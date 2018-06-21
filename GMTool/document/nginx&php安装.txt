@@ -1,0 +1,42 @@
+//nginx安装（端口默认80）
+这个直接在线安装，
+yum -y install nginx
+
+//php安装，可以yum源安装（但是缺少php扩展，后期还要装扩展，恶心，建议源码安装，项目要求版本为php7）
+//1.yum源安装
+rpm -Uvh  https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+rpm -Uvh https://mirrors.ustc.edu.cn/centos/7/extras/x86_64/Packages/epel-release-7-6.noarch.rpm
+rpm -Uvh https://centos7.iuscommunity.org/ius-release.rpm
+yum search php7
+yum install php70u
+yum install php70u-cli
+
+//2.php源码安装
+wget http://cn2.php.net/distributions/php-7.1.5.tar.gz
+./configure --enable-fpm --with-mysqli --with-fpm-user=nobody --with-fpm-group=nobody
+
+make时候会报错，原因是没有libiconv
+解决：make时执行
+ln -s /usr/local/lib/libiconv.so.2 /usr/lib64/
+make ZEND_EXTRA_LIBS='-liconv' 
+
+make install
+
+//nginx,php安装好后，需要启动他们
+
+//启动nginx服务
+systemctl start nginx.service
+systemctl enable nginx.service
+//启动php-fpm(高版本的php里自带的有php-fpm,源码安装时候需要配置./configure --enable-fpm该项，不然没有php-fpm，默认端口9000)
+ps-ef|grep php-fpm  //查看该进程，先杀死
+whereis php-fpm //查看服务位置找到后启动该服务
+注意：只有nginx，php-fpm两个都启动起来后，php网页才能被访问（如果9000被占用，需要修改默认端口，修改nginx.conf,php-fpm.conf包含的配置文件）
+
+//nginx,php两个都启动后，本机自己能访问，外机访问还需开端口，centos7默认用的是firewall，需要开启80,9000端口
+sudo firewall-cmd --zone=public --add-port=9999/tcp --permanent（--permanent永久生效，没有此参数重启后失效）
+sudo firewall-cmd --reload (重启)
+sudo firewall-cmd --query-port=8080/tcp（某端口是否开启）
+sudo firewall-cmd    --state （查firewall是否运行）
+sudo firewall-cmd --list-ports （已开放端口） 
+
+//mysql版本无所谓，直接yum在线安装

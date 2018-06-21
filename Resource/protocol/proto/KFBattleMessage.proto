@@ -1,0 +1,486 @@
+import "KFCommonMessage.proto";
+package KFMsg;
+
+enum BattleProtocol
+{	
+	S2S_REGISTER_BATTLE_SERVER_REQ = 11200;				// 注册战斗服务器
+	S2S_REGISTER_BATTLE_SERVER_ACK = 11201;				// 注册战斗服务器
+	S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ = 11202;	// 战后服务器断开连接
+	S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ = 11203;	// 注册战斗服务器
+	S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ = 11204;		// 请求创建战斗房间
+	S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ = 11205;		// 请求创建战斗房间
+	S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK = 11206;			// 请求创建战斗房间
+	S2S_OPEN_BATTLE_ROOM_REQ = 11207;					// 请求开启房间
+	S2S_OPEN_BATTLE_ROOM_ACK = 11208;					// 开启战场结果
+	S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK = 11209;			// 开启战场结果
+	S2S_PLAYER_ENTER_BATTLE_ROOM_REQ = 11210;			// 玩家匹配进入战场
+	S2S_PLAYER_ENTER_BATTLE_ROOM_ACK = 11211;			// 玩家匹配进入战场
+	S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK = 11212;	// 玩家匹配进入战场
+	S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ = 11213;			// 玩家主动离开了房间(非断线重连)(从进入房间到战斗结束之前)
+	S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ = 11214;	// 玩家离开了房间
+	S2S_TELL_BATTLE_ROOM_START_REQ = 11215;				// 通知服务器战场开启
+	S2S_TELL_BATTLE_ROOM_START_ACK = 11216;				// 通知服务器战场开启
+	S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ = 11217;		// 通知服务器战场开启
+	S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ = 11218;			// 通知服务器战场开启
+	S2S_TELL_BATTLE_ROOM_FINISH_REQ = 11219;			// 通知服务器战场关闭
+	S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK = 11220;		// 玩家离开战场
+	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ = 11221;	// 战场开始
+	S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ = 11222;	// 战场场结束
+	S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ = 11223;			// 添加匹配阵营
+	S2S_ADD_CAMP_TO_MATCH_SHARD_ACK = 11224;			// 添加匹配阵营
+	S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ = 11225;		// 删除阵营
+	S2S_PLAYER_CANCEL_MATCH_REQ = 11226;				// 玩家取消匹配
+	S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK = 11227;			// 玩家离开房间
+	S2S_PLAYER_CANCEL_MATCH_ACK = 11228;				// 玩家取消匹配
+	S2S_TELL_BATTLE_ROOM_FINISH_ACK = 11229;			// 战场结束
+	S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ = 11230;	// 离开战场
+	S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ = 11231;			// 玩家登陆战场服务器
+	S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK = 11232;			// 玩家登陆战场服务器
+	S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ = 11233; 	// 玩家登陆战场服务器
+	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK = 11234;	// 战场开始 
+	S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ = 11235;		// 通知注册
+	S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ = 11236;		// 通知战场关闭
+	S2S_PLAYER_BATTLE_SCORE_REQ = 11237;				// 玩家战绩
+	S2S_PLAYER_BATTLE_SCORE_ACK = 11238;				// 玩家战绩
+	S2S_BATTLE_ROOM_SCORE_BALANCE_REQ = 11239;			// 玩家战绩
+	S2S_BATTLE_ROOM_SCORE_BALANCE_ACK = 11240;			// 玩家战绩
+	S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241;		// 战场结算
+	S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242;			// 查询结算
+	S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243;			// 开启战场
+ }
+
+enum BattleEnum
+{
+	OpenSuccess = 1;	// 开启成功
+	OpenFailed = 2;		// 开启失败
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 战斗服务器=>战斗服务器集群
+// 注册战斗服务器
+// S2S_REGISTER_BATTLE_SERVER_REQ
+message S2SRegisterBattleServerReq
+{
+	required uint32 serverid = 1;		// 服务器id
+	required string ip = 2;				// ip
+	required uint32 port = 3;			// port
+	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
+	required uint32 battleshardid = 5;	// 战斗服务器集群逻辑分片id		
+}
+
+// 战斗服务器集群=>战斗服务器
+// 注册战斗服务器
+// S2S_REGISTER_BATTLE_SERVER_ACK
+message S2SRegisterBattleServerAck
+{
+	required uint32 serverid = 1;		// 服务器id
+	required uint32 result = 2;			// 注册结果 
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 注册战斗服务器
+// S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ
+message S2SRegisterServerToBattleShardReq
+{
+	required uint32 serverid = 1;		// 服务器id
+	required string ip = 2;				// ip
+	required uint32 port = 3;			// port
+	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 广播给所有服务器
+// S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ
+message S2STellBattleRegisterToShardReq
+{
+	required uint32 serverid = 1;		// 服务器id
+	required uint64 roomid = 2;			// 房间id
+	required string ip = 3;				// ip
+	required uint32 port = 4;			// port
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 战斗服务器断开连接
+// S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ
+message S2SDisconnectServerToBattleShardReq
+{
+	required uint32 serverid = 1;		// 服务器id
+}
+
+// 匹配服务器集群逻辑分片=>战斗服务器集群代理
+// 请求创建房间
+// S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ
+message S2SCreateRoomToBattleProxyReq
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 maxplayercount = 3;	// 这个房间的最大人数
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 请求开启战斗房间
+// 战场服务器收到消息,
+// 如果战场没有开启, 直接开启, 返回成功
+// 如果战场已经开启 判断matchid 和roomid是否相同, 如果相同返回成功, 否则返回失败
+// S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ
+message S2SCreateRoomToBattleShardReq
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 matchshardid = 3;	// 匹配shardid
+	required uint32 maxplayercount = 4;	// 这个房间的最大人数
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 请求创建房间
+// S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK
+message S2SCreateRoomToMatchShardAck
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 battleshardid = 3;	// 战场服务器shardid
+}
+
+// 匹配服务器集群逻辑分片=>战斗服务器集群逻辑分片
+// 玩家加入战场
+// S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ
+message S2SAddCampToBattleShardReq
+{
+	required uint64 roomid = 1;
+	required PBBattleCamp pbcamp = 2;	// 阵营信息
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 玩家加入战场
+// S2S_ADD_CAMP_TO_MATCH_SHARD_ACK
+message S2SAddCampToMatchShardAck
+{
+	required uint32 matchid = 1;
+	required uint64 roomid = 2;
+	required uint32 campid = 3;
+	required bool addok = 4;
+}
+
+// 匹配服务器集群逻辑分片=>战斗服务器集群逻辑分片
+// 玩家离开战场
+// S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ
+//message S2SRemoveCampToBattleShardReq
+//{
+//	required uint64 roomid = 1;
+//	required uint32 campid = 2;
+//}
+
+// 战斗服务器集群逻辑分片=>战斗服务器
+// 请求开启战斗房间
+// S2S_OPEN_BATTLE_ROOM_REQ
+message S2SOpenBattleRoomReq
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 battleshardid = 3;	// 战斗服务器集群逻辑分片id
+	required uint32 maxplayercount = 4;	// 这个房间的最大人数
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 开启战场结果回馈
+// S2S_OPEN_BATTLE_ROOM_ACK
+message S2SOpenBattleRoomAck
+{
+	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id
+	required uint32 matchid = 2;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 3;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 result = 4;			// 开启结果 ( 对应BattleEnum, 目前只有成功失败, 以后其他原因再细分)
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 开启战场结果回馈
+// S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK
+message S2SOpenBattleRoomToShardAck
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 result = 3;			// 开启结果 ( 对应BattleEnum, 目前只有成功失败, 以后其他原因再细分)
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 开启战场结果回馈
+// S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ
+message S2SOpenRoomToMatchShardReq
+{
+	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 waittime = 3;		// 房间等待时间
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 开启战场结果回馈
+// S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK
+message S2SOpenRoomToBattleShardAck
+{
+	required uint64 roomid = 1;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+}
+
+// 战斗服务器集群逻辑分片=>战斗服务器
+// 玩家匹配进入战场房间
+// S2S_PLAYER_ENTER_BATTLE_ROOM_REQ
+message S2SPlayerEnterBattleRoomReq
+{
+	required uint64 roomid = 1;			// 房间id	
+	required PBBattlePlayer player = 2;	// 玩家
+	required string token = 3;			// token
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 玩家匹配进入战场结果
+// 收到S2SPlayerEnterBattleRoomReq 以后, 
+// 战场服务器把玩家数据加入列表以后回这个消息, 如果已经在列表中也需要回复
+// S2S_PLAYER_ENTER_BATTLE_ROOM_ACK
+message S2SPlayerEnterBattleRoomAck
+{
+	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id	
+	required uint64 roomid = 2;			// 房间id
+	required uint32 campid = 3;			// 阵营id
+	required uint32 playerid = 4;		// 玩家id
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 玩家匹配进入战场结果
+// S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK
+message S2SPlayerEnterRoomToBattleShardAck
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 campid = 2;			// 阵营id
+	required uint32 playerid = 3;		// 玩家id
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 玩家登陆到服务器
+// S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ
+message S2SPlayerLoginBattleRoomReq
+{
+	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id		
+	required uint64 roomid = 2;			// 房间id
+	required uint32 campid = 3;			// 阵营id
+	required uint32 playerid = 4;		// 玩家id
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 玩家登陆到服务器
+// S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK
+message S2SPlayerLoginBattleRoomAck
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 campid = 2;			// 阵营id
+	required uint32 playerid = 3;		// 玩家id
+}
+
+
+// 战斗服务器集群逻辑代理=>战斗服务器集群逻辑分片
+// 玩家登陆到服务器
+// S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ
+message S2SPlayerLoginRoomToBattleShardReq
+{
+	required uint64 roomid = 2;			// 房间id
+	required uint32 campid = 3;			// 阵营id
+	required uint32 playerid = 4;		// 玩家id
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+
+// 战斗服务器集群逻辑分片=>战斗服务器
+// 玩家取消匹配
+// S2S_PLAYER_CANCEL_MATCH_REQ
+message S2SPlayerCancelMatchReq
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 campid = 2;			// 阵营id
+	required uint32 playerid = 3;		// 玩家id
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 玩家离开了房间
+// S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ
+message S2SPlayerLeaveBattleRoomReq
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 battleshardid = 2;	// 战斗服务器集群逻辑分片id	
+	required uint32 campid = 3;			// 玩家阵营id
+	required uint32 playerid = 4;		// 玩家id
+}
+
+// 战斗服务器集群逻辑分片=>战斗服务器
+// 玩家离开了房间
+// S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK
+message S2SPlayerLeaveBattleRoomAck
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 campid = 2;			// 玩家阵营id
+	required uint32 playerid = 3;		// 玩家id
+}
+
+// 战斗服务器集群逻辑代理=>战斗服务器集群逻辑分片
+// 玩家离开了房间
+// S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ
+message S2SPlayerLeaveRoomToBattleShardReq
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 campid = 2;			// 玩家阵营id
+	required uint32 playerid = 3;		// 玩家id
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 玩家离开了房间
+// S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ
+message S2SPlayerLeaveRoomToMatchShardReq
+{
+	required uint64 matchid = 1;	// 匹配模式
+	required uint64 roomid = 2;		// 房间id
+	required uint32 campid = 3;		// 玩家阵营id
+	required uint32 playerid = 4;	// 玩家id
+}
+
+// 战斗服务器集群逻辑分片=>大厅服务器
+// 玩家离开战场
+// S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK
+message S2SLeaveBattleRoomToClientAck
+{
+	required uint32 playerid = 1;	// 玩家id
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 通知服务器战场正式开始
+// S2S_TELL_BATTLE_ROOM_START_REQ
+message S2STellBattleRoomStartReq
+{
+	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id	
+	required uint64 roomid = 2;			// 房间id
+}
+
+// 战斗服务器集群代理=>战斗服务器集群逻辑分片
+// 通知服务器战场正式开始
+// S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ
+message S2STellRoomStartToBattleShardReq
+{
+	required uint64 roomid = 1;			// 房间id
+}
+
+// 战斗服务器集群逻辑分片=>战斗服务器
+// 通知服务器战场正式开始
+// S2S_TELL_BATTLE_ROOM_START_ACK
+message S2STellBattleRoomStartAck
+{
+	required uint64 roomid = 1;			// 房间id
+}
+
+// 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
+// 通知服务器战场正式开始
+// S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ
+message S2STellRoomStartToMatchShardReq
+{
+	required uint32 matchid = 1;	// 匹配模式	
+	required uint64 roomid = 2;		// 房间id
+}
+
+// 匹配服务器集群逻辑分片=>战斗服务器集群逻辑分片
+// 通知服务器战场正式开始
+// S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK
+message S2STellRoomStartToMatchShardAck
+{
+	required uint64 roomid = 1;		// 房间id
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分片
+// 通知战场结束
+// S2S_TELL_BATTLE_ROOM_FINISH_REQ
+message S2STellBattleRoomFinishReq
+{
+	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id
+	required uint64 roomid = 2;			// 房间id
+	required uint32 serverid = 3;		// 服务器id
+	required string ip = 4;				// ip
+}
+
+// 战斗服务器=>战斗服务器集群逻辑分
+// 通知战场结束
+// S2S_TELL_BATTLE_ROOM_FINISH_ACK
+message S2STellBattleRoomFinishAck
+{
+	required uint64 roomid = 1;			// 房间id
+}
+
+// 战斗服务器=>战斗服务器集群逻辑
+// 战场数据结算 
+// S2S_BATTLE_ROOM_SCORE_BALANCE_REQ
+message S2SBattleRoomScoreBalanceReq
+{
+	required uint64 roomid = 1;			// 房间id
+	required uint32 battleshardid = 2;	// battleshardid
+	required PBBattleScore pbscore = 3;	// 战绩列表
+}
+
+// 战斗服务器集群逻辑分=>战斗服务器
+// 战场数据结算
+// S2S_BATTLE_ROOM_SCORE_BALANCE_ACK
+message S2SBattleRoomScoreBalanceAck
+{
+	required uint64 roomid = 1;		// 房间id
+	required uint32 playerid = 2;	// 玩家列表
+	required string reward = 3;		// 奖励字串( 需要解析 )
+}
+
+// 战斗服务器集群逻辑=>战斗服务器集群逻辑
+// 战场数据结算
+// S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ
+message S2SBattleScoreBalanceToShardReq
+{
+	required uint64 roomid = 1;			// 房间id
+	required PBBattleScore pbscore = 2;	// 战绩列表
+}
+
+// 玩家战场数据
+// S2S_PLAYER_BATTLE_SCORE_REQ
+message S2SPlayerBattleScoreReq
+{
+	required uint32 playerid = 1;	// 玩家列表
+	required uint64 roomid = 2;		// 房间id
+	required PBBattleScore pbscore = 3;	// 战绩列表
+}
+
+// 玩家战场数据
+// S2S_PLAYER_BATTLE_SCORE_ACK
+message S2SPlayerBattleScoreAck
+{
+	required uint32 playerid = 1;	// 玩家列表
+	required uint64 roomid = 2;		// 房间id
+}
+
+// 上线查询结算
+// S2S_ONLINE_QUERY_BATTLE_SCORE_REQ
+message S2SOnlieQueryBattleScoreReq
+{
+	required uint32 playerid = 1;	// 玩家列表
+}
+
+// 通知战场结束
+// S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ
+message S2STellRoomFinishToBattleShardReq
+{
+	required uint64 roomid = 1;		// 房间id
+	required uint32 serverid = 2;	// 服务器id
+	required string ip = 3;			// ip
+}
+
+// 通知战场关闭
+// S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ
+message S2STellRoomCloseToMatchShardReq
+{
+	required uint64 matchid = 1;	// 匹配模式
+	required uint64 roomid = 2;		// 房间id
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

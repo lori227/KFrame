@@ -1,0 +1,50 @@
+cmake_minimum_required(VERSION 3.0)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+project(KFrame)
+
+########################################################################
+
+set(ROOT_DIR ${PROJECT_SOURCE_DIR})
+include_directories(
+    ${ROOT_DIR}
+    ${ROOT_DIR}/KFCommon
+    ${ROOT_DIR}/KFContrib
+    ${ROOT_DIR}/KFLibrary
+)
+#set(LIB_DIR /data/_lib)
+#set(BIN_DIR /data/_bin)
+
+set(LIB_DIR ${ROOT_DIR}/_lib/linux)
+set(BIN_DIR ${ROOT_DIR}/_bin/linux)
+
+LINK_DIRECTORIES("/usr/local/lib")
+LINK_DIRECTORIES(${LIB_DIR})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -ggdb -D_DEBUG")
+else()
+    set(CMAKE_BUILD_TYPE "Release")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+endif()
+
+ADD_DEFINITIONS(
+ -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-strict-aliasing
+)
+
+set(LDFLAGS "$ENV{LDFLAGS} -stdlib=libc++")
+
+#log
+message("root dir=${ROOT_DIR}")
+message("lib dir=${LIB_DIR}")
+message("bin dir=${BIN_DIR}")
+
+##################################################################
+message("start to build all...")
+add_subdirectory(KFContrib)
+add_subdirectory(KFStartup)
+add_subdirectory(KFPlugin)
+

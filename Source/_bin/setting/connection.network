@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--ListenPort-->
+	<!--默认的监听端口-->
+	<ListenPort Port="10000"/>
+
+	<!-- Master Master服务器地址 -->
+	<!-- Ip 连接地址 -->
+	<!-- Port 连接端口 -->
+	<!-- Type 服务器类型 -->
+	<!-- ID 服务器id -->
+	<!-- Name 服务器名字 -->
+	<!--ClusterKey 认证秘钥 -->
+	<Masters>
+		<Master Name="zone" Type="master" Id="100" Ip="127.0.0.1" Port="0" Key=""/>
+		<Master Name="data" Type="master" Id="1" Ip="127.0.0.1" Port="0" Key="DataCluster@KFrame,./"/>
+		<Master Name="public" Type="master" Id="2" Ip="127.0.0.1" Port="0" Key="PublicCluster@KFrame,./"/>
+		<Master Name="route" Type="master" Id="3" Ip="127.0.0.1" Port="0" Key="RouteCluster@KFrame,./"/>
+		<Master Name="match"  Type="master" Id="4" Ip="127.0.0.1" Port="0" Key="MatchCluster@KFrame,./"/>
+		<Master Name="battle" Type="master" Id="5" Ip="127.0.0.1" Port="0" Key="BattleCluster@KFrame,./"/>
+		<Master Name="mail" Type="master" Id="6" Ip="127.0.0.1" Port="0"  Key="MailCluster@KFrame,./"/>
+		<Master Name="relation" Type="master" Id="7" Ip="127.0.0.1" Port="0" Key="RelationCluster@KFrame,./"/>
+		<Master Name="group" Type="master" Id="8" Ip="127.0.0.1" Port="0" Key="GroupCluster@KFrame,./"/>
+		<Master Name="guild" Type="master" Id="9" Ip="127.0.0.1" Port="0" Key="GuildCluster@KFrame,./"/>
+		<Master Name="rank" Type="master" Id="10" Ip="127.0.0.1" Port="0" Key="RankCluster@KFrame,./"/>
+	</Masters>
+
+	<!--Platform -->
+	<!--Address 平台服务器的http访问地址 -->
+	<Platforms>
+		<Platform Id="1" Address="http://127.0.0.1:9011/" />
+		<Platform Id="2" Address="http://127.0.0.1:9012/" />
+	</Platforms>
+</Config>
+

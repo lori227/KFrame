@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="battle" AppType="shard">
+	<Plugins>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="12" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFTimer" Startup="1" Sort="13" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFClusterClient" Startup="1" Sort="30" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/shard.network"/>			
+		<Plguin Name="KFRedis" Startup="1" Sort="60" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="70" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/shard.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="80" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/shard.network"/>
+		<Plguin Name="KFClusterShard" Startup="1" Sort="81" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
+		<Plguin Name="KFBattleShard" Startup="1" Sort="90" Debug="KFBattleShardd" Release="KFBattleShard" Config="./config/battle.config"/>
+	</Plugins>
+</Setting>

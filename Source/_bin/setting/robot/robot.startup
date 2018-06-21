@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="robot" AppType="single">
+	<Plugins>
+		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/> 
+		<Plguin Name="KFHttpClient" Startup="1" Sort="211" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFKernel" Startup="1" Sort="100" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
+		<Plguin Name="KFRobot" Startup="1" Sort="212" Debug="KFRobotd" Release="KFRobot" Config="./config/robot.config"/>
+		
+
+	</Plugins>
+</Setting>

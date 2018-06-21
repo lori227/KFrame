@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="zone" AppType="master">
+	<Plugins>
+		<Plguin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="21" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="22" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="30" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/master.network"/>
+	</Plugins>
+</Setting>

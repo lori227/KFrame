@@ -1,0 +1,97 @@
+############################################################################
+log4j.category.rootCategory = DEBUG, rootAppender
+
+log4j.appender.rootAppender = org.apache.log4j.ConsoleAppender
+log4j.appender.rootAppender.layout = org.apache.log4j.PatternLayout
+log4j.appender.rootAppender.layout.ConversionPattern = [%p] [%d] %m%n
+#log4j.appender.rootAppender.encoding = UTF-8
+############################################################################
+log4j.category.Init.log = DEBUG, InitAppender, rootAppender
+log4j.additivity.Init.log = false
+
+log4j.appender.InitAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.InitAppender.append = true
+log4j.appender.InitAppender.layout = org.apache.log4j.PatternLayout
+log4j.appender.InitAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.InitAppender.DatePattern = './_output/'yyyy-MM-dd'/init/init-$app.log'
+############################################################################
+log4j.category.Memory.log = DEBUG, MemoryAppender
+log4j.additivity.Memory.log = false
+
+log4j.appender.MemoryAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.MemoryAppender.Append = true
+log4j.appender.MemoryAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.MemoryAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.MemoryAppender.DatePattern = './_output/'yyyy-MM-dd'/init/memory-$app.log'
+#log4j.appender.MemoryAppender.encoding = UTF-8
+############################################################################
+log4j.category.System.log = DEBUG, SystemAppender, rootAppender
+log4j.additivity.System.log = false
+
+log4j.appender.SystemAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.SystemAppender.append = true
+log4j.appender.SystemAppender.layout = org.apache.log4j.PatternLayout
+log4j.appender.SystemAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.SystemAppender.DatePattern = './_output/'yyyy-MM-dd'/init/system-$app.log'
+############################################################################
+log4j.category.Logic.log = DEBUG, LogicAppender
+log4j.additivity.Logic.log = false
+
+log4j.appender.LogicAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.LogicAppender.Append = true
+log4j.appender.LogicAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.LogicAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.LogicAppender.DatePattern = './_output/'yyyy-MM-dd'/init/logic-$app.log'
+#log4j.appender.LogicAppender.encoding = UTF-8
+############################################################################
+log4j.category.Net.log = DEBUG, NetAppender
+log4j.additivity.Net.log = false
+
+log4j.appender.NetAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.NetAppender.Append = true
+log4j.appender.NetAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.NetAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.NetAppender.DatePattern = './_output/'yyyy-MM-dd'/init/net-$app.log'
+#log4j.appender.NetAppender.encoding = UTF-8
+############################################################################
+log4j.category.Script.log = DEBUG, ScriptAppender
+log4j.additivity.Script.log = false
+
+log4j.appender.ScriptAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.ScriptAppender.Append = true
+log4j.appender.ScriptAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.ScriptAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.ScriptAppender.DatePattern = './_output/'yyyy-MM-dd'/init/script-$app.log'
+#log4j.appender.ScriptAppender.encoding = UTF-8
+############################################################################
+log4j.category.Login.log = DEBUG, LoginAppender
+log4j.additivity.Login.log = false
+
+log4j.appender.LoginAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.LoginAppender.Append = true
+log4j.appender.LoginAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.LoginAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.LoginAppender.DatePattern = './_output/'yyyy-MM-dd'/init/login-$app.log'
+#log4j.appender.LoginAppender.encoding = UTF-8
+############################################################################
+log4j.category.Player.log = DEBUG, PlayerAppender
+log4j.additivity.Player.log = false
+
+log4j.appender.PlayerAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.PlayerAppender.Append = true
+log4j.appender.PlayerAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.PlayerAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.PlayerAppender.DatePattern = './_output/'yyyy-MM-dd'/init/player-$app.log'
+#log4j.appender.PlayerAppender.encoding = UTF-8
+############################################################################
+log4j.category.SQL.log = DEBUG, SQLAppender
+log4j.additivity.SQL.log = false
+
+log4j.appender.SQLAppender = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.SQLAppender.Append = true
+log4j.appender.SQLAppender.layout = org.apache.log4j.PatternLayout 
+log4j.appender.SQLAppender.layout.ConversionPattern = [%p] [%d] %m%n
+log4j.appender.SQLAppender.DatePattern = './_output/'yyyy-MM-dd'/init/sql-$app.log'
+#log4j.appender.SQLAppender.encoding = UTF-8
+############################################################################
+

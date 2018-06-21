@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--HttpServer -->
+	<!--LocalIp 内网ip -->
+	<!--InteranetIp 外网ip -->
+	<!--Port 端口-->
+	<!--KeepAlive 是否保持连接-->
+	<!--MaxThread 最大线程数量-->
+	<!--MaxQueue 最大队列数量-->
+	<!--IdleTime 空闲时间-->
+	<HttpServer LocalIp="0.0.0.0" InteranetIp="127.0.0.1" Port="7776" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
+</Config>
+

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFGuildShardConfig.cpp" />
+    <ClCompile Include="KFGuildShardModule.cpp" />
+    <ClCompile Include="KFGuildShardPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFGuildShardConfig.h" />
+    <ClInclude Include="KFGuildShardInterface.h" />
+    <ClInclude Include="KFGuildShardModule.h" />
+    <ClInclude Include="KFGuildShardPlugin.h" />
+  </ItemGroup>
+</Project>

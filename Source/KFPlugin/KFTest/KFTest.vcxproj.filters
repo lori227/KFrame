@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="KFTestInterface.h" />
+    <ClInclude Include="KFTestModule.h" />
+    <ClInclude Include="KFTestPlugin.h" />
+    <ClInclude Include="KFTestConfig.h" />
+    <ClInclude Include="KFTestMessage.pb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFTestModule.cpp" />
+    <ClCompile Include="KFTestPlugin.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFTestConfig.cpp" />
+    <ClCompile Include="KFTestMessage.pb.cc" />
+  </ItemGroup>
+</Project>

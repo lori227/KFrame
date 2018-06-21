@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="zone" AppType="game">
+	<Plugins>
+		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFDisplay" Startup="1" Sort="21" Debug="KFDisplayd" Release="KFDisplay" Config=""/>	
+		<Plguin Name="KFOption" Startup="1" Sort="22" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
+		<Plguin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="31" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFGame" Startup="1" Sort="40" Debug="KFGamed" Release="KFGame" Config=""/>
+		<Plguin Name="KFZone" Startup="1" Sort="41" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/game.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="60" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/game.network"/>
+		<Plguin Name="KFClusterClient" Startup="1" Sort="70" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/game.network"/>
+		<Plguin Name="KFRouteClient" Startup="1" Sort="71" Debug="KFRouteClientd" Release="KFRouteClient" Config=""/>
+		<Plguin Name="KFLoginGame" Startup="1" Sort="80" Debug="KFLoginGamed" Release="KFLoginGame" Config=""/>
+		<Plguin Name="KFLua" Startup="1" Sort="90" Debug="KFLuad" Release="KFLua" Config=""/>
+		<Plguin Name="KFKernel" Startup="1" Sort="100" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
+		<Plguin Name="KFPlayer" Startup="1" Sort="110" Debug="KFPlayerd" Release="KFPlayer" Config=""/>
+		<Plguin Name="KFReset" Startup="1" Sort="120" Debug="KFResetd" Release="KFReset" Config="./config/reset.config"/>
+		<Plguin Name="KFEnter" Startup="1" Sort="130" Debug="KFEnterd" Release="KFEnter" Config="./config/enter.config"/>
+		<Plguin Name="KFDataClient" Startup="1" Sort="140" Debug="KFDataClientd" Release="KFDataClient" Config=""/>
+		<Plguin Name="KFMailClient" Startup="1" Sort="150" Debug="KFMailClientd" Release="KFMailClient" Config="./config/mail.config"/>
+		<Plguin Name="KFPublicClient" Startup="1" Sort="160" Debug="KFPublicClientd" Release="KFPublicClient" Config="./config/public.config"/>
+		<Plguin Name="KFChat" Startup="1" Sort="170" Debug="KFChatd" Release="KFChat" Config="./config/chat.config"/>
+		<Plguin Name="KFRelationClient" Startup="1" Sort="180" Debug="KFRelationClientd" Release="KFRelationClient" Config="./config/relation.config"/>
+		<Plguin Name="KFMatchClient" Startup="1" Sort="190" Debug="KFMatchClientd" Release="KFMatchClient" Config="./config/match.config"/>
+		<Plguin Name="KFBattleClient" Startup="1" Sort="191" Debug="KFBattleClientd" Release="KFBattleClient" Config=""/>
+		<Plguin Name="KFItem" Startup="1" Sort="200" Debug="KFItemd" Release="KFItem" Config="./config/item.config"/>
+		<Plguin Name="KFClothes" Startup="1" Sort="201" Debug="KFClothesd" Release="KFClothes" Config="./config/clothes.config"/>
+		<Plguin Name="KFDebug" Startup="1" Sort="210" Debug="KFDebugd" Release="KFDebug" Config="./config/debug.config"/>
+		<Plguin Name="KFAchieve" Startup="1" Sort="220" Debug="KFAchieved" Release="KFAchieve" Config="./config/achieve.config"/>
+		<Plguin Name="KFGroupClient" Startup="1" Sort="230" Debug="KFGroupClientd" Release="KFGroupClient" Config="./config/group.config"/>
+		<Plguin Name="KFStore" Startup="1" Sort="240" Debug="KFStored" Release="KFStore" Config="./config/store.config"/>
+	</Plugins>
+</Setting>

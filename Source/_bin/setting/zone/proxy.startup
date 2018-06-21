@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="zone" AppType="proxy">
+	<Plugins>
+		<Plguin Name="KFTimer" Startup="1" Sort="10" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFZone" Startup="1" Sort="12" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFDisplay" Startup="1" Sort="21" Debug="KFDisplayd" Release="KFDisplay" Config=""/>	
+		<Plguin Name="KFConfig" Startup="1" Sort="30" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="31" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/proxy.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/proxy.network"/>
+		<Plguin Name="KFGate" Startup="1" Sort="60" Debug="KFGated" Release="KFGate" Config=""/>
+		<Plguin Name="KFProxy" Startup="1" Sort="60" Debug="KFProxyd" Release="KFProxy" Config=""/>
+		<Plguin Name="KFLoginProxy" Startup="1" Sort="60" Debug="KFLoginProxyd" Release="KFLoginProxy" Config=""/>
+	</Plugins>
+</Setting>

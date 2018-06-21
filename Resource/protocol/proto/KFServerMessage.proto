@@ -1,0 +1,1001 @@
+import "KFCommonMessage.proto";
+
+package KFMsg;
+
+enum ServerProtocol
+{	
+	S2S_TRANSMIT_MESSAGE_REQ = 21001;				// 转发消息
+	S2S_BROADCAST_MESSAGE_REQ = 21002;				// 广播消息
+	S2S_SAVE_PLAYER_REQ = 21003;					// 保存数据
+	S2S_DELETE_PLAYER_REQ = 21004;					// 删除数据
+	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// 更新公共数据
+	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// 更新zone信息到proxy
+	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// 转发消息到数据库
+	
+	S2S_LOGIN_TELL_TOKEN_TO_WORLD_ACK = 21097;		// 通知登录token
+	S2S_LOGIN_TELL_TOKEN_TO_GAME_ACK = 21098;		// 通知登录token
+	S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ = 21099;		// 通知登录token
+	S2S_LOGIN_PROXY_REMOVE_REQ = 21100;				// 删除登录连接
+	S2S_KICK_GAME_PLAYER_REQ = 21101;				// 踢掉在线玩家
+	S2S_KICK_PROXY_PLAYER_REQ = 21102;				// 踢掉在线玩家
+	S2S_LOGIN_PROXY_UPDATE_REQ = 21103;				// 更新登录连接数量
+	S2S_LOGIN_LOGIN_VERIFY_REQ = 21104;				// 登录验证请求	
+	S2S_LOGIN_LOGIN_VERIFY_ACK = 21105;				// 登录验证结果
+	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106;		// 通知登录Token信息
+	S2S_LOGIN_GAME_UPDATE_REQ = 21107;				// 更新登录连接数量
+	S2S_LOGIN_WORLD_VERIFY_REQ = 21108;				// 登录验证请求
+	S2S_LOGIN_WORLD_VERIFY_ACK = 21109;				// 登录验证结果
+	S2S_LOGIN_QUERY_PLAYERID_REQ = 21110;			// 查询角色userid
+	S2S_LOGIN_QUERY_PLAYERID_ACK = 21111;			// 查询角色userid
+	//S2S_LOGIN_UPDATE_LOGIN_REQ = 21112;				// 更新登录服务器信息
+	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// 同步在线人家
+	S2S_LOGIN_GAME_REQ = 21114;						// 请求登录游戏服务器
+	S2S_LOGIN_GAME_ACK = 21115;						// 请求登录游戏服务器
+	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// 请求加载玩家数据
+	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// 加载玩家数据回馈
+	S2S_LOGIN_CREATE_PLAYER_REQ = 21118;			// 创建玩家
+	S2S_LOGIN_OUT_REQ = 21119;						// 登出游戏
+	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// 游戏玩家进入游戏
+	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// 游戏玩家离开游戏
+	S2S_SET_PLAYER_NAME_REQ = 21124;				// 设置名字请求
+	S2S_SET_PLAYER_NAME_ACK = 21125;				// 设置名字回应
+	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// 玩家掉线
+	S2S_QUERY_MAIL_REQ = 21127;						// 查询邮件
+	S2S_QUERY_MAIL_ACK = 21128;						// 查询邮件
+	S2S_DELETE_MAIL_REQ = 21129;					// 删除邮件
+	S2S_QUERY_FRIEND_REQ = 21130;					// 查询好友信息
+	S2S_ADD_FRIEND_INVITE_REQ = 21131;				// 添加好友请求
+	S2S_DEL_FRIEND_REQ = 21132;						// 删除好友请求
+	S2S_QUERY_FRIEND_ACK = 21133;					// 查询好友信息
+	S2S_QUERY_FRIEND_INVITE_ACK = 21134;			// 查询好友申请信息
+	S2S_ADD_FRIEND_INVITE_ACK = 21135;				// 添加好友请求
+	S2S_DEL_FRIEND_INVITE_REQ = 21136;				// 删除好友邀请
+	S2S_ADD_FRIEND_REQ = 21137;						// 添加好友
+	S2S_DEL_FRIEND_ACK = 21138;						// 删除好友
+	S2S_ADD_FRIEND_ACK = 21139;						// 添加好友
+	S2S_UPDATE_FRIEND_REQ = 21140;					// 更新好友
+	S2S_ADD_MAIL_REQ = 21141;						// 添加邮件
+	S2S_NOTICE_NEW_MAIL_REQ = 21142;				// 通知新邮件
+	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// 更新好友度
+	S2S_QUERY_BASIC_REQ = 21144;					// 查询好友基础数据
+	S2S_QUERY_PLAYER_REQ = 21145;					// 查询好友数据
+	S2S_QUERY_BASIC_ACK = 21146;					// 查询好友基础数据
+	S2S_QUERY_PLAYER_ACK = 21147;					// 查询好友数据
+	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
+	//S2S_LOGIN_UPDATE_LOGIN_ACK = 21149;				// 更新登录回馈
+	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
+	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
+	S2S_UPDATE_MAIL_FLAG_REQ = 21152;				// 设置邮件状态请求
+	S2S_UPDATE_MAIL_FLAG_ACK = 21153;				// 设置邮件状态响应
+	//S2S_EMAIL_OUT_RANGE_REQ = 21154;				// 邮件超时删除
+	//S2S_LOGIN_EMAIL_REQ = 21155;					// 玩家登陆邮件系统
+	S2S_PLAYER_TOAST_REQ = 21156;					// 玩家敬酒请求
+	S2S_PLAYER_TOAST_ACK = 21157;					// 玩家敬酒回馈
+	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// 更新好友度反馈
+	S2S_CREATE_MATCH_GROUP_REQ = 21159;				// 创建匹配队伍
+	S2S_RECEIVE_INVITE_MATCH_GROUP_REQ = 21160;		// 接收到组队邀请
+	S2S_CONSENT_INVITE_MATCH_GROUP_REQ = 21161;		// 回复邀请操作
+	S2S_ADD_MATCH_GROUP_MEMBER_REQ = 21162;			// 添加队员
+ 	S2S_REMOVE_MATCH_GROUP_MEMBER_ACK = 21163;		// 删除队员
+	S2S_LEAVE_MATCH_GROUP_REQ = 21164;				// 离开队伍请求
+	S2S_KICK_MATCH_GROUP_REQ = 21165;				// 踢出队员
+	S2S_APPLY_MATCH_GROUP_REQ = 21166;				// 队员信息
+	S2S_LEAVE_MATCH_GROUP_ACK = 21167;				// 离开队伍
+	S2S_CONSENT_APPLY_MATCH_GROUP_ACK = 21168;		// 同意加入队伍
+	S2S_ONLINE_QUERY_MATCH_GROUP_REQ = 21169;		// 上线查询队伍信息
+	S2S_ADD_MATCH_GROUP_MEMBER_ACK = 21170;			// 添加队员
+	S2S_UPDATE_GROUP_MEMBER_ACK = 21171;			// 更新玩家基础信息
+	S2S_UPDATE_GROUP_MEMBER_REQ = 21172;			// 更新玩家基础信息
+	S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ = 21173;		// 离线更新队伍信息
+	S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ = 21174;	// 创建队伍
+	S2S_UPDATE_GUEST_LIST_REQ = 21175;				// 更新访客列表
+	S2S_QUERY_GUEST_REQ = 21176;					// 查询访客信息请求
+	S2S_QUERY_GUEST_ACK = 21177;					// 查询访客信息回馈
+	S2S_UPDATE_GROUP_CAPTAIN_ACK = 21178;			// 更新队长
+	S2S_APPLY_MATCH_GROUP_ACK = 21179;				// 申请加入队伍
+	S2S_QUERY_TOAST_COUNT_REQ = 21180;				// 查询总的敬酒次数请求
+	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// 查询总的敬酒次数回馈
+	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// 更新队伍匹配模式
+	S2S_UPDATE_GROUP_MATCH_ACK = 21183;				// 更新队伍匹配模式
+	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// 新玩家登陆邮件服务
+	S2S_JOIN_RANK_LIST_REQ = 21186;					// 更新排行榜请求
+	S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187;			// 查询全服排行榜
+	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
+	S2S_QUERY_RANK_LIST_ACK	= 21189;				// 查询排行榜数据反馈
+ }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// S2S_TRANSMIT_MESSAGE_REQ
+message S2STransmitMessageReq
+{
+	required uint32 playerid = 1;
+	required uint32 msgid = 2;
+	required string msgdata = 3;
+}
+
+// S2S_BROADCAST_MESSAGE_REQ
+message S2SBroadcastMessageReq
+{
+	required uint32 msgid = 1;			// 消息id
+	required string msgdata = 2;		// 消息内容
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// S2S_UPDATE_ZONE_TO_PROXY_REQ
+message S2SUpdateZoneToProxyReq
+{
+	repeated uint32 zoneid = 1;
+}
+
+// S2S_TRANSMIT_TO_DATA_SHARD_REQ
+message S2STransmitToDataShardReq
+{
+	required uint32 zoneid = 1;
+	required uint32 msgid = 2;
+	required string msgdata = 3;
+}
+
+// S2S_SAVE_PLAYER_REQ
+message S2SSavePlayerReq
+{
+	required uint32 zoneid = 1;	
+	required uint32 id = 2;
+	required PBObject data = 3;
+}
+
+// S2S_DELETE_PLAYER_REQ
+message S2SDeletePlayerReq
+{
+	required uint32 zoneid = 1;
+	required uint32 id = 2;
+}
+
+// 更新公共数据
+// S2S_UPDATE_PUBLIC_DATA_REQ
+message S2SUpdatePublicDataReq
+{
+	required uint32 playerid = 1;		// 玩家id
+	repeated PBString pbdata = 4;		// 属性
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// S2S_KICK_GAME_PLAYER_REQ
+message S2SKickGamePlayerReq
+{
+	required uint32 playerid = 1;		// 角色id
+	required uint32 type = 2;
+}
+
+// S2S_KICK_PROXY_PLAYER_REQ
+message S2SKickProxyPlayerReq
+{
+	required uint32 playerid = 1;		// 角色id
+	required uint32 type = 2;
+
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 更新登录连接数量
+// S2S_LOGIN_PROXY_UPDATE_REQ
+message S2SLoginProxyUpdateReq
+{
+	required uint32 proxyid = 1;
+	required uint32 count = 2;
+	required string ip = 3;
+	required uint32 port = 4;
+}
+
+// 更新登录连接数量
+// S2S_LOGIN_PROXY_REMOVE_REQ
+message S2SLoginProxyRemoveReq
+{
+	required uint32 proxyid = 1;
+}
+
+// 更新游戏服务器角色数量
+// S2S_LOGIN_GAME_UPDATE_REQ
+message S2SLoginGameUpdateReq
+{
+	required uint32 gameid = 1;
+	required uint32 count = 2;
+}
+
+// 登录验证请求
+// S2S_LOGIN_LOGIN_VERIFY_REQ
+message S2SLoginLoginVerifyReq
+{
+	required uint32 accountid = 1;	// 账号id
+	required string token = 2;	// token
+	required string ip = 3;		// ip
+}
+
+// 登录验证请求
+// S2S_LOGIN_LOGIN_VERIFY_ACK
+message S2SLoginLoginVerifyAck
+{
+	required uint32 result = 1;	// 结果
+	required uint32 accountid = 2;	// 账号id
+	required uint32 playerid = 3;	// 角色id
+	required string token = 4;	// token
+	optional string ip = 5;
+	optional uint32 port = 6;
+}
+
+
+// 世界服务器验证
+// S2S_LOGIN_WORLD_VERIFY_REQ
+message S2SLoginWorldVerifyReq
+{
+	required uint32 accountid = 1;	// 账号id
+	required string token = 2;	// token
+	required uint32 gateid = 3;	// 服务器id
+	required uint32 playerid = 4;	// 角色id
+	
+}
+
+// 登录验证请求
+// S2S_LOGIN_WORLD_VERIFY_ACK
+message S2SLoginWorldVerifyAck
+{
+	required uint32 gateid = 1;	// 服务器id
+	required uint32 result = 2;	// 结果
+	required uint32 accountid = 3;	// 账号id
+	required uint32 playerid = 4;	// 角色id
+	required string token = 5;	// token
+	required string ip = 6;	// ip
+	required uint32 port = 7;	// port
+}
+
+// 通知登录节点Token信息
+// S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ
+message S2SLoginTellTokenToGameReq
+{
+	required uint32 playerid = 1;	// 角色id
+	required string token = 2;		// token
+	required uint32 proxyid = 3;	// 登录proxyid
+	required uint32 accountid = 4;	// 账号id
+	required uint32 loginid = 5;	// loginid
+	required uint32 gateid = 6;		// gateid
+}
+
+// 通知登录节点Token信息
+// S2S_LOGIN_TELL_TOKEN_TO_GAME_ACK
+message S2SLoginTellTokenToGameAck
+{
+	required uint32 playerid = 1;	// 角色id
+	required string token = 2;		// token
+	required uint32 accountid = 3;	// 账号id
+	required uint32 loginid = 4;	// loginid
+	required uint32 gateid = 5;		// gateid
+	required string ip = 6;			// ip
+	required uint32 port = 7;		// port
+}
+
+// 通知登录节点Token信息
+// S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ
+message S2SLoginTellTokenToProxyReq
+{
+	required uint32 playerid = 1;	// 角色id
+	required string token = 2;		// token
+	required uint32 accountid = 3;	// 账号id
+	required uint32 loginid = 4;	// loginid
+	required uint32 gateid = 5;		// gateid
+}
+
+// 通知登录节点Token信息
+// S2S_LOGIN_TELL_TOKEN_TO_WORLD_ACK
+message S2SLoginTellTokenToWorldAck
+{
+	required uint32 playerid = 1;	// 角色id
+	required string token = 2;		// token
+	required uint32 accountid = 3;	// 账号id
+	required uint32 loginid = 4;	// loginid
+	required uint32 gateid = 5;		// gateid
+	required string ip = 6;			// ip
+	required uint32 port = 7;		// port
+}
+
+// 查询角色id请求
+// S2S_LOGIN_QUERY_PLAYERID_REQ
+message S2SLoginQueryPlayerIdReq
+{
+	required uint32 loginserverid = 1;	// 登录服务器id
+	required uint32 gateid = 2;			// gateid
+	required uint32 accountid = 3;		// 账号id
+	required uint32 channel = 4;		// 渠道id
+	required string token = 5;			// token
+	required uint32 zoneid = 6;			// 游戏区id
+	required uint32 logiczoneid = 7;	// 逻辑游戏去id
+}
+
+// S2S_LOGIN_QUERY_PLAYERID_ACK
+message S2SLoginQueryPlayerIdAck
+{
+	required uint32 loginserverid = 1;	// 登录服务器id
+	required uint32 gateid = 2;		// gateid
+	required uint32 accountid = 3;		// 账号id
+	required uint32 playerid = 4;		// 角色id
+	required string token = 5;		// token
+}
+
+// 登录游戏服务器
+// S2S_LOGIN_GAME_REQ
+message S2SLoginGameReq
+{
+	required uint32 playerid = 1; 
+	required uint32 accountid = 2;
+	required string ip = 3;
+}
+
+// S2S_LOGIN_GAME_ACK
+message S2SLoginGameAck
+{
+	required uint32 result = 1;
+	required uint32 playerid = 2; 
+	required PBObject playerdata = 3;
+	required uint64 servertime = 4;
+}
+
+// 加载游戏数据
+// S2S_LOGIN_LOAD_PLAYER_REQ
+message S2SLoginLoadPlayerReq
+{
+	required uint32 gateid = 1;	
+	required uint32 zoneid = 2;
+	required uint32 playerid = 3; 	
+	required uint32 accountid = 4; 	
+}
+
+// S2S_LOGIN_LOAD_PLAYER_ACK
+message S2SLoginLoadPlayerAck
+{
+	required uint32 result = 1;
+	required uint32 playerid = 2; 
+	required uint32 gateid = 3;	
+	required PBObject playerdata = 4;
+	required PBStrings extenddata = 5;			
+}
+
+// S2S_LOGIN_CREATE_PLAYER_REQ
+message S2SLoginCreatePlayerReq
+{
+	required uint32 playerid = 1; 
+	required uint32 accountid = 2;
+	required uint32 channel = 3;
+}
+
+// S2S_LOGIN_OUT_REQ
+message S2SLoginOutReq
+{
+	required uint32 playerid = 1; 
+}
+
+// S2S_PLAYER_DISCONNECTION_REQ
+message S2SPlayerDisconnectionReq
+{
+	required uint32 playerid = 1; 
+}
+
+// S2S_SET_PLAYER_NAME_REQ
+message S2SSetPlayerNameReq
+{
+	required uint32 playerid = 1;
+	required string oldname = 2;
+	required string newname = 3;
+}
+
+// S2S_SET_PLAYER_NAME_ACK
+message S2SSetPlayerNameAck
+{
+	required uint32 playerid = 1;
+	required string oldname = 2;
+	required string newname = 3;
+	required uint32 result = 4;
+}
+
+// 创建角色
+// S2S_CREATE_ROLE_REQ
+message S2SCreateRoleReq
+{
+	required uint32 playerid = 1;
+	required string newname = 2;
+	required uint32 modleid = 3;
+}
+
+// 创建角色
+// S2S_CREATE_ROLE_ACK
+message S2SCreateRoleAck
+{
+	required uint32 playerid = 1;
+	required string newname = 2;
+	required uint32 modleid = 3;
+	required uint32 result = 4;	
+}
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// 查询角色id请求
+// S2S_PLAYER_ENTER_WORLD_REQ
+message S2SPlayerEnterWorldReq
+{
+	required uint32 playerid = 1;		// 角色id	
+	required uint32 accountid = 2;		// 账号id
+}
+
+// S2S_PLAYER_LEAVE_WORLD_REQ
+message S2SPlayerLeaveWorldReq
+{
+	required uint32 playerid = 1;		// 角色id
+	required uint32 accountid = 2;		// 账号id
+}
+
+// 同步在线玩家
+// S2S_GAME_SYNC_ONLINE_REQ
+message S2SGameSyncOnlineReq
+{
+	repeated uint32 playerid = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询邮件请求
+// S2S_QUERY_MAIL_REQ
+message S2SQueryMailReq
+{
+	required uint32 playerid = 1;		//  角色id
+	required uint32 mailtype = 2;		//  邮件类型
+	required uint64 maxmailid = 3;			// 最大的邮件id
+}
+
+// 邮件信息
+message PBMail
+{
+	repeated PBString data = 1;
+}
+
+message PBMails
+{
+	repeated PBMail mail = 1;	// 邮件信息
+}
+
+// 查询邮件请求
+// S2S_QUERY_MAIL_ACK
+message S2SQueryMailAck
+{
+	required uint32 playerid = 1;	//  角色id
+	required PBMails mails = 2;	// 邮件信息
+	required uint32 mailtype = 3;	// 邮件类型
+}
+
+// 删除邮件
+// S2S_DELETE_MAIL_REQ
+message S2SDeleteMailReq
+{
+	required uint32 playerid = 1;		// 角色id
+	required uint64 mailid = 2;			// 邮件id
+	required uint32 mailtype = 3;		// 邮件类型
+}
+
+// 添加邮件
+// S2S_ADD_MAIL_REQ
+message S2SAddMailReq
+{
+	required uint32 playerid = 1;		// 角色id
+	required uint32 mailtype = 3;		// 邮件类型
+	required PBMail pbmail = 5;			// 邮件信息
+}
+
+// 通知有新邮件
+// S2S_NOTICE_NEW_MAIL_REQ
+message S2SNoticeNewMailReq
+{
+	required uint32 playerid = 1;	// 角色id	
+	required uint32 mailtype = 2;	// 邮件类型	
+}
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+message PBFriend
+{
+	required uint32 playerid = 1;
+	repeated PBString playerdata = 2;
+	repeated PBString frienddata = 3;
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_REQ
+message S2SQueryFriendReq
+{
+	required uint32 playerid = 1;	// 玩家id
+	required uint32 serverid = 2;
+}
+
+// 查询好友申请信息
+// S2S_QUERY_FRIEND_INVITE_REQ
+message S2SQueryFriendInviteReq
+{
+	required uint32 playerid = 1;	// 玩家id
+	required uint32 serverid = 2;
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_ACK
+message S2SQueryFriendAck
+{
+	required uint32 playerid = 1;	// 玩家id
+	repeated PBFriend pbfriend = 2;	// 好友数据	
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_INVITE_ACK
+message S2SQueryFriendInviteAck
+{
+	required uint32 playerid = 1;	// 玩家id
+	repeated PBFriend pbfriend = 2;	// 好友数据	
+}
+
+// 添加好友请求
+// S2S_ADD_FRIEND_INVITE_REQ
+message S2SAddFriendInviteReq
+{
+	required uint32 selfplayerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+	required string message = 3;		// 留言	
+	required uint32 serverid = 4;
+	required string targetname = 5;		// 对方名字
+}
+
+// 添加好友申请
+// S2S_ADD_FRIEND_INVITE_ACK
+message S2SAddFriendInviteAck
+{
+	required uint32 playerid = 1;	// 玩家id
+	required PBFriend pbfriend = 2;	// 好友数据	
+}
+
+// 删除好友请求
+// S2S_DEL_FRIEND_REQ
+message S2SDelFriendReq
+{
+	required uint32 selfplayerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+}
+
+// 删除好友
+// S2S_DEL_FRIEND_ACK
+message S2SDelFriendAck
+{
+	required uint32 playerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+}
+
+// 删除好友请求
+// S2S_DEL_FRIEND_INVITE_REQ
+message S2SDelFriendInviteReq
+{
+	required uint32 selfplayerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+}
+
+// 添加好友
+// S2S_ADD_FRIEND_REQ
+message S2SAddFriendReq
+{
+	required uint32 selfplayerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+	required uint32 serverid = 3;
+	required string targetname = 4;		// 对方名字
+}
+
+// 添加好友
+// S2S_ADD_FRIEND_ACK
+message S2SAddFriendAck
+{
+	required uint32 playerid = 1;		// 玩家id
+	required PBFriend pbfriend = 2;		// 好友信息
+}
+
+// 更新好友属性
+// S2S_UPDATE_FRIEND_REQ
+message S2SUpdateFriendReq
+{
+	required uint32 friendid = 1;
+	repeated PBString pbdata = 2;
+}
+
+// 更新好友度
+// S2S_UPDATE_FRIEND_LINESS_REQ
+message S2SUpdateFriendLinessReq
+{
+	required uint32 selfplayerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+	required uint32 friendliness = 3;	// 好友度
+	required uint32 type = 4;		// 类型
+}
+
+// 查询基础数据
+// S2S_QUERY_BASIC_REQ
+message S2SQueryBasicReq
+{
+	required uint32 playerid = 1;
+	required string name = 2;
+}
+
+// 查询基础数据
+// S2S_QUERY_BASIC_ACK
+message S2SQueryBasicAck
+{
+	required uint32 playerid = 1;
+	required PBObject pbobject = 2;
+}
+
+// 查询属性
+// S2S_QUERY_PLAYER_REQ
+message S2SQueryPlayerReq
+{
+	required uint32 zoneid = 1;
+	required uint32 playerid = 2;
+	required uint32 queryid = 3;
+}
+
+// 查询属性
+// S2S_QUERY_PLAYER_ACK
+message S2SQueryPlayerAck
+{
+	required uint32 playerid = 1;
+	required PBObject pbobject = 2;
+}
+
+// 设置邮件状态请求
+// S2S_UPDATE_MAIL_FLAG_REQ
+message S2SUpdateMailFlagReq
+{
+	required uint32 playerid = 1;
+	required uint64 mailid = 2;
+	required uint32 mailtype = 3;
+	required uint32 flag = 4;
+}
+
+// 设置邮件状态响应
+// S2S_UPDATE_MAIL_FLAG_ACK
+message S2SUpdateMailFlagAck
+{
+	required uint32 playerid = 1;
+	required uint64 mailid = 2;
+	required uint32 mailtype = 3;
+	required uint32 flag = 4;
+}
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+// 玩家敬酒请求
+//S2S_PLAYER_TOAST_REQ
+message S2SPlayerToastReq
+{
+	required uint32 selfplayerid = 1;			// 敬酒人
+	required uint32 targetplayerid = 2;         // 被敬酒人
+	required uint32 dailygetlimit = 3;			// 每日被敬酒次数上限
+}
+
+//玩家敬酒回馈
+//S2S_PLAYER_TOAST_ACK
+message S2SPlayerToastAck
+{
+	required uint32 result = 1;					// 敬酒结果
+	required uint32 playerid = 2;				// 敬酒人
+	required uint32 targetplayerid = 3;			// 被敬酒人
+	required uint32 targetserverid = 4;			// 被敬酒人serverid
+}
+
+// 查询总的敬酒次数请求
+//S2S_QUERY_TOAST_COUNT_REQ
+message S2SQueryToastCountReq
+{
+	required uint32 selfplayerid = 1;
+	required uint32 targetplayerid = 2;
+}
+
+// 查询总的敬酒次数回馈
+//S2S_QUERY_TOAST_COUNT_ACK
+message S2SQueryToastCountAck
+{
+	required uint32 playerid = 1;
+	required uint32 targetplayerid = 2;
+	required uint32 toastcount = 3;
+}
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+// 更新好友度反馈
+// S2S_UPDATE_FRIENDLINESS_ACK
+message S2SUpdateFriendLinessAck
+{
+	required uint32 playerid = 1;	// 申请id
+	required uint32 targetplayerid = 2;	// 对方id
+	required uint32 friendliness = 3;	// 好友度
+}
+
+// 创建匹配小组
+// S2S_CREATE_MATCH_GROUP_REQ
+message S2SCreateMatchGroupReq
+{
+	required PBObject pbmember = 1;
+	required uint64 groupid = 2;
+	required uint32 maxcount = 3;
+	required uint32 matchid = 4;
+}
+
+// 更新队伍信息
+// S2S_UPDATE_GROUP_MATCH_REQ
+message S2SUpdateGroupMatchReq
+{
+	required uint64 groupid = 1;
+	required uint32 maxcount = 2;
+	required uint32 matchid = 3;
+	required uint32 playerid = 4;
+}
+
+// 更新队伍信息
+// S2S_UPDATE_GROUP_MATCH_ACK
+message S2SUpdateGroupMatchAck
+{
+	required uint32 maxcount = 1;
+	required uint32 matchid = 2;
+}
+
+// 创建匹配小组
+// S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ
+message S2SCreateMatchGroupToShardReq
+{
+	required PBObject pbmember = 1;
+	required uint64 groupid = 2;
+	required uint32 maxcount = 3;
+	required uint32 matchid = 4;
+}
+
+// 接收到组队请求
+// S2S_RECEIVE_INVITE_MATCH_GROUP_REQ
+message S2SReceiveInviteMatchGroupReq
+{
+	required uint32 playerid = 1;		 // 玩家id
+	required uint64 groupid = 2;		 // 队伍id
+	required PBObject inviter = 3;		 // 邀请者(BasicPlayer)
+	required string source = 4;			 // 从哪里发起邀请
+	required uint32 matchid = 5;		 // 匹配模式
+	required uint32 inviterplayerid = 6; // 邀请者id
+	required uint32 inviterserverid = 7; // 服务器id
+	required string playername = 8;		 // 被邀请玩家名字
+}
+
+// 同意玩家邀请请求
+// S2S_CONSENT_INVITE_MATCH_GROUP_REQ
+message S2SConsentInviteMatchGroupReq
+{
+	required uint64 groupid = 1;		// 队伍id
+	required uint32 playerid = 2;		// 玩家id
+	required uint32 serverid = 3;		// 服务器id
+	optional PBObject pbmember = 4;		// 队员信息
+}
+
+// 同意玩家邀请请求
+// S2S_ADD_MATCH_GROUP_MEMBER_REQ
+message S2SAddMatchGroupMemberReq
+{
+	required uint64 groupid = 1;		// 队伍id
+	required uint32 playerid = 2;		// 玩家id
+	required uint32 serverid = 3;		// 服务器id
+	optional PBObject pbmember = 4;		// 队员信息
+}
+
+// 添加匹配队员
+// S2S_ADD_MATCH_GROUP_MEMBER_ACK
+message S2SAddMatchGroupMemberAck
+{
+	repeated PBObject pbmember = 1;
+	optional uint64 groupid = 2;
+	optional uint32 iscaptain = 3;
+	optional uint32 maxcount = 4;
+	optional uint32 matchid = 5;
+	optional bool newadd = 6;
+}
+
+// 添加匹配队员
+// S2S_REMOVE_MATCH_GROUP_MEMBER_ACK
+message S2SRemoveMatchGroupMemberAck
+{
+	required uint32 memberid = 1;
+}
+
+// 离开队伍请求
+// S2S_LEAVE_MATCH_GROUP_REQ
+message S2SLeaveMatchGroupReq
+{
+	required uint64 groupid = 1;
+	required uint32 playerid = 2;	
+}
+
+// 踢出队员
+// S2S_KICK_MATCH_GROUP_REQ
+message S2SKickMatchGroupReq
+{
+	required uint64 groupid = 1;
+	required uint32 captainid = 2;	
+	required uint32 serverid = 3;
+	required uint32 memberid = 4;	
+}
+
+// 离开队伍
+// S2S_LEAVE_MATCH_GROUP_ACK
+message S2SLeaveMatchGroupAck
+{
+	required uint32 playerid = 1;	
+}
+
+// 申请加入队伍
+// S2S_APPLY_MATCH_GROUP_REQ
+message S2SApplyMatchGroupReq
+{
+	required uint64 groupid = 1;		// 队伍id
+	required uint32 playerid = 2;		// 玩家id
+	required uint32 serverid = 3;		// 服务器id
+	required PBObject pbmember = 4;		// 队员信息
+}
+
+// 申请加入队伍
+// S2S_APPLY_MATCH_GROUP_ACK
+message S2SApplyMatchGroupAck
+{
+	required uint32 playerid = 1;
+	required PBObject pbmember = 2;		// 队员信息
+	required uint32 serverid = 3;		// 服务器id
+}
+
+
+// 回复申请加入队伍
+// S2S_CONSENT_APPLY_MATCH_GROUP_ACK
+message S2SConsentApplyMatchGroupAck
+{
+	required uint64 groupid = 1;		// 队伍id
+	required uint32 playerid = 2;		// 申请人id
+	required uint32 captainid = 3;		// 队长id
+	required uint32 serverid = 4;		// 服务器id
+	required string playername = 5;		// 玩家名字
+}
+
+// 上线查询队伍信息
+// S2S_ONLINE_QUERY_MATCH_GROUP_REQ
+message S2SOnLineQueryMatchGroupReq
+{
+	required uint64 groupid = 1;	// 队伍id
+	required uint32 playerid = 2;	// 玩家id
+	required uint32 serverid = 3;	// 服务器id
+}
+
+// 离线更新队伍信息
+// S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ
+message S2SOffLineUpdateMatchGroupReq
+{
+	required uint64 groupid = 1;	// 队伍id
+	required uint32 playerid = 2;	// 玩家id
+}
+
+// 更新队员的基础信息
+// S2S_UPDATE_GROUP_MEMBER_REQ
+message S2SUpdateGroupMemberReq
+{
+	required uint64 groupid = 1;		// 队伍
+	required uint32 memberid = 2;		// 队员id
+	required string dataname = 3;		// 属性名称
+	required PBStrings pbstrings = 4;	// 更新数值
+}
+
+// 更新队员的基础信息
+// S2S_UPDATE_GROUP_MEMBER_ACK
+message S2SUpdateGroupMemberAck
+{
+	required uint32 memberid = 1;		// 队员id
+	required string dataname = 2;		// 属性名称
+	required PBStrings pbstrings = 3;	// 更新数值
+}
+
+// 变更为队长
+// S2S_UPDATE_GROUP_CAPTAIN_ACK
+message S2SUpdateGroupCaptainAck
+{
+	required uint32 iscaptain = 1;
+}
+
+
+// 更新访客列表
+// S2S_UPDATE_GUEST_LIST_REQ
+message S2SUpdateGuestListReq
+{
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 guestid = 2;		// 访客id
+	required uint64 guesttime = 3;		// 拜访时间戳
+}
+
+// 查询访客信息请求
+// S2S_QUERY_GUEST_REQ
+message S2SQueryGuestReq
+{
+	required uint32 playerid = 1;		// 发起请求的玩家id
+	required uint32 queryid = 2;		// 被查询的玩家id
+	required uint64 querytime = 3;		// 请求时间戳
+}
+
+// 查询访客信息回馈
+// S2S_QUERY_GUEST_ACK
+message S2SQueryGuestAck
+{
+	required uint32 playerid = 1;		// 发起请求的玩家id
+	required uint32 queryid = 2;		// 被查询的玩家id
+	required uint32 guestcount = 3;		// 本月访客数量
+	repeated PBGuestData guestdata = 4;	// 最近访客信息
+}
+
+// 新玩家登陆邮件服务
+// S2S_NEW_PLAYER_LOGIN_MAIL_REQ
+message S2SNewPlayerLoginMailReq
+{
+	required uint32 playerid = 1;		// 玩家id
+}
+
+
+message PBScoreData
+{
+	repeated PBUInt64 score = 1;		// 打榜分数
+}
+
+
+// 更新排行榜请求
+// S2S_JOIN_RANK_LIST_REQ
+message S2SJoinRankListReq
+{
+	required uint32 playerid = 1;		// 玩家id
+	required string scoretype = 2;		// 排行榜类型
+	required PBScoreData scores = 3;	// 打榜分数
+	required PBScoreData totalscores = 4;	// 打榜总分数
+}
+
+// 查询全服排行榜
+// S2S_QUERY_WHOLE_RANK_LIST_REQ
+message S2SQueryWholeRankListReq
+{
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 matchid = 2;		// 榜单id
+	required string ranktype = 3;		// 榜单类型
+	required uint32 begin = 4;		// 查询榜单开始位置(从0开始)
+	required uint32 end = 5;		// 查询榜单的结束位置
+
+}
+
+// 查询好友排行榜
+// S2S_QUERY_FRIEND_RANK_LIST_REQ
+message S2SQueryFriendRankListReq
+{
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 matchid = 2;		// 榜单id
+	required string ranktype = 3;		// 榜单类型
+	required PBPlayerIds playerids = 4;	// 待查询的玩家好友id
+
+}
+
+
+
+// 查询排行榜数据反馈
+//S2S_QUERY_RANK_LIST_ACK
+message S2SQueryRankListAck
+{
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 matchid = 2;		// 榜单id
+	required string ranktype = 3;		// 榜单类型
+	optional PBRankData rankdatas = 4;	// 榜单数据
+	optional bool isfriendrank = 5;		// 是否是好友榜单
+}

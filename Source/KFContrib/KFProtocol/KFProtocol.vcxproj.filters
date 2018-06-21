@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="KFClientMessage.pb.cc" />
+    <ClCompile Include="KFCommonMessage.pb.cc" />
+    <ClCompile Include="KFServerMessage.pb.cc" />
+    <ClCompile Include="KFBattleMessage.pb.cc" />
+    <ClCompile Include="KFMatchMessage.pb.cc" />
+    <ClCompile Include="KFDataMessage.pb.cc" />
+    <ClCompile Include="KFProtocol.cpp" />
+    <ClCompile Include="KFClusterMessage.pb.cc" />
+    <ClCompile Include="KFFrameMessage.pb.cc" />
+    <ClCompile Include="KFRouteMessage.pb.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFClientMessage.pb.h" />
+    <ClInclude Include="KFCommonMessage.pb.h" />
+    <ClInclude Include="KFProtocol.h" />
+    <ClInclude Include="KFServerMessage.pb.h" />
+    <ClInclude Include="KFBattleMessage.pb.h" />
+    <ClInclude Include="KFMatchMessage.pb.h" />
+    <ClInclude Include="KFDataMessage.pb.h" />
+    <ClInclude Include="KFClusterMessage.pb.h" />
+    <ClInclude Include="KFFrameMessage.pb.h" />
+    <ClInclude Include="KFRouteMessage.pb.h" />
+  </ItemGroup>
+</Project>

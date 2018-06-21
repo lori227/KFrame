@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{40c5010d-7987-468f-bf0d-cbf7f909d4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{36e6543d-156d-422b-993e-c1e8e7c218fb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFNetClient.cpp" />
+    <ClCompile Include="KFrameMessage.pb.cc" />
+    <ClCompile Include="KFClientConfig.cpp" />
+    <ClCompile Include="KFClientModule.cpp" />
+    <ClCompile Include="KFGameClient\dllmain.cpp" />
+    <ClCompile Include="KFGameClient\KFGameClientModule.cpp" />
+    <ClCompile Include="KFGameClient\KFGameClientPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFNetClient.h" />
+    <ClInclude Include="KFrameMessage.pb.h" />
+    <ClInclude Include="KFrameProtocol.h" />
+    <ClInclude Include="KFClientConfig.h" />
+    <ClInclude Include="KFClientModule.h" />
+    <ClInclude Include="KFGameClient\KFGameClientModule.h" />
+    <ClInclude Include="KFGameClient\KFGameClientPlugin.h" />
+  </ItemGroup>
+</Project>

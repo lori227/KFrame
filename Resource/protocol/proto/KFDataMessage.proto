@@ -1,0 +1,57 @@
+import "KFCommonMessage.proto";
+
+package KFMsg;
+
+enum DataProtocol
+ {
+	MSG_LOGIN_ENTER_GAME = 10;				// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 11;				// 同步更新属性
+	MSG_SYNC_ADD_DATA = 12;					// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 13;				// 同步删除属性
+	MSG_TELL_QUERY_PLAYER = 14;             // 查询玩家数据
+	MSG_TELL_QUERY_BASIC = 15;              // 查询基础数据
+ }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 通知进入游戏世界
+// MSG_LOGIN_ENTER_GAME
+message MsgEnterGame
+{
+	required PBObject playerdata = 1;
+	required uint64 servertime = 2;
+}
+
+// 所有的游戏属性同通过这3个消息来完成同步
+// MSG_SYNC_UPDATE_DATA
+message MsgSyncUpdateData
+{
+	required PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_ADD_DATA
+message MsgSyncAddData
+{
+	required PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_REMOVE_DATA
+message MsgSyncRemoveData
+{
+	required PBObject pbdata = 1;	
+}
+
+// 查询玩家信息
+// 如果key为0, 说明没有查询角色
+// MSG_TELL_QUERY_PLAYER
+message MsgTellQueryPlayer
+{
+	required PBObject player = 1;
+}
+
+// 玩家基础信息
+// MSG_TELL_QUERY_BASIC
+message MsgTellQueryBasic
+{
+	required PBObject player = 1;	
+}

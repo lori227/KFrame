@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!--File 启动器路径 -->
+<!--AutoStartup 是否自动启动服务 -->
+<!--LaunchRedisId Launch连接的redisid -->
+<!--FtpId Launch使用的ftpid -->
+
+
+<Setting File="KFStartupd.exe" PluginPath="./plugin/" SettingPath="./setting/" AutoStartup="1" LaunchRedisId="1" FtpId="1">
+
+	<Command RedisId="1"/>
+
+	<!--Id Ftp标识 -->
+	<!--Address Ftp地址 -->
+	<!--Port Ftp端口 -->
+	<!--User Ftp用户名 -->
+	<!--Password Ftp密码 -->
+	<!--FtpPath Ftp服务器相对路径 -->
+	<!--LocalPath 本地资源相对路径 -->
+	<Ftps>
+		<Ftp Id="1" Address="127.0.0.1" Port="21" User="ftp" Password="ftp@lori227-=" FtpPath="" LocalPath=""/>
+	</Ftps>
+
+	<!--HttpServer -->
+	<!--LocalIp 内网ip -->
+	<!--InteranetIp 外网ip -->
+	<!--Port 端口-->
+	<!--KeepAlive 是否保持连接-->
+	<!--MaxThread 最大线程数量-->
+	<!--MaxQueue 最大队列数量-->
+	<!--IdleTime 空闲时间-->
+	<HttpServer LocalIp="127.0.0.1" InteranetIp="127.0.0.1" Port="7777" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
+
+	<!--Id 启动的编号 -->
+	<!--Startup 1 启动   0 不启动 -->
+	<!--ShowWindow 1 显示窗口   0 后台运行 -->
+	<!--Pause 1 启动时候暂停挂起   0 不挂起 ( 仅Debug模式下有效 ) -->
+	<!--AppName 启动的进程名字 -->
+	<!--AppId 启动的进程id -->
+	<!--DebugShutTime Debug模式下关闭时间 0 表示立即关闭  其他表示延迟时间安全关闭 单位 : 秒-->
+	<!--ReleaseShutTime Release模式下关闭时间 0 表示立即关闭  其他表示延迟时间安全关闭 单位 : 秒-->
+	<!--Path 游戏配置文件路径-->
+	<!--Config 启动的startup配置文件-->
+	<Launch Id="1" Startup="1" ShowWindow="1" Pause="0" AppName="Auth" AppId="1" DebugShutTime="0" ReleaseShutTime="0" Path="../auth/" Config="setting/auth.startup" LoggerFile="setting/auth.log4cxx" LinuxPath="cd /home/test/KFrame/Source/_build/linux" LinuxRestar="./auth_run.sh debug"/>
+
+</Setting>
+

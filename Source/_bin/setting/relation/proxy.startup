@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="relation" AppType="proxy">
+	<Plugins>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/proxy.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/proxy.network"/>
+    		<Plguin Name="KFClusterProxy" Startup="1" Sort="80" Debug="KFClusterProxyd" Release="KFClusterProxy" Config="./setting/proxy.network"/>
+   		<Plguin Name="KFRelationProxy" Startup="1" Sort="90" Debug="KFRelationProxyd" Release="KFRelationProxy" Config=""/>
+	</Plugins>
+</Setting>

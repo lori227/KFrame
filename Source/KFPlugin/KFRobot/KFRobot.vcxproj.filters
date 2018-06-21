@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRobotModule.cpp" />
+    <ClCompile Include="KFRobotPlugin.cpp" />
+    <ClCompile Include="KFRobotConfig.cpp" />
+    <ClCompile Include="KFRobot.cpp" />
+    <ClCompile Include="KFFSM.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStateManage.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAuthState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFIdleState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLoginVerifyState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLoginGameState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRobotMessageModule.cpp" />
+    <ClCompile Include="KFCreateRoleState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFViewMailState.cpp">
+      <Filter>FSM\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryMailNumState.cpp">
+      <Filter>FSM\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryMailState.cpp">
+      <Filter>FSM\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDelMailState.cpp">
+      <Filter>FSM\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="KFEnterChatState.cpp">
+      <Filter>FSM\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="KFSendChatState.cpp">
+      <Filter>FSM\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLeaveChatState.cpp">
+      <Filter>FSM\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="KFBuyStoreState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGiveStoreState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAddFriendState.cpp">
+      <Filter>FSM\friend</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDelFriendState.cpp">
+      <Filter>FSM\friend</Filter>
+    </ClCompile>
+    <ClCompile Include="KFSetRefuseFirendState.cpp">
+      <Filter>FSM\friend</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryBasicState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeNameState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeSexState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFSendFriendChatState.cpp">
+      <Filter>FSM\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeIconState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeMottoState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeIconBoxState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeModelState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFChangeClothesState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDressClothesState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryGuestState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRecvActivityRewardState.cpp">
+      <Filter>FSM\reward</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRecvTaskRewardState.cpp">
+      <Filter>FSM\reward</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRecvAchieveRewardState.cpp">
+      <Filter>FSM\reward</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRecvGiftRewardState.cpp">
+      <Filter>FSM\reward</Filter>
+    </ClCompile>
+    <ClCompile Include="KFReciveMailRewardState.cpp">
+      <Filter>FSM\reward</Filter>
+    </ClCompile>
+    <ClCompile Include="KFToastState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFInviteTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAgreeInviteTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRefuseMinuInviteTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRefuseInviteTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLeaveTeamState .cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFApplyGroupState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAgreeApplyTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRefuseApplyTeamState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFKickGroupState.cpp">
+      <Filter>FSM\team</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRobotPolicMgr.cpp" />
+    <ClCompile Include="KFSingleMatchState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCancleMatchState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryPlayerState.cpp">
+      <Filter>FSM\player</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStoreVersionState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStoreInfoState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDoubleMatchGpState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDoubleMatchState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFPentaMatchGpState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFPentaMatchState.cpp">
+      <Filter>FSM\match</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAddMoneyState.cpp">
+      <Filter>FSM\GMCmd</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAddDiamondState.cpp">
+      <Filter>FSM\GMCmd</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAddWishOrderState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDelWishOrderState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFModifyWishOrderState.cpp">
+      <Filter>FSM\store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFPauseState.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryWholeRankState.cpp">
+      <Filter>FSM\rank</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryFriendRankState.cpp">
+      <Filter>FSM\rank</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFRobotInterface.h" />
+    <ClInclude Include="KFRobotModule.h" />
+    <ClInclude Include="KFRobotPlugin.h" />
+    <ClInclude Include="KFRobotConfig.h" />
+    <ClInclude Include="KFRobot.h" />
+    <ClInclude Include="KFFSM.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateManage.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAuthState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateDefine.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFIdleState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLoginVerifyState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLoginGameState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRobotMessageModule.h" />
+    <ClInclude Include="KFCreateRoleState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFViewMailState.h">
+      <Filter>FSM\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryMailNumState.h">
+      <Filter>FSM\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryMailState.h">
+      <Filter>FSM\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDelMailState.h">
+      <Filter>FSM\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="KFEnterChatState.h">
+      <Filter>FSM\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSendChatState.h">
+      <Filter>FSM\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLeaveChatState.h">
+      <Filter>FSM\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="KFBuyStoreState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFGiveStoreState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAddFriendState.h">
+      <Filter>FSM\friend</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDelFriendState.h">
+      <Filter>FSM\friend</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSetRefuseFirendState.h">
+      <Filter>FSM\friend</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryBasicState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeNameState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeSexState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSendFriendChatState.h">
+      <Filter>FSM\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeIconState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeMottoState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeIconBoxState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeModelState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFChangeClothesState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDressClothesState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryGuestState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecvActivityRewardState.h">
+      <Filter>FSM\reward</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecvTaskRewardState.h">
+      <Filter>FSM\reward</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecvAchieveRewardState.h">
+      <Filter>FSM\reward</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecvGiftRewardState.h">
+      <Filter>FSM\reward</Filter>
+    </ClInclude>
+    <ClInclude Include="KFReciveMailRewardState.h">
+      <Filter>FSM\reward</Filter>
+    </ClInclude>
+    <ClInclude Include="KFToastState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFInviteTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAgreeInviteTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRefuseMinuInviteTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRefuseInviteTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLeaveTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFApplyGroupState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAgreeApplyTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRefuseApplyTeamState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFKickGroupState.h">
+      <Filter>FSM\team</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRobotPolicMgr.h" />
+    <ClInclude Include="KFSingleMatchState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCancleMatchState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryPlayerState.h">
+      <Filter>FSM\player</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStoreVersionState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStoreInfoState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDoubleMatchGpState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDoubleMatchState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFPentaMatchGpState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFPentaMatchState.h">
+      <Filter>FSM\match</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAddMoneyState.h">
+      <Filter>FSM\GMCmd</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAddDiamondState.h">
+      <Filter>FSM\GMCmd</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAddWishOrderState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDelWishOrderState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFModifyWishOrderState.h">
+      <Filter>FSM\store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFPauseState.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryWholeRankState.h">
+      <Filter>FSM\rank</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryFriendRankState.h">
+      <Filter>FSM\rank</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FSM">
+      <UniqueIdentifier>{fea76f83-d0c9-4f31-8898-46e106f502e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\mail">
+      <UniqueIdentifier>{277052f3-dbf2-4fb2-93aa-ee921f01ca92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\chat">
+      <UniqueIdentifier>{d1a4d613-7aec-4786-a6a7-a13c3d25e1b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\store">
+      <UniqueIdentifier>{c70fff2f-771f-49dc-8823-ce4a5a33a55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\friend">
+      <UniqueIdentifier>{f75419d1-7f04-4fb8-a405-e195dbc20c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\player">
+      <UniqueIdentifier>{069558a1-3325-4452-9c90-3ce7cfa34979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\reward">
+      <UniqueIdentifier>{0147291d-1fcd-42bc-a57c-0f57f2420bbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\team">
+      <UniqueIdentifier>{c753220d-789b-49e4-a44a-4e880375722b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\match">
+      <UniqueIdentifier>{51d864a9-4556-40a5-a887-e5184e372c02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\GMCmd">
+      <UniqueIdentifier>{7a79cf77-34e6-4fdb-b320-0135ca44c3eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\rank">
+      <UniqueIdentifier>{ae89f025-88ac-4058-a305-18f5c1d08392}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

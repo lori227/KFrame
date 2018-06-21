@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{64de1a73-4b27-4dc0-89ec-f6bfdd71a93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ftp">
+      <UniqueIdentifier>{58db8e2f-5c7e-45bb-af73-ad1c25f5b2b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\KFLibrary\Ftp\BlockingSocket.cpp">
+      <Filter>Ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\KFLibrary\Ftp\FTPClient.cpp">
+      <Filter>Ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\KFLibrary\Ftp\FTPDataTypes.cpp">
+      <Filter>Ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\KFLibrary\Ftp\FTPFileStatus.cpp">
+      <Filter>Ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\KFLibrary\Ftp\FTPListParse.cpp">
+      <Filter>Ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="KFFtpConfig.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="KFFtpPlugin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="KFFtpThread.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="KFFtpModule.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\KFLibrary\Ftp\BlockingSocket.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\Definements.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\FTPClient.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\FTPDataTypes.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\FTPFileStatus.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\FTPListParse.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFLibrary\Ftp\smart_ptr.h">
+      <Filter>Ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFtpConfig.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFtpInterface.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFtpModule.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFtpPlugin.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFtpThread.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
