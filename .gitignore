@@ -61,8 +61,6 @@ Bin/zgame/world/
 *.so*
 Bin/zgame/launch/
 Bin/zgame/
-Bin/auth/
-Bin/platform/
 Bin/_output/
 Server/_build/linux/cmake_install.cmake
 Server/_build/linux/KFPlugin/
@@ -73,4 +71,3 @@ Server/_build/linux/CMakeCache.txt
 Server/_build/linux/KFStartup
 Server/_build/linux/compile_commands.json
 Server/_bin/linux/
-Resource/config/
