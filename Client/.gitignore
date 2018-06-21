@@ -1,0 +1,11 @@
+*.obj
+*.tlog
+*.lib
+*.pdb
+*.suo
+*.Plo
+*.Po
+*.log
+*.opendb
+*.db
+*.user
