@@ -1,6 +1,5 @@
 *.obj
 *.tlog
-*.lib
 *.pdb
 *.suo
 *.Plo
