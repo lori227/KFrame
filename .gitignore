@@ -53,3 +53,4 @@ Server/KFLibrary/poco/lib64/
 Server/KFLibrary/luaplus/projects/x64/
 Server/KFLibrary/libiconv/win64/MSVC14/libiconv_static/x64/
 Server/KFLibrary/google/protobuf/vsprojects/x64/
+Unity/obj/

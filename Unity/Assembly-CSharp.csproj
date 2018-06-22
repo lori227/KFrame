@@ -62,9 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\KFCommon\KFCrypto.cs" />
+    <Compile Include="Assets\Scripts\KFCommon\KFHttpClient.cs" />
     <Compile Include="Assets\Scripts\KFUI\UIDialog.cs" />
     <Compile Include="Assets\Scripts\KFUI\UILogin.cs" />
     <Compile Include="Assets\Scripts\KFUI\UIPanel.cs" />
+    <Compile Include="Assets\UnityPackages\JsonNetSample\JsonNetSample.cs" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>E:/GitHub/KFrame/Unity/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
@@ -274,6 +276,9 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/LIUXIAOBING/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>E:/GitHub/KFrame/Unity/Assets/UnityPackages/JsonNet/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
