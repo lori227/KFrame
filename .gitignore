@@ -44,3 +44,13 @@ Unity/Temp/
 Unity/Library/metadata/
 Unity/Library/ShaderCache/
 Unity/Library/
+Server/KFLibrary/log4cxx/apr-util/x64/
+Server/KFLibrary/libuv/Debug/
+Server/KFLibrary/libuv/Release/
+Server/KFLibrary/log4cxx/apr-util/xml/expat/lib/x64/
+Server/KFLibrary/libiconv/win64/MSVC14/x64/
+Server/KFLibrary/poco/lib64/
+Server/KFLibrary/luaplus/projects/x64/
+Server/KFLibrary/libiconv/win64/MSVC14/libiconv_static/x64/
+Server/KFLibrary/google/protobuf/vsprojects/x64/
+Unity/obj/
