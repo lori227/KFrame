@@ -31,6 +31,8 @@ public class KFAuth : KFSingleton<KFAuth>
         _acconnt_flag = uint.Parse(result["accountflag"].ToString());
         _token = result["token"].ToString();
 
+        KFServerList.Instance().ClearServer();
+
         // 保存服务器列表
         JArray jarray = result.GetValue("serverlist") as JArray;
         if (jarray != null)
@@ -50,6 +52,9 @@ public class KFAuth : KFSingleton<KFAuth>
                 KFServerList.Instance().AddServer(info);
             }
         }
+
+        // 显示服务器列表
+
     }
 
 }

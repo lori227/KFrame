@@ -68,9 +68,10 @@
     <Compile Include="Assets\Scripts\KFSource\KFOption.cs" />
     <Compile Include="Assets\Scripts\KFSource\KFServerList.cs" />
     <Compile Include="Assets\Scripts\KFSource\KFServices.cs" />
-    <Compile Include="Assets\Scripts\KFUI\UIDialog.cs" />
+    <Compile Include="Assets\Scripts\KFUI\UIBase\UIDialog.cs" />
+    <Compile Include="Assets\Scripts\KFUI\UIBase\UIManage.cs" />
+    <Compile Include="Assets\Scripts\KFUI\UIBase\UIPanel.cs" />
     <Compile Include="Assets\Scripts\KFUI\UILogin.cs" />
-    <Compile Include="Assets\Scripts\KFUI\UIPanel.cs" />
     <Compile Include="Assets\UnityPackages\JsonNetSample\JsonNetSample.cs" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>E:/GitHub/KFrame/Unity/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>

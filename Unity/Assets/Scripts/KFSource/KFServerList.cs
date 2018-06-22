@@ -27,10 +27,13 @@ public class ServerInfo
 
 public class KFServerList : KFSingleton<KFServerList>
 {
-    
-
     // 服务器列表
     private ArrayList _server_list = new ArrayList();
+
+    public void ClearServer()
+    {
+        _server_list.Clear();
+    }
 
     public void AddServer(ServerInfo info)
     {
