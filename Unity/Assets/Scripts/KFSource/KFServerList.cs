@@ -28,7 +28,7 @@ public class ServerInfo
 public class KFServerList : KFSingleton<KFServerList>
 {
     // 服务器列表
-    private ArrayList _server_list = new ArrayList();
+    public ArrayList _server_list = new ArrayList();
 
     public void ClearServer()
     {
