@@ -32,7 +32,8 @@ public class UILogin : UIDialog
         json.Add("channel", "1");
         json.Add("account", account);
 
-        var result = KFHttpClient.HttpRequest("http://139.196.33.35:7777/auth", json);
+        var authurl = KFOption.GetString("authurl");
+        var result = KFHttpClient.HttpRequest(authurl, json);
 
     }
 }
