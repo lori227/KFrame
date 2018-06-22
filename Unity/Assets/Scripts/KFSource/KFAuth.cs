@@ -54,7 +54,7 @@ public class KFAuth : KFSingleton<KFAuth>
         }
 
         // 显示服务器列表
-
+        UIManage.Instance().ShowUI<UIServerList>();
     }
 
 }
