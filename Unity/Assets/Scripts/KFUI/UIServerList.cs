@@ -28,20 +28,16 @@ public class UIServerList : UIDialog
         foreach (ServerInfo info in KFServerList.Instance()._server_list)
 		{
             var item = new Dropdown.OptionData();
-			item.text = info._name + "( " + info._id.ToString() + "区 )";
+			item.text = info._name;
 			_dropdown_server_list.options.Add( item );
 		}
 
         _dropdown_server_list.captionText.text = "请选择服务器";
 	}
 
-
 	private void OnConnectClick()
 	{
-		var text = _dropdown_server_list.options[_dropdown_server_list.value].text.ToString();
-		var index = text.IndexOf("(");
-		var servername = text.Substring(0,index);
-
+		var servername = _dropdown_server_list.options[_dropdown_server_list.value].text.ToString();
 		var info = KFServerList.Instance().FindServer( servername );
 		if ( info == null)
 		{
