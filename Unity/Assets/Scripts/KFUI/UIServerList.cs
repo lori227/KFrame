@@ -38,6 +38,16 @@ public class UIServerList : UIDialog
 
 	private void OnConnectClick()
 	{
+		var text = _dropdown_server_list.options[_dropdown_server_list.value].text.ToString();
+		var index = text.IndexOf("(");
+		var servername = text.Substring(0,index);
 
+		var info = KFServerList.Instance().FindServer( servername );
+		if ( info == null)
+		{
+			return;
+		}
+
+		//Debug.Log( info._id.ToString() );
 	}
 }
