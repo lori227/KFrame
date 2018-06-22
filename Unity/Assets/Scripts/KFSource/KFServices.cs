@@ -6,7 +6,7 @@ public class KFServices : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        KFOption.LoadConfig();
+        KFOption.Instance().LoadConfig();
 	}
 	
 	// Update is called once per frame

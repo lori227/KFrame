@@ -31,9 +31,6 @@ public class UILogin : UIDialog
         JObject json = new JObject();
         json.Add("channel", "1");
         json.Add("account", account);
-
-        var authurl = KFOption.GetString("authurl");
-        var result = KFHttpClient.HttpRequest(authurl, json);
-
+        KFAuth.Instance().AuthAccount(json);
     }
 }

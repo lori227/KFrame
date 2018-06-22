@@ -63,7 +63,10 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\KFCommon\KFCrypto.cs" />
     <Compile Include="Assets\Scripts\KFCommon\KFHttpClient.cs" />
+    <Compile Include="Assets\Scripts\KFCommon\KFSingleton.cs" />
+    <Compile Include="Assets\Scripts\KFSource\KFAuth.cs" />
     <Compile Include="Assets\Scripts\KFSource\KFOption.cs" />
+    <Compile Include="Assets\Scripts\KFSource\KFServerList.cs" />
     <Compile Include="Assets\Scripts\KFSource\KFServices.cs" />
     <Compile Include="Assets\Scripts\KFUI\UIDialog.cs" />
     <Compile Include="Assets\Scripts\KFUI\UILogin.cs" />

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 public class KFHttpClient
 {
-    public static string HttpRequest(string url, string data)
+    public static string Request(string url, string data)
     {
         HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
         CookieContainer cookieContainer = new CookieContainer();
@@ -41,11 +41,11 @@ public class KFHttpClient
         return content;
     }
 
-    public static JObject HttpRequest(string url, JObject json)
+    public static JObject Request(string url, JObject json)
     {
         // 转换成字串
         string data = json.ToString();
-        data = HttpRequest(url, data);
+        data = Request(url, data);
         var result = JObject.Parse(data);
         return result;
     }

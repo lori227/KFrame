@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
-public class KFOption
+public class KFOption : KFSingleton<KFOption>
 {
     public class Option
     {
@@ -17,10 +17,9 @@ public class KFOption
         }
     }
 
-    public static string _config = "Config/option.config";
-    public static Dictionary<string, Option> _options = new Dictionary<string, Option>();
+    public Dictionary<string, Option> _options = new Dictionary<string, Option>();
 
-    public static string GetString(string name, int key = 0)
+    public string GetString(string name, int key = 0)
     {
         Option option = null;
         if (_options.TryGetValue(name, out option))
@@ -31,12 +30,18 @@ public class KFOption
         return "";
     }
 
-    public static int GetInt(string name, int key = 0)
+    public int GetInt(string name, int key = 0)
     {
-        return int.Parse(GetString(name, key));
+        var value = GetString(name, key);
+        if (value == "")
+        {
+            return 0;
+        }
+
+        return int.Parse(value);
     }
 
-    public static bool LoadConfig()
+    public bool LoadConfig()
     {
         try
         {
