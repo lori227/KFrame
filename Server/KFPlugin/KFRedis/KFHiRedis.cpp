@@ -76,10 +76,10 @@ namespace KFrame
 		}
 		catch ( KFRedisException& )
 		{
-			return KFErrorEnum::PasswordError;
+			return 2;
 		}
 
-		return KFErrorEnum::Success;
+		return 1;
 	}
 
 	int32 KFHiRedis::ReConnect()
