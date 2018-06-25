@@ -140,7 +140,7 @@ namespace KFrame
 
 	void KFZoneData::SaveToJson( KFJson& kfjson )
 	{
-		std::map<std::string, std::string > values;
+		std::map< std::string, std::string > values;
 		SaveTo( values, false );
 		
 		kfjson.Parse( values );
@@ -177,7 +177,7 @@ namespace KFrame
 
 	KFAddress* KFZoneData::SelectAddress()
 	{
-		//随机选择一个ip地址
+		// 随机选择一个ip地址
 		auto addresscount = _address_list.size();
 		if ( addresscount == 0 )
 		{

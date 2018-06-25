@@ -15,10 +15,6 @@ namespace KFrame
 		}
 	}
 
-	void KFWorkerModule::InitModule()
-	{
-	}
-
 	void KFWorkerModule::Run()
 	{
 		for ( auto kfactor : _kf_actor )
@@ -90,6 +86,7 @@ namespace KFrame
 			do
 			{
 				--loopcount;
+
 				_actor_index = ( _actor_index + 1 ) % count;
 				auto kfactor = _kf_actor[ _actor_index ];
 				if ( !kfactor->IsBusy() )
