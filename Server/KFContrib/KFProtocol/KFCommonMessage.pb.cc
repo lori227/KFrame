@@ -92,6 +92,7 @@ const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* StoreWishEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* WishStateEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* RankListEnum_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor_ = NULL;
 
 }  // namespace
 
@@ -463,6 +464,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
   StoreWishEnum_descriptor_ = file->enum_type(9);
   WishStateEnum_descriptor_ = file->enum_type(10);
   RankListEnum_descriptor_ = file->enum_type(11);
+  ChannelEnum_descriptor_ = file->enum_type(12);
 }
 
 namespace {
@@ -731,7 +733,8 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "shStateEnum\022\014\n\010AllWatch\020\000\022\r\n\tNoneWatch\020\001"
     "\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatch\020\003*K\n\014Rank"
     "ListEnum\022\016\n\nSingleRank\020\001\022\016\n\nDoubleRank\020\002"
-    "\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004", 6509);
+    "\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004*\'\n\013Channel"
+    "Enum\022\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002", 6550);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -1138,6 +1141,20 @@ bool RankListEnum_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ChannelEnum_descriptor_;
+}
+bool ChannelEnum_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
       return true;
     default:
       return false;
