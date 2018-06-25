@@ -28,8 +28,8 @@ namespace KFrame
 	void KFChannelModule::BeforeRun()
 	{
 		/////////////////////////////////////////////////////////////////////////////////
-		RegisterChannel( new KFInternal( KFChannelEnum::Internal ) );
-		RegisterChannel( new KFWeiXin( KFChannelEnum::WeiXin ) );
+		RegisterChannel( new KFInternal( KFMsg::Internal ) );
+		RegisterChannel( new KFWeiXin( KFMsg::WeiXin ) );
 
 	}
 
