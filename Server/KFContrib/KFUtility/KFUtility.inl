@@ -25,17 +25,20 @@ namespace KFrame
 		case KFOperateEnum::And:
 			basevalue = ( basevalue & value );
 			break;
-		case KFOperateEnum::Or:
-			basevalue = ( basevalue | value );
-			break;
-		case KFOperateEnum::Xor:
-			basevalue = basevalue & ( ~value );
-			break;
 		case KFOperateEnum::ABit:
 			basevalue |= ( element << value );
 			break;
 		case KFOperateEnum::XBit:
 			basevalue &= ~( element << value );
+			break;
+		case KFOperateEnum::Mul:
+			basevalue = ( basevalue * value );
+			break;
+		case KFOperateEnum::Div:
+			if ( value != 0 )
+			{
+				basevalue = ( basevalue / value );
+			}
 			break;
 		case KFOperateEnum::Greater:
 			if ( basevalue < value )
