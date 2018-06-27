@@ -39,7 +39,7 @@ void DllPluginLeave( KFrame::KFPluginManage* pluginmanage )\
 
 namespace KFrame
 {
-	__MT_CLASS__( KFDebugCommand )
+	class KFDebugCommand
 	{
 	public:
 		std::string _command;

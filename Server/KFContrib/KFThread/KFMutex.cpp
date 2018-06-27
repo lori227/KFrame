@@ -24,5 +24,13 @@ namespace KFrame
 
 	//////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////
+	KFLocker::KFLocker( KFMutex& kfmutex ) : _kf_mutex( kfmutex )
+	{
+		_kf_mutex.Lock();
+	}
 
+	KFLocker::~KFLocker()
+	{
+		_kf_mutex.Unlock();
+	}
 }

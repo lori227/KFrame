@@ -22,7 +22,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFDataKeeper )
+	class KFDataKeeper
 	{
 	public:
 		KFDataKeeper()

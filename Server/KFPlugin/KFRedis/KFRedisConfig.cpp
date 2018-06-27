@@ -18,18 +18,18 @@ namespace KFrame
 		_redis_setting.Insert( kfsetting->_id, kfsetting );
 	}
 
-	const KFRedisSetting* KFRedisConfig::FindRedisSetting( uint32 id )
+	const KFRedisSetting* KFRedisConfig::FindRedisSetting( uint32 id ) const
 	{
 		return _redis_setting.Find( id );
 	}
 
-	const KFRedisSetting* KFRedisConfig::FindRedisSetting( const std::string& field, uint32 logicid )
+	const KFRedisSetting* KFRedisConfig::FindRedisSetting( const std::string& field, uint32 logicid ) const
 	{
 		auto redisid = FindLogicRedisId( field, logicid );
 		return FindRedisSetting( redisid );
 	}
 
-	uint32 KFRedisConfig::FindLogicRedisId( const std::string& filed, uint32 logicid )
+	uint32 KFRedisConfig::FindLogicRedisId( const std::string& filed, uint32 logicid ) const
 	{
 		auto key = LogicKey( filed, logicid );
 		auto iter = _logic_redis_map.find( key );

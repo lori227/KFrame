@@ -12,7 +12,7 @@ namespace KFrame
 {
 	using namespace Poco::Data;
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__MT_CLASS__( KFMySQLExecute ), public KFMySQL, public KFMySQLDriver
+	class KFMySQLExecute : public KFMySQL, public KFMySQLDriver
 	{
 	public:
 		KFMySQLExecute();

@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFChannelSetting )
+	class KFChannelSetting
 	{
 	public:
 		KFChannelSetting()

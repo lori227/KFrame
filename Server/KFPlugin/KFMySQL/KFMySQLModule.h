@@ -12,6 +12,7 @@
 #include "KFrame.h"
 #include "KFMySQLInterface.h"
 #include "KFMySQLExecute.h"
+#include "KFThread/KFMutex.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -43,9 +44,12 @@ namespace KFrame
 		void InsertMySQLExecute( uint32 id, KFMySQLExecute* kfexecute );
 
 	private:
+		// 互斥量
+		KFMutex _kf_mutex;
+
 		// 数据库列表
 		typedef std::pair< uint32, uint32 > MySQLKey;
-		KFMap< MySQLKey, const MySQLKey&, KFMySQLExecute, KFMutex > _mysql_execute_list;
+		KFMap< MySQLKey, const MySQLKey&, KFMySQLExecute > _mysql_execute_map;
 	};
 }
 

@@ -7,7 +7,7 @@
 namespace KFrame
 {
 	// 匹配阵营
-	__ST_CLASS__( KFMatchCamp )
+	class KFMatchCamp
 	{
 	public:
 		KFMatchCamp();

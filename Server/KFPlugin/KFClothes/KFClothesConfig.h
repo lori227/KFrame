@@ -15,7 +15,7 @@ namespace KFrame
 		~KFClothesConfig();
 
 		// 查找配置
-		const KFClothesSetting* FindClothesSetting( uint32 id );
+		const KFClothesSetting* FindClothesSetting( uint32 id ) const;
 
 		// 读取配置
 		bool LoadConfig( const char* file );

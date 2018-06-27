@@ -10,7 +10,7 @@
 
 namespace KFrame
 {
-	__MT_CLASS__( KFRedisExecute ), public KFRedisDriver
+	class KFRedisExecute : public KFRedisDriver
 	{
 	public:
 		/////////////////////////////////////////////////////////////////////////////////////////////

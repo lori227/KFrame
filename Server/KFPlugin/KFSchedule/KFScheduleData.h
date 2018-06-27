@@ -7,7 +7,7 @@
 namespace KFrame
 {
 	class KFScheduleTime;
-	__ST_CLASS__( KFScheduleData )
+	class KFScheduleData
 	{
 	public:
 		KFScheduleData();

@@ -15,7 +15,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFConfigData )
+	class KFConfigData
 	{
 	public:
 		KFConfigData()

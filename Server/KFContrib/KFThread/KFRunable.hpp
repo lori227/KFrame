@@ -8,7 +8,7 @@
 namespace KFrame
 {
 	///////////////////////////////////////////////////////////////////////////////////////////
-	__MT_CLASS__( KFRunable ), public Poco::Runnable
+	class KFRunable : public Poco::Runnable
 	{
 	public:
 		// 开启线程

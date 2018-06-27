@@ -1,4 +1,5 @@
 ﻿#include "KFBuffer.h"
+#include "KFThread/KFMutex.h"
 #include "KFThread/KFThread.h"
 
 namespace KFrame
@@ -6,10 +7,12 @@ namespace KFrame
 	/////////////////////////////////////////////////////////////
 	KFThreadBuffer::KFThreadBuffer()
 	{
+		_kf_mutex = new KFMutex();
 	}
 
 	KFThreadBuffer::~KFThreadBuffer()
 	{
+		delete _kf_mutex;
 	}
 
 	int8* KFThreadBuffer::GetInt8( uint32 length, const char* function, uint32 line )
@@ -17,7 +20,12 @@ namespace KFrame
 		auto threadid = KFThread::GetThreadID();
 		BuffKey key( threadid, length );
 		
-		auto kfbuffer = _kf_int8.Create( key );
+		KFBuffer< int8 >* kfbuffer = nullptr;
+		{
+			KFLocker locker( *_kf_mutex );
+			kfbuffer = _kf_int8.Create( key );
+		}
+
 		if ( kfbuffer->_buffer == nullptr )
 		{
 			kfbuffer->_length = length;
@@ -35,7 +43,12 @@ namespace KFrame
 		auto threadid = KFThread::GetThreadID();
 		BuffKey key( threadid, length );
 
-		auto kfbuffer = _kf_uint8.Create( key );
+		KFBuffer< uint8 >* kfbuffer = nullptr;
+		{
+			KFLocker locker( *_kf_mutex );
+			kfbuffer = _kf_uint8.Create( key );
+		}
+
 		if ( kfbuffer->_buffer == nullptr )
 		{
 			kfbuffer->_length = length;

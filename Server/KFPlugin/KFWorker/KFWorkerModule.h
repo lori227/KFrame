@@ -25,6 +25,7 @@ namespace KFrame
 		KFWorkerModule();
 		~KFWorkerModule();
 		
+		virtual void InitModule();
 		virtual void BeforeRun();
 		virtual void BeforeShut();
 		////////////////////////////////////////////////////////////////////////////////

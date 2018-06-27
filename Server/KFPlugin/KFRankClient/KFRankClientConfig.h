@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFRankSetting )
+	class KFRankSetting
 	{
 	public:
 		KFRankSetting()
@@ -32,7 +32,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找排行榜设定
-		const KFRankSetting* FindRankSetting( uint32 matchid );
+		const KFRankSetting* FindRankSetting( uint32 matchid ) const;
 	public:
 		// 匹配配置列表
 		KFMap< uint32, uint32, KFRankSetting > _kf_rank_setting;

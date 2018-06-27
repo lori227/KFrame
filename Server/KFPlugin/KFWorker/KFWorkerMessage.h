@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	__MT_CLASS__( KFWorkerMessage )
+	class KFWorkerMessage
 	{
 	public:
 		KFWorkerMessage( );

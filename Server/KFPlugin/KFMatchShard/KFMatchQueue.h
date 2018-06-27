@@ -7,7 +7,7 @@
 namespace KFrame
 {
 	class KFMatchShardModule;
-	__ST_CLASS__( KFMatchQueue )
+	class KFMatchQueue
 	{
 	public:
 		KFMatchQueue();

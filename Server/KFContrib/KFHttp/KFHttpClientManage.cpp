@@ -13,7 +13,7 @@ namespace KFrame
 	KFHttpClientManage::~KFHttpClientManage()
 	{
 		{
-			KFLocker< KFMutex > lock( _finish_mutex );
+			KFLocker lock( _finish_mutex );
 			for ( auto httpdata : _finish_http_data )
 			{
 				__KF_DESTROY__( KFHttpData, httpdata );
@@ -67,7 +67,7 @@ namespace KFrame
 	
 	void KFHttpClientManage::AddFinishHttp( KFHttpData* httpdata )
 	{
-		KFLocker< KFMutex > lock( _finish_mutex );
+		KFLocker lock( _finish_mutex );
 		_finish_http_data.push_back( httpdata );
 	}
 		
@@ -84,7 +84,7 @@ namespace KFrame
 	{
 		HttpDataList temphttpdata;
 		{
-			KFLocker< KFMutex > lock( _finish_mutex );
+			KFLocker lock( _finish_mutex );
 			if ( _finish_http_data.empty() )
 			{
 				return;

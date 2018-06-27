@@ -15,6 +15,7 @@ namespace KFrame
 
 	void KFRedisManage::ShutDown()
 	{
+		KFLocker lock( _mt_mutex );
 		{
 			for ( auto& iter : _redis_execute._objects )
 			{
@@ -33,7 +34,7 @@ namespace KFrame
 
 		kfredisexecute = __KF_CREATE_BATCH__( KFRedisExecute, 5 );
 		auto result = kfredisexecute->Initialize( ip.c_str(), port, password.c_str() );
-		if ( result != KFCommonEnum::OK )
+		if ( result != KFErrorEnum::Success )
 		{
 			// KFLogger::LogInit( KFLogger::Error, "redis connect[ id=%u ip=%s:%u ] failed!", id, ip.c_str(), port );
 		}
@@ -73,6 +74,7 @@ namespace KFrame
 		auto threadid = KFThread::GetThreadID();
 		auto key = RedisKey( threadid, id );
 
+		KFLocker lock( _mt_mutex );
 		return _redis_execute.Find( key );
 	}
 
@@ -80,6 +82,8 @@ namespace KFrame
 	{
 		auto threadid = KFThread::GetThreadID();
 		auto key = RedisKey( threadid, id );
+
+		KFLocker lock( _mt_mutex );
 		_redis_execute.Insert( key, kfredisexecute );
 	}
 }

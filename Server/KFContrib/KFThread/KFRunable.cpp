@@ -12,6 +12,7 @@ namespace KFrame
 		_thread.start( *this );
 	}
 
+
 	void KFRunable::run()
 	{
 		_function();

@@ -12,7 +12,7 @@ namespace KFrame
 		
 	}
 
-	const KFFtpSetting* KFFtpConfig::FindFtpSetting( uint32 id )
+	const KFFtpSetting* KFFtpConfig::FindFtpSetting( uint32 id ) const
 	{
 		return _kf_ftp_setting.Find( id );
 	}

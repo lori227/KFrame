@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFMatchSetting )
+	class KFMatchSetting
 	{
 	public:
 		KFMatchSetting()
@@ -59,7 +59,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找匹配设置
-		const KFMatchSetting* FindMatchSetting( uint32 matchid );
+		const KFMatchSetting* FindMatchSetting( uint32 matchid ) const;
 
 	public:
 		// 匹配配置列表

@@ -234,7 +234,7 @@ namespace KFrame
 
 	void KFZoneManage::GetZoneJson( KFJson& kfjson )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 
 		for ( auto iter : _kf_zone_data._objects )
 		{
@@ -248,7 +248,7 @@ namespace KFrame
 
 	void KFZoneManage::RandZoneJson( uint32 zoneid, std::string& ip, uint32& port )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 
 		auto kfzonedata = _kf_zone_data.Find( zoneid );
 		if ( kfzonedata == nullptr )
@@ -268,7 +268,7 @@ namespace KFrame
 	
 	std::string KFZoneManage::GetZoneUrl( uint32 zoneid )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 
 		auto kfzonedata = _kf_zone_data.Find( zoneid );
 		if ( kfzonedata == nullptr )
@@ -288,7 +288,7 @@ namespace KFrame
 		auto address = kfjson.GetString( KFField::_address );
 		auto port = kfjson.GetUInt32( KFField::_port );
 		
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 		auto zonedata = _kf_zone_data.Create( zoneid );
 		
 		bool update = false;
@@ -325,7 +325,7 @@ namespace KFrame
 
 	void KFZoneManage::RemoveZoneData( uint32 id )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 
 		_kf_zone_data.Remove( id );
 		RemoveZoneDataToDatabase( id );
@@ -333,7 +333,7 @@ namespace KFrame
 
 	void KFZoneManage::RemoveZoneAddress( uint32 zoneid, uint32 appid )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 		auto zonedata = FindZoneData( zoneid );
 		if ( zonedata == nullptr )
 		{
@@ -346,7 +346,7 @@ namespace KFrame
 
 	void KFZoneManage::UpdateZoneStatus( uint32 id, uint32 status, const std::string& describe )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 		auto zonedata = FindZoneData( id );
 		if ( zonedata == nullptr )
 		{
@@ -360,7 +360,7 @@ namespace KFrame
 
 	void KFZoneManage::QueryZoneStatus( uint32 id, uint32& status, std::string& describe )
 	{
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 
 		auto zonedata = FindZoneData( id );
 		if ( zonedata == nullptr )
@@ -375,7 +375,7 @@ namespace KFrame
 	void KFZoneManage::UpdateZoneHttp( uint32 zoneid, const std::string& url )
 	{
 		{
-			KFLocker< KFMutex > kflock( _kf_mutex );
+			KFLocker kflock( _kf_mutex );
 			auto zonedata = _kf_zone_data.Create( zoneid );
 			zonedata->_id = zoneid;
 			zonedata->_zone_http = url;
@@ -436,7 +436,7 @@ namespace KFrame
 		// 设置新版本
 		_zone_list_version = newzonelistversion;
 
-		KFLocker< KFMutex > kflock( _kf_mutex );
+		KFLocker kflock( _kf_mutex );
 		for ( auto& strzoneid : queryvalue )
 		{
 			auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );

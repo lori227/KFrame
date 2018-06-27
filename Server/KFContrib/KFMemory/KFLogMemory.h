@@ -1,5 +1,5 @@
-﻿#ifndef __KF_MEMROY_LOGGER_H__
-#define __KF_MEMROY_LOGGER_H__
+﻿#ifndef __MEMROY_LOGGER_H__
+#define __MEMROY_LOGGER_H__
 
 #include "KFDefine.h"
 
@@ -39,79 +39,34 @@ namespace KFrame
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	template< class Mutex >
 	class KFLogMemory
 	{
 	public:
-		KFLogMemory()
-		{
-			_open = true;
-		}
-
-		~KFLogMemory()
-		{
-			KFLocker< Mutex > locker( *_kf_mutex );
-			for ( auto iter : _log_block._log_data )
-			{
-				delete iter.second;
-			}
-
-			_log_block._log_data.clear();;
-		}
+		KFLogMemory();
+		~KFLogMemory();
 
 		// 日志开关
-		void SetOpen( bool open )
-		{
-			_open = open;
-		}
+		void SetOpen( bool open );
+		bool IsOpen() const;
 
-		bool IsOpen() const
-		{
-			return _open;
-		}
-
-		LogBlock GetLogBlock()
-		{
-			return _log_block;
-		}
-
-		const LogBlock& RefLogBlock()
-		{
-			return _log_block;
-		}
-
-		void AddMemory( const std::string& type, uint64 size, uint64 totalsize )
-		{
-			if ( !_open )
-			{
-				return;
-			}
-
-			KFLocker< Mutex > locker( *_kf_mutex );
-			_log_block.AddBlock( type, size, totalsize );
-		}
-
-		void DecMemory( const std::string& type, uint64 size )
-		{
-			if ( !_open )
-			{
-				return;
-			}
-
-			KFLocker< Mutex > locker( *_kf_mutex );
-			_log_block.DecBlock( type, size );
-		}
+		LogBlock GetMTMemory();
+		void AddMTMemory( const std::string& type, uint64 size, uint64 totalsize );
+		void DecMTMemory( const std::string& type, uint64 size );
 		/////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////
+		LogBlock& GetSTMemory();
+		void AddSTMemory( const std::string& type, uint64 size, uint64 totalsize );
+		void DecSTMemory( const std::string& type, uint64 size );
 	
 	private:
 		// 日志开关
 		bool _open;
 
-		// 互斥量
-		Mutex* _kf_mutex;
-		
-		// 内存记录
-		LogBlock _log_block;
+		// 多线程数据
+		LogBlock _mt_log_block;
+
+		// 单线程
+		LogBlock _st_log_block;
 	};
 }
 

@@ -15,7 +15,7 @@ namespace KFrame
 		~KFItemConfig();
 
 		// 获得成就配置
-		const KFItemSetting* FindItemSetting( uint32 itemid );
+		const KFItemSetting* FindItemSetting( uint32 itemid ) const;
 
 		// 读取配置
 		bool LoadConfig( const char* file );

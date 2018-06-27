@@ -7,7 +7,7 @@ namespace KFrame
 {
 	class KFNetServerEngine;
 	class KFNetServerServices;
-	__ST_CLASS__( KFNetHandle ), public KFNetConnector
+	class KFNetHandle : public KFNetConnector
 	{
 	public:
 		KFNetHandle();

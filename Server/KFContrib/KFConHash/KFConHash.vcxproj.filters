@@ -4,10 +4,12 @@
     <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFHashData.cpp" />
     <ClCompile Include="KFHashFunction.cpp" />
+    <ClCompile Include="KFHashLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFHashData.hpp" />
     <ClInclude Include="KFHashFunction.hpp" />
+    <ClInclude Include="KFHashLogic.hpp" />
   </ItemGroup>
 </Project>

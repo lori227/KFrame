@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFLoginGame )
+	class KFLoginGame
 	{
 	public:
 		KFLoginGame()

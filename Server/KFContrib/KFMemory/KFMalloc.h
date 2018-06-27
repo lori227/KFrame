@@ -1,32 +1,36 @@
 ﻿#ifndef __KF_MALLOC_H__
 #define __KF_MALLOC_H__
 
-#include "KFMemory.h"
+#include "KFInclude.h"
+#include "KFMemory/KFMemory.h"
+#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
-#define __KF_NEW__( name, ... )\
-	 KFMalloc::Instance()->New< name >( __FUNCTION_LINE__, ##__VA_ARGS__ )
-#define __KF_DELETE__( object )\
-	 KFMalloc::Instance()->Delete( object, __FUNCTION_LINE__ )
+#define __KF_NEW__( name, ... ) KFMalloc::Instance()->New< name >( __FUNCTION_LINE__, ##__VA_ARGS__ )
+#define __KF_DELETE__( object ) KFMalloc::Instance()->Delete( object, __FUNCTION_LINE__ )
 
 #define __KF_INT8__( length )\
 	KFMalloc::Instance()->GetInt8( length, __FUNCTION_LINE__ )
+
 #define __KF_UINT8__( length )\
 	KFMalloc::Instance()->GetUInt8( length, __FUNCTION_LINE__ )
-	
-	// 多线程内存池
-#define __KF_MALLOC_BATCH__(name, size, batch)\
-	 KFMalloc::Instance()->Malloc< name >( size, batch, __FUNCTION_LINE__ );
-#define __KF_MALLOC__(name, size)\
-	 KFMalloc::Instance()->Malloc< name >( size, 30, __FUNCTION_LINE__ );
-#define __KF_FREE__(name, memory, size)\
-	 KFMalloc::Instance()->Free< name >( memory, size, __FUNCTION_LINE__ );
+
+	// 对象池
+#define __KF_CREATE__(name) KFMalloc::Instance()->Create< name >( __FUNCTION_LINE__ )
+#define __KF_CREATE_BATCH__(name, batch) KFMalloc::Instance()->Create< name, batch >( __FUNCTION_LINE__ )
+#define __KF_CREATE_PARAM1__(name, batch, param) KFMalloc::Instance()->Create< name, batch >( param, __FUNCTION_LINE__ )
+#define __KF_CREATE_PARAM2__(name, batch, param1, param2) KFMalloc::Instance()->Create< name, batch >( param1, param2, __FUNCTION_LINE__ )
+#define __KF_DESTROY__(name, object) KFMalloc::Instance()->Destroy< name >( object, __FUNCTION_LINE__ )
+
+	// 内存池
+#define __KF_MALLOC_BATCH__(name, size, batch) KFMalloc::Instance()->Malloc< name >( size, batch, __FUNCTION_LINE__ );
+#define __KF_MALLOC__(name, size) __KF_MALLOC_BATCH__( name, size, 30 );
+#define __KF_FREE__(name, memory, size) KFMalloc::Instance()->Free< name >( memory, size, __FUNCTION_LINE__ );
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	class KFThreadBuffer;
-	class KFMutex;
 	class KFMalloc
 	{
 	public:
@@ -67,48 +71,43 @@ namespace KFrame
 
 		///////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////
-		template< class T, class ... P>
-		inline T* MTCreate( const char* function, uint32 line, uint32 batch, P&&...params )
-		{
-			void* memory = _mt_memory->Create( typeid( T ).name(), sizeof( T ), batch, function, line );
-			return new( memory ) T( std::forward<P>( params )... );
-		}
 
-		template< class T, class ... P>
-		inline T* STCreate( const char* function, uint32 line, uint32 batch, P&&...params )
+		template< class T, uint32 batch = 30 >
+		inline T* Create( const char* function, uint32 line )
 		{
-			void* memory = _st_memory->Create( typeid( T ).name(), sizeof( T ), batch, function, line );
-			return new( memory ) T( std::forward<P>( params )... );
+			auto memory = _kf_memory->Create( typeid(T).name(), sizeof( T ), batch, function, line );
+			return new(memory) T();
 		}
-
+		///////////////////////////////////////////////////////////////////////////////////
+		template< class T, uint32 batch = 30 >
+		inline T* Create( uint32 param, const char* function, uint32 line )
+		{
+			auto memory = _kf_memory->Create( typeid(T).name(), sizeof( T ), batch, function, line );
+			return new(memory) T( param );
+		}
+		///////////////////////////////////////////////////////////////////////////////////
+		template< class T, uint32 batch = 30 >
+		inline T* Create( uint32 param1, uint32 param2, const char* function, uint32 line )
+		{
+			auto memory = _kf_memory->Create( typeid(T).name(), sizeof( T ), batch, function, line );
+			return new(memory) T( param1, param2 );
+		}
+		///////////////////////////////////////////////////////////////////////////////////
 		template< class T >
-		inline void MTDestroy( T* object, const char* function, uint32 line )
+		inline void Destroy( T* object, const char* function, uint32 line )
 		{
 			if ( object == nullptr )
 			{
 				return;
 			}
-
 			object->~T();
-			_mt_memory->Delete( object, function, line );
-		}
-
-		template< class T >
-		inline void STDestroy( T* object, const char* function, uint32 line )
-		{
-			if ( object == nullptr )
-			{
-				return;
-			}
-
-			object->~T();
-			_st_memory->Delete( object, function, line );
+			_kf_memory->Delete( object, function, line );
 		}
 		///////////////////////////////////////////////////////////////////////////////////
 		template< class T >
 		inline T* Malloc( uint32 size, uint32 batch, const char* function, uint32 line )
 		{
-			return reinterpret_cast< T* >( MallocMemory( size, batch, function, line ) );
+			return reinterpret_cast<T*>(MallocMemory( size, batch, function, line ));
 		}
 
 		template< class T >
@@ -116,11 +115,13 @@ namespace KFrame
 		{
 			FreeMemory( memory, size, function, line );
 		}
+
 		///////////////////////////////////////////////////////////////////////////////////
 		// 获得buff
 		int8* GetInt8( uint32 length, const char* function, uint32 line );
 		uint8* GetUInt8( uint32 length, const char* function, uint32 line );
 		///////////////////////////////////////////////////////////////////////////////////
+
 		// 打印内存信息
 		void PrintLogMemory();
 
@@ -138,19 +139,13 @@ namespace KFrame
 		// 计算最小的2的整数倍
 		uint32 CalcNearest2NSize( uint32 size );
 
-		// 打印内存
-		void PrintLogMemory( const char* type, uint32 count, uint64 usesize, uint64 totalsize );
-
 	private:
-		// 单线程内存
-		KFMemory< KFNullMutex >* _st_memory;
-		
-		// 多线程内存
-		KFMemory< KFMutex >* _mt_memory;
-		
-		KFMutex* _kf_mutex;
-		std::set< void* > _mt_new_memory;
+		// 内存分配器
+		KFMemory* _kf_memory;
 
+		// 直接new出来的内存
+		std::set< void* > _new_memory;
+		
 		// 线程内存
 		KFThreadBuffer * _kf_buffer;
 	};

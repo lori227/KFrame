@@ -13,7 +13,7 @@ namespace KFrame
 		
 	}
 	
-	const KFMatchSetting* KFMatchClientConfig::FindMatchSetting( uint32 matchid )
+	const KFMatchSetting* KFMatchClientConfig::FindMatchSetting( uint32 matchid ) const
 	{
 		return _kf_match_setting.Find( matchid );
 	}

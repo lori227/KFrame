@@ -42,7 +42,7 @@ namespace KFrame
 		return true;
 	}
 
-	const KFChatSetting * KFChatConfig::FindChatSetting( uint32 chattype )
+	const KFChatSetting * KFChatConfig::FindChatSetting( uint32 chattype ) const
 	{
 		return _kf_chat_setting.Find( chattype );
 	}

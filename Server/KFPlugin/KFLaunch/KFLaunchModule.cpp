@@ -89,7 +89,7 @@ namespace KFrame
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////////////	
 #define __LAUNCH_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_login );
-
+	
 	void KFLaunchModule::RunLaunch()
 	{
 		if ( !_launch_timer.DoneTimer( KFGlobal::Instance()->_game_time, true ) )
@@ -251,8 +251,8 @@ namespace KFrame
 		startupinfo.wShowWindow = SW_SHOW;
 		startupinfo.dwFlags = STARTF_USESHOWWINDOW;
 
-		std::string param = KFUtility::Format( " %u %s %u %s %s", kfsetting->_pause,
-			kfsetting->_app_name.c_str(), kfsetting->_app_id,
+		std::string param = KFUtility::Format( " %u %s %u %s %s", kfsetting->_pause, 
+			kfsetting->_app_name.c_str(), kfsetting->_app_id, 
 			kfsetting->_logger_file.c_str(), kfsetting->_startup_config.c_str() );
 
 		//CREATE_NEW_CONSOLE
@@ -265,7 +265,7 @@ namespace KFrame
 		auto startupfile = kfsetting->_app_path + _kf_launch_config->_startup_file;
 
 		PROCESS_INFORMATION processinfo;
-		BOOL result = CreateProcess( startupfile.c_str(), const_cast< char* >( param.c_str() ),
+		BOOL result = CreateProcess( startupfile.c_str(), const_cast<char*>(param.c_str()),
 			NULL, NULL, FALSE, createflag, NULL, kfsetting->_app_path.c_str(), &startupinfo, &processinfo );
 
 		kfsetting->_process_id = processinfo.dwProcessId;
@@ -339,7 +339,7 @@ namespace KFrame
 		{
 			return;
 		}
-
+		
 		char shellstr[ 128 ] = { 0 };
 		sprintf( shellstr, "ps -e | grep -c %d", kfsetting->_process_id );
 		FILE *fp = popen( shellstr, "r" );
@@ -365,7 +365,7 @@ namespace KFrame
 
 	bool KFLaunchModule::StartLinuxProcess( KFLaunchSetting * kfsetting )
 	{
-		CheckLinuxProcess( kfsetting );
+		CheckLinuxProcess(kfsetting);
 
 		if ( kfsetting->_stop || kfsetting->_process_id != 0 )
 		{
@@ -453,17 +453,17 @@ namespace KFrame
 
 		if ( time <= KFGlobal::Instance()->_real_time )
 		{
-			ScheduleStartup( 0, data.c_str(), static_cast< uint32 >( data.size() ) );
+			ScheduleStartup( 0, data.c_str(), static_cast<uint32>(data.size()) );
 		}
 		else
 		{
 			auto kfsetting = _kf_schedule->CreateScheduleSetting();
 			kfsetting->SetTime( time );
-			kfsetting->SetData( __LINE__, reinterpret_cast< const void* >( data.data() ), static_cast< uint32 >( data.size() ) );
+			kfsetting->SetData( __LINE__, reinterpret_cast<const void*>(data.data()), static_cast<uint32>(data.size()) );
 			_kf_schedule->RegisterSchedule( kfsetting, this, &KFLaunchModule::ScheduleStartup );
 		}
 
-		return _kf_http_server->SendResponseCode( KFCommonEnum::OK );
+		return _kf_http_server->SendResponseCode( KFErrorEnum::Success );
 	}
 
 	void KFLaunchModule::ScheduleStartup( uint32 id, const char* data, uint32 size )
@@ -492,17 +492,17 @@ namespace KFrame
 
 		if ( time <= KFGlobal::Instance()->_real_time )
 		{
-			ScheduleShutDown( 0, data.c_str(), static_cast< uint32 >( data.size() ) );
+			ScheduleShutDown( 0, data.c_str(), static_cast<uint32>(data.size()) );
 		}
 		else
 		{
 			auto kfsetting = _kf_schedule->CreateScheduleSetting();
 			kfsetting->SetTime( time );
-			kfsetting->SetData( __LINE__, reinterpret_cast< const void* >( data.data() ), static_cast< uint32 >( data.size() ) );
+			kfsetting->SetData( __LINE__, reinterpret_cast<const void*>(data.data()), static_cast<uint32>(data.size()) );
 			_kf_schedule->RegisterSchedule( kfsetting, this, &KFLaunchModule::ScheduleShutDown );
 		}
 
-		return _kf_http_server->SendResponseCode( KFCommonEnum::OK );
+		return _kf_http_server->SendResponseCode( KFErrorEnum::Success );
 	}
 
 	void KFLaunchModule::ScheduleShutDown( uint32 id, const char* data, uint32 size )
@@ -512,7 +512,7 @@ namespace KFrame
 		auto processlist = request[ KFField::_process ];
 		for ( uint32 i = 0; i < processlist.size(); ++i )
 		{
-			auto id = processlist[ i ].asUInt();
+			auto id = processlist[i].asUInt();
 			auto kfsetting = _kf_launch_config->FindLaunchSetting( id );
 			if ( kfsetting == nullptr )
 			{
@@ -546,17 +546,17 @@ namespace KFrame
 
 		if ( time == 0 )
 		{
-			ScheduleFtpDownload( 0, data.c_str(), static_cast< uint32 >( data.size() ) );
+			ScheduleFtpDownload( 0, data.c_str(), static_cast<uint32>(data.size()) );
 		}
 		else
 		{
 			auto kfsetting = _kf_schedule->CreateScheduleSetting();
 			kfsetting->SetTime( time );
-			kfsetting->SetData( __LINE__, reinterpret_cast< const void* >( data.data() ), static_cast< uint32 >( data.size() ) );
+			kfsetting->SetData( __LINE__, reinterpret_cast<const void*>(data.data()), static_cast<uint32>(data.size()) );
 			_kf_schedule->RegisterSchedule( kfsetting, this, &KFLaunchModule::ScheduleFtpDownload );
 		}
 
-		return _kf_http_server->SendResponseCode( KFCommonEnum::OK );
+		return _kf_http_server->SendResponseCode( KFErrorEnum::Success );
 	}
 
 	void KFLaunchModule::ScheduleFtpDownload( uint32 id, const char* data, uint32 size )
@@ -580,17 +580,17 @@ namespace KFrame
 
 		if ( time == 0 )
 		{
-			ScheduleTransmitCommand( 0, data.c_str(), static_cast< uint32 >( data.size() ) );
+			ScheduleTransmitCommand( 0, data.c_str(), static_cast<uint32>(data.size()) );
 		}
 		else
 		{
 			auto kfsetting = _kf_schedule->CreateScheduleSetting();
 			kfsetting->SetTime( time );
-			kfsetting->SetData( __LINE__, reinterpret_cast< const void* >( data.data() ), static_cast< uint32 >( data.size() ) );
+			kfsetting->SetData( __LINE__, reinterpret_cast<const void*>(data.data()), static_cast<uint32>(data.size()) );
 			_kf_schedule->RegisterSchedule( kfsetting, this, &KFLaunchModule::ScheduleTransmitCommand );
 		}
 
-		return _kf_http_server->SendResponseCode( KFCommonEnum::OK );
+		return _kf_http_server->SendResponseCode( KFErrorEnum::Success );
 	}
 
 	void KFLaunchModule::ScheduleTransmitCommand( uint32 id, const char* data, uint32 size )
@@ -602,7 +602,7 @@ namespace KFrame
 		auto processlist = request[ KFField::_process ];
 		for ( uint32 i = 0; i < processlist.size(); ++i )
 		{
-			auto id = processlist[ i ].asUInt();
+			auto id = processlist[i].asUInt();
 			auto kfsetting = _kf_launch_config->FindLaunchSetting( id );
 			if ( kfsetting == nullptr )
 			{

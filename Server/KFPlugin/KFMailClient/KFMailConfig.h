@@ -8,7 +8,7 @@
 namespace KFrame
 {
 	/////////////////////////////////////////////////////////////////////////////////
-	__ST_CLASS__( KFMailSetting )
+	class KFMailSetting
 	{
 	public:
 		KFMailSetting()
@@ -67,7 +67,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找邮件设定
-		const KFMailSetting* FindMailSetting( uint32 configid );
+		const KFMailSetting* FindMailSetting( uint32 configid ) const;
 
 	public:
 		// 邮件配置列表

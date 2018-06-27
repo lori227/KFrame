@@ -32,7 +32,7 @@ namespace KFrame
 		KFAgents _rewards;		// 奖励
 	};
 
-	__ST_CLASS__( KFActivitySetting )
+	class KFActivitySetting
 	{
 	public:
 		KFActivitySetting() : _max_value( 0 )
@@ -101,11 +101,11 @@ namespace KFrame
 		~KFActivityConfig();
 
 		// 获得活动配置
-		const KFActivitySetting* FindActivitySetting( uint32 type );
-		const KFActivityData* FindActivityData( uint32 type, uint32 id );
+		const KFActivitySetting* FindActivitySetting( uint32 type ) const;
+		const KFActivityData* FindActivityData( uint32 type, uint32 id ) const;
 
 		// 获得某种类型的所有成就
-		const KFActivityType* FindActivityType( const std::string& parentname, const std::string& dataname );
+		const KFActivityType* FindActivityType( const std::string& parentname, const std::string& dataname ) const;
 
 		bool LoadConfig( const char* file );
 

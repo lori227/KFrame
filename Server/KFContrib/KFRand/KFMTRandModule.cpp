@@ -15,7 +15,7 @@ namespace KFrame
 
 	uint32 KFMTRandModule::Rand32()
 	{
-		KFLocker< KFMutex > locker( *_kf_mutex );
+		KFLocker locker( *_kf_mutex );
 
 		return KFRandModule::Rand32();
 	}

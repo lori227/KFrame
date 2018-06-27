@@ -23,7 +23,7 @@ namespace KFrame
 		uint64 _value;				// 重置的初始值
 	};
 	
-	__ST_CLASS__( KFResetSetting )
+	class KFResetSetting
 	{
 	public:
 		uint64 _note_id;			// 保存时间的变量id

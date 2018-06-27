@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFMySQLSetting )
+	class KFMySQLSetting
 	{
 	public:
 		uint32 _id;
@@ -25,11 +25,11 @@ namespace KFrame
 		// 加载配置文件
 		bool LoadConfig( const char* file );
 
-		const KFMySQLSetting* FindSetting( uint32 id );
-		const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid );
+		const KFMySQLSetting* FindSetting( uint32 id ) const;
+		const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid ) const;
 
 	protected:
-		uint32 FindLogicMySQLId( const std::string& filed, uint32 logicid );
+		uint32 FindLogicMySQLId( const std::string& filed, uint32 logicid ) const;
 
 	public:		
 		// 数据库连接

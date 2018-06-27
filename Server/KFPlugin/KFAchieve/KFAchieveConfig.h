@@ -19,7 +19,7 @@ namespace KFrame
 	////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
 
-	__ST_CLASS__( KFAchieveSetting )
+	class KFAchieveSetting
 	{
 	public:
 		uint32 _id;					// id
@@ -66,7 +66,7 @@ namespace KFrame
 	{
 	public:
 		void AddKFAchieveType( KFAchieveSetting* setting );
-		const KFAchieveType* FindKFAchieveType( const std::string& dataname );
+		const KFAchieveType* FindKFAchieveType( const std::string& dataname ) const;
 
 	public:
 		std::map< std::string, KFAchieveType > _achievetype;
@@ -81,10 +81,10 @@ namespace KFrame
 		~KFAchieveConfig();
 
 		// 获得成就配置
-		const KFAchieveSetting* FindAchieveSetting( uint32 id );
+		const KFAchieveSetting* FindAchieveSetting( uint32 id ) const;
 
 		// 获得某种类型的所有成就
-		const KFAchieveType* FindTypeAchieve( const std::string& parentname, const std::string& dataname );
+		const KFAchieveType* FindTypeAchieve( const std::string& parentname, const std::string& dataname ) const;
 
 		// 读取配置
 		bool LoadConfig( const char* file );

@@ -43,7 +43,7 @@ namespace KFrame
 		return true;
 	}
 
-	const KFRankSetting* KFRankClientConfig::FindRankSetting( uint32 matchid )
+	const KFRankSetting* KFRankClientConfig::FindRankSetting( uint32 matchid ) const
 	{
 		return _kf_rank_setting.Find( matchid );
 	}

@@ -44,4 +44,86 @@ namespace KFrame
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////
+	KFLogMemory::KFLogMemory()
+	{
+		_open = true;
+	}
+
+	KFLogMemory::~KFLogMemory()
+	{
+		for ( auto iter : _st_log_block._log_data )
+		{
+			delete iter.second;
+		}
+
+		for ( auto iter : _mt_log_block._log_data )
+		{
+			delete iter.second;
+		}
+
+		_st_log_block._log_data.clear();
+		_mt_log_block._log_data.clear();;
+	}
+
+	void KFLogMemory::SetOpen( bool open )
+	{
+		_open = open;
+	}
+
+	bool KFLogMemory::IsOpen() const
+	{
+		return _open;
+	}
+
+	void KFLogMemory::AddMTMemory( const std::string& type, uint64 size, uint64 totalsize )
+	{
+		if ( !_open )
+		{
+			return;
+		}
+
+		_mt_log_block.AddBlock( type, size, totalsize );
+	}
+
+	void KFLogMemory::DecMTMemory( const std::string& type, uint64 size )
+	{
+		if ( !_open )
+		{
+			return;
+		}
+
+		_mt_log_block.DecBlock( type, size );
+	}
+
+	LogBlock KFLogMemory::GetMTMemory()
+	{
+		return _mt_log_block;
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	void KFLogMemory::AddSTMemory( const std::string& type, uint64 size, uint64 totalsize )
+	{
+		if ( !_open )
+		{
+			return;
+		}
+
+		_st_log_block.AddBlock( type, size, totalsize );
+	}
+
+	void KFLogMemory::DecSTMemory( const std::string& type, uint64 size )
+	{
+		if ( !_open )
+		{
+			return;
+		}
+
+		_st_log_block.DecBlock( type, size );
+	}
+
+	LogBlock& KFLogMemory::GetSTMemory()
+	{
+		return _st_log_block;
+	}
 }

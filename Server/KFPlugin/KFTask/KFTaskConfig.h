@@ -7,7 +7,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFTaskSetting )
+	class KFTaskSetting
 	{
 	public:
 		KFTaskSetting()
@@ -41,7 +41,7 @@ namespace KFrame
 	{
 	public:
 		// 获得活动配置
-		const KFTaskSetting* FindTaskSetting( uint32 taskid );
+		const KFTaskSetting* FindTaskSetting( uint32 taskid ) const;
 
 		// 加载配置
 		bool LoadConfig( const char* file );
@@ -62,7 +62,7 @@ namespace KFrame
 		_task_setting.Insert( kfsetting->_id, kfsetting );
 	}
 
-	inline const KFTaskSetting* KFTaskConfig::FindTaskSetting( uint32 taskid )
+	inline const KFTaskSetting* KFTaskConfig::FindTaskSetting( uint32 taskid ) const
 	{
 		return _task_setting.Find( taskid );
 	}

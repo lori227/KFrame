@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFOnline )
+	class KFOnline
 	{
 	public:
 		virtual ~KFOnline(){}

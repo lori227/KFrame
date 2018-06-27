@@ -22,7 +22,7 @@ namespace KFrame
 	{
 		_http_server->stopAll();
 
-		KFLocker< KFMutex > kflocker( _kf_mutex );
+		KFLocker kflocker( _kf_mutex );
 		for ( auto kfdata : _kf_function_data )
 		{
 			__KF_DESTROY__( KFFunctionData, kfdata );
@@ -77,18 +77,18 @@ namespace KFrame
 		kfdata->_kf_function = kffunction;
 		{
 			// 保存数据
-			KFLocker< KFMutex > kflocker( _kf_mutex );
+			KFLocker kflocker( _kf_mutex );
 			_kf_function_data.push_back( kfdata );
 		}
 
-		return KFHttpCommon::SendResponseCode( KFCommonEnum::OK );
+		return KFHttpCommon::SendResponseCode( KFErrorEnum::Success );
 	}
 
 	void KFHttpServer::Run()
 	{
 		std::list< KFFunctionData* > templist;
 		{
-			KFLocker< KFMutex > kflocker( _kf_mutex );
+			KFLocker kflocker( _kf_mutex );
 			templist.swap( _kf_function_data );
 		}
 

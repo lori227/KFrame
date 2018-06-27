@@ -6,7 +6,7 @@
 namespace KFrame
 {
 	// 战场阵营
-	__ST_CLASS__( KFBattleCamp )
+	class KFBattleCamp
 	{
 	public:
 		KFBattleCamp();

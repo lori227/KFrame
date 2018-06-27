@@ -26,8 +26,7 @@ namespace KFrame
 			Give = 2,					// 赠送
 		};
 	}
-
-	__ST_CLASS__( KFStoreSetting )
+	class KFStoreSetting
 	{
 	public:
 		// 商品
@@ -83,13 +82,13 @@ namespace KFrame
 
 
 		//判断参数列表合法（检测购买和赠送的消耗列表是否存在）
-		bool CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime );
+		bool CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime ) const;
 
 		//获得购买消耗物品列表
-		const KFAgents* FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num );
+		const KFAgents* FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const;
 
 		//获取赠送消耗物品列表
-		const KFAgents* FindGiveCostAgents( uint64 nowtime );
+		const KFAgents* FindGiveCostAgents( uint64 nowtime ) const;
 
 		//检测道具是否超过限购日期
 		bool CheckOutOfData( uint64 nowtime ) const;
@@ -114,7 +113,7 @@ namespace KFrame
 		bool CheckGive() const;
 
 		//判断消耗参数合法
-		bool CheckCostParam( const std::string& buytype, uint64 nowtime );
+		bool CheckCostParam( const std::string& buytype, uint64 nowtime ) const;
 	};
 
 	class KFStoreConfig : public KFConfig, public KFSingleton< KFStoreConfig >
@@ -127,7 +126,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		//查找商城配置
-		KFStoreSetting* FindStoreSetting( uint32 id );
+		const KFStoreSetting* FindStoreSetting( uint32 id ) const;
 		inline uint32 GetVersion() const
 		{
 			return _version;
