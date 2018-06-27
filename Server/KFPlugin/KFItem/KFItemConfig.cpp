@@ -13,7 +13,7 @@ namespace KFrame
 	{
 	}
 
-	const KFItemSetting* KFItemConfig::FindItemSetting( uint32 itemid ) const
+	const KFItemSetting* KFItemConfig::FindItemSetting( uint32 itemid )
 	{
 		return _item_setting.Find( itemid );
 	}

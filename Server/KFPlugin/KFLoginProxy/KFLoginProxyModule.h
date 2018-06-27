@@ -22,7 +22,7 @@
 
 namespace KFrame
 {
-	class KFLoginToken
+	__ST_CLASS__( KFLoginToken )
 	{
 	public:
 		KFLoginToken()

@@ -13,7 +13,7 @@ namespace KFrame
 	
 	}
 
-	const KFMailSetting* KFMailConfig::FindMailSetting( uint32 configid ) const
+	const KFMailSetting* KFMailConfig::FindMailSetting( uint32 configid )
 	{
 		return _mail_setting.Find( configid );
 	}

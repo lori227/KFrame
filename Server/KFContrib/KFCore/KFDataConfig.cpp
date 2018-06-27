@@ -14,7 +14,7 @@ namespace KFrame
 
 	}
 
-	const KFClassSetting* KFDataConfig::GetClassSetting( const std::string& classname ) const
+	const KFClassSetting* KFDataConfig::GetClassSetting( const std::string& classname )
 	{
 		return _class_setting.Find( classname );
 	}
@@ -26,7 +26,7 @@ namespace KFrame
 		kfclasssetting->AddDataSetting( kfdatasetting );
 	}
 
-	const KFDataSetting* KFDataConfig::GetDataSetting( const std::string& classname, const std::string& propertyname ) const
+	const KFDataSetting* KFDataConfig::GetDataSetting( const std::string& classname, const std::string& propertyname )
 	{
 		auto classsetting = GetClassSetting( classname );
 		if ( classsetting == nullptr )

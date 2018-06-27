@@ -8,7 +8,7 @@
 
 namespace KFrame
 {
-	class KFData
+	__ST_CLASS__( KFData )
 	{
 	public:
 		KFData();

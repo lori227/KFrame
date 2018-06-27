@@ -19,7 +19,7 @@ namespace KFrame
 
 	class KFBattleCamp;
 	class KFBattleRoom;
-	class KFBattlePlayer
+	__ST_CLASS__( KFBattlePlayer )
 	{
 	public:
 		KFBattlePlayer();

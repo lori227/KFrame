@@ -2,11 +2,12 @@
 #define __KF_MAP_H__
 
 #include "KFInclude.h"
-#include "KFMemory/KFMalloc.h"
+#include "KFThread/KFMutex.h"
+#include "KFMemory/KFMemoryObject.h"
 
 namespace KFrame
 {
-	template< class KeyType, class ParamType, class ObjectType >
+	template< class KeyType, class ParamType, class ObjectType, class Mutex = KFNullMutex >
 	class KFMap
 	{
 	public:
@@ -20,15 +21,15 @@ namespace KFrame
 		void Insert( ParamType, ObjectType* object );
 
 		// 查找
-		ObjectType* Find( ParamType key ) const;
+		ObjectType* Find( ParamType key );
 		ObjectType* Create( ParamType key );
-		
+
 		// 存在
 		bool IsExist( ParamType key );
 
 		// 删除
 		bool Remove( ParamType key, bool isdelete = true );
-		
+
 		// 清除
 		void Clear( bool isdelete = true );
 
@@ -49,31 +50,37 @@ namespace KFrame
 
 		// 列表
 		std::map< KeyType, ObjectType* > _objects;
+
+	private:
+		Mutex _kf_mutex;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////
-	template< class KeyType, class ParamType, class ObjectType >
-	KFMap< KeyType, ParamType, ObjectType >::KFMap()
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	KFMap< KeyType, ParamType, ObjectType, Mutex >::KFMap()
 	{
 		_objects.clear();
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	KFMap< KeyType, ParamType, ObjectType >::~KFMap()
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	KFMap< KeyType, ParamType, ObjectType, Mutex >::~KFMap()
 	{
 		Clear();
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	uint32 KFMap< KeyType, ParamType, ObjectType >::Size()
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	uint32 KFMap< KeyType, ParamType, ObjectType, Mutex >::Size()
 	{
-		return static_cast<uint32>(_objects.size());
+		KFLocker< Mutex > locker( _kf_mutex );
+		return static_cast< uint32 >( _objects.size() );
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	void KFMap< KeyType, ParamType, ObjectType >::Clear( bool isdelete /* = true */ )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	void KFMap< KeyType, ParamType, ObjectType, Mutex >::Clear( bool isdelete /* = true */ )
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
+
 		if ( isdelete )
 		{
 			for ( auto iter = _objects.begin(); iter != _objects.end(); ++iter )
@@ -84,29 +91,33 @@ namespace KFrame
 
 		_objects.clear();
 	}
-	
-	template< class KeyType, class ParamType, class ObjectType >
-	bool KFMap< KeyType, ParamType, ObjectType >::IsEmpty()
+
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	bool KFMap< KeyType, ParamType, ObjectType, Mutex >::IsEmpty()
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
 		return _objects.empty();
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	bool KFMap< KeyType, ParamType, ObjectType >::IsExist( ParamType key )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	bool KFMap< KeyType, ParamType, ObjectType, Mutex >::IsExist( ParamType key )
 	{
 		return Find( key ) != nullptr;
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	void KFMap< KeyType, ParamType, ObjectType >::Insert( ParamType key, ObjectType* object )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	void KFMap< KeyType, ParamType, ObjectType, Mutex >::Insert( ParamType key, ObjectType* object )
 	{
 		Remove( key, true );
+
+		KFLocker< Mutex > locker( _kf_mutex );
 		_objects[ key ] = object;
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	ObjectType* KFMap< KeyType, ParamType, ObjectType >::Find( ParamType key ) const
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	ObjectType* KFMap< KeyType, ParamType, ObjectType, Mutex >::Find( ParamType key )
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
 		auto iter = _objects.find( key );
 		if ( iter == _objects.end() )
 		{
@@ -116,8 +127,8 @@ namespace KFrame
 		return iter->second;
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	ObjectType* KFMap< KeyType, ParamType, ObjectType >::Create( ParamType key )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	ObjectType* KFMap< KeyType, ParamType, ObjectType, Mutex >::Create( ParamType key )
 	{
 		auto object = Find( key );
 		if ( object != nullptr )
@@ -130,10 +141,11 @@ namespace KFrame
 		return object;
 	}
 
-
-	template< class KeyType, class ParamType, class ObjectType >
-	bool KFMap< KeyType, ParamType, ObjectType >::Remove( ParamType key, bool isdelete )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	bool KFMap< KeyType, ParamType, ObjectType, Mutex >::Remove( ParamType key, bool isdelete )
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
+
 		auto iter = _objects.find( key );
 		if ( iter == _objects.end() )
 		{
@@ -149,9 +161,11 @@ namespace KFrame
 		return true;
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	ObjectType* KFMap< KeyType, ParamType, ObjectType >::First()
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	ObjectType* KFMap< KeyType, ParamType, ObjectType, Mutex >::First()
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
+
 		if ( _objects.empty() )
 		{
 			return nullptr;
@@ -159,11 +173,13 @@ namespace KFrame
 
 		_iter = _objects.begin();
 		return _iter->second;
-}
+	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	ObjectType* KFMap< KeyType, ParamType, ObjectType >::Next()
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	ObjectType* KFMap< KeyType, ParamType, ObjectType, Mutex >::Next()
 	{
+		KFLocker< Mutex > locker( _kf_mutex );
+
 		++_iter;
 		if ( _iter == _objects.end() )
 		{
@@ -173,8 +189,8 @@ namespace KFrame
 		return _iter->second;
 	}
 
-	template< class KeyType, class ParamType, class ObjectType >
-	void KFMap< KeyType, ParamType, ObjectType >::AddMap( KFMap& kfother )
+	template< class KeyType, class ParamType, class ObjectType, class Mutex >
+	void KFMap< KeyType, ParamType, ObjectType, Mutex >::AddMap( KFMap& kfother )
 	{
 		for ( auto iter : kfother._objects )
 		{

@@ -10,7 +10,7 @@ namespace KFrame
 {
 	class KFWorkerModule;
 	/////////////////////////////////////////////////////////////////////////
-	class KFActor
+	__ST_CLASS__( KFActor )
 	{
 	public:
 		KFActor();

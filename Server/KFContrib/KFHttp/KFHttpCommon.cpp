@@ -46,7 +46,7 @@ namespace KFrame
 	{
 		if ( !json.isMember( KFField::_ret_code ) )
 		{
-			json.SetValue< uint32 >( KFField::_ret_code, KFErrorEnum::Success );
+			json.SetValue< uint32 >( KFField::_ret_code, KFCommonEnum::OK );
 		}
 
 		return json.Serialize();

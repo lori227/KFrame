@@ -7,7 +7,7 @@
 
 namespace KFrame
 {
-	class KFScript
+	__ST_CLASS__( KFScript )
 	{
 	public:
 		template< class ... T >

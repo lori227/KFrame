@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	class KFProxyData
+	__ST_CLASS__( KFProxyData )
 	{
 	public:
 		KFProxyData()

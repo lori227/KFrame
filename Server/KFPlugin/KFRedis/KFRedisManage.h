@@ -29,12 +29,9 @@ namespace KFrame
 		void InsertRedisExecute( uint32 id, KFRedisExecute* kfredisexecute );
 
 	private:
-		// 线程锁
-		KFMutex _mt_mutex;
-
 		// 多线程列表
 		typedef std::pair< uint32, uint32 > RedisKey;
-		KFMap< RedisKey, const RedisKey&, KFRedisExecute > _redis_execute;
+		KFMap< RedisKey, const RedisKey&, KFRedisExecute, KFMutex > _redis_execute;
 	};
 
 	////////////////////////////////////////////////////////////////////

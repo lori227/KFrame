@@ -118,7 +118,7 @@ namespace KFrame
 		return true;
 	}
 
-	const KFStoreSetting* KFStoreConfig::FindStoreSetting( uint32 id ) const
+	KFStoreSetting* KFStoreConfig::FindStoreSetting( uint32 id )
 	{
 		return _store_setting.Find( id );
 	}
@@ -147,7 +147,7 @@ namespace KFrame
 	}
 
 
-	bool KFStoreSetting::CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime ) const
+	bool KFStoreSetting::CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime )
 	{
 		if ( num > _buy_max_num )
 		{
@@ -175,7 +175,7 @@ namespace KFrame
 	}
 
 
-	const KFAgents* KFStoreSetting::FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const
+	const KFAgents* KFStoreSetting::FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num )
 	{
 		if ( CheckDiscount( nowtime ) )
 		{
@@ -186,7 +186,7 @@ namespace KFrame
 		return _cost_item.Find( buytype );
 	}
 
-	const KFAgents* KFStoreSetting::FindGiveCostAgents( uint64 nowtime ) const
+	const KFAgents* KFStoreSetting::FindGiveCostAgents( uint64 nowtime )
 	{
 		if ( CheckDiscount( nowtime ) )
 		{
@@ -196,7 +196,7 @@ namespace KFrame
 		return _cost_item.Find( _cost_give );
 	}
 
-	bool KFStoreSetting::CheckCostParam( const std::string& buytype, uint64 nowtime ) const
+	bool KFStoreSetting::CheckCostParam( const std::string& buytype, uint64 nowtime )
 	{
 		if ( CheckDiscount( nowtime ) )
 		{

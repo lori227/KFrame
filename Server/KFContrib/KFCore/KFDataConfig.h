@@ -15,10 +15,10 @@ namespace KFrame
 		~KFDataConfig();
 
 		// 获得静态类配置
-		const KFClassSetting* GetClassSetting( const std::string& classname ) const;
+		const KFClassSetting* GetClassSetting( const std::string& classname );
 
 		// 获得活动配置
-		const KFDataSetting* GetDataSetting( const std::string& classname, const std::string& propertyname ) const;
+		const KFDataSetting* GetDataSetting( const std::string& classname, const std::string& propertyname );
 
 		// 加载
 		bool LoadConfig( const char* file );

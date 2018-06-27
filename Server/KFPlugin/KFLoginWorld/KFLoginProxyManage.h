@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFLoginProxy
+	__ST_CLASS__( KFLoginProxy )
 	{
 	public:
 		KFLoginProxy()

@@ -17,7 +17,7 @@ namespace KFrame
 	};
 
 	// 战斗房间
-	class KFBattleRoom
+	__ST_CLASS__( KFBattleRoom )
 	{
 	public:
 		KFBattleRoom();

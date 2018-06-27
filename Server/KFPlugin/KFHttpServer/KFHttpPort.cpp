@@ -5,7 +5,7 @@ namespace KFrame
 
 	KFPort* KFramePort::FindPort( uint32 id )
 	{
-		KFLocker locker( _kf_mutex );
+		KFLocker< KFMutex > locker( _kf_mutex );
 
 		for ( auto i = 0; i < __MAX_PORT_COUNT__; ++i )
 		{

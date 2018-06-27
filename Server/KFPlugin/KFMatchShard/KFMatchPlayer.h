@@ -12,7 +12,7 @@ namespace KFrame
 	class KFMatchQueue;
 	class KFMatchSetting;
 
-	class KFMatchPlayer
+	__ST_CLASS__( KFMatchPlayer )
 	{
 	public:
 		KFMatchPlayer();

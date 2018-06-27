@@ -2,6 +2,7 @@
 #define __NET_DEFINE_H__
 
 #include "KFInclude.h"
+#include "KFMemory/KFMemoryObject.h"
 
 namespace KFrame
 {
@@ -78,7 +79,7 @@ namespace KFrame
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	// 网络事件
-	class KFEventData
+	__MT_CLASS__( KFEventData )
 	{
 	public:
 		KFEventData()

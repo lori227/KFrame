@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFRouteZone
+	__ST_CLASS__( KFRouteZone )
 	{
 	public:
 		KFRouteZone()

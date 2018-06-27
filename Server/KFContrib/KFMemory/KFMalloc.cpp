@@ -1,6 +1,7 @@
 ﻿#include "KFMalloc.h"
 #include "KFLogMemory.h"
 #include "KFBuffer.h"
+#include "KFThread/KFMutex.h"
 
 namespace KFrame
 {
@@ -8,15 +9,18 @@ namespace KFrame
 
 	KFMalloc::KFMalloc()
 	{
-		_kf_memory = new KFMemory();
+		_st_memory = new KFMemory< KFNullMutex >();
+		_mt_memory = new KFMemory< KFMutex >();
 		_kf_buffer = new KFThreadBuffer();
-
+		_kf_mutex = new KFMutex();
 	}
 
 	KFMalloc::~KFMalloc()
 	{
-		delete _kf_memory;
+		delete _st_memory;
+		delete _mt_memory;
 		delete _kf_buffer;
+		delete _kf_mutex;
 	}
 
 	void KFMalloc::Initialize( KFMalloc* kfmalloc )
@@ -76,12 +80,15 @@ namespace KFrame
 		auto mallocsize = CalcNearest2NSize( size );
 		if ( mallocsize != 0 )
 		{
-			return _kf_memory->Malloc( mallocsize, batch, function, line );
+			return _mt_memory->Malloc( mallocsize, batch, function, line );
 		}
 
 		KFLogger::LogMemory( KFLogger::Error, "[%s:%u] memory too large[%u]!", function, line, size );
 		auto memory = new char[ size ];
-		_new_memory.insert( memory );
+
+		KFLocker< KFMutex > locker( *_kf_mutex );
+		_mt_new_memory.insert( memory );
+
 		return memory;
 	}
 
@@ -95,14 +102,15 @@ namespace KFrame
 		auto mallocsize = CalcNearest2NSize( size );
 		if ( mallocsize != 0 )
 		{
-			_kf_memory->Free( memory, function, line );
+			_mt_memory->Free( memory, function, line );
 		}
 		else
 		{
-			auto iter = _new_memory.find( memory );
-			if ( iter != _new_memory.end() )
+			KFLocker< KFMutex > locker( *_kf_mutex );
+			auto iter = _mt_new_memory.find( memory );
+			if ( iter != _mt_new_memory.end() )
 			{
-				_new_memory.erase( iter );
+				_mt_new_memory.erase( iter );
 				delete[] reinterpret_cast< char* >( memory );
 			}
 			else
@@ -111,18 +119,7 @@ namespace KFrame
 			}
 		}
 	}
-
-	void KFMalloc::SetLogMemoryOpen( bool open )
-	{
-		_kf_memory->SetLogOpen( open );
-	}
-
-	void KFMalloc::PrintLogMemory()
-	{
-		_kf_memory->PrintLogMemory();
-	}
-
-
+			
 	int8* KFMalloc::GetInt8( uint32 length, const char* function, uint32 line )
 	{
 		return _kf_buffer->GetInt8( length, function, line );
@@ -131,5 +128,61 @@ namespace KFrame
 	uint8* KFMalloc::GetUInt8( uint32 length, const char* function, uint32 line )
 	{
 		return _kf_buffer->GetUInt8( length, function, line );
+	}
+
+	void KFMalloc::SetLogMemoryOpen( bool open )
+	{
+		_st_memory->SetLogOpen( open );
+		_mt_memory->SetLogOpen( open );
+	}
+
+	void KFMalloc::PrintLogMemory()
+	{
+		if ( !_st_memory->_kf_log_memory->IsOpen() )
+		{
+			return;
+		}
+
+		KFLogger::LogMemory( KFLogger::Info, " " );
+		KFLogger::LogMemory( KFLogger::Info, "***********************************print memory start****************************************************" );
+
+		uint64 totalusesize = 0;
+		uint64 totalmallocsize = 0;
+
+		auto& stlogblock = _st_memory->_kf_log_memory->RefLogBlock();
+		for ( auto iter = stlogblock._log_data.begin(); iter != stlogblock._log_data.end(); ++iter )
+		{
+			auto logdata = iter->second;
+
+			totalusesize += logdata->_use_size;
+			totalmallocsize += logdata->_total_size;
+			PrintLogMemory( iter->first.c_str(), logdata->_count, logdata->_use_size, logdata->_total_size );
+		}
+
+		auto mtlogblock = _mt_memory->_kf_log_memory->GetLogBlock();
+		for ( auto iter = mtlogblock._log_data.begin(); iter != mtlogblock._log_data.end(); ++iter )
+		{
+			auto logdata = iter->second;
+
+			totalusesize += logdata->_use_size;
+			totalmallocsize += logdata->_total_size;
+			PrintLogMemory( iter->first.c_str(), logdata->_count, logdata->_use_size, logdata->_total_size );
+		}
+
+		auto strtotalusesize = __KF_STRING__( totalusesize );
+		auto totalmmallocsize = __KF_STRING__( totalmallocsize );
+
+		KFLogger::LogMemory( KFLogger::Info, " " );
+		KFLogger::LogMemory( KFLogger::Info, "******************print memory end, use[%s], total[%s]*************************",
+			strtotalusesize.c_str(), totalmmallocsize.c_str() );
+	}
+
+	void KFMalloc::PrintLogMemory( const char* type, uint32 count, uint64 usesize, uint64 totalsize )
+	{
+		auto strusesize = __KF_STRING__( usesize );
+		auto strtotalsize = __KF_STRING__( totalsize );
+
+		KFLogger::LogMemory( KFLogger::Info, "count[%u] use[%s] total[%s] [%s]",
+			count, strusesize.c_str(), strtotalsize.c_str(), type );
 	}
 }

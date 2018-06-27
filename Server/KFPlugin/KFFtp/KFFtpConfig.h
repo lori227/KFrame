@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	class KFFtpSetting
+	__ST_CLASS__( KFFtpSetting )
 	{
 	public:
 		KFFtpSetting()
@@ -37,7 +37,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找配置
-		const KFFtpSetting* FindFtpSetting( uint32 id ) const;
+		const KFFtpSetting* FindFtpSetting( uint32 id );
 
 	public:
 		KFMap< uint32, uint32, KFFtpSetting > _kf_ftp_setting;
