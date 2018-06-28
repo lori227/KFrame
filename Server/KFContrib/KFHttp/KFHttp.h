@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFHttp
+	__ST_CLASS__( KFHttp )
 	{
 	public:
 		KFHttp();

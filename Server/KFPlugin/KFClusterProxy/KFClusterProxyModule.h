@@ -20,7 +20,7 @@
 
 namespace KFrame
 {
-	class KFClusterToken
+	__ST_CLASS__( KFClusterToken )
 	{
 	public:
 		KFClusterToken()

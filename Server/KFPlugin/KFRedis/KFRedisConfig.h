@@ -8,7 +8,7 @@ namespace KFrame
 {
 	/////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFRedisSetting
+	__ST_CLASS__( KFRedisSetting )
 	{
 	public:
 		KFRedisSetting()
@@ -32,15 +32,15 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找redis配置
-		const KFRedisSetting* FindRedisSetting( uint32 id ) const;
-		const KFRedisSetting* FindRedisSetting( const std::string& field, uint32 logicid ) const;
+		const KFRedisSetting* FindRedisSetting( uint32 id );
+		const KFRedisSetting* FindRedisSetting( const std::string& field, uint32 logicid );
 
 	protected:
 		// 添加redis配置
 		void AddRedisSetting( KFRedisSetting* kfsetting );
 
 		// 查找redis
-		uint32 FindLogicRedisId( const std::string& filed, uint32 logicid ) const;
+		uint32 FindLogicRedisId( const std::string& filed, uint32 logicid );
 	public:
 		// 连接列表
 		KFMap< uint32, uint32, KFRedisSetting > _redis_setting;

@@ -14,7 +14,7 @@ namespace Poco
 
 namespace KFrame
 {
-	class KFHttpFuncton
+	__ST_CLASS__( KFHttpFuncton )
 	{
 	public:
 		// httpº¯Êý
@@ -24,7 +24,7 @@ namespace KFrame
 		bool _sync;
 	};
 
-	class KFFunctionData
+	__MT_CLASS__( KFFunctionData )
 	{
 	public:
 		// Ö´ÐÐº¯Êý

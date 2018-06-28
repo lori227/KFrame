@@ -6,7 +6,7 @@
 namespace KFrame
 {
 	// 匹配队伍
-	class KFMatchGroup
+	__ST_CLASS__( KFMatchGroup )
 	{
 	public:
 		KFMatchGroup();

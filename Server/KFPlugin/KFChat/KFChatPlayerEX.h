@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFChatPlayerEX
+	__ST_CLASS__( KFChatPlayerEX )
 	{
 	public:
 		KFChatPlayerEX();

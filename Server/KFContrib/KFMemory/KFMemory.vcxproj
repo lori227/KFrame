@@ -20,11 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFBlockMemory.cpp" />
-    <ClCompile Include="KFBlockStore.cpp" />
     <ClCompile Include="KFBuffer.cpp" />
     <ClCompile Include="KFLogMemory.cpp" />
     <ClCompile Include="KFMalloc.cpp" />
-    <ClCompile Include="KFMemory.cpp" />
     <ClCompile Include="KFShareMemory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +32,7 @@
     <ClInclude Include="KFLogMemory.h" />
     <ClInclude Include="KFMalloc.h" />
     <ClInclude Include="KFMemory.h" />
+    <ClInclude Include="KFMemoryObject.h" />
     <ClInclude Include="KFShareMemory.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

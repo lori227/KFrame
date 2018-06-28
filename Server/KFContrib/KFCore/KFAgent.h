@@ -6,7 +6,7 @@
 namespace KFrame
 {
 	class KFData;
-	class KFAgentValue
+	__ST_CLASS__( KFAgentValue )
 	{
 	public:
 		KFAgentValue();
@@ -23,7 +23,7 @@ namespace KFrame
 	};
 
 	class KFAgents;
-	class KFAgent
+	__ST_CLASS__( KFAgent )
 	{
 	public:
 		KFAgent();
@@ -64,7 +64,7 @@ namespace KFrame
 		KFMap< std::string, const std::string&, KFAgentValue > _datas;
 	};
 
-	class KFAgents
+	__ST_CLASS__( KFAgents )
 	{
 	public:
 		KFAgents();

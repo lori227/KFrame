@@ -22,13 +22,11 @@
     <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFHashData.cpp" />
     <ClCompile Include="KFHashFunction.cpp" />
-    <ClCompile Include="KFHashLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFHashData.hpp" />
     <ClInclude Include="KFHashFunction.hpp" />
-    <ClInclude Include="KFHashLogic.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0806FBC0-E5DD-4044-B96D-C2AED38D16D4}</ProjectGuid>

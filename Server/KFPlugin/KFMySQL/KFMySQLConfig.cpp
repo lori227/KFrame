@@ -3,18 +3,18 @@
 namespace KFrame
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	const KFMySQLSetting* KFMySQLConfig::FindSetting( uint32 id ) const
+	const KFMySQLSetting* KFMySQLConfig::FindSetting( uint32 id )
 	{
 		return _mysql_setting.Find( id );
 	}
 
-	const KFMySQLSetting* KFMySQLConfig::FindSetting( const std::string& field, uint32 logicid ) const
+	const KFMySQLSetting* KFMySQLConfig::FindSetting( const std::string& field, uint32 logicid )
 	{
 		auto redisid = FindLogicMySQLId( field, logicid );
 		return FindSetting( redisid );
 	}
 
-	uint32 KFMySQLConfig::FindLogicMySQLId( const std::string& filed, uint32 logicid ) const
+	uint32 KFMySQLConfig::FindLogicMySQLId( const std::string& filed, uint32 logicid )
 	{
 		auto key = LogicKey( filed, logicid );
 		auto iter = _logic_mysql_map.find( key );

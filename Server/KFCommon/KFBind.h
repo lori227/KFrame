@@ -6,7 +6,7 @@
 namespace KFrame
 {
 	template< class T >
-	class KFFunction
+	__ST_CLASS__( KFFunction )
 	{
 	public:
 		KFFunction()
@@ -24,8 +24,8 @@ namespace KFrame
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////
-	template< class KeyType, class ParamType, class ObjectType >
-	class KFBind : public KFMap< KeyType, ParamType, KFFunction< ObjectType > >
+	template< class KeyType, class ParamType, class ObjectType, class Mutex = KFNullMutex >
+	class KFBind : public KFMap< KeyType, ParamType, KFFunction< ObjectType >, Mutex >
 	{
 	public:
 		KFBind()
@@ -38,7 +38,6 @@ namespace KFrame
 
 		}
 			
-	public:
 	};
 	//////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////

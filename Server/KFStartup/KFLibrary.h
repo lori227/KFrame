@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFLibrary
+	__ST_CLASS__( KFLibrary )
 	{
 	public:
 		KFLibrary();

@@ -14,7 +14,7 @@ namespace KFrame
 		iter->second.AddKFAchieveType( setting );
 	}
 
-	const KFAchieveType* KFDataAchieveTypes::FindKFAchieveType( const std::string& dataname ) const
+	const KFAchieveType* KFDataAchieveTypes::FindKFAchieveType( const std::string& dataname )
 	{
 		auto iter = _achievetype.find( dataname );
 		if ( iter == _achievetype.end() )
@@ -38,7 +38,7 @@ namespace KFrame
 		_object_types.clear();
 	}
 
-	const KFAchieveSetting* KFAchieveConfig::FindAchieveSetting( uint32 id ) const
+	const KFAchieveSetting* KFAchieveConfig::FindAchieveSetting( uint32 id )
 	{
 		return _achieve_setting.Find( id );
 	}
@@ -60,7 +60,7 @@ namespace KFrame
 		iter->second.AddKFAchieveType( setting );
 	}
 
-	const KFAchieveType* KFAchieveConfig::FindTypeAchieve( const std::string& parentname, const std::string& dataname ) const
+	const KFAchieveType* KFAchieveConfig::FindTypeAchieve( const std::string& parentname, const std::string& dataname )
 	{
 		auto iter = _object_types.find( parentname );
 		if ( iter == _object_types.end() )

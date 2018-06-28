@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-	class KFChatSetting
+	__ST_CLASS__( KFChatSetting )
 	{
 	public:
 		KFChatSetting()
@@ -37,7 +37,7 @@ namespace KFrame
 		bool LoadConfig( const char* file );
 
 		// 查找聊天室设置
-		const KFChatSetting* FindChatSetting( uint32 chattype ) const;
+		const KFChatSetting* FindChatSetting( uint32 chattype );
 
 	public:
 		// 聊天室配置列表

@@ -8,7 +8,7 @@ namespace KFrame
 {
 	class KFClusterClientModule;
 	class ClusterClientSetting;
-	class KFClusterClient
+	__ST_CLASS__( KFClusterClient )
 	{
 	public:
 		KFClusterClient();

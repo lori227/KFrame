@@ -7,7 +7,7 @@
 namespace KFrame
 {
 	// 匹配房间
-	class KFMatchRoom
+	__ST_CLASS__( KFMatchRoom )
 	{
 	public:
 		KFMatchRoom();

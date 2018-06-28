@@ -8,7 +8,7 @@
 namespace KFrame
 {
 	class KFNetClientServices;
-	class KFNetClient : public KFNetConnector
+	__ST_CLASS__( KFNetClient ), public KFNetConnector
 	{
 	public:
 		KFNetClient();

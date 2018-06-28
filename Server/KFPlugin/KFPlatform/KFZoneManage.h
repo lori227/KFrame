@@ -44,7 +44,7 @@ namespace KFrame
 		uint64 _offline_time;
 	};
 
-	class KFZoneData
+	__MT_CLASS__( KFZoneData )
 	{
 	public:
 		KFZoneData();

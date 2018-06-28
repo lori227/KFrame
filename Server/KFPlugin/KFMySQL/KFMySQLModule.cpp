@@ -42,18 +42,14 @@ namespace KFrame
 	{
 		auto threadid = KFThread::GetThreadID();
 		auto key = MySQLKey( threadid, id );
-
-		KFLocker lock( _kf_mutex );
-		return _mysql_execute_map.Find( key );
+		return _mysql_execute_list.Find( key );
 	}
 
 	void KFMySQLModule::InsertMySQLExecute( uint32 id, KFMySQLExecute* kfexecute )
 	{
 		auto threadid = KFThread::GetThreadID();
 		auto key = MySQLKey( threadid, id );
-
-		KFLocker lock( _kf_mutex );
-		_mysql_execute_map.Insert( key, kfexecute );
+		_mysql_execute_list.Insert( key, kfexecute );
 	}
 		
 	KFMySQLDriver* KFMySQLModule::CreateExecute( uint32 id )

@@ -14,7 +14,7 @@ namespace KFrame
 
 	}
 
-	const KFClothesSetting* KFClothesConfig::FindClothesSetting( uint32 id ) const
+	const KFClothesSetting* KFClothesConfig::FindClothesSetting( uint32 id )
 	{
 		return _clothes_setting.Find( id );
 	}

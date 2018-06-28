@@ -19,7 +19,7 @@ namespace KFrame
 	///////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////
 	template< class T >
-	class KFBuffer
+	__MT_CLASS__( KFBuffer )
 	{
 	public:
 		KFBuffer()
@@ -53,13 +53,10 @@ namespace KFrame
 		uint8* GetUInt8( uint32 length, const char* function, uint32 line );
 
 	private:
-		// 线程锁		
-		KFMutex* _kf_mutex;
-		
 		// buff列表
 		typedef std::pair< uint32, uint32 > BuffKey;
-		KFMap< BuffKey, const BuffKey&, KFBuffer< int8 > > _kf_int8;
-		KFMap< BuffKey, const BuffKey&, KFBuffer< uint8 > > _kf_uint8;
+		KFMap< BuffKey, const BuffKey&, KFBuffer< int8 >, KFMutex > _kf_int8;
+		KFMap< BuffKey, const BuffKey&, KFBuffer< uint8 >, KFMutex > _kf_uint8;
 	};
 }
 

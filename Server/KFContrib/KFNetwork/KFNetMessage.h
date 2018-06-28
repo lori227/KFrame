@@ -2,13 +2,14 @@
 #define __NET_MESSAGE_H__
 
 #include "KFGuid.h"
+#include "KFMemory/KFMemoryObject.h"
 
 #pragma pack( 1 )
 
 namespace KFrame
 {
 	///////////////////////////////////////////////////////////////////////////////////////////
-	class KFNetHead
+	__MT_CLASS__( KFNetHead )
 	{
 	public:
 		KFGuid _guid;		// guid

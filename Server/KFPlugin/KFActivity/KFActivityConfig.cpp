@@ -119,12 +119,12 @@ namespace KFrame
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////
-	const KFActivitySetting* KFActivityConfig::FindActivitySetting( uint32 type ) const
+	const KFActivitySetting* KFActivityConfig::FindActivitySetting( uint32 type )
 	{
 		return _activity_setting.Find( type );
 	}
 
-	const KFActivityData* KFActivityConfig::FindActivityData( uint32 type, uint32 id ) const
+	const KFActivityData* KFActivityConfig::FindActivityData( uint32 type, uint32 id )
 	{
 		auto psetting = FindActivitySetting( type );
 		if ( psetting == nullptr )
@@ -156,7 +156,7 @@ namespace KFrame
 		//iter->second.AddKFAchieveType( setting );
 	}
 
-	const KFActivityType* KFActivityConfig::FindActivityType( const std::string& parentname, const std::string& dataname ) const 
+	const KFActivityType* KFActivityConfig::FindActivityType( const std::string& parentname, const std::string& dataname ) 
 	{
 		auto key = ActivityTypeKey( parentname, dataname );
 		auto iter = _activity_types.find( key );

@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-	class KFRouteProxy
+	__ST_CLASS__( KFRouteProxy )
 	{
 	public:
 		KFRouteProxy()

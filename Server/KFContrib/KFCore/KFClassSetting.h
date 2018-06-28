@@ -7,7 +7,7 @@ namespace KFrame
 {
 	// 对象类定义
 	////////////////////////////////////////////////////////////////////////////////////////
-	class KFClassSetting
+	__ST_CLASS__( KFClassSetting )
 	{
 	public:
 		KFClassSetting();
