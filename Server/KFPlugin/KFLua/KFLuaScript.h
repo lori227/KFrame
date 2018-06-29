@@ -6,22 +6,22 @@
 
 namespace KFrame
 {
-	class KFLuaScript : public KFScript
-	{
-	public:
-		KFLuaScript();
-		~KFLuaScript();
+    class KFLuaScript : public KFScript
+    {
+    public:
+        KFLuaScript();
+        ~KFLuaScript();
 
-		// 加载脚本函数
-		bool LoadScript( const std::string& file );
+        // 加载脚本函数
+        bool LoadScript( const std::string& file );
 
-		// 释放脚本
-		void ReleaseScript();
-		
-	public:
-		// 是否初始化函数
-		bool _is_initialized;
-	};
+        // 释放脚本
+        void ReleaseScript();
+
+    public:
+        // 是否初始化函数
+        bool _is_initialized;
+    };
 }
 
 #endif

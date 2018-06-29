@@ -24,206 +24,206 @@
 
 namespace KFrame
 {
-	class KFComponent;
-	class KFPlayerModule : public KFPlayerInterface
-	{
-	public:
-		KFPlayerModule();
-		~KFPlayerModule();
+    class KFComponent;
+    class KFPlayerModule : public KFPlayerInterface
+    {
+    public:
+        KFPlayerModule();
+        ~KFPlayerModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 刷新
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	
-		// 初始化 
-		void InitPlayer( KFEntity* kfentity );
-		void UnInitPlayer( KFEntity* kfentity );
-		
-		// 逻辑刷新
-		void RunPlayer( KFEntity* kfentity );
-		void AfterRunPlayer( KFEntity* kfentity );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 保存玩家
-		void SavePlayer( KFEntity* kfentity );
-		////////////////////////////////////////////////////////////////////////////
-		// 打印玩家日志
-		virtual void LogPlayer( KFEntity* player, const char* format, ... );
-		////////////////////////////////////////////////////////////////////////////
-		// 玩家数量
-		virtual uint32 GetPlayerCount();
+        // 初始化
+        void InitPlayer( KFEntity* kfentity );
+        void UnInitPlayer( KFEntity* kfentity );
 
-		// 创建角色
-		virtual KFEntity* CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* extenddata );
+        // 逻辑刷新
+        void RunPlayer( KFEntity* kfentity );
+        void AfterRunPlayer( KFEntity* kfentity );
 
-		// 登出游戏
-		virtual void LogoutPlayer( uint32 playerid );
-		
-		// 踢掉角色
-		virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
+        // 保存玩家
+        void SavePlayer( KFEntity* kfentity );
+        ////////////////////////////////////////////////////////////////////////////
+        // 打印玩家日志
+        virtual void LogPlayer( KFEntity* player, const char* format, ... );
+        ////////////////////////////////////////////////////////////////////////////
+        // 玩家数量
+        virtual uint32 GetPlayerCount();
 
-		// 查找玩家
-		virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line );
+        // 创建角色
+        virtual KFEntity* CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* extenddata );
 
-		// 发送消息
-		virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-		virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        // 登出游戏
+        virtual void LogoutPlayer( uint32 playerid );
 
-		virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
-		virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length );
-		
-		virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message );
+        // 踢掉角色
+        virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
 
-		virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
+        // 查找玩家
+        virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line );
 
-	protected:
-		virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveInitDataFunction( const std::string& moudle );
+        // 发送消息
+        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length );
 
-		virtual void AddUnInitDataFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveUnInitDataFunction( const std::string& moudle );
-		
-		virtual void AddRunDataFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveRunDataFunction( const std::string& moudle );
+        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length );
 
-		virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveEnterFunction( const std::string& moudle );
+        virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message );
 
-		virtual void AddLeaveFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveLeaveFunction( const std::string& moudle );
+        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
 
-		virtual void AddLogoutFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveLogoutFunction( const std::string& moudle );
+    protected:
+        virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveInitDataFunction( const std::string& moudle );
 
-		virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function );
-		virtual void RemoveNewPlayerFunction( const std::string& moudle );
+        virtual void AddUnInitDataFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveUnInitDataFunction( const std::string& moudle );
 
-	protected:
-		// 连接World服务器
-		__KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionWorld );
+        virtual void AddRunDataFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveRunDataFunction( const std::string& moudle );
 
-	protected:
-		// 转发消息到玩家
-		__KF_TRANSMIT_FUNCTION__( TransmitMessageToPlayer );
+        virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveEnterFunction( const std::string& moudle );
 
-	protected:
-		// 处理玩家掉线
-		__KF_MESSAGE_FUNCTION__( HandlePlayerDisconnectionReq );
+        virtual void AddLeaveFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveLeaveFunction( const std::string& moudle );
 
-		// 处理踢人消息
-		__KF_MESSAGE_FUNCTION__( HandleKickGamePlayerReq );
+        virtual void AddLogoutFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveLogoutFunction( const std::string& moudle );
 
-		// 处理创建角色
-		__KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
+        virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveNewPlayerFunction( const std::string& moudle );
 
-		// 处理创建角色
-		__KF_MESSAGE_FUNCTION__( HandleCreateRoleAck );
+    protected:
+        // 连接World服务器
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionWorld );
 
-		// 处理修改名字请求
-		__KF_MESSAGE_FUNCTION__( HandleChangeNameReq );
+    protected:
+        // 转发消息到玩家
+        __KF_TRANSMIT_FUNCTION__( TransmitMessageToPlayer );
 
-		// 处理设置性别请求
-		__KF_MESSAGE_FUNCTION__( HandleChangeSexReq );
+    protected:
+        // 处理玩家掉线
+        __KF_MESSAGE_FUNCTION__( HandlePlayerDisconnectionReq );
 
-		// 处理设置名字回馈
-		__KF_MESSAGE_FUNCTION__( HandleSetPlayerNameAck );
+        // 处理踢人消息
+        __KF_MESSAGE_FUNCTION__( HandleKickGamePlayerReq );
 
-		// 请求修改人物头像
-		__KF_MESSAGE_FUNCTION__( HandleChangeIconReq );
+        // 处理创建角色
+        __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
 
-		// 处理修改头像框请求
-		__KF_MESSAGE_FUNCTION__( HandleChangeIconBoxReq );
+        // 处理创建角色
+        __KF_MESSAGE_FUNCTION__( HandleCreateRoleAck );
 
-		// 请求修改个性签名
-		__KF_MESSAGE_FUNCTION__( HandleChangeMottoReq );
+        // 处理修改名字请求
+        __KF_MESSAGE_FUNCTION__( HandleChangeNameReq );
 
-		// 查询玩家所有数据
-		__KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
+        // 处理设置性别请求
+        __KF_MESSAGE_FUNCTION__( HandleChangeSexReq );
 
-		// 处理查询玩家所有数据回馈
-		__KF_MESSAGE_FUNCTION__( HandleQueryPlayerAck );
+        // 处理设置名字回馈
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameAck );
 
-		// 删除属性请求
-		__KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
+        // 请求修改人物头像
+        __KF_MESSAGE_FUNCTION__( HandleChangeIconReq );
 
-		// 查询访客信息
-		__KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
+        // 处理修改头像框请求
+        __KF_MESSAGE_FUNCTION__( HandleChangeIconBoxReq );
 
-		// 查询访客信息回馈
-		__KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
+        // 请求修改个性签名
+        __KF_MESSAGE_FUNCTION__( HandleChangeMottoReq );
 
-		// 查询总的被敬酒次数
-		__KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+        // 查询玩家所有数据
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
-		// 查询总的被敬酒次数回馈
-		__KF_MESSAGE_FUNCTION__( HandleQueryToastCountAck );
+        // 处理查询玩家所有数据回馈
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerAck );
 
-		// 查询玩家设置请求
-		__KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );
+        // 删除属性请求
+        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
 
-		// 玩家更新设置请求
-		__KF_MESSAGE_FUNCTION__( HandleUpdateSettingReq );
+        // 查询访客信息
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
 
-	private:
-		// 创建角色
-		void OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid );
+        // 查询访客信息回馈
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
 
-		// 进入游戏世界
-		void SendEnterMessageToWorld( KFEntity* player );
+        // 查询总的被敬酒次数
+        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
 
-		// 离开游戏世界
-		void SendLeaveMessageToWord( KFEntity* player );
+        // 查询总的被敬酒次数回馈
+        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountAck );
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 同步更新属性到客户端
-		void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
-		
-		// 同步添加属性到客户端
-		void SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+        // 查询玩家设置请求
+        __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );
 
-		// 同步删除属性到客户端
-		void SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+        // 玩家更新设置请求
+        __KF_MESSAGE_FUNCTION__( HandleUpdateSettingReq );
 
-		// 显示添加奖励消息
-		void SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line );
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private:
+        // 创建角色
+        void OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid );
 
-	private:
-		// 玩家组件
-		KFComponent* _kf_component;
+        // 进入游戏世界
+        void SendEnterMessageToWorld( KFEntity* player );
 
-		// 玩家数据
-		KFData* _kf_player_data;
+        // 离开游戏世界
+        void SendLeaveMessageToWord( KFEntity* player );
 
-		// 更新函数
-		KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 同步更新属性到客户端
+        void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
 
-		// 初始化函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _player_init_function;
+        // 同步添加属性到客户端
+        void SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
 
-		// 卸载函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _player_uninit_function;
+        // 同步删除属性到客户端
+        void SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
 
-		// 登录函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _player_enter_function;
+        // 显示添加奖励消息
+        void SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		// 离开函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _player_leave_function;
+    private:
+        // 玩家组件
+        KFComponent* _kf_component;
 
-		// 登出函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _player_logout_function;
+        // 玩家数据
+        KFData* _kf_player_data;
 
-		// 新玩家处理函数
-		KFBind< std::string, const std::string&, KFEntityFunction > _new_player_function;
+        // 更新函数
+        KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;
 
-	};
+        // 初始化函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_init_function;
+
+        // 卸载函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_uninit_function;
+
+        // 登录函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_enter_function;
+
+        // 离开函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_leave_function;
+
+        // 登出函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_logout_function;
+
+        // 新玩家处理函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _new_player_function;
+
+    };
 }
 
 #endif

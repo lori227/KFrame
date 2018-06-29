@@ -6,15 +6,15 @@
 
 namespace KFrame
 {
-	class KFDump
-	{
-	public:
-		KFDump( const char* appname, const char* apptype, int appid );
-		~KFDump();
+    class KFDump
+    {
+    public:
+        KFDump( const char* appname, const char* apptype, int appid );
+        ~KFDump();
 
-		// 异常回调
-		static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* pexceptioninfo );
-	};
+        // 异常回调
+        static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* pexceptioninfo );
+    };
 
 }
 #endif

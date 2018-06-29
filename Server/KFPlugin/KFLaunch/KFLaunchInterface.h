@@ -5,10 +5,10 @@
 
 namespace KFrame
 {
-	class KFLaunchInterface : public KFModule
-	{
-	public:
-	};
+    class KFLaunchInterface : public KFModule
+    {
+    public:
+    };
 }
 
 

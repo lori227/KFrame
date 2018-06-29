@@ -4,102 +4,102 @@
 
 namespace KFrame
 {
-	KFExcelZip::KFExcelZip()
-	{
+    KFExcelZip::KFExcelZip()
+    {
 
-	}
-	
-	KFExcelZip::~KFExcelZip()
-	{
-		unzClose( _zipFile );
-	}
+    }
 
-	bool KFExcelZip::Open( const char* file )
-	{
-		_zipFile = unzOpen( file );
+    KFExcelZip::~KFExcelZip()
+    {
+        unzClose( _zipFile );
+    }
 
-		if ( !_zipFile )
-			return false;
+    bool KFExcelZip::Open( const char* file )
+    {
+        _zipFile = unzOpen( file );
 
-		char szCurrentFileName[ 260 ] = { 0 };
-		unz_file_info64 fileInfo;
+        if ( !_zipFile )
+            return false;
 
-		int err = unzGoToNextFile2( _zipFile, &fileInfo,
-			szCurrentFileName, sizeof( szCurrentFileName ) - 1, nullptr, 0, nullptr, 0 );
-		while ( err == UNZ_OK )
-		{
-			unz_file_pos posInfo;
-			if ( unzGetFilePos( _zipFile, &posInfo ) == UNZ_OK )
-			{
-				std::string currentFileName = szCurrentFileName;
+        char szCurrentFileName[ 260 ] = { 0 };
+        unz_file_info64 fileInfo;
 
-				ZipEntryInfo entry;
-				entry.pos = posInfo;
-				entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
-				_files[ currentFileName ] = entry;
-			}
-			err = unzGoToNextFile2( _zipFile, &fileInfo,
-				szCurrentFileName, sizeof( szCurrentFileName ) - 1, nullptr, 0, nullptr, 0 );
-		}
+        int err = unzGoToNextFile2( _zipFile, &fileInfo,
+                                    szCurrentFileName, sizeof( szCurrentFileName ) - 1, nullptr, 0, nullptr, 0 );
+        while ( err == UNZ_OK )
+        {
+            unz_file_pos posInfo;
+            if ( unzGetFilePos( _zipFile, &posInfo ) == UNZ_OK )
+            {
+                std::string currentFileName = szCurrentFileName;
 
-		return true;
-	}
+                ZipEntryInfo entry;
+                entry.pos = posInfo;
+                entry.uncompressed_size = ( uLong )fileInfo.uncompressed_size;
+                _files[ currentFileName ] = entry;
+            }
+            err = unzGoToNextFile2( _zipFile, &fileInfo,
+                                    szCurrentFileName, sizeof( szCurrentFileName ) - 1, nullptr, 0, nullptr, 0 );
+        }
 
-	char* KFExcelZip::GetFileData( const char* filename, unsigned long& size )
-	{
-		char * pBuffer = nullptr;
+        return true;
+    }
 
-		auto it = _files.find( filename );
+    char* KFExcelZip::GetFileData( const char* filename, unsigned long& size )
+    {
+        char* pBuffer = nullptr;
 
-		if ( it == _files.end() )
-		{
-			return nullptr;
-		}
+        auto it = _files.find( filename );
 
-		ZipEntryInfo fileInfo = it->second;
+        if ( it == _files.end() )
+        {
+            return nullptr;
+        }
 
-		int nRet = unzGoToFilePos( _zipFile, &fileInfo.pos );
-		if ( UNZ_OK != nRet )
-		{
-			return nullptr;
-		}
+        ZipEntryInfo fileInfo = it->second;
 
-		nRet = unzOpenCurrentFile( _zipFile );
-		if ( UNZ_OK != nRet )
-		{
-			return nullptr;
-		}
+        int nRet = unzGoToFilePos( _zipFile, &fileInfo.pos );
+        if ( UNZ_OK != nRet )
+        {
+            return nullptr;
+        }
 
-		pBuffer = new char[ fileInfo.uncompressed_size ];
-		unzReadCurrentFile( _zipFile, pBuffer, fileInfo.uncompressed_size );
+        nRet = unzOpenCurrentFile( _zipFile );
+        if ( UNZ_OK != nRet )
+        {
+            return nullptr;
+        }
 
-		size = fileInfo.uncompressed_size;
-		unzCloseCurrentFile( _zipFile );
+        pBuffer = new char[ fileInfo.uncompressed_size ];
+        unzReadCurrentFile( _zipFile, pBuffer, fileInfo.uncompressed_size );
 
-		return pBuffer;
-	}
+        size = fileInfo.uncompressed_size;
+        unzCloseCurrentFile( _zipFile );
 
-	bool KFExcelZip::OpenXML( const char* filename, rapidxml::xml_document<>& doc )
-	{
-		unsigned long size = 0;
-		char* data = GetFileData( filename, size );
+        return pBuffer;
+    }
 
-		if ( data == nullptr )
-		{
-			return false;
-		}
+    bool KFExcelZip::OpenXML( const char* filename, rapidxml::xml_document<>& doc )
+    {
+        unsigned long size = 0;
+        char* data = GetFileData( filename, size );
 
-		char* pData = new char[ size + 1 ];
-		strncpy( pData, data, size );
-		pData[ size ] = 0;
-		doc.parse<0>( pData );
+        if ( data == nullptr )
+        {
+            return false;
+        }
 
-		if ( data != nullptr )
-		{
-			delete[] data;
-		}
+        char* pData = new char[ size + 1 ];
+        strncpy( pData, data, size );
+        pData[ size ] = 0;
+        doc.parse<0>( pData );
 
-		return true;
-	}
+        if ( data != nullptr )
+        {
+            delete[] data;
+        }
+
+        return true;
+    }
 
 }

@@ -13,21 +13,21 @@
 
 namespace KFrame
 {
-	class KFGuildProxyModule : public KFGuildProxyInterface
-	{
-	public:
-		KFGuildProxyModule();
-		~KFGuildProxyModule();
+    class KFGuildProxyModule : public KFGuildProxyInterface
+    {
+    public:
+        KFGuildProxyModule();
+        ~KFGuildProxyModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
+        // 刷新
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-	};
+        // 关闭
+        virtual void BeforeShut();
+    };
 }
 
 #endif

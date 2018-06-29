@@ -5,29 +5,29 @@
 
 namespace KFrame
 {
-	/////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////
-	class KFXml
-	{
-	public:
-		KFXml( const char* file );
-		~KFXml();
-				
-		// 查找节点
-		KFNode RootNode();
-		KFNode FindNode( const char* key );
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    class KFXml
+    {
+    public:
+        KFXml( const char* file );
+        ~KFXml();
 
-		const char* GetFileName() const;
+        // 查找节点
+        KFNode RootNode();
+        KFNode FindNode( const char* key );
 
-	protected:
-		// 解析文件
-		void Parse( const char* file );
+        const char* GetFileName() const;
 
-	private:
-		void* _document;
-		void* _data;
-		std::string _file;
-	};
+    protected:
+        // 解析文件
+        void Parse( const char* file );
+
+    private:
+        void* _document;
+        void* _data;
+        std::string _file;
+    };
 }
 
 #endif

@@ -3,51 +3,51 @@
 
 namespace KFrame
 {
-	static const char* _gb_code = "gb2312";
-	static const char* _utf8_code = "utf-8";
+    static const char* _gb_code = "gb2312";
+    static const char* _utf8_code = "utf-8";
 
-	std::string KFConvert::ToCovert( void* iconvhandle, const std::string& source )
-	{
-		auto insize = source.size();
-		const char* inbuff = source.data();
+    std::string KFConvert::ToCovert( void* iconvhandle, const std::string& source )
+    {
+        auto insize = source.size();
+        const char* inbuff = source.data();
 
-		static const uint32 _length = 1024 * 10;
-		
-		char iconvbuff[ _length ];
-		auto outbuff = iconvbuff;
-		uint32 iconvsize = _length;
+        static const uint32 _length = 1024 * 10;
 
-		auto iconvresult = iconv( iconvhandle, (char**)(&inbuff), (size_t*)&insize, (char**)(&outbuff), (size_t*)&iconvsize );
+        char iconvbuff[ _length ];
+        auto outbuff = iconvbuff;
+        uint32 iconvsize = _length;
 
-		//关闭字符集转换
-		iconv_close( iconvhandle );
+        auto iconvresult = iconv( iconvhandle, ( char** )( &inbuff ), ( size_t* )&insize, ( char** )( &outbuff ), ( size_t* )&iconvsize );
 
-		std::string result;
-		result.assign( iconvbuff, _length - iconvsize );
-		return result;
-	}
+        //关闭字符集转换
+        iconv_close( iconvhandle );
 
-	std::string KFConvert::ToUTF8( const std::string& source )
-	{
-		//打开字符集转换
-		auto iconvhandle = iconv_open( _utf8_code, _gb_code );
-		if ( iconvhandle == (iconv_t)-1 )
-		{
-			return "";
-		}
+        std::string result;
+        result.assign( iconvbuff, _length - iconvsize );
+        return result;
+    }
 
-		return ToCovert( iconvhandle, source );
-	}
+    std::string KFConvert::ToUTF8( const std::string& source )
+    {
+        //打开字符集转换
+        auto iconvhandle = iconv_open( _utf8_code, _gb_code );
+        if ( iconvhandle == ( iconv_t ) -1 )
+        {
+            return "";
+        }
 
-	std::string KFConvert::ToAscii( const std::string& source )
-	{
-		//打开字符集转换
-		auto iconvhandle = iconv_open( _gb_code, _utf8_code );
-		if ( iconvhandle == (iconv_t)-1 )
-		{
-			return "";
-		}
+        return ToCovert( iconvhandle, source );
+    }
 
-		return ToCovert( iconvhandle, source );
-	}
+    std::string KFConvert::ToAscii( const std::string& source )
+    {
+        //打开字符集转换
+        auto iconvhandle = iconv_open( _gb_code, _utf8_code );
+        if ( iconvhandle == ( iconv_t ) -1 )
+        {
+            return "";
+        }
+
+        return ToCovert( iconvhandle, source );
+    }
 }

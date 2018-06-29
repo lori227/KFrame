@@ -2,35 +2,35 @@
 
 namespace KFrame
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	KFClusterServerConfig::KFClusterServerConfig()
-	{
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    KFClusterServerConfig::KFClusterServerConfig()
+    {
 
-	}
+    }
 
-	KFClusterServerConfig::~KFClusterServerConfig()
-	{
-		
-	}
-	
-	bool KFClusterServerConfig::LoadConfig( const char* file )
-	{
-		try
-		{
-			KFXml kfxml( file );
-			auto config = kfxml.RootNode();
-			//////////////////////////////////////////////////////////////////
-			auto cluster = config.FindNode( "ClusterServer" );
+    KFClusterServerConfig::~KFClusterServerConfig()
+    {
 
-			_cluster_key = cluster.GetString( "ClusterKey" );
+    }
 
-			//////////////////////////////////////////////////////////////////
-		}
-		catch ( ... )
-		{
-			return false;
-		}
+    bool KFClusterServerConfig::LoadConfig( const char* file )
+    {
+        try
+        {
+            KFXml kfxml( file );
+            auto config = kfxml.RootNode();
+            //////////////////////////////////////////////////////////////////
+            auto cluster = config.FindNode( "ClusterServer" );
 
-		return true;
-	}
+            _cluster_key = cluster.GetString( "ClusterKey" );
+
+            //////////////////////////////////////////////////////////////////
+        }
+        catch ( ... )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

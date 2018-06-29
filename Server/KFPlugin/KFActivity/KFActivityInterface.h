@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFActivityInterface : public KFModule
-	{
-	public:
+    class KFActivityInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 

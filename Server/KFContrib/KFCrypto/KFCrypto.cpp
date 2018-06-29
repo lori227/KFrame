@@ -3,22 +3,22 @@
 
 namespace KFrame
 {
-	using Poco::Crypto::DigestEngine;
+    using Poco::Crypto::DigestEngine;
 
-	std::string KFCrypto::Md5Encode( const std::string& source )
-	{
-		DigestEngine engine( "MD5" );
-		engine.update( source );
+    std::string KFCrypto::Md5Encode( const std::string& source )
+    {
+        DigestEngine engine( "MD5" );
+        engine.update( source );
 
-		return DigestEngine::digestToHex( engine.digest() );
-	}
+        return DigestEngine::digestToHex( engine.digest() );
+    }
 
-	std::string KFCrypto::Sha1Encode( const std::string& source )
-	{
-		DigestEngine engine( "SHA1" );
-		engine.update( source );
+    std::string KFCrypto::Sha1Encode( const std::string& source )
+    {
+        DigestEngine engine( "SHA1" );
+        engine.update( source );
 
-		return DigestEngine::digestToHex( engine.digest() );
-	}
+        return DigestEngine::digestToHex( engine.digest() );
+    }
 
 }

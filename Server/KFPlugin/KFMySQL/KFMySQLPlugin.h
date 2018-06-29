@@ -1,21 +1,18 @@
-#ifndef __KF_MYSQL_PLUGIN_H__
+Ôªø#ifndef __KF_MYSQL_PLUGIN_H__
 #define __KF_MYSQL_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-	class KFMySQLPlugin : public KFPlugin
-	{
-	public:
-		// ◊¢≤·
-		virtual void Install();
+    class KFMySQLPlugin : public KFPlugin
+    {
+    public:
+        virtual void Install();
 
-		// –∂‘ÿ
-		virtual void UnInstall();
+        virtual void UnInstall();
 
-		// º”‘ÿ
-		virtual void LoadModule();
-	};
+        virtual void LoadModule();
+    };
 }
 
 

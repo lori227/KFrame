@@ -6,23 +6,23 @@
 
 namespace KFrame
 {
-	class KFHttpServer;
-	class KFHttpHandle : public Poco::Net::HTTPRequestHandler
-	{
-	public:
-		KFHttpHandle( KFHttpServer* kfhttpserver );
+    class KFHttpServer;
+    class KFHttpHandle : public Poco::Net::HTTPRequestHandler
+    {
+    public:
+        KFHttpHandle( KFHttpServer* kfhttpserver );
 
-		// 处理请求
-		virtual void handleRequest( Poco::Net::HTTPServerRequest &request, Poco::Net::HTTPServerResponse &response );
+        // 处理请求
+        virtual void handleRequest( Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response );
 
-	protected:
-		//  读取数据
-		std::string ReadRequestData( Poco::Net::HTTPServerRequest &request );
-		
-	private:
-		// httpserver
-		KFHttpServer* _http_server;
-	};
+    protected:
+        //  读取数据
+        std::string ReadRequestData( Poco::Net::HTTPServerRequest& request );
+
+    private:
+        // httpserver
+        KFHttpServer* _http_server;
+    };
 }
 
 

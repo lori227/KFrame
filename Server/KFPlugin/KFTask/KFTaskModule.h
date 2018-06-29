@@ -19,40 +19,40 @@
 
 namespace KFrame
 {
-	class KFComponent;
-	class KFTaskModule : public KFTaskInterface
-	{
-	public:
-		KFTaskModule();
-		~KFTaskModule();
+    class KFComponent;
+    class KFTaskModule : public KFTaskInterface
+    {
+    public:
+        KFTaskModule();
+        ~KFTaskModule();
 
-		// 加载配置
-		virtual void InitMoudle();
+        // 加载配置
+        virtual void InitMoudle();
 
-		// 逻辑
-		virtual void BeforeRun();
+        // 逻辑
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 领取奖励
-		__KF_MESSAGE_FUNCTION__( HandleReceiveTaskRewardReq );
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	private:
-		// 领取任务奖励
-		uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 领取奖励
+        __KF_MESSAGE_FUNCTION__( HandleReceiveTaskRewardReq );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    private:
+        // 领取任务奖励
+        uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
 
-		// 任务数值更新回调
-		void OnUpdateTaskValueCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        // 任务数值更新回调
+        void OnUpdateTaskValueCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
 
-		// 任务标记更新回调
-		void OnUpdateTaskFlagCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-	private:
-		KFComponent * _kf_component;
-	};
+        // 任务标记更新回调
+        void OnUpdateTaskFlagCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+    private:
+        KFComponent* _kf_component;
+    };
 }
 
 

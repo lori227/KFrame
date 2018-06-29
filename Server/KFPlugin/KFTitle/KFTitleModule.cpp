@@ -7,25 +7,25 @@
 #include "KFNetFunction/KFNetFunctionInterface.h"
 namespace KFrame
 {
-	KFTitleModule::KFTitleModule()
-	{
-		_kf_player_logic = nullptr;
-	}
+    KFTitleModule::KFTitleModule()
+    {
+        _kf_player_logic = nullptr;
+    }
 
-	KFTitleModule::~KFTitleModule()
-	{
-	}
+    KFTitleModule::~KFTitleModule()
+    {
+    }
 
-	void KFTitleModule::InitMoudle()
-	{
-		///////////////////////////////////////////////////////////////////////////////
-		_kf_config->AddConfig( _kf_title_config, _kf_plugin->_config, true );
-	}
+    void KFTitleModule::InitMoudle()
+    {
+        ///////////////////////////////////////////////////////////////////////////////
+        _kf_config->AddConfig( _kf_title_config, _kf_plugin->_config, true );
+    }
 
-	void KFTitleModule::BeforeRun()
-	{
-		_kf_player_logic = _kf_component->FindComponent( KFField::_player );
-	}
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////	
+    void KFTitleModule::BeforeRun()
+    {
+        _kf_player_logic = _kf_component->FindComponent( KFField::_player );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

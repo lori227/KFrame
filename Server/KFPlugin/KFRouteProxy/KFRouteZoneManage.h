@@ -5,45 +5,45 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFRouteZone )
-	{
-	public:
-		KFRouteZone()
-		{
-			_zone_id = 0;
-			_server_id = 0;
-			_handle_id = 0;
-		}
+    class KFRouteZone
+    {
+    public:
+        KFRouteZone()
+        {
+            _zone_id = 0;
+            _server_id = 0;
+            _handle_id = 0;
+        }
 
-		uint32 _zone_id;
-		uint32 _server_id;
-		uint32 _handle_id;
-	};
+        uint32 _zone_id;
+        uint32 _server_id;
+        uint32 _handle_id;
+    };
 
-	// 匹配服务器管理器
-	class KFRouteZoneManage : public KFSingleton< KFRouteZoneManage >
-	{
-	public:
-		KFRouteZoneManage();
-		~KFRouteZoneManage();
-		
-		// 添加游戏区
-		KFRouteZone* AddRouteZone( uint32 zoneid, uint32 serverid, uint32 handleid );
+    // 匹配服务器管理器
+    class KFRouteZoneManage : public KFSingleton< KFRouteZoneManage >
+    {
+    public:
+        KFRouteZoneManage();
+        ~KFRouteZoneManage();
 
-		// 删除游戏区
-		void RemoveRouteZone( uint32 serverid );
-		
-		// 查找登录节点
-		KFRouteZone* FindRouteZone( uint32 serverid );
+        // 添加游戏区
+        KFRouteZone* AddRouteZone( uint32 zoneid, uint32 serverid, uint32 handleid );
 
-	public:
-		// 登录节点列表
-		KFMap< uint32, uint32, KFRouteZone > _kf_route_zone;
-	};
+        // 删除游戏区
+        void RemoveRouteZone( uint32 serverid );
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_zone_manage = KFRouteZoneManage::Instance();
-	///////////////////////////////////////////////////////////////////////////////////////////////
+        // 查找登录节点
+        KFRouteZone* FindRouteZone( uint32 serverid );
+
+    public:
+        // 登录节点列表
+        KFMap< uint32, uint32, KFRouteZone > _kf_route_zone;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_zone_manage = KFRouteZoneManage::Instance();
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

@@ -20,56 +20,56 @@
 
 namespace KFrame
 {
-	class KFPublicShardModule : public KFPublicShardInterface
-	{
-	public:
-		KFPublicShardModule();
-		~KFPublicShardModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFPublicShardModule : public KFPublicShardInterface
+    {
+    public:
+        KFPublicShardModule();
+        ~KFPublicShardModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-	protected:
-		// 更新公共数据
-		__KF_MESSAGE_FUNCTION__( HandleUpdatePublicDataReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 查询基础数据
-		__KF_MESSAGE_FUNCTION__( HandleQueryBasicDataReq );
-		
-		// 处理创建角色
-		__KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
+    protected:
+        // 更新公共数据
+        __KF_MESSAGE_FUNCTION__( HandleUpdatePublicDataReq );
 
-		// 处理设置名字
-		__KF_MESSAGE_FUNCTION__( HandleSetPlayerNameReq );
+        // 查询基础数据
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicDataReq );
 
-		// 处理玩家敬酒请求(被敬酒次数判断)
-		__KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
+        // 处理创建角色
+        __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
 
-		// 处理更新访客列表请求
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGuestListReq );
+        // 处理设置名字
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameReq );
 
-		// 处理查询访客请求
-		__KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
+        // 处理玩家敬酒请求(被敬酒次数判断)
+        __KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
 
-		// 处理查询总的被敬酒次数请求
-		__KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+        // 处理更新访客列表请求
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGuestListReq );
 
-	private:
-		// 设置玩家名字
-		uint32 ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname );
+        // 处理查询访客请求
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
 
-		// 清除被敬酒信息
-		void OnScheduleCleanDailyToast( uint32 id, const char*data, uint32 size );
-	};
+        // 处理查询总的被敬酒次数请求
+        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+
+    private:
+        // 设置玩家名字
+        uint32 ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname );
+
+        // 清除被敬酒信息
+        void OnScheduleCleanDailyToast( uint32 id, const char* data, uint32 size );
+    };
 }
 
 

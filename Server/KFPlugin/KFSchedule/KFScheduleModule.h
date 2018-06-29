@@ -15,30 +15,30 @@
 
 namespace KFrame
 {
-	class KFScheduleModule : public KFScheduleInterface
-	{
-	public:
-		KFScheduleModule();
-		~KFScheduleModule();
+    class KFScheduleModule : public KFScheduleInterface
+    {
+    public:
+        KFScheduleModule();
+        ~KFScheduleModule();
 
-		virtual void BeforeRun();
-		virtual void ShutDown();
+        virtual void BeforeRun();
+        virtual void ShutDown();
 
-		// 逻辑
-		////////////////////////////////////////////////////////////////////////////////
-		// 创建计划设定
-		virtual KFScheduleSetting* CreateScheduleSetting();
-		
-	protected:
-		// 注册计划任务
-		virtual void AddSchedule( const std::string& module, KFScheduleSetting* kfsetting, KFScheduleFunction& function );
+        // 逻辑
+        ////////////////////////////////////////////////////////////////////////////////
+        // 创建计划设定
+        virtual KFScheduleSetting* CreateScheduleSetting();
 
-		// 删除计划任务
-		void RemoveSchedule( const std::string& module );
+    protected:
+        // 注册计划任务
+        virtual void AddSchedule( const std::string& module, KFScheduleSetting* kfsetting, KFScheduleFunction& function );
 
-	private:
-		void Run();
-	};
+        // 删除计划任务
+        void RemoveSchedule( const std::string& module );
+
+    private:
+        void Run();
+    };
 }
 
 

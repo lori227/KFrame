@@ -1,4 +1,4 @@
-// Vector2D.h
+﻿// Vector2D.h
 
 #pragma once
 
@@ -7,77 +7,77 @@ class MATH_LIBRARY_API Math3D::Vector2D
 {
 public:
 
-	Vector2D( void );
-	Vector2D( const Vector2D& vector );
-	Vector2D( Scalar x, Scalar y );
-	~Vector2D( void );
+    Vector2D( void );
+    Vector2D( const Vector2D& vector );
+    Vector2D( Scalar x, Scalar y );
+    ~Vector2D( void );
 
-	Vector2D& Set( const Vector2D& vector );
-	void Get( Vector2D& result ) const;
-	
-	Vector2D& Set( Scalar x, Scalar y );
-	void Get( Scalar& x, Scalar& y ) const;
+    Vector2D& Set( const Vector2D& vector );
+    void Get( Vector2D& result ) const;
 
-	void SetX( Scalar x );
-	void SetY( Scalar y );
+    Vector2D& Set( Scalar x, Scalar y );
+    void Get( Scalar& x, Scalar& y ) const;
 
-	Scalar GetX( void ) const;
-	Scalar GetY( void ) const;
+    void SetX( Scalar x );
+    void SetY( Scalar y );
 
-	Scalar Length( void ) const;
+    Scalar GetX( void ) const;
+    Scalar GetY( void ) const;
 
-	bool SetNormalized( const Vector2D& vector );
-	bool GetNormalized( Vector2D& result ) const;
+    Scalar Length( void ) const;
 
-	Scalar Angle( const Vector2D& vector ) const;
+    bool SetNormalized( const Vector2D& vector );
+    bool GetNormalized( Vector2D& result ) const;
 
-	Vector2D& operator=( const Vector2D& vector );
-	Vector2D operator+( const Vector2D& vector ) const;
-	Vector2D operator-( const Vector2D& vector ) const;
-	Vector2D operator*( Scalar scalar ) const;
+    Scalar Angle( const Vector2D& vector ) const;
 
-	void operator+=( const Vector2D& vector );
-	void operator-=( const Vector2D& vector );
+    Vector2D& operator=( const Vector2D& vector );
+    Vector2D operator+( const Vector2D& vector ) const;
+    Vector2D operator-( const Vector2D& vector ) const;
+    Vector2D operator*( Scalar scalar ) const;
 
-	Vector2D& Add( const Vector2D& vectorA, const Vector2D& vectorB );
-	Vector2D& Add( const Vector2D& vectorB );
-	Vector2D& Sub( const Vector2D& vectorA, const Vector2D& vectorB );
-	Vector2D& Sub( const Vector2D& vectorB );
-	Scalar Dot( const Vector2D& vector ) const;
-	Vector2D& Scale( Scalar scalar );
-	Vector2D& Scale( const Vector2D& vector, Scalar scalar );
-	Vector2D& OrthoProject( const Vector2D& unitProjectionVector, const Vector2D& vector );
-	Vector2D& OrthoReject( const Vector2D& unitRejectionVector, const Vector2D& vector );
-	Vector2D& Rotate( Scalar angle );
-	Vector2D& Rotate( const Vector2D& vector, Scalar angle );
+    void operator+=( const Vector2D& vector );
+    void operator-=( const Vector2D& vector );
 
-	// Add two vectors together.
-	static void Add( Vector2D& result, const Vector2D& vectorA, const Vector2D& vectorB );
+    Vector2D& Add( const Vector2D& vectorA, const Vector2D& vectorB );
+    Vector2D& Add( const Vector2D& vectorB );
+    Vector2D& Sub( const Vector2D& vectorA, const Vector2D& vectorB );
+    Vector2D& Sub( const Vector2D& vectorB );
+    Scalar Dot( const Vector2D& vector ) const;
+    Vector2D& Scale( Scalar scalar );
+    Vector2D& Scale( const Vector2D& vector, Scalar scalar );
+    Vector2D& OrthoProject( const Vector2D& unitProjectionVector, const Vector2D& vector );
+    Vector2D& OrthoReject( const Vector2D& unitRejectionVector, const Vector2D& vector );
+    Vector2D& Rotate( Scalar angle );
+    Vector2D& Rotate( const Vector2D& vector, Scalar angle );
 
-	// Subtract one vector from another.
-	static void Sub( Vector2D& result, const Vector2D& vectorA, const Vector2D& vectorB );
+    // Add two vectors together.
+    static void Add( Vector2D& result, const Vector2D& vectorA, const Vector2D& vectorB );
 
-	// Take the dot product of two vectors.
-	static Scalar Dot( const Vector2D& vectorA, const Vector2D& vectorB );
+    // Subtract one vector from another.
+    static void Sub( Vector2D& result, const Vector2D& vectorA, const Vector2D& vectorB );
 
-	// Scale the given vector by the given scalar.
-	static void Scale( Vector2D& result, const Vector2D& vector, Scalar scalar );
+    // Take the dot product of two vectors.
+    static Scalar Dot( const Vector2D& vectorA, const Vector2D& vectorB );
 
-	// Find the orthogonal projection of one vector onto another.  The given projection vector must be of unit length.
-	static void OrthoProject( Vector2D& result, const Vector2D& unitProjectionVector, const Vector2D& vector );
+    // Scale the given vector by the given scalar.
+    static void Scale( Vector2D& result, const Vector2D& vector, Scalar scalar );
 
-	// Find the orthogonal rejection of one vector from another.  The given rejection vector must be of unit length.
-	static void OrthoReject( Vector2D& result, const Vector2D& unitRejectionVector, const Vector2D& vector );
+    // Find the orthogonal projection of one vector onto another.  The given projection vector must be of unit length.
+    static void OrthoProject( Vector2D& result, const Vector2D& unitProjectionVector, const Vector2D& vector );
 
-	// Rotate the given vector in the XY-plane about the given angle in radians.
-	static void Rotate( Vector2D& result, const Vector2D& vector, Scalar angle );
+    // Find the orthogonal rejection of one vector from another.  The given rejection vector must be of unit length.
+    static void OrthoReject( Vector2D& result, const Vector2D& unitRejectionVector, const Vector2D& vector );
 
-	static const Vector2D xAxis;
-	static const Vector2D yAxis;
+    // Rotate the given vector in the XY-plane about the given angle in radians.
+    static void Rotate( Vector2D& result, const Vector2D& vector, Scalar angle );
+
+    static const Vector2D xAxis;
+    static const Vector2D yAxis;
 
 private:
 
-	Scalar x, y;
+    Scalar x, y;
 };
 
 // Vector2D.h

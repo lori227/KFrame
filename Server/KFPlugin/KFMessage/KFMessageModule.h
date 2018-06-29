@@ -14,30 +14,30 @@
 
 namespace KFrame
 {
-	class KFMessageModule : public KFMessageInterface
-	{
-	public:
-		KFMessageModule();
-		~KFMessageModule();
-		
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 执行函数
-		virtual bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
-		//////////////////////////////////////////////////////////////////////////////////////////
+    class KFMessageModule : public KFMessageInterface
+    {
+    public:
+        KFMessageModule();
+        ~KFMessageModule();
 
-		// 取消注册
-		virtual void UnRegisterFunction( uint32 msgid );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 执行函数
+        virtual bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        //////////////////////////////////////////////////////////////////////////////////////////
 
-	protected:
+        // 取消注册
+        virtual void UnRegisterFunction( uint32 msgid );
 
-		// 添加函数
-		virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
+    protected:
 
-	private:
-		// 处理器函数
-		KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
-	};
+        // 添加函数
+        virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
+
+    private:
+        // 处理器函数
+        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+    };
 }
 
 

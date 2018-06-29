@@ -7,35 +7,35 @@
 namespace KFrame
 {
 
-	class KFKernelConfig : public KFConfig, public KFSingleton< KFKernelConfig >
-	{
-	public:
-		KFKernelConfig();
-		~KFKernelConfig();
+    class KFKernelConfig : public KFConfig, public KFSingleton< KFKernelConfig >
+    {
+    public:
+        KFKernelConfig();
+        ~KFKernelConfig();
 
-		// 加载配置
-		bool LoadConfig( const char* file );
+        // 加载配置
+        bool LoadConfig( const char* file );
 
-		// 倍数属性
-		bool IsMultipleData( const std::string& dataname ) const;
+        // 倍数属性
+        bool IsMultipleData( const std::string& dataname ) const;
 
-	public:
+    public:
 
-		// 属性配置的文件名
-		std::string _class_file;
+        // 属性配置的文件名
+        std::string _class_file;
 
-		// 全局类名
-		std::string _global_class_name;
+        // 全局类名
+        std::string _global_class_name;
 
-		// 延迟保持时间
-		uint32 _delay_save_time;
+        // 延迟保持时间
+        uint32 _delay_save_time;
 
-		// 允许有倍数的属性
-		std::set< std::string > _multiple_data;
-	};
+        // 允许有倍数的属性
+        std::set< std::string > _multiple_data;
+    };
 
-	///////////////////////////////////////////////////////////////////////////
-	static auto _kf_kernel_config = KFKernelConfig::Instance();
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    static auto _kf_kernel_config = KFKernelConfig::Instance();
+    ///////////////////////////////////////////////////////////////////////////
 }
 #endif

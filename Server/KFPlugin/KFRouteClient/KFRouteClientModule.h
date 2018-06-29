@@ -18,41 +18,41 @@
 
 namespace KFrame
 {
-	class KFRouteClientModule : public KFRouteClientInterface
-	{
-	public:
-		KFRouteClientModule();
-		~KFRouteClientModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFRouteClientModule : public KFRouteClientInterface
+    {
+    public:
+        KFRouteClientModule();
+        ~KFRouteClientModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 转发消息
-		virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-		virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
-	
-		// 卸载
-		virtual void UnRegisterTransmitFunction();
-		virtual void SetTransmitFunction( KFTransmitFunction& function );
-	protected:
+        // 初始化
+        virtual void BeforeRun();
 
-		// 转发消息
-		__KF_MESSAGE_FUNCTION__( HandleTransmitRouteZoneMessageAck );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 转发消息
+        virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
 
-	private:
-		// 连接到RouteProxy
-		void OnConnectionRouteProxy( uint32 serverid );
-	private:
-		// 转发函数
-		KFTransmitFunction _kf_transmit_function;
-	};
+        // 卸载
+        virtual void UnRegisterTransmitFunction();
+        virtual void SetTransmitFunction( KFTransmitFunction& function );
+    protected:
+
+        // 转发消息
+        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteZoneMessageAck );
+
+    private:
+        // 连接到RouteProxy
+        void OnConnectionRouteProxy( uint32 serverid );
+    private:
+        // 转发函数
+        KFTransmitFunction _kf_transmit_function;
+    };
 }
 
 

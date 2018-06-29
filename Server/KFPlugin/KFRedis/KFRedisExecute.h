@@ -10,114 +10,114 @@
 
 namespace KFrame
 {
-	__MT_CLASS__( KFRedisExecute ), public KFRedisDriver
-	{
-	public:
-		/////////////////////////////////////////////////////////////////////////////////////////////
-		KFRedisExecute();
-		~KFRedisExecute();
+    class KFRedisExecute : public KFRedisDriver
+    {
+    public:
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        KFRedisExecute();
+        ~KFRedisExecute();
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual bool VoidExecute( const char* format, ... );
-		virtual bool VoidExecute( const MapString& fieldvalue, const char* format, ... );
-		virtual bool VoidExecute( const VectorString& fieldvalue, const char* format, ... );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual bool VoidExecute( const char* format, ... );
+        virtual bool VoidExecute( const MapString& fieldvalue, const char* format, ... );
+        virtual bool VoidExecute( const VectorString& fieldvalue, const char* format, ... );
 
-		virtual bool UInt32Execute( uint32& value, const char* format, ... );
-		virtual bool UInt64Execute( uint64& value, const char* format, ... );
-		virtual bool StringExecute( std::string& value, const char* format, ... );
-		virtual bool MapExecute( MapString& value, const char* format, ... );
-		virtual bool VectorExecute( VectorString& value, const char* format, ... );
-		virtual bool MapExecute( LesserMapString& value, const char* format, ... );
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual bool UInt32Execute( uint32& value, const char* format, ... );
+        virtual bool UInt64Execute( uint64& value, const char* format, ... );
+        virtual bool StringExecute( std::string& value, const char* format, ... );
+        virtual bool MapExecute( MapString& value, const char* format, ... );
+        virtual bool VectorExecute( VectorString& value, const char* format, ... );
+        virtual bool MapExecute( LesserMapString& value, const char* format, ... );
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		// 添加指令
-		virtual void AppendCommand( const char* format, ... );
-		virtual void AppendCommand( const MapString& fieldvalue, const char* format, ... );
-		virtual void AppendCommand( const VectorString& fieldvalue, const char* format, ... );
+        // 添加指令
+        virtual void AppendCommand( const char* format, ... );
+        virtual void AppendCommand( const MapString& fieldvalue, const char* format, ... );
+        virtual void AppendCommand( const VectorString& fieldvalue, const char* format, ... );
 
-		// 执行指令集
-		virtual bool PipelineExecute();
-		virtual bool PipelineExecute( const ListString& commands );
-		virtual bool PipelineExecute( ListString& commands, MapString& value);
-		virtual bool PipelineExecute( ListString& commands, VectorString& value );
+        // 执行指令集
+        virtual bool PipelineExecute();
+        virtual bool PipelineExecute( const ListString& commands );
+        virtual bool PipelineExecute( ListString& commands, MapString& value );
+        virtual bool PipelineExecute( ListString& commands, VectorString& value );
 
-	public:
+    public:
 
-		// 初始化
-		int32 Initialize( const char* ip, int32 port, const char* password );
-		
-		// 关闭
-		void ShutDown();
+        // 初始化
+        int32 Initialize( const char* ip, int32 port, const char* password );
 
-		// 切换索引
-		void SelectIndex( uint32 index );
+        // 关闭
+        void ShutDown();
 
-	private:
-		template< class T >
-		bool CommandExecute( T& value, const char* command )
-		{
-			bool result = false;
-			try
-			{
-				result = _redis.Execute< T >( value, command );
-			}
-			catch ( KFRedisException& exception )
-			{
-				result = ExecuteException< T >( value, exception );
-			}
+        // 切换索引
+        void SelectIndex( uint32 index );
 
-			return result;
-		}
+    private:
+        template< class T >
+        bool CommandExecute( T& value, const char* command )
+        {
+            bool result = false;
+            try
+            {
+                result = _redis.Execute< T >( value, command );
+            }
+            catch ( KFRedisException& exception )
+            {
+                result = ExecuteException< T >( value, exception );
+            }
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            return result;
+        }
 
-		template< class T >
-		bool ExecuteException( T& value, KFRedisException& exception )
-		{
-			if ( !_redis.IsDisconnected() )
-			{
-				return RetCode< T >( exception );
-			}
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			_redis.ReConnect();
+        template< class T >
+        bool ExecuteException( T& value, KFRedisException& exception )
+        {
+            if ( !_redis.IsDisconnected() )
+            {
+                return RetCode< T >( exception );
+            }
 
-			bool result = false;
-			try
-			{
-				result = _redis.Execute< T >( value, exception._command.c_str() );
-			}
-			catch ( KFRedisException& newexception )
-			{
-				result = RetCode< T >( newexception );
-			}
+            _redis.ReConnect();
 
-			return result;
-		}
+            bool result = false;
+            try
+            {
+                result = _redis.Execute< T >( value, exception._command.c_str() );
+            }
+            catch ( KFRedisException& newexception )
+            {
+                result = RetCode< T >( newexception );
+            }
 
-		template< class T >
-		inline bool RetCode( KFRedisException& exception )
-		{
-			KFLogger::LogSql( KFLogger::Error, "[%d] [%s] [%s]",
-				exception._flags, exception._command.c_str(), exception._display.c_str() );
+            return result;
+        }
 
-			return false;
-		}
-		
-	private:
-		// redis
-		KFHiRedis _redis;
+        template< class T >
+        inline bool RetCode( KFRedisException& exception )
+        {
+            KFLogger::LogSql( KFLogger::Error, "[%d] [%s] [%s]",
+                              exception._flags, exception._command.c_str(), exception._display.c_str() );
 
-		// 数据库索引
-		uint32 _index;
+            return false;
+        }
 
-		// 执行的命令
-		ListString _commands;
+    private:
+        // redis
+        KFHiRedis _redis;
 
-		// buffer
-		int8* _buffer;
-		uint32 _length;
-	};
+        // 数据库索引
+        uint32 _index;
+
+        // 执行的命令
+        ListString _commands;
+
+        // buffer
+        int8* _buffer;
+        uint32 _length;
+    };
 }
 #endif

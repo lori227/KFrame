@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFClusterServerInterface : public KFModule
-	{
-	public:
+    class KFClusterServerInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 

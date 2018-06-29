@@ -3,279 +3,279 @@
 
 namespace KFrame
 {
-	KFRecord::KFRecord()
-	{
-	
-	}
+    KFRecord::KFRecord()
+    {
 
-	KFRecord::~KFRecord()
-	{
-	
-	}
-	
-	void KFRecord::Reset()
-	{
-		_data.Clear();
-	}
+    }
 
-	bool KFRecord::IsValid()
-	{
-		return _data.Size() != 0;
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	uint32 KFRecord::Size()
-	{
-		return _data.Size();
-	}
+    KFRecord::~KFRecord()
+    {
 
-	KFData* KFRecord::FirstData()
-	{
-		return _data.First();
-	}
+    }
 
-	KFData* KFRecord::NextData()
-	{
-		return _data.Next();
-	}
+    void KFRecord::Reset()
+    {
+        _data.Clear();
+    }
 
-	void KFRecord::CopyFrom( KFData* kfother )
-	{
-		auto kfchild = kfother->FirstData();
-		while ( kfchild != nullptr )
-		{
-			auto kfdata = KFDataFactory::CreateData( kfchild->GetDataSetting() );
-			if ( kfdata != nullptr )
-			{
-				kfdata->CopyFrom( kfchild );
-				AddData( kfdata->GetKeyID(), kfdata );
-			}
+    bool KFRecord::IsValid()
+    {
+        return _data.Size() != 0;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint32 KFRecord::Size()
+    {
+        return _data.Size();
+    }
 
-			kfchild = kfother->NextData();
-		}
-	}
+    KFData* KFRecord::FirstData()
+    {
+        return _data.First();
+    }
 
-	void KFRecord::SaveTo( KFData* kfother )
-	{
-		kfother->CopyFrom( this );
-	}
+    KFData* KFRecord::NextData()
+    {
+        return _data.Next();
+    }
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	KFData* KFRecord::FindData( uint64 key )
-	{
-		return _data.Find( key );
-	}
+    void KFRecord::CopyFrom( KFData* kfother )
+    {
+        auto kfchild = kfother->FirstData();
+        while ( kfchild != nullptr )
+        {
+            auto kfdata = KFDataFactory::CreateData( kfchild->GetDataSetting() );
+            if ( kfdata != nullptr )
+            {
+                kfdata->CopyFrom( kfchild );
+                AddData( kfdata->GetKeyID(), kfdata );
+            }
 
-	KFData* KFRecord::FindData( uint64 key, const std::string& dataname )
-	{
-		auto kfdata = FindData( key );
-		if ( kfdata == nullptr )
-		{
-			return nullptr;
-		}
+            kfchild = kfother->NextData();
+        }
+    }
 
-		return kfdata->FindData( dataname );
-	}
+    void KFRecord::SaveTo( KFData* kfother )
+    {
+        kfother->CopyFrom( this );
+    }
 
-	KFData* KFRecord::FindData( uint64 parentkey, uint64 childkey )
-	{
-		auto kfdata = FindData( parentkey );
-		if ( kfdata == nullptr )
-		{
-			return nullptr;
-		}
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFData* KFRecord::FindData( uint64 key )
+    {
+        return _data.Find( key );
+    }
 
-		return kfdata->FindData( childkey );
-	}
+    KFData* KFRecord::FindData( uint64 key, const std::string& dataname )
+    {
+        auto kfdata = FindData( key );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
 
-	KFData* KFRecord::FindData( uint64 parentkey, uint64 childkey, const std::string& dataname )
-	{
-		auto kfdata = FindData( parentkey );
-		if ( kfdata == nullptr )
-		{
-			return nullptr;
-		}
+        return kfdata->FindData( dataname );
+    }
 
-		return kfdata->FindData( childkey, dataname );
-	}
+    KFData* KFRecord::FindData( uint64 parentkey, uint64 childkey )
+    {
+        auto kfdata = FindData( parentkey );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
 
-	KFData* KFRecord::FindData( uint64 parentkey, const std::string& dataname, uint64 childkey )
-	{
-		auto kfdata = FindData( parentkey );
-		if ( kfdata == nullptr )
-		{
-			return nullptr;
-		}
+        return kfdata->FindData( childkey );
+    }
 
-		return kfdata->FindData( dataname, childkey );
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFRecord::AddData( uint64 key, KFData* data )
-	{
-		data->SetKeyID( key );
-		data->SetParent( this );
+    KFData* KFRecord::FindData( uint64 parentkey, uint64 childkey, const std::string& dataname )
+    {
+        auto kfdata = FindData( parentkey );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
 
-		_data.Insert( key, data );
+        return kfdata->FindData( childkey, dataname );
+    }
 
-		return true;
-	}
+    KFData* KFRecord::FindData( uint64 parentkey, const std::string& dataname, uint64 childkey )
+    {
+        auto kfdata = FindData( parentkey );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
 
-	bool KFRecord::AddData( uint64 parentkey, uint64 childkey, KFData* data )
-	{
-		auto kfdata = FindData( parentkey );
-		if ( kfdata == nullptr )
-		{
-			return false;
-		}
+        return kfdata->FindData( dataname, childkey );
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFRecord::AddData( uint64 key, KFData* data )
+    {
+        data->SetKeyID( key );
+        data->SetParent( this );
 
-		return kfdata->AddData( childkey, data );
-	}
+        _data.Insert( key, data );
 
-	bool KFRecord::AddData( uint64 key, const std::string& dataname, KFData* data )
-	{
-		auto kfdata = FindData( key );
-		if ( kfdata == nullptr )
-		{
-			return false;
-		}
+        return true;
+    }
 
-		return kfdata->AddData( dataname, data );
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFRecord::RemoveData( uint64 key )
-	{
-		return _data.Remove( key );
-	}
+    bool KFRecord::AddData( uint64 parentkey, uint64 childkey, KFData* data )
+    {
+        auto kfdata = FindData( parentkey );
+        if ( kfdata == nullptr )
+        {
+            return false;
+        }
 
-	bool KFRecord::RemoveData( uint64 key, const std::string& dataname )
-	{
-		auto kfdata = FindData( key );
-		if ( kfdata == nullptr )
-		{
-			return false;
-		}
+        return kfdata->AddData( childkey, data );
+    }
 
-		return kfdata->RemoveData( dataname );
-	}
+    bool KFRecord::AddData( uint64 key, const std::string& dataname, KFData* data )
+    {
+        auto kfdata = FindData( key );
+        if ( kfdata == nullptr )
+        {
+            return false;
+        }
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	void KFRecord::FindData( const std::string& dataname, uint64 value, std::list<KFData*>& findlist )
-	{
-		auto child = FirstData();
-		while ( child != nullptr )
-		{
-			auto datavalue = child->GetValue( dataname );
-			if ( datavalue == value )
-			{
-				findlist.push_back( child );
-			}
+        return kfdata->AddData( dataname, data );
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFRecord::RemoveData( uint64 key )
+    {
+        return _data.Remove( key );
+    }
 
-			child = NextData();
-		}
-	}
+    bool KFRecord::RemoveData( uint64 key, const std::string& dataname )
+    {
+        auto kfdata = FindData( key );
+        if ( kfdata == nullptr )
+        {
+            return false;
+        }
 
-	bool KFRecord::CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue )
-	{
-		uint64 totalvalue = 0;
+        return kfdata->RemoveData( dataname );
+    }
 
-		auto child = FirstData();
-		while ( child != nullptr )
-		{
-			auto datavalue = child->GetValue( dataname );
-			if ( datavalue == value )
-			{
-				totalvalue += child->GetValue( checkname );
-				if ( totalvalue >= checkvalue )
-				{
-					return true;
-				}
-			}
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFRecord::FindData( const std::string& dataname, uint64 value, std::list<KFData*>& findlist )
+    {
+        auto child = FirstData();
+        while ( child != nullptr )
+        {
+            auto datavalue = child->GetValue( dataname );
+            if ( datavalue == value )
+            {
+                findlist.push_back( child );
+            }
 
-			child = NextData();
-		}
+            child = NextData();
+        }
+    }
 
-		return false;
-	}
+    bool KFRecord::CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue )
+    {
+        uint64 totalvalue = 0;
+
+        auto child = FirstData();
+        while ( child != nullptr )
+        {
+            auto datavalue = child->GetValue( dataname );
+            if ( datavalue == value )
+            {
+                totalvalue += child->GetValue( checkname );
+                if ( totalvalue >= checkvalue )
+                {
+                    return true;
+                }
+            }
+
+            child = NextData();
+        }
+
+        return false;
+    }
 
 
-	std::string KFRecord::ToString()
-	{
-		// [1={xxxx}=1,2={xxxx}=2]
+    std::string KFRecord::ToString()
+    {
+        // [1={xxxx}=1,2={xxxx}=2]
 
-		std::string result = "";
-		result += "[";
+        std::string result = "";
+        result += "[";
 
-		for ( auto& iter : _data._objects )
-		{
-			auto key = __KF_STRING__( iter.first );
-			auto kfdata = iter.second;
+        for ( auto& iter : _data._objects )
+        {
+            auto key = __KF_STRING__( iter.first );
+            auto kfdata = iter.second;
 
-			auto strdata = kfdata->ToString();
-			auto temp = KFUtility::Format( "%s=%s=%s,", key.c_str(), strdata.c_str(), key.c_str() );
-			result += temp;
-		}
+            auto strdata = kfdata->ToString();
+            auto temp = KFUtility::Format( "%s=%s=%s,", key.c_str(), strdata.c_str(), key.c_str() );
+            result += temp;
+        }
 
-		result += "]";
+        result += "]";
 
-		return result;
-	}
+        return result;
+    }
 
-	void KFRecord::FromString( const std::string& value )
-	{
-		auto temp = value;
-		KFUtility::SplitString( temp, "[" );
+    void KFRecord::FromString( const std::string& value )
+    {
+        auto temp = value;
+        KFUtility::SplitString( temp, "[" );
 
-		while ( !temp.empty() )
-		{
-			auto strkey = KFUtility::SplitString( temp, "=" );
+        while ( !temp.empty() )
+        {
+            auto strkey = KFUtility::SplitString( temp, "=" );
 
-			auto split = "=" + strkey;
-			auto data = KFUtility::SplitString( temp, split );
-			if ( !data.empty() )
-			{
-				auto kfdata = KFDataFactory::CreateData( _data_setting );
-				if ( kfdata != nullptr )
-				{
-					auto key = KFUtility::ToValue< uint64 >( strkey );
-					kfdata->SetKeyID( key );
-					kfdata->FromString( data );
-					AddData( key, kfdata );
-				}
-			}
+            auto split = "=" + strkey;
+            auto data = KFUtility::SplitString( temp, split );
+            if ( !data.empty() )
+            {
+                auto kfdata = KFDataFactory::CreateData( _data_setting );
+                if ( kfdata != nullptr )
+                {
+                    auto key = KFUtility::ToValue< uint64 >( strkey );
+                    kfdata->SetKeyID( key );
+                    kfdata->FromString( data );
+                    AddData( key, kfdata );
+                }
+            }
 
-			KFUtility::SplitString( temp, "," );
-		}
-	}
+            KFUtility::SplitString( temp, "," );
+        }
+    }
 
-	void KFRecord::ToMap( MapString& values )
-	{
-		for ( auto& iter : _data._objects )
-		{
-			auto key = __KF_STRING__( iter.first );
-			auto kfdata = iter.second;
+    void KFRecord::ToMap( MapString& values )
+    {
+        for ( auto& iter : _data._objects )
+        {
+            auto key = __KF_STRING__( iter.first );
+            auto kfdata = iter.second;
 
-			values[ key ] = kfdata->ToString();
-		}
-	}
+            values[ key ] = kfdata->ToString();
+        }
+    }
 
-	void KFRecord::FromMap( const MapString& values )
-	{
-		for ( auto iter : values )
-		{
-			auto kfdata = KFDataFactory::CreateData( _data_setting );
-			if ( kfdata == nullptr)
-			{
-				continue;
-			}
-			
-			auto key = KFUtility::ToValue< uint64 >( iter.first );
-			kfdata->SetKeyID( key );
-			kfdata->FromString( iter.second );
-			AddData( key, kfdata );
-		}
-	}
+    void KFRecord::FromMap( const MapString& values )
+    {
+        for ( auto iter : values )
+        {
+            auto kfdata = KFDataFactory::CreateData( _data_setting );
+            if ( kfdata == nullptr )
+            {
+                continue;
+            }
+
+            auto key = KFUtility::ToValue< uint64 >( iter.first );
+            kfdata->SetKeyID( key );
+            kfdata->FromString( iter.second );
+            AddData( key, kfdata );
+        }
+    }
 }

@@ -15,7 +15,7 @@ namespace KFrame
 
 	void KFRankClientPlugin::LoadModule()
 	{
-		_kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
+		_kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
 		_kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
 		_kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
 		_kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();

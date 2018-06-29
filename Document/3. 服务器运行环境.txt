@@ -24,18 +24,23 @@ win10 64
     2. 执行deploy.bat, 把需要的文件拷贝到该目录下
     3. 首次部署需要修改配置文件
         1. 打开dataserver.config, 修改Listen, ip地址改成自己需要监听的地址, ClusterServer这个按需修改
-        2. 打开dataproxy.config, 修改Listen, ip地址改成自己需要监听的地址, Master Id 默认1
-        3. 打开datashard.config, 修改Listen, ip地址改成自己需要监听的地址, Master Id 默认1
+        2. 打开dataproxy.config, 修改Listen, ip地址改成自己需要监听的地址, Master Id 默认111
+        3. 打开datashard.config, 修改Listen, ip地址改成自己需要监听的地址, Master Id 默认111
         4. 打开redis.config , 修改或添加redis的数据库连接地址和密码
-        5. 打开connection.config, 修改Masters地址, 修改对应的Master Id(默认1)的Master地址
+        5. 打开partition.config, 修改Masters地址, 修改对应的Master Id(默认111)的Master地址
     4. 执行rund.bat, 启动完成
-5. 开启mailcluster服务器, 配置与4相同, Master Id默认4
+5. 开启mailcluster服务器, 配置与4相同, Master Id默认141
 6. 开启游戏服务器
     1. 进入Bin\zgame
     2. 执行deploy.bat, 把需要的文件拷贝到该目录下
     3. 首次部署需要修改配置文件
         1. 打开master.config, 修改Listen服务器监听地址
-        7. 打开connection.config, 修改Masters地址, 修改Master地址, 修改Partition分区信息, 修改Platforms平台地址信息
+        2. 打开world.config, 修改Listen服务器监听地址, Master Id默认101
+        3. 打开gate.config, 修改Listen服务器监听地址, Master Id默认101
+        4. 打开login.config, 修改Listen服务器监听地址, Master Id默认101
+        5. 打开proxy.config, 修改Listen服务器监听地址, Master Id默认101
+        6. 打开game.config, 修改Listen服务器监听地址, Master Id默认101
+        7. 打开partition.config, 修改Masters地址, 修改Master地址, 修改Partition分区信息, 修改Platforms平台地址信息
     4. 执行rund.bat, 启动完成
 7. 测试服务器是否正常:
     1. 进入Server\_build\win64\tool\Poster, 打开Poster.exe

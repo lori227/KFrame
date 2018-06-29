@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFTaskInterface : public KFModule
-	{
-	public:
+    class KFTaskInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 #endif

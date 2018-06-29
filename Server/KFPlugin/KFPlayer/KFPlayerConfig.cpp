@@ -2,29 +2,29 @@
 
 namespace KFrame
 {
-	KFPlayerConfig::KFPlayerConfig()
-	{
-		_daily_refresh_hour = 0;
-		_day_of_week = 1;
-		_day_of_month = 1;
-	}
+    KFPlayerConfig::KFPlayerConfig()
+    {
+        _daily_refresh_hour = 0;
+        _day_of_week = 1;
+        _day_of_month = 1;
+    }
 
-	KFPlayerConfig::~KFPlayerConfig()
-	{
+    KFPlayerConfig::~KFPlayerConfig()
+    {
 
-	}
+    }
 
-	bool KFPlayerConfig::LoadConfig( const char* file )
-	{
-		try
-		{
-			
-		}
-		catch ( ... )
-		{
-			return false;
-		}
+    bool KFPlayerConfig::LoadConfig( const char* file )
+    {
+        try
+        {
 
-		return true;
-	}
+        }
+        catch ( ... )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

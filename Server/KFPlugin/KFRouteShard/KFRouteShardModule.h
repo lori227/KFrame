@@ -17,32 +17,32 @@
 
 namespace KFrame
 {
-	class KFRouteShardModule : public KFRouteShardInterface
-	{
-	public:
-		KFRouteShardModule();
-		~KFRouteShardModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFRouteShardModule : public KFRouteShardInterface
+    {
+    public:
+        KFRouteShardModule();
+        ~KFRouteShardModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 处理 route proxy注册
-		__KF_MESSAGE_FUNCTION__( HandleRegisterRouteProxyReq );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 处理消息转发
-		__KF_MESSAGE_FUNCTION__( HandleTransmitRouteProxyMessageReq );
-	protected:
-		// route proxy 断开连接
-		__KF_SERVER_LOST_FUNCTION__( OnServerLostRouteProxy );
-	};
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 处理 route proxy注册
+        __KF_MESSAGE_FUNCTION__( HandleRegisterRouteProxyReq );
+
+        // 处理消息转发
+        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteProxyMessageReq );
+    protected:
+        // route proxy 断开连接
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostRouteProxy );
+    };
 }
 
 

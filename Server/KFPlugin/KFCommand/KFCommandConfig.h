@@ -6,20 +6,20 @@
 
 namespace KFrame
 {
-	class KFCommandConfig : public KFConfig, public KFSingleton< KFCommandConfig >
-	{
-	public:
-		KFCommandConfig();
-		~KFCommandConfig();
+    class KFCommandConfig : public KFConfig, public KFSingleton< KFCommandConfig >
+    {
+    public:
+        KFCommandConfig();
+        ~KFCommandConfig();
 
-		bool LoadConfig( const char* file );
+        bool LoadConfig( const char* file );
 
-	public:
-	};
+    public:
+    };
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_command_config = KFCommandConfig::Instance();
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_command_config = KFCommandConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

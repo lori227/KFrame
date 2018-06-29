@@ -19,47 +19,47 @@
 
 namespace KFrame
 {
-	class KFMatchProxyModule : public KFMatchProxyInterface
-	{
-	public:
-		KFMatchProxyModule();
-		~KFMatchProxyModule();
+    class KFMatchProxyModule : public KFMatchProxyInterface
+    {
+    public:
+        KFMatchProxyModule();
+        ~KFMatchProxyModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 注册匹配信息
-		__KF_MESSAGE_FUNCTION__( HandleRegisterMatchReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 注册匹配信息
+        __KF_MESSAGE_FUNCTION__( HandleRegisterMatchReq );
 
-		// 处理匹配
-		__KF_MESSAGE_FUNCTION__( HandleMatchToProxyReq );
+        // 处理匹配
+        __KF_MESSAGE_FUNCTION__( HandleMatchToProxyReq );
 
-		// 查询匹配
-		__KF_MESSAGE_FUNCTION__( HandleQueryMatchRoomReq );
+        // 查询匹配
+        __KF_MESSAGE_FUNCTION__( HandleQueryMatchRoomReq );
 
-		// 取消匹配
-		__KF_MESSAGE_FUNCTION__( HandleCancelMatchToProxyReq );
-		
-	protected:
-		// 丢失连接
-		__KF_CLIENT_LOST_FUNCTION__( OnClientLostMatchShard );
+        // 取消匹配
+        __KF_MESSAGE_FUNCTION__( HandleCancelMatchToProxyReq );
 
-	private:
-		// 查找一个匹配服务器
-		uint32 FindMatchShard( uint32 matchid, uint32 playerid );
+    protected:
+        // 丢失连接
+        __KF_CLIENT_LOST_FUNCTION__( OnClientLostMatchShard );
 
-	private:
-		// 匹配shard列表
-		KFMap< uint32, uint32, KFConHash > _match_shard;
-	};
+    private:
+        // 查找一个匹配服务器
+        uint32 FindMatchShard( uint32 matchid, uint32 playerid );
+
+    private:
+        // 匹配shard列表
+        KFMap< uint32, uint32, KFConHash > _match_shard;
+    };
 }
 
 

@@ -5,33 +5,33 @@
 
 namespace KFrame
 {
-	class KFExcelZip;
-	class KFExcelFile
-	{
-	public:
-		KFExcelFile();
-		~KFExcelFile();
+    class KFExcelZip;
+    class KFExcelFile
+    {
+    public:
+        KFExcelFile();
+        ~KFExcelFile();
 
-		bool Open( const char* file );
-		KFExcelSheet* FindSheet( const char* name );
+        bool Open( const char* file );
+        KFExcelSheet* FindSheet( const char* name );
 
-	private:
+    private:
 
-		void ReadWorkBook( const char* file );
-		void ReadWorkBookRels( const char* file );
-		void ReadSharedStrings( const char* file );
-		void ReadStyles( const char* file );
-		void ReadSheet( KFExcelSheet* sheet );
+        void ReadWorkBook( const char* file );
+        void ReadWorkBookRels( const char* file );
+        void ReadSharedStrings( const char* file );
+        void ReadStyles( const char* file );
+        void ReadSheet( KFExcelSheet* sheet );
 
-		void ParseCell( const std::string& value, int& row, int& col );
-		void ParseRange( const std::string& value, KFExcelRange& range );
+        void ParseCell( const std::string& value, int& row, int& col );
+        void ParseRange( const std::string& value, KFExcelRange& range );
 
-	public:
-		KFExcelZip* _zip;
+    public:
+        KFExcelZip* _zip;
 
-		std::vector<std::string> _shared_string;
-		std::vector<KFExcelSheet*> _sheets;
-	};
+        std::vector<std::string> _shared_string;
+        std::vector<KFExcelSheet*> _sheets;
+    };
 }
 
 

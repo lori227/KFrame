@@ -16,71 +16,71 @@
 
 namespace KFrame
 {
-	class KFLuaModule : public KFLuaInterface
-	{
-	public:
-		KFLuaModule();
-		~KFLuaModule();
-		
-		// 加载脚本文件
-		virtual void LoadScript( const std::string& luafile );
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	
-		// 获得基础属性
-		uint64 LuaGetValue( const char* module, uint32 objectid, const char* dataname );
+    class KFLuaModule : public KFLuaInterface
+    {
+    public:
+        KFLuaModule();
+        ~KFLuaModule();
 
-		// 操作属性
-		uint64 LuaOperateValue( const char* module, uint32 objectid, const char* dataname, uint32 operate, uint64 value );
+        // 加载脚本文件
+        virtual void LoadScript( const std::string& luafile );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 获得对象属性
-		uint64 LuaGetObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname );
+        // 获得基础属性
+        uint64 LuaGetValue( const char* module, uint32 objectid, const char* dataname );
 
-		// 操作对象属性
-		uint64 LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value );
+        // 操作属性
+        uint64 LuaOperateValue( const char* module, uint32 objectid, const char* dataname, uint32 operate, uint64 value );
 
-		// 获得数组属性
-		uint64 LuaGetRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname );
+        // 获得对象属性
+        uint64 LuaGetObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname );
 
-		// 操作数组属性
-		uint64 LuaOperateRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value );
+        // 操作对象属性
+        uint64 LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value );
 
-		// 获得运行时变量
-		uint32 LuaGetVariable( uint32 varid );
+        // 获得数组属性
+        uint64 LuaGetRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname );
 
-		// 操作运行时变量
-		uint32 LuaOperateVariable( uint32 varid, uint32 operate, uint32 value );
+        // 操作数组属性
+        uint64 LuaOperateRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value );
 
-		// 获得游戏时间
-		uint64 LuaGetGameTime();
+        // 获得运行时变量
+        uint32 LuaGetVariable( uint32 varid );
 
-		// 获得现实时间
-		uint64 LuaGetRealTime();
+        // 操作运行时变量
+        uint32 LuaOperateVariable( uint32 varid, uint32 operate, uint32 value );
 
-		// 添加数据
-		void LuaAddData( const char* module, uint32 objectid, const char* stragent, bool showclient );
+        // 获得游戏时间
+        uint64 LuaGetGameTime();
 
-		// 设置数据
-		void LuaSetData( const char* module, uint32 objectid, const char* stragent, bool showclient );
+        // 获得现实时间
+        uint64 LuaGetRealTime();
 
-		// 减少数据
-		void LuaDecData( const char* module, uint32 objectid, const char* stragent );
+        // 添加数据
+        void LuaAddData( const char* module, uint32 objectid, const char* stragent, bool showclient );
 
-	protected:
-		////////////////////////////////////////////////////////////////////////////////
-		// 查找lua脚本
-		virtual KFScript* FindLuaScript( const std::string& luafile );
+        // 设置数据
+        void LuaSetData( const char* module, uint32 objectid, const char* stragent, bool showclient );
 
-		// 注册lua导出函数
-		void RegisterLuaFunction( KFLuaScript* luascript );
+        // 减少数据
+        void LuaDecData( const char* module, uint32 objectid, const char* stragent );
 
-	private:
-		// lua 脚本
-		KFMap< std::string, const std::string&, KFLuaScript > _lua_script;
+    protected:
+        ////////////////////////////////////////////////////////////////////////////////
+        // 查找lua脚本
+        virtual KFScript* FindLuaScript( const std::string& luafile );
 
-		// 运行时的一些变量
-		std::map< uint32, uint32 > _run_variable;
-	};
+        // 注册lua导出函数
+        void RegisterLuaFunction( KFLuaScript* luascript );
+
+    private:
+        // lua 脚本
+        KFMap< std::string, const std::string&, KFLuaScript > _lua_script;
+
+        // 运行时的一些变量
+        std::map< uint32, uint32 > _run_variable;
+    };
 }
 
 

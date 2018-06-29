@@ -5,19 +5,19 @@
 
 namespace KFrame
 {
-	class KFMatchClientInterface : public KFModule
-	{
-	public:
-		// 发送消息到Match
-		virtual bool SendMessageToMatch( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+    class KFMatchClientInterface : public KFModule
+    {
+    public:
+        // 发送消息到Match
+        virtual bool SendMessageToMatch( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
-		// 获得匹配最大人数
-		virtual uint32 GetMatchMaxCount( uint32 matchid ) = 0;
-	};
+        // 获得匹配最大人数
+        virtual uint32 GetMatchMaxCount( uint32 matchid ) = 0;
+    };
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_match, KFMatchClientInterface );
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_match, KFMatchClientInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

@@ -19,123 +19,123 @@
 
 namespace KFrame
 {
-	class KFNetServerEngine;
-	class KFTcpServerModule : public KFTcpServerInterface
-	{
-	public:
-		KFTcpServerModule();
-		~KFTcpServerModule();
+    class KFNetServerEngine;
+    class KFTcpServerModule : public KFTcpServerInterface
+    {
+    public:
+        KFTcpServerModule();
+        ~KFTcpServerModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 加载
-		virtual void AfterLoad();
+        // 加载
+        virtual void AfterLoad();
 
-		// 逻辑
-		virtual void BeforeRun();
+        // 逻辑
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		virtual void ShutDown();
-		/////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void BeforeShut();
+        virtual void ShutDown();
+        /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
 
-		// 发送消息
-		virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
-		virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 );
-		virtual void SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message );
+        // 发送消息
+        virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
+        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 );
+        virtual void SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message );
 
-		virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
-		virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message );
 
-		// 给指定对象发送消息
-		virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
-		virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message );
+        // 给指定对象发送消息
+        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message );
 
-		// 给指定对象发送消息
-		virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
-		virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
-		/////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////
-		// 注册到连接器
-		virtual bool RegisteNetHandle( uint32 sessionid, uint32 objectid );
+        // 给指定对象发送消息
+        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
+        /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+        // 注册到连接器
+        virtual bool RegisteNetHandle( uint32 sessionid, uint32 objectid );
 
-		// 删除连接器
-		virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line );
-		
-		// 连接数量
-		virtual uint32 GetHandleCount();
+        // 删除连接器
+        virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line );
 
-		// 连接列表
-		virtual void GetHandleList( std::list< uint32 >& handlelist );
+        // 连接数量
+        virtual uint32 GetHandleCount();
 
-		// 获得连接ip
-		virtual const std::string& GetHandleIp( uint32 handleid );
-		/////////////////////////////////////////////////////////////////////////
-	protected:
-		// 处理客户端注册
-		__KF_MESSAGE_FUNCTION__( HandleRegisterReq );
+        // 连接列表
+        virtual void GetHandleList( std::list< uint32 >& handlelist );
 
-	private:
-		void Run();
+        // 获得连接ip
+        virtual const std::string& GetHandleIp( uint32 handleid );
+        /////////////////////////////////////////////////////////////////////////
+    protected:
+        // 处理客户端注册
+        __KF_MESSAGE_FUNCTION__( HandleRegisterReq );
 
-		virtual void AddDiscoverFunction( const char* module, KFServerDiscoverFunction& function );
-		virtual void RemoveDiscoverFunction( const char* module );
+    private:
+        void Run();
 
-		virtual void AddLostFunction( const char* module, KFServerLostFunction& function );
-		virtual void RemoveLostFunction( const char* module );
+        virtual void AddDiscoverFunction( const char* module, KFServerDiscoverFunction& function );
+        virtual void RemoveDiscoverFunction( const char* module );
 
-		virtual void AddTransmitFunction( const char* module, KFTransmitFunction& function );
-		virtual void RemoveTransmitFunction( const char* module );
+        virtual void AddLostFunction( const char* module, KFServerLostFunction& function );
+        virtual void RemoveLostFunction( const char* module );
 
-		// 发现客户端回调
-		void CallDiscoverFunction( KFNetHandle* tcphandle );
+        virtual void AddTransmitFunction( const char* module, KFTransmitFunction& function );
+        virtual void RemoveTransmitFunction( const char* module );
 
-		// 通知有处理器注册
-		void BroadcastRegisterToServer( KFNetHandle* tcphandle );
+        // 发现客户端回调
+        void CallDiscoverFunction( KFNetHandle* tcphandle );
 
-		// 处理断开消息
-		void BroadcastLostFromServer( KFNetHandle* nethandle );
+        // 通知有处理器注册
+        void BroadcastRegisterToServer( KFNetHandle* tcphandle );
 
-		// 通话新客户端所有的客户端的注册信息
-		void SendRegisterToServerToHandle( KFNetHandle* tcphandle );
+        // 处理断开消息
+        void BroadcastLostFromServer( KFNetHandle* nethandle );
 
-	protected:
-		// 消息处理函数
-		void HandleNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        // 通话新客户端所有的客户端的注册信息
+        void SendRegisterToServerToHandle( KFNetHandle* tcphandle );
 
-		// 断线处理
-		__KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
+    protected:
+        // 消息处理函数
+        void HandleNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
 
-		// 丢失客户端回调
-		void CallLostFunction( KFNetHandle* tcphandle );
+        // 断线处理
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
 
-	private:
-		// 获得内网ip
-		std::string GetLocalIp();
+        // 丢失客户端回调
+        void CallLostFunction( KFNetHandle* tcphandle );
+
+    private:
+        // 获得内网ip
+        std::string GetLocalIp();
 #if __KF_SYSTEM__ == __KF_WIN__
-		std::string GetWinLocalIp();
+        std::string GetWinLocalIp();
 #else
-		std::string GetLinuxLocalIp();
+        std::string GetLinuxLocalIp();
 #endif
 
-	private:
-		// 网络服务器引擎
-		KFNetServerEngine* _kf_server_engine;
+    private:
+        // 网络服务器引擎
+        KFNetServerEngine* _kf_server_engine;
 
-		// 网络端口
-		KFNetProt _kf_net_port;
-		
-		// 发现客户端回调
-		KFBind< std::string, const std::string&, KFServerDiscoverFunction > _kf_discover_function;
+        // 网络端口
+        KFNetProt _kf_net_port;
 
-		// 丢失客户端回调
-		KFBind< std::string, const std::string&, KFServerLostFunction > _kf_lost_function;
+        // 发现客户端回调
+        KFBind< std::string, const std::string&, KFServerDiscoverFunction > _kf_discover_function;
 
-		// 转发函数
-		KFTransmitFunction _kf_transmit_function;
-	};
+        // 丢失客户端回调
+        KFBind< std::string, const std::string&, KFServerLostFunction > _kf_lost_function;
+
+        // 转发函数
+        KFTransmitFunction _kf_transmit_function;
+    };
 }
 
 

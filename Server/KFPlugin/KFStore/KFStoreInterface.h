@@ -4,11 +4,11 @@
 #include "KFrame.h"
 namespace KFrame
 {
-	class KFStoreInterface : public KFModule
-	{
-	public:
+    class KFStoreInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 #endif//__KF_ACHIEVE_INTERFACE_H__

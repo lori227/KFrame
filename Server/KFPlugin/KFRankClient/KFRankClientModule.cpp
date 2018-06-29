@@ -1,6 +1,5 @@
 ﻿#include "KFRankClientModule.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFRankClientConfig.h"
 
 namespace KFrame
 {
@@ -16,7 +15,6 @@ namespace KFrame
 
 	void KFRankClientModule::InitModule()
 	{
-		_kf_config->AddConfig( _kf_rank_config, _kf_plugin->_plugin_name, _kf_plugin->_config, true );
 	}
 
 	void KFRankClientModule::BeforeRun()
@@ -34,15 +32,15 @@ namespace KFrame
 		__UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_ACK );
 	}
 
-	void KFRankClientModule::OnceRun()
-	{
-
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFRankClientModule::SendMessageToRank( uint64 rankid, uint32 msgid, ::google::protobuf::Message* message )
+	bool KFRankClientModule::SendMessageToRank( uint64 zoneid, uint32 msgid, ::google::protobuf::Message* message )
 	{
-		return _kf_cluster->SendMessageToObject( KFField::_rank, rankid, msgid, message );
+		KFMsg::S2STransmitToRankShardReq req;
+		req.set_zoneid( zoneid );
+		req.set_msgid( msgid );
+		req.set_msgdata( message->SerializeAsString() );
+		return _kf_cluster->SendMessageToShard( KFField::_rank, KFMsg::S2S_TRANSMIT_TO_RANK_SHARD_REQ, &req );
 	}
 
 	bool KFRankClientModule::SendMessageToRankShard( uint32 msgid, ::google::protobuf::Message* message )
@@ -70,8 +68,8 @@ namespace KFrame
 		req.set_begin( 0 );
 		req.set_end( 99 );
 
-		SendMessageToRankShard( KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ, &req );
-		//SendMessageToRank( kfmsg.rankid(), KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ, &req );
+		auto zoneid = _kf_zone->GetPlayerZoneId( playerid );
+		SendMessageToRank( zoneid, KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ, &req );
 	}
 
 	__KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryFriendRankListReq )
@@ -113,15 +111,8 @@ namespace KFrame
 		auto playerids = req.mutable_playerids();
 		playerids->add_playerid( playerid );
 
-		auto kfsetting = _kf_rank_config->FindRankSetting( kfmsg.matchid() );
-		if ( kfsetting == nullptr )
-		{
-			return KFLogger::LogLogic( KFLogger::Error, "%s can't find rank:%u config!", __FUNCTION__ , kfmsg.matchid() );
-		}
-
-		auto rankid = kfsetting->_rank_id;
-
-		SendMessageToRank( rankid, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
+		auto zoneid = _kf_zone->GetPlayerZoneId( playerid );
+		SendMessageToRank( zoneid, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
 	}
 
 	__KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListAck )
@@ -149,7 +140,8 @@ namespace KFrame
 		// 1次join更新6个榜单
 		if ( _invalid_int == playerid || nullptr == player || scoretype.empty() )
 		{
-			return;
+			return KFLogger::LogLogic( KFLogger::Error, "%s join rank err matchid:%u playerid:%u scoretype:%s!",
+				__FUNCTION__, matchid, playerid, scoretype.c_str() );
 		}
 	
 		KFMsg::S2SJoinRankListReq req;
@@ -166,15 +158,9 @@ namespace KFrame
 		FormateRankData( pbsocre , kfscores );
 		auto pbtotalscore = req.mutable_totalscores();
 		FormateRankData( pbtotalscore, kftotalscores );
-		auto kfsetting = _kf_rank_config->FindRankSetting( matchid );
-		if ( kfsetting == nullptr )
-		{
-			return KFLogger::LogLogic( KFLogger::Error, "%s can't find rank:%u config!", __FUNCTION__, matchid );
-		}
 
-		auto rankid = kfsetting->_rank_id;
-
-		SendMessageToRank( rankid, KFMsg::S2S_JOIN_RANK_LIST_REQ , &req );
+		auto zoneid = _kf_zone->GetPlayerZoneId( playerid );
+		SendMessageToRank( zoneid, KFMsg::S2S_JOIN_RANK_LIST_REQ, &req );
 	}
 
 	void KFRankClientModule::CalcRankData( KFData* kfdata, uint64& evalscore, uint64& winscore, uint64& killscore )

@@ -2,7 +2,7 @@
 #include "hiredis/hiredis.h"
 #include "KFRedisException.h"
 #ifdef _WIN32
-#include <WinSock2.h>
+    #include <WinSock2.h>
 #endif // _WIN32
 
 
@@ -10,331 +10,331 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace KFrame
 {
-	KFHiRedis::KFHiRedis()
-	{
-		_port = 0;
-		_redis_context = nullptr;
-	}
+    KFHiRedis::KFHiRedis()
+    {
+        _port = 0;
+        _redis_context = nullptr;
+    }
 
-	KFHiRedis::~KFHiRedis()
-	{
-		//if ( _redis_context != nullptr )
-		//{
-		//	redisFree( _redis_context );
-		//	_redis_context = nullptr;
-		//}
-	}
+    KFHiRedis::~KFHiRedis()
+    {
+        //if ( _redis_context != nullptr )
+        //{
+        //	redisFree( _redis_context );
+        //	_redis_context = nullptr;
+        //}
+    }
 
-	bool KFHiRedis::IsDisconnected()
-	{
-		if ( _redis_context == nullptr )
-		{
-			return true;
-		}
+    bool KFHiRedis::IsDisconnected()
+    {
+        if ( _redis_context == nullptr )
+        {
+            return true;
+        }
 
-		if ( _redis_context->err == REDIS_ERR_EOF ||
-			_redis_context->err == REDIS_ERR_IO )
-		{
-			return true;
-		}
+        if ( _redis_context->err == REDIS_ERR_EOF ||
+                _redis_context->err == REDIS_ERR_IO )
+        {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	int32 KFHiRedis::Connect( const char* ip, int32 port, const char* password )
-	{
-		_ip = ip;
-		_port = port;
-		_password = password;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    int32 KFHiRedis::Connect( const char* ip, int32 port, const char* password )
+    {
+        _ip = ip;
+        _port = port;
+        _password = password;
 
 #ifdef _WIN32
-		struct timeval timeout;
-		timeout.tv_sec = 0;
-		timeout.tv_usec = 5000;
-		_redis_context = redisConnectWithTimeout( ip, port, timeout );
+        struct timeval timeout;
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 5000;
+        _redis_context = redisConnectWithTimeout( ip, port, timeout );
 #else
-		_redis_context = redisConnect( ip, port );
+        _redis_context = redisConnect( ip, port );
 #endif // _WIN32
 
-		if ( _redis_context->err != REDIS_OK )
-		{
-			return _redis_context->err;
-		}
-		
-		redisEnableKeepAlive( _redis_context );
+        if ( _redis_context->err != REDIS_OK )
+        {
+            return _redis_context->err;
+        }
 
-		try
-		{
-			if ( password[ 0 ] != 0 )
-			{
-				char command[ 56 ] = { 0 };
-				sprintf( command, "auth %s", password );
-				auto redisreply = Execute( REDIS_REPLY_STATUS, command );
-				freeReplyObject( redisreply );
-			}
-		}
-		catch ( KFRedisException& )
-		{
-			return 2;
-		}
+        redisEnableKeepAlive( _redis_context );
 
-		return 1;
-	}
+        try
+        {
+            if ( password[ 0 ] != 0 )
+            {
+                char command[ 56 ] = { 0 };
+                sprintf( command, "auth %s", password );
+                auto redisreply = Execute( REDIS_REPLY_STATUS, command );
+                freeReplyObject( redisreply );
+            }
+        }
+        catch ( KFRedisException& )
+        {
+            return 2;
+        }
 
-	int32 KFHiRedis::ReConnect()
-	{
-		if ( _redis_context != nullptr )
-		{
-			redisFree( _redis_context );
-			_redis_context = nullptr;
-		}
+        return 1;
+    }
 
-		return Connect( _ip.c_str(), _port, _password.c_str() );
-	}
+    int32 KFHiRedis::ReConnect()
+    {
+        if ( _redis_context != nullptr )
+        {
+            redisFree( _redis_context );
+            _redis_context = nullptr;
+        }
 
-	void KFHiRedis::ShutDown()
-	{
-		if ( _redis_context != nullptr )
-		{
-			redisFree( _redis_context );
-			_redis_context = nullptr;
-		}
-	}
+        return Connect( _ip.c_str(), _port, _password.c_str() );
+    }
 
-	redisReply* KFHiRedis::Execute( int32 type, const char* command )
-	{
-		redisReply* reply = (redisReply*) redisCommand( _redis_context, command );
-		if ( reply == nullptr )
-		{
-			throw KFRedisException( command, _redis_context->err, _redis_context->errstr );
-		}
+    void KFHiRedis::ShutDown()
+    {
+        if ( _redis_context != nullptr )
+        {
+            redisFree( _redis_context );
+            _redis_context = nullptr;
+        }
+    }
 
-		if ( reply->type == REDIS_REPLY_ERROR )
-		{
-			std::string error;
-			if ( reply->str != nullptr )
-			{
-				error = reply->str;
-			}
+    redisReply* KFHiRedis::Execute( int32 type, const char* command )
+    {
+        redisReply* reply = ( redisReply* ) redisCommand( _redis_context, command );
+        if ( reply == nullptr )
+        {
+            throw KFRedisException( command, _redis_context->err, _redis_context->errstr );
+        }
 
-			freeReplyObject( reply );
-			throw KFRedisException( command, _redis_context->flags, error.c_str() );
-		}
+        if ( reply->type == REDIS_REPLY_ERROR )
+        {
+            std::string error;
+            if ( reply->str != nullptr )
+            {
+                error = reply->str;
+            }
 
-		return reply;
-	}
+            freeReplyObject( reply );
+            throw KFRedisException( command, _redis_context->flags, error.c_str() );
+        }
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	template<>
-	bool KFHiRedis::Execute<>( uint32& value, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_STATUS, command );
-		freeReplyObject( reply );
-		return true;
-	}
+        return reply;
+    }
 
-	template<>
-	bool KFHiRedis::Execute<>( std::string& value, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_STRING, command );
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    template<>
+    bool KFHiRedis::Execute<>( uint32& value, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_STATUS, command );
+        freeReplyObject( reply );
+        return true;
+    }
 
-		value = (reply->str == nullptr ? "" : reply->str);
-		freeReplyObject( reply );
-		return true;
-	}
+    template<>
+    bool KFHiRedis::Execute<>( std::string& value, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_STRING, command );
 
-	template<>
-	bool KFHiRedis::Execute<>( uint64& value, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_INTEGER, command );
+        value = ( reply->str == nullptr ? "" : reply->str );
+        freeReplyObject( reply );
+        return true;
+    }
 
-		value = reply->integer;
-		freeReplyObject( reply );
-		return true;
-	}
+    template<>
+    bool KFHiRedis::Execute<>( uint64& value, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_INTEGER, command );
 
-	template<>
-	bool KFHiRedis::Execute<>( VectorString& result, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
+        value = reply->integer;
+        freeReplyObject( reply );
+        return true;
+    }
 
-		for ( size_t i = 0; i < reply->elements; ++i )
-		{
-			auto element = reply->element[ i ];
+    template<>
+    bool KFHiRedis::Execute<>( VectorString& result, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
 
-			std::string value = (element->str == nullptr ? "" : element->str);
-			result.push_back( value );
-		}
+        for ( size_t i = 0; i < reply->elements; ++i )
+        {
+            auto element = reply->element[ i ];
 
-		freeReplyObject( reply );
-		return true;
-	}
+            std::string value = ( element->str == nullptr ? "" : element->str );
+            result.push_back( value );
+        }
 
-	template<>
-	bool KFHiRedis::Execute<>( MapString& result, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
+        freeReplyObject( reply );
+        return true;
+    }
 
-		for ( size_t i = 0; i < reply->elements; i += 2 )
-		{
-			auto keyelement = reply->element[ i ];
-			auto valueelement = reply->element[ i + 1 ];
+    template<>
+    bool KFHiRedis::Execute<>( MapString& result, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
 
-			std::string key = (keyelement->str == nullptr ? "" : keyelement->str);
-			std::string value = (valueelement->str == nullptr ? "" : valueelement->str);
-			if ( key == "" )
-			{
-				continue;
-			}
+        for ( size_t i = 0; i < reply->elements; i += 2 )
+        {
+            auto keyelement = reply->element[ i ];
+            auto valueelement = reply->element[ i + 1 ];
 
-			result[ key ] = value;
-		}
+            std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
+            std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
+            if ( key == "" )
+            {
+                continue;
+            }
 
-		freeReplyObject( reply );
-		return true;
-	}
+            result[ key ] = value;
+        }
 
-	template<>
-	bool KFHiRedis::Execute<>( LesserMapString& result, const char* command )
-	{
-		redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
+        freeReplyObject( reply );
+        return true;
+    }
 
-		for ( size_t i = 0; i < reply->elements; i += 2 )
-		{
-			auto keyelement = reply->element[ i ];
-			auto valueelement = reply->element[ i + 1 ];
+    template<>
+    bool KFHiRedis::Execute<>( LesserMapString& result, const char* command )
+    {
+        redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
 
-			std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
-			std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
-			if ( key == "" )
-			{
-				continue;
-			}
+        for ( size_t i = 0; i < reply->elements; i += 2 )
+        {
+            auto keyelement = reply->element[ i ];
+            auto valueelement = reply->element[ i + 1 ];
 
-			result[ key ] = value;
-		}
+            std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
+            std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
+            if ( key == "" )
+            {
+                continue;
+            }
 
-		freeReplyObject( reply );
-		return true;
-	}
+            result[ key ] = value;
+        }
 
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFHiRedis::PipelineExecute( const ListString& commands )
-	{
-		for ( auto& command : commands )
-		{
-			auto result = redisAppendCommand( _redis_context, command.c_str() );
-			if ( result != REDIS_OK )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
-			}
-		}
-
-		redisReply* reply = nullptr;
-		for ( auto& command : commands )
-		{
-			auto result = redisGetReply( _redis_context, (void**)&reply );
-			if ( reply == nullptr )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
-			}
-
-			freeReplyObject( reply );
-			reply = nullptr;
-		}
-
-		return true;
-	}
-
-	bool KFHiRedis::PipelineExecute( const ListString& commands , MapString& values )
-	{
-		for ( auto& command : commands )
-		{
-			auto result = redisAppendCommand( _redis_context, command.c_str() );
-			if ( result != REDIS_OK )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
-			}
-		}
-
-		redisReply* reply = nullptr;
-		for ( auto& command : commands )
-		{
-			auto result = redisGetReply( _redis_context, ( void** )&reply );
-			if ( reply == nullptr )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
-			}
-
-			for ( size_t i = 0; i < reply->elements; i += 2 )
-			{
-				auto keyelement = reply->element[ i ];
-				auto valueelement = reply->element[ i + 1 ];
-
-				std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
-				std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
-				if ( key == "" )
-				{
-					continue;
-				}
-
-				values[ key ] = value;
-			}
+        freeReplyObject( reply );
+        return true;
+    }
 
 
-			freeReplyObject( reply );
-			reply = nullptr;
-		}
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFHiRedis::PipelineExecute( const ListString& commands )
+    {
+        for ( auto& command : commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
+            }
+        }
 
-		return true;
-	}
+        redisReply* reply = nullptr;
+        for ( auto& command : commands )
+        {
+            auto result = redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
+            }
 
-	bool KFHiRedis::PipelineExecute( const ListString& commands, VectorString& values )
-	{
-		for ( auto& command : commands )
-		{
-			auto result = redisAppendCommand( _redis_context, command.c_str() );
-			if ( result != REDIS_OK )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
-			}
-		}
+            freeReplyObject( reply );
+            reply = nullptr;
+        }
 
-		redisReply* reply = nullptr;
-		for ( auto& command : commands )
-		{
-			auto result = redisGetReply( _redis_context, ( void** )&reply );
-			if ( reply == nullptr )
-			{
-				throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
-			}
+        return true;
+    }
 
-			if ( reply->elements != 0 )
-			{
-				for ( size_t i = 0; i < reply->elements; ++i )
-				{
-					auto element = reply->element[ i ];
+    bool KFHiRedis::PipelineExecute( const ListString& commands, MapString& values )
+    {
+        for ( auto& command : commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
+            }
+        }
 
-					std::string value = ( element->str == nullptr ? "" : element->str );
-					values.push_back( value );
-				}
-			}
+        redisReply* reply = nullptr;
+        for ( auto& command : commands )
+        {
+            auto result = redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
+            }
 
-			else 
-			{
-				std::string value = ( reply->str == nullptr ? "" : reply->str );
-				values.push_back( value );
-			}
-		
+            for ( size_t i = 0; i < reply->elements; i += 2 )
+            {
+                auto keyelement = reply->element[ i ];
+                auto valueelement = reply->element[ i + 1 ];
 
-			freeReplyObject( reply );
-			reply = nullptr;
-		}
+                std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
+                std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
+                if ( key == "" )
+                {
+                    continue;
+                }
 
-		return true;
-	}
+                values[ key ] = value;
+            }
+
+
+            freeReplyObject( reply );
+            reply = nullptr;
+        }
+
+        return true;
+    }
+
+    bool KFHiRedis::PipelineExecute( const ListString& commands, VectorString& values )
+    {
+        for ( auto& command : commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisAppendCommand" );
+            }
+        }
+
+        redisReply* reply = nullptr;
+        for ( auto& command : commands )
+        {
+            auto result = redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
+            {
+                throw KFRedisException( command.c_str(), _redis_context->flags, "redisGetReply" );
+            }
+
+            if ( reply->elements != 0 )
+            {
+                for ( size_t i = 0; i < reply->elements; ++i )
+                {
+                    auto element = reply->element[ i ];
+
+                    std::string value = ( element->str == nullptr ? "" : element->str );
+                    values.push_back( value );
+                }
+            }
+
+            else
+            {
+                std::string value = ( reply->str == nullptr ? "" : reply->str );
+                values.push_back( value );
+            }
+
+
+            freeReplyObject( reply );
+            reply = nullptr;
+        }
+
+        return true;
+    }
 }

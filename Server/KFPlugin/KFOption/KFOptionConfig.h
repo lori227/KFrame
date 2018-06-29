@@ -6,29 +6,29 @@
 
 namespace KFrame
 {
-	/////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	class KFOptionConfig : public KFConfig, public KFSingleton< KFOptionConfig >
-	{
-	public:
-		KFOptionConfig();
-		~KFOptionConfig();
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFOptionConfig : public KFConfig, public KFSingleton< KFOptionConfig >
+    {
+    public:
+        KFOptionConfig();
+        ~KFOptionConfig();
 
-		// 加载配置
-		bool LoadConfig( const char* file );
+        // 加载配置
+        bool LoadConfig( const char* file );
 
-		// 查找配置选项
-		const std::string& FindOption( const std::string& name, uint32 key ) const;
+        // 查找配置选项
+        const std::string& FindOption( const std::string& name, uint32 key ) const;
 
-	public:
-		// 选项配置列表
-		typedef std::pair< std::string, uint32 > OptionKey;
-		std::map< OptionKey, std::string > _option_list;
-	};
+    public:
+        // 选项配置列表
+        typedef std::pair< std::string, uint32 > OptionKey;
+        std::map< OptionKey, std::string > _option_list;
+    };
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_option_config = KFOptionConfig::Instance();
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_option_config = KFOptionConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

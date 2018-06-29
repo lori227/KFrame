@@ -18,48 +18,48 @@
 
 namespace KFrame
 {
-	class KFComponent;
-	class KFAchieveModule : public KFAchieveInterface
-	{
-	public:
-		KFAchieveModule();
-		~KFAchieveModule();
+    class KFComponent;
+    class KFAchieveModule : public KFAchieveInterface
+    {
+    public:
+        KFAchieveModule();
+        ~KFAchieveModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
+        // 关闭
+        virtual void BeforeShut();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-	protected:
-		// 领取奖励
-		__KF_MESSAGE_FUNCTION__( HandleReceiveAchieveRewardReq );
+    protected:
+        // 领取奖励
+        __KF_MESSAGE_FUNCTION__( HandleReceiveAchieveRewardReq );
 
-	private:
-		// 领取成就奖励
-		uint32 ReceiveAchieveReward( KFEntity* player, uint32 achieveid );
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 成就数值更新回调
-		void OnAchieveValueUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 属性更新回调
-		void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-		void OnAddDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
-		void OnRemoveDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+    private:
+        // 领取成就奖励
+        uint32 ReceiveAchieveReward( KFEntity* player, uint32 achieveid );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 成就数值更新回调
+        void OnAchieveValueUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 属性更新回调
+        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        void OnAddDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        void OnRemoveDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
 
-		// 更新成就
-		void UpdateDataAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
-		void UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
+        // 更新成就
+        void UpdateDataAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        void UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
 
-	private:
-		KFComponent * _kf_component;
-	};
+    private:
+        KFComponent* _kf_component;
+    };
 }
 
 

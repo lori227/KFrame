@@ -7,14 +7,14 @@
 
 namespace KFrame
 {
-	class KFNetEvent;
-	class KFNetClientServices : public KFNetServices
-	{
-	public:
+    class KFNetEvent;
+    class KFNetClientServices : public KFNetServices
+    {
+    public:
 
-		KFNetClientServices();
-		~KFNetClientServices();
-	};
+        KFNetClientServices();
+        ~KFNetClientServices();
+    };
 }
 
 #endif

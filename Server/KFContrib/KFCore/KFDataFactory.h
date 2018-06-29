@@ -5,25 +5,25 @@
 
 namespace KFrame
 {
-	class KFDataFactory
-	{
-	public:
+    class KFDataFactory
+    {
+    public:
 
-		// 创建
-		static KFData* Create( uint32 type );
-		static KFData* Create( const std::string& type );
+        // 创建
+        static KFData* Create( uint32 type );
+        static KFData* Create( const std::string& type );
 
-		// 释放资源
-		static void Release( KFData* kfdata );
+        // 释放资源
+        static void Release( KFData* kfdata );
 
-		// 创建一个属性
-		static KFData* CreateData( const KFDataSetting* datasetting );
-		static KFData* CreateData( const std::string& classname, const std::string& dataname );
+        // 创建一个属性
+        static KFData* CreateData( const KFDataSetting* datasetting );
+        static KFData* CreateData( const std::string& classname, const std::string& dataname );
 
-		// 初始化对象
-		static void InitData( KFData* kfdata, const KFClassSetting* classsetting, const KFDataSetting* datasetting );
+        // 初始化对象
+        static void InitData( KFData* kfdata, const KFClassSetting* classsetting, const KFDataSetting* datasetting );
 
-	};
+    };
 }
 
 #endif

@@ -10,66 +10,67 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFInterfaces.h"
 #include "KFChannelInterface.h"
+#include "KFConfig/KFConfigInterface.h"
+#include "KFRedis/KFRedisInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 
 namespace KFrame
 {
-	class KFChannel;
-	class KFChannelSetting;
-	class KFChannelModule : public KFChannelInterface
-	{
-	public:
-		KFChannelModule();
-		~KFChannelModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFChannel;
+    class KFChannelSetting;
+    class KFChannelModule : public KFChannelInterface
+    {
+    public:
+        KFChannelModule();
+        ~KFChannelModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		template< class T >
-		void RegisterChannel( T* object )
-		{
-			auto channel = object->_channel;
-			_kf_channel_list.insert( std::make_pair( channel, object ) );
+        // 初始化
+        virtual void BeforeRun();
 
-			{
-				KFChannelFunction loginfunction = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
-				auto kfloginfunction = _kf_login_function.Create( channel );
-				kfloginfunction->_function = loginfunction;
-			}
-	
-			{
-				KFChannelFunction payfunction = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
-				auto kfpayfunction = _kf_pay_function.Create( channel );
-				kfpayfunction->_function = payfunction;
-			}
-		
-		}
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void RegisterChannel( T* object )
+        {
+            auto channel = object->_channel;
+            _kf_channel_list.insert( std::make_pair( channel, object ) );
 
-		// 处理登录请求
-		virtual std::string AuthChannelLogin( const std::string& data );
+            {
+                KFChannelFunction loginfunction = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
+                auto kfloginfunction = _kf_login_function.Create( channel );
+                kfloginfunction->_function = loginfunction;
+            }
 
-	private:
-		typedef std::function< std::string( KFJson& request, const KFChannelSetting* )> KFChannelFunction;
+            {
+                KFChannelFunction payfunction = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
+                auto kfpayfunction = _kf_pay_function.Create( channel );
+                kfpayfunction->_function = payfunction;
+            }
 
-		// 绑定的登录函数
-		KFBind< uint32, uint32, KFChannelFunction > _kf_login_function;
+        }
 
-		// 充值函数
-		KFBind< uint32, uint32, KFChannelFunction > _kf_pay_function;
+        // 处理登录请求
+        virtual std::string AuthChannelLogin( const std::string& data );
 
-		// 注册的渠道
-		std::map< uint32, KFChannel* > _kf_channel_list;
-	};
+    private:
+        typedef std::function< std::string( KFJson& request, const KFChannelSetting* )> KFChannelFunction;
+
+        // 绑定的登录函数
+        KFBind< uint32, uint32, KFChannelFunction > _kf_login_function;
+
+        // 充值函数
+        KFBind< uint32, uint32, KFChannelFunction > _kf_pay_function;
+
+        // 注册的渠道
+        std::map< uint32, KFChannel* > _kf_channel_list;
+    };
 }
 
 

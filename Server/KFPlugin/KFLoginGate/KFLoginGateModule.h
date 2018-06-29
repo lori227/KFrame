@@ -21,38 +21,38 @@
 
 namespace KFrame
 {
-	class KFLoginGateModule : public KFLoginGateInterface
-	{
-	public:
-		KFLoginGateModule();
-		~KFLoginGateModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFLoginGateModule : public KFLoginGateInterface
+    {
+    public:
+        KFLoginGateModule();
+        ~KFLoginGateModule();
 
-		// 初始化
-		virtual void BeforeRun();
-			
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 登录验证
-		__KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );
+        // 加载配置
+        virtual void InitModule();
 
-		// 验证结果
-		__KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
-		
-	protected:
-		// 更新ip地址到login
-		__KF_TIMER_FUNCTION__( OnTimerUpdateClientToLogin );
+        // 初始化
+        virtual void BeforeRun();
 
-	protected:
-		// 更新login回调
-		void OnHttpLoginUpdateCallBack( std::string& senddata, std::string& recvdata );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 登录验证
+        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );
 
-	};
+        // 验证结果
+        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
+
+    protected:
+        // 更新ip地址到login
+        __KF_TIMER_FUNCTION__( OnTimerUpdateClientToLogin );
+
+    protected:
+        // 更新login回调
+        void OnHttpLoginUpdateCallBack( std::string& senddata, std::string& recvdata );
+
+    };
 }
 
 

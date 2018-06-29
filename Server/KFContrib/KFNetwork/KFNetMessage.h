@@ -2,54 +2,55 @@
 #define __NET_MESSAGE_H__
 
 #include "KFGuid.h"
-#include "KFMemory/KFMemoryObject.h"
 
 #pragma pack( 1 )
 
 namespace KFrame
 {
-	///////////////////////////////////////////////////////////////////////////////////////////
-	__MT_CLASS__( KFNetHead )
-	{
-	public:
-		KFGuid _guid;		// guid
-		uint32 _length;		// 消息长度
-		uint16 _msgid;		// 消息类型
-		uint16 _child;		// 子消息个数( 包括自己 )
-	};
-	
-	// 消息基类
-	class KFNetMessage : public KFNetHead
-	{
-	public:
-		KFNetMessage();
-		~KFNetMessage();
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    class KFNetHead
+    {
+    public:
+        KFGuid _guid;		// guid
+        uint32 _length;		// 消息长度
+        uint16 _msgid;		// 消息类型
+        uint16 _child;		// 子消息个数( 包括自己 )
+    };
 
-		static KFNetMessage* Create( uint32 length );
-		void Release();
+    // 消息基类
+    class KFNetMessage : public KFNetHead
+    {
+    public:
+        KFNetMessage();
+        ~KFNetMessage();
 
-		static uint32 HeadLength() { return sizeof( KFNetHead ); }
-		//////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////
+        static KFNetMessage* Create( uint32 length );
+        void Release();
 
-		void CopyData( const int8* data, uint32 length );
+        static uint32 HeadLength() {
+            return sizeof( KFNetHead );
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
-		// 复制消息
-		void CopyFrom( KFNetMessage* message );
-		void CopyFrom( const KFGuid& guid, uint32 msgid, const int8* data, uint32 length );
-		///////////////////////////////////////////////////////////////////////////////
+        void CopyData( const int8* data, uint32 length );
 
-	protected:
-		// 分配内存
-		void MallocData( uint32 length );
-		void FreeData();
+        // 复制消息
+        void CopyFrom( KFNetMessage* message );
+        void CopyFrom( const KFGuid& guid, uint32 msgid, const int8* data, uint32 length );
+        ///////////////////////////////////////////////////////////////////////////////
 
-	public:
-		int8* _data;		// 消息数据
-	};
+    protected:
+        // 分配内存
+        void MallocData( uint32 length );
+        void FreeData();
 
-	/////////////////////////////////////////////////////////////////////////////
-	typedef std::list< KFNetMessage* > MessageList;
+    public:
+        int8* _data;		// 消息数据
+    };
+
+    /////////////////////////////////////////////////////////////////////////////
+    typedef std::list< KFNetMessage* > MessageList;
 }
 
 #pragma pack()

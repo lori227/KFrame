@@ -5,10 +5,10 @@
 
 namespace KFrame
 {
-	class KFAuthInterface : public KFModule
-	{
-	public:
-	};
+    class KFAuthInterface : public KFModule
+    {
+    public:
+    };
 }
 
 

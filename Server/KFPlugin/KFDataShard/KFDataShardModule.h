@@ -22,87 +22,87 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFDataKeeper )
-	{
-	public:
-		KFDataKeeper()
-		{
-			_zone_id = 0;
-			_player_id = 0;
-		}
+    class KFDataKeeper
+    {
+    public:
+        KFDataKeeper()
+        {
+            _zone_id = 0;
+            _player_id = 0;
+        }
 
-		// 小区id
-		uint32 _zone_id;
+        // 小区id
+        uint32 _zone_id;
 
-		// 玩家id
-		uint32 _player_id;
+        // 玩家id
+        uint32 _player_id;
 
-		// 玩家数据
-		KFMsg::PBObject _pb_object;
-	};
+        // 玩家数据
+        KFMsg::PBObject _pb_object;
+    };
 
-	class KFDataShardModule : public KFDataShardInterface
-	{
-	public:
-		KFDataShardModule();
-		~KFDataShardModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFDataShardModule : public KFDataShardInterface
+    {
+    public:
+        KFDataShardModule();
+        ~KFDataShardModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
-		
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 客户端连接
-		__KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
-		
-	protected:
-		// 定时保存数据
-		__KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
+        // 加载配置
+        virtual void InitModule();
 
-	protected:
-		// 处理查询角色id 
-		__KF_MESSAGE_FUNCTION__( HandleLoginQueryPlayerIdReq );
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 玩家登陆
-		__KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 客户端连接
+        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
-		// 保存数据
-		__KF_MESSAGE_FUNCTION__( HandleSavePlayerReq );
+    protected:
+        // 定时保存数据
+        __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
 
-		// 删除数据
-		__KF_MESSAGE_FUNCTION__( HandleDeletePlayerReq );
+    protected:
+        // 处理查询角色id
+        __KF_MESSAGE_FUNCTION__( HandleLoginQueryPlayerIdReq );
 
-		// 查询玩家属性
-		__KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
+        // 玩家登陆
+        __KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );
 
-	protected:
-		// 加载数据
-		bool LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject );
-		void LoadExtendData( uint32 accountid, KFMsg::PBStrings* extenddata );
+        // 保存数据
+        __KF_MESSAGE_FUNCTION__( HandleSavePlayerReq );
 
-		// 保存数据
-		bool SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject );
+        // 删除数据
+        __KF_MESSAGE_FUNCTION__( HandleDeletePlayerReq );
 
-		// 删除数据
-		bool DeletePlayerData( uint32 zoneid, uint32 id );
+        // 查询玩家属性
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
-		// 查询角色id
-		uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
+    protected:
+        // 加载数据
+        bool LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject );
+        void LoadExtendData( uint32 accountid, KFMsg::PBStrings* extenddata );
 
-		// 创建角色
-		void CreatePlayer( uint32 channel, uint32 accountid, uint32 zoneid, uint32 playerid );
+        // 保存数据
+        bool SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject );
 
-	private:
-		// 数据保存
-		KFMap< uint32, uint32, KFDataKeeper > _kf_data_keeper;
-	};
+        // 删除数据
+        bool DeletePlayerData( uint32 zoneid, uint32 id );
+
+        // 查询角色id
+        uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
+
+        // 创建角色
+        void CreatePlayer( uint32 channel, uint32 accountid, uint32 zoneid, uint32 playerid );
+
+    private:
+        // 数据保存
+        KFMap< uint32, uint32, KFDataKeeper > _kf_data_keeper;
+    };
 }
 
 

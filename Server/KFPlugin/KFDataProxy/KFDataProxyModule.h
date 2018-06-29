@@ -18,40 +18,40 @@
 
 namespace KFrame
 {
-	class KFDataProxyModule : public KFDataProxyInterface
-	{
-	public:
-		KFDataProxyModule();
-		~KFDataProxyModule();
+    class KFDataProxyModule : public KFDataProxyInterface
+    {
+    public:
+        KFDataProxyModule();
+        ~KFDataProxyModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
+        // 刷新
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
+        // 关闭
+        virtual void BeforeShut();
 
-	protected:
-		// 断开连接
-		__KF_CLIENT_LOST_FUNCTION__( OnClientLostServer );
+    protected:
+        // 断开连接
+        __KF_CLIENT_LOST_FUNCTION__( OnClientLostServer );
 
-	protected:
-		// 更新zone信息
-		__KF_MESSAGE_FUNCTION__( HandleUpdateZoneToProxyReq );
+    protected:
+        // 更新zone信息
+        __KF_MESSAGE_FUNCTION__( HandleUpdateZoneToProxyReq );
 
-		// 消息转发
-		__KF_MESSAGE_FUNCTION__( HandleTransmitToDataShardReq );
+        // 消息转发
+        __KF_MESSAGE_FUNCTION__( HandleTransmitToDataShardReq );
 
-	protected:
-		// 查找逻辑分片
-		uint32 FindZoneShardId( uint32 zoneid, uint32 clientid );
+    protected:
+        // 查找逻辑分片
+        uint32 FindZoneShardId( uint32 zoneid, uint32 clientid );
 
-	private:
-		// 分区hash列表
-		KFMap< uint32, uint32, KFConHash > _zone_hash;
-	};
+    private:
+        // 分区hash列表
+        KFMap< uint32, uint32, KFConHash > _zone_hash;
+    };
 }
 
 #endif

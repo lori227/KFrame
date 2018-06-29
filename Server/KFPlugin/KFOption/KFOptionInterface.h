@@ -5,20 +5,24 @@
 
 namespace KFrame
 {
-	class KFOptionInterface : public KFModule
-	{
-	public:
-		// 获得string配置
-		virtual const std::string& GetString( const std::string& name, uint32 key = 0 ) = 0;
+    class KFOptionInterface : public KFModule
+    {
+    public:
+        // 获得配置数值
+        template< class T >
+        T GetValue( const std::string& name, uint32 key = 0 )
+        {
+            auto& strvalue = GetString( name, key );
+            return KFUtility::ToValue< T >( strvalue );
+        }
 
-		// 获得uint32配置
-		virtual uint32 GetUInt32( const std::string& name, uint32 key = 0 ) = 0;
+    protected:
+        virtual const std::string& GetString( const std::string& name, uint32 key = 0 ) = 0;
+    };
 
-	};
-
-	///////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_option, KFOptionInterface );
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_option, KFOptionInterface );
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 

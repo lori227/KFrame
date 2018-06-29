@@ -2,25 +2,25 @@
 
 namespace KFrame
 {
-	KFPublicProxyModule::KFPublicProxyModule()
-	{
-	}
+    KFPublicProxyModule::KFPublicProxyModule()
+    {
+    }
 
-	KFPublicProxyModule::~KFPublicProxyModule()
-	{
+    KFPublicProxyModule::~KFPublicProxyModule()
+    {
 
-	}
+    }
 
-	void KFPublicProxyModule::InitModule()
-	{
+    void KFPublicProxyModule::InitModule()
+    {
 
-	}
+    }
 
-	void KFPublicProxyModule::BeforeRun()
-	{
-	}
+    void KFPublicProxyModule::BeforeRun()
+    {
+    }
 
-	void KFPublicProxyModule::BeforeShut()
-	{
-	}
+    void KFPublicProxyModule::BeforeShut()
+    {
+    }
 }

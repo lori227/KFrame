@@ -3,8 +3,8 @@
 
 namespace KFrame
 {
-	KFSTRandModule::KFSTRandModule()
-	{
-	}
+    KFSTRandModule::KFSTRandModule()
+    {
+    }
 
 }

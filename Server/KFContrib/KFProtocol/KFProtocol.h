@@ -15,20 +15,20 @@
 ////////////////////////////////////////////////////////////////////
 
 #define __PROTO_PARSE__( msgtype ) \
-		msgtype kfmsg;\
-		if ( !KFProto::Parse( &kfmsg, data, length ) )\
-		{\
-			return;\
-		}\
+    msgtype kfmsg;\
+    if ( !KFProto::Parse( &kfmsg, data, length ) )\
+    {\
+        return;\
+    }\
 
 namespace KFrame
 {
-	class KFProto
-	{
-	public:
-		// 解析消息
-		static bool Parse( ::google::protobuf::Message* proto, const int8* data, uint32 length );
-	};
+    class KFProto
+    {
+    public:
+        // 解析消息
+        static bool Parse( ::google::protobuf::Message* proto, const int8* data, uint32 length );
+    };
 
 }
 

@@ -1,34 +1,36 @@
 ﻿#ifndef __KF_THREAD_H__
 #define __KF_THREAD_H__
 
-#include "KFDefine.h"
+#include "KFInclude.h"
 
 namespace KFrame
 {
-	///////////////////////////////////////////////////////////////////////////////////////////
-	class KFThread
-	{
-	public:
-		// 当前线程id
-		static uint32 GetThreadID();
+    typedef std::function< void() > KFThreadFunction;
 
-		// 创建线程
-		template< class T >
-		static void CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
-		{
-			KFThreadFunction function = std::bind( handle, object );
-			CreateThread( function, file, line );
-		}
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    class KFThread
+    {
+    public:
+        // 当前线程id
+        static uint32 GetThreadID();
 
-		// 睡眠
-		static void Sleep( uint32 milliseconds );
+        // 创建线程
+        template< class T >
+        static void CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
+        {
+            KFThreadFunction function = std::bind( handle, object );
+            CreateThread( function, file, line );
+        }
 
-	protected:
-		// 创建线程
-		static void CreateThread( KFThreadFunction& function, const char* file, uint32 line );
-	};
+        // 睡眠
+        static void Sleep( uint32 milliseconds );
 
-	
+    protected:
+        // 创建线程
+        static void CreateThread( KFThreadFunction& function, const char* file, uint32 line );
+    };
+
+
 }
 
 #endif

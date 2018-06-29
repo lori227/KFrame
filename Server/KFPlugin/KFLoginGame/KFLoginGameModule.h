@@ -22,51 +22,51 @@
 
 namespace KFrame
 {
-	class KFLoginGameModule : public KFLoginGameInterface
-	{
-	public:
-		KFLoginGameModule();
-		~KFLoginGameModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFLoginGameModule : public KFLoginGameInterface
+    {
+    public:
+        KFLoginGameModule();
+        ~KFLoginGameModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 处理更新登录数量
-		__KF_MESSAGE_FUNCTION__( HandleLoginProxyUpdateReq );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 处理登录请求
-		__KF_MESSAGE_FUNCTION__ ( HandleLoginGameReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 处理更新登录数量
+        __KF_MESSAGE_FUNCTION__( HandleLoginProxyUpdateReq );
 
-		// 处理加载玩家数据请求
-		__KF_MESSAGE_FUNCTION__ ( HandleLoadPlayerAck );
+        // 处理登录请求
+        __KF_MESSAGE_FUNCTION__ ( HandleLoginGameReq );
 
-		// 处理登出游戏
-		__KF_MESSAGE_FUNCTION__ ( HandleLoginOutReq );
+        // 处理加载玩家数据请求
+        __KF_MESSAGE_FUNCTION__ ( HandleLoadPlayerAck );
 
-		// 登录Token
-		__KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
-		__KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameAck );
+        // 处理登出游戏
+        __KF_MESSAGE_FUNCTION__ ( HandleLoginOutReq );
 
-	protected:
-		// 更新
-		__KF_TIMER_FUNCTION__( OnTimerUpdateLoginGameToWorld );
+        // 登录Token
+        __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameAck );
 
-	protected:
-		// 连接丢失
-		__KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
+    protected:
+        // 更新
+        __KF_TIMER_FUNCTION__( OnTimerUpdateLoginGameToWorld );
 
-	private:
-		// 发送登录回应消息
-		void SendLoginGameMessage( uint32 result, uint32 playerid, uint32 gateid, const KFMsg::PBObject* playerdata );
-	};
+    protected:
+        // 连接丢失
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
+
+    private:
+        // 发送登录回应消息
+        void SendLoginGameMessage( uint32 result, uint32 playerid, uint32 gateid, const KFMsg::PBObject* playerdata );
+    };
 }
 
 

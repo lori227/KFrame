@@ -19,37 +19,37 @@
 namespace KFrame
 {
 
-	class KFDebugModule : public KFDebugInterface
-	{
-	public:
-		KFDebugModule();
-		~KFDebugModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFDebugModule : public KFDebugInterface
+    {
+    public:
+        KFDebugModule();
+        ~KFDebugModule();
 
-		// 逻辑
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 逻辑
+        virtual void BeforeRun();
 
-		// 卸载调试函数
-		virtual void UnRegisterDebugFunction( const std::string& command );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-	protected:
-		// 绑定调试函数
-		virtual void BindDebugFunction( const std::string& command, KFDebugFunction& function );
+        // 卸载调试函数
+        virtual void UnRegisterDebugFunction( const std::string& command );
 
-	protected:
-		// 处理客户端命令请求
-		__KF_MESSAGE_FUNCTION__( HandleDebugCommandReq );
+    protected:
+        // 绑定调试函数
+        virtual void BindDebugFunction( const std::string& command, KFDebugFunction& function );
 
-	protected:
-		KFBind< std::string, const std::string&, KFDebugFunction > _kf_debug_function;
-	};
+    protected:
+        // 处理客户端命令请求
+        __KF_MESSAGE_FUNCTION__( HandleDebugCommandReq );
+
+    protected:
+        KFBind< std::string, const std::string&, KFDebugFunction > _kf_debug_function;
+    };
 }
 
 

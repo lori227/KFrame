@@ -14,260 +14,260 @@
 
 namespace KFrame
 {
-	class KFFSM;
-	class KFRobot
-	{
-	public:
-		KFRobot();
-		~KFRobot();
-		// 初始化
-		void Initialize( uint32 robotid, KFNetClientEngine* netclient, KFComponent * kfcomponent );
+    class KFFSM;
+    class KFRobot
+    {
+    public:
+        KFRobot();
+        ~KFRobot();
+        // 初始化
+        void Initialize( uint32 robotid, KFNetClientEngine* netclient, KFComponent* kfcomponent );
 
-		// 改变状态
-		void ChangeState( uint32 state );
-		
-		// 改变状态 //外部配置调用这个接口
-		void ChangeStateProxy();
+        // 改变状态
+        void ChangeState( uint32 state );
 
-		// 逻辑
-		void Run();
+        // 改变状态 //外部配置调用这个接口
+        void ChangeStateProxy();
 
-		// 开启定时器
-		void StartTimer( uint64 spacetime );
+        // 逻辑
+        void Run();
 
-		// 停止定时器
-		void StopTimer();
+        // 开启定时器
+        void StartTimer( uint64 spacetime );
 
-		// 响应定时器
-		bool DoneTimer();
+        // 停止定时器
+        void StopTimer();
 
-		// 连接到服务器
-		void ConnectServer( const std::string& servertype, uint32 serverid, const std::string& name, const std::string& ip, uint32 port );
-		
-		// 断开连接
-		void DisconnectServer( uint32 serverid );
+        // 响应定时器
+        bool DoneTimer();
 
-		// 登录验证
-		void OnConnectSendMessage();
-		
-		// 发送消息
-		void SendNetMessage( uint32 msgid, google::protobuf::Message* message );
+        // 连接到服务器
+        void ConnectServer( const std::string& servertype, uint32 serverid, const std::string& name, const std::string& ip, uint32 port );
 
-		//解析pb kfdata key
-		void ParsePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key );
-		void ParseUpdatePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key );
+        // 断开连接
+        void DisconnectServer( uint32 serverid );
 
-		// 创建角色
-		void CreateRole();
+        // 登录验证
+        void OnConnectSendMessage();
 
-		// 请求邮件数量
-		void QueryMailNum();
-		
-		// 请求邮件列表
-		void QueryMailInfo();
+        // 发送消息
+        void SendNetMessage( uint32 msgid, google::protobuf::Message* message );
 
-		// 查看邮件
-		void ViewMail();
+        //解析pb kfdata key
+        void ParsePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key );
+        void ParseUpdatePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key );
 
-		// 领取邮件奖励
-		void ReceiveMailReward();
+        // 创建角色
+        void CreateRole();
 
-		// 删除邮件
-		void DelMail();
+        // 请求邮件数量
+        void QueryMailNum();
 
-		// 进入聊天频道
-		void EnterChat();
+        // 请求邮件列表
+        void QueryMailInfo();
 
-		// 发送聊天信息
-		void SendChatMessage();
+        // 查看邮件
+        void ViewMail();
 
-		// 离开聊天频道
-		void LeaveChat();
+        // 领取邮件奖励
+        void ReceiveMailReward();
 
-		// 购买商品
-		void BuyStore();
+        // 删除邮件
+        void DelMail();
 
-		// 赠送商品
-		void GiveStore();
+        // 进入聊天频道
+        void EnterChat();
 
-		// 添加好友
-		void AddFriend();
+        // 发送聊天信息
+        void SendChatMessage();
 
-		// 同意添加好友
-		void AgreeInvite();
+        // 离开聊天频道
+        void LeaveChat();
 
-		// 删除好友
-		void DelFriend();
+        // 购买商品
+        void BuyStore();
 
-		// 设置拒绝添加好友
-		void SetRefuseFriendInvite();
+        // 赠送商品
+        void GiveStore();
 
-		// 查询玩家基础信息
-		void QueryBasic();
+        // 添加好友
+        void AddFriend();
 
-		// 修改名字
-		void ChangeName();
+        // 同意添加好友
+        void AgreeInvite();
 
-		// 修改性别
-		void ChangeSex();
+        // 删除好友
+        void DelFriend();
 
-		// 发送好友聊天
-		void SendFriendChat();
+        // 设置拒绝添加好友
+        void SetRefuseFriendInvite();
 
-		// 修改头像请求
-		void ChangeIcon();
+        // 查询玩家基础信息
+        void QueryBasic();
 
-		// 修改头像框
-		void ChangeIconBox();
+        // 修改名字
+        void ChangeName();
 
-		// 修改个性签名
-		void ChangeMotto();
+        // 修改性别
+        void ChangeSex();
 
-		// 修改模型
-		void ChangeModel();
+        // 发送好友聊天
+        void SendFriendChat();
 
-		// 修改默认时装
-		void ChangeClothes();
+        // 修改头像请求
+        void ChangeIcon();
 
-		// 穿戴时装
-		void DressClothes();
+        // 修改头像框
+        void ChangeIconBox();
 
-		// 查询访客信息
-		void QueryGuest();
+        // 修改个性签名
+        void ChangeMotto();
 
-		// 领取活动奖励
-		void RecvActivityReward();
+        // 修改模型
+        void ChangeModel();
 
-		// 领取任务奖励
-		void RecvTaskReward();
+        // 修改默认时装
+        void ChangeClothes();
 
-		// 领取成就奖励
-		void RecvAchieveReward();
+        // 穿戴时装
+        void DressClothes();
 
-		// 领取礼包奖励
-		void RecvGiftReward();
+        // 查询访客信息
+        void QueryGuest();
 
-		// 敬酒
-		void Toast();
+        // 领取活动奖励
+        void RecvActivityReward();
 
-		// 邀请组队
-		void InviteTeam();
+        // 领取任务奖励
+        void RecvTaskReward();
 
-		// 同意组队邀请
-		void AgreeInviteTeam();
+        // 领取成就奖励
+        void RecvAchieveReward();
 
-		// 拒绝组队邀请
-		void RefuseInviteTeam();
+        // 领取礼包奖励
+        void RecvGiftReward();
 
-		// 拒绝并且5分钟内不接受邀请
-		void RefuseMinuInviteTeam();
+        // 敬酒
+        void Toast();
 
-		// 离开组队
-		void LeaveTeam();
+        // 邀请组队
+        void InviteTeam();
 
-		// 申请加入队伍
-		void ApplyGroup();
+        // 同意组队邀请
+        void AgreeInviteTeam();
 
-		// 同意申请加入队伍
-		void AgreeApplyTeam();
+        // 拒绝组队邀请
+        void RefuseInviteTeam();
 
-		// 拒绝申请加入队伍
-		void RefuseApplyTeam();
+        // 拒绝并且5分钟内不接受邀请
+        void RefuseMinuInviteTeam();
 
-		// 踢出队员
-		void KickGroup();
+        // 离开组队
+        void LeaveTeam();
 
-		// GM加钱
-		void AddMoney();
+        // 申请加入队伍
+        void ApplyGroup();
 
-		// GM加钻石
-		void AddDiamond();
+        // 同意申请加入队伍
+        void AgreeApplyTeam();
 
-		// 增加心愿单
-		void AddWishOrder();
+        // 拒绝申请加入队伍
+        void RefuseApplyTeam();
 
-		// 删除心愿单
-		void DelWishOrder();
+        // 踢出队员
+        void KickGroup();
 
-		// 修改心愿单可见状态
-		void ModifyWishOrder();
+        // GM加钱
+        void AddMoney();
 
-		//////////////////////匹配相关///////////////////////////////
-		// 开始单人匹配
-		void SingleMatch();
+        // GM加钻石
+        void AddDiamond();
 
-		// 匹配
-		void StartMatch( uint32 mode, bool group );
-		// 取消匹配
-		void CancleMatch();
+        // 增加心愿单
+        void AddWishOrder();
 
-		//////////////////////匹配相关///////////////////////////////
-		// 查询玩家
-		void QueryPlayer();
+        // 删除心愿单
+        void DelWishOrder();
 
-		// 查询商城版本号
-		void QueryStoreVersion();
+        // 修改心愿单可见状态
+        void ModifyWishOrder();
 
-		// 查询商城信息
-		void QueryStoreInfo();
-		
-		// 查询全服排行榜信息
-		void QueryWholeRankList();
-		
-		// 查询好友排行榜信息
-		void QueryFriendRankList();
+        //////////////////////匹配相关///////////////////////////////
+        // 开始单人匹配
+        void SingleMatch();
 
-	protected:
+        // 匹配
+        void StartMatch( uint32 mode, bool group );
+        // 取消匹配
+        void CancleMatch();
 
-		// 定时器
-		KFClockTimer _fsm_timer;
+        //////////////////////匹配相关///////////////////////////////
+        // 查询玩家
+        void QueryPlayer();
 
-		// 客户端链接管理
-		KFNetClientEngine* _net_client;
+        // 查询商城版本号
+        void QueryStoreVersion();
 
-		// 属性组件
-		KFComponent * _kf_component;
-	public:
+        // 查询商城信息
+        void QueryStoreInfo();
 
+        // 查询全服排行榜信息
+        void QueryWholeRankList();
 
-		// 状态机状态
-		uint32 _state;
-		// 下个状态 与上个状态时间间隔
-		uint32 _loop_wait_times;
+        // 查询好友排行榜信息
+        void QueryFriendRankList();
 
-		// 状态机指针
-		KFFSM * _kf_fsm;
-		pNode _state_list;
-	public:
-		// 机器人id
-		uint32 _robot_id;
+    protected:
 
-		std::string _account;
+        // 定时器
+        KFClockTimer _fsm_timer;
 
-		uint32 _playerid;
-		uint32 _accountid;
-		uint32 _matchid;
+        // 客户端链接管理
+        KFNetClientEngine* _net_client;
 
-		// 目前只保存到player层
-		//	KFMap< std::string, const std::string, KFComponentEx > _kf_component;
+        // 属性组件
+        KFComponent* _kf_component;
+    public:
 
-	public:
-		std::string _connect_token;
-		std::string _connect_ip;
-		uint32  _connect_port;
 
-	public:
-		std::string _gate_server_id;
-		std::string _gate_server_type;
-		std::string _gate_ip;
-		std::string _gate_port;
-		std::string _gate_name;
-		std::string _token;
+        // 状态机状态
+        uint32 _state;
+        // 下个状态 与上个状态时间间隔
+        uint32 _loop_wait_times;
 
+        // 状态机指针
+        KFFSM* _kf_fsm;
+        pNode _state_list;
+    public:
+        // 机器人id
+        uint32 _robot_id;
 
-	public:
-		MapString _mail_num_arr;
-	};
+        std::string _account;
+
+        uint32 _playerid;
+        uint32 _accountid;
+        uint32 _matchid;
+
+        // 目前只保存到player层
+        //	KFMap< std::string, const std::string, KFComponentEx > _kf_component;
+
+    public:
+        std::string _connect_token;
+        std::string _connect_ip;
+        uint32  _connect_port;
+
+    public:
+        std::string _gate_server_id;
+        std::string _gate_server_type;
+        std::string _gate_ip;
+        std::string _gate_port;
+        std::string _gate_name;
+        std::string _token;
+
+
+    public:
+        MapString _mail_num_arr;
+    };
 }
 
 #endif

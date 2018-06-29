@@ -3,19 +3,19 @@
 
 namespace KFrame
 {
-	void KFGuildProxyPlugin::Install()
-	{
-		_kf_plugin_manage->RegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >( new KFGuildProxyModule() );
-	}
+    void KFGuildProxyPlugin::Install()
+    {
+        _kf_plugin_manage->RegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >( new KFGuildProxyModule() );
+    }
 
-	void KFGuildProxyPlugin::UnInstall()
-	{
-		_kf_plugin_manage->UnRegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >();
-	}
+    void KFGuildProxyPlugin::UnInstall()
+    {
+        _kf_plugin_manage->UnRegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >();
+    }
 
-	void KFGuildProxyPlugin::LoadModule()
-	{
+    void KFGuildProxyPlugin::LoadModule()
+    {
 
-	}
+    }
 
 }

@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFLoginWorldInterface : public KFModule
-	{
-	public:
+    class KFLoginWorldInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 

@@ -5,19 +5,19 @@
 
 namespace KFrame
 {
-	class KFBattleClientInterface : public KFModule
-	{
-	public:
+    class KFBattleClientInterface : public KFModule
+    {
+    public:
 
-		// 发送消息到Battle
-		virtual bool SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        // 发送消息到Battle
+        virtual bool SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
-	};
+    };
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_battle, KFBattleClientInterface );
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_battle, KFBattleClientInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

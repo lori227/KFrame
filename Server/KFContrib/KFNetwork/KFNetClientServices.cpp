@@ -3,13 +3,13 @@
 
 namespace KFrame
 {
-	KFNetClientServices::KFNetClientServices()
-	{
+    KFNetClientServices::KFNetClientServices()
+    {
 
-	}
+    }
 
-	KFNetClientServices::~KFNetClientServices()
-	{
+    KFNetClientServices::~KFNetClientServices()
+    {
 
-	}
+    }
 }

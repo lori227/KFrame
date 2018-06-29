@@ -15,28 +15,24 @@
 
 namespace KFrame
 {
-	class KFOptionModule : public KFOptionInterface
-	{
-	public:
-		KFOptionModule();
-		~KFOptionModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFOptionModule : public KFOptionInterface
+    {
+    public:
+        KFOptionModule();
+        ~KFOptionModule();
 
-		// 逻辑
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 获得string配置
-		virtual const std::string& GetString( const std::string& name, uint32 key = 0 );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 获得uint32配置
-		virtual uint32 GetUInt32( const std::string& name, uint32 key = 0 );
-	};
+    protected:
+        // 获得string配置
+        virtual const std::string& GetString( const std::string& name, uint32 key = 0 );
+    };
 }
 
 

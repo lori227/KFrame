@@ -4,98 +4,98 @@
 
 namespace KFrame
 {
-	int32 KFCompress::Zib( const std::string& value, std::string& result )
-	{
-		result.clear();
-		if ( value.empty() )
-		{
-			return 0;
-		}
-		 
-		auto zipbuffer = __KF_UINT8__( KFrame::Buff_20M );
+    int32 KFCompress::Zib( const std::string& value, std::string& result )
+    {
+        result.clear();
+        if ( value.empty() )
+        {
+            return 0;
+        }
 
-		// 压缩数据
-		uLongf compresslength = 0;
-		auto recode = compress( zipbuffer, &compresslength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
-		if ( recode == Z_OK )
-		{
-			result.assign( reinterpret_cast< int8* >( zipbuffer ), compresslength );
-		}
+        auto zipbuffer = __KF_UINT8__( KFrame::Buff_20M );
 
-		return recode;
-	}
+        // 压缩数据
+        uLongf compresslength = 0;
+        auto recode = compress( zipbuffer, &compresslength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
+        if ( recode == Z_OK )
+        {
+            result.assign( reinterpret_cast< int8* >( zipbuffer ), compresslength );
+        }
 
-	int32 KFCompress::Compress( const std::string& value, std::string& result )
-	{
-		result.clear();
-		if ( value.empty() )
-		{
-			return 0;
-		}
+        return recode;
+    }
 
-		uLongf ziplength = KFrame::Buff_20M;
-		auto zipbuffer = __KF_UINT8__( ziplength );
+    int32 KFCompress::Compress( const std::string& value, std::string& result )
+    {
+        result.clear();
+        if ( value.empty() )
+        {
+            return 0;
+        }
 
-		// 压缩数据
-		auto recode = compress( zipbuffer, &ziplength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
-		if ( recode == Z_OK )
-		{
-			uint32 maxlength = KFrame::Buff_40M;
-			auto savebuffer = __KF_INT8__( maxlength );
+        uLongf ziplength = KFrame::Buff_20M;
+        auto zipbuffer = __KF_UINT8__( ziplength );
 
-			// 转为可视字符串
-			auto savelength = KFDecode::UByteToString( zipbuffer, ziplength, savebuffer, maxlength );
-			result.assign( savebuffer, savelength );
-		}
+        // 压缩数据
+        auto recode = compress( zipbuffer, &ziplength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
+        if ( recode == Z_OK )
+        {
+            uint32 maxlength = KFrame::Buff_40M;
+            auto savebuffer = __KF_INT8__( maxlength );
 
-		return recode;
-	}
+            // 转为可视字符串
+            auto savelength = KFDecode::UByteToString( zipbuffer, ziplength, savebuffer, maxlength );
+            result.assign( savebuffer, savelength );
+        }
 
-	int32 KFCompress::UnZib( const std::string& value, std::string& result )
-	{
-		result.clear();
-		if ( value.empty() )
-		{
-			return 0;
-		}
-;
-		uLongf ziplength = KFrame::Buff_20M;
-		auto zipbuffer = __KF_UINT8__( ziplength );
+        return recode;
+    }
 
-		// 解压缩
-		auto recode = uncompress( zipbuffer, &ziplength, reinterpret_cast< const uint8* >( value.c_str() ), static_cast< uLong >( value.size() ) );
-		if ( recode == Z_OK )
-		{
-			result.assign( reinterpret_cast< int8* >( zipbuffer ), ziplength );
-		}
+    int32 KFCompress::UnZib( const std::string& value, std::string& result )
+    {
+        result.clear();
+        if ( value.empty() )
+        {
+            return 0;
+        }
+        ;
+        uLongf ziplength = KFrame::Buff_20M;
+        auto zipbuffer = __KF_UINT8__( ziplength );
 
-		return recode;
-	}
+        // 解压缩
+        auto recode = uncompress( zipbuffer, &ziplength, reinterpret_cast< const uint8* >( value.c_str() ), static_cast< uLong >( value.size() ) );
+        if ( recode == Z_OK )
+        {
+            result.assign( reinterpret_cast< int8* >( zipbuffer ), ziplength );
+        }
 
-	int32 KFCompress::UnCompress( const std::string& value, std::string& result )
-	{
-		result.clear();
-		if ( value.empty() )
-		{
-			return 0;
-		}
+        return recode;
+    }
 
-		auto ziplength = KFrame::Buff_20M;
-		auto zipbuffer = __KF_UINT8__( ziplength );
+    int32 KFCompress::UnCompress( const std::string& value, std::string& result )
+    {
+        result.clear();
+        if ( value.empty() )
+        {
+            return 0;
+        }
 
-		// 转成压缩数据
-		auto length = KFDecode::StringToUByte( value.data(), static_cast< uint32 >( value.size() ), zipbuffer, ziplength );
+        auto ziplength = KFrame::Buff_20M;
+        auto zipbuffer = __KF_UINT8__( ziplength );
 
-		uLongf maxlength = KFrame::Buff_40M;
-		auto resultbuffer = __KF_UINT8__( maxlength );
+        // 转成压缩数据
+        auto length = KFDecode::StringToUByte( value.data(), static_cast< uint32 >( value.size() ), zipbuffer, ziplength );
 
-		// 解压缩
-		auto recode = uncompress( resultbuffer, &maxlength, zipbuffer, length );
-		if ( recode == Z_OK )
-		{
-			result.assign( reinterpret_cast< int8* >( resultbuffer ), maxlength );
-		}
+        uLongf maxlength = KFrame::Buff_40M;
+        auto resultbuffer = __KF_UINT8__( maxlength );
 
-		return recode;
-	}
+        // 解压缩
+        auto recode = uncompress( resultbuffer, &maxlength, zipbuffer, length );
+        if ( recode == Z_OK )
+        {
+            result.assign( reinterpret_cast< int8* >( resultbuffer ), maxlength );
+        }
+
+        return recode;
+    }
 }

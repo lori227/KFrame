@@ -18,52 +18,52 @@
 
 namespace KFrame
 {
-	/////////////////////////////////////////////////////////////////////////
-	class KFWorkerModule : public KFWorkerInterface
-	{
-	public:
-		KFWorkerModule();
-		~KFWorkerModule();
-		
-		virtual void BeforeRun();
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 执行函数
-		bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+    /////////////////////////////////////////////////////////////////////////
+    class KFWorkerModule : public KFWorkerInterface
+    {
+    public:
+        KFWorkerModule();
+        ~KFWorkerModule();
 
-		// 取消注册
-		virtual void UnRegisterFunction( uint32 msgid );
+        virtual void BeforeRun();
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 执行函数
+        bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
 
-		//////////////////////////////////////////////////////////////////////////////////////////
-		// 发送消息
-		virtual void SendMessageToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message );
-		virtual void SendMessageToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message );
-			
-	protected:
-		// 转发消息到工作线程
-		__KF_TRANSMIT_FUNCTION__( SendMessageToWorker );
+        // 取消注册
+        virtual void UnRegisterFunction( uint32 msgid );
 
-	protected:
-		void Run();
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // 发送消息
+        virtual void SendMessageToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendMessageToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message );
 
-		// 添加函数
-		virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
+    protected:
+        // 转发消息到工作线程
+        __KF_TRANSMIT_FUNCTION__( SendMessageToWorker );
 
-		// 查找工作线程
-		KFActor* CreateWorkActor();
-		KFActor* FindWorkActor();
+    protected:
+        void Run();
 
-	private:
-		// 处理器函数
-		KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+        // 添加函数
+        virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
 
-		// 工作者索引
-		uint32 _actor_index;
+        // 查找工作线程
+        KFActor* CreateWorkActor();
+        KFActor* FindWorkActor();
 
-		// 工作者线程
-		std::vector< KFActor* > _kf_actor;
-	};
+    private:
+        // 处理器函数
+        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+
+        // 工作者索引
+        uint32 _actor_index;
+
+        // 工作者线程
+        std::vector< KFActor* > _kf_actor;
+    };
 }
 
 

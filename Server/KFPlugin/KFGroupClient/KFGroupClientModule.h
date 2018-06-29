@@ -23,127 +23,127 @@
 
 namespace KFrame
 {
-	class KFGroupClientModule : public KFGroupClientInterface
-	{
-	public:
-		KFGroupClientModule();
-		~KFGroupClientModule();
+    class KFGroupClientModule : public KFGroupClientInterface
+    {
+    public:
+        KFGroupClientModule();
+        ~KFGroupClientModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		
-		// 判断是否是队员
-		virtual bool IsGroupMember( KFEntity* player, uint32 playerid );
+        // 关闭
+        virtual void BeforeShut();
 
-		// 删除一个队员
-		virtual void RemoveGroupMember( uint64 groupid, uint32 playerid );
+        // 判断是否是队员
+        virtual bool IsGroupMember( KFEntity* player, uint32 playerid );
 
-		// 发送消息到Group
-		virtual bool SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message );
-		virtual bool SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message );
+        // 删除一个队员
+        virtual void RemoveGroupMember( uint64 groupid, uint32 playerid );
 
-	protected:
-		// 处理邀请玩家匹配
-		__KF_MESSAGE_FUNCTION__( HandleInviteMatchGroupReq );
+        // 发送消息到Group
+        virtual bool SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message );
 
-		// 接受到组队邀请
-		__KF_MESSAGE_FUNCTION__( HandleReceiveInviteMatchGroupReq );
+    protected:
+        // 处理邀请玩家匹配
+        __KF_MESSAGE_FUNCTION__( HandleInviteMatchGroupReq );
 
-		// 处理接受邀请
-		__KF_MESSAGE_FUNCTION__( HandleReplyInviteMatchGroupReq );
+        // 接受到组队邀请
+        __KF_MESSAGE_FUNCTION__( HandleReceiveInviteMatchGroupReq );
 
-		// 同意邀请组队
-		__KF_MESSAGE_FUNCTION__( HandleConsentInviteMatchGroupReq );
+        // 处理接受邀请
+        __KF_MESSAGE_FUNCTION__( HandleReplyInviteMatchGroupReq );
 
-		// 处理添加队员
-		__KF_MESSAGE_FUNCTION__( HandleAddMatchGroupMemberAck );
+        // 同意邀请组队
+        __KF_MESSAGE_FUNCTION__( HandleConsentInviteMatchGroupReq );
 
-		// 处理删除队员
-		__KF_MESSAGE_FUNCTION__( HandleRemoveMatchGroupMemberAck );
+        // 处理添加队员
+        __KF_MESSAGE_FUNCTION__( HandleAddMatchGroupMemberAck );
 
-		// 申请离开队伍
-		__KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupReq );
-		
-		// 剔除玩家
-		__KF_MESSAGE_FUNCTION__( HandleKickMatchGroupReq );
+        // 处理删除队员
+        __KF_MESSAGE_FUNCTION__( HandleRemoveMatchGroupMemberAck );
 
-		// 离开队伍
-		__KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupAck );
+        // 申请离开队伍
+        __KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupReq );
 
-		// 申请加入队伍
-		__KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupReq );
+        // 剔除玩家
+        __KF_MESSAGE_FUNCTION__( HandleKickMatchGroupReq );
 
-		// 申请加入队伍
-		__KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupAck );
+        // 离开队伍
+        __KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupAck );
 
-		// 回复申请组队操作
-		__KF_MESSAGE_FUNCTION__( HandleReplyApplyMatchGroupReq );
+        // 申请加入队伍
+        __KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupReq );
 
-		// 同意申请最对
-		__KF_MESSAGE_FUNCTION__( HandleConsentApplyMatchGroupAck );
+        // 申请加入队伍
+        __KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupAck );
 
-		// 更新玩家的基础信息
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupMemberAck );
+        // 回复申请组队操作
+        __KF_MESSAGE_FUNCTION__( HandleReplyApplyMatchGroupReq );
 
-		// 请求准备
-		__KF_MESSAGE_FUNCTION__( HandleMatchGroupPrepareReq );
+        // 同意申请最对
+        __KF_MESSAGE_FUNCTION__( HandleConsentApplyMatchGroupAck );
 
-		// 更新队长
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupCaptainAck );
+        // 更新玩家的基础信息
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMemberAck );
 
-		// 更新队伍模式
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchAck );
+        // 请求准备
+        __KF_MESSAGE_FUNCTION__( HandleMatchGroupPrepareReq );
 
-		// 更新组队模式
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchReq );
+        // 更新队长
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupCaptainAck );
 
-	protected:
-		// 登录游戏查询队伍
-		void OnEnterQueryMatchGroup( KFEntity* player );
+        // 更新队伍模式
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchAck );
 
-		// 离开游戏更新队伍
-		void OnLeaveUpdateMatchGroup( KFEntity* player );
+        // 更新组队模式
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchReq );
 
-		// 更新属性回调
-		void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
-		void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-		void OnUpdateDataToGroup( KFEntity* player, KFData* kfdata );
+    protected:
+        // 登录游戏查询队伍
+        void OnEnterQueryMatchGroup( KFEntity* player );
 
-	private:
-		// 准备匹配小队
-		uint64 PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
+        // 离开游戏更新队伍
+        void OnLeaveUpdateMatchGroup( KFEntity* player );
 
-		// 创建匹配小队
-		bool CreateMatchGroup( KFEntity* player, uint64 groupid );
+        // 更新属性回调
+        void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
+        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        void OnUpdateDataToGroup( KFEntity* player, KFData* kfdata );
 
-		// 设置匹配队伍
-		void UpdateMatchGroupStatus( KFEntity* player, uint64 groupid, uint32 iscaptain, uint32 matchid, uint32 maxcount );
+    private:
+        // 准备匹配小队
+        uint64 PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
 
-		// 格式化队伍成员
-		void FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject );
+        // 创建匹配小队
+        bool CreateMatchGroup( KFEntity* player, uint64 groupid );
 
-		// 离开队伍
-		void ProcessLeaveMatchGroup( KFEntity* player );
+        // 设置匹配队伍
+        void UpdateMatchGroupStatus( KFEntity* player, uint64 groupid, uint32 iscaptain, uint32 matchid, uint32 maxcount );
 
-		// 更新玩家队伍基础信息
-		bool UpdateMemberToMatchGroup( uint64 groupid, uint32 playerid, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
-		
-		// 更新匹配模式
-		void UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount );
-	private:
-		// 匹配队伍成员
-		KFData* _kf_group_member;
-		
-		// 组件
-		KFComponent* _kf_component;
-	};
+        // 格式化队伍成员
+        void FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject );
+
+        // 离开队伍
+        void ProcessLeaveMatchGroup( KFEntity* player );
+
+        // 更新玩家队伍基础信息
+        bool UpdateMemberToMatchGroup( uint64 groupid, uint32 playerid, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
+
+        // 更新匹配模式
+        void UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount );
+    private:
+        // 匹配队伍成员
+        KFData* _kf_group_member;
+
+        // 组件
+        KFComponent* _kf_component;
+    };
 }
 
 #endif

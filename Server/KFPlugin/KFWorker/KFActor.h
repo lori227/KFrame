@@ -8,53 +8,53 @@
 
 namespace KFrame
 {
-	class KFWorkerModule;
-	/////////////////////////////////////////////////////////////////////////
-	__ST_CLASS__( KFActor )
-	{
-	public:
-		KFActor();
-		~KFActor();
-		
-		// 初始化
-		void InitActor( KFWorkerModule* kfmodule, uint32 maxreqcount, uint32 maxackcount );
+    class KFWorkerModule;
+    /////////////////////////////////////////////////////////////////////////
+    class KFActor
+    {
+    public:
+        KFActor();
+        ~KFActor();
 
-		// 逻辑
-		void RunActor();
+        // 初始化
+        void InitActor( KFWorkerModule* kfmodule, uint32 maxreqcount, uint32 maxackcount );
 
-		// 停止
-		void StopActor();
+        // 逻辑
+        void RunActor();
 
-		// 是否忙
-		bool IsBusy();
+        // 停止
+        void StopActor();
 
-		// 添加请求消息
-		bool PushReqMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        // 是否忙
+        bool IsBusy();
 
-		// 添加响应消息
-		bool PushAckMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
-		bool PushAckMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message );
+        // 添加请求消息
+        bool PushReqMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
 
-	protected:
-		// 执行线程逻辑
-		void RunActorThread();
+        // 添加响应消息
+        bool PushAckMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
+        bool PushAckMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message );
 
-	private:
-		// 工作模块
-		KFWorkerModule* _kf_worker_moduler;
+    protected:
+        // 执行线程逻辑
+        void RunActorThread();
 
-		// 线程状态 
-		volatile bool _actor_thread_run;
+    private:
+        // 工作模块
+        KFWorkerModule* _kf_worker_moduler;
 
-		// 暂存的Guid
-		KFGuid _kf_guid;
+        // 线程状态
+        volatile bool _actor_thread_run;
 
-		// 需要处理的请求消息
-		KFQueue< KFWorkerMessage > _req_message_queue;
+        // 暂存的Guid
+        KFGuid _kf_guid;
 
-		// 已经处理好的消息
-		KFQueue< KFWorkerMessage > _ack_message_queue;
-	};
+        // 需要处理的请求消息
+        KFQueue< KFWorkerMessage > _req_message_queue;
+
+        // 已经处理好的消息
+        KFQueue< KFWorkerMessage > _ack_message_queue;
+    };
 }
 
 

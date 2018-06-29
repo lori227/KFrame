@@ -5,15 +5,15 @@
 
 namespace KFrame
 {
-	class KFNetLocker
-	{
-	public:
-		KFNetLocker( uv_mutex_t* uvmutex );
-		~KFNetLocker();
+    class KFNetLocker
+    {
+    public:
+        KFNetLocker( uv_mutex_t* uvmutex );
+        ~KFNetLocker();
 
-	private:
-		uv_mutex_t* _uv_mutex;
-	};
+    private:
+        uv_mutex_t* _uv_mutex;
+    };
 }
 
 #endif

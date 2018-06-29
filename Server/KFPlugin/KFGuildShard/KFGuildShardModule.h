@@ -20,24 +20,24 @@
 
 namespace KFrame
 {
-	class KFGuildShardModule : public KFGuildShardInterface
-	{
-	public:
-		KFGuildShardModule();
-		~KFGuildShardModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFGuildShardModule : public KFGuildShardInterface
+    {
+    public:
+        KFGuildShardModule();
+        ~KFGuildShardModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	};
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
+
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    };
 }
 
 

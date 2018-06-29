@@ -2,42 +2,42 @@
 
 namespace KFrame
 {
-	KFDouble::KFDouble()
-	{
-		_data = 0.0f;
-	}
+    KFDouble::KFDouble()
+    {
+        _data = 0.0f;
+    }
 
-	KFDouble::~KFDouble()
-	{
-	}
-	
-	void KFDouble::Reset()
-	{
-		_data = 0.0f;
-	}
+    KFDouble::~KFDouble()
+    {
+    }
 
-	bool KFDouble::IsValid()
-	{
-		return _data != 0.0f;
-	}
+    void KFDouble::Reset()
+    {
+        _data = 0.0f;
+    }
 
-	void KFDouble::CopyFrom( KFData* kfother )
-	{
-		SetValue( kfother->GetValue<double>() );
-	}
+    bool KFDouble::IsValid()
+    {
+        return _data != 0.0f;
+    }
 
-	void KFDouble::SaveTo( KFData* kfother )
-	{
-		kfother->SetValue( GetValue<double>() );
-	}
+    void KFDouble::CopyFrom( KFData* kfother )
+    {
+        SetValue( kfother->GetValue<double>() );
+    }
 
-	std::string KFDouble::ToString()
-	{
-		return KFUtility::ToString( _data );
-	}
+    void KFDouble::SaveTo( KFData* kfother )
+    {
+        kfother->SetValue( GetValue<double>() );
+    }
 
-	void KFDouble::FromString( const std::string& value )
-	{
-		_data = KFUtility::ToValue<double>( value );
-	}
+    std::string KFDouble::ToString()
+    {
+        return KFUtility::ToString( _data );
+    }
+
+    void KFDouble::FromString( const std::string& value )
+    {
+        _data = KFUtility::ToValue<double>( value );
+    }
 }

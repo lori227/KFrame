@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFGiftInterface : public KFModule
-	{
-	public:
+    class KFGiftInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 #endif

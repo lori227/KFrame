@@ -1,14 +1,15 @@
 ﻿#ifndef __KF_RUNABLE_H__
 #define __KF_RUNABLE_H__
 
-#include "KFDefine.h"
+#include "KFThread.h"
 #include "Poco/Runnable.h"
 #include "Poco/Thread.h"
+#include "KFSingleton.h"
 
 namespace KFrame
 {
 	///////////////////////////////////////////////////////////////////////////////////////////
-	__MT_CLASS__( KFRunable ), public Poco::Runnable
+	class KFRunable : public Poco::Runnable
 	{
 	public:
 		// 开启线程
@@ -16,7 +17,6 @@ namespace KFrame
 
 		// poco run
 		virtual void run();
-
 	private:
 		// 线程
 		Poco::Thread _thread;
@@ -27,7 +27,26 @@ namespace KFrame
 		KFThreadFunction _function;
 	};
 
-	
+	///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
+	class KFRunablePool : public KFSingleton< KFRunablePool >
+	{
+	public:
+		KFRunablePool();
+		~KFRunablePool();
+
+		// 创建线程
+		KFRunable* CreateRunable();
+		
+		// 释放线程
+		void DestroyRunable( KFRunable* runable );
+
+	private:
+		// 空闲的线程
+		std::list< KFRunable* > _idle_pool;
+	};
 }
 
 #endif

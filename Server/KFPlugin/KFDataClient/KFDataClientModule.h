@@ -16,27 +16,27 @@
 
 namespace KFrame
 {
-	class KFDataClientModule : public KFDataClientInterface
-	{
-	public:
-		KFDataClientModule();
-		~KFDataClientModule();
+    class KFDataClientModule : public KFDataClientInterface
+    {
+    public:
+        KFDataClientModule();
+        ~KFDataClientModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
+        // 刷新
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		
-		// 发送消息到数据库
-		virtual bool SendMessageToData( uint32 zoneid, uint32 msgid, ::google::protobuf::Message* message );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-	};
+        // 发送消息到数据库
+        virtual bool SendMessageToData( uint32 zoneid, uint32 msgid, ::google::protobuf::Message* message );
+
+    };
 }
 
 #endif

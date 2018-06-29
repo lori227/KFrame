@@ -22,58 +22,57 @@
 
 namespace KFrame
 {
-	class KFMatchClientModule : public KFMatchClientInterface
-	{
-	public:
-		KFMatchClientModule();
-		~KFMatchClientModule();
+    class KFMatchClientModule : public KFMatchClientInterface
+    {
+    public:
+        KFMatchClientModule();
+        ~KFMatchClientModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 发送消息到Match
-		virtual bool SendMessageToMatch( uint32 msgid, ::google::protobuf::Message* message );
+        // 发送消息到Match
+        virtual bool SendMessageToMatch( uint32 msgid, ::google::protobuf::Message* message );
 
-		// 获得匹配最大人数
-		virtual uint32 GetMatchMaxCount( uint32 matchid );
-	protected:
-		// 请求单人匹配
-		__KF_MESSAGE_FUNCTION__( HandleStartMatchReq );
+        // 获得匹配最大人数
+        virtual uint32 GetMatchMaxCount( uint32 matchid );
+    protected:
+        // 请求单人匹配
+        __KF_MESSAGE_FUNCTION__( HandleStartMatchReq );
 
-		// 匹配回馈消息
-		__KF_MESSAGE_FUNCTION__( HanldeMatchToClientAck );
+        // 匹配回馈消息
+        __KF_MESSAGE_FUNCTION__( HanldeMatchToClientAck );
 
-		// 取消匹配
-		__KF_MESSAGE_FUNCTION__( HandleCancelMatchReq );
+        // 取消匹配
+        __KF_MESSAGE_FUNCTION__( HandleCancelMatchReq );
 
-		// 查询匹配房间
-		__KF_MESSAGE_FUNCTION__( HandleQueryMatchRoomAck );
-				
-	private:
-		// 处理开始匹配
-		uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup );
+        // 查询匹配房间
+        __KF_MESSAGE_FUNCTION__( HandleQueryMatchRoomAck );
 
-		// 判断所有队员准备
-		bool IsAllGroupMemberPrepare( KFData* kfmemberrecord );
+    private:
+        // 处理开始匹配
+        uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup );
 
-		// 队伍信息
-		void FormatMatchGroup( KFEntity* player, KFMsg::PBMatchGroup* pbgroup );
+        // 判断所有队员准备
+        bool IsAllGroupMemberPrepare( KFData* kfmemberrecord );
 
-		// 设置匹配玩家数据
-		void FormatMatchPlayer( KFData* kfobject, KFMsg::PBBattlePlayer* pbplayer );
-		
-		// 玩家上线回调
-		void OnEnterQueryMatchRoom( KFEntity* player );
-	};
+        // 队伍信息
+        void FormatMatchGroup( KFEntity* player, KFMsg::PBMatchGroup* pbgroup );
+
+        // 设置匹配玩家数据
+        void FormatMatchPlayer( KFData* kfobject, KFMsg::PBBattlePlayer* pbplayer );
+
+        // 玩家上线回调
+        void OnEnterQueryMatchRoom( KFEntity* player );
+    };
 }
 
 

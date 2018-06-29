@@ -2,74 +2,74 @@
 
 namespace KFrame
 {
-	KFConfigModule::KFConfigModule()
-	{
-	}
+    KFConfigModule::KFConfigModule()
+    {
+    }
 
-	KFConfigModule::~KFConfigModule()
-	{
-	}
+    KFConfigModule::~KFConfigModule()
+    {
+    }
 
-	void KFConfigModule::ShutDown()
-	{
-		_kf_config_data.Clear();
-	}
+    void KFConfigModule::ShutDown()
+    {
+        _kf_config_data.Clear();
+    }
 
-	void KFConfigModule::AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload )
-	{
-		auto kfdata = _kf_config_data.Create( module );
+    void KFConfigModule::AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload )
+    {
+        auto kfdata = _kf_config_data.Create( module );
 
-		kfdata->_module = module;
-		kfdata->_config = config;
-		kfdata->_file = file;
-		kfdata->_can_reload = canreload;
-	}
+        kfdata->_module = module;
+        kfdata->_config = config;
+        kfdata->_file = file;
+        kfdata->_can_reload = canreload;
+    }
 
-	void KFConfigModule::RemoveConfig( const std::string& module )
-	{
-		_kf_config_data.Remove( module );
-	}
+    void KFConfigModule::RemoveConfig( const std::string& module )
+    {
+        _kf_config_data.Remove( module );
+    }
 
-	void KFConfigModule::LoadConfig()
-	{
-		for ( auto& iter : _kf_config_data._objects )
-		{
-			auto kfdata = iter.second;
+    void KFConfigModule::LoadConfig()
+    {
+        for ( auto& iter : _kf_config_data._objects )
+        {
+            auto kfdata = iter.second;
 
-			LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
-		}
-	}
+            LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
+        }
+    }
 
-	void KFConfigModule::LoadConfig( const std::string& file )
-	{
-		for ( auto& iter : _kf_config_data._objects )
-		{
-			auto kfdata = iter.second;
-			if ( !kfdata->_can_reload )
-			{
-				continue;
-			}
-			
-			auto pos = kfdata->_file.find( file );
-			if ( pos == std::string::npos )
-			{
-				continue;
-			}
+    void KFConfigModule::LoadConfig( const std::string& file )
+    {
+        for ( auto& iter : _kf_config_data._objects )
+        {
+            auto kfdata = iter.second;
+            if ( !kfdata->_can_reload )
+            {
+                continue;
+            }
 
-			LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
-		}
-	}
+            auto pos = kfdata->_file.find( file );
+            if ( pos == std::string::npos )
+            {
+                continue;
+            }
 
-	void KFConfigModule::LoadConfig( KFConfig* config, const std::string& module, const std::string& file )
-	{
-		bool result = config->LoadConfig( file.c_str() );
-		if ( result )
-		{
-			KFLogger::LogInit( KFLogger::Info, "load [%s][%s] ok!", module.c_str(), file.c_str() );
-		}
-		else
-		{
-			KFLogger::LogInit( KFLogger::Error, "load [%s][%s] failed!", module.c_str(), file.c_str() );
-		}
-	}
+            LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
+        }
+    }
+
+    void KFConfigModule::LoadConfig( KFConfig* config, const std::string& module, const std::string& file )
+    {
+        bool result = config->LoadConfig( file.c_str() );
+        if ( result )
+        {
+            KFLogger::LogInit( KFLogger::Info, "load [%s][%s] ok!", module.c_str(), file.c_str() );
+        }
+        else
+        {
+            KFLogger::LogInit( KFLogger::Error, "load [%s][%s] failed!", module.c_str(), file.c_str() );
+        }
+    }
 }

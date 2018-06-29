@@ -22,65 +22,65 @@
 
 namespace KFrame
 {
-	class KFMailShardModule : public KFMailShardInterface
-	{
-	public:
-		KFMailShardModule ();
-		~KFMailShardModule ();
+    class KFMailShardModule : public KFMailShardInterface
+    {
+    public:
+        KFMailShardModule ();
+        ~KFMailShardModule ();
 
-		// 加载配置
-		virtual void InitModule ();
+        // 加载配置
+        virtual void InitModule ();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut ();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		
-		////////////////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void BeforeShut ();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-	protected:
-		// 删除邮件
-		__KF_MESSAGE_FUNCTION__ ( HandleDeleteMailReq );
+        ////////////////////////////////////////////////////////////////////////////////////
 
-		// 查询邮件
-		__KF_MESSAGE_FUNCTION__ ( HandleQueryMailReq );
+    protected:
+        // 删除邮件
+        __KF_MESSAGE_FUNCTION__ ( HandleDeleteMailReq );
 
-		// 添加邮件
-		__KF_MESSAGE_FUNCTION__( HandleAddMailReq );
+        // 查询邮件
+        __KF_MESSAGE_FUNCTION__ ( HandleQueryMailReq );
 
-		// 设置邮件状态
-		__KF_MESSAGE_FUNCTION__( HandleUpdateMailFlagReq );
+        // 添加邮件
+        __KF_MESSAGE_FUNCTION__( HandleAddMailReq );
 
-		// 新玩家登陆邮件处理
-		__KF_MESSAGE_FUNCTION__( HandleNewPlayerLoginMailReq );
+        // 设置邮件状态
+        __KF_MESSAGE_FUNCTION__( HandleUpdateMailFlagReq );
 
-	protected:
-		// 计划清理过期的全局邮件
-		void OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size );
+        // 新玩家登陆邮件处理
+        __KF_MESSAGE_FUNCTION__( HandleNewPlayerLoginMailReq );
 
-	private:
-		
-		// 重载GM全局邮件
-		void LoadWholeMailToPerson( uint32 playerid );
-	
-		// 根据邮件类型获取redis键名
-		std::string FormatMailKeyName( uint32 playerid, uint32 mailtype, const char* function, uint32 line );
+    protected:
+        // 计划清理过期的全局邮件
+        void OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size );
 
-		// 设置邮件状态
-		bool UpdateMailFlag( uint32 playerid, uint64 mailid, uint32 mailtype, uint32 flag );
+    private:
 
-		// 删除邮件
-		bool RemoveMail( uint32 playerid, uint32 mailtype, uint64 mailid );
+        // 重载GM全局邮件
+        void LoadWholeMailToPerson( uint32 playerid );
 
-		// 添加邮件
-		bool AddMail( const std::string& maillistkey, MapString& maildata );
-	
+        // 根据邮件类型获取redis键名
+        std::string FormatMailKeyName( uint32 playerid, uint32 mailtype, const char* function, uint32 line );
 
-	};
+        // 设置邮件状态
+        bool UpdateMailFlag( uint32 playerid, uint64 mailid, uint32 mailtype, uint32 flag );
+
+        // 删除邮件
+        bool RemoveMail( uint32 playerid, uint32 mailtype, uint64 mailid );
+
+        // 添加邮件
+        bool AddMail( const std::string& maillistkey, MapString& maildata );
+
+
+    };
 }
 
 #endif

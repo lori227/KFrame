@@ -5,45 +5,45 @@
 
 namespace KFrame
 {
-	class KFClusterProxyInterface : public KFModule
-	{
-	public:
+    class KFClusterProxyInterface : public KFModule
+    {
+    public:
 
-		// 选择Shard
-		virtual uint32 SelectClusterShard( const char* data, bool cache = false ) = 0;
-		virtual uint32 SelectClusterShard( uint64 objectid, bool cache = false ) = 0;
-		virtual uint32 SelectClusterShard( const char* data, uint32 objectid, bool cache = false ) = 0;
+        // 选择Shard
+        virtual uint32 SelectClusterShard( const char* data, bool cache = false ) = 0;
+        virtual uint32 SelectClusterShard( uint64 objectid, bool cache = false ) = 0;
+        virtual uint32 SelectClusterShard( const char* data, uint32 objectid, bool cache = false ) = 0;
 
-		// 发送消息到Shard
-		virtual void SendMessageToShard( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual void SendMessageToShard( uint32 msgid, const char* data, uint32 length ) = 0;
+        // 发送消息到Shard
+        virtual void SendMessageToShard( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToShard( uint32 msgid, const char* data, uint32 length ) = 0;
 
-		virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length ) = 0;
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 发送消息到客户端
-		virtual void SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual void SendMessageToClient( uint32 msgid, const char* data, uint32 length ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 发送消息到客户端
+        virtual void SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToClient( uint32 msgid, const char* data, uint32 length ) = 0;
 
-		virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
-	
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 添加映射
-		virtual void AddObjectShard( uint64 objectid, uint32 shardid ) = 0;
+        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
 
-		// 查找映射
-		virtual uint32 FindObjectShard( uint64 objectid ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 添加映射
+        virtual void AddObjectShard( uint64 objectid, uint32 shardid ) = 0;
 
-		// 查找负载最小的逻辑分片id
-		virtual uint32 FindMinObjectShard() = 0;
-	};
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_cluster_proxy, KFClusterProxyInterface );
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 查找映射
+        virtual uint32 FindObjectShard( uint64 objectid ) = 0;
+
+        // 查找负载最小的逻辑分片id
+        virtual uint32 FindMinObjectShard() = 0;
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_cluster_proxy, KFClusterProxyInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

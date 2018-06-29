@@ -6,39 +6,39 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFMySQLSetting )
-	{
-	public:
-		uint32 _id;
-		std::string _ip;
-		uint32 _port;
-		std::string _user;
-		std::string _password;
-		std::string _database;
-		std::string _name;
-	};
+    class KFMySQLSetting
+    {
+    public:
+        uint32 _id;
+        std::string _ip;
+        uint32 _port;
+        std::string _user;
+        std::string _password;
+        std::string _database;
+        std::string _name;
+    };
 
-	class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
-	{
-	public:
+    class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
+    {
+    public:
 
-		// 加载配置文件
-		bool LoadConfig( const char* file );
+        // 加载配置文件
+        bool LoadConfig( const char* file );
 
-		const KFMySQLSetting* FindSetting( uint32 id );
-		const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid );
+        const KFMySQLSetting* FindSetting( uint32 id ) const;
+        const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid ) const;
 
-	protected:
-		uint32 FindLogicMySQLId( const std::string& filed, uint32 logicid );
+    protected:
+        uint32 FindLogicMySQLId( const std::string& filed, uint32 logicid ) const;
 
-	public:		
-		// 数据库连接
-		KFMap< uint32, uint32, KFMySQLSetting > _mysql_setting;
+    public:
+        // 数据库连接
+        KFMap< uint32, uint32, KFMySQLSetting > _mysql_setting;
 
-		// 逻辑数据库映射
-		typedef std::pair< std::string, uint32 > LogicKey;
-		std::map< LogicKey, uint32 > _logic_mysql_map;
-	};
+        // 逻辑数据库映射
+        typedef std::pair< std::string, uint32 > LogicKey;
+        std::map< LogicKey, uint32 > _logic_mysql_map;
+    };
 }
 
 ////////////////////////////////////////////////////////////////////////////

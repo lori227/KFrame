@@ -14,25 +14,25 @@
 
 namespace KFrame
 {
-	class KFComponent;
-	class KFTitleModule : public KFTitleInterface
-	{
-	public:
-		KFTitleModule();
-		~KFTitleModule();
-		
-		// 加载配置
-		virtual void InitMoudle();
+    class KFComponent;
+    class KFTitleModule : public KFTitleInterface
+    {
+    public:
+        KFTitleModule();
+        ~KFTitleModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 加载配置
+        virtual void InitMoudle();
 
-	protected:
-		// 玩家构件
-		KFComponent* _kf_player_logic;
-	};
+        // 初始化
+        virtual void BeforeRun();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+    protected:
+        // 玩家构件
+        KFComponent* _kf_player_logic;
+    };
 }
 
 

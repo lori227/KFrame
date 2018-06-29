@@ -1,118 +1,73 @@
-﻿#ifndef __KF_MEMROY_LOGGER_H__
-#define __KF_MEMROY_LOGGER_H__
+﻿#ifndef __MEMROY_LOGGER_H__
+#define __MEMROY_LOGGER_H__
 
 #include "KFDefine.h"
 
 namespace KFrame
 {
-	class LogData
-	{
-	public:
-		LogData() : _count( 0 ), _use_size( 0 ), _total_size( 0 )
-		{
+    class LogData
+    {
+    public:
+        LogData() : _count( 0 ), _use_size( 0 ), _total_size( 0 )
+        {
 
-		}
+        }
 
-		void AddData( uint64 size, uint64 totalsize );
-		void DecData( uint64 size );
+        void AddData( uint64 size, uint64 totalsize );
+        void DecData( uint64 size );
 
-	public:
-		uint32 _count;
-		uint64 _use_size;
-		uint64 _total_size;
-	};
+    public:
+        uint32 _count;
+        uint64 _use_size;
+        uint64 _total_size;
+    };
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	class LogBlock
-	{
-	public:
-		void AddBlock( const std::string& type, uint64 size, uint64 totalsize );
-		void DecBlock( const std::string& type, uint64 size );
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    class LogBlock
+    {
+    public:
+        void AddBlock( const std::string& type, uint64 size, uint64 totalsize );
+        void DecBlock( const std::string& type, uint64 size );
 
-	protected:
-		LogData* FindData( const std::string& type );
+    protected:
+        LogData* FindData( const std::string& type );
 
-	public:
-		std::map< std::string, LogData* > _log_data;
-	};
+    public:
+        std::map< std::string, LogData* > _log_data;
+    };
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	template< class Mutex >
-	class KFLogMemory
-	{
-	public:
-		KFLogMemory()
-		{
-			_open = true;
-		}
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFLogMemory
+    {
+    public:
+        KFLogMemory();
+        ~KFLogMemory();
 
-		~KFLogMemory()
-		{
-			KFLocker< Mutex > locker( *_kf_mutex );
-			for ( auto iter : _log_block._log_data )
-			{
-				delete iter.second;
-			}
+        // 日志开关
+        void SetOpen( bool open );
+        bool IsOpen() const;
 
-			_log_block._log_data.clear();;
-		}
+        LogBlock GetMTMemory();
+        void AddMTMemory( const std::string& type, uint64 size, uint64 totalsize );
+        void DecMTMemory( const std::string& type, uint64 size );
+        /////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+        LogBlock& GetSTMemory();
+        void AddSTMemory( const std::string& type, uint64 size, uint64 totalsize );
+        void DecSTMemory( const std::string& type, uint64 size );
 
-		// 日志开关
-		void SetOpen( bool open )
-		{
-			_open = open;
-		}
+    private:
+        // 日志开关
+        bool _open;
 
-		bool IsOpen() const
-		{
-			return _open;
-		}
+        // 多线程数据
+        LogBlock _mt_log_block;
 
-		LogBlock GetLogBlock()
-		{
-			return _log_block;
-		}
-
-		const LogBlock& RefLogBlock()
-		{
-			return _log_block;
-		}
-
-		void AddMemory( const std::string& type, uint64 size, uint64 totalsize )
-		{
-			if ( !_open )
-			{
-				return;
-			}
-
-			KFLocker< Mutex > locker( *_kf_mutex );
-			_log_block.AddBlock( type, size, totalsize );
-		}
-
-		void DecMemory( const std::string& type, uint64 size )
-		{
-			if ( !_open )
-			{
-				return;
-			}
-
-			KFLocker< Mutex > locker( *_kf_mutex );
-			_log_block.DecBlock( type, size );
-		}
-		/////////////////////////////////////////////////////////////////////////////////////////
-	
-	private:
-		// 日志开关
-		bool _open;
-
-		// 互斥量
-		Mutex* _kf_mutex;
-		
-		// 内存记录
-		LogBlock _log_block;
-	};
+        // 单线程
+        LogBlock _st_log_block;
+    };
 }
 
 #endif

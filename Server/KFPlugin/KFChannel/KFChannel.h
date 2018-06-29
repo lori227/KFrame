@@ -7,16 +7,16 @@
 
 namespace KFrame
 {
-	class KFChannel
-	{
-	public:
-		KFChannel( uint32 channel );
-		virtual ~KFChannel();
+    class KFChannel
+    {
+    public:
+        KFChannel( uint32 channel );
+        virtual ~KFChannel();
 
-	public:
-		// 渠道编号
-		uint32 _channel;
-	};
+    public:
+        // 渠道编号
+        uint32 _channel;
+    };
 }
 
 

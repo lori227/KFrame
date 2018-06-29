@@ -6,42 +6,42 @@
 
 namespace KFrame
 {
-	class KFListen
-	{
-	public:
-		KFListen()
-		{
-			_port = 0;
-			_type = 0;
-			_timeout = 2000;
-			_max_connection = 5000;
-			_max_queue_size = 10000;
-		}
+    class KFListen
+    {
+    public:
+        KFListen()
+        {
+            _port = 0;
+            _type = 0;
+            _timeout = 2000;
+            _max_connection = 5000;
+            _max_queue_size = 10000;
+        }
 
-		std::string _local_ip;
-		std::string _interanet_ip;
+        std::string _local_ip;
+        std::string _interanet_ip;
 
-		uint32 _type;
-		uint32 _port;
-		uint32 _timeout;
-		uint32 _max_connection;
-		uint32 _max_queue_size;
-	};
-		
-	class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >
-	{
-	public:
+        uint32 _type;
+        uint32 _port;
+        uint32 _timeout;
+        uint32 _max_connection;
+        uint32 _max_queue_size;
+    };
 
-		// 加载配置文件
-		bool LoadConfig( const char* file );
+    class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >
+    {
+    public:
 
-	public:
-		// 类型
-		uint32 _server_type;
+        // 加载配置文件
+        bool LoadConfig( const char* file );
 
-		// 服务器监听端口
-		KFListen _kf_listen;
-	};
+    public:
+        // 类型
+        uint32 _server_type;
+
+        // 服务器监听端口
+        KFListen _kf_listen;
+    };
 }
 
 ////////////////////////////////////////////////////////////////////////////

@@ -17,99 +17,102 @@
 
 namespace KFrame
 {
-	class KFRobotModule : public KFRobotInterface
-	{
-	public:
-		KFRobotModule();
-		~KFRobotModule();
+    class KFRobotModule : public KFRobotInterface
+    {
+    public:
+        KFRobotModule();
+        ~KFRobotModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 刷新
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 发送消息到认证服务器
-		//virtual bool SendJsonMessageToAuth();	
-	protected:
-		// 登录机器人定时器
-		__KF_TIMER_FUNCTION__( OnTimerCreateRobot );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 发送消息到认证服务器
+        //virtual bool SendJsonMessageToAuth();
+    protected:
+        // 登录机器人定时器
+        __KF_TIMER_FUNCTION__( OnTimerCreateRobot );
 
-	protected:
-		// 客户端连接
-		__KF_CLIENT_CONNECT_FUNCTION__( OnClientConnected );
-		// 客户端断开
-		__KF_CLIENT_LOST_FUNCTION__( OnClientDisconnect );
+    protected:
+        // 客户端连接
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnected );
+        // 客户端断开
+        __KF_CLIENT_LOST_FUNCTION__( OnClientDisconnect );
 
-	protected:
+    protected:
 
-		void Run();
+        void Run();
 
-		void ChangeState( const VectorString& param );
+        void ChangeState( const VectorString& param );
 
-	private:
-		void HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
-	
-	private:
-		// 属性组件
-		KFComponent * _kf_component;
+    private:
+        void HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
 
-		// 客户端链接管理
-		KFNetClientEngine* _net_client;
+    private:
+        // 属性组件
+        KFComponent* _kf_component;
 
-		// 创建的数量
-		uint32 _robot_count;
+        // 客户端链接管理
+        KFNetClientEngine* _net_client;
 
-		// 机器人列表
-		KFMap< uint32, uint32, KFRobot > _robot_list;
-	protected:
-		// gate服务器返回验证结果
-		__KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
+        // 创建的数量
+        uint32 _robot_count;
 
-		// 登录接受到玩家数据
-		__KF_MESSAGE_FUNCTION__( HandleEnterGame );
-		
-		// 各种结果反馈
-		__KF_MESSAGE_FUNCTION__( HandleResultDisplay );
+        // 机器人列表
+        KFMap< uint32, uint32, KFRobot > _robot_list;
+    protected:
+        // gate服务器返回验证结果
+        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
 
-		// 游戏属性更新
-		__KF_MESSAGE_FUNCTION__( HandleUpdateData );
+        // 登录接受到玩家数据
+        __KF_MESSAGE_FUNCTION__( HandleEnterGame );
 
-		// 游戏属性添加
-		__KF_MESSAGE_FUNCTION__( HandleAddData );
+        // 各种结果反馈
+        __KF_MESSAGE_FUNCTION__( HandleResultDisplay );
 
-		// 游戏属性移除
-		__KF_MESSAGE_FUNCTION__( HandleRemoveData );
+        // 游戏属性更新
+        __KF_MESSAGE_FUNCTION__( HandleUpdateData );
+
+        // 游戏属性添加
+        __KF_MESSAGE_FUNCTION__( HandleAddData );
+
+        // 游戏属性移除
+        __KF_MESSAGE_FUNCTION__( HandleRemoveData );
 
 
-		///////////////////////////// 业务逻辑/////////////////////////////////////////////
+        ///////////////////////////// 业务逻辑/////////////////////////////////////////////
 
-		// 江湖聊天消息显示
-		__KF_MESSAGE_FUNCTION__( HandleDisplayChatInfo );
+        // 江湖聊天消息显示
+        __KF_MESSAGE_FUNCTION__( HandleDisplayChatInfo );
 
-		// 通知被踢下线
-		__KF_MESSAGE_FUNCTION__( HandleBeKick );
+        // 通知被踢下线
+        __KF_MESSAGE_FUNCTION__( HandleBeKick );
 
-		// 查询玩家信息
-		__KF_MESSAGE_FUNCTION__( HandleQueryPlayAck );
+        // 查询玩家信息
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayAck );
 
-		// 好友聊天信息显示
-		__KF_MESSAGE_FUNCTION__( HandleDisplayFriendChat );
+        // 好友聊天信息显示
+        __KF_MESSAGE_FUNCTION__( HandleDisplayFriendChat );
 
-		// 查询访客信息回馈
-		__KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
+        // 查询访客信息回馈
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
 
-		// 展示奖励
-		__KF_MESSAGE_FUNCTION__( HandleShowReward );
+        // 展示奖励
+        __KF_MESSAGE_FUNCTION__( HandleShowReward );
 
-		// 取消匹配回应
-		__KF_MESSAGE_FUNCTION__( HandleCancleMatch );
-	};
+        // 取消匹配回应
+        __KF_MESSAGE_FUNCTION__( HandleCancleMatch );
+
+        // 所有排行榜
+        __KF_MESSAGE_FUNCTION__( HandleWholeRankDisplay );
+    };
 }
 
 #endif

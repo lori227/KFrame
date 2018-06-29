@@ -21,104 +21,104 @@
 
 namespace KFrame
 {
-	class KFBattleShardModule : public KFBattleShardInterface
-	{
-	public:
-		KFBattleShardModule();
-		~KFBattleShardModule();
+    class KFBattleShardModule : public KFBattleShardInterface
+    {
+    public:
+        KFBattleShardModule();
+        ~KFBattleShardModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
-		
-		// 关闭
-		virtual void BeforeShut();
-		virtual void ShutDown();
-		
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 有代理服务器注册
-		__KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverBattleProxy );
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-	protected:
-		// 注册战场服务器
-		__KF_MESSAGE_FUNCTION__( HandleRegisterServerToBattleShardReq );
+        // 关闭
+        virtual void BeforeShut();
+        virtual void ShutDown();
 
-		// 收到战场服务器注册
-		__KF_MESSAGE_FUNCTION__( HandleTellBattleRegisterToShardReq );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 有代理服务器注册
+        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverBattleProxy );
 
-		// 战场服务器断开
-		__KF_MESSAGE_FUNCTION__( HandleDisconnectServerToBattleServerReq );
-		
-		// 创建一个房间
-		__KF_MESSAGE_FUNCTION__( HandleCreateRoomToBattleShardReq );
+    protected:
+        // 注册战场服务器
+        __KF_MESSAGE_FUNCTION__( HandleRegisterServerToBattleShardReq );
 
-		// 请求战场服务器开启房间回馈
-		__KF_MESSAGE_FUNCTION__( HandleOpenBattleRoomToShardAck );
-		
-		// 战场开启
-		__KF_MESSAGE_FUNCTION__( HandleOpenRoomToBattleShardAck );
+        // 收到战场服务器注册
+        __KF_MESSAGE_FUNCTION__( HandleTellBattleRegisterToShardReq );
 
-		// 添加阵营
-		__KF_MESSAGE_FUNCTION__( HandleAddCampToBattleShardReq );
+        // 战场服务器断开
+        __KF_MESSAGE_FUNCTION__( HandleDisconnectServerToBattleServerReq );
 
-		// 取消匹配
-		__KF_MESSAGE_FUNCTION__( HandleCancelMatchToBattleShardReq );
+        // 创建一个房间
+        __KF_MESSAGE_FUNCTION__( HandleCreateRoomToBattleShardReq );
 
-		// 玩家离开战场
-		__KF_MESSAGE_FUNCTION__( HandlePlayerLeaveRoomToBattleShardReq );
+        // 请求战场服务器开启房间回馈
+        __KF_MESSAGE_FUNCTION__( HandleOpenBattleRoomToShardAck );
 
-		// 玩家进入房间
-		__KF_MESSAGE_FUNCTION__( HandlePlayerEnterRoomToBattleShardAck );
+        // 战场开启
+        __KF_MESSAGE_FUNCTION__( HandleOpenRoomToBattleShardAck );
 
-		// 战场开始
-		__KF_MESSAGE_FUNCTION__( HandleTellRoomStartToBattleShardReq );
+        // 添加阵营
+        __KF_MESSAGE_FUNCTION__( HandleAddCampToBattleShardReq );
 
-		// 游戏开始
-		__KF_MESSAGE_FUNCTION__( HandleTellRoomStartToBattleShardAck );
-		
-		// 通知玩家房间信息
-		__KF_MESSAGE_FUNCTION__( HandleNoticeMatchRoomAck );
+        // 取消匹配
+        __KF_MESSAGE_FUNCTION__( HandleCancelMatchToBattleShardReq );
 
-		// 玩家登陆战场
-		__KF_MESSAGE_FUNCTION__( HandlePlayerLoginRoomToBattleShardReq );
+        // 玩家离开战场
+        __KF_MESSAGE_FUNCTION__( HandlePlayerLeaveRoomToBattleShardReq );
 
-		// 查询战场房间
-		__KF_MESSAGE_FUNCTION__( HandleQueryRoomToBattleShardReq );
-		
-		// 处理战场结束
-		__KF_MESSAGE_FUNCTION__( HandleTellRoomFinishToBattleShardReq );
+        // 玩家进入房间
+        __KF_MESSAGE_FUNCTION__( HandlePlayerEnterRoomToBattleShardAck );
 
-		// 玩家登陆游戏服务器
-		__KF_MESSAGE_FUNCTION__( HandlePlayerOnlineToBattleShardReq );
+        // 战场开始
+        __KF_MESSAGE_FUNCTION__( HandleTellRoomStartToBattleShardReq );
 
-		// 结算战绩回馈
-		__KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreAck );
+        // 游戏开始
+        __KF_MESSAGE_FUNCTION__( HandleTellRoomStartToBattleShardAck );
 
-		// 战场结算
-		__KF_MESSAGE_FUNCTION__( HandleBattleScoreBalanceToShardReq );
+        // 通知玩家房间信息
+        __KF_MESSAGE_FUNCTION__( HandleNoticeMatchRoomAck );
 
-		// 上线查询结算
-		__KF_MESSAGE_FUNCTION__( HandleOnlieQueryBattleScoreReq );
+        // 玩家登陆战场
+        __KF_MESSAGE_FUNCTION__( HandlePlayerLoginRoomToBattleShardReq );
 
-	private:
-		// 逻辑
-		void Run();
+        // 查询战场房间
+        __KF_MESSAGE_FUNCTION__( HandleQueryRoomToBattleShardReq );
 
-		// 服务器id
-		KFBattleRoom* FindBattleRoomByServerId( uint32 serverid );
-		
-		// 删除一个房间
-		void RemoveBattleRoom( KFBattleRoom* kfroom );
+        // 处理战场结束
+        __KF_MESSAGE_FUNCTION__( HandleTellRoomFinishToBattleShardReq );
 
-	private:
-		// 战场列表
-		KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;
-	};
+        // 玩家登陆游戏服务器
+        __KF_MESSAGE_FUNCTION__( HandlePlayerOnlineToBattleShardReq );
+
+        // 结算战绩回馈
+        __KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreAck );
+
+        // 战场结算
+        __KF_MESSAGE_FUNCTION__( HandleBattleScoreBalanceToShardReq );
+
+        // 上线查询结算
+        __KF_MESSAGE_FUNCTION__( HandleOnlieQueryBattleScoreReq );
+
+    private:
+        // 逻辑
+        void Run();
+
+        // 服务器id
+        KFBattleRoom* FindBattleRoomByServerId( uint32 serverid );
+
+        // 删除一个房间
+        void RemoveBattleRoom( KFBattleRoom* kfroom );
+
+    private:
+        // 战场列表
+        KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;
+    };
 }
 
 

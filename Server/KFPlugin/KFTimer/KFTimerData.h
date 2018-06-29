@@ -6,42 +6,42 @@
 
 namespace KFrame
 {
-	//////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-	__ST_CLASS__( KFTimerData )
-	{
-	public:
-		KFTimerData();
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    class KFTimerData
+    {
+    public:
+        KFTimerData();
 
-	public:
-		// 
-		std::string _module;
+    public:
+        //
+        std::string _module;
 
-		// id
-		uint64 _id;
-		
-		// 类型
-		uint32 _type;
-		
-		// 次数
-		uint32 _count;
+        // id
+        uint64 _id;
 
-		// 时间间隔
-		uint32 _interval;
-			
-		// 时间轮
-		uint32 _rotation;
+        // 类型
+        uint32 _type;
 
-		// 槽索引
-		uint32 _slot;
+        // 次数
+        uint32 _count;
 
-		// 回调函数
-		KFTimerFunction _function;
+        // 时间间隔
+        uint32 _interval;
 
-		// 链表
-		KFTimerData* _prev;
-		KFTimerData* _next;
-	};
+        // 时间轮
+        uint32 _rotation;
+
+        // 槽索引
+        uint32 _slot;
+
+        // 回调函数
+        KFTimerFunction _function;
+
+        // 链表
+        KFTimerData* _prev;
+        KFTimerData* _next;
+    };
 }
 
 

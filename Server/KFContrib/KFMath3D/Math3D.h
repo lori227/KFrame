@@ -1,14 +1,14 @@
-// MathLibrary.h
+﻿// MathLibrary.h
 
 #pragma once
 
 //========================================================================
 #if defined MATH_LIBRARY_EXPORT
-#	define MATH_LIBRARY_API		__declspec( dllexport )
+    #define MATH_LIBRARY_API		__declspec( dllexport )
 #elif defined MATH_LIBRARY_IMPORT
-#	define MATH_LIBRARY_API		__declspec( dllimport )
+    #define MATH_LIBRARY_API		__declspec( dllimport )
 #else
-#	define MATH_LIBRARY_API
+    #define MATH_LIBRARY_API
 #endif
 
 //========================================================================
@@ -17,14 +17,14 @@
 //========================================================================
 namespace Math3D
 {
-	typedef double Scalar;
+    typedef double Scalar;
 
-	class Vector2D;
-	class Vector3D;
-	class LinearTransform2D;
-	class LinearTransform3D;
-	class AffineTransform2D;
-	class AffineTransform3D;
+    class Vector2D;
+    class Vector3D;
+    class LinearTransform2D;
+    class LinearTransform3D;
+    class AffineTransform2D;
+    class AffineTransform3D;
 }
 
 //========================================================================

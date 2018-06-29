@@ -19,9 +19,8 @@
 #include "KFCrypto/KFCrypto.h"
 #include "KFLogger/KFLogger.h"
 #include "KFPlugin/KFGlobal.h"
-#include "KFThread/KFMutex.h"
 #include "KFMemory/KFBuffer.h"
-#include "KFMemory/KFMemoryObject.h"
+#include "KFMemory/KFMalloc.h"
 #include "KFUtility/KFUtility.h"
 #include "KFPlugin/KFPluginManage.h"
 

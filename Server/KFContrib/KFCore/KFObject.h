@@ -6,65 +6,65 @@
 
 namespace KFrame
 {
-	class KFObject : public KFData
-	{
-	public:
-		KFObject();
-		virtual ~KFObject();
-		
-		// 类型
-		virtual uint32 GetType() const;
+    class KFObject : public KFData
+    {
+    public:
+        KFObject();
+        virtual ~KFObject();
 
-		// 重置
-		virtual void Reset();
+        // 类型
+        virtual uint32 GetType() const;
 
-		// 是否有效
-		virtual bool IsValid();
+        // 重置
+        virtual void Reset();
 
-		// 数量
-		virtual uint32 Size();
+        // 是否有效
+        virtual bool IsValid();
 
-		// 获得key
-		virtual uint64 GetKeyID();
-		virtual void SetKeyID( uint64 id );
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual KFData* FirstData();
-		virtual KFData* NextData();
+        // 数量
+        virtual uint32 Size();
 
-		virtual void CopyFrom( KFData* kfother );
-		virtual void SaveTo( KFData* kfother );
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual KFData* FindData( const std::string& dataname );
-		virtual KFData* FindData( const std::string& dataname, uint64 key );
-		virtual KFData* FindData( const std::string& parentname, const std::string& childname );
-		virtual KFData* FindData( const std::string& parentname, uint64 key, const std::string& childname );
-		virtual KFData* FindData( const std::string& parentname, const std::string& childname, uint64 key );
-		virtual KFData* FindData( const std::string& parentname, const std::string& childname, const std::string& dataname );
+        // 获得key
+        virtual uint64 GetKeyID();
+        virtual void SetKeyID( uint64 id );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual KFData* FirstData();
+        virtual KFData* NextData();
 
-		virtual bool AddData( const std::string& dataname, KFData* data );
-		virtual bool AddData( const std::string& dataname, uint64 key, KFData* data );
-		virtual bool AddData( const std::string& parentname, const std::string& childname, KFData* data );
+        virtual void CopyFrom( KFData* kfother );
+        virtual void SaveTo( KFData* kfother );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual KFData* FindData( const std::string& dataname );
+        virtual KFData* FindData( const std::string& dataname, uint64 key );
+        virtual KFData* FindData( const std::string& parentname, const std::string& childname );
+        virtual KFData* FindData( const std::string& parentname, uint64 key, const std::string& childname );
+        virtual KFData* FindData( const std::string& parentname, const std::string& childname, uint64 key );
+        virtual KFData* FindData( const std::string& parentname, const std::string& childname, const std::string& dataname );
 
-		virtual bool RemoveData( const std::string& dataname );
-		virtual bool RemoveData( const std::string& dataname, uint64 key );
-		virtual bool RemoveData( const std::string& parentname, const std::string& childname );
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 格式化成字串
-		virtual std::string ToString();
-		virtual void FromString( const std::string& value );
+        virtual bool AddData( const std::string& dataname, KFData* data );
+        virtual bool AddData( const std::string& dataname, uint64 key, KFData* data );
+        virtual bool AddData( const std::string& parentname, const std::string& childname, KFData* data );
 
-		// Map的特殊操作
-		virtual void ToMap( MapString& values );
-		virtual void FromMap( const MapString& values );
+        virtual bool RemoveData( const std::string& dataname );
+        virtual bool RemoveData( const std::string& dataname, uint64 key );
+        virtual bool RemoveData( const std::string& parentname, const std::string& childname );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 格式化成字串
+        virtual std::string ToString();
+        virtual void FromString( const std::string& value );
 
-	protected:
-		// key
-		uint64 _key;
+        // Map的特殊操作
+        virtual void ToMap( MapString& values );
+        virtual void FromMap( const MapString& values );
 
-		// 列表
-		KFMap< std::string, const std::string&, KFData > _data;
-	};
+    protected:
+        // key
+        uint64 _key;
+
+        // 列表
+        KFMap< std::string, const std::string&, KFData > _data;
+    };
 }
 
 

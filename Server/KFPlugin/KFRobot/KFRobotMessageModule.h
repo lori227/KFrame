@@ -14,40 +14,40 @@
 
 namespace KFrame
 {
-	class KFRobotMessageModule
-	{
-	public:
-		KFRobotMessageModule();
-		~KFRobotMessageModule();
-		
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 执行函数
-		 bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
-		//////////////////////////////////////////////////////////////////////////////////////////
+    class KFRobotMessageModule
+    {
+    public:
+        KFRobotMessageModule();
+        ~KFRobotMessageModule();
 
-		// 取消注册
-		 void UnRegisterFunction( uint32 msgid );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 执行函数
+        bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        //////////////////////////////////////////////////////////////////////////////////////////
 
-	public:
+        // 取消注册
+        void UnRegisterFunction( uint32 msgid );
 
-		// 添加函数
-		 void AddFunction( uint32 msgid, KFMessageFunction& function );
+    public:
 
-	private:
-		// 处理器函数
-		KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
-	};
-	
-	template<typename T>
-	void RegisterFunction( KFRobotMessageModule* self, uint32 msgid, T* object, void ( T::*handle )( const KFGuid& guid, const char* data, uint32 length ) )
-	{
-		KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-		self->AddFunction( msgid, function );
-	}
+        // 添加函数
+        void AddFunction( uint32 msgid, KFMessageFunction& function );
+
+    private:
+        // 处理器函数
+        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+    };
+
+    template<typename T>
+    void RegisterFunction( KFRobotMessageModule* self, uint32 msgid, T* object, void ( T::*handle )( const KFGuid& guid, const char* data, uint32 length ) )
+    {
+        KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+        self->AddFunction( msgid, function );
+    }
 
 #define __REGISTER_ROBOT_MESSAGE__( self, msgid, function) \
-	RegisterFunction( self, msgid, this, function );
+    RegisterFunction( self, msgid, this, function );
 }
 
 

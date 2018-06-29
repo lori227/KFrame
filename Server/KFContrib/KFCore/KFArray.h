@@ -6,47 +6,47 @@
 
 namespace KFrame
 {
-	class KFArray : public KFData
-	{
-	public:
-		KFArray();
-		virtual ~KFArray();
-		
-		virtual void Reset();
+    class KFArray : public KFData
+    {
+    public:
+        KFArray();
+        virtual ~KFArray();
 
-		// 是否有效
-		virtual bool IsValid();
+        virtual void Reset();
 
-		// 初始化
-		virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
+        // 是否有效
+        virtual bool IsValid();
 
-		// common
-		virtual uint32 Size();
-		virtual void Resize( uint32 size );
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual KFData* FirstData();
-		virtual KFData* NextData();
+        // 初始化
+        virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
 
-		virtual void CopyFrom( KFData* kfother );
-		virtual void SaveTo( KFData* kfother );
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual KFData* FindData( uint64 key );
-		virtual KFData* FindData( uint64 key, const std::string& dataname );
+        // common
+        virtual uint32 Size();
+        virtual void Resize( uint32 size );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual KFData* FirstData();
+        virtual KFData* NextData();
 
-		virtual bool AddData( uint64 key, KFData* data );
-		virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
+        virtual void CopyFrom( KFData* kfother );
+        virtual void SaveTo( KFData* kfother );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual KFData* FindData( uint64 key );
+        virtual KFData* FindData( uint64 key, const std::string& dataname );
 
-		virtual bool RemoveData( uint64 key );
-		virtual bool RemoveData( uint64 key, const std::string& dataname );
+        virtual bool AddData( uint64 key, KFData* data );
+        virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
 
-		// 格式化成字串
-		virtual std::string ToString();
-		virtual void FromString( const std::string& value );
+        virtual bool RemoveData( uint64 key );
+        virtual bool RemoveData( uint64 key, const std::string& dataname );
 
-	protected:
-		// 列表
-		KFVector< KFData > _data;
-	};
+        // 格式化成字串
+        virtual std::string ToString();
+        virtual void FromString( const std::string& value );
+
+    protected:
+        // 列表
+        KFVector< KFData > _data;
+    };
 }
 
 

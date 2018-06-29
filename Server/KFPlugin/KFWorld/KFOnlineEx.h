@@ -5,38 +5,38 @@
 
 namespace KFrame
 {
-	class KFOnlineEx : public KFOnline
-	{
-	public:
-		KFOnlineEx();
-		virtual ~KFOnlineEx();
-	
-		// useid
-		virtual void SetPlayerId( uint32 playerid );
-		virtual uint32 GetPlayerId();
+    class KFOnlineEx : public KFOnline
+    {
+    public:
+        KFOnlineEx();
+        virtual ~KFOnlineEx();
 
-		// gameid
-		virtual void SetGameId( uint32 gameid );
-		virtual uint32 GetGameId();
+        // useid
+        virtual void SetPlayerId( uint32 playerid );
+        virtual uint32 GetPlayerId();
 
-		// accountid
-		virtual void SetAccountId( uint32 accountid );
-		virtual uint32 GetAccountId();
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		// 发送消息到Game
-		virtual void SendMessageToOnline( uint32 msgid, const char* data, uint32 length );
-		virtual void SendMessageToOnline( uint32 msgid, ::google::protobuf::Message* message );
-	private:
-		// playerid
-		uint32 _player_id;
+        // gameid
+        virtual void SetGameId( uint32 gameid );
+        virtual uint32 GetGameId();
 
-		// gameid
-		uint32 _game_id;
+        // accountid
+        virtual void SetAccountId( uint32 accountid );
+        virtual uint32 GetAccountId();
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        // 发送消息到Game
+        virtual void SendMessageToOnline( uint32 msgid, const char* data, uint32 length );
+        virtual void SendMessageToOnline( uint32 msgid, ::google::protobuf::Message* message );
+    private:
+        // playerid
+        uint32 _player_id;
 
-		// accountid
-		uint32 _account_id;
-	};
+        // gameid
+        uint32 _game_id;
+
+        // accountid
+        uint32 _account_id;
+    };
 }
 
 

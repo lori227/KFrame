@@ -18,27 +18,27 @@
 
 namespace KFrame
 {
-	class KFGuildClientModule : public KFGuildClientInterface
-	{
-	public:
-		KFGuildClientModule();
-		~KFGuildClientModule();
+    class KFGuildClientModule : public KFGuildClientInterface
+    {
+    public:
+        KFGuildClientModule();
+        ~KFGuildClientModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 刷新
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 发送消息到Guild
-		virtual bool SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 发送消息到Guild
+        virtual bool SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message );
 
-	};
+    };
 }
 
 #endif

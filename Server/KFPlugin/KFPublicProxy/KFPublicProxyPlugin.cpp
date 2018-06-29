@@ -3,19 +3,19 @@
 
 namespace KFrame
 {
-	void KFPublicProxyPlugin::Install()
-	{
-		_kf_plugin_manage->RegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >( new KFPublicProxyModule() );
-	}
+    void KFPublicProxyPlugin::Install()
+    {
+        _kf_plugin_manage->RegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >( new KFPublicProxyModule() );
+    }
 
-	void KFPublicProxyPlugin::UnInstall()
-	{
-		_kf_plugin_manage->UnRegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >();
-	}
+    void KFPublicProxyPlugin::UnInstall()
+    {
+        _kf_plugin_manage->UnRegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >();
+    }
 
-	void KFPublicProxyPlugin::LoadModule()
-	{
+    void KFPublicProxyPlugin::LoadModule()
+    {
 
-	}
+    }
 
 }

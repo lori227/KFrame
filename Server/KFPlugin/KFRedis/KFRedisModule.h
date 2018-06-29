@@ -14,27 +14,26 @@
 
 namespace KFrame
 {
-	class KFRedisDriver;
-	class KFRedisModule : public KFRedisInterface
-	{
-	public:
-		KFRedisModule();
-		~KFRedisModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFRedisDriver;
+    class KFRedisModule : public KFRedisInterface
+    {
+    public:
+        KFRedisModule();
+        ~KFRedisModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		virtual void ShutDown();
+        // 加载配置
+        virtual void InitModule();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 创建RedisExecute
-		virtual KFRedisDriver* CreateExecute( uint32 id );
-		virtual KFRedisDriver* CreateExecute( const std::string& field, uint32 logicid = 0 );
-		virtual KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
-	};
+        // 关闭
+        virtual void ShutDown();
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 创建RedisExecute
+        virtual KFRedisDriver* CreateExecute( uint32 id );
+        virtual KFRedisDriver* CreateExecute( const std::string& field, uint32 logicid = 0 );
+        virtual KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
+    };
 }
 
 

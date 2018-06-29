@@ -17,46 +17,46 @@
 
 namespace KFrame
 {
-	class KFClusterServerModule : public KFClusterServerInterface
-	{
-	public:
-		KFClusterServerModule();
-		~KFClusterServerModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFClusterServerModule : public KFClusterServerInterface
+    {
+    public:
+        KFClusterServerModule();
+        ~KFClusterServerModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 初始化
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-	protected:
-		// 注册
-		__KF_MESSAGE_FUNCTION__( HandleClusterRegisterReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 更新连接数量
-		__KF_MESSAGE_FUNCTION__( HandleClusterUpdateReq );
+    protected:
+        // 注册
+        __KF_MESSAGE_FUNCTION__( HandleClusterRegisterReq );
 
-		// 登录认证
-		__KF_MESSAGE_FUNCTION__( HandleClusterAuthReq );
+        // 更新连接数量
+        __KF_MESSAGE_FUNCTION__( HandleClusterUpdateReq );
 
-	protected:
-		// 连接丢失
-		__KF_SERVER_LOST_FUNCTION__( OnServerLostClusterProxy );
+        // 登录认证
+        __KF_MESSAGE_FUNCTION__( HandleClusterAuthReq );
 
-	private:
-		// 生成认证token
-		std::string MakeAuthToken( const KFGuid& guid );
+    protected:
+        // 连接丢失
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostClusterProxy );
 
-	private:
-		// 集群认证秘钥
-		std::string _cluster_key;
-	};
+    private:
+        // 生成认证token
+        std::string MakeAuthToken( const KFGuid& guid );
+
+    private:
+        // 集群认证秘钥
+        std::string _cluster_key;
+    };
 }
 
 

@@ -3,51 +3,30 @@
 
 namespace KFrame
 {
-	///////////////////////////////////////////////////////////////////////
-	class KFNullMutex
-	{
-	public:
-		KFNullMutex() {}
-		~KFNullMutex() {}
+    class KFMutex
+    {
+    public:
+        KFMutex();
+        ~KFMutex();
 
-		void Lock() {}
-		void Unlock() {}
-	};
+        void Lock();
+        void Unlock();
 
-	///////////////////////////////////////////////////////////////////////////////////////
-	class KFMutex
-	{
-	public:
-		KFMutex();
-		~KFMutex();
+    private:
+        char _buff[ 128 ];
+    };
 
-		void Lock();
-		void Unlock();
+    ///////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
+    class KFLocker
+    {
+    public:
+        KFLocker( KFMutex& kfmutex );
+        ~KFLocker();
 
-	private:
-		char _buff[ 128 ];
-	};
-	///////////////////////////////////////////////////////////////////////////////////////
-	template< class T >
-	class KFLocker
-	{
-	public:
-		KFLocker( T& kfmutex ) : _kf_mutex( kfmutex )
-		{
-			_kf_mutex.Lock();
-		}
-
-		~KFLocker()
-		{
-			_kf_mutex.Unlock();
-		}
-
-	private:
-		T &_kf_mutex;
-	};
-	///////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////
-
+    private:
+        KFMutex& _kf_mutex;
+    };
 }
 
 #endif

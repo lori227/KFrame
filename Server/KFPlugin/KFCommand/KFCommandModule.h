@@ -17,57 +17,57 @@
 
 namespace KFrame
 {
-	class KFCommandModule : public KFCommandInterface
-	{
-	public:
-		KFCommandModule();
-		~KFCommandModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFCommandModule : public KFCommandInterface
+    {
+    public:
+        KFCommandModule();
+        ~KFCommandModule();
 
-		// 开始执行
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 准备关闭
-		virtual void BeforeShut();
+        // 开始执行
+        virtual void BeforeRun();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 添加命令
-		virtual void AddCommand( const char* appname, uint32 appid, const char* command );
+        // 准备关闭
+        virtual void BeforeShut();
 
-		// 卸载
-		virtual void UnRegisterCommandFunction( const char* command );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 添加命令
+        virtual void AddCommand( const char* appname, uint32 appid, const char* command );
 
-	protected:
-		// 注册函数
-		virtual void RegisterFunction( const char* command, KFCommandFunction& function );
+        // 卸载
+        virtual void UnRegisterCommandFunction( const char* command );
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 注册函数
+        virtual void RegisterFunction( const char* command, KFCommandFunction& function );
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
 
-		// 执行命令
-		void ExecuteCommand( const std::string& command );
+        // 执行命令
+        void ExecuteCommand( const std::string& command );
 
-		// 加载配置
-		void ExecuteLoadConfig( KFJson& json );
+        // 加载配置
+        void ExecuteLoadConfig( KFJson& json );
 
-		// 关闭服务
-		void ExecuteShutDown( KFJson& json );
+        // 关闭服务
+        void ExecuteShutDown( KFJson& json );
 
-	protected:
-		// 查询命令
-		__KF_TIMER_FUNCTION__( OnTimerQueryCommand );
+    protected:
+        // 查询命令
+        __KF_TIMER_FUNCTION__( OnTimerQueryCommand );
 
-		// 服务器关闭
-		__KF_TIMER_FUNCTION__( OnTimerServiceShutDown );
-	protected:
+        // 服务器关闭
+        __KF_TIMER_FUNCTION__( OnTimerServiceShutDown );
+    protected:
 
-		// 命令函数
-		KFBind< std::string, const std::string&, KFCommandFunction > _kf_command_function;
-	};
+        // 命令函数
+        KFBind< std::string, const std::string&, KFCommandFunction > _kf_command_function;
+    };
 }
 
 

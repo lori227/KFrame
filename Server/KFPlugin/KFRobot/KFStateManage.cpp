@@ -62,111 +62,111 @@
 
 namespace KFrame
 {
-	void KFStateManage::Initialize()
-	{
-		// 在这里添加所有状态信息
-		AddState( RobotStateEnum::IdleState, new KFIdleState() );
-		AddState( RobotStateEnum::AuthState, new KFAuthState() );
-		AddState( RobotStateEnum::LoginVerify, new KFLoginVerifyState() );
-		AddState( RobotStateEnum::LoginGame, new KFLoginGameState() );
-		AddState( RobotStateEnum::CreateRole, new KFCreateRoleState() );
-		
-		// 邮件
-		AddState( RobotStateEnum::QueryMailNum, new KFQueryMailNumState() );
-		AddState( RobotStateEnum::QueryMail, new KFQueryMailState() );
-		AddState( RobotStateEnum::ViewMail, new KFViewMailState() );
-		AddState( RobotStateEnum::ReciveMailReward, new KFReciveMailRewardState() );
-		AddState( RobotStateEnum::DelMail, new KFDelMailState() );
+    void KFStateManage::Initialize()
+    {
+        // 在这里添加所有状态信息
+        AddState( RobotStateEnum::IdleState, new KFIdleState() );
+        AddState( RobotStateEnum::AuthState, new KFAuthState() );
+        AddState( RobotStateEnum::LoginVerify, new KFLoginVerifyState() );
+        AddState( RobotStateEnum::LoginGame, new KFLoginGameState() );
+        AddState( RobotStateEnum::CreateRole, new KFCreateRoleState() );
 
-		// 聊天
-		AddState( RobotStateEnum::EnterChat, new KFEnterChatState() );
-		AddState( RobotStateEnum::SendChat, new KFSendChatState() );
-		AddState( RobotStateEnum::LeaveChat, new KFLeaveChatState() );
-		AddState( RobotStateEnum::SendFriendChat, new KFSendFriendChatState() );
+        // 邮件
+        AddState( RobotStateEnum::QueryMailNum, new KFQueryMailNumState() );
+        AddState( RobotStateEnum::QueryMail, new KFQueryMailState() );
+        AddState( RobotStateEnum::ViewMail, new KFViewMailState() );
+        AddState( RobotStateEnum::ReciveMailReward, new KFReciveMailRewardState() );
+        AddState( RobotStateEnum::DelMail, new KFDelMailState() );
 
-		// 商城
-		AddState( RobotStateEnum::BuyStore, new KFBuyStoreState() );
-		AddState( RobotStateEnum::GiveStore, new KFGiveStoreState() );
+        // 聊天
+        AddState( RobotStateEnum::EnterChat, new KFEnterChatState() );
+        AddState( RobotStateEnum::SendChat, new KFSendChatState() );
+        AddState( RobotStateEnum::LeaveChat, new KFLeaveChatState() );
+        AddState( RobotStateEnum::SendFriendChat, new KFSendFriendChatState() );
 
-		// 好友
-		AddState( RobotStateEnum::AddFriend, new KFAddFriendState() );
-		AddState( RobotStateEnum::DelFriend, new KFDelFriendState() );
-		AddState( RobotStateEnum::RefuseFriend, new KFSetRefuseFirendState() );
+        // 商城
+        AddState( RobotStateEnum::BuyStore, new KFBuyStoreState() );
+        AddState( RobotStateEnum::GiveStore, new KFGiveStoreState() );
 
-		// 玩家状态/行为
-		AddState( RobotStateEnum::QueryBasic, new KFQueryBasicState() );
-		AddState( RobotStateEnum::ChangeName, new KFChangeNameState() );
-		AddState( RobotStateEnum::ChangeSex, new KFChangeSexState() );
-		AddState( RobotStateEnum::ChangeIcon, new KFChangeIconState() );
-		AddState( RobotStateEnum::ChangeIconBox, new KFChangeIconBoxState() );
-		AddState( RobotStateEnum::ChangeMotto, new KFChangeMottoState() );
-		AddState( RobotStateEnum::ChangeModel, new KFChangeModelState() );
-		AddState( RobotStateEnum::ChangeClothes, new KFChangeClothesState() );
-		AddState( RobotStateEnum::DressClothes, new KFDressClothesState() );
-		AddState( RobotStateEnum::QueryGuest, new KFQueryGuestState() );
-		AddState( RobotStateEnum::Toask, new KFToastState() );
-	
-		// 奖励相关
-		AddState( RobotStateEnum::RecvActivityReward, new KFRecvActivityRewardState() );
-		AddState( RobotStateEnum::RecvTaskReward, new KFRecvTaskRewardState() );
-		AddState( RobotStateEnum::RecvAchieveReward, new KFRecvAchieveRewardState() );
-		AddState( RobotStateEnum::RecvGiftReward, new KFRecvGiftRewardState() );
+        // 好友
+        AddState( RobotStateEnum::AddFriend, new KFAddFriendState() );
+        AddState( RobotStateEnum::DelFriend, new KFDelFriendState() );
+        AddState( RobotStateEnum::RefuseFriend, new KFSetRefuseFirendState() );
 
-		// 组队相关
-		AddState( RobotStateEnum::InviteTeam, new KFInviteTeamState() );
-		AddState( RobotStateEnum::AgreeInviteTeam, new KFAgreeInviteTeamState() );
-		AddState( RobotStateEnum::RefuseInviteTeam, new KFRefuseInviteTeamState() );
-		AddState( RobotStateEnum::RefuseMinuInviteTeam, new KFRefuseMinuInviteTeamState() );
-		AddState( RobotStateEnum::LeaveTeam, new KFLeaveTeamState() );
-		AddState( RobotStateEnum::ApplyGroup, new KFApplyGroupState() );
-		AddState( RobotStateEnum::AgreeApplyTeam, new KFAgreeApplyTeamState() );
-		AddState( RobotStateEnum::RefuseApplyTeam, new KFRefuseApplyTeamState() );
-		AddState( RobotStateEnum::KickGroup, new KFKickGroupState() );
+        // 玩家状态/行为
+        AddState( RobotStateEnum::QueryBasic, new KFQueryBasicState() );
+        AddState( RobotStateEnum::ChangeName, new KFChangeNameState() );
+        AddState( RobotStateEnum::ChangeSex, new KFChangeSexState() );
+        AddState( RobotStateEnum::ChangeIcon, new KFChangeIconState() );
+        AddState( RobotStateEnum::ChangeIconBox, new KFChangeIconBoxState() );
+        AddState( RobotStateEnum::ChangeMotto, new KFChangeMottoState() );
+        AddState( RobotStateEnum::ChangeModel, new KFChangeModelState() );
+        AddState( RobotStateEnum::ChangeClothes, new KFChangeClothesState() );
+        AddState( RobotStateEnum::DressClothes, new KFDressClothesState() );
+        AddState( RobotStateEnum::QueryGuest, new KFQueryGuestState() );
+        AddState( RobotStateEnum::Toask, new KFToastState() );
 
-		// 匹配
-		AddState( RobotStateEnum::SingleMatch, new KFSingleMatchState() );
-		AddState( RobotStateEnum::CancelMatch, new KFCancleMatchState() );
-		AddState( RobotStateEnum::DoubleMatchGroup, new KFDoubleMatchGpState() );
-		AddState( RobotStateEnum::DoubleMatch, new KFDoubleMatchState() );
-		AddState( RobotStateEnum::PentaMatchGroup, new KFPentaMatchGpState() );
-		AddState( RobotStateEnum::PentaMatch, new KFPentaMatchState() );
+        // 奖励相关
+        AddState( RobotStateEnum::RecvActivityReward, new KFRecvActivityRewardState() );
+        AddState( RobotStateEnum::RecvTaskReward, new KFRecvTaskRewardState() );
+        AddState( RobotStateEnum::RecvAchieveReward, new KFRecvAchieveRewardState() );
+        AddState( RobotStateEnum::RecvGiftReward, new KFRecvGiftRewardState() );
 
-		AddState( RobotStateEnum::QueryPlayer, new KFQueryPlayerState() );
-		
-		// 商城热更
-		AddState( RobotStateEnum::QueryStoreVersion, new KFStoreVersionState() );
-		AddState( RobotStateEnum::QueryStoreInfo, new KFStoreInfoState() );
+        // 组队相关
+        AddState( RobotStateEnum::InviteTeam, new KFInviteTeamState() );
+        AddState( RobotStateEnum::AgreeInviteTeam, new KFAgreeInviteTeamState() );
+        AddState( RobotStateEnum::RefuseInviteTeam, new KFRefuseInviteTeamState() );
+        AddState( RobotStateEnum::RefuseMinuInviteTeam, new KFRefuseMinuInviteTeamState() );
+        AddState( RobotStateEnum::LeaveTeam, new KFLeaveTeamState() );
+        AddState( RobotStateEnum::ApplyGroup, new KFApplyGroupState() );
+        AddState( RobotStateEnum::AgreeApplyTeam, new KFAgreeApplyTeamState() );
+        AddState( RobotStateEnum::RefuseApplyTeam, new KFRefuseApplyTeamState() );
+        AddState( RobotStateEnum::KickGroup, new KFKickGroupState() );
 
-		// 排行榜
-		AddState( RobotStateEnum::QueryWholeRankList, new KFQueryWholeRankState() );
-		AddState( RobotStateEnum::QueryFriendRankList, new KFQueryFriendRankState() );
+        // 匹配
+        AddState( RobotStateEnum::SingleMatch, new KFSingleMatchState() );
+        AddState( RobotStateEnum::CancelMatch, new KFCancleMatchState() );
+        AddState( RobotStateEnum::DoubleMatchGroup, new KFDoubleMatchGpState() );
+        AddState( RobotStateEnum::DoubleMatch, new KFDoubleMatchState() );
+        AddState( RobotStateEnum::PentaMatchGroup, new KFPentaMatchGpState() );
+        AddState( RobotStateEnum::PentaMatch, new KFPentaMatchState() );
+
+        AddState( RobotStateEnum::QueryPlayer, new KFQueryPlayerState() );
+
+        // 商城热更
+        AddState( RobotStateEnum::QueryStoreVersion, new KFStoreVersionState() );
+        AddState( RobotStateEnum::QueryStoreInfo, new KFStoreInfoState() );
+
+        // 排行榜
+        AddState( RobotStateEnum::QueryWholeRankList, new KFQueryWholeRankState() );
+        AddState( RobotStateEnum::QueryFriendRankList, new KFQueryFriendRankState() );
 
 
-		// GM加钱
-		AddState( RobotStateEnum::GMAddMoney , new KFAddMoneyState() );
-		AddState( RobotStateEnum::GMAddDiamond, new KFAddDiamondState() );
+        // GM加钱
+        AddState( RobotStateEnum::GMAddMoney, new KFAddMoneyState() );
+        AddState( RobotStateEnum::GMAddDiamond, new KFAddDiamondState() );
 
-		AddState( RobotStateEnum::AddWishOrder, new KFAddWishOrderState() );
-		AddState( RobotStateEnum::DelWishOrder, new KFDelWishOrderState() );
-		AddState( RobotStateEnum::ModifyWishOrder, new KFModifyWishOrderState() );
+        AddState( RobotStateEnum::AddWishOrder, new KFAddWishOrderState() );
+        AddState( RobotStateEnum::DelWishOrder, new KFDelWishOrderState() );
+        AddState( RobotStateEnum::ModifyWishOrder, new KFModifyWishOrderState() );
 
-		AddState( RobotStateEnum::PauseState, new KFPauseState() );
-	}
+        AddState( RobotStateEnum::PauseState, new KFPauseState() );
+    }
 
-	void KFStateManage::AddState( uint32 state, KFState* kfstate )
-	{
-		_state_list[ state ] = kfstate;
-		kfstate->_state = state;
-	}
+    void KFStateManage::AddState( uint32 state, KFState* kfstate )
+    {
+        _state_list[ state ] = kfstate;
+        kfstate->_state = state;
+    }
 
-	KFState* KFStateManage::FindState( uint32 state )
-	{
-		auto iter = _state_list.find( state );
-		if ( iter == _state_list.end() )
-		{
-			return nullptr;
-		}
+    KFState* KFStateManage::FindState( uint32 state )
+    {
+        auto iter = _state_list.find( state );
+        if ( iter == _state_list.end() )
+        {
+            return nullptr;
+        }
 
-		return iter->second;
-	}
+        return iter->second;
+    }
 }

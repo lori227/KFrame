@@ -18,35 +18,35 @@
 
 namespace KFrame
 {
-	class KFRouteProxyModule : public KFRouteProxyInterface
-	{
-	public:
-		KFRouteProxyModule();
-		~KFRouteProxyModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFRouteProxyModule : public KFRouteProxyInterface
+    {
+    public:
+        KFRouteProxyModule();
+        ~KFRouteProxyModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 注册游戏区请求
-		__KF_MESSAGE_FUNCTION__( HandleRegisterZoneReq );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 转发消息
-		__KF_MESSAGE_FUNCTION__( HandleTransmitRouteZoneMessageReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 注册游戏区请求
+        __KF_MESSAGE_FUNCTION__( HandleRegisterZoneReq );
 
-		// 转发消息
-		__KF_MESSAGE_FUNCTION__( HandleTransmitRouteProxyMessageAck );
-	protected:
-		// 注册到Route shard回调
-		__KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionRouteShard );
-	};
+        // 转发消息
+        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteZoneMessageReq );
+
+        // 转发消息
+        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteProxyMessageAck );
+    protected:
+        // 注册到Route shard回调
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionRouteShard );
+    };
 }
 
 

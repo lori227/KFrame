@@ -19,24 +19,24 @@
 
 namespace KFrame
 {
-	class KFMailProxyModule : public KFMailProxyInterface
-	{
-	public:
-		KFMailProxyModule();
-		~KFMailProxyModule();
+    class KFMailProxyModule : public KFMailProxyInterface
+    {
+    public:
+        KFMailProxyModule();
+        ~KFMailProxyModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-	};
+    };
 }
 
 

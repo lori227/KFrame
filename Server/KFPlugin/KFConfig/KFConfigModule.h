@@ -15,52 +15,52 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFConfigData )
-	{
-	public:
-		KFConfigData()
-		{
-			_config = nullptr;
-			_can_reload = false;
-		}
+    class KFConfigData
+    {
+    public:
+        KFConfigData()
+        {
+            _config = nullptr;
+            _can_reload = false;
+        }
 
-	public:
-		KFConfig* _config;
-		std::string _module;
-		std::string _file;
-		bool _can_reload;
-	};
-	////////////////////////////////////////////////////////////////
-	class KFConfigModule : public KFConfigInterface
-	{
-	public:
-		KFConfigModule();
-		~KFConfigModule();
-		
-		// 关闭
-		virtual void ShutDown();
+    public:
+        KFConfig* _config;
+        std::string _module;
+        std::string _file;
+        bool _can_reload;
+    };
+    ////////////////////////////////////////////////////////////////
+    class KFConfigModule : public KFConfigInterface
+    {
+    public:
+        KFConfigModule();
+        ~KFConfigModule();
 
-		// 加载配置
-		virtual void LoadConfig();
+        // 关闭
+        virtual void ShutDown();
 
-		// 加载一个配置
-		virtual void AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload );
+        // 加载配置
+        virtual void LoadConfig();
 
-		// 删除配置
-		virtual void RemoveConfig( const std::string& module );
-		
-		// 重载载某一个配置
-		virtual void LoadConfig( const std::string& file );
+        // 加载一个配置
+        virtual void AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload );
 
-		// 加载配置
-		virtual void LoadConfig( KFConfig* config, const std::string& module, const std::string& file );
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 删除配置
+        virtual void RemoveConfig( const std::string& module );
 
-	private:
-		// 配置列表
-		KFMap< std::string, const std::string&, KFConfigData > _kf_config_data;
-	};
+        // 重载载某一个配置
+        virtual void LoadConfig( const std::string& file );
+
+        // 加载配置
+        virtual void LoadConfig( KFConfig* config, const std::string& module, const std::string& file );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+    private:
+        // 配置列表
+        KFMap< std::string, const std::string&, KFConfigData > _kf_config_data;
+    };
 }
 
 

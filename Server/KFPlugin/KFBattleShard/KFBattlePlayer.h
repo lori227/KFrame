@@ -6,91 +6,91 @@
 
 namespace KFrame
 {
-	enum KFPlayerStatus
-	{
-		StatusPlayerIdle = 0,		// 等待状态
-		StatusEnterRoom = 1,		// 进入房间状态
-		StatusNoticeRoom = 2,		// 通知房间地址状态
-		StatusDisconnetRoom = 3,	// 玩家断线状态
-		StatusLoginRoom = 4,		// 玩家登陆状态
-		StatusPlayingRoom = 5,		// 玩家游戏状态
-		StatusLeaveRoom = 6,		// 玩家离开状态
-	};
+    enum KFPlayerStatus
+    {
+        StatusPlayerIdle = 0,		// 等待状态
+        StatusEnterRoom = 1,		// 进入房间状态
+        StatusNoticeRoom = 2,		// 通知房间地址状态
+        StatusDisconnetRoom = 3,	// 玩家断线状态
+        StatusLoginRoom = 4,		// 玩家登陆状态
+        StatusPlayingRoom = 5,		// 玩家游戏状态
+        StatusLeaveRoom = 6,		// 玩家离开状态
+    };
 
-	class KFBattleCamp;
-	class KFBattleRoom;
-	__ST_CLASS__( KFBattlePlayer )
-	{
-	public:
-		KFBattlePlayer();
-		~KFBattlePlayer();
+    class KFBattleCamp;
+    class KFBattleRoom;
+    class KFBattlePlayer
+    {
+    public:
+        KFBattlePlayer();
+        ~KFBattlePlayer();
 
-		static KFBattlePlayer* Create( const KFMsg::PBBattlePlayer& pbplayer );
-		static void Release( KFBattlePlayer* kfplayer );
-		
-		// 玩家id
-		uint32 GetID();
+        static KFBattlePlayer* Create( const KFMsg::PBBattlePlayer& pbplayer );
+        static void Release( KFBattlePlayer* kfplayer );
 
-		// 加载
-		void LoadFrom( const KFMsg::PBBattlePlayer& pbplayer );
+        // 玩家id
+        uint32 GetID();
 
-		// 保存
-		void SaveTo( KFMsg::PBBattlePlayer* pbenter );
+        // 加载
+        void LoadFrom( const KFMsg::PBBattlePlayer& pbplayer );
 
-		// 玩家进入战场
-		void RunEnterRoom( KFBattleRoom* kfroom );
-		
-		// 进入游戏房间
-		void ConfirmEnterBattleRoom();
+        // 保存
+        void SaveTo( KFMsg::PBBattlePlayer* pbenter );
 
-		// 确认通知战场房间
-		void ConfirmNoticeBattleRoom();
+        // 玩家进入战场
+        void RunEnterRoom( KFBattleRoom* kfroom );
 
-		// 登陆游戏房间
-		bool LoginBattleRoomReq( KFBattleRoom* kfroom );
+        // 进入游戏房间
+        void ConfirmEnterBattleRoom();
 
-		// 离开房间
-		void LeaveBattleRoomReq( KFBattleRoom* kfroom );
+        // 确认通知战场房间
+        void ConfirmNoticeBattleRoom();
 
-		// 查询游戏房间
-		bool QueryBattleRoom( uint32 serverid );
+        // 登陆游戏房间
+        bool LoginBattleRoomReq( KFBattleRoom* kfroom );
 
-		// 玩家上线
-		void OnlineBattleRoom( uint32 serverid );
+        // 离开房间
+        void LeaveBattleRoomReq( KFBattleRoom* kfroom );
 
-		// 离开战场
-		void FinishLeaveRoom();
+        // 查询游戏房间
+        bool QueryBattleRoom( uint32 serverid );
 
-		// 发送消息到客户端
-		bool SendMessageToClient( uint32 msgid, google::protobuf::Message* message );
+        // 玩家上线
+        void OnlineBattleRoom( uint32 serverid );
 
-		// 结算
-		bool BattleScoreBalance( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore );
+        // 离开战场
+        void FinishLeaveRoom();
 
-		// 计算评分
-		void ScoreBalance( KFMsg::PBBattleScore* pbscore );
-	protected:
-		// 玩家进入战场
-		void PlayerEnterBattleRoom( KFBattleRoom* kfroom );
+        // 发送消息到客户端
+        bool SendMessageToClient( uint32 msgid, google::protobuf::Message* message );
 
-		// 通知房间信息
-		void PlayerNoticeBattleRoom( KFBattleRoom* kfroom );
+        // 结算
+        bool BattleScoreBalance( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore );
 
-		// 发送离开消息
-		void SendLeaveRoomToPlayer();
-	public:
-		// 玩家数据
-		KFMsg::PBBattlePlayer _pb_player;
+        // 计算评分
+        void ScoreBalance( KFMsg::PBBattleScore* pbscore );
+    protected:
+        // 玩家进入战场
+        void PlayerEnterBattleRoom( KFBattleRoom* kfroom );
 
-		// token数据
-		std::string _token;
+        // 通知房间信息
+        void PlayerNoticeBattleRoom( KFBattleRoom* kfroom );
 
-		// 玩家状态
-		uint32 _status;
+        // 发送离开消息
+        void SendLeaveRoomToPlayer();
+    public:
+        // 玩家数据
+        KFMsg::PBBattlePlayer _pb_player;
 
-		// 通知的次数
-		uint32 _notice_count;
-	};
+        // token数据
+        std::string _token;
+
+        // 玩家状态
+        uint32 _status;
+
+        // 通知的次数
+        uint32 _notice_count;
+    };
 }
 
 #endif

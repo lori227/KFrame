@@ -16,44 +16,44 @@
 
 namespace KFrame
 {
-	class KFEntity;
-	class KFResetModule : public KFResetInterface
-	{
-	public:
-		KFResetModule();
-		~KFResetModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFEntity;
+    class KFResetModule : public KFResetInterface
+    {
+    public:
+        KFResetModule();
+        ~KFResetModule();
 
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		virtual void ShutDown();
+        virtual void BeforeRun();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		void Run();
+        virtual void ShutDown();
 
-		// 重置数据
-		void ResetPlayerData( KFEntity* player );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        void Run();
 
-		// 刷新数据
-		void RunResetPlayerData( KFEntity* player );
+        // 重置数据
+        void ResetPlayerData( KFEntity* player );
 
-		// 判断刷新时间
-		bool CheckResetPlayerDataTime();
+        // 刷新数据
+        void RunResetPlayerData( KFEntity* player );
 
-		// 计算刷新时间
-		void CalcNextResetTime();
+        // 判断刷新时间
+        bool CheckResetPlayerDataTime();
 
-	private:
-		// 是否需要刷新
-		bool _need_to_reset;
+        // 计算刷新时间
+        void CalcNextResetTime();
 
-		// 上次刷新时间
-		uint64 _next_reset_data_time;
-	};
+    private:
+        // 是否需要刷新
+        bool _need_to_reset;
+
+        // 上次刷新时间
+        uint64 _next_reset_data_time;
+    };
 }
 
 

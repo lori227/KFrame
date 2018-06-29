@@ -5,35 +5,39 @@
 
 namespace KFrame
 {
-	class KFUInt32 : public KFData
-	{
-	public:
-		KFUInt32();
-		virtual ~KFUInt32();
-		
-		virtual void Reset();
+    class KFUInt32 : public KFData
+    {
+    public:
+        KFUInt32();
+        virtual ~KFUInt32();
 
-		// 是否有效
-		virtual bool IsValid();
-		
-		// 保存 赋值
-		virtual void CopyFrom( KFData* kfother );
-		virtual void SaveTo( KFData* kfother );
+        virtual void Reset();
 
-		// 格式化成字串
-		virtual std::string ToString();
-		virtual void FromString( const std::string& value );
+        // 是否有效
+        virtual bool IsValid();
 
-	protected:
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual uint32 GetUInt32() { return _data; }
-		virtual void SetUInt32( uint32 value ) { _data = value; }
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 保存 赋值
+        virtual void CopyFrom( KFData* kfother );
+        virtual void SaveTo( KFData* kfother );
 
-	private:
-		// 属性
-		uint32 _data;
-	};
+        // 格式化成字串
+        virtual std::string ToString();
+        virtual void FromString( const std::string& value );
+
+    protected:
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual uint32 GetUInt32() {
+            return _data;
+        }
+        virtual void SetUInt32( uint32 value ) {
+            _data = value;
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private:
+        // 属性
+        uint32 _data;
+    };
 }
 
 

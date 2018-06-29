@@ -19,54 +19,54 @@
 
 namespace KFrame
 {
-	class KFPublicClientModule : public KFPublicClientInterface
-	{
-	public:
-		KFPublicClientModule();
-		~KFPublicClientModule();
+    class KFPublicClientModule : public KFPublicClientInterface
+    {
+    public:
+        KFPublicClientModule();
+        ~KFPublicClientModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 刷新
-		virtual void BeforeRun();
-		virtual void OnceRun();
+        // 刷新
+        virtual void BeforeRun();
+        virtual void OnceRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 更新公共数据
-		virtual bool UpdatePublicData( KFEntity* player, const MapString& values );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 更新公共数据
+        virtual bool UpdatePublicData( KFEntity* player, const MapString& values );
 
-		// 发送消息到Public
-		virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message );
-	protected:
-		// 更新属性回调
-		void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-		void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
-		
-		void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
+        // 发送消息到Public
+        virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message );
+    protected:
+        // 更新属性回调
+        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
 
-		// 上线更新公共数据
-		void OnEnterUpdatePublicData( KFEntity* player );
+        void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
 
-		// 离线更新公共数据
-		void OnLeaveUpdatePublicData( KFEntity* player );
+        // 上线更新公共数据
+        void OnEnterUpdatePublicData( KFEntity* player );
 
-	protected:
-		// 查询玩家基本数据
-		__KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
+        // 离线更新公共数据
+        void OnLeaveUpdatePublicData( KFEntity* player );
 
-		// 查询玩家基本数据
-		__KF_MESSAGE_FUNCTION__( HandleQueryBasicAck );
-	private:
-		// 组件
-		KFComponent* _kf_component;
+    protected:
+        // 查询玩家基本数据
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
 
-		// 基础模块
-		KFData* _kf_basic;
-	};
+        // 查询玩家基本数据
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicAck );
+    private:
+        // 组件
+        KFComponent* _kf_component;
+
+        // 基础模块
+        KFData* _kf_basic;
+    };
 }
 
 #endif

@@ -6,105 +6,105 @@
 
 namespace KFrame
 {
-	/////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	__ST_CLASS__( KFLaunchSetting )
-	{
-	public:
-		KFLaunchSetting()
-		{
-			_id = 0;
-			_startup = true;
-			_show_window = true;
-			_pause = 0;
-			_app_id = 1;
-			_debug_shut_time = 0;
-			_release_shut_time = 0;
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFLaunchSetting
+    {
+    public:
+        KFLaunchSetting()
+        {
+            _id = 0;
+            _startup = true;
+            _show_window = true;
+            _pause = 0;
+            _app_id = 1;
+            _debug_shut_time = 0;
+            _release_shut_time = 0;
 
-			_stop = false;
-			_process_id = 0;
-		}
+            _stop = false;
+            _process_id = 0;
+        }
 
-		uint32 GetShutTime() const;
-		
-	public:
-		// id
-		uint32 _id;
+        uint32 GetShutTime() const;
 
-		// 是否开启
-		bool _startup;
+    public:
+        // id
+        uint32 _id;
 
-		// 是否后台运行
-		bool _show_window;
+        // 是否开启
+        bool _startup;
 
-		// 挂起
-		uint32 _pause;
+        // 是否后台运行
+        bool _show_window;
 
-		// 程序路径
-		std::string _app_path;
+        // 挂起
+        uint32 _pause;
 
-		// 程序名称
-		std::string _app_name;
+        // 程序路径
+        std::string _app_path;
 
-		// 程序id
-		uint32 _app_id;
+        // 程序名称
+        std::string _app_name;
 
-		// 配置目录
-		std::string _logger_file;
+        // 程序id
+        uint32 _app_id;
 
-		// 启动文件
-		std::string _startup_config;
+        // 配置目录
+        std::string _logger_file;
 
-		// 关闭时间( 0 表示立即关闭
-		uint32 _debug_shut_time;
-		uint32 _release_shut_time;
+        // 启动文件
+        std::string _startup_config;
 
-		//////////////////////////////////////////////////
-		// 停止
-		bool _stop;
+        // 关闭时间( 0 表示立即关闭
+        uint32 _debug_shut_time;
+        uint32 _release_shut_time;
 
-		// 启动的进程id
-		uint32 _process_id;
+        //////////////////////////////////////////////////
+        // 停止
+        bool _stop;
 
-		/////////////////////////////////////////////////////
-		//linux执行文件路径
-		std::string _linux_path;
+        // 启动的进程id
+        uint32 _process_id;
 
-		//linux进程重启指令
-		std::string _linux_restar;
-	};
+        /////////////////////////////////////////////////////
+        //linux执行文件路径
+        std::string _linux_path;
 
-	class KFLaunchConfig : public KFConfig, public KFSingleton< KFLaunchConfig >
-	{
-	public:
-		KFLaunchConfig();
-		~KFLaunchConfig();
+        //linux进程重启指令
+        std::string _linux_restar;
+    };
 
-		bool LoadConfig( const char* file );
+    class KFLaunchConfig : public KFConfig, public KFSingleton< KFLaunchConfig >
+    {
+    public:
+        KFLaunchConfig();
+        ~KFLaunchConfig();
 
-		// 查找设定
-		KFLaunchSetting* FindLaunchSetting( uint32 id );
+        bool LoadConfig( const char* file );
 
-	public:
-		// 自动启动
-		bool _auto_startup;
+        // 查找设定
+        KFLaunchSetting* FindLaunchSetting( uint32 id );
 
-		// 启动文件
-		std::string _startup_file;
+    public:
+        // 自动启动
+        bool _auto_startup;
 
-		// launch redis in
-		uint32 _launch_redis_id;
+        // 启动文件
+        std::string _startup_file;
 
-		// ftpid
-		uint32 _ftp_id;
+        // launch redis in
+        uint32 _launch_redis_id;
 
-		// 称号列表
-		KFMap< uint32, uint32, KFLaunchSetting > _kf_launch_setting;
-	};
+        // ftpid
+        uint32 _ftp_id;
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_launch_config = KFLaunchConfig::Instance();
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+        // 称号列表
+        KFMap< uint32, uint32, KFLaunchSetting > _kf_launch_setting;
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_launch_config = KFLaunchConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

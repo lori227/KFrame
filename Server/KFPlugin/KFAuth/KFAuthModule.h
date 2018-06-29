@@ -20,29 +20,29 @@
 
 namespace KFrame
 {
-	class KFAuthModule : public KFAuthInterface
-	{
-	public:
-		KFAuthModule();
-		~KFAuthModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFAuthModule : public KFAuthInterface
+    {
+    public:
+        KFAuthModule();
+        ~KFAuthModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 处理登录请求
-		std::string HandleAuthChannelLogin( const std::string& ip, const std::string& data );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 激活请求
-		std::string HandleAuthActivation( const std::string& ip, const std::string& data );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 处理登录请求
+        std::string HandleAuthChannelLogin( const std::string& ip, const std::string& data );
 
-	};
+        // 激活请求
+        std::string HandleAuthActivation( const std::string& ip, const std::string& data );
+
+    };
 }
 
 

@@ -7,34 +7,34 @@
 
 namespace KFrame
 {
-	class KFLibrary;
-	class KFAppSetting;
-	class KFStartup : public KFSingleton< KFStartup >
-	{
-	public:
-		KFStartup();
-		~KFStartup();
+    class KFLibrary;
+    class KFAppSetting;
+    class KFStartup : public KFSingleton< KFStartup >
+    {
+    public:
+        KFStartup();
+        ~KFStartup();
 
-		// 初始化
-		bool InitStartup( const char* file );
+        // 初始化
+        bool InitStartup( const char* file );
 
-		// 加载插件
-		bool LoadPlugin();
+        // 加载插件
+        bool LoadPlugin();
 
-		// 关闭
-		void ShutDown();
+        // 关闭
+        void ShutDown();
 
-	public:
-		bool LoadPluginLibrarys();
-		bool LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting  );
+    public:
+        bool LoadPluginLibrarys();
+        bool LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting  );
 
-		// 卸载
-		bool UnLoadPluginLibrary( const std::string& pluginname );
+        // 卸载
+        bool UnLoadPluginLibrary( const std::string& pluginname );
 
-	private:
-		// 插件列表
-		KFMap< std::string, const std::string&, KFLibrary > _kf_library;
-	};
+    private:
+        // 插件列表
+        KFMap< std::string, const std::string&, KFLibrary > _kf_library;
+    };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 static auto _kf_startup = KFrame::KFStartup::Instance();

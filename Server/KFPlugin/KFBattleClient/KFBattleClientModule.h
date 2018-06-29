@@ -21,48 +21,48 @@
 
 namespace KFrame
 {
-	class KFBattleClientModule : public KFBattleClientInterface
-	{
-	public:
-		KFBattleClientModule();
-		~KFBattleClientModule();
+    class KFBattleClientModule : public KFBattleClientInterface
+    {
+    public:
+        KFBattleClientModule();
+        ~KFBattleClientModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 发送消息到Battle
-		virtual bool SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message );
-		virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message );
+        // 发送消息到Battle
+        virtual bool SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message );
 
-	protected:
+    protected:
 
-		// 匹配结果
-		__KF_MESSAGE_FUNCTION__( HandleNoticeMatchRoomReq );
+        // 匹配结果
+        __KF_MESSAGE_FUNCTION__( HandleNoticeMatchRoomReq );
 
-		// 离开房间
-		__KF_MESSAGE_FUNCTION__( HandleLeaveBattleRoomAck );
+        // 离开房间
+        __KF_MESSAGE_FUNCTION__( HandleLeaveBattleRoomAck );
 
-		// 结算战绩
-		__KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreReq );
+        // 结算战绩
+        __KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreReq );
 
-	private:
-		// 玩家上线回调
-		void OnEnterQueryBattleRoom( KFEntity* player );
-	
-		// 结算战绩
-		void BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore );
-	
-		// 计算总评分
-		uint32 CalcTotalScore( KFEntity* player );
-	};
+    private:
+        // 玩家上线回调
+        void OnEnterQueryBattleRoom( KFEntity* player );
+
+        // 结算战绩
+        void BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore );
+
+        // 计算总评分
+        uint32 CalcTotalScore( KFEntity* player );
+    };
 }
 
 

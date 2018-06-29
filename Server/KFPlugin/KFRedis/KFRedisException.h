@@ -5,26 +5,26 @@
 
 namespace KFrame
 {
-	class KFRedisException
-	{
-	public:
-		KFRedisException( const char* command, uint32 flags, const char* display )
-		{
-			_flags = flags;
-			_command = command;
-			_display = display;
-		}
+    class KFRedisException
+    {
+    public:
+        KFRedisException( const char* command, uint32 flags, const char* display )
+        {
+            _flags = flags;
+            _command = command;
+            _display = display;
+        }
 
-	public:
+    public:
 
-		// 标识
-		int32 _flags;
+        // 标识
+        int32 _flags;
 
-		// 描述
-		std::string _display;
+        // 描述
+        std::string _display;
 
-		// 命令
-		std::string _command;
-	};
+        // 命令
+        std::string _command;
+    };
 }
 #endif

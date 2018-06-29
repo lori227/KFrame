@@ -5,33 +5,33 @@
 
 namespace KFrame
 {
-	class KFRouteClientInterface : public KFModule
-	{
-	public:
-		// 转发消息
-		virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-		virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 注册连接成功函数
-		template< class T >
-		void RegisterTransmitFunction( T* object, bool (T::*handle)(const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length) )
-		{
-			KFTransmitFunction function = std::bind( handle, object,
-				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-			SetTransmitFunction( function );
-		}
+    class KFRouteClientInterface : public KFModule
+    {
+    public:
+        // 转发消息
+        virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册连接成功函数
+        template< class T >
+        void RegisterTransmitFunction( T* object, bool ( T::*handle )( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) )
+        {
+            KFTransmitFunction function = std::bind( handle, object,
+                                          std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            SetTransmitFunction( function );
+        }
 
-		// 卸载
-		virtual void UnRegisterTransmitFunction() = 0;
-	protected:
+        // 卸载
+        virtual void UnRegisterTransmitFunction() = 0;
+    protected:
 
-		virtual void SetTransmitFunction( KFTransmitFunction& function ) = 0;
-	};
+        virtual void SetTransmitFunction( KFTransmitFunction& function ) = 0;
+    };
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_route, KFRouteClientInterface );
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_route, KFRouteClientInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

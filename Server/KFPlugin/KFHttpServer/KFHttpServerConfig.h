@@ -6,36 +6,36 @@
 
 namespace KFrame
 {
-	class KFHttpServerConfig : public KFConfig, public KFSingleton< KFHttpServerConfig >
-	{
-	public:
-		KFHttpServerConfig();
+    class KFHttpServerConfig : public KFConfig, public KFSingleton< KFHttpServerConfig >
+    {
+    public:
+        KFHttpServerConfig();
 
-		// 加载配置文件
-		bool LoadConfig( const char* file );
+        // 加载配置文件
+        bool LoadConfig( const char* file );
 
-	public:
-		// 内网ip
-		std::string _local_ip;
+    public:
+        // 内网ip
+        std::string _local_ip;
 
-		// 外网ip
-		std::string _interanet_ip;
+        // 外网ip
+        std::string _interanet_ip;
 
-		// 端口
-		uint32 _port;
+        // 端口
+        uint32 _port;
 
-		// 是否保持
-		bool _keep_alive;
+        // 是否保持
+        bool _keep_alive;
 
-		// 最大线程
-		uint32 _max_thread;
+        // 最大线程
+        uint32 _max_thread;
 
-		// 最大队列
-		uint32 _max_queue;
-		
-		// 线程idle时间
-		uint32 _idle_time;
-	};
+        // 最大队列
+        uint32 _max_queue;
+
+        // 线程idle时间
+        uint32 _idle_time;
+    };
 }
 
 ////////////////////////////////////////////////////////////////////////////

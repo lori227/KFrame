@@ -5,34 +5,38 @@
 
 namespace KFrame
 {
-	class KFDouble : public KFData
-	{
-	public:
-		KFDouble();
-		virtual ~KFDouble();
-		
-		virtual void Reset();
+    class KFDouble : public KFData
+    {
+    public:
+        KFDouble();
+        virtual ~KFDouble();
 
-		// 是否有效
-		virtual bool IsValid();
+        virtual void Reset();
 
-		// 保存 赋值
-		virtual void CopyFrom( KFData* kfother );
-		virtual void SaveTo( KFData* kfother );
+        // 是否有效
+        virtual bool IsValid();
 
-		// 格式化成字串
-		virtual std::string ToString();
-		virtual void FromString( const std::string& value );
+        // 保存 赋值
+        virtual void CopyFrom( KFData* kfother );
+        virtual void SaveTo( KFData* kfother );
 
-	protected:
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual double GetDouble() { return _data; }
-		virtual void SetDouble( double value ) { _data = value; }
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 格式化成字串
+        virtual std::string ToString();
+        virtual void FromString( const std::string& value );
 
-	private:
-		double _data;
-	};
+    protected:
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual double GetDouble() {
+            return _data;
+        }
+        virtual void SetDouble( double value ) {
+            _data = value;
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private:
+        double _data;
+    };
 }
 
 

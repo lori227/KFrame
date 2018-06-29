@@ -7,61 +7,61 @@
 
 namespace KFrame
 {
-	__ST_CLASS__( KFScript )
-	{
-	public:
-		template< class ... T >
-		void CallFunction( const char* function, uint32 objectid, T&&...params )
-		{
-			try
-			{
-				LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function );
-				if ( luaobject.IsFunction() )
-				{
-					( ( LuaPlus::LuaFunction< int32 > )luaobject )( objectid, std::forward<T>( params )... );
-				}
-			}
-			catch ( LuaPlus::LuaException &e )
-			{
-				KFLogger::LogScript( KFLogger::Error, "call [ %s ] [ %s ] failed = [ %s ]",
-					_lua_file.c_str(), function, e.GetErrorMessage() );
-			}
-		}
+    class KFScript
+    {
+    public:
+        template< class ... T >
+        void CallFunction( const char* function, uint32 objectid, T&& ...params )
+        {
+            try
+            {
+                LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function );
+                if ( luaobject.IsFunction() )
+                {
+                    ( ( LuaPlus::LuaFunction< int32 > )luaobject )( objectid, std::forward<T>( params )... );
+                }
+            }
+            catch ( LuaPlus::LuaException& e )
+            {
+                KFLogger::LogScript( KFLogger::Error, "call [ %s ] [ %s ] failed = [ %s ]",
+                                     _lua_file.c_str(), function, e.GetErrorMessage() );
+            }
+        }
 
-	public:
-		// 创建Lua解释器
-		LuaPlus::LuaStateOwner _lua_state;
+    public:
+        // 创建Lua解释器
+        LuaPlus::LuaStateOwner _lua_state;
 
-	protected:
-		// 脚本文件
-		std::string _lua_file;
-	};
+    protected:
+        // 脚本文件
+        std::string _lua_file;
+    };
 
-	class KFLuaInterface : public KFModule
-	{
-	public:
+    class KFLuaInterface : public KFModule
+    {
+    public:
 
-		// 重新加载lua文件
-		virtual void LoadScript( const std::string& luafile ) = 0;
-		///////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////
+        // 重新加载lua文件
+        virtual void LoadScript( const std::string& luafile ) = 0;
+        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
 
-		template< class ... T >
-		void CallFunction( const std::string& luafile, const std::string& function, uint32 objectid, T&&...params )
-		{
-			auto kfscript = FindLuaScript( luafile );
-			kfscript->CallFunction( function.c_str(), objectid, std::forward<T>( params )... );
-		}
+        template< class ... T >
+        void CallFunction( const std::string& luafile, const std::string& function, uint32 objectid, T&& ...params )
+        {
+            auto kfscript = FindLuaScript( luafile );
+            kfscript->CallFunction( function.c_str(), objectid, std::forward<T>( params )... );
+        }
 
-	protected:
-		// 查找lua脚本
-		virtual KFScript* FindLuaScript( const std::string& luafile ) = 0;
-	};
+    protected:
+        // 查找lua脚本
+        virtual KFScript* FindLuaScript( const std::string& luafile ) = 0;
+    };
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_INTERFACE__( _kf_lua, KFLuaInterface );
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_lua, KFLuaInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

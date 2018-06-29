@@ -3,222 +3,222 @@
 
 namespace KFrame
 {
-	/////////////////////////////////////////////////////////////////////////////
-	KFRedisExecute::KFRedisExecute()
-	{
-		_index = 0;
-	}
+    /////////////////////////////////////////////////////////////////////////////
+    KFRedisExecute::KFRedisExecute()
+    {
+        _index = 0;
+    }
 
-	KFRedisExecute::~KFRedisExecute()
-	{
-	}
+    KFRedisExecute::~KFRedisExecute()
+    {
+    }
 
-	int32 KFRedisExecute::Initialize( const char* ip, int32 port, const char* password )
-	{
-		_length = KFrame::Buff_10M;
-		_buffer = __KF_INT8__( _length );
-		return _redis.Connect( ip, port, password );
-	}
+    int32 KFRedisExecute::Initialize( const char* ip, int32 port, const char* password )
+    {
+        _length = KFrame::Buff_10M;
+        _buffer = __KF_INT8__( _length );
+        return _redis.Connect( ip, port, password );
+    }
 
-	void KFRedisExecute::ShutDown()
-	{
-		_redis.ShutDown();
-	}
+    void KFRedisExecute::ShutDown()
+    {
+        _redis.ShutDown();
+    }
 
-	void KFRedisExecute::SelectIndex( uint32 index )
-	{
-		if ( index == _index )
-		{
-			return;
-		}
+    void KFRedisExecute::SelectIndex( uint32 index )
+    {
+        if ( index == _index )
+        {
+            return;
+        }
 
-		_index = index;
-		VoidExecute( "select %u", _index );
-	}
-	
+        _index = index;
+        VoidExecute( "select %u", _index );
+    }
+
 #define __FORMAT_BUFFER__\
-		memset( _buffer, 0, _length );\
-		va_list args;\
-		va_start( args, format );\
-		vsprintf( _buffer, format, args );\
-		va_end( args );\
+    memset( _buffer, 0, _length );\
+    va_list args;\
+    va_start( args, format );\
+    vsprintf( _buffer, format, args );\
+    va_end( args );\
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void KFRedisExecute::AppendCommand( const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		_commands.push_back( _buffer );
-	}
+    void KFRedisExecute::AppendCommand( const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        _commands.push_back( _buffer );
+    }
 
-	void KFRedisExecute::AppendCommand( const VectorString& fieldvalue, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
+    void KFRedisExecute::AppendCommand( const VectorString& fieldvalue, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
 
-		KFRedisFormat kfformat;
-		kfformat.Append( _buffer );
-		kfformat.Append( fieldvalue );
-		_commands.push_back( kfformat.ToString().c_str() );
-	}
+        KFRedisFormat kfformat;
+        kfformat.Append( _buffer );
+        kfformat.Append( fieldvalue );
+        _commands.push_back( kfformat.ToString().c_str() );
+    }
 
-	void KFRedisExecute::AppendCommand( const MapString& fieldvalue, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
+    void KFRedisExecute::AppendCommand( const MapString& fieldvalue, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
 
-		KFRedisFormat kfformat;
-		kfformat.Append( _buffer );
-		kfformat.Append( fieldvalue );
-		_commands.push_back( kfformat.ToString().c_str() );
-	}
+        KFRedisFormat kfformat;
+        kfformat.Append( _buffer );
+        kfformat.Append( fieldvalue );
+        _commands.push_back( kfformat.ToString().c_str() );
+    }
 
-	bool KFRedisExecute::PipelineExecute()
-	{
-		bool result = PipelineExecute( _commands );
-		_commands.clear();
-		
-		return result;
-	}
+    bool KFRedisExecute::PipelineExecute()
+    {
+        bool result = PipelineExecute( _commands );
+        _commands.clear();
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFRedisExecute::PipelineExecute( const ListString& commands )
-	{
-		try
-		{
-			return _redis.PipelineExecute( commands );
-		}
-		catch ( KFRedisException& )
-		{
-			// 已经断线, 重新连接
-			if ( _redis.IsDisconnected() )
-			{
-				_redis.ReConnect();
+        return result;
+    }
 
-				// 重新执行一遍
-				return _redis.PipelineExecute( commands );
-			}
-		}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFRedisExecute::PipelineExecute( const ListString& commands )
+    {
+        try
+        {
+            return _redis.PipelineExecute( commands );
+        }
+        catch ( KFRedisException& )
+        {
+            // 已经断线, 重新连接
+            if ( _redis.IsDisconnected() )
+            {
+                _redis.ReConnect();
 
-		return false;
-	}
+                // 重新执行一遍
+                return _redis.PipelineExecute( commands );
+            }
+        }
 
-	bool KFRedisExecute::PipelineExecute( ListString& commands, MapString& value )
-	{
-		try
-		{
-			 return _redis.PipelineExecute( commands, value );
-		}
-		catch ( KFRedisException& )
-		{
-			// 已经断线, 重新连接
-			if ( _redis.IsDisconnected() )
-			{
-				_redis.ReConnect();
+        return false;
+    }
 
-				// 重新执行一遍
-				return _redis.PipelineExecute( commands, value );
-			}
-		}
-		
-		return false;
-	}
+    bool KFRedisExecute::PipelineExecute( ListString& commands, MapString& value )
+    {
+        try
+        {
+            return _redis.PipelineExecute( commands, value );
+        }
+        catch ( KFRedisException& )
+        {
+            // 已经断线, 重新连接
+            if ( _redis.IsDisconnected() )
+            {
+                _redis.ReConnect();
 
-	bool KFRedisExecute::PipelineExecute( ListString& commands, VectorString& value )
-	{
-		try
-		{
-			return _redis.PipelineExecute( commands, value );
-		}
-		catch ( KFRedisException& )
-		{
-			// 已经断线, 重新连接
-			if ( _redis.IsDisconnected() )
-			{
-				_redis.ReConnect();
+                // 重新执行一遍
+                return _redis.PipelineExecute( commands, value );
+            }
+        }
 
-				// 重新执行一遍
-				return _redis.PipelineExecute( commands, value );
-			}
-		}
+        return false;
+    }
 
-		return false;
-	}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool KFRedisExecute::VoidExecute( const char* format, ... )
-	{
-		static uint32 _value = 0;
+    bool KFRedisExecute::PipelineExecute( ListString& commands, VectorString& value )
+    {
+        try
+        {
+            return _redis.PipelineExecute( commands, value );
+        }
+        catch ( KFRedisException& )
+        {
+            // 已经断线, 重新连接
+            if ( _redis.IsDisconnected() )
+            {
+                _redis.ReConnect();
 
-		__FORMAT_BUFFER__;
-		return CommandExecute< uint32 >( _value, _buffer );
-	}
+                // 重新执行一遍
+                return _redis.PipelineExecute( commands, value );
+            }
+        }
 
-	bool KFRedisExecute::VoidExecute( const VectorString& fieldvalue, const char* format, ... )
-	{
-		static uint32 _value = 0;
+        return false;
+    }
 
-		__FORMAT_BUFFER__;
-		KFRedisFormat kfformat;
-		kfformat.Append( _buffer );
-		kfformat.Append( fieldvalue );
-		return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
-	}
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFRedisExecute::VoidExecute( const char* format, ... )
+    {
+        static uint32 _value = 0;
 
-	bool KFRedisExecute::VoidExecute( const MapString& fieldvalue, const char* format, ... )
-	{
-		static uint32 _value = 0;
+        __FORMAT_BUFFER__;
+        return CommandExecute< uint32 >( _value, _buffer );
+    }
 
-		__FORMAT_BUFFER__;
-		KFRedisFormat kfformat;
-		kfformat.Append( _buffer );
-		kfformat.Append( fieldvalue );
-		return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
-	}
+    bool KFRedisExecute::VoidExecute( const VectorString& fieldvalue, const char* format, ... )
+    {
+        static uint32 _value = 0;
 
-	bool KFRedisExecute::UInt32Execute( uint32& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
+        __FORMAT_BUFFER__;
+        KFRedisFormat kfformat;
+        kfformat.Append( _buffer );
+        kfformat.Append( fieldvalue );
+        return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
+    }
 
-		std::string strvalue = "";
-		bool result = CommandExecute< std::string >( strvalue, _buffer );
-		if ( result )
-		{
-			value = KFUtility::ToValue< uint32 >( strvalue );
-		}
+    bool KFRedisExecute::VoidExecute( const MapString& fieldvalue, const char* format, ... )
+    {
+        static uint32 _value = 0;
 
-		return result;
-	}
+        __FORMAT_BUFFER__;
+        KFRedisFormat kfformat;
+        kfformat.Append( _buffer );
+        kfformat.Append( fieldvalue );
+        return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
+    }
 
-	bool KFRedisExecute::UInt64Execute( uint64& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		return CommandExecute< uint64 >( value, _buffer );
-	}
+    bool KFRedisExecute::UInt32Execute( uint32& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
 
-	bool KFRedisExecute::StringExecute( std::string& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		return CommandExecute< std::string >( value, _buffer );
-	}
+        std::string strvalue = "";
+        bool result = CommandExecute< std::string >( strvalue, _buffer );
+        if ( result )
+        {
+            value = KFUtility::ToValue< uint32 >( strvalue );
+        }
 
-	bool KFRedisExecute::MapExecute( MapString& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		return CommandExecute< MapString >( value, _buffer );
-	}
+        return result;
+    }
 
-	bool KFRedisExecute::VectorExecute( VectorString& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		return CommandExecute< VectorString >( value, _buffer );
-	}
+    bool KFRedisExecute::UInt64Execute( uint64& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        return CommandExecute< uint64 >( value, _buffer );
+    }
 
-	bool KFRedisExecute::MapExecute( LesserMapString& value, const char* format, ... )
-	{
-		__FORMAT_BUFFER__;
-		return CommandExecute< LesserMapString >( value, _buffer );
-	}
+    bool KFRedisExecute::StringExecute( std::string& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        return CommandExecute< std::string >( value, _buffer );
+    }
+
+    bool KFRedisExecute::MapExecute( MapString& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        return CommandExecute< MapString >( value, _buffer );
+    }
+
+    bool KFRedisExecute::VectorExecute( VectorString& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        return CommandExecute< VectorString >( value, _buffer );
+    }
+
+    bool KFRedisExecute::MapExecute( LesserMapString& value, const char* format, ... )
+    {
+        __FORMAT_BUFFER__;
+        return CommandExecute< LesserMapString >( value, _buffer );
+    }
 
 }

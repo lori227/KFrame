@@ -21,66 +21,66 @@
 
 namespace KFrame
 {
-	class KFComponent;
-	class KFClothesModule : public KFClothesInterface
-	{
-	public:
-		KFClothesModule();
-		~KFClothesModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFComponent;
+    class KFClothesModule : public KFClothesInterface
+    {
+    public:
+        KFClothesModule();
+        ~KFClothesModule();
 
-		// 逻辑
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 逻辑
+        virtual void BeforeRun();
 
-	protected:
-		// 添加物品
-		void AddClothesAgentData( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line );
-	
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 衣服数量回调
-		void OnClothesCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 添加物品回调
-		void OnAddClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
-		
-		// 删除物品回调
-		void OnRemoveClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 添加物品
+        void AddClothesAgentData( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line );
 
-		// 初始化
-		void OnEnterStartClothesTimer( KFEntity* player );
-		void OnLeaveStopClothesTimer( KFEntity* player );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 衣服数量回调
+        void OnClothesCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
 
-		// 检查启动时间定时器
-		void CheckStartClothesTimer( KFEntity* player );
+        // 添加物品回调
+        void OnAddClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
 
-		// 删除超时的时装
-		void RemoveValidTimeoutClothes( KFEntity* player );
+        // 删除物品回调
+        void OnRemoveClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	protected:
-		// 检测时间道具
-		__KF_TIMER_FUNCTION__( OnTimerCheckClothesValidTime );
+        // 初始化
+        void OnEnterStartClothesTimer( KFEntity* player );
+        void OnLeaveStopClothesTimer( KFEntity* player );
 
-	protected:
-		// 处理穿戴时装
-		__KF_MESSAGE_FUNCTION__( HandleDressClothesReq );
+        // 检查启动时间定时器
+        void CheckStartClothesTimer( KFEntity* player );
 
-		// 设置模型的默认时装id
-		__KF_MESSAGE_FUNCTION__( HandleSetModelDefaultClothesReq );
+        // 删除超时的时装
+        void RemoveValidTimeoutClothes( KFEntity* player );
 
-		// 改变模型
-		__KF_MESSAGE_FUNCTION__( HandleChangeModelReq );
-	protected:
-		KFComponent* _kf_component;
-	};
+    protected:
+        // 检测时间道具
+        __KF_TIMER_FUNCTION__( OnTimerCheckClothesValidTime );
+
+    protected:
+        // 处理穿戴时装
+        __KF_MESSAGE_FUNCTION__( HandleDressClothesReq );
+
+        // 设置模型的默认时装id
+        __KF_MESSAGE_FUNCTION__( HandleSetModelDefaultClothesReq );
+
+        // 改变模型
+        __KF_MESSAGE_FUNCTION__( HandleChangeModelReq );
+    protected:
+        KFComponent* _kf_component;
+    };
 }
 
 

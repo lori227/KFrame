@@ -38,7 +38,7 @@ typedef unsigned long long uint64;
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 #ifndef __FUNCTION_LINE__
-#define __FUNCTION_LINE__ __FUNCTION__, __LINE__
+    #define __FUNCTION_LINE__ __FUNCTION__, __LINE__
 #endif
 
 #endif

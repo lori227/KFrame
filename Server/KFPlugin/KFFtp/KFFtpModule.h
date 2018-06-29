@@ -14,39 +14,39 @@
 
 namespace KFrame
 {
-	class KFFtpThread;
-	class KFFtpModule : public KFFtpInterface
-	{
-	public:
-		KFFtpModule();
-		~KFFtpModule();
-		
-		// 初始化
-		virtual void InitModule();
+    class KFFtpThread;
+    class KFFtpModule : public KFFtpInterface
+    {
+    public:
+        KFFtpModule();
+        ~KFFtpModule();
 
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
 
-		virtual void ShutDown();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        virtual void BeforeRun();
 
-	protected:
-		
-		// 执行
-		void Run();
+        virtual void ShutDown();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// 开启下载
-		virtual void StartDownload( uint32 ftpid, KFFtpFunction& function );
+    protected:
 
-	private:
-		
-		// ftp 线程
-		KFFtpThread* _kf_ftp_thread;
+        // 执行
+        void Run();
 
-		// 回调函数
-		KFFtpFunction _ftp_function;
+        // 开启下载
+        virtual void StartDownload( uint32 ftpid, KFFtpFunction& function );
 
-	};
+    private:
+
+        // ftp 线程
+        KFFtpThread* _kf_ftp_thread;
+
+        // 回调函数
+        KFFtpFunction _ftp_function;
+
+    };
 }
 
 

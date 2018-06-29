@@ -3,54 +3,54 @@
 
 namespace KFrame
 {
-	KFMatchGroup::KFMatchGroup()
-	{
-		_group_id = 0;
-	}
+    KFMatchGroup::KFMatchGroup()
+    {
+        _group_id = 0;
+    }
 
-	KFMatchGroup::~KFMatchGroup()
-	{
-		
-	}
+    KFMatchGroup::~KFMatchGroup()
+    {
 
-	uint32 KFMatchGroup::PlayerCount()
-	{
-		return _kf_player_list.Size();
-	}
+    }
 
-	bool KFMatchGroup::IsFull( const KFMatchSetting* kfsetting )
-	{
-		return PlayerCount() >= kfsetting->_max_group_player_count;
-	}
+    uint32 KFMatchGroup::PlayerCount()
+    {
+        return _kf_player_list.Size();
+    }
 
-	bool KFMatchGroup::HavePlayer( uint32 playerid )
-	{
-		auto kfplayer = _kf_player_list.Find( playerid );
-		return kfplayer != nullptr;
-	}
+    bool KFMatchGroup::IsFull( const KFMatchSetting* kfsetting )
+    {
+        return PlayerCount() >= kfsetting->_max_group_player_count;
+    }
 
-	void KFMatchGroup::LoadFrom( const KFMsg::PBMatchGroup* pbgroup )
-	{
-		_group_id = pbgroup->groupid();
+    bool KFMatchGroup::HavePlayer( uint32 playerid )
+    {
+        auto kfplayer = _kf_player_list.Find( playerid );
+        return kfplayer != nullptr;
+    }
 
-		for ( auto i = 0; i < pbgroup->pbplayer_size(); ++i )
-		{
-			auto pbplayer = &pbgroup->pbplayer( i );
-			auto kfplayer = KFMatchPlayer::Create( pbplayer );
+    void KFMatchGroup::LoadFrom( const KFMsg::PBMatchGroup* pbgroup )
+    {
+        _group_id = pbgroup->groupid();
 
-			_kf_player_list.Insert( kfplayer->GetID(), kfplayer );
-		}
-	}
+        for ( auto i = 0; i < pbgroup->pbplayer_size(); ++i )
+        {
+            auto pbplayer = &pbgroup->pbplayer( i );
+            auto kfplayer = KFMatchPlayer::Create( pbplayer );
 
-	bool KFMatchGroup::QueryMatchGroup( uint32 playerid, uint32 gameid )
-	{
-		auto kfplayer = _kf_player_list.Find( playerid );
-		if ( kfplayer == nullptr )
-		{
-			return false;
-		}
+            _kf_player_list.Insert( kfplayer->GetID(), kfplayer );
+        }
+    }
 
-		kfplayer->QueryMatchRoom( gameid, nullptr );
-		return true;
-	}
+    bool KFMatchGroup::QueryMatchGroup( uint32 playerid, uint32 gameid )
+    {
+        auto kfplayer = _kf_player_list.Find( playerid );
+        if ( kfplayer == nullptr )
+        {
+            return false;
+        }
+
+        kfplayer->QueryMatchRoom( gameid, nullptr );
+        return true;
+    }
 }

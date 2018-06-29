@@ -6,41 +6,41 @@
 
 namespace KFrame
 {
-	namespace KFTitleEnum
-	{
-		// 活动函数枚举
-		enum EConstDefine
-		{
+    namespace KFTitleEnum
+    {
+        // 活动函数枚举
+        enum EConstDefine
+        {
 
-		};
-	}
-	/////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	class KFTitleSetting
-	{
-	public:
+        };
+    }
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFTitleSetting
+    {
+    public:
 
-	};
+    };
 
 
-	class KFTitleConfig : public KFConfig, public ISingleton< KFTitleConfig >
-	{
-	public:
-		KFTitleConfig();
-		~KFTitleConfig();
+    class KFTitleConfig : public KFConfig, public ISingleton< KFTitleConfig >
+    {
+    public:
+        KFTitleConfig();
+        ~KFTitleConfig();
 
-		bool LoadConfig( const char* file );
+        bool LoadConfig( const char* file );
 
-	protected:
+    protected:
 
-	public:
-		// 称号列表
-		std::map< uint32, KFTitleSetting > _title_setting;
-	};
+    public:
+        // 称号列表
+        std::map< uint32, KFTitleSetting > _title_setting;
+    };
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto* _kf_title_config = KFTitleConfig::Instance();
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto* _kf_title_config = KFTitleConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

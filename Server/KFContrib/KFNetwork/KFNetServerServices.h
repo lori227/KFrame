@@ -6,32 +6,32 @@
 
 namespace KFrame
 {
-	class KFNetServerServices : public KFNetServices
-	{
-	public:
-		KFNetServerServices();
-		virtual ~KFNetServerServices();
+    class KFNetServerServices : public KFNetServices
+    {
+    public:
+        KFNetServerServices();
+        virtual ~KFNetServerServices();
 
-		// 初始化
-		virtual void InitServices( uint32 eventcount, uint32 queuesize );
+        // 初始化
+        virtual void InitServices( uint32 eventcount, uint32 queuesize );
 
-		// 开启服务
-		int32 StartServices( const KFNetSetting* kfsetting );
+        // 开启服务
+        int32 StartServices( const KFNetSetting* kfsetting );
 
-	protected:
-		// 处理新连接
-		static void OnConnectionCallBack( uv_stream_t* pstream, int status );
+    protected:
+        // 处理新连接
+        static void OnConnectionCallBack( uv_stream_t* pstream, int status );
 
-		// 创建托管id
-		uint32 MakeTrusteeID();
+        // 创建托管id
+        uint32 MakeTrusteeID();
 
-	protected:
-		// 托管连接id
-		uint32 _trustee_id;
+    protected:
+        // 托管连接id
+        uint32 _trustee_id;
 
-		// uv tcp
-		uv_tcp_t _uv_server;
-	};
+        // uv tcp
+        uv_tcp_t _uv_server;
+    };
 }
 
 #endif

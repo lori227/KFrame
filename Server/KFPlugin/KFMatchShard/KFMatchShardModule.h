@@ -20,64 +20,64 @@
 
 namespace KFrame
 {
-	class KFMatchShardModule : public KFMatchShardInterface
-	{
-	public:
-		KFMatchShardModule();
-		~KFMatchShardModule();
+    class KFMatchShardModule : public KFMatchShardInterface
+    {
+    public:
+        KFMatchShardModule();
+        ~KFMatchShardModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
-		
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 处理匹配请求
-		__KF_MESSAGE_FUNCTION__( HandleMatchToShardReq );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 查询匹配
-		__KF_MESSAGE_FUNCTION__( HandleQueryRoomToMatchShardReq );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 处理匹配请求
+        __KF_MESSAGE_FUNCTION__( HandleMatchToShardReq );
 
-		// 取消匹配
-		__KF_MESSAGE_FUNCTION__( HandleCancelMatchToShardReq );
+        // 查询匹配
+        __KF_MESSAGE_FUNCTION__( HandleQueryRoomToMatchShardReq );
 
-		// 取消匹配
-		__KF_MESSAGE_FUNCTION__( HandleCancelMatchToMatchShardAck );
-		
-		// 创建房间回馈
-		__KF_MESSAGE_FUNCTION__( HandleCreateRoomToMatchShardAck );
+        // 取消匹配
+        __KF_MESSAGE_FUNCTION__( HandleCancelMatchToShardReq );
 
-		// 战场开启
-		__KF_MESSAGE_FUNCTION__( HandleOpenRoomToMatchShardReq );
-		
-		// 战场房间正式开始
-		__KF_MESSAGE_FUNCTION__( HandleTellRoomStartToMatchShardReq );
-		
-		// 阵营加入房间
-		__KF_MESSAGE_FUNCTION__( HandleAddCampToMatchShardAck );
+        // 取消匹配
+        __KF_MESSAGE_FUNCTION__( HandleCancelMatchToMatchShardAck );
 
-		// 玩家离开战场
-		__KF_MESSAGE_FUNCTION__( HandlePlayerLeaveRoomToMatchShardReq );
+        // 创建房间回馈
+        __KF_MESSAGE_FUNCTION__( HandleCreateRoomToMatchShardAck );
 
-		// 战场关闭
-		__KF_MESSAGE_FUNCTION__( HandleTellRoomCloseToMatchShardReq );
+        // 战场开启
+        __KF_MESSAGE_FUNCTION__( HandleOpenRoomToMatchShardReq );
 
-	protected:
-		// Match Proxy连接成功
-		__KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverMatchProxy );
+        // 战场房间正式开始
+        __KF_MESSAGE_FUNCTION__( HandleTellRoomStartToMatchShardReq );
 
-	protected:
-		// 逻辑run
-		void Run();
+        // 阵营加入房间
+        __KF_MESSAGE_FUNCTION__( HandleAddCampToMatchShardAck );
 
-	private:
-		// 匹配模式列表
-		KFMap< uint32, uint32, KFMatchQueue > _kf_match_queue;
-	};
+        // 玩家离开战场
+        __KF_MESSAGE_FUNCTION__( HandlePlayerLeaveRoomToMatchShardReq );
+
+        // 战场关闭
+        __KF_MESSAGE_FUNCTION__( HandleTellRoomCloseToMatchShardReq );
+
+    protected:
+        // Match Proxy连接成功
+        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverMatchProxy );
+
+    protected:
+        // 逻辑run
+        void Run();
+
+    private:
+        // 匹配模式列表
+        KFMap< uint32, uint32, KFMatchQueue > _kf_match_queue;
+    };
 }
 
 

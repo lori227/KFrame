@@ -15,72 +15,72 @@
 
 namespace KFrame
 {
-	class KFHttpServer;
-	class KFHttpServerModule : public KFHttpServerInterface
-	{
-	public:
-		KFHttpServerModule();
-		~KFHttpServerModule();
-		
-		// 初始化
-		virtual void InitModule();
-		virtual void AfterLoad();
+    class KFHttpServer;
+    class KFHttpServerModule : public KFHttpServerInterface
+    {
+    public:
+        KFHttpServerModule();
+        ~KFHttpServerModule();
 
-		// 运行
-		virtual void BeforeRun();
+        // 初始化
+        virtual void InitModule();
+        virtual void AfterLoad();
 
-		// 关闭
-		virtual void ShutDown();
+        // 运行
+        virtual void BeforeRun();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
+        // 关闭
+        virtual void ShutDown();
 
-		// 卸载
-		virtual void UnRegisterFunction( const std::string& url );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-		// http完整路径
-		virtual const std::string& GetHttpUrl();
+        // 卸载
+        virtual void UnRegisterFunction( const std::string& url );
 
-		// 返回错误
-		virtual std::string SendResponseCode( uint32 code );
+        // http完整路径
+        virtual const std::string& GetHttpUrl();
 
-		// 获得错误码
-		virtual uint32 GetResponseCode( KFJson& json );
+        // 返回错误
+        virtual std::string SendResponseCode( uint32 code );
 
-		// 发送json
-		virtual std::string SendResponse( KFJson& json );
-		virtual std::string SendResponse( KFJson& json, uint32 code );
+        // 获得错误码
+        virtual uint32 GetResponseCode( KFJson& json );
 
-		// 创建签名
-		virtual void MakeSignature( KFJson& json );
+        // 发送json
+        virtual std::string SendResponse( KFJson& json );
+        virtual std::string SendResponse( KFJson& json, uint32 code );
 
-		// 验证签名
-		virtual bool VerifySignature( KFJson& json );
-	private:
-		void Run();
+        // 创建签名
+        virtual void MakeSignature( KFJson& json );
 
-		// 注册httphandle
-		virtual void RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function );
+        // 验证签名
+        virtual bool VerifySignature( KFJson& json );
+    private:
+        void Run();
 
-	private:
+        // 注册httphandle
+        virtual void RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function );
 
-		// 获得内网ip
-		std::string GetLocalIp();
+    private:
+
+        // 获得内网ip
+        std::string GetLocalIp();
 #if __KF_SYSTEM__ == __KF_WIN__
-		std::string GetWinLocalIp();
+        std::string GetWinLocalIp();
 #else
-		std::string GetLinuxLocalIp();
+        std::string GetLinuxLocalIp();
 #endif
 
-	private:
-		// http服务器
-		KFHttpServer* _http_server;
+    private:
+        // http服务器
+        KFHttpServer* _http_server;
 
-		// 完整路径
-		std::string _full_url;
+        // 完整路径
+        std::string _full_url;
 
-		KFHttpProt _http_port;
-	};
+        KFHttpProt _http_port;
+    };
 }
 
 

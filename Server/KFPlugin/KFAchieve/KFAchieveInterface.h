@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-	class KFAchieveInterface : public KFModule
-	{
-	public:
+    class KFAchieveInterface : public KFModule
+    {
+    public:
 
-	};
+    };
 }
 
 

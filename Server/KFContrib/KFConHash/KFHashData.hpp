@@ -1,11 +1,12 @@
 ﻿#ifndef __KF_HASH_DATA_H__
 #define __KF_HASH_DATA_H__
 
-#include "KFMemory/KFMemoryObject.h"
+#include "KFInclude.h"
+#include "KFMap.h"
 
 namespace KFrame
 {
-	__ST_CLASS__( KFHashNode )
+	class HashNode
 	{
 	public:
 		// 节点id
@@ -18,14 +19,14 @@ namespace KFrame
 		std::vector< uint32 > _virtual_list;
 	};
 
-	__ST_CLASS__( KFVirtualNode )
+	class VirtualHashNode
 	{
 	public:
 		// hash key
 		uint32 _hash_key;
 
 		// 真实节点的指针
-		KFHashNode* _hash_node;
+		HashNode* _hash_node;
 	};
 }
 

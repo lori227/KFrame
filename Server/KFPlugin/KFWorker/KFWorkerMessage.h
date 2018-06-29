@@ -5,20 +5,20 @@
 
 namespace KFrame
 {
-	__MT_CLASS__( KFWorkerMessage )
-	{
-	public:
-		KFWorkerMessage( );
-		~KFWorkerMessage();
+    class KFWorkerMessage
+    {
+    public:
+        KFWorkerMessage( );
+        ~KFWorkerMessage();
 
-		void CopyFrom( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        void CopyFrom( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
 
-	public:
-		KFGuid _kfguid;
-		uint32 _msgid;
-		char* _data;
-		uint32 _length;
-	};
+    public:
+        KFGuid _kfguid;
+        uint32 _msgid;
+        char* _data;
+        uint32 _length;
+    };
 }
 
 

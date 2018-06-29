@@ -5,35 +5,39 @@
 
 namespace KFrame
 {
-	class KFString : public KFData
-	{
-	public:
-		KFString();
-		virtual ~KFString();
-		
-		virtual void Reset();
+    class KFString : public KFData
+    {
+    public:
+        KFString();
+        virtual ~KFString();
 
-		// 是否有效
-		virtual bool IsValid();
+        virtual void Reset();
 
-		// 保存 赋值
-		virtual void CopyFrom( KFData* kfother );
-		virtual void SaveTo( KFData* kfother );
+        // 是否有效
+        virtual bool IsValid();
 
-		// 格式化成字串
-		virtual std::string ToString();
-		virtual void FromString( const std::string& value );
+        // 保存 赋值
+        virtual void CopyFrom( KFData* kfother );
+        virtual void SaveTo( KFData* kfother );
 
-	protected:
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual const std::string& GetString() { return _data; }
-		virtual void SetString( const std::string& value ) { _data = value; }
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 格式化成字串
+        virtual std::string ToString();
+        virtual void FromString( const std::string& value );
 
-	private:
-		// 属性
-		std::string _data;
-	};
+    protected:
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual const std::string& GetString() {
+            return _data;
+        }
+        virtual void SetString( const std::string& value ) {
+            _data = value;
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private:
+        // 属性
+        std::string _data;
+    };
 }
 
 

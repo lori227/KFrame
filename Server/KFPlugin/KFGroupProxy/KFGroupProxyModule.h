@@ -16,26 +16,26 @@
 
 namespace KFrame
 {
-	class KFGroupProxyModule : public KFGroupProxyInterface
-	{
-	public:
-		KFGroupProxyModule();
-		~KFGroupProxyModule();
+    class KFGroupProxyModule : public KFGroupProxyInterface
+    {
+    public:
+        KFGroupProxyModule();
+        ~KFGroupProxyModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 创建的队伍
-		__KF_MESSAGE_FUNCTION__( HandleCreateMatchGroupReq );
-	};
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 创建的队伍
+        __KF_MESSAGE_FUNCTION__( HandleCreateMatchGroupReq );
+    };
 }
 
 

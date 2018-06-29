@@ -4,18 +4,18 @@
 
 namespace KFrame
 {
-	class KFBattleProxyPlugin : public KFPlugin
-	{
-	public:
-		// 注册
-		virtual void Install();
+    class KFBattleProxyPlugin : public KFPlugin
+    {
+    public:
+        // 注册
+        virtual void Install();
 
-		// 卸载
-		virtual void UnInstall();
+        // 卸载
+        virtual void UnInstall();
 
-		// 加载
-		virtual void LoadModule();
-	};
+        // 加载
+        virtual void LoadModule();
+    };
 }
 
 

@@ -2,19 +2,19 @@
 
 namespace KFrame
 {
-	bool KFTaskConfig::LoadConfig( const char* file )
-	{
-		_task_setting.Clear();
+    bool KFTaskConfig::LoadConfig( const char* file )
+    {
+        _task_setting.Clear();
 
-		try
-		{
-			
-		}
-		catch ( ... )
-		{
-			return false;
-		}
+        try
+        {
 
-		return true;
-	}
+        }
+        catch ( ... )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

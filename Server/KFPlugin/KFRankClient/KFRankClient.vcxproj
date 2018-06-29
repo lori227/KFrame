@@ -12,12 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFRankClientConfig.cpp" />
     <ClCompile Include="KFRankClientModule.cpp" />
     <ClCompile Include="KFRankClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFRankClientConfig.h" />
     <ClInclude Include="KFRankClientInterface.h" />
     <ClInclude Include="KFRankClientModule.h" />
     <ClInclude Include="KFRankClientPlugin.h" />

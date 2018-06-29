@@ -10,103 +10,103 @@
 
 namespace KFrame
 {
-	KFNode::KFNode( KFXml* kfxml )
-	{
-		_kf_xml = kfxml;
-		_node = nullptr;
-	}
+    KFNode::KFNode( KFXml* kfxml )
+    {
+        _kf_xml = kfxml;
+        _node = nullptr;
+    }
 
-	KFNode::~KFNode()
-	{
-		_node = nullptr;
-	}
+    KFNode::~KFNode()
+    {
+        _node = nullptr;
+    }
 
-	bool KFNode::IsValid()
-	{
-		return _node != nullptr;
-	}
+    bool KFNode::IsValid()
+    {
+        return _node != nullptr;
+    }
 
-	void KFNode::NextNode()
-	{
-		auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>(_node);
-		_node = xmlnode->next_sibling();
-	}
+    void KFNode::NextNode()
+    {
+        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        _node = xmlnode->next_sibling();
+    }
 
-	KFNode KFNode::FindNode( const char* key )
-	{
-		auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>(_node);
-		
-		KFNode kfnode( _kf_xml );
-		kfnode._node = xmlnode->first_node( key );
-		return kfnode;
-	}
+    KFNode KFNode::FindNode( const char* key )
+    {
+        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-	bool KFNode::GetBoolen( const char* key, bool optional /* = false */ )
-	{
-		auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>(_node);
+        KFNode kfnode( _kf_xml );
+        kfnode._node = xmlnode->first_node( key );
+        return kfnode;
+    }
 
-		auto attribute = xmlnode->first_attribute( key );
-		if ( attribute == nullptr )
-		{
-			if ( !optional )
-			{
-				KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
-			}
-			return false;
-		}
+    bool KFNode::GetBoolen( const char* key, bool optional /* = false */ )
+    {
+        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-		return KFUtility::ToValue<uint32>( attribute->value() ) == 1;
-	}
+        auto attribute = xmlnode->first_attribute( key );
+        if ( attribute == nullptr )
+        {
+            if ( !optional )
+            {
+                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+            }
+            return false;
+        }
 
-	uint32 KFNode::GetUInt32( const char* key, bool optional /* = false */, uint32 defaultvalue /* = 0 */ )
-	{
-		auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>(_node);
+        return KFUtility::ToValue<uint32>( attribute->value() ) == 1;
+    }
 
-		auto attribute = xmlnode->first_attribute( key );
-		if ( attribute == nullptr )
-		{
-			if ( !optional )
-			{
-				KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
-			}
-			return defaultvalue;
-		}
+    uint32 KFNode::GetUInt32( const char* key, bool optional /* = false */, uint32 defaultvalue /* = 0 */ )
+    {
+        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-		return KFUtility::ToValue<uint32>( attribute->value() );
-	}
-	
-	std::string KFNode::GetString( const char* key, bool optional /* = false */ )
-	{
-		auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>(_node);
+        auto attribute = xmlnode->first_attribute( key );
+        if ( attribute == nullptr )
+        {
+            if ( !optional )
+            {
+                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+            }
+            return defaultvalue;
+        }
 
-		auto attribute = xmlnode->first_attribute( key );
-		if (attribute == nullptr )
-		{
-			if ( !optional )
-			{
-				KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
-			}
-			return _invalid_str;
-		}
+        return KFUtility::ToValue<uint32>( attribute->value() );
+    }
 
-		return attribute->value();
-	}
+    std::string KFNode::GetString( const char* key, bool optional /* = false */ )
+    {
+        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-	double KFNode::GetDouble( const char* key, bool optional /* = false */, double defaultvalue /* = 0.0f */ )
-	{
-		auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto attribute = xmlnode->first_attribute( key );
+        if ( attribute == nullptr )
+        {
+            if ( !optional )
+            {
+                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+            }
+            return _invalid_str;
+        }
 
-		auto attribute = xmlnode->first_attribute( key );
-		if ( attribute == nullptr )
-		{
-			if ( !optional )
-			{
-				KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
-			}
-			return defaultvalue;
-		}
+        return attribute->value();
+    }
 
-		return atof( attribute->value() );
-	}
+    double KFNode::GetDouble( const char* key, bool optional /* = false */, double defaultvalue /* = 0.0f */ )
+    {
+        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+
+        auto attribute = xmlnode->first_attribute( key );
+        if ( attribute == nullptr )
+        {
+            if ( !optional )
+            {
+                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+            }
+            return defaultvalue;
+        }
+
+        return atof( attribute->value() );
+    }
 
 }

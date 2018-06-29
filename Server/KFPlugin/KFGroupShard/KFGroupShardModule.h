@@ -21,79 +21,79 @@
 
 namespace KFrame
 {
-	class KFGroupShardModule : public KFGroupShardInterface
-	{
-	public:
-		KFGroupShardModule();
-		~KFGroupShardModule();
+    class KFGroupShardModule : public KFGroupShardInterface
+    {
+    public:
+        KFGroupShardModule();
+        ~KFGroupShardModule();
 
-		// 加载配置
-		virtual void InitModule();
+        // 加载配置
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 服务器发现客户端
-		__KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
-		
-		// 发现代理服务器
-		void OnServerDiscoverGroupProxy( uint32 proxyid );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 服务器发现客户端
+        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
-	protected:
-		// 创建队伍
-		__KF_MESSAGE_FUNCTION__( HandleCreateMatchGroupToShardReq );
+        // 发现代理服务器
+        void OnServerDiscoverGroupProxy( uint32 proxyid );
 
-		// 队员加入队伍
-		__KF_MESSAGE_FUNCTION__( HandleAddMatchGroupMemberReq );
+    protected:
+        // 创建队伍
+        __KF_MESSAGE_FUNCTION__( HandleCreateMatchGroupToShardReq );
 
-		// 申请加入队伍
-		__KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupReq );
+        // 队员加入队伍
+        __KF_MESSAGE_FUNCTION__( HandleAddMatchGroupMemberReq );
 
-		// 玩家离开队伍
-		__KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupReq );
+        // 申请加入队伍
+        __KF_MESSAGE_FUNCTION__( HandleApplyMatchGroupReq );
 
-		// 踢出玩家
-		__KF_MESSAGE_FUNCTION__( HandleKickMatchGroupReq );
+        // 玩家离开队伍
+        __KF_MESSAGE_FUNCTION__( HandleLeaveMatchGroupReq );
 
-		// 上线查询队伍
-		__KF_MESSAGE_FUNCTION__( HandleOnLineQueryGroupReq );
+        // 踢出玩家
+        __KF_MESSAGE_FUNCTION__( HandleKickMatchGroupReq );
 
-		// 离线更新队伍
-		__KF_MESSAGE_FUNCTION__( HandleOffLineUpdateGroupReq );
+        // 上线查询队伍
+        __KF_MESSAGE_FUNCTION__( HandleOnLineQueryGroupReq );
 
-		// 更新基础属性
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupMemberReq );
+        // 离线更新队伍
+        __KF_MESSAGE_FUNCTION__( HandleOffLineUpdateGroupReq );
 
-		// 更新组队模式
-		__KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchReq );
+        // 更新基础属性
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMemberReq );
 
-	protected:
-		// 发送消息给队员
-		bool SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message );
-		void SendMessageToGroup( KFData* kfmemberrecord, uint32 memberid, uint32 msgid, ::google::protobuf::Message* message );
+        // 更新组队模式
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchReq );
 
-		// 队伍选择新队长
-		KFData* ChooseNewGroupCaptain( KFData* kfmemberrecord );
+    protected:
+        // 发送消息给队员
+        bool SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message );
+        void SendMessageToGroup( KFData* kfmemberrecord, uint32 memberid, uint32 msgid, ::google::protobuf::Message* message );
 
-		// 处理选择队长
-		bool ProcessChooseGroupCaptain( KFEntity* kfgroup );
+        // 队伍选择新队长
+        KFData* ChooseNewGroupCaptain( KFData* kfmemberrecord );
 
-		// 删除队伍
-		void ProcessRemoveGroup( uint64 groupid );
-		
-		// 更新基础属性
-		void SendUpdateMemberToGroup( uint64 groupid, KFData* kfmemberrecord, KFData* kfmember, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
-	
-		// 发送队伍信息给队员
-		void SendGroupDataToMember( KFData* kfmemberrecord, KFData* kfnewmember, KFEntity* kfgroup, bool newadd );
-	private:
-		// 队伍组件
-		KFComponent* _kf_component;
-	};
+        // 处理选择队长
+        bool ProcessChooseGroupCaptain( KFEntity* kfgroup );
+
+        // 删除队伍
+        void ProcessRemoveGroup( uint64 groupid );
+
+        // 更新基础属性
+        void SendUpdateMemberToGroup( uint64 groupid, KFData* kfmemberrecord, KFData* kfmember, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
+
+        // 发送队伍信息给队员
+        void SendGroupDataToMember( KFData* kfmemberrecord, KFData* kfnewmember, KFEntity* kfgroup, bool newadd );
+    private:
+        // 队伍组件
+        KFComponent* _kf_component;
+    };
 }
 
 

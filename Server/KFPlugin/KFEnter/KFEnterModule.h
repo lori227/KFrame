@@ -17,25 +17,25 @@
 
 namespace KFrame
 {
-	class KFEntity;
-	class KFEnterModule : public KFEnterInterface
-	{
-	public:
-		KFEnterModule();
-		~KFEnterModule();
-		
-		// 加载配置
-		virtual void InitModule();
-		virtual void BeforeRun();
-		virtual void BeforeShut();
-		
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
+    class KFEntity;
+    class KFEnterModule : public KFEnterInterface
+    {
+    public:
+        KFEnterModule();
+        ~KFEnterModule();
 
-		// 进入游戏世界
-		void EnterGameWorld( KFEntity* player );
-	};
+        // 加载配置
+        virtual void InitModule();
+        virtual void BeforeRun();
+        virtual void BeforeShut();
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+
+        // 进入游戏世界
+        void EnterGameWorld( KFEntity* player );
+    };
 }
 
 

@@ -4,112 +4,112 @@
 
 namespace KFrame
 {
-	KFRouteProxyModule::KFRouteProxyModule()
-	{
-	}
+    KFRouteProxyModule::KFRouteProxyModule()
+    {
+    }
 
-	KFRouteProxyModule::~KFRouteProxyModule()
-	{
-	}
+    KFRouteProxyModule::~KFRouteProxyModule()
+    {
+    }
 
-	void KFRouteProxyModule::InitModule()
-	{
-		///////////////////////////////////////////////////////////////////////////////
-	}
+    void KFRouteProxyModule::InitModule()
+    {
+        ///////////////////////////////////////////////////////////////////////////////
+    }
 
-	void KFRouteProxyModule::BeforeRun()
-	{
-		_kf_tcp_client->RegisterConnectionFunction( this, &KFRouteProxyModule::OnClientConnectionRouteShard );
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		__REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &KFRouteProxyModule::HandleRegisterZoneReq );
-		__REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ, &KFRouteProxyModule::HandleTransmitRouteZoneMessageReq );
-		__REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK, &KFRouteProxyModule::HandleTransmitRouteProxyMessageAck );
-		
-	}
+    void KFRouteProxyModule::BeforeRun()
+    {
+        _kf_tcp_client->RegisterConnectionFunction( this, &KFRouteProxyModule::OnClientConnectionRouteShard );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &KFRouteProxyModule::HandleRegisterZoneReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ, &KFRouteProxyModule::HandleTransmitRouteZoneMessageReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK, &KFRouteProxyModule::HandleTransmitRouteProxyMessageAck );
 
-	void KFRouteProxyModule::BeforeShut()
-	{
-		_kf_tcp_client->UnRegisterConnectionFunction( this );
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		__UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ );
-		__UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ );
-		__UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK );
-	}
+    }
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	__KF_CLIENT_CONNECT_FUNCTION__( KFRouteProxyModule::OnClientConnectionRouteShard )
-	{
-		if ( servertype != KFField::_shard )
-		{
-			return;
-		}
-		
-		// 把所有的分区信息注册到route shard
-		KFMsg::S2SRegisterRouteProxyReq req;
-		for ( auto iter : _kf_zone_manage->_kf_route_zone._objects )
-		{
-			auto zonedata = iter.second;
+    void KFRouteProxyModule::BeforeShut()
+    {
+        _kf_tcp_client->UnRegisterConnectionFunction( this );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK );
+    }
 
-			auto pbzonedata = req.add_zonedata();
-			pbzonedata->set_zoneid( zonedata->_zone_id );
-			pbzonedata->set_serverid( zonedata->_server_id );
-		}
-		_kf_cluster_proxy->SendMessageToShard( serverid, KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
-	}
-	
-	__KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRegisterZoneReq )
-	{
-		__PROTO_PARSE__( KFMsg::S2SRegisterRouteZoneReq );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_CLIENT_CONNECT_FUNCTION__( KFRouteProxyModule::OnClientConnectionRouteShard )
+    {
+        if ( servertype != KFField::_shard )
+        {
+            return;
+        }
 
-		auto handleid = __KF_HEAD_ID__( kfguid );
-		auto zonedata = &kfmsg.zonedata();
+        // 把所有的分区信息注册到route shard
+        KFMsg::S2SRegisterRouteProxyReq req;
+        for ( auto iter : _kf_zone_manage->_kf_route_zone._objects )
+        {
+            auto zonedata = iter.second;
 
-		// 注册到管理器
-		_kf_zone_manage->AddRouteZone( zonedata->zoneid(), zonedata->serverid(), handleid );
+            auto pbzonedata = req.add_zonedata();
+            pbzonedata->set_zoneid( zonedata->_zone_id );
+            pbzonedata->set_serverid( zonedata->_server_id );
+        }
+        _kf_cluster_proxy->SendMessageToShard( serverid, KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
+    }
 
-		KFLogger::LogLogic( KFLogger::Info, "[%s] register route server[%u=>%u]!",
-			__FUNCTION__, zonedata->serverid(), handleid );
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRegisterZoneReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SRegisterRouteZoneReq );
 
-		// 通知route shard
-		KFMsg::S2SRegisterRouteProxyReq req;
-		auto addzonedata = req.add_zonedata();
-		addzonedata->CopyFrom( *zonedata );
-		_kf_cluster_proxy->SendMessageToShard( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
-	}
-	
-	__KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteZoneMessageReq )
-	{
-		__PROTO_PARSE__( KFMsg::S2STransmitRouteZoneMessageReq );
+        auto handleid = __KF_HEAD_ID__( kfguid );
+        auto zonedata = &kfmsg.zonedata();
 
-		// 选择一个client 发送消息
-		auto handleid = __KF_HEAD_ID__( kfguid );
-		uint32 shardserverid = _kf_cluster_proxy->SelectClusterShard( handleid );
-		if ( shardserverid == _invalid_int )
-		{
-			return KFLogger::LogLogic( KFLogger::Error, "[%s] can not select route shard!", 
-				__FUNCTION__ );
-		}
-		
-		KFMsg::S2STransmitRouteProxyMessageReq req;
-		req.mutable_transmitdata()->CopyFrom( kfmsg.transmitdata() );
-		_kf_cluster_proxy->SendMessageToShard( shardserverid, KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ, &req );
-	}
+        // 注册到管理器
+        _kf_zone_manage->AddRouteZone( zonedata->zoneid(), zonedata->serverid(), handleid );
 
-	__KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteProxyMessageAck )
-	{
-		__PROTO_PARSE__( KFMsg::S2STransmitRouteProxyMessageAck );
+        KFLogger::LogLogic( KFLogger::Info, "[%s] register route server[%u=>%u]!",
+                            __FUNCTION__, zonedata->serverid(), handleid );
 
-		auto transmitdata = &kfmsg.transmitdata();
-		auto kfroutezone = _kf_zone_manage->FindRouteZone( transmitdata->serverid() );
-		if ( kfroutezone == nullptr )
-		{
-			return KFLogger::LogLogic( KFLogger::Error, "[%s] can't route server[%u] !",
-				__FUNCTION__, transmitdata->serverid() );
-		}
+        // 通知route shard
+        KFMsg::S2SRegisterRouteProxyReq req;
+        auto addzonedata = req.add_zonedata();
+        addzonedata->CopyFrom( *zonedata );
+        _kf_cluster_proxy->SendMessageToShard( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
+    }
 
-		KFMsg::S2STransmitRouteZoneMessageAck ack;
-		ack.mutable_transmitdata()->CopyFrom( *transmitdata );
-		_kf_cluster_proxy->SendMessageToClient( kfroutezone->_handle_id, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
-	}
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteZoneMessageReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransmitRouteZoneMessageReq );
+
+        // 选择一个client 发送消息
+        auto handleid = __KF_HEAD_ID__( kfguid );
+        uint32 shardserverid = _kf_cluster_proxy->SelectClusterShard( handleid );
+        if ( shardserverid == _invalid_int )
+        {
+            return KFLogger::LogLogic( KFLogger::Error, "[%s] can not select route shard!",
+                                       __FUNCTION__ );
+        }
+
+        KFMsg::S2STransmitRouteProxyMessageReq req;
+        req.mutable_transmitdata()->CopyFrom( kfmsg.transmitdata() );
+        _kf_cluster_proxy->SendMessageToShard( shardserverid, KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteProxyMessageAck )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransmitRouteProxyMessageAck );
+
+        auto transmitdata = &kfmsg.transmitdata();
+        auto kfroutezone = _kf_zone_manage->FindRouteZone( transmitdata->serverid() );
+        if ( kfroutezone == nullptr )
+        {
+            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't route server[%u] !",
+                                       __FUNCTION__, transmitdata->serverid() );
+        }
+
+        KFMsg::S2STransmitRouteZoneMessageAck ack;
+        ack.mutable_transmitdata()->CopyFrom( *transmitdata );
+        _kf_cluster_proxy->SendMessageToClient( kfroutezone->_handle_id, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
+    }
 }

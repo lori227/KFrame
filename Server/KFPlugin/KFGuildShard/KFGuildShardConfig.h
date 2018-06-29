@@ -6,24 +6,24 @@
 
 namespace KFrame
 {
-	class KFGuildShardConfig : public KFConfig, public KFSingleton< KFGuildShardConfig >
-	{
-	public:
-		KFGuildShardConfig();
-		~KFGuildShardConfig();
+    class KFGuildShardConfig : public KFConfig, public KFSingleton< KFGuildShardConfig >
+    {
+    public:
+        KFGuildShardConfig();
+        ~KFGuildShardConfig();
 
-		bool LoadConfig( const char* file );
+        bool LoadConfig( const char* file );
 
-	public:
+    public:
 
-		//每日清除被敬酒信息的时间配置
-		uint32 _clean_hour;
-		uint32 _clean_minute;
-	};
+        //每日清除被敬酒信息的时间配置
+        uint32 _clean_hour;
+        uint32 _clean_minute;
+    };
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_public_shard_config = KFGuildShardConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_public_shard_config = KFGuildShardConfig::Instance();
 }
 
 #endif

@@ -17,41 +17,41 @@
 
 namespace KFrame
 {
-	class KFDisplayModule : public KFDisplayInterface
-	{
-	public:
-		KFDisplayModule();
-		~KFDisplayModule();
+    class KFDisplayModule : public KFDisplayInterface
+    {
+    public:
+        KFDisplayModule();
+        ~KFDisplayModule();
 
-		// 初始化
-		virtual void InitModule();
+        // 初始化
+        virtual void InitModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 初始化
+        virtual void BeforeRun();
 
-		// 关闭
-		virtual void BeforeShut();
+        // 关闭
+        virtual void BeforeShut();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	private:
-		// Gate/Proxy ==> Client
-		virtual void SendToClient( uint32 playerid, uint32 result, ListString& params );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    private:
+        // Gate/Proxy ==> Client
+        virtual void SendToClient( uint32 playerid, uint32 result, ListString& params );
 
-		// Game ==> Client
-		virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
+        // Game ==> Client
+        virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
 
-		// Game ==> Client
-		virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );
+        // Game ==> Client
+        virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );
 
-		// Cluster ==> Game
-		virtual void SendToGame( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
+        // Cluster ==> Game
+        virtual void SendToGame( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
 
-		// Game ==> Route ==> Game
-		virtual void SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
-		virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );
+        // Game ==> Route ==> Game
+        virtual void SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
+        virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );
 
-	};
+    };
 }
 
 

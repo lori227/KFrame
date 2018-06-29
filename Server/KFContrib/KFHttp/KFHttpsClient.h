@@ -7,22 +7,22 @@
 
 namespace KFrame
 {
-	class KFHttpsClient : public KFHttp
-	{
-	public:
-		KFHttpsClient();
-		virtual ~KFHttpsClient();
+    class KFHttpsClient : public KFHttp
+    {
+    public:
+        KFHttpsClient();
+        virtual ~KFHttpsClient();
 
-		static void Initialize();
-		//////////////////////////////////////////////////////////////////////////////////////
-	protected:
-		virtual Poco::Net::HTTPClientSession* GetHttpSession();
+        static void Initialize();
+        //////////////////////////////////////////////////////////////////////////////////////
+    protected:
+        virtual Poco::Net::HTTPClientSession* GetHttpSession();
 
-	protected:
-	
-		static Poco::Net::Context::Ptr _context;
-		Poco::Net::HTTPSClientSession* _https_session;
-	};
+    protected:
+
+        static Poco::Net::Context::Ptr _context;
+        Poco::Net::HTTPSClientSession* _https_session;
+    };
 }
 
 

@@ -8,34 +8,34 @@
 
 namespace KFrame
 {
-	class KFDataConfig : public KFSingleton< KFDataConfig >
-	{
-	public:
-		KFDataConfig();
-		~KFDataConfig();
+    class KFDataConfig : public KFSingleton< KFDataConfig >
+    {
+    public:
+        KFDataConfig();
+        ~KFDataConfig();
 
-		// 获得静态类配置
-		const KFClassSetting* GetClassSetting( const std::string& classname );
+        // 获得静态类配置
+        const KFClassSetting* GetClassSetting( const std::string& classname ) const;
 
-		// 获得活动配置
-		const KFDataSetting* GetDataSetting( const std::string& classname, const std::string& propertyname );
+        // 获得活动配置
+        const KFDataSetting* GetDataSetting( const std::string& classname, const std::string& propertyname ) const;
 
-		// 加载
-		bool LoadConfig( const char* file );
+        // 加载
+        bool LoadConfig( const char* file );
 
-	protected:
+    protected:
 
-		// 添加
-		void AddDataSetting( const std::string& classname, KFDataSetting& kfdatasetting );
+        // 添加
+        void AddDataSetting( const std::string& classname, KFDataSetting& kfdatasetting );
 
-	public:
-		// 静态类列表
-		KFMap< std::string, const std::string&, KFClassSetting > _class_setting;
-	};
+    public:
+        // 静态类列表
+        KFMap< std::string, const std::string&, KFClassSetting > _class_setting;
+    };
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	static auto _kf_data_config = KFDataConfig::Instance();
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_data_config = KFDataConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

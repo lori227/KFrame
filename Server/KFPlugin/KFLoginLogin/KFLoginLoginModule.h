@@ -21,44 +21,44 @@
 
 namespace KFrame
 {
-	class KFLoginLoginModule : public KFLoginLoginInterface
-	{
-	public:
-		KFLoginLoginModule();
-		~KFLoginLoginModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFLoginLoginModule : public KFLoginLoginInterface
+    {
+    public:
+        KFLoginLoginModule();
+        ~KFLoginLoginModule();
 
-		// 初始化
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		
-		// 登录验证请求
-		__KF_MESSAGE_FUNCTION__ ( HandleLoginVerifyReq );
+        // 初始化
+        virtual void BeforeRun();
 
-		// 登录验证结果
-		__KF_MESSAGE_FUNCTION__ ( HandleLoginVerifyAck );
-		
-		// 查询角色playerid
-		__KF_MESSAGE_FUNCTION__ ( HandleLoginQueryPlayerIdAck );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
 
-	protected:
-		// 连接丢失
-		__KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
+        // 登录验证请求
+        __KF_MESSAGE_FUNCTION__ ( HandleLoginVerifyReq );
 
-	private:
-		// 平台验证回调
-		void OnHttpPlatformLoginVerifyCallBack( std::string& senddata, std::string& recvdata );
+        // 登录验证结果
+        __KF_MESSAGE_FUNCTION__ ( HandleLoginVerifyAck );
 
-		// 发送登录验证结果消息
-		void SendLoginVerifyMessage( uint32 gateid, uint32 result, uint32 accountid, uint32 playerid, const std::string& token, const std::string& ip, uint32 port );
-	};
+        // 查询角色playerid
+        __KF_MESSAGE_FUNCTION__ ( HandleLoginQueryPlayerIdAck );
+
+    protected:
+        // 连接丢失
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
+
+    private:
+        // 平台验证回调
+        void OnHttpPlatformLoginVerifyCallBack( std::string& senddata, std::string& recvdata );
+
+        // 发送登录验证结果消息
+        void SendLoginVerifyMessage( uint32 gateid, uint32 result, uint32 accountid, uint32 playerid, const std::string& token, const std::string& ip, uint32 port );
+    };
 }
 
 

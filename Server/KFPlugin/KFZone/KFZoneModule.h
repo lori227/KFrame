@@ -16,32 +16,32 @@
 
 namespace KFrame
 {
-	class KFZoneModule : public KFZoneInterface
-	{
-	public:
-		KFZoneModule();
-		~KFZoneModule();
+    class KFZoneModule : public KFZoneInterface
+    {
+    public:
+        KFZoneModule();
+        ~KFZoneModule();
 
-		// 初始化
-		virtual void InitModule();
-		
-		virtual void AfterLoad();
+        // 初始化
+        virtual void InitModule();
 
-		// 关闭
-		virtual void BeforeShut();
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		// 游戏分区id
-		virtual const KFZone* GetZone() const;
+        virtual void AfterLoad();
 
-		// 判断游戏分区id
-		virtual bool IsServerSameZone( uint32 serverid );
-		virtual bool IsPlayerSameZone( uint32 playerid );
+        // 关闭
+        virtual void BeforeShut();
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // 游戏分区id
+        virtual const KFZone* GetZone() const;
 
-		// 获得zoneid
-		virtual uint32 GetServerZoneId( uint32 serverid );
-		virtual uint32 GetPlayerZoneId( uint32 playerid );
-	};
+        // 判断游戏分区id
+        virtual bool IsServerSameZone( uint32 serverid );
+        virtual bool IsPlayerSameZone( uint32 playerid );
+
+        // 获得zoneid
+        virtual uint32 GetServerZoneId( uint32 serverid );
+        virtual uint32 GetPlayerZoneId( uint32 playerid );
+    };
 }
 
 #endif

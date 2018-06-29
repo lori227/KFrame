@@ -5,16 +5,16 @@
 
 namespace KFrame
 {
-	class KFConvert
-	{
-	public:
+    class KFConvert
+    {
+    public:
 
-		static std::string ToUTF8( const std::string& source );
-		static std::string ToAscii( const std::string& source );
+        static std::string ToUTF8( const std::string& source );
+        static std::string ToAscii( const std::string& source );
 
-	protected:
-		static std::string ToCovert( void* iconvhandle, const std::string& source );
-	};
+    protected:
+        static std::string ToCovert( void* iconvhandle, const std::string& source );
+    };
 }
 
 
