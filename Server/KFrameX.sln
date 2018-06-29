@@ -167,6 +167,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRelationShard", "KFPlugin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFStartup", "KFStartup\KFStartup.vcxproj", "{5991D4A1-8E08-4037-B389-459AA7CB274B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFCompound", "KFPlugin\KFCompound\KFCompound.vcxproj", "{06622B1B-7345-47E6-B812-22CC1A174BCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -677,6 +679,14 @@ Global
 		{5991D4A1-8E08-4037-B389-459AA7CB274B}.Release|x64.Build.0 = Release|x64
 		{5991D4A1-8E08-4037-B389-459AA7CB274B}.Release|x86.ActiveCfg = Release|Win32
 		{5991D4A1-8E08-4037-B389-459AA7CB274B}.Release|x86.Build.0 = Release|Win32
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Debug|x64.ActiveCfg = Debug|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Debug|x64.Build.0 = Debug|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Debug|x86.ActiveCfg = Debug|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Release|Any CPU.ActiveCfg = Release|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Release|x64.ActiveCfg = Release|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Release|x64.Build.0 = Release|x64
+		{06622B1B-7345-47E6-B812-22CC1A174BCC}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -761,9 +771,10 @@ Global
 		{E00EA638-FC98-4E10-9F4E-98074DB50013} = {00B75F7E-1C7A-4544-BDC4-A7C5E9964824}
 		{3F3929D9-B7A1-434A-ADCD-CE62125E67EB} = {00B75F7E-1C7A-4544-BDC4-A7C5E9964824}
 		{4246B02F-697D-46AF-8BF8-9F76BACF03F0} = {00B75F7E-1C7A-4544-BDC4-A7C5E9964824}
+		{06622B1B-7345-47E6-B812-22CC1A174BCC} = {CC34363F-FF7F-4907-93F1-610CB368B7B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal
