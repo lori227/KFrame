@@ -8,6 +8,7 @@
 	<!--MaxQueue 最大队列数量-->
 	<!--IdleTime 空闲时间-->
 
+	<!-- http服务器配置 -->
 	<HttpServer>
 		<!-- 认证服务器 -->
 		<Server AppName="auth" AppType="auth" Type="1" Port="7776" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
@@ -22,10 +23,16 @@
 		<Server AppName="deploy" AppType="server" Type="0" Port="9999" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>	
 	</HttpServer>
 
-	<!-- tcp服务器 -->
+	<!-- tcp服务器配置 -->
 	<TcpServer>
-		<!-- 通用服务器配置 -->
+		<!-- 通用服务器 -->
 		<Server AppName="*" AppType="*" InteranetIp="127.0.0.1" Type="2" Port="0" MaxQueue="20000"/>
+
+		<!-- deploy server 服务器-->
+		<Server AppName="deploy" AppType="master" InteranetIp="127.0.0.1" Type="0" Port="9999" MaxQueue="20000"/>
+
+		<!-- deploy agent 服务器-->
+		<Server AppName="deploy" AppType="agent" InteranetIp="127.0.0.1" Type="0" Port="9998" MaxQueue="20000"/>
 
 		<!-- master服务器 -->
 		<Server AppName="*" AppType="master" InteranetIp="127.0.0.1" Type="1" Port="0" MaxQueue="20000"/>
