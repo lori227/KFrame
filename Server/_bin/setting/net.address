@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+
+	<!--Port 端口-->
+	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
+	<!-- tcp服务器配置 -->
+	<TcpServer Port="10000">
+		<!-- 部署服务器 -->
+		<Server AppName="deploy" AppType="server" AppId="1" Ip="127.0.0.1" Type="0" Port="10000"/>
+
+		<!-- data服务器 -->
+		<Server AppName="data" AppType="master" AppId="1" Ip="127.0.0.1" Type="0" Port="10001"/>
+
+		<!-- public服务器 -->
+		<Server AppName="public" AppType="master" AppId="2" Ip="127.0.0.1" Type="0" Port="10002"/>
+
+		<!-- route服务器 -->
+		<Server AppName="route" AppType="master" AppId="3" Ip="127.0.0.1" Type="0" Port="10003"/>
+
+		<!-- match服务器 -->
+		<Server AppName="match" AppType="master" AppId="4" Ip="127.0.0.1" Type="0" Port="10004"/>	
+		
+		<!-- battle服务器 -->
+		<Server AppName="battle" AppType="master" AppId="5" Ip="127.0.0.1" Type="0" Port="10005"/>
+
+		<!-- mail服务器 -->
+		<Server AppName="mail" AppType="master" AppId="6" Ip="127.0.0.1" Type="0" Port="10006"/>
+
+		<!-- relation服务器 -->
+		<Server AppName="relation" AppType="master" AppId="7" Ip="127.0.0.1" Type="0" Port="10007"/>
+
+		<!-- group服务器 -->
+		<Server AppName="group" AppType="master" AppId="8" Ip="127.0.0.1" Type="0" Port="10008"/>
+
+		<!-- zone master 服务器 -->
+		<Server AppName="zone" AppType="master" AppId="101" Ip="127.0.0.1" Type="1" Port="0"/>
+		<Server AppName="zone" AppType="master" AppId="102" Ip="127.0.0.1" Type="1" Port="0"/>
+	</TcpServer>
+
+	<HttpServer>
+		<Server AppType="platform" Address="http://127.0.0.1:8011/" />
+		<Server AppType="platform" Address="http://127.0.0.1:8012/" />
+	</HttpServer>
+
+</Config>
+

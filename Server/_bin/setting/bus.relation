@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<Bus>
+		<Server AppName="*" AppType="master" AppId="0" ConnectName="deploy" ConnectType="server" ConnectId="0"/>	
+
+		<Server AppName="data" AppType="proxy" AppId="0" ConnectName="data" ConnectType="master" ConnectId="0"/>
+		<Server AppName="data" AppType="shard" AppId="0" ConnectName="data" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="public" AppType="proxy" AppId="0" ConnectName="public" ConnectType="master" ConnectId="0"/>
+		<Server AppName="public" AppType="shard" AppId="0" ConnectName="public" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="route" AppType="proxy" AppId="0" ConnectName="route" ConnectType="master" ConnectId="0"/>
+		<Server AppName="route" AppType="shard" AppId="0" ConnectName="route" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="match" AppType="proxy" AppId="0" ConnectName="match" ConnectType="master" ConnectId="0"/>
+		<Server AppName="match" AppType="shard" AppId="0" ConnectName="match" ConnectType="master" ConnectId="0"/>
+		<Server AppName="match" AppType="shard" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="battle" AppType="proxy" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
+		<Server AppName="battle" AppType="shard" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
+		<Server AppName="battle" AppType="shard" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="mail" AppType="proxy" AppId="0" ConnectName="mail" ConnectType="master" ConnectId="0"/>
+		<Server AppName="mail" AppType="shard" AppId="0" ConnectName="mail" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="relation" AppType="proxy" AppId="0" ConnectName="relation" ConnectType="master" ConnectId="0"/>
+		<Server AppName="relation" AppType="proxy" AppId="0" ConnectName="relation" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="group" AppType="proxy" AppId="0" ConnectName="group" ConnectType="master" ConnectId="0"/>
+		<Server AppName="group" AppType="proxy" AppId="0" ConnectName="group" ConnectType="master" ConnectId="0"/>
+
+		<Server AppName="zone" AppType="gate" AppId="0" ConnectName="zone" ConnectType="master" ConnectId="100"/>
+		<Server AppName="zone" AppType="gate" AppId="0" ConnectName="zone" ConnectType="login" ConnectId="0"/>
+
+		<Server AppName="zone" AppType="login" AppId="0" ConnectName="zone" ConnectType="master" ConnectId="100"/>
+		<Server AppName="zone" AppType="login" AppId="0" ConnectName="zone" ConnectType="world" ConnectId="0"/>
+
+		<Server AppName="zone" AppType="proxy" AppId="0" ConnectName="zone" ConnectType="master" ConnectId="100"/>
+		<Server AppName="zone" AppType="proxy" AppId="0" ConnectName="zone" ConnectType="game" ConnectId="0"/>
+
+		<Server AppName="zone" AppType="game" AppId="0" ConnectName="*" ConnectType="master" ConnectId="100"/>
+		<Server AppName="zone" AppType="game" AppId="0" ConnectName="zone" ConnectType="world" ConnectId="0"/>
+
+		<Server AppName="zone" AppType="world" AppId="0" ConnectName="zone" ConnectType="master" ConnectId="100"/>
+	</Bus>	
+</Config>
+
