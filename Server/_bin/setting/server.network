@@ -26,7 +26,7 @@
 	<!-- tcp服务器配置 -->
 	<TcpServer>
 		<!-- 通用服务器 -->
-		<Server AppName="*" AppType="*" InteranetIp="127.0.0.1" Type="2" Port="0" MaxQueue="20000"/>
+		<Server AppName="*" AppType="*" InteranetIp="127.0.0.1" Type="2" Port="12000" MaxQueue="20000"/>
 
 		<!-- master服务器 -->
 		<Server AppName="*" AppType="master" InteranetIp="127.0.0.1" MaxQueue="20000"/>
@@ -35,10 +35,10 @@
 		<Server AppName="deploy" AppType="server" InteranetIp="127.0.0.1" MaxQueue="20000"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="gate" InteranetIp="0.0.0.0" MaxQueue="200"/>
+		<Server AppName="zone" AppType="gate" InteranetIp="0.0.0.0" Type="2" Port="12000" MaxQueue="200"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="proxy" InteranetIp="0.0.0.0" MaxQueue="200"/>	
+		<Server AppName="zone" AppType="proxy" InteranetIp="0.0.0.0" Type="2" Port="12000" MaxQueue="200"/>	
 	</TcpServer>
 </Config>
 

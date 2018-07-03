@@ -4,7 +4,7 @@
 	<!--Port 端口-->
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
 	<!-- tcp服务器配置 -->
-	<TcpServer Port="10000">
+	<TcpServer>
 		<!-- 部署服务器 -->
 		<Server AppName="deploy" AppType="server" AppId="1" Ip="127.0.0.1" Type="0" Port="10000"/>
 
@@ -33,8 +33,8 @@
 		<Server AppName="group" AppType="master" AppId="8" Ip="127.0.0.1" Type="0" Port="10008"/>
 
 		<!-- zone master 服务器 -->
-		<Server AppName="zone" AppType="master" AppId="101" Ip="127.0.0.1" Type="1" Port="0"/>
-		<Server AppName="zone" AppType="master" AppId="102" Ip="127.0.0.1" Type="1" Port="0"/>
+		<Server AppName="zone" AppType="master" AppId="100" Ip="127.0.0.1" Type="1" Port="10100"/>
+
 	</TcpServer>
 
 	<HttpServer>
