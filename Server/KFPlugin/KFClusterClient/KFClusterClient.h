@@ -3,11 +3,11 @@
 
 #include "KFrame.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFClusterClientConfig.h"
 
 namespace KFrame
 {
     class KFClusterClientModule;
-    class ClusterClientSetting;
     class KFClusterClient
     {
     public:
@@ -15,7 +15,7 @@ namespace KFrame
         ~KFClusterClient();
 
         // 开启集群客户端
-        void StartClusterClient( KFClusterClientModule* module, const KFConnection* setting );
+        void StartClusterMasterClient();
 
         // 连接事件
         void OnConnectionClusterServer( const std::string& servertype, uint32 serverid );
@@ -24,7 +24,7 @@ namespace KFrame
         void OnLostClusterServer( const std::string& servertype, uint32 serverid );
 
         // 认证成功
-        void ProcessClusterAuth( const std::string& servertype, uint32 serverid, const std::string& name, const std::string& ip, uint32 port, const std::string& token );
+        void ProcessClusterAuth( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port, const std::string& token );
 
         // 验证token成功
         void ProcessClusterVerify( uint32 serverid );
@@ -43,24 +43,27 @@ namespace KFrame
         // 发送Token消息
         __KF_TIMER_FUNCTION__( OnTimerSendClusterTokenMessage );
 
-    private:
+    public:
         // 模块
         KFClusterClientModule* _cluster_client_module;
 
         // 集群设置
-        KFConnection _cluster_setting;
+        KFClusterSetting _cluster_setting;
+
+    private:
+
+        // 是否可以服务
+        bool _cluster_in_services;
 
         // token
         std::string _auth_token;
 
-        // server node type
-        std::string _cluster_node_type;
+        // proxy id
+        uint32 _cluster_proxy_id;
 
-        // server id
-        uint32 _cluster_node_id;
+        // proxy type
+        std::string _cluster_proxy_type;
 
-        // 是否可以服务
-        bool _cluster_in_services;
     };
 }
 

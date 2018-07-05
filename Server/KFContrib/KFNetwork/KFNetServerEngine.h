@@ -18,7 +18,7 @@ namespace KFrame
         void InitEngine( uint32 maxqueuesize );
 
         // 初始化服务
-        int32 StartEngine( const std::string& ip, uint32 port, uint32 maxconnect = 20000 );
+        int32 StartEngine( const std::string& ip, uint32 port, uint32 maxconnect, uint32 timeout );
 
         // 逻辑
         void RunEngine( uint64 nowtime );

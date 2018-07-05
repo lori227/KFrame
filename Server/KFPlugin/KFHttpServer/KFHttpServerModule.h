@@ -10,8 +10,8 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFHttpPort.h"
 #include "KFHttpServerInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
 {
@@ -24,10 +24,10 @@ namespace KFrame
 
         // 初始化
         virtual void InitModule();
-        virtual void AfterLoad();
 
         // 运行
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void ShutDown();
@@ -64,22 +64,12 @@ namespace KFrame
 
     private:
 
-        // 获得内网ip
-        std::string GetLocalIp();
-#if __KF_SYSTEM__ == __KF_WIN__
-        std::string GetWinLocalIp();
-#else
-        std::string GetLinuxLocalIp();
-#endif
-
     private:
         // http服务器
         KFHttpServer* _http_server;
 
         // 完整路径
         std::string _full_url;
-
-        KFHttpProt _http_port;
     };
 }
 

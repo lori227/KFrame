@@ -11,6 +11,7 @@
 #include "KFServerMessage.pb.h"
 #include "KFBattleMessage.pb.h"
 #include "KFMatchMessage.pb.h"
+#include "KFDeployMessage.pb.h"
 
 ////////////////////////////////////////////////////////////////////
 

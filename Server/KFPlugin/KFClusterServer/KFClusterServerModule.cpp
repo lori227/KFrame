@@ -1,5 +1,6 @@
 ﻿#include "KFClusterServerModule.h"
 #include "KFClusterServerManage.h"
+#include "KFClusterServerConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -15,6 +16,7 @@ namespace KFrame
 
     void KFClusterServerModule::InitModule()
     {
+        __KF_ADD_CONFIG__( _kf_cluster_config, false );
         ///////////////////////////////////////////////////////////////////////////////
     }
 
@@ -30,6 +32,7 @@ namespace KFrame
 
     void KFClusterServerModule::BeforeShut()
     {
+        __KF_REMOVE_CONFIG__();
         _kf_tcp_server->UnRegisterLostFunction( this );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,13 +44,13 @@ namespace KFrame
 
     void KFClusterServerModule::OnceRun()
     {
-        auto* mastersetting = _kf_connection->FindMasterConnection( KFGlobal::Instance()->_app_name );
-        if ( mastersetting == nullptr )
+        auto kfsetting = _kf_cluster_config->FindClusterSetting( KFGlobal::Instance()->_app_name );
+        if ( kfsetting == nullptr )
         {
             return;
         }
 
-        _cluster_key = mastersetting->_key;
+        _cluster_key = kfsetting->_key;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

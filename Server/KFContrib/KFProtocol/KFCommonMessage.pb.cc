@@ -81,6 +81,7 @@ const ::google::protobuf::Descriptor* PBPlayerIds_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBPlayerIds_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* AckEnum_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* SexEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* KickEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* FlagEnum_descriptor_ = NULL;
@@ -92,7 +93,6 @@ const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* StoreWishEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* WishStateEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* RankListEnum_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor_ = NULL;
 
 }  // namespace
 
@@ -453,18 +453,18 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBPlayerIds));
   AckEnum_descriptor_ = file->enum_type(0);
-  SexEnum_descriptor_ = file->enum_type(1);
-  KickEnum_descriptor_ = file->enum_type(2);
-  FlagEnum_descriptor_ = file->enum_type(3);
-  MailEnum_descriptor_ = file->enum_type(4);
-  MailConfigEnum_descriptor_ = file->enum_type(5);
-  StatusEnum_descriptor_ = file->enum_type(6);
-  ChatEnum_descriptor_ = file->enum_type(7);
-  InviteEnum_descriptor_ = file->enum_type(8);
-  StoreWishEnum_descriptor_ = file->enum_type(9);
-  WishStateEnum_descriptor_ = file->enum_type(10);
-  RankListEnum_descriptor_ = file->enum_type(11);
-  ChannelEnum_descriptor_ = file->enum_type(12);
+  ChannelEnum_descriptor_ = file->enum_type(1);
+  SexEnum_descriptor_ = file->enum_type(2);
+  KickEnum_descriptor_ = file->enum_type(3);
+  FlagEnum_descriptor_ = file->enum_type(4);
+  MailEnum_descriptor_ = file->enum_type(5);
+  MailConfigEnum_descriptor_ = file->enum_type(6);
+  StatusEnum_descriptor_ = file->enum_type(7);
+  ChatEnum_descriptor_ = file->enum_type(8);
+  InviteEnum_descriptor_ = file->enum_type(9);
+  StoreWishEnum_descriptor_ = file->enum_type(10);
+  WishStateEnum_descriptor_ = file->enum_type(11);
+  RankListEnum_descriptor_ = file->enum_type(12);
 }
 
 namespace {
@@ -718,24 +718,24 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "am\020\250N\022\034\n\027MatchRepeatInviteToCode\020\251N\022\022\n\rC"
     "opySuccessed\020\252N\022\034\n\027GiveFaildForLimitsGoo"
     "ds\020\253N\022\025\n\020MatchHasPrepared\020\254N\022\025\n\020MatchHas"
-    "Canceled\020\255N*+\n\007SexEnum\022\n\n\006Unknow\020\000\022\010\n\004Ma"
-    "le\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013LoginBeK"
-    "ick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010FlagEnum\022\010\n"
-    "\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022\n\n\006Remov"
-    "e\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEnum\022\r\n\tWh"
-    "oleMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010GiftMail\020\003*"
-    "\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001*f\n\nStat"
-    "usEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013GroupStatus\020"
-    "\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingStatus\020\004\022\021\n"
-    "\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007Jianghu\020"
-    "\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002"
-    "\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-\n\rStoreW"
-    "ishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modify\020\003*L\n"
-    "\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\tNoneWatc"
-    "h\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatch\020\003*K\n\014R"
-    "ankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nDoubleRan"
-    "k\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004*\'\n\013Chan"
-    "nelEnum\022\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002", 6593);
+    "Canceled\020\255N*\'\n\013ChannelEnum\022\014\n\010Internal\020\001"
+    "\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Unknow\020\000\022\010\n\004M"
+    "ale\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013LoginBe"
+    "Kick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010FlagEnum\022\010"
+    "\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022\n\n\006Remo"
+    "ve\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEnum\022\r\n\tW"
+    "holeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010GiftMail\020\003"
+    "*\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001*f\n\nSta"
+    "tusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013GroupStatus"
+    "\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingStatus\020\004\022\021"
+    "\n\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007Jianghu"
+    "\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006Refuse\020"
+    "\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-\n\rStore"
+    "WishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modify\020\003*L"
+    "\n\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\tNoneWat"
+    "ch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatch\020\003*K\n\014"
+    "RankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nDoubleRa"
+    "nk\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004", 6593);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -983,6 +983,20 @@ bool AckEnum_IsValid(int value) {
   }
 }
 
+const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ChannelEnum_descriptor_;
+}
+bool ChannelEnum_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 const ::google::protobuf::EnumDescriptor* SexEnum_descriptor() {
   protobuf_AssignDescriptorsOnce();
   return SexEnum_descriptor_;
@@ -1144,20 +1158,6 @@ bool RankListEnum_IsValid(int value) {
     case 2:
     case 3:
     case 4:
-      return true;
-    default:
-      return false;
-  }
-}
-
-const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ChannelEnum_descriptor_;
-}
-bool ChannelEnum_IsValid(int value) {
-  switch(value) {
-    case 1:
-    case 2:
       return true;
     default:
       return false;

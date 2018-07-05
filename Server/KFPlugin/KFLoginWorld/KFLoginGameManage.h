@@ -2,7 +2,6 @@
 #define __KF_LOGIN_GAME_MANAGE_H__
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
 
 namespace KFrame
 {

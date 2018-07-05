@@ -19,6 +19,5 @@ namespace KFrame
     {
         _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
     }
 }

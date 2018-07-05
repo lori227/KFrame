@@ -13,11 +13,11 @@
 #include "KFWorldInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
 {

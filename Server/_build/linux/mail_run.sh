@@ -1,16 +1,15 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/mailcluster
-server=mailserver
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=mailserverd
 else
-\cp KFStartup $server
+server=mailserver
 fi
 
 echo Starting Mail Cluster Server
-./$server 0 6 ./setting/server.startup
+./$server 0 6 ./setting/master.startup
 
 echo Starting Mail Proxy Server
 ./$server 0 6001 ./setting/proxy.startup

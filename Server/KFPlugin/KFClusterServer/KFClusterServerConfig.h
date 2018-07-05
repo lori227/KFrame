@@ -6,23 +6,45 @@
 
 namespace KFrame
 {
+    class KFClusterSetting
+    {
+    public:
+        KFClusterSetting()
+        {
+            _id = 0;
+        }
+
+    public:
+        // 集群名字
+        std::string _name;
+
+        // 集群类型
+        std::string _type;
+
+        // 集群的秘钥
+        std::string _key;
+
+        // 集群服务器id
+        uint32 _id;
+    };
+
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     class KFClusterServerConfig : public KFConfig, public KFSingleton< KFClusterServerConfig >
     {
     public:
-        KFClusterServerConfig();
-        ~KFClusterServerConfig();
 
         bool LoadConfig( const char* file );
 
+        const KFClusterSetting* FindClusterSetting( const std::string& name );
+
     public:
-        // 集群的认证key
-        std::string _cluster_key;
+        // 集群客服端配置列表
+        std::map< std::string, KFClusterSetting > _cluster_setting_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_cluster_server_config = KFClusterServerConfig::Instance();
+    static auto _kf_cluster_config = KFClusterServerConfig::Instance();
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

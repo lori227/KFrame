@@ -2,19 +2,25 @@
 
 namespace KFrame
 {
-    KFHttpServerConfig::KFHttpServerConfig()
+    KFHttpSetting* KFHttpServerConfig::FindHttpSetting( const std::string& appname, const std::string& apptype )
     {
-        _port = 0;
-        _keep_alive = false;
-        _max_thread = 0;
-        _max_queue = 0;
-        _idle_time = 0;
+        for ( auto& kfsetting : _http_setting_list )
+        {
+            if ( kfsetting._app_name == appname &&
+                    kfsetting._app_type == apptype )
+            {
+                return &kfsetting;
+            }
+        }
+
+        return nullptr;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     bool KFHttpServerConfig::LoadConfig( const char* file )
     {
+        _http_setting_list.clear();
         try
         {
             KFXml kfxml( file );
@@ -22,13 +28,31 @@ namespace KFrame
 
             //////////////////////////////////////////////////////////////////
             auto httpserver = config.FindNode( "HttpServer" );
-            _local_ip = httpserver.GetString( "LocalIp" );
-            _interanet_ip = httpserver.GetString( "InteranetIp" );
-            _port = httpserver.GetUInt32( "Port" );
-            _keep_alive = httpserver.GetBoolen( "KeepAlive" );
-            _max_thread = httpserver.GetUInt32( "MaxThread" );
-            _max_queue = httpserver.GetUInt32( "MaxQueue" );
-            _idle_time = httpserver.GetUInt32( "IdleTime" );
+            if ( httpserver.IsValid() )
+            {
+                auto kepplive = httpserver.GetBoolen( "KeepAlive" );
+                auto maxthread = httpserver.GetUInt32( "MaxThread" );
+                auto maxqueue = httpserver.GetUInt32( "MaxQueue" );
+                auto idletime = httpserver.GetUInt32( "IdleTime" );
+
+                auto servernode = httpserver.FindNode( "Server" );
+                while ( servernode.IsValid() )
+                {
+                    KFHttpSetting kfsetting;
+
+                    kfsetting._app_name = servernode.GetString( "AppName" );
+                    kfsetting._app_type = servernode.GetString( "AppType" );
+                    kfsetting._port_type = servernode.GetUInt32( "Type" );
+                    kfsetting._port = servernode.GetUInt32( "Port" );
+                    kfsetting._keep_alive = servernode.GetBoolen( "KeepAlive", true, kepplive );
+                    kfsetting._max_thread = servernode.GetUInt32( "MaxThread", true, maxthread );
+                    kfsetting._max_queue = servernode.GetUInt32( "MaxQueue", true, maxqueue );
+                    kfsetting._idle_time = servernode.GetUInt32( "IdleTime", true, idletime );
+                    _http_setting_list.push_back( kfsetting );
+
+                    servernode.NextNode();
+                }
+            }
             //////////////////////////////////////////////////////////////////
         }
         catch ( ... )

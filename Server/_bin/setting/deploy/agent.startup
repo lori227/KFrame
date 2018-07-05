@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="deploy" AppType="agent">
+	<Plugins>
+		<Plguin Name="KFTimer" Startup="1" Sort="1" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFMessage" Startup="1" Sort="30" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFDeployAgent" Startup="1" Sort="60" Debug="KFDeployAgentd" Release="KFDeployAgent" Config="./config/agent.config"/>
+	</Plugins>
+</Setting>

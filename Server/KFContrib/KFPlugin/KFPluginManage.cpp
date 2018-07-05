@@ -121,7 +121,6 @@ namespace KFrame
 
     void KFPluginManage::InitPlugin()
     {
-        // 按照权重排序
         SortPlugin();
 
         // 加载模块

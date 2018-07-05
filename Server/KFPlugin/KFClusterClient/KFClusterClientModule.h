@@ -15,7 +15,8 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
+#include "KFBus/KFBusInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 
 namespace KFrame
@@ -64,7 +65,6 @@ namespace KFrame
         // 注册回调函数
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
         virtual void RemoveConnectionFunction( const std::string& name );
-
 
         // 开启集群客户端
         void StartClusterClient();

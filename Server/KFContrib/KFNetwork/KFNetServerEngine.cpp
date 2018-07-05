@@ -27,13 +27,14 @@ namespace KFrame
         _net_server_services->_net_event->BindDisconnectFunction( this, &KFNetServerEngine::OnServerDisconnect );
     }
 
-    int32 KFNetServerEngine::StartEngine( const std::string& ip, uint32 port, uint32 maxconnect /* = 20000 */ )
+    int32 KFNetServerEngine::StartEngine( const std::string& ip, uint32 port, uint32 maxconnect, uint32 timeout )
     {
 
         KFNetSetting kfsetting;
         kfsetting._ip = ip;
         kfsetting._port = port;
         kfsetting._max_connect = maxconnect;
+        kfsetting._timeout = timeout;
         return _net_server_services->StartServices( &kfsetting );
     }
 

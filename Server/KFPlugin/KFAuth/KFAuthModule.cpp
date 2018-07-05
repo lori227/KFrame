@@ -47,7 +47,7 @@ namespace KFrame
         authjson[ KFField::_ip ] = ip;
 
         auto threadid = KFThread::GetThreadID();
-        std::string platformurl = _kf_connection->FindPlatformAddress( threadid ) + KFField::_login;
+        std::string platformurl = _kf_ip_address->FindPlatformAddress( threadid ) + KFField::_login;
         return _kf_http_client->StartSTHttpClient( platformurl, authjson, true );
     }
 
@@ -57,7 +57,7 @@ namespace KFrame
         kfjson[ KFField::_ip ] = ip;
 
         auto threadid = KFThread::GetThreadID();
-        std::string platformurl = _kf_connection->FindPlatformAddress( threadid ) + KFField::_activation;
+        std::string platformurl = _kf_ip_address->FindPlatformAddress( threadid ) + KFField::_activation;
         return _kf_http_client->StartSTHttpClient( platformurl, kfjson, true );
     }
 }

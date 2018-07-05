@@ -47,7 +47,7 @@ namespace KFrame
         sendjson.SetValue( KFField::_type, zone->_type );
         sendjson.SetValue< const std::string& >( KFField::_name, zone->_name );
 
-        static auto url = _kf_connection->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_update_zone;
+        static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_update_zone;
         _kf_http_client->StartMTHttpClient( url, sendjson, true, this, &KFLoginGateModule::OnHttpLoginUpdateCallBack );
     }
 
@@ -59,7 +59,7 @@ namespace KFrame
         if ( retcode != KFMsg::Success )
         {
             auto kfglobal = KFGlobal::Instance();
-            KFLogger::LogSystem( KFLogger::Error, "updata login [%u|%s:%u] failed[%u]!",
+            KFLogger::LogSystem( KFLogger::Error, "update login [%u|%s:%u] failed[%u]!",
                                  kfglobal->_app_id, kfglobal->_interanet_ip.c_str(), kfglobal->_listen_port, retcode );
         }
     }

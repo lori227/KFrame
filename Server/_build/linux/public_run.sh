@@ -1,15 +1,15 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/publiccluster
-server=publicserver
+
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=publicserverd
 else
-\cp KFStartup $server
+server=publicserverd
 fi
 
 echo Starting Public Cluster Server
-./$server 0 2 ./setting/server.startup
+./$server 0 2 ./setting/master.startup
 
 echo Starting Public Proxy Server
 ./$server 0 2001 ./setting/proxy.startup

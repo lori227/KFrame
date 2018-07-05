@@ -10,16 +10,15 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFNetPort.h"
 #include "KFTcpServerInterface.h"
-#include "KFMessage/KFMessageInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
 #include "KFNetwork/KFNetServerEngine.h"
+#include "KFMessage/KFMessageInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
 {
-    class KFNetServerEngine;
+    class KFTcpSetting;
     class KFTcpServerModule : public KFTcpServerInterface
     {
     public:
@@ -29,17 +28,13 @@ namespace KFrame
         // 初始化
         virtual void InitModule();
 
-        // 加载
-        virtual void AfterLoad();
-
         // 逻辑
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
         virtual void ShutDown();
-        /////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////
 
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
@@ -112,20 +107,13 @@ namespace KFrame
         void CallLostFunction( KFNetHandle* tcphandle );
 
     private:
-        // 获得内网ip
-        std::string GetLocalIp();
-#if __KF_SYSTEM__ == __KF_WIN__
-        std::string GetWinLocalIp();
-#else
-        std::string GetLinuxLocalIp();
-#endif
+
+        // 查找tcpdata
+        KFTcpSetting* FindTcpServerSetting();
 
     private:
         // 网络服务器引擎
         KFNetServerEngine* _kf_server_engine;
-
-        // 网络端口
-        KFNetProt _kf_net_port;
 
         // 发现客户端回调
         KFBind< std::string, const std::string&, KFServerDiscoverFunction > _kf_discover_function;
@@ -137,7 +125,5 @@ namespace KFrame
         KFTransmitFunction _kf_transmit_function;
     };
 }
-
-
 
 #endif

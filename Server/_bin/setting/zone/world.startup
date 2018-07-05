@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="zone" AppType="world">
 	<Plugins>
-		<Plguin Name="KFTimer" Startup="1" Sort="10" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFTimer" Startup="1" Sort="1" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
 		<Plguin Name="KFConfig" Startup="1" Sort="12" Debug="KFConfigd" Release="KFConfig" Config=""/>
 		<Plguin Name="KFZone" Startup="1" Sort="13" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
 		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFHttpClient" Startup="1" Sort="21" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFHttpServer" Startup="1" Sort="22" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/world.network"/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="30" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/world.network"/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="40" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/world.network"/>
+		<Plguin Name="KFHttpServer" Startup="1" Sort="22" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="30" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="40" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
 		<Plguin Name="KFWorld" Startup="1" Sort="60" Debug="KFWorldd" Release="KFWorld" Config=""/>
 		<Plguin Name="KFLoginWorld" Startup="1" Sort="70" Debug="KFLoginWorldd" Release="KFLoginWorld" Config=""/>
 	</Plugins>

@@ -1,16 +1,16 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/routecluster
-server=routeserver
+
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=routeserverd
 else
-\cp KFStartup $server
+server=routeserver
 fi
 
 echo Starting Route Cluster Server
-./$server 0 3 ./setting/server.startup
+./$server 0 3 ./setting/master.startup
 
 echo Starting Route Proxy Server
 ./$server 0 3001 ./setting/proxy.startup

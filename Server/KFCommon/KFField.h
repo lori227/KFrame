@@ -25,7 +25,12 @@ namespace KFrame
         static const std::string _account_make = "accountmake";
         static const std::string _address = "address";
         static const std::string _app_id = "appid";
+        static const std::string _app_name = "appname";
+        static const std::string _app_type = "apptype";
         static const std::string _app_key = "appkey";
+        static const std::string _local_ip = "localip";
+        static const std::string _interanet_ip = "interanetip";
+        static const std::string _agent_id = "agentid";
         static const std::string _auth = "auth";
         static const std::string _activation = "activation";
         static const std::string _activation_code = "activationcode";
@@ -215,6 +220,7 @@ namespace KFrame
         static const std::string _kd_score = "kdscore";
         static const std::string _operate_time = "operatetime";
         static const std::string _stranger = "stranger";
+        static const std::string _deploy = "deploy";
     }
 }
 

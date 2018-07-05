@@ -5,13 +5,11 @@
     <ClCompile Include="KFTcpServerConfig.cpp" />
     <ClCompile Include="KFTcpServerModule.cpp" />
     <ClCompile Include="KFTcpServerPlugin.cpp" />
-    <ClCompile Include="KFNetPort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTcpServerConfig.h" />
     <ClInclude Include="KFTcpServerInterface.h" />
     <ClInclude Include="KFTcpServerModule.h" />
     <ClInclude Include="KFTcpServerPlugin.h" />
-    <ClInclude Include="KFNetPort.h" />
   </ItemGroup>
 </Project>

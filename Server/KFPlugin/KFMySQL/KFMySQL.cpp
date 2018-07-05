@@ -29,7 +29,7 @@ namespace KFrame
         {
             _session = __KF_NEW__( Session, SessionFactory::instance().create( MySQL::Connector::KEY, _connect_data ) );
         }
-        catch ( MySQL::MySQLException& ex )
+        catch ( Poco::Exception& ex )
         {
             KFLogger::LogInit( KFLogger::Error, "mysql[%u:%s] connect failed = [%s]!",
                                id, _connect_data.c_str(), ex.displayText().c_str() );

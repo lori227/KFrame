@@ -11,6 +11,7 @@ rem ===========================================================================
 
 if not exist plugin (mkdir plugin)
 if not exist setting (mkdir setting)
+if not exist config (mkdir config)
 
 set path1=..\..\Source\_bin\win64
 set path2=.
@@ -25,17 +26,20 @@ call :copyfile 1 libssl-1_1-x64.dll
 rem 全局配置
 set path1=..\..\Source\_bin\setting
 set path2=setting
-call :copyfile 0 connection.network
+call :copyfile 1 server.network
+call :copyfile 1 ip.address
+call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 
+set path2=config
+call :copyfile 1 cluster.config
+
 rem 配置目录
 set path1=..\..\Source\_bin\setting\route
-call :copyfile 1 server.network
-call :copyfile 1 server.startup
-call :copyfile 1 proxy.network
+set path2=setting
+call :copyfile 1 master.startup
 call :copyfile 1 proxy.startup
-call :copyfile 1 shard.network
 call :copyfile 1 shard.startup
 
 rem 插件目录
@@ -46,8 +50,10 @@ call :copyfile 1 KFHttpClient.dll
 call :copyfile 1 KFHttpClientd.dll
 call :copyfile 1 KFConfigd.dll
 call :copyfile 1 KFConfig.dll
-call :copyfile 1 KFConnectiond.dll
-call :copyfile 1 KFConnection.dll
+call :copyfile 1 KFBusd.dll
+call :copyfile 1 KFBus.dll
+call :copyfile 1 KFIpAddress.dll
+call :copyfile 1 KFIpAddressd.dll
 call :copyfile 1 KFMessaged.dll
 call :copyfile 1 KFMessage.dll
 call :copyfile 1 KFTimerd.dll

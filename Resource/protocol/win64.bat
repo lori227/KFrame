@@ -4,11 +4,11 @@ cd proto
 call __cpp_class.bat
 cd ../
 
-xcopy *.pb.* ..\..\Server\KFContrib\KFProtocol\ /y
+xcopy *.pb.* ..\..\Source\KFContrib\KFProtocol\ /y
 
 del *.pb.*
 
-cd ../../Server/KFContrib/KFProtocol
+cd ../../Source/KFContrib/KFProtocol
 
 "%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Debug|X64"
 "%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Release|X64"

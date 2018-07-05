@@ -27,11 +27,16 @@ call :copyfile 1 log4cxxd.dll
 call :copyfile 1 log4cxx.dll
 call :copyfile 1 libcrypto-1_1-x64.dll
 call :copyfile 1 libssl-1_1-x64.dll
+
+copy /y KFStartup.exe platformserver.exe
+copy /y KFStartupd.exe platformserverd.exe
 rem ===========================================================================
 rem ===========================================================================
 rem 全局配置
 set path1=..\..\Source\_bin\setting
 set path2=setting
+call :copyfile 1 server.network
+call :copyfile 1 ip.address
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 
@@ -40,7 +45,6 @@ rem ===========================================================================
 rem 配置目录
 set path1=..\..\Source\_bin\setting\platform
 set path2=setting
-call :copyfile 1 platform.network
 call :copyfile 1 platform.startup
 
 rem config
@@ -56,14 +60,26 @@ rem 插件目录
 set path1=..\..\Source\_bin\win64\plugin
 set path2=plugin
 
+call :copyfile 1 KFHttpServer.dll
 call :copyfile 1 KFHttpServerd.dll
-call :copyfile 1 KFHttpClientd.dll
-call :copyfile 1 KFConfigd.dll
-call :copyfile 1 KFRedisd.dll
-call :copyfile 1 KFPlatformd.dll
-call :copyfile 1 KFTimerd.dll
-rem call :copyfile KFCommandd.dll
 
+call :copyfile 1 KFHttpClientddll
+call :copyfile 1 KFHttpClientd.dll
+
+call :copyfile 1 KFConfig.dll
+call :copyfile 1 KFConfigd.dll
+
+call :copyfile 1 KFRedis.dll
+call :copyfile 1 KFRedisd.dll
+
+call :copyfile 1 KFPlatform.dll
+call :copyfile 1 KFPlatformd.dll
+
+call :copyfile 1 KFTimer.dll
+call :copyfile 1 KFTimerd.dll
+
+call :copyfile 1 KFIpAddress.dll
+call :copyfile 1 KFIpAddressd.dll
 
 rem pause
 rem ===========================================================================

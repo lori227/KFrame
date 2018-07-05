@@ -143,7 +143,7 @@ namespace KFrame
                              kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
     }
 
-    void KFNetClientEngine::StartClient( const std::string& type, uint32 id, const std::string& name, const std::string& ip, uint32 port )
+    void KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
     {
         auto kfclient = _kf_clients.Find( id );
         if ( kfclient != nullptr )

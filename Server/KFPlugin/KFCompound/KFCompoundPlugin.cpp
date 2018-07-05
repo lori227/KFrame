@@ -1,4 +1,4 @@
-#include "KFCompoundPlugin.h"
+﻿#include "KFCompoundPlugin.h"
 #include "KFCompoundModule.h"
 
 //////////////////////////////////////////////////////////////////////////

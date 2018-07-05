@@ -84,6 +84,9 @@ namespace KFrame
 
     class KFJson;
 
+    class KFIpAddress;
+    typedef std::set< KFIpAddress* > IpAddressList;
+
     typedef std::list< std::string > ListString;
     typedef std::vector< std::string > VectorString;
     typedef std::map< std::string, std::string > MapString;
@@ -91,6 +94,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////
     static const uint32 _invalid_int = 0;
     static const std::string _invalid_str = "";
+    static const std::string _globbing_str = "*";
     static ListString _invalid_list_str;
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -120,51 +124,6 @@ namespace KFrame
     // httphandle 函数
     typedef std::function< std::string ( const std::string& ip, const std::string& data )> KFHttpMethodFunction;
 
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-
-
-    //////////////////////////////////////////////////////////////////////////////
-    // 连接定义
-    class KFConnection
-    {
-    public:
-        KFConnection()
-        {
-            _id = 0;
-            _port = 0;
-            _timeout = 2000;
-        }
-
-        inline bool IsValid() const
-        {
-            return !_ip.empty();
-        }
-
-    public:
-
-        // 服务器类型
-        std::string _type;
-
-        // 服务器id
-        uint32 _id;
-
-        // 服务器名字
-        std::string _name;
-
-        // 服务器ip
-        std::string _ip;
-
-        // 服务器端口
-        int32 _port;
-
-        // 连接超时时间
-        uint32 _timeout;
-
-        // 集群的认证key
-        std::string _key;
-    };
-    //////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
 }

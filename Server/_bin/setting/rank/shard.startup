@@ -2,17 +2,18 @@
 <Setting AppName="rank" AppType="shard">
 	<Plugins>
 		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
 		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
 		<Plguin Name="KFTimer" Startup="1" Sort="11" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plguin Name="KFConnection" Startup="1" Sort="12" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
 		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFClusterShard" Startup="1" Sort="40" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
 		<Plguin Name="KFSchedule" Startup="1" Sort="41" Debug="KFScheduled" Release="KFSchedule" Config=""/>
 		<Plguin Name="KFWorker" Startup="1" Sort="50" Debug="KFWorkerd" Release="KFWorker" Config=""/>
 		<Plguin Name="KFOption" Startup="1" Sort="51" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>
 		<Plguin Name="KFRedis" Startup="1" Sort="60" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="70" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/shard.network"/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="80" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/shard.network"/>
-		<Plguin Name="KFRankShard" Startup="1" Sort="90" Debug="KFRankShardd" Release="KFRankShard" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="70" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="80" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFRankShard" Startup="1" Sort="90" Debug="KFRankShardd" Release="KFRankShard" Config="./config/rankshard.config"/>
 	</Plugins>
 </Setting>

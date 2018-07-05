@@ -54,4 +54,9 @@ namespace KFrame
     {
         return _hash_logic->GetHashNodeCount();
     }
+
+    void KFConHash::ClearHashNode()
+    {
+        return _hash_logic->ClearHashNode();
+    }
 }

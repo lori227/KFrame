@@ -1,16 +1,15 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/battlecluster
-server=battleserver
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=battleserverd
 else
-\cp KFStartup $server
+server=battleserver
 fi
 
 echo Starting Battle Cluster Server
-./$server 0 5 ./setting/server.startup
+./$server 0 5 ./setting/master.startup
 
 echo Starting Battle Proxy Server
 ./$server 0 5001 ./setting/proxy.startup

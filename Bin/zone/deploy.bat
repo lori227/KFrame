@@ -27,25 +27,24 @@ call :copyfile 1 libssl-1_1-x64.dll
 rem 全局配置
 set path1=..\..\Source\_bin\setting
 set path2=setting
-call :copyfile 0 connection.network
+call :copyfile 1 ip.address
+call :copyfile 1 bus.relation
+call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
+
+set path2=config
+call :copyfile 1 cluster.config
 
 set path1=..\..\Source\_bin\setting\zone
 set path2=setting
 call :copyfile 0 zone.config
 
-call :copyfile 0 gate.network
 call :copyfile 1 gate.startup
-call :copyfile 1 login.network
 call :copyfile 1 login.startup
-call :copyfile 1 master.network
 call :copyfile 1 master.startup
-call :copyfile 0 proxy.network
 call :copyfile 1 proxy.startup
-call :copyfile 1 world.network
 call :copyfile 1 world.startup
-call :copyfile 1 game.network
 call :copyfile 1 game.startup
 
 rem 全局配置

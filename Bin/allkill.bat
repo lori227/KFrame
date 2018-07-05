@@ -35,3 +35,7 @@ cd ..
 cd datacluster
 call kill.bat
 cd ..
+
+cd rankcluster
+call kill.bat
+cd ..

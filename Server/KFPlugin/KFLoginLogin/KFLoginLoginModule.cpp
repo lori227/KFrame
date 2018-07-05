@@ -44,7 +44,7 @@ namespace KFrame
             KFJson sendjson;
             sendjson.SetValue( KFField::_app_id, handleid );
             sendjson.SetValue( KFField::_id, _kf_zone->GetZone()->_id );
-            auto url = _kf_connection->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_lost_zone;
+            static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_lost_zone;
             _kf_http_client->StartMTHttpClient( url, sendjson, true );
         }
     }
@@ -88,7 +88,7 @@ namespace KFrame
         sendjson.SetValue( KFField::_server_id, KFGlobal::Instance()->_app_id );
         sendjson.SetValue( KFField::_ip, kfmsg.ip() );
 
-        auto url = _kf_connection->FindPlatformAddress( accountid ) + KFField::_token;
+        auto url = _kf_ip_address->FindPlatformAddress( accountid ) + KFField::_token;
         _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFLoginLoginModule::OnHttpPlatformLoginVerifyCallBack );
     }
 

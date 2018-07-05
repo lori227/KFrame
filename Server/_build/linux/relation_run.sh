@@ -1,16 +1,16 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/relationcluster
-server=relationserver
+
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=relationserverd
 else
-\cp KFStartup $server
+server=relationserver
 fi
 
 echo Starting Relation Cluster Server
-./$server 0 7 ./setting/server.startup
+./$server 0 7 ./setting/master.startup
 
 echo Starting Relation Proxy Server
 ./$server 0 7001 ./setting/proxy.startup

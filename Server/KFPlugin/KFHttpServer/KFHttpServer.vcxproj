@@ -12,13 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFHttpPort.cpp" />
     <ClCompile Include="KFHttpServerConfig.cpp" />
     <ClCompile Include="KFHttpServerModule.cpp" />
     <ClCompile Include="KFHttpServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFHttpPort.h" />
     <ClInclude Include="KFHttpServerConfig.h" />
     <ClInclude Include="KFHttpServerInterface.h" />
     <ClInclude Include="KFHttpServerModule.h" />

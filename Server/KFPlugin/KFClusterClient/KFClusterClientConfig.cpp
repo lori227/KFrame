@@ -2,33 +2,37 @@
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFClusterClientConfig::KFClusterClientConfig()
+    const KFClusterSetting* KFClusterClientConfig::FindClusterSetting( const std::string& name )
     {
+        auto iter = _cluster_setting_list.find( name );
+        if ( iter == _cluster_setting_list.end() )
+        {
+            return nullptr;
+        }
 
-    }
-
-    KFClusterClientConfig::~KFClusterClientConfig()
-    {
-
+        return &iter->second;
     }
 
     bool KFClusterClientConfig::LoadConfig( const char* file )
     {
+        _cluster_setting_list.clear();
+
         try
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////
-            auto clusters = config.FindNode( "ClusterClients" );
-            auto cluster = clusters.FindNode( "ClusterClient" );
+            auto clusters = config.FindNode( "Clusters" );
+            auto cluster = clusters.FindNode( "Cluster" );
             while ( cluster.IsValid() )
             {
-                KFConnection setting;
+                KFClusterSetting kfsetting;
 
-                setting._name = cluster.GetString( "Cluster" );
-                _cluster_client_setting.push_back( setting );
+                kfsetting._name = cluster.GetString( "Name" );
+                kfsetting._type = cluster.GetString( "Type" );
+                kfsetting._key = cluster.GetString( "Key" );
+                _cluster_setting_list[ kfsetting._name ] = kfsetting;
 
                 cluster.NextNode();
             }

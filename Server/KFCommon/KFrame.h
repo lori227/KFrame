@@ -22,6 +22,7 @@
 #include "KFMemory/KFBuffer.h"
 #include "KFMemory/KFMalloc.h"
 #include "KFUtility/KFUtility.h"
+#include "KFConHash/KFConHash.h"
 #include "KFPlugin/KFPluginManage.h"
 
 #endif

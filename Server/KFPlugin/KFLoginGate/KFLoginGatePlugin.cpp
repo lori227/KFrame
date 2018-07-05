@@ -21,7 +21,7 @@ namespace KFrame
         _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
         _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
         _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
     }
 }

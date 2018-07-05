@@ -1,16 +1,16 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/matchcluster
-server=matchserver
+
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=matchserverd
 else
-\cp KFStartup $server
+server=matchserver
 fi
 
 echo Starting Match Cluster Server
-./$server 0 4 ./setting/server.startup
+./$server 0 4 ./setting/master.startup
 
 echo Starting Match Proxy Server
 ./$server 0 4001 ./setting/proxy.startup

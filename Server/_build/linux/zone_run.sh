@@ -3,17 +3,15 @@ zoneid=$2
 echo zoneid "$zoneid"
 basepath=$(cd `dirname $0`; pwd)
 cd /data/zone"$zoneid"
-server=zone"$zoneid"server
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=zoneserverd
 else
-\cp KFStartup $server
+server=zoneserver
 fi
 
 echo Starting Master Server
-masterid=$[100+zoneid]
-./$server 0 $masterid ./setting/master.startup
+./$server 0 100 ./setting/master.startup
 
 echo Starting World Server
 ./$server 0 200 ./setting/world.startup

@@ -1,16 +1,16 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/rankcluster
-server=rankserver
+
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=rankserverd
 else
-\cp KFStartup $server
+server=rankserver
 fi
 
 echo Starting Cluster Server
-./$server 0 10 ./setting/server.startup
+./$server 0 10 ./setting/master.startup
 
 echo Starting Proxy Server
 ./$server 0 10001 ./setting/proxy.startup

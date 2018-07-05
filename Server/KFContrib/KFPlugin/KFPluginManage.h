@@ -18,6 +18,7 @@
         pluginmanage->UnRegistPlugin< classname >();\
     }\
 
+
 #define __REGISTER_MODULE__( name ) \
     _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( new name##Module() )
 

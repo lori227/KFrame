@@ -38,12 +38,13 @@ mkdir -p $deploypath/config
 #setting
 path1=$settingpath
 path2=$deploypath/setting
+copyfile 1 server.network
+copyfile 1 ip.address
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 
 path1=$settingpath/platform
 path2=$deploypath/setting
-copyfile 1 platform.network
 copyfile 1 platform.startup
 
 #config
@@ -58,7 +59,13 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
+\cp $deploypath/KFStartup $deploypath/platformserver
+\cp $deploypath/KFStartupd $deploypath/platformserverd
+
 path2=$deploypath/plugin
+
+copyfile 1 KFIpAddress.so
+copyfile 1 KFIpAddressd.so
 copyfile 1 KFHttpServer.so
 copyfile 1 KFHttpServerd.so
 copyfile 1 KFHttpClient.so

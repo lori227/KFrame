@@ -1,7 +1,7 @@
 @echo off
 
 echo Starting Group Cluster Server
-start "Group_Master" "KFStartupd.exe" "0" "8" "./setting/server.startup"
+start "Group_Master" "KFStartupd.exe" "0" "8" "./setting/master.startup"
 
 echo Starting Route Proxy Server
 start "Group_Proxy" "KFStartupd.exe" "0" "8001" "./setting/proxy.startup"

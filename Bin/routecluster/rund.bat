@@ -1,7 +1,7 @@
 @echo off
 
 echo Starting Route Cluster Server
-start "Route_Master" "KFStartupd.exe" "0" "3" "./setting/server.startup"
+start "Route_Master" "KFStartupd.exe" "0" "3" "./setting/master.startup"
 
 echo Starting Route Proxy Server
 start "Route_Proxy" "KFStartupd.exe" "0" "3001" "./setting/proxy.startup"

@@ -2,20 +2,6 @@
 #include "KFTcpServerConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
-
-#if __KF_SYSTEM__ == __KF_WIN__
-
-#else
-    #include <unistd.h>
-    #include <netdb.h>
-    #include <net/if.h>
-    #include <arpa/inet.h>
-    #include <sys/ioctl.h>
-    #include <sys/types.h>
-    #include <sys/socket.h>
-#endif
-
-
 namespace KFrame
 {
     KFTcpServerModule::KFTcpServerModule()
@@ -35,123 +21,65 @@ namespace KFrame
         _kf_server_engine = __KF_NEW__( KFNetServerEngine );
     }
 
-    static std::string _default_ip = "0.0.0.0";
-    static std::string _local_ip = "127.0.0.1";
-    void KFTcpServerModule::AfterLoad()
+    KFTcpSetting* KFTcpServerModule::FindTcpServerSetting()
     {
-        static std::string dnsurl = "http://members.3322.org/dyndns/getip";
-
-        auto listen = &_kf_server_config->_kf_listen;
-        if ( listen->_interanet_ip == _default_ip )
-        {
-            // 获得外网地址
-            auto interanetip = _kf_http_client->StartSTHttpClient( dnsurl, _invalid_str );
-            if ( interanetip.empty() )
-            {
-                // 获得内网地址
-                interanetip = GetLocalIp();
-            }
-            else
-            {
-                interanetip = KFUtility::SplitString( interanetip, "\n" );
-            }
-
-            if ( !interanetip.empty() )
-            {
-                listen->_interanet_ip = interanetip;
-            }
-            else
-            {
-                listen->_interanet_ip = _local_ip;
-            }
-        }
-        else if ( listen->_interanet_ip == _local_ip )
-        {
-            auto localip = GetLocalIp();
-            if ( !localip.empty() )
-            {
-                listen->_interanet_ip = localip;
-            }
-        }
-
         auto kfglobal = KFGlobal::Instance();
+
+        auto kftcpsetting = _kf_server_config->FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
+        if ( kftcpsetting == nullptr )
+        {
+            kftcpsetting = _kf_server_config->FindTcpSetting( _globbing_str, kfglobal->_app_type );
+            if ( kftcpsetting == nullptr )
+            {
+                kftcpsetting = _kf_server_config->FindTcpSetting( kfglobal->_app_name, _globbing_str );
+                if ( kftcpsetting == nullptr )
+                {
+                    kftcpsetting = _kf_server_config->FindTcpSetting( _globbing_str, _globbing_str );
+                    if ( kftcpsetting == nullptr )
+                    {
+                        return nullptr;
+                    }
+                }
+            }
+        }
+
+        // 计算ip
+        kftcpsetting->_interanet_ip = _kf_ip_address->CalcIpAddress( kftcpsetting->_interanet_ip );
         KFLogger::LogInit( KFLogger::Info, "[%s:%s] interanet ip : [%s]",
-                           kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), listen->_interanet_ip.c_str() );
-    }
+                           kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kftcpsetting->_interanet_ip.c_str() );
 
-    std::string KFTcpServerModule::GetLocalIp()
-    {
-#if __KF_SYSTEM__ == __KF_WIN__
-        return GetWinLocalIp();
-#else
-        return GetLinuxLocalIp();
-#endif
-    }
-
-#if __KF_SYSTEM__ == __KF_WIN__
-    std::string KFTcpServerModule::GetWinLocalIp()
-    {
-        WSADATA wsadata = { 0 };
-        if ( WSAStartup( MAKEWORD( 2, 1 ), &wsadata ) != 0 )
+        // 计算端口
+        if ( kftcpsetting->_port == 0 )
         {
-            return _invalid_str;
+            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+            kftcpsetting->_port_type = kfaddress->_port_type;
+            kftcpsetting->_port = kfaddress->_port;
         }
 
-        std::string ip = "";
-        char hostname[ MAX_PATH ] = { 0 };
-        auto retcode = gethostname( hostname, sizeof( hostname ) );
-        if ( retcode == 0 )
-        {
-            auto hostinfo = gethostbyname( hostname );
-            ip = inet_ntoa( *( struct in_addr* )*hostinfo->h_addr_list );
-        }
-
-        WSACleanup();
-        return ip;
+        kftcpsetting->_port = _kf_ip_address->CalcTcpListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id );
+        return kftcpsetting;
     }
-#else
-    std::string KFTcpServerModule::GetLinuxLocalIp()
-    {
-        auto sd = socket( AF_INET, SOCK_DGRAM, 0 );
-        if ( -1 == sd )
-        {
-            return _invalid_str;
-        }
-
-        struct ifreq ifr;
-        strncpy( ifr.ifr_name, "eth0", IFNAMSIZ );
-        ifr.ifr_name[ IFNAMSIZ - 1 ] = 0;
-
-        std::string ip = "";
-        if ( ioctl( sd, SIOCGIFADDR, &ifr ) >= 0 )
-        {
-            struct sockaddr_in sin;
-            memcpy( &sin, &ifr.ifr_addr, sizeof( sin ) );
-            ip = inet_ntoa( sin.sin_addr );
-        }
-
-        close( sd );
-        return ip;
-    }
-#endif
 
     void KFTcpServerModule::BeforeRun()
     {
-        auto kfglobal = KFGlobal::Instance();
-        auto listen = &_kf_server_config->_kf_listen;
-
-        _kf_server_engine->InitEngine( listen->_max_queue_size );
-
-        _kf_server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
-        _kf_server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
-
         __REGISTER_RUN_FUNCTION__( &KFTcpServerModule::Run );
         ////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
+    }
 
-        kfglobal->_local_ip = listen->_local_ip;
-        kfglobal->_interanet_ip = listen->_interanet_ip;
-        kfglobal->_listen_port = _kf_net_port.CalcListenPort( listen->_type, kfglobal->_app_id, _kf_connection->GetListenPort() );
-        auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port );
+    void KFTcpServerModule::OnceRun()
+    {
+        auto kftcpsetting = FindTcpServerSetting();
+        _kf_server_engine->InitEngine( kftcpsetting->_max_queue_size );
+        _kf_server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
+        _kf_server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
+        //////////////////////////////////////////////////////////////////////////////////////////////
+
+        auto kfglobal = KFGlobal::Instance();
+        kfglobal->_listen_port = kftcpsetting->_port;
+        kfglobal->_local_ip = kftcpsetting->_local_ip;
+        kfglobal->_interanet_ip = kftcpsetting->_interanet_ip;
+        auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
             KFLogger::LogInit( KFLogger::Info, "[%s:%s|%s:%u] tcp services ok!",
@@ -162,14 +90,10 @@ namespace KFrame
             KFLogger::LogInit( KFLogger::Error, " [%s:%s|%s:%u] tcp services failed[ %d ]!",
                                kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_interanet_ip.c_str(), kfglobal->_listen_port, result );
         }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
     }
 
     void KFTcpServerModule::BeforeShut()
     {
-        _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ );
     }

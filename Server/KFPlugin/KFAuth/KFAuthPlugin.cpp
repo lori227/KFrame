@@ -19,7 +19,7 @@ namespace KFrame
     {
         _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
         _kf_channel = _kf_plugin_manage->FindModule< KFChannelInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
         _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
         _kf_http_server = _kf_plugin_manage->FindModule< KFHttpServerInterface >();
     }

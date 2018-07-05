@@ -32,18 +32,27 @@ namespace KFrame
 
     void KFHttpServer::Start( const std::string& ip, uint32 port, uint32 maxthread, uint32 maxqueue, uint32 idletime, bool keeplive )
     {
-        Poco::Net::HTTPServerParams* params = __KF_NEW__( Poco::Net::HTTPServerParams );
-        params->setKeepAlive( keeplive );
-        params->setMaxThreads( maxthread );
-        params->setMaxQueued( maxqueue );
-        params->setThreadIdleTime( idletime );
+        try
+        {
+            Poco::Net::HTTPServerParams* params = __KF_NEW__( Poco::Net::HTTPServerParams );
+            params->setKeepAlive( keeplive );
+            params->setMaxThreads( maxthread );
+            params->setMaxQueued( maxqueue );
+            params->setThreadIdleTime( idletime );
 
-        Poco::Net::SocketAddress address( ip, port );
-        Poco::Net::ServerSocket socket( address );
+            Poco::Net::SocketAddress address( ip, port );
+            Poco::Net::ServerSocket socket( address );
 
-        auto httpfactory = __KF_NEW__( KFHttpFactory, this );
-        _http_server = __KF_NEW__( Poco::Net::HTTPServer, httpfactory, socket, params );
-        _http_server->start();
+            auto httpfactory = __KF_NEW__( KFHttpFactory, this );
+            _http_server = __KF_NEW__( Poco::Net::HTTPServer, httpfactory, socket, params );
+            _http_server->start();
+        }
+        catch ( Poco::Exception& exc )
+        {
+            KFLogger::LogInit( KFLogger::Error, "init http server[%s:%u] failed[%d:%s]!",
+                               ip.c_str(), port, exc.code(), exc.message().c_str() );
+        }
+
     }
 
     void KFHttpServer::RegisterMethonFunction( const std::string& url, bool sync, KFHttpMethodFunction& function )

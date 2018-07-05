@@ -159,6 +159,7 @@ enum AckEnum
 	OperateFrequently			= 152;		// 操作太频繁, 稍后再试
 	DataNotEnough				= 153;		// 没有足够的数据
 	CompoundNotExist			= 154;		// 合成配置不存在
+	
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
 	FriendApplyCountOver		= 10001;	// 申请列表已满
@@ -191,6 +192,12 @@ enum AckEnum
 	MatchHasPrepared			= 10028;	//匹配: 已准备就绪
 	MatchHasCanceled			= 10029;	//匹配: 已取消准备
 
+}
+
+enum ChannelEnum
+{
+	Internal = 1;		// 内部测试
+	WeiXin = 2;			// 微信
 }
 
 enum SexEnum
@@ -272,12 +279,6 @@ enum RankListEnum
 	DoubleRank = 2;		// 双人榜单
 	FourRank = 3;		// 四人榜单
 	TotalRank = 4;		// 总榜单
-}
-
-enum ChannelEnum
-{
-	Internal = 1;	// 内网测试渠道
-	WeiXin = 2;		// 微信渠道
 }
 
 

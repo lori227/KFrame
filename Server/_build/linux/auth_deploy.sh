@@ -40,13 +40,13 @@ mkdir -p $deploypath/config
 #setting
 path1=$settingpath
 path2=$deploypath/setting
-copyfile 0 connection.network
+copyfile 1 server.network
+copyfile 1 ip.address
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 
 path1=$settingpath/auth
 path2=$deploypath/setting
-copyfile 1 auth.network
 copyfile 1 auth.startup
 
 #config
@@ -61,8 +61,13 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
+\cp $deploypath/KFStartup $deploypath/authserver
+\cp $deploypath/KFStartupd $deploypath/authserverd
+
 path2=$deploypath/plugin
 
+copyfile 1 KFIpAddress.so
+copyfile 1 KFIpAddressd.so
 copyfile 1 KFHttpServer.so
 copyfile 1 KFHttpServerd.so
 copyfile 1 KFHttpClient.so
@@ -75,8 +80,7 @@ copyfile 1 KFChannel.so
 copyfile 1 KFChanneld.so
 copyfile 1 KFRedis.so
 copyfile 1 KFRedisd.so
-copyfile 1 KFConnectiond.so
-copyfile 1 KFConnection.so
+
 
 
 

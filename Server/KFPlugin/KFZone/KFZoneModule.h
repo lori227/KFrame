@@ -12,7 +12,7 @@
 #include "KFrame.h"
 #include "KFZoneInterface.h"
 #include "KFConfig/KFConfigInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
 {

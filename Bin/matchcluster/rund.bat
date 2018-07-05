@@ -1,7 +1,7 @@
 @echo off
 
 echo Starting Match Cluster Server
-start "Match_Master" "KFStartupd.exe" "0" "4" "./setting/server.startup"
+start "Match_Master" "KFStartupd.exe" "0" "4" "./setting/master.startup"
 
 echo Starting Match Proxy Server
 start "Match_Proxy" "KFStartupd.exe" "0" "4001" "./setting/proxy.startup"

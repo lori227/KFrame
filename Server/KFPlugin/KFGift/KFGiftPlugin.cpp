@@ -20,9 +20,9 @@ namespace KFrame
         _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
         _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
         _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
     }
 
 }

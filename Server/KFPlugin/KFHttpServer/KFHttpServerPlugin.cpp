@@ -18,5 +18,6 @@ namespace KFrame
     void KFHttpServerPlugin::LoadModule()
     {
         _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
     }
 }

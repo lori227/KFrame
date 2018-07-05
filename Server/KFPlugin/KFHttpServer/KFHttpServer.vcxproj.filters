@@ -5,13 +5,11 @@
     <ClCompile Include="KFHttpServerConfig.cpp" />
     <ClCompile Include="KFHttpServerModule.cpp" />
     <ClCompile Include="KFHttpServerPlugin.cpp" />
-    <ClCompile Include="KFHttpPort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttpServerConfig.h" />
     <ClInclude Include="KFHttpServerInterface.h" />
     <ClInclude Include="KFHttpServerModule.h" />
     <ClInclude Include="KFHttpServerPlugin.h" />
-    <ClInclude Include="KFHttpPort.h" />
   </ItemGroup>
 </Project>

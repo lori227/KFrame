@@ -97,7 +97,6 @@ namespace KFrame
         {
             RemoveTransmitFunction( typeid( T ).name() );
         }
-        /////////////////////////////////////////////////////////////////////////////
 
     private:
         virtual void AddDiscoverFunction( const char* module, KFServerDiscoverFunction& function ) = 0;

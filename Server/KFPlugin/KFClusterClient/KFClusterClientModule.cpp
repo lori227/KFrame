@@ -15,7 +15,7 @@ namespace KFrame
 
     void KFClusterClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_cluster_client_config, false );
+        __KF_ADD_CONFIG__( _kf_cluster_config, false );
     }
 
     void KFClusterClientModule::BeforeRun()
@@ -26,9 +26,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_ACK, &KFClusterClientModule::HandleClusterAuthAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_ACK, &KFClusterClientModule::HandleClusterVerifyAck );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // 添加连接到集群服务器
-        StartClusterClient();
     }
 
     void KFClusterClientModule::BeforeShut()
@@ -67,41 +64,43 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    void KFClusterClientModule::StartClusterClient()
-    {
-        for ( auto& clustersetting : _kf_cluster_client_config->_cluster_client_setting )
-        {
-            auto kfsetting = _kf_connection->FindMasterConnection( clustersetting._name );
-            if ( kfsetting != nullptr )
-            {
-                auto kfclusterclient = _kf_cluster_client.Create( clustersetting._name );
-                kfclusterclient->StartClusterClient( this, kfsetting );
-            }
-            else
-            {
-                KFLogger::LogInit( KFLogger::Error, "[%s:%u] can not find [%s] connection!",
-                                   __FUNCTION_LINE__, clustersetting._name.c_str() );
-            }
-        }
-    }
-
     __KF_CLIENT_CONNECT_FUNCTION__( KFClusterClientModule::OnClientConnectionServer )
     {
-        for ( auto& iter : _kf_cluster_client._objects )
+        // 不能连自己的proxy
+        if ( servername == KFGlobal::Instance()->_app_name )
         {
-            auto kfclusterclient = iter.second;
-            kfclusterclient->OnConnectionClusterServer( servertype, serverid );
+            return;
         }
+
+        // 判断是否存在集群客户端
+        auto kfclusterclient = _kf_cluster_client.Find( servername );
+        if ( kfclusterclient == nullptr )
+        {
+            // 判断配置是否存在
+            auto kfsetting = _kf_cluster_config->FindClusterSetting( servername );
+            if ( kfsetting == nullptr )
+            {
+                return;
+            }
+
+            // 添加进列表
+            kfclusterclient = _kf_cluster_client.Create( servername );
+            kfclusterclient->_cluster_setting = *kfsetting;
+            kfclusterclient->_cluster_client_module = this;
+        }
+
+        kfclusterclient->OnConnectionClusterServer( servertype, serverid );
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFClusterClientModule::OnClientLostServer )
     {
-        for ( auto& iter : _kf_cluster_client._objects )
+        auto kfclusterclient = _kf_cluster_client.Find( servername );
+        if ( kfclusterclient == nullptr )
         {
-            auto kfclusterclient = iter.second;
-            kfclusterclient->OnLostClusterServer( servertype, serverid );
+            return;
         }
+
+        kfclusterclient->OnLostClusterServer( servertype, serverid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterAuthAck )
@@ -119,7 +118,7 @@ namespace KFrame
             return;
         }
 
-        kfclusterclient->ProcessClusterAuth( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port(), kfmsg.token() );
+        kfclusterclient->ProcessClusterAuth( kfmsg.name(), kfmsg.type(), kfmsg.id(),  kfmsg.ip(), kfmsg.port(), kfmsg.token() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterVerifyAck )

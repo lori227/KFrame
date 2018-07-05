@@ -147,4 +147,11 @@ namespace KFrame
     {
         return _node_list.Size();
     }
+
+    void KFHashLogic::ClearHashNode()
+    {
+        _select_list.clear();
+        _virtual_list.Clear();
+        _node_list.Clear();
+    }
 }

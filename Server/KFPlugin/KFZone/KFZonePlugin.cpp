@@ -16,7 +16,7 @@ namespace KFrame
     void KFZonePlugin::LoadModule()
     {
         _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
     }
 
 }

@@ -19,12 +19,13 @@ namespace KFrame
 
         _uv_server.data = this;
         uv_tcp_init( _uv_loop, &_uv_server );
-        uv_tcp_nodelay( &_uv_server, 1 );
-        uv_tcp_keepalive( &_uv_server, 1, 20 );
     }
 
     int32 KFNetServerServices::StartServices( const KFNetSetting* kfsetting )
     {
+        uv_tcp_nodelay( &_uv_server, 1 );
+        uv_tcp_keepalive( &_uv_server, 1, kfsetting->_timeout );
+
         sockaddr_in addr;
         uv_ip4_addr( kfsetting->_ip.c_str(), kfsetting->_port, &addr );
         uv_tcp_bind( &_uv_server, reinterpret_cast< const sockaddr* >( &addr ), 0 );

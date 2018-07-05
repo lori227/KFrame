@@ -8,6 +8,13 @@ namespace KFrame
     class KFTcpClientInterface : public KFModule
     {
     public:
+        // 添加连接
+        virtual void StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port ) = 0;
+
+        // 断开连接
+        virtual void CloseClient( uint32 serverid ) = 0;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message ) = 0;
         virtual bool SendNetMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
@@ -27,14 +34,6 @@ namespace KFrame
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;
 
-        // 添加连接
-        virtual void StartClient( const std::string& servertype, uint32 serverid, const std::string& name, const std::string& ip, uint32 port ) = 0;
-
-        // 断开连接
-        virtual void CloseClient( uint32 serverid ) = 0;
-
-        // 添加需要连接的类型
-        virtual void AddNeedConnection( const std::string& servername, const std::string& servertype ) = 0;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加注册回调函数

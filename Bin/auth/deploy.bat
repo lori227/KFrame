@@ -24,12 +24,16 @@ call :copyfile 1 log4cxxd.dll
 call :copyfile 1 log4cxx.dll
 call :copyfile 1 libcrypto-1_1-x64.dll
 call :copyfile 1 libssl-1_1-x64.dll
+
+copy /y KFStartup.exe authserver.exe
+copy /y KFStartupd.exe authserverd.exe
 rem ===========================================================================
 rem ===========================================================================
 rem »´æ÷≈‰÷√
 set path1=..\..\Source\_bin\setting
 set path2=setting
-call :copyfile 0 connection.network
+call :copyfile 0 ip.address
+call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 rem ===========================================================================
@@ -37,7 +41,6 @@ rem ===========================================================================
 rem ≈‰÷√ƒø¬º
 set path1=..\..\Source\_bin\setting\auth
 set path2=setting
-call :copyfile 1 auth.network
 call :copyfile 1 auth.startup
 
 rem config
@@ -62,8 +65,8 @@ call :copyfile 1 KFHttpClient.dll
 call :copyfile 1 KFConfigd.dll
 call :copyfile 1 KFConfig.dll
 
-call :copyfile 1 KFConnection.dll
-call :copyfile 1 KFConnectiond.dll
+call :copyfile 1 KFIpAddress.dll
+call :copyfile 1 KFIpAddressd.dll
 
 call :copyfile 1 KFAuthd.dll
 call :copyfile 1 KFAuth.dll

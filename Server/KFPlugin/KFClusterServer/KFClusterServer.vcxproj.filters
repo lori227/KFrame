@@ -5,11 +5,13 @@
     <ClCompile Include="KFClusterServerModule.cpp" />
     <ClCompile Include="KFClusterServerPlugin.cpp" />
     <ClCompile Include="KFClusterServerManage.cpp" />
+    <ClCompile Include="KFClusterServerConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterServerManage.h" />
     <ClInclude Include="KFClusterServerModule.h" />
     <ClInclude Include="KFClusterServerPlugin.h" />
     <ClInclude Include="KFClusterServerInterface.h" />
+    <ClInclude Include="KFClusterServerConfig.h" />
   </ItemGroup>
 </Project>

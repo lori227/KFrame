@@ -38,7 +38,7 @@ namespace KFrame
         sendjson.SetValue( KFField::_gift_key, kfmsg.giftkey() );
         sendjson.SetValue( KFField::_server_id, _kf_zone->GetZone()->_id );
 
-        static auto url = _kf_connection->FindPlatformAddress( playerid ) + KFField::_gift;
+        static auto url = _kf_ip_address->FindPlatformAddress( playerid ) + KFField::_gift;
         _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFGiftModule::HandleReceiveGiftResult );
     }
 

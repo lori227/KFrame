@@ -4,11 +4,12 @@ cd /data/auth
 
 server=authserver
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=authserverd
 else
-\cp KFStartup $server
+server=authserver
 fi
 
 echo Starting Auth Server
 ./$server 0 1 ./setting/auth.startup
 cd $basepath
+~                 

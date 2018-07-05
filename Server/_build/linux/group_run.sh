@@ -1,16 +1,15 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/groupcluster
-server=groupserver
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=groupserverd
 else
-\cp KFStartup $server
+server=groupserver
 fi
 
 echo Starting Cluster Server
-./$server 0 8 ./setting/server.startup
+./$server 0 8 ./setting/master.startup
 
 echo Starting Proxy Server
 ./$server 0 8001 ./setting/proxy.startup

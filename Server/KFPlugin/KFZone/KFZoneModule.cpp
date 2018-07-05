@@ -19,11 +19,14 @@ namespace KFrame
 
     void KFZoneModule::AfterLoad()
     {
-        auto id = ( _kf_zone_config->_kf_zone._id + 1000 ) * 1000;
-        KFGlobal::Instance()->_app_id += id;
+        auto kfglobal = KFGlobal::Instance();
+        auto kfzone = &_kf_zone_config->_kf_zone;
 
-        // 修改id
-        _kf_connection->SetMasterConnection( KFField::_zone, _kf_zone_config->_kf_zone._id );
+        auto id = kfglobal->_app_id % 1000;
+        kfglobal->_app_id = id + ( kfzone->_id + 1000 ) * 1000;
+
+        // 修改服务器ip
+        _kf_ip_address->SetZoneIpAddress( kfzone->_id, kfglobal->_app_id, kfzone->_ip );
     }
 
     void KFZoneModule::BeforeShut()

@@ -1,7 +1,7 @@
 
 
 echo Starting Battle Cluster Server
-start "Battle_Master" "KFStartupd.exe" "0" "5" "./setting/server.startup"
+start "Battle_Master" "KFStartupd.exe" "0" "5" "./setting/master.startup"
 
 echo Starting Battle Proxy Server
 start "Battle_Proxy" "KFStartupd.exe" "0" "5001" "./setting/proxy.startup"

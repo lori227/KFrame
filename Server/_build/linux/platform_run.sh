@@ -1,11 +1,11 @@
 
 basepath=$(cd `dirname $0`; pwd)
 cd /data/platform
-server=platformserver
+
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=platformserverd
 else
-\cp KFStartup $server
+server=platformserver
 fi
 
 echo Starting Platform Server

@@ -53,7 +53,7 @@ namespace KFrame
         sendjson.SetValue( KFField::_zone_id, _kf_zone->GetZone()->_id );
         sendjson.SetValue( KFField::_url, _kf_http_server->GetHttpUrl() );
 
-        auto url = _kf_connection->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_zone_http;
+        auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_zone_http;
         auto recvdata = _kf_http_client->StartSTHttpClient( url, sendjson, true );
 
         // 处理验证结果
@@ -159,7 +159,7 @@ namespace KFrame
 
     void KFWorldModule::UpdateOnlineToPlatfrom( uint32 accountid, uint32 playerid, uint32 online )
     {
-        static auto _url = _kf_connection->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_online_zone;
+        static auto _url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_online_zone;
 
         // 在线服务器
         KFJson sendjson;

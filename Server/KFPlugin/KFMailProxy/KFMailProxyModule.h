@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailProxyInterface.h"
 #include "KFMessage/KFMessageInterface.h"

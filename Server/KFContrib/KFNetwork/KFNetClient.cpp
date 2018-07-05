@@ -49,9 +49,6 @@ namespace KFrame
     {
         _uv_connect_timer.data = this;
         uv_timer_start( &_uv_connect_timer, OnTimerConnectCallBack, time, 0 );
-
-        KFLogger::LogNet( KFLogger::Debug, "[%s] client[%u] start connect timer[%u]!",
-                          __FUNCTION__, _net_setting._id, time );
     }
 
     void KFNetClient::OnTimerConnectCallBack( uv_timer_t* handle )

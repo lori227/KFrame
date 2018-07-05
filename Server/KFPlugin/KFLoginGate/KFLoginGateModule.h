@@ -16,7 +16,7 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame

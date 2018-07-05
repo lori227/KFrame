@@ -33,6 +33,9 @@ namespace KFrame
 
         // 节点数量
         uint32 GetHashNodeCount();
+
+        // 清空
+        void ClearHashNode();
     private:
         // Hash 逻辑
         KFHashLogic* _hash_logic;

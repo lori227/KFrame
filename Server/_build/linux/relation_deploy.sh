@@ -38,17 +38,19 @@ mkdir -p $deploypath/config
 #setting
 path1=$settingpath
 path2=$deploypath/setting
-copyfile 0 connection.network
+copyfile 1 ip.address
+copyfile 1 bus.relation
+copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 
+path2=$deploypath/config
+copyfile 1 cluster.config
+
 path1=$settingpath/relation
 path2=$deploypath/setting
-copyfile 1 server.network
-copyfile 1 server.startup
-copyfile 1 proxy.network
+copyfile 1 master.startup
 copyfile 1 proxy.startup
-copyfile 1 shard.network
 copyfile 1 shard.startup
 
 path1=$respath/config
@@ -62,7 +64,14 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
+\cp $deploypath/KFStartup $deploypath/relationserver
+\cp $deploypath/KFStartupd $deploypath/relationserverd
+
 path2=$deploypath/plugin
+copyfile 1 KFBus.so
+copyfile 1 KFBusd.so
+copyfile 1 KFIpAddress.so
+copyfile 1 KFIpAddressd.so
 copyfile 1 KFHttpClient.so
 copyfile 1 KFHttpClientd.so
 copyfile 1 KFTcpServer.so
@@ -89,8 +98,6 @@ copyfile 1 KFRelationShard.so
 copyfile 1 KFRelationShardd.so
 copyfile 1 KFRedis.so
 copyfile 1 KFRedisd.so
-copyfile 1 KFConnection.so
-copyfile 1 KFConnectiond.so
 copyfile 1 KFScheduled.so
 copyfile 1 KFSchedule.so
 copyfile 1 KFDisplayd.so

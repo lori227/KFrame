@@ -256,6 +256,25 @@ inline bool AckEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<AckEnum>(
     AckEnum_descriptor(), name, value);
 }
+enum ChannelEnum {
+  Internal = 1,
+  WeiXin = 2
+};
+LIBPROTOC_EXPORT bool ChannelEnum_IsValid(int value);
+const ChannelEnum ChannelEnum_MIN = Internal;
+const ChannelEnum ChannelEnum_MAX = WeiXin;
+const int ChannelEnum_ARRAYSIZE = ChannelEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor();
+inline const ::std::string& ChannelEnum_Name(ChannelEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ChannelEnum_descriptor(), value);
+}
+inline bool ChannelEnum_Parse(
+    const ::std::string& name, ChannelEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ChannelEnum>(
+    ChannelEnum_descriptor(), name, value);
+}
 enum SexEnum {
   Unknow = 0,
   Male = 1,
@@ -477,25 +496,6 @@ inline bool RankListEnum_Parse(
     const ::std::string& name, RankListEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<RankListEnum>(
     RankListEnum_descriptor(), name, value);
-}
-enum ChannelEnum {
-  Internal = 1,
-  WeiXin = 2
-};
-LIBPROTOC_EXPORT bool ChannelEnum_IsValid(int value);
-const ChannelEnum ChannelEnum_MIN = Internal;
-const ChannelEnum ChannelEnum_MAX = WeiXin;
-const int ChannelEnum_ARRAYSIZE = ChannelEnum_MAX + 1;
-
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor();
-inline const ::std::string& ChannelEnum_Name(ChannelEnum value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    ChannelEnum_descriptor(), value);
-}
-inline bool ChannelEnum_Parse(
-    const ::std::string& name, ChannelEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<ChannelEnum>(
-    ChannelEnum_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -5328,6 +5328,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::AckEnum>() {
   return ::KFMsg::AckEnum_descriptor();
 }
 template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ChannelEnum>() {
+  return ::KFMsg::ChannelEnum_descriptor();
+}
+template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::SexEnum>() {
   return ::KFMsg::SexEnum_descriptor();
 }
@@ -5370,10 +5374,6 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::WishStateEnum>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RankListEnum>() {
   return ::KFMsg::RankListEnum_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ChannelEnum>() {
-  return ::KFMsg::ChannelEnum_descriptor();
 }
 
 }  // namespace google

@@ -4,13 +4,13 @@ cd /data/guildcluster
 server=guildserver
 
 if [ "$1" = "debug" ]; then
-\cp KFStartupd $server
+server=guildserverd
 else
-\cp KFStartup $server
+server=guildserver
 fi
 
 echo Starting Cluster Server
-./$server 0 9 ./setting/server.startup
+./$server 0 9 ./setting/master.startup
 
 echo Starting Proxy Server
 ./$server 0 9001 ./setting/proxy.startup

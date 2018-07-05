@@ -41,7 +41,7 @@ namespace KFrame
         return kfnode;
     }
 
-    bool KFNode::GetBoolen( const char* key, bool optional /* = false */ )
+    bool KFNode::GetBoolen( const char* key, bool optional /* = false */, bool defaultvale /* = false */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
@@ -52,7 +52,7 @@ namespace KFrame
             {
                 KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
             }
-            return false;
+            return defaultvale;
         }
 
         return KFUtility::ToValue<uint32>( attribute->value() ) == 1;

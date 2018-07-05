@@ -17,7 +17,7 @@ namespace KFrame
     {
         _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
         _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
         _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
         _kf_http_server = _kf_plugin_manage->FindModule<KFHttpServerInterface >();

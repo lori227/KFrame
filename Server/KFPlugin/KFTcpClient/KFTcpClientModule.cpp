@@ -1,8 +1,5 @@
 ﻿#include "KFTcpClientModule.h"
-#include "KFTcpClientConfig.h"
 #include "KFProtocol/KFProtocol.h"
-
-
 
 namespace KFrame
 {
@@ -19,7 +16,6 @@ namespace KFrame
 
     void KFTcpClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_client_config, false );
         _kf_client_engine = __KF_NEW__( KFNetClientEngine );
     }
 
@@ -27,39 +23,21 @@ namespace KFrame
     {
         __REGISTER_RUN_FUNCTION__( &KFTcpClientModule::Run );
 
-        _kf_client_engine->InitEngine( _kf_client_config->_max_queue_size );
+        _kf_client_engine->InitEngine( 10000 );
 
         _kf_client_engine->BindNetFunction( this, &KFTcpClientModule::HandleNetMessage );
         _kf_client_engine->BindConnectFunction( this, &KFTcpClientModule::OnClientConnected );
         _kf_client_engine->BindDisconnectFunction( this, &KFTcpClientModule::OnClientDisconnect );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 启动网络
-        auto kfconnection = _kf_connection->FindMasterConnection( _kf_client_config->_kf_master_connection._name );
-        if ( kfconnection != nullptr )
-        {
-            StartNetClient( kfconnection );
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK, &KFTcpClientModule::HandleRegisterAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &KFTcpClientModule::HanldeTellRegisterToServer );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &KFTcpClientModule::HanldeTellUnRegisterFromServer );
-    }
-
-    void KFTcpClientModule::BeforeShut()
-    {
-        ////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER );
     }
 
     void KFTcpClientModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
         __UNREGISTER_RUN_FUNCTION__();
-
+        ////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
         _kf_client_engine->ShutEngine();
     }
 
@@ -93,22 +71,6 @@ namespace KFrame
     __KF_CLIENT_LOST_FUNCTION__( KFTcpClientModule::OnClientDisconnect )
     {
         CallClientLostFunction( serverid, servername, servertype );
-    }
-
-    void KFTcpClientModule::StartNetClient( const KFConnection* connection )
-    {
-        if ( !connection->IsValid() )
-        {
-            return;
-        }
-
-        auto port = connection->_port;
-        if ( port == 0 )
-        {
-            port = _kf_connection->GetListenPort() + connection->_id;
-        }
-
-        _kf_client_engine->StartClient( connection->_type, connection->_id, connection->_name, connection->_ip, port );
     }
 
     void KFTcpClientModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message )
@@ -202,19 +164,34 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFTcpClientModule::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
+    {
+        if ( IsSelfConnection( name, type, id ) )
+        {
+            return;
+        }
+
+        _kf_client_engine->StartClient( name, type, id, ip, port );
+    }
+
+    bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint32 id )
+    {
+        auto kfglobal = KFGlobal::Instance();
+
+        if ( name == kfglobal->_app_name &&
+                type == kfglobal->_app_type &&
+                id == kfglobal->_app_id )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     void KFTcpClientModule::CloseClient( uint32 serverid )
     {
         _kf_client_engine->CloseClient( serverid );
     }
-
-    void KFTcpClientModule::AddNeedConnection( const std::string& servername, const std::string& servertype )
-    {
-        KFConnection connection;
-        connection._type = servertype;
-        connection._name = servername;
-        _kf_client_config->_kf_connections.push_back( connection );
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTcpClientModule::AddConnectionFunction( const char* name, KFClientConnectionFunction& function )
@@ -248,7 +225,7 @@ namespace KFrame
         _kf_lost_function.Remove( name );
     }
 
-    void KFTcpClientModule::CallClientLostFunction( uint32 serverid, const std::string& servertype, const std::string& servername )
+    void KFTcpClientModule::CallClientLostFunction( uint32 serverid, const std::string& servername, const std::string& servertype )
     {
         for ( auto& iter : _kf_lost_function._objects )
         {
@@ -268,42 +245,6 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpClientModule::StartClient( const std::string& servertype, uint32 serverid, const std::string& name, const std::string& ip, uint32 port )
-    {
-        if ( port == 0 )
-        {
-            port = _kf_connection->GetListenPort() + serverid;
-        }
-
-        _kf_client_engine->StartClient( servertype, serverid, name, ip, port );
-    }
-
-    void KFTcpClientModule::StartNetConnection( const KFMsg::ListenData* listendata )
-    {
-        if ( !_kf_client_config->NeedToConnection( listendata->appname(), listendata->apptype(), listendata->appid() ) )
-        {
-            return;
-        }
-
-        _kf_client_engine->StartClient( listendata->apptype(), listendata->appid(), listendata->appname(), listendata->ip(), listendata->port() );
-    }
-
-    // 通知有客户端注册
-    __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HanldeTellRegisterToServer )
-    {
-        __PROTO_PARSE__( KFMsg::TellRegisterToServer );
-
-        auto listendata = &kfmsg.listen();
-        StartNetConnection( listendata );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HanldeTellUnRegisterFromServer )
-    {
-        __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
-
-        CloseClient( kfmsg.appid() );
-    }
-
     // 注册回馈
     __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HandleRegisterAck )
     {
@@ -321,7 +262,7 @@ namespace KFrame
         {
             auto kfsetting = &kfclient->_net_setting;
 
-            KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] register ok!",
+            KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] connect ok!",
                                  servername.c_str(), servertype.c_str(), serverid, kfsetting->_ip.c_str(), kfsetting->_port );
         }
     }

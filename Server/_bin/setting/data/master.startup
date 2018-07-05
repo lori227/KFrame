@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="data" AppType="master">
+	<Plugins>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>				
+		<Plguin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="30" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFClusterServer" Startup="1" Sort="50" Debug="KFClusterServerd" Release="KFClusterServer" Config="./config/cluster.config"/>
+	</Plugins>
+</Setting>

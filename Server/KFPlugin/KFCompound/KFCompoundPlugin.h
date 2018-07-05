@@ -1,4 +1,4 @@
-#ifndef __KF_COMPOUND_PLUGIN_H__
+﻿#ifndef __KF_COMPOUND_PLUGIN_H__
 #define __KF_COMPOUND_PLUGIN_H__
 #include "KFrame.h"
 

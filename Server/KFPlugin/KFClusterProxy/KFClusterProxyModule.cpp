@@ -23,8 +23,6 @@ namespace KFrame
         __REGISTER_AFTER_RUN_FUNCTION__( &KFClusterProxyModule::AfterRun );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_tcp_client->AddNeedConnection( KFGlobal::Instance()->_app_name, KFField::_shard );
-
         _kf_tcp_client->RegisterLostFunction( this, &KFClusterProxyModule::OnClientLostServer );
 
         _kf_tcp_client->RegisterConnectionFunction( this, &KFClusterProxyModule::OnClientConnectionServer );

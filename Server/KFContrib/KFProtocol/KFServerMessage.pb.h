@@ -132,6 +132,8 @@ class S2SJoinRankListReq;
 class S2SQueryWholeRankListReq;
 class S2SQueryFriendRankListReq;
 class S2SQueryRankListAck;
+class S2SUpdateZoneToRankProxyReq;
+class S2STransmitToRankShardReq;
 
 enum ServerProtocol {
   S2S_TRANSMIT_MESSAGE_REQ = 21001,
@@ -226,11 +228,13 @@ enum ServerProtocol {
   S2S_JOIN_RANK_LIST_REQ = 21186,
   S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187,
   S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188,
-  S2S_QUERY_RANK_LIST_ACK = 21189
+  S2S_QUERY_RANK_LIST_ACK = 21189,
+  S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190,
+  S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
 const ServerProtocol ServerProtocol_MIN = S2S_TRANSMIT_MESSAGE_REQ;
-const ServerProtocol ServerProtocol_MAX = S2S_QUERY_RANK_LIST_ACK;
+const ServerProtocol ServerProtocol_MAX = S2S_TRANSMIT_TO_RANK_SHARD_REQ;
 const int ServerProtocol_ARRAYSIZE = ServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerProtocol_descriptor();
@@ -10577,6 +10581,198 @@ class LIBPROTOC_EXPORT S2SQueryRankListAck : public ::google::protobuf::Message 
   void InitAsDefaultInstance();
   static S2SQueryRankListAck* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SUpdateZoneToRankProxyReq : public ::google::protobuf::Message {
+ public:
+  S2SUpdateZoneToRankProxyReq();
+  virtual ~S2SUpdateZoneToRankProxyReq();
+
+  S2SUpdateZoneToRankProxyReq(const S2SUpdateZoneToRankProxyReq& from);
+
+  inline S2SUpdateZoneToRankProxyReq& operator=(const S2SUpdateZoneToRankProxyReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SUpdateZoneToRankProxyReq& default_instance();
+
+  void Swap(S2SUpdateZoneToRankProxyReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SUpdateZoneToRankProxyReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SUpdateZoneToRankProxyReq& from);
+  void MergeFrom(const S2SUpdateZoneToRankProxyReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 zoneid = 1;
+  inline int zoneid_size() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 1;
+  inline ::google::protobuf::uint32 zoneid(int index) const;
+  inline void set_zoneid(int index, ::google::protobuf::uint32 value);
+  inline void add_zoneid(::google::protobuf::uint32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      zoneid() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_zoneid();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateZoneToRankProxyReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > zoneid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SUpdateZoneToRankProxyReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STransmitToRankShardReq : public ::google::protobuf::Message {
+ public:
+  S2STransmitToRankShardReq();
+  virtual ~S2STransmitToRankShardReq();
+
+  S2STransmitToRankShardReq(const S2STransmitToRankShardReq& from);
+
+  inline S2STransmitToRankShardReq& operator=(const S2STransmitToRankShardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STransmitToRankShardReq& default_instance();
+
+  void Swap(S2STransmitToRankShardReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2STransmitToRankShardReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2STransmitToRankShardReq& from);
+  void MergeFrom(const S2STransmitToRankShardReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 zoneid = 1;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 1;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 msgid = 2;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 2;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 3;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 3;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STransmitToRankShardReq)
+ private:
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 zoneid_;
+  ::google::protobuf::uint32 msgid_;
+  ::std::string* msgdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2STransmitToRankShardReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -19999,6 +20195,153 @@ inline bool S2SQueryRankListAck::isfriendrank() const {
 inline void S2SQueryRankListAck::set_isfriendrank(bool value) {
   set_has_isfriendrank();
   isfriendrank_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SUpdateZoneToRankProxyReq
+
+// repeated uint32 zoneid = 1;
+inline int S2SUpdateZoneToRankProxyReq::zoneid_size() const {
+  return zoneid_.size();
+}
+inline void S2SUpdateZoneToRankProxyReq::clear_zoneid() {
+  zoneid_.Clear();
+}
+inline ::google::protobuf::uint32 S2SUpdateZoneToRankProxyReq::zoneid(int index) const {
+  return zoneid_.Get(index);
+}
+inline void S2SUpdateZoneToRankProxyReq::set_zoneid(int index, ::google::protobuf::uint32 value) {
+  zoneid_.Set(index, value);
+}
+inline void S2SUpdateZoneToRankProxyReq::add_zoneid(::google::protobuf::uint32 value) {
+  zoneid_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+S2SUpdateZoneToRankProxyReq::zoneid() const {
+  return zoneid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+S2SUpdateZoneToRankProxyReq::mutable_zoneid() {
+  return &zoneid_;
+}
+
+// -------------------------------------------------------------------
+
+// S2STransmitToRankShardReq
+
+// required uint32 zoneid = 1;
+inline bool S2STransmitToRankShardReq::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2STransmitToRankShardReq::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2STransmitToRankShardReq::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2STransmitToRankShardReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2STransmitToRankShardReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2STransmitToRankShardReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 msgid = 2;
+inline bool S2STransmitToRankShardReq::has_msgid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2STransmitToRankShardReq::set_has_msgid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2STransmitToRankShardReq::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2STransmitToRankShardReq::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2STransmitToRankShardReq::msgid() const {
+  return msgid_;
+}
+inline void S2STransmitToRankShardReq::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 3;
+inline bool S2STransmitToRankShardReq::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2STransmitToRankShardReq::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2STransmitToRankShardReq::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2STransmitToRankShardReq::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2STransmitToRankShardReq::msgdata() const {
+  return *msgdata_;
+}
+inline void S2STransmitToRankShardReq::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToRankShardReq::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToRankShardReq::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2STransmitToRankShardReq::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2STransmitToRankShardReq::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2STransmitToRankShardReq::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 

@@ -11,14 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTcpClientConfig.h" />
     <ClInclude Include="KFTcpClientInterface.h" />
     <ClInclude Include="KFTcpClientModule.h" />
     <ClInclude Include="KFTcpClientPlugin.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTcpClientConfig.cpp" />
     <ClCompile Include="KFTcpClientModule.cpp" />
     <ClCompile Include="KFTcpClientPlugin.cpp" />
   </ItemGroup>

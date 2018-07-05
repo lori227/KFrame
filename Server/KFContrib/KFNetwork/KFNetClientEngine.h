@@ -24,7 +24,7 @@ namespace KFrame
         void RunEngine( uint64 nowtime );
 
         // 开始一个客户端
-        void StartClient( const std::string& type, uint32 id, const std::string& name, const std::string& ip, uint32 port );
+        void StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port );
 
         // 关闭一个客户端
         void CloseClient( uint32 id );

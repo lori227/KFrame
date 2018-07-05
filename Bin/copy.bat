@@ -4,6 +4,9 @@ set path1=E:\Work\Server\Bin
 set path2=.
 xcopy /y %path1%\*.bat %path2%\
 
+if not exist deploy (mkdir deploy)
+xcopy /y %path1%\deploy\*.bat %path2%\deploy
+
 if not exist auth (mkdir auth)
 xcopy /y %path1%\auth\*.bat %path2%\auth
 

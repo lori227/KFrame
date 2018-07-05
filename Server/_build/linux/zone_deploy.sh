@@ -39,26 +39,27 @@ mkdir -p $deploypath/script
 #setting
 path1=$settingpath
 path2=$deploypath/setting
-copyfile 0 connection.network
+copyfile 1 ip.address
+copyfile 1 bus.relation
+copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
+
+path2=$deploypath/config
+copyfile 1 cluster.config
 
 path1=$settingpath/zone
 path2=$deploypath/setting
 copyfile 0 zone.config
 
-copyfile 0 gate.network
 copyfile 1 gate.startup
-copyfile 1 login.network
 copyfile 1 login.startup
-copyfile 1 master.network
 copyfile 1 master.startup
-copyfile 0 proxy.network
 copyfile 1 proxy.startup
-copyfile 1 game.network
 copyfile 1 game.startup
-copyfile 1 world.network
 copyfile 1 world.startup
+
+
 
 #config
 \cp $respath/config/*.config $deploypath/config/
@@ -72,6 +73,9 @@ path1=$binpath
 path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
+
+\cp $deploypath/KFStartup $deploypath/zoneserver
+\cp $deploypath/KFStartupd $deploypath/zoneserverd
 
 path1=$binpath
 path2=$deploypath/plugin

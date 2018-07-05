@@ -24,6 +24,7 @@
     <ClCompile Include="KFCommonMessage.pb.cc" />
     <ClCompile Include="KFBattleMessage.pb.cc" />
     <ClCompile Include="KFDataMessage.pb.cc" />
+    <ClCompile Include="KFDeployMessage.pb.cc" />
     <ClCompile Include="KFFrameMessage.pb.cc" />
     <ClCompile Include="KFMatchMessage.pb.cc" />
     <ClCompile Include="KFProtocol.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="KFCommonMessage.pb.h" />
     <ClInclude Include="KFBattleMessage.pb.h" />
     <ClInclude Include="KFDataMessage.pb.h" />
+    <ClInclude Include="KFDeployMessage.pb.h" />
     <ClInclude Include="KFFrameMessage.pb.h" />
     <ClInclude Include="KFMatchMessage.pb.h" />
     <ClInclude Include="KFProtocol.h" />

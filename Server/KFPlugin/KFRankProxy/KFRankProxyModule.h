@@ -11,7 +11,6 @@
 
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
 #include "KFRankProxyInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"

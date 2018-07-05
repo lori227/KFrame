@@ -14,9 +14,9 @@
 #include "KFAuthInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFChannel/KFChannelInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
 {

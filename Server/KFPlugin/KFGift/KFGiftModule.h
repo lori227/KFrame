@@ -16,8 +16,8 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFConnection/KFConnectionInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
 {

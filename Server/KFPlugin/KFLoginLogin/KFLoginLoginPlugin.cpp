@@ -18,10 +18,10 @@ namespace KFrame
     {
         _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
         _kf_login = _kf_plugin_manage->FindModule< KFLoginInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
         _kf_data = _kf_plugin_manage->FindModule< KFDataClientInterface >();
+        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
+        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
     }
 }

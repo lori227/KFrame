@@ -2,43 +2,51 @@
 <Config>
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
 	<!--Port 端口-->
-	<!--InteranetIp 外网ip -->
 	<!--KeepAlive 是否保持连接-->
 	<!--MaxThread 最大线程数量-->
 	<!--MaxQueue 最大队列数量-->
 	<!--IdleTime 空闲时间-->
 
 	<!-- http服务器配置 -->
-	<HttpServer>
+	<HttpServer KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000">
 		<!-- 认证服务器 -->
-		<Server AppName="auth" AppType="auth" Type="1" Port="7776" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
+		<Server AppName="auth" AppType="auth" Type="1" Port="7776" />
 		
 		<!-- 账号服务器 -->
-		<Server AppName="platform" AppType="platform" Type="1" Port="8000" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
+		<Server AppName="platform" AppType="platform" Type="1" Port="8000"/>
 
 		<!-- world服务器 -->
-		<Server AppName="zone" AppType="world" Type="1" Port="9000" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>	
+		<Server AppName="zone" AppType="world" Type="1" Port="9000"/>	
 
 		<!-- deploy 服务器 -->
-		<Server AppName="deploy" AppType="server" Type="0" Port="9999" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>	
+		<Server AppName="deploy" AppType="server" Type="0" Port="9999"/>	
 	</HttpServer>
 
+
+	<!-- AppName 服务器名字-- >
+	<!-- AppType 服务器类型-- >
+	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
+	<!-- Port 端口 -->
+	<!-- InteranetIp 外网ip 127.0.0.1 提供局域网ip  0.0.0.0 提供公网ip-->
+	<!-- MaxQueue 最大队列数量 默认20000-->
+	<!-- TimeOut 掉线监测时间 默认20 -->
+	
 	<!-- tcp服务器配置 -->
-	<TcpServer>
+	<TcpServer MaxQueue="20000">
 		<!-- 通用服务器 -->
-		<Server AppName="*" AppType="*" InteranetIp="127.0.0.1" Type="2" Port="12000" MaxQueue="20000"/>
+		<Server AppName="*" AppType="*" InteranetIp="127.0.0.1" Type="2" Port="12000"/>
 
 		<!-- master服务器 -->
-		<Server AppName="*" AppType="master" InteranetIp="127.0.0.1" MaxQueue="20000"/>
+		<Server AppName="*" AppType="master" InteranetIp="127.0.0.1"/>
 
 		<!-- deploy server 服务器-->
-		<Server AppName="deploy" AppType="server" InteranetIp="127.0.0.1" MaxQueue="20000"/>
+		<Server AppName="deploy" AppType="server" InteranetIp="127.0.0.1"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="gate" InteranetIp="0.0.0.0" Type="2" Port="12000" MaxQueue="200"/>
+		<Server AppName="zone" AppType="gate" InteranetIp="127.0.0.1" Type="2" Port="12000" MaxQueue="200"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="proxy" InteranetIp="0.0.0.0" Type="2" Port="12000" MaxQueue="200"/>	
+		<Server AppName="zone" AppType="proxy" InteranetIp="127.0.0.1" Type="2" Port="12000" MaxQueue="200"/>	
 	</TcpServer>
 </Config>
 

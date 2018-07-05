@@ -16,10 +16,11 @@ namespace KFrame
 
     void KFClusterClientPlugin::LoadModule()
     {
+        _kf_bus = _kf_plugin_manage->FindModule< KFBusInterface >();
         _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
         _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
         _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
+        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
     }
 }

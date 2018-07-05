@@ -2,7 +2,6 @@
 #define __KF_ZONE_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
 #include "KFZoneInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 

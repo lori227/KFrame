@@ -16,8 +16,8 @@ namespace KFrame
 
     void KFClusterServerPlugin::LoadModule()
     {
+        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
         _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
         _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_connection = _kf_plugin_manage->FindModule< KFConnectionInterface >();
     }
 }

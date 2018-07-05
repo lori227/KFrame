@@ -102,6 +102,9 @@ enum ServerProtocol
 	S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187;			// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
 	S2S_QUERY_RANK_LIST_ACK	= 21189;				// 查询排行榜数据反馈
+ 
+ 	S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190;			// 更新zone信息到rankproxy
+	S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191;				// 转发消息到rank数据库
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -998,4 +1001,19 @@ message S2SQueryRankListAck
 	required string ranktype = 3;		// 榜单类型
 	optional PBRankData rankdatas = 4;	// 榜单数据
 	optional bool isfriendrank = 5;		// 是否是好友榜单
+}
+
+
+// S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ
+message S2SUpdateZoneToRankProxyReq
+{
+	repeated uint32 zoneid = 1;
+}
+
+// S2S_TRANSMIT_TO_RANK_SHARD_REQ
+message S2STransmitToRankShardReq
+{
+	required uint32 zoneid = 1;
+	required uint32 msgid = 2;
+	required string msgdata = 3;
 }

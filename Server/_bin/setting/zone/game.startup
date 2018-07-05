@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="zone" AppType="game">
 	<Plugins>
-		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
+		<Plguin Name="KFConfig" Startup="1" Sort="11" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>		
 		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFDisplay" Startup="1" Sort="21" Debug="KFDisplayd" Release="KFDisplay" Config=""/>	
 		<Plguin Name="KFOption" Startup="1" Sort="22" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
@@ -10,9 +11,9 @@
 		<Plguin Name="KFHttpClient" Startup="1" Sort="31" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
 		<Plguin Name="KFGame" Startup="1" Sort="40" Debug="KFGamed" Release="KFGame" Config=""/>
 		<Plguin Name="KFZone" Startup="1" Sort="41" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/game.network"/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="60" Debug="KFTcpClientd" Release="KFTcpClient" Config="./setting/game.network"/>
-		<Plguin Name="KFClusterClient" Startup="1" Sort="70" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/game.network"/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="60" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFClusterClient" Startup="1" Sort="70" Debug="KFClusterClientd" Release="KFClusterClient" Config="./config/cluster.config"/>
 		<Plguin Name="KFRouteClient" Startup="1" Sort="71" Debug="KFRouteClientd" Release="KFRouteClient" Config=""/>
 		<Plguin Name="KFLoginGame" Startup="1" Sort="80" Debug="KFLoginGamed" Release="KFLoginGame" Config=""/>
 		<Plguin Name="KFLua" Startup="1" Sort="90" Debug="KFLuad" Release="KFLua" Config=""/>
@@ -33,5 +34,6 @@
 		<Plguin Name="KFAchieve" Startup="1" Sort="220" Debug="KFAchieved" Release="KFAchieve" Config="./config/achieve.config"/>
 		<Plguin Name="KFGroupClient" Startup="1" Sort="230" Debug="KFGroupClientd" Release="KFGroupClient" Config="./config/group.config"/>
 		<Plguin Name="KFStore" Startup="1" Sort="240" Debug="KFStored" Release="KFStore" Config="./config/store.config"/>
+		<Plguin Name="KFRankClient" Startup="1" Sort="250" Debug="KFRankClientd" Release="KFRankClient" Config=""/>
 	</Plugins>
 </Setting>

@@ -26,6 +26,7 @@ namespace KFrame
             _kf_zone._type = xmlnode.GetUInt32( "Type" );
             _kf_zone._name = xmlnode.GetString( "Name" );
             _kf_zone._logic_id = xmlnode.GetUInt32( "LogicId", true, _kf_zone._id );
+            _kf_zone._ip = xmlnode.GetString( "Ip" );
         }
         catch ( ... )
         {
