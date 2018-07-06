@@ -21,7 +21,7 @@ namespace KFrame
     void KFGroupShardModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( KFField::_group );
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFGroupShardModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFGroupShardModule::OnServerDiscoverClient );
         ////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ, &KFGroupShardModule::HandleCreateMatchGroupToShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &KFGroupShardModule::HandleAddMatchGroupMemberReq );
@@ -38,7 +38,7 @@ namespace KFrame
     void KFGroupShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
-        _kf_tcp_server->UnRegisterDiscoverFunction( this );
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ );
@@ -88,12 +88,12 @@ namespace KFrame
         return _kf_cluster_shard->SendMessageToPlayer( serverid, playerid, msgid, message );
     }
 
-    void KFGroupShardModule::SendMessageToGroup( KFData* kfmemberrecord, uint32 memberid, uint32 msgid, ::google::protobuf::Message* message )
+    void KFGroupShardModule::SendMessageToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid /* = 0 */ )
     {
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
-            if ( kfmember->GetKeyID() != memberid )
+            if ( kfmember->GetKeyID() != excludeid )
             {
                 SendMessageToMember( kfmember, msgid, message );
             }
@@ -112,17 +112,17 @@ namespace KFrame
         auto kfgroup = _kf_component->CreateEntity( kfmsg.groupid() );
 
         auto kfobject = kfgroup->GetData();
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
-
-        auto kfmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting() );
-        _kf_kernel->ParseFromProto( kfmember, &kfmsg.pbmember() );
-
-        kfmember->SetValue< uint32 >( KFField::_is_captain, 1 );
-        kfobject->SetValue< uint32 >( KFField::_captain_id, kfmember->GetKeyID() );
+        kfobject->SetValue< uint32 >( KFField::_captain_id, kfmsg.playerid() );
         kfobject->SetValue< uint32 >( KFField::_max_count, kfmsg.maxcount() );
         kfobject->SetValue< uint32 >( KFField::_match_id, kfmsg.matchid() );
 
+        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        auto kfmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), &kfmsg.pbmember() );
+        kfmember->SetValue< uint64 >( KFField::_time, KFGlobal::Instance()->_real_time );
         kfmemberrecord->AddData( kfmember->GetKeyID(), kfmember );
+
+        // 通知玩家队伍信息
+        SendGroupDataToMember( kfmemberrecord, kfmember, kfgroup, true );
 
         // 更新到proxy
         _kf_cluster_shard->AddObjectToProxy( kfmsg.groupid() );
@@ -159,19 +159,16 @@ namespace KFrame
 
         // 加入新成员
         auto kfnewmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), &kfmsg.pbmember() );
+        kfnewmember->SetValue< uint64 >( KFField::_time, KFGlobal::Instance()->_real_time );
         kfmemberrecord->AddData( kfnewmember->GetKeyID(), kfnewmember );
 
-        {
-            // 通知新队员加入
-            KFMsg::S2SAddMatchGroupMemberAck ack;
-            ack.add_pbmember()->CopyFrom( kfmsg.pbmember() );
-            SendMessageToGroup( kfmemberrecord, kfnewmember->GetKeyID(), KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_ACK, &ack );
-        }
+        // 通知新队员加入
+        KFMsg::S2SAddMatchGroupMemberAck ack;
+        ack.mutable_pbmember()->CopyFrom( kfmsg.pbmember() );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_ACK, &ack, kfnewmember->GetKeyID() );
 
-        {
-            // 通知新队员队伍信息
-            SendGroupDataToMember( kfmemberrecord, kfnewmember, kfgroup, true );
-        }
+        // 通知新队员队伍信息
+        SendGroupDataToMember( kfmemberrecord, kfnewmember, kfgroup, true );
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] reply invite group[%s] ok!",
                             __FUNCTION__, strgroupid.c_str() );
@@ -228,12 +225,10 @@ namespace KFrame
         auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
         kfmemberrecord->RemoveData( kfmsg.playerid() );
 
-        {
-            // 发送消息
-            KFMsg::S2SRemoveMatchGroupMemberAck req;
-            req.set_memberid( kfmsg.playerid() );
-            SendMessageToGroup( kfmemberrecord, kfmsg.playerid(), KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
-        }
+        // 发送消息
+        KFMsg::S2SRemoveMatchGroupMemberAck req;
+        req.set_memberid( kfmsg.playerid() );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
 
         // 判断队员数量
         if ( kfmemberrecord->Size() == 0 )
@@ -281,24 +276,16 @@ namespace KFrame
             return false;
         }
 
-        {
-            // 设置新队长
-            kfobject->SetValue< uint32 >( KFField::_captain_id, kfmember->GetKeyID() );
+        // 设置新队长
+        kfobject->SetValue< uint32 >( KFField::_captain_id, kfmember->GetKeyID() );
 
-            // 通知玩家你已经成为队长了
-            KFMsg::S2SUpdateGroupCaptainAck ack;
-            ack.set_iscaptain( 1 );
-            SendMessageToMember( kfmember, KFMsg::S2S_UPDATE_GROUP_CAPTAIN_ACK, &ack );
-        }
+        // 通知玩家你已经成为队长了
 
-        {
-            // 更新队长消息
-            KFMsg::PBStrings pbstrings;
-            auto pbstring = pbstrings.add_pbstring();
-            pbstring->set_name( KFField::_is_captain );
-            pbstring->set_value( "1" );
-            SendUpdateMemberToGroup( kfgroup->GetKeyID(), kfmemberrecord, kfmember, "", pbstrings );
-        }
+        KFMsg::S2SUpdateGroupDataAck ack;
+        auto pbstring = ack.add_pbstring();
+        pbstring->set_name( KFField::_camp_id );
+        pbstring->set_value( __KF_STRING__( kfmember->GetKeyID() ) );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
 
         return true;
     }
@@ -355,12 +342,10 @@ namespace KFrame
             kfmemberrecord->RemoveData( kfmsg.memberid() );
         }
 
-        {
-            // 通知队员, 有队员离开
-            KFMsg::S2SRemoveMatchGroupMemberAck req;
-            req.set_memberid( kfmsg.memberid() );
-            SendMessageToGroup( kfmemberrecord, kfmsg.memberid(), KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
-        }
+        // 通知队员, 有队员离开
+        KFMsg::S2SRemoveMatchGroupMemberAck req;
+        req.set_memberid( kfmsg.memberid() );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] player[%u] kick member[%u] ok!",
                             __FUNCTION__, strgroupid.c_str(), kfmsg.captainid(), kfmsg.memberid() );
@@ -411,27 +396,22 @@ namespace KFrame
     void KFGroupShardModule::SendGroupDataToMember( KFData* kfmemberrecord, KFData* kfnewmember, KFEntity* kfgroup, bool newadd )
     {
         auto kfobject = kfgroup->GetData();
-        auto captainid = kfobject->GetValue< uint32 >( KFField::_captain_id );
-        auto maxcount = kfobject->GetValue< uint32 >( KFField::_max_count );
-        auto matchid = kfobject->GetValue< uint32 >( KFField::_match_id );
 
-        KFMsg::S2SAddMatchGroupMemberAck ack;
+        KFMsg::S2STellMatchGroupDataAck ack;
         ack.set_groupid( kfgroup->GetKeyID() );
-        ack.set_maxcount( maxcount );
-        ack.set_matchid( matchid );
-        ack.set_iscaptain( kfnewmember->GetKeyID() == captainid ? 1 : 0 );
+        ack.set_maxcount( kfobject->GetValue< uint32 >( KFField::_max_count ) );
+        ack.set_matchid( kfobject->GetValue< uint32 >( KFField::_match_id ) );
+        ack.set_captainid( kfobject->GetValue< uint32 >( KFField::_captain_id ) );
         ack.set_newadd( newadd );
 
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
-            if ( kfmember != kfnewmember )
-            {
-                _kf_kernel->SerializeToClient( kfmember, ack.add_pbmember() );
-            }
+            _kf_kernel->SerializeToClient( kfmember, ack.add_pbmember() );
             kfmember = kfmemberrecord->NextData();
         }
-        SendMessageToMember( kfnewmember, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_ACK, &ack );
+
+        SendMessageToMember( kfnewmember, KFMsg::S2S_TELL_MATCH_GROUP_DATA_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleOffLineUpdateGroupReq )
@@ -480,10 +460,6 @@ namespace KFrame
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( KFField::_status );
             pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::StatusEnum::OfflineStatus ) );
-
-            pbstring = pbstrings.add_pbstring();
-            pbstring->set_name( KFField::_is_captain );
-            pbstring->set_value( "0" );
 
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( KFField::_prepare );
@@ -537,7 +513,7 @@ namespace KFrame
         ack.set_memberid( kfmember->GetKeyID() );
         ack.set_dataname( dataname );
         ack.mutable_pbstrings()->CopyFrom( pbstrings );
-        SendMessageToGroup( kfmemberrecord, kfmember->GetKeyID(), KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK, &ack );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleUpdateGroupMatchReq )
@@ -555,11 +531,20 @@ namespace KFrame
         kfobject->SetValue< uint32 >( KFField::_max_count, kfmsg.maxcount() );
 
         // 同步给客户端
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        KFMsg::S2SUpdateGroupDataAck ack;
+        {
+            auto pbstring = ack.add_pbstring();
+            pbstring->set_name( KFField::_match_id );
+            pbstring->set_value( __KF_STRING__( kfmsg.matchid() ) );
+        }
 
-        KFMsg::S2SUpdateGroupMatchAck ack;
-        ack.set_matchid( kfmsg.matchid() );
-        ack.set_maxcount( kfmsg.maxcount() );
-        SendMessageToGroup( kfmemberrecord, kfmsg.playerid(), KFMsg::S2S_UPDATE_GROUP_MATCH_ACK, &ack );
+        {
+            auto pbstring = ack.add_pbstring();
+            pbstring->set_name( KFField::_max_count );
+            pbstring->set_value( __KF_STRING__( kfmsg.maxcount() ) );
+        }
+
+        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
     }
 }

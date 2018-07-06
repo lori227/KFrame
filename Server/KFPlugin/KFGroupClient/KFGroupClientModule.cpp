@@ -26,7 +26,14 @@ namespace KFrame
 
         _kf_player->RegisterEnterFunction( this, &KFGroupClientModule::OnEnterQueryMatchGroup );
         _kf_player->RegisterLeaveFunction( this, &KFGroupClientModule::OnLeaveUpdateMatchGroup );
-        ///////////////////////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        _kf_component->RegisterUpdateDataFunction( KFField::_group, KFField::_id, this, &KFGroupClientModule::OnGroupIdUpdateCallBack );
+        _kf_component->RegisterUpdateDataFunction( KFField::_group, KFField::_max_count, this, &KFGroupClientModule::OnGroupMaxCountUpdateCallBack );
+
+        _kf_component->RegisterAddDataFunction( KFField::_group_member, this, &KFGroupClientModule::OnAddGroupMemberCallBack );
+        _kf_component->RegisterRemoveDataFunction( KFField::_group_member, this, &KFGroupClientModule::OnRemoveGroupMemberCallBack );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_INVITE_MATCH_GROUP_REQ, &KFGroupClientModule::HandleInviteMatchGroupReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ, &KFGroupClientModule::HandleReceiveInviteMatchGroupReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_INVITE_MATCH_GROUP_REQ, &KFGroupClientModule::HandleReplyInviteMatchGroupReq );
@@ -40,11 +47,11 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &KFGroupClientModule::HandleConsentApplyMatchGroupAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK, &KFGroupClientModule::HandleUpdateGroupMemberAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_MATCH_GROUP_PREPARE_REQ, &KFGroupClientModule::HandleMatchGroupPrepareReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_CAPTAIN_ACK, &KFGroupClientModule::HandleUpdateGroupCaptainAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &KFGroupClientModule::HandleUpdateGroupDataAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_APPLY_MATCH_GROUP_ACK, &KFGroupClientModule::HandleApplyMatchGroupAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_MATCH_ACK, &KFGroupClientModule::HandleUpdateGroupMatchAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_GROUP_MATCH_REQ, &KFGroupClientModule::HandleUpdateGroupMatchReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CONSENT_INVITE_MATCH_GROUP_REQ, &KFGroupClientModule::HandleConsentInviteMatchGroupReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_MATCH_GROUP_DATA_ACK, &KFGroupClientModule::HandleTellMatchGroupDataAck );
 
     }
 
@@ -65,6 +72,12 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////
+        _kf_component->UnRegisterUpdateDataFunction( KFField::_group, KFField::_id );
+        _kf_component->UnRegisterUpdateDataFunction( KFField::_group, KFField::_max_count );
+
+        _kf_component->UnRegisterAddDataFunction( KFField::_group_member );
+        _kf_component->UnRegisterRemoveDataFunction( KFField::_group_member );
+        ///////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_INVITE_MATCH_GROUP_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_INVITE_MATCH_GROUP_REQ );
@@ -78,11 +91,11 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_MATCH_GROUP_PREPARE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_CAPTAIN_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_DATA_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_APPLY_MATCH_GROUP_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GROUP_MATCH_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_UPDATE_GROUP_MATCH_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CONSENT_INVITE_MATCH_GROUP_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_MATCH_GROUP_DATA_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,7 +110,58 @@ namespace KFrame
     {
         return _kf_cluster->SendMessageToObject( KFField::_group, groupid, msgid, message );
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFGroupClientModule::OnGroupIdUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    {
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( KFField::_basic );
 
+        player->UpdateData( kfbasic, KFField::_group_id, KFOperateEnum::Set, newvalue );
+
+        if ( newvalue != _invalid_int )
+        {
+            player->UpdateData( kfbasic, KFField::_status, KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
+        }
+        else
+        {
+            player->UpdateData( kfbasic, KFField::_status, KFOperateEnum::Set, KFMsg::StatusEnum::OnlineStatus );
+        }
+    }
+
+    void KFGroupClientModule::OnGroupMaxCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    {
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( KFField::_basic );
+
+        player->UpdateData( kfbasic, KFField::_max_group_count, KFOperateEnum::Set, newvalue );
+    }
+
+    void KFGroupClientModule::OnAddGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    {
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( KFField::_basic );
+
+        auto nowcount = kfparent->Size();
+        player->UpdateData( KFField::_basic, KFField::_now_group_count, KFOperateEnum::Set, nowcount );
+    }
+
+    void KFGroupClientModule::OnRemoveGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    {
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( KFField::_basic );
+
+        // 有队伍才更新
+        auto groupid = kfbasic->GetValue< uint64 >( KFField::_group_id );
+        if ( groupid == _invalid_int )
+        {
+            return;
+        }
+
+        auto nowcount = kfparent->Size();
+        player->UpdateData( KFField::_basic, KFField::_now_group_count, KFOperateEnum::Set, nowcount );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint64 KFGroupClientModule::PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount )
     {
         auto kfobject = player->GetData();
@@ -106,13 +170,15 @@ namespace KFrame
         auto groupid = kfbasic->GetValue< uint64 >( KFField::_group_id );
         if ( groupid == _invalid_int )
         {
-            groupid = kfobject->GetValue< uint64 >( KFField::_group_id );
+            auto kfgroup = kfobject->FindData( KFField::_group );
+            groupid = kfgroup->GetValue< uint64 >( KFField::_id );
             if ( groupid == _invalid_int )
             {
                 // 没有创建小组
                 groupid = KFUtility::Make64Guid( player->GetKeyID() );
-                kfobject->SetValue< uint32 >( KFField::_group_match_id, matchid );
-                kfobject->SetValue< uint64 >( KFField::_group_id, groupid );
+                kfgroup->SetValue< uint64 >( KFField::_id, groupid );
+                kfgroup->SetValue< uint32 >( KFField::_match_id, matchid );
+                kfgroup->SetValue< uint64 >( KFField::_max_count, maxcount );
             }
         }
         else
@@ -131,53 +197,24 @@ namespace KFrame
     bool KFGroupClientModule::CreateMatchGroup( KFEntity* player, uint64 groupid )
     {
         auto kfobject = player->GetData();
+        auto kfgroup = kfobject->FindData( KFField::_group );
 
-        auto matchid = kfobject->GetValue< uint32 >( KFField::_group_match_id );
-        auto maxcount = _kf_match->GetMatchMaxCount( matchid );
+        auto matchid = kfgroup->GetValue< uint32 >( KFField::_match_id );
+        auto maxcount = kfgroup->GetValue< uint32 >( KFField::_max_count );
 
-        // 先更新状态
-        UpdateMatchGroupStatus( player, groupid, 1, matchid, maxcount );
+        // 先清空数据
+        kfgroup->SetValue< uint32 >( KFField::_group_id, _invalid_int );
+        kfgroup->SetValue< uint32 >( KFField::_match_id, _invalid_int );
+        kfgroup->SetValue< uint32 >( KFField::_max_count, _invalid_int );
 
         // 发送到队伍集群
         KFMsg::S2SCreateMatchGroupReq req;
         req.set_groupid( groupid );
         req.set_matchid( matchid );
         req.set_maxcount( maxcount );
+        req.set_playerid( player->GetKeyID() );
         FormatMatchGroupMember( player, req.mutable_pbmember() );
-        auto ok =  SendMessageToGroup( KFMsg::S2S_CREATE_MATCH_GROUP_REQ, &req );
-        if ( !ok )
-        {
-            UpdateMatchGroupStatus( player, _invalid_int, _invalid_int, _invalid_int, _invalid_int );
-        }
-
-        return ok;
-    }
-
-    void KFGroupClientModule::UpdateMatchGroupStatus( KFEntity* player, uint64 groupid, uint32 iscaptain, uint32 matchid, uint32 maxcount )
-    {
-        auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( KFField::_basic );
-
-        player->UpdateData( KFField::_group_match_id, KFOperateEnum::Set, matchid );
-
-        // 更新队长
-        auto selfcaptain = kfobject->GetValue< uint32 >( KFField::_is_captain );
-        if ( selfcaptain != iscaptain )
-        {
-            player->UpdateData( KFField::_is_captain, KFOperateEnum::Set, iscaptain );
-        }
-
-        if ( groupid != _invalid_int )
-        {
-            player->UpdateData( kfbasic, KFField::_status, KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
-            player->UpdateData( kfbasic, KFField::_max_group_count, KFOperateEnum::Set, maxcount );
-            player->UpdateData( kfbasic, KFField::_group_id, KFOperateEnum::Set, groupid );
-        }
-        else
-        {
-            player->UpdateData( kfbasic, KFField::_group_id, KFOperateEnum::Set, groupid );
-            player->UpdateData( kfbasic, KFField::_status, KFOperateEnum::Set, KFMsg::StatusEnum::OnlineStatus );
-        }
+        return SendMessageToGroup( KFMsg::S2S_CREATE_MATCH_GROUP_REQ, &req );
     }
 
     void KFGroupClientModule::FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject )
@@ -228,9 +265,6 @@ namespace KFrame
 
     void KFGroupClientModule::UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount )
     {
-        player->UpdateData( KFField::_group_match_id, KFOperateEnum::Set, matchid );
-        player->UpdateData( KFField::_basic, KFField::_max_group_count, KFOperateEnum::Set, maxcount );
-
         KFMsg::S2SUpdateGroupMatchReq req;
         req.set_groupid( groupid );
         req.set_matchid( matchid );
@@ -258,8 +292,8 @@ namespace KFrame
         }
 
         // 判断队伍人数
-        auto kfgroupmember = kfobject->FindData( KFField::_group_member );
-        if ( ( kfgroupmember->Size() + 1 ) >= maxcount )
+        auto membercount = GetGroupMemberCount( kfobject );
+        if ( membercount >= maxcount )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupMemberIsFull );
         }
@@ -417,11 +451,13 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfgroup = kfobject->FindData( KFField::_group );
+
         auto groupid = kfbasic->GetValue< uint64 >( KFField::_group_id );
         if ( groupid == _invalid_int )
         {
             // 没有队伍, 创建一个新的队伍
-            groupid = kfobject->GetValue< uint64 >( KFField::_group_id );
+            groupid = kfgroup->GetValue< uint64 >( KFField::_id );
             if ( groupid == _invalid_int )
             {
                 groupid = kfmsg.groupid();
@@ -443,16 +479,15 @@ namespace KFrame
             }
 
             // 判断队员数量
-            auto maxgroupcount = kfbasic->GetValue< uint32 >( KFField::_max_group_count );
-            auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
-            if ( kfmemberrecord->Size() + 1 >= maxgroupcount )
+            auto maxgroupcount = kfgroup->GetValue< uint32 >( KFField::_max_count );
+            auto kfmemberrecord = kfgroup->FindData( KFField::_group_member );
+            if ( kfmemberrecord->Size() >= maxgroupcount )
             {
                 return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupMemberIsFull );
             }
         }
 
         // 发送到集群
-        // 加入队员
         KFMsg::S2SAddMatchGroupMemberReq req;
         req.set_groupid( groupid );
         req.set_playerid( kfmsg.playerid() );
@@ -465,44 +500,51 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleAddMatchGroupMemberAck )
+    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleTellMatchGroupDataAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SAddMatchGroupMemberAck );
+        __ROUTE_PROTO_PARSE__( KFMsg::S2STellMatchGroupDataAck );
 
         auto kfobject = player->GetData();
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        auto kfgroup = kfobject->FindData( KFField::_group );
 
+        player->UpdateData( kfgroup, KFField::_id, KFOperateEnum::Set, kfmsg.groupid() );
+        player->UpdateData( kfgroup, KFField::_match_id, KFOperateEnum::Set, kfmsg.matchid() );
+        player->UpdateData( kfgroup, KFField::_max_count, KFOperateEnum::Set, kfmsg.maxcount() );
+        player->UpdateData( kfgroup, KFField::_captain_id, KFOperateEnum::Set, kfmsg.captainid() );
+
+        // 加入队员
+        auto kfmemberrecord = kfgroup->FindData( KFField::_group_member );
         for ( auto i = 0; i < kfmsg.pbmember_size(); ++i )
         {
             auto pbmember = &kfmsg.pbmember( i );
 
             auto kfmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), pbmember );
             player->AddData( kfmemberrecord, kfmember );
-
-            if ( !kfmsg.has_groupid() )
-            {
-                auto name = kfmember->GetValue< std::string >( KFField::_basic, KFField::_name );
-                _kf_display->SendToClient( player, KFMsg::GroupMemberJoin, name );
-            }
         }
 
-        // 如果需要设置队伍id
-        if ( kfmsg.has_groupid() )
+        // 删除邀请列表
+        player->RemoveData( KFField::_group_invite );
+
+        // 新加入通知客户端
+        if ( kfmsg.newadd() )
         {
-            UpdateMatchGroupStatus( player, kfmsg.groupid(), kfmsg.iscaptain(), kfmsg.matchid(), kfmsg.maxcount() );
-
-            // 删除邀请列表
-            player->RemoveData( KFField::_group_invite );
-
-            if ( kfmsg.newadd() )
-            {
-                _kf_display->SendToClient( player, KFMsg::GroupJoinOK );
-            }
+            _kf_display->SendToClient( player, KFMsg::GroupJoinOK );
         }
+    }
 
-        // 更新当前数量
-        auto nowcount = kfmemberrecord->Size() + 1;
-        player->UpdateData( KFField::_basic, KFField::_now_group_count, KFOperateEnum::Set, nowcount );
+    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleAddMatchGroupMemberAck )
+    {
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SAddMatchGroupMemberAck );
+
+        auto kfobject = player->GetData();
+        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
+
+        auto kfmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), &kfmsg.pbmember() );
+        player->AddData( kfmemberrecord, kfmember );
+
+        // 通知玩家
+        auto name = kfmember->GetValue< std::string >( KFField::_basic, KFField::_name );
+        _kf_display->SendToClient( player, KFMsg::GroupMemberJoin, name );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleRemoveMatchGroupMemberAck )
@@ -510,7 +552,7 @@ namespace KFrame
         __ROUTE_PROTO_PARSE__( KFMsg::S2SRemoveMatchGroupMemberAck );
 
         auto kfobject = player->GetData();
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
 
         auto kfmember = kfmemberrecord->FindData( kfmsg.memberid() );
         if ( kfmember != nullptr )
@@ -520,10 +562,6 @@ namespace KFrame
         }
 
         player->RemoveData( kfmemberrecord, kfmsg.memberid() );
-
-        // 更新当前数量
-        auto nowcount = kfmemberrecord->Size() + 1;
-        player->UpdateData( KFField::_basic, KFField::_now_group_count, KFOperateEnum::Set, nowcount );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleLeaveMatchGroupReq )
@@ -553,13 +591,13 @@ namespace KFrame
 
     void KFGroupClientModule::ProcessLeaveMatchGroup( KFEntity* player )
     {
+        // 清除队伍id
+        player->UpdateData( KFField::_group, KFField::_id, KFOperateEnum::Set, _invalid_int );
+
         // 删除队员
-        player->RemoveData( KFField::_group_member );
         player->RemoveData( KFField::_group_invite );
         player->RemoveData( KFField::_group_apply );
-
-        // 设置队伍id
-        UpdateMatchGroupStatus( player, _invalid_int, _invalid_int, _invalid_int, _invalid_int );
+        player->RemoveData( KFField::_group, KFField::_group_member );
 
         // 通知离开队伍
         _kf_display->SendToClient( player, KFMsg::GroupLeaveOK );
@@ -657,6 +695,17 @@ namespace KFrame
         player->AddData( kfapplyrecord, kfapply );
     }
 
+    uint32 KFGroupClientModule::GetGroupMemberCount( KFData* kfobject )
+    {
+        auto kfgroupmember = kfobject->FindData( KFField::_group, KFField::_group_member );
+        if ( kfgroupmember == nullptr )
+        {
+            return _invalid_int;
+        }
+
+        return kfgroupmember->Size();
+    }
+
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleReplyApplyMatchGroupReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgReplyApplyMatchGroupReq );
@@ -692,9 +741,10 @@ namespace KFrame
             else
             {
                 // 判断数量
-                auto kfgroupmember = kfobject->FindData( KFField::_group_member );
+                auto membercount = GetGroupMemberCount( kfobject );
                 auto maxcount = kfbasic->GetValue< uint32 >( KFField::_max_group_count );
-                if ( ( kfgroupmember->Size() + 1 ) >= maxcount )
+
+                if ( membercount >= maxcount )
                 {
                     _kf_display->SendToClient( player, KFMsg::GroupMemberIsFull );
                 }
@@ -828,7 +878,7 @@ namespace KFrame
         __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateGroupMemberAck );
 
         auto kfobject = player->GetData();
-        auto kfmember = kfobject->FindData( KFField::_group_member, kfmsg.memberid() );
+        auto kfmember = kfobject->FindData( KFField::_group, KFField::_group_member, kfmsg.memberid() );
         if ( kfmember == nullptr )
         {
             return;
@@ -863,14 +913,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMatchGroupPrepareReq );
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( KFField::_basic, KFField::_group_id );
+        auto kfgroup = kfobject->FindData( KFField::_group );
+
+        auto groupid = kfgroup->GetValue< uint64 >( KFField::_group_id );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
         }
-
-        // 更新状态
-        player->UpdateData( KFField::_prepare, KFOperateEnum::Set, kfmsg.prepare() );
 
         // 更新准备状态
         KFMsg::PBStrings pbstrings;
@@ -884,26 +933,24 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleUpdateGroupCaptainAck )
+    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleUpdateGroupDataAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateGroupCaptainAck );
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateGroupDataAck );
 
-        player->UpdateData( KFField::_is_captain, KFOperateEnum::Set, kfmsg.iscaptain() );
-        if ( kfmsg.iscaptain() == 1 )
+        auto kfobject = player->GetData();
+        auto kfgroup = kfobject->FindData( KFField::_group );
+
+        for ( auto i = 0; i < kfmsg.pbstring_size(); ++i )
         {
-            _kf_display->SendToClient( player, KFMsg::GroupIsNewCaption );
+            auto pbstring = &kfmsg.pbstring( i );
+            player->UpdateData( kfgroup, pbstring->name(), pbstring->value() );
         }
     }
 
     bool KFGroupClientModule::IsGroupMember( KFEntity* player, uint32 playerid )
     {
-        if ( player->GetKeyID() == playerid )
-        {
-            return true;
-        }
-
         auto kfobject = player->GetData();
-        auto kfmember = kfobject->FindData( KFField::_group_member, playerid );
+        auto kfmember = kfobject->FindData( KFField::_group, KFField::_group_member, playerid );
         return kfmember != nullptr;
     }
 
@@ -914,13 +961,5 @@ namespace KFrame
         req.set_groupid( groupid );
         req.set_playerid( playerid );
         SendMessageToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleUpdateGroupMatchAck )
-    {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateGroupMatchAck );
-
-        player->UpdateData( KFField::_group_match_id, KFOperateEnum::Set, kfmsg.matchid() );
-        player->UpdateData( KFField::_basic, KFField::_max_group_count, KFOperateEnum::Set, kfmsg.maxcount() );
     }
 }

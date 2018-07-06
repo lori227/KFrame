@@ -229,6 +229,12 @@ namespace KFrame
         return UpdateData( kfdata, key, operate, value );
     }
 
+    uint64 KFEntityEx::UpdateData( KFData* kfdata, uint32 operate, uint64 value )
+    {
+        auto key = kfdata->GetKeyID();
+        return UpdateData( kfdata, key, operate, value );
+    }
+
     uint64 KFEntityEx::UpdateData( KFData* kfdata, uint64 key, uint32 operate, uint64 value )
     {
         auto oldvalue = kfdata->GetValue< uint64 >();
@@ -345,6 +351,31 @@ namespace KFrame
 
         return true;
     }
+
+    bool KFEntityEx::RemoveData( const std::string& parentname, const std::string& dataname )
+    {
+        auto kfparent = _kf_object->FindData( parentname, dataname );
+        if ( kfparent == nullptr )
+        {
+            return false;
+        }
+
+        std::list<uint64> keyvector;
+        auto kfdata = kfparent->FirstData();
+        while ( kfdata != nullptr )
+        {
+            keyvector.push_back( kfdata->GetKeyID() );
+            kfdata = kfparent->NextData();
+        }
+
+        for ( auto key : keyvector )
+        {
+            RemoveData( kfparent, key );
+        }
+
+        return true;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line )

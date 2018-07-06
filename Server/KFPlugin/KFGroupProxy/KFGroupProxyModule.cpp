@@ -50,6 +50,7 @@ namespace KFrame
         req.set_groupid( kfmsg.groupid() );
         req.set_maxcount( kfmsg.maxcount() );
         req.set_matchid( kfmsg.matchid() );
+        req.set_playerid( kfmsg.playerid() );
         req.mutable_pbmember()->CopyFrom( kfmsg.pbmember() );
         auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ, &req );
         if ( ok )

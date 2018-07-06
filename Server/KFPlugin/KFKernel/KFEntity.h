@@ -42,6 +42,7 @@ namespace KFrame
         virtual bool RemoveData( const std::string& dataname, uint64 key ) = 0;
         virtual bool RemoveData( KFData* kfparent, uint64 key ) = 0;
         virtual bool RemoveData( const std::string& dataname ) = 0;
+        virtual bool RemoveData( const std::string& parentname, const std::string& dataname ) = 0;
 
 
         // 更新属性
@@ -55,6 +56,7 @@ namespace KFrame
         virtual uint64 UpdateData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value ) = 0;
         virtual uint64 UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value ) = 0;
 
+        virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value ) = 0;
         virtual uint64 UpdateData( KFData* kfdata, uint64 key, uint32 operate, uint64 value ) = 0;
         virtual uint64 UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value ) = 0;
         virtual uint64 UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value ) = 0;

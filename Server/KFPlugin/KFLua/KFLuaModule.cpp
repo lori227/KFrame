@@ -24,7 +24,6 @@ namespace KFrame
 
             // 加载文件
             kfluascript->LoadScript( luafile );
-            kfluascript->_is_initialized = true;
         }
 
         return kfluascript;

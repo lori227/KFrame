@@ -103,20 +103,33 @@ namespace KFrame
             return KFMsg::MatchAlreadyWait;
         }
 
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
-        auto membercount = kfmemberrecord->Size() + 1;
+        auto kfgroup = kfobject->FindData( KFField::_group );
+        auto kfmemberrecord = kfgroup->FindData( KFField::_group_member );
 
         // 判断该模式的人数限定
+        auto membercount = __MAX__( kfmemberrecord->Size(), 1 );
         if ( kfsetting->_min_group_player_count > membercount ||
                 kfsetting->_max_group_player_count < membercount )
         {
             return KFMsg::MatchGroupPlayerLimit;
         }
 
-        // 判断是否都准备
-        if ( !IsAllGroupMemberPrepare( kfmemberrecord ) )
+        // 如果有队伍
+        auto groupid = kfgroup->GetValue< uint64 >( KFField::_id );
+        if ( groupid != _invalid_int )
         {
-            return KFMsg::MatchMustPrepare;
+            // 队长才能匹配
+            auto captainid = kfgroup->GetValue< uint32 >( KFField::_captain_id );
+            if ( captainid != player->GetKeyID() )
+            {
+                return KFMsg::GroupNotCaption;
+            }
+
+            // 判断是否都准备
+            if ( !IsAllGroupMemberPrepare( kfmemberrecord ) )
+            {
+                return KFMsg::MatchMustPrepare;
+            }
         }
 
         // 发送给匹配集群， 进行匹配
@@ -151,7 +164,7 @@ namespace KFrame
         FormatMatchPlayer( kfobject, pbgroup->add_pbplayer() );
 
         // 队员的属性
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {

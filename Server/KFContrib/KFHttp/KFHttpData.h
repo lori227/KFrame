@@ -6,26 +6,18 @@
 namespace KFrame
 {
     class KFHttp;
-    class KFHttpClientManage;
     class KFHttpData
     {
     public:
         KFHttpData();
         ~KFHttpData();
 
-        // 访问Http
-        void StartMTHttp( KFHttpClientManage* clientmanage );
-
         // 执行逻辑
-        void Run();
-        ////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////
+        void Request();
+
         // 访问结束
         void Finish();
     public:
-        // 管理器
-        KFHttpClientManage* _manage;
-
         // 访问地址
         std::string _url;
 
@@ -40,7 +32,6 @@ namespace KFrame
 
         // httpclient
         KFHttp* _http;
-
     };
 }
 

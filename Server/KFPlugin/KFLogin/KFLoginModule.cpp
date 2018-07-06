@@ -19,16 +19,15 @@ namespace KFrame
 
     void KFLoginModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterLostFunction( this, &KFLoginModule::OnClientLostWorld );
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFLoginModule::OnClientConnectionWorld );
-
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLoginModule::OnClientConnectionWorld );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFLoginModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterLostFunction( this );
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

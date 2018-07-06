@@ -24,6 +24,7 @@ namespace KFrame
     void KFHttpClientModule::ShutDown()
     {
         __UNREGISTER_RUN_FUNCTION__();
+        _kf_http_manage->ShutDown();
     }
 
     void KFHttpClientModule::Run()

@@ -19,18 +19,16 @@ namespace KFrame
 
     void KFGameModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterLostFunction( this, &KFGameModule::OnClientLostServer );
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFGameModule::OnClientConnectionServer );
-
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFGameModule::OnClientLostServer );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGameModule::OnClientConnectionServer );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ, &KFGameModule::HandleBroadcastMessageReq );
     }
 
     void KFGameModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterLostFunction( this );
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
-
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ );
     }

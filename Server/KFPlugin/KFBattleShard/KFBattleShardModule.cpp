@@ -24,9 +24,9 @@ namespace KFrame
     void KFBattleShardModule::BeforeRun()
     {
         __REGISTER_RUN_FUNCTION__( &KFBattleShardModule::Run );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFBattleShardModule::OnServerDiscoverBattleProxy );
+
         _kf_battle_config->LoadRewardConfig( _kf_battle_config->_reward_file.c_str() );
-        ///////////////////////////////////////////////////////////////////////////////
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFBattleShardModule::OnServerDiscoverBattleProxy );
         ///////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ, &KFBattleShardModule::HandleRegisterServerToBattleShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ, &KFBattleShardModule::HandleTellBattleRegisterToShardReq );
@@ -53,7 +53,7 @@ namespace KFrame
     void KFBattleShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
-        _kf_tcp_server->UnRegisterDiscoverFunction( this );
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ );

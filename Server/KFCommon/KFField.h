@@ -96,6 +96,7 @@ namespace KFrame
         static const std::string _activity = "activity";
         static const std::string _birthday = "birthday";
         static const std::string _server_id = "serverid";
+        static const std::string _server = "server";
         static const std::string _zone_id = "zoneid";
         static const std::string _zone_balance = "zonebalance";
         static const std::string _gate_id = "gateid";
@@ -162,7 +163,6 @@ namespace KFrame
         static const std::string _toast_count = "toastcount";
         static const std::string _file = "file";
         static const std::string _group_id = "groupid";
-        static const std::string _group_match_id = "groupmatchid";
         static const std::string _max_group_count = "maxgroupcount";
         static const std::string _now_group_count = "nowgroupcount";
         static const std::string _group = "group";
@@ -170,7 +170,6 @@ namespace KFrame
         static const std::string _refuse_group_invite = "refusegroupinvite";
         static const std::string _group_apply = "groupapply";
         static const std::string _group_invite = "groupinvite";
-        static const std::string _is_captain = "iscaptain";
         static const std::string _captain_id = "captainid";
         static const std::string _prepare = "prepare";
         static const std::string _guest = "guest";

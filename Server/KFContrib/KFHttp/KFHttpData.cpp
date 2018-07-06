@@ -1,14 +1,12 @@
 ﻿#include "KFHttpData.h"
 #include "KFHttpClient.h"
 #include "KFHttpsClient.h"
-#include "KFHttpClientManage.h"
 #include "KFThread/KFThread.h"
 
 namespace KFrame
 {
     KFHttpData::KFHttpData()
     {
-        _manage = nullptr;
         _http = nullptr;
         _function = nullptr;
     }
@@ -18,16 +16,9 @@ namespace KFrame
         __KF_DESTROY__( KFHttp, _http );
     }
 
-    void KFHttpData::StartMTHttp( KFHttpClientManage* clientmanage )
-    {
-        _manage = clientmanage;
-        KFThread::CreateThread( this, &KFHttpData::Run, __FUNCTION_LINE__ );
-    }
-
-    void KFHttpData::Run()
+    void KFHttpData::Request()
     {
         _result = _http->RunHttp( _url, _data );
-        _manage->AddFinishHttp( this );
     }
 
     void KFHttpData::Finish()

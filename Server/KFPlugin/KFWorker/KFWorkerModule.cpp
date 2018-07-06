@@ -26,7 +26,7 @@ namespace KFrame
     void KFWorkerModule::BeforeRun()
     {
         __REGISTER_RUN_FUNCTION__( &KFWorkerModule::Run );
-        _kf_tcp_server->RegisterTransmitFunction( this, &KFWorkerModule::SendMessageToWorker );
+        __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFWorkerModule::SendMessageToWorker );
         //////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -38,7 +38,7 @@ namespace KFrame
         }
 
         __UNREGISTER_RUN_FUNCTION__();
-        _kf_tcp_server->UnRegisterTransmitFunction( this );
+        __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

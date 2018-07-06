@@ -154,13 +154,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSendGroupChatReq );
 
-        auto kfobject = player->GetData();
-        auto kfgroupmember = kfobject->FindData( KFField::_group_member );
-        if ( kfgroupmember->Size() == 0 )
-        {
-            return;
-        }
-
         KFMsg::MsgSendGroupChatInfo info;
         info.set_chatinfo( kfmsg.chatinfo() );
         info.set_isvoice( kfmsg.isvoice() );

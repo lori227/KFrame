@@ -105,12 +105,12 @@ class S2SQueryToastCountAck;
 class S2SUpdateFriendLinessAck;
 class S2SCreateMatchGroupReq;
 class S2SUpdateGroupMatchReq;
-class S2SUpdateGroupMatchAck;
 class S2SCreateMatchGroupToShardReq;
 class S2SReceiveInviteMatchGroupReq;
 class S2SConsentInviteMatchGroupReq;
 class S2SAddMatchGroupMemberReq;
 class S2SAddMatchGroupMemberAck;
+class S2STellMatchGroupDataAck;
 class S2SRemoveMatchGroupMemberAck;
 class S2SLeaveMatchGroupReq;
 class S2SKickMatchGroupReq;
@@ -122,7 +122,7 @@ class S2SOnLineQueryMatchGroupReq;
 class S2SOffLineUpdateMatchGroupReq;
 class S2SUpdateGroupMemberReq;
 class S2SUpdateGroupMemberAck;
-class S2SUpdateGroupCaptainAck;
+class S2SUpdateGroupDataAck;
 class S2SUpdateGuestListReq;
 class S2SQueryGuestReq;
 class S2SQueryGuestAck;
@@ -218,23 +218,23 @@ enum ServerProtocol {
   S2S_UPDATE_GUEST_LIST_REQ = 21175,
   S2S_QUERY_GUEST_REQ = 21176,
   S2S_QUERY_GUEST_ACK = 21177,
-  S2S_UPDATE_GROUP_CAPTAIN_ACK = 21178,
+  S2S_UPDATE_GROUP_DATA_ACK = 21178,
   S2S_APPLY_MATCH_GROUP_ACK = 21179,
   S2S_QUERY_TOAST_COUNT_REQ = 21180,
   S2S_QUERY_TOAST_COUNT_ACK = 21181,
   S2S_UPDATE_GROUP_MATCH_REQ = 21182,
-  S2S_UPDATE_GROUP_MATCH_ACK = 21183,
   S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184,
   S2S_JOIN_RANK_LIST_REQ = 21186,
   S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187,
   S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188,
   S2S_QUERY_RANK_LIST_ACK = 21189,
   S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190,
-  S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191
+  S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191,
+  S2S_TELL_MATCH_GROUP_DATA_ACK = 21192
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
 const ServerProtocol ServerProtocol_MIN = S2S_TRANSMIT_MESSAGE_REQ;
-const ServerProtocol ServerProtocol_MAX = S2S_TRANSMIT_TO_RANK_SHARD_REQ;
+const ServerProtocol ServerProtocol_MAX = S2S_TELL_MATCH_GROUP_DATA_ACK;
 const int ServerProtocol_ARRAYSIZE = ServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerProtocol_descriptor();
@@ -7509,6 +7509,13 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
+  // required uint32 playerid = 5;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 5;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateMatchGroupReq)
  private:
   inline void set_has_pbmember();
@@ -7519,6 +7526,8 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupReq : public ::google::protobuf::Messa
   inline void clear_has_maxcount();
   inline void set_has_matchid();
   inline void clear_has_matchid();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -7526,9 +7535,10 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupReq : public ::google::protobuf::Messa
   ::google::protobuf::uint64 groupid_;
   ::google::protobuf::uint32 maxcount_;
   ::google::protobuf::uint32 matchid_;
+  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -7651,98 +7661,6 @@ class LIBPROTOC_EXPORT S2SUpdateGroupMatchReq : public ::google::protobuf::Messa
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SUpdateGroupMatchAck : public ::google::protobuf::Message {
- public:
-  S2SUpdateGroupMatchAck();
-  virtual ~S2SUpdateGroupMatchAck();
-
-  S2SUpdateGroupMatchAck(const S2SUpdateGroupMatchAck& from);
-
-  inline S2SUpdateGroupMatchAck& operator=(const S2SUpdateGroupMatchAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SUpdateGroupMatchAck& default_instance();
-
-  void Swap(S2SUpdateGroupMatchAck* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SUpdateGroupMatchAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SUpdateGroupMatchAck& from);
-  void MergeFrom(const S2SUpdateGroupMatchAck& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 maxcount = 1;
-  inline bool has_maxcount() const;
-  inline void clear_maxcount();
-  static const int kMaxcountFieldNumber = 1;
-  inline ::google::protobuf::uint32 maxcount() const;
-  inline void set_maxcount(::google::protobuf::uint32 value);
-
-  // required uint32 matchid = 2;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 2;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateGroupMatchAck)
- private:
-  inline void set_has_maxcount();
-  inline void clear_has_maxcount();
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 maxcount_;
-  ::google::protobuf::uint32 matchid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SUpdateGroupMatchAck* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class LIBPROTOC_EXPORT S2SCreateMatchGroupToShardReq : public ::google::protobuf::Message {
  public:
   S2SCreateMatchGroupToShardReq();
@@ -7827,6 +7745,13 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupToShardReq : public ::google::protobuf
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
+  // required uint32 playerid = 5;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 5;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateMatchGroupToShardReq)
  private:
   inline void set_has_pbmember();
@@ -7837,6 +7762,8 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupToShardReq : public ::google::protobuf
   inline void clear_has_maxcount();
   inline void set_has_matchid();
   inline void clear_has_matchid();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -7844,9 +7771,10 @@ class LIBPROTOC_EXPORT S2SCreateMatchGroupToShardReq : public ::google::protobuf
   ::google::protobuf::uint64 groupid_;
   ::google::protobuf::uint32 maxcount_;
   ::google::protobuf::uint32 matchid_;
+  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -8303,6 +8231,90 @@ class LIBPROTOC_EXPORT S2SAddMatchGroupMemberAck : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
+  // required .KFMsg.PBObject pbmember = 1;
+  inline bool has_pbmember() const;
+  inline void clear_pbmember();
+  static const int kPbmemberFieldNumber = 1;
+  inline const ::KFMsg::PBObject& pbmember() const;
+  inline ::KFMsg::PBObject* mutable_pbmember();
+  inline ::KFMsg::PBObject* release_pbmember();
+  inline void set_allocated_pbmember(::KFMsg::PBObject* pbmember);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddMatchGroupMemberAck)
+ private:
+  inline void set_has_pbmember();
+  inline void clear_has_pbmember();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::KFMsg::PBObject* pbmember_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAddMatchGroupMemberAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STellMatchGroupDataAck : public ::google::protobuf::Message {
+ public:
+  S2STellMatchGroupDataAck();
+  virtual ~S2STellMatchGroupDataAck();
+
+  S2STellMatchGroupDataAck(const S2STellMatchGroupDataAck& from);
+
+  inline S2STellMatchGroupDataAck& operator=(const S2STellMatchGroupDataAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STellMatchGroupDataAck& default_instance();
+
+  void Swap(S2STellMatchGroupDataAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2STellMatchGroupDataAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2STellMatchGroupDataAck& from);
+  void MergeFrom(const S2STellMatchGroupDataAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
   // repeated .KFMsg.PBObject pbmember = 1;
   inline int pbmember_size() const;
   inline void clear_pbmember();
@@ -8322,12 +8334,12 @@ class LIBPROTOC_EXPORT S2SAddMatchGroupMemberAck : public ::google::protobuf::Me
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // optional uint32 iscaptain = 3;
-  inline bool has_iscaptain() const;
-  inline void clear_iscaptain();
-  static const int kIscaptainFieldNumber = 3;
-  inline ::google::protobuf::uint32 iscaptain() const;
-  inline void set_iscaptain(::google::protobuf::uint32 value);
+  // optional uint32 captainid = 3;
+  inline bool has_captainid() const;
+  inline void clear_captainid();
+  static const int kCaptainidFieldNumber = 3;
+  inline ::google::protobuf::uint32 captainid() const;
+  inline void set_captainid(::google::protobuf::uint32 value);
 
   // optional uint32 maxcount = 4;
   inline bool has_maxcount() const;
@@ -8350,12 +8362,12 @@ class LIBPROTOC_EXPORT S2SAddMatchGroupMemberAck : public ::google::protobuf::Me
   inline bool newadd() const;
   inline void set_newadd(bool value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddMatchGroupMemberAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STellMatchGroupDataAck)
  private:
   inline void set_has_groupid();
   inline void clear_has_groupid();
-  inline void set_has_iscaptain();
-  inline void clear_has_iscaptain();
+  inline void set_has_captainid();
+  inline void clear_has_captainid();
   inline void set_has_maxcount();
   inline void clear_has_maxcount();
   inline void set_has_matchid();
@@ -8367,7 +8379,7 @@ class LIBPROTOC_EXPORT S2SAddMatchGroupMemberAck : public ::google::protobuf::Me
 
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBObject > pbmember_;
   ::google::protobuf::uint64 groupid_;
-  ::google::protobuf::uint32 iscaptain_;
+  ::google::protobuf::uint32 captainid_;
   ::google::protobuf::uint32 maxcount_;
   ::google::protobuf::uint32 matchid_;
   bool newadd_;
@@ -8380,7 +8392,7 @@ class LIBPROTOC_EXPORT S2SAddMatchGroupMemberAck : public ::google::protobuf::Me
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SAddMatchGroupMemberAck* default_instance_;
+  static S2STellMatchGroupDataAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -9519,14 +9531,14 @@ class LIBPROTOC_EXPORT S2SUpdateGroupMemberAck : public ::google::protobuf::Mess
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SUpdateGroupCaptainAck : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SUpdateGroupDataAck : public ::google::protobuf::Message {
  public:
-  S2SUpdateGroupCaptainAck();
-  virtual ~S2SUpdateGroupCaptainAck();
+  S2SUpdateGroupDataAck();
+  virtual ~S2SUpdateGroupDataAck();
 
-  S2SUpdateGroupCaptainAck(const S2SUpdateGroupCaptainAck& from);
+  S2SUpdateGroupDataAck(const S2SUpdateGroupDataAck& from);
 
-  inline S2SUpdateGroupCaptainAck& operator=(const S2SUpdateGroupCaptainAck& from) {
+  inline S2SUpdateGroupDataAck& operator=(const S2SUpdateGroupDataAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -9540,17 +9552,17 @@ class LIBPROTOC_EXPORT S2SUpdateGroupCaptainAck : public ::google::protobuf::Mes
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SUpdateGroupCaptainAck& default_instance();
+  static const S2SUpdateGroupDataAck& default_instance();
 
-  void Swap(S2SUpdateGroupCaptainAck* other);
+  void Swap(S2SUpdateGroupDataAck* other);
 
   // implements Message ----------------------------------------------
 
-  S2SUpdateGroupCaptainAck* New() const;
+  S2SUpdateGroupDataAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SUpdateGroupCaptainAck& from);
-  void MergeFrom(const S2SUpdateGroupCaptainAck& from);
+  void CopyFrom(const S2SUpdateGroupDataAck& from);
+  void MergeFrom(const S2SUpdateGroupDataAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -9573,21 +9585,24 @@ class LIBPROTOC_EXPORT S2SUpdateGroupCaptainAck : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required uint32 iscaptain = 1;
-  inline bool has_iscaptain() const;
-  inline void clear_iscaptain();
-  static const int kIscaptainFieldNumber = 1;
-  inline ::google::protobuf::uint32 iscaptain() const;
-  inline void set_iscaptain(::google::protobuf::uint32 value);
+  // repeated .KFMsg.PBString pbstring = 1;
+  inline int pbstring_size() const;
+  inline void clear_pbstring();
+  static const int kPbstringFieldNumber = 1;
+  inline const ::KFMsg::PBString& pbstring(int index) const;
+  inline ::KFMsg::PBString* mutable_pbstring(int index);
+  inline ::KFMsg::PBString* add_pbstring();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
+      pbstring() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
+      mutable_pbstring();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateGroupCaptainAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateGroupDataAck)
  private:
-  inline void set_has_iscaptain();
-  inline void clear_has_iscaptain();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 iscaptain_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > pbstring_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -9597,7 +9612,7 @@ class LIBPROTOC_EXPORT S2SUpdateGroupCaptainAck : public ::google::protobuf::Mes
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SUpdateGroupCaptainAck* default_instance_;
+  static S2SUpdateGroupDataAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -17362,6 +17377,28 @@ inline void S2SCreateMatchGroupReq::set_matchid(::google::protobuf::uint32 value
   matchid_ = value;
 }
 
+// required uint32 playerid = 5;
+inline bool S2SCreateMatchGroupReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SCreateMatchGroupReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SCreateMatchGroupReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateMatchGroupReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SCreateMatchGroupReq::playerid() const {
+  return playerid_;
+}
+inline void S2SCreateMatchGroupReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SUpdateGroupMatchReq
@@ -17452,54 +17489,6 @@ inline ::google::protobuf::uint32 S2SUpdateGroupMatchReq::playerid() const {
 inline void S2SUpdateGroupMatchReq::set_playerid(::google::protobuf::uint32 value) {
   set_has_playerid();
   playerid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SUpdateGroupMatchAck
-
-// required uint32 maxcount = 1;
-inline bool S2SUpdateGroupMatchAck::has_maxcount() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SUpdateGroupMatchAck::set_has_maxcount() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SUpdateGroupMatchAck::clear_has_maxcount() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SUpdateGroupMatchAck::clear_maxcount() {
-  maxcount_ = 0u;
-  clear_has_maxcount();
-}
-inline ::google::protobuf::uint32 S2SUpdateGroupMatchAck::maxcount() const {
-  return maxcount_;
-}
-inline void S2SUpdateGroupMatchAck::set_maxcount(::google::protobuf::uint32 value) {
-  set_has_maxcount();
-  maxcount_ = value;
-}
-
-// required uint32 matchid = 2;
-inline bool S2SUpdateGroupMatchAck::has_matchid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SUpdateGroupMatchAck::set_has_matchid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SUpdateGroupMatchAck::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SUpdateGroupMatchAck::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 S2SUpdateGroupMatchAck::matchid() const {
-  return matchid_;
-}
-inline void S2SUpdateGroupMatchAck::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -17608,6 +17597,28 @@ inline ::google::protobuf::uint32 S2SCreateMatchGroupToShardReq::matchid() const
 inline void S2SCreateMatchGroupToShardReq::set_matchid(::google::protobuf::uint32 value) {
   set_has_matchid();
   matchid_ = value;
+}
+
+// required uint32 playerid = 5;
+inline bool S2SCreateMatchGroupToShardReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SCreateMatchGroupToShardReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SCreateMatchGroupToShardReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateMatchGroupToShardReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SCreateMatchGroupToShardReq::playerid() const {
+  return playerid_;
+}
+inline void S2SCreateMatchGroupToShardReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -18122,137 +18133,179 @@ inline void S2SAddMatchGroupMemberReq::set_allocated_pbmember(::KFMsg::PBObject*
 
 // S2SAddMatchGroupMemberAck
 
-// repeated .KFMsg.PBObject pbmember = 1;
-inline int S2SAddMatchGroupMemberAck::pbmember_size() const {
-  return pbmember_.size();
+// required .KFMsg.PBObject pbmember = 1;
+inline bool S2SAddMatchGroupMemberAck::has_pbmember() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SAddMatchGroupMemberAck::set_has_pbmember() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SAddMatchGroupMemberAck::clear_has_pbmember() {
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SAddMatchGroupMemberAck::clear_pbmember() {
+  if (pbmember_ != NULL) pbmember_->::KFMsg::PBObject::Clear();
+  clear_has_pbmember();
+}
+inline const ::KFMsg::PBObject& S2SAddMatchGroupMemberAck::pbmember() const {
+  return pbmember_ != NULL ? *pbmember_ : *default_instance_->pbmember_;
+}
+inline ::KFMsg::PBObject* S2SAddMatchGroupMemberAck::mutable_pbmember() {
+  set_has_pbmember();
+  if (pbmember_ == NULL) pbmember_ = new ::KFMsg::PBObject;
+  return pbmember_;
+}
+inline ::KFMsg::PBObject* S2SAddMatchGroupMemberAck::release_pbmember() {
+  clear_has_pbmember();
+  ::KFMsg::PBObject* temp = pbmember_;
+  pbmember_ = NULL;
+  return temp;
+}
+inline void S2SAddMatchGroupMemberAck::set_allocated_pbmember(::KFMsg::PBObject* pbmember) {
+  delete pbmember_;
+  pbmember_ = pbmember;
+  if (pbmember) {
+    set_has_pbmember();
+  } else {
+    clear_has_pbmember();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2STellMatchGroupDataAck
+
+// repeated .KFMsg.PBObject pbmember = 1;
+inline int S2STellMatchGroupDataAck::pbmember_size() const {
+  return pbmember_.size();
+}
+inline void S2STellMatchGroupDataAck::clear_pbmember() {
   pbmember_.Clear();
 }
-inline const ::KFMsg::PBObject& S2SAddMatchGroupMemberAck::pbmember(int index) const {
+inline const ::KFMsg::PBObject& S2STellMatchGroupDataAck::pbmember(int index) const {
   return pbmember_.Get(index);
 }
-inline ::KFMsg::PBObject* S2SAddMatchGroupMemberAck::mutable_pbmember(int index) {
+inline ::KFMsg::PBObject* S2STellMatchGroupDataAck::mutable_pbmember(int index) {
   return pbmember_.Mutable(index);
 }
-inline ::KFMsg::PBObject* S2SAddMatchGroupMemberAck::add_pbmember() {
+inline ::KFMsg::PBObject* S2STellMatchGroupDataAck::add_pbmember() {
   return pbmember_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBObject >&
-S2SAddMatchGroupMemberAck::pbmember() const {
+S2STellMatchGroupDataAck::pbmember() const {
   return pbmember_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBObject >*
-S2SAddMatchGroupMemberAck::mutable_pbmember() {
+S2STellMatchGroupDataAck::mutable_pbmember() {
   return &pbmember_;
 }
 
 // optional uint64 groupid = 2;
-inline bool S2SAddMatchGroupMemberAck::has_groupid() const {
+inline bool S2STellMatchGroupDataAck::has_groupid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SAddMatchGroupMemberAck::set_has_groupid() {
+inline void S2STellMatchGroupDataAck::set_has_groupid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_has_groupid() {
+inline void S2STellMatchGroupDataAck::clear_has_groupid() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_groupid() {
+inline void S2STellMatchGroupDataAck::clear_groupid() {
   groupid_ = GOOGLE_ULONGLONG(0);
   clear_has_groupid();
 }
-inline ::google::protobuf::uint64 S2SAddMatchGroupMemberAck::groupid() const {
+inline ::google::protobuf::uint64 S2STellMatchGroupDataAck::groupid() const {
   return groupid_;
 }
-inline void S2SAddMatchGroupMemberAck::set_groupid(::google::protobuf::uint64 value) {
+inline void S2STellMatchGroupDataAck::set_groupid(::google::protobuf::uint64 value) {
   set_has_groupid();
   groupid_ = value;
 }
 
-// optional uint32 iscaptain = 3;
-inline bool S2SAddMatchGroupMemberAck::has_iscaptain() const {
+// optional uint32 captainid = 3;
+inline bool S2STellMatchGroupDataAck::has_captainid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SAddMatchGroupMemberAck::set_has_iscaptain() {
+inline void S2STellMatchGroupDataAck::set_has_captainid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_has_iscaptain() {
+inline void S2STellMatchGroupDataAck::clear_has_captainid() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_iscaptain() {
-  iscaptain_ = 0u;
-  clear_has_iscaptain();
+inline void S2STellMatchGroupDataAck::clear_captainid() {
+  captainid_ = 0u;
+  clear_has_captainid();
 }
-inline ::google::protobuf::uint32 S2SAddMatchGroupMemberAck::iscaptain() const {
-  return iscaptain_;
+inline ::google::protobuf::uint32 S2STellMatchGroupDataAck::captainid() const {
+  return captainid_;
 }
-inline void S2SAddMatchGroupMemberAck::set_iscaptain(::google::protobuf::uint32 value) {
-  set_has_iscaptain();
-  iscaptain_ = value;
+inline void S2STellMatchGroupDataAck::set_captainid(::google::protobuf::uint32 value) {
+  set_has_captainid();
+  captainid_ = value;
 }
 
 // optional uint32 maxcount = 4;
-inline bool S2SAddMatchGroupMemberAck::has_maxcount() const {
+inline bool S2STellMatchGroupDataAck::has_maxcount() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SAddMatchGroupMemberAck::set_has_maxcount() {
+inline void S2STellMatchGroupDataAck::set_has_maxcount() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_has_maxcount() {
+inline void S2STellMatchGroupDataAck::clear_has_maxcount() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_maxcount() {
+inline void S2STellMatchGroupDataAck::clear_maxcount() {
   maxcount_ = 0u;
   clear_has_maxcount();
 }
-inline ::google::protobuf::uint32 S2SAddMatchGroupMemberAck::maxcount() const {
+inline ::google::protobuf::uint32 S2STellMatchGroupDataAck::maxcount() const {
   return maxcount_;
 }
-inline void S2SAddMatchGroupMemberAck::set_maxcount(::google::protobuf::uint32 value) {
+inline void S2STellMatchGroupDataAck::set_maxcount(::google::protobuf::uint32 value) {
   set_has_maxcount();
   maxcount_ = value;
 }
 
 // optional uint32 matchid = 5;
-inline bool S2SAddMatchGroupMemberAck::has_matchid() const {
+inline bool S2STellMatchGroupDataAck::has_matchid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void S2SAddMatchGroupMemberAck::set_has_matchid() {
+inline void S2STellMatchGroupDataAck::set_has_matchid() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_has_matchid() {
+inline void S2STellMatchGroupDataAck::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_matchid() {
+inline void S2STellMatchGroupDataAck::clear_matchid() {
   matchid_ = 0u;
   clear_has_matchid();
 }
-inline ::google::protobuf::uint32 S2SAddMatchGroupMemberAck::matchid() const {
+inline ::google::protobuf::uint32 S2STellMatchGroupDataAck::matchid() const {
   return matchid_;
 }
-inline void S2SAddMatchGroupMemberAck::set_matchid(::google::protobuf::uint32 value) {
+inline void S2STellMatchGroupDataAck::set_matchid(::google::protobuf::uint32 value) {
   set_has_matchid();
   matchid_ = value;
 }
 
 // optional bool newadd = 6;
-inline bool S2SAddMatchGroupMemberAck::has_newadd() const {
+inline bool S2STellMatchGroupDataAck::has_newadd() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void S2SAddMatchGroupMemberAck::set_has_newadd() {
+inline void S2STellMatchGroupDataAck::set_has_newadd() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_has_newadd() {
+inline void S2STellMatchGroupDataAck::clear_has_newadd() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void S2SAddMatchGroupMemberAck::clear_newadd() {
+inline void S2STellMatchGroupDataAck::clear_newadd() {
   newadd_ = false;
   clear_has_newadd();
 }
-inline bool S2SAddMatchGroupMemberAck::newadd() const {
+inline bool S2STellMatchGroupDataAck::newadd() const {
   return newadd_;
 }
-inline void S2SAddMatchGroupMemberAck::set_newadd(bool value) {
+inline void S2STellMatchGroupDataAck::set_newadd(bool value) {
   set_has_newadd();
   newadd_ = value;
 }
@@ -19215,28 +19268,31 @@ inline void S2SUpdateGroupMemberAck::set_allocated_pbstrings(::KFMsg::PBStrings*
 
 // -------------------------------------------------------------------
 
-// S2SUpdateGroupCaptainAck
+// S2SUpdateGroupDataAck
 
-// required uint32 iscaptain = 1;
-inline bool S2SUpdateGroupCaptainAck::has_iscaptain() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .KFMsg.PBString pbstring = 1;
+inline int S2SUpdateGroupDataAck::pbstring_size() const {
+  return pbstring_.size();
 }
-inline void S2SUpdateGroupCaptainAck::set_has_iscaptain() {
-  _has_bits_[0] |= 0x00000001u;
+inline void S2SUpdateGroupDataAck::clear_pbstring() {
+  pbstring_.Clear();
 }
-inline void S2SUpdateGroupCaptainAck::clear_has_iscaptain() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::KFMsg::PBString& S2SUpdateGroupDataAck::pbstring(int index) const {
+  return pbstring_.Get(index);
 }
-inline void S2SUpdateGroupCaptainAck::clear_iscaptain() {
-  iscaptain_ = 0u;
-  clear_has_iscaptain();
+inline ::KFMsg::PBString* S2SUpdateGroupDataAck::mutable_pbstring(int index) {
+  return pbstring_.Mutable(index);
 }
-inline ::google::protobuf::uint32 S2SUpdateGroupCaptainAck::iscaptain() const {
-  return iscaptain_;
+inline ::KFMsg::PBString* S2SUpdateGroupDataAck::add_pbstring() {
+  return pbstring_.Add();
 }
-inline void S2SUpdateGroupCaptainAck::set_iscaptain(::google::protobuf::uint32 value) {
-  set_has_iscaptain();
-  iscaptain_ = value;
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
+S2SUpdateGroupDataAck::pbstring() const {
+  return pbstring_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
+S2SUpdateGroupDataAck::mutable_pbstring() {
+  return &pbstring_;
 }
 
 // -------------------------------------------------------------------

@@ -44,6 +44,7 @@ namespace KFrame
         KFAgentData()
         {
             _agent_id = 0;
+            _port = 0;
         }
 
     public:
@@ -53,8 +54,14 @@ namespace KFrame
         // 局域网地址
         std::string _local_ip;
 
-        // 外网地址
-        std::string _interanet_ip;
+        // 名字
+        std::string _name;
+
+        // 类型
+        std::string _type;
+
+        // 端口
+        uint32 _port;
 
         // 服务器列表
         KFMap< uint32, uint32, KFServerData > _server_list;

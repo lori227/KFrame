@@ -85,7 +85,7 @@ namespace KFrame
             return;
         }
 
-        char buff[ 2048 ] = "";
+        char buff[ 8196 ] = "";
 
         va_list args;
         va_start( args, format );

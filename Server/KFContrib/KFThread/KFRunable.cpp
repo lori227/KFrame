@@ -1,4 +1,5 @@
 ﻿#include "KFRunable.hpp"
+#include "KFMemory/KFMalloc.h"
 
 namespace KFrame
 {
@@ -7,6 +8,9 @@ namespace KFrame
         _function = function;
         _file = file;
         _line = line;
+
+        // 如果是原来申请的线程, 线程句柄没有释放, 这里释放掉
+        _thread.join();
         _thread.start( *this );
     }
 

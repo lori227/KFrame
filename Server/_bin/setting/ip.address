@@ -32,6 +32,9 @@
 		<!-- group服务器 -->
 		<Server AppName="group" AppType="master" AppId="8" Ip="127.0.0.1" Type="0" Port="10008"/>
 
+		<!-- rank服务器 -->
+		<Server AppName="rank" AppType="master" AppId="10" Ip="127.0.0.1" Type="0" Port="10009"/>
+
 		<!-- zone master 服务器 这个不需要配置, 由zone模块来更新 -->
 		<Server AppName="zone" AppType="master" AppId="100" Ip="127.0.0.1" Type="3" Port="11000" Key=""/>
 

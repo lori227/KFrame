@@ -22,8 +22,8 @@ namespace KFrame
 
     void KFPlayerModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFPlayerModule::OnClientConnectionWorld );
-        _kf_tcp_client->RegisterTransmitFunction( this, &KFPlayerModule::TransmitMessageToPlayer );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFPlayerModule::OnClientConnectionWorld );
+        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFPlayerModule::TransmitMessageToPlayer );
         _kf_route->RegisterTransmitFunction( this, &KFPlayerModule::TransmitMessageToPlayer );
 
         // 注册逻辑函数
@@ -72,9 +72,9 @@ namespace KFrame
 
     void KFPlayerModule::BeforeShut()
     {
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
         _kf_kernel->ReleaseObject( _kf_player_data );
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
-        _kf_tcp_client->UnRegisterTransmitFunction( this );
         _kf_route->UnRegisterTransmitFunction();
 
         // 卸载逻辑函数
@@ -196,7 +196,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::LogPlayer( KFEntity* player, const char* format, ... )
     {
-        static char _buffer[ 1024 ] = "";
+        char _buffer[ 4096 ] = "";
 
         va_list args;
         va_start( args, format );
@@ -431,12 +431,17 @@ namespace KFrame
         SendMessageToClient( player, msgid, message );
 
         auto kfobject = player->GetData();
-        auto kfmemberrecord = kfobject->FindData( KFField::_group_member );
+        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
+
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
-            auto kfbasic = kfmember->FindData( KFField::_basic );
-            SendMessageToClient( kfbasic, msgid, message );
+            if ( kfmember->GetKeyID() != player->GetKeyID() )
+            {
+                auto kfbasic = kfmember->FindData( KFField::_basic );
+                SendMessageToClient( kfbasic, msgid, message );
+            }
+
             kfmember = kfmemberrecord->NextData();
         }
     }

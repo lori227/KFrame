@@ -13,7 +13,7 @@ namespace KFrame
         ~KFLuaScript();
 
         // 加载脚本函数
-        bool LoadScript( const std::string& file );
+        void LoadScript( const std::string& file );
 
         // 释放脚本
         void ReleaseScript();

@@ -23,11 +23,11 @@ namespace KFrame
         _lua_state->PushNil();
     }
 
-    bool KFLuaScript::LoadScript( const std::string& file )
+    void KFLuaScript::LoadScript( const std::string& file )
     {
         if ( file.empty() )
         {
-            return false;
+            return;
         }
 
         ReleaseScript();
@@ -35,12 +35,11 @@ namespace KFrame
         auto result = _lua_state->LoadFile( file.c_str() );
         if ( result != 0 )
         {
-            KFLogger::LogScript( KFLogger::Error, "Load [%s] Failed!", file.c_str() );
-            return false;
+            return KFLogger::LogScript( KFLogger::Error, "Load [%s] Failed!", file.c_str() );
         }
 
         _lua_file = file;
+        _is_initialized = true;
         _lua_state->Call( 0, 0 );
-        return true;
     }
 }

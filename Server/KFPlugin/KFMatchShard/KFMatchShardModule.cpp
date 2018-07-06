@@ -18,7 +18,8 @@ namespace KFrame
     void KFMatchShardModule::BeforeRun()
     {
         __REGISTER_RUN_FUNCTION__( &KFMatchShardModule::Run );
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFMatchShardModule::OnServerDiscoverMatchProxy );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFMatchShardModule::OnServerDiscoverMatchProxy );
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ, &KFMatchShardModule::HandleMatchToShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CANCEL_MATCH_TO_SHARD_REQ, &KFMatchShardModule::HandleCancelMatchToShardReq );
@@ -36,7 +37,7 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         __UNREGISTER_RUN_FUNCTION__();
-        _kf_tcp_server->UnRegisterDiscoverFunction( this );
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CANCEL_MATCH_TO_SHARD_REQ );

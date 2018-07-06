@@ -2,34 +2,34 @@
 #include "KFHttpData.h"
 #include "KFHttpClient.h"
 #include "KFHttpsClient.h"
+#include "KFThread/KFThread.h"
 
 namespace KFrame
 {
     KFHttpClientManage::KFHttpClientManage()
     {
-        _req_http_data_count = 0;
+        _thread_run = true;
     }
 
     KFHttpClientManage::~KFHttpClientManage()
     {
-        {
-            KFLocker lock( _finish_mutex );
-            for ( auto httpdata : _finish_http_data )
-            {
-                __KF_DESTROY__( KFHttpData, httpdata );
-            }
-        }
 
-        for ( auto httpdata : _wait_http_data )
-        {
-            __KF_DESTROY__( KFHttpData, httpdata );
-        }
     }
 
     void KFHttpClientManage::Initialize()
     {
         KFHttpsClient::Initialize();
+        _req_http_data.InitQueue( 1000 );
+        _ack_http_data.InitQueue( 1000 );
+
+        KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNCTION_LINE__ );
     }
+
+    void KFHttpClientManage::ShutDown()
+    {
+        _thread_run = false;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientManage::SendSTHttp( const std::string& url, const std::string& data )
@@ -52,7 +52,7 @@ namespace KFrame
         httpdata->_data = data;
         httpdata->_function = function;
         httpdata->_http = __KF_CREATE__( KFHttpClient );
-        _wait_http_data.push_back( httpdata );
+        _req_http_data.PushObject( httpdata );
     }
 
     void KFHttpClientManage::SendMTHttps( const std::string& url, const std::string& data, KFHttpClientFunction& function )
@@ -62,68 +62,32 @@ namespace KFrame
         httpdata->_data = data;
         httpdata->_function = function;
         httpdata->_http = __KF_CREATE__( KFHttpsClient );
-        _wait_http_data.push_back( httpdata );
-    }
-
-    void KFHttpClientManage::AddFinishHttp( KFHttpData* httpdata )
-    {
-        KFLocker lock( _finish_mutex );
-        _finish_http_data.push_back( httpdata );
+        _req_http_data.PushObject( httpdata );
     }
 
     void KFHttpClientManage::RunUpdate()
     {
-        // 结束的http
-        ExecuteFinishHttp();
-
-        // 等待的http
-        ExecuteWaitHttp();
-    }
-
-    void KFHttpClientManage::ExecuteFinishHttp()
-    {
-        HttpDataList temphttpdata;
-        {
-            KFLocker lock( _finish_mutex );
-            if ( _finish_http_data.empty() )
-            {
-                return;
-            }
-
-            temphttpdata.swap( _finish_http_data );
-        }
-
-        for ( auto httpdata : temphttpdata )
+        auto httpdata = _ack_http_data.PopObject();
+        while ( httpdata != nullptr )
         {
             httpdata->Finish();
             __KF_DESTROY__( KFHttpData, httpdata );
-
-            _req_http_data_count -= __MIN__( _req_http_data_count, 1 );
+            httpdata = _ack_http_data.PopObject();
         }
     }
 
-#define __MAX_REQ_HTTP_DATA_COUNT__ 16
-
-    void KFHttpClientManage::ExecuteWaitHttp()
+    void KFHttpClientManage::RunHttpRequest()
     {
         do
         {
-            if ( _wait_http_data.empty() )
+            auto httpdata = _req_http_data.PopObject();
+            while ( httpdata != nullptr )
             {
-                break;
+                httpdata->Request();
+                _ack_http_data.PushObject( httpdata );
+
+                httpdata = _req_http_data.PopObject();
             }
-
-            // 判断当前请求的数量
-            if ( _req_http_data_count >= __MAX_REQ_HTTP_DATA_COUNT__ )
-            {
-                break;
-            }
-
-            auto httpdata = _wait_http_data.front();
-            _wait_http_data.pop_front();
-
-            httpdata->StartMTHttp( this );
-            ++_req_http_data_count;
-        } while ( true );
+        } while ( _thread_run );
     }
 }

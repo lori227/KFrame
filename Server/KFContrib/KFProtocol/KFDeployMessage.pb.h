@@ -35,15 +35,19 @@ void protobuf_AssignDesc_KFDeployMessage_2eproto();
 void protobuf_ShutdownFile_KFDeployMessage_2eproto();
 
 class S2SRegisterAgentToServerReq;
+class S2SGetAgentIpAddressReq;
+class S2SGetAgentIpAddressAck;
 class S2SUpdateServerStatusReq;
 
 enum DeployProtocol {
   S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301,
-  S2S_UPDATE_SERVER_STATUS_REQ = 10302
+  S2S_UPDATE_SERVER_STATUS_REQ = 10302,
+  S2S_GET_AGENT_IP_ADDRESS_REQ = 10303,
+  S2S_GET_AGENT_IP_ADDRESS_ACK = 10304
 };
 LIBPROTOC_EXPORT bool DeployProtocol_IsValid(int value);
 const DeployProtocol DeployProtocol_MIN = S2S_REGISTER_AGENT_TO_SERVER_REQ;
-const DeployProtocol DeployProtocol_MAX = S2S_UPDATE_SERVER_STATUS_REQ;
+const DeployProtocol DeployProtocol_MAX = S2S_GET_AGENT_IP_ADDRESS_ACK;
 const int DeployProtocol_ARRAYSIZE = DeployProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* DeployProtocol_descriptor();
@@ -131,17 +135,36 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
   inline ::std::string* release_localip();
   inline void set_allocated_localip(::std::string* localip);
 
-  // required string interanetip = 3;
-  inline bool has_interanetip() const;
-  inline void clear_interanetip();
-  static const int kInteranetipFieldNumber = 3;
-  inline const ::std::string& interanetip() const;
-  inline void set_interanetip(const ::std::string& value);
-  inline void set_interanetip(const char* value);
-  inline void set_interanetip(const char* value, size_t size);
-  inline ::std::string* mutable_interanetip();
-  inline ::std::string* release_interanetip();
-  inline void set_allocated_interanetip(::std::string* interanetip);
+  // required string name = 3;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 3;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string type = 4;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 4;
+  inline const ::std::string& type() const;
+  inline void set_type(const ::std::string& value);
+  inline void set_type(const char* value);
+  inline void set_type(const char* value, size_t size);
+  inline ::std::string* mutable_type();
+  inline ::std::string* release_type();
+  inline void set_allocated_type(::std::string* type);
+
+  // required uint32 port = 5;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 5;
+  inline ::google::protobuf::uint32 port() const;
+  inline void set_port(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterAgentToServerReq)
  private:
@@ -149,17 +172,23 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
   inline void clear_has_agentid();
   inline void set_has_localip();
   inline void clear_has_localip();
-  inline void set_has_interanetip();
-  inline void clear_has_interanetip();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_port();
+  inline void clear_has_port();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* localip_;
-  ::std::string* interanetip_;
+  ::std::string* name_;
   ::google::protobuf::uint32 agentid_;
+  ::google::protobuf::uint32 port_;
+  ::std::string* type_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -167,6 +196,230 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
 
   void InitAsDefaultInstance();
   static S2SRegisterAgentToServerReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SGetAgentIpAddressReq : public ::google::protobuf::Message {
+ public:
+  S2SGetAgentIpAddressReq();
+  virtual ~S2SGetAgentIpAddressReq();
+
+  S2SGetAgentIpAddressReq(const S2SGetAgentIpAddressReq& from);
+
+  inline S2SGetAgentIpAddressReq& operator=(const S2SGetAgentIpAddressReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SGetAgentIpAddressReq& default_instance();
+
+  void Swap(S2SGetAgentIpAddressReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SGetAgentIpAddressReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SGetAgentIpAddressReq& from);
+  void MergeFrom(const S2SGetAgentIpAddressReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string localip = 1;
+  inline bool has_localip() const;
+  inline void clear_localip();
+  static const int kLocalipFieldNumber = 1;
+  inline const ::std::string& localip() const;
+  inline void set_localip(const ::std::string& value);
+  inline void set_localip(const char* value);
+  inline void set_localip(const char* value, size_t size);
+  inline ::std::string* mutable_localip();
+  inline ::std::string* release_localip();
+  inline void set_allocated_localip(::std::string* localip);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SGetAgentIpAddressReq)
+ private:
+  inline void set_has_localip();
+  inline void clear_has_localip();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* localip_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
+  friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFDeployMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SGetAgentIpAddressReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SGetAgentIpAddressAck : public ::google::protobuf::Message {
+ public:
+  S2SGetAgentIpAddressAck();
+  virtual ~S2SGetAgentIpAddressAck();
+
+  S2SGetAgentIpAddressAck(const S2SGetAgentIpAddressAck& from);
+
+  inline S2SGetAgentIpAddressAck& operator=(const S2SGetAgentIpAddressAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SGetAgentIpAddressAck& default_instance();
+
+  void Swap(S2SGetAgentIpAddressAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SGetAgentIpAddressAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SGetAgentIpAddressAck& from);
+  void MergeFrom(const S2SGetAgentIpAddressAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string appname = 1;
+  inline bool has_appname() const;
+  inline void clear_appname();
+  static const int kAppnameFieldNumber = 1;
+  inline const ::std::string& appname() const;
+  inline void set_appname(const ::std::string& value);
+  inline void set_appname(const char* value);
+  inline void set_appname(const char* value, size_t size);
+  inline ::std::string* mutable_appname();
+  inline ::std::string* release_appname();
+  inline void set_allocated_appname(::std::string* appname);
+
+  // required string apptype = 2;
+  inline bool has_apptype() const;
+  inline void clear_apptype();
+  static const int kApptypeFieldNumber = 2;
+  inline const ::std::string& apptype() const;
+  inline void set_apptype(const ::std::string& value);
+  inline void set_apptype(const char* value);
+  inline void set_apptype(const char* value, size_t size);
+  inline ::std::string* mutable_apptype();
+  inline ::std::string* release_apptype();
+  inline void set_allocated_apptype(::std::string* apptype);
+
+  // required uint32 appid = 3;
+  inline bool has_appid() const;
+  inline void clear_appid();
+  static const int kAppidFieldNumber = 3;
+  inline ::google::protobuf::uint32 appid() const;
+  inline void set_appid(::google::protobuf::uint32 value);
+
+  // required string ip = 4;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 4;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
+  // required uint32 port = 5;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 5;
+  inline ::google::protobuf::uint32 port() const;
+  inline void set_port(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SGetAgentIpAddressAck)
+ private:
+  inline void set_has_appname();
+  inline void clear_has_appname();
+  inline void set_has_apptype();
+  inline void clear_has_apptype();
+  inline void set_has_appid();
+  inline void clear_has_appid();
+  inline void set_has_ip();
+  inline void clear_has_ip();
+  inline void set_has_port();
+  inline void clear_has_port();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* appname_;
+  ::std::string* apptype_;
+  ::std::string* ip_;
+  ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 port_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
+  friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFDeployMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SGetAgentIpAddressAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -419,74 +672,498 @@ inline void S2SRegisterAgentToServerReq::set_allocated_localip(::std::string* lo
   }
 }
 
-// required string interanetip = 3;
-inline bool S2SRegisterAgentToServerReq::has_interanetip() const {
+// required string name = 3;
+inline bool S2SRegisterAgentToServerReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SRegisterAgentToServerReq::set_has_interanetip() {
+inline void S2SRegisterAgentToServerReq::set_has_name() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SRegisterAgentToServerReq::clear_has_interanetip() {
+inline void S2SRegisterAgentToServerReq::clear_has_name() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SRegisterAgentToServerReq::clear_interanetip() {
-  if (interanetip_ != &::google::protobuf::internal::kEmptyString) {
-    interanetip_->clear();
+inline void S2SRegisterAgentToServerReq::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
   }
-  clear_has_interanetip();
+  clear_has_name();
 }
-inline const ::std::string& S2SRegisterAgentToServerReq::interanetip() const {
-  return *interanetip_;
+inline const ::std::string& S2SRegisterAgentToServerReq::name() const {
+  return *name_;
 }
-inline void S2SRegisterAgentToServerReq::set_interanetip(const ::std::string& value) {
-  set_has_interanetip();
-  if (interanetip_ == &::google::protobuf::internal::kEmptyString) {
-    interanetip_ = new ::std::string;
+inline void S2SRegisterAgentToServerReq::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  interanetip_->assign(value);
+  name_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_interanetip(const char* value) {
-  set_has_interanetip();
-  if (interanetip_ == &::google::protobuf::internal::kEmptyString) {
-    interanetip_ = new ::std::string;
+inline void S2SRegisterAgentToServerReq::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  interanetip_->assign(value);
+  name_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_interanetip(const char* value, size_t size) {
-  set_has_interanetip();
-  if (interanetip_ == &::google::protobuf::internal::kEmptyString) {
-    interanetip_ = new ::std::string;
+inline void S2SRegisterAgentToServerReq::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  interanetip_->assign(reinterpret_cast<const char*>(value), size);
+  name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* S2SRegisterAgentToServerReq::mutable_interanetip() {
-  set_has_interanetip();
-  if (interanetip_ == &::google::protobuf::internal::kEmptyString) {
-    interanetip_ = new ::std::string;
+inline ::std::string* S2SRegisterAgentToServerReq::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
   }
-  return interanetip_;
+  return name_;
 }
-inline ::std::string* S2SRegisterAgentToServerReq::release_interanetip() {
-  clear_has_interanetip();
-  if (interanetip_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* S2SRegisterAgentToServerReq::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = interanetip_;
-    interanetip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void S2SRegisterAgentToServerReq::set_allocated_interanetip(::std::string* interanetip) {
-  if (interanetip_ != &::google::protobuf::internal::kEmptyString) {
-    delete interanetip_;
+inline void S2SRegisterAgentToServerReq::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
   }
-  if (interanetip) {
-    set_has_interanetip();
-    interanetip_ = interanetip;
+  if (name) {
+    set_has_name();
+    name_ = name;
   } else {
-    clear_has_interanetip();
-    interanetip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// required string type = 4;
+inline bool S2SRegisterAgentToServerReq::has_type() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SRegisterAgentToServerReq::set_has_type() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SRegisterAgentToServerReq::clear_has_type() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SRegisterAgentToServerReq::clear_type() {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    type_->clear();
+  }
+  clear_has_type();
+}
+inline const ::std::string& S2SRegisterAgentToServerReq::type() const {
+  return *type_;
+}
+inline void S2SRegisterAgentToServerReq::set_type(const ::std::string& value) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void S2SRegisterAgentToServerReq::set_type(const char* value) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void S2SRegisterAgentToServerReq::set_type(const char* value, size_t size) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRegisterAgentToServerReq::mutable_type() {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  return type_;
+}
+inline ::std::string* S2SRegisterAgentToServerReq::release_type() {
+  clear_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = type_;
+    type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRegisterAgentToServerReq::set_allocated_type(::std::string* type) {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    delete type_;
+  }
+  if (type) {
+    set_has_type();
+    type_ = type;
+  } else {
+    clear_has_type();
+    type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 port = 5;
+inline bool S2SRegisterAgentToServerReq::has_port() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SRegisterAgentToServerReq::set_has_port() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SRegisterAgentToServerReq::clear_has_port() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SRegisterAgentToServerReq::clear_port() {
+  port_ = 0u;
+  clear_has_port();
+}
+inline ::google::protobuf::uint32 S2SRegisterAgentToServerReq::port() const {
+  return port_;
+}
+inline void S2SRegisterAgentToServerReq::set_port(::google::protobuf::uint32 value) {
+  set_has_port();
+  port_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SGetAgentIpAddressReq
+
+// required string localip = 1;
+inline bool S2SGetAgentIpAddressReq::has_localip() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SGetAgentIpAddressReq::set_has_localip() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SGetAgentIpAddressReq::clear_has_localip() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SGetAgentIpAddressReq::clear_localip() {
+  if (localip_ != &::google::protobuf::internal::kEmptyString) {
+    localip_->clear();
+  }
+  clear_has_localip();
+}
+inline const ::std::string& S2SGetAgentIpAddressReq::localip() const {
+  return *localip_;
+}
+inline void S2SGetAgentIpAddressReq::set_localip(const ::std::string& value) {
+  set_has_localip();
+  if (localip_ == &::google::protobuf::internal::kEmptyString) {
+    localip_ = new ::std::string;
+  }
+  localip_->assign(value);
+}
+inline void S2SGetAgentIpAddressReq::set_localip(const char* value) {
+  set_has_localip();
+  if (localip_ == &::google::protobuf::internal::kEmptyString) {
+    localip_ = new ::std::string;
+  }
+  localip_->assign(value);
+}
+inline void S2SGetAgentIpAddressReq::set_localip(const char* value, size_t size) {
+  set_has_localip();
+  if (localip_ == &::google::protobuf::internal::kEmptyString) {
+    localip_ = new ::std::string;
+  }
+  localip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SGetAgentIpAddressReq::mutable_localip() {
+  set_has_localip();
+  if (localip_ == &::google::protobuf::internal::kEmptyString) {
+    localip_ = new ::std::string;
+  }
+  return localip_;
+}
+inline ::std::string* S2SGetAgentIpAddressReq::release_localip() {
+  clear_has_localip();
+  if (localip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = localip_;
+    localip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SGetAgentIpAddressReq::set_allocated_localip(::std::string* localip) {
+  if (localip_ != &::google::protobuf::internal::kEmptyString) {
+    delete localip_;
+  }
+  if (localip) {
+    set_has_localip();
+    localip_ = localip;
+  } else {
+    clear_has_localip();
+    localip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2SGetAgentIpAddressAck
+
+// required string appname = 1;
+inline bool S2SGetAgentIpAddressAck::has_appname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SGetAgentIpAddressAck::set_has_appname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SGetAgentIpAddressAck::clear_has_appname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SGetAgentIpAddressAck::clear_appname() {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    appname_->clear();
+  }
+  clear_has_appname();
+}
+inline const ::std::string& S2SGetAgentIpAddressAck::appname() const {
+  return *appname_;
+}
+inline void S2SGetAgentIpAddressAck::set_appname(const ::std::string& value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_appname(const char* value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_appname(const char* value, size_t size) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SGetAgentIpAddressAck::mutable_appname() {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  return appname_;
+}
+inline ::std::string* S2SGetAgentIpAddressAck::release_appname() {
+  clear_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = appname_;
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SGetAgentIpAddressAck::set_allocated_appname(::std::string* appname) {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    delete appname_;
+  }
+  if (appname) {
+    set_has_appname();
+    appname_ = appname;
+  } else {
+    clear_has_appname();
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string apptype = 2;
+inline bool S2SGetAgentIpAddressAck::has_apptype() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SGetAgentIpAddressAck::set_has_apptype() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SGetAgentIpAddressAck::clear_has_apptype() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SGetAgentIpAddressAck::clear_apptype() {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    apptype_->clear();
+  }
+  clear_has_apptype();
+}
+inline const ::std::string& S2SGetAgentIpAddressAck::apptype() const {
+  return *apptype_;
+}
+inline void S2SGetAgentIpAddressAck::set_apptype(const ::std::string& value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_apptype(const char* value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_apptype(const char* value, size_t size) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SGetAgentIpAddressAck::mutable_apptype() {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  return apptype_;
+}
+inline ::std::string* S2SGetAgentIpAddressAck::release_apptype() {
+  clear_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = apptype_;
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SGetAgentIpAddressAck::set_allocated_apptype(::std::string* apptype) {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    delete apptype_;
+  }
+  if (apptype) {
+    set_has_apptype();
+    apptype_ = apptype;
+  } else {
+    clear_has_apptype();
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 appid = 3;
+inline bool S2SGetAgentIpAddressAck::has_appid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SGetAgentIpAddressAck::set_has_appid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SGetAgentIpAddressAck::clear_has_appid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SGetAgentIpAddressAck::clear_appid() {
+  appid_ = 0u;
+  clear_has_appid();
+}
+inline ::google::protobuf::uint32 S2SGetAgentIpAddressAck::appid() const {
+  return appid_;
+}
+inline void S2SGetAgentIpAddressAck::set_appid(::google::protobuf::uint32 value) {
+  set_has_appid();
+  appid_ = value;
+}
+
+// required string ip = 4;
+inline bool S2SGetAgentIpAddressAck::has_ip() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SGetAgentIpAddressAck::set_has_ip() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SGetAgentIpAddressAck::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SGetAgentIpAddressAck::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& S2SGetAgentIpAddressAck::ip() const {
+  return *ip_;
+}
+inline void S2SGetAgentIpAddressAck::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_ip(const char* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SGetAgentIpAddressAck::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* S2SGetAgentIpAddressAck::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SGetAgentIpAddressAck::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 port = 5;
+inline bool S2SGetAgentIpAddressAck::has_port() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SGetAgentIpAddressAck::set_has_port() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SGetAgentIpAddressAck::clear_has_port() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SGetAgentIpAddressAck::clear_port() {
+  port_ = 0u;
+  clear_has_port();
+}
+inline ::google::protobuf::uint32 S2SGetAgentIpAddressAck::port() const {
+  return port_;
+}
+inline void S2SGetAgentIpAddressAck::set_port(::google::protobuf::uint32 value) {
+  set_has_port();
+  port_ = value;
 }
 
 // -------------------------------------------------------------------

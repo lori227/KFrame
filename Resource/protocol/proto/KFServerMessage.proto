@@ -91,20 +91,19 @@ enum ServerProtocol
 	S2S_UPDATE_GUEST_LIST_REQ = 21175;				// 更新访客列表
 	S2S_QUERY_GUEST_REQ = 21176;					// 查询访客信息请求
 	S2S_QUERY_GUEST_ACK = 21177;					// 查询访客信息回馈
-	S2S_UPDATE_GROUP_CAPTAIN_ACK = 21178;			// 更新队长
+	S2S_UPDATE_GROUP_DATA_ACK = 21178;				// 更新队伍属性
 	S2S_APPLY_MATCH_GROUP_ACK = 21179;				// 申请加入队伍
 	S2S_QUERY_TOAST_COUNT_REQ = 21180;				// 查询总的敬酒次数请求
 	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// 查询总的敬酒次数回馈
 	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// 更新队伍匹配模式
-	S2S_UPDATE_GROUP_MATCH_ACK = 21183;				// 更新队伍匹配模式
 	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// 新玩家登陆邮件服务
 	S2S_JOIN_RANK_LIST_REQ = 21186;					// 更新排行榜请求
 	S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187;			// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
-	S2S_QUERY_RANK_LIST_ACK	= 21189;				// 查询排行榜数据反馈
- 
- 	S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190;			// 更新zone信息到rankproxy
+	S2S_QUERY_RANK_LIST_ACK	= 21189;				// 查询排行榜数据反馈 
+	S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190;			// 更新zone信息到rankproxy
 	S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191;				// 转发消息到rank数据库
+	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -732,6 +731,7 @@ message S2SCreateMatchGroupReq
 	required uint64 groupid = 2;
 	required uint32 maxcount = 3;
 	required uint32 matchid = 4;
+	required uint32 playerid = 5;
 }
 
 // 更新队伍信息
@@ -744,14 +744,6 @@ message S2SUpdateGroupMatchReq
 	required uint32 playerid = 4;
 }
 
-// 更新队伍信息
-// S2S_UPDATE_GROUP_MATCH_ACK
-message S2SUpdateGroupMatchAck
-{
-	required uint32 maxcount = 1;
-	required uint32 matchid = 2;
-}
-
 // 创建匹配小组
 // S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ
 message S2SCreateMatchGroupToShardReq
@@ -760,6 +752,7 @@ message S2SCreateMatchGroupToShardReq
 	required uint64 groupid = 2;
 	required uint32 maxcount = 3;
 	required uint32 matchid = 4;
+	required uint32 playerid = 5;
 }
 
 // 接收到组队请求
@@ -800,12 +793,19 @@ message S2SAddMatchGroupMemberReq
 // S2S_ADD_MATCH_GROUP_MEMBER_ACK
 message S2SAddMatchGroupMemberAck
 {
+	required PBObject pbmember = 1;
+}
+
+// 通知队伍信息
+// S2S_TELL_MATCH_GROUP_DATA_ACK
+message S2STellMatchGroupDataAck
+{
 	repeated PBObject pbmember = 1;
 	optional uint64 groupid = 2;
-	optional uint32 iscaptain = 3;
+	optional uint32 captainid = 3;
 	optional uint32 maxcount = 4;
 	optional uint32 matchid = 5;
-	optional bool newadd = 6;
+	optional bool newadd = 6;		// 是否新加入队伍
 }
 
 // 添加匹配队员
@@ -908,10 +908,10 @@ message S2SUpdateGroupMemberAck
 }
 
 // 变更为队长
-// S2S_UPDATE_GROUP_CAPTAIN_ACK
-message S2SUpdateGroupCaptainAck
+// S2S_UPDATE_GROUP_DATA_ACK
+message S2SUpdateGroupDataAck
 {
-	required uint32 iscaptain = 1;
+	repeated PBString pbstring = 1;	// 更新数值
 }
 
 

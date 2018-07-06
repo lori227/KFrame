@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFRouteProxyModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFRouteProxyModule::OnClientConnectionRouteShard );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFRouteProxyModule::OnClientConnectionRouteShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &KFRouteProxyModule::HandleRegisterZoneReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ, &KFRouteProxyModule::HandleTransmitRouteZoneMessageReq );
@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFRouteProxyModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ );

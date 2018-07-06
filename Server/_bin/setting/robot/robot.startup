@@ -2,7 +2,6 @@
 <Setting AppName="robot" AppType="single">
 	<Plugins>
 		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFConnection" Startup="1" Sort="11" Debug="KFConnectiond" Release="KFConnection" Config="./setting/connection.network"/>
 		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/> 
 		<Plguin Name="KFHttpClient" Startup="1" Sort="211" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>

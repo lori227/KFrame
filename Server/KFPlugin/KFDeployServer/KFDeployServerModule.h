@@ -43,6 +43,9 @@ namespace KFrame
         // 更新服务器状态
         __KF_MESSAGE_FUNCTION__( HandleUpdateServerStatusReq );
 
+        // 请求分配Agent连接
+        __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressReq );
+
     private:
 
         // mysql

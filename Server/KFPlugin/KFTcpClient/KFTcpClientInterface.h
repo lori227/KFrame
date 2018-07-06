@@ -108,6 +108,24 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+#define __REGISTER_CLIENT_CONNECTION_FUNCTION__( function ) \
+    _kf_tcp_client->RegisterConnectionFunction( this, function )
+
+#define __UNREGISTER_CLIENT_CONNECTION_FUNCTION__() \
+    _kf_tcp_client->UnRegisterConnectionFunction( this )
+
+#define __REGISTER_CLIENT_LOST_FUNCTION__( function ) \
+    _kf_tcp_client->RegisterLostFunction( this, function )
+
+#define __UNREGISTER_CLIENT_LOST_FUNCTION__() \
+    _kf_tcp_client->UnRegisterLostFunction( this )
+
+#define __REGISTER_CLIENT_TRANSMIT_FUNCTION__( function ) \
+    _kf_tcp_client->RegisterTransmitFunction( this, function )
+
+#define __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__() \
+    _kf_tcp_client->UnRegisterTransmitFunction( this )
 }
 
 #endif

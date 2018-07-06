@@ -4,6 +4,8 @@ enum DeployProtocol
 {
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
 	S2S_UPDATE_SERVER_STATUS_REQ = 10302;		// 更新服务器状态
+	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// 请求分配Agent连接地址
+	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// 请求分配Agent连接地址
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -13,7 +15,27 @@ message S2SRegisterAgentToServerReq
 {
 	required uint32 agentid = 1;
 	required string localip = 2;
-	required string interanetip = 3;
+	required string name = 3;
+	required string type = 4;
+	required uint32 port = 5;
+}
+
+// 请求分配Agent连接地址
+// S2S_GET_AGENT_IP_ADDRESS_REQ
+message S2SGetAgentIpAddressReq
+{
+	required string localip = 1;
+}
+
+// 分配Agent连接地址回应
+// S2S_GET_AGENT_IP_ADDRESS_ACK
+message S2SGetAgentIpAddressAck
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;
+	required string ip = 4;	
+	required uint32 port = 5;
 }
 
 // 更新服务器状态

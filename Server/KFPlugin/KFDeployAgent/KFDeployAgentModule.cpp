@@ -35,7 +35,7 @@ namespace KFrame
     void KFDeployAgentModule::BeforeRun()
     {
         _kf_timer->RegisterLoopTimer( 0, 30000, this, &KFDeployAgentModule::OnTimerStartupProcess );
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFDeployAgentModule::OnClientConnectServer );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
     }
 
@@ -50,23 +50,27 @@ namespace KFrame
     void KFDeployAgentModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         _kf_timer->UnRegisterTimer( this );
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
     }
 
     /////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFDeployAgentModule::OnClientConnectServer )
     {
         // 连接成功
-        if ( servername == "deploy" && servertype == "master" )
+        if ( servername == KFField::_deploy && servertype == KFField::_server )
         {
             _deploy_server_id = serverid;
 
+            auto kfglobal = KFGlobal::Instance();
+
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;
-            req.set_agentid( KFGlobal::Instance()->_app_id );
+            req.set_agentid( kfglobal->_app_id );
+            req.set_name( kfglobal->_app_name );
+            req.set_type( kfglobal->_app_type );
+            req.set_port( kfglobal->_listen_port );
             req.set_localip( _kf_ip_address->GetLocalIp() );
-            req.set_interanetip( _kf_ip_address->GetInteranetIp() );
             _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
 
             // 更新服务器状态

@@ -62,6 +62,9 @@ namespace KFrame
         // 同意邀请组队
         __KF_MESSAGE_FUNCTION__( HandleConsentInviteMatchGroupReq );
 
+        // 队伍数据
+        __KF_MESSAGE_FUNCTION__( HandleTellMatchGroupDataAck );
+
         // 处理添加队员
         __KF_MESSAGE_FUNCTION__( HandleAddMatchGroupMemberAck );
 
@@ -95,13 +98,10 @@ namespace KFrame
         // 请求准备
         __KF_MESSAGE_FUNCTION__( HandleMatchGroupPrepareReq );
 
-        // 更新队长
-        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupCaptainAck );
+        // 更新队伍信息
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupDataAck );
 
-        // 更新队伍模式
-        __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchAck );
-
-        // 更新组队模式
+        // 请求更改队伍模式
         __KF_MESSAGE_FUNCTION__( HandleUpdateGroupMatchReq );
 
     protected:
@@ -116,15 +116,24 @@ namespace KFrame
         void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
         void OnUpdateDataToGroup( KFEntity* player, KFData* kfdata );
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 队伍id
+        void OnGroupIdUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+
+        // 最大数量
+        void OnGroupMaxCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+
+        // 添加队员回调
+        void OnAddGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+
+        // 删除队员回调
+        void OnRemoveGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
     private:
         // 准备匹配小队
         uint64 PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
 
         // 创建匹配小队
         bool CreateMatchGroup( KFEntity* player, uint64 groupid );
-
-        // 设置匹配队伍
-        void UpdateMatchGroupStatus( KFEntity* player, uint64 groupid, uint32 iscaptain, uint32 matchid, uint32 maxcount );
 
         // 格式化队伍成员
         void FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject );
@@ -137,6 +146,9 @@ namespace KFrame
 
         // 更新匹配模式
         void UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount );
+
+        // 获得队伍当前数量
+        uint32 GetGroupMemberCount( KFData* kfobject );
     private:
         // 匹配队伍成员
         KFData* _kf_group_member;

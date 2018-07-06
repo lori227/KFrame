@@ -7,7 +7,6 @@
 
 ************************************************************************/
 #include "KFrame.h"
-#include "KFThread/KFMutex.h"
 
 namespace KFrame
 {
@@ -21,6 +20,9 @@ namespace KFrame
         // 初始化
         void Initialize();
 
+        // 关闭
+        void ShutDown();
+
         // 执行逻辑
         void RunUpdate();
 
@@ -32,26 +34,18 @@ namespace KFrame
         void SendMTHttp( const std::string& url, const std::string& data, KFHttpClientFunction& function );
         void SendMTHttps( const std::string& url, const std::string& data, KFHttpClientFunction& function );
 
-        // 执行完成
-        void AddFinishHttp( KFHttpData* httpdata );
     protected:
-        // 处理执行完成的http请求
-        void ExecuteFinishHttp();
-
-        // 请求异步http
-        void ExecuteWaitHttp();
+        // http请求
+        void RunHttpRequest();
 
     private:
-        // 异步等待的列表
-        typedef std::list< KFHttpData* > HttpDataList;
-        HttpDataList _wait_http_data;
+        volatile bool _thread_run;
 
-        // 处理完的列表
-        KFMutex _finish_mutex;
-        HttpDataList _finish_http_data;
+        // 请求的数据队列
+        KFQueue< KFHttpData >_req_http_data;
 
-        // 正在处理的数量
-        uint32 _req_http_data_count;
+        // 完成的数据队列
+        KFQueue< KFHttpData > _ack_http_data;
     };
 
 }

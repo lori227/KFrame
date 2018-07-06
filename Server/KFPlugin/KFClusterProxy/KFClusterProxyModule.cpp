@@ -23,14 +23,12 @@ namespace KFrame
         __REGISTER_AFTER_RUN_FUNCTION__( &KFClusterProxyModule::AfterRun );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_tcp_client->RegisterLostFunction( this, &KFClusterProxyModule::OnClientLostServer );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterProxyModule::OnClientLostServer );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterProxyModule::OnClientConnectionServer );
+        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToClient );
 
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFClusterProxyModule::OnClientConnectionServer );
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFClusterProxyModule::OnServerDiscoverClient );
-
-        _kf_tcp_server->RegisterTransmitFunction( this, &KFClusterProxyModule::TransmitMessageToShard );
-        _kf_tcp_client->RegisterTransmitFunction( this, &KFClusterProxyModule::TransmitMessageToClient );
-
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFClusterProxyModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_REQ, &KFClusterProxyModule::HandleClusterTokenReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_REQ, &KFClusterProxyModule::HandleClusterVerifyReq );
@@ -49,7 +47,12 @@ namespace KFrame
 
         _kf_tcp_client->UnRegisterLostFunction( this );
         _kf_tcp_client->UnRegisterConnectionFunction( this );
-        _kf_tcp_server->UnRegisterDiscoverFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
+
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_REQ );

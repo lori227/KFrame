@@ -20,9 +20,10 @@ namespace KFrame
 
     void KFProxyModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFProxyModule::OnPlayerDisconnection );
         _kf_tcp_client->RegisterTransmitFunction( this, &KFProxyModule::SendMessageToClient );
-        _kf_tcp_server->RegisterTransmitFunction( this, &KFProxyModule::SendMessageToGame );
+
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFProxyModule::OnPlayerDisconnection );
+        __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFProxyModule::SendMessageToGame );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ, &KFProxyModule::HandleBroadcastMessageReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PROXY_PLAYER_REQ, &KFProxyModule::HandleKickProxyPlayerReq );
@@ -31,9 +32,9 @@ namespace KFrame
 
     void KFProxyModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
         _kf_tcp_client->UnRegisterTransmitFunction( this );
-        _kf_tcp_server->UnRegisterTransmitFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
+        __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PROXY_PLAYER_REQ );

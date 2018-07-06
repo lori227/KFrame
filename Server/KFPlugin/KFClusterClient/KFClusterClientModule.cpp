@@ -20,8 +20,9 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterConnectionFunction( this, &KFClusterClientModule::OnClientConnectionServer );
-        _kf_tcp_client->RegisterLostFunction( this, &KFClusterClientModule::OnClientLostServer );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterClientModule::OnClientLostServer );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterClientModule::OnClientConnectionServer );
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_ACK, &KFClusterClientModule::HandleClusterAuthAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_ACK, &KFClusterClientModule::HandleClusterVerifyAck );
@@ -32,8 +33,8 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
 
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
-        _kf_tcp_client->UnRegisterLostFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_ACK );

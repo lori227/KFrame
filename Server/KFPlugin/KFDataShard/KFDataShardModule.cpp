@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFDataShardModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFDataShardModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFDataShardModule::OnServerDiscoverClient );
         _kf_timer->RegisterLoopTimer( 1, 10000, this, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
@@ -43,8 +43,8 @@ namespace KFrame
     void KFDataShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         _kf_timer->UnRegisterTimer( this );
-        _kf_tcp_server->UnRegisterDiscoverFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
         __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ );

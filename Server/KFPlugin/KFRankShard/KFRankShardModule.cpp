@@ -35,7 +35,8 @@ namespace KFrame
 
     void KFRankShardModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterDiscoverFunction( this, &KFRankShardModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFRankShardModule::OnServerDiscoverClient );
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_RANK_MESSAGE__( KFMsg::S2S_JOIN_RANK_LIST_REQ, &KFRankShardModule::HandleJoinRankListReq );
         __REGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ, &KFRankShardModule::HandleQueryWholeRanklistReq );
         __REGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &KFRankShardModule::HandleQueryFriendRanklistReq );
@@ -44,6 +45,8 @@ namespace KFrame
     void KFRankShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
         __UNREGISTER_RANK_MESSAGE__( KFMsg::S2S_JOIN_RANK_LIST_REQ );
         __UNREGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ );

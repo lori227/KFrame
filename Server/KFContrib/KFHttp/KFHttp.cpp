@@ -70,12 +70,7 @@ namespace KFrame
             }
             catch ( Poco::Exception& exception )
             {
-                psession->reset();
                 ++exceptioncount;
-            }
-            catch ( ... )
-            {
-                break;
             }
         } while ( exceptioncount < MAX_EXCEPTION );
 

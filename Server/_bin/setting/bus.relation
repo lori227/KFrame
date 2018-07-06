@@ -37,6 +37,9 @@
 
 		<Connection AppName="group" AppType="*" AppId="0" ConnectName="group" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="group" AppType="proxy" AppId="0" ConnectName="group" ConnectType="shard" ConnectId="0"/>
+		
+		<Connection AppName="rank" AppType="*" AppId="0" ConnectName="rank" ConnectType="master" ConnectId="0"/>
+		<Connection AppName="rank" AppType="proxy" AppId="0" ConnectName="rank" ConnectType="shard" ConnectId="0"/>
 
 		<Connection AppName="zone" AppType="*" AppId="0" ConnectName="zone" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="zone" AppType="gate" AppId="0" ConnectName="zone" ConnectType="login" ConnectId="0"/>

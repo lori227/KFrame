@@ -113,6 +113,25 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_tcp_server, KFTcpServerInterface );
     //////////////////////////////////////////////////////////////////////////////////////////
+
+#define __REGISTER_SERVER_DISCOVER_FUNCTION__( function ) \
+    _kf_tcp_server->RegisterDiscoverFunction( this, function )
+
+#define __UNREGISTER_SERVER_DISCOVER_FUNCTION__() \
+    _kf_tcp_server->UnRegisterDiscoverFunction( this )
+
+#define __REGISTER_SERVER_LOST_FUNCTION__( function ) \
+    _kf_tcp_server->RegisterLostFunction( this, function )
+
+#define __UNREGISTER_SERVER_LOST_FUNCTION__() \
+    _kf_tcp_server->UnRegisterLostFunction( this )
+
+#define __REGISTER_SERVER_TRANSMIT_FUNCTION__( function ) \
+    _kf_tcp_server->RegisterTransmitFunction( this, function )
+
+#define __UNREGISTER_SERVER_TRANSMIT_FUNCTION__() \
+    _kf_tcp_server->UnRegisterTransmitFunction( this )
+
 }
 
 
