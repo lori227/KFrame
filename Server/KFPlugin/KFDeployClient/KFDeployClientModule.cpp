@@ -20,18 +20,20 @@ namespace KFrame
 
     void KFDeployClientModule::BeforeRun()
     {
-        _kf_timer->RegisterLoopTimer( 0, 5000, this, &KFDeployClientModule::OnTimerGetAgentIpAddress );
+        __REGISTER_LOOP_TIMER__( 0, 5000, &KFDeployClientModule::OnTimerGetAgentIpAddress );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployClientModule::OnClientConnectDeployServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_ACK, &KFDeployClientModule::HandleGetAgentIpAddressAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ, &KFDeployClientModule::HandleShutDownServerToMasterReq );
     }
 
     void KFDeployClientModule::ShutDown()
     {
+        __UNREGISTER_TIMER__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        _kf_timer->UnRegisterTimer( this );
         /////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ );
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -63,11 +65,31 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SGetAgentIpAddressAck );
 
         // 先关闭当前连接
+        __UNREGISTER_TIMER__();
         _kf_tcp_client->CloseClient( _deploy_server_id );
-        _kf_timer->UnRegisterTimer( this, 0 );
         _deploy_server_id = 0;
 
         // 连接Agent
         _kf_tcp_client->StartClient( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.ip(), kfmsg.port() );
     }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleShutDownServerToMasterReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SShutDownServerToMasterReq );
+
+        // 关闭服务器
+        _kf_deploy_command->ShutDownServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.delaytime() );
+
+        // 发送到客户端
+        if ( _kf_tcp_server != nullptr )
+        {
+            KFMsg::S2SShutDownServerToServerReq req;
+            req.set_appname( kfmsg.appname() );
+            req.set_apptype( kfmsg.apptype() );
+            req.set_appid( kfmsg.appid() );
+            req.set_delaytime( kfmsg.delaytime() );
+            _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ, &req );
+        }
+    }
+
 }

@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFInclude\;..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFLibrary\poco\Foundation\include\</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

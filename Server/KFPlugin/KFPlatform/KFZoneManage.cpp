@@ -219,12 +219,12 @@ namespace KFrame
 
     void KFZoneManage::BeforeRun()
     {
-        _kf_timer->RegisterLoopTimer( 1, 10000, this, &KFZoneManage::OnTimerLoadZoneDataFormDatabase );
+        __REGISTER_LOOP_TIMER__( 1, 10000, &KFZoneManage::OnTimerLoadZoneDataFormDatabase );
     }
 
     void KFZoneManage::BeforeShut()
     {
-        _kf_timer->UnRegisterTimer( this );
+        __UNREGISTER_TIMER__();
     }
 
     void KFZoneManage::Run()

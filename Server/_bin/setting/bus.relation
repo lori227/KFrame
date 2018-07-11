@@ -11,6 +11,8 @@
 	<Bus>
 		<Connection AppName="*" AppType="master" AppId="0" ConnectName="deploy" ConnectType="server" ConnectId="0"/>	
 		<Connection AppName="*" AppType="agent" AppId="0" ConnectName="deploy" ConnectType="server" ConnectId="0"/>	
+		<Connection AppName="auth" AppType="auth" AppId="0" ConnectName="deploy" ConnectType="server" ConnectId="0"/>	
+		<Connection AppName="platform" AppType="platform" AppId="0" ConnectName="deploy" ConnectType="server" ConnectId="0"/>	
 
 		<Connection AppName="data" AppType="*" AppId="0" ConnectName="data" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="data" AppType="proxy" AppId="0" ConnectName="data" ConnectType="shard" ConnectId="0"/>
@@ -27,7 +29,6 @@
 
 		<Connection AppName="battle" AppType="*" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="battle" AppType="proxy" AppId="0" ConnectName="battle" ConnectType="shard" ConnectId="0"/>
-		<Connection AppName="battle" AppType="shard" AppId="0" ConnectName="relation" ConnectType="master" ConnectId="0"/>
 
 		<Connection AppName="mail" AppType="*" AppId="0" ConnectName="mail" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="mail" AppType="proxy" AppId="0" ConnectName="mail" ConnectType="shard" ConnectId="0"/>

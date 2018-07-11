@@ -9,20 +9,20 @@ namespace KFrame
 {
     void KFPlatformPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFPlatformPlugin, KFPlatformInterface >( new KFPlatformModule() );
+        __REGISTER_MODULE__( KFPlatform );
     }
 
     void KFPlatformPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFPlatformPlugin, KFPlatformInterface >();
+        __UNREGISTER_MODULE__( KFPlatform );
     }
 
     void KFPlatformPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
-        _kf_http_server = _kf_plugin_manage->FindModule< KFHttpServerInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+        __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
     }
 }

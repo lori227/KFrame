@@ -6,6 +6,7 @@ namespace KFrame
 {
     KFLoginLoginModule::KFLoginLoginModule()
     {
+        _is_login_close = false;
     }
 
     KFLoginLoginModule::~KFLoginLoginModule()
@@ -19,7 +20,8 @@ namespace KFrame
 
     void KFLoginLoginModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFLoginLoginModule::OnServerLostHandle );
+        __REGISTER_SHUTDOWN_FUNCTION__( &KFLoginLoginModule::OnDeployShutDownServer );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginLoginModule::OnServerLostHandle );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &KFLoginLoginModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_WORLD_VERIFY_ACK, &KFLoginLoginModule::HandleLoginVerifyAck );
@@ -28,7 +30,8 @@ namespace KFrame
 
     void KFLoginLoginModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SHUTDOWN_FUNCTION__();
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_WORLD_VERIFY_ACK );
@@ -48,6 +51,12 @@ namespace KFrame
             _kf_http_client->StartMTHttpClient( url, sendjson, true );
         }
     }
+
+    __KF_COMMAND_FUNCTION__( KFLoginLoginModule::OnDeployShutDownServer )
+    {
+        _is_login_close = true;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFLoginLoginModule::SendLoginVerifyMessage( uint32 gateid, uint32 result, uint32 accountid, uint32 playerid, const std::string& token, const std::string& ip, uint32 port )
@@ -76,14 +85,20 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyReq );
 
+        auto gateid = __KF_HEAD_ID__( kfguid );
         auto accountid = kfmsg.accountid();
         auto& token = kfmsg.token();
         KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] login verify", __FUNCTION__, accountid );
 
+        if ( _is_login_close )
+        {
+            return SendLoginVerifyMessage( gateid, KFMsg::LoginIsClose, accountid, _invalid_int, _invalid_str, _invalid_str, _invalid_int );
+        }
+
         // 访问平台服务器, 验证token
         KFJson sendjson;
         sendjson.SetValue< const std::string& >( KFField::_token, kfmsg.token() );
-        sendjson.SetValue( KFField::_gate_id, kfguid._head_id );
+        sendjson.SetValue( KFField::_gate_id, gateid );
         sendjson.SetValue( KFField::_account_id, kfmsg.accountid() );
         sendjson.SetValue( KFField::_server_id, KFGlobal::Instance()->_app_id );
         sendjson.SetValue( KFField::_ip, kfmsg.ip() );

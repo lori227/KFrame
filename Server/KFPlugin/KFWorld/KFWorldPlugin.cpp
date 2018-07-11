@@ -5,23 +5,23 @@ namespace KFrame
 {
     void KFWorldPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFWorldPlugin, KFWorldInterface >( new KFWorldModule() );
+        __REGISTER_MODULE__( KFWorld );
     }
 
     void KFWorldPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFWorldPlugin, KFWorldInterface >();
+        __UNREGISTER_MODULE__( KFWorld );
     }
 
     void KFWorldPlugin::LoadModule()
     {
-        _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_http_server = _kf_plugin_manage->FindModule<KFHttpServerInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
+        __FIND_MODULE__( _kf_zone, KFZoneInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }
 
 }

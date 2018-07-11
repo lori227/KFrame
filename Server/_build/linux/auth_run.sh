@@ -10,6 +10,5 @@ server=authserver
 fi
 
 echo Starting Auth Server
-./$server 0 1 ./setting/auth.startup
-cd $basepath
-~                 
+./$server 0 1001 ./setting/auth.startup
+cd $basepath                 

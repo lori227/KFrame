@@ -45,6 +45,16 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerStartupProcess );
 
     protected:
+        // 启动服务器
+        __KF_MESSAGE_FUNCTION__( HandleStartupServerReq );
+
+        // 关闭服务器
+        __KF_MESSAGE_FUNCTION__( HandleShutDownServerReq );
+
+        // 杀死服务器
+        __KF_MESSAGE_FUNCTION__( HandleKillServerReq );
+
+    protected:
         // 更新数据到部署服务
         void UpdateProcessToServer( KFLaunchSetting* kfsetting );
 

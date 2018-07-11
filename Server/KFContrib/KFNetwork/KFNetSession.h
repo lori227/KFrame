@@ -1,6 +1,7 @@
 ﻿#ifndef __NET_SESSION_H__
 #define __NET_SESSION_H__
 
+#include "KFrame.h"
 #include "uv.h"
 #include "KFQueue.h"
 #include "KFNetDefine.h"

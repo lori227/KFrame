@@ -3,23 +3,23 @@
 
 namespace KFrame
 {
-	void KFRankClientPlugin::Install()
-	{
-		_kf_plugin_manage->RegistModule< KFRankClientPlugin, KFRankClientInterface >( new KFRankClientModule() );
-	}
+    void KFRankClientPlugin::Install()
+    {
+        __REGISTER_MODULE__( KFRankClient );
+    }
 
-	void KFRankClientPlugin::UnInstall()
-	{
-		_kf_plugin_manage->UnRegistModule< KFRankClientPlugin, KFRankClientInterface >();
-	}
+    void KFRankClientPlugin::UnInstall()
+    {
+        __UNREGISTER_MODULE__( KFRankClient );
+    }
 
-	void KFRankClientPlugin::LoadModule()
-	{
-		_kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
-		_kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-		_kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-		_kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-		_kf_cluster = _kf_plugin_manage->FindModule< KFClusterClientInterface >();
-	}
+    void KFRankClientPlugin::LoadModule()
+    {
+        __FIND_MODULE__( _kf_zone, KFZoneInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
+    }
 
 }

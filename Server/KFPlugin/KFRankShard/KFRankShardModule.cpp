@@ -59,6 +59,7 @@ namespace KFrame
     {
         // 分区信息同步到代理服务器
         auto zonelist = _kf_rank_shard_config->FindZoneId( KFGlobal::Instance()->_app_id );
+
         if ( zonelist == nullptr )
         {
             return KFLogger::LogSystem( KFLogger::Error, "[%s] server[%u] can't find zone list",
@@ -66,6 +67,7 @@ namespace KFrame
         }
 
         KFMsg::S2SUpdateZoneToRankProxyReq req;
+
         for ( auto zoneid : *zonelist )
         {
             req.add_zoneid( zoneid );
@@ -80,6 +82,7 @@ namespace KFrame
         auto redisdriver = __RANK_REDIS_DRIVER__;
         auto scoretype = kfmsg.scoretype();
         std::string mainkey = GetRankMainKey( scoretype );
+
         if ( mainkey.empty() )
         {
             return;
@@ -87,6 +90,7 @@ namespace KFrame
 
         std::string total_score( KFField::_total_score );
         std::string totalkey = GetRankMainKey( total_score );
+
         if ( totalkey.empty() )
         {
             return;
@@ -100,6 +104,7 @@ namespace KFrame
         AppendCommand( redisdriver, kfmsg.playerid(), totalkey, pbtotalsocres );
 
         auto ok = redisdriver->PipelineExecute();
+
         if ( !ok )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u] join rank[%s] failed!",
@@ -111,22 +116,27 @@ namespace KFrame
     std::string KFRankShardModule::GetRankMainKey( std::string& ranktype )
     {
         std::string mainkey = "";
+
         if ( ranktype == KFField::_single_score )
         {
             mainkey = KFField::_single;
         }
+
         else if ( ranktype == KFField::_double_score )
         {
             mainkey = KFField::_double;
         }
+
         else if ( ranktype == KFField::_four_score )
         {
             mainkey = KFField::_four;
         }
+
         else if ( ranktype == KFField::_total_score )
         {
             mainkey = KFField::_total;
         }
+
         return mainkey;
     }
 
@@ -134,18 +144,22 @@ namespace KFrame
     std::string KFRankShardModule::MakeRankKey( std::string& mainkey, const std::string& scoretype )
     {
         std::string key = "";
+
         if ( scoretype == KFField::_eval_score )
         {
             key = mainkey + "_" + KFField::_eval_rank;
         }
+
         else if ( scoretype == KFField::_win_score )
         {
             key = mainkey + "_" + KFField::_win_rank;
         }
+
         else if ( scoretype == KFField::_kill_score )
         {
             key = mainkey + "_" + KFField::_kill_rank;
         }
+
         return key;
     }
 
@@ -167,6 +181,7 @@ namespace KFrame
 
         auto ranktype = _kf_option->GetValue<std::string>( "ranktype", kfmsg.matchid() );
         auto mainkey = GetRankMainKey( ranktype );
+
         if ( mainkey.empty() )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s:%u] Make wholerank key err rankid：%u ranktype:%s!",
@@ -177,6 +192,7 @@ namespace KFrame
         //auto rankkey = MakeRankKey( mainkey, kfmsg.ranktype() );
         MapString ranklist;
         redisdriver->MapExecute( ranklist, "zrevrange %s %u %u WITHSCORES", rankkey.c_str(), kfmsg.begin(), kfmsg.end() );
+
         if ( ranklist.empty() )
         {
             return;
@@ -189,12 +205,14 @@ namespace KFrame
         fileds.push_back( KFField::_icon );
 
         auto queryplayercmd = "hmget %s:%s %s %s";
+
         for ( auto& iter : ranklist )
         {
             playerids.push_back( iter.first );
         }
 
         VectorString playerinfos;
+
         if ( !QueryRoleInfoBatch( playerinfos, playerids, fileds ) )
         {
             return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err!", __FUNCTION_LINE__ );
@@ -207,6 +225,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
 
         auto pbrankdata = ack.mutable_rankdatas();
+
         for ( auto& iter : ranklist )
         {
             auto rankdata = pbrankdata->add_rankdata();
@@ -223,6 +242,7 @@ namespace KFrame
             // 拼接角色信息
             FormatRoleInfoToPB( rankdata, playerinfos, cursor, fileds );
         }
+
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_RANK_LIST_ACK, &ack );
     }
 
@@ -234,15 +254,16 @@ namespace KFrame
 
         auto ranktype = _kf_option->GetValue<std::string>( "ranktype", kfmsg.matchid() );
         auto mainkey = GetRankMainKey( ranktype );
+
         if ( mainkey.empty() )
         {
             return;
         }
+
         auto rankkey = mainkey + "_" + kfmsg.ranktype();
         //auto rankkey = MakeRankKey( mainkey, kfmsg.ranktype() );
         // 查询
         ListString queryrankcmds;
-        auto queryrankcmd = "zscore %s %u";
 
         char strsql[ 256 ];
 
@@ -255,13 +276,16 @@ namespace KFrame
             {
                 continue;
             }
+
             memset( strsql, 0, 256 );
-            snprintf( strsql, 256, queryrankcmd, rankkey.c_str(), playerids->playerid( i ) );
+            snprintf( strsql, 256, "zscore %s %u", rankkey.c_str(), playerids->playerid( i ) );
             queryrankcmds.push_back( strsql );
             playeridvec.push_back( __KF_STRING__( playerids->playerid( i ) ) );
         }
+
         VectorString rankscores;
         auto ok = publicrediver->PipelineExecute( queryrankcmds, rankscores );
+
         if ( !ok || rankscores.size() != queryrankcmds.size() )
         {
             return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err ranksize:%u,cmdsize:%u!",
@@ -273,6 +297,7 @@ namespace KFrame
         fileds.push_back( KFField::_name );
         fileds.push_back( KFField::_icon );
         VectorString playerinfos;
+
         if ( !this->QueryRoleInfoBatch( playerinfos, playeridvec, fileds ) )
         {
             return  KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err!", __FUNCTION_LINE__ );
@@ -286,6 +311,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_isfriendrank( true );
         auto pbrankdata = ack.mutable_rankdatas();
+
         for ( auto i = 0; i < playerids->playerid_size(); ++i )
         {
             if ( _invalid_int == playerids->playerid( i ) )
@@ -307,6 +333,7 @@ namespace KFrame
             // 拼接角色信息
             FormatRoleInfoToPB( rankdata, playerinfos, cursor, fileds );
         }
+
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_RANK_LIST_ACK, &ack );
     }
 
@@ -315,15 +342,16 @@ namespace KFrame
     {
         auto publicrediver = __PUBLIC_REDIS_DRIVER__;
         ListString cmds;
-        char* queryplayercmd = "hmget %s:%s %s %s";
+
         char strsql[ 256 ];
 
         for ( auto& iter : playerids )
         {
             memset( strsql, 0, 256 );
-            snprintf( strsql, 256, queryplayercmd, KFField::_public.c_str(), iter.c_str(), fileds[ 0 ].c_str(), fileds[ 1 ].c_str() );
+            snprintf( strsql, 256, "hmget %s:%s %s %s", KFField::_public.c_str(), iter.c_str(), fileds[ 0 ].c_str(), fileds[ 1 ].c_str() );
             cmds.push_back( strsql );
         }
+
         return publicrediver->PipelineExecute( cmds, playerinfos );
     }
 
@@ -340,12 +368,14 @@ namespace KFrame
             pbstring->set_name( fileds[ 0 ] );
             pbstring->set_value( playerinfos[ cursor ] );
         }
+
         {
             auto pbstring = pbrank->add_pbstring();
             pbstring->set_name( fileds[ 1 ] );
             pbstring->set_value( playerinfos[ cursor + 1 ] );
 
         }
+
         cursor += fileds.size();
     }
 }

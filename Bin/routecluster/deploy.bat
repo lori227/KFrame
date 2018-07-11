@@ -72,7 +72,10 @@ call :copyfile 1 KFRouteShardd.dll
 call :copyfile 1 KFRouteShard.dll
 call :copyfile 1 KFRouteProxyd.dll
 call :copyfile 1 KFRouteProxy.dll
-
+call :copyfile 1 KFDeployCommand.dll
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
 
 rem pause
 rem ===========================================================================

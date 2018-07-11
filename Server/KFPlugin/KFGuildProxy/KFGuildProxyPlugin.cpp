@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFGuildProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >( new KFGuildProxyModule() );
+        __REGISTER_MODULE__( KFGuildProxy );
     }
 
     void KFGuildProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGuildProxyPlugin, KFGuildProxyInterface >();
+        __UNREGISTER_MODULE__( KFGuildProxy );
     }
 
     void KFGuildProxyPlugin::LoadModule()

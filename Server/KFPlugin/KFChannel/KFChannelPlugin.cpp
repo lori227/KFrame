@@ -7,19 +7,19 @@ namespace KFrame
 {
     void KFChannelPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFChannelPlugin, KFChannelInterface >( new KFChannelModule() );
+        __REGISTER_MODULE__( KFChannel );
     }
 
     void KFChannelPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFChannelPlugin, KFChannelInterface >();
+        __UNREGISTER_MODULE__( KFChannel );
     }
 
     void KFChannelPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
-        _kf_http_server = _kf_plugin_manage->FindModule< KFHttpServerInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+        __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
     }
 }

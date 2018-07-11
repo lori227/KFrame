@@ -86,8 +86,13 @@ call :copyfile 1 KFMailShardd.dll
 call :copyfile 1 KFMailShard.dll
 call :copyfile 1 KFScheduled.dll
 call :copyfile 1 KFSchedule.dll
+call :copyfile 1 KFDeployCommand.dll
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
 
-call :copyfile 1 KFScheduled.dll
+
+
 rem pause
 rem ===========================================================================
 rem ===========================================================================

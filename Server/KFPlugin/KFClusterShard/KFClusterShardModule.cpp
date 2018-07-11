@@ -19,14 +19,16 @@ namespace KFrame
 
     void KFClusterShardModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFClusterShardModule::OnServerLostHandle );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterShardModule::OnServerLostHandle );
+        //////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &KFClusterShardModule::HandleClusterClientListReq );
 
     }
 
     void KFClusterShardModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
+        //////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ );
     }
 

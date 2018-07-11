@@ -74,6 +74,11 @@ namespace KFrame
         // 设置日志
         static std::string _init_log_file = "./setting/initapp.log4cxx";
         KFLogger::Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id, _init_log_file );
+
+        //new logger
+        std::string out_dir = KF_FORMAT( ".{}_output", spdlog::details::os::folder_sep );
+        kfglobal->_logger->Initialize( out_dir, kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+
         if ( !_kf_startup->LoadPlugin() )
         {
             return false;
@@ -92,8 +97,7 @@ namespace KFrame
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        KFLogger::LogInit( KFLogger::Info, "[%s:%s:%u] startup ok!",
-                           kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
+        KF_LOG_INFO( "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
 
         // log4cxx重新初始化
         static std::string _template_log_file = "./setting/templateapp.log4cxx";

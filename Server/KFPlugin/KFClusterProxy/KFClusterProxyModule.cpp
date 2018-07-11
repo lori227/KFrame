@@ -39,10 +39,10 @@ namespace KFrame
 
     void KFClusterProxyModule::BeforeShut()
     {
+        __UNREGISTER_TIMER__();
         __UNREGISTER_RUN_FUNCTION__();
         __UNREGISTER_AFTER_RUN_FUNCTION__();
 
-        _kf_timer->UnRegisterTimer( this );
         _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
 
         _kf_tcp_client->UnRegisterLostFunction( this );
@@ -183,7 +183,7 @@ namespace KFrame
         req.set_port( kfglobal->_listen_port );
         _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_REGISTER_REQ, &req );
 
-        _kf_timer->RegisterLoopTimer( serverid, 5000, this, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
+        __REGISTER_LOOP_TIMER__( serverid, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint32 serverid )
@@ -225,7 +225,7 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientLostClusterServer( uint32 serverid )
     {
-        _kf_timer->UnRegisterTimer( this, serverid );
+        __UNREGISTER_OBJECT_TIMER__( serverid );
     }
 
     void KFClusterProxyModule::OnClientLostClusterShard( uint32 serverid )

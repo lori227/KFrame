@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="zone" AppType="proxy">
 	<Plugins>
-		<Plguin Name="KFTimer" Startup="1" Sort="1" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="2" Debug="KFTimerd" Release="KFTimer" Config=""/>
 		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
 		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
 		<Plguin Name="KFZone" Startup="1" Sort="12" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>

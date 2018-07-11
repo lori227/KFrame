@@ -551,7 +551,7 @@ namespace KFrame
         if ( !kfentity->IsNeedToSave() )
         {
             kfentity->SetNeetToSave( true );
-            _kf_timer->RegisterDelayTimer( kfentity->GetKeyID(), _kf_kernel_config->_delay_save_time, this, &KFComponentEx::OnTimerSaveEntity );
+            __REGISTER_DELAY_TIMER__( kfentity->GetKeyID(), _kf_kernel_config->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
         }
     }
 
@@ -571,7 +571,7 @@ namespace KFrame
         if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __NEED_TO_SAVE__ ) )
         {
             // 删除定时器
-            _kf_timer->UnRegisterTimer( this, kfentity->GetKeyID() );
+            __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
             SaveEntity( kfentity, __FUNCTION_LINE__ );
         }
         else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_SAVE__ ) )

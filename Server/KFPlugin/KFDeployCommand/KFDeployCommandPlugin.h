@@ -1,10 +1,10 @@
-﻿#ifndef __KF_COMMAND_PLUGIN_H__
-#define __KF_COMMAND_PLUGIN_H__
+﻿#ifndef __KF_DEPLOY_COMMAND_PLUGIN_H__
+#define __KF_DEPLOY_COMMAND_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFCommandPlugin : public KFPlugin
+    class KFDeployCommandPlugin : public KFPlugin
     {
     public:
         // 注册

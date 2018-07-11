@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFPublicProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >( new KFPublicProxyModule() );
+        __REGISTER_MODULE__( KFPublicProxy );
     }
 
     void KFPublicProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFPublicProxyPlugin, KFPublicProxyInterface >();
+        __UNREGISTER_MODULE__( KFPublicProxy );
     }
 
     void KFPublicProxyPlugin::LoadModule()

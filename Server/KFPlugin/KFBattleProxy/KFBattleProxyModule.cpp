@@ -18,7 +18,7 @@ namespace KFrame
 
     void KFBattleProxyModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFBattleProxyModule::OnServerLostHandle );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFBattleProxyModule::OnServerLostHandle );
         ////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_BATTLE_SERVER_REQ, &KFBattleProxyModule::HandleRegisterBattleServerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &KFBattleProxyModule::HandleCreateRoomToBattleProxyReq );
@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFBattleProxyModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_BATTLE_SERVER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ );

@@ -6,16 +6,16 @@ namespace KFrame
 {
     void KFLuaPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLuaPlugin, KFLuaInterface >( new KFLuaModule() );
+        __REGISTER_MODULE__( KFLua );
     }
 
     void KFLuaPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLuaPlugin, KFLuaInterface >();
+        __UNREGISTER_MODULE__( KFLua );
     }
 
     void KFLuaPlugin::LoadModule()
     {
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
     }
 }

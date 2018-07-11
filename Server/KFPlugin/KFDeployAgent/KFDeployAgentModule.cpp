@@ -5,7 +5,7 @@
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <windows.h>
     #include <direct.h>
-    #define __MKDIR__( path ) mkdir( path.c_str() )
+    #define __MKDIR__( path ) _mkdir( path.c_str() )
 #else
     #include <unistd.h>
     #include <sys/types.h>
@@ -34,9 +34,12 @@ namespace KFrame
 
     void KFDeployAgentModule::BeforeRun()
     {
-        _kf_timer->RegisterLoopTimer( 0, 30000, this, &KFDeployAgentModule::OnTimerStartupProcess );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
+        __REGISTER_LOOP_TIMER__( 0, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
         ////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleStartupServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleShutDownServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleKillServerReq );
     }
 
     static std::string _pid_path = "./pid";
@@ -50,8 +53,12 @@ namespace KFrame
     void KFDeployAgentModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_TIMER__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        _kf_timer->UnRegisterTimer( this );
+        //////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ );
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -267,15 +274,15 @@ namespace KFrame
 
         auto apppath = _kf_deploy_agent_config->_deploy_path + kfsetting->_app_path + "/";
         auto startupfile = apppath + kfsetting->GetStartupFile();
-        args.push_back( const_cast<char*>( startupfile.c_str() ) );
+        args.push_back( const_cast< char* >( startupfile.c_str() ) );
 
         auto strpause = __KF_STRING__( kfsetting->_is_pause );
-        args.push_back( const_cast<char*>( strpause.c_str() ) );
+        args.push_back( const_cast< char* >( strpause.c_str() ) );
 
         auto strappid = __KF_STRING__( kfsetting->_app_id );
-        args.push_back( const_cast<char*>( strappid.c_str() ) );
+        args.push_back( const_cast< char* >( strappid.c_str() ) );
 
-        args.push_back( const_cast<char*>( kfsetting->_app_config.c_str() ) );
+        args.push_back( const_cast< char* >( kfsetting->_app_config.c_str() ) );
         args.push_back( nullptr );
 
         auto pid = fork();
@@ -423,5 +430,61 @@ namespace KFrame
         std::string strdata = os.str();
         kfsetting->_process_id = KFUtility::SplitValue< uint32 >( strdata, DEFAULT_SPLIT_STRING );
         kfsetting->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleStartupServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SStartupServerToAgentReq );
+
+        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        {
+            auto kfsetting = iter.second;
+
+            auto isserver = kfsetting->IsAppServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+            if ( isserver )
+            {
+                kfsetting->_is_shutdown = false;
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleShutDownServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SShutDownServerToAgentReq );
+
+        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        {
+            auto kfsetting = iter.second;
+
+            auto isserver = kfsetting->IsAppServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+            if ( isserver )
+            {
+                kfsetting->_is_shutdown = true;
+            }
+        }
+
+        KFMsg::S2SShutDownServerToMasterReq req;
+        req.set_appname( kfmsg.appname() );
+        req.set_apptype( kfmsg.apptype() );
+        req.set_appid( kfmsg.appid() );
+        req.set_delaytime( kfmsg.delaytime() );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleKillServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SKillServerToAgentReq );
+
+        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        {
+            auto kfsetting = iter.second;
+
+            auto isserver = kfsetting->IsAppServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+            if ( isserver )
+            {
+                kfsetting->_is_shutdown = true;
+                KillServerProcess( kfsetting->_process_id );
+            }
+        }
     }
 }

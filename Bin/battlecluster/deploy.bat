@@ -85,6 +85,10 @@ call :copyfile 1 KFBattleShardd.dll
 call :copyfile 1 KFBattleShard.dll
 call :copyfile 1 KFBattleProxyd.dll
 call :copyfile 1 KFBattleProxy.dll
+call :copyfile 1 KFDeployCommand.dll
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
 
 rem pause
 rem ===========================================================================

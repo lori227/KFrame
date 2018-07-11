@@ -29,24 +29,32 @@ namespace KFrame
 
             //////////////////////////////////////////////////////////////////
             auto ftpsnode = config.FindNode( "Ftps" );
-            if ( ftpsnode.IsValid() )
+            while ( ftpsnode.IsValid() )
             {
+                auto address = ftpsnode.GetString( "Address" );
+                auto port = ftpsnode.GetUInt32( "Port" );
+                auto user = ftpsnode.GetString( "User" );
+                auto password = ftpsnode.GetString( "Password" );
+
                 auto ftpnode = ftpsnode.FindNode( "Ftp" );
                 while ( ftpnode.IsValid() )
                 {
                     auto kfsetting = __KF_CREATE__( KFFtpSetting );
 
+                    kfsetting->_address = address;
+                    kfsetting->_port = port;
+                    kfsetting->_user = user;
+                    kfsetting->_password = password;
+
                     kfsetting->_id = ftpnode.GetUInt32( "Id" );
-                    kfsetting->_address = ftpnode.GetString( "Address" );
-                    kfsetting->_port = ftpnode.GetUInt32( "Port" );
-                    kfsetting->_user = ftpnode.GetString( "User" );
-                    kfsetting->_password = ftpnode.GetString( "Password" );
                     kfsetting->_ftp_path = ftpnode.GetString( "FtpPath" );
                     kfsetting->_local_path = ftpnode.GetString( "LocalPath" );
                     _kf_ftp_setting.Insert( kfsetting->_id, kfsetting );
 
                     ftpnode.NextNode();
                 }
+
+                ftpsnode.NextNode();
             }
         }
         catch ( ... )

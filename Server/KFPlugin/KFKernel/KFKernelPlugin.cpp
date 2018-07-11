@@ -6,17 +6,17 @@ namespace KFrame
 {
     void KFKernelPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFKernelPlugin, KFKernelInterface >( new KFKernelModule() );
+        __REGISTER_MODULE__( KFKernel );
     }
 
     void KFKernelPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFKernelPlugin, KFKernelInterface >();
+        __UNREGISTER_MODULE__( KFKernel );
     }
 
     void KFKernelPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule<KFConfigInterface>();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 }

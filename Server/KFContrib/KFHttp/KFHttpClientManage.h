@@ -35,6 +35,9 @@ namespace KFrame
         void SendMTHttps( const std::string& url, const std::string& data, KFHttpClientFunction& function );
 
     protected:
+        // 添加异步请求
+        void AddHttpData( KFHttpData* httpdata );
+
         // http请求
         void RunHttpRequest();
 
@@ -42,7 +45,7 @@ namespace KFrame
         volatile bool _thread_run;
 
         // 请求的数据队列
-        KFQueue< KFHttpData >_req_http_data;
+        KFQueue< KFHttpData > _req_http_data;
 
         // 完成的数据队列
         KFQueue< KFHttpData > _ack_http_data;

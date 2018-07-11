@@ -37,12 +37,6 @@ namespace Poco
         class HTTPClientSession;
     }
 }
-
-namespace Json
-{
-    class Value;
-}
-
 namespace Math3D
 {
     class Vector3D;
@@ -50,19 +44,7 @@ namespace Math3D
 
 namespace KFrame
 {
-#ifndef __MIN__
-    #define __MIN__( x, y ) ( (x) > (y) ? (y) : (x) )
-#endif
 
-#ifndef __MAX__
-    #define __MAX__( x, y ) ( (x) > (y) ? (x) : (y) )
-#endif
-
-#ifndef __DELETE_ARRAY__
-    #define __DELETE_ARRAY__( p ) if ( p != nullptr ) { delete[] p; p = nullptr; }
-#endif
-
-#define __KF_STRING__( value ) std::to_string( value )
     ////////////////////////////////////////////////////////////////
     struct StringLesser : std::binary_function<std::string, std::string, bool >
     {
@@ -102,21 +84,14 @@ namespace KFrame
     typedef std::function<void( const KFGuid& guid, const char* data, uint32 length )> KFMessageFunction;
     typedef std::function<void( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )> KFNetFunction;
     typedef std::function<bool( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )> KFTransmitFunction;
-#define __KF_MESSAGE_FUNCTION__( function ) void function( const KFGuid& kfguid, const char* data, uint32 length )
-#define __KF_TRANSMIT_FUNCTION__( function ) bool function( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
     ////////////////////////////////////////////////////////////////////////
     // 客户端 连接 和 断开 回调函数
     typedef std::function< void( uint32 serverid, const std::string& servername, const std::string& servertype ) > KFClientLostFunction;
     typedef std::function< void( uint32 serverid, const std::string& servername, const std::string& servertype ) > KFClientConnectionFunction;
-#define __KF_CLIENT_LOST_FUNCTION__( function ) void function( uint32 serverid, const std::string& servername, const std::string& servertype )
-#define __KF_CLIENT_CONNECT_FUNCTION__( function ) void function( uint32 serverid, const std::string& servername, const std::string& servertype )
     ////////////////////////////////////////////////////////////////////////
     // 服务器 连接 和 断开 回调函数
     typedef std::function< void( uint32 id, const std::string& name, const std::string& type ) > KFServerLostFunction;
     typedef std::function< void( uint32 id, const std::string& name, const std::string& type, const std::string& ip, uint32 port ) > KFServerDiscoverFunction;
-
-#define __KF_SERVER_LOST_FUNCTION__( function ) void function( uint32 handleid, const std::string& handlename, const std::string& handletype )
-#define __KF_SERVER_DISCOVER_FUNCTION__( function ) void function( uint32 handleid, const std::string& handlename , const std::string& handletype, const std::string& ip, uint32 port )
     ////////////////////////////////////////////////////////////////////////
     // httpclient回调函数
     typedef std::function<void( std::string& data, std::string& result )> KFHttpClientFunction;

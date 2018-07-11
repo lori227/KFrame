@@ -21,6 +21,7 @@
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFPublicClient/KFPublicClientInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -109,9 +110,11 @@ namespace KFrame
         // 连接World服务器
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionWorld );
 
-    protected:
         // 转发消息到玩家
         __KF_TRANSMIT_FUNCTION__( TransmitMessageToPlayer );
+
+        // 部署服务器关闭
+        __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
 
     protected:
         // 处理玩家掉线

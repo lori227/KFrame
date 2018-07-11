@@ -1,6 +1,7 @@
 ﻿#ifndef __NET_CLIENT_H__
 #define __NET_CLIENT_H__
 
+#include "KFrame.h"
 #include "uv.h"
 #include "KFNetSetting.h"
 #include "KFNetConnector.h"

@@ -64,7 +64,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    std::string KFPlatformModule::HandleLoginToken( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleLoginToken )
     {
         KFJson request( data );
         if ( !_kf_http_server->VerifySignature( request ) )
@@ -211,7 +211,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFPlatformModule::HandleActivationAccount( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleActivationAccount )
     {
         KFJson request( data );
         if ( !_kf_http_server->VerifySignature( request ) )
@@ -263,7 +263,7 @@ namespace KFrame
         return SaveLoginToken( accountid, accountdata );
     }
 
-    std::string KFPlatformModule::HandleQueryZoneList( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleQueryZoneList )
     {
         KFJson kfserverlistjson;
         _kf_zone_manage->GetZoneJson( kfserverlistjson );
@@ -317,7 +317,7 @@ namespace KFrame
         return accountdata;
     }
 
-    std::string KFPlatformModule::HandleVerifyToken( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleVerifyToken )
     {
         KFJson request( data );
         auto token = request.GetString( KFField::_token );
@@ -356,7 +356,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFPlatformModule::HandleUpdateZone( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleUpdateZone )
     {
         KFJson request( data );
 
@@ -371,7 +371,7 @@ namespace KFrame
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 
-    std::string KFPlatformModule::HandleZoneHttp( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleZoneHttp )
     {
         KFJson request( data );
 
@@ -389,7 +389,7 @@ namespace KFrame
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 
-    std::string KFPlatformModule::HandleLostZone( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleLostZone )
     {
         KFJson request( data );
 
@@ -406,7 +406,7 @@ namespace KFrame
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 
-    std::string KFPlatformModule::HandleUpdateZoneStatus( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleUpdateZoneStatus )
     {
         KFJson request( data );
 
@@ -425,7 +425,7 @@ namespace KFrame
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 
-    std::string KFPlatformModule::HandleQueryZoneStatus( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleQueryZoneStatus )
     {
         KFJson request( data );
 
@@ -442,7 +442,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFPlatformModule::HandleUpdateOnline( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFPlatformModule::HandleUpdateOnline )
     {
         KFJson request( data );
 

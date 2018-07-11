@@ -6,12 +6,12 @@ namespace KFrame
 {
     void KFHttpClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFHttpClientPlugin, KFHttpClientInterface >( new KFHttpClientModule() );
+        __REGISTER_MODULE__( KFHttpClient );
     }
 
     void KFHttpClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFHttpClientPlugin, KFHttpClientInterface >();
+        __UNREGISTER_MODULE__( KFHttpClient );
     }
 
     void KFHttpClientPlugin::LoadModule()

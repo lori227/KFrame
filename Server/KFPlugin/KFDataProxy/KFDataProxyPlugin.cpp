@@ -5,19 +5,19 @@ namespace KFrame
 {
     void KFDataProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFDataProxyPlugin, KFDataProxyInterface >( new KFDataProxyModule() );
+        __REGISTER_MODULE__( KFDataProxy );
     }
 
     void KFDataProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFDataProxyPlugin, KFDataProxyInterface >();
+        __UNREGISTER_MODULE__( KFDataProxy );
     }
 
     void KFDataProxyPlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_cluster_proxy = _kf_plugin_manage->FindModule< KFClusterProxyInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
     }
 
 }

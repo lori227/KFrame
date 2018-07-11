@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="rank" AppType="master">
 	<Plugins>
-		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plguin Name="KFDeployClient" Startup="1" Sort="2" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="3" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFHttpClient" Startup="1" Sort="4" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="5" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="6" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
 		<Plguin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
 		<Plguin Name="KFTcpClient" Startup="1" Sort="30" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>

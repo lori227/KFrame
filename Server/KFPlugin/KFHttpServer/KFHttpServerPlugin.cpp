@@ -7,17 +7,17 @@ namespace KFrame
 {
     void KFHttpServerPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFHttpServerPlugin, KFHttpServerInterface >( new KFHttpServerModule() );
+        __REGISTER_MODULE__( KFHttpServer );
     }
 
     void KFHttpServerPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFHttpServerPlugin, KFHttpServerInterface >();
+        __UNREGISTER_MODULE__( KFHttpServer );
     }
 
     void KFHttpServerPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
     }
 }

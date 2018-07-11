@@ -1,6 +1,6 @@
-﻿#include "uv.h"
+﻿#include "KFrame.h"
+#include "uv.h"
 #include "KFNetServices.h"
-#include "KFLogger/KFLogger.h"
 #include "KFNetSession.h"
 #include "KFNetLocker.h"
 
@@ -102,7 +102,6 @@ namespace KFrame
 
         uv_stop( _uv_loop );
         uv_loop_close( _uv_loop );
-        uv_thread_join( &_thread_id );
     }
 
     void KFNetServices::SendNetMessage( KFNetSession* netsession )

@@ -17,7 +17,6 @@
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFBattleRoom.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame
 {

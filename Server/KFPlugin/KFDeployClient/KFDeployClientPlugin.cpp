@@ -6,20 +6,28 @@ namespace KFrame
 {
     void KFDeployClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFDeployClientPlugin, KFDeployClientInterface >( new KFDeployClientModule() );
+        __REGISTER_MODULE__( KFDeployClient );
     }
 
     void KFDeployClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFDeployClientPlugin, KFDeployClientInterface >();
+        __UNREGISTER_MODULE__( KFDeployClient );
     }
 
     void KFDeployClientPlugin::LoadModule()
     {
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_deploy_command, KFDeployCommandInterface );
+
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_app_name != KFField::_auth &&
+                kfglobal->_app_name != KFField::_platform )
+        {
+            __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        }
     }
 }

@@ -73,7 +73,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformation>false</BrowseInformation>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
     </ClCompile>
@@ -104,6 +104,7 @@
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

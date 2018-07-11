@@ -87,6 +87,10 @@ call :copyfile 1 KFDataProxyd.dll
 call :copyfile 1 KFDataProxy.dll
 call :copyfile 1 KFMySQLd.dll
 call :copyfile 1 KFMySQL.dll
+call :copyfile 1 KFDeployCommand.dll
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
 
 rem pause
 rem ===========================================================================

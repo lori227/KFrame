@@ -135,6 +135,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\openssl\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -188,6 +189,7 @@
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\openssl\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

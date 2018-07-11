@@ -17,6 +17,7 @@ namespace KFrame
             _is_startup = true;
             _is_pause = 0;
             _is_show_window = true;
+            _ftp_id = 0;
 
             _process_id = 0;
             _startup_time = 0;
@@ -24,6 +25,8 @@ namespace KFrame
         }
 
         std::string GetStartupFile();
+
+        bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid );
 
     public:
         // id
@@ -55,6 +58,9 @@ namespace KFrame
 
         // 是否启动挂起
         uint32 _is_pause;
+
+        // ftpid
+        uint32 _ftp_id;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
 

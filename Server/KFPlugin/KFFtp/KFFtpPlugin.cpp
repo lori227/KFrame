@@ -7,16 +7,16 @@ namespace KFrame
 {
     void KFFtpPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFFtpPlugin, KFFtpInterface >( new KFFtpModule() );
+        __REGISTER_MODULE__( KFFtp );
     }
 
     void KFFtpPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFFtpPlugin, KFFtpInterface >();
+        __UNREGISTER_MODULE__( KFFtp );
     }
 
     void KFFtpPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 }

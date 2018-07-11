@@ -1,5 +1,5 @@
 ﻿#include "KFUtility.h"
-#include "KFEnum.h"
+#include "KFMacros.h"
 #include "KFTime/KFDate.h"
 
 #ifdef _WIN32

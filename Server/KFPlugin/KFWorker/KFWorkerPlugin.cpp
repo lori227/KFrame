@@ -6,18 +6,19 @@ namespace KFrame
 {
     void KFWorkerPlugin::Install()
     {
+        __REGISTER_MODULE__( KFWorker );
         _kf_plugin_manage->RegistModule< KFWorkerPlugin, KFWorkerInterface >( new KFWorkerModule() );
     }
 
     void KFWorkerPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFWorkerPlugin, KFWorkerInterface >();
+        __UNREGISTER_MODULE__( KFWorker );
     }
 
     void KFWorkerPlugin::LoadModule()
     {
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

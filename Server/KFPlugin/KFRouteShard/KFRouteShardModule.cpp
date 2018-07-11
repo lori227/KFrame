@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFRouteShardModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFRouteShardModule::OnServerLostRouteProxy );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFRouteShardModule::OnServerLostRouteProxy );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &KFRouteShardModule::HandleRegisterRouteProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ, &KFRouteShardModule::HandleTransmitRouteProxyMessageReq );
@@ -27,7 +27,7 @@ namespace KFrame
 
     void KFRouteShardModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ );

@@ -114,6 +114,12 @@ namespace KFrame
     __KF_INTERFACE__( _kf_tcp_server, KFTcpServerInterface );
     //////////////////////////////////////////////////////////////////////////////////////////
 
+#define __KF_SERVER_LOST_FUNCTION__( function ) \
+    void function( uint32 handleid, const std::string& handlename, const std::string& handletype )
+
+#define __KF_SERVER_DISCOVER_FUNCTION__( function ) \
+    void function( uint32 handleid, const std::string& handlename , const std::string& handletype, const std::string& ip, uint32 port )
+
 #define __REGISTER_SERVER_DISCOVER_FUNCTION__( function ) \
     _kf_tcp_server->RegisterDiscoverFunction( this, function )
 

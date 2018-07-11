@@ -173,6 +173,7 @@
       </DisableSpecificWarnings>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -230,6 +231,7 @@
       </DisableSpecificWarnings>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

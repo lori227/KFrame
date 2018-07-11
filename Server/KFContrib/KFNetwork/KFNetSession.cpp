@@ -246,7 +246,10 @@ namespace KFrame
     void KFNetSession::CloseSession()
     {
         _is_connected = false;
-        uv_read_stop( _uv_stream );
+        if ( _uv_stream != nullptr )
+        {
+            uv_read_stop( _uv_stream );
+        }
     }
 
     void KFNetSession::OnConnect( uv_stream_t* uvstream )

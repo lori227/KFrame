@@ -21,14 +21,14 @@ function copyfile()
 	
 	if [ $needcopyfile == 1 ];then
 		echo "copy $file1 $file2"
-		\cp $file1 $file2
+		cp -f $file1 $file2
 	fi
 }
 
 binpath=../../_bin/linux
 respath=../../../Resource
 settingpath=../../_bin/setting
-deploypath=/data/zone"$2"
+deploypath=/data/zone"$1"
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
@@ -62,10 +62,10 @@ copyfile 1 world.startup
 
 
 #config
-\cp $respath/config/*.config $deploypath/config/
+cp -f $respath/config/*.config $deploypath/config/
 
 #script
-\cp $respath/script/* $deploypath/script/
+cp -f $respath/script/* $deploypath/script/
 
 
 #plugin
@@ -74,12 +74,12 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
-\cp $deploypath/KFStartup $deploypath/zoneserver
-\cp $deploypath/KFStartupd $deploypath/zoneserverd
+cp -f $deploypath/KFStartup $deploypath/zoneserver
+cp -f $deploypath/KFStartupd $deploypath/zoneserverd
 
 path1=$binpath
 path2=$deploypath/plugin
 
-\cp $path1/*.so $path2/
+cp -f $path1/*.so $path2/
 
 

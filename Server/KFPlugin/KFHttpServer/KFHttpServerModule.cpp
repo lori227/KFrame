@@ -41,7 +41,7 @@ namespace KFrame
         auto localip = _kf_ip_address->GetLocalIp();
         _full_url = KFUtility::Format( "http://%s:%u/", localip.c_str(), kfsetting->_port );
 
-        KFLogger::LogInit( KFLogger::Info, "http server[%s] startup ok!", _full_url.c_str() );
+        KF_LOG_INFO( "http server[{}] startup ok!", _full_url );
     }
 
     void KFHttpServerModule::Run()

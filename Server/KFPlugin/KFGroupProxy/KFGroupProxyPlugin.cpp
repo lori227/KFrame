@@ -6,18 +6,17 @@ namespace KFrame
 {
     void KFGroupProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGroupProxyPlugin, KFGroupProxyInterface >( new KFGroupProxyModule() );
+        __REGISTER_MODULE__( KFGroupProxy );
     }
 
     void KFGroupProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGroupProxyPlugin, KFGroupProxyInterface >();
+        __UNREGISTER_MODULE__( KFGroupProxy );
     }
 
     void KFGroupProxyPlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_cluster_proxy = _kf_plugin_manage->FindModule< KFClusterProxyInterface >();
-
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
     }
 }

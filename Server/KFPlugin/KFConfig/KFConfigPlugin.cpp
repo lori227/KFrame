@@ -6,12 +6,12 @@ namespace KFrame
 {
     void KFConfigPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFConfigPlugin, KFConfigInterface >( new KFConfigModule() );
+        __REGISTER_MODULE__( KFConfig );
     }
 
     void KFConfigPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFConfigPlugin, KFConfigInterface >();
+        __UNREGISTER_MODULE__( KFConfig );
     }
 
     void KFConfigPlugin::LoadModule()

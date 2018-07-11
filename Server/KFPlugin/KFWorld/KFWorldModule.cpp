@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFWorldModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFWorldModule::OnServerLostGame );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFWorldModule::OnServerLostGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &KFWorldModule::HandleGameSyncOnlineReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_MESSAGE_REQ, &KFWorldModule::HandleTransmitMessageReq );
@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFWorldModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ );
@@ -61,13 +61,11 @@ namespace KFrame
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
         if ( retcode == KFMsg::Success )
         {
-            KFLogger::LogInit( KFLogger::Info, "update http[%s] to platfrom ok!",
-                               _kf_http_server->GetHttpUrl().c_str() );
+            KF_LOG_INFO( "update http[{}] to platform ok!", _kf_http_server->GetHttpUrl() );
         }
         else
         {
-            KFLogger::LogInit( KFLogger::Info, "update http[%s] to platfrom failed!",
-                               _kf_http_server->GetHttpUrl().c_str() );
+            KF_LOG_ERROR( "update http[{}] to platform failed!", _kf_http_server->GetHttpUrl() );
         }
     }
 
@@ -227,13 +225,13 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
     }
 
-    std::string KFWorldModule::HandleHttpKickOnline( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFWorldModule::HandleHttpKickOnline )
     {
         KFJson kfjson( data );
 
         auto playerid = kfjson.GetUInt32( KFField::_player_id );
         KickOnline( playerid, __FUNCTION_LINE__ );
-        return _kf_http_server->SendResponseCode( KFMsg::Success );
+        return _invalid_str;
     }
 
 }

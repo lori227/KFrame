@@ -36,11 +36,12 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+    protected:
         // 处理登录请求
-        std::string HandleAuthChannelLogin( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleAuthChannelLogin );
 
         // 激活请求
-        std::string HandleAuthActivation( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleAuthActivation );
 
     };
 }

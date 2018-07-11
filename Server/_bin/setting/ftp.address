@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--Id Ftp标识 -->
+	<!--Address Ftp地址 -->
+	<!--Port Ftp端口 -->
+	<!--User Ftp用户名 -->
+	<!--Password Ftp密码 -->
+	<!--FtpPath Ftp服务器相对路径 -->
+	<!--LocalPath 本地资源相对路径 -->
+	<Ftps Address="192.168.1.7" Port="21" User="liuxiaobing" Password="489%*ON*&^ujfnm">
+		<Ftp Id="1"  FtpPath="auth" LocalPath="../auth"/>
+	</Ftps>
+</Config>
+

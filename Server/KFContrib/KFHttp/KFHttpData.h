@@ -2,6 +2,7 @@
 #define __KF_HTTP_DATA_H__
 
 #include "KFDefine.h"
+#include "KFrame.h"
 
 namespace KFrame
 {

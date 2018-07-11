@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFDataProxyModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterLostFunction( this, &KFDataProxyModule::OnClientLostServer );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFDataProxyModule::OnClientLostServer );
         ////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_PROXY_REQ, &KFDataProxyModule::HandleUpdateZoneToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_DATA_SHARD_REQ, &KFDataProxyModule::HandleTransmitToDataShardReq );
@@ -27,7 +27,7 @@ namespace KFrame
 
     void KFDataProxyModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterLostFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_DATA_SHARD_REQ );
@@ -85,8 +85,8 @@ namespace KFrame
         auto shardid = FindZoneShardId( kfmsg.zoneid(), clientid );
         if ( shardid == _invalid_int )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find zone[%u] shardid!",
-                                       __FUNCTION__, kfmsg.zoneid() );
+            return KFLogger::LogLogic( KFLogger::Error, "[%s] msgid[%u] can't find zone[%u] shardid!",
+                                       __FUNCTION__, kfmsg.msgid(), kfmsg.zoneid() );
         }
 
         auto ok = _kf_tcp_client->SendNetMessage( shardid, clientid, kfmsg.msgid(), kfmsg.msgdata().data(), kfmsg.msgdata().length() );

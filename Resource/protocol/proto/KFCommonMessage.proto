@@ -159,6 +159,7 @@ enum AckEnum
 	OperateFrequently			= 152;		// 操作太频繁, 稍后再试
 	DataNotEnough				= 153;		// 没有足够的数据
 	CompoundNotExist			= 154;		// 合成配置不存在
+	LoginIsClose				= 155;		// 登录已经关闭
 	
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

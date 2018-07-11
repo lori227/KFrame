@@ -111,7 +111,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\json\include;$(ProjectDir)..\;$(ProjectDir)..\log4cxx\log4cxx\src\main\include;$(ProjectDir)..\network\source\;$(ProjectDir)..\log\source\;$(ProjectDir)..\utility\;$(ProjectDir)..\poco\JSON\include;$(ProjectDir)..\poco\Foundation\include;$(ProjectDir)..\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\json\include;$(ProjectDir)..\;$(ProjectDir)..\log4cxx\log4cxx\src\main\include;$(ProjectDir)..\network\source\;$(ProjectDir)..\log\source\;$(ProjectDir)..\utility\;$(ProjectDir)..\poco\JSON\include;$(ProjectDir)..\poco\Foundation\include;$(ProjectDir)..\zlib;$(ProjectDir)..\..\KFLibrary\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -136,6 +136,7 @@
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFCommon\;..\..\KFLibrary\log4cxx\log4cxx\src\main\include\;..\..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,6 +191,7 @@
       <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFCommon\;..\..\KFLibrary\log4cxx\log4cxx\src\main\include\;..\..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

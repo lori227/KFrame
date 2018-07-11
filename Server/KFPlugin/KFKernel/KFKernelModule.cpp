@@ -60,11 +60,11 @@ namespace KFrame
         bool result = _kf_data_config->LoadConfig( file );
         if ( result )
         {
-            KFLogger::LogInit( KFLogger::Info, "load [%s] ok!", file );
+            KF_LOG_INFO( "load [{}] ok!", file );
         }
         else
         {
-            KFLogger::LogInit( KFLogger::Error, "load [%s] failed!", file );
+            KF_LOG_ERROR( "load [{}] failed!", file );
         }
 
         return result;

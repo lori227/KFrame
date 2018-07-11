@@ -138,6 +138,7 @@ xcopy/AEFRSY "$(TargetPath)" "$(ProjectDir)..\Product\Terminal\"</Command>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -190,6 +191,7 @@ xcopy/AEFRSY "$(TargetPath)" "$(ProjectDir)..\Product\Terminal\"</Command>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -37,42 +37,41 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-
         // 登录token
-        std::string HandleLoginToken( const std::string& ip, const std::string& data );
-
-        // 查询创建账号
-        MapString QueryCreateAccount( const std::string& account, uint32 channel );
+        __KF_HTTP_FUNCTION__( HandleLoginToken );
 
         // 激活账号
-        std::string HandleActivationAccount( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleActivationAccount );
 
         // 验证token
-        std::string HandleVerifyToken( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleVerifyToken );
 
         // 大厅信息
-        std::string HandleUpdateZone( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleUpdateZone );
 
         // zone http server
-        std::string HandleZoneHttp( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleZoneHttp );
 
         // 大厅丢失
-        std::string HandleLostZone( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleLostZone );
 
         // 更新大厅状态
-        std::string HandleUpdateZoneStatus( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleUpdateZoneStatus );
 
         // 查询服务器列表
-        std::string HandleQueryZoneList( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleQueryZoneList );
 
         // 查询状态
-        std::string HandleQueryZoneStatus( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleQueryZoneStatus );
 
         // 更新在线信息
-        std::string HandleUpdateOnline( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleUpdateOnline );
 
     private:
         void Run();
+
+        // 查询创建账号
+        MapString QueryCreateAccount( const std::string& account, uint32 channel );
 
         // 保存账号token
         std::string SaveLoginToken( uint32 accountid, MapString& accountdata );

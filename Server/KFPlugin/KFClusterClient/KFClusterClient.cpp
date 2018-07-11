@@ -29,12 +29,12 @@ namespace KFrame
             _cluster_setting._id = serverid;
 
             // 开启认证定时器
-            _kf_timer->RegisterLoopTimer( serverid, 5000, this, &KFClusterClient::OnTimerSendClusterAuthMessage );
+            __REGISTER_LOOP_TIMER__( serverid, 5000, &KFClusterClient::OnTimerSendClusterAuthMessage );
         }
         else if ( _cluster_proxy_type == servertype )
         {
             // 发送登录消息定时器
-            _kf_timer->RegisterLimitTimer( serverid, 1000, 1, this, &KFClusterClient::OnTimerSendClusterTokenMessage );
+            __REGISTER_LOOP_TIMER__( serverid, 3000, &KFClusterClient::OnTimerSendClusterTokenMessage );
         }
     }
 
@@ -45,16 +45,18 @@ namespace KFrame
             return;
         }
 
-        // 断开了proxy服务器
-        _cluster_in_services = false;
-        _kf_tcp_client->CloseClient( _cluster_proxy_id );
-
         // 重新启动连接
         StartClusterMasterClient();
     }
 
     void KFClusterClient::StartClusterMasterClient()
     {
+        // 断开了proxy服务器
+        _kf_tcp_client->CloseClient( _cluster_proxy_id );
+        _cluster_proxy_id = 0;
+        _cluster_proxy_type.clear();
+        _cluster_in_services = false;
+
         auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_setting._name, _cluster_setting._type, _cluster_setting._id );
         if ( kfaddress == nullptr )
         {
@@ -72,13 +74,18 @@ namespace KFrame
         KFMsg::S2SClusterAuthReq req;
         req.set_clusterkey( _cluster_setting._key );
         req.set_clustertype( _cluster_setting._name );
-        _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_AUTH_REQ, &req );
+        auto ok = _kf_tcp_client->SendNetMessage( _cluster_setting._id, KFMsg::S2S_CLUSTER_AUTH_REQ, &req );
+        if ( !ok )
+        {
+            KFLogger::LogSystem( KFLogger::Error, "[%s] send cluster[%u] auth failed!",
+                                 __FUNCTION__, _cluster_setting._id );
+        }
     }
 
     void KFClusterClient::ProcessClusterAuth( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port, const std::string& token )
     {
         // 停止定时器
-        _kf_timer->UnRegisterTimer( this, _cluster_setting._id );
+        __UNREGISTER_TIMER__();
 
         // 删除master连接
         _kf_tcp_client->CloseClient( _cluster_setting._id );
@@ -98,13 +105,17 @@ namespace KFrame
         req.set_token( _auth_token );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         req.set_clustertype( _cluster_setting._name );
-        _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_REQ, &req );
+        auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_REQ, &req );
+        if ( !ok )
+        {
+            StartClusterMasterClient();
+        }
     }
 
     void KFClusterClient::ProcessClusterVerify( uint32 serverid )
     {
         // 停止定时器
-        _kf_timer->UnRegisterTimer( this, _cluster_proxy_id );
+        __UNREGISTER_TIMER__();
 
         if ( serverid != 0 )
         {
@@ -120,9 +131,6 @@ namespace KFrame
         {
             // 重新连接
             StartClusterMasterClient();
-
-            // 关闭当前客户端
-            _kf_tcp_client->CloseClient( _cluster_proxy_id );
         }
     }
 

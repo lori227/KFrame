@@ -1,16 +1,11 @@
 #ifndef __KF_SYSTEM_H__
 #define __KF_SYSTEM_H__
 
-
 #ifdef _DEBUG
     #define __KF_DEBUG__
 #else
     #define __KF_RELEASE__
 #endif // _DEBUG
-
-#ifndef POCO_STATIC
-    #define POCO_STATIC
-#endif // !1
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -33,6 +28,10 @@
         #define _CRT_SECURE_NO_WARNINGS
     #endif // !_CRT_SECURE_NO_WARNINGS
 
+    #ifdef _WIN32_WINNT
+        #undef _WIN32_WINNT
+    #endif
+    #define _WIN32_WINNT 0x0600
 
 #endif
 
@@ -40,6 +39,9 @@
 #if __KF_SYSTEM__ == __KF_LINUX__
     #define __KF_EXPORT__ extern "C" __attribute ((visibility("default")))
 
+    #ifndef MAX_PATH
+        #define MAX_PATH 256
+    #endif
 #endif
 
 

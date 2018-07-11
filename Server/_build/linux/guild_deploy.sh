@@ -21,7 +21,7 @@ function copyfile()
 	
 	if [ $needcopyfile == 1 ];then
 		echo "copy $file1 $file2"
-		\cp $file1 $file2
+		cp -f $file1 $file2
 	fi
 }
 
@@ -68,8 +68,8 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
-\cp $deploypath/KFStartup $deploypath/guildserver
-\cp $deploypath/KFStartupd $deploypath/guildserverd
+cp -f $deploypath/KFStartup $deploypath/guildserver
+cp -f $deploypath/KFStartupd $deploypath/guildserverd
 
 path2=$deploypath/plugin
 
@@ -101,3 +101,7 @@ copyfile 1 KFGuildProxy.so
 copyfile 1 KFGuildProxyd.so
 copyfile 1 KFGuildShard.so
 copyfile 1 KFGuildShardd.so
+copyfile 1 KFDeployClient.so
+copyfile 1 KFDeployClientd.so
+copyfile 1 KFDeployCommand.so
+copyfile 1 KFDeployCommandd.so

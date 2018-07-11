@@ -5,18 +5,18 @@ namespace KFrame
 {
     void KFZonePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFZonePlugin, KFZoneInterface >( new KFZoneModule() );
+        __REGISTER_MODULE__( KFZone );
     }
 
     void KFZonePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFZonePlugin, KFZoneInterface >();
+        __UNREGISTER_MODULE__( KFZone );
     }
 
     void KFZonePlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
     }
 
 }

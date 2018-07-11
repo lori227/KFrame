@@ -1,4 +1,4 @@
-#include "KFTimerPlugin.h"
+﻿#include "KFTimerPlugin.h"
 #include "KFTimerModule.h"
 //////////////////////////////////////////////////////////////////////////
 
@@ -6,12 +6,12 @@ namespace KFrame
 {
     void KFTimerPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFTimerPlugin, KFTimerInterface >( new KFTimerModule() );
+        __REGISTER_MODULE__( KFTimer );
     }
 
     void KFTimerPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFTimerPlugin, KFTimerInterface >();
+        __UNREGISTER_MODULE__( KFTimer );
     }
 
     void KFTimerPlugin::LoadModule()

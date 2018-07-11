@@ -6,20 +6,20 @@ namespace KFrame
 {
     void KFMatchShardPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFMatchShardPlugin, KFMatchShardInterface >( new KFMatchShardModule() );
+        __REGISTER_MODULE__( KFMatchShard );
     }
 
     void KFMatchShardPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFMatchShardPlugin, KFMatchShardInterface >();
+        __UNREGISTER_MODULE__( KFMatchShard );
     }
 
     void KFMatchShardPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
-        _kf_cluster = _kf_plugin_manage->FindModule< KFClusterClientInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
+        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

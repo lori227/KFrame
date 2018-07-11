@@ -7,17 +7,17 @@ namespace KFrame
 {
     void KFTcpClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFTcpClientPlugin, KFTcpClientInterface >( new KFTcpClientModule() );
+        __REGISTER_MODULE__( KFTcpClient );
     }
 
     void KFTcpClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFTcpClientPlugin, KFTcpClientInterface >();
+        __UNREGISTER_MODULE__( KFTcpClient );
     }
 
     void KFTcpClientPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
     }
 }

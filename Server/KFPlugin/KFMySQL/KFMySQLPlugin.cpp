@@ -7,16 +7,16 @@ namespace KFrame
 {
     void KFMySQLPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFMySQLPlugin, KFMySQLInterface >( new KFMySQLModule() );
+        __REGISTER_MODULE__( KFMySQL );
     }
 
     void KFMySQLPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFMySQLPlugin, KFMySQLInterface >();
+        __UNREGISTER_MODULE__( KFMySQL );
     }
 
     void KFMySQLPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 }

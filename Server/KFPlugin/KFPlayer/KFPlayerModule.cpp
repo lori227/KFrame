@@ -24,6 +24,7 @@ namespace KFrame
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFPlayerModule::OnClientConnectionWorld );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFPlayerModule::TransmitMessageToPlayer );
+        __REGISTER_SHUTDOWN_FUNCTION__( &KFPlayerModule::OnDeployShutDownServer );
         _kf_route->RegisterTransmitFunction( this, &KFPlayerModule::TransmitMessageToPlayer );
 
         // 注册逻辑函数
@@ -74,6 +75,8 @@ namespace KFrame
     {
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
+        __UNREGISTER_SHUTDOWN_FUNCTION__();
+
         _kf_kernel->ReleaseObject( _kf_player_data );
         _kf_route->UnRegisterTransmitFunction();
 
@@ -494,6 +497,16 @@ namespace KFrame
 
         auto playerid = kfmsg.playerid();
         KickPlayer( playerid, kfmsg.type(), __FUNCTION_LINE__ );
+    }
+
+    __KF_COMMAND_FUNCTION__( KFPlayerModule::OnDeployShutDownServer )
+    {
+        auto player = _kf_component->FirstEntity();
+        while ( player != nullptr )
+        {
+            SavePlayer( player );
+            player = _kf_component->NextEntity();
+        }
     }
 
     void KFPlayerModule::KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line )

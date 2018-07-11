@@ -6,12 +6,12 @@ namespace KFrame
 {
     void KFMessagePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFMessagePlugin, KFMessageInterface >( new KFMessageModule() );
+        __REGISTER_MODULE__( KFMessage );
     }
 
     void KFMessagePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFMessagePlugin, KFMessageInterface >();
+        __UNREGISTER_MODULE__( KFMessage );
     }
 
     void KFMessagePlugin::LoadModule()

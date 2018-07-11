@@ -7,20 +7,20 @@ namespace KFrame
 {
     void KFAuthPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFAuthPlugin, KFAuthInterface >( new KFAuthModule() );
+        __REGISTER_MODULE__( KFAuth );
     }
 
     void KFAuthPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFAuthPlugin, KFAuthInterface >();
+        __UNREGISTER_MODULE__( KFAuth );
     }
 
     void KFAuthPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_channel = _kf_plugin_manage->FindModule< KFChannelInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
-        _kf_http_server = _kf_plugin_manage->FindModule< KFHttpServerInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_channel, KFChannelInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+        __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
     }
 }

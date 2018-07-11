@@ -71,7 +71,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformation>false</BrowseInformation>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
     </ClCompile>
@@ -105,6 +105,7 @@
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

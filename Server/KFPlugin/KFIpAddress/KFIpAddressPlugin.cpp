@@ -5,18 +5,18 @@ namespace KFrame
 {
     void KFIpAddressPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFIpAddressPlugin, KFIpAddressInterface >( new KFIpAddressModule() );
+        __REGISTER_MODULE__( KFIpAddress );
     }
 
     void KFIpAddressPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFIpAddressPlugin, KFIpAddressInterface >();
+        __UNREGISTER_MODULE__( KFIpAddress );
     }
 
     void KFIpAddressPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }
 
 }

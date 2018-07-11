@@ -6,23 +6,23 @@ namespace KFrame
 {
     void KFLoginGamePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLoginGamePlugin, KFLoginGameInterface >( new KFLoginGameModule() );
+        __REGISTER_MODULE__( KFLoginGame );
     }
 
     void KFLoginGamePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLoginGamePlugin, KFLoginGameInterface >();
+        __UNREGISTER_MODULE__( KFLoginGame );
     }
 
     void KFLoginGamePlugin::LoadModule()
     {
-        _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
-        _kf_game = _kf_plugin_manage->FindModule< KFGameInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_data = _kf_plugin_manage->FindModule< KFDataClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_zone, KFZoneInterface );
+        __FIND_MODULE__( _kf_game, KFGameInterface );
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_data, KFDataClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 }

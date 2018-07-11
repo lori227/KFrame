@@ -6,7 +6,6 @@
 namespace KFrame
 {
     typedef std::function<void( const std::string&, uint64 )> KFTimerFunction;
-#define __KF_TIMER_FUNCTION__( function ) void function( const std::string& module, uint64 objectid )
     ////////////////////////////////////////////////////////////////////////////
     class KFTimerInterface : public KFModule
     {
@@ -68,6 +67,25 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_timer, KFTimerInterface );
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __KF_TIMER_FUNCTION__( function ) \
+    void function( const std::string& module, uint64 objectid )
+
+#define __REGISTER_LOOP_TIMER__( objectid, intervaltime, function ) \
+    _kf_timer->RegisterLoopTimer( objectid, intervaltime, this, function )
+
+#define __REGISTER_LIMIT_TIMER__( objectid, intervaltime, count, function ) \
+    _kf_timer->RegisterLimitTimer( objectid, intervaltime, count, this, function )
+
+#define __REGISTER_DELAY_TIMER__( objectid, intervaltime, function ) \
+    _kf_timer->RegisterDelayTimer( objectid, intervaltime, this, function )
+
+#define __UNREGISTER_TIMER__() \
+    _kf_timer->UnRegisterTimer( this )
+
+#define __UNREGISTER_OBJECT_TIMER__( objectid ) \
+    _kf_timer->UnRegisterTimer( this, objectid )
+
 }
 
 

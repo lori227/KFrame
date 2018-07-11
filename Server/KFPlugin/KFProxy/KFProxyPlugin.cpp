@@ -5,20 +5,20 @@ namespace KFrame
 {
     void KFProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFProxyPlugin, KFProxyInterface >( new KFProxyModule() );
+        __REGISTER_MODULE__( KFProxy );
     }
 
     void KFProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFProxyPlugin, KFProxyInterface >();
+        __UNREGISTER_MODULE__( KFProxy );
     }
 
     void KFProxyPlugin::LoadModule()
     {
-        _kf_gate = _kf_plugin_manage->FindModule< KFGateInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_gate, KFGateInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 
 }

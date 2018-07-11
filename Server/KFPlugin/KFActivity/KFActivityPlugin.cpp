@@ -7,20 +7,20 @@ namespace KFrame
 {
     void KFActivityPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFActivityPlugin, KFActivityInterface >( new KFActivityModule() );
+        __REGISTER_MODULE__( KFActivity );
     }
 
     void KFActivityPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFActivityPlugin, KFActivityInterface >();
+        __UNREGISTER_MODULE__( KFActivity );
     }
 
     void KFActivityPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
     }
 }

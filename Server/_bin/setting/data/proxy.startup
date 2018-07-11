@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="data" AppType="proxy">
 	<Plugins>
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
 		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
 		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
 		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>		

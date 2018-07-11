@@ -79,7 +79,10 @@ call :copyfile 1 KFMatchShardd.dll
 call :copyfile 1 KFMatchShard.dll
 call :copyfile 1 KFMatchProxyd.dll
 call :copyfile 1 KFMatchProxy.dll
-
+call :copyfile 1 KFDeployCommand.dll
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
 
 rem pause
 rem ===========================================================================

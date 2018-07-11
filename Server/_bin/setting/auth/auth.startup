@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="auth" AppType="auth">
 	<Plugins>
-		<Plguin Name="KFConfig" Startup="1" Sort="1" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="80" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plguin Name="KFDeployClient" Startup="1" Sort="2" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
+		<Plguin Name="KFConfig" Startup="1" Sort="3" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="4" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFMessage" Startup="1" Sort="5" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFIpAddress" Startup="1" Sort="10" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
 		<Plguin Name="KFRedis" Startup="1" Sort="20" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
 		<Plguin Name="KFHttpClient" Startup="1" Sort="30" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
 		<Plguin Name="KFHttpServer" Startup="1" Sort="40" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
 		<Plguin Name="KFChannel" Startup="1" Sort="50" Debug="KFChanneld" Release="KFChannel" Config="./config/channel.config"/>
-		<Plguin Name="KFAuth" Startup="1" Sort="60" Debug="KFAuthd" Release="KFAuth" Config=""/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="60" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="70" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFAuth" Startup="1" Sort="80" Debug="KFAuthd" Release="KFAuth" Config=""/>
 	</Plugins>
 </Setting>

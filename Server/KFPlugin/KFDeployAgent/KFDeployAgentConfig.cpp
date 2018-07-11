@@ -17,6 +17,41 @@ namespace KFrame
         return file;
     }
 
+    bool KFLaunchSetting::IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid )
+    {
+        if ( appname == _globbing_str )
+        {
+            return true;
+        }
+
+        if ( appname != _app_name )
+        {
+            return false;
+        }
+
+        if ( apptype == _globbing_str )
+        {
+            return true;
+        }
+
+        if ( apptype != _app_type )
+        {
+            return false;
+        }
+
+        if ( appid == _invalid_int )
+        {
+            return true;
+        }
+
+        if ( appid != _app_id )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     KFDeployAgentConfig::KFDeployAgentConfig()
     {
@@ -73,6 +108,8 @@ namespace KFrame
                     kfsetting->_app_id = launchnode.GetUInt32( "AppId" );
                     kfsetting->_is_startup = launchnode.GetBoolen( "Startup" );
                     kfsetting->_is_pause = launchnode.GetUInt32( "Pause" );
+                    kfsetting->_ftp_id = launchnode.GetUInt32( "FtpId" );
+
                     _kf_launch_setting.Insert( kfsetting->_launch_id, kfsetting );
 
                     launchnode.NextNode();

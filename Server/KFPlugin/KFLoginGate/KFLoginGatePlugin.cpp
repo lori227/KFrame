@@ -6,22 +6,22 @@ namespace KFrame
 {
     void KFLoginGatePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLoginGatePlugin, KFLoginGateInterface >( new KFLoginGateModule() );
+        __REGISTER_MODULE__( KFLoginGate );
     }
 
     void KFLoginGatePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLoginGatePlugin, KFLoginGateInterface >();
+        __UNREGISTER_MODULE__( KFLoginGate );
     }
 
     void KFLoginGatePlugin::LoadModule()
     {
-        _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
-        _kf_gate = _kf_plugin_manage->FindModule< KFGateInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
+        __FIND_MODULE__( _kf_zone, KFZoneInterface );
+        __FIND_MODULE__( _kf_gate, KFGateInterface );
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }
 }

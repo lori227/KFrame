@@ -7,18 +7,18 @@ namespace KFrame
 {
     void KFEnterPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFEnterPlugin, KFEnterInterface >( new KFEnterModule() );
+        __REGISTER_MODULE__( KFEnter );
     }
 
     void KFEnterPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFEnterPlugin, KFEnterInterface >();
+        __UNREGISTER_MODULE__( KFEnter );
     }
 
     void KFEnterPlugin::LoadModule()
     {
-        _kf_lua = _kf_plugin_manage->FindModule< KFLuaInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
+        __FIND_MODULE__( _kf_lua, KFLuaInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
     }
 }

@@ -210,6 +210,7 @@ enum AckEnum {
   OperateFrequently = 152,
   DataNotEnough = 153,
   CompoundNotExist = 154,
+  LoginIsClose = 155,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,

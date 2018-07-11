@@ -5,8 +5,7 @@
 
 namespace KFrame
 {
-#define __REGISTER_MESSAGE__( msgid, function ) _kf_message->RegisterFunction( msgid, this, function )
-#define __UNREGISTER_MESSAGE__( msgid ) _kf_message->UnRegisterFunction( msgid )
+
 
     class KFMessageInterface : public KFModule
     {
@@ -34,6 +33,17 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_message, KFMessageInterface );
     ///////////////////////////////////////////////////////////////////////////////////////////
+#define __KF_MESSAGE_FUNCTION__( function ) \
+    void function( const KFGuid& kfguid, const char* data, uint32 length )
+
+#define __KF_TRANSMIT_FUNCTION__( function ) \
+    bool function( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+
+#define __REGISTER_MESSAGE__( msgid, function ) \
+    _kf_message->RegisterFunction( msgid, this, function )
+
+#define __UNREGISTER_MESSAGE__( msgid ) \
+    _kf_message->UnRegisterFunction( msgid )
 }
 
 

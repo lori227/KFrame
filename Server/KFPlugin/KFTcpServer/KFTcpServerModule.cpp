@@ -45,8 +45,7 @@ namespace KFrame
 
         // 计算ip
         kftcpsetting->_interanet_ip = _kf_ip_address->CalcIpAddress( kftcpsetting->_interanet_ip );
-        KFLogger::LogInit( KFLogger::Info, "[%s:%s] interanet ip : [%s]",
-                           kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kftcpsetting->_interanet_ip.c_str() );
+        KF_LOG_INFO( "[{}:{}] interanet ip : [{}]", kfglobal->_app_name, kfglobal->_app_type, kftcpsetting->_interanet_ip );
 
         // 计算端口
         if ( kftcpsetting->_port == 0 )
@@ -82,13 +81,11 @@ namespace KFrame
         auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
-            KFLogger::LogInit( KFLogger::Info, "[%s:%s|%s:%u] tcp services ok!",
-                               kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_interanet_ip.c_str(), kfglobal->_listen_port );
+            KF_LOG_INFO( "[{}:{}|{}:{}] tcp services ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port );
         }
         else
         {
-            KFLogger::LogInit( KFLogger::Error, " [%s:%s|%s:%u] tcp services failed[ %d ]!",
-                               kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_interanet_ip.c_str(), kfglobal->_listen_port, result );
+            KF_LOG_ERROR( "[{}:{}|{}:{}] tcp services failed[ {} ]!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
     }
 

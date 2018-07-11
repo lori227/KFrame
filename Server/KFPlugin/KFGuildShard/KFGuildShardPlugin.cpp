@@ -6,21 +6,21 @@ namespace KFrame
 {
     void KFGuildShardPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGuildShardPlugin, KFGuildShardInterface >( new KFGuildShardModule() );
+        __REGISTER_MODULE__( KFGuildShard );
     }
 
     void KFGuildShardPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGuildShardPlugin, KFGuildShardInterface >();
+        __UNREGISTER_MODULE__( KFGuildShard );
     }
 
     void KFGuildShardPlugin::LoadModule()
     {
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_worker = _kf_plugin_manage->FindModule< KFWorkerInterface >();
-        _kf_option = _kf_plugin_manage->FindModule< KFOptionInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_schedule = _kf_plugin_manage->FindModule< KFScheduleInterface >();
-        _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_worker, KFWorkerInterface );
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
+        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

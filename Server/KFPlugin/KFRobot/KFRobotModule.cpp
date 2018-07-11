@@ -58,15 +58,14 @@ namespace KFrame
     void KFRobotModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_TIMER__();
         __UNREGISTER_RUN_FUNCTION__();
-        _kf_timer->UnRegisterTimer( this );
     }
 
     void KFRobotModule::OnceRun()
     {
         _robot_count = _kf_robot_config->_start_count;
-        _kf_timer->RegisterLimitTimer( 0, _kf_robot_config->_login_span_time, _kf_robot_config->_robot_count,
-                                       this, &KFRobotModule::OnTimerCreateRobot );
+        __REGISTER_LIMIT_TIMER__( 0, _kf_robot_config->_login_span_time, _kf_robot_config->_robot_count, &KFRobotModule::OnTimerCreateRobot );
     }
 
     void KFRobotModule::Run()

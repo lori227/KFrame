@@ -8,7 +8,7 @@ namespace KFrame
 {
     KFHttpClientManage::KFHttpClientManage()
     {
-        _thread_run = true;
+        _thread_run = false;
     }
 
     KFHttpClientManage::~KFHttpClientManage()
@@ -19,10 +19,9 @@ namespace KFrame
     void KFHttpClientManage::Initialize()
     {
         KFHttpsClient::Initialize();
+
         _req_http_data.InitQueue( 1000 );
         _ack_http_data.InitQueue( 1000 );
-
-        KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNCTION_LINE__ );
     }
 
     void KFHttpClientManage::ShutDown()
@@ -52,7 +51,7 @@ namespace KFrame
         httpdata->_data = data;
         httpdata->_function = function;
         httpdata->_http = __KF_CREATE__( KFHttpClient );
-        _req_http_data.PushObject( httpdata );
+        AddHttpData( httpdata );
     }
 
     void KFHttpClientManage::SendMTHttps( const std::string& url, const std::string& data, KFHttpClientFunction& function )
@@ -62,6 +61,17 @@ namespace KFrame
         httpdata->_data = data;
         httpdata->_function = function;
         httpdata->_http = __KF_CREATE__( KFHttpsClient );
+        AddHttpData( httpdata );
+    }
+
+    void KFHttpClientManage::AddHttpData( KFHttpData* httpdata )
+    {
+        if ( !_thread_run )
+        {
+            _thread_run = true;
+            KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNCTION_LINE__ );
+        }
+
         _req_http_data.PushObject( httpdata );
     }
 
@@ -88,6 +98,8 @@ namespace KFrame
 
                 httpdata = _req_http_data.PopObject();
             }
+
+            KFThread::Sleep( 1 );
         } while ( _thread_run );
     }
 }

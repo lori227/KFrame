@@ -2,6 +2,7 @@
 <Setting AppName="deploy" AppType="server">
 	<Plugins>
 		<Plguin Name="KFConfig" Startup="1" Sort="1" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFSchedule" Startup="1" Sort="2" Debug="KFScheduled" Release="KFSchedule" Config=""/>	
 		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
 		<Plguin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
 		<Plguin Name="KFHttpServer" Startup="1" Sort="30" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>

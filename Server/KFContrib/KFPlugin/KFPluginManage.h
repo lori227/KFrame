@@ -18,12 +18,14 @@
         pluginmanage->UnRegistPlugin< classname >();\
     }\
 
-
 #define __REGISTER_MODULE__( name ) \
     _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( new name##Module() )
 
 #define __UNREGISTER_MODULE__( name ) \
     _kf_plugin_manage->UnRegistModule< name##Plugin, name##Interface >()
+
+#define __FIND_MODULE__( module, classname ) \
+    module = _kf_plugin_manage->FindModule< classname >();
 
 #define __REGISTER_RUN_FUNCTION__( function ) \
     _kf_plugin_manage->RegisterRunFunction( _kf_plugin->_sort, this, function )
@@ -146,8 +148,8 @@ namespace KFrame
             auto kffunction = _run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                return KFLogger::LogInit( KFLogger::Error, " sort[%u] run is already register!",
-                                          sort );
+                KF_LOG_ERROR( "sort[{}] run is already register!", sort );
+                return;
             }
 
             kffunction = _run_functions.Create( sort );
@@ -166,8 +168,8 @@ namespace KFrame
             auto kffunction = _after_run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                return KFLogger::LogInit( KFLogger::Error, " sort[%u] after run is already register!",
-                                          sort );
+                KF_LOG_ERROR( "sort[{}] after run is already register!", sort );
+                return;
             }
 
             kffunction = _after_run_functions.Create( sort );

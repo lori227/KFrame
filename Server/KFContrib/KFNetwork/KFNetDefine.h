@@ -22,7 +22,7 @@ namespace KFrame
             ServerPingTimeOut = 70,			// ping 超时, 单位 : 秒
             ConnectorTimeOut = 60000,		// 连接后无操作的超时时间 单位 : 毫秒
 
-            ConncectTime = 3000,			// 重连定时器
+            ConncectTime = 5000,			// 重连定时器
             SerializeBuffLength = 1024 * 1024 * 20 + 24,	// 序列化消息的buff长度
 
             CUT_MSGCHILDBEGIN = 65535,		// 分割的头消息

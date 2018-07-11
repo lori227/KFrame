@@ -49,10 +49,8 @@ namespace KFrame
         }
         catch ( Poco::Exception& exc )
         {
-            KFLogger::LogInit( KFLogger::Error, "init http server[%s:%u] failed[%d:%s]!",
-                               ip.c_str(), port, exc.code(), exc.message().c_str() );
+            KF_LOG_ERROR( "init http server[{}:{}] failed[{}:{}]!", ip, port, exc.code(), exc.message() );
         }
-
     }
 
     void KFHttpServer::RegisterMethonFunction( const std::string& url, bool sync, KFHttpMethodFunction& function )

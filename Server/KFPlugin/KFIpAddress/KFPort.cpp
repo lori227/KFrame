@@ -49,7 +49,7 @@ namespace KFrame
         uint32 port = baseport;
         if ( type == __ID_PORT__ )
         {
-            port = baseport + appid;
+            port = baseport + ( appid % 1000 );
         }
         else if ( type == __SH_PORT__ )
         {

@@ -15,8 +15,10 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -45,6 +47,9 @@ namespace KFrame
     protected:
         // 获得Agent地址
         __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressAck );
+
+        // 关闭服务器
+        __KF_MESSAGE_FUNCTION__( HandleShutDownServerToMasterReq );
 
     private:
 

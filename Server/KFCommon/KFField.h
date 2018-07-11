@@ -220,6 +220,9 @@ namespace KFrame
         static const std::string _operate_time = "operatetime";
         static const std::string _stranger = "stranger";
         static const std::string _deploy = "deploy";
+        static const std::string _delay_time = "delaytime";
+        static const std::string _schedule_time = "scheduletime";
+        static const std::string _platform = "platform";
     }
 }
 

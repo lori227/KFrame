@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="platform" AppType="platform">
 	<Plugins>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="10" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
-		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFTimer" Startup="1" Sort="20" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="1" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>
+		<Plguin Name="KFConfig" Startup="1" Sort="2" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plguin Name="KFTimer" Startup="1" Sort="10" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFHttpClient" Startup="1" Sort="30" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFRedisd" Startup="1" Sort="40" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
-		<Plguin Name="KFPlatform" Startup="1" Sort="60" Debug="KFPlatformd" Release="KFPlatform" Config="./config/platform.config"/>
-		<Plguin Name="KFHttpServer" Startup="1" Sort="70" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFTcpClient" Startup="1" Sort="40" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="50" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFHttpServer" Startup="1" Sort="60" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="70" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plguin Name="KFDeployClient" Startup="1" Sort="80" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
+		<Plguin Name="KFRedisd" Startup="1" Sort="90" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
+		<Plguin Name="KFPlatform" Startup="1" Sort="100" Debug="KFPlatformd" Release="KFPlatform" Config="./config/platform.config"/>
 	</Plugins>
 </Setting>

@@ -5,25 +5,25 @@ namespace KFrame
 {
     void KFMailClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFMailClientPlugin, KFMailClientInterface >( new KFMailClientModule() );
+        __REGISTER_MODULE__( KFMailClient );
     }
 
     void KFMailClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFMailClientPlugin, KFMailClientInterface >();
+        __UNREGISTER_MODULE__( KFMailClient );
     }
 
     void KFMailClientPlugin::LoadModule()
     {
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_cluster = _kf_plugin_manage->FindModule< KFClusterClientInterface >();
-        _kf_route = _kf_plugin_manage->FindModule< KFRouteClientInterface >();
-        _kf_option = _kf_plugin_manage->FindModule< KFOptionInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
+        __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
     }
 
 }

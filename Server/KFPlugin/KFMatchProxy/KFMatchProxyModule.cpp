@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFMatchProxyModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterLostFunction( this, &KFMatchProxyModule::OnClientLostMatchShard );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFMatchProxyModule::OnClientLostMatchShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_MATCH_REQ, &KFMatchProxyModule::HandleRegisterMatchReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_PROXY_REQ, &KFMatchProxyModule::HandleMatchToProxyReq );
@@ -27,7 +27,7 @@ namespace KFrame
 
     void KFMatchProxyModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterLostFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_MATCH_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_PROXY_REQ );

@@ -5,19 +5,19 @@ namespace KFrame
 {
     void KFGamePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGamePlugin, KFGameInterface >( new KFGameModule() );
+        __REGISTER_MODULE__( KFGame );
     }
 
     void KFGamePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGamePlugin, KFGameInterface >();
+        __UNREGISTER_MODULE__( KFGame );
     }
 
     void KFGamePlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 
 }

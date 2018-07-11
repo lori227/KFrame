@@ -26,7 +26,7 @@ yum -y install redis
 chkconfig redis on
 debuginfo-install -y  glibc-2.12-1.132.el6.i686
 
-\cp /usr/lib64/mysql/* /usr/local/lib/ -r
+cp -f /usr/lib64/mysql/* /usr/local/lib/ -r
 
 
 cd tool

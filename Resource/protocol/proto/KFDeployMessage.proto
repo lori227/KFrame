@@ -6,6 +6,11 @@ enum DeployProtocol
 	S2S_UPDATE_SERVER_STATUS_REQ = 10302;		// 更新服务器状态
 	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// 请求分配Agent连接地址
 	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// 请求分配Agent连接地址
+	S2S_STARTUP_SERVER_TO_AGENT_REQ = 10305;	// 开启服务器
+	S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ = 10306;	// 关闭服务器
+	S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ = 10307;	// 关闭服务器
+	S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ = 10308;	// 关闭服务器
+	S2S_KILL_SERVER_TO_AGENT_REQ = 10309;		// 杀死服务器
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,4 +54,52 @@ message S2SUpdateServerStatusReq
 	required uint32 process = 5;
 	required uint64 startuptime = 6;
 	required uint32 isshutdown = 7;
+}
+
+// 启动服务器
+// S2S_STARTUP_SERVER_TO_AGENT_REQ
+message S2SStartupServerToAgentReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;		
+}
+
+// 关闭服务器
+// S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ
+message S2SShutDownServerToAgentReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;		
+	required uint32 delaytime = 4;	// 延迟时间关闭
+}
+
+// 关闭服务器
+// S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ
+message S2SShutDownServerToMasterReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;		
+	required uint32 delaytime = 4;	// 延迟时间关闭
+}
+
+// 关闭服务器
+// S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ
+message S2SShutDownServerToServerReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;		
+	required uint32 delaytime = 4;	// 延迟时间关闭
+}
+
+// 杀死服务器
+// S2S_KILL_SERVER_TO_AGENT_REQ
+message S2SKillServerToAgentReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;		
 }

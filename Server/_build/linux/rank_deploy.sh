@@ -21,7 +21,7 @@ function copyfile()
 	
 	if [ $needcopyfile == 1 ];then
 		echo "copy $file1 $file2"
-		\cp $file1 $file2
+		cp -f $file1 $file2
 	fi
 }
 
@@ -53,12 +53,19 @@ copyfile 1 master.startup
 copyfile 1 proxy.startup
 copyfile 1 shard.startup
 
+path1=$settingpath/rank
+path2=$deploypath/setting
+copyfile 1 master.startup
+copyfile 1 proxy.startup
+copyfile 1 shard.startup
+
 #config
 path1=$respath/config
 path2=$deploypath/config
 copyfile 0 redis.config
 copyfile 1 rank.config
 copyfile 1 option.config
+copyfile 1 rankshard.config
 
 #plugin
 path1=$binpath/
@@ -66,8 +73,8 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
-\cp $deploypath/KFStartup $deploypath/rankserver
-\cp $deploypath/KFStartupd $deploypath/rankserverd
+cp -f $deploypath/KFStartup $deploypath/rankserver
+cp -f $deploypath/KFStartupd $deploypath/rankserverd
 
 path2=$deploypath/plugin
 copyfile 1 KFBus.so
@@ -98,3 +105,15 @@ copyfile 1 KFRankProxy.so
 copyfile 1 KFRankProxyd.so
 copyfile 1 KFRankShard.so
 copyfile 1 KFRankShardd.so
+copyfile 1 KFDeployClient.so
+copyfile 1 KFDeployClientd.so
+copyfile 1 KFDeployCommand.so
+copyfile 1 KFDeployCommandd.so
+copyfile 1 KFOptiond.so
+copyfile 1 KFOption.so
+copyfile 1 KFRedisd.so
+copyfile 1 KFRedis.so
+copyfile 1 KFWorkerd.so
+copyfile 1 KFWorker.so
+copyfile 1 KFScheduled.so
+copyfile 1 KFSchedule.so

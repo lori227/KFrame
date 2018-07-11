@@ -6,18 +6,18 @@ namespace KFrame
 {
     void KFRouteShardPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFRouteShardPlugin, KFRouteShardInterface >( new KFRouteShardModule() );
+        __REGISTER_MODULE__( KFRouteShard );
     }
 
     void KFRouteShardPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFRouteShardPlugin, KFRouteShardInterface >();
+        __UNREGISTER_MODULE__( KFRouteShard );
     }
 
     void KFRouteShardPlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
     }
 }

@@ -50,7 +50,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+                KF_LOG_ERROR( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvale;
         }
@@ -67,7 +67,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+                KF_LOG_ERROR( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }
@@ -84,7 +84,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+                KF_LOG_ERROR( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return _invalid_str;
         }
@@ -101,7 +101,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                KFLogger::LogInit( KFLogger::Error, "[%s] can't find node = [%s]!", _kf_xml->GetFileName(), key );
+                KF_LOG_ERROR( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }

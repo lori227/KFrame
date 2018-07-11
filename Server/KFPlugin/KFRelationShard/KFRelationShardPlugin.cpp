@@ -7,23 +7,23 @@ namespace KFrame
 {
     void KFRelationShardPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFRelationShardPlugin, KFRelationShardInterface >( new KFRelationShardModule() );
+        __REGISTER_MODULE__( KFRelationShard );
     }
 
     void KFRelationShardPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFRelationShardPlugin, KFRelationShardInterface >();
+        __UNREGISTER_MODULE__( KFRelationShard );
     }
 
     void KFRelationShardPlugin::LoadModule()
     {
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_worker = _kf_plugin_manage->FindModule< KFWorkerInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
-        _kf_schedule = _kf_plugin_manage->FindModule< KFScheduleInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_worker, KFWorkerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

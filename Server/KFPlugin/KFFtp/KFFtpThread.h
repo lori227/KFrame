@@ -51,13 +51,13 @@ namespace KFrame
         bool CheckFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile );
 
         // 创建目录
-        void CreateLocalDirectory( const char* path );
+        void CreateLocalDirectory( const std::string& path );
 
         // 删除文件
-        void DeleteLocalFile( const char* file );
+        void DeleteLocalFile( const std::string& file );
 
         // 改名字
-        void RenameFile( const char* oldfile, const char* newfile );
+        void RenameFile( const std::string& oldfile, const std::string& newfile );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         bool CheckWinFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile );

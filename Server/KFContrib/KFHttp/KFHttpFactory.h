@@ -2,6 +2,7 @@
 #define __KF_HTTP_FACTORY_H__
 
 #include "KFDefine.h"
+#include "KFrame.h"
 #include "Poco/Net/HTTPRequestHandlerFactory.h"
 #include "Poco/Net/HTTPRequestHandler.h"
 

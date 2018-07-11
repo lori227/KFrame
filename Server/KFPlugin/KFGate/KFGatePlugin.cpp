@@ -5,19 +5,19 @@ namespace KFrame
 {
     void KFGatePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGatePlugin, KFGateInterface >( new KFGateModule() );
+        __REGISTER_MODULE__( KFGate );
     }
 
     void KFGatePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGatePlugin, KFGateInterface >();
+        __UNREGISTER_MODULE__( KFGate );
     }
 
     void KFGatePlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 
 }

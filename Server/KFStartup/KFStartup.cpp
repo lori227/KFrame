@@ -18,7 +18,7 @@ namespace KFrame
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )
         {
-            KFLogger::LogInit( KFLogger::Error, "load [%s] failed!", file );
+            KF_LOG_ERROR( "load [{}] failed!", file );
             return false;
         }
 
@@ -75,7 +75,7 @@ namespace KFrame
         auto library = __KF_CREATE__( KFLibrary );
         if ( !library->Load( _plugin_path, file ) )
         {
-            KFLogger::LogInit( KFLogger::Error, "load [%s] failed!", library->_path.c_str() );
+            KF_LOG_ERROR( "load [{}] failed!", library->_path );
             __KF_DESTROY__( KFLibrary, library );
             return false;
         }
@@ -83,7 +83,7 @@ namespace KFrame
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
-            KFLogger::LogInit( KFLogger::Error, "entry [%s] failed!", library->_path.c_str() );
+            KF_LOG_ERROR( "entry [{}] failed!", library->_path );
             __KF_DESTROY__( KFLibrary, library );
             return false;
         }
@@ -97,7 +97,7 @@ namespace KFrame
         plugin->_plugin_name = appsetting->_name;
         plugin->_config = appsetting->_config_file;
 
-        KFLogger::LogInit( KFLogger::Info, "load [%s] ok!", library->_path.c_str() );
+        KF_LOG_INFO( "load [{}] ok!", library->_path );
         return true;
     }
 

@@ -2,7 +2,10 @@
 #define __LOG_MODULE_H__
 
 #include "KFInclude.h"
-
+#include "KFMacros.h"
+#include "spdlog/spdlog.h"
+#include "spdlog/fmt/fmt.h"
+#include "KFPlugin/KFGlobal.h"
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 namespace KFrame
@@ -33,15 +36,15 @@ namespace KFrame
             LogMessage( _system_log_name, type, format, std::forward< P >( params )... );
         }
 
-        // Load日志
-        template <class...P>
-        static void LogInit( uint32 type, const char* format, P&& ... params )
-        {
-            static const std::string _init_log_name = "Init.log";
+        //// Load日志
+        //template <class...P>
+        //static void LogInit( uint32 type, const char* format, P&& ... params )
+        //{
+        //    static const std::string _init_log_name = "Init.log";
 
-            SetConsoleTextColor( type );
-            LogMessage( _init_log_name, type, format, std::forward< P >( params )... );
-        }
+        //    SetConsoleTextColor( type );
+        //    LogMessage( _init_log_name, type, format, std::forward< P >( params )... );
+        //}
 
         // logic日志
         template <class...P>
@@ -113,6 +116,45 @@ namespace KFrame
     private:
         // 控制台句柄，用来设置字体颜色
         static void* _console_handle;
+    };
+
+#define KF_FORMAT(my_fmt, ...)				fmt::format(my_fmt, ##__VA_ARGS__);
+#define KF_FORMAT_FUNCTION(my_fmt, ...)		fmt::format(std::string("[{}:{}]") + my_fmt, __FUNCTION_LINE__, ##__VA_ARGS__);
+
+#define KF_LOG_TRACE(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::trace, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+#define KF_LOG_DEBUG(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::debug, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+#define KF_LOG_INFO(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::info, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+#define KF_LOG_WARN(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::warn, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+#define KF_LOG_ERROR(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::err, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+#define KF_LOG_CRITICAL(my_fmt, ...)		KFGlobal::Instance()->_logger->Log(spdlog::level::critical, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
+
+
+    class KFLoggerEx
+    {
+    public:
+        ~KFLoggerEx();
+
+        bool Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid );
+
+        template<typename... ARGS>
+        void Log( spdlog::level::level_enum log_level, const char* function, int line, const char* my_fmt, ARGS&& ... args )
+        {
+            auto& logger = GetLogger();
+            if ( logger == nullptr )
+            {
+                return;
+            }
+            else
+            {
+                std::string new_fmt = std::string( "[{}:{}]" ) + my_fmt;
+                logger->log( log_level, new_fmt.c_str(), function, line, std::forward<ARGS>( args )... );
+            }
+        }
+
+        const std::shared_ptr<spdlog::logger>& GetLogger();
+
+    private:
+        std::shared_ptr<spdlog::logger> _init_logger;
     };
 }
 

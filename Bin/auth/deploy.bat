@@ -33,6 +33,7 @@ rem »´æ÷≈‰÷√
 set path1=..\..\Source\_bin\setting
 set path2=setting
 call :copyfile 0 ip.address
+call :copyfile 1 bus.relation
 call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
@@ -68,6 +69,12 @@ call :copyfile 1 KFConfig.dll
 call :copyfile 1 KFIpAddress.dll
 call :copyfile 1 KFIpAddressd.dll
 
+call :copyfile 1 KFTimer.dll
+call :copyfile 1 KFTimerd.dll
+
+call :copyfile 1 KFMessage.dll
+call :copyfile 1 KFMessaged.dll
+
 call :copyfile 1 KFAuthd.dll
 call :copyfile 1 KFAuth.dll
 
@@ -77,6 +84,17 @@ call :copyfile 1 KFChannel.dll
 call :copyfile 1 KFRedisd.dll
 call :copyfile 1 KFRedis.dll
 
+call :copyfile 1 KFBusd.dll
+call :copyfile 1 KFBus.dll
+
+call :copyfile 1 KFTcpClientd.dll
+call :copyfile 1 KFTcpClient.dll
+
+call :copyfile 1 KFDeployClient.dll
+call :copyfile 1 KFDeployClientd.dll
+
+call :copyfile 1 KFDeployCommandd.dll
+call :copyfile 1 KFDeployCommand.dll
 
 rem pause
 rem ===========================================================================

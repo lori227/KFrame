@@ -69,7 +69,7 @@ namespace KFrame
             }
         }
 
-        KFLogger::LogInit( KFLogger::Error, "Can't Find [ %s ] Module!", name.c_str() );
+        KF_LOG_ERROR( "Can't Find [{}] Module!", name );
         return nullptr;
     }
 

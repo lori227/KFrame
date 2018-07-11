@@ -5,21 +5,21 @@
 
 namespace KFrame
 {
-	void KFCompoundPlugin::Install()
-	{
-		_kf_plugin_manage->RegistModule< KFCompoundPlugin, KFCompoundInterface >( new KFCompoundModule() );
-	}
+    void KFCompoundPlugin::Install()
+    {
+        __REGISTER_MODULE__( KFCompound );
+    }
 
-	void KFCompoundPlugin::UnInstall()
-	{
-		_kf_plugin_manage->UnRegistModule< KFCompoundPlugin, KFCompoundInterface >();
-	}
-	
-	void KFCompoundPlugin::LoadModule()
-	{
-		_kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-		_kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-		_kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
-		_kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-	}
+    void KFCompoundPlugin::UnInstall()
+    {
+        __UNREGISTER_MODULE__( KFCompound );
+    }
+
+    void KFCompoundPlugin::LoadModule()
+    {
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+    }
 }

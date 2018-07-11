@@ -108,6 +108,11 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#define __KF_CLIENT_LOST_FUNCTION__( function ) \
+    void function( uint32 serverid, const std::string& servername, const std::string& servertype )
+
+#define __KF_CLIENT_CONNECT_FUNCTION__( function ) \
+    void function( uint32 serverid, const std::string& servername, const std::string& servertype )
 
 #define __REGISTER_CLIENT_CONNECTION_FUNCTION__( function ) \
     _kf_tcp_client->RegisterConnectionFunction( this, function )

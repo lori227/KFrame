@@ -18,7 +18,7 @@ namespace KFrame
 
     void KFLoginGateModule::BeforeRun()
     {
-        _kf_timer->RegisterLoopTimer( 0, 60000, this, &KFLoginGateModule::OnTimerUpdateClientToLogin );
+        __REGISTER_LOOP_TIMER__( 0, 60000, &KFLoginGateModule::OnTimerUpdateClientToLogin );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ, &KFLoginGateModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &KFLoginGateModule::HandleLoginVerifyAck );
@@ -28,7 +28,7 @@ namespace KFrame
 
     void KFLoginGateModule::BeforeShut()
     {
-        _kf_timer->UnRegisterTimer( this );
+        __UNREGISTER_TIMER__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK );

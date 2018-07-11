@@ -6,18 +6,18 @@ namespace KFrame
 {
     void KFLoginWorldPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLoginWorldPlugin, KFLoginWorldInterface >( new KFLoginWorldModule() );
+        __REGISTER_MODULE__( KFLoginWorld );
     }
 
     void KFLoginWorldPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLoginWorldPlugin, KFLoginWorldInterface >();
+        __UNREGISTER_MODULE__( KFLoginWorld );
     }
 
     void KFLoginWorldPlugin::LoadModule()
     {
-        _kf_world = _kf_plugin_manage->FindModule< KFWorldInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_world, KFWorldInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 }

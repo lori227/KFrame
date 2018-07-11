@@ -9,16 +9,12 @@ server=battleserver
 fi
 
 echo Starting Battle Cluster Server
-./$server 0 5 ./setting/master.startup
+./$server 0 50000 ./setting/master.startup
 
 echo Starting Battle Proxy Server
-./$server 0 5001 ./setting/proxy.startup
-./$server 0 5002 ./setting/proxy.startup
+./$server 0 50001 ./setting/proxy.startup
 
 echo Starting Battle Shard Server
-./$server 0 5101 ./setting/shard.startup
-./$server 0 5102 ./setting/shard.startup
-./$server 0 5103 ./setting/shard.startup
-./$server 0 5104 ./setting/shard.startup
+./$server 0 52001 ./setting/shard.startup
 
 cd $basepath

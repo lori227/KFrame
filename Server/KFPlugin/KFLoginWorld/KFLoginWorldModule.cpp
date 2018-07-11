@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFLoginWorldModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFLoginWorldModule::OnServerLostGame );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginWorldModule::OnServerLostGame );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_UPDATE_REQ, &KFLoginWorldModule::HandleLoginGameUpdateReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_PROXY_UPDATE_REQ, &KFLoginWorldModule::HandleLoginProxyUpdateReq );
@@ -32,7 +32,7 @@ namespace KFrame
 
     void KFLoginWorldModule::BeforeShut()
     {
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_UPDATE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_PROXY_UPDATE_REQ );

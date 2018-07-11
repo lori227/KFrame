@@ -1,5 +1,5 @@
 ﻿#include "KFLogMemory.h"
-#include "KFThread/KFMutex.h"
+#include "KFMacros.h"
 
 namespace KFrame
 {

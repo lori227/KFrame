@@ -6,23 +6,23 @@ namespace KFrame
 {
     void KFLoginProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLoginProxyPlugin, KFLoginProxyInterface >( new KFLoginProxyModule() );
+        __REGISTER_MODULE__( KFLoginProxy );
     }
 
     void KFLoginProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLoginProxyPlugin, KFLoginProxyInterface >();
+        __UNREGISTER_MODULE__( KFLoginProxy );
     }
 
     void KFLoginProxyPlugin::LoadModule()
     {
-        _kf_gate = _kf_plugin_manage->FindModule< KFGateInterface >();
-        _kf_proxy = _kf_plugin_manage->FindModule< KFProxyInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        __FIND_MODULE__( _kf_gate, KFGateInterface );
+        __FIND_MODULE__( _kf_proxy, KFProxyInterface );
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 }

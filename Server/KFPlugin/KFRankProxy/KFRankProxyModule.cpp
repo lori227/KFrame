@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFRankProxyModule::BeforeRun()
     {
-        _kf_tcp_client->RegisterLostFunction( this, &KFRankProxyModule::OnClientLostServer );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFRankProxyModule::OnClientLostServer );
         ////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ, &KFRankProxyModule::HandleUpdateZoneToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_RANK_SHARD_REQ, &KFRankProxyModule::HandleTransmitToRankShardReq );
@@ -27,7 +27,8 @@ namespace KFrame
 
     void KFRankProxyModule::BeforeShut()
     {
-        _kf_tcp_client->UnRegisterLostFunction( this );
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        ////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_RANK_SHARD_REQ );
     }

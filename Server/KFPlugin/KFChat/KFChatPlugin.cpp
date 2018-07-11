@@ -5,23 +5,23 @@ namespace KFrame
 {
     void KFChatPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFChatPlugin, KFChatInterface >( new KFChatModule() );
+        __REGISTER_MODULE__( KFChat );
     }
 
     void KFChatPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFChatPlugin, KFChatInterface >();
+        __UNREGISTER_MODULE__( KFChat );
     }
 
     void KFChatPlugin::LoadModule()
     {
-        _kf_game = _kf_plugin_manage->FindModule< KFGameInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_relation = _kf_plugin_manage->FindModule< KFRelationClientInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
-        _kf_route = _kf_plugin_manage->FindModule< KFRouteClientInterface >();
+        __FIND_MODULE__( _kf_game, KFGameInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE__( _kf_relation, KFRelationClientInterface );
     }
 
 }

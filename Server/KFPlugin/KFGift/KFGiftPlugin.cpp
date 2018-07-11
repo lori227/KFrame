@@ -6,23 +6,22 @@ namespace KFrame
 {
     void KFGiftPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFGiftPlugin, KFGiftInterface >( new KFGiftModule() );
+        __REGISTER_MODULE__( KFGift );
     }
 
     void KFGiftPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFGiftPlugin, KFGiftInterface >();
+        __UNREGISTER_MODULE__( KFGift );
     }
 
     void KFGiftPlugin::LoadModule()
     {
-        _kf_zone = _kf_plugin_manage->FindModule< KFZoneInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
-        _kf_http_client = _kf_plugin_manage->FindModule< KFHttpClientInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        __FIND_MODULE__( _kf_zone, KFZoneInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
+        __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }
-
 }

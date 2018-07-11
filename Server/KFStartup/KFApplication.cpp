@@ -146,6 +146,13 @@ namespace KFrame
         static const uint32 _console_buff_size = 32;
         INPUT_RECORD record[ _console_buff_size ];
         DWORD eventcount = 0;
+
+        GetNumberOfConsoleInputEvents( _in_handle, &eventcount );
+        if ( eventcount == 0 )
+        {
+            return;
+        }
+
         ReadConsoleInput( _in_handle, record, _console_buff_size, &eventcount );
 
         std::list< uint32 > listkeycode;

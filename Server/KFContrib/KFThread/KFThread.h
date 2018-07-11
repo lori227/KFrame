@@ -2,6 +2,7 @@
 #define __KF_THREAD_H__
 
 #include "KFInclude.h"
+#include "KFrame.h"
 
 namespace KFrame
 {

@@ -64,7 +64,7 @@ namespace KFrame
 
     void KFItemModule::OnLeaveStopItemTimer( KFEntity* player )
     {
-        _kf_timer->UnRegisterTimer( this, player->GetKeyID() );
+        __UNREGISTER_OBJECT_TIMER__( player->GetKeyID() );
     }
 
     void KFItemModule::CheckStartItemTimer( KFEntity* player )
@@ -100,7 +100,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        _kf_timer->RegisterLimitTimer( player->GetKeyID(), intervaltime, 1, this, &KFItemModule::OnTimerCheckItemValidTime );
+        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerCheckItemValidTime );
     }
 
     void KFItemModule::RemoveValidTimeoutItem( KFEntity* player )

@@ -6,21 +6,21 @@ namespace KFrame
 {
     void KFClusterClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFClusterClientPlugin, KFClusterClientInterface >( new KFClusterClientModule() );
+        __REGISTER_MODULE__( KFClusterClient );
     }
 
     void KFClusterClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFClusterClientPlugin, KFClusterClientInterface >();
+        __UNREGISTER_MODULE__( KFClusterClient );
     }
 
     void KFClusterClientPlugin::LoadModule()
     {
-        _kf_bus = _kf_plugin_manage->FindModule< KFBusInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_ip_address = _kf_plugin_manage->FindModule< KFIpAddressInterface >();
+        __FIND_MODULE__( _kf_bus, KFBusInterface );
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
     }
 }

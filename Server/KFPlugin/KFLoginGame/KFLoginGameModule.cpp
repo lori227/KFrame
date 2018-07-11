@@ -6,6 +6,7 @@ namespace KFrame
     KFLoginGameModule::KFLoginGameModule()
     {
 
+
     }
 
     KFLoginGameModule::~KFLoginGameModule()
@@ -19,8 +20,8 @@ namespace KFrame
 
     void KFLoginGameModule::BeforeRun()
     {
-        _kf_timer->RegisterLoopTimer( 0, 10000, this, &KFLoginGameModule::OnTimerUpdateLoginGameToWorld );
-        _kf_tcp_server->RegisterLostFunction( this, &KFLoginGameModule::OnServerLostHandle );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginGameModule::OnServerLostHandle );
+        __REGISTER_LOOP_TIMER__( 0, 10000, &KFLoginGameModule::OnTimerUpdateLoginGameToWorld );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_PROXY_UPDATE_REQ, &KFLoginGameModule::HandleLoginProxyUpdateReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_REQ, &KFLoginGameModule::HandleLoginGameReq );
@@ -32,8 +33,8 @@ namespace KFrame
 
     void KFLoginGameModule::BeforeShut()
     {
-        _kf_timer->UnRegisterTimer( this );
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_TIMER__();
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );

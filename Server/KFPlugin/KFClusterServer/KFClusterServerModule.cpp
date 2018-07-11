@@ -22,7 +22,7 @@ namespace KFrame
 
     void KFClusterServerModule::BeforeRun()
     {
-        _kf_tcp_server->RegisterLostFunction( this, &KFClusterServerModule::OnServerLostClusterProxy );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterServerModule::OnServerLostClusterProxy );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ, &KFClusterServerModule::HandleClusterRegisterReq );
@@ -33,7 +33,7 @@ namespace KFrame
     void KFClusterServerModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
-        _kf_tcp_server->UnRegisterLostFunction( this );
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ );

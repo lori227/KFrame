@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting AppName="zone" AppType="gate">
 	<Plugins>
-		<Plguin Name="KFMessage" Startup="1" Sort="1" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>		
+		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plguin Name="KFMessage" Startup="1" Sort="2" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plguin Name="KFBus" Startup="1" Sort="3" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plguin Name="KFIpAddress" Startup="1" Sort="4" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>		
 		<Plguin Name="KFZone" Startup="1" Sort="11" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
 		<Plguin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
 		<Plguin Name="KFDisplay" Startup="1" Sort="21" Debug="KFDisplayd" Release="KFDisplay" Config=""/>		

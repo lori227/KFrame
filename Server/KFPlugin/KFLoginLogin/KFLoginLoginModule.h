@@ -18,6 +18,7 @@
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -52,12 +53,19 @@ namespace KFrame
         // 连接丢失
         __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
 
-    private:
+        // 关闭回调
+        __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
+
+    protected:
         // 平台验证回调
         void OnHttpPlatformLoginVerifyCallBack( std::string& senddata, std::string& recvdata );
 
         // 发送登录验证结果消息
         void SendLoginVerifyMessage( uint32 gateid, uint32 result, uint32 accountid, uint32 playerid, const std::string& token, const std::string& ip, uint32 port );
+
+    private:
+        // 关闭登录
+        bool _is_login_close;
     };
 }
 

@@ -131,6 +131,7 @@ xcopy/AEFRSY "$(TargetPath)" "$(ProjectDir)..\Product\Terminal\"</Command>
       <PreprocessorDefinitions>_WIN32;POCO_STATIC;_DEBUG;_CONSOLE;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,6 +182,7 @@ xcopy/AEFRSY "$(TargetPath)" "$(ProjectDir)..\Product\Terminal\"</Command>
       <PreprocessorDefinitions>_WIN32;POCO_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

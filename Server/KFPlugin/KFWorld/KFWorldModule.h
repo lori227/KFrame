@@ -82,7 +82,7 @@ namespace KFrame
 
     protected:
         // 处理踢人
-        std::string HandleHttpKickOnline( const std::string& ip, const std::string& data );
+        __KF_HTTP_FUNCTION__( HandleHttpKickOnline );
 
         // 更新玩家在线状态
         void UpdateOnlineToPlatfrom( uint32 accountid, uint32 playerid, uint32 online );

@@ -5,19 +5,19 @@ namespace KFrame
 {
     void KFLoginPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFLoginPlugin, KFLoginInterface >( new KFLoginModule() );
+        __REGISTER_MODULE__( KFLogin );
     }
 
     void KFLoginPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFLoginPlugin, KFLoginInterface >();
+        __UNREGISTER_MODULE__( KFLogin );
     }
 
     void KFLoginPlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 
 }

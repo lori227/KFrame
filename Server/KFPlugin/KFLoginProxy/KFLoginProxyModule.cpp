@@ -20,8 +20,7 @@ namespace KFrame
     {
         __REGISTER_RUN_FUNCTION__( &KFLoginProxyModule::Run );
         __REGISTER_AFTER_RUN_FUNCTION__( &KFLoginProxyModule::AfterRun );
-
-        _kf_timer->RegisterLoopTimer( 0, 10000, this, &KFLoginProxyModule::OnTimerUpdateOnlineToGame );
+        __REGISTER_LOOP_TIMER__( 0, 10000, &KFLoginProxyModule::OnTimerUpdateOnlineToGame );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_GAME_REQ, &KFLoginProxyModule::HandleLoginGameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_ACK, &KFLoginProxyModule::HandleLoginGameAck );
@@ -33,10 +32,9 @@ namespace KFrame
 
     void KFLoginProxyModule::ShutDown()
     {
+        __UNREGISTER_TIMER__();
         __UNREGISTER_RUN_FUNCTION__();
         __UNREGISTER_AFTER_RUN_FUNCTION__();
-
-        _kf_timer->UnRegisterTimer( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_ACK );

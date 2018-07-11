@@ -6,18 +6,18 @@ namespace KFrame
 {
     void KFMatchProxyPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFMatchProxyPlugin, KFMatchProxyInterface >( new KFMatchProxyModule() );
+        __REGISTER_MODULE__( KFMatchProxy );
     }
 
     void KFMatchProxyPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFMatchProxyPlugin, KFMatchProxyInterface >();
+        __UNREGISTER_MODULE__( KFMatchProxy );
     }
 
     void KFMatchProxyPlugin::LoadModule()
     {
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_tcp_client = _kf_plugin_manage->FindModule< KFTcpClientInterface >();
-        _kf_cluster_proxy = _kf_plugin_manage->FindModule< KFClusterProxyInterface >();
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
     }
 }

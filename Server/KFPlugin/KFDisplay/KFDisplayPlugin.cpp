@@ -7,27 +7,27 @@ namespace KFrame
 {
     void KFDisplayPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFDisplayPlugin, KFDisplayInterface >( new KFDisplayModule() );
+        __REGISTER_MODULE__( KFDisplay );
     }
 
     void KFDisplayPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFDisplayPlugin, KFDisplayInterface >();
+        __UNREGISTER_MODULE__( KFDisplay );
     }
 
     void KFDisplayPlugin::LoadModule()
     {
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
 
         auto apptype = KFGlobal::Instance()->_app_type;
         if ( apptype == KFField::_shard )
         {
-            _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
+            __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
         }
         else if ( apptype == KFField::_game )
         {
-            _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-            _kf_route = _kf_plugin_manage->FindModule< KFRouteClientInterface >();
+            __FIND_MODULE__( _kf_player, KFPlayerInterface );
+            __FIND_MODULE__( _kf_route, KFRouteClientInterface );
         }
     }
 }

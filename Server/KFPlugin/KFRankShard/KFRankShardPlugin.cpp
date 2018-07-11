@@ -6,23 +6,23 @@ namespace KFrame
 {
     void KFRankShardPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFRankShardPlugin, KFRankShardInterface >( new KFRankShardModule() );
+        __REGISTER_MODULE__( KFRankShard );
     }
 
     void KFRankShardPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFRankShardPlugin, KFRankShardInterface >();
+        __UNREGISTER_MODULE__( KFRankShard );
     }
 
     void KFRankShardPlugin::LoadModule()
     {
-        _kf_redis = _kf_plugin_manage->FindModule< KFRedisInterface >();
-        _kf_worker = _kf_plugin_manage->FindModule< KFWorkerInterface >();
-        _kf_option = _kf_plugin_manage->FindModule< KFOptionInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_schedule = _kf_plugin_manage->FindModule< KFScheduleInterface >();
-        _kf_tcp_server = _kf_plugin_manage->FindModule< KFTcpServerInterface >();
-        _kf_cluster_shard = _kf_plugin_manage->FindModule< KFClusterShardInterface >();
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_worker, KFWorkerInterface );
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
+        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
+        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

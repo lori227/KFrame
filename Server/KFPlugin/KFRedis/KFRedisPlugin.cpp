@@ -7,16 +7,16 @@ namespace KFrame
 {
     void KFRedisPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFRedisPlugin, KFRedisInterface >( new KFRedisModule() );
+        __REGISTER_MODULE__( KFRedis );
     }
 
     void KFRedisPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFRedisPlugin, KFRedisInterface >();
+        __UNREGISTER_MODULE__( KFRedis );
     }
 
     void KFRedisPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 }

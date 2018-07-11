@@ -30,7 +30,9 @@ rem ===========================================================================
 rem »´æ÷≈‰÷√
 set path1=..\..\Source\_bin\setting
 set path2=setting
-call :copyfile 0 connection.network
+call :copyfile 0 ip.address
+call :copyfile 1 bus.relation
+call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 rem ===========================================================================
@@ -91,6 +93,15 @@ call :copyfile 1 KFDeployServer.dll
 
 call :copyfile 1 KFMySQLd.dll
 call :copyfile 1 KFMySQL.dll
+
+call :copyfile 1 KFBusd.dll
+call :copyfile 1 KFBus.dll
+
+call :copyfile 1 KFIpAddressd.dll
+call :copyfile 1 KFIpAddress.dll
+
+call :copyfile 1 KFScheduled.dll
+call :copyfile 1 KFSchedule.dll
 
 rem pause
 rem ===========================================================================

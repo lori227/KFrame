@@ -6,21 +6,21 @@ namespace KFrame
 {
     void KFBattleClientPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFBattleClientPlugin, KFBattleClientInterface >( new KFBattleClientModule() );
+        __REGISTER_MODULE__( KFBattleClient );
     }
 
     void KFBattleClientPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFBattleClientPlugin, KFBattleClientInterface >();
+        __UNREGISTER_MODULE__( KFBattleClient );
     }
 
     void KFBattleClientPlugin::LoadModule()
     {
-        _kf_option = _kf_plugin_manage->FindModule< KFOptionInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_cluster = _kf_plugin_manage->FindModule< KFClusterClientInterface >();
-        _kf_rank = _kf_plugin_manage->FindModule< KFRankClientInterface >();
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
+        __FIND_MODULE__( _kf_rank, KFRankClientInterface );
     }
 }

@@ -10,6 +10,7 @@
 #include "KFVector.h"
 #include "KFField.h"
 #include "KFSystem.h"
+#include "KFMacros.h"
 #include "KFInterfaces.h"
 #include "KFSingleton.h"
 #include "KFXml/KFXml.h"

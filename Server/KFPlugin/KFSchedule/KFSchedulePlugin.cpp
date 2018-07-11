@@ -6,12 +6,12 @@ namespace KFrame
 {
     void KFSchedulePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFSchedulePlugin, KFScheduleInterface >( new KFScheduleModule() );
+        __REGISTER_MODULE__( KFSchedule );
     }
 
     void KFSchedulePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFSchedulePlugin, KFScheduleInterface >();
+        __UNREGISTER_MODULE__( KFSchedule );
     }
 
     void KFSchedulePlugin::LoadModule()

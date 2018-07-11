@@ -33,7 +33,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFAuthModule::HandleAuthChannelLogin( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthChannelLogin )
     {
         auto authdata = _kf_channel->AuthChannelLogin( data );
 
@@ -51,7 +51,7 @@ namespace KFrame
         return _kf_http_client->StartSTHttpClient( platformurl, authjson, true );
     }
 
-    std::string KFAuthModule::HandleAuthActivation( const std::string& ip, const std::string& data )
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthActivation )
     {
         KFJson kfjson( data );
         kfjson[ KFField::_ip ] = ip;

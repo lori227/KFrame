@@ -7,22 +7,22 @@ namespace KFrame
 {
     void KFClothesPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFClothesPlugin, KFClothesInterface >( new KFClothesModule() );
+        __REGISTER_MODULE__( KFClothes );
     }
 
     void KFClothesPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFClothesPlugin, KFClothesInterface >();
+        __UNREGISTER_MODULE__( KFClothes );
     }
 
     void KFClothesPlugin::LoadModule()
     {
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_timer = _kf_plugin_manage->FindModule< KFTimerInterface >();
-        _kf_kernel = _kf_plugin_manage->FindModule< KFKernelInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
-        _kf_message = _kf_plugin_manage->FindModule< KFMessageInterface >();
-        _kf_mail = _kf_plugin_manage->FindModule< KFMailClientInterface >();
-        _kf_display = _kf_plugin_manage->FindModule< KFDisplayInterface >();
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_mail, KFMailClientInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
     }
 }

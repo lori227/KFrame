@@ -1,4 +1,5 @@
 ﻿#include "KFGlobal.h"
+#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -11,6 +12,7 @@ namespace KFrame
         _game_time = 0;
         _real_time = 0;
         _listen_port = 0;
+        _logger = new KFLoggerEx();
     }
 
     KFGlobal::~KFGlobal()

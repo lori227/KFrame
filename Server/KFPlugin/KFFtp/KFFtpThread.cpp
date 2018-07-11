@@ -4,6 +4,19 @@
 #include "KFThread/KFThread.h"
 #include "KFConvert/KFConvert.h"
 
+#if __KF_SYSTEM__ == __KF_WIN__
+    #include <windows.h>
+    #include <direct.h>
+    #define __MKDIR__( path ) _mkdir( path.c_str() )
+#else
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <sys/wait.h>
+
+    #define __MKDIR__( path ) mkdir( path.c_str(), 0755 )
+#endif
+
 namespace KFrame
 {
     KFFtpThread::KFFtpThread()
@@ -73,39 +86,19 @@ namespace KFrame
         _ftp_result = KFFtpEnum::Finish;
     }
 
-    void KFFtpThread::CreateLocalDirectory( const char* path )
+    void KFFtpThread::CreateLocalDirectory( const std::string& path )
     {
-#if __KF_SYSTEM__ == __KF_WIN__
-        CreateDirectoryA( path, nullptr );
-#endif
-
-
-#if __KF_SYSTEM__ == __KF_LINUX__
-        mkdir( directory, 777 );
-#endif
+        __MKDIR__( path );
     }
 
-
-    void KFFtpThread::DeleteLocalFile( const char* file )
+    void KFFtpThread::DeleteLocalFile( const std::string& file )
     {
-#if __KF_SYSTEM__ == __KF_WIN__
-        DeleteFileA( file );
-#endif
-
-#if __KF_SYSTEM__ == __KF_LINUX__
-        remove( file );
-#endif
+        remove( file.c_str() );
     }
 
-    void KFFtpThread::RenameFile( const char* oldfile, const char* newfile )
+    void KFFtpThread::RenameFile( const std::string& oldfile, const std::string& newfile )
     {
-#if __KF_SYSTEM__ == __KF_WIN__
-        rename( oldfile, newfile );
-#endif
-
-#if __KF_SYSTEM__ == __KF_LINUX__
-        rename( oldfile, newfile );
-#endif
+        rename( oldfile.c_str(), newfile.c_str() );
     }
 
     bool KFFtpThread::CheckFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile )
@@ -122,7 +115,7 @@ namespace KFrame
     void KFFtpThread::DownloadFiles( nsFTP::CFTPClient* ftpclient, std::string& ftppath, std::string& localpath )
     {
         // 创建文件夹
-        CreateLocalDirectory( localpath.c_str() );
+        CreateLocalDirectory( localpath );
 
         // 遍历ftp上的文件
         nsFTP::TFTPFileStatusShPtrVec filelist;
@@ -157,14 +150,14 @@ namespace KFrame
         std::string downloadfile = localfile + ".new";
         if ( !ftpclient->DownloadFile( ftpfile, downloadfile ) )
         {
-            DeleteLocalFile( downloadfile.c_str() );
-            return KFLogger::LogLogic( KFLogger::Error, "DownLoad [ %s ] Failed!", localfile.c_str() );
+            DeleteLocalFile( downloadfile );
+            return KFLogger::LogLogic( KFLogger::Error, "download [ %s ] failed!", localfile.c_str() );
         }
 
-        DeleteLocalFile( localfile.c_str() );
-        RenameFile( downloadfile.c_str(), localfile.c_str() );
+        DeleteLocalFile( localfile );
+        RenameFile( downloadfile, localfile );
 
-        KFLogger::LogLogic( KFLogger::Info, "DownLoad [ %s ] Ok!", localfile.c_str() );
+        KFLogger::LogLogic( KFLogger::Info, "download [ %s ] ok!", localfile.c_str() );
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -197,10 +190,8 @@ namespace KFrame
 
         return _localtime >= _ftptime;
     }
-#endif
 
-
-#if __KF_SYSTEM__ == __KF_LINUX__
+#else
 
     bool KFFtpThread::CheckLinuxFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile )
     {
@@ -218,10 +209,11 @@ namespace KFrame
         auto localtime = buf.st_mtime;
 
         auto _tm = gmtime( &file->MTime() );
-        KFRealTime filetime( _tm->tm_year + 1900, _tm->tm_mon + 1, _tm->tm_mday, _tm->tm_hour, _tm->tm_min, _tm->tm_sec );
+        KFDate filetime( _tm->tm_year + 1900, _tm->tm_mon + 1, _tm->tm_mday, _tm->tm_hour, _tm->tm_min, _tm->tm_sec );
         auto ftptime = filetime.GetTime();
 
         return localtime >= ftptime;
     }
+
 #endif
 }

@@ -66,7 +66,7 @@ namespace KFrame
 
     void KFClothesModule::OnLeaveStopClothesTimer( KFEntity* player )
     {
-        _kf_timer->UnRegisterTimer( this, player->GetKeyID() );
+        __UNREGISTER_OBJECT_TIMER__( player->GetKeyID() );
     }
 
     void KFClothesModule::CheckStartClothesTimer( KFEntity* player )
@@ -102,7 +102,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        _kf_timer->RegisterLimitTimer( player->GetKeyID(), intervaltime, 1, this, &KFClothesModule::OnTimerCheckClothesValidTime );
+        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), intervaltime, 1, &KFClothesModule::OnTimerCheckClothesValidTime );
     }
 
     void KFClothesModule::RemoveValidTimeoutClothes( KFEntity* player )
