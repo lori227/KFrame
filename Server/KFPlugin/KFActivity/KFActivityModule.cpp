@@ -94,7 +94,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFActivityModule::OnActivityValueUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFActivityModule::OnActivityValueUpdateCallBack )
     {
         auto activitysetting = _kf_activity_config->FindActivitySetting( key );
         if ( activitysetting == nullptr )
@@ -181,7 +181,7 @@ namespace KFrame
         }
     }
 
-    void KFActivityModule::OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFActivityModule::OnUpdateDataCallBack )
     {
         UpdateDataActivityValue( player, key, kfdata, operate, value, newvalue );
     }
@@ -201,12 +201,12 @@ namespace KFrame
         }
     }
 
-    void KFActivityModule::OnAddDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFActivityModule::OnAddDataCallBack )
     {
         UpdateObjectActivityValue( player, key, kfdata, KFOperateEnum::Add );
     }
 
-    void KFActivityModule::OnRemoveDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_REMOVE_DATA_FUNCTION__( KFActivityModule::OnRemoveDataCallBack )
     {
         UpdateObjectActivityValue( player, key, kfdata, KFOperateEnum::Dec );
     }

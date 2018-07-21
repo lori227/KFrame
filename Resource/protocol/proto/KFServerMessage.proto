@@ -27,7 +27,6 @@ enum ServerProtocol
 	S2S_LOGIN_WORLD_VERIFY_ACK = 21109;				// 登录验证结果
 	S2S_LOGIN_QUERY_PLAYERID_REQ = 21110;			// 查询角色userid
 	S2S_LOGIN_QUERY_PLAYERID_ACK = 21111;			// 查询角色userid
-	//S2S_LOGIN_UPDATE_LOGIN_REQ = 21112;				// 更新登录服务器信息
 	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// 同步在线人家
 	S2S_LOGIN_GAME_REQ = 21114;						// 请求登录游戏服务器
 	S2S_LOGIN_GAME_ACK = 21115;						// 请求登录游戏服务器
@@ -62,13 +61,10 @@ enum ServerProtocol
 	S2S_QUERY_BASIC_ACK = 21146;					// 查询好友基础数据
 	S2S_QUERY_PLAYER_ACK = 21147;					// 查询好友数据
 	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
-	//S2S_LOGIN_UPDATE_LOGIN_ACK = 21149;				// 更新登录回馈
 	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
 	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
 	S2S_UPDATE_MAIL_FLAG_REQ = 21152;				// 设置邮件状态请求
 	S2S_UPDATE_MAIL_FLAG_ACK = 21153;				// 设置邮件状态响应
-	//S2S_EMAIL_OUT_RANGE_REQ = 21154;				// 邮件超时删除
-	//S2S_LOGIN_EMAIL_REQ = 21155;					// 玩家登陆邮件系统
 	S2S_PLAYER_TOAST_REQ = 21156;					// 玩家敬酒请求
 	S2S_PLAYER_TOAST_ACK = 21157;					// 玩家敬酒回馈
 	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// 更新好友度反馈
@@ -97,13 +93,10 @@ enum ServerProtocol
 	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// 查询总的敬酒次数回馈
 	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// 更新队伍匹配模式
 	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// 新玩家登陆邮件服务
-	S2S_JOIN_RANK_LIST_REQ = 21186;					// 更新排行榜请求
-	S2S_QUERY_WHOLE_RANK_LIST_REQ = 21187;			// 查询全服排行榜
+	S2S_QUERY_RANK_LIST_REQ = 21187;				// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
-	S2S_QUERY_RANK_LIST_ACK	= 21189;				// 查询排行榜数据反馈 
-	S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ = 21190;			// 更新zone信息到rankproxy
-	S2S_TRANSMIT_TO_RANK_SHARD_REQ = 21191;				// 转发消息到rank数据库
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
+	S2S_UPDATE_RANK_DATA_REQ = 21193;				// 更新排行榜数据
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -950,33 +943,24 @@ message S2SNewPlayerLoginMailReq
 	required uint32 playerid = 1;		// 玩家id
 }
 
-
-message PBScoreData
+// 更新排行榜数据
+// S2S_UPDATE_RANK_DATA_REQ
+message S2SUpdateRankDataReq
 {
-	repeated PBUInt64 score = 1;		// 打榜分数
-}
-
-
-// 更新排行榜请求
-// S2S_JOIN_RANK_LIST_REQ
-message S2SJoinRankListReq
-{
-	required uint32 playerid = 1;		// 玩家id
-	required string scoretype = 2;		// 排行榜类型
-	required PBScoreData scores = 3;	// 打榜分数
-	required PBScoreData totalscores = 4;	// 打榜总分数
+	required uint32 playerid = 1;	// 玩家id
+	required uint32 rankid = 2;		// 榜单id
+	required uint32 zoneid = 3;		// 小区id
+	required PBRankData pbrankdata = 4;	// 排行榜数据
 }
 
 // 查询全服排行榜
-// S2S_QUERY_WHOLE_RANK_LIST_REQ
-message S2SQueryWholeRankListReq
+// S2S_QUERY_RANK_LIST_REQ
+message S2SQueryRankListReq
 {
 	required uint32 playerid = 1;		// 玩家id
-	required uint32 matchid = 2;		// 榜单id
-	required string ranktype = 3;		// 榜单类型
-	required uint32 begin = 4;		// 查询榜单开始位置(从0开始)
-	required uint32 end = 5;		// 查询榜单的结束位置
-
+	required uint32 serverid = 2;		// 服务器id
+	required uint32 rankid = 3;			// 排行榜id
+	required uint32 zoneid = 4;			// 小区id
 }
 
 // 查询好友排行榜
@@ -984,36 +968,7 @@ message S2SQueryWholeRankListReq
 message S2SQueryFriendRankListReq
 {
 	required uint32 playerid = 1;		// 玩家id
-	required uint32 matchid = 2;		// 榜单id
-	required string ranktype = 3;		// 榜单类型
-	required PBPlayerIds playerids = 4;	// 待查询的玩家好友id
-
-}
-
-
-
-// 查询排行榜数据反馈
-//S2S_QUERY_RANK_LIST_ACK
-message S2SQueryRankListAck
-{
-	required uint32 playerid = 1;		// 玩家id
-	required uint32 matchid = 2;		// 榜单id
-	required string ranktype = 3;		// 榜单类型
-	optional PBRankData rankdatas = 4;	// 榜单数据
-	optional bool isfriendrank = 5;		// 是否是好友榜单
-}
-
-
-// S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ
-message S2SUpdateZoneToRankProxyReq
-{
-	repeated uint32 zoneid = 1;
-}
-
-// S2S_TRANSMIT_TO_RANK_SHARD_REQ
-message S2STransmitToRankShardReq
-{
-	required uint32 zoneid = 1;
-	required uint32 msgid = 2;
-	required string msgdata = 3;
+	required uint32 serverid = 2;		// 服务器id
+	required uint32 rankid = 3;			// 榜单类型
+	repeated uint32 friendid = 4;		// 待查询的玩家好友id
 }

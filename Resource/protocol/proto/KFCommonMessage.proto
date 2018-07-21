@@ -160,6 +160,8 @@ enum AckEnum
 	DataNotEnough				= 153;		// 没有足够的数据
 	CompoundNotExist			= 154;		// 合成配置不存在
 	LoginIsClose				= 155;		// 登录已经关闭
+	RankNotExist				= 156;		// 排行榜不存在
+	RankServerBusy				= 157;		// 排行榜服务器忙
 	
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
@@ -384,7 +386,15 @@ message PBRecord
 
 message PBRankData
 {
-	repeated PBStrings rankdata = 1;	// 排行榜数据
+	optional uint32 rankindex = 1;		// 从1开始
+	optional uint32 playerid = 2;		// 玩家id
+	optional uint64 rankscore = 3;		// 排行的数据( 客户端好友排行根据这个排序 )
+	optional PBStrings pbdata = 4;		// 排行榜数据
+}
+
+message PBRankDatas
+{
+	repeated PBRankData rankdata = 3;		// 排行榜数据
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

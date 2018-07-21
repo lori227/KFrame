@@ -15,7 +15,7 @@ namespace KFrame
 
     int32 KFRedisExecute::Initialize( const char* ip, int32 port, const char* password )
     {
-        _length = KFrame::Buff_10M;
+        _length = KFBufferEnum::Buff_10M;
         _buffer = __KF_INT8__( _length );
         return _redis.Connect( ip, port, password );
     }
@@ -215,10 +215,10 @@ namespace KFrame
         return CommandExecute< VectorString >( value, _buffer );
     }
 
-    bool KFRedisExecute::MapExecute( LesserMapString& value, const char* format, ... )
+    bool KFRedisExecute::MapExecute( GreaterMapString& value, const char* format, ... )
     {
         __FORMAT_BUFFER__;
-        return CommandExecute< LesserMapString >( value, _buffer );
+        return CommandExecute< GreaterMapString >( value, _buffer );
     }
 
 }

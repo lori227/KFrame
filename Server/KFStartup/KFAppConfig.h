@@ -35,6 +35,7 @@ namespace KFrame
     };
     //////////////////////////////////////////////////////////////////////////////
 
+    class KFNode;
     class KFAppConfig : public KFSingleton< KFAppConfig >
     {
     public:
@@ -44,7 +45,14 @@ namespace KFrame
         // 加载启动配置
         bool LoadStartupConfig( const char* file );
 
+
     protected:
+
+        bool LoadServerConfig( const char* file );
+        bool LoadCommonConfig( const char* file );
+
+        // 读取插件配置
+        void ReadPluginSetting( KFNode& root );
 
         // 查找配置
         KFAppSetting* GetStartupSetting( const std::string& name );
@@ -52,8 +60,11 @@ namespace KFrame
         // 添加配置
         void AddStartupSetting( KFAppSetting& setting );
 
-    public:
+    protected:
+        // 公共的插件文件
+        std::string _common_startup_file;
 
+    public:
         // appname
         std::string _app_name;
 

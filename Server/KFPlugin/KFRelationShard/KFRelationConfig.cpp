@@ -32,7 +32,7 @@ namespace KFrame
             auto setting = config.FindNode( "Setting" );
             _max_friend_count = setting.GetUInt32( "FriendMaxCount" );
             _max_invite_count = setting.GetUInt32( "InviteMaxCount" );
-            _invite_keep_time = setting.GetUInt32( "InviteKeepTime" ) * TimeEnum::OneDaySecond;
+            _invite_keep_time = setting.GetUInt32( "InviteKeepTime" ) * KFTimeEnum::OneDaySecond;
             _single_team_friend_liness = setting.GetUInt32( "SingleTeamFriendLiness" );
             _max_team_friend_liness = setting.GetUInt32( "MaxTeamFriendLiness" );
             _single_win_friend_liness = setting.GetUInt32( "SingleWinFriendLiness" );

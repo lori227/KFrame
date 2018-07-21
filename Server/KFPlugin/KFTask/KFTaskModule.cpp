@@ -104,7 +104,7 @@ namespace KFrame
         return KFMsg::TaskReceiveRewardOK;
     }
 
-    void KFTaskModule::OnUpdateTaskValueCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
     {
         auto tasksetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
         if ( tasksetting == nullptr )
@@ -139,7 +139,7 @@ namespace KFrame
         player->UpdateData( kfparent->GetName(), key, KFField::_flag, KFOperateEnum::Set, KFMsg::FlagEnum::Done );
     }
 
-    void KFTaskModule::OnUpdateTaskFlagCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskFlagCallBack )
     {
         auto tasksetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
         if ( tasksetting == nullptr )

@@ -43,8 +43,8 @@ namespace KFrame
         virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message );
     protected:
         // 更新属性回调
-        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-        void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
+        __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
         void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
 

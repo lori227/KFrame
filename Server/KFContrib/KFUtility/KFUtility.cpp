@@ -11,6 +11,28 @@
 
 namespace KFrame
 {
+    uint32 KFUtility::CalcZoneId( uint32 playerid )
+    {
+        return ( playerid / KFZoneEnum::MaxPlayerCount );
+    }
+
+    uint32 KFUtility::CalcPlayerid( uint32 id, uint32 zoneid )
+    {
+        return id + zoneid * KFZoneEnum::MaxPlayerCount;
+    }
+
+    uint32 KFUtility::CalcZoneServerId( uint32 serverid, uint32 zoneid )
+    {
+        serverid = serverid % 1000;
+        serverid += ( zoneid + 1000 ) * 1000;
+        return serverid;
+    }
+
+    uint32 KFUtility::CalcServerZoneId( uint32 serverid )
+    {
+        return ( serverid / 1000 ) % 1000;
+    }
+
     bool KFUtility::IsZeroFloat( float value, float epsilon )
     {
         return std::abs( value ) <= epsilon;

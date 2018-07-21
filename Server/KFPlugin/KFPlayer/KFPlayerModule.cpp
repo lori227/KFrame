@@ -263,7 +263,7 @@ namespace KFrame
     void KFPlayerModule::SavePlayer( KFEntity* kfentity )
     {
         auto kfdata = kfentity->GetData();
-        auto zoneid = _kf_zone->GetPlayerZoneId( kfdata->GetKeyID() );
+        auto zoneid = KFUtility::CalcZoneId( kfdata->GetKeyID() );
         if ( !kfentity->IsInited() || !kfentity->IsNeedToSave() )
         {
             return;
@@ -737,7 +737,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::CanNotInquireSelf );
         }
 
-        auto zoneid = _kf_zone->GetPlayerZoneId( kfmsg.playerid() );
+        auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
 
         //查询玩家数据
         KFMsg::S2SQueryPlayerReq req;

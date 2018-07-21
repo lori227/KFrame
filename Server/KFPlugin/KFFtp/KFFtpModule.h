@@ -11,10 +11,10 @@
 
 #include "KFrame.h"
 #include "KFFtpInterface.h"
+#include "KFFtpThread.h"
 
 namespace KFrame
 {
-    class KFFtpThread;
     class KFFtpModule : public KFFtpInterface
     {
     public:
@@ -36,15 +36,11 @@ namespace KFrame
         void Run();
 
         // 开启下载
-        virtual void StartDownload( uint32 ftpid, KFFtpFunction& function );
+        virtual void StartFtpDownload( uint32 ftpid, KFFtpFunction& function );
 
     private:
-
-        // ftp 线程
-        KFFtpThread* _kf_ftp_thread;
-
-        // 回调函数
-        KFFtpFunction _ftp_function;
+        // 请求的ftp列表
+        KFMap< uint32, uint32, KFFtpThread > _ftp_thread_list;
 
     };
 }

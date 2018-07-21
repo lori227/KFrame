@@ -22,11 +22,10 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         auto kfzone = &_kf_zone_config->_kf_zone;
 
-        auto id = kfglobal->_app_id % 1000;
-        kfglobal->_app_id = id + ( kfzone->_id + 1000 ) * 1000;
+        kfglobal->_app_id = KFUtility::CalcZoneServerId( kfglobal->_app_id, kfzone->_id );
 
         // 修改服务器ip
-        _kf_ip_address->SetZoneIpAddress( kfzone->_id, kfglobal->_app_id, kfzone->_ip );
+        _kf_ip_address->SetZoneIpAddress( kfzone->_id, kfzone->_ip );
     }
 
     void KFZoneModule::BeforeShut()
@@ -42,25 +41,15 @@ namespace KFrame
         return &_kf_zone_config->_kf_zone;
     }
 
-    uint32 KFZoneModule::GetServerZoneId( uint32 serverid )
-    {
-        return ( serverid / 1000 ) % 1000;
-    }
-
-    uint32 KFZoneModule::GetPlayerZoneId( uint32 playerid )
-    {
-        return ( playerid / KFZoneEnum::MaxPlayerCount );
-    }
-
     bool KFZoneModule::IsServerSameZone( uint32 serverid )
     {
-        auto zoneid = GetServerZoneId( serverid );
+        auto zoneid = KFUtility::CalcServerZoneId( serverid );
         return zoneid == _kf_zone_config->_kf_zone._id;
     }
 
     bool KFZoneModule::IsPlayerSameZone( uint32 playerid )
     {
-        auto zoneid = GetPlayerZoneId( playerid );
+        auto zoneid = KFUtility::CalcZoneId( playerid );
         return zoneid == _kf_zone_config->_kf_zone._id;
     }
 

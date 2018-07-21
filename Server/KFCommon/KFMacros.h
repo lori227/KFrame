@@ -4,6 +4,7 @@
 //Define all macros in this file
 
 #include "KFSystem.h"
+#include "spdlog/fmt/fmt.h"
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +36,40 @@
     #define __KF_STRING__( value ) std::to_string( value )
 #endif
 
+
+enum ELogCategory
+{
+    ELC_NONE = 0,
+    ELC_SYSTEM,
+    ELC_INIT,
+    ELC_LOGIC,
+    ELC_NET,
+    ELC_SQL,
+    ELC_MEMORY,
+    ELC_SCRIPT,
+    ELC_LOGIN,
+    ELC_PLAYER,
+    //TO ADD
+    ELC_MAX,
+};
+
+static const std::string LogCategoryName[] =
+{
+    "none",
+    "system",
+    "init",
+    "logic",
+    "net",
+    "sql",
+    "memory",
+    "script",
+    "login",
+    "player",
+    //TO ADD
+};
+
+#define KF_FORMAT(my_fmt, ...)				fmt::format(my_fmt, ##__VA_ARGS__);
+#define KF_FORMAT_FUNCTION(my_fmt, ...)		fmt::format(std::string("[{}:{}]") + my_fmt, __FUNCTION_LINE__, ##__VA_ARGS__);
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 

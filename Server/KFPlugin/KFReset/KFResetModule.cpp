@@ -45,7 +45,7 @@ namespace KFrame
         auto nowtime = KFGlobal::Instance()->_real_time;
 
         // 在整点的时候刷新一次
-        _next_reset_data_time = ( ( nowtime + TimeEnum::OneHourSecond - 1 ) / TimeEnum::OneHourSecond ) * TimeEnum::OneHourSecond;
+        _next_reset_data_time = ( ( nowtime + KFTimeEnum::OneHourSecond - 1 ) / KFTimeEnum::OneHourSecond ) * KFTimeEnum::OneHourSecond;
     }
 
     bool KFResetModule::CheckResetPlayerDataTime()
@@ -56,7 +56,7 @@ namespace KFrame
             return false;
         }
 
-        _next_reset_data_time += TimeEnum::OneHourSecond;
+        _next_reset_data_time += KFTimeEnum::OneHourSecond;
         return true;
     }
 

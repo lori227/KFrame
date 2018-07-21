@@ -23,9 +23,10 @@ namespace KFrame
     {
         _ftp_id = 0;
         _ftp_result = KFFtpEnum::Idle;
+        _ftp_function = nullptr;
     }
 
-    void KFFtpThread::StartThread( uint32 id )
+    void KFFtpThread::StartThread( uint32 id, KFFtpFunction& function )
     {
         if ( _ftp_result != KFFtpEnum::Idle )
         {
@@ -33,28 +34,22 @@ namespace KFrame
         }
 
         _ftp_id = id;
+        _ftp_function = function;
         _ftp_result = KFFtpEnum::Login;
         KFThread::CreateThread( this, &KFFtpThread::Run, __FUNCTION_LINE__ );
     }
 
     void KFFtpThread::FinishThread()
     {
-        _ftp_result = KFFtpEnum::Idle;
-    }
-
-    bool KFFtpThread::IsRun()
-    {
-        return _ftp_result != KFFtpEnum::Idle;
+        if ( _ftp_function != nullptr )
+        {
+            _ftp_function( _ftp_id, _ftp_result == KFFtpEnum::Finish );
+        }
     }
 
     bool KFFtpThread::IsFinish()
     {
         return _ftp_result == KFFtpEnum::Failed || _ftp_result == KFFtpEnum::Finish;
-    }
-
-    uint32 KFFtpThread::FtpResult()
-    {
-        return _ftp_result;
     }
 
     void KFFtpThread::Run()
@@ -78,7 +73,11 @@ namespace KFrame
         _ftp_result = KFFtpEnum::Download;
 
         // 更新文件
-        std::string ftppath = "/" + kfsetting->_ftp_path;
+#if __KF_SYSTEM__ == __KF_WIN__
+        std::string ftppath = "/" + kfsetting->_win_ftp_path;
+#else
+        std::string ftppath = "/" + kfsetting->_linux_ftp_path;
+#endif
         std::string localpath = kfsetting->_local_path;
         DownloadFiles( &ftpclient, ftppath, localpath );
 
@@ -105,9 +104,7 @@ namespace KFrame
     {
 #if __KF_SYSTEM__ == __KF_WIN__
         return CheckWinFileModifyTime( ftpclient, file, localfile );
-#endif
-
-#if __KF_SYSTEM__ == __KF_LINUX__
+#else
         return CheckLinuxFileModifyTime( ftpclient, file, localfile );
 #endif
     }
@@ -185,7 +182,7 @@ namespace KFrame
 
         tm _tm;
         gmtime_s( &_tm, &file->MTime() );
-        KFDate filetime( _tm.tm_year + TimeEnum::SinceYear, _tm.tm_mon + 1, _tm.tm_mday, _tm.tm_hour, _tm.tm_min, _tm.tm_sec );
+        KFDate filetime( _tm.tm_year + KFTimeEnum::SinceYear, _tm.tm_mon + 1, _tm.tm_mday, _tm.tm_hour, _tm.tm_min, _tm.tm_sec );
         auto _ftptime = filetime.GetTime();
 
         return _localtime >= _ftptime;

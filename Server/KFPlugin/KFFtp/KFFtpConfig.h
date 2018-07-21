@@ -22,7 +22,8 @@ namespace KFrame
         std::string _user;
         std::string _password;
 
-        std::string _ftp_path;
+        std::string _win_ftp_path;
+        std::string _linux_ftp_path;
         std::string _local_path;
     };
 

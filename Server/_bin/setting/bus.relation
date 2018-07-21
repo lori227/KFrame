@@ -30,6 +30,9 @@
 		<Connection AppName="battle" AppType="*" AppId="0" ConnectName="battle" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="battle" AppType="proxy" AppId="0" ConnectName="battle" ConnectType="shard" ConnectId="0"/>
 
+		<Connection AppName="log" AppType="*" AppId="0" ConnectName="log" ConnectType="master" ConnectId="0"/>
+		<Connection AppName="log" AppType="proxy" AppId="0" ConnectName="log" ConnectType="shard" ConnectId="0"/>
+		
 		<Connection AppName="mail" AppType="*" AppId="0" ConnectName="mail" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="mail" AppType="proxy" AppId="0" ConnectName="mail" ConnectType="shard" ConnectId="0"/>
 
@@ -49,6 +52,7 @@
 		<Connection AppName="zone" AppType="proxy" AppId="0" ConnectName="zone" ConnectType="game" ConnectId="0"/>
 		<Connection AppName="zone" AppType="game" AppId="0" ConnectName="*" ConnectType="master" ConnectId="0"/>
 		<Connection AppName="zone" AppType="game" AppId="0" ConnectName="zone" ConnectType="world" ConnectId="0"/>
+		<Connection AppName="zone" AppType="*" AppId="0" ConnectName="log" ConnectType="master" ConnectId="0"/>
 	</Bus>	
 </Config>
 

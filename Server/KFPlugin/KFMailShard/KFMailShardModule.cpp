@@ -141,7 +141,7 @@ namespace KFrame
 
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        LesserMapString querymaillist;
+        GreaterMapString querymaillist;
         redisdriver->MapExecute( querymaillist, "zrange %s 0 -1 WITHSCORES", maillistkey.c_str() );
         if ( querymaillist.empty() )
         {
@@ -164,10 +164,9 @@ namespace KFrame
         ack.set_mailtype( kfmsg.mailtype() );
 
         VectorString overduelist;
-        auto iterbegin = querymaillist.begin();
-        for ( ; iterbegin != itermail; ++iterbegin )
+        for ( auto& mailiter : querymaillist )
         {
-            auto& strmailid = iterbegin->first;
+            auto& strmailid = mailiter.first;
 
             MapString maildata;
             auto ok = redisdriver->MapExecute( maildata, "hgetall %s:%s", KFField::_mail.c_str(), strmailid.c_str() );
@@ -190,10 +189,9 @@ namespace KFrame
                 pbdata->set_name( iter.first );
 
                 // 系统邮件做特殊处理
-                if ( iter.first == KFField::_flag &&
-                        kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
+                if ( iter.first == KFField::_flag && kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
                 {
-                    pbdata->set_value( iterbegin->second );
+                    pbdata->set_value( mailiter.second );
                 }
                 else
                 {

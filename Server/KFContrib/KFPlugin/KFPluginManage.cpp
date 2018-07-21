@@ -58,7 +58,7 @@ namespace KFrame
         return nullptr;
     }
 
-    KFModule* KFPluginManage::FindModule( const std::string& name )
+    KFModule* KFPluginManage::FindModule( const std::string& name, const char* function, uint32 line )
     {
         for ( auto plugin : _plugins )
         {
@@ -69,7 +69,7 @@ namespace KFrame
             }
         }
 
-        KF_LOG_ERROR( "Can't Find [{}] Module!", name );
+        KF_LOG_ERROR( "[{}:{}] can't find [{}] module!", function, line, name );
         return nullptr;
     }
 

@@ -11,7 +11,7 @@ typedef struct tm _tm;
 
 namespace KFrame
 {
-    namespace TimeEnum
+    namespace KFTimeEnum
     {
         enum EConstDefine
         {
@@ -34,10 +34,12 @@ namespace KFrame
 
             OneMonthDay = 30,
             ////////////////////////////////////////////////////////////////////////
-            Day = 1,
-            Week = 2,
-            Month = 3,
-            Year = 4,
+            None = 0,
+            Hour = 1,
+            Day = 2,
+            Week = 3,
+            Month = 4,
+            Year = 5,
             Max,
         };
     }
@@ -55,28 +57,28 @@ namespace KFrame
 
         // 天数
         uint32 GetDays() const {
-            return static_cast< uint32 >( _time / TimeEnum::OneDaySecond );
+            return static_cast< uint32 >( _time / KFTimeEnum::OneDaySecond );
         }
 
         // 小时数
         uint32 GetHours() const {
-            return GetTotalHours() - GetDays() * TimeEnum::OneDayHour;
+            return GetTotalHours() - GetDays() * KFTimeEnum::OneDayHour;
         }
         uint32 GetTotalHours() const {
-            return static_cast< uint32 >( _time / TimeEnum::OneHourSecond );
+            return static_cast< uint32 >( _time / KFTimeEnum::OneHourSecond );
         }
 
         // 分钟数
         uint32 GetMinutes() const {
-            return GetTotalMinutes() - GetTotalHours() * TimeEnum::OneHourMinute;
+            return GetTotalMinutes() - GetTotalHours() * KFTimeEnum::OneHourMinute;
         }
         uint32 GetTotalMinutes() const {
-            return static_cast< uint32 >( _time / TimeEnum::OneMinuteSecond );
+            return static_cast< uint32 >( _time / KFTimeEnum::OneMinuteSecond );
         }
 
         // 秒数
         uint32 GetSeconds() const {
-            return _time % TimeEnum::OneMinuteSecond;
+            return _time % KFTimeEnum::OneMinuteSecond;
         }
         uint64 GetTotalSeconds() const {
             return _time;

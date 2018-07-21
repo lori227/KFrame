@@ -40,7 +40,7 @@ namespace KFrame
 
     KFRunable* KFRunablePool::CreateRunable()
     {
-        if ( _idle_pool.empty() )
+        //if ( _idle_pool.empty() )
         {
             return new KFRunable();
         }
@@ -52,6 +52,7 @@ namespace KFrame
 
     void KFRunablePool::DestroyRunable( KFRunable* runable )
     {
-        _idle_pool.push_back( runable );
+        delete runable;
+        //_idle_pool.push_back( runable );
     }
 }

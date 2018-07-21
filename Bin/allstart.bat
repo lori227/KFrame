@@ -28,6 +28,10 @@ cd friendcluster
 call rund.bat
 cd ..
 
+cd logcluster
+call rund.bat
+cd ..
+
 cd  zone
 call rund.bat
 cd ..

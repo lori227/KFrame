@@ -17,7 +17,6 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
-#include "KFRankClient/KFRankClientInterface.h"
 
 namespace KFrame
 {

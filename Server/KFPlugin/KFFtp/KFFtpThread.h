@@ -3,6 +3,7 @@
 
 #include "KFrame.h"
 #include "ftp/FTPClient.h"
+#include "KFFtpInterface.h"
 
 namespace KFrame
 {
@@ -24,19 +25,13 @@ namespace KFrame
         void Run();
 
         // 开始下载
-        void StartThread( uint32 id );
+        void StartThread( uint32 id, KFFtpFunction& function );
 
         // 结束下载
         void FinishThread();
 
-        // 是否存在
-        bool IsRun();
-
         // 是否完成
         bool IsFinish();
-
-        // 结果
-        uint32 FtpResult();
 
     protected:
         // 下载文件夹
@@ -73,6 +68,9 @@ namespace KFrame
 
         // 下载结果
         volatile uint32 _ftp_result;
+
+        // 回调函数
+        KFFtpFunction _ftp_function;
     };
 }
 

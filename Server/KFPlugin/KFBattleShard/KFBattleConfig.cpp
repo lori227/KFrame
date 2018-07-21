@@ -31,8 +31,8 @@ namespace KFrame
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );
             _min_open_room_camp_count = xmlnode.GetUInt32( "MinOpenRoomCount" );
-            _room_valid_time = xmlnode.GetUInt32( "RoomValidTime" ) * TimeEnum::OneMinuteMicSecond;
-            _wait_enter_time = xmlnode.GetUInt32( "WaitEnterTime" ) * TimeEnum::OneMinuteMicSecond;
+            _room_valid_time = xmlnode.GetUInt32( "RoomValidTime" ) * KFTimeEnum::OneMinuteMicSecond;
+            _wait_enter_time = xmlnode.GetUInt32( "WaitEnterTime" ) * KFTimeEnum::OneMinuteMicSecond;
             _reward_file = xmlnode.GetString( "RewardFile" );
 
             //////////////////////////////////////////////////////////////////

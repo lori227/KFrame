@@ -5,8 +5,6 @@
 
 namespace KFrame
 {
-
-
     class KFMessageInterface : public KFModule
     {
     public:
@@ -33,6 +31,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_message, KFMessageInterface );
     ///////////////////////////////////////////////////////////////////////////////////////////
+
 #define __KF_MESSAGE_FUNCTION__( function ) \
     void function( const KFGuid& kfguid, const char* data, uint32 length )
 

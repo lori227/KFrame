@@ -127,7 +127,7 @@ namespace KFrame
     {
         // 把log时间分来, 每日切换的时候, 有可能创建文件夹的时候被占用, 然后切换日志失败
         auto spacetime = KFGlobal::Instance()->_app_id % 10000 + KFRand::STRandDistrict( 100, 1000, 0 );
-        _memory_timer.StartTimer( KFGlobal::Instance()->_game_time, 5 * TimeEnum::OneMinuteMicSecond + spacetime );
+        _memory_timer.StartTimer( KFGlobal::Instance()->_game_time, 5 * KFTimeEnum::OneMinuteMicSecond + spacetime );
     }
 
     void KFServices::PrintLogMemory()

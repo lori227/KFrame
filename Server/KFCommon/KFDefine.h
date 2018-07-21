@@ -46,7 +46,7 @@ namespace KFrame
 {
 
     ////////////////////////////////////////////////////////////////
-    struct StringLesser : std::binary_function<std::string, std::string, bool >
+    struct StringGreater : std::binary_function<std::string, std::string, bool >
     {
         bool operator() ( const std::string& x, const std::string& y ) const
         {
@@ -72,7 +72,7 @@ namespace KFrame
     typedef std::list< std::string > ListString;
     typedef std::vector< std::string > VectorString;
     typedef std::map< std::string, std::string > MapString;
-    typedef std::map<std::string, std::string, StringLesser > LesserMapString;
+    typedef std::map<std::string, std::string, StringGreater > GreaterMapString;
     /////////////////////////////////////////////////////////////////////////
     static const uint32 _invalid_int = 0;
     static const std::string _invalid_str = "";

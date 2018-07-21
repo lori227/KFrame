@@ -111,7 +111,7 @@ namespace KFrame
         return _kf_cluster->SendMessageToObject( KFField::_group, groupid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFGroupClientModule::OnGroupIdUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFGroupClientModule::OnGroupIdUpdateCallBack )
     {
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
@@ -128,7 +128,7 @@ namespace KFrame
         }
     }
 
-    void KFGroupClientModule::OnGroupMaxCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFGroupClientModule::OnGroupMaxCountUpdateCallBack )
     {
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
@@ -136,7 +136,7 @@ namespace KFrame
         player->UpdateData( kfbasic, KFField::_max_group_count, KFOperateEnum::Set, newvalue );
     }
 
-    void KFGroupClientModule::OnAddGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFGroupClientModule::OnAddGroupMemberCallBack )
     {
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
@@ -145,7 +145,7 @@ namespace KFrame
         player->UpdateData( KFField::_basic, KFField::_now_group_count, KFOperateEnum::Set, nowcount );
     }
 
-    void KFGroupClientModule::OnRemoveGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_REMOVE_DATA_FUNCTION__( KFGroupClientModule::OnRemoveGroupMemberCallBack )
     {
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
@@ -288,7 +288,7 @@ namespace KFrame
         auto maxcount = _kf_match->GetMatchMaxCount( kfmsg.matchid() );
         if ( maxcount == 1 )
         {
-            return _kf_display->SendToClient( player, KFMsg::GroupInviteInMatch );
+            return _kf_display->SendToClient( player, KFMsg::MatchGroupPlayerLimit );
         }
 
         // 判断队伍人数
@@ -838,12 +838,12 @@ namespace KFrame
         SendMessageToGroup( groupid, KFMsg::S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ, &req );
     }
 
-    void KFGroupClientModule::OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFGroupClientModule::OnUpdateDataCallBack )
     {
         OnUpdateDataToGroup( player, kfdata );
     }
 
-    void KFGroupClientModule::OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value )
+    __KF_UPDATE_STRING_FUNCTION__( KFGroupClientModule::OnUpdateStringCallBack )
     {
         OnUpdateDataToGroup( player, kfdata );
     }

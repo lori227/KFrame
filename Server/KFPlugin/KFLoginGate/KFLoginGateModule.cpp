@@ -1,6 +1,7 @@
 ﻿#include "KFLoginGateModule.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFJson.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -76,6 +77,9 @@ namespace KFrame
 
         KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] login gate req!",
                             __FUNCTION__, accountid );
+
+        std::string log = KF_FORMAT_FUNCTION( "accountid[{}] login gate req!", accountid );
+        KF_REMOTE_LOG_INFO( ELC_LOGIN, log );
 
         // 注册连接器
         auto ok = _kf_gate->AddConnection( handleid, accountid );

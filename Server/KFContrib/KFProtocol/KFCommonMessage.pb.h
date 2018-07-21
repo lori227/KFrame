@@ -48,6 +48,7 @@ class PBArray;
 class PBObject;
 class PBRecord;
 class PBRankData;
+class PBRankDatas;
 class PBBattlePlayer;
 class PBBattleCamp;
 class PBMatchGroup;
@@ -211,6 +212,8 @@ enum AckEnum {
   DataNotEnough = 153,
   CompoundNotExist = 154,
   LoginIsClose = 155,
+  RankNotExist = 156,
+  RankServerBusy = 157,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,
@@ -2028,24 +2031,138 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBStrings rankdata = 1;
-  inline int rankdata_size() const;
-  inline void clear_rankdata();
-  static const int kRankdataFieldNumber = 1;
-  inline const ::KFMsg::PBStrings& rankdata(int index) const;
-  inline ::KFMsg::PBStrings* mutable_rankdata(int index);
-  inline ::KFMsg::PBStrings* add_rankdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
-      rankdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
-      mutable_rankdata();
+  // optional uint32 rankindex = 1;
+  inline bool has_rankindex() const;
+  inline void clear_rankindex();
+  static const int kRankindexFieldNumber = 1;
+  inline ::google::protobuf::uint32 rankindex() const;
+  inline void set_rankindex(::google::protobuf::uint32 value);
+
+  // optional uint32 playerid = 2;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // optional uint64 rankscore = 3;
+  inline bool has_rankscore() const;
+  inline void clear_rankscore();
+  static const int kRankscoreFieldNumber = 3;
+  inline ::google::protobuf::uint64 rankscore() const;
+  inline void set_rankscore(::google::protobuf::uint64 value);
+
+  // optional .KFMsg.PBStrings pbdata = 4;
+  inline bool has_pbdata() const;
+  inline void clear_pbdata();
+  static const int kPbdataFieldNumber = 4;
+  inline const ::KFMsg::PBStrings& pbdata() const;
+  inline ::KFMsg::PBStrings* mutable_pbdata();
+  inline ::KFMsg::PBStrings* release_pbdata();
+  inline void set_allocated_pbdata(::KFMsg::PBStrings* pbdata);
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBRankData)
+ private:
+  inline void set_has_rankindex();
+  inline void clear_has_rankindex();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_rankscore();
+  inline void clear_has_rankscore();
+  inline void set_has_pbdata();
+  inline void clear_has_pbdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 rankindex_;
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 rankscore_;
+  ::KFMsg::PBStrings* pbdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBRankData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBRankDatas : public ::google::protobuf::Message {
+ public:
+  PBRankDatas();
+  virtual ~PBRankDatas();
+
+  PBRankDatas(const PBRankDatas& from);
+
+  inline PBRankDatas& operator=(const PBRankDatas& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBRankDatas& default_instance();
+
+  void Swap(PBRankDatas* other);
+
+  // implements Message ----------------------------------------------
+
+  PBRankDatas* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBRankDatas& from);
+  void MergeFrom(const PBRankDatas& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBRankData rankdata = 3;
+  inline int rankdata_size() const;
+  inline void clear_rankdata();
+  static const int kRankdataFieldNumber = 3;
+  inline const ::KFMsg::PBRankData& rankdata(int index) const;
+  inline ::KFMsg::PBRankData* mutable_rankdata(int index);
+  inline ::KFMsg::PBRankData* add_rankdata();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRankData >&
+      rankdata() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRankData >*
+      mutable_rankdata();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBRankDatas)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings > rankdata_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRankData > rankdata_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -2055,7 +2172,7 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static PBRankData* default_instance_;
+  static PBRankDatas* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4394,28 +4511,136 @@ PBRecord::mutable_pbobject() {
 
 // PBRankData
 
-// repeated .KFMsg.PBStrings rankdata = 1;
-inline int PBRankData::rankdata_size() const {
+// optional uint32 rankindex = 1;
+inline bool PBRankData::has_rankindex() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PBRankData::set_has_rankindex() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PBRankData::clear_has_rankindex() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PBRankData::clear_rankindex() {
+  rankindex_ = 0u;
+  clear_has_rankindex();
+}
+inline ::google::protobuf::uint32 PBRankData::rankindex() const {
+  return rankindex_;
+}
+inline void PBRankData::set_rankindex(::google::protobuf::uint32 value) {
+  set_has_rankindex();
+  rankindex_ = value;
+}
+
+// optional uint32 playerid = 2;
+inline bool PBRankData::has_playerid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PBRankData::set_has_playerid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PBRankData::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PBRankData::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 PBRankData::playerid() const {
+  return playerid_;
+}
+inline void PBRankData::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// optional uint64 rankscore = 3;
+inline bool PBRankData::has_rankscore() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PBRankData::set_has_rankscore() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PBRankData::clear_has_rankscore() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PBRankData::clear_rankscore() {
+  rankscore_ = GOOGLE_ULONGLONG(0);
+  clear_has_rankscore();
+}
+inline ::google::protobuf::uint64 PBRankData::rankscore() const {
+  return rankscore_;
+}
+inline void PBRankData::set_rankscore(::google::protobuf::uint64 value) {
+  set_has_rankscore();
+  rankscore_ = value;
+}
+
+// optional .KFMsg.PBStrings pbdata = 4;
+inline bool PBRankData::has_pbdata() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PBRankData::set_has_pbdata() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PBRankData::clear_has_pbdata() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PBRankData::clear_pbdata() {
+  if (pbdata_ != NULL) pbdata_->::KFMsg::PBStrings::Clear();
+  clear_has_pbdata();
+}
+inline const ::KFMsg::PBStrings& PBRankData::pbdata() const {
+  return pbdata_ != NULL ? *pbdata_ : *default_instance_->pbdata_;
+}
+inline ::KFMsg::PBStrings* PBRankData::mutable_pbdata() {
+  set_has_pbdata();
+  if (pbdata_ == NULL) pbdata_ = new ::KFMsg::PBStrings;
+  return pbdata_;
+}
+inline ::KFMsg::PBStrings* PBRankData::release_pbdata() {
+  clear_has_pbdata();
+  ::KFMsg::PBStrings* temp = pbdata_;
+  pbdata_ = NULL;
+  return temp;
+}
+inline void PBRankData::set_allocated_pbdata(::KFMsg::PBStrings* pbdata) {
+  delete pbdata_;
+  pbdata_ = pbdata;
+  if (pbdata) {
+    set_has_pbdata();
+  } else {
+    clear_has_pbdata();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// PBRankDatas
+
+// repeated .KFMsg.PBRankData rankdata = 3;
+inline int PBRankDatas::rankdata_size() const {
   return rankdata_.size();
 }
-inline void PBRankData::clear_rankdata() {
+inline void PBRankDatas::clear_rankdata() {
   rankdata_.Clear();
 }
-inline const ::KFMsg::PBStrings& PBRankData::rankdata(int index) const {
+inline const ::KFMsg::PBRankData& PBRankDatas::rankdata(int index) const {
   return rankdata_.Get(index);
 }
-inline ::KFMsg::PBStrings* PBRankData::mutable_rankdata(int index) {
+inline ::KFMsg::PBRankData* PBRankDatas::mutable_rankdata(int index) {
   return rankdata_.Mutable(index);
 }
-inline ::KFMsg::PBStrings* PBRankData::add_rankdata() {
+inline ::KFMsg::PBRankData* PBRankDatas::add_rankdata() {
   return rankdata_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
-PBRankData::rankdata() const {
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRankData >&
+PBRankDatas::rankdata() const {
   return rankdata_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
-PBRankData::mutable_rankdata() {
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRankData >*
+PBRankDatas::mutable_rankdata() {
   return &rankdata_;
 }
 

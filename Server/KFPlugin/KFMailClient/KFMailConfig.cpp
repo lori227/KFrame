@@ -42,7 +42,7 @@ namespace KFrame
                 kfsetting->_content = setting.GetString( "Content" );
                 KFUtility::ReplaceString( kfsetting->_content, " ", "" );
 
-                kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * TimeEnum::OneDaySecond;
+                kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
 
                 kfsetting->_daily_get_limit = setting.GetUInt32( "DailyGetLimit" );
                 kfsetting->_daily_send_limit = setting.GetUInt32( "DailySendLimit" );

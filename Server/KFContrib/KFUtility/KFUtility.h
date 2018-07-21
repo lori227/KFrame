@@ -37,6 +37,18 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
+        // 获得玩家zoneid
+        static uint32 CalcZoneId( uint32 playerid );
+
+        // 计算玩家id
+        static uint32 CalcPlayerid( uint32 id, uint32 zoneid );
+
+        // 计算zone服务器id
+        static uint32 CalcZoneServerId( uint32 serverid, uint32 zoneid );
+
+        // 计算服务器的zoneid
+        static uint32 CalcServerZoneId( uint32 serverid );
+
         // 判断float double 是否为0
         static bool IsZeroFloat( float value, float epsilon = 1e-6 );
         static bool IsZeroDouble( double value, double epsilon = 1e-15 );

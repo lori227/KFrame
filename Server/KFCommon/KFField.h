@@ -189,6 +189,10 @@ namespace KFrame
         static const std::string _elo_value = "elovalue";
         static const std::string _guild = "guild";
         static const std::string _rank = "rank";
+        static const std::string _rank_list = "ranklist";
+        static const std::string _rank_sort = "ranksort";
+        static const std::string _rank_sort_list = "ranksortlist";
+        static const std::string _rank_data = "rankdata";
         static const std::string _wish_order = "wishorder";
         static const std::string _robot = "robot";
         static const std::string _single_score = "singlescore";
@@ -216,13 +220,16 @@ namespace KFrame
         static const std::string _kill_rank = "killrank";
         static const std::string _win_rate = "winrate";
         static const std::string _evage_kill = "evagekill";
-        static const std::string _kd_score = "kdscore";
+        static const std::string _kda = "kda";
+        static const std::string _average_kill = "averagekill";
         static const std::string _operate_time = "operatetime";
         static const std::string _stranger = "stranger";
         static const std::string _deploy = "deploy";
         static const std::string _delay_time = "delaytime";
         static const std::string _schedule_time = "scheduletime";
         static const std::string _platform = "platform";
+        static const std::string _min_rank_score = "minrankscore";
+        static const std::string _log = "log";
     }
 }
 

@@ -179,8 +179,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         if ( name == kfglobal->_app_name &&
-                type == kfglobal->_app_type &&
-                id == kfglobal->_app_id )
+                type == kfglobal->_app_type )
         {
             return true;
         }

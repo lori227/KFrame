@@ -6,17 +6,18 @@
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
-//    @Date             :    2018-5-16
+//    @Date             :    2018-7-12
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFRankClientInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFZone/KFZoneInterface.h"
+#include "KFRankClientConfig.h"
+#include "KFDisplay/KFDisplayInterface.h"
 
 namespace KFrame
 {
@@ -36,41 +37,41 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 发送消息到Rank
-        virtual bool SendMessageToRank( uint64 zoneid, uint32 msgid, ::google::protobuf::Message* message );
-
-        // 发送消息到Rank
-        virtual bool SendMessageToRankShard( uint32 msgid, ::google::protobuf::Message* message );
-        // 更新排行榜
-        virtual void JoinRankList( uint64 matchid, uint32 playerid, KFEntity* player, const std::string& scoretype );
 
     protected:
-        // 客户端请求查询全服排行榜
-        __KF_MESSAGE_FUNCTION__( HandleQueryWholeRankListReq );
+        // 属性更新回调
+        __KF_UPDATE_DATA_FUNCTION__( OnDataUpdateCallBack );
 
-        // 请求好友排行榜数据返回
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListReq );
+    protected:
+        // 请求查询全服排行榜
+        __KF_MESSAGE_FUNCTION__( HandleQueryRankListReq );
 
         // 请求排行榜数据返回
         __KF_MESSAGE_FUNCTION__( HandleQueryRankListAck );
 
-    private:
+        // 请求好友排行榜
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListReq );
+
+        // 请求排行榜数据返回
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListAck );
+
+    protected:
+        // 发送消息到Rank
+        bool SendMessageToRank( uint32 rankid, uint32 msgid, ::google::protobuf::Message* message );
+
+        // 更新排行榜数据
+        void UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting );
+
         // 计算排行榜的打榜分值
-        void CalcRankData( KFData* kfdata, uint64& evalscore, uint64& winscore, uint64& killscore );
-        void FormateRankData( KFMsg::PBScoreData* pbscores, KFData* kfdata );
+        uint64 CalcRankDataScore( KFData* kfparent, const KFRankSetting* kfsetting );
 
-        // 解析排行榜
-        void SerialzeToClient( const KFMsg::PBRankData* pbrankdatas, const std::string& ranktype );
-        void ParseScoreToPb( const KFMsg::PBStrings* pbstrings, const std::string& ranktype );
+        // 计算zoneid
+        uint32 CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting );
 
-        // 计算评分榜数据
-        void SerialzeEvalRank( uint64 score, const KFMsg::PBStrings* pbstrings );
+    private:
+        // 玩家组件
+        KFComponent* _kf_component;
 
-        // 计算胜利榜数据
-        void SerialzeWinRank( uint64 score, const KFMsg::PBStrings* pbstrings );
-
-        // 计算击伤榜数据
-        void SerialzeKillRank( uint64 score, const KFMsg::PBStrings* pbstrings );
     };
 }
 

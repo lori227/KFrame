@@ -41,20 +41,18 @@ namespace KFrame
 
     protected:
         // 添加物品
-        void AddClothesAgentData( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line );
+        __KF_ADD_AGENT_FUNCTION__( AddClothesAgentData );
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 衣服数量回调
-        void OnClothesCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnClothesCountUpdateCallBack );
 
         // 添加物品回调
-        void OnAddClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_ADD_DATA_FUNCTION__( OnAddClothesCallBack );
 
         // 删除物品回调
-        void OnRemoveClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveClothesCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    protected:
         // 初始化
         void OnEnterStartClothesTimer( KFEntity* player );
         void OnLeaveStopClothesTimer( KFEntity* player );

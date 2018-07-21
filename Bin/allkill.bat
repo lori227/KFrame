@@ -39,3 +39,7 @@ cd ..
 cd rankcluster
 call kill.bat
 cd ..
+
+cd logcluster
+call kill.bat
+cd ..

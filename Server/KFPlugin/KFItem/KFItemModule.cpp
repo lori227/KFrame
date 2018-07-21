@@ -157,7 +157,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFItemModule::AddItemAgentData( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line )
+    __KF_ADD_AGENT_FUNCTION__( KFItemModule::AddItemAgentData )
     {
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
@@ -337,7 +337,7 @@ namespace KFrame
         return kftarget;
     }
 
-    void KFItemModule::OnItemCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFItemModule::OnItemCountUpdateCallBack )
     {
         // 调用脚本
         auto itemcount = kfdata->GetValue<uint32>();
@@ -350,7 +350,7 @@ namespace KFrame
         player->RemoveData( KFField::_item, key );
     }
 
-    void KFItemModule::OnAddItemCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFItemModule::OnAddItemCallBack )
     {
         auto datasetting = kfdata->GetDataSetting();
 
@@ -383,7 +383,7 @@ namespace KFrame
         }
     }
 
-    void KFItemModule::OnRemoveItemCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_REMOVE_DATA_FUNCTION__( KFItemModule::OnRemoveItemCallBack )
     {
         auto datasetting = kfdata->GetDataSetting();
 
@@ -414,7 +414,7 @@ namespace KFrame
         _kf_lua->CallFunction( itemsetting->_lua_file, luafunction, playerid, itemsetting->_id );
     }
 
-    bool KFItemModule::CheckItemAgentData( KFEntity* player, KFAgent* kfagent, const char* function, uint32 line )
+    __KF_CHECK_AGENT_FUNCTION__( KFItemModule::CheckItemAgentData )
     {
         auto kfobject = player->GetData();
         auto kfitemrecord = kfobject->FindData( KFField::_item );
@@ -455,7 +455,7 @@ namespace KFrame
         return false;
     }
 
-    void KFItemModule::RemoveItemAgentData( KFEntity* player, KFAgent* kfagent, const char* function, uint32 line )
+    __KF_REMOVE_AGENT_FUNCTION__( KFItemModule::RemoveItemAgentData )
     {
         auto kfobject = player->GetData();
         auto kfitemrecord = kfobject->FindData( KFField::_item );

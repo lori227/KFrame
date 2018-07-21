@@ -43,6 +43,7 @@ copyfile 1 bus.relation
 copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
+copyfile 1 common.startup
 
 path2=$deploypath/config
 copyfile 1 cluster.config
@@ -105,3 +106,7 @@ copyfile 1 KFDeployClient.so
 copyfile 1 KFDeployClientd.so
 copyfile 1 KFDeployCommand.so
 copyfile 1 KFDeployCommandd.so
+copyfile 1 KFClusterClientd.so
+copyfile 1 KFClusterClient.so
+copyfile 1 KFLogClientd.so
+copyfile 1 KFLogClient.so

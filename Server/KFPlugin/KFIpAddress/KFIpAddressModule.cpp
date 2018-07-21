@@ -69,9 +69,9 @@ namespace KFrame
         _kf_ip_config->FindIpAddress( appname, apptype, appid, outlist );
     }
 
-    void KFIpAddressModule::SetZoneIpAddress( uint32 zoneid, uint32 appid, const std::string& ip )
+    void KFIpAddressModule::SetZoneIpAddress( uint32 zoneid, const std::string& ip )
     {
-        _kf_ip_config->SetZoneIpAddress( zoneid, appid, ip );
+        _kf_ip_config->SetZoneIpAddress( zoneid, ip );
     }
 
     static std::string _default_local_ip = "127.0.0.1";

@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="zone" AppType="login">
+<Setting AppName="zone" AppType="login" Common="./setting/common.startup">
 	<Plugins>
-		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
-		<Plguin Name="KFMessage" Startup="1" Sort="2" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plguin Name="KFTimer" Startup="1" Sort="20" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plguin Name="KFConfig" Startup="1" Sort="30" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFHttpClient" Startup="1" Sort="42" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="60" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFClusterClient" Startup="1" Sort="70" Debug="KFClusterClientd" Release="KFClusterClient" Config="./config/cluster.config"/>
-		<Plguin Name="KFDataClient" Startup="1" Sort="71" Debug="KFDataClientd" Release="KFDataClient" Config=""/>
-		<Plguin Name="KFLogin" Startup="1" Sort="80" Debug="KFLogind" Release="KFLogin" Config=""/>
-		<Plguin Name="KFZone" Startup="1" Sort="90" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
-		<Plguin Name="KFLoginLogin" Startup="1" Sort="100" Debug="KFLoginLogind" Release="KFLoginLogin" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFLogin" Startup="1" Sort="110" Debug="KFLogind" Release="KFLogin" Config=""/>
+		<Plguin Name="KFZone" Startup="1" Sort="120" Debug="KFZoned" Release="KFZone" Config="./setting/zone.config"/>
+		<Plguin Name="KFLoginLogin" Startup="1" Sort="130" Debug="KFLoginLogind" Release="KFLoginLogin" Config=""/>
+		<Plguin Name="KFClusterClient" Startup="1" Sort="140" Debug="KFClusterClientd" Release="KFClusterClient" Config="./config/cluster.config"/>
+		<Plguin Name="KFDataClient" Startup="1" Sort="150" Debug="KFDataClientd" Release="KFDataClient" Config=""/>
 	</Plugins>
 </Setting>

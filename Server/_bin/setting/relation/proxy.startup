@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="relation" AppType="proxy">
+<Setting AppName="relation" AppType="proxy" Common="./setting/common.startup">
 	<Plugins>
-		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>	
-		<Plguin Name="KFHttpClient" Startup="1" Sort="1" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plguin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-    		<Plguin Name="KFClusterProxy" Startup="1" Sort="80" Debug="KFClusterProxyd" Release="KFClusterProxy" Config=""/>
-   		<Plguin Name="KFRelationProxy" Startup="1" Sort="90" Debug="KFRelationProxyd" Release="KFRelationProxy" Config=""/>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+    	<Plguin Name="KFClusterProxy" Startup="1" Sort="110" Debug="KFClusterProxyd" Release="KFClusterProxy" Config=""/>
+   		<Plguin Name="KFRelationProxy" Startup="1" Sort="120" Debug="KFRelationProxyd" Release="KFRelationProxy" Config=""/>
 	</Plugins>
 </Setting>

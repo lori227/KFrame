@@ -206,7 +206,7 @@ namespace KFrame
 
         // 删除过期访客信息
         auto querytime = kfmsg.querytime();
-        uint64 validtime = TimeEnum::OneDaySecond * TimeEnum::OneMonthDay;
+        uint64 validtime = KFTimeEnum::OneDaySecond * KFTimeEnum::OneMonthDay;
         if ( querytime > validtime )
         {
             redisdriver->VoidExecute( "zremrangebyscore %s:%u %u %u", KFField::_guest.c_str(), kfmsg.queryid(), _invalid_int, querytime - validtime );

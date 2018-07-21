@@ -21,7 +21,7 @@ namespace KFrame
             return false;
         }
 
-        if ( _schedule_time->_hour != hour )
+        if ( _schedule_time->_hour != 0 && _schedule_time->_hour != hour )
         {
             return false;
         }
@@ -70,7 +70,7 @@ namespace KFrame
 
         // 不超过一分钟
         auto gametime = KFGlobal::Instance()->_game_time;
-        if ( gametime < ( _last_execute_time + TimeEnum::OneMinuteMicSecond + 1 ) )
+        if ( gametime < ( _last_execute_time + KFTimeEnum::OneMinuteMicSecond + 1 ) )
         {
             return false;
         }

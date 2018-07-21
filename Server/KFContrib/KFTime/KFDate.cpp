@@ -18,7 +18,7 @@ namespace KFrame
     {
         struct tm atm;
 
-        atm.tm_year = static_cast< int32 >( year - TimeEnum::SinceYear );     // tm_year is 1900 based
+        atm.tm_year = static_cast< int32 >( year - KFTimeEnum::SinceYear );     // tm_year is 1900 based
         atm.tm_mon = static_cast< int32 >( month - 1 );        // tm_mon is 0 based
         atm.tm_mday = static_cast< int32 >( day );
         atm.tm_hour = static_cast< int32 >( hour );
@@ -134,7 +134,7 @@ namespace KFrame
     uint32 KFDate::GetYear() const
     {
         auto ptm = LocalTime();
-        return ptm->tm_year + TimeEnum::SinceYear;
+        return ptm->tm_year + KFTimeEnum::SinceYear;
     }
 
     uint32 KFDate::GetMonth() const
@@ -183,7 +183,7 @@ namespace KFrame
     {
         auto ptm = localtime( reinterpret_cast< time_t* >( &time ) );
 
-        uint64 year = ptm->tm_year + TimeEnum::SinceYear;
+        uint64 year = ptm->tm_year + KFTimeEnum::SinceYear;
         uint64 month = ptm->tm_mon + 1;
         uint64 day = ptm->tm_mday;
         uint64 hour = ptm->tm_hour;
@@ -323,7 +323,7 @@ namespace KFrame
         TimeSpan timedistance = nowdate - lastdate;
 
         // 大于一天
-        if ( timedistance.GetTotalSeconds() >= TimeEnum::OneDaySecond )
+        if ( timedistance.GetTotalSeconds() >= KFTimeEnum::OneDaySecond )
         {
             return true;
         }
@@ -341,7 +341,7 @@ namespace KFrame
         }
 
         // 同一天, 小于1小时
-        if ( timedistance.GetTotalSeconds() < TimeEnum::OneHourSecond )
+        if ( timedistance.GetTotalSeconds() < KFTimeEnum::OneHourSecond )
         {
             return false;
         }
@@ -361,12 +361,12 @@ namespace KFrame
 
         // 跨度超过1周
         TimeSpan timedistance = nowdate - lastdate;
-        if ( timedistance.GetTotalSeconds() >= TimeEnum::OneWeekSecond )
+        if ( timedistance.GetTotalSeconds() >= KFTimeEnum::OneWeekSecond )
         {
             return true;
         }
 
-        if ( timedistance.GetTotalSeconds() < TimeEnum::OneDaySecond )
+        if ( timedistance.GetTotalSeconds() < KFTimeEnum::OneDaySecond )
         {
             return false;
         }
@@ -410,13 +410,16 @@ namespace KFrame
     {
         switch ( type )
         {
-        case TimeEnum::Day:		// 判断时间
+        case KFTimeEnum::Hour:
+            return KFDate::CheckPassHour( lasttime, nowtime );
+            break;
+        case KFTimeEnum::Day:		// 判断时间
             return KFDate::CheckPassDay( lasttime, nowtime, time );
             break;
-        case TimeEnum::Week:	// 判断时间
+        case KFTimeEnum::Week:	// 判断时间
             return KFDate::CheckPassWeek( lasttime, nowtime, time );
             break;
-        case TimeEnum::Month:	// 月份
+        case KFTimeEnum::Month:	// 月份
             return KFDate::CheckPassMonth( lasttime, nowtime, time );
             break;
         default:
@@ -430,7 +433,7 @@ namespace KFrame
     {
         uint64 nowtime = KFDate::GetTimeEx();
         auto ptm = localtime( reinterpret_cast< time_t* >( &nowtime ) );
-        uint32 nowyear = ptm->tm_year + TimeEnum::SinceYear;
+        uint32 nowyear = ptm->tm_year + KFTimeEnum::SinceYear;
         uint32 nowmonth = ptm->tm_mon + 1;
         uint32 nowday = ptm->tm_mday;
         uint32 nowhour = ptm->tm_hour;

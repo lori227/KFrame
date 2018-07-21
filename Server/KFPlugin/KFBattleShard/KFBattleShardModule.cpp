@@ -702,7 +702,7 @@ namespace KFrame
             // 保存到数据库
             auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-            auto pbdata = pbscore->SerializeAsString();
+            auto pbdata = KFProto::Serialize( pbscore, KFCompressEnum::Compress );
             redisdriver->VoidExecute( "hset %s:%u %s %s",
                                       KFField::_score.c_str(), pbscore->playerid(), strroomid.c_str(), pbdata.c_str() );
 
@@ -731,12 +731,12 @@ namespace KFrame
             return;
         }
 
-        for ( auto iter : mapdata )
+        for ( auto& iter : mapdata )
         {
             KFMsg::S2SPlayerBattleScoreReq req;
             req.set_playerid( kfmsg.playerid() );
             req.set_roomid( KFUtility::ToValue< uint64 >( iter.first ) );
-            req.mutable_pbscore()->ParseFromString( iter.second );
+            KFProto::Parse( req.mutable_pbscore(), iter.second, KFCompressEnum::Compress );
             _kf_cluster_shard->SendMessageToClient( guid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
     }

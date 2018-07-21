@@ -47,7 +47,7 @@ namespace KFrame
     }
 
     // 设置日期
-    void KFScheduleTime::SetDate( uint32 control, uint32 minute, uint32 hour, uint32 day /* = 0 */, uint32 month /* = 0 */, uint32 year /* = 0 */ )
+    void KFScheduleTime::SetDate( uint32 control, uint32 minute, uint32 hour /* = 0 */, uint32 day /* = 0 */, uint32 month /* = 0 */, uint32 year /* = 0 */ )
     {
         _minute = minute;
         _hour = hour;

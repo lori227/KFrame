@@ -28,6 +28,9 @@ xcopy /y %path1%\mailcluster\*.bat %path2%\mailcluster
 if not exist matchcluster (mkdir matchcluster)
 xcopy /y %path1%\matchcluster\*.bat %path2%\matchcluster
 
+if not exist logcluster (mkdir logcluster)
+xcopy /y %path1%\logcluster\*.bat %path2%\logcluster
+
 if not exist platform (mkdir platform)
 xcopy /y %path1%\platform\*.bat %path2%\platform
 

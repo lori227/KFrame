@@ -103,7 +103,7 @@ namespace KFrame
         }
 
         newuserid += 10000;
-        playerid = static_cast< uint32 >( newuserid ) + zoneid * KFZoneEnum::MaxPlayerCount;
+        playerid = KFUtility::CalcPlayerid( static_cast< uint32 >( newuserid ), zoneid );
         if ( !redisdriver->VoidExecute( "hset %s:%u %u %u", KFField::_user.c_str(), accountid, logiczoneid, playerid ) )
         {
             return 0;

@@ -1,26 +1,12 @@
 ﻿#include "KFRankShardModule.h"
-#include "KFRankShardConfig.h"
+#include "KFTime/KFDate.h"
+#include "KFCompress/KFCompress.h"
 
 namespace KFrame
 {
-#define __USE_WORKER__
-#define __RANK_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_rank )
-#define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_public )
-
-
-#ifdef __USE_WORKER__
-    #define __REGISTER_RANK_MESSAGE__ __REGISTER_WORKER_MESSAGE__
-    #define __UNREGISTER_RANK_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendMessageToClient( kfguid, msgid, message )
-#else
-    #define __REGISTER_RANK_MESSAGE__ __REGISTER_MESSAGE__
-    #define __UNREGISTER_RANK_MESSAGE__ __UNREGISTER_MESSAGE__
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendMessageToClient( kfguid, msgid, message )
-#endif
-
     KFRankShardModule::KFRankShardModule()
     {
-
+        _rank_driver = nullptr;
     }
 
     KFRankShardModule::~KFRankShardModule()
@@ -30,352 +16,354 @@ namespace KFrame
 
     void KFRankShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_rank_shard_config, true );
+        __KF_ADD_CONFIG__( _kf_rank_config, true );
     }
 
     void KFRankShardModule::BeforeRun()
     {
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFRankShardModule::OnServerDiscoverClient );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_RANK_MESSAGE__( KFMsg::S2S_JOIN_RANK_LIST_REQ, &KFRankShardModule::HandleJoinRankListReq );
-        __REGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ, &KFRankShardModule::HandleQueryWholeRanklistReq );
-        __REGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &KFRankShardModule::HandleQueryFriendRanklistReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ, &KFRankShardModule::HandleUpdateRankDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ, &KFRankShardModule::HandleQueryRanklistReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &KFRankShardModule::HandleQueryFriendRanklistReq );
     }
 
     void KFRankShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_TIMER__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __UNREGISTER_RANK_MESSAGE__( KFMsg::S2S_JOIN_RANK_LIST_REQ );
-        __UNREGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_WHOLE_RANK_LIST_REQ );
-        __UNREGISTER_RANK_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
+    }
+
+    void KFRankShardModule::OnceRun()
+    {
+        _rank_driver = _kf_redis->CreateExecute( KFField::_rank );
+
+        // 加载所有排行榜数据
+        LoadTotalRankData();
+
+        // 启动刷新排行榜定时器
+        StartRefreshRankDataTimer();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFRankShardModule::OnServerDiscoverClient )
     {
-        // 分区信息同步到代理服务器
-        auto zonelist = _kf_rank_shard_config->FindZoneId( KFGlobal::Instance()->_app_id );
+        std::list< uint64 > ranklist;
 
-        if ( zonelist == nullptr )
+        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s] server[%u] can't find zone list",
-                                        __FUNCTION__, KFGlobal::Instance()->_app_id );
+            auto kfsetting = iter.second;
+            if ( kfsetting->_shard_id == KFGlobal::Instance()->_app_id )
+            {
+                ranklist.push_back( kfsetting->_rank_id );
+            }
         }
 
-        KFMsg::S2SUpdateZoneToRankProxyReq req;
-
-        for ( auto zoneid : *zonelist )
-        {
-            req.add_zoneid( zoneid );
-        }
-
-        _kf_cluster_shard->SendMessageToProxy( handleid, KFMsg::S2S_UPDATE_ZONE_TO_RANK_PROXY_REQ, &req );
-    }
-    // 处理打榜请求
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleJoinRankListReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SJoinRankListReq );
-        auto redisdriver = __RANK_REDIS_DRIVER__;
-        auto scoretype = kfmsg.scoretype();
-        std::string mainkey = GetRankMainKey( scoretype );
-
-        if ( mainkey.empty() )
-        {
-            return;
-        }
-
-        std::string total_score( KFField::_total_score );
-        std::string totalkey = GetRankMainKey( total_score );
-
-        if ( totalkey.empty() )
-        {
-            return;
-        }
-
-        auto pbsocres = &kfmsg.scores();
-        AppendCommand( redisdriver, kfmsg.playerid(), mainkey, pbsocres );
-
-        // 总榜
-        auto pbtotalsocres = &kfmsg.totalscores();
-        AppendCommand( redisdriver, kfmsg.playerid(), totalkey, pbtotalsocres );
-
-        auto ok = redisdriver->PipelineExecute();
-
-        if ( !ok )
-        {
-            KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u] join rank[%s] failed!",
-                                __FUNCTION_LINE__, kfmsg.playerid(), scoretype.c_str() );
-        }
+        _kf_cluster_shard->AddObjectToProxy( handleid, ranklist );
     }
 
-
-    std::string KFRankShardModule::GetRankMainKey( std::string& ranktype )
+    void KFRankShardModule::LoadTotalRankData()
     {
-        std::string mainkey = "";
-
-        if ( ranktype == KFField::_single_score )
-        {
-            mainkey = KFField::_single;
-        }
-
-        else if ( ranktype == KFField::_double_score )
-        {
-            mainkey = KFField::_double;
-        }
-
-        else if ( ranktype == KFField::_four_score )
-        {
-            mainkey = KFField::_four;
-        }
-
-        else if ( ranktype == KFField::_total_score )
-        {
-            mainkey = KFField::_total;
-        }
-
-        return mainkey;
-    }
-
-
-    std::string KFRankShardModule::MakeRankKey( std::string& mainkey, const std::string& scoretype )
-    {
-        std::string key = "";
-
-        if ( scoretype == KFField::_eval_score )
-        {
-            key = mainkey + "_" + KFField::_eval_rank;
-        }
-
-        else if ( scoretype == KFField::_win_score )
-        {
-            key = mainkey + "_" + KFField::_win_rank;
-        }
-
-        else if ( scoretype == KFField::_kill_score )
-        {
-            key = mainkey + "_" + KFField::_kill_rank;
-        }
-
-        return key;
-    }
-
-    void KFRankShardModule::AppendCommand( KFRedisDriver* redisdriver, uint32 playerid, std::string& mainkey, const KFMsg::PBScoreData* scores )
-    {
-        for ( auto i = 0; i < scores->score_size(); ++i )
-        {
-            auto score = &scores->score( i );
-            std::string rankkey = MakeRankKey( mainkey, score->name() );
-            redisdriver->AppendCommand( "zadd %s %s %u", rankkey.c_str(), __KF_STRING__( score->value() ).c_str(), playerid );
-        }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryWholeRanklistReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SQueryWholeRankListReq );
-        auto redisdriver = __RANK_REDIS_DRIVER__;
-        auto publicrediver = __PUBLIC_REDIS_DRIVER__;
-
-        auto ranktype = _kf_option->GetValue<std::string>( "ranktype", kfmsg.matchid() );
-        auto mainkey = GetRankMainKey( ranktype );
-
-        if ( mainkey.empty() )
-        {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s:%u] Make wholerank key err rankid：%u ranktype:%s!",
-                                       __FUNCTION_LINE__, kfmsg.matchid(), ranktype.c_str() );
-        }
-
-        auto rankkey = mainkey + "_" + kfmsg.ranktype();
-        //auto rankkey = MakeRankKey( mainkey, kfmsg.ranktype() );
-        MapString ranklist;
-        redisdriver->MapExecute( ranklist, "zrevrange %s %u %u WITHSCORES", rankkey.c_str(), kfmsg.begin(), kfmsg.end() );
-
+        VectorString ranklist;
+        _rank_driver->VectorExecute( ranklist, "smembers %s:%u", KFField::_rank_list.c_str(), KFGlobal::Instance()->_app_id );
         if ( ranklist.empty() )
         {
             return;
         }
 
-        // redis cmds
-        VectorString fileds;
-        VectorString playerids;
-        fileds.push_back( KFField::_name );
-        fileds.push_back( KFField::_icon );
-
-        auto queryplayercmd = "hmget %s:%s %s %s";
-
-        for ( auto& iter : ranklist )
+        for ( auto& strrankkey : ranklist )
         {
-            playerids.push_back( iter.first );
-        }
-
-        VectorString playerinfos;
-
-        if ( !QueryRoleInfoBatch( playerinfos, playerids, fileds ) )
-        {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err!", __FUNCTION_LINE__ );
-        }
-
-        auto cursor = 0;
-        KFMsg::S2SQueryRankListAck ack;
-        ack.set_matchid( kfmsg.matchid() );
-        ack.set_ranktype( kfmsg.ranktype() );
-        ack.set_playerid( kfmsg.playerid() );
-
-        auto pbrankdata = ack.mutable_rankdatas();
-
-        for ( auto& iter : ranklist )
-        {
-            auto rankdata = pbrankdata->add_rankdata();
+            MapString mapvalues;
+            _rank_driver->MapExecute( mapvalues, "hgetall %s", strrankkey.c_str() );
+            if ( mapvalues.empty() )
             {
-                auto pbstring = rankdata->add_pbstring();
-                pbstring->set_name( KFField::_id );
-                pbstring->set_value( iter.first );
+                continue;
             }
-            {
-                auto pbstring = rankdata->add_pbstring();
-                pbstring->set_name( KFField::_score );
-                pbstring->set_value( iter.second );
-            }
-            // 拼接角色信息
-            FormatRoleInfoToPB( rankdata, playerinfos, cursor, fileds );
+
+            auto rankid = KFUtility::ToValue< uint32 >( mapvalues[ KFField::_id ] );
+            auto zoneid = KFUtility::ToValue< uint32 >( mapvalues[ KFField::_zone_id ] );
+            auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
+            kfrankdata->_rank_id = rankid;
+            kfrankdata->_zone_id = zoneid;
+            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( mapvalues[ KFField::_min_rank_score ] );
+
+            auto strrankata = mapvalues[ KFField::_rank_data ];
+            KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
         }
 
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_RANK_LIST_ACK, &ack );
+        _rank_driver->VoidExecute( "del %s:%u", KFField::_rank_list.c_str(), KFGlobal::Instance()->_app_id );
+    }
+
+    void KFRankShardModule::SaveRankData( KFRankData* kfrankdata )
+    {
+        std::string strdata = "";
+        auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
+
+        MapString rankdata;
+        rankdata[ KFField::_id ] = __KF_STRING__( kfrankdata->_rank_id );
+        rankdata[ KFField::_zone_id ] = __KF_STRING__( kfrankdata->_zone_id );
+        rankdata[ KFField::_min_rank_score ] = __KF_STRING__( kfrankdata->_min_rank_score );
+        rankdata[ KFField::_rank_data ] = strrankdata;
+
+        auto rankkey = KFUtility::Format( "%s:%u:%u", KFField::_rank.c_str(), kfrankdata->_rank_id, kfrankdata->_zone_id );
+
+        _rank_driver->AppendCommand( rankdata, "hmset %s", rankkey );
+        _rank_driver->AppendCommand( "sadd %s:%u %s", KFField::_rank_list.c_str(), KFGlobal::Instance()->_app_id, rankkey );
+        _rank_driver->PipelineExecute();
+    }
+
+    void KFRankShardModule::StartRefreshRankDataTimer()
+    {
+        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
+        {
+            auto kfsetting = iter.second;
+            if ( kfsetting->_shard_id != KFGlobal::Instance()->_app_id )
+            {
+                continue;
+            }
+
+            StartRefreshRankDataTimer( kfsetting );
+        }
+    }
+
+    void KFRankShardModule::StartRefreshRankDataTimer( const KFRankSetting* kfsetting )
+    {
+        if ( kfsetting->_refresh_type == KFTimeEnum::None )
+        {
+            // 配置_refresh_time 单位:秒
+            __REGISTER_LOOP_TIMER__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, &KFRankShardModule::OnTimerRefreshRankData );
+            return;
+        }
+
+        auto kfschedulesetting = _kf_schedule->CreateScheduleSetting();
+        kfschedulesetting->SetData( kfsetting->_rank_id, nullptr, 0 );
+        switch ( kfsetting->_refresh_type )
+        {
+        case KFTimeEnum::Week:
+            kfschedulesetting->SetDayOfWeek( KFScheduleEnum::Loop, kfsetting->_refresh_minute, kfsetting->_refresh_hour, kfsetting->_refresh_time );
+            break;
+        default:
+            kfschedulesetting->SetDate( KFScheduleEnum::Loop, kfsetting->_refresh_minute, kfsetting->_refresh_hour, kfsetting->_refresh_time );
+            break;
+        }
+
+        _kf_schedule->RegisterSchedule( kfschedulesetting, this, &KFRankShardModule::OnScheduleRefreshRankData );
+    }
+
+    __KF_TIMER_FUNCTION__( KFRankShardModule::OnTimerRefreshRankData )
+    {
+        RefreshRankData( objectid );
+    }
+
+    void KFRankShardModule::OnScheduleRefreshRankData( uint32 rankid, const char* data, uint32 size )
+    {
+        RefreshRankData( rankid );
+    }
+
+    std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
+    {
+        static std::string rankdatakey = "";
+        rankdatakey = KFUtility::Format( "%s:%u:%u", KFField::_rank_data.c_str(), rankid, zoneid );
+        return rankdatakey;
+    }
+
+    std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zoneid )
+    {
+        static std::string ranksortkey = "";
+        ranksortkey = KFUtility::Format( "%s:%u:%u", KFField::_rank_sort.c_str(), rankid, zoneid );
+        return ranksortkey;
+    }
+
+    void KFRankShardModule::RefreshRankData( uint32 rankid )
+    {
+        auto kfsetting = _kf_rank_config->FindRankSetting( rankid );
+        if ( kfsetting == nullptr )
+        {
+            return;
+        }
+
+        // 获得排行榜列表
+        VectorString zonelist;
+        _rank_driver->VectorExecute( zonelist, "smembers %s:%u", KFField::_rank_sort_list.c_str(), rankid );
+
+        for ( auto& strzoneid : zonelist )
+        {
+            auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
+
+            auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
+            kfrankdata->_rank_id = rankid;
+            kfrankdata->_zone_id = zoneid;
+            kfrankdata->_min_rank_score = 0;
+            kfrankdata->_rank_datas.Clear();
+
+            auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
+            auto& rankdatakey = FormatRankDataKey( rankid, zoneid );
+
+            VectorString idlist;
+            _rank_driver->VectorExecute( idlist, "zrevrange %s 0 %u", ranksortkey.c_str(), kfsetting->_max_count - 1 );
+            if ( idlist.empty() )
+            {
+                continue;
+            }
+
+            auto rankindex = 0u;
+            for ( auto& strplayerid : idlist )
+            {
+                auto playerid = KFUtility::ToValue< uint32 >( strplayerid );
+
+                // 读取排行榜信息
+                std::string strrankdata = "";
+                _rank_driver->StringExecute( strrankdata, "hget %s %u", rankdatakey.c_str(), playerid );
+
+                auto pbrankdata = kfrankdata->_rank_datas.add_rankdata();
+                pbrankdata->set_rankindex( ++rankindex );
+                KFProto::Parse( pbrankdata, strrankdata, KFCompressEnum::Convert );
+
+                // 加载玩家显示数据
+                // todo : 更新的时候pbdata里面包含玩家数据
+                // LoadPlayerShowData( pbdatas, playerid );
+            }
+
+            // 保存排行榜信息
+            SaveRankData( kfrankdata );
+
+            if ( kfsetting->_is_reset_data )
+            {
+                // 清空数据
+                _rank_driver->AppendCommand( "del %s", rankdatakey.c_str() );
+                _rank_driver->AppendCommand( "del %s", ranksortkey.c_str() );
+                _rank_driver->PipelineExecute();
+            }
+            else
+            {
+                // 最小积分
+                //auto playerid = idlist.back();
+                //std::string minscore = "";
+                //_rank_driver->StringExecute( minscore, "zscore %s:%u:%u %u",
+                //                             KFField::_rank_sort.c_str(), rankid, zoneid, playerid );
+                //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
+
+                // 删除指定数量以后的排序
+                uint64 rankcount = 0;
+                _rank_driver->UInt64Execute( rankcount, "zcard %s", ranksortkey.c_str() );
+                if ( rankcount > kfsetting->_max_count )
+                {
+                    _rank_driver->VoidExecute( "zremrangebyrank %s 0 %u", ranksortkey.c_str(), rankcount - kfsetting->_max_count );
+                }
+            }
+        }
+    }
+
+    void KFRankShardModule::LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint32 playerid )
+    {
+        //// 查询玩家的信息
+        //MapString playervalues;
+        //_public_driver->MapExecute( playervalues, "hgetall %s:%u",
+        //                            KFField::_public.c_str(), playerid );
+
+        //for ( auto& showdata : _kf_rank_config->_player_data )
+        //{
+        //    auto pbdata = pbdatas->add_pbstring();
+        //    pbdata->set_name( showdata );
+        //    pbdata->set_value( playervalues[ showdata ] );
+        //}
+    }
+
+    // 处理打榜请求
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleUpdateRankDataReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SUpdateRankDataReq );
+
+        auto& ranksortkey = FormatRankSortKey( kfmsg.rankid(), kfmsg.zoneid() );
+        auto& rankdatakey = FormatRankDataKey( kfmsg.rankid(), kfmsg.zoneid() );
+
+        auto pbrankdata = &kfmsg.pbrankdata();
+
+        // 排行显示属性
+        auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::Convert );
+        _rank_driver->AppendCommand( "hset %s %u %s", rankdatakey.c_str(), kfmsg.playerid(), strrankdata.c_str() );
+
+        // 判断最低的分数
+        // if ( IsNeedUpdateRankData( kfmsg.rankid(), kfmsg.zoneid(), kfmsg.rankscore() ) )
+        {
+            // 添加到排行榜的zone列表
+            _rank_driver->AppendCommand( "sadd %s:%u %u", KFField::_rank_sort_list.c_str(),
+                                         kfmsg.rankid(), kfmsg.zoneid() );
+
+            // 积分排行列表
+            auto strrankscore = __KF_STRING__( pbrankdata->rankscore() );
+            _rank_driver->AppendCommand( "zadd %s %s %u", ranksortkey.c_str(), strrankscore.c_str(), kfmsg.playerid() );
+        }
+
+        _rank_driver->PipelineExecute();
+    }
+
+    bool KFRankShardModule::IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore )
+    {
+        auto kfrankdata = _kf_rank_data.Find( RankKey( rankid, zoneid ) );
+        if ( kfrankdata == nullptr )
+        {
+            return true;
+        }
+
+        return rankscore > kfrankdata->_min_rank_score;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryRanklistReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
+
+        KFMsg::MsgQueryRankListAck ack;
+        ack.set_rankid( kfmsg.rankid() );
+        auto pbrankdatas = ack.mutable_rankdatas();
+
+        auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg.rankid(), kfmsg.zoneid() ) );
+        if ( kfrankdata != nullptr )
+        {
+            pbrankdatas->CopyFrom( kfrankdata->_rank_datas );
+        }
+
+        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryFriendRanklistReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryFriendRankListReq );
-        auto redisdriver = __RANK_REDIS_DRIVER__;
-        auto publicrediver = __PUBLIC_REDIS_DRIVER__;
 
-        auto ranktype = _kf_option->GetValue<std::string>( "ranktype", kfmsg.matchid() );
-        auto mainkey = GetRankMainKey( ranktype );
-
-        if ( mainkey.empty() )
-        {
-            return;
-        }
-
-        auto rankkey = mainkey + "_" + kfmsg.ranktype();
-        //auto rankkey = MakeRankKey( mainkey, kfmsg.ranktype() );
         // 查询
-        ListString queryrankcmds;
-
-        char strsql[ 256 ];
-
-        auto playerids = &kfmsg.playerids();
-        VectorString playeridvec;
-
-        for ( auto i = 0; i < playerids->playerid_size(); ++i )
+        ListString querysql;
+        for ( auto i = 0; i < kfmsg.friendid_size(); ++i )
         {
-            if ( _invalid_int == playerids->playerid( i ) )
+            auto friendid = kfmsg.friendid( i );
+            auto zoneid = KFUtility::CalcZoneId( friendid );
+
+            auto& rankdatakey = FormatRankDataKey( kfmsg.rankid(), zoneid );
+            auto strsql = KFUtility::Format( "hget %s %u", rankdatakey.c_str(), friendid );
+
+            querysql.push_back( strsql );
+        }
+
+        VectorString rankdatalist;
+        _rank_driver->PipelineExecute( querysql, rankdatalist );
+
+        KFMsg::MsgQueryFriendRankListAck ack;
+        ack.set_rankid( kfmsg.rankid() );
+        auto pbrankdatas = ack.mutable_rankdatas();
+        for ( auto& strrankdata : rankdatalist )
+        {
+            if ( !strrankdata.empty() )
             {
-                continue;
+                KFProto::Parse( pbrankdatas->add_rankdata(), strrankdata, KFCompressEnum::Convert );
             }
-
-            memset( strsql, 0, 256 );
-            snprintf( strsql, 256, "zscore %s %u", rankkey.c_str(), playerids->playerid( i ) );
-            queryrankcmds.push_back( strsql );
-            playeridvec.push_back( __KF_STRING__( playerids->playerid( i ) ) );
         }
 
-        VectorString rankscores;
-        auto ok = publicrediver->PipelineExecute( queryrankcmds, rankscores );
-
-        if ( !ok || rankscores.size() != queryrankcmds.size() )
-        {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err ranksize:%u,cmdsize:%u!",
-                                        __FUNCTION_LINE__, queryrankcmds.size(), rankscores.size() );
-
-        }
-
-        VectorString fileds;
-        fileds.push_back( KFField::_name );
-        fileds.push_back( KFField::_icon );
-        VectorString playerinfos;
-
-        if ( !this->QueryRoleInfoBatch( playerinfos, playeridvec, fileds ) )
-        {
-            return  KFLogger::LogSystem( KFLogger::Error, "[%s:%u] redis exec err!", __FUNCTION_LINE__ );
-        }
-
-
-        auto cursor = 0;
-        KFMsg::S2SQueryRankListAck ack;
-        ack.set_matchid( kfmsg.matchid() );
-        ack.set_ranktype( kfmsg.ranktype() );
-        ack.set_playerid( kfmsg.playerid() );
-        ack.set_isfriendrank( true );
-        auto pbrankdata = ack.mutable_rankdatas();
-
-        for ( auto i = 0; i < playerids->playerid_size(); ++i )
-        {
-            if ( _invalid_int == playerids->playerid( i ) )
-            {
-                continue;
-            }
-
-            auto rankdata = pbrankdata->add_rankdata();
-            {
-                auto pbstring = rankdata->add_pbstring();
-                pbstring->set_name( KFField::_id );
-                pbstring->set_value( __KF_STRING__( playerids->playerid( i ) ) );
-            }
-            {
-                auto pbstring = rankdata->add_pbstring();
-                pbstring->set_name( KFField::_score );
-                pbstring->set_value( rankscores[ i ] );
-            }
-            // 拼接角色信息
-            FormatRoleInfoToPB( rankdata, playerinfos, cursor, fileds );
-        }
-
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_RANK_LIST_ACK, &ack );
-    }
-
-
-    bool KFRankShardModule::QueryRoleInfoBatch( VectorString& playerinfos, VectorString& playerids, VectorString& fileds )
-    {
-        auto publicrediver = __PUBLIC_REDIS_DRIVER__;
-        ListString cmds;
-
-        char strsql[ 256 ];
-
-        for ( auto& iter : playerids )
-        {
-            memset( strsql, 0, 256 );
-            snprintf( strsql, 256, "hmget %s:%s %s %s", KFField::_public.c_str(), iter.c_str(), fileds[ 0 ].c_str(), fileds[ 1 ].c_str() );
-            cmds.push_back( strsql );
-        }
-
-        return publicrediver->PipelineExecute( cmds, playerinfos );
-    }
-
-    void KFRankShardModule::FormatRoleInfoToPB( KFMsg::PBStrings* pbrank, VectorString& playerinfos, int& cursor, VectorString& fileds )
-    {
-        if ( cursor >= playerinfos.size() )
-        {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] AddRoleInfo to RankData Error: cursor:%u size:%u",
-                                        __FUNCTION_LINE__, cursor, playerinfos.size() );
-        }
-
-        {
-            auto pbstring = pbrank->add_pbstring();
-            pbstring->set_name( fileds[ 0 ] );
-            pbstring->set_value( playerinfos[ cursor ] );
-        }
-
-        {
-            auto pbstring = pbrank->add_pbstring();
-            pbstring->set_name( fileds[ 1 ] );
-            pbstring->set_value( playerinfos[ cursor + 1 ] );
-
-        }
-
-        cursor += fileds.size();
+        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_FRIEND_RANK_LIST_ACK, &ack );
     }
 }

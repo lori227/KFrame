@@ -33,23 +33,6 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
 
-    protected:
-        // 断开连接
-        __KF_CLIENT_LOST_FUNCTION__( OnClientLostServer );
-
-    protected:
-        // 更新zone信息
-        __KF_MESSAGE_FUNCTION__( HandleUpdateZoneToProxyReq );
-
-        // 消息转发
-        __KF_MESSAGE_FUNCTION__( HandleTransmitToRankShardReq );
-
-    protected:
-        // 查找逻辑分片
-        uint32 FindZoneShardId( uint32 zoneid, uint32 clientid );
-    private:
-        // 分区hash列表
-        KFMap< uint32, uint32, KFConHash > _zone_hash;
     };
 }
 

@@ -158,7 +158,7 @@ namespace KFrame
         CheckStartClothesTimer( player );
     }
 
-    void KFClothesModule::AddClothesAgentData( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line )
+    __KF_ADD_AGENT_FUNCTION__( KFClothesModule::AddClothesAgentData )
     {
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
@@ -230,7 +230,7 @@ namespace KFrame
                 else
                 {
                     // 时限时装, 转换成金币
-                    auto multiple = agenttime / TimeEnum::OneDaySecond;
+                    auto multiple = agenttime / KFTimeEnum::OneDaySecond;
                     if ( multiple != 0 )
                     {
                         player->AddAgentData( &kfsetting->_exchange, multiple, true, __FUNCTION_LINE__ );
@@ -254,7 +254,7 @@ namespace KFrame
         }
     }
 
-    void KFClothesModule::OnClothesCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFClothesModule::OnClothesCountUpdateCallBack )
     {
         // 调用脚本
         if ( newvalue > 0 )
@@ -266,7 +266,7 @@ namespace KFrame
         player->RemoveData( KFField::_clothes, key );
     }
 
-    void KFClothesModule::OnAddClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFClothesModule::OnAddClothesCallBack )
     {
         auto validtime = kfdata->GetValue< uint64 >( KFField::_time );
         if ( validtime == 0 )
@@ -278,7 +278,7 @@ namespace KFrame
         CheckStartClothesTimer( player );
     }
 
-    void KFClothesModule::OnRemoveClothesCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_REMOVE_DATA_FUNCTION__( KFClothesModule::OnRemoveClothesCallBack )
     {
         auto kfsetting = _kf_clothes_config->FindClothesSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )

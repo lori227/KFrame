@@ -1,17 +1,15 @@
 ﻿#include "KFFtpModule.h"
 #include "KFFtpConfig.h"
-#include "KFFtpThread.h"
 
 namespace KFrame
 {
     KFFtpModule::KFFtpModule()
     {
-        _kf_ftp_thread = new KFFtpThread();
     }
 
     KFFtpModule::~KFFtpModule()
     {
-        delete _kf_ftp_thread;
+        _ftp_thread_list.Clear();
     }
 
     void KFFtpModule::InitModule()
@@ -22,13 +20,21 @@ namespace KFrame
 
     void KFFtpModule::Run()
     {
-        if ( !_kf_ftp_thread->IsFinish() )
+        std::list< uint32 > removelist;
+        for ( auto& iter : _ftp_thread_list._objects )
         {
-            return;
+            auto kfftpthread = iter.second;
+            if ( kfftpthread->IsFinish() )
+            {
+                removelist.push_back( iter.first );
+                kfftpthread->FinishThread();
+            }
         }
 
-        _ftp_function( _kf_ftp_thread->FtpResult() );
-        _kf_ftp_thread->FinishThread();
+        for ( auto ftpid : removelist )
+        {
+            _ftp_thread_list.Remove( ftpid );
+        }
     }
 
     void KFFtpModule::BeforeRun()
@@ -44,14 +50,9 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFFtpModule::StartDownload( uint32 ftpid, KFFtpFunction& function )
+    void KFFtpModule::StartFtpDownload( uint32 ftpid, KFFtpFunction& function )
     {
-        if ( _kf_ftp_thread->IsRun() )
-        {
-            return;
-        }
-
-        _ftp_function = function;
-        _kf_ftp_thread->StartThread( ftpid );
+        auto kfftpthread = _ftp_thread_list.Create( ftpid );
+        kfftpthread->StartThread( ftpid, function );
     }
 }

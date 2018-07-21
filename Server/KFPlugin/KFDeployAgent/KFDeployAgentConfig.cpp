@@ -57,6 +57,7 @@ namespace KFrame
     {
         _is_auto_startup = true;
         _ftp_id = 1;
+        _is_show_window = true;
     }
 
     KFDeployAgentConfig::~KFDeployAgentConfig()
@@ -80,6 +81,7 @@ namespace KFrame
             _deploy_path = root.GetString( "DeployPath" );
             _is_auto_startup = root.GetBoolen( "AutoStartup" );
             _ftp_id = root.GetUInt32( "FtpId" );
+            _is_show_window = root.GetBoolen( "ShowWindow" );
             /////////////////////////////////////////////////////////////////////
 
             auto launchs = root.FindNode( "Launchs" );
@@ -88,29 +90,33 @@ namespace KFrame
                 auto apppath = launchs.GetString( "AppPath" );
                 auto appfile = launchs.GetString( "AppFile" );
                 auto appname = launchs.GetString( "AppName" );
-                auto apptype = launchs.GetString( "AppType" );
-                auto appconfig = launchs.GetString( "AppConfig" );
-                auto isshowwindow = launchs.GetBoolen( "ShowWindow" );
+                auto ftpid = launchs.GetUInt32( "FtpId" );
+                auto zoneid = launchs.GetUInt32( "ZoneId", true, _invalid_int );
 
                 auto launchnode = launchs.FindNode( "Launch" );
                 while ( launchnode.IsValid() )
                 {
-                    auto kfsetting = __KF_CREATE__( KFLaunchSetting );
+                    auto apptype = launchnode.GetString( "AppType" );
+                    auto appid = launchnode.GetUInt32( "AppId" );
+                    auto appcount = launchnode.GetUInt32( "AppCount" );
+                    auto appconfig = launchnode.GetString( "AppConfig" );
+                    if ( zoneid != _invalid_int )
+                    {
+                        appid = KFUtility::CalcZoneServerId( appid, zoneid );
+                    }
 
-                    kfsetting->_app_path = apppath;
-                    kfsetting->_app_file = appfile;
-                    kfsetting->_app_name = appname;
-                    kfsetting->_app_type = apptype;
-                    kfsetting->_app_config = appconfig;
-                    kfsetting->_is_show_window = isshowwindow;
-
-                    kfsetting->_launch_id = launchnode.GetUInt32( "LaunchId" );
-                    kfsetting->_app_id = launchnode.GetUInt32( "AppId" );
-                    kfsetting->_is_startup = launchnode.GetBoolen( "Startup" );
-                    kfsetting->_is_pause = launchnode.GetUInt32( "Pause" );
-                    kfsetting->_ftp_id = launchnode.GetUInt32( "FtpId" );
-
-                    _kf_launch_setting.Insert( kfsetting->_launch_id, kfsetting );
+                    for ( auto i = 1u; i <= appcount; ++i )
+                    {
+                        auto kfsetting = __KF_CREATE__( KFLaunchSetting );
+                        kfsetting->_app_path = apppath;
+                        kfsetting->_app_file = appfile;
+                        kfsetting->_app_name = appname;
+                        kfsetting->_app_type = apptype;
+                        kfsetting->_app_id = appid + i - 1;
+                        kfsetting->_app_config = appconfig;
+                        kfsetting->_ftp_id = ftpid;
+                        _kf_launch_setting.Insert( kfsetting->_app_id, kfsetting );
+                    }
 
                     launchnode.NextNode();
                 }

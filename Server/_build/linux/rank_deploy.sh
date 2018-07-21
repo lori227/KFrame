@@ -43,6 +43,7 @@ copyfile 1 bus.relation
 copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
+copyfile 1 common.startup
 
 path2=$deploypath/config
 copyfile 1 cluster.config
@@ -64,8 +65,6 @@ path1=$respath/config
 path2=$deploypath/config
 copyfile 0 redis.config
 copyfile 1 rank.config
-copyfile 1 option.config
-copyfile 1 rankshard.config
 
 #plugin
 path1=$binpath/
@@ -117,3 +116,7 @@ copyfile 1 KFWorkerd.so
 copyfile 1 KFWorker.so
 copyfile 1 KFScheduled.so
 copyfile 1 KFSchedule.so
+copyfile 1 KFClusterClientd.so
+copyfile 1 KFClusterClient.so
+copyfile 1 KFLogClientd.so
+copyfile 1 KFLogClient.so

@@ -126,7 +126,7 @@ namespace KFrame
     void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore )
     {
         // 游戏场数
-        player->UpdateData( kfscore, KFField::_count, KFOperateEnum::Add, 1 );
+        auto totalcount = player->UpdateData( kfscore, KFField::_count, KFOperateEnum::Add, 1 );
 
         // 排名
         if ( pbscore->ranking() == __TOP_ONE__ )
@@ -154,6 +154,22 @@ namespace KFrame
             std::string maxname = "max" + pbdata->name();
             player->UpdateData( kfscore, maxname, KFOperateEnum::Greater, pbdata->value() );
         }
+
+        // 胜率
+        auto victorycount = kfscore->GetValue< uint32 >( KFField::_victory );
+        auto winrate = static_cast< double >( victorycount ) / static_cast< double >( totalcount );
+        player->UpdateData( kfscore, KFField::_win_rate, KFOperateEnum::Set, winrate * KFScoreEnum::ScoreRatio );
+
+        // kda计算
+        auto killcount = kfscore->GetValue< uint32 >( KFField::_kill );
+        auto diecount = kfscore->GetValue< uint32 >( KFField::_die );
+        auto kda = static_cast< double >( killcount ) / static_cast< double >( __MAX__( 1, diecount ) );
+        player->UpdateData( kfscore, KFField::_kda, KFOperateEnum::Set, kda * KFScoreEnum::ScoreRatio );
+
+        // 场均击杀
+        auto averagekill = static_cast< double >( killcount ) / static_cast< double >( totalcount );
+        player->UpdateData( kfscore, KFField::_average_kill, KFOperateEnum::Set, averagekill * KFScoreEnum::ScoreRatio );
+
 
         // 奖励
         if ( pbscore->has_reward() )
@@ -184,33 +200,27 @@ namespace KFrame
         }
 
         // 计算单项数据
+        BalanceBattleScore( player, kfscore, pbscore );
+        int32 score = pbscore->score();
+        if ( score > 0 )
         {
-            BalanceBattleScore( player, kfscore, pbscore );
-            int32 score = pbscore->score();
-            if ( score > 0 )
-            {
-                player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Add, score );
-            }
-            else
-            {
-                player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Dec, abs( score ) );
-            }
+            player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Add, score );
+        }
+        else
+        {
+            player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Dec, abs( score ) );
         }
 
         // 计算总数据
+        auto kftotalscore = kfobject->FindData( KFField::_total_score );
+        if ( kftotalscore != nullptr )
         {
-            auto kftotalscore = kfobject->FindData( KFField::_total_score );
-            if ( kftotalscore != nullptr )
-            {
-                BalanceBattleScore( player, kftotalscore, pbscore );
+            BalanceBattleScore( player, kftotalscore, pbscore );
 
-                // 总评分
-                auto totalscore = CalcTotalScore( player );
-                player->UpdateData( kftotalscore, KFField::_score, KFOperateEnum::Set, totalscore );
-            }
+            // 总评分
+            auto totalscore = CalcTotalScore( player );
+            player->UpdateData( kftotalscore, KFField::_score, KFOperateEnum::Set, totalscore );
         }
-
-        _kf_rank->JoinRankList( pbscore->matchid(), player->GetKeyID(), player, scorename );
 
         // 回复消息
         KFMsg::S2SPlayerBattleScoreAck ack;

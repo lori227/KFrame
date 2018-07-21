@@ -25,7 +25,7 @@
     _kf_plugin_manage->UnRegistModule< name##Plugin, name##Interface >()
 
 #define __FIND_MODULE__( module, classname ) \
-    module = _kf_plugin_manage->FindModule< classname >();
+    module = _kf_plugin_manage->FindModule< classname >( __FUNCTION_LINE__ );
 
 #define __REGISTER_RUN_FUNCTION__( function ) \
     _kf_plugin_manage->RegisterRunFunction( _kf_plugin->_sort, this, function )
@@ -120,10 +120,10 @@ namespace KFrame
 
         // 查找模块
         template< class ModuleType >
-        ModuleType* FindModule()
+        ModuleType* FindModule( const char* function, uint32 line )
         {
             std::string name = typeid( ModuleType ).name();
-            return dynamic_cast<ModuleType*>( FindModule( name ) );
+            return dynamic_cast<ModuleType*>( FindModule( name, function, line ) );
         }
 
         /////////////////////////////////////////////////////////////////
@@ -216,7 +216,7 @@ namespace KFrame
         KFPlugin* FindPlugin( const std::string& name );
 
         // 查找模块
-        KFModule* FindModule( const std::string& name );
+        KFModule* FindModule( const std::string& name, const char* function, uint32 line );
 
     protected:
         std::vector< KFPlugin* > _plugins;

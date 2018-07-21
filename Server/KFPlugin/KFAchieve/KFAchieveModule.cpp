@@ -89,7 +89,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFAchieveModule::OnAchieveValueUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnAchieveValueUpdateCallBack )
     {
         auto achievesetting = _kf_achieve_config->FindAchieveSetting( key );
         if ( achievesetting == nullptr )
@@ -110,17 +110,17 @@ namespace KFrame
         }
     }
 
-    void KFAchieveModule::OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnUpdateDataCallBack )
     {
         UpdateDataAchieveValue( player, key, kfdata, operate, value, newvalue );
     }
 
-    void KFAchieveModule::OnAddDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFAchieveModule::OnAddDataCallBack )
     {
         UpdateObjectAchieveValue( player, key, kfdata, KFOperateEnum::Add );
     }
 
-    void KFAchieveModule::OnRemoveDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_REMOVE_DATA_FUNCTION__( KFAchieveModule::OnRemoveDataCallBack )
     {
         UpdateObjectAchieveValue( player, key, kfdata, KFOperateEnum::Dec );
     }

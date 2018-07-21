@@ -107,10 +107,11 @@ class MsgQuerySettingAck;
 class MsgUpdateSettingReq;
 class MsgQueryRecentListReq;
 class MsgQueryRecentListAck;
-class MsgQueryWholeRankListReq;
+class MsgCompoundDataReq;
+class MsgQueryRankListReq;
 class MsgQueryRankListAck;
 class MsgQueryFriendRankListReq;
-class MsgCompoundDataReq;
+class MsgQueryFriendRankListAck;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -183,10 +184,11 @@ enum ClientProtocol {
   MSG_UPDATE_SETTING_REQ = 180,
   MSG_QUERY_RECENT_LIST_REQ = 181,
   MSG_QUERY_RECENT_LIST_ACK = 182,
-  MSG_QUERY_WHOLE_RANK_LIST_REQ = 183,
-  MSG_QUERY_FRIEND_RANK_LIST_REQ = 184,
-  MSG_QUERY_RANK_LIST_ACK = 185,
-  MSG_COMPOUND_DATA_REQ = 186
+  MSG_QUERY_RANK_LIST_REQ = 183,
+  MSG_QUERY_RANK_LIST_ACK = 184,
+  MSG_QUERY_FRIEND_RANK_LIST_REQ = 185,
+  MSG_QUERY_FRIEND_RANK_LIST_ACK = 186,
+  MSG_COMPOUND_DATA_REQ = 187
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
@@ -6864,319 +6866,6 @@ class LIBPROTOC_EXPORT MsgQueryRecentListAck : public ::google::protobuf::Messag
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT MsgQueryWholeRankListReq : public ::google::protobuf::Message {
- public:
-  MsgQueryWholeRankListReq();
-  virtual ~MsgQueryWholeRankListReq();
-
-  MsgQueryWholeRankListReq(const MsgQueryWholeRankListReq& from);
-
-  inline MsgQueryWholeRankListReq& operator=(const MsgQueryWholeRankListReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgQueryWholeRankListReq& default_instance();
-
-  void Swap(MsgQueryWholeRankListReq* other);
-
-  // implements Message ----------------------------------------------
-
-  MsgQueryWholeRankListReq* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgQueryWholeRankListReq& from);
-  void MergeFrom(const MsgQueryWholeRankListReq& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 matchid = 1;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 1;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // required string ranktype = 2;
-  inline bool has_ranktype() const;
-  inline void clear_ranktype();
-  static const int kRanktypeFieldNumber = 2;
-  inline const ::std::string& ranktype() const;
-  inline void set_ranktype(const ::std::string& value);
-  inline void set_ranktype(const char* value);
-  inline void set_ranktype(const char* value, size_t size);
-  inline ::std::string* mutable_ranktype();
-  inline ::std::string* release_ranktype();
-  inline void set_allocated_ranktype(::std::string* ranktype);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryWholeRankListReq)
- private:
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-  inline void set_has_ranktype();
-  inline void clear_has_ranktype();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* ranktype_;
-  ::google::protobuf::uint32 matchid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
-  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static MsgQueryWholeRankListReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message {
- public:
-  MsgQueryRankListAck();
-  virtual ~MsgQueryRankListAck();
-
-  MsgQueryRankListAck(const MsgQueryRankListAck& from);
-
-  inline MsgQueryRankListAck& operator=(const MsgQueryRankListAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgQueryRankListAck& default_instance();
-
-  void Swap(MsgQueryRankListAck* other);
-
-  // implements Message ----------------------------------------------
-
-  MsgQueryRankListAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgQueryRankListAck& from);
-  void MergeFrom(const MsgQueryRankListAck& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 matchid = 1;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 1;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // required string ranktype = 2;
-  inline bool has_ranktype() const;
-  inline void clear_ranktype();
-  static const int kRanktypeFieldNumber = 2;
-  inline const ::std::string& ranktype() const;
-  inline void set_ranktype(const ::std::string& value);
-  inline void set_ranktype(const char* value);
-  inline void set_ranktype(const char* value, size_t size);
-  inline ::std::string* mutable_ranktype();
-  inline ::std::string* release_ranktype();
-  inline void set_allocated_ranktype(::std::string* ranktype);
-
-  // optional .KFMsg.PBRankData rankdatas = 3;
-  inline bool has_rankdatas() const;
-  inline void clear_rankdatas();
-  static const int kRankdatasFieldNumber = 3;
-  inline const ::KFMsg::PBRankData& rankdatas() const;
-  inline ::KFMsg::PBRankData* mutable_rankdatas();
-  inline ::KFMsg::PBRankData* release_rankdatas();
-  inline void set_allocated_rankdatas(::KFMsg::PBRankData* rankdatas);
-
-  // optional bool isfriendrank = 4;
-  inline bool has_isfriendrank() const;
-  inline void clear_isfriendrank();
-  static const int kIsfriendrankFieldNumber = 4;
-  inline bool isfriendrank() const;
-  inline void set_isfriendrank(bool value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListAck)
- private:
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-  inline void set_has_ranktype();
-  inline void clear_has_ranktype();
-  inline void set_has_rankdatas();
-  inline void clear_has_rankdatas();
-  inline void set_has_isfriendrank();
-  inline void clear_has_isfriendrank();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* ranktype_;
-  ::google::protobuf::uint32 matchid_;
-  bool isfriendrank_;
-  ::KFMsg::PBRankData* rankdatas_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
-  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static MsgQueryRankListAck* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgQueryFriendRankListReq : public ::google::protobuf::Message {
- public:
-  MsgQueryFriendRankListReq();
-  virtual ~MsgQueryFriendRankListReq();
-
-  MsgQueryFriendRankListReq(const MsgQueryFriendRankListReq& from);
-
-  inline MsgQueryFriendRankListReq& operator=(const MsgQueryFriendRankListReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgQueryFriendRankListReq& default_instance();
-
-  void Swap(MsgQueryFriendRankListReq* other);
-
-  // implements Message ----------------------------------------------
-
-  MsgQueryFriendRankListReq* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgQueryFriendRankListReq& from);
-  void MergeFrom(const MsgQueryFriendRankListReq& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 matchid = 1;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 1;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // required string ranktype = 2;
-  inline bool has_ranktype() const;
-  inline void clear_ranktype();
-  static const int kRanktypeFieldNumber = 2;
-  inline const ::std::string& ranktype() const;
-  inline void set_ranktype(const ::std::string& value);
-  inline void set_ranktype(const char* value);
-  inline void set_ranktype(const char* value, size_t size);
-  inline ::std::string* mutable_ranktype();
-  inline ::std::string* release_ranktype();
-  inline void set_allocated_ranktype(::std::string* ranktype);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryFriendRankListReq)
- private:
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-  inline void set_has_ranktype();
-  inline void clear_has_ranktype();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* ranktype_;
-  ::google::protobuf::uint32 matchid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
-  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static MsgQueryFriendRankListReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class LIBPROTOC_EXPORT MsgCompoundDataReq : public ::google::protobuf::Message {
  public:
   MsgCompoundDataReq();
@@ -7271,6 +6960,358 @@ class LIBPROTOC_EXPORT MsgCompoundDataReq : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static MsgCompoundDataReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryRankListReq : public ::google::protobuf::Message {
+ public:
+  MsgQueryRankListReq();
+  virtual ~MsgQueryRankListReq();
+
+  MsgQueryRankListReq(const MsgQueryRankListReq& from);
+
+  inline MsgQueryRankListReq& operator=(const MsgQueryRankListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryRankListReq& default_instance();
+
+  void Swap(MsgQueryRankListReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryRankListReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryRankListReq& from);
+  void MergeFrom(const MsgQueryRankListReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 rankid = 1;
+  inline bool has_rankid() const;
+  inline void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  inline ::google::protobuf::uint32 rankid() const;
+  inline void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListReq)
+ private:
+  inline void set_has_rankid();
+  inline void clear_has_rankid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 rankid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryRankListReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message {
+ public:
+  MsgQueryRankListAck();
+  virtual ~MsgQueryRankListAck();
+
+  MsgQueryRankListAck(const MsgQueryRankListAck& from);
+
+  inline MsgQueryRankListAck& operator=(const MsgQueryRankListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryRankListAck& default_instance();
+
+  void Swap(MsgQueryRankListAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryRankListAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryRankListAck& from);
+  void MergeFrom(const MsgQueryRankListAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 rankid = 1;
+  inline bool has_rankid() const;
+  inline void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  inline ::google::protobuf::uint32 rankid() const;
+  inline void set_rankid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBRankDatas rankdatas = 2;
+  inline bool has_rankdatas() const;
+  inline void clear_rankdatas();
+  static const int kRankdatasFieldNumber = 2;
+  inline const ::KFMsg::PBRankDatas& rankdatas() const;
+  inline ::KFMsg::PBRankDatas* mutable_rankdatas();
+  inline ::KFMsg::PBRankDatas* release_rankdatas();
+  inline void set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListAck)
+ private:
+  inline void set_has_rankid();
+  inline void clear_has_rankid();
+  inline void set_has_rankdatas();
+  inline void clear_has_rankdatas();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::KFMsg::PBRankDatas* rankdatas_;
+  ::google::protobuf::uint32 rankid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryRankListAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryFriendRankListReq : public ::google::protobuf::Message {
+ public:
+  MsgQueryFriendRankListReq();
+  virtual ~MsgQueryFriendRankListReq();
+
+  MsgQueryFriendRankListReq(const MsgQueryFriendRankListReq& from);
+
+  inline MsgQueryFriendRankListReq& operator=(const MsgQueryFriendRankListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryFriendRankListReq& default_instance();
+
+  void Swap(MsgQueryFriendRankListReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryFriendRankListReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryFriendRankListReq& from);
+  void MergeFrom(const MsgQueryFriendRankListReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 rankid = 1;
+  inline bool has_rankid() const;
+  inline void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  inline ::google::protobuf::uint32 rankid() const;
+  inline void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryFriendRankListReq)
+ private:
+  inline void set_has_rankid();
+  inline void clear_has_rankid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 rankid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryFriendRankListReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Message {
+ public:
+  MsgQueryFriendRankListAck();
+  virtual ~MsgQueryFriendRankListAck();
+
+  MsgQueryFriendRankListAck(const MsgQueryFriendRankListAck& from);
+
+  inline MsgQueryFriendRankListAck& operator=(const MsgQueryFriendRankListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryFriendRankListAck& default_instance();
+
+  void Swap(MsgQueryFriendRankListAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryFriendRankListAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryFriendRankListAck& from);
+  void MergeFrom(const MsgQueryFriendRankListAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 rankid = 1;
+  inline bool has_rankid() const;
+  inline void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  inline ::google::protobuf::uint32 rankid() const;
+  inline void set_rankid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBRankDatas rankdatas = 2;
+  inline bool has_rankdatas() const;
+  inline void clear_rankdatas();
+  static const int kRankdatasFieldNumber = 2;
+  inline const ::KFMsg::PBRankDatas& rankdatas() const;
+  inline ::KFMsg::PBRankDatas* mutable_rankdatas();
+  inline ::KFMsg::PBRankDatas* release_rankdatas();
+  inline void set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryFriendRankListAck)
+ private:
+  inline void set_has_rankid();
+  inline void clear_has_rankid();
+  inline void set_has_rankdatas();
+  inline void clear_has_rankdatas();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::KFMsg::PBRankDatas* rankdatas_;
+  ::google::protobuf::uint32 rankid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryFriendRankListAck* default_instance_;
 };
 // ===================================================================
 
@@ -12098,354 +12139,6 @@ inline void MsgQueryRecentListAck::set_allocated_recentlist(::KFMsg::PBRecord* r
 
 // -------------------------------------------------------------------
 
-// MsgQueryWholeRankListReq
-
-// required uint32 matchid = 1;
-inline bool MsgQueryWholeRankListReq::has_matchid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void MsgQueryWholeRankListReq::set_has_matchid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void MsgQueryWholeRankListReq::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void MsgQueryWholeRankListReq::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 MsgQueryWholeRankListReq::matchid() const {
-  return matchid_;
-}
-inline void MsgQueryWholeRankListReq::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
-}
-
-// required string ranktype = 2;
-inline bool MsgQueryWholeRankListReq::has_ranktype() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void MsgQueryWholeRankListReq::set_has_ranktype() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void MsgQueryWholeRankListReq::clear_has_ranktype() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void MsgQueryWholeRankListReq::clear_ranktype() {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    ranktype_->clear();
-  }
-  clear_has_ranktype();
-}
-inline const ::std::string& MsgQueryWholeRankListReq::ranktype() const {
-  return *ranktype_;
-}
-inline void MsgQueryWholeRankListReq::set_ranktype(const ::std::string& value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryWholeRankListReq::set_ranktype(const char* value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryWholeRankListReq::set_ranktype(const char* value, size_t size) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgQueryWholeRankListReq::mutable_ranktype() {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  return ranktype_;
-}
-inline ::std::string* MsgQueryWholeRankListReq::release_ranktype() {
-  clear_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ranktype_;
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void MsgQueryWholeRankListReq::set_allocated_ranktype(::std::string* ranktype) {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    delete ranktype_;
-  }
-  if (ranktype) {
-    set_has_ranktype();
-    ranktype_ = ranktype;
-  } else {
-    clear_has_ranktype();
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
-
-// MsgQueryRankListAck
-
-// required uint32 matchid = 1;
-inline bool MsgQueryRankListAck::has_matchid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void MsgQueryRankListAck::set_has_matchid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void MsgQueryRankListAck::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void MsgQueryRankListAck::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 MsgQueryRankListAck::matchid() const {
-  return matchid_;
-}
-inline void MsgQueryRankListAck::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
-}
-
-// required string ranktype = 2;
-inline bool MsgQueryRankListAck::has_ranktype() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void MsgQueryRankListAck::set_has_ranktype() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void MsgQueryRankListAck::clear_has_ranktype() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void MsgQueryRankListAck::clear_ranktype() {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    ranktype_->clear();
-  }
-  clear_has_ranktype();
-}
-inline const ::std::string& MsgQueryRankListAck::ranktype() const {
-  return *ranktype_;
-}
-inline void MsgQueryRankListAck::set_ranktype(const ::std::string& value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryRankListAck::set_ranktype(const char* value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryRankListAck::set_ranktype(const char* value, size_t size) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgQueryRankListAck::mutable_ranktype() {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  return ranktype_;
-}
-inline ::std::string* MsgQueryRankListAck::release_ranktype() {
-  clear_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ranktype_;
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void MsgQueryRankListAck::set_allocated_ranktype(::std::string* ranktype) {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    delete ranktype_;
-  }
-  if (ranktype) {
-    set_has_ranktype();
-    ranktype_ = ranktype;
-  } else {
-    clear_has_ranktype();
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional .KFMsg.PBRankData rankdatas = 3;
-inline bool MsgQueryRankListAck::has_rankdatas() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void MsgQueryRankListAck::set_has_rankdatas() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void MsgQueryRankListAck::clear_has_rankdatas() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void MsgQueryRankListAck::clear_rankdatas() {
-  if (rankdatas_ != NULL) rankdatas_->::KFMsg::PBRankData::Clear();
-  clear_has_rankdatas();
-}
-inline const ::KFMsg::PBRankData& MsgQueryRankListAck::rankdatas() const {
-  return rankdatas_ != NULL ? *rankdatas_ : *default_instance_->rankdatas_;
-}
-inline ::KFMsg::PBRankData* MsgQueryRankListAck::mutable_rankdatas() {
-  set_has_rankdatas();
-  if (rankdatas_ == NULL) rankdatas_ = new ::KFMsg::PBRankData;
-  return rankdatas_;
-}
-inline ::KFMsg::PBRankData* MsgQueryRankListAck::release_rankdatas() {
-  clear_has_rankdatas();
-  ::KFMsg::PBRankData* temp = rankdatas_;
-  rankdatas_ = NULL;
-  return temp;
-}
-inline void MsgQueryRankListAck::set_allocated_rankdatas(::KFMsg::PBRankData* rankdatas) {
-  delete rankdatas_;
-  rankdatas_ = rankdatas;
-  if (rankdatas) {
-    set_has_rankdatas();
-  } else {
-    clear_has_rankdatas();
-  }
-}
-
-// optional bool isfriendrank = 4;
-inline bool MsgQueryRankListAck::has_isfriendrank() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void MsgQueryRankListAck::set_has_isfriendrank() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void MsgQueryRankListAck::clear_has_isfriendrank() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void MsgQueryRankListAck::clear_isfriendrank() {
-  isfriendrank_ = false;
-  clear_has_isfriendrank();
-}
-inline bool MsgQueryRankListAck::isfriendrank() const {
-  return isfriendrank_;
-}
-inline void MsgQueryRankListAck::set_isfriendrank(bool value) {
-  set_has_isfriendrank();
-  isfriendrank_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgQueryFriendRankListReq
-
-// required uint32 matchid = 1;
-inline bool MsgQueryFriendRankListReq::has_matchid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void MsgQueryFriendRankListReq::set_has_matchid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void MsgQueryFriendRankListReq::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void MsgQueryFriendRankListReq::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 MsgQueryFriendRankListReq::matchid() const {
-  return matchid_;
-}
-inline void MsgQueryFriendRankListReq::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
-}
-
-// required string ranktype = 2;
-inline bool MsgQueryFriendRankListReq::has_ranktype() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void MsgQueryFriendRankListReq::set_has_ranktype() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void MsgQueryFriendRankListReq::clear_has_ranktype() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void MsgQueryFriendRankListReq::clear_ranktype() {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    ranktype_->clear();
-  }
-  clear_has_ranktype();
-}
-inline const ::std::string& MsgQueryFriendRankListReq::ranktype() const {
-  return *ranktype_;
-}
-inline void MsgQueryFriendRankListReq::set_ranktype(const ::std::string& value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryFriendRankListReq::set_ranktype(const char* value) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(value);
-}
-inline void MsgQueryFriendRankListReq::set_ranktype(const char* value, size_t size) {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  ranktype_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgQueryFriendRankListReq::mutable_ranktype() {
-  set_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    ranktype_ = new ::std::string;
-  }
-  return ranktype_;
-}
-inline ::std::string* MsgQueryFriendRankListReq::release_ranktype() {
-  clear_has_ranktype();
-  if (ranktype_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ranktype_;
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void MsgQueryFriendRankListReq::set_allocated_ranktype(::std::string* ranktype) {
-  if (ranktype_ != &::google::protobuf::internal::kEmptyString) {
-    delete ranktype_;
-  }
-  if (ranktype) {
-    set_has_ranktype();
-    ranktype_ = ranktype;
-  } else {
-    clear_has_ranktype();
-    ranktype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
-
 // MsgCompoundDataReq
 
 // required string dataname = 1;
@@ -12538,6 +12231,186 @@ inline ::google::protobuf::uint32 MsgCompoundDataReq::key() const {
 inline void MsgCompoundDataReq::set_key(::google::protobuf::uint32 value) {
   set_has_key();
   key_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryRankListReq
+
+// required uint32 rankid = 1;
+inline bool MsgQueryRankListReq::has_rankid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryRankListReq::set_has_rankid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryRankListReq::clear_has_rankid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryRankListReq::clear_rankid() {
+  rankid_ = 0u;
+  clear_has_rankid();
+}
+inline ::google::protobuf::uint32 MsgQueryRankListReq::rankid() const {
+  return rankid_;
+}
+inline void MsgQueryRankListReq::set_rankid(::google::protobuf::uint32 value) {
+  set_has_rankid();
+  rankid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryRankListAck
+
+// required uint32 rankid = 1;
+inline bool MsgQueryRankListAck::has_rankid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryRankListAck::set_has_rankid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryRankListAck::clear_has_rankid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryRankListAck::clear_rankid() {
+  rankid_ = 0u;
+  clear_has_rankid();
+}
+inline ::google::protobuf::uint32 MsgQueryRankListAck::rankid() const {
+  return rankid_;
+}
+inline void MsgQueryRankListAck::set_rankid(::google::protobuf::uint32 value) {
+  set_has_rankid();
+  rankid_ = value;
+}
+
+// required .KFMsg.PBRankDatas rankdatas = 2;
+inline bool MsgQueryRankListAck::has_rankdatas() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgQueryRankListAck::set_has_rankdatas() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgQueryRankListAck::clear_has_rankdatas() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgQueryRankListAck::clear_rankdatas() {
+  if (rankdatas_ != NULL) rankdatas_->::KFMsg::PBRankDatas::Clear();
+  clear_has_rankdatas();
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryRankListAck::rankdatas() const {
+  return rankdatas_ != NULL ? *rankdatas_ : *default_instance_->rankdatas_;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryRankListAck::mutable_rankdatas() {
+  set_has_rankdatas();
+  if (rankdatas_ == NULL) rankdatas_ = new ::KFMsg::PBRankDatas;
+  return rankdatas_;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryRankListAck::release_rankdatas() {
+  clear_has_rankdatas();
+  ::KFMsg::PBRankDatas* temp = rankdatas_;
+  rankdatas_ = NULL;
+  return temp;
+}
+inline void MsgQueryRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas) {
+  delete rankdatas_;
+  rankdatas_ = rankdatas;
+  if (rankdatas) {
+    set_has_rankdatas();
+  } else {
+    clear_has_rankdatas();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryFriendRankListReq
+
+// required uint32 rankid = 1;
+inline bool MsgQueryFriendRankListReq::has_rankid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryFriendRankListReq::set_has_rankid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryFriendRankListReq::clear_has_rankid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryFriendRankListReq::clear_rankid() {
+  rankid_ = 0u;
+  clear_has_rankid();
+}
+inline ::google::protobuf::uint32 MsgQueryFriendRankListReq::rankid() const {
+  return rankid_;
+}
+inline void MsgQueryFriendRankListReq::set_rankid(::google::protobuf::uint32 value) {
+  set_has_rankid();
+  rankid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryFriendRankListAck
+
+// required uint32 rankid = 1;
+inline bool MsgQueryFriendRankListAck::has_rankid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryFriendRankListAck::set_has_rankid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryFriendRankListAck::clear_has_rankid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryFriendRankListAck::clear_rankid() {
+  rankid_ = 0u;
+  clear_has_rankid();
+}
+inline ::google::protobuf::uint32 MsgQueryFriendRankListAck::rankid() const {
+  return rankid_;
+}
+inline void MsgQueryFriendRankListAck::set_rankid(::google::protobuf::uint32 value) {
+  set_has_rankid();
+  rankid_ = value;
+}
+
+// required .KFMsg.PBRankDatas rankdatas = 2;
+inline bool MsgQueryFriendRankListAck::has_rankdatas() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgQueryFriendRankListAck::set_has_rankdatas() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgQueryFriendRankListAck::clear_has_rankdatas() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgQueryFriendRankListAck::clear_rankdatas() {
+  if (rankdatas_ != NULL) rankdatas_->::KFMsg::PBRankDatas::Clear();
+  clear_has_rankdatas();
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryFriendRankListAck::rankdatas() const {
+  return rankdatas_ != NULL ? *rankdatas_ : *default_instance_->rankdatas_;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryFriendRankListAck::mutable_rankdatas() {
+  set_has_rankdatas();
+  if (rankdatas_ == NULL) rankdatas_ = new ::KFMsg::PBRankDatas;
+  return rankdatas_;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryFriendRankListAck::release_rankdatas() {
+  clear_has_rankdatas();
+  ::KFMsg::PBRankDatas* temp = rankdatas_;
+  rankdatas_ = NULL;
+  return temp;
+}
+inline void MsgQueryFriendRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas) {
+  delete rankdatas_;
+  rankdatas_ = rankdatas;
+  if (rankdatas) {
+    set_has_rankdatas();
+  } else {
+    clear_has_rankdatas();
+  }
 }
 
 

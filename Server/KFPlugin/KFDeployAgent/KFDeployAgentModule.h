@@ -12,6 +12,7 @@
 
 #include "KFrame.h"
 #include "KFDeployAgentInterface.h"
+#include "KFFtp/KFFtpInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -21,6 +22,43 @@
 
 namespace KFrame
 {
+    class KFDeployTask
+    {
+    public:
+        enum MyEnum
+        {
+            None = 0,
+            Startup = 1,		// 启动
+            ShutDown = 2,		// 关闭
+            Kill = 3,			// 强制关闭
+            Update = 4,			// 更新
+        };
+
+    public:
+        KFDeployTask()
+        {
+            _app_id = _invalid_int;
+            _deploy_type = _invalid_int;
+            _delay_time = _invalid_int;
+        }
+
+    public:
+        // 部署类型
+        uint32 _deploy_type;
+
+        // appname
+        std::string _app_name;
+
+        // apptype
+        std::string _app_type;
+
+        // appid
+        uint32 _app_id;
+
+        // 延迟时间
+        uint32 _delay_time;
+    };
+
     class KFLaunchSetting;
     class KFDeployAgentModule : public KFDeployAgentInterface
     {
@@ -44,6 +82,9 @@ namespace KFrame
         // 启动服务器
         __KF_TIMER_FUNCTION__( OnTimerStartupProcess );
 
+        // 检查任务完成
+        __KF_TIMER_FUNCTION__( OnTimerCheckTaskFinish );
+
     protected:
         // 启动服务器
         __KF_MESSAGE_FUNCTION__( HandleStartupServerReq );
@@ -53,6 +94,9 @@ namespace KFrame
 
         // 杀死服务器
         __KF_MESSAGE_FUNCTION__( HandleKillServerReq );
+
+        // 更新服务器
+        __KF_MESSAGE_FUNCTION__( HandleUpdateServerReq );
 
     protected:
         // 更新数据到部署服务
@@ -99,8 +143,33 @@ namespace KFrame
         void KillLinuxProcess( uint32 processid );
 #endif
 
+    protected:
+        // 添加部署任务
+        void AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 delaytime = 0 );
+
+        // 开始任务
+        void StartDeployTask();
+        void StartKillServerTask();
+        void StartShutDownServerTask();
+        void StartStartupServerTask();
+        void StartUpdateServerTask();
+
+        // 检查任务完成
+        bool CheckShutDownServerTaskFinish();
+        bool CheckStartupServerTaskFinish();
+        bool CheckUpdateServerTaskFinish();
+
+        // ftp下载回调
+        void OnFtpDownLoadCallBack( uint32 ftpid, bool ftpok );
+
     private:
         uint32 _deploy_server_id;
+
+        // 当前执行的任务
+        KFDeployTask* _kf_task;
+
+        // 部署任务队列
+        std::list< KFDeployTask* > _deploy_task;
     };
 }
 

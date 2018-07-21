@@ -46,10 +46,10 @@ namespace KFrame
         uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
 
         // 任务数值更新回调
-        void OnUpdateTaskValueCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskValueCallBack );
 
         // 任务标记更新回调
-        void OnUpdateTaskFlagCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskFlagCallBack );
     private:
         KFComponent* _kf_component;
     };

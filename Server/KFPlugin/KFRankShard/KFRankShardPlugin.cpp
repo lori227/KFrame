@@ -16,9 +16,9 @@ namespace KFrame
 
     void KFRankShardPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_redis, KFRedisInterface );
         __FIND_MODULE__( _kf_worker, KFWorkerInterface );
-        __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_schedule, KFScheduleInterface );

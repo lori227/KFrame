@@ -7,7 +7,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFMySQLExecute::KFMySQLExecute()
     {
-        _length = KFrame::Buff_10M;
+        _length = KFBufferEnum::Buff_10M;
         _buffer = __KF_INT8__( _length );
     }
 

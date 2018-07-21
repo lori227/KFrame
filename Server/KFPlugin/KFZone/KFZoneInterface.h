@@ -42,10 +42,6 @@ namespace KFrame
         // 游戏分区id
         virtual const KFZone* GetZone() const = 0;
 
-        // 获得zoneid
-        virtual uint32 GetServerZoneId( uint32 serverid ) = 0;
-        virtual uint32 GetPlayerZoneId( uint32 playerid ) = 0;
-
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint32 serverid ) = 0;
         virtual bool IsPlayerSameZone( uint32 playerid ) = 0;

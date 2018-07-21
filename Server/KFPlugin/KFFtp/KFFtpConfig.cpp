@@ -47,7 +47,8 @@ namespace KFrame
                     kfsetting->_password = password;
 
                     kfsetting->_id = ftpnode.GetUInt32( "Id" );
-                    kfsetting->_ftp_path = ftpnode.GetString( "FtpPath" );
+                    kfsetting->_win_ftp_path = ftpnode.GetString( "WinFtpPath" );
+                    kfsetting->_linux_ftp_path = ftpnode.GetString( "LinuxFtpPath" );
                     kfsetting->_local_path = ftpnode.GetString( "LocalPath" );
                     _kf_ftp_setting.Insert( kfsetting->_id, kfsetting );
 

@@ -4,7 +4,6 @@
 #include "KFInclude.h"
 #include "KFMacros.h"
 #include "spdlog/spdlog.h"
-#include "spdlog/fmt/fmt.h"
 #include "KFPlugin/KFGlobal.h"
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -118,8 +117,6 @@ namespace KFrame
         static void* _console_handle;
     };
 
-#define KF_FORMAT(my_fmt, ...)				fmt::format(my_fmt, ##__VA_ARGS__);
-#define KF_FORMAT_FUNCTION(my_fmt, ...)		fmt::format(std::string("[{}:{}]") + my_fmt, __FUNCTION_LINE__, ##__VA_ARGS__);
 
 #define KF_LOG_TRACE(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::trace, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);
 #define KF_LOG_DEBUG(my_fmt, ...)			KFGlobal::Instance()->_logger->Log(spdlog::level::debug, __FUNCTION_LINE__, my_fmt, ##__VA_ARGS__);

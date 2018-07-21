@@ -17,7 +17,6 @@ namespace KFrame
 
     void KFWorkerPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_redis, KFRedisInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }

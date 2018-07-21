@@ -182,9 +182,9 @@ namespace KFrame
             auto keyelement = reply->element[ i ];
             auto valueelement = reply->element[ i + 1 ];
 
-            std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
-            std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
-            if ( key == "" )
+            std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+            std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+            if ( key == _invalid_str )
             {
                 continue;
             }
@@ -197,7 +197,7 @@ namespace KFrame
     }
 
     template<>
-    bool KFHiRedis::Execute<>( LesserMapString& result, const char* command )
+    bool KFHiRedis::Execute<>( GreaterMapString& result, const char* command )
     {
         redisReply* reply = Execute( REDIS_REPLY_ARRAY, command );
 
@@ -206,9 +206,9 @@ namespace KFrame
             auto keyelement = reply->element[ i ];
             auto valueelement = reply->element[ i + 1 ];
 
-            std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
-            std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
-            if ( key == "" )
+            std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+            std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+            if ( key == _invalid_str )
             {
                 continue;
             }
@@ -275,16 +275,15 @@ namespace KFrame
                 auto keyelement = reply->element[ i ];
                 auto valueelement = reply->element[ i + 1 ];
 
-                std::string key = ( keyelement->str == nullptr ? "" : keyelement->str );
-                std::string value = ( valueelement->str == nullptr ? "" : valueelement->str );
-                if ( key == "" )
+                std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+                std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+                if ( key == _invalid_str )
                 {
                     continue;
                 }
 
                 values[ key ] = value;
             }
-
 
             freeReplyObject( reply );
             reply = nullptr;
@@ -319,17 +318,10 @@ namespace KFrame
                 {
                     auto element = reply->element[ i ];
 
-                    std::string value = ( element->str == nullptr ? "" : element->str );
+                    std::string value = ( element->str == nullptr ? _invalid_str : element->str );
                     values.push_back( value );
                 }
             }
-
-            else
-            {
-                std::string value = ( reply->str == nullptr ? "" : reply->str );
-                values.push_back( value );
-            }
-
 
             freeReplyObject( reply );
             reply = nullptr;

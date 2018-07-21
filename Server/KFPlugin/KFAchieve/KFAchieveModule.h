@@ -46,12 +46,13 @@ namespace KFrame
         uint32 ReceiveAchieveReward( KFEntity* player, uint32 achieveid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 成就数值更新回调
-        void OnAchieveValueUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnAchieveValueUpdateCallBack );
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调
-        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-        void OnAddDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
-        void OnRemoveDataCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
+        __KF_ADD_DATA_FUNCTION__( OnAddDataCallBack );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataCallBack );
 
         // 更新成就
         void UpdateDataAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );

@@ -21,7 +21,18 @@ namespace KFrame
             MT = 2,		// 多线程
         };
     }
-
+    namespace KFBufferEnum
+    {
+        enum MyEnum
+        {
+            Buff_1M = 1024 * 1024,		// buff大小
+            Buff_10M = 10 * Buff_1M,
+            Buff_20M = 20 * Buff_1M,
+            Buff_40M = 40 * Buff_1M,
+            Buff_100M = 100 * Buff_1M,
+            Buff_200M = 200 * Buff_1M,
+        };
+    }
     ////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
     namespace KFOperateEnum
@@ -52,5 +63,35 @@ namespace KFrame
             MaxPlayerCount = 1000000,	// 每个区最大的角色数量
         };
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    namespace KFRankEnum
+    {
+        enum MyEnum
+        {
+            TotalRank = 1,		// 全区全服排行榜
+            ZoneRank = 2,		// 分区排行榜
+        };
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    namespace KFScoreEnum
+    {
+        enum MyEnum
+        {
+            ScoreRatio = 10000,	// 积分比率
+        };
+    }
+
+    namespace KFCompressEnum
+    {
+        enum MyEnum
+        {
+            None = 0x0,			// 无操作
+            Convert = 0x1,		// 转换
+            Zib = 0x2,			// 压缩
+            Compress = 0x3,		// 压缩转换
+        };
+    }
 }
+
 #endif

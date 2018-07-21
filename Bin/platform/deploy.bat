@@ -40,7 +40,7 @@ call :copyfile 1 ip.address
 call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
-
+call :copyfile 1 common.startup
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼

@@ -185,7 +185,7 @@ namespace KFrame
         _init_logger->flush_on( spdlog::level::trace );
 #else
         _init_logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
-        _init_logger->flush_on( spdlog::level::err );
+        _init_logger->flush_on( spdlog::level::warn );
 #endif
 
         spdlog::register_logger( _init_logger );

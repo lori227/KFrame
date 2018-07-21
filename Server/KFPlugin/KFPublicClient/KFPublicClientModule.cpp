@@ -92,12 +92,12 @@ namespace KFrame
         UpdatePublicData( player, values );
     }
 
-    void KFPublicClientModule::OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFPublicClientModule::OnUpdateDataCallBack )
     {
         OnUpdateDataToPublic( player, kfdata );
     }
 
-    void KFPublicClientModule::OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value )
+    __KF_UPDATE_STRING_FUNCTION__( KFPublicClientModule::OnUpdateStringCallBack )
     {
         OnUpdateDataToPublic( player, kfdata );
     }

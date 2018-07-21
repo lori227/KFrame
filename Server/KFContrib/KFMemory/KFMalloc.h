@@ -2,6 +2,7 @@
 #define __KF_MALLOC_H__
 
 #include "KFInclude.h"
+#include "KFEnum.h"
 #include "KFMemory/KFMemory.h"
 #include "KFLogger/KFLogger.h"
 

@@ -121,7 +121,7 @@ namespace KFrame
         SendUpdateToFriend( player, values );
     }
 
-    void KFRelationClientModule::OnRelationValueUpdate( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    __KF_UPDATE_DATA_FUNCTION__( KFRelationClientModule::OnRelationValueUpdate )
     {
         if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) ||
                 !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) )
@@ -136,7 +136,7 @@ namespace KFrame
     }
 
 
-    void KFRelationClientModule::OnRelationStringUpdate( KFEntity* player, KFData* kfdata, const std::string& value )
+    __KF_UPDATE_STRING_FUNCTION__( KFRelationClientModule::OnRelationStringUpdate )
     {
         if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) ||
                 !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) )
@@ -150,7 +150,7 @@ namespace KFrame
         SendUpdateToFriend( player, values );
     }
 
-    void KFRelationClientModule::OnAddToastCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+    __KF_ADD_DATA_FUNCTION__( KFRelationClientModule::OnAddToastCallBack )
     {
         // 敬酒增加好友度
         auto targetplayerid = kfdata->GetValue< uint32 >( KFField::_id );

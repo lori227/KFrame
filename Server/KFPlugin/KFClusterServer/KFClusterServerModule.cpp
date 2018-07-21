@@ -112,7 +112,7 @@ namespace KFrame
             ack.set_type( "" );
             ack.set_id( 0 );
 
-            KFLogger::LogLogic( KFLogger::Error, "[%s] cluster[%u] key failed!",
+            KFLogger::LogLogic( KFLogger::Error, "cluster[%u] can't find proxy!",
                                 kfmsg.clusterkey().c_str(), handleid );
         }
         else

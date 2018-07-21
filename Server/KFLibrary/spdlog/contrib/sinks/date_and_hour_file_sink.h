@@ -92,11 +92,7 @@ struct default_date_and_hour_file_name_calculator
             {
                 if (ACCESS(tmp_dir_path, 0) == -1)
                 {
-                    int32_t ret = MKDIR(tmp_dir_path);
-                    if (ret != 0)
-                    {
-                        assert(0);
-                    }
+                    MKDIR(tmp_dir_path);
                 }
             }
         }

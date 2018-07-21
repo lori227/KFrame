@@ -30,7 +30,7 @@ namespace KFrame
         virtual void SetTime( uint64 time ) = 0;
 
         // 设置日期
-        virtual void SetDate( uint32 controltype, uint32 minute, uint32 hour, uint32 day = 0, uint32 month = 0, uint32 year = 0 ) = 0;
+        virtual void SetDate( uint32 controltype, uint32 minute, uint32 hour = 0, uint32 day = 0, uint32 month = 0, uint32 year = 0 ) = 0;
 
         // 设置回调数据
         virtual void SetData( uint32 objectid, const void* data, uint32 size ) = 0;

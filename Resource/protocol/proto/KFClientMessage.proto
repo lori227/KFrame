@@ -74,10 +74,11 @@ enum ClientProtocol
 	MSG_UPDATE_SETTING_REQ = 180;				// 更新设置请求
 	MSG_QUERY_RECENT_LIST_REQ = 181;			// 查询最近列表申请
 	MSG_QUERY_RECENT_LIST_ACK = 182;			// 查询最近列表回馈
-	MSG_QUERY_WHOLE_RANK_LIST_REQ = 183;		// 查询全服排行榜
-	MSG_QUERY_FRIEND_RANK_LIST_REQ = 184;		// 查询好友排行榜
-	MSG_QUERY_RANK_LIST_ACK	 = 185;				// 查询排行榜反馈
-	MSG_COMPOUND_DATA_REQ = 186;				// 合成属性
+	MSG_QUERY_RANK_LIST_REQ = 183;				// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 = 184;				// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// 查询好友排行榜
+	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -697,34 +698,6 @@ message MsgQueryRecentListAck
 	required PBRecord recentlist = 1;
 }
 
-
-// 查询全服排行榜
-// MSG_QUERY_WHOLE_RANK_LIST_REQ	
-message MsgQueryWholeRankListReq
-{
-	required uint32 matchid = 1 ;		// 单人;双人;四人;综合
-	required string ranktype = 2;		// 榜单类型:evalrank,winrank;killrank;
-}
-
-
-// 查询排行榜反馈
-// MSG_QUERY_RANK_LIST_ACK
-message MsgQueryRankListAck
-{
-	required uint32 matchid = 1;		// 匹配类型id  单人;双人;四人;综合
-	required string ranktype = 2;		// 榜单类型
-	optional PBRankData rankdatas = 3;	// 榜单数据
-	optional bool isfriendrank = 4;		// 是否是好友榜单
-}
-
-// 查询好友排行榜
-// MSG_QUERY_FRIEND_RANK_LIST_REQ
-message MsgQueryFriendRankListReq
-{
-	required uint32 matchid = 1 ;		// 单人;双人;四人;综合
-	required string ranktype = 2;		// 榜单类型:evalrank,winrank;killrank;
-}
-
 // 合成属性
 // MSG_COMPOUND_DATA_REQ
 message MsgCompoundDataReq
@@ -732,3 +705,34 @@ message MsgCompoundDataReq
 	required string dataname = 1;	// 属性名称( 在class中 )
 	required uint32 key = 2;		// 属性id
 }
+
+// 查询全服排行榜
+// MSG_QUERY_RANK_LIST_REQ	
+message MsgQueryRankListReq
+{
+	required uint32 rankid = 1;
+}
+
+// 查询排行榜反馈
+// MSG_QUERY_RANK_LIST_ACK
+message MsgQueryRankListAck
+{
+	required uint32 rankid = 1;			// 排行榜id
+	required PBRankDatas rankdatas = 2;	// 榜单数据
+}
+
+// 查询好友排行榜
+// MSG_QUERY_FRIEND_RANK_LIST_REQ
+message MsgQueryFriendRankListReq
+{
+	required uint32 rankid = 1;
+}
+
+// 查询好友排行榜反馈
+// MSG_QUERY_FRIEND_RANK_LIST_ACK
+message MsgQueryFriendRankListAck
+{
+	required uint32 rankid = 1;			// 排行榜id
+	required PBRankDatas rankdatas = 2;	// 榜单数据
+}
+

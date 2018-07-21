@@ -50,7 +50,7 @@ namespace KFrame
         virtual void FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist );
 
         // 修改小区master地址
-        virtual void SetZoneIpAddress( uint32 zoneid, uint32 appid, const std::string& ip );
+        virtual void SetZoneIpAddress( uint32 zoneid, const std::string& ip );
 
         // 平台访问地址
         virtual const std::string& FindPlatformAddress( uint32 id );

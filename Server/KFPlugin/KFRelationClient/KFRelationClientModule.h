@@ -102,10 +102,10 @@ namespace KFrame
         void AddFriend( KFEntity* player, KFData* kfinvite );
 
         // 属性更新回调
-        void OnRelationValueUpdate( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
-        void OnAddToastCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_ADD_DATA_FUNCTION__( OnAddToastCallBack );
+        __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );
+        __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
 
-        void OnRelationStringUpdate( KFEntity* player, KFData* kfdata, const std::string& value );
         // 发送好友更新消息
         void SendUpdateToFriend( KFEntity* player, MapString& values );
     private:

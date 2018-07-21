@@ -135,7 +135,7 @@ namespace KFrame
         // 踢掉在线玩家
         _kf_player->KickPlayer( playerid, KFMsg::KickEnum::LoginBeKick, __FUNCTION__, _invalid_int );
 
-        auto zoneid = _kf_zone->GetPlayerZoneId( playerid );
+        auto zoneid = KFUtility::CalcZoneId( playerid );
 
         // 加载玩家数据
         KFMsg::S2SLoginLoadPlayerReq req;

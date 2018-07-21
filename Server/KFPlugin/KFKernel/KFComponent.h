@@ -22,11 +22,31 @@ namespace KFrame
     typedef std::function<void( KFEntity*, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )> KFUpdateDataFunction;
     typedef std::function<void( KFEntity*, KFData* kfdata, const std::string& value )> KFUpdateStringFunction;
 
-
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
     typedef std::function< void( KFEntity*, const KFMsg::PBObject&  ) > KFSyncFunction;
     typedef std::function< void( KFEntity*, const std::string&, bool, const char*, uint32 ) > KFShowRewardFunction;
 
+
+#define __KF_ADD_AGENT_FUNCTION__( addfunction ) \
+    void addfunction( KFEntity* player, KFAgent* kfagent, float multiple, const char* function, uint32 line )
+
+#define  __KF_CHECK_AGENT_FUNCTION__( checkfunction ) \
+    bool checkfunction( KFEntity* player, KFAgent* kfagent, const char* function, uint32 line )
+
+#define  __KF_REMOVE_AGENT_FUNCTION__( removefunction ) \
+    void removefunction( KFEntity* player, KFAgent* kfagent, const char* function, uint32 line )
+
+#define __KF_ADD_DATA_FUNCTION__( addfunction ) \
+    void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+
+#define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
+    void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+
+#define __KF_UPDATE_DATA_FUNCTION__( updatefunction ) \
+    void updatefunction( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+
+#define  __KF_UPDATE_STRING_FUNCTION__( updatefunction ) \
+    void updatefunction( KFEntity* player, KFData* kfdata, const std::string& value )
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     // 游戏中的组件, 负责属性回调时间

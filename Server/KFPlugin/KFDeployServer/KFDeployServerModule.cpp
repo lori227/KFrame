@@ -22,6 +22,7 @@ namespace KFrame
         __REGISTER_HTTP_FUNCTION__( KFField::_startup, true, &KFDeployServerModule::HandleStartupServer );
         __REGISTER_HTTP_FUNCTION__( KFField::_shut_down, true, &KFDeployServerModule::HandleShutDownServer );
         __REGISTER_HTTP_FUNCTION__( KFField::_kill, true, &KFDeployServerModule::HandleKillServer );
+        __REGISTER_HTTP_FUNCTION__( KFField::_download, true, &KFDeployServerModule::HandleUpdateServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
@@ -39,6 +40,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( KFField::_startup );
         __UNREGISTER_HTTP_FUNCTION__( KFField::_shut_down );
         __UNREGISTER_HTTP_FUNCTION__( KFField::_kill );
+        __UNREGISTER_HTTP_FUNCTION__( KFField::_download );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_STATUS_REQ );
@@ -218,6 +220,23 @@ namespace KFrame
         req.set_apptype( apptype );
         req.set_appid( appid );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &req );
+
+        return _invalid_str;
+    }
+
+    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleUpdateServer )
+    {
+        KFJson request( data );
+
+        auto appname = request.GetString( KFField::_app_name );
+        auto apptype = request.GetString( KFField::_app_type );
+        auto appid = request.GetUInt32( KFField::_app_id );
+
+        KFMsg::S2SUpdateServerToAgentReq req;
+        req.set_appname( appname );
+        req.set_apptype( apptype );
+        req.set_appid( appid );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ, &req );
 
         return _invalid_str;
     }

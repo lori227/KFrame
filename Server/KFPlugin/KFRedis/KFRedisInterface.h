@@ -18,8 +18,8 @@ namespace KFrame
         virtual bool UInt64Execute( uint64& value, const char* format, ... ) = 0;
         virtual bool StringExecute( std::string& value, const char* format, ... ) = 0;
         virtual bool MapExecute( MapString& value, const char* format, ... ) = 0;
+        virtual bool MapExecute( GreaterMapString& value, const char* format, ... ) = 0;
         virtual bool VectorExecute( VectorString& value, const char* format, ... ) = 0;
-        virtual bool MapExecute( LesserMapString& value, const char* format, ... ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 

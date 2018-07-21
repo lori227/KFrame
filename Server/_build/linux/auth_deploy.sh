@@ -45,6 +45,7 @@ copyfile 1 bus.relation
 copyfile 1 ip.address
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
+copyfile 1 common.startup
 
 path1=$settingpath/auth
 path2=$deploypath/setting
@@ -93,7 +94,10 @@ copyfile 1 KFBus.so
 copyfile 1 KFBusd.so
 copyfile 1 KFMessage.so
 copyfile 1 KFMessaged.so
-
+copyfile 1 KFClusterClientd.so
+copyfile 1 KFClusterClient.so
+copyfile 1 KFLogClientd.so
+copyfile 1 KFLogClient.so
 
 
 

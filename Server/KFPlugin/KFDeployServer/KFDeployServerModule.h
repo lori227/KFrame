@@ -49,6 +49,9 @@ namespace KFrame
         // 杀死服务器
         __KF_HTTP_FUNCTION__( HandleKillServer );
 
+        // 更新服务器
+        __KF_HTTP_FUNCTION__( HandleUpdateServer );
+
     protected:
 
         // 注册Agent

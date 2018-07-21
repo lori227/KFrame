@@ -15,25 +15,54 @@ namespace KFrame
 
     bool KFRankShardConfig::LoadConfig( const char* file )
     {
+        _player_data.clear();
+        _kf_rank_setting.Clear();
+
         try
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
-
             //////////////////////////////////////////////////////////////////
-            auto zonenode = config.FindNode( "Zone" );
-            while ( zonenode.IsValid() )
+            auto playernode = config.FindNode( "PlayerData" );
+            auto datanode = playernode.FindNode( "Data" );
+            while ( datanode.IsValid() )
             {
-                auto zoneid = zonenode.GetUInt32( "Id" );
+                auto dataname = datanode.GetString( "Name" );
+                _player_data.push_back( dataname );
 
-                auto servernode = zonenode.FindNode( "Server" );
-                while ( servernode.IsValid() )
+                datanode.NextNode();
+            }
+
+            playernode.NextNode();
+            //////////////////////////////////////////////////////////////////
+            auto ranksnode = config.FindNode( "Ranks" );
+            auto ranknode = ranksnode.FindNode( "Rank" );
+            while ( ranknode.IsValid() )
+            {
+                auto kfsetting = __KF_CREATE__( KFRankSetting );
+
+                kfsetting->_rank_id = ranknode.GetUInt32( "Id" );
+                kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
+                kfsetting->_shard_id = ranknode.GetUInt32( "ShardId" );
+                kfsetting->_parent_data = ranknode.GetString( "ParentData" );
+                kfsetting->_rank_data = ranknode.GetString( "RankData" );
+                kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
+                kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
+                kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
+                kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
+                kfsetting->_refresh_minute = ranknode.GetUInt32( "RefreshMinute" );
+                kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
+
+                auto shownode = ranknode.FindNode( "ShowData" );
+                while ( shownode.IsValid() )
                 {
-                    auto serverid = servernode.GetUInt32( "Id" );
-                    AddServerZone( zoneid, serverid );
-                    servernode.NextNode();
+                    auto dataname = shownode.GetString( "Name" );
+                    kfsetting->_show_data.push_back( dataname );
+                    shownode.NextNode();
                 }
-                zonenode.NextNode();
+
+                AddRankSetting( kfsetting );
+                ranknode.NextNode();
             }
         }
         catch ( ... )
@@ -44,26 +73,13 @@ namespace KFrame
         return true;
     }
 
-    const std::set< uint32 >* KFRankShardConfig::FindZoneId( uint32 serverid )
+    void KFRankShardConfig::AddRankSetting( KFRankSetting* kfsetting )
     {
-        auto iter = _server_zone_list.find( serverid );
-        if ( iter == _server_zone_list.end() )
-        {
-            return nullptr;
-        }
-
-        return &iter->second;
+        _kf_rank_setting.Insert( kfsetting->_rank_id, kfsetting );
     }
 
-    void KFRankShardConfig::AddServerZone( uint32 zoneid, uint32 serverid )
+    const KFRankSetting* KFRankShardConfig::FindRankSetting( uint32 rankid ) const
     {
-        auto iter = _server_zone_list.find( serverid );
-        if ( iter == _server_zone_list.end() )
-        {
-            std::set< uint32 > zonelist;
-            iter = _server_zone_list.insert( std::make_pair( serverid, zonelist ) ).first;
-        }
-
-        iter->second.insert( zoneid );
+        return _kf_rank_setting.Find( rankid );
     }
 }

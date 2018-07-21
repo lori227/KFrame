@@ -111,23 +111,24 @@ namespace KFrame
         // 离开游戏更新队伍
         void OnLeaveUpdateMatchGroup( KFEntity* player );
 
-        // 更新属性回调
-        void OnUpdateStringCallBack( KFEntity* player, KFData* kfdata, const std::string& value );
-        void OnUpdateDataCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        // 更新队伍属性
         void OnUpdateDataToGroup( KFEntity* player, KFData* kfdata );
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 更新属性回调
+        __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
+
         // 队伍id
-        void OnGroupIdUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnGroupIdUpdateCallBack );
 
         // 最大数量
-        void OnGroupMaxCountUpdateCallBack( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        __KF_UPDATE_DATA_FUNCTION__( OnGroupMaxCountUpdateCallBack );
 
         // 添加队员回调
-        void OnAddGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_ADD_DATA_FUNCTION__( OnAddGroupMemberCallBack );
 
         // 删除队员回调
-        void OnRemoveGroupMemberCallBack( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveGroupMemberCallBack );
     private:
         // 准备匹配小队
         uint64 PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
