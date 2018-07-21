@@ -51,8 +51,15 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
+        // 如果是master, 返回false, 因为master会主动连, 不需要再这里再次连接
+        if ( connecttype == KFField::_master )
+        {
+            return false;
+        }
+
         auto ok = _kf_bus_config->IsValidConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id,
                   connectname, connecttype, connectid );
+
         return ok;
     }
 

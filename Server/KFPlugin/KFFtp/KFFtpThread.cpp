@@ -61,28 +61,34 @@ namespace KFrame
             return;
         }
 
-
-        nsFTP::CFTPClient ftpclient;
-        nsFTP::CLogonInfo logonInfo( kfsetting->_address, kfsetting->_port, kfsetting->_user, kfsetting->_password );
-        if ( !ftpclient.Login( logonInfo ) )
+        try
         {
-            _ftp_result = KFFtpEnum::Failed;
-            return;
+            nsFTP::CFTPClient ftpclient;
+            nsFTP::CLogonInfo logonInfo( kfsetting->_address, kfsetting->_port, kfsetting->_user, kfsetting->_password );
+            if ( !ftpclient.Login( logonInfo ) )
+            {
+                _ftp_result = KFFtpEnum::Failed;
+                return;
+            }
+
+            _ftp_result = KFFtpEnum::Download;
+
+            // 更新文件
+#if __KF_SYSTEM__ == __KF_WIN__
+            std::string ftppath = "/" + kfsetting->_win_ftp_path;
+#else
+            std::string ftppath = "/" + kfsetting->_linux_ftp_path;
+#endif
+            std::string localpath = kfsetting->_local_path;
+            DownloadFiles( &ftpclient, ftppath, localpath );
+
+            ftpclient.Logout();
+            _ftp_result = KFFtpEnum::Finish;
+        }
+        catch ( ... )
+        {
         }
 
-        _ftp_result = KFFtpEnum::Download;
-
-        // 更新文件
-#if __KF_SYSTEM__ == __KF_WIN__
-        std::string ftppath = "/" + kfsetting->_win_ftp_path;
-#else
-        std::string ftppath = "/" + kfsetting->_linux_ftp_path;
-#endif
-        std::string localpath = kfsetting->_local_path;
-        DownloadFiles( &ftpclient, ftppath, localpath );
-
-        ftpclient.Logout();
-        _ftp_result = KFFtpEnum::Finish;
     }
 
     void KFFtpThread::CreateLocalDirectory( const std::string& path )

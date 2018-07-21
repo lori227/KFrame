@@ -48,7 +48,7 @@ copyfile 1 common.startup
 path2=$deploypath/config
 copyfile 1 cluster.config
 
-path1=$settingpath/mail
+path1=$settingpath/log
 path2=$deploypath/setting
 copyfile 1 master.startup
 copyfile 1 proxy.startup
@@ -57,8 +57,6 @@ copyfile 1 shard.startup
 #config
 path1=$respath/config
 path2=$deploypath/config
-copyfile 0 redis.config
-copyfile 1 option.config
 
 #plugin
 path1=$binpath

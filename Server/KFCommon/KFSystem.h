@@ -32,7 +32,6 @@
         #define _WINSOCK_DEPRECATED_NO_WARNINGS
     #endif // !_WINSOCK_DEPRECATED_NO_WARNINGS
 
-
     #ifdef _WIN32_WINNT
         #undef _WIN32_WINNT
     #endif

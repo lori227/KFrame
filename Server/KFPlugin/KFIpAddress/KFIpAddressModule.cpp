@@ -3,8 +3,8 @@
 
 
 #if __KF_SYSTEM__ == __KF_WIN__
-    #include <windows.h>
     #include <winsock2.h>
+    #include <windows.h>
 #else
     #include <unistd.h>
     #include <netdb.h>

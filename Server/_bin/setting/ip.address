@@ -36,7 +36,7 @@
 		<Server AppName="rank" AppType="master" AppId="90000" Ip="192.168.1.9" Type="0" Port="10009"/>
 
 		<!-- log服务器 -->
-		<Server AppName="log" AppType="master" AppId="110000" Ip="192.168.1.17" Type="0" Port="10011"/>
+		<Server AppName="log" AppType="master" AppId="110000" Ip="192.168.1.9" Type="0" Port="10011"/>
 		
 		<!-- zone master 服务器 这个不需要配置, 由zone模块来更新 -->
 		<Server AppName="zone" AppType="master" AppId="100" Ip="192.168.1.9" Type="3" Port="11000" Key=""/>

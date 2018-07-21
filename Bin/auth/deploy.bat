@@ -39,6 +39,8 @@ call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
 
+set path2=config
+call :copyfile 1 cluster.config
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼
@@ -97,6 +99,12 @@ call :copyfile 1 KFDeployClientd.dll
 
 call :copyfile 1 KFDeployCommandd.dll
 call :copyfile 1 KFDeployCommand.dll
+
+call :copyfile 1 KFClusterClientd.dll
+call :copyfile 1 KFClusterClient.dll
+
+call :copyfile 1 KFLogClientd.dll
+call :copyfile 1 KFLogClient.dll
 
 rem pause
 rem ===========================================================================

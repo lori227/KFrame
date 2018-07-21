@@ -47,6 +47,9 @@ copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
 
+path2=$deploypath/config
+copyfile 1 cluster.config
+
 path1=$settingpath/auth
 path2=$deploypath/setting
 copyfile 1 auth.startup
