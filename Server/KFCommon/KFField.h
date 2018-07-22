@@ -230,6 +230,8 @@ namespace KFrame
         static const std::string _platform = "platform";
         static const std::string _min_rank_score = "minrankscore";
         static const std::string _log = "log";
+		static const std::string _skill_id = "skillid";
+		static const std::string _skill = "skill";
     }
 }
 
