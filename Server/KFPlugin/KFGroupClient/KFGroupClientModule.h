@@ -42,8 +42,17 @@ namespace KFrame
         // 判断是否是队员
         virtual bool IsGroupMember( KFEntity* player, uint32 playerid );
 
+        // 判断是否是队长
+        virtual bool IsGroupCaptain( KFEntity* player, uint32 playerid );
+
         // 删除一个队员
         virtual void RemoveGroupMember( uint64 groupid, uint32 playerid );
+
+        // 队员数量(没有队伍为1)
+        virtual uint32 GroupMemberCount( KFEntity* player );
+
+        // 是否在队伍中
+        virtual bool IsInGroup( KFEntity* player );
 
         // 发送消息到Group
         virtual bool SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message );

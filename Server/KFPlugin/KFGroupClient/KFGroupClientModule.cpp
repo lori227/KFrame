@@ -954,6 +954,14 @@ namespace KFrame
         return kfmember != nullptr;
     }
 
+    bool KFGroupClientModule::IsGroupCaptain( KFEntity* player, uint32 playerid )
+    {
+        auto kfobject = player->GetData();
+        auto kfgroup = kfobject->FindData( KFField::_group );
+        auto captainid = kfgroup->GetValue< uint32 >( KFField::_captain_id );
+        return captainid == playerid;
+    }
+
     void KFGroupClientModule::RemoveGroupMember( uint64 groupid, uint32 playerid )
     {
         // 通知组队服务器
@@ -962,4 +970,20 @@ namespace KFrame
         req.set_playerid( playerid );
         SendMessageToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
     }
+
+    uint32 KFGroupClientModule::GroupMemberCount( KFEntity* player )
+    {
+        auto kfobject = player->GetData();
+        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
+        auto count = kfmemberrecord->Size();
+        return __MAX__( count, 1 );
+    }
+
+    bool KFGroupClientModule::IsInGroup( KFEntity* player )
+    {
+        auto kfobject = player->GetData();
+        auto groupid = kfobject->GetValue< uint64 >( KFField::_group, KFField::_id );
+        return groupid != _invalid_int;
+    }
+
 }
