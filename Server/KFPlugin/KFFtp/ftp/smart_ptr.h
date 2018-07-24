@@ -1,4 +1,4 @@
-#ifndef INC_SMART_PTR_H
+﻿#ifndef INC_SMART_PTR_H
 #define INC_SMART_PTR_H
 #ifdef USE_STD_SMART_PTR
    #include <memory>

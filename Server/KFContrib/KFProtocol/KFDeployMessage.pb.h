@@ -44,6 +44,7 @@ class S2SShutDownServerToMasterReq;
 class S2SShutDownServerToServerReq;
 class S2SKillServerToAgentReq;
 class S2SUpdateServerToAgentReq;
+class S2SRestartServerToAgentReq;
 
 enum DeployProtocol {
   S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301,
@@ -55,11 +56,12 @@ enum DeployProtocol {
   S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ = 10307,
   S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ = 10308,
   S2S_KILL_SERVER_TO_AGENT_REQ = 10309,
-  S2S_UPDATE_SERVER_TO_AGENT_REQ = 10310
+  S2S_UPDATE_SERVER_TO_AGENT_REQ = 10310,
+  S2S_START_SERVER_TO_AGENT_REQ = 10311
 };
 LIBPROTOC_EXPORT bool DeployProtocol_IsValid(int value);
 const DeployProtocol DeployProtocol_MIN = S2S_REGISTER_AGENT_TO_SERVER_REQ;
-const DeployProtocol DeployProtocol_MAX = S2S_UPDATE_SERVER_TO_AGENT_REQ;
+const DeployProtocol DeployProtocol_MAX = S2S_START_SERVER_TO_AGENT_REQ;
 const int DeployProtocol_ARRAYSIZE = DeployProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* DeployProtocol_descriptor();
@@ -527,24 +529,31 @@ class LIBPROTOC_EXPORT S2SUpdateServerStatusReq : public ::google::protobuf::Mes
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required uint32 process = 5;
+  // required uint32 zoneid = 5;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 5;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 process = 6;
   inline bool has_process() const;
   inline void clear_process();
-  static const int kProcessFieldNumber = 5;
+  static const int kProcessFieldNumber = 6;
   inline ::google::protobuf::uint32 process() const;
   inline void set_process(::google::protobuf::uint32 value);
 
-  // required uint64 startuptime = 6;
+  // required uint64 startuptime = 7;
   inline bool has_startuptime() const;
   inline void clear_startuptime();
-  static const int kStartuptimeFieldNumber = 6;
+  static const int kStartuptimeFieldNumber = 7;
   inline ::google::protobuf::uint64 startuptime() const;
   inline void set_startuptime(::google::protobuf::uint64 value);
 
-  // required uint32 isshutdown = 7;
+  // required uint32 isshutdown = 8;
   inline bool has_isshutdown() const;
   inline void clear_isshutdown();
-  static const int kIsshutdownFieldNumber = 7;
+  static const int kIsshutdownFieldNumber = 8;
   inline ::google::protobuf::uint32 isshutdown() const;
   inline void set_isshutdown(::google::protobuf::uint32 value);
 
@@ -558,6 +567,8 @@ class LIBPROTOC_EXPORT S2SUpdateServerStatusReq : public ::google::protobuf::Mes
   inline void clear_has_appname();
   inline void set_has_apptype();
   inline void clear_has_apptype();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
   inline void set_has_process();
   inline void clear_has_process();
   inline void set_has_startuptime();
@@ -571,12 +582,13 @@ class LIBPROTOC_EXPORT S2SUpdateServerStatusReq : public ::google::protobuf::Mes
   ::google::protobuf::uint32 appid_;
   ::std::string* appname_;
   ::std::string* apptype_;
-  ::google::protobuf::uint64 startuptime_;
+  ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 process_;
+  ::google::protobuf::uint64 startuptime_;
   ::google::protobuf::uint32 isshutdown_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -672,6 +684,13 @@ class LIBPROTOC_EXPORT S2SStartupServerToAgentReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SStartupServerToAgentReq)
  private:
   inline void set_has_appname();
@@ -680,15 +699,18 @@ class LIBPROTOC_EXPORT S2SStartupServerToAgentReq : public ::google::protobuf::M
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -784,10 +806,17 @@ class LIBPROTOC_EXPORT S2SShutDownServerToAgentReq : public ::google::protobuf::
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required uint32 delaytime = 4;
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 delaytime = 5;
   inline bool has_delaytime() const;
   inline void clear_delaytime();
-  static const int kDelaytimeFieldNumber = 4;
+  static const int kDelaytimeFieldNumber = 5;
   inline ::google::protobuf::uint32 delaytime() const;
   inline void set_delaytime(::google::protobuf::uint32 value);
 
@@ -799,6 +828,8 @@ class LIBPROTOC_EXPORT S2SShutDownServerToAgentReq : public ::google::protobuf::
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
   inline void set_has_delaytime();
   inline void clear_has_delaytime();
 
@@ -807,10 +838,11 @@ class LIBPROTOC_EXPORT S2SShutDownServerToAgentReq : public ::google::protobuf::
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 delaytime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -906,10 +938,17 @@ class LIBPROTOC_EXPORT S2SShutDownServerToMasterReq : public ::google::protobuf:
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required uint32 delaytime = 4;
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 delaytime = 5;
   inline bool has_delaytime() const;
   inline void clear_delaytime();
-  static const int kDelaytimeFieldNumber = 4;
+  static const int kDelaytimeFieldNumber = 5;
   inline ::google::protobuf::uint32 delaytime() const;
   inline void set_delaytime(::google::protobuf::uint32 value);
 
@@ -921,6 +960,8 @@ class LIBPROTOC_EXPORT S2SShutDownServerToMasterReq : public ::google::protobuf:
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
   inline void set_has_delaytime();
   inline void clear_has_delaytime();
 
@@ -929,10 +970,11 @@ class LIBPROTOC_EXPORT S2SShutDownServerToMasterReq : public ::google::protobuf:
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 delaytime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1028,10 +1070,17 @@ class LIBPROTOC_EXPORT S2SShutDownServerToServerReq : public ::google::protobuf:
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required uint32 delaytime = 4;
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 delaytime = 5;
   inline bool has_delaytime() const;
   inline void clear_delaytime();
-  static const int kDelaytimeFieldNumber = 4;
+  static const int kDelaytimeFieldNumber = 5;
   inline ::google::protobuf::uint32 delaytime() const;
   inline void set_delaytime(::google::protobuf::uint32 value);
 
@@ -1043,6 +1092,8 @@ class LIBPROTOC_EXPORT S2SShutDownServerToServerReq : public ::google::protobuf:
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
   inline void set_has_delaytime();
   inline void clear_has_delaytime();
 
@@ -1051,10 +1102,11 @@ class LIBPROTOC_EXPORT S2SShutDownServerToServerReq : public ::google::protobuf:
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 delaytime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1150,6 +1202,13 @@ class LIBPROTOC_EXPORT S2SKillServerToAgentReq : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SKillServerToAgentReq)
  private:
   inline void set_has_appname();
@@ -1158,15 +1217,18 @@ class LIBPROTOC_EXPORT S2SKillServerToAgentReq : public ::google::protobuf::Mess
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1262,6 +1324,13 @@ class LIBPROTOC_EXPORT S2SUpdateServerToAgentReq : public ::google::protobuf::Me
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateServerToAgentReq)
  private:
   inline void set_has_appname();
@@ -1270,15 +1339,18 @@ class LIBPROTOC_EXPORT S2SUpdateServerToAgentReq : public ::google::protobuf::Me
   inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* appname_;
   ::std::string* apptype_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1286,6 +1358,138 @@ class LIBPROTOC_EXPORT S2SUpdateServerToAgentReq : public ::google::protobuf::Me
 
   void InitAsDefaultInstance();
   static S2SUpdateServerToAgentReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SRestartServerToAgentReq : public ::google::protobuf::Message {
+ public:
+  S2SRestartServerToAgentReq();
+  virtual ~S2SRestartServerToAgentReq();
+
+  S2SRestartServerToAgentReq(const S2SRestartServerToAgentReq& from);
+
+  inline S2SRestartServerToAgentReq& operator=(const S2SRestartServerToAgentReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SRestartServerToAgentReq& default_instance();
+
+  void Swap(S2SRestartServerToAgentReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SRestartServerToAgentReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SRestartServerToAgentReq& from);
+  void MergeFrom(const S2SRestartServerToAgentReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string appname = 1;
+  inline bool has_appname() const;
+  inline void clear_appname();
+  static const int kAppnameFieldNumber = 1;
+  inline const ::std::string& appname() const;
+  inline void set_appname(const ::std::string& value);
+  inline void set_appname(const char* value);
+  inline void set_appname(const char* value, size_t size);
+  inline ::std::string* mutable_appname();
+  inline ::std::string* release_appname();
+  inline void set_allocated_appname(::std::string* appname);
+
+  // required string apptype = 2;
+  inline bool has_apptype() const;
+  inline void clear_apptype();
+  static const int kApptypeFieldNumber = 2;
+  inline const ::std::string& apptype() const;
+  inline void set_apptype(const ::std::string& value);
+  inline void set_apptype(const char* value);
+  inline void set_apptype(const char* value, size_t size);
+  inline ::std::string* mutable_apptype();
+  inline ::std::string* release_apptype();
+  inline void set_allocated_apptype(::std::string* apptype);
+
+  // required uint32 appid = 3;
+  inline bool has_appid() const;
+  inline void clear_appid();
+  static const int kAppidFieldNumber = 3;
+  inline ::google::protobuf::uint32 appid() const;
+  inline void set_appid(::google::protobuf::uint32 value);
+
+  // required uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
+  // required uint32 delaytime = 5;
+  inline bool has_delaytime() const;
+  inline void clear_delaytime();
+  static const int kDelaytimeFieldNumber = 5;
+  inline ::google::protobuf::uint32 delaytime() const;
+  inline void set_delaytime(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRestartServerToAgentReq)
+ private:
+  inline void set_has_appname();
+  inline void clear_has_appname();
+  inline void set_has_apptype();
+  inline void clear_has_apptype();
+  inline void set_has_appid();
+  inline void clear_has_appid();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
+  inline void set_has_delaytime();
+  inline void clear_has_delaytime();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* appname_;
+  ::std::string* apptype_;
+  ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
+  ::google::protobuf::uint32 delaytime_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
+  friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFDeployMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SRestartServerToAgentReq* default_instance_;
 };
 // ===================================================================
 
@@ -2068,15 +2272,37 @@ inline void S2SUpdateServerStatusReq::set_allocated_apptype(::std::string* appty
   }
 }
 
-// required uint32 process = 5;
-inline bool S2SUpdateServerStatusReq::has_process() const {
+// required uint32 zoneid = 5;
+inline bool S2SUpdateServerStatusReq::has_zoneid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void S2SUpdateServerStatusReq::set_has_process() {
+inline void S2SUpdateServerStatusReq::set_has_zoneid() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void S2SUpdateServerStatusReq::clear_has_process() {
+inline void S2SUpdateServerStatusReq::clear_has_zoneid() {
   _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SUpdateServerStatusReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SUpdateServerStatusReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SUpdateServerStatusReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 process = 6;
+inline bool S2SUpdateServerStatusReq::has_process() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SUpdateServerStatusReq::set_has_process() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SUpdateServerStatusReq::clear_has_process() {
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SUpdateServerStatusReq::clear_process() {
   process_ = 0u;
@@ -2090,15 +2316,15 @@ inline void S2SUpdateServerStatusReq::set_process(::google::protobuf::uint32 val
   process_ = value;
 }
 
-// required uint64 startuptime = 6;
+// required uint64 startuptime = 7;
 inline bool S2SUpdateServerStatusReq::has_startuptime() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void S2SUpdateServerStatusReq::set_has_startuptime() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void S2SUpdateServerStatusReq::clear_has_startuptime() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SUpdateServerStatusReq::clear_startuptime() {
   startuptime_ = GOOGLE_ULONGLONG(0);
@@ -2112,15 +2338,15 @@ inline void S2SUpdateServerStatusReq::set_startuptime(::google::protobuf::uint64
   startuptime_ = value;
 }
 
-// required uint32 isshutdown = 7;
+// required uint32 isshutdown = 8;
 inline bool S2SUpdateServerStatusReq::has_isshutdown() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void S2SUpdateServerStatusReq::set_has_isshutdown() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void S2SUpdateServerStatusReq::clear_has_isshutdown() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void S2SUpdateServerStatusReq::clear_isshutdown() {
   isshutdown_ = 0u;
@@ -2300,6 +2526,28 @@ inline void S2SStartupServerToAgentReq::set_appid(::google::protobuf::uint32 val
   appid_ = value;
 }
 
+// required uint32 zoneid = 4;
+inline bool S2SStartupServerToAgentReq::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SStartupServerToAgentReq::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SStartupServerToAgentReq::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SStartupServerToAgentReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SStartupServerToAgentReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SStartupServerToAgentReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SShutDownServerToAgentReq
@@ -2466,15 +2714,37 @@ inline void S2SShutDownServerToAgentReq::set_appid(::google::protobuf::uint32 va
   appid_ = value;
 }
 
-// required uint32 delaytime = 4;
-inline bool S2SShutDownServerToAgentReq::has_delaytime() const {
+// required uint32 zoneid = 4;
+inline bool S2SShutDownServerToAgentReq::has_zoneid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SShutDownServerToAgentReq::set_has_delaytime() {
+inline void S2SShutDownServerToAgentReq::set_has_zoneid() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SShutDownServerToAgentReq::clear_has_delaytime() {
+inline void S2SShutDownServerToAgentReq::clear_has_zoneid() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SShutDownServerToAgentReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SShutDownServerToAgentReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SShutDownServerToAgentReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 delaytime = 5;
+inline bool S2SShutDownServerToAgentReq::has_delaytime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SShutDownServerToAgentReq::set_has_delaytime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SShutDownServerToAgentReq::clear_has_delaytime() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SShutDownServerToAgentReq::clear_delaytime() {
   delaytime_ = 0u;
@@ -2654,15 +2924,37 @@ inline void S2SShutDownServerToMasterReq::set_appid(::google::protobuf::uint32 v
   appid_ = value;
 }
 
-// required uint32 delaytime = 4;
-inline bool S2SShutDownServerToMasterReq::has_delaytime() const {
+// required uint32 zoneid = 4;
+inline bool S2SShutDownServerToMasterReq::has_zoneid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SShutDownServerToMasterReq::set_has_delaytime() {
+inline void S2SShutDownServerToMasterReq::set_has_zoneid() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SShutDownServerToMasterReq::clear_has_delaytime() {
+inline void S2SShutDownServerToMasterReq::clear_has_zoneid() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SShutDownServerToMasterReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SShutDownServerToMasterReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SShutDownServerToMasterReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 delaytime = 5;
+inline bool S2SShutDownServerToMasterReq::has_delaytime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SShutDownServerToMasterReq::set_has_delaytime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SShutDownServerToMasterReq::clear_has_delaytime() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SShutDownServerToMasterReq::clear_delaytime() {
   delaytime_ = 0u;
@@ -2842,15 +3134,37 @@ inline void S2SShutDownServerToServerReq::set_appid(::google::protobuf::uint32 v
   appid_ = value;
 }
 
-// required uint32 delaytime = 4;
-inline bool S2SShutDownServerToServerReq::has_delaytime() const {
+// required uint32 zoneid = 4;
+inline bool S2SShutDownServerToServerReq::has_zoneid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SShutDownServerToServerReq::set_has_delaytime() {
+inline void S2SShutDownServerToServerReq::set_has_zoneid() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SShutDownServerToServerReq::clear_has_delaytime() {
+inline void S2SShutDownServerToServerReq::clear_has_zoneid() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SShutDownServerToServerReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SShutDownServerToServerReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SShutDownServerToServerReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 delaytime = 5;
+inline bool S2SShutDownServerToServerReq::has_delaytime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SShutDownServerToServerReq::set_has_delaytime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SShutDownServerToServerReq::clear_has_delaytime() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SShutDownServerToServerReq::clear_delaytime() {
   delaytime_ = 0u;
@@ -3030,6 +3344,28 @@ inline void S2SKillServerToAgentReq::set_appid(::google::protobuf::uint32 value)
   appid_ = value;
 }
 
+// required uint32 zoneid = 4;
+inline bool S2SKillServerToAgentReq::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SKillServerToAgentReq::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SKillServerToAgentReq::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SKillServerToAgentReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SKillServerToAgentReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SKillServerToAgentReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SUpdateServerToAgentReq
@@ -3194,6 +3530,238 @@ inline ::google::protobuf::uint32 S2SUpdateServerToAgentReq::appid() const {
 inline void S2SUpdateServerToAgentReq::set_appid(::google::protobuf::uint32 value) {
   set_has_appid();
   appid_ = value;
+}
+
+// required uint32 zoneid = 4;
+inline bool S2SUpdateServerToAgentReq::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SUpdateServerToAgentReq::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SUpdateServerToAgentReq::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SUpdateServerToAgentReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SUpdateServerToAgentReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SUpdateServerToAgentReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SRestartServerToAgentReq
+
+// required string appname = 1;
+inline bool S2SRestartServerToAgentReq::has_appname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SRestartServerToAgentReq::set_has_appname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SRestartServerToAgentReq::clear_has_appname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SRestartServerToAgentReq::clear_appname() {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    appname_->clear();
+  }
+  clear_has_appname();
+}
+inline const ::std::string& S2SRestartServerToAgentReq::appname() const {
+  return *appname_;
+}
+inline void S2SRestartServerToAgentReq::set_appname(const ::std::string& value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void S2SRestartServerToAgentReq::set_appname(const char* value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void S2SRestartServerToAgentReq::set_appname(const char* value, size_t size) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRestartServerToAgentReq::mutable_appname() {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  return appname_;
+}
+inline ::std::string* S2SRestartServerToAgentReq::release_appname() {
+  clear_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = appname_;
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRestartServerToAgentReq::set_allocated_appname(::std::string* appname) {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    delete appname_;
+  }
+  if (appname) {
+    set_has_appname();
+    appname_ = appname;
+  } else {
+    clear_has_appname();
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string apptype = 2;
+inline bool S2SRestartServerToAgentReq::has_apptype() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SRestartServerToAgentReq::set_has_apptype() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SRestartServerToAgentReq::clear_has_apptype() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SRestartServerToAgentReq::clear_apptype() {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    apptype_->clear();
+  }
+  clear_has_apptype();
+}
+inline const ::std::string& S2SRestartServerToAgentReq::apptype() const {
+  return *apptype_;
+}
+inline void S2SRestartServerToAgentReq::set_apptype(const ::std::string& value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void S2SRestartServerToAgentReq::set_apptype(const char* value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void S2SRestartServerToAgentReq::set_apptype(const char* value, size_t size) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRestartServerToAgentReq::mutable_apptype() {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  return apptype_;
+}
+inline ::std::string* S2SRestartServerToAgentReq::release_apptype() {
+  clear_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = apptype_;
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRestartServerToAgentReq::set_allocated_apptype(::std::string* apptype) {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    delete apptype_;
+  }
+  if (apptype) {
+    set_has_apptype();
+    apptype_ = apptype;
+  } else {
+    clear_has_apptype();
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 appid = 3;
+inline bool S2SRestartServerToAgentReq::has_appid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SRestartServerToAgentReq::set_has_appid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SRestartServerToAgentReq::clear_has_appid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SRestartServerToAgentReq::clear_appid() {
+  appid_ = 0u;
+  clear_has_appid();
+}
+inline ::google::protobuf::uint32 S2SRestartServerToAgentReq::appid() const {
+  return appid_;
+}
+inline void S2SRestartServerToAgentReq::set_appid(::google::protobuf::uint32 value) {
+  set_has_appid();
+  appid_ = value;
+}
+
+// required uint32 zoneid = 4;
+inline bool S2SRestartServerToAgentReq::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SRestartServerToAgentReq::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SRestartServerToAgentReq::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SRestartServerToAgentReq::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 S2SRestartServerToAgentReq::zoneid() const {
+  return zoneid_;
+}
+inline void S2SRestartServerToAgentReq::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
+}
+
+// required uint32 delaytime = 5;
+inline bool S2SRestartServerToAgentReq::has_delaytime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SRestartServerToAgentReq::set_has_delaytime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SRestartServerToAgentReq::clear_has_delaytime() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SRestartServerToAgentReq::clear_delaytime() {
+  delaytime_ = 0u;
+  clear_has_delaytime();
+}
+inline ::google::protobuf::uint32 S2SRestartServerToAgentReq::delaytime() const {
+  return delaytime_;
+}
+inline void S2SRestartServerToAgentReq::set_delaytime(::google::protobuf::uint32 value) {
+  set_has_delaytime();
+  delaytime_ = value;
 }
 
 

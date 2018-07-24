@@ -46,9 +46,9 @@ copyfile 1 ip.address
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
-
-path2=$deploypath/config
-copyfile 1 cluster.config
+copyfile 1 cluster.setting
+copyfile 1 redis.address
+copyfile 1 channel.setting
 
 path1=$settingpath/auth
 path2=$deploypath/setting
@@ -57,8 +57,6 @@ copyfile 1 auth.startup
 #config
 path1=$respath/config
 path2=$deploypath/config
-copyfile 0 redis.config
-copyfile 1 channel.config
 
 #plugin
 path1=$binpath/

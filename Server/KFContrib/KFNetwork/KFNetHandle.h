@@ -52,6 +52,9 @@ namespace KFrame
         // 名字
         std::string _app_name;
 
+        // 分区id
+        uint32 _zone_id;
+
         // ip
         std::string _listen_ip;
 

@@ -13,6 +13,7 @@
 #include "KFRobotInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFRobot.h"
 
 namespace KFrame

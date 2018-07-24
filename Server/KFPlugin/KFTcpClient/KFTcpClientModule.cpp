@@ -62,6 +62,7 @@ namespace KFrame
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_ip( kfglobal->_interanet_ip );
         listendata->set_port( kfglobal->_listen_port );
+        listendata->set_zoneid( kfglobal->_zone_id );
 
         auto strdata = req.SerializeAsString();
         SendNetMessage( serverid, KFMsg::S2S_REGISTER_TO_SERVER_REQ, strdata.data(), strdata.size() );

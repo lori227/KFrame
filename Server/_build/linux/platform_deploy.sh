@@ -44,19 +44,19 @@ copyfile 1 bus.relation
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
-
-path2=$deploypath/config
-copyfile 1 cluster.config
+copyfile 1 cluster.setting
+copyfile 0 redis.address
 
 path1=$settingpath/platform
 path2=$deploypath/setting
 copyfile 1 platform.startup
 
+path2=$deploypath/config
+copyfile 1 platform.config
+
 #config
 path1=$respath/config
 path2=$deploypath/config
-copyfile 0 redis.config
-copyfile 1 platform.config
 
 #plugin
 path1=$binpath

@@ -33,13 +33,11 @@ call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
-
-set path2=config
-call :copyfile 1 cluster.config
+call :copyfile 1 cluster.setting
+call :copyfile 0 zone.setting
 
 set path1=..\..\Source\_bin\setting\zone
 set path2=setting
-call :copyfile 0 zone.config
 
 call :copyfile 1 gate.startup
 call :copyfile 1 login.startup

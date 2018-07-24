@@ -11,30 +11,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\KFLibrary\Ftp\BlockingSocket.cpp" />
-    <ClCompile Include="..\..\KFLibrary\Ftp\FTPClient.cpp" />
-    <ClCompile Include="..\..\KFLibrary\Ftp\FTPDataTypes.cpp" />
-    <ClCompile Include="..\..\KFLibrary\Ftp\FTPFileStatus.cpp" />
-    <ClCompile Include="..\..\KFLibrary\Ftp\FTPListParse.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ftp\BlockingSocket.cpp" />
+    <ClCompile Include="ftp\FTPClient.cpp" />
+    <ClCompile Include="ftp\FTPDataTypes.cpp" />
+    <ClCompile Include="ftp\FTPFileStatus.cpp" />
+    <ClCompile Include="ftp\FTPListParse.cpp" />
     <ClCompile Include="KFFtpConfig.cpp" />
     <ClCompile Include="KFFtpModule.cpp" />
     <ClCompile Include="KFFtpPlugin.cpp" />
+    <ClCompile Include="KFDownloadThread.cpp" />
     <ClCompile Include="KFFtpThread.cpp" />
+    <ClCompile Include="KFUploadThread.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFLibrary\Ftp\BlockingSocket.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\Definements.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\FTPClient.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\FTPDataTypes.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\FTPFileStatus.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\FTPListParse.h" />
-    <ClInclude Include="..\..\KFLibrary\Ftp\smart_ptr.h" />
+    <ClInclude Include="ftp\BlockingSocket.h" />
+    <ClInclude Include="ftp\Definements.h" />
+    <ClInclude Include="ftp\FTPClient.h" />
+    <ClInclude Include="ftp\FTPDataTypes.h" />
+    <ClInclude Include="ftp\FTPFileStatus.h" />
+    <ClInclude Include="ftp\FTPListParse.h" />
+    <ClInclude Include="ftp\smart_ptr.h" />
     <ClInclude Include="KFFtpConfig.h" />
     <ClInclude Include="KFFtpInterface.h" />
     <ClInclude Include="KFFtpModule.h" />
     <ClInclude Include="KFFtpPlugin.h" />
+    <ClInclude Include="KFDownloadThread.h" />
     <ClInclude Include="KFFtpThread.h" />
+    <ClInclude Include="KFUploadThread.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8105905C-1831-48A2-B7ED-DFB6136E4CBB}</ProjectGuid>

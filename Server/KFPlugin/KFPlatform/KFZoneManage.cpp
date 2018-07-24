@@ -89,6 +89,11 @@ namespace KFrame
             std::string straddress = DEFAULT_SPLIT_STRING;
             for ( auto& kfaddress : _address_list )
             {
+                if ( !kfaddress._is_online )
+                {
+                    continue;
+                }
+
                 straddress += __KF_STRING__( kfaddress._appid );
 
                 straddress += FUNCTION_LINK_STRING;

@@ -2,7 +2,6 @@
 basepath=$(cd `dirname $0`; pwd)
 cd /data/auth
 
-server=authserver
 if [ "$1" = "debug" ]; then
 server=authserverd
 else

@@ -11,7 +11,7 @@ namespace KFrame
     {
         Idle = 0,
         Login,
-        Download,
+        Process,
         Failed,
         Finish,
     };
@@ -20,12 +20,10 @@ namespace KFrame
     {
     public:
         KFFtpThread();
-
-        // run
-        void Run();
+        virtual ~KFFtpThread();
 
         // 开始下载
-        void StartThread( uint32 id, KFFtpFunction& function );
+        void StartThread( uint32 id, const std::string& apppath, KFFtpFunction& function );
 
         // 结束下载
         void FinishThread();
@@ -34,37 +32,24 @@ namespace KFrame
         bool IsFinish();
 
     protected:
-        // 下载文件夹
-        void DownloadFiles( nsFTP::CFTPClient* ftpclient, std::string& ftppath, std::string& localpath );
+        // 开始线程
+        virtual void CreateFtpThread() = 0;
 
-        // 下载文件
-        void DownloadFile( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& ftpfile, std::string& localfile, std::string& asciifile );
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 判断文件时间
-        bool CheckFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile );
-
-        // 创建目录
-        void CreateLocalDirectory( const std::string& path );
-
-        // 删除文件
-        void DeleteLocalFile( const std::string& file );
-
-        // 改名字
-        void RenameFile( const std::string& oldfile, const std::string& newfile );
+        // 获得本地文件时间
+        int64 GetLocalFileTime( std::string& localfile );
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        bool CheckWinFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile );
+        int64 GetWinLocalFileTime( std::string& localfile );
+#else
+        int64 GetLinuxLocalFileTime( std::string& localfile );
 #endif
 
-
-#if __KF_SYSTEM__ == __KF_LINUX__
-        bool CheckLinuxFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile );
-#endif
-
-    private:
+    protected:
+        // ftpid
         uint32 _ftp_id;
+
+        // 路径
+        std::string _app_path;
 
         // 下载结果
         volatile uint32 _ftp_result;

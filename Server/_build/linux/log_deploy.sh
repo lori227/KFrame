@@ -44,9 +44,7 @@ copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
-
-path2=$deploypath/config
-copyfile 1 cluster.config
+copyfile 1 cluster.setting
 
 path1=$settingpath/log
 path2=$deploypath/setting

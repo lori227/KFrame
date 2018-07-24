@@ -16,11 +16,6 @@ namespace KFrame
     void KFLogClientPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
-
-        if ( KFGlobal::Instance()->_app_name == KFField::_zone )
-        {
-            __FIND_MODULE__( _kf_zone, KFZoneInterface );
-        }
     }
 
 }

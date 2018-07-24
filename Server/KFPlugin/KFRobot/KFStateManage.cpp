@@ -59,6 +59,7 @@
 #include "KFPauseState.h"
 #include "KFQueryWholeRankState.h"
 #include "KFQueryFriendRankState.h"
+#include "KFAddRecentState.h"
 
 namespace KFrame
 {
@@ -145,6 +146,7 @@ namespace KFrame
         // GM加钱
         AddState( RobotStateEnum::GMAddMoney, new KFAddMoneyState() );
         AddState( RobotStateEnum::GMAddDiamond, new KFAddDiamondState() );
+        AddState( RobotStateEnum::GMAddRecent, new KFAddRecentState() );
 
         AddState( RobotStateEnum::AddWishOrder, new KFAddWishOrderState() );
         AddState( RobotStateEnum::DelWishOrder, new KFDelWishOrderState() );
@@ -162,6 +164,7 @@ namespace KFrame
     KFState* KFStateManage::FindState( uint32 state )
     {
         auto iter = _state_list.find( state );
+
         if ( iter == _state_list.end() )
         {
             return nullptr;

@@ -11,6 +11,7 @@ namespace KFrame
         KFServerData()
         {
             _app_id = 0;
+            _zone_id = 0;
             _process_id = 0;
             _startup_time = 0;
             _is_shutdown = false;
@@ -25,6 +26,9 @@ namespace KFrame
 
         // 服务器类型
         std::string _app_type;
+
+        // zoneid
+        uint32 _zone_id;
 
         // 进程id
         uint32 _process_id;

@@ -1,27 +1,13 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
-	<!--Id Ftp标识 -->
+	<!--Id Ftpid -->
 	<!--Address Ftp地址 -->
 	<!--Port Ftp端口 -->
 	<!--User Ftp用户名 -->
 	<!--Password Ftp密码 -->
-	<!--FtpPath Ftp服务器相对路径 -->
-	<!--LocalPath 本地资源相对路径 -->
-	<Ftps Address="192.168.1.7" Port="21" User="liuxiaobing" Password="489%*ON*&^ujfnm">
-		<Ftp Id="1" WinFtpPath="deploy/auth/win64" LinuxFtpPath="deploy/auth/linux" LocalPath="../auth"/>
-		<Ftp Id="2" WinFtpPath="deploy/platform/win64" LinuxFtpPath="deploy/platform/linux" LocalPath="../platform"/>
-		<Ftp Id="3" WinFtpPath="deploy/datacluster/win64" LinuxFtpPath="deploy/datacluster/linux" LocalPath="../datacluster"/>
-		<Ftp Id="4" WinFtpPath="deploy/publiccluster/win64" LinuxFtpPath="deploy/publiccluster/linux" LocalPath="../publiccluster"/>
-		<Ftp Id="5" WinFtpPath="deploy/routecluster/win64" LinuxFtpPath="deploy/routecluster/linux" LocalPath="../routecluster"/>
-		<Ftp Id="6" WinFtpPath="deploy/matchcluster/win64" LinuxFtpPath="deploy/matchcluster/linux" LocalPath="../matchcluster"/>
-		<Ftp Id="7" WinFtpPath="deploy/battlecluster/win64" LinuxFtpPath="deploy/battlecluster/linux" LocalPath="../battlecluster"/>
-		<Ftp Id="8" WinFtpPath="deploy/mailcluster/win64" LinuxFtpPath="deploy/mailcluster/linux" LocalPath="../mailcluster"/>
-		<Ftp Id="9" WinFtpPath="deploy/relationcluster/win64" LinuxFtpPath="deploy/relationcluster/linux" LocalPath="../relationcluster"/>
-		<Ftp Id="10" WinFtpPath="deploy/groupcluster/win64" LinuxFtpPath="deploy/groupcluster/linux" LocalPath="../groupcluster"/>
-		<Ftp Id="11" WinFtpPath="deploy/rankcluster/win64" LinuxFtpPath="deploy/rankcluster/linux" LocalPath="../rankcluster"/>
-		<Ftp Id="12" WinFtpPath="deploy/guildcluster/win64" LinuxFtpPath="deploy/guildcluster/linux" LocalPath="../guildcluster"/>
-		<Ftp Id="13" WinFtpPath="deploy/logcluster/win64" LinuxFtpPath="deploy/logcluster/linux" LocalPath="../logcluster"/>
-		<Ftp Id="21" WinFtpPath="deploy/zone/win64" LinuxFtpPath="deploy/zone/linux" LocalPath="../zone"/>
-	</Ftps>
+	<!--FtpRootPath Ftp服务器根路径 -->
+	<!--DownLoadPath 本地资源下载根路径 -->
+	<!--UpLoadPath 本地资源上传根路径 -->
+	<Ftp Id="1" Address="192.168.1.7" Port="21" User="liuxiaobing" Password="489%*ON*&^ujfnm" FtpRootPath="/deploy" DownLoadPath=".." UpLoadPath="./deploy"/>
 </Config>
 

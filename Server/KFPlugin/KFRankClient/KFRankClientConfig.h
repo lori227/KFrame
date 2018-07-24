@@ -83,7 +83,7 @@ namespace KFrame
         KFMap< uint32, uint32, KFRankSetting > _kf_rank_setting;
 
         typedef std::pair< std::string, std::string > RankDataType;
-        std::map < RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;
+        std::map< RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

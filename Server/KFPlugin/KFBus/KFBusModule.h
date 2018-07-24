@@ -45,7 +45,7 @@ namespace KFrame
         void FindConnection( IpAddressList& outlist );
 
         // 判断是否需要连接
-        bool IsConnection( const std::string& connectname, const std::string& connecttype, uint32 connectid );
+        bool IsConnection( const std::string& connectname, const std::string& connecttype, uint32 connectid, uint32 zoneid );
 
     };
 }

@@ -250,6 +250,7 @@ namespace KFrame
         kfhandle->_app_id = listendata->appid();
         kfhandle->_listen_ip = listendata->ip();
         kfhandle->_listen_port = listendata->port();
+        kfhandle->_zone_id = listendata->zoneid();
 
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,6 +282,7 @@ namespace KFrame
         listendata->set_appid( kfhandle->_app_id );
         listendata->set_appname( kfhandle->_app_name );
         listendata->set_apptype( kfhandle->_app_type );
+        listendata->set_zoneid( kfhandle->_zone_id );
         listendata->set_ip( kfhandle->_listen_ip );
         listendata->set_port( kfhandle->_listen_port );
         SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, kfhandle->_id );
@@ -288,23 +290,27 @@ namespace KFrame
 
     void KFTcpServerModule::SendRegisterToServerToHandle( KFNetHandle* kfhandle )
     {
-        auto nethandle = _kf_server_engine->_kf_handles.First();
-        while ( nethandle != nullptr )
+        for ( auto& iter : _kf_server_engine->_kf_handles._objects )
         {
-            if ( nethandle->_id != kfhandle->_id )
+            auto nethandle = iter.second;
+            if ( nethandle->_app_id == kfhandle->_app_id ||
+                    nethandle->_app_name != kfhandle->_app_name ||
+                    nethandle->_zone_id != kfhandle->_zone_id )
             {
-                KFMsg::TellRegisterToServer tell;
-                auto listendata = tell.mutable_listen();
-
-                listendata->set_appid( nethandle->_app_id );
-                listendata->set_appname( nethandle->_app_name );
-                listendata->set_apptype( nethandle->_app_type );
-                listendata->set_ip( nethandle->_listen_ip );
-                listendata->set_port( nethandle->_listen_port );
-                SendNetMessage( kfhandle->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+                continue;
             }
 
-            nethandle = _kf_server_engine->_kf_handles.Next();
+
+            KFMsg::TellRegisterToServer tell;
+            auto listendata = tell.mutable_listen();
+
+            listendata->set_appid( nethandle->_app_id );
+            listendata->set_appname( nethandle->_app_name );
+            listendata->set_apptype( nethandle->_app_type );
+            listendata->set_zoneid( nethandle->_zone_id );
+            listendata->set_ip( nethandle->_listen_ip );
+            listendata->set_port( nethandle->_listen_port );
+            SendNetMessage( kfhandle->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
         }
     }
 

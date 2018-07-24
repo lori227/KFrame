@@ -23,6 +23,7 @@ namespace KFrame
         __REGISTER_HTTP_FUNCTION__( KFField::_shut_down, true, &KFDeployServerModule::HandleShutDownServer );
         __REGISTER_HTTP_FUNCTION__( KFField::_kill, true, &KFDeployServerModule::HandleKillServer );
         __REGISTER_HTTP_FUNCTION__( KFField::_download, true, &KFDeployServerModule::HandleUpdateServer );
+        __REGISTER_HTTP_FUNCTION__( KFField::_restart, true, &KFDeployServerModule::HandleRestartServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
@@ -41,6 +42,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( KFField::_shut_down );
         __UNREGISTER_HTTP_FUNCTION__( KFField::_kill );
         __UNREGISTER_HTTP_FUNCTION__( KFField::_download );
+        __UNREGISTER_HTTP_FUNCTION__( KFField::_restart );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_STATUS_REQ );
@@ -96,6 +98,7 @@ namespace KFrame
         kfserverdata->_app_id = kfmsg.appid();
         kfserverdata->_app_name = kfmsg.appname();
         kfserverdata->_app_type = kfmsg.apptype();
+        kfserverdata->_zone_id = kfmsg.zoneid();
         kfserverdata->_process_id = kfmsg.process();
         kfserverdata->_startup_time = kfmsg.startuptime();
         kfserverdata->_is_shutdown = kfmsg.isshutdown();
@@ -105,6 +108,7 @@ namespace KFrame
         values[ KFField::_app_id ] = __KF_STRING__( kfserverdata->_app_id );
         values[ KFField::_app_name ] = kfserverdata->_app_name;
         values[ KFField::_app_type ] = kfserverdata->_app_type;
+        values[ KFField::_zone_id ] = __KF_STRING__( kfserverdata->_zone_id );
         values[ KFField::_process ] = __KF_STRING__( kfserverdata->_process_id );
         values[ KFField::_time ] = __KF_STRING__( kfserverdata->_startup_time );
         values[ KFField::_shut_down ] = __KF_STRING__( kfserverdata->_is_shutdown ? 1 : 0 );
@@ -162,12 +166,14 @@ namespace KFrame
         auto appname = request.GetString( KFField::_app_name );
         auto apptype = request.GetString( KFField::_app_type );
         auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( KFField::_zone_id );
         auto delaytime = request.GetUInt32( KFField::_delay_time );
 
         KFMsg::S2SShutDownServerToAgentReq req;
         req.set_appname( appname );
         req.set_apptype( apptype );
         req.set_appid( appid );
+        req.set_zoneid( zoneid );
         req.set_delaytime( __MAX__( delaytime, 10000 ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ, &req );
     }
@@ -199,11 +205,13 @@ namespace KFrame
         auto appname = request.GetString( KFField::_app_name );
         auto apptype = request.GetString( KFField::_app_type );
         auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( KFField::_zone_id );
 
         KFMsg::S2SStartupServerToAgentReq req;
         req.set_appname( appname );
         req.set_apptype( apptype );
         req.set_appid( appid );
+        req.set_zoneid( zoneid );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ, &req );
     }
 
@@ -214,11 +222,13 @@ namespace KFrame
         auto appname = request.GetString( KFField::_app_name );
         auto apptype = request.GetString( KFField::_app_type );
         auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( KFField::_zone_id );
 
         KFMsg::S2SKillServerToAgentReq req;
         req.set_appname( appname );
         req.set_apptype( apptype );
         req.set_appid( appid );
+        req.set_zoneid( zoneid );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &req );
 
         return _invalid_str;
@@ -228,15 +238,56 @@ namespace KFrame
     {
         KFJson request( data );
 
+        auto scheduletime = request.GetUInt32( KFField::_schedule_time );
+        if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
+        {
+            UpdateServerToAgnet( _invalid_int, data.c_str(), data.size() );
+        }
+        else
+        {
+            auto kfsetting = _kf_schedule->CreateScheduleSetting();
+            kfsetting->SetTime( scheduletime );
+            kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
+            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::UpdateServerToAgnet );
+        }
+
+        return _invalid_str;
+    }
+
+    void KFDeployServerModule::UpdateServerToAgnet( uint32 id, const char* data, uint32 size )
+    {
+        KFJson request( data, size );
+
         auto appname = request.GetString( KFField::_app_name );
         auto apptype = request.GetString( KFField::_app_type );
         auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( KFField::_zone_id );
 
         KFMsg::S2SUpdateServerToAgentReq req;
         req.set_appname( appname );
         req.set_apptype( apptype );
         req.set_appid( appid );
+        req.set_zoneid( zoneid );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ, &req );
+    }
+
+    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleRestartServer )
+    {
+        KFJson request( data );
+
+        auto appname = request.GetString( KFField::_app_name );
+        auto apptype = request.GetString( KFField::_app_type );
+        auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( KFField::_zone_id );
+        auto delaytime = request.GetUInt32( KFField::_delay_time );
+
+        KFMsg::S2SRestartServerToAgentReq req;
+        req.set_appname( appname );
+        req.set_apptype( apptype );
+        req.set_appid( appid );
+        req.set_zoneid( zoneid );
+        req.set_delaytime( delaytime );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_START_SERVER_TO_AGENT_REQ, &req );
 
         return _invalid_str;
     }

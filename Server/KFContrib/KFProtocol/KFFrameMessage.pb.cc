@@ -47,12 +47,13 @@ void protobuf_AssignDesc_KFFrameMessage_2eproto() {
       "KFFrameMessage.proto");
   GOOGLE_CHECK(file != NULL);
   ListenData_descriptor_ = file->message_type(0);
-  static const int ListenData_offsets_[5] = {
+  static const int ListenData_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, appid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, appname_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, apptype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, ip_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, port_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListenData, zoneid_),
   };
   ListenData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -174,19 +175,20 @@ void protobuf_AddDesc_KFFrameMessage_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\024KFFrameMessage.proto\022\005KFMsg\"W\n\nListenD"
+    "\n\024KFFrameMessage.proto\022\005KFMsg\"g\n\nListenD"
     "ata\022\r\n\005appid\030\001 \001(\r\022\017\n\007appname\030\002 \002(\t\022\017\n\007a"
-    "pptype\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 \002(\r\"8"
-    "\n\023RegisterToServerReq\022!\n\006listen\030\001 \002(\0132\021."
-    "KFMsg.ListenData\"F\n\023RegisterToServerAck\022"
-    "\017\n\007apptype\030\001 \002(\t\022\r\n\005appid\030\002 \002(\r\022\017\n\007appna"
-    "me\030\003 \002(\t\"9\n\024TellRegisterToServer\022!\n\006list"
-    "en\030\001 \002(\0132\021.KFMsg.ListenData\")\n\030TellUnReg"
-    "isterFromServer\022\r\n\005appid\030\001 \002(\r*\231\001\n\rFrame"
-    "Protocol\022\037\n\032S2S_REGISTER_TO_SERVER_REQ\020\221"
-    "N\022\037\n\032S2S_REGISTER_TO_SERVER_ACK\020\222N\022 \n\033S2"
-    "S_TELL_REGISTER_TO_SERVER\020\223N\022$\n\037S2S_TELL"
-    "_UNREGISTER_FROM_SERVER\020\224N", 506);
+    "pptype\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 \002(\r\022\016"
+    "\n\006zoneid\030\006 \001(\r\"8\n\023RegisterToServerReq\022!\n"
+    "\006listen\030\001 \002(\0132\021.KFMsg.ListenData\"F\n\023Regi"
+    "sterToServerAck\022\017\n\007apptype\030\001 \002(\t\022\r\n\005appi"
+    "d\030\002 \002(\r\022\017\n\007appname\030\003 \002(\t\"9\n\024TellRegister"
+    "ToServer\022!\n\006listen\030\001 \002(\0132\021.KFMsg.ListenD"
+    "ata\")\n\030TellUnRegisterFromServer\022\r\n\005appid"
+    "\030\001 \002(\r*\231\001\n\rFrameProtocol\022\037\n\032S2S_REGISTER"
+    "_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SER"
+    "VER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVE"
+    "R\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SERVER\020"
+    "\224N", 522);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFFrameMessage.proto", &protobuf_RegisterTypes);
   ListenData::default_instance_ = new ListenData();
@@ -233,6 +235,7 @@ const int ListenData::kAppnameFieldNumber;
 const int ListenData::kApptypeFieldNumber;
 const int ListenData::kIpFieldNumber;
 const int ListenData::kPortFieldNumber;
+const int ListenData::kZoneidFieldNumber;
 #endif  // !_MSC_VER
 
 ListenData::ListenData()
@@ -256,6 +259,7 @@ void ListenData::SharedCtor() {
   apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   port_ = 0u;
+  zoneid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -317,6 +321,7 @@ void ListenData::Clear() {
       }
     }
     port_ = 0u;
+    zoneid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -406,6 +411,22 @@ bool ListenData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(48)) goto parse_zoneid;
+        break;
+      }
+
+      // optional uint32 zoneid = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_zoneid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &zoneid_)));
+          set_has_zoneid();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -465,6 +486,11 @@ void ListenData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->port(), output);
   }
 
+  // optional uint32 zoneid = 6;
+  if (has_zoneid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->zoneid(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -513,6 +539,11 @@ void ListenData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->port(), target);
   }
 
+  // optional uint32 zoneid = 6;
+  if (has_zoneid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->zoneid(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -559,6 +590,13 @@ int ListenData::ByteSize() const {
           this->port());
     }
 
+    // optional uint32 zoneid = 6;
+    if (has_zoneid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->zoneid());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -601,6 +639,9 @@ void ListenData::MergeFrom(const ListenData& from) {
     if (from.has_port()) {
       set_port(from.port());
     }
+    if (from.has_zoneid()) {
+      set_zoneid(from.zoneid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -630,6 +671,7 @@ void ListenData::Swap(ListenData* other) {
     std::swap(apptype_, other->apptype_);
     std::swap(ip_, other->ip_);
     std::swap(port_, other->port_);
+    std::swap(zoneid_, other->zoneid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

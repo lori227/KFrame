@@ -15,6 +15,7 @@
     <ClCompile Include="KFAddDiamondState.cpp" />
     <ClCompile Include="KFAddFriendState.cpp" />
     <ClCompile Include="KFAddMoneyState.cpp" />
+    <ClCompile Include="KFAddRecentState.cpp" />
     <ClCompile Include="KFAddWishOrderState.cpp" />
     <ClCompile Include="KFAgreeApplyTeamState.cpp" />
     <ClCompile Include="KFAgreeInviteTeamState.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="KFAddDiamondState.h" />
     <ClInclude Include="KFAddFriendState.h" />
     <ClInclude Include="KFAddMoneyState.h" />
+    <ClInclude Include="KFAddRecentState.h" />
     <ClInclude Include="KFAddWishOrderState.h" />
     <ClInclude Include="KFAgreeApplyTeamState.h" />
     <ClInclude Include="KFAgreeInviteTeamState.h" />

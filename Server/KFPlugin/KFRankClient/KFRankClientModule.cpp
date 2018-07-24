@@ -19,6 +19,7 @@ namespace KFrame
 
     void KFRankClientModule::BeforeRun()
     {
+        __REGISTER_AFTER_RUN_FUNCTION__( &KFRankClientModule::AfterRun );
         _kf_component = _kf_kernel->FindComponent( KFField::_player );
         _kf_component->RegisterUpdateDataModule( this, &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +31,7 @@ namespace KFrame
     void KFRankClientModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_AFTER_RUN_FUNCTION__();
         _kf_component->UnRegisterUpdateDataModule( this );
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +52,33 @@ namespace KFrame
 
         for ( auto kfsetting : ranksettinglist )
         {
-            UpdateRankDataToShard( player, kfsetting );
+            // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
+            _update_rank_list[ player->GetKeyID() ].push_back( kfsetting );
         }
+    }
+
+    void KFRankClientModule::AfterRun()
+    {
+        if ( _update_rank_list.empty() )
+        {
+            return;
+        }
+
+        for ( auto& iter : _update_rank_list )
+        {
+            auto player = _kf_player->FindPlayer( iter.first, __FUNCTION_LINE__ );
+            if ( player == nullptr )
+            {
+                continue;
+            }
+
+            for ( auto kfsetting : iter.second )
+            {
+                UpdateRankDataToShard( player, kfsetting );
+            }
+        }
+
+        _update_rank_list.clear();
     }
 
     uint32 KFRankClientModule::CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting )

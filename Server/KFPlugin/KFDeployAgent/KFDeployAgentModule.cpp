@@ -43,6 +43,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleShutDownServerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleKillServerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleUpdateServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_START_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleRestartServerReq );
     }
 
     static std::string _pid_path = "./pid";
@@ -63,6 +64,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_START_SERVER_TO_AGENT_REQ );
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -426,7 +428,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SStartupServerToAgentReq );
 
-        AddDeployTask( KFDeployTask::Startup, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+        AddDeployTask( KFDeployTask::Startup, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleShutDownServerReq )
@@ -434,30 +436,40 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SShutDownServerToAgentReq );
 
         // 添加到任务队列
-        AddDeployTask( KFDeployTask::ShutDown, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.delaytime() );
+        AddDeployTask( KFDeployTask::ShutDown, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), kfmsg.delaytime() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleKillServerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SKillServerToAgentReq );
 
-        AddDeployTask( KFDeployTask::Kill, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+        AddDeployTask( KFDeployTask::Kill, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleUpdateServerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateServerToAgentReq );
 
-        AddDeployTask( KFDeployTask::Update, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() );
+        AddDeployTask( KFDeployTask::Update, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
     }
 
-    void KFDeployAgentModule::AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 delaytime /* = 0 */ )
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleRestartServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SRestartServerToAgentReq );
+
+        AddDeployTask( KFDeployTask::ShutDown, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), 10000 );
+        AddDeployTask( KFDeployTask::Update, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
+        AddDeployTask( KFDeployTask::Startup, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
+    }
+
+    void KFDeployAgentModule::AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime /* = 0 */ )
     {
         auto kftask = __KF_CREATE__( KFDeployTask );
         kftask->_deploy_type = type;
         kftask->_app_name = appname;
         kftask->_app_type = apptype;
         kftask->_app_id = appid;
+        kftask->_zone_id = zoneid;
         kftask->_delay_time = delaytime;
 
         if ( _kf_task == nullptr )
@@ -538,7 +550,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 kfsetting->_is_shutdown = true;
@@ -553,7 +565,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 kfsetting->_is_shutdown = true;
@@ -575,7 +587,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( kfsetting->_process_id != 0 )
@@ -594,7 +606,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 kfsetting->_is_shutdown = false;
@@ -608,7 +620,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( kfsetting->_process_id == 0 )
@@ -627,11 +639,11 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 kfsetting->_is_download = true;
-                _kf_ftp->StartDownload( kfsetting->_ftp_id, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
+                _kf_ftp->StartDownload( _kf_deploy_agent_config->_ftp_id, kfsetting->_app_path, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
             }
         }
     }
@@ -642,7 +654,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( kfsetting->_is_download )
@@ -655,17 +667,17 @@ namespace KFrame
         return true;
     }
 
-    void KFDeployAgentModule::OnFtpDownLoadCallBack( uint32 ftpid, bool ftpok )
+    void KFDeployAgentModule::OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok )
     {
         // 设置不在下载
         for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
         {
             auto kfsetting = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id );
+            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                if ( kfsetting->_ftp_id == ftpid )
+                if ( kfsetting->_app_path == apppath )
                 {
                     kfsetting->_is_download = false;
                 }

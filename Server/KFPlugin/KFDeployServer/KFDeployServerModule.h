@@ -52,6 +52,9 @@ namespace KFrame
         // 更新服务器
         __KF_HTTP_FUNCTION__( HandleUpdateServer );
 
+        // 重启服务器
+        __KF_HTTP_FUNCTION__( HandleRestartServer );
+
     protected:
 
         // 注册Agent
@@ -69,6 +72,9 @@ namespace KFrame
 
         // 关闭服务器
         void ShutDownServerToAgent( uint32 id, const char* data, uint32 size );
+
+        // 更新服务器
+        void UpdateServerToAgnet( uint32 id, const char* data, uint32 size );
     private:
 
         // mysql

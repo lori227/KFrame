@@ -56,6 +56,9 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListAck );
 
     protected:
+        // 延迟执行
+        void AfterRun();
+
         // 发送消息到Rank
         bool SendMessageToRank( uint32 rankid, uint32 msgid, ::google::protobuf::Message* message );
 
@@ -72,6 +75,8 @@ namespace KFrame
         // 玩家组件
         KFComponent* _kf_component;
 
+        // 更新的排行榜操作
+        std::map< uint32, std::list< KFRankSetting* > > _update_rank_list;
     };
 }
 

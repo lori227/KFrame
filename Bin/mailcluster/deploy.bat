@@ -32,9 +32,8 @@ call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
-
-set path2=config
-call :copyfile 1 cluster.config
+call :copyfile 1 cluster.setting
+call :copyfile 1 redis.address
 
 rem ÅäÖÃÄ¿Â¼
 set path1=..\..\Source\_bin\setting\mail
@@ -46,7 +45,6 @@ call :copyfile 1 shard.startup
 rem config
 set path1=..\..\Resource\config
 set path2=config
-call :copyfile 0 redis.config
 call :copyfile 1 option.config
 
 rem ²å¼þÄ¿Â¼

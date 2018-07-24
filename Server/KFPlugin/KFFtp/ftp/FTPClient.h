@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // The official specification of the File Transfer Protocol (FTP) is the RFC 959.
 // Most of the documentation are taken from this RFC.
@@ -328,7 +328,7 @@ namespace nsFTP
    The "natural" structure of a file will depend on which host
    stores the file.  A source-code file will usually be stored on
    an IBM Mainframe in fixed length records but on a DEC TOPS-20
-   as a stream of characters partitioned into lines, for example
+   as a stream of characters zoneed into lines, for example
    by <CRLF>.  If the transfer of files between such disparate
    sites is to be useful, there must be some way for one site to
    recognize the other's assumptions about the file.

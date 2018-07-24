@@ -45,13 +45,11 @@ copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
-
-path2=$deploypath/config
-copyfile 1 cluster.config
+copyfile 1 cluster.setting
+copyfile 0 zone.setting
 
 path1=$settingpath/zone
 path2=$deploypath/setting
-copyfile 0 zone.config
 
 copyfile 1 gate.startup
 copyfile 1 login.startup
@@ -59,8 +57,6 @@ copyfile 1 master.startup
 copyfile 1 proxy.startup
 copyfile 1 game.startup
 copyfile 1 world.startup
-
-
 
 #config
 cp -f $respath/config/*.config $deploypath/config/

@@ -40,6 +40,7 @@ namespace KFrame
             _app_id = _invalid_int;
             _deploy_type = _invalid_int;
             _delay_time = _invalid_int;
+            _zone_id = _invalid_int;
         }
 
     public:
@@ -54,6 +55,9 @@ namespace KFrame
 
         // appid
         uint32 _app_id;
+
+        // zoneid
+        uint32 _zone_id;
 
         // 延迟时间
         uint32 _delay_time;
@@ -97,6 +101,9 @@ namespace KFrame
 
         // 更新服务器
         __KF_MESSAGE_FUNCTION__( HandleUpdateServerReq );
+
+        // 重启服务器
+        __KF_MESSAGE_FUNCTION__( HandleRestartServerReq );
 
     protected:
         // 更新数据到部署服务
@@ -145,7 +152,7 @@ namespace KFrame
 
     protected:
         // 添加部署任务
-        void AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 delaytime = 0 );
+        void AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime = 0 );
 
         // 开始任务
         void StartDeployTask();
@@ -160,7 +167,7 @@ namespace KFrame
         bool CheckUpdateServerTaskFinish();
 
         // ftp下载回调
-        void OnFtpDownLoadCallBack( uint32 ftpid, bool ftpok );
+        void OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok );
 
     private:
         uint32 _deploy_server_id;

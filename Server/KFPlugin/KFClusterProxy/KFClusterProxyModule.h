@@ -123,7 +123,7 @@ namespace KFrame
         void AfterRun();
 
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterServer( uint32 serverid );
+        void OnClientConnectionClusterServer( const std::string& servername, uint32 serverid );
 
         // 连接Cluster Server 成功
         void OnClientConnectionClusterShard( const std::string& servername, uint32 serverid );

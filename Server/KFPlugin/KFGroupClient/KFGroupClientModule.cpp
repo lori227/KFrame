@@ -203,7 +203,7 @@ namespace KFrame
         auto maxcount = kfgroup->GetValue< uint32 >( KFField::_max_count );
 
         // 先清空数据
-        kfgroup->SetValue< uint32 >( KFField::_group_id, _invalid_int );
+        kfgroup->SetValue< uint32 >( KFField::_id, _invalid_int );
         kfgroup->SetValue< uint32 >( KFField::_match_id, _invalid_int );
         kfgroup->SetValue< uint32 >( KFField::_max_count, _invalid_int );
 
@@ -915,7 +915,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfgroup = kfobject->FindData( KFField::_group );
 
-        auto groupid = kfgroup->GetValue< uint64 >( KFField::_group_id );
+        auto groupid = kfgroup->GetValue< uint64 >( KFField::_id );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );

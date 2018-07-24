@@ -24,9 +24,17 @@
     #define __MAX__( x, y ) ( (x) > (y) ? (x) : (y) )
 #endif
 
+#ifndef __NEW_ARRAY__
+    #define __NEW_ARRAY__( name, size ) new name[size]
+#endif // !__NEW_OBJECT__
+
 #ifndef __DELETE_ARRAY__
     #define __DELETE_ARRAY__( p ) if ( p != nullptr ) { delete[] p; p = nullptr; }
 #endif
+
+#ifndef __NEW_OBJECT__
+    #define __NEW_OBJECT__( name ) new name()
+#endif // !__NEW_OBJECT__
 
 #ifndef __DELETE_OBJECT__
     #define __DELETE_OBJECT__( p ) if ( p != nullptr ) { delete p; p = nullptr; }

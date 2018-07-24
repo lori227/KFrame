@@ -32,9 +32,7 @@ call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
-
-set path2=config
-call :copyfile 1 cluster.config
+call :copyfile 1 cluster.setting
 
 rem ÅäÖÃÄ¿Â¼
 set path1=..\..\Source\_bin\setting\route

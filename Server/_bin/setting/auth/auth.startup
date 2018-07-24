@@ -3,8 +3,8 @@
 	<Plugins>
 		<Plguin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
 		<Plguin Name="KFHttpServer" Startup="1" Sort="110" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
-		<Plguin Name="KFChannel" Startup="1" Sort="130" Debug="KFChanneld" Release="KFChannel" Config="./config/channel.config"/>
+		<Plguin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
+		<Plguin Name="KFChannel" Startup="1" Sort="130" Debug="KFChanneld" Release="KFChannel" Config="./setting/channel.setting"/>
 		<Plguin Name="KFAuth" Startup="1" Sort="140" Debug="KFAuthd" Release="KFAuth" Config=""/>
 	</Plugins>
 </Setting>

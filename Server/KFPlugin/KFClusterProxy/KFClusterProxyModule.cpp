@@ -163,7 +163,7 @@ namespace KFrame
     {
         if ( servertype == KFField::_master )
         {
-            OnClientConnectionClusterServer( serverid );
+            OnClientConnectionClusterServer( servername, serverid );
         }
         else if ( servertype == KFField::_shard )
         {
@@ -171,9 +171,14 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterServer( uint32 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterServer( const std::string& servername, uint32 serverid )
     {
         auto kfglobal = KFGlobal::Instance();
+        // 判断只有连接自己的master才执行
+        if ( kfglobal->_app_name != servername )
+        {
+            return;
+        }
 
         KFMsg::S2SClusterRegisterReq req;
         req.set_type( kfglobal->_app_type );

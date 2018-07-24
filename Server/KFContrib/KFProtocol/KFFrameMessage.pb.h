@@ -167,6 +167,13 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 port() const;
   inline void set_port(::google::protobuf::uint32 value);
 
+  // optional uint32 zoneid = 6;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 6;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.ListenData)
  private:
   inline void set_has_appid();
@@ -179,6 +186,8 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
   inline void clear_has_ip();
   inline void set_has_port();
   inline void clear_has_port();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -187,9 +196,10 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
   ::google::protobuf::uint32 appid_;
   ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFFrameMessage_2eproto();
   friend void protobuf_AssignDesc_KFFrameMessage_2eproto();
@@ -819,6 +829,28 @@ inline ::google::protobuf::uint32 ListenData::port() const {
 inline void ListenData::set_port(::google::protobuf::uint32 value) {
   set_has_port();
   port_ = value;
+}
+
+// optional uint32 zoneid = 6;
+inline bool ListenData::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void ListenData::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void ListenData::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void ListenData::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 ListenData::zoneid() const {
+  return zoneid_;
+}
+inline void ListenData::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
 }
 
 // -------------------------------------------------------------------

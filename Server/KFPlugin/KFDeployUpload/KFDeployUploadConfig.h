@@ -1,0 +1,28 @@
+﻿#ifndef __KF_DEPLOY_UPLOAD_CONFIG_H__
+#define __KF_DEPLOY_UPLOAD_CONFIG_H__
+
+#include "KFConfig/KFConfigInterface.h"
+
+namespace KFrame
+{
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFDeployUploadConfig : public KFConfig, public KFSingleton< KFDeployUploadConfig >
+    {
+    public:
+        KFDeployUploadConfig();
+        ~KFDeployUploadConfig();
+
+        bool LoadConfig( const char* file );
+
+    public:
+        // ftp 地址
+        uint32 _ftp_id;
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    static auto _kf_deploy_upload_config = KFDeployUploadConfig::Instance();
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+#endif

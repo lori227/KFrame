@@ -35,9 +35,9 @@ call :copyfile 1 bus.relation
 call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
-
-set path2=config
 call :copyfile 1 ftp.address
+call :copyfile 1 mysql.address
+
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼
@@ -56,8 +56,6 @@ call :copyfile 1 agent.config
 rem config
 set path1=..\..\Resource\config
 set path2=config
-call :copyfile 0 mysql.config
-
 
 rem ===========================================================================
 rem ===========================================================================

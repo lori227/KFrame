@@ -15,7 +15,7 @@ namespace KFrame
     {
         enum EConstDefine
         {
-            SinceYear = 1970,
+            SinceYear = 1900,
 
             OneSecondMicSecond = 1000,
             OneMinuteSecond = 60,

@@ -71,6 +71,7 @@ namespace KFrame
     void KFRobotModule::Run()
     {
         auto kfrobot = _robot_list.First();
+
         while ( kfrobot != nullptr )
         {
             _net_client->RunEngine( KFGlobal::Instance()->_game_time );
@@ -87,6 +88,7 @@ namespace KFrame
         }
 
         auto kfrobot = _robot_list.First();
+
         while ( kfrobot != nullptr )
         {
             kfrobot->ChangeState( atoi( param[ 1 ].c_str() ) );
@@ -121,6 +123,7 @@ namespace KFrame
     void KFRobotModule::HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )
     {
         bool handleresult = _kf_message->CallFunction( guid, msgid, data, length );
+
         if ( handleresult )
         {
             return;
@@ -137,11 +140,13 @@ namespace KFrame
         KFLogger::LogSystem( KFLogger::Error, "[%s] robot[%u] disconect!",
                              __FUNCTION__, serverid );
         auto kfrobot = _robot_list.Find( serverid );
+
         if ( kfrobot == nullptr )
         {
             return KFLogger::LogSystem( KFLogger::Error, "No Find Robot at [%s] robotid:%u",
                                         __FUNCTION__, serverid );
         }
+
         kfrobot->DisconnectServer( serverid );
         kfrobot->ChangeState( RobotStateEnum::AuthState );
 
@@ -151,6 +156,7 @@ namespace KFrame
     __KF_CLIENT_CONNECT_FUNCTION__( KFRobotModule::OnClientConnected )
     {
         auto kfrobot = _robot_list.Find( serverid );
+
         if ( kfrobot == nullptr )
         {
             return KFLogger::LogSystem( KFLogger::Error, "No Find Robot at [%s] robotid:%u",
@@ -186,6 +192,7 @@ namespace KFrame
         // 这边判断名字是否为空 决定切换的状态
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_basic );
+
         if ( nullptr == kfbasic )
         {
             return;
@@ -194,10 +201,12 @@ namespace KFrame
 
         // 没有名字先创角
         auto modleid = kfbasic->GetValue< uint32 >( KFField::_model_id );
+
         if ( modleid == _invalid_int )
         {
             kfrobot->ChangeState( RobotStateEnum::CreateRole );
         }
+
         else
         {
             kfrobot->ChangeState( kfrobot->_state_list->_state );
@@ -231,6 +240,7 @@ namespace KFrame
             kfrobot->ChangeState( kfrobot->_state_list->_state );
         }
         break;
+
         case KFMsg::NameAlreadyExist:
         case KFMsg::NameEmpty:
         {
@@ -243,12 +253,14 @@ namespace KFrame
             kfrobot->SendNetMessage( KFMsg::MSG_CREATE_ROLE_REQ, &req );
         }
         break;
+
         case KFMsg::MatchRequestSuccess:
         {
             if ( kfrobot->_state_list->next && RobotStateEnum::CancelMatch == kfrobot->_state_list->next->_state )
             {
                 kfrobot->ChangeStateProxy();
             }
+
             else
             {
                 KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] start match success! waitting...",
@@ -256,6 +268,7 @@ namespace KFrame
             }
         }
         break;
+
         default:
             break;
         }
@@ -265,9 +278,10 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncUpdateData );
 
-        //std::cout << "HandleUpdateData: " <<kfmsg.DebugString() <<std::endl;
+        //std::cout << "HandleUpdateData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+
         if ( nullptr == player )
         {
             return;
@@ -281,9 +295,10 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleAddData )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncAddData );
-        //std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
+        // std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+
         if ( nullptr == player )
         {
             return;
@@ -292,9 +307,11 @@ namespace KFrame
         _kf_kernel->ParseFromProto( player->GetData(), pbdata );
 
         auto kfobject = player->GetData();
+
         if (  pbdata->pbrecord_size() > 0 )
         {
             auto record = &pbdata->pbrecord( 0 );
+
             if ( KFField::_friend_invite == record->name() )
             {
                 kfrobot->AgreeInvite();
@@ -305,8 +322,9 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleRemoveData )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveData );
-
+        // std::cout << "HandleRemoveData: " << kfmsg.DebugString() << std::endl;
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+
         if ( nullptr == player )
         {
             return;
@@ -334,6 +352,7 @@ namespace KFrame
                              __FUNCTION__, robotid, kfmsg.type() );
 
         auto ok = _kf_component->RemoveEntity( kfrobot->_playerid );
+
         if ( ok )
         {
             KFRobotPolicMgr::Instance()->RemoveRole( kfrobot->_playerid );

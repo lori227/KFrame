@@ -6,6 +6,6 @@
 	<!--Type 游戏服类型 1 内网测试服-->
 	<!--Name 游戏服名字, 最好是一个id映射到客户端的字串-->
 	<!--Ip Master服务器ip-->
-	<Zone Id="1" LogicId="1" Type="1" Name="内网测试服" Ip="192.168.1.9"/>
+	<Zone Id="0" LogicId="1" Type="1" Name="内网测试服" Ip="127.0.0.1"/>
 </Config>
 

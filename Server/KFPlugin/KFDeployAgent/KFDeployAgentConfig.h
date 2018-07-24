@@ -13,17 +13,16 @@ namespace KFrame
         KFLaunchSetting()
         {
             _app_id = 0;
-            _ftp_id = 0;
-
             _process_id = 0;
             _startup_time = 0;
+            _zone_id = 0;
             _is_shutdown = false;
             _is_download = false;
         }
 
         std::string GetStartupFile();
 
-        bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid );
+        bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
 
     public:
         // 程序id
@@ -44,8 +43,8 @@ namespace KFrame
         // 程序类型( 给web显示用 );
         std::string _app_type;
 
-        // ftpid
-        uint32 _ftp_id;
+        // 小区id
+        uint32 _zone_id;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
 

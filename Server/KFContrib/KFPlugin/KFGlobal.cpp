@@ -12,6 +12,7 @@ namespace KFrame
         _game_time = 0;
         _real_time = 0;
         _listen_port = 0;
+        _zone_id = 0;
         _logger = new KFLoggerEx();
     }
 

@@ -5,7 +5,7 @@
 		<Plguin Name="KFSchedule" Startup="1" Sort="110" Debug="KFScheduled" Release="KFSchedule" Config=""/>
 		<Plguin Name="KFWorker" Startup="1" Sort="120" Debug="KFWorkerd" Release="KFWorker" Config=""/>
 		<Plguin Name="KFOption" Startup="1" Sort="130" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>
-		<Plguin Name="KFRedis" Startup="1" Sort="140" Debug="KFRedisd" Release="KFRedis" Config="./config/redis.config"/>
+		<Plguin Name="KFRedis" Startup="1" Sort="140" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
 		<Plguin Name="KFClusterShard" Startup="1" Sort="150" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
 		<Plguin Name="KFMailShard" Startup="1" Sort="160" Debug="KFMailShardd" Release="KFMailShard" Config=""/>
 

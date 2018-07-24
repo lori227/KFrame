@@ -41,6 +41,8 @@ call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
+call :copyfile 1 redis.address
+
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼
@@ -48,11 +50,12 @@ set path1=..\..\Source\_bin\setting\platform
 set path2=setting
 call :copyfile 1 platform.startup
 
+set path2=config
+call :copyfile 1 platform.config
+
 rem config
 set path1=..\..\Resource\config
 set path2=config
-call :copyfile 0 redis.config
-call :copyfile 1 platform.config
 
 rem ===========================================================================
 rem ===========================================================================

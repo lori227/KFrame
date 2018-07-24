@@ -38,9 +38,10 @@ call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
+call :copyfile 1 cluster.setting
+call :copyfile 1 redis.address
+call :copyfile 1 channel.setting
 
-set path2=config
-call :copyfile 1 cluster.config
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼
@@ -51,9 +52,7 @@ call :copyfile 1 auth.startup
 rem config
 set path1=..\..\Resource\config
 set path2=config
-call :copyfile 0 redis.config
-call :copyfile 1 option.config
-call :copyfile 1 channel.config
+
 rem ===========================================================================
 rem ===========================================================================
 

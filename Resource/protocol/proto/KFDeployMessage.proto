@@ -12,6 +12,7 @@ enum DeployProtocol
 	S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ = 10308;	// 关闭服务器
 	S2S_KILL_SERVER_TO_AGENT_REQ = 10309;		// 杀死服务器
 	S2S_UPDATE_SERVER_TO_AGENT_REQ = 10310;		// 更新服务器
+	S2S_START_SERVER_TO_AGENT_REQ = 10311;		// 重启服务器
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +53,10 @@ message S2SUpdateServerStatusReq
 	required uint32 appid = 2;
 	required string appname = 3;
 	required string apptype = 4;
-	required uint32 process = 5;
-	required uint64 startuptime = 6;
-	required uint32 isshutdown = 7;
+	required uint32 zoneid = 5;
+	required uint32 process = 6;
+	required uint64 startuptime = 7;
+	required uint32 isshutdown = 8;
 }
 
 // 启动服务器
@@ -63,7 +65,8 @@ message S2SStartupServerToAgentReq
 {
 	required string appname = 1;
 	required string apptype = 2;
-	required uint32 appid = 3;		
+	required uint32 appid = 3;	
+	required uint32 zoneid = 4;	
 }
 
 // 关闭服务器
@@ -73,7 +76,8 @@ message S2SShutDownServerToAgentReq
 	required string appname = 1;
 	required string apptype = 2;
 	required uint32 appid = 3;		
-	required uint32 delaytime = 4;	// 延迟时间关闭
+	required uint32 zoneid = 4;	
+	required uint32 delaytime = 5;	// 延迟时间关闭
 }
 
 // 关闭服务器
@@ -83,7 +87,8 @@ message S2SShutDownServerToMasterReq
 	required string appname = 1;
 	required string apptype = 2;
 	required uint32 appid = 3;		
-	required uint32 delaytime = 4;	// 延迟时间关闭
+	required uint32 zoneid = 4;	
+	required uint32 delaytime = 5;	// 延迟时间关闭
 }
 
 // 关闭服务器
@@ -93,7 +98,9 @@ message S2SShutDownServerToServerReq
 	required string appname = 1;
 	required string apptype = 2;
 	required uint32 appid = 3;		
-	required uint32 delaytime = 4;	// 延迟时间关闭
+	required uint32 zoneid = 4;	
+	required uint32 delaytime = 5;	// 延迟时间关闭
+	
 }
 
 // 杀死服务器
@@ -103,6 +110,8 @@ message S2SKillServerToAgentReq
 	required string appname = 1;
 	required string apptype = 2;
 	required uint32 appid = 3;		
+	required uint32 zoneid = 4;	
+	
 }
 
 // 更新服务器
@@ -112,4 +121,16 @@ message S2SUpdateServerToAgentReq
 	required string appname = 1;
 	required string apptype = 2;
 	required uint32 appid = 3;	
+	required uint32 zoneid = 4;	
+}
+
+// 重启服务器
+// S2S_START_SERVER_TO_AGENT_REQ
+message S2SRestartServerToAgentReq
+{
+	required string appname = 1;
+	required string apptype = 2;
+	required uint32 appid = 3;	
+	required uint32 zoneid = 4;	
+	required uint32 delaytime = 5;	// 延迟时间关闭	
 }

@@ -5,6 +5,8 @@ namespace KFrame
 {
     namespace KFField
     {
+        static const std::string _win64 = "win64";
+        static const std::string _linux = "linux";
         static const std::string _shard = "shard";
         static const std::string _gate = "gate";
         static const std::string _game = "game";
@@ -27,6 +29,7 @@ namespace KFrame
         static const std::string _app_id = "appid";
         static const std::string _app_name = "appname";
         static const std::string _app_type = "apptype";
+        static const std::string _app_path = "apppath";
         static const std::string _app_key = "appkey";
         static const std::string _local_ip = "localip";
         static const std::string _interanet_ip = "interanetip";
@@ -60,7 +63,9 @@ namespace KFrame
         static const std::string _shut_down = "shutdown";
         static const std::string _launch_service = "launchservice";
         static const std::string _startup = "startup";
+        static const std::string _restart = "restart";
         static const std::string _download = "download";
+        static const std::string _upload = "upload";
         static const std::string _transmit = "transmit";
         static const std::string _launch_list = "launchlist";
         static const std::string _status = "status";
@@ -230,8 +235,7 @@ namespace KFrame
         static const std::string _platform = "platform";
         static const std::string _min_rank_score = "minrankscore";
         static const std::string _log = "log";
-		static const std::string _skill_id = "skillid";
-		static const std::string _skill = "skill";
+        static const std::string _ftp_id = "ftpid";
     }
 }
 

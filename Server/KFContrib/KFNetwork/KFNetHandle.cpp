@@ -13,6 +13,7 @@ namespace KFrame
         _app_id = 0;
         _listen_port = 0;
         _trustee_timeout = 0;
+        _zone_id = 0;
         _is_shutdown = false;
     }
 

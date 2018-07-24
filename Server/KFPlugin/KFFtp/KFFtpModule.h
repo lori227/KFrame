@@ -36,11 +36,14 @@ namespace KFrame
         void Run();
 
         // 开启下载
-        virtual void StartFtpDownload( uint32 ftpid, KFFtpFunction& function );
+        virtual void StartFtpDownload( uint32 ftpid, const std::string& apppath, KFFtpFunction& function );
+
+        // 开启上传
+        virtual void StartFtpUpload( uint32 ftpid, const std::string& apppath, KFFtpFunction& function );
 
     private:
         // 请求的ftp列表
-        KFMap< uint32, uint32, KFFtpThread > _ftp_thread_list;
+        std::map< std::string, KFFtpThread* > _ftp_thread_list;
 
     };
 }

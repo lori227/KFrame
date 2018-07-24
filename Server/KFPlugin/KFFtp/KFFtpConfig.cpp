@@ -12,50 +12,31 @@ namespace KFrame
 
     }
 
-    const KFFtpSetting* KFFtpConfig::FindFtpSetting( uint32 id ) const
-    {
-        return _kf_ftp_setting.Find( id );
-    }
-
     /////////////////////////////////////////////////////////////////////////////
     bool KFFtpConfig::LoadConfig( const char* file )
     {
-        _kf_ftp_setting.Clear();
-
         try
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////
-            auto ftpsnode = config.FindNode( "Ftps" );
-            while ( ftpsnode.IsValid() )
+            auto ftpnode = config.FindNode( "Ftp" );
+            while ( ftpnode.IsValid() )
             {
-                auto address = ftpsnode.GetString( "Address" );
-                auto port = ftpsnode.GetUInt32( "Port" );
-                auto user = ftpsnode.GetString( "User" );
-                auto password = ftpsnode.GetString( "Password" );
+                auto kfsetting = __KF_CREATE__( KFFtpSetting );
 
-                auto ftpnode = ftpsnode.FindNode( "Ftp" );
-                while ( ftpnode.IsValid() )
-                {
-                    auto kfsetting = __KF_CREATE__( KFFtpSetting );
+                kfsetting->_id = ftpnode.GetUInt32( "Id" );
+                kfsetting->_address = ftpnode.GetString( "Address" );
+                kfsetting->_port = ftpnode.GetUInt32( "Port" );
+                kfsetting->_user = ftpnode.GetString( "User" );
+                kfsetting->_password = ftpnode.GetString( "Password" );
+                kfsetting->_ftp_root_path = ftpnode.GetString( "FtpRootPath" );
+                kfsetting->_download_path = ftpnode.GetString( "DownLoadPath" );
+                kfsetting->_upload_path = ftpnode.GetString( "UpLoadPath" );
+                _ftp_setting.Insert( kfsetting->_id, kfsetting );
 
-                    kfsetting->_address = address;
-                    kfsetting->_port = port;
-                    kfsetting->_user = user;
-                    kfsetting->_password = password;
-
-                    kfsetting->_id = ftpnode.GetUInt32( "Id" );
-                    kfsetting->_win_ftp_path = ftpnode.GetString( "WinFtpPath" );
-                    kfsetting->_linux_ftp_path = ftpnode.GetString( "LinuxFtpPath" );
-                    kfsetting->_local_path = ftpnode.GetString( "LocalPath" );
-                    _kf_ftp_setting.Insert( kfsetting->_id, kfsetting );
-
-                    ftpnode.NextNode();
-                }
-
-                ftpsnode.NextNode();
+                ftpnode.NextNode();
             }
         }
         catch ( ... )
@@ -64,5 +45,46 @@ namespace KFrame
         }
 
         return true;
+    }
+
+    const KFFtpSetting* KFFtpConfig::FindFtpSetting( uint32 ftpid )
+    {
+        return _ftp_setting.Find( ftpid );
+    }
+
+    std::string KFFtpSetting::GetFtpPath( const std::string& apppath ) const
+    {
+        char buff[ 128 ] = "";
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+#else
+        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+#endif
+        return buff;
+    }
+
+    std::string KFFtpSetting::GetDownloadPath( const std::string& apppath ) const
+    {
+        char buff[ 128 ] = "";
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        sprintf( buff, "%s/%s/%s", _download_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+#else
+        sprintf( buff, "%s/%s/%s", _download_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+#endif
+        return buff;
+    }
+
+    std::string KFFtpSetting::GetUploadPath( const std::string& apppath ) const
+    {
+        char buff[ 128 ] = "";
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+#else
+        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+#endif
+        return buff;
     }
 }

@@ -47,12 +47,16 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFBusModule::IsConnection( const std::string& connectname, const std::string& connecttype, uint32 connectid )
+    bool KFBusModule::IsConnection( const std::string& connectname, const std::string& connecttype, uint32 connectid, uint32 zoneid )
     {
         auto kfglobal = KFGlobal::Instance();
 
+        // 不是同一类服务器
         // 如果是master, 返回false, 因为master会主动连, 不需要再这里再次连接
-        if ( connecttype == KFField::_master )
+        // 如果是不同小区, 不能连接
+        if ( connectname != kfglobal->_app_name ||
+                connecttype == KFField::_master ||
+                zoneid != kfglobal->_zone_id )
         {
             return false;
         }
@@ -86,7 +90,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::TellRegisterToServer );
 
         auto listendata = &kfmsg.listen();
-        if ( !IsConnection( listendata->appname(), listendata->apptype(), listendata->appid() ) )
+        if ( !IsConnection( listendata->appname(), listendata->apptype(), listendata->appid(), listendata->zoneid() ) )
         {
             return;
         }

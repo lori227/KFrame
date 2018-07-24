@@ -76,6 +76,7 @@ namespace KFrame
 
         GMAddMoney = 1000,		// 加钱
         GMAddDiamond = 1001,	// 加钻石
+        GMAddRecent = 1002,		// 添加最近的人
 
         // 机器人空闲状态
         PauseState = 9998,		// 机器人停止切换状态

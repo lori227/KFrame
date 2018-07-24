@@ -17,7 +17,7 @@ namespace KFrame
         return file;
     }
 
-    bool KFLaunchSetting::IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid )
+    bool KFLaunchSetting::IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid )
     {
         if ( appname == _globbing_str )
         {
@@ -35,6 +35,11 @@ namespace KFrame
         }
 
         if ( apptype != _app_type )
+        {
+            return false;
+        }
+
+        if ( zoneid != _zone_id )
         {
             return false;
         }
@@ -79,8 +84,8 @@ namespace KFrame
             KFXml kfxml( file );
             auto root = kfxml.FindNode( "Setting" );
             _deploy_path = root.GetString( "DeployPath" );
-            _is_auto_startup = root.GetBoolen( "AutoStartup" );
             _ftp_id = root.GetUInt32( "FtpId" );
+            _is_auto_startup = root.GetBoolen( "AutoStartup" );
             _is_show_window = root.GetBoolen( "ShowWindow" );
             /////////////////////////////////////////////////////////////////////
 
@@ -113,8 +118,8 @@ namespace KFrame
                         kfsetting->_app_name = appname;
                         kfsetting->_app_type = apptype;
                         kfsetting->_app_id = appid + i - 1;
+                        kfsetting->_zone_id = zoneid;
                         kfsetting->_app_config = appconfig;
-                        kfsetting->_ftp_id = ftpid;
                         _kf_launch_setting.Insert( kfsetting->_app_id, kfsetting );
                     }
 

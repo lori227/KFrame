@@ -183,6 +183,9 @@ namespace KFrame
         // GM加钻石
         void AddDiamond();
 
+        // GM加最近的人
+        void AddRecent();
+
         // 增加心愿单
         void AddWishOrder();
 

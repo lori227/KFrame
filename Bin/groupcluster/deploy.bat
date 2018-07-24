@@ -32,9 +32,7 @@ call :copyfile 1 bus.relation
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
-
-set path2=config
-call :copyfile 1 cluster.config
+call :copyfile 1 cluster.setting
 
 rem ÅäÖÃÄ¿Â¼
 set path1=..\..\Source\_bin\setting\group
@@ -42,7 +40,6 @@ set path2=setting
 call :copyfile 1 master.startup
 call :copyfile 1 proxy.startup
 call :copyfile 1 shard.startup
-
 
 rem config
 set path1=..\..\Resource\config
@@ -89,6 +86,10 @@ call :copyfile 1 KFDeployCommand.dll
 call :copyfile 1 KFDeployCommandd.dll
 call :copyfile 1 KFDeployClient.dll
 call :copyfile 1 KFDeployClientd.dll
+call :copyfile 1 KFClusterClient.dll
+call :copyfile 1 KFClusterClientd.dll
+call :copyfile 1 KFLogClient.dll
+call :copyfile 1 KFLogClientd.dll
 
 
 rem pause

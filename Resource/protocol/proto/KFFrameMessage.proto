@@ -16,6 +16,7 @@ message ListenData
 	required string apptype = 3;
 	required string ip = 4;
 	required uint32 port = 5;	
+	optional uint32 zoneid = 6;	
 }
 
 ////////////////////////////////////////////////////////////////////////////////

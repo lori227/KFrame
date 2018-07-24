@@ -8,7 +8,7 @@
 	<!--User 登录用户名 -->
 	<!--Password 登录密码 -->
 	<Redis>
-		<Connection Id="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		<Connection Id="1" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
 	</Redis>
 
 	<!--逻辑功能对应redis映射-->

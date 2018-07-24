@@ -1019,7 +1019,18 @@ namespace KFrame
 
             if ( !record->name().empty() )
             {
-                kfparent = kfparent->FindData( record->name() );
+                if ( nullptr != kfparent )
+                {
+                    kfparent = kfparent->FindData( record->name() );
+                }
+
+                if ( nullptr == kfparent )
+                {
+                    // log
+                    KFLogger::LogLogic( KFLogger::Error, "[%s] robot[%u] parse pb to kfdata Error[%s]!",
+                                        __FUNCTION__, player->GetKeyID(), record->name().c_str() );
+                }
+
             }
 
             for ( auto j = 0; j < record->pbobject_size(); ++j )
@@ -1057,19 +1068,20 @@ namespace KFrame
     }
 
     void KFRobot::QueryWholeRankList()
-    {
-        KFMsg::MsgQueryWholeRankListReq req;
-        req.set_matchid( 4 );
-        req.set_ranktype( KFField::_eval_rank );
-        SendNetMessage( KFMsg::MSG_QUERY_WHOLE_RANK_LIST_REQ, &req );
+    {   /*
+           KFMsg::MsgQueryWholeRankListReq req;
+           req.set_matchid( 4 );
+           req.set_ranktype( KFField::_eval_rank );
+           SendNetMessage( KFMsg::MSG_QUERY_WHOLE_RANK_LIST_REQ, &req );*/
     }
 
     void KFRobot::QueryFriendRankList()
     {
+        /*
         KFMsg::MsgQueryFriendRankListReq req;
         req.set_matchid( 4 );
         req.set_ranktype( KFField::_eval_rank );
-        SendNetMessage( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &req );
+        SendNetMessage( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &req );*/
     }
 
     void KFRobot::ParseUpdatePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key )
@@ -1251,6 +1263,16 @@ namespace KFrame
         KFMsg::MsgDebugCommandReq req;
         req.set_command( "AddData" );
         req.add_params( "[{\"diamond\":{\"diamond\":3000}}]" );
+        SendNetMessage( KFMsg::MSG_DEBUG_COMMAND_REQ, &req );
+    }
+
+    void KFRobot::AddRecent()
+    {
+        KFMsg::MsgDebugCommandReq req;
+        req.set_command( "AddRecent" );
+
+        auto randuid = KFRand::STRandDistrict( 1010001, 1014352, 1 );
+        req.add_params( __KF_STRING__( randuid ) );
         SendNetMessage( KFMsg::MSG_DEBUG_COMMAND_REQ, &req );
     }
 
