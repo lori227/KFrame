@@ -18,7 +18,7 @@ namespace KFrame
         void StartClusterMasterClient();
 
         // 连接事件
-        void OnConnectionClusterServer( const std::string& servertype, uint32 serverid );
+        void OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid );
 
         // 断线事件
         void OnLostClusterServer( const std::string& servertype, uint32 serverid );

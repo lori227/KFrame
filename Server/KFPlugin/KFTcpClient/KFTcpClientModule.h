@@ -37,7 +37,7 @@ namespace KFrame
         virtual void StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port );
 
         // 断开连接
-        virtual void CloseClient( uint32 serverid );
+        virtual void CloseClient( uint32 serverid, const char* function, uint32 line );
         /////////////////////////////////////////////////////////////////////////
 
         // 发送消息

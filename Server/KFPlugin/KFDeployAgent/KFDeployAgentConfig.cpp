@@ -29,17 +29,17 @@ namespace KFrame
             return false;
         }
 
+        if ( zoneid != _zone_id )
+        {
+            return false;
+        }
+
         if ( apptype == _globbing_str )
         {
             return true;
         }
 
         if ( apptype != _app_type )
-        {
-            return false;
-        }
-
-        if ( zoneid != _zone_id )
         {
             return false;
         }

@@ -32,6 +32,8 @@ namespace KFrame
             return;
         }
 
+        _time_difference = kfsetting->_time_difference;
+
         std::string localpath = kfsetting->GetUploadPath( _app_path );
         auto uploadpath = __NEW_OBJECT__( KFUpLoadPath );
         uploadpath->_total_path = localpath;
@@ -196,7 +198,7 @@ namespace KFrame
 
         KFDate kfdate( _tm.tm_year, _tm.tm_mon, _tm.tm_mday, _tm.tm_hour, _tm.tm_min, _tm.tm_sec );
         auto ftptime = static_cast< int64 >( kfdate.GetTime() );
-        ftptime += 8 * KFTimeEnum::OneHourSecond;
+        ftptime += _time_difference;
 
         return localtime >= ftptime;
     }

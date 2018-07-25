@@ -44,51 +44,6 @@ namespace KFrame
         };
     }
 
-    // 时间间隔
-    class TimeSpan
-    {
-    public:
-        TimeSpan() : _time( 0 ) {}
-        TimeSpan( uint64 time ) : _time( time ) {}
-
-        uint64 GetTime() const {
-            return _time;
-        }
-
-        // 天数
-        uint32 GetDays() const {
-            return static_cast< uint32 >( _time / KFTimeEnum::OneDaySecond );
-        }
-
-        // 小时数
-        uint32 GetHours() const {
-            return GetTotalHours() - GetDays() * KFTimeEnum::OneDayHour;
-        }
-        uint32 GetTotalHours() const {
-            return static_cast< uint32 >( _time / KFTimeEnum::OneHourSecond );
-        }
-
-        // 分钟数
-        uint32 GetMinutes() const {
-            return GetTotalMinutes() - GetTotalHours() * KFTimeEnum::OneHourMinute;
-        }
-        uint32 GetTotalMinutes() const {
-            return static_cast< uint32 >( _time / KFTimeEnum::OneMinuteSecond );
-        }
-
-        // 秒数
-        uint32 GetSeconds() const {
-            return _time % KFTimeEnum::OneMinuteSecond;
-        }
-        uint64 GetTotalSeconds() const {
-            return _time;
-        }
-
-    private:
-        // 时间
-        uint64 _time;
-    };
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 系统时间
@@ -99,32 +54,10 @@ namespace KFrame
         KFDate( uint64 time );
         KFDate( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 min, uint32 second = 0 );
 
-        KFDate& operator += ( TimeSpan time );
-        KFDate& operator -= ( TimeSpan time );
-        KFDate operator + ( TimeSpan time ) const;
-        KFDate operator - ( TimeSpan time ) const;
-
-        KFDate& operator += ( uint64 time );
-        KFDate& operator -= ( uint64 time );
-        KFDate operator + ( uint64 time ) const;
-        KFDate operator - ( uint64 time ) const;
-
-        bool operator == ( KFDate time ) const;
-        bool operator != ( KFDate time ) const;
-        bool operator <= ( KFDate time ) const;
-        bool operator >= ( KFDate time ) const;
-        bool operator < ( KFDate time ) const;
-        bool operator > ( KFDate time ) const;
-
-        TimeSpan operator - ( KFDate time ) const;
-
         // 获得时间
-        uint64 GetTime() const {
-            return _time;
-        }
-        void SetTime( uint64 time ) {
-            _time = time;
-        }
+        uint64 GetTime() const;
+        void SetTime( uint64 time );
+        void AddTime( uint64 time );
 
         // 获得具体年月日时间
         uint32 GetYear() const;
@@ -157,30 +90,23 @@ namespace KFrame
         // 判断是否过了一年
         static bool CheckPassYear( uint64 lasttime, uint64 nowtime );
 
-        // 判断是否过了一个月
-        static bool CheckPassMonth( uint64 lasttime, uint64 nowtime );
-
         // 判断是否过了某一天
-        static bool CheckPassMonth( uint64 lasttime, uint64 nowtime, uint32 day );
+        static bool CheckPassMonth( uint64 lasttime, uint64 nowtime, uint32 day, uint32 hour );
 
-        // 判断是否过了一天
-        static bool CheckPassDay( uint64 lasttime, uint64 nowtime );
+        // 判断是否过了一小时
+        static bool CheckPassHour( uint64 lasttime, uint64 nowtime );
+
+        // 判断同一天
         static bool CheckSameDay( uint64 lasttime, uint64 nowtime );
 
         // 判断是否过了某一天
         static bool CheckPassDay( uint64 lasttime, uint64 nowtime, uint32 hour );
 
         // 判断是否过了一周
-        static bool CheckPassWeek( uint64 lasttime, uint64 nowtime );
-
-        // 判断是否过了周急
-        static bool CheckPassWeek( uint64 lasttime, uint64 nowtime, uint32 dayofweek );
-
-        // 判断是否过了一小时
-        static bool CheckPassHour( uint64 lasttime, uint64 nowtime );
+        static bool CheckPassWeek( uint64 lasttime, uint64 nowtime, uint32 dayofweek, uint32 hour );
 
         // 判断时间
-        static bool CheckTime( uint32 type, uint32 time, uint64 lasttime, uint64 nowtime );
+        static bool CheckTime( uint32 type, uint32 value, uint32 hour, uint64 lasttime, uint64 nowtime );
 
         // 判断是否过了时间
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
@@ -189,10 +115,12 @@ namespace KFrame
         static uint64 TimeFormate( const std::string& ymd, const std::string& split = "-" );
 
     protected:
-        _tm* LocalTime() const;
+        // 转换时间
+        void ConvertTimeDate();
 
     private:
-        uint64 _time;
+        time_t _time;
+        _tm _tm_date;
     };
 }
 

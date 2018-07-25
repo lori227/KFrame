@@ -66,7 +66,7 @@ namespace KFrame
 
         // 先关闭当前连接
         __UNREGISTER_TIMER__();
-        _kf_tcp_client->CloseClient( _deploy_server_id );
+        _kf_tcp_client->CloseClient( _deploy_server_id, __FUNCTION_LINE__ );
         _deploy_server_id = 0;
 
         // 连接Agent

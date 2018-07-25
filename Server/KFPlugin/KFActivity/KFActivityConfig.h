@@ -35,13 +35,10 @@ namespace KFrame
     class KFActivitySetting
     {
     public:
-        KFActivitySetting() : _max_value( 0 )
+        KFActivitySetting()
         {
-        }
-
-        ~KFActivitySetting()
-        {
-
+            _max_value = 0;
+            _reset_hour = 0;
         }
 
         uint32 _type;				// 活动类型
@@ -50,6 +47,8 @@ namespace KFrame
         uint64 _start_time;			// 开始时间
         uint64 _end_time;			// 结束时间
         uint32 _reset_type;			// 重置类型
+        uint32 _reset_time;			// 重置时间
+        uint32 _reset_hour;			// 重置时间
         uint32 _max_value;			// 活动最大值
 
         uint32 _level;				// 等级限制

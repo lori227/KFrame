@@ -17,6 +17,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFRelationClient/KFRelationClientInterface.h"
 
 namespace KFrame
 {
@@ -52,6 +53,9 @@ namespace KFrame
         // 结算战绩
         __KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreReq );
 
+        // 战斗结束
+        __KF_MESSAGE_FUNCTION__( HandleBattleFinishAck );
+
     private:
         // 玩家上线回调
         void OnEnterQueryBattleRoom( KFEntity* player );
@@ -61,6 +65,9 @@ namespace KFrame
 
         // 计算总评分
         uint32 CalcTotalScore( KFEntity* player );
+
+        // 过滤最近玩家所需数据
+        void FilterRecentData( KFMsg::PBBattleScore* pbbattlescore, KFMsg::PBRecentData* recentdata );
     };
 }
 

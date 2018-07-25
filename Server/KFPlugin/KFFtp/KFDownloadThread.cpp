@@ -30,6 +30,7 @@ namespace KFrame
             return;
         }
 
+        _time_difference = kfsetting->_time_difference;
         try
         {
             nsFTP::CFTPClient ftpclient;
@@ -84,7 +85,7 @@ namespace KFrame
         auto _tm = gmtime( &file->MTime() );
         KFDate filetime( _tm->tm_year + KFTimeEnum::SinceYear, _tm->tm_mon + 1, _tm->tm_mday, _tm->tm_hour, _tm->tm_min, _tm->tm_sec );
         auto ftptime = static_cast< int64 >( filetime.GetTime() );
-        ftptime += 8 * KFTimeEnum::OneHourSecond;
+        ftptime += _time_difference;
 
         return localtime <= ftptime;
     }

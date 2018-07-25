@@ -161,6 +161,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFClusterProxyModule::OnClientConnectionServer )
     {
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_app_name != servername )
+        {
+            return;
+        }
+
         if ( servertype == KFField::_master )
         {
             OnClientConnectionClusterServer( servername, serverid );
@@ -174,11 +180,6 @@ namespace KFrame
     void KFClusterProxyModule::OnClientConnectionClusterServer( const std::string& servername, uint32 serverid )
     {
         auto kfglobal = KFGlobal::Instance();
-        // 判断只有连接自己的master才执行
-        if ( kfglobal->_app_name != servername )
-        {
-            return;
-        }
 
         KFMsg::S2SClusterRegisterReq req;
         req.set_type( kfglobal->_app_type );
@@ -218,22 +219,28 @@ namespace KFrame
 
     __KF_CLIENT_LOST_FUNCTION__( KFClusterProxyModule::OnClientLostServer )
     {
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_app_name != servername )
+        {
+            return;
+        }
+
         if ( servertype == KFField::_master )
         {
-            OnClientLostClusterServer( serverid );
+            OnClientLostClusterServer( servername, serverid );
         }
         else if ( servertype == KFField::_shard )
         {
-            OnClientLostClusterShard( serverid );
+            OnClientLostClusterShard( servername, serverid );
         }
     }
 
-    void KFClusterProxyModule::OnClientLostClusterServer( uint32 serverid )
+    void KFClusterProxyModule::OnClientLostClusterServer( const std::string& servername, uint32 serverid )
     {
         __UNREGISTER_OBJECT_TIMER__( serverid );
     }
 
-    void KFClusterProxyModule::OnClientLostClusterShard( uint32 serverid )
+    void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint32 serverid )
     {
         _kf_hash.RemoveHashNode( serverid );
 

@@ -13,7 +13,7 @@ if not exist plugin (mkdir plugin)
 if not exist setting (mkdir setting)
 if not exist config (mkdir config)
 
-set path1=..\..\Source\_bin\win64
+set path1=..\..\Server\_bin\win64
 set path2=.
 
 call :copyfile 1 KFStartupd.exe
@@ -26,7 +26,7 @@ call :copyfile 1 libmysql.dll
 
 
 rem 全局配置
-set path1=..\..\Source\_bin\setting
+set path1=..\..\Server\_bin\setting
 set path2=setting
 call :copyfile 1 ip.address
 call :copyfile 1 bus.relation
@@ -40,7 +40,7 @@ call :copyfile 1 mysql.address
 call :copyfile 1 data.setting
 
 rem 配置目录
-set path1=..\..\Source\_bin\setting\data
+set path1=..\..\Server\_bin\setting\data
 set path2=setting
 call :copyfile 1 master.startup
 call :copyfile 1 proxy.startup
@@ -51,7 +51,7 @@ set path1=..\..\Resource\config
 set path2=config
 
 rem 插件目录
-set path1=..\..\Source\_bin\win64\plugin
+set path1=..\..\Server\_bin\win64\plugin
 set path2=plugin
 
 call :copyfile 1 KFHttpClient.dll

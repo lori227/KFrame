@@ -130,6 +130,10 @@ class S2SNewPlayerLoginMailReq;
 class S2SUpdateRankDataReq;
 class S2SQueryRankListReq;
 class S2SQueryFriendRankListReq;
+class S2SAddBattleFriendDataReq;
+class PBUidsInfo;
+class PBUidBasic;
+class S2SModifyRecentListReq;
 
 enum ServerProtocol {
   S2S_TRANSMIT_MESSAGE_REQ = 21001,
@@ -223,11 +227,13 @@ enum ServerProtocol {
   S2S_QUERY_RANK_LIST_REQ = 21187,
   S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188,
   S2S_TELL_MATCH_GROUP_DATA_ACK = 21192,
-  S2S_UPDATE_RANK_DATA_REQ = 21193
+  S2S_UPDATE_RANK_DATA_REQ = 21193,
+  S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194,
+  S2S_MODIFY_RECENT_LIST_REQ = 21195
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
 const ServerProtocol ServerProtocol_MIN = S2S_TRANSMIT_MESSAGE_REQ;
-const ServerProtocol ServerProtocol_MAX = S2S_UPDATE_RANK_DATA_REQ;
+const ServerProtocol ServerProtocol_MAX = S2S_MODIFY_RECENT_LIST_REQ;
 const int ServerProtocol_ARRAYSIZE = ServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerProtocol_descriptor();
@@ -10349,6 +10355,393 @@ class LIBPROTOC_EXPORT S2SQueryFriendRankListReq : public ::google::protobuf::Me
   void InitAsDefaultInstance();
   static S2SQueryFriendRankListReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SAddBattleFriendDataReq : public ::google::protobuf::Message {
+ public:
+  S2SAddBattleFriendDataReq();
+  virtual ~S2SAddBattleFriendDataReq();
+
+  S2SAddBattleFriendDataReq(const S2SAddBattleFriendDataReq& from);
+
+  inline S2SAddBattleFriendDataReq& operator=(const S2SAddBattleFriendDataReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAddBattleFriendDataReq& default_instance();
+
+  void Swap(S2SAddBattleFriendDataReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SAddBattleFriendDataReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SAddBattleFriendDataReq& from);
+  void MergeFrom(const S2SAddBattleFriendDataReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBRecentData recentdata = 1;
+  inline int recentdata_size() const;
+  inline void clear_recentdata();
+  static const int kRecentdataFieldNumber = 1;
+  inline const ::KFMsg::PBRecentData& recentdata(int index) const;
+  inline ::KFMsg::PBRecentData* mutable_recentdata(int index);
+  inline ::KFMsg::PBRecentData* add_recentdata();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >&
+      recentdata() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >*
+      mutable_recentdata();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddBattleFriendDataReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData > recentdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAddBattleFriendDataReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBUidsInfo : public ::google::protobuf::Message {
+ public:
+  PBUidsInfo();
+  virtual ~PBUidsInfo();
+
+  PBUidsInfo(const PBUidsInfo& from);
+
+  inline PBUidsInfo& operator=(const PBUidsInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBUidsInfo& default_instance();
+
+  void Swap(PBUidsInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  PBUidsInfo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBUidsInfo& from);
+  void MergeFrom(const PBUidsInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string uidsinfo = 1;
+  inline int uidsinfo_size() const;
+  inline void clear_uidsinfo();
+  static const int kUidsinfoFieldNumber = 1;
+  inline const ::std::string& uidsinfo(int index) const;
+  inline ::std::string* mutable_uidsinfo(int index);
+  inline void set_uidsinfo(int index, const ::std::string& value);
+  inline void set_uidsinfo(int index, const char* value);
+  inline void set_uidsinfo(int index, const char* value, size_t size);
+  inline ::std::string* add_uidsinfo();
+  inline void add_uidsinfo(const ::std::string& value);
+  inline void add_uidsinfo(const char* value);
+  inline void add_uidsinfo(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& uidsinfo() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_uidsinfo();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBUidsInfo)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::std::string> uidsinfo_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBUidsInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBUidBasic : public ::google::protobuf::Message {
+ public:
+  PBUidBasic();
+  virtual ~PBUidBasic();
+
+  PBUidBasic(const PBUidBasic& from);
+
+  inline PBUidBasic& operator=(const PBUidBasic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBUidBasic& default_instance();
+
+  void Swap(PBUidBasic* other);
+
+  // implements Message ----------------------------------------------
+
+  PBUidBasic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBUidBasic& from);
+  void MergeFrom(const PBUidBasic& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBStrings basicdata = 1;
+  inline int basicdata_size() const;
+  inline void clear_basicdata();
+  static const int kBasicdataFieldNumber = 1;
+  inline const ::KFMsg::PBStrings& basicdata(int index) const;
+  inline ::KFMsg::PBStrings* mutable_basicdata(int index);
+  inline ::KFMsg::PBStrings* add_basicdata();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
+      basicdata() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
+      mutable_basicdata();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBUidBasic)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings > basicdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBUidBasic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SModifyRecentListReq : public ::google::protobuf::Message {
+ public:
+  S2SModifyRecentListReq();
+  virtual ~S2SModifyRecentListReq();
+
+  S2SModifyRecentListReq(const S2SModifyRecentListReq& from);
+
+  inline S2SModifyRecentListReq& operator=(const S2SModifyRecentListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SModifyRecentListReq& default_instance();
+
+  void Swap(S2SModifyRecentListReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SModifyRecentListReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SModifyRecentListReq& from);
+  void MergeFrom(const S2SModifyRecentListReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBPlayerIds uids = 2;
+  inline bool has_uids() const;
+  inline void clear_uids();
+  static const int kUidsFieldNumber = 2;
+  inline const ::KFMsg::PBPlayerIds& uids() const;
+  inline ::KFMsg::PBPlayerIds* mutable_uids();
+  inline ::KFMsg::PBPlayerIds* release_uids();
+  inline void set_allocated_uids(::KFMsg::PBPlayerIds* uids);
+
+  // required uint32 operate = 3;
+  inline bool has_operate() const;
+  inline void clear_operate();
+  static const int kOperateFieldNumber = 3;
+  inline ::google::protobuf::uint32 operate() const;
+  inline void set_operate(::google::protobuf::uint32 value);
+
+  // optional .KFMsg.PBUidsInfo uidsinfos = 4;
+  inline bool has_uidsinfos() const;
+  inline void clear_uidsinfos();
+  static const int kUidsinfosFieldNumber = 4;
+  inline const ::KFMsg::PBUidsInfo& uidsinfos() const;
+  inline ::KFMsg::PBUidsInfo* mutable_uidsinfos();
+  inline ::KFMsg::PBUidsInfo* release_uidsinfos();
+  inline void set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos);
+
+  // optional .KFMsg.PBUidBasic basicdatas = 5;
+  inline bool has_basicdatas() const;
+  inline void clear_basicdatas();
+  static const int kBasicdatasFieldNumber = 5;
+  inline const ::KFMsg::PBUidBasic& basicdatas() const;
+  inline ::KFMsg::PBUidBasic* mutable_basicdatas();
+  inline ::KFMsg::PBUidBasic* release_basicdatas();
+  inline void set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SModifyRecentListReq)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_uids();
+  inline void clear_has_uids();
+  inline void set_has_operate();
+  inline void clear_has_operate();
+  inline void set_has_uidsinfos();
+  inline void clear_has_uidsinfos();
+  inline void set_has_basicdatas();
+  inline void clear_has_basicdatas();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::KFMsg::PBPlayerIds* uids_;
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 operate_;
+  ::KFMsg::PBUidsInfo* uidsinfos_;
+  ::KFMsg::PBUidBasic* basicdatas_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SModifyRecentListReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -19410,6 +19803,274 @@ S2SQueryFriendRankListReq::friendid() const {
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
 S2SQueryFriendRankListReq::mutable_friendid() {
   return &friendid_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SAddBattleFriendDataReq
+
+// repeated .KFMsg.PBRecentData recentdata = 1;
+inline int S2SAddBattleFriendDataReq::recentdata_size() const {
+  return recentdata_.size();
+}
+inline void S2SAddBattleFriendDataReq::clear_recentdata() {
+  recentdata_.Clear();
+}
+inline const ::KFMsg::PBRecentData& S2SAddBattleFriendDataReq::recentdata(int index) const {
+  return recentdata_.Get(index);
+}
+inline ::KFMsg::PBRecentData* S2SAddBattleFriendDataReq::mutable_recentdata(int index) {
+  return recentdata_.Mutable(index);
+}
+inline ::KFMsg::PBRecentData* S2SAddBattleFriendDataReq::add_recentdata() {
+  return recentdata_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >&
+S2SAddBattleFriendDataReq::recentdata() const {
+  return recentdata_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >*
+S2SAddBattleFriendDataReq::mutable_recentdata() {
+  return &recentdata_;
+}
+
+// -------------------------------------------------------------------
+
+// PBUidsInfo
+
+// repeated string uidsinfo = 1;
+inline int PBUidsInfo::uidsinfo_size() const {
+  return uidsinfo_.size();
+}
+inline void PBUidsInfo::clear_uidsinfo() {
+  uidsinfo_.Clear();
+}
+inline const ::std::string& PBUidsInfo::uidsinfo(int index) const {
+  return uidsinfo_.Get(index);
+}
+inline ::std::string* PBUidsInfo::mutable_uidsinfo(int index) {
+  return uidsinfo_.Mutable(index);
+}
+inline void PBUidsInfo::set_uidsinfo(int index, const ::std::string& value) {
+  uidsinfo_.Mutable(index)->assign(value);
+}
+inline void PBUidsInfo::set_uidsinfo(int index, const char* value) {
+  uidsinfo_.Mutable(index)->assign(value);
+}
+inline void PBUidsInfo::set_uidsinfo(int index, const char* value, size_t size) {
+  uidsinfo_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PBUidsInfo::add_uidsinfo() {
+  return uidsinfo_.Add();
+}
+inline void PBUidsInfo::add_uidsinfo(const ::std::string& value) {
+  uidsinfo_.Add()->assign(value);
+}
+inline void PBUidsInfo::add_uidsinfo(const char* value) {
+  uidsinfo_.Add()->assign(value);
+}
+inline void PBUidsInfo::add_uidsinfo(const char* value, size_t size) {
+  uidsinfo_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+PBUidsInfo::uidsinfo() const {
+  return uidsinfo_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+PBUidsInfo::mutable_uidsinfo() {
+  return &uidsinfo_;
+}
+
+// -------------------------------------------------------------------
+
+// PBUidBasic
+
+// repeated .KFMsg.PBStrings basicdata = 1;
+inline int PBUidBasic::basicdata_size() const {
+  return basicdata_.size();
+}
+inline void PBUidBasic::clear_basicdata() {
+  basicdata_.Clear();
+}
+inline const ::KFMsg::PBStrings& PBUidBasic::basicdata(int index) const {
+  return basicdata_.Get(index);
+}
+inline ::KFMsg::PBStrings* PBUidBasic::mutable_basicdata(int index) {
+  return basicdata_.Mutable(index);
+}
+inline ::KFMsg::PBStrings* PBUidBasic::add_basicdata() {
+  return basicdata_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
+PBUidBasic::basicdata() const {
+  return basicdata_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
+PBUidBasic::mutable_basicdata() {
+  return &basicdata_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SModifyRecentListReq
+
+// required uint32 playerid = 1;
+inline bool S2SModifyRecentListReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SModifyRecentListReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SModifyRecentListReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SModifyRecentListReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SModifyRecentListReq::playerid() const {
+  return playerid_;
+}
+inline void S2SModifyRecentListReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required .KFMsg.PBPlayerIds uids = 2;
+inline bool S2SModifyRecentListReq::has_uids() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SModifyRecentListReq::set_has_uids() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SModifyRecentListReq::clear_has_uids() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SModifyRecentListReq::clear_uids() {
+  if (uids_ != NULL) uids_->::KFMsg::PBPlayerIds::Clear();
+  clear_has_uids();
+}
+inline const ::KFMsg::PBPlayerIds& S2SModifyRecentListReq::uids() const {
+  return uids_ != NULL ? *uids_ : *default_instance_->uids_;
+}
+inline ::KFMsg::PBPlayerIds* S2SModifyRecentListReq::mutable_uids() {
+  set_has_uids();
+  if (uids_ == NULL) uids_ = new ::KFMsg::PBPlayerIds;
+  return uids_;
+}
+inline ::KFMsg::PBPlayerIds* S2SModifyRecentListReq::release_uids() {
+  clear_has_uids();
+  ::KFMsg::PBPlayerIds* temp = uids_;
+  uids_ = NULL;
+  return temp;
+}
+inline void S2SModifyRecentListReq::set_allocated_uids(::KFMsg::PBPlayerIds* uids) {
+  delete uids_;
+  uids_ = uids;
+  if (uids) {
+    set_has_uids();
+  } else {
+    clear_has_uids();
+  }
+}
+
+// required uint32 operate = 3;
+inline bool S2SModifyRecentListReq::has_operate() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SModifyRecentListReq::set_has_operate() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SModifyRecentListReq::clear_has_operate() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SModifyRecentListReq::clear_operate() {
+  operate_ = 0u;
+  clear_has_operate();
+}
+inline ::google::protobuf::uint32 S2SModifyRecentListReq::operate() const {
+  return operate_;
+}
+inline void S2SModifyRecentListReq::set_operate(::google::protobuf::uint32 value) {
+  set_has_operate();
+  operate_ = value;
+}
+
+// optional .KFMsg.PBUidsInfo uidsinfos = 4;
+inline bool S2SModifyRecentListReq::has_uidsinfos() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SModifyRecentListReq::set_has_uidsinfos() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SModifyRecentListReq::clear_has_uidsinfos() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SModifyRecentListReq::clear_uidsinfos() {
+  if (uidsinfos_ != NULL) uidsinfos_->::KFMsg::PBUidsInfo::Clear();
+  clear_has_uidsinfos();
+}
+inline const ::KFMsg::PBUidsInfo& S2SModifyRecentListReq::uidsinfos() const {
+  return uidsinfos_ != NULL ? *uidsinfos_ : *default_instance_->uidsinfos_;
+}
+inline ::KFMsg::PBUidsInfo* S2SModifyRecentListReq::mutable_uidsinfos() {
+  set_has_uidsinfos();
+  if (uidsinfos_ == NULL) uidsinfos_ = new ::KFMsg::PBUidsInfo;
+  return uidsinfos_;
+}
+inline ::KFMsg::PBUidsInfo* S2SModifyRecentListReq::release_uidsinfos() {
+  clear_has_uidsinfos();
+  ::KFMsg::PBUidsInfo* temp = uidsinfos_;
+  uidsinfos_ = NULL;
+  return temp;
+}
+inline void S2SModifyRecentListReq::set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos) {
+  delete uidsinfos_;
+  uidsinfos_ = uidsinfos;
+  if (uidsinfos) {
+    set_has_uidsinfos();
+  } else {
+    clear_has_uidsinfos();
+  }
+}
+
+// optional .KFMsg.PBUidBasic basicdatas = 5;
+inline bool S2SModifyRecentListReq::has_basicdatas() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SModifyRecentListReq::set_has_basicdatas() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SModifyRecentListReq::clear_has_basicdatas() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SModifyRecentListReq::clear_basicdatas() {
+  if (basicdatas_ != NULL) basicdatas_->::KFMsg::PBUidBasic::Clear();
+  clear_has_basicdatas();
+}
+inline const ::KFMsg::PBUidBasic& S2SModifyRecentListReq::basicdatas() const {
+  return basicdatas_ != NULL ? *basicdatas_ : *default_instance_->basicdatas_;
+}
+inline ::KFMsg::PBUidBasic* S2SModifyRecentListReq::mutable_basicdatas() {
+  set_has_basicdatas();
+  if (basicdatas_ == NULL) basicdatas_ = new ::KFMsg::PBUidBasic;
+  return basicdatas_;
+}
+inline ::KFMsg::PBUidBasic* S2SModifyRecentListReq::release_basicdatas() {
+  clear_has_basicdatas();
+  ::KFMsg::PBUidBasic* temp = basicdatas_;
+  basicdatas_ = NULL;
+  return temp;
+}
+inline void S2SModifyRecentListReq::set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas) {
+  delete basicdatas_;
+  basicdatas_ = basicdatas;
+  if (basicdatas) {
+    set_has_basicdatas();
+  } else {
+    clear_has_basicdatas();
+  }
 }
 
 

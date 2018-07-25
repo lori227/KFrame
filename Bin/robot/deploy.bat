@@ -20,7 +20,7 @@ set path1=..\..\Resource\config
 set path2=config
 xcopy /y /e %path1% %path2%\
 
-set path1=..\..\Source\_bin\win64
+set path1=..\..\Server\_bin\win64
 set path2=.
 
 call :copyfile 1 KFStartupd.exe
@@ -31,7 +31,7 @@ call :copyfile 1 libcrypto-1_1-x64.dll
 call :copyfile 1 libssl-1_1-x64.dll
 
 rem ²å¼þÄ¿Â¼
-set path1=..\..\Source\_bin\win64\plugin
+set path1=..\..\Server\_bin\win64\plugin
 set path2=plugin
 
 for /f "delims=" %%i in ('dir "%path1% *.dll" /b') do (
@@ -39,14 +39,14 @@ copy "%%i" "%path2%\" /y
 )
 xcopy /y %path1%\*.dll %path2%\
 
-set path1=..\..\Source\_bin\setting
+set path1=..\..\Server\_bin\setting
 set path2=setting
 
 call :copyfile 0 connection.network
 call :copyfile 1 initapp.log4cxx
 call :copyfile 1 templateapp.log4cxx
 
-set path1=..\..\Source\_bin\setting\robot
+set path1=..\..\Server\_bin\setting\robot
 set path2=setting
 call :copyfile 0 game.network
 call :copyfile 1 robot.startup

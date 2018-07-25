@@ -2,6 +2,7 @@
 #define __KF_DECODE_H__
 
 #include "KFInclude.h"
+#include "KFMemory/KFBuffer.h"
 
 namespace KFrame
 {

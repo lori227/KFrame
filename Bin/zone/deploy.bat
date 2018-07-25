@@ -14,7 +14,7 @@ if not exist setting (mkdir setting)
 if not exist config (mkdir config)
 if not exist script (mkdir script)
 
-set path1=..\..\Source\_bin\win64
+set path1=..\..\Server\_bin\win64
 set path2=.
 
 call :copyfile 1 KFStartupd.exe
@@ -25,9 +25,9 @@ call :copyfile 1 libcrypto-1_1-x64.dll
 call :copyfile 1 libssl-1_1-x64.dll
 
 rem 全局配置
-set path1=..\..\Source\_bin\setting
+set path1=..\..\Server\_bin\setting
 set path2=setting
-call :copyfile 1 ip.address
+call :copyfile 0 ip.address
 call :copyfile 1 bus.relation
 call :copyfile 1 server.network
 call :copyfile 1 initapp.log4cxx
@@ -36,7 +36,7 @@ call :copyfile 1 common.startup
 call :copyfile 1 cluster.setting
 call :copyfile 0 zone.setting
 
-set path1=..\..\Source\_bin\setting\zone
+set path1=..\..\Server\_bin\setting\zone
 set path2=setting
 
 call :copyfile 1 gate.startup
@@ -56,7 +56,7 @@ set path2=script
 xcopy /y /e %path1% %path2%\
 
 rem 插件目录
-set path1=..\..\Source\_bin\win64\plugin
+set path1=..\..\Server\_bin\win64\plugin
 set path2=plugin
 
 for /f "delims=" %%i in ('dir "%path1% *.dll" /b') do (

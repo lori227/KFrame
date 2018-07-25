@@ -67,8 +67,9 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFClusterClientModule::OnClientConnectionServer )
     {
-        // 不能连自己的proxy
-        if ( servername == KFGlobal::Instance()->_app_name )
+        // 只处理除自己外的集群连接
+        auto kfglobal = KFGlobal::Instance();
+        if ( servername == kfglobal->_app_name )
         {
             return;
         }
@@ -90,7 +91,7 @@ namespace KFrame
             kfclusterclient->_cluster_client_module = this;
         }
 
-        kfclusterclient->OnConnectionClusterServer( servertype, serverid );
+        kfclusterclient->OnConnectionClusterServer( servername, servertype, serverid );
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFClusterClientModule::OnClientLostServer )

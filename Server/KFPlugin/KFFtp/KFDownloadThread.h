@@ -33,6 +33,8 @@ namespace KFrame
 
         // 改名字
         void RenameFile( const std::string& oldfile, const std::string& newfile );
+
+
     };
 }
 

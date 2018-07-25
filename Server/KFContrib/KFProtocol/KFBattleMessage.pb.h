@@ -3586,6 +3586,22 @@ class LIBPROTOC_EXPORT S2STellBattleRoomFinishAck : public ::google::protobuf::M
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
+  // repeated string pbscore = 2;
+  inline int pbscore_size() const;
+  inline void clear_pbscore();
+  static const int kPbscoreFieldNumber = 2;
+  inline const ::std::string& pbscore(int index) const;
+  inline ::std::string* mutable_pbscore(int index);
+  inline void set_pbscore(int index, const ::std::string& value);
+  inline void set_pbscore(int index, const char* value);
+  inline void set_pbscore(int index, const char* value, size_t size);
+  inline ::std::string* add_pbscore();
+  inline void add_pbscore(const ::std::string& value);
+  inline void add_pbscore(const char* value);
+  inline void add_pbscore(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& pbscore() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_pbscore();
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2STellBattleRoomFinishAck)
  private:
   inline void set_has_roomid();
@@ -3594,9 +3610,10 @@ class LIBPROTOC_EXPORT S2STellBattleRoomFinishAck : public ::google::protobuf::M
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> pbscore_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -6930,6 +6947,50 @@ inline ::google::protobuf::uint64 S2STellBattleRoomFinishAck::roomid() const {
 inline void S2STellBattleRoomFinishAck::set_roomid(::google::protobuf::uint64 value) {
   set_has_roomid();
   roomid_ = value;
+}
+
+// repeated string pbscore = 2;
+inline int S2STellBattleRoomFinishAck::pbscore_size() const {
+  return pbscore_.size();
+}
+inline void S2STellBattleRoomFinishAck::clear_pbscore() {
+  pbscore_.Clear();
+}
+inline const ::std::string& S2STellBattleRoomFinishAck::pbscore(int index) const {
+  return pbscore_.Get(index);
+}
+inline ::std::string* S2STellBattleRoomFinishAck::mutable_pbscore(int index) {
+  return pbscore_.Mutable(index);
+}
+inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const ::std::string& value) {
+  pbscore_.Mutable(index)->assign(value);
+}
+inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const char* value) {
+  pbscore_.Mutable(index)->assign(value);
+}
+inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const char* value, size_t size) {
+  pbscore_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2STellBattleRoomFinishAck::add_pbscore() {
+  return pbscore_.Add();
+}
+inline void S2STellBattleRoomFinishAck::add_pbscore(const ::std::string& value) {
+  pbscore_.Add()->assign(value);
+}
+inline void S2STellBattleRoomFinishAck::add_pbscore(const char* value) {
+  pbscore_.Add()->assign(value);
+}
+inline void S2STellBattleRoomFinishAck::add_pbscore(const char* value, size_t size) {
+  pbscore_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+S2STellBattleRoomFinishAck::pbscore() const {
+  return pbscore_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+S2STellBattleRoomFinishAck::mutable_pbscore() {
+  return &pbscore_;
 }
 
 // -------------------------------------------------------------------

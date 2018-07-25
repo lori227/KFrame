@@ -235,7 +235,14 @@ namespace KFrame
         static const std::string _platform = "platform";
         static const std::string _min_rank_score = "minrankscore";
         static const std::string _log = "log";
+        static const std::string _battle_room = "battleroom";
         static const std::string _ftp_id = "ftpid";
+        static const std::string _recent_list = "recentlist";
+        static const std::string _recent_hash = "recenthash";
+        static const std::string _recent_player = "recentplayer";
+        static const std::string _total_player = "totalplayer";
+        static const std::string _be_killed = "bekilled";
+        static const std::string _relation_type = "relationtype";
     }
 }
 

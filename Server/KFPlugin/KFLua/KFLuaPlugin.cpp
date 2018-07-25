@@ -17,5 +17,6 @@ namespace KFrame
     void KFLuaPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_relation, KFRelationClientInterface );
     }
 }

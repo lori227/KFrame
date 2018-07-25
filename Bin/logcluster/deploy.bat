@@ -13,7 +13,7 @@ if not exist plugin (mkdir plugin)
 if not exist setting (mkdir setting)
 if not exist config (mkdir config)
 
-set path1=..\..\Source\_bin\win64
+set path1=..\..\Server\_bin\win64
 set path2=.
 
 call :copyfile 1 KFStartupd.exe
@@ -24,7 +24,7 @@ call :copyfile 1 libcrypto-1_1-x64.dll
 call :copyfile 1 libssl-1_1-x64.dll
 
 rem 全局配置
-set path1=..\..\Source\_bin\setting
+set path1=..\..\Server\_bin\setting
 set path2=setting
 call :copyfile 1 ip.address
 call :copyfile 1 server.network
@@ -34,7 +34,7 @@ call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 cluster.setting
 
 rem 配置目录
-set path1=..\..\Source\_bin\setting\log
+set path1=..\..\Server\_bin\setting\log
 set path2=setting
 call :copyfile 1 master.startup
 call :copyfile 1 proxy.startup
@@ -45,7 +45,7 @@ set path1=..\..\Resource\config
 set path2=config
 
 rem 插件目录
-set path1=..\..\Source\_bin\win64\plugin
+set path1=..\..\Server\_bin\win64\plugin
 set path2=plugin
 
 call :copyfile 1 KFHttpClient.dll

@@ -410,6 +410,7 @@ message S2STellBattleRoomFinishReq
 message S2STellBattleRoomFinishAck
 {
 	required uint64 roomid = 1;			// 房间id
+	repeated string pbscore = 2;			// 战绩
 }
 
 // 战斗服务器=>战斗服务器集群逻辑

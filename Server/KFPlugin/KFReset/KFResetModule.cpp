@@ -62,21 +62,23 @@ namespace KFrame
 
     void KFResetModule::ResetPlayerData( KFEntity* player )
     {
-        auto kfobject = player->GetData();
         auto nowtime = KFGlobal::Instance()->_real_time;
+
+        auto kfobject = player->GetData();
+        auto kfnoterecord = kfobject->FindData( KFField::_note );
 
         for ( auto& iter : _kf_reset_config->_reset_setting._objects )
         {
             auto kfsetting = iter.second;
 
-            auto lasttime = kfobject->GetValue< uint64 >( KFField::_note, kfsetting->_note_id, KFField::_value );
-            if ( !KFDate::CheckTime( kfsetting->_reset_time_type, kfsetting->_reset_time_value, lasttime, nowtime ) )
+            auto lasttime = kfnoterecord->GetValue< uint64 >( kfsetting->_note_id, KFField::_value );
+            if ( !KFDate::CheckTime( kfsetting->_time_type, kfsetting->_time_value, kfsetting->_time_hour, lasttime, nowtime ) )
             {
                 continue;
             }
 
             // 保存时间
-            player->UpdateData( KFField::_note, kfsetting->_note_id, KFField::_value, KFOperateEnum::Set, nowtime );
+            player->UpdateData( kfnoterecord, kfsetting->_note_id, KFField::_value, KFOperateEnum::Set, nowtime );
 
             // 重置变量
             for ( auto& resetdata : kfsetting->_reset_data_list )
@@ -85,7 +87,7 @@ namespace KFrame
 
                 if ( kfreset->_parent_name.empty() )
                 {
-                    player->UpdateData( kfreset->_data_name, KFOperateEnum::Set, kfreset->_value );
+                    player->UpdateData( kfreset->_data_name, kfreset->_operate, kfreset->_value );
                 }
                 else if ( kfreset->_data_name.empty() )
                 {
@@ -93,11 +95,11 @@ namespace KFrame
                 }
                 else if ( kfreset->_key == 0 )
                 {
-                    player->UpdateData( kfreset->_parent_name, kfreset->_data_name, KFOperateEnum::Set, kfreset->_value );
+                    player->UpdateData( kfreset->_parent_name, kfreset->_data_name, kfreset->_operate, kfreset->_value );
                 }
                 else
                 {
-                    player->UpdateData( kfreset->_parent_name, kfreset->_key, kfreset->_data_name, KFOperateEnum::Set, kfreset->_value );
+                    player->UpdateData( kfreset->_parent_name, kfreset->_key, kfreset->_data_name, kfreset->_operate, kfreset->_value );
                 }
             }
         }

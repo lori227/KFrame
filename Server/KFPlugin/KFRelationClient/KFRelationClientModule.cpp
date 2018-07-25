@@ -40,6 +40,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleReplyInviteReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseFriendInviteReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK, &KFRelationClientModule::HandleUpdateFriendLinessAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_MODIFY_RECENT_LIST_REQ, &KFRelationClientModule::HandleModifyRecentListReq );
     }
 
     void KFRelationClientModule::BeforeShut()
@@ -64,6 +65,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_MODIFY_RECENT_LIST_REQ );
     }
 
     void KFRelationClientModule::OnceRun()
@@ -80,6 +82,7 @@ namespace KFrame
     bool KFRelationClientModule::SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
     {
         auto serverid = kfrelation->GetValue< uint32 >( KFField::_basic, KFField::_server_id );
+
         if ( serverid == _invalid_int )
         {
             return false;
@@ -161,6 +164,7 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( KFField::_friend );
+
         if ( kffriendrecord == nullptr )
         {
             return;
@@ -168,6 +172,7 @@ namespace KFrame
 
         KFMsg::S2SUpdateFriendReq req;
         req.set_friendid( player->GetKeyID() );
+
         for ( auto iter : values )
         {
             auto pbdata = req.add_pbdata();
@@ -176,6 +181,7 @@ namespace KFrame
         }
 
         auto kffriend = kffriendrecord->FirstData();
+
         while ( kffriend != nullptr )
         {
             SendMessageToRelation( kffriend, KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
@@ -188,11 +194,13 @@ namespace KFrame
         kffriend->SetKeyID( pbfriend->playerid() );
 
         auto kfbasic = kffriend->FindData( KFField::_basic );
+
         for ( auto i = 0; i < pbfriend->playerdata_size(); ++i )
         {
             auto pbdata = &pbfriend->playerdata( i );
 
             auto kfdata = kfbasic->FindData( pbdata->name() );
+
             if ( kfdata != nullptr )
             {
                 kfdata->SetValue< std::string >( pbdata->value() );
@@ -204,6 +212,7 @@ namespace KFrame
             auto pbdata = &pbfriend->frienddata( i );
 
             auto kfdata = kffriend->FindData( pbdata->name() );
+
             if ( kfdata != nullptr )
             {
                 kfdata->SetValue< std::string >( pbdata->value() );
@@ -217,6 +226,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( KFField::_friend, kfmsg.friendid(), KFField::_basic );
+
         if ( kfbasic == nullptr )
         {
             return;
@@ -241,6 +251,7 @@ namespace KFrame
             auto pbfriend = &kfmsg.pbfriend( i );
 
             auto kffriend = _kf_kernel->CreateObject( kffreindrecord->GetDataSetting() );
+
             if ( kffriend == nullptr )
             {
                 continue;
@@ -271,6 +282,7 @@ namespace KFrame
             auto pbfriend = &kfmsg.pbfriend( i );
 
             auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
+
             if ( kfinvite == nullptr )
             {
                 continue;
@@ -294,6 +306,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( KFField::_friend );
         auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
+
         if ( kffriend != nullptr )
         {
             // 已经是好友, 不能申请
@@ -317,6 +330,7 @@ namespace KFrame
         req.set_message( message );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         auto ok = SendMessageToRelation( KFMsg::S2S_ADD_FRIEND_INVITE_REQ, &req );
+
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
@@ -331,6 +345,7 @@ namespace KFrame
         auto kfinviterecord = kfobject->FindData( KFField::_friend_invite );
 
         auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
+
         if ( kfinvite == nullptr )
         {
             return;
@@ -350,6 +365,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( KFField::_friend );
         auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
+
         if ( kffriend == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
@@ -360,6 +376,7 @@ namespace KFrame
         req.set_selfplayerid( playerid );
         req.set_targetplayerid( kfmsg.playerid() );
         auto ok = SendMessageToRelation( KFMsg::S2S_DEL_FRIEND_REQ, &req );
+
         if ( ok )
         {
             auto name = kffriend->GetValue< std::string >( KFField::_basic, KFField::_name );
@@ -367,6 +384,7 @@ namespace KFrame
 
             player->RemoveData( kffriendrecord, kfmsg.playerid() );
         }
+
         else
         {
             _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
@@ -380,6 +398,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( KFField::_friend );
         auto kffriend = kffriendrecord->FindData( kfmsg.targetplayerid() );
+
         if ( kffriend == nullptr )
         {
             return;
@@ -400,6 +419,7 @@ namespace KFrame
         {
             ReplyFriendInvite( player, kfmsg.operate() );
         }
+
         else
         {
             ReplyFriendInvite( player, kfmsg.playerid(), kfmsg.operate() );
@@ -414,9 +434,11 @@ namespace KFrame
         std::vector<uint32> removelist;
 
         auto kfinvite = kfinviterecord->FirstData();
+
         while ( kfinvite != nullptr )
         {
             auto removeid = ReplyFriendInvite( player, kfinvite, operate );
+
             if ( _invalid_int != removeid )
             {
                 removelist.push_back( removeid );
@@ -437,12 +459,14 @@ namespace KFrame
         auto kfinviterecord = kfobject->FindData( KFField::_friend_invite );
 
         auto kfinvite = kfinviterecord->FindData( playerid );
+
         if ( kfinvite == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::FriendInviteNotExist );
         }
 
         auto inviteid = ReplyFriendInvite( player, kfinvite, operate );
+
         if ( inviteid != _invalid_int )
         {
             player->RemoveData( kfinviterecord, inviteid );
@@ -452,6 +476,7 @@ namespace KFrame
     uint32 KFRelationClientModule::ReplyFriendInvite( KFEntity* player, KFData* kfinvite, uint32 operate )
     {
         auto removeid = _invalid_int;
+
         switch ( operate )
         {
         case KFMsg::InviteEnum::Consent:
@@ -459,6 +484,7 @@ namespace KFrame
             AddFriend( player, kfinvite );
         }
         break;
+
         case KFMsg::InviteEnum::Refuse:
         {
             auto kfobject = player->GetData();
@@ -466,6 +492,7 @@ namespace KFrame
             auto targetserverid = kfinvite->GetValue< uint32 >( KFField::_basic, KFField::_server_id );
             _kf_display->SendToPlayer( targetserverid, kfinvite->GetKeyID(), KFMsg::FriendRefuseYourInvite, selfname );
         }//break; 注释break, 执行下次发送删除消息操作
+
         case  KFMsg::InviteEnum::Delete:
         {
             removeid = kfinvite->GetKeyID();
@@ -477,6 +504,7 @@ namespace KFrame
             SendMessageToRelation( KFMsg::S2S_DEL_FRIEND_INVITE_REQ, &req );
         }
         break;
+
         default:
             break;
         }
@@ -492,6 +520,7 @@ namespace KFrame
 
         // 判断数量
         auto friendcount = kffriendrecord->Size();
+
         if ( friendcount >= _kf_relation_config->_max_friend_count )
         {
             return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _kf_relation_config->_max_friend_count );
@@ -504,6 +533,7 @@ namespace KFrame
         req.set_serverid( KFGlobal::Instance()->_app_id );
         req.set_targetname( kfinvite->GetValue< std::string >( KFField::_basic, KFField::_name ) );
         auto ok = SendMessageToRelation( KFMsg::S2S_ADD_FRIEND_REQ, &req );
+
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
@@ -540,6 +570,7 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( KFField::_friend, friendid );
+
         if ( kffriend == nullptr )
         {
             return;
@@ -560,6 +591,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( KFField::_friend, kfmsg.targetplayerid() );
+
         if ( kffriend == nullptr )
         {
             return;
@@ -571,4 +603,124 @@ namespace KFrame
         auto friendname = kffriend->GetValue< std::string >( KFField::_basic, KFField::_name );
         _kf_display->SendToClient( player, KFMsg::FriendLinessAdd, friendname, kfmsg.friendliness() );
     }
+
+
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleModifyRecentListReq )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SModifyRecentListReq );
+        auto kfobject = player->GetData();
+        auto kfrecentplayer = kfobject->FindData( KFField::_recent_player );
+
+        switch ( kfmsg.operate() )
+        {
+        case KFOperateEnum::Add:
+        case  KFOperateEnum::Set:
+        {
+
+            auto uidsize = kfmsg.uids().playerid_size();
+            auto basicsize = kfmsg.basicdatas().basicdata_size();
+
+            if ( kfmsg.uids().playerid_size() != kfmsg.basicdatas().basicdata_size() )
+            {
+                return;
+            }
+
+            for ( auto i = 0; i < kfmsg.uids().playerid_size(); ++i )
+            {
+                auto recentid = kfmsg.uids().playerid( i );
+
+                if ( _invalid_int == recentid )
+                {
+                    continue;
+                }
+
+                auto pbbasic = &kfmsg.basicdatas().basicdata( i );
+                auto strdata = kfmsg.uidsinfos().uidsinfo( i );
+                KFMsg::PBRecentData pbrecentdata;
+                KFProto::Parse( &pbrecentdata, strdata, KFCompressEnum::Convert );
+
+                if ( nullptr == pbbasic || strdata.empty() )
+                {
+                    continue;
+                }
+
+                auto kfdata = PBRecentListToKFData( recentid, &pbrecentdata, pbbasic, kfrecentplayer->GetDataSetting() );
+                player->AddData( kfrecentplayer, kfdata );
+            }
+        }
+        break;
+
+        case KFOperateEnum::Dec:
+        {
+            for ( auto i = 0; i < kfmsg.uids().playerid_size(); ++i )
+            {
+                player->RemoveData( KFField::_recent_player, kfmsg.uids().playerid( i ) );
+            }
+
+        }
+        break;
+
+        default:
+            break;
+        }
+
+    }
+
+
+    KFData* KFRelationClientModule::PBRecentListToKFData( uint32 playerid, const KFMsg::PBRecentData* pbrecentdata,
+            const KFMsg::PBStrings* basicdata, const KFDataSetting* kfsetting )
+    {
+        auto kfrecentobject = _kf_kernel->CreateObject( kfsetting );
+
+        if ( kfrecentobject == nullptr )
+        {
+            return nullptr;
+        }
+
+        kfrecentobject->SetKeyID( playerid );
+        auto kfbasic = kfrecentobject->FindData( KFField::_basic );
+
+        for ( auto i = 0; i < basicdata->pbstring_size(); ++i )
+        {
+            auto pbdata = &basicdata->pbstring( i );
+
+            auto kfdata = kfbasic->FindData( pbdata->name() );
+
+            if ( nullptr != kfdata )
+            {
+                kfdata->SetValue<std::string >( pbdata->value() );
+            }
+        }
+
+        // 单局排名
+        kfrecentobject->SetValue<uint32 >( KFField::_rank, pbrecentdata->ranking() );
+
+        // 单局游戏人数
+        kfrecentobject->SetValue<uint32 >( KFField::_total_player, pbrecentdata->totalnum() );
+
+        // 击杀人数
+        kfrecentobject->SetValue<uint32 >( KFField::_kill, pbrecentdata->kill() );
+
+        // 单局评分
+        if ( pbrecentdata->has_score() )
+        {
+            kfrecentobject->SetValue<uint32 >( KFField::_score, pbrecentdata->score() );
+        }
+
+        // 关系类型
+        if ( pbrecentdata->has_relationtype() )
+        {
+            kfrecentobject->SetValue<uint32 >( KFField::_relation_type, pbrecentdata->relationtype() );
+        }
+
+        else
+        {
+            kfrecentobject->SetValue<uint32 >( KFField::_relation_type, _invalid_int );
+        }
+
+        return kfrecentobject;
+    }
+
+
+
 }

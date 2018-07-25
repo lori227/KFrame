@@ -49,13 +49,8 @@ namespace KFrame
         switch ( _reset_type )
         {
         case KFActivityEnum::ResetDaily:
-        {
-            if ( KFDate::CheckPassDay( eventtime, nowtime ) )
-            {
-                return true;
-            }
+            return KFDate::CheckPassDay( eventtime, nowtime, _reset_hour );
             break;
-        }
         default:
             break;
         }

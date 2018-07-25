@@ -717,8 +717,9 @@ void protobuf_AssignDesc_KFBattleMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2STellBattleRoomFinishReq));
   S2STellBattleRoomFinishAck_descriptor_ = file->message_type(33);
-  static const int S2STellBattleRoomFinishAck_offsets_[1] = {
+  static const int S2STellBattleRoomFinishAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2STellBattleRoomFinishAck, roomid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2STellBattleRoomFinishAck, pbscore_),
   };
   S2STellBattleRoomFinishAck_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -1129,70 +1130,71 @@ void protobuf_AddDesc_KFBattleMessage_2eproto() {
     "atchShardAck\022\016\n\006roomid\030\001 \002(\004\"a\n\032S2STellB"
     "attleRoomFinishReq\022\025\n\rbattleshardid\030\001 \002("
     "\r\022\016\n\006roomid\030\002 \002(\004\022\020\n\010serverid\030\003 \002(\r\022\n\n\002i"
-    "p\030\004 \002(\t\",\n\032S2STellBattleRoomFinishAck\022\016\n"
-    "\006roomid\030\001 \002(\004\"l\n\034S2SBattleRoomScoreBalan"
-    "ceReq\022\016\n\006roomid\030\001 \002(\004\022\025\n\rbattleshardid\030\002"
-    " \002(\r\022%\n\007pbscore\030\003 \002(\0132\024.KFMsg.PBBattleSc"
-    "ore\"P\n\034S2SBattleRoomScoreBalanceAck\022\016\n\006r"
-    "oomid\030\001 \002(\004\022\020\n\010playerid\030\002 \002(\r\022\016\n\006reward\030"
-    "\003 \002(\t\"X\n\037S2SBattleScoreBalanceToShardReq"
-    "\022\016\n\006roomid\030\001 \002(\004\022%\n\007pbscore\030\002 \002(\0132\024.KFMs"
-    "g.PBBattleScore\"b\n\027S2SPlayerBattleScoreR"
-    "eq\022\020\n\010playerid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022%\n\007"
-    "pbscore\030\003 \002(\0132\024.KFMsg.PBBattleScore\";\n\027S"
-    "2SPlayerBattleScoreAck\022\020\n\010playerid\030\001 \002(\r"
-    "\022\016\n\006roomid\030\002 \002(\004\"/\n\033S2SOnlieQueryBattleS"
-    "coreReq\022\020\n\010playerid\030\001 \002(\r\"Q\n!S2STellRoom"
-    "FinishToBattleShardReq\022\016\n\006roomid\030\001 \002(\004\022\020"
-    "\n\010serverid\030\002 \002(\r\022\n\n\002ip\030\003 \002(\t\"B\n\037S2STellR"
-    "oomCloseToMatchShardReq\022\017\n\007matchid\030\001 \002(\004"
-    "\022\016\n\006roomid\030\002 \002(\004*\207\016\n\016BattleProtocol\022#\n\036S"
-    "2S_REGISTER_BATTLE_SERVER_REQ\020\300W\022#\n\036S2S_"
-    "REGISTER_BATTLE_SERVER_ACK\020\301W\022.\n)S2S_DIS"
-    "CONNECT_SERVER_TO_BATTLE_SHARD_REQ\020\302W\022,\n"
-    "\'S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ"
-    "\020\303W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_PROXY_R"
-    "EQ\020\304W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_SHARD"
-    "_REQ\020\305W\022\'\n\"S2S_CREATE_ROOM_TO_MATCH_SHAR"
-    "D_ACK\020\306W\022\035\n\030S2S_OPEN_BATTLE_ROOM_REQ\020\307W\022"
-    "\035\n\030S2S_OPEN_BATTLE_ROOM_ACK\020\310W\022&\n!S2S_OP"
-    "EN_ROOM_TO_BATTLE_SHARD_ACK\020\311W\022%\n S2S_PL"
-    "AYER_ENTER_BATTLE_ROOM_REQ\020\312W\022%\n S2S_PLA"
-    "YER_ENTER_BATTLE_ROOM_ACK\020\313W\022.\n)S2S_PLAY"
-    "ER_ENTER_ROOM_TO_BATTLE_SHARD_ACK\020\314W\022%\n "
-    "S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ\020\315W\022-\n(S"
-    "2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ\020"
-    "\316W\022#\n\036S2S_TELL_BATTLE_ROOM_START_REQ\020\317W\022"
-    "#\n\036S2S_TELL_BATTLE_ROOM_START_ACK\020\320W\022+\n&"
-    "S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ\020\321"
-    "W\022%\n S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ\020\322W"
-    "\022$\n\037S2S_TELL_BATTLE_ROOM_FINISH_REQ\020\323W\022("
-    "\n#S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK\020\324W"
-    "\022,\n\'S2S_TELL_ROOM_START_TO_BATTLE_SHARD_"
-    "REQ\020\325W\022-\n(S2S_TELL_ROOM_FINISH_TO_BATTLE"
-    "_SAHRD_REQ\020\326W\022%\n S2S_ADD_CAMP_TO_BATTLE_"
-    "SHARD_REQ\020\327W\022$\n\037S2S_ADD_CAMP_TO_MATCH_SH"
-    "ARD_ACK\020\330W\022(\n#S2S_REMOVE_CAMP_TO_BATTLE_"
-    "SHARD_REQ\020\331W\022 \n\033S2S_PLAYER_CANCEL_MATCH_"
-    "REQ\020\332W\022%\n S2S_PLAYER_LEAVE_BATTLE_ROOM_A"
-    "CK\020\333W\022 \n\033S2S_PLAYER_CANCEL_MATCH_ACK\020\334W\022"
-    "$\n\037S2S_TELL_BATTLE_ROOM_FINISH_ACK\020\335W\022.\n"
-    ")S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_R"
-    "EQ\020\336W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_RE"
-    "Q\020\337W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK"
-    "\020\340W\022.\n)S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_S"
-    "HARD_REQ\020\341W\022,\n\'S2S_TELL_ROOM_START_TO_BA"
-    "TTLE_SHARD_ACK\020\342W\022*\n%S2S_TELL_BATTLE_REG"
-    "ISTER_TO_SHARD_REQ\020\343W\022+\n&S2S_TELL_ROOM_C"
-    "LOSE_TO_MATCH_SHARD_REQ\020\344W\022 \n\033S2S_PLAYER"
-    "_BATTLE_SCORE_REQ\020\345W\022 \n\033S2S_PLAYER_BATTL"
-    "E_SCORE_ACK\020\346W\022&\n!S2S_BATTLE_ROOM_SCORE_"
-    "BALANCE_REQ\020\347W\022&\n!S2S_BATTLE_ROOM_SCORE_"
-    "BALANCE_ACK\020\350W\022*\n%S2S_BATTLE_SCORE_BALAN"
-    "CE_TO_SHARD_REQ\020\351W\022&\n!S2S_ONLINE_QUERY_B"
-    "ATTLE_SCORE_REQ\020\352W\022&\n!S2S_OPEN_BATTLE_RO"
-    "OM_TO_SHARD_ACK\020\353W*-\n\nBattleEnum\022\017\n\013Open"
-    "Success\020\001\022\016\n\nOpenFailed\020\002", 5345);
+    "p\030\004 \002(\t\"=\n\032S2STellBattleRoomFinishAck\022\016\n"
+    "\006roomid\030\001 \002(\004\022\017\n\007pbscore\030\002 \003(\t\"l\n\034S2SBat"
+    "tleRoomScoreBalanceReq\022\016\n\006roomid\030\001 \002(\004\022\025"
+    "\n\rbattleshardid\030\002 \002(\r\022%\n\007pbscore\030\003 \002(\0132\024"
+    ".KFMsg.PBBattleScore\"P\n\034S2SBattleRoomSco"
+    "reBalanceAck\022\016\n\006roomid\030\001 \002(\004\022\020\n\010playerid"
+    "\030\002 \002(\r\022\016\n\006reward\030\003 \002(\t\"X\n\037S2SBattleScore"
+    "BalanceToShardReq\022\016\n\006roomid\030\001 \002(\004\022%\n\007pbs"
+    "core\030\002 \002(\0132\024.KFMsg.PBBattleScore\"b\n\027S2SP"
+    "layerBattleScoreReq\022\020\n\010playerid\030\001 \002(\r\022\016\n"
+    "\006roomid\030\002 \002(\004\022%\n\007pbscore\030\003 \002(\0132\024.KFMsg.P"
+    "BBattleScore\";\n\027S2SPlayerBattleScoreAck\022"
+    "\020\n\010playerid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\"/\n\033S2S"
+    "OnlieQueryBattleScoreReq\022\020\n\010playerid\030\001 \002"
+    "(\r\"Q\n!S2STellRoomFinishToBattleShardReq\022"
+    "\016\n\006roomid\030\001 \002(\004\022\020\n\010serverid\030\002 \002(\r\022\n\n\002ip\030"
+    "\003 \002(\t\"B\n\037S2STellRoomCloseToMatchShardReq"
+    "\022\017\n\007matchid\030\001 \002(\004\022\016\n\006roomid\030\002 \002(\004*\207\016\n\016Ba"
+    "ttleProtocol\022#\n\036S2S_REGISTER_BATTLE_SERV"
+    "ER_REQ\020\300W\022#\n\036S2S_REGISTER_BATTLE_SERVER_"
+    "ACK\020\301W\022.\n)S2S_DISCONNECT_SERVER_TO_BATTL"
+    "E_SHARD_REQ\020\302W\022,\n\'S2S_REGISTER_SERVER_TO"
+    "_BATTLE_SHARD_REQ\020\303W\022(\n#S2S_CREATE_ROOM_"
+    "TO_BATTLE_PROXY_REQ\020\304W\022(\n#S2S_CREATE_ROO"
+    "M_TO_BATTLE_SHARD_REQ\020\305W\022\'\n\"S2S_CREATE_R"
+    "OOM_TO_MATCH_SHARD_ACK\020\306W\022\035\n\030S2S_OPEN_BA"
+    "TTLE_ROOM_REQ\020\307W\022\035\n\030S2S_OPEN_BATTLE_ROOM"
+    "_ACK\020\310W\022&\n!S2S_OPEN_ROOM_TO_BATTLE_SHARD"
+    "_ACK\020\311W\022%\n S2S_PLAYER_ENTER_BATTLE_ROOM_"
+    "REQ\020\312W\022%\n S2S_PLAYER_ENTER_BATTLE_ROOM_A"
+    "CK\020\313W\022.\n)S2S_PLAYER_ENTER_ROOM_TO_BATTLE"
+    "_SHARD_ACK\020\314W\022%\n S2S_PLAYER_LEAVE_BATTLE"
+    "_ROOM_REQ\020\315W\022-\n(S2S_PLAYER_LEAVE_ROOM_TO"
+    "_MATCH_SHARD_REQ\020\316W\022#\n\036S2S_TELL_BATTLE_R"
+    "OOM_START_REQ\020\317W\022#\n\036S2S_TELL_BATTLE_ROOM"
+    "_START_ACK\020\320W\022+\n&S2S_TELL_ROOM_START_TO_"
+    "MATCH_SHARD_REQ\020\321W\022%\n S2S_OPEN_ROOM_TO_M"
+    "ATCH_SHARD_REQ\020\322W\022$\n\037S2S_TELL_BATTLE_ROO"
+    "M_FINISH_REQ\020\323W\022(\n#S2S_LEAVE_BATTLE_ROOM"
+    "_TO_CLIENT_ACK\020\324W\022,\n\'S2S_TELL_ROOM_START"
+    "_TO_BATTLE_SHARD_REQ\020\325W\022-\n(S2S_TELL_ROOM"
+    "_FINISH_TO_BATTLE_SAHRD_REQ\020\326W\022%\n S2S_AD"
+    "D_CAMP_TO_BATTLE_SHARD_REQ\020\327W\022$\n\037S2S_ADD"
+    "_CAMP_TO_MATCH_SHARD_ACK\020\330W\022(\n#S2S_REMOV"
+    "E_CAMP_TO_BATTLE_SHARD_REQ\020\331W\022 \n\033S2S_PLA"
+    "YER_CANCEL_MATCH_REQ\020\332W\022%\n S2S_PLAYER_LE"
+    "AVE_BATTLE_ROOM_ACK\020\333W\022 \n\033S2S_PLAYER_CAN"
+    "CEL_MATCH_ACK\020\334W\022$\n\037S2S_TELL_BATTLE_ROOM"
+    "_FINISH_ACK\020\335W\022.\n)S2S_PLAYER_LEAVE_ROOM_"
+    "TO_BATTLE_SHARD_REQ\020\336W\022%\n S2S_PLAYER_LOG"
+    "IN_BATTLE_ROOM_REQ\020\337W\022%\n S2S_PLAYER_LOGI"
+    "N_BATTLE_ROOM_ACK\020\340W\022.\n)S2S_PLAYER_LOGIN"
+    "_ROOM_TO_BATTLE_SHARD_REQ\020\341W\022,\n\'S2S_TELL"
+    "_ROOM_START_TO_BATTLE_SHARD_ACK\020\342W\022*\n%S2"
+    "S_TELL_BATTLE_REGISTER_TO_SHARD_REQ\020\343W\022+"
+    "\n&S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ"
+    "\020\344W\022 \n\033S2S_PLAYER_BATTLE_SCORE_REQ\020\345W\022 \n"
+    "\033S2S_PLAYER_BATTLE_SCORE_ACK\020\346W\022&\n!S2S_B"
+    "ATTLE_ROOM_SCORE_BALANCE_REQ\020\347W\022&\n!S2S_B"
+    "ATTLE_ROOM_SCORE_BALANCE_ACK\020\350W\022*\n%S2S_B"
+    "ATTLE_SCORE_BALANCE_TO_SHARD_REQ\020\351W\022&\n!S"
+    "2S_ONLINE_QUERY_BATTLE_SCORE_REQ\020\352W\022&\n!S"
+    "2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK\020\353W*-\n\nB"
+    "attleEnum\022\017\n\013OpenSuccess\020\001\022\016\n\nOpenFailed"
+    "\020\002", 5362);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFBattleMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterBattleServerReq::default_instance_ = new S2SRegisterBattleServerReq();
@@ -10876,6 +10878,7 @@ void S2STellBattleRoomFinishReq::Swap(S2STellBattleRoomFinishReq* other) {
 
 #ifndef _MSC_VER
 const int S2STellBattleRoomFinishAck::kRoomidFieldNumber;
+const int S2STellBattleRoomFinishAck::kPbscoreFieldNumber;
 #endif  // !_MSC_VER
 
 S2STellBattleRoomFinishAck::S2STellBattleRoomFinishAck()
@@ -10932,6 +10935,7 @@ void S2STellBattleRoomFinishAck::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     roomid_ = GOOGLE_ULONGLONG(0);
   }
+  pbscore_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -10953,6 +10957,25 @@ bool S2STellBattleRoomFinishAck::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(18)) goto parse_pbscore;
+        break;
+      }
+
+      // repeated string pbscore = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_pbscore:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->add_pbscore()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->pbscore(this->pbscore_size() - 1).data(),
+            this->pbscore(this->pbscore_size() - 1).length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_pbscore;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -10980,6 +11003,15 @@ void S2STellBattleRoomFinishAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->roomid(), output);
   }
 
+  // repeated string pbscore = 2;
+  for (int i = 0; i < this->pbscore_size(); i++) {
+  ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+    this->pbscore(i).data(), this->pbscore(i).length(),
+    ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->pbscore(i), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -10991,6 +11023,15 @@ void S2STellBattleRoomFinishAck::SerializeWithCachedSizes(
   // required uint64 roomid = 1;
   if (has_roomid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->roomid(), target);
+  }
+
+  // repeated string pbscore = 2;
+  for (int i = 0; i < this->pbscore_size(); i++) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->pbscore(i).data(), this->pbscore(i).length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteStringToArray(2, this->pbscore(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -11012,6 +11053,13 @@ int S2STellBattleRoomFinishAck::ByteSize() const {
     }
 
   }
+  // repeated string pbscore = 2;
+  total_size += 1 * this->pbscore_size();
+  for (int i = 0; i < this->pbscore_size(); i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+      this->pbscore(i));
+  }
+
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -11037,6 +11085,7 @@ void S2STellBattleRoomFinishAck::MergeFrom(const ::google::protobuf::Message& fr
 
 void S2STellBattleRoomFinishAck::MergeFrom(const S2STellBattleRoomFinishAck& from) {
   GOOGLE_CHECK_NE(&from, this);
+  pbscore_.MergeFrom(from.pbscore_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_roomid()) {
       set_roomid(from.roomid());
@@ -11066,6 +11115,7 @@ bool S2STellBattleRoomFinishAck::IsInitialized() const {
 void S2STellBattleRoomFinishAck::Swap(S2STellBattleRoomFinishAck* other) {
   if (other != this) {
     std::swap(roomid_, other->roomid_);
+    pbscore_.Swap(&other->pbscore_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

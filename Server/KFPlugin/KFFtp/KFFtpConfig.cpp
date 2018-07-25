@@ -34,6 +34,7 @@ namespace KFrame
                 kfsetting->_ftp_root_path = ftpnode.GetString( "FtpRootPath" );
                 kfsetting->_download_path = ftpnode.GetString( "DownLoadPath" );
                 kfsetting->_upload_path = ftpnode.GetString( "UpLoadPath" );
+                kfsetting->_time_difference = ftpnode.GetUInt32( "TimeDifference" );
                 _ftp_setting.Insert( kfsetting->_id, kfsetting );
 
                 ftpnode.NextNode();

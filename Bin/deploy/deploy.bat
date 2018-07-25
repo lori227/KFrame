@@ -15,7 +15,7 @@ rem ===========================================================================
 rem ===========================================================================
 
 rem 程序目录
-set path1=..\..\Source\_bin\win64
+set path1=..\..\Server\_bin\win64
 set path2=.
 
 call :copyfile 1 KFStartupd.exe
@@ -28,7 +28,7 @@ call :copyfile 1 libmysql.dll
 rem ===========================================================================
 rem ===========================================================================
 rem 全局配置
-set path1=..\..\Source\_bin\setting
+set path1=..\..\Server\_bin\setting
 set path2=setting
 call :copyfile 0 ip.address
 call :copyfile 1 bus.relation
@@ -41,7 +41,7 @@ call :copyfile 1 mysql.address
 rem ===========================================================================
 
 rem 配置目录
-set path1=..\..\Source\_bin\setting\deploy
+set path1=..\..\Server\_bin\setting\deploy
 set path2=setting
 call :copyfile 1 server.network
 call :copyfile 1 server.startup
@@ -61,7 +61,7 @@ rem ===========================================================================
 rem ===========================================================================
 
 rem 插件目录
-set path1=..\..\Source\_bin\win64\plugin
+set path1=..\..\Server\_bin\win64\plugin
 set path2=plugin
 
 call :copyfile 1 KFHttpServerd.dll

@@ -293,14 +293,6 @@ namespace KFrame
         for ( auto& iter : _kf_server_engine->_kf_handles._objects )
         {
             auto nethandle = iter.second;
-            if ( nethandle->_app_id == kfhandle->_app_id ||
-                    nethandle->_app_name != kfhandle->_app_name ||
-                    nethandle->_zone_id != kfhandle->_zone_id )
-            {
-                continue;
-            }
-
-
             KFMsg::TellRegisterToServer tell;
             auto listendata = tell.mutable_listen();
 
@@ -322,7 +314,10 @@ namespace KFrame
         }
 
         KFMsg::TellUnRegisterFromServer tell;
-        tell.set_appid( kfhandle->_id );
+        tell.set_appid( kfhandle->_app_id );
+        tell.set_appname( kfhandle->_app_name );
+        tell.set_apptype( kfhandle->_app_type );
+        tell.set_zoneid( kfhandle->_zone_id );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_id );
 
         KFLogger::LogSystem( KFLogger::Error, "[%s:%s:%u|%s:%u] lost connect!",

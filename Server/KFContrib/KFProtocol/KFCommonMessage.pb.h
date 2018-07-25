@@ -54,6 +54,7 @@ class PBBattleCamp;
 class PBMatchGroup;
 class PBGuestData;
 class PBBattleScore;
+class PBRecentData;
 class PBPlayerIds;
 
 enum AckEnum {
@@ -2825,6 +2826,148 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT PBRecentData : public ::google::protobuf::Message {
+ public:
+  PBRecentData();
+  virtual ~PBRecentData();
+
+  PBRecentData(const PBRecentData& from);
+
+  inline PBRecentData& operator=(const PBRecentData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBRecentData& default_instance();
+
+  void Swap(PBRecentData* other);
+
+  // implements Message ----------------------------------------------
+
+  PBRecentData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBRecentData& from);
+  void MergeFrom(const PBRecentData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint32 ranking = 2;
+  inline bool has_ranking() const;
+  inline void clear_ranking();
+  static const int kRankingFieldNumber = 2;
+  inline ::google::protobuf::uint32 ranking() const;
+  inline void set_ranking(::google::protobuf::uint32 value);
+
+  // required uint32 totalnum = 3;
+  inline bool has_totalnum() const;
+  inline void clear_totalnum();
+  static const int kTotalnumFieldNumber = 3;
+  inline ::google::protobuf::uint32 totalnum() const;
+  inline void set_totalnum(::google::protobuf::uint32 value);
+
+  // optional uint32 kill = 4;
+  inline bool has_kill() const;
+  inline void clear_kill();
+  static const int kKillFieldNumber = 4;
+  inline ::google::protobuf::uint32 kill() const;
+  inline void set_kill(::google::protobuf::uint32 value);
+
+  // optional uint32 score = 5;
+  inline bool has_score() const;
+  inline void clear_score();
+  static const int kScoreFieldNumber = 5;
+  inline ::google::protobuf::uint32 score() const;
+  inline void set_score(::google::protobuf::uint32 value);
+
+  // optional uint32 bekillid = 6;
+  inline bool has_bekillid() const;
+  inline void clear_bekillid();
+  static const int kBekillidFieldNumber = 6;
+  inline ::google::protobuf::uint32 bekillid() const;
+  inline void set_bekillid(::google::protobuf::uint32 value);
+
+  // optional uint32 relationtype = 7;
+  inline bool has_relationtype() const;
+  inline void clear_relationtype();
+  static const int kRelationtypeFieldNumber = 7;
+  inline ::google::protobuf::uint32 relationtype() const;
+  inline void set_relationtype(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBRecentData)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_ranking();
+  inline void clear_has_ranking();
+  inline void set_has_totalnum();
+  inline void clear_has_totalnum();
+  inline void set_has_kill();
+  inline void clear_has_kill();
+  inline void set_has_score();
+  inline void clear_has_score();
+  inline void set_has_bekillid();
+  inline void clear_has_bekillid();
+  inline void set_has_relationtype();
+  inline void clear_has_relationtype();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 ranking_;
+  ::google::protobuf::uint32 totalnum_;
+  ::google::protobuf::uint32 kill_;
+  ::google::protobuf::uint32 score_;
+  ::google::protobuf::uint32 bekillid_;
+  ::google::protobuf::uint32 relationtype_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBRecentData* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT PBPlayerIds : public ::google::protobuf::Message {
  public:
   PBPlayerIds();
@@ -5509,6 +5652,164 @@ inline void PBBattleScore::set_allocated_reward(::std::string* reward) {
     clear_has_reward();
     reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// PBRecentData
+
+// required uint32 playerid = 1;
+inline bool PBRecentData::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PBRecentData::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PBRecentData::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PBRecentData::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 PBRecentData::playerid() const {
+  return playerid_;
+}
+inline void PBRecentData::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint32 ranking = 2;
+inline bool PBRecentData::has_ranking() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PBRecentData::set_has_ranking() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PBRecentData::clear_has_ranking() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PBRecentData::clear_ranking() {
+  ranking_ = 0u;
+  clear_has_ranking();
+}
+inline ::google::protobuf::uint32 PBRecentData::ranking() const {
+  return ranking_;
+}
+inline void PBRecentData::set_ranking(::google::protobuf::uint32 value) {
+  set_has_ranking();
+  ranking_ = value;
+}
+
+// required uint32 totalnum = 3;
+inline bool PBRecentData::has_totalnum() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PBRecentData::set_has_totalnum() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PBRecentData::clear_has_totalnum() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PBRecentData::clear_totalnum() {
+  totalnum_ = 0u;
+  clear_has_totalnum();
+}
+inline ::google::protobuf::uint32 PBRecentData::totalnum() const {
+  return totalnum_;
+}
+inline void PBRecentData::set_totalnum(::google::protobuf::uint32 value) {
+  set_has_totalnum();
+  totalnum_ = value;
+}
+
+// optional uint32 kill = 4;
+inline bool PBRecentData::has_kill() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PBRecentData::set_has_kill() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PBRecentData::clear_has_kill() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PBRecentData::clear_kill() {
+  kill_ = 0u;
+  clear_has_kill();
+}
+inline ::google::protobuf::uint32 PBRecentData::kill() const {
+  return kill_;
+}
+inline void PBRecentData::set_kill(::google::protobuf::uint32 value) {
+  set_has_kill();
+  kill_ = value;
+}
+
+// optional uint32 score = 5;
+inline bool PBRecentData::has_score() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PBRecentData::set_has_score() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PBRecentData::clear_has_score() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PBRecentData::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+inline ::google::protobuf::uint32 PBRecentData::score() const {
+  return score_;
+}
+inline void PBRecentData::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
+}
+
+// optional uint32 bekillid = 6;
+inline bool PBRecentData::has_bekillid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void PBRecentData::set_has_bekillid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void PBRecentData::clear_has_bekillid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void PBRecentData::clear_bekillid() {
+  bekillid_ = 0u;
+  clear_has_bekillid();
+}
+inline ::google::protobuf::uint32 PBRecentData::bekillid() const {
+  return bekillid_;
+}
+inline void PBRecentData::set_bekillid(::google::protobuf::uint32 value) {
+  set_has_bekillid();
+  bekillid_ = value;
+}
+
+// optional uint32 relationtype = 7;
+inline bool PBRecentData::has_relationtype() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PBRecentData::set_has_relationtype() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PBRecentData::clear_has_relationtype() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PBRecentData::clear_relationtype() {
+  relationtype_ = 0u;
+  clear_has_relationtype();
+}
+inline ::google::protobuf::uint32 PBRecentData::relationtype() const {
+  return relationtype_;
+}
+inline void PBRecentData::set_relationtype(::google::protobuf::uint32 value) {
+  set_has_relationtype();
+  relationtype_ = value;
 }
 
 // -------------------------------------------------------------------

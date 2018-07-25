@@ -101,6 +101,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer )
     {
         __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
-        _kf_tcp_client->CloseClient( kfmsg.appid() );
+
+        if ( !IsConnection( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() ) )
+        {
+            return;
+        }
+
+        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNCTION_LINE__ );
     }
 }

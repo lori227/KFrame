@@ -4,9 +4,9 @@ cd /data/deploy
 
 
 if [ "$1" = "debug" ]; then
-server=deployd
+server=deployserverd
 else
-server=deploy
+server=deployserver
 fi
 
 echo Starting Deploy Server

@@ -84,6 +84,9 @@ namespace KFrame
 
     void KFNetClient::ConnectFailed( int32 status )
     {
+        _uv_client.data = this;
+        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), nullptr );
+
         // 再次启动一个定时器
         StartConnectTimer( KFNetDefine::ConncectTime );
 

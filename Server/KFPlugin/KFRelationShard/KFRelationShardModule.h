@@ -61,10 +61,15 @@ namespace KFrame
         // 更新好友度
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessReq );
 
+        // 添加最近的人
+        __KF_MESSAGE_FUNCTION__( HandleAddBattleFriendDataReq );
+
+
     protected:
         // 信息转换成好友信息
         void MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBFriend* pbfriend );
         void MapStringToPBFriend( MapString& values, KFMsg::PBFriend* pbfriend, bool newadd );
+        void MapStringToPBBasic( MapString& values, KFMsg::PBStrings* pbstrings );
 
         // 格式化好友key
         const char* FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid );
@@ -78,6 +83,28 @@ namespace KFrame
 
         // 计划清理数据库
         void OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size );
+
+        // 是否是好友成员信息
+        bool IsFriend( uint32 playerid, uint32 targetid );
+
+        // 是否已经在最近游戏列表
+        bool IsRecentFriend( uint32 playerid, uint32 targetid );
+
+        // 删除已经存在的最近游戏列表
+        bool DelRecentListToDB( uint32 playerid );
+
+        // 保存最近游戏列表
+        bool SaveRecentListToDB( uint32 playerid, VectorString& uidinfos );
+
+        // 判断玩家是否有public属性
+        bool IsPublicPlayer( uint32 playerid );
+
+        // 通知客户端操作最近游戏列表
+        void SendRecentListToClient( uint32 selfid, uint32 operate, VectorString& uidinfos );
+
+    private:
+        std::set< uint32 > _add_uids;
+        std::set< uint32 > _del_uids;
     };
 }
 

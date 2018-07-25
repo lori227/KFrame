@@ -63,8 +63,8 @@ path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
 
-cp -f $deploypath/KFStartup $deploypath/deploy
-cp -f $deploypath/KFStartupd $deploypath/deployd
+cp -f $deploypath/KFStartup $deploypath/deployserver
+cp -f $deploypath/KFStartupd $deploypath/deployserverd
 
 path2=$deploypath/plugin
 copyfile 1 KFBus.so

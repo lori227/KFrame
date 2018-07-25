@@ -88,6 +88,7 @@ namespace KFrame
         std::set< KFBattleRoom* > removelist;
 
         auto kfroom = _kf_room_list.First();
+
         while ( kfroom != nullptr )
         {
             kfroom->RunRoom();
@@ -112,6 +113,7 @@ namespace KFrame
     void KFBattleShardModule::ShutDown()
     {
         auto kfroom = _kf_room_list.First();
+
         while ( kfroom != nullptr )
         {
             kfroom->FreeBattleServer();
@@ -140,6 +142,7 @@ namespace KFrame
         std::list< uint64 > roomlist;
 
         auto kfroom = _kf_room_list.First();
+
         while ( kfroom != nullptr )
         {
             roomlist.push_back( kfroom->_battle_room_id );
@@ -157,6 +160,7 @@ namespace KFrame
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] register battle[%u|%s:%u|%s] req!",
                             __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str() );
+
         if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
         {
             return;
@@ -186,21 +190,25 @@ namespace KFrame
         {
             // roomid不为0 断线重连
             auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
             if ( kfroom != nullptr )
             {
                 kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
             }
         }
+
         else
         {
             // roomid为0, 宕机重启
             auto kfroom = FindBattleRoomByServerId( kfmsg.serverid() );
+
             if ( kfroom != nullptr )
             {
                 if ( kfroom->IsBattleRoomStart() )
                 {
                     RemoveBattleRoom( kfroom );
                 }
+
                 else
                 {
                     kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
@@ -220,6 +228,7 @@ namespace KFrame
         }
 
         auto kfroom = _kf_room_list.First();
+
         while ( kfroom != nullptr )
         {
             if ( kfroom->_battle_server._server_id == serverid )
@@ -250,6 +259,7 @@ namespace KFrame
 
         // 创建房间
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
@@ -286,6 +296,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str(), kfmsg.result() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -296,6 +307,7 @@ namespace KFrame
         {
             kfroom->ConfirmOpenBattleRoom( true );
         }
+
         else
         {
             kfroom->ConfirmOpenBattleRoom( false );
@@ -311,6 +323,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -331,6 +344,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -338,11 +352,13 @@ namespace KFrame
         }
 
         auto kfcamp = kfroom->AddCamp( &kfmsg.pbcamp() );
+
         if ( kfcamp != nullptr )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] ok!",
                                 __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] room[%s] add camp[%u] failed!",
@@ -355,11 +371,13 @@ namespace KFrame
         ack.set_campid( kfmsg.pbcamp().campid() );
         ack.set_addok( kfcamp != nullptr );
         auto ok = kfroom->SendMessageToMatch( KFMsg::S2S_ADD_CAMP_TO_MATCH_SHARD_ACK, &ack );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] send ok!",
                                 __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] send failed!",
@@ -376,15 +394,18 @@ namespace KFrame
 
         bool isopen = true;
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom != nullptr )
         {
             isopen = ( kfroom->_status >= KFRoomStatus::StatusBattleRoomOpen );
             auto ok = kfroom->CancelMatch( kfmsg.campid(), kfmsg.playerid() );
+
             if ( ok )
             {
                 KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] room[%s] cancel match ok!",
                                     __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
             }
+
             else
             {
                 KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] room[%s] cancel match failed!",
@@ -411,6 +432,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -418,11 +440,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->ConfirmEnterBattleRoom( kfmsg.campid(), kfmsg.playerid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] enter room[%s] ok!",
                                 __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%u] enter room[%s] failed!",
@@ -439,6 +463,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -446,11 +471,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->LeaveBattleRoom( kfmsg.campid(), kfmsg.playerid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] leave room[%s] ok!",
                                 __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] leave battle room[%s] failed!",
@@ -473,6 +500,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -480,11 +508,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->NoticeBattleRoom( kfmsg.campid(), kfmsg.playerid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] notice battle room[%s] ok!",
                                 __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] notice battle room[%s] failed!",
@@ -501,6 +531,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -508,11 +539,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->LoginBattleRoom( kfmsg.campid(), kfmsg.playerid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] login battle room[%s] ok!",
                                 __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] login battle room[%s] failed!",
@@ -529,6 +562,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Debug, "[%s] can't find room[%s]",
@@ -536,11 +570,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->QueryBattleRoom( kfmsg.playerid(), kfmsg.serverid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] query room[%s] ok!",
                                 __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] query room[%s] failed!",
@@ -556,6 +592,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -581,6 +618,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -605,10 +643,12 @@ namespace KFrame
         // _kf_battle_manage->FreeBattleServer( kfmsg.serverid(), kfmsg.ip() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom != nullptr )
         {
             RemoveBattleRoom( kfroom );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -617,12 +657,16 @@ namespace KFrame
 
         KFMsg::S2STellBattleRoomFinishAck ack;
         ack.set_roomid( kfmsg.roomid() );
+        SerialzeBattleRoomFinish( kfmsg.roomid(), &ack );
         auto ok = _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
+
         if ( ok )
         {
+            RemoveCalcBattleRoom( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] finish ok!",
                                 __FUNCTION__, strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] finish failed!",
@@ -639,6 +683,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Debug, "[%s] can't find room[%s]!",
@@ -646,11 +691,13 @@ namespace KFrame
         }
 
         auto ok = kfroom->PlayerOnlineBattleRoom( kfmsg.campid(), kfmsg.playerid(), kfmsg.serverid() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] online room[%s] ok!",
                                 __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%u] online room[%s] failed!",
@@ -668,11 +715,13 @@ namespace KFrame
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
         auto ok = redisdriver->VoidExecute( "hdel %s:%u %s", KFField::_score.c_str(), kfmsg.playerid(), strroomid.c_str() );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] balance ack ok!",
                                 __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] balance ack failed!",
@@ -689,6 +738,7 @@ namespace KFrame
                             __FUNCTION__, strroomid.c_str() );
 
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+
         if ( kfroom == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
@@ -697,6 +747,7 @@ namespace KFrame
 
         auto pbscore = kfmsg.mutable_pbscore();
         auto ok = kfroom->BattleScoreBalance( pbscore );
+
         if ( ok )
         {
             // 保存到数据库
@@ -706,9 +757,15 @@ namespace KFrame
             redisdriver->VoidExecute( "hset %s:%u %s %s",
                                       KFField::_score.c_str(), pbscore->playerid(), strroomid.c_str(), pbdata.c_str() );
 
+            // 记录房间单个玩家的数据,用于组队玩家数据的结算(亲密度,最近好友)
+            redisdriver->VoidExecute( "hset %s:%s %u %s",
+                                      KFField::_battle_room.c_str(), strroomid.c_str(),
+                                      pbscore->playerid(), pbdata.c_str() );
+
             KFLogger::LogLogic( KFLogger::Debug, "[%s] battlr[%s] balance ok!",
                                 __FUNCTION__, strroomid.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] battlr[%s] balance failed!",
@@ -726,6 +783,7 @@ namespace KFrame
 
         MapString mapdata;
         redisdriver->MapExecute( mapdata, "hgetall %s:%u", KFField::_score.c_str(), kfmsg.playerid() );
+
         if ( mapdata.empty() )
         {
             return;
@@ -739,5 +797,38 @@ namespace KFrame
             KFProto::Parse( req.mutable_pbscore(), iter.second, KFCompressEnum::Compress );
             _kf_cluster_shard->SendMessageToClient( guid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
+    }
+
+    void KFBattleShardModule::RemoveCalcBattleRoom( uint64 roomid )
+    {
+        auto redisdriver = __BATTLE_REDIS_DRIVER__;
+        auto ok = redisdriver->VoidExecute( "del %s:%s", KFField::_battle_room.c_str(),
+                                            __KF_STRING__( roomid ).c_str() );
+
+        if ( !ok )
+        {
+            KFLogger::LogLogic( KFLogger::Error, "[%s] can't del battle room[%s]!",
+                                __FUNCTION__, __KF_STRING__( roomid ).c_str() );
+        }
+    }
+
+    void KFBattleShardModule::SerialzeBattleRoomFinish( uint64 roomid, KFMsg::S2STellBattleRoomFinishAck* ack )
+    {
+        auto redisdriver = __BATTLE_REDIS_DRIVER__;
+        MapString mapdata;
+        redisdriver->MapExecute( mapdata, "hgetall %s:%s", KFField::_battle_room.c_str(), __KF_STRING__( roomid ).c_str() );
+
+        if ( mapdata.empty() )
+        {
+            KFLogger::LogLogic( KFLogger::Error, "[%s] get battle room[%s] map empty!",
+                                __FUNCTION__, __KF_STRING__( roomid ).c_str() );
+            return;
+        }
+
+        for ( auto iter : mapdata )
+        {
+            ack->add_pbscore( iter.second );
+        }
+
     }
 }

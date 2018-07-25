@@ -22,7 +22,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ, &KFBattleClientModule::HandleNoticeMatchRoomReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK, &KFBattleClientModule::HandleLeaveBattleRoomAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &KFBattleClientModule::HandlePlayerBattleScoreReq );
-
+        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &KFBattleClientModule::HandleBattleFinishAck );
     }
 
     void KFBattleClientModule::BeforeShut()
@@ -32,6 +32,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto roomid = kfobject->GetValue< uint64 >( KFField::_room_id );
+
         if ( roomid == _invalid_int )
         {
             return;
@@ -79,6 +81,7 @@ namespace KFrame
 
         player->UpdateData( KFField::_match_id, KFOperateEnum::Set, kfmsg.matchid() );
         player->UpdateData( KFField::_room_id, KFOperateEnum::Set, kfmsg.roomid() );
+
         if ( !kfmsg.has_ip() )
         {
             return;
@@ -133,10 +136,12 @@ namespace KFrame
         {
             player->UpdateData( kfscore, KFField::_victory, KFOperateEnum::Add, 1 );
         }
+
         else if ( pbscore->ranking() <= __TOP_FIVE__ )
         {
             player->UpdateData( kfscore, KFField::_top_five, KFOperateEnum::Add, 1 );
         }
+
         else if ( pbscore->ranking() <= __TOP_TEN__ )
         {
             player->UpdateData( kfscore, KFField::_top_ten, KFOperateEnum::Add, 1 );
@@ -193,6 +198,7 @@ namespace KFrame
                             __FUNCTION__, kfmsg.playerid(), strroomid.c_str(), pbscore->matchid(), scorename.c_str() );
 
         auto kfscore = kfobject->FindData( scorename );
+
         if ( kfscore == nullptr )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u] balance battle[%s] score[%u:%s] error!",
@@ -202,10 +208,12 @@ namespace KFrame
         // 计算单项数据
         BalanceBattleScore( player, kfscore, pbscore );
         int32 score = pbscore->score();
+
         if ( score > 0 )
         {
             player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Add, score );
         }
+
         else
         {
             player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Dec, abs( score ) );
@@ -213,6 +221,7 @@ namespace KFrame
 
         // 计算总数据
         auto kftotalscore = kfobject->FindData( KFField::_total_score );
+
         if ( kftotalscore != nullptr )
         {
             BalanceBattleScore( player, kftotalscore, pbscore );
@@ -227,11 +236,13 @@ namespace KFrame
         ack.set_roomid( kfmsg.roomid() );
         ack.set_playerid( kfmsg.playerid() );
         auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
+
         if ( ok )
         {
             KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] balance battle[%s] score[%u:%s] ok!",
                                 __FUNCTION__, kfmsg.playerid(), strroomid.c_str(), pbscore->matchid(), scorename.c_str() );
         }
+
         else
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u] balance battle[%s] score[%u:%s] failed!",
@@ -259,5 +270,61 @@ namespace KFrame
                          + fourscore->GetValue( KFField::_score ) * fourscore->GetValue( KFField::_count );
 
         return tempvalue / totalgametimes;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleBattleFinishAck )
+    {
+        __PROTO_PARSE__( KFMsg::S2STellBattleRoomFinishAck );
+        KFMsg::S2SAddBattleFriendDataReq req;
+
+        for ( auto i = 0; i < kfmsg.pbscore_size(); ++i )
+        {
+            auto pbscoredata = kfmsg.pbscore( i );
+
+            if ( !pbscoredata.empty() )
+            {
+                KFMsg::PBBattleScore battlescore;
+
+                KFProto::Parse( &battlescore, pbscoredata, KFCompressEnum::Compress );
+
+                FilterRecentData( &battlescore, req.add_recentdata() );
+            }
+
+        }
+
+        _kf_relation->SendMessageToRelation( KFMsg::S2S_ADD_BATTLE_FRIEND_DATA_REQ, &req );
+    }
+
+    void KFBattleClientModule::FilterRecentData( KFMsg::PBBattleScore* pbbattlescore, KFMsg::PBRecentData* recentdata )
+    {
+        recentdata->set_playerid( pbbattlescore->playerid() );
+        recentdata->set_ranking( pbbattlescore->ranking() );
+        recentdata->set_score( pbbattlescore->score() );
+
+        for ( auto i = 0; i < pbbattlescore->pbdata_size(); ++i )
+        {
+            auto pbdata = &pbbattlescore->pbdata( i );
+
+            if ( nullptr == pbdata )
+            {
+                continue;
+            }
+
+            if ( pbdata->name() == KFField::_total_player )
+            {
+                recentdata->set_totalnum( pbdata->value() );
+            }
+
+            else if ( pbdata->name() == KFField::_kill )
+            {
+                recentdata->set_kill( pbdata->value() );
+            }
+
+            else if ( pbdata->name() == KFField::_be_killed )
+            {
+                recentdata->set_kill( pbdata->value() );
+            }
+
+        }
     }
 }

@@ -97,6 +97,8 @@ enum ServerProtocol
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
 	S2S_UPDATE_RANK_DATA_REQ = 21193;				// 更新排行榜数据
+	S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194;			// 结算战斗好友相关数据
+	S2S_MODIFY_RECENT_LIST_REQ = 21195;			// 通知处理最近游戏列表	
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -947,7 +949,7 @@ message S2SNewPlayerLoginMailReq
 // S2S_UPDATE_RANK_DATA_REQ
 message S2SUpdateRankDataReq
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint32 playerid = 1;		// 玩家id
 	required uint32 rankid = 2;		// 榜单id
 	required uint32 zoneid = 3;		// 小区id
 	required PBRankData pbrankdata = 4;	// 排行榜数据
@@ -971,4 +973,31 @@ message S2SQueryFriendRankListReq
 	required uint32 serverid = 2;		// 服务器id
 	required uint32 rankid = 3;			// 榜单类型
 	repeated uint32 friendid = 4;		// 待查询的玩家好友id
+}
+// 结算战斗好友相关数据
+// S2S_ADD_BATTLE_FRIEND_DATA_REQ
+message S2SAddBattleFriendDataReq
+{
+	repeated PBRecentData recentdata = 1;		// 战绩
+}
+
+message PBUidsInfo
+{
+	repeated string uidsinfo = 1;
+}
+
+message PBUidBasic
+{
+	repeated PBStrings basicdata = 1;
+}
+
+// 通知处理最近游戏列表	
+// S2S_MODIFY_RECENT_LIST_REQ
+message S2SModifyRecentListReq
+{
+	required uint32 playerid = 1;	//  角色id
+	required PBPlayerIds uids = 2;// 玩家列表
+	required uint32 operate = 3;// 操作类型
+	optional PBUidsInfo uidsinfos = 4;//玩家详细信息
+	optional PBUidBasic basicdatas = 5; // 玩家基础信息
 }

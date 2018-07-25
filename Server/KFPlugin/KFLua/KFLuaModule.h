@@ -13,6 +13,8 @@
 #include "KFLuaScript.h"
 #include "KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFProtocol/KFProtocol.h"
+#include "KFRelationClient/KFRelationClientInterface.h"
 
 namespace KFrame
 {
@@ -65,7 +67,7 @@ namespace KFrame
 
         // 减少数据
         void LuaDecData( const char* module, uint32 objectid, const char* stragent );
-
+        void LuaAddRecent( const char* module, uint32 objectid, const char* stragent );
     protected:
         ////////////////////////////////////////////////////////////////////////////////
         // 查找lua脚本

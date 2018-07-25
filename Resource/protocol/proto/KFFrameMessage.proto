@@ -45,5 +45,9 @@ message TellRegisterToServer
 // S2S_TELL_UNREGISTER_FROM_SERVER
 message TellUnRegisterFromServer
 {
-	required uint32 appid = 1;	
+	optional uint32 appid = 1;
+	required string appname = 2;
+	required string apptype = 3;
+	optional uint32 zoneid = 4;	
+	
 }

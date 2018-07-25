@@ -185,7 +185,7 @@ namespace KFrame
         return _kf_clients.Find( id );
     }
 
-    void KFNetClientEngine::CloseClient( uint32 id )
+    void KFNetClientEngine::CloseClient( uint32 id, const char* function, uint32 line )
     {
         auto kfclient = _kf_clients.Find( id );
         if ( kfclient == nullptr )
@@ -194,7 +194,7 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogNet( KFLogger::Info, "[%s:%s:%u|%s:%u] connect close!",
+        KFLogger::LogNet( KFLogger::Info, "[%s:%u][%s:%s:%u|%s:%u] connect close!", function, line,
                           kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
 
         kfclient->CloseClient();

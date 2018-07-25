@@ -129,8 +129,8 @@ namespace KFrame
         void OnClientConnectionClusterShard( const std::string& servername, uint32 serverid );
 
         // 断开连接
-        void OnClientLostClusterServer( uint32 serverid );
-        void OnClientLostClusterShard( uint32 serverid );
+        void OnClientLostClusterServer( const std::string& servername, uint32 serverid );
+        void OnClientLostClusterShard( const std::string& servername, uint32 serverid );
 
         // 检查token有效时间
         void RunClusterTokenValidTime();

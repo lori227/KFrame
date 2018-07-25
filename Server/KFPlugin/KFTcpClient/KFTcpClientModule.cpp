@@ -188,9 +188,9 @@ namespace KFrame
         return false;
     }
 
-    void KFTcpClientModule::CloseClient( uint32 serverid )
+    void KFTcpClientModule::CloseClient( uint32 serverid, const char* function, uint32 line )
     {
-        _kf_client_engine->CloseClient( serverid );
+        _kf_client_engine->CloseClient( serverid, function, line );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////

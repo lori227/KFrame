@@ -12,3 +12,7 @@ end
 function DecData( playerid, stragent )
 	KFrame:DecData( "player", playerid, stragent );
 end
+	
+function AddRecent( playerid, stragent )
+	KFrame:AddRecent( "player", playerid, stragent );
+end

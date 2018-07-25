@@ -552,11 +552,11 @@ namespace KFrame
     void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
 #ifdef __KF_DEBUG__
-        auto temp = pbobect.DebugString();
         static uint32 _update_print = 0;
         if ( _update_print == 1 )
         {
-            KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
+            auto temp = pbobect.DebugString();
+            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 
@@ -568,11 +568,11 @@ namespace KFrame
     void KFPlayerModule::SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
 #ifdef __KF_DEBUG__
-        auto temp = pbobect.DebugString();
         static uint32 _print = 0;
         if ( _print == 1 )
         {
-            KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
+            auto temp = pbobect.DebugString();
+            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 
@@ -584,11 +584,11 @@ namespace KFrame
     void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
 #ifdef __KF_DEBUG__
-        auto temp = pbobect.DebugString();
         static uint32 _print = 0;
         if ( _print == 1 )
         {
-            KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
+            auto temp = pbobect.DebugString();
+            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 

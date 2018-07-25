@@ -40,7 +40,7 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 添加好友度 （目前只支持增加 --by szz）
+        // 添加好友度 （目前只支持增加）
         virtual void UpdateFriendLiness( KFEntity* player, uint32 friendid, uint32 operate, uint64 value, uint32 type );
 
         // 发送消息到关系属性
@@ -89,9 +89,15 @@ namespace KFrame
         // 更新好感度
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessAck );
 
+        // 更新最近游戏列表
+        __KF_MESSAGE_FUNCTION__( HandleModifyRecentListReq );
+
     private:
         // 解析好友信息
         void PBFriendToKFData( const KFMsg::PBFriend* pbfriend, KFData* kffriend );
+        // 解析最近列表消息
+        KFData* PBRecentListToKFData( uint32 playerid, const KFMsg::PBRecentData* pbrecentdata,
+                                      const KFMsg::PBStrings*  basicdata, const KFDataSetting* kfsetting );
 
         // 好友申请操作
         void ReplyFriendInvite( KFEntity* player, uint32 operate );

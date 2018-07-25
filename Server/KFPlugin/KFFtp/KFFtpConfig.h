@@ -13,6 +13,7 @@ namespace KFrame
         {
             _id = 0;
             _port = 0;
+            _time_difference = 0;
         }
 
         // 获得路径
@@ -43,6 +44,9 @@ namespace KFrame
 
         // 上传根目录
         std::string _upload_path;
+
+        // 时差
+        uint32 _time_difference;
     };
 
 

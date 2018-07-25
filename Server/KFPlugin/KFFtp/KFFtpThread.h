@@ -56,6 +56,9 @@ namespace KFrame
 
         // 回调函数
         KFFtpFunction _ftp_function;
+
+        // 时差
+        uint32 _time_difference;
     };
 }
 

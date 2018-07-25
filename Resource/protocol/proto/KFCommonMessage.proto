@@ -454,6 +454,19 @@ message PBBattleScore
 	optional string reward = 6;		// 奖励字串( 服务器使用 )
 }
 
+// 最近玩家
+message PBRecentData
+{
+	required uint32 playerid = 1;	// 玩家id
+	required uint32 ranking = 2;	// 排名
+	required uint32 totalnum =3;	// 单局游戏人数
+	optional uint32 kill  = 4;	// 单局击杀人数
+	optional uint32 score = 5;	// 评分
+	optional uint32 bekillid = 6;	// 淘汰者
+	optional uint32 relationtype = 7; // 关系类型 0:好友 1:被淘汰者
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 玩家id
 message PBPlayerIds

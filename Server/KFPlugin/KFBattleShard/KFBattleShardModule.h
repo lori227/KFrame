@@ -114,6 +114,12 @@ namespace KFrame
         // 删除一个房间
         void RemoveBattleRoom( KFBattleRoom* kfroom );
 
+        // 删除战斗结算房间
+        void RemoveCalcBattleRoom( uint64 roomid );
+
+        // 房间结束pb
+        void SerialzeBattleRoomFinish( uint64 roomid, KFMsg::S2STellBattleRoomFinishAck* ack );
+
     private:
         // 战场列表
         KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;

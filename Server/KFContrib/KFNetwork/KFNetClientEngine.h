@@ -27,7 +27,7 @@ namespace KFrame
         void StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port );
 
         // 关闭一个客户端
-        void CloseClient( uint32 id );
+        void CloseClient( uint32 id, const char* function, uint32 line );
 
         // 查找客户端
         KFNetClient* FindClient( uint32 id );

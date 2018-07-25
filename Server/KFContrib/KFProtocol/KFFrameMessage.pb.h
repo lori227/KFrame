@@ -544,24 +544,64 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required uint32 appid = 1;
+  // optional uint32 appid = 1;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 1;
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
+  // required string appname = 2;
+  inline bool has_appname() const;
+  inline void clear_appname();
+  static const int kAppnameFieldNumber = 2;
+  inline const ::std::string& appname() const;
+  inline void set_appname(const ::std::string& value);
+  inline void set_appname(const char* value);
+  inline void set_appname(const char* value, size_t size);
+  inline ::std::string* mutable_appname();
+  inline ::std::string* release_appname();
+  inline void set_allocated_appname(::std::string* appname);
+
+  // required string apptype = 3;
+  inline bool has_apptype() const;
+  inline void clear_apptype();
+  static const int kApptypeFieldNumber = 3;
+  inline const ::std::string& apptype() const;
+  inline void set_apptype(const ::std::string& value);
+  inline void set_apptype(const char* value);
+  inline void set_apptype(const char* value, size_t size);
+  inline ::std::string* mutable_apptype();
+  inline ::std::string* release_apptype();
+  inline void set_allocated_apptype(::std::string* apptype);
+
+  // optional uint32 zoneid = 4;
+  inline bool has_zoneid() const;
+  inline void clear_zoneid();
+  static const int kZoneidFieldNumber = 4;
+  inline ::google::protobuf::uint32 zoneid() const;
+  inline void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.TellUnRegisterFromServer)
  private:
   inline void set_has_appid();
   inline void clear_has_appid();
+  inline void set_has_appname();
+  inline void clear_has_appname();
+  inline void set_has_apptype();
+  inline void clear_has_apptype();
+  inline void set_has_zoneid();
+  inline void clear_has_zoneid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* appname_;
   ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint32 zoneid_;
+  ::std::string* apptype_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFFrameMessage_2eproto();
   friend void protobuf_AssignDesc_KFFrameMessage_2eproto();
@@ -1107,7 +1147,7 @@ inline void TellRegisterToServer::set_allocated_listen(::KFMsg::ListenData* list
 
 // TellUnRegisterFromServer
 
-// required uint32 appid = 1;
+// optional uint32 appid = 1;
 inline bool TellUnRegisterFromServer::has_appid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1127,6 +1167,168 @@ inline ::google::protobuf::uint32 TellUnRegisterFromServer::appid() const {
 inline void TellUnRegisterFromServer::set_appid(::google::protobuf::uint32 value) {
   set_has_appid();
   appid_ = value;
+}
+
+// required string appname = 2;
+inline bool TellUnRegisterFromServer::has_appname() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void TellUnRegisterFromServer::set_has_appname() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void TellUnRegisterFromServer::clear_has_appname() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void TellUnRegisterFromServer::clear_appname() {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    appname_->clear();
+  }
+  clear_has_appname();
+}
+inline const ::std::string& TellUnRegisterFromServer::appname() const {
+  return *appname_;
+}
+inline void TellUnRegisterFromServer::set_appname(const ::std::string& value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_appname(const char* value) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_appname(const char* value, size_t size) {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  appname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* TellUnRegisterFromServer::mutable_appname() {
+  set_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    appname_ = new ::std::string;
+  }
+  return appname_;
+}
+inline ::std::string* TellUnRegisterFromServer::release_appname() {
+  clear_has_appname();
+  if (appname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = appname_;
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void TellUnRegisterFromServer::set_allocated_appname(::std::string* appname) {
+  if (appname_ != &::google::protobuf::internal::kEmptyString) {
+    delete appname_;
+  }
+  if (appname) {
+    set_has_appname();
+    appname_ = appname;
+  } else {
+    clear_has_appname();
+    appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string apptype = 3;
+inline bool TellUnRegisterFromServer::has_apptype() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void TellUnRegisterFromServer::set_has_apptype() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void TellUnRegisterFromServer::clear_has_apptype() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void TellUnRegisterFromServer::clear_apptype() {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    apptype_->clear();
+  }
+  clear_has_apptype();
+}
+inline const ::std::string& TellUnRegisterFromServer::apptype() const {
+  return *apptype_;
+}
+inline void TellUnRegisterFromServer::set_apptype(const ::std::string& value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_apptype(const char* value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_apptype(const char* value, size_t size) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* TellUnRegisterFromServer::mutable_apptype() {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  return apptype_;
+}
+inline ::std::string* TellUnRegisterFromServer::release_apptype() {
+  clear_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = apptype_;
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void TellUnRegisterFromServer::set_allocated_apptype(::std::string* apptype) {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    delete apptype_;
+  }
+  if (apptype) {
+    set_has_apptype();
+    apptype_ = apptype;
+  } else {
+    clear_has_apptype();
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional uint32 zoneid = 4;
+inline bool TellUnRegisterFromServer::has_zoneid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void TellUnRegisterFromServer::set_has_zoneid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void TellUnRegisterFromServer::clear_has_zoneid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void TellUnRegisterFromServer::clear_zoneid() {
+  zoneid_ = 0u;
+  clear_has_zoneid();
+}
+inline ::google::protobuf::uint32 TellUnRegisterFromServer::zoneid() const {
+  return zoneid_;
+}
+inline void TellUnRegisterFromServer::set_zoneid(::google::protobuf::uint32 value) {
+  set_has_zoneid();
+  zoneid_ = value;
 }
 
 

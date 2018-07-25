@@ -19,10 +19,10 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFClusterClient::OnConnectionClusterServer( const std::string& servertype, uint32 serverid )
+    void KFClusterClient::OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid )
     {
-        KFLogger::LogLogic( KFLogger::Info, "[%s] connect cluster server[%s:%u]",
-                            __FUNCTION__, servertype.c_str(), serverid );
+        KFLogger::LogLogic( KFLogger::Info, "[%s] connect cluster server[%s:%s:%u]",
+                            __FUNCTION__, servername.c_str(), servertype.c_str(), serverid );
 
         if ( servertype == _cluster_setting._type )
         {
@@ -52,7 +52,7 @@ namespace KFrame
     void KFClusterClient::StartClusterMasterClient()
     {
         // 断开了proxy服务器
-        _kf_tcp_client->CloseClient( _cluster_proxy_id );
+        _kf_tcp_client->CloseClient( _cluster_proxy_id, __FUNCTION_LINE__ );
         _cluster_proxy_id = 0;
         _cluster_proxy_type.clear();
         _cluster_in_services = false;
@@ -77,8 +77,8 @@ namespace KFrame
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_setting._id, KFMsg::S2S_CLUSTER_AUTH_REQ, &req );
         if ( !ok )
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] send cluster[%u] auth failed!",
-                                 __FUNCTION__, _cluster_setting._id );
+            KFLogger::LogLogic( KFLogger::Error, "[%s] send cluster[%u] auth failed!",
+                                __FUNCTION__, _cluster_setting._id );
         }
     }
 
@@ -88,7 +88,7 @@ namespace KFrame
         __UNREGISTER_TIMER__();
 
         // 删除master连接
-        _kf_tcp_client->CloseClient( _cluster_setting._id );
+        _kf_tcp_client->CloseClient( _cluster_setting._id, __FUNCTION_LINE__ );
 
         _auth_token = token;
         _cluster_proxy_id = id;
@@ -150,8 +150,8 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            KFLogger::LogSystem( KFLogger::Error, "cluster[%s] is not in services! msgid[%u]",
-                                 _cluster_setting._name.c_str(), msgid );
+            KFLogger::LogLogic( KFLogger::Error, "cluster[%s] is not in services! msgid[%u]",
+                                _cluster_setting._name.c_str(), msgid );
             return false;
         }
 
@@ -162,8 +162,8 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            KFLogger::LogSystem( KFLogger::Error, "cluster[%s] is not in services! objectid[%u] msgid[%u]",
-                                 _cluster_setting._name.c_str(), objectid, msgid );
+            KFLogger::LogLogic( KFLogger::Error, "cluster[%s] is not in services! objectid[%u] msgid[%u]",
+                                _cluster_setting._name.c_str(), objectid, msgid );
             return false;
         }
 
