@@ -1,8 +1,6 @@
 
-zoneid=$2
-echo zoneid "$zoneid"
 basepath=$(cd `dirname $0`; pwd)
-cd /data/zone"$zoneid"
+cd /data/zone
 
 if [ "$1" = "debug" ]; then
 server=zoneserverd

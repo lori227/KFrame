@@ -85,7 +85,7 @@ namespace KFrame
     void KFClusterClient::ProcessClusterAuth( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port, const std::string& token )
     {
         // 停止定时器
-        __UNREGISTER_TIMER__();
+        __UNREGISTER_OBJECT_TIMER__( _cluster_setting._id );
 
         // 删除master连接
         _kf_tcp_client->CloseClient( _cluster_setting._id, __FUNCTION_LINE__ );
@@ -115,7 +115,7 @@ namespace KFrame
     void KFClusterClient::ProcessClusterVerify( uint32 serverid )
     {
         // 停止定时器
-        __UNREGISTER_TIMER__();
+        __UNREGISTER_OBJECT_TIMER__( _cluster_proxy_id );
 
         if ( serverid != 0 )
         {

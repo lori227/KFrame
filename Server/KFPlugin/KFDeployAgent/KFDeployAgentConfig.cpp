@@ -95,7 +95,6 @@ namespace KFrame
                 auto apppath = launchs.GetString( "AppPath" );
                 auto appfile = launchs.GetString( "AppFile" );
                 auto appname = launchs.GetString( "AppName" );
-                auto ftpid = launchs.GetUInt32( "FtpId" );
                 auto zoneid = launchs.GetUInt32( "ZoneId", true, _invalid_int );
 
                 auto launchnode = launchs.FindNode( "Launch" );

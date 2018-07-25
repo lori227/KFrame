@@ -44,6 +44,7 @@ copyfile 1 server.network
 copyfile 1 initapp.log4cxx
 copyfile 1 templateapp.log4cxx
 copyfile 1 mysql.address
+copyfile 1 ftp.address
 
 path1=$settingpath/deploy
 path2=$deploypath/setting
@@ -93,6 +94,8 @@ copyfile 1 KFMySQL.so
 copyfile 1 KFMySQLd.so
 copyfile 1 KFSchedule.so
 copyfile 1 KFScheduled.so
+copyfile 1 KFFtp.so
+copyfile 1 KFFtpd.so
 
 
 

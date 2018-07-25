@@ -33,14 +33,14 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // 关闭服务
-        virtual void ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 delaytime );
+        virtual void ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime );
 
     protected:
         virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function );
         virtual void RemoveShutDownFunction( const std::string& module );
 
         // 判断是不是自己
-        bool IsSelfServer( const std::string& appname, const std::string& apptype, uint32 appid );
+        bool IsSelfServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
     protected:
         // 处理关闭服务器
         __KF_MESSAGE_FUNCTION__( HandleShutDownServerToServerReq );

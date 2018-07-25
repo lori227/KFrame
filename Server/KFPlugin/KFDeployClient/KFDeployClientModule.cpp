@@ -78,7 +78,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SShutDownServerToMasterReq );
 
         // 关闭服务器
-        _kf_deploy_command->ShutDownServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.delaytime() );
+        _kf_deploy_command->ShutDownServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), kfmsg.delaytime() );
 
         // 发送到客户端
         if ( _kf_tcp_server != nullptr )
@@ -87,6 +87,7 @@ namespace KFrame
             req.set_appname( kfmsg.appname() );
             req.set_apptype( kfmsg.apptype() );
             req.set_appid( kfmsg.appid() );
+            req.set_zoneid( kfmsg.zoneid() );
             req.set_delaytime( kfmsg.delaytime() );
             _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ, &req );
         }

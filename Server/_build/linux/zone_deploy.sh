@@ -28,7 +28,7 @@ function copyfile()
 binpath=../../_bin/linux
 respath=../../../Resource
 settingpath=../../_bin/setting
-deploypath=/data/zone"$1"
+deploypath=/data/zone
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting

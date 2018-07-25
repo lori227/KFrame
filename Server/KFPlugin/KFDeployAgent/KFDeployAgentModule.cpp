@@ -367,6 +367,7 @@ namespace KFrame
         req.set_appid( kfsetting->_app_id );
         req.set_appname( kfsetting->_app_name );
         req.set_apptype( kfsetting->_app_type );
+        req.set_zoneid( kfsetting->_zone_id );
         req.set_process( kfsetting->_process_id );
         req.set_startuptime( kfsetting->_startup_time );
         req.set_isshutdown( kfsetting->_is_shutdown );
@@ -576,6 +577,7 @@ namespace KFrame
         req.set_appname( _kf_task->_app_name );
         req.set_apptype( _kf_task->_app_type );
         req.set_appid( _kf_task->_app_id );
+        req.set_zoneid( _kf_task->_zone_id );
         req.set_delaytime( _kf_task->_delay_time );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ, &req );
     }
