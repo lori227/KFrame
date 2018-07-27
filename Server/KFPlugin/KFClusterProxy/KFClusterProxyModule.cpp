@@ -118,12 +118,12 @@ namespace KFrame
 
     void KFClusterProxyModule::SendMessageToShard( uint32 msgid, const char* data, uint32 length )
     {
-        _kf_tcp_client->SendMessageToType( KFField::_shard, msgid, data, length );
+        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), msgid, data, length );
     }
 
     void KFClusterProxyModule::SendMessageToShard( uint32 msgid, ::google::protobuf::Message* message )
     {
-        _kf_tcp_client->SendMessageToType( KFField::_shard, msgid, message );
+        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), msgid, message );
     }
 
     bool KFClusterProxyModule::SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length )
@@ -167,11 +167,11 @@ namespace KFrame
             return;
         }
 
-        if ( servertype == KFField::_master )
+        if ( servertype == __KF_STRING__( master ) )
         {
             OnClientConnectionClusterServer( servername, serverid );
         }
-        else if ( servertype == KFField::_shard )
+        else if ( servertype == __KF_STRING__( shard ) )
         {
             OnClientConnectionClusterShard( servername, serverid );
         }
@@ -225,11 +225,11 @@ namespace KFrame
             return;
         }
 
-        if ( servertype == KFField::_master )
+        if ( servertype == __KF_STRING__( master ) )
         {
             OnClientLostClusterServer( servername, serverid );
         }
-        else if ( servertype == KFField::_shard )
+        else if ( servertype == __KF_STRING__( shard ) )
         {
             OnClientLostClusterShard( servername, serverid );
         }
@@ -350,7 +350,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard[ objectid ] = shardid;
 
-            auto strobjectid = __KF_STRING__( objectid );
+            auto strobjectid = __TO_STRING__( objectid );
 
             KFLogger::LogLogic( KFLogger::Info, "[%s] add object[%s] ok!",
                                 __FUNCTION__, strobjectid.c_str() );
@@ -369,7 +369,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard.erase( objectid );
 
-            auto strobjectid = __KF_STRING__( objectid );
+            auto strobjectid = __TO_STRING__( objectid );
 
             KFLogger::LogLogic( KFLogger::Info, "[%s] remove object[%s] ok!",
                                 __FUNCTION__, strobjectid.c_str() );
@@ -434,7 +434,7 @@ namespace KFrame
         auto shardid = FindObjectShard( kfmsg.objectid() );
         if ( shardid == _invalid_int )
         {
-            auto strobjectid = __KF_STRING__( kfmsg.objectid() );
+            auto strobjectid = __TO_STRING__( kfmsg.objectid() );
             return KFLogger::LogLogic( KFLogger::Info, "[%s] msgid[%u] objectid[%s] can't find shard!",
                                        __FUNCTION__, kfmsg.msgid(), strobjectid.c_str() );
         }

@@ -55,7 +55,7 @@ namespace KFrame
         KFLogger::LogLogic( KFLogger::Error, "[%s] client[%s:%s:%u] lost!",
                             __FUNCTION__, handlename.c_str(), handletype.c_str(), handleid );
 
-        if ( handlename == KFField::_battle && handletype == KFField::_client )
+        if ( handlename == __KF_STRING__( battle ) && handletype == __KF_STRING__( client ) )
         {
             OnServerLostBattleServer( handleid );
         }
@@ -94,7 +94,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterBattleServerReq );
 
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Info, "[%s] register battle[%u|%s:%u|%s:%u] req!",
                             __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str(), kfmsg.battleshardid() );
 
@@ -132,7 +132,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleCreateRoomToBattleProxyReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToBattleProxyReq );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Info, "[%s] create room[%s] req!",
                             __FUNCTION__, strroomid.c_str() );
 
@@ -171,7 +171,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBattleRoomReq );
 
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.roomid() );
 
         KFMsg::S2SQueryRoomToBattleShardReq req;
@@ -202,7 +202,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK, &ack );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] open room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -219,7 +219,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] enter room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -234,7 +234,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] start room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -251,7 +251,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ, &req );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] finish room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -268,7 +268,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] login room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -285,7 +285,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] leave room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }
@@ -302,7 +302,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ, &req );
         if ( !ok )
         {
-            auto strroomid = __KF_STRING__( kfmsg.roomid() );
+            auto strroomid = __TO_STRING__( kfmsg.roomid() );
             KFLogger::LogLogic( KFLogger::Error, "[%s] balance room[%u:%s] failed!",
                                 __FUNCTION__, kfmsg.battleshardid(), strroomid.c_str() );
         }

@@ -112,6 +112,8 @@ namespace KFrame
         std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
         std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
 
+        // 计算zoneid
+        uint32 CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting );
     private:
         // 排行榜
         KFRedisDriver* _rank_driver;

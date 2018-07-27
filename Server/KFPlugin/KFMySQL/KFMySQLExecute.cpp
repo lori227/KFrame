@@ -124,7 +124,7 @@ namespace KFrame
         __MYSQL_BUFFER__;
 
         sprintf( _buffer, "delete from %s where `%s`='%s';",
-                 table.c_str(), KFField::_id.c_str(), key.c_str() );
+                 table.c_str(), __KF_CHAR__( id ), key.c_str() );
 
         return ExecuteSql( _buffer );
     }
@@ -152,7 +152,7 @@ namespace KFrame
         else
         {
             sprintf( _buffer, "update %s set `%s`='%s' where `%s`='%s';",
-                     table.c_str(), field.c_str(), invalue.c_str(), KFField::_id.c_str(), key.c_str() );
+                     table.c_str(), field.c_str(), invalue.c_str(), __KF_CHAR__( id ), key.c_str() );
         }
 
         return ExecuteSql( _buffer );
@@ -187,7 +187,7 @@ namespace KFrame
         else
         {
             sprintf( _buffer, "update %s set %s where `%s`='%s';",
-                     table.c_str(), oss.str().c_str(), KFField::_id.c_str(), key.c_str() );
+                     table.c_str(), oss.str().c_str(), __KF_CHAR__( id ), key.c_str() );
         }
 
         return ExecuteSql( _buffer );
@@ -231,7 +231,7 @@ namespace KFrame
         __MYSQL_BUFFER__;
 
         sprintf( _buffer, "select `%s` from %s where `%s`='%s';",
-                 field.c_str(), table.c_str(), KFField::_id.c_str(), key.c_str() );
+                 field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
 
         Statement statement( *_session );
         statement << _buffer;
@@ -257,12 +257,12 @@ namespace KFrame
         if ( limitcount == 0 )
         {
             sprintf( _buffer, "select `%s` from %s where `%s`='%s';",
-                     field.c_str(), table.c_str(), KFField::_id.c_str(), key.c_str() );
+                     field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
         }
         else
         {
             sprintf( _buffer, "select `%s` from %s where `%s`='%s' limit %u;",
-                     field.c_str(), table.c_str(), KFField::_id.c_str(), key.c_str(), limitcount );
+                     field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str(), limitcount );
         }
 
         Statement statement( *_session );
@@ -302,7 +302,7 @@ namespace KFrame
         __MYSQL_BUFFER__;
 
         sprintf( _buffer, "select * from %s where `%s`='%s';",
-                 table.c_str(), KFField::_id.c_str(), key.c_str() );
+                 table.c_str(), __KF_CHAR__( id ), key.c_str() );
 
         Statement statement( *_session );
         statement << _buffer;
@@ -355,7 +355,7 @@ namespace KFrame
         }
 
         sprintf( _buffer, "select %s from %s where `%s`='%s';",
-                 ossfields.str().c_str(), table.c_str(), KFField::_id.c_str(), key.c_str() );
+                 ossfields.str().c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
 
         Statement statement( *_session );
         statement << _buffer;
@@ -391,7 +391,7 @@ namespace KFrame
         else
         {
             sprintf( _buffer, "select * from %s where `%s`='%s';",
-                     table.c_str(), KFField::_id.c_str(), key.c_str() );
+                     table.c_str(), __KF_CHAR__( id ), key.c_str() );
         }
 
         Statement statement( *_session );
@@ -435,7 +435,7 @@ namespace KFrame
         else
         {
             sprintf( _buffer, "select * from %s where `%s`='%s';",
-                     table.c_str(), KFField::_id.c_str(), key.c_str() );
+                     table.c_str(), __KF_CHAR__( id ), key.c_str() );
         }
 
         Statement statement( *_session );

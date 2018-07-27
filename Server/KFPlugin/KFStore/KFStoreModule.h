@@ -18,7 +18,7 @@ namespace KFrame
     {
     public:
         KFStoreModule();
-        ~KFStoreModule();
+        ~KFStoreModule() = default;
 
         //初始化
         virtual void InitModule();

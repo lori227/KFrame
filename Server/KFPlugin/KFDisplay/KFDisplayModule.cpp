@@ -116,8 +116,8 @@ namespace KFrame
 
     void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )
     {
-        auto serverid = kfbasic->GetValue< uint32 >( KFField::_server_id );
-        auto playerid = kfbasic->GetValue< uint32 >( KFField::_id );
+        auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
+        auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
         SendToPlayer( serverid, playerid, result, params );
     }
 }

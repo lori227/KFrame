@@ -20,12 +20,12 @@ namespace KFrame
 
     void KFAchieveModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
 
         _kf_component->RegisterAddDataModule( this, &KFAchieveModule::OnAddDataCallBack );
         _kf_component->RegisterRemoveDataModule( this, &KFAchieveModule::OnRemoveDataCallBack );
         _kf_component->RegisterUpdateDataModule( this, &KFAchieveModule::OnUpdateDataCallBack );
-        _kf_component->RegisterUpdateDataFunction( KFField::_achieve, KFField::_value, this, &KFAchieveModule::OnAchieveValueUpdateCallBack );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( achieve ), __KF_STRING__( value ), this, &KFAchieveModule::OnAchieveValueUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleReceiveAchieveRewardReq );
     }
@@ -37,7 +37,7 @@ namespace KFrame
         _kf_component->UnRegisterAddDataModule( this );
         _kf_component->UnRegisterRemoveDataModule( this );
         _kf_component->UnRegisterUpdateDataModule( this );
-        _kf_component->UnRegisterUpdateDataFunction( KFField::_achieve, KFField::_value );
+        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( achieve ), __KF_STRING__( value ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_ACHIEVE_REWARD_REQ );
     }
@@ -61,13 +61,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfachieve = kfobject->FindData( KFField::_achieve, kfsetting->_id );
+        auto kfachieve = kfobject->FindData( __KF_STRING__( achieve ), kfsetting->_id );
         if ( kfachieve == nullptr )
         {
             return KFMsg::CanNotFindAchieveData;
         }
 
-        auto achieveflag = kfachieve->GetValue( KFField::_flag );
+        auto achieveflag = kfachieve->GetValue( __KF_STRING__( flag ) );
         if ( achieveflag == KFMsg::FlagEnum::Init )
         {
             return KFMsg::AchieveNotDone;
@@ -79,7 +79,7 @@ namespace KFrame
         }
 
         // 设置已经领取
-        player->UpdateData( kfachieve, KFField::_flag, KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( kfachieve, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
         player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
@@ -103,7 +103,7 @@ namespace KFrame
             return;
         }
 
-        player->UpdateData( KFField::_achieve, key, KFField::_flag, KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+        player->UpdateData( __KF_STRING__( achieve ), key, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
         if ( newvalue > achievesetting->_done_value )
         {
             kfdata->OperateValue< uint64 >( KFOperateEnum::Set, achievesetting->_done_value );
@@ -157,13 +157,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfachieves = kfobject->FindData( KFField::_achieve );
+        auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
         if ( kfachieves == nullptr )
         {
             return;
         }
 
-        auto level = kfobject->GetValue< uint64 >( KFField::_level );
+        auto level = kfobject->GetValue< uint64 >( __KF_STRING__( level ) );
         for ( auto achievesetting : kfachievetypesetting->_achieve_type )
         {
             if ( !achievesetting->CheckCanUpdate( key, level, operate ) )
@@ -181,7 +181,7 @@ namespace KFrame
             auto kfachieve = kfachieves->FindData( achievesetting->_id );
             if ( kfachieve != nullptr )
             {
-                auto flag = kfachieve->GetValue( KFField::_flag );
+                auto flag = kfachieve->GetValue( __KF_STRING__( flag ) );
                 if ( flag != KFMsg::FlagEnum::Init )
                 {
                     continue;
@@ -190,7 +190,7 @@ namespace KFrame
 
             // 获得使用的数值
             auto usevalue = achievesetting->GetUseValue( operatevalue );
-            player->UpdateData( kfachieves, achievesetting->_id, KFField::_value, achievesetting->_operate, usevalue );
+            player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( value ), achievesetting->_operate, usevalue );
         }
     }
 }

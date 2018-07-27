@@ -16,6 +16,6 @@ if [ "$1" = "-" ]; then
 		sh $file $2 $3 $4
 	done
 else
-	sh "$1"upload.sh $2 $3 $4
+	sh "$1"_upload.sh $2 $3 $4
 fi
 

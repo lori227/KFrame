@@ -32,7 +32,7 @@ namespace KFrame
         _net_client->BindDisconnectFunction( this, &KFRobotModule::OnClientDisconnect );
 
         _kf_state_manage->Initialize();
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
 
         _kf_plugin_manage->RegisterCommandFunction( "state", this, &KFRobotModule::ChangeState );
 
@@ -176,7 +176,7 @@ namespace KFrame
         kfrobot->_connect_token = kfmsg.token();
         kfrobot->_connect_ip = kfmsg.ip();
         kfrobot->_connect_port = kfmsg.port();
-        _net_client->CloseClient( robotid );
+        _net_client->CloseClient( robotid, __FUNCTION_LINE__ );
 
         KFLogger::LogSystem( KFLogger::Info, "[%s] robot[%u] login [%s:%u] verity ok!",
                              __FUNCTION__, robotid, kfmsg.ip().c_str(), kfmsg.port() );
@@ -191,7 +191,7 @@ namespace KFrame
 
         // 这边判断名字是否为空 决定切换的状态
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
         if ( nullptr == kfbasic )
         {
@@ -200,7 +200,7 @@ namespace KFrame
 
 
         // 没有名字先创角
-        auto modleid = kfbasic->GetValue< uint32 >( KFField::_model_id );
+        auto modleid = kfbasic->GetValue< uint32 >( __KF_STRING__( modelid ) );
 
         if ( modleid == _invalid_int )
         {
@@ -312,7 +312,7 @@ namespace KFrame
         {
             auto record = &pbdata->pbrecord( 0 );
 
-            if ( KFField::_friend_invite == record->name() )
+            if ( __KF_STRING__( friendinvite ) == record->name() )
             {
                 kfrobot->AgreeInvite();
             }

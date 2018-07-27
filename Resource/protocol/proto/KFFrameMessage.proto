@@ -39,15 +39,20 @@ message RegisterToServerAck
 // S2S_TELL_REGISTER_TO_SERVER
 message TellRegisterToServer
 {
-	required ListenData listen = 1;
+	required string servername = 1;
+	required uint32 serverzoneid = 2;
+
+	required ListenData listen = 3;
 }
 
 // S2S_TELL_UNREGISTER_FROM_SERVER
 message TellUnRegisterFromServer
 {
-	optional uint32 appid = 1;
-	required string appname = 2;
-	required string apptype = 3;
-	optional uint32 zoneid = 4;	
-	
+	required string servername = 1;
+	required uint32 serverzoneid = 2;
+
+	required uint32 appid = 3;
+	required string appname = 4;
+	required string apptype = 5;
+	required uint32 zoneid = 6;	
 }

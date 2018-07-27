@@ -17,14 +17,14 @@ namespace KFrame
     {
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( KFField::_upload, true, &KFDeployUploadModule::HandleUploadFile );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( upload ), true, &KFDeployUploadModule::HandleUploadFile );
     }
 
 
     void KFDeployUploadModule::ShutDown()
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_upload );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( upload ) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -33,8 +33,8 @@ namespace KFrame
     {
         KFJson request( data );
 
-        auto ftpid = request.GetUInt32( KFField::_ftp_id );
-        auto apppath = request.GetString( KFField::_app_path );
+        auto ftpid = request.GetUInt32( __KF_STRING__( ftpid ) );
+        auto apppath = request.GetString( __KF_STRING__( apppath ) );
 
         // 启动ftp下载
         _kf_ftp->StartUpload( ftpid, apppath );

@@ -42,7 +42,7 @@ namespace KFrame
     {
         {
             auto kfhandle = _trustee_handles.First();
-            while ( true )
+            while ( kfhandle != nullptr )
             {
                 kfhandle->CloseHandle();
                 kfhandle = _trustee_handles.Next();
@@ -51,7 +51,7 @@ namespace KFrame
 
         {
             auto kfhandle = _kf_handles.First();
-            while ( true )
+            while ( kfhandle != nullptr )
             {
                 kfhandle->CloseHandle();
                 kfhandle = _kf_handles.Next();

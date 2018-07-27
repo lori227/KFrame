@@ -41,14 +41,14 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         KFJson sendjson;
-        sendjson.SetValue< const std::string& >( KFField::_address, kfglobal->_interanet_ip );
-        sendjson.SetValue( KFField::_port, kfglobal->_listen_port );
-        sendjson.SetValue( KFField::_app_id, kfglobal->_app_id );
-        sendjson.SetValue( KFField::_id, zone->_id );
-        sendjson.SetValue( KFField::_type, zone->_type );
-        sendjson.SetValue< const std::string& >( KFField::_name, zone->_name );
+        sendjson.SetValue< const std::string& >( __KF_STRING__( address ), kfglobal->_interanet_ip );
+        sendjson.SetValue( __KF_STRING__( port ), kfglobal->_listen_port );
+        sendjson.SetValue( __KF_STRING__( appid ), kfglobal->_app_id );
+        sendjson.SetValue( __KF_STRING__( id ), zone->_id );
+        sendjson.SetValue( __KF_STRING__( type ), zone->_type );
+        sendjson.SetValue< const std::string& >( __KF_STRING__( name ), zone->_name );
 
-        static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_update_zone;
+        static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + __KF_STRING__( updatezone );
         _kf_http_client->StartMTHttpClient( url, sendjson, true, this, &KFLoginGateModule::OnHttpLoginUpdateCallBack );
     }
 

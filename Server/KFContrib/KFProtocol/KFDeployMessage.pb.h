@@ -57,11 +57,11 @@ enum DeployProtocol {
   S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ = 10308,
   S2S_KILL_SERVER_TO_AGENT_REQ = 10309,
   S2S_UPDATE_SERVER_TO_AGENT_REQ = 10310,
-  S2S_START_SERVER_TO_AGENT_REQ = 10311
+  S2S_RESTART_SERVER_TO_AGENT_REQ = 10311
 };
 LIBPROTOC_EXPORT bool DeployProtocol_IsValid(int value);
 const DeployProtocol DeployProtocol_MIN = S2S_REGISTER_AGENT_TO_SERVER_REQ;
-const DeployProtocol DeployProtocol_MAX = S2S_START_SERVER_TO_AGENT_REQ;
+const DeployProtocol DeployProtocol_MAX = S2S_RESTART_SERVER_TO_AGENT_REQ;
 const int DeployProtocol_ARRAYSIZE = DeployProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* DeployProtocol_descriptor();

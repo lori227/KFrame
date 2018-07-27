@@ -43,7 +43,7 @@ namespace KFrame
     {
         KFJson request( data );
 
-        auto channel = request.GetUInt32( KFField::_channel );
+        auto channel = request.GetUInt32( __KF_STRING__( channel ) );
 
         // 渠道是否开启
         auto kfsetting = _kf_channel_config->FindChannelSetting( channel );

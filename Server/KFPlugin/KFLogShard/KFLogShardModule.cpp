@@ -96,7 +96,7 @@ namespace KFrame
             return NULLPTR_;
         }
 
-        std::string zone_name = __KF_STRING__( zone_id );
+        std::string zone_name = __TO_STRING__( zone_id );
         if ( zone_id == 0 )
         {
             zone_name = "cluster";

@@ -64,7 +64,7 @@ namespace KFrame
 
         kfgroup->_kf_player_list.Clear( false );
 
-        auto strgroupid = __KF_STRING__( kfgroup->_group_id );
+        auto strgroupid = __TO_STRING__( kfgroup->_group_id );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] camp[%u] match group[%s]!",
                             __FUNCTION__, _camp_id, strgroupid.c_str() );
     }

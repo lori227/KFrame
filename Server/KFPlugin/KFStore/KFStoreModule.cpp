@@ -1,6 +1,6 @@
 ﻿#include "KFStoreModule.h"
 #include "KFStoreConfig.h"
-//#include "KFProtocol/KFProtocol.h"
+#include "KFProtocol/KFProtocol.h"
 
 
 namespace KFrame
@@ -8,10 +8,6 @@ namespace KFrame
     KFStoreModule::KFStoreModule()
     {
         _kf_component = nullptr;
-    }
-
-    KFStoreModule::~KFStoreModule()
-    {
     }
 
     void KFStoreModule::InitModule()
@@ -117,22 +113,22 @@ namespace KFrame
     bool KFStoreModule::CheckLimitItem( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime, uint32 buylimits )
     {
         auto kfobject = player->GetData();
-        auto kfstore = kfobject->FindData( KFField::_store, ( uint64 )shopid );
+        auto kfstore = kfobject->FindData( __KF_STRING__( store ), ( uint64 )shopid );
         if ( kfstore == nullptr )
         {
             return true;
         }
 
         //出现存储限购时间不一致 重置玩家的限购次数
-        auto limittime = kfstore->GetValue<uint64>( KFField::_time );
+        auto limittime = kfstore->GetValue<uint64>( __KF_STRING__( time ) );
         if ( startbuytime != limittime )
         {
-            player->UpdateData( KFField::_store, shopid, KFField::_time, KFOperateEnum::Set, startbuytime );
-            player->UpdateData( KFField::_store, shopid, KFField::_count, KFOperateEnum::Set, 0 );
+            player->UpdateData( kfstore, shopid, __KF_STRING__( time ), KFOperateEnum::Set, startbuytime );
+            player->UpdateData( kfstore, shopid, __KF_STRING__( count ), KFOperateEnum::Set, 0 );
             return true;
         }
 
-        auto hadbuy = kfstore->GetValue<uint32>( KFField::_count );
+        auto hadbuy = kfstore->GetValue<uint32>( __KF_STRING__( count ) );
         if ( hadbuy + num > buylimits )
         {
             return false;
@@ -150,16 +146,16 @@ namespace KFrame
     void KFStoreModule::SetLimitInfo( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime )
     {
         auto kfobject = player->GetData();
-        auto kfstorerecord = kfobject->FindData( KFField::_store );
-        auto kfstore = kfobject->FindData( KFField::_store, ( uint64 )shopid );
+        auto kfstorerecord = kfobject->FindData( __KF_STRING__( store ) );
+        auto kfstore = kfobject->FindData( __KF_STRING__( store ), shopid );
         if ( nullptr == kfstore )
         {
-            player->UpdateData( kfstorerecord, shopid, KFField::_id, KFOperateEnum::Set, shopid );
-            player->UpdateData( KFField::_store, shopid, KFField::_time, KFOperateEnum::Set, startbuytime );
-            player->UpdateData( KFField::_store, shopid, KFField::_count, KFOperateEnum::Set, num );
+            player->UpdateData( kfstorerecord, shopid, __KF_STRING__( id ), KFOperateEnum::Set, shopid );
+            player->UpdateData( kfstorerecord, shopid, __KF_STRING__( time ), KFOperateEnum::Set, startbuytime );
+            player->UpdateData( kfstorerecord, shopid, __KF_STRING__( count ), KFOperateEnum::Set, num );
             return;
         }
-        player->UpdateData( KFField::_store, shopid, KFField::_count, KFOperateEnum::Add, num );
+        player->UpdateData( kfstorerecord, shopid, __KF_STRING__( count ), KFOperateEnum::Add, num );
         return;
     }
 
@@ -170,13 +166,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgGiveStoreReq );
 
         auto kfobject = player->GetData();
-        auto kffriend = kfobject->FindData( KFField::_friend, kfmsg.toplayerid() );
+        auto kffriend = kfobject->FindData( __KF_STRING__( friend ), kfmsg.toplayerid() );
         if ( kffriend == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
         }
 
-        auto toserverid = kffriend->GetValue<uint32>( KFField::_basic, KFField::_server_id );
+        auto toserverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
         auto result = GiveStoreResult( player, kfmsg.shopid(), kfmsg.toplayerid(), toserverid );
         _kf_display->SendToClient( player, result, kfmsg.shopid() );
     }
@@ -233,7 +229,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetWishOrderReq );
         auto kfdata = player->GetData();
-        auto kfwishorders = kfdata->FindData( KFField::_wish_order );
+        auto kfwishorders = kfdata->FindData( __KF_STRING__( wishorder ) );
 
         uint32 result = KFMsg::AckEnum::StoreParamError;
 
@@ -252,7 +248,6 @@ namespace KFrame
             break;
         }
         _kf_display->SendToClient( player, result, kfmsg.storeid() );
-        //_kf_player->SendResultAck( gateid, playerid, KFMsg::ModuleEnum::Store, result );
     }
 
 
@@ -283,9 +278,9 @@ namespace KFrame
         }
 
         auto kfwishorder = _kf_kernel->CreateObject( kfwishorders->GetDataSetting() );
-        kfwishorder->SetValue< uint32 >( KFField::_id, storeid );
-        kfwishorder->SetValue< uint64 >( KFField::_time, KFGlobal::Instance()->_real_time );
-        kfwishorder->SetValue< uint32 >( KFField::_status, status );
+        kfwishorder->SetValue< uint32 >( __KF_STRING__( id ), storeid );
+        kfwishorder->SetValue< uint64 >( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
+        kfwishorder->SetValue< uint32 >( __KF_STRING__( status ), status );
         player->AddData( kfwishorders, kfwishorder );
         return KFMsg::AckEnum::WishPanelAddSuccessed;
     }
@@ -321,7 +316,7 @@ namespace KFrame
             return KFMsg::AckEnum::WishOrderNoExist;
         }
 
-        player->UpdateData( KFField::_wish_order, storeid, KFField::_status, KFOperateEnum::Set, status );
+        player->UpdateData( __KF_STRING__( wishorder ), storeid, __KF_STRING__( status ), KFOperateEnum::Set, status );
         return KFMsg::AckEnum::Success;
     }
 

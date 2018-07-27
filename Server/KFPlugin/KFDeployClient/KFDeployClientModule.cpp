@@ -9,15 +9,6 @@ namespace KFrame
         _deploy_agent_id = 0;
     }
 
-    KFDeployClientModule::~KFDeployClientModule()
-    {
-
-    }
-
-    void KFDeployClientModule::InitModule()
-    {
-    }
-
     void KFDeployClientModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 0, 5000, &KFDeployClientModule::OnTimerGetAgentIpAddress );
@@ -40,7 +31,7 @@ namespace KFrame
     __KF_CLIENT_CONNECT_FUNCTION__( KFDeployClientModule::OnClientConnectDeployServer )
     {
         // 连接成功
-        if ( servername == KFField::_deploy && servertype == KFField::_server )
+        if ( servername == __KF_STRING__( deploy ) && servertype == __KF_STRING__( server ) )
         {
             _deploy_server_id = serverid;
         }

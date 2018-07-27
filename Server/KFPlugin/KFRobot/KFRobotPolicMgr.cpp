@@ -217,8 +217,8 @@ namespace KFrame
             auto kfobject = _players[ playerid ]->GetData();
             if ( kfobject )
             {
-                auto basicobj = kfobject->FindData( KFField::_basic );
-                name = basicobj->GetValue<std::string>( KFField::_name );
+                auto basicobj = kfobject->FindData( __KF_STRING__( basic ) );
+                name = basicobj->GetValue<std::string>( __KF_STRING__( name ) );
             }
         }
 

@@ -20,7 +20,7 @@ namespace KFrame
     void KFRankClientModule::BeforeRun()
     {
         __REGISTER_AFTER_RUN_FUNCTION__( &KFRankClientModule::AfterRun );
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterUpdateDataModule( this, &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_REQ, &KFRankClientModule::HandleQueryRankListReq );
@@ -43,7 +43,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFRankClientModule::SendMessageToRank( uint32 rankid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( KFField::_rank, rankid, msgid, message );
+        return _kf_cluster->SendMessageToObject( __KF_STRING__( rank ), rankid, msgid, message );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )
@@ -140,7 +140,7 @@ namespace KFrame
         }
 
         // 玩家的基本数据
-        auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         for ( auto& showdata  : _kf_rank_config->_player_data )
         {
             auto kfdata = kfbasic->FindData( showdata );
@@ -219,11 +219,11 @@ namespace KFrame
         req.set_serverid( KFGlobal::Instance()->_app_id );
 
         auto kfobject = player->GetData();
-        auto kffriendrecord = kfobject->FindData( KFField::_friend );
+        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
         auto kffriend = kffriendrecord->FirstData();
         while ( kffriend != nullptr )
         {
-            auto friendid = kffriend->GetValue<uint32>( KFField::_id );
+            auto friendid = kffriend->GetValue<uint32>( __KF_STRING__( id ) );
             if ( _invalid_int != friendid )
             {
                 req.add_friendid( friendid );

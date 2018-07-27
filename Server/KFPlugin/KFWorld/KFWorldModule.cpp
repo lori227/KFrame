@@ -29,7 +29,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &KFWorldModule::HandlePlayerEnterWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &KFWorldModule::HandlePlayerLeaveWorldReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( KFField::_kick_online, true, &KFWorldModule::HandleHttpKickOnline );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
     }
 
     void KFWorldModule::BeforeShut()
@@ -43,17 +43,17 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_kick_online );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ) );
     }
 
     void KFWorldModule::OnceRun()
     {
         // 把自己注册到platfrom
         KFJson sendjson;
-        sendjson.SetValue( KFField::_zone_id, _kf_zone->GetZone()->_id );
-        sendjson.SetValue( KFField::_url, _kf_http_server->GetHttpUrl() );
+        sendjson.SetValue( __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
+        sendjson.SetValue( __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
 
-        auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_zone_http;
+        auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + __KF_STRING__( zonehttp );
         auto recvdata = _kf_http_client->StartSTHttpClient( url, sendjson, true );
 
         // 处理验证结果
@@ -107,7 +107,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_LOST_FUNCTION__( KFWorldModule::OnServerLostGame )
     {
-        if ( handlename != KFField::_game )
+        if ( handlename != __KF_STRING__( game ) )
         {
             return;
         }
@@ -152,19 +152,19 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SBroadcastMessageReq );
 
-        _kf_tcp_server->SendNetMessage( KFField::_game, KFMsg::S2S_BROADCAST_MESSAGE_REQ, &kfmsg );
+        _kf_tcp_server->SendNetMessage( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_MESSAGE_REQ, &kfmsg );
     }
 
     void KFWorldModule::UpdateOnlineToPlatfrom( uint32 accountid, uint32 playerid, uint32 online )
     {
-        static auto _url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_online_zone;
+        static auto _url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + __KF_STRING__( onlinezone );
 
         // 在线服务器
         KFJson sendjson;
-        sendjson.SetValue< uint32 >( KFField::_zone_id, _kf_zone->GetZone()->_id );
-        sendjson.SetValue< uint32 >( KFField::_player_id, playerid );
-        sendjson.SetValue< uint32 >( KFField::_account_id, accountid );
-        sendjson.SetValue< uint32 >( KFField::_online, online );
+        sendjson.SetValue< uint32 >( __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
+        sendjson.SetValue< uint32 >( __KF_STRING__( playerid ), playerid );
+        sendjson.SetValue< uint32 >( __KF_STRING__( accountid ), accountid );
+        sendjson.SetValue< uint32 >( __KF_STRING__( online ), online );
         _kf_http_client->StartMTHttpClient( _url, sendjson, false );
     }
 
@@ -229,7 +229,7 @@ namespace KFrame
     {
         KFJson kfjson( data );
 
-        auto playerid = kfjson.GetUInt32( KFField::_player_id );
+        auto playerid = kfjson.GetUInt32( __KF_STRING__( playerid ) );
         KickOnline( playerid, __FUNCTION_LINE__ );
         return _invalid_str;
     }

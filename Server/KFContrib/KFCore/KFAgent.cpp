@@ -179,7 +179,7 @@ namespace KFrame
                     auto name = citer.name();
                     auto value = citer->asString();
 
-                    if ( name == KFField::_id )
+                    if ( name == __KF_STRING__( id ) )
                     {
                         kfagent->_config_id = KFUtility::ToValue< uint32 >( value );
                     }
@@ -231,12 +231,12 @@ namespace KFrame
             for ( auto& iter : kfagent->_datas._objects )
             {
                 auto kfvalue = iter.second;
-                kfdata[ iter.first ] = __KF_STRING__( kfvalue->GetUseValue() );
+                kfdata[ iter.first ] = __TO_STRING__( kfvalue->GetUseValue() );
             }
 
             if ( kfagent->_config_id != _invalid_int )
             {
-                kfdata[ KFField::_id ] = __KF_STRING__( kfagent->_config_id );
+                kfdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfagent->_config_id );
             }
 
             KFJson kfreward;

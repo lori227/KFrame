@@ -58,9 +58,9 @@ namespace KFrame
         char buff[ 128 ] = "";
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), __KF_CHAR__( win64 ) );
 #else
-        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), __KF_CHAR__( linux ) );
 #endif
         return buff;
     }
@@ -70,9 +70,9 @@ namespace KFrame
         char buff[ 128 ] = "";
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s/%s", _download_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+        sprintf( buff, "%s/%s", _download_path.c_str(), apppath.c_str() );
 #else
-        sprintf( buff, "%s/%s/%s", _download_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+        sprintf( buff, "%s/%s", _download_path.c_str(), apppath.c_str() );
 #endif
         return buff;
     }
@@ -82,9 +82,9 @@ namespace KFrame
         char buff[ 128 ] = "";
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), KFField::_win64.c_str() );
+        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), __KF_CHAR__( win64 ) );
 #else
-        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), KFField::_linux.c_str() );
+        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), __KF_CHAR__( linux ) );
 #endif
         return buff;
     }

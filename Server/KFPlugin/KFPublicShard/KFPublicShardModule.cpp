@@ -8,7 +8,7 @@ namespace KFrame
 #ifdef __USE_WORKER__
     #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_WORKER_MESSAGE__
     #define __UNREGISTER_PUBLIC_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_public )
+    #define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( public ) )
     #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendMessageToClient( kfguid, msgid, message )
 #else
     #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_MESSAGE__
@@ -63,7 +63,7 @@ namespace KFrame
     {
 #ifndef __USE_WORKER__
         // 初始化redis
-        _kf_redis_driver = _kf_redis->CreateExecute( KFField::_public );
+        _kf_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
 #endif
 
         auto cleartime = _kf_option->GetValue< uint32 >( "dailytoastcleartime" );
@@ -88,7 +88,7 @@ namespace KFrame
         }
 
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->VoidExecute( values, "hmset %s:%u", KFField::_public.c_str(), kfmsg.playerid() );
+        redisdriver->VoidExecute( values, "hmset %s:%u", __KF_CHAR__( public ), kfmsg.playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryBasicDataReq )
@@ -100,7 +100,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
 
         uint32 queryid = _invalid_int;
-        redisdriver->UInt32Execute( queryid, "get %s:%s", KFField::_name.c_str(), kfmsg.name().c_str() );
+        redisdriver->UInt32Execute( queryid, "get %s:%s", __KF_CHAR__( name ), kfmsg.name().c_str() );
 
         auto pbobject = ack.mutable_pbobject();
         pbobject->set_key( queryid );
@@ -109,7 +109,7 @@ namespace KFrame
         if ( queryid != _invalid_int )
         {
             MapString values;
-            redisdriver->MapExecute( values, "hgetall %s:%u", KFField::_public.c_str(), queryid );
+            redisdriver->MapExecute( values, "hgetall %s:%u", __KF_CHAR__( public ), queryid );
             for ( auto iter : values )
             {
                 auto pbstring = pbobject->add_pbstring();
@@ -156,7 +156,7 @@ namespace KFrame
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
         uint32 serverid = _invalid_int;
-        redisdriver->UInt32Execute( serverid, "hget %s:%u %s", KFField::_public.c_str(), kfmsg.targetplayerid(), KFField::_server_id.c_str() );
+        redisdriver->UInt32Execute( serverid, "hget %s:%u %s", __KF_CHAR__( public ), kfmsg.targetplayerid(), __KF_CHAR__( serverid ) );
 
         KFMsg::S2SPlayerToastAck ack;
         ack.set_playerid( kfmsg.selfplayerid() );
@@ -165,7 +165,7 @@ namespace KFrame
 
         //获取玩家今日的被敬酒次数
         uint32 toastcount = _invalid_int;
-        redisdriver->UInt32Execute( toastcount, "hget %s %u", KFField::_toast.c_str(), kfmsg.targetplayerid() );
+        redisdriver->UInt32Execute( toastcount, "hget %s %u", __KF_CHAR__( toast ), kfmsg.targetplayerid() );
 
         //判断被敬酒次数是否用完
         if ( toastcount >= kfmsg.dailygetlimit() )
@@ -176,8 +176,8 @@ namespace KFrame
         }
 
         // 增加玩家今日被敬酒次数和总的被敬酒次数
-        redisdriver->AppendCommand( "hincrby %s %u %u", KFField::_toast.c_str(), kfmsg.targetplayerid(), 1 );
-        redisdriver->AppendCommand( "hincrby %s %u %u", KFField::_toast_count.c_str(), kfmsg.targetplayerid(), 1 );
+        redisdriver->AppendCommand( "hincrby %s %u %u", __KF_CHAR__( toast ), kfmsg.targetplayerid(), 1 );
+        redisdriver->AppendCommand( "hincrby %s %u %u", __KF_CHAR__( toastcount ), kfmsg.targetplayerid(), 1 );
         auto ok = redisdriver->PipelineExecute();
         if ( !ok )
         {
@@ -196,7 +196,7 @@ namespace KFrame
 
         // 保存访客信息
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->VoidExecute( "zadd %s:%u %u %u", KFField::_guest.c_str(), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
+        redisdriver->VoidExecute( "zadd %s:%u %u %u", __KF_CHAR__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryGuestReq )
@@ -209,7 +209,7 @@ namespace KFrame
         uint64 validtime = KFTimeEnum::OneDaySecond * KFTimeEnum::OneMonthDay;
         if ( querytime > validtime )
         {
-            redisdriver->VoidExecute( "zremrangebyscore %s:%u %u %u", KFField::_guest.c_str(), kfmsg.queryid(), _invalid_int, querytime - validtime );
+            redisdriver->VoidExecute( "zremrangebyscore %s:%u %u %u", __KF_CHAR__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
         }
         else
         {
@@ -224,21 +224,21 @@ namespace KFrame
 
         // 获取访客数量
         uint64 querycount = _invalid_int;
-        redisdriver->UInt64Execute( querycount, "zcard %s:%u", KFField::_guest.c_str(), kfmsg.queryid() );
+        redisdriver->UInt64Execute( querycount, "zcard %s:%u", __KF_CHAR__( guest ), kfmsg.queryid() );
         ack.set_guestcount( querycount );
 
         // 获取最近四位访客的信息
         if ( querycount != _invalid_int )
         {
             VectorString values;
-            redisdriver->VectorExecute( values, "zrevrange %s:%u 0 3", KFField::_guest.c_str(), kfmsg.queryid() );
+            redisdriver->VectorExecute( values, "zrevrange %s:%u 0 3", __KF_CHAR__( guest ), kfmsg.queryid() );
             for ( auto& strid : values )
             {
                 auto guestid = KFUtility::ToValue< uint32 >( strid );
                 std::string guesticon;
-                redisdriver->StringExecute( guesticon, "hget %s:%u %s", KFField::_public.c_str(), guestid, KFField::_icon.c_str() );
+                redisdriver->StringExecute( guesticon, "hget %s:%u %s", __KF_CHAR__( public ), guestid, __KF_CHAR__( icon ) );
                 std::string guesticonbox;
-                redisdriver->StringExecute( guesticonbox, "hget %s:%u %s", KFField::_public.c_str(), guestid, KFField::_icon_box.c_str() );
+                redisdriver->StringExecute( guesticonbox, "hget %s:%u %s", __KF_CHAR__( public ), guestid, __KF_CHAR__( iconbox ) );
                 auto guestdata = ack.add_guestdata();
                 guestdata->set_guestid( guestid );
                 guestdata->set_guesticon( guesticon );
@@ -254,7 +254,7 @@ namespace KFrame
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
         uint32 toastcount = _invalid_int;
-        redisdriver->UInt32Execute( toastcount, "hget %s %u", KFField::_toast_count.c_str(), kfmsg.targetplayerid() );
+        redisdriver->UInt32Execute( toastcount, "hget %s %u", __KF_CHAR__( toastcount ), kfmsg.targetplayerid() );
 
         KFMsg::S2SQueryToastCountAck ack;
         ack.set_playerid( kfmsg.selfplayerid() );
@@ -268,7 +268,7 @@ namespace KFrame
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
         uint32 queryplayerid = 0;
-        if ( !redisdriver->UInt32Execute( queryplayerid, "get %s:%s", KFField::_name.c_str(), newname.c_str() ) )
+        if ( !redisdriver->UInt32Execute( queryplayerid, "get %s:%s", __KF_CHAR__( name ), newname.c_str() ) )
         {
             return KFMsg::PublicDatabaseError;
         }
@@ -280,7 +280,7 @@ namespace KFrame
         }
 
         // 保存名字
-        if ( !redisdriver->VoidExecute( "set %s:%s %u", KFField::_name.c_str(), newname.c_str(), playerid ) )
+        if ( !redisdriver->VoidExecute( "set %s:%s %u", __KF_CHAR__( name ), newname.c_str(), playerid ) )
         {
             return KFMsg::PublicDatabaseError;
         }
@@ -288,7 +288,7 @@ namespace KFrame
         // 删除旧的名字关联
         if ( !oldname.empty() )
         {
-            redisdriver->VoidExecute( "del %s:%s", KFField::_name.c_str(), oldname.c_str() );
+            redisdriver->VoidExecute( "del %s:%s", __KF_CHAR__( name ), oldname.c_str() );
         }
 
         return KFMsg::Success;
@@ -298,6 +298,6 @@ namespace KFrame
     {
         //清除所有玩家的被敬酒次数
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->VoidExecute( "del %s", KFField::_toast.c_str() );
+        redisdriver->VoidExecute( "del %s", __KF_CHAR__( toast ) );
     }
 }

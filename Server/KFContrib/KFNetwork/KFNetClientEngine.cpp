@@ -33,9 +33,15 @@ namespace KFrame
 
     void KFNetClientEngine::ShutEngine()
     {
-        _kf_clients.Clear();
-        _net_client_services->_net_event->ShutEvent();
+        auto kfclient = _kf_clients.First();
+        while ( kfclient != nullptr )
+        {
+            kfclient->CloseClient();
+            kfclient = _kf_clients.Next();
+        }
+
         _net_client_services->ShutServices();
+        _net_client_services->_net_event->ShutEvent();
     }
 
     void KFNetClientEngine::RunEngine( uint64 nowtime )

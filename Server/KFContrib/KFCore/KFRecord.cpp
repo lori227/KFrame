@@ -211,7 +211,7 @@ namespace KFrame
 
         for ( auto& iter : _data._objects )
         {
-            auto key = __KF_STRING__( iter.first );
+            auto key = __TO_STRING__( iter.first );
             auto kfdata = iter.second;
 
             auto strdata = kfdata->ToString();
@@ -255,7 +255,7 @@ namespace KFrame
     {
         for ( auto& iter : _data._objects )
         {
-            auto key = __KF_STRING__( iter.first );
+            auto key = __TO_STRING__( iter.first );
             auto kfdata = iter.second;
 
             values[ key ] = kfdata->ToString();

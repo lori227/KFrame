@@ -7,6 +7,7 @@ namespace KFrame
 {
     KFFtpModule::KFFtpModule()
     {
+        _kf_ftp_thread = nullptr;
     }
 
     KFFtpModule::~KFFtpModule()
@@ -26,20 +27,28 @@ namespace KFrame
 
     void KFFtpModule::Run()
     {
-        for ( auto iter = _ftp_thread_list.begin(); iter != _ftp_thread_list.end(); )
+        if ( _kf_ftp_thread == nullptr )
         {
-            auto kfftpthread = iter->second;
-            if ( !kfftpthread->IsFinish() )
-            {
-                ++iter;
-            }
-            else
-            {
-                kfftpthread->FinishThread();
-                __KF_DESTROY__( KFFtpThread, kfftpthread );
-                iter = _ftp_thread_list.erase( iter );
-            }
+            return;
         }
+
+        if ( !_kf_ftp_thread->IsFinish() )
+        {
+            return;
+        }
+
+        _kf_ftp_thread->FinishThread();
+        _ftp_thread_list.erase( _kf_ftp_thread->_app_path );
+        __KF_DESTROY__( KFFtpThread, _kf_ftp_thread );
+        _kf_ftp_thread = nullptr;
+
+        if ( _ftp_thread_list.empty() )
+        {
+            return;
+        }
+
+        _kf_ftp_thread = _ftp_thread_list.begin()->second;
+        _kf_ftp_thread->StartThread();
     }
 
     void KFFtpModule::BeforeRun()
@@ -64,9 +73,11 @@ namespace KFrame
         }
 
         auto kfftpthread = __KF_CREATE__( KFDownloadThread );
-        kfftpthread->StartThread( ftpid, apppath, function );
+        kfftpthread->_ftp_id = ftpid;
+        kfftpthread->_app_path = apppath;
+        kfftpthread->_ftp_function = function;
 
-        _ftp_thread_list[ apppath ] = kfftpthread;
+        AddFtpThread( kfftpthread );
     }
 
     void KFFtpModule::StartFtpUpload( uint32 ftpid, const std::string& apppath, KFFtpFunction& function )
@@ -78,8 +89,23 @@ namespace KFrame
         }
 
         auto kfftpthread = __KF_CREATE__( KFUploadThread );
-        kfftpthread->StartThread( ftpid, apppath, function );
+        kfftpthread->_ftp_id = ftpid;
+        kfftpthread->_app_path = apppath;
+        kfftpthread->_ftp_function = function;
 
-        _ftp_thread_list[ apppath ] = kfftpthread;
+        AddFtpThread( kfftpthread );
+    }
+
+    void KFFtpModule::AddFtpThread(  KFFtpThread* kfftpthread )
+    {
+        if ( _kf_ftp_thread == nullptr )
+        {
+            _kf_ftp_thread = kfftpthread;
+            _kf_ftp_thread->StartThread();
+        }
+        else
+        {
+            _ftp_thread_list[ kfftpthread->_app_path ] = kfftpthread;
+        }
     }
 }

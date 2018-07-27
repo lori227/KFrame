@@ -32,7 +32,7 @@ namespace KFrame
     void KFEnterModule::EnterGameWorld( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto kfnoteparent = kfobject->FindData( KFField::_note );
+        auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
         if ( kfnoteparent == nullptr )
         {
             return;
@@ -43,14 +43,14 @@ namespace KFrame
         {
             auto setting = &iter;
 
-            auto notevalue = kfnoteparent->GetValue( setting->_note_id, KFField::_value );
+            auto notevalue = kfnoteparent->GetValue( setting->_note_id, __KF_STRING__( value ) );
             if ( notevalue != _invalid_int )
             {
                 continue;
             }
 
             // 设置属性
-            player->UpdateData( kfnoteparent, setting->_note_id, KFField::_value, KFOperateEnum::Set, 1 );
+            player->UpdateData( kfnoteparent, setting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
 
             // 调用脚本
             _kf_lua->CallFunction( setting->_lua_file, setting->_lua_function, playerid );

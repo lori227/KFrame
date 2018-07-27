@@ -38,7 +38,7 @@ namespace KFrame
 
     __KF_CLIENT_CONNECT_FUNCTION__( KFLoginModule::OnClientConnectionWorld )
     {
-        if ( servertype != KFField::_world )
+        if ( servertype != __KF_STRING__( world ) )
         {
             return;
         }
@@ -48,7 +48,7 @@ namespace KFrame
 
     __KF_CLIENT_LOST_FUNCTION__( KFLoginModule::OnClientLostWorld )
     {
-        if ( servertype != KFField::_world )
+        if ( servertype != __KF_STRING__( world ) )
         {
             return;
         }

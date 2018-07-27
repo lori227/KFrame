@@ -222,8 +222,8 @@ namespace KFrame
             PrintLogMemory( iter->first.c_str(), logdata->_count, logdata->_use_size, logdata->_total_size );
         }
 
-        auto strtotalusesize = __KF_STRING__( totalusesize );
-        auto totalmmallocsize = __KF_STRING__( totalmallocsize );
+        auto strtotalusesize = __TO_STRING__( totalusesize );
+        auto totalmmallocsize = __TO_STRING__( totalmallocsize );
 
         KFLogger::LogMemory( KFLogger::Info, " " );
         KFLogger::LogMemory( KFLogger::Info, "******************print memory end, use[%s], total[%s]*************************",
@@ -232,8 +232,8 @@ namespace KFrame
 
     void KFMemory::PrintLogMemory( const char* type, uint32 count, uint64 usesize, uint64 totalsize )
     {
-        auto strusesize = __KF_STRING__( usesize );
-        auto strtotalsize = __KF_STRING__( totalsize );
+        auto strusesize = __TO_STRING__( usesize );
+        auto strtotalsize = __TO_STRING__( totalsize );
 
         KFLogger::LogMemory( KFLogger::Info, "count[%u] use[%s] total[%s] [%s]",
                              count, strusesize.c_str(), strtotalsize.c_str(), type );

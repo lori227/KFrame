@@ -35,7 +35,7 @@ namespace KFrame
 
     void KFBattleManage::Initialize()
     {
-        _redis_driver = _kf_redis->CreateExecute( KFField::_battle );
+        _redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -45,12 +45,12 @@ namespace KFrame
         // 先删除列表在添加到列表中
 
         MapString values;
-        values[ KFField::_ip ] = ip;
-        values[ KFField::_port ] = __KF_STRING__( port );
-        values[ KFField::_proxy_id ] = __KF_STRING__( proxyid );
-        values[ KFField::_server_id ] = __KF_STRING__( serverid );
-        _redis_driver->AppendCommand( values, "hmset %s:%u", KFField::_battle.c_str(), serverid );
-        _redis_driver->AppendCommand( "sadd %s:%s %u", KFField::_ip.c_str(), ip.c_str(), serverid );
+        values[ __KF_STRING__( ip ) ] = ip;
+        values[ __KF_STRING__( port ) ] = __TO_STRING__( port );
+        values[ __KF_STRING__( proxyid ) ] = __TO_STRING__( proxyid );
+        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( serverid );
+        _redis_driver->AppendCommand( values, "hmset %s:%u", __KF_CHAR__( battle ), serverid );
+        _redis_driver->AppendCommand( "sadd %s:%s %u", __KF_CHAR__( ip ), ip.c_str(), serverid );
         _redis_driver->PipelineExecute();
 
         // 设置数量
@@ -60,15 +60,15 @@ namespace KFrame
     void KFBattleManage::UnRegisterBattleServer( uint32 serverid )
     {
         std::string queryip = "";
-        _redis_driver->StringExecute( queryip, "hget %s:%u %s", KFField::_battle.c_str(), serverid, KFField::_ip.c_str() );
+        _redis_driver->StringExecute( queryip, "hget %s:%u %s", __KF_CHAR__( battle ), serverid, __KF_CHAR__( ip ) );
         if ( queryip.empty() )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] redis can't find battle[%u] ip!",
                                        __FUNCTION__, serverid );
         }
 
-        _redis_driver->AppendCommand( "del %s:%u", KFField::_battle.c_str(), serverid );
-        _redis_driver->AppendCommand( "srem %s:%s %u", KFField::_ip.c_str(), queryip.c_str(), serverid );
+        _redis_driver->AppendCommand( "del %s:%u", __KF_CHAR__( battle ), serverid );
+        _redis_driver->AppendCommand( "srem %s:%s %u", __KF_CHAR__( ip ), queryip.c_str(), serverid );
         _redis_driver->PipelineExecute();
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] unregister battle server[%u|%s]!",
@@ -82,7 +82,7 @@ namespace KFrame
     {
         // 找到负载最小的一个
         VectorString ipvalues;
-        _redis_driver->VectorExecute( ipvalues, "zrevrange %s 0 0", KFField::_battle_list.c_str() );
+        _redis_driver->VectorExecute( ipvalues, "zrevrange %s 0 0", __KF_CHAR__( battlelist ) );
         if ( ipvalues.empty() )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] no battle server!",
@@ -93,30 +93,30 @@ namespace KFrame
 
         // 弹出一个可用的服务器
         std::string queryserverid = "";
-        _redis_driver->StringExecute( queryserverid, "spop %s:%s", KFField::_ip.c_str(), queryip.c_str() );
+        _redis_driver->StringExecute( queryserverid, "spop %s:%s", __KF_CHAR__( ip ), queryip.c_str() );
         if ( queryserverid.empty() )
         {
-            _redis_driver->VoidExecute( "zrem %s %s", KFField::_battle_list.c_str(), queryip.c_str() );
+            _redis_driver->VoidExecute( "zrem %s %s", __KF_CHAR__( battlelist ), queryip.c_str() );
             return KFLogger::LogLogic( KFLogger::Error, "[%s] [%s] battle list empty!",
                                        __FUNCTION__, queryip.c_str() );
         }
 
         // 数量减1
-        _redis_driver->VoidExecute( "zincrby %s -1 %s", KFField::_battle_list.c_str(), queryip.c_str() );
+        _redis_driver->VoidExecute( "zincrby %s -1 %s", __KF_CHAR__( battlelist ), queryip.c_str() );
 
         // 查询所有信息
         MapString values;
-        _redis_driver->MapExecute( values, "hgetall %s:%s", KFField::_battle.c_str(), queryserverid.c_str() );
+        _redis_driver->MapExecute( values, "hgetall %s:%s", __KF_CHAR__( battle ), queryserverid.c_str() );
         if ( values.empty() )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] [%s] battle data empty!",
                                        __FUNCTION__, queryserverid.c_str() );
         }
 
-        auto ip = values[ KFField::_ip ];
-        auto port = KFUtility::ToValue< uint32 >( values[ KFField::_port ] );
-        auto serverid = KFUtility::ToValue< uint32 >( values[ KFField::_server_id ] );
-        auto proxyid = KFUtility::ToValue< uint32 >( values[ KFField::_proxy_id ] );
+        auto ip = values[ __KF_STRING__( ip ) ];
+        auto port = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( port ) ] );
+        auto serverid = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( serverid ) ] );
+        auto proxyid = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( proxyid ) ] );
         if ( ip.empty() || port == _invalid_int || proxyid == _invalid_int || serverid == _invalid_int )
         {
             return KFLogger::LogLogic( KFLogger::Error, "[%s] battle data [%s:%u:%u] error!",
@@ -132,7 +132,7 @@ namespace KFrame
 
     void KFBattleManage::RemoveBattleServer( uint32 serverid, const std::string& ip )
     {
-        _redis_driver->VoidExecute( "srem %s:%s %u", KFField::_ip.c_str(), ip.c_str(), serverid );
+        _redis_driver->VoidExecute( "srem %s:%s %u", __KF_CHAR__( ip ), ip.c_str(), serverid );
 
         // 设置数量
         UpdateBattleCount( ip );
@@ -157,7 +157,7 @@ namespace KFrame
         KFLogger::LogLogic( KFLogger::Debug, "[%s] free battle server[%u|%s]!",
                             __FUNCTION__, serverid, ip.c_str() );
 
-        _redis_driver->VoidExecute( "sadd %s:%s %u", KFField::_ip.c_str(), ip.c_str(), serverid );
+        _redis_driver->VoidExecute( "sadd %s:%s %u", __KF_CHAR__( ip ), ip.c_str(), serverid );
 
         // 更新数量
         UpdateBattleCount( ip );
@@ -166,9 +166,9 @@ namespace KFrame
     void KFBattleManage::UpdateBattleCount( const std::string& ip )
     {
         uint64 battlecount = 0;
-        if ( _redis_driver->UInt64Execute( battlecount, "scard %s:%s", KFField::_ip.c_str(), ip.c_str() ) )
+        if ( _redis_driver->UInt64Execute( battlecount, "scard %s:%s", __KF_CHAR__( ip ), ip.c_str() ) )
         {
-            _redis_driver->VoidExecute( "zadd %s %u %s", KFField::_battle_list.c_str(), battlecount, ip.c_str() );
+            _redis_driver->VoidExecute( "zadd %s %u %s", __KF_CHAR__( battlelist ), battlecount, ip.c_str() );
 
             KFLogger::LogLogic( KFLogger::Debug, "[%s] ip[%s] server count[%u]!",
                                 __FUNCTION__, ip.c_str(), static_cast< uint32 >( battlecount ) );

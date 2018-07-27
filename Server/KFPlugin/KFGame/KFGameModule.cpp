@@ -36,7 +36,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGameModule::OnClientConnectionServer )
     {
-        if ( servertype == KFField::_world )
+        if ( servertype == __KF_STRING__( world ) )
         {
             OnClientConnectionWorld( serverid );
         }
@@ -49,7 +49,7 @@ namespace KFrame
 
     __KF_CLIENT_LOST_FUNCTION__( KFGameModule::OnClientLostServer )
     {
-        if ( servertype == KFField::_world )
+        if ( servertype == __KF_STRING__( world ) )
         {
             OnClientLostWorld();
         }

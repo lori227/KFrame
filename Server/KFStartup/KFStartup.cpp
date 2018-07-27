@@ -92,7 +92,7 @@ namespace KFrame
         _kf_library.Insert( appsetting->_name, library );
 
         // 设置插件信息
-        auto plugin = function( _kf_plugin_manage, KFGlobal::Instance(), KFMalloc::Instance() );
+        auto plugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance() );
         plugin->_sort = appsetting->_sort;
         plugin->_plugin_name = appsetting->_name;
         plugin->_config = appsetting->_config_file;
@@ -114,7 +114,7 @@ namespace KFrame
         PluginLeaveFunction function = ( PluginLeaveFunction )library->GetFunction( "DllPluginLeave" );
         if ( function != nullptr )
         {
-            function( _kf_plugin_manage );
+            function( KFPluginManage::Instance() );
         }
 
         library->UnLoad();

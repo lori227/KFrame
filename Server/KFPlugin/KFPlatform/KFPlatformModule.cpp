@@ -7,7 +7,7 @@
 
 namespace KFrame
 {
-#define __ACCOUNT_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_account )
+#define __ACCOUNT_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( account ) )
 
     KFPlatformModule::KFPlatformModule()
     {
@@ -27,16 +27,16 @@ namespace KFrame
         __REGISTER_RUN_FUNCTION__( &KFPlatformModule::Run );
         _kf_zone_manage->BeforeRun();
 
-        __REGISTER_HTTP_FUNCTION__( KFField::_login, false, &KFPlatformModule::HandleLoginToken );
-        __REGISTER_HTTP_FUNCTION__( KFField::_token, false, &KFPlatformModule::HandleVerifyToken );
-        __REGISTER_HTTP_FUNCTION__( KFField::_update_zone, false, &KFPlatformModule::HandleUpdateZone );
-        __REGISTER_HTTP_FUNCTION__( KFField::_lost_zone, false, &KFPlatformModule::HandleLostZone );
-        __REGISTER_HTTP_FUNCTION__( KFField::_status, false, &KFPlatformModule::HandleUpdateZoneStatus );
-        __REGISTER_HTTP_FUNCTION__( KFField::_zone_list, false, &KFPlatformModule::HandleQueryZoneList );
-        __REGISTER_HTTP_FUNCTION__( KFField::_zone_status, false, &KFPlatformModule::HandleQueryZoneStatus );
-        __REGISTER_HTTP_FUNCTION__( KFField::_activation, false, &KFPlatformModule::HandleActivationAccount );
-        __REGISTER_HTTP_FUNCTION__( KFField::_zone_http, false, &KFPlatformModule::HandleZoneHttp );
-        __REGISTER_HTTP_FUNCTION__( KFField::_online_zone, false, &KFPlatformModule::HandleUpdateOnline );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( login ), false, &KFPlatformModule::HandleLoginToken );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( token ), false, &KFPlatformModule::HandleVerifyToken );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( updatezone ), false, &KFPlatformModule::HandleUpdateZone );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( lostzone ), false, &KFPlatformModule::HandleLostZone );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( status ), false, &KFPlatformModule::HandleUpdateZoneStatus );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ), false, &KFPlatformModule::HandleQueryZoneList );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonestatus ), false, &KFPlatformModule::HandleQueryZoneStatus );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ), false, &KFPlatformModule::HandleActivationAccount );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonehttp ), false, &KFPlatformModule::HandleZoneHttp );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( onlinezone ), false, &KFPlatformModule::HandleUpdateOnline );
     }
 
     void KFPlatformModule::BeforeShut()
@@ -45,16 +45,16 @@ namespace KFrame
         __UNREGISTER_RUN_FUNCTION__();
         _kf_zone_manage->BeforeShut();
 
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_login );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_token );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_update_zone );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_lost_zone );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_status );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_zone_list );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_zone_status );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_activation );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_zone_http );
-        __UNREGISTER_HTTP_FUNCTION__( KFField::_online_zone );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( login ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( token ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( updatezone ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( lostzone ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( status ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonestatus ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonehttp ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( onlinezone ) );
     }
 
     void KFPlatformModule::Run()
@@ -72,8 +72,8 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::SignError );
         }
 
-        auto account = request.GetString( KFField::_account );
-        auto channel = request.GetUInt32( KFField::_channel );
+        auto account = request.GetString( __KF_STRING__( account ) );
+        auto channel = request.GetUInt32( __KF_STRING__( channel ) );
         if ( account.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
@@ -81,7 +81,7 @@ namespace KFrame
 
         // 查询创建账号
         auto accountdata = QueryCreateAccount( account, channel );
-        auto accountid = KFUtility::ToValue<uint32>( accountdata[ KFField::_account_id ] );
+        auto accountid = KFUtility::ToValue<uint32>( accountdata[ __KF_STRING__( accountid ) ] );
         if ( accountid == 0 )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformBusy );
@@ -90,12 +90,12 @@ namespace KFrame
         // 判断是否需要激活
         if ( _kf_platform_config->_is_open_activation )
         {
-            auto activation = accountdata[ KFField::_activation ];
+            auto activation = accountdata[ __KF_STRING__( activation ) ];
             if ( activation.empty() )
             {
                 KFJson response;
-                response.SetValue( KFField::_account_id, accountid );
-                response.SetValue< uint32 >( KFField::_ret_code, KFMsg::ActivationAccount );
+                response.SetValue( __KF_STRING__( accountid ), accountid );
+                response.SetValue< uint32 >( __KF_STRING__( retcode ), KFMsg::ActivationAccount );
                 return _kf_http_server->SendResponse( response );
             }
         }
@@ -110,49 +110,49 @@ namespace KFrame
     void KFPlatformModule::UpdateExtendData( uint32 accountid, uint32 channel, KFJson& kfjson )
     {
         MapString values;
-        values[ KFField::_account_id ] = __KF_STRING__( accountid );
-        values[ KFField::_channel ] = __KF_STRING__( channel );
-        values[ KFField::_name ] = kfjson.GetString( KFField::_name );
-        values[ KFField::_sex ] = kfjson.GetString( KFField::_sex );
-        values[ KFField::_icon ] = kfjson.GetString( KFField::_icon );
+        values[ __KF_STRING__( accountid ) ] = __TO_STRING__( accountid );
+        values[ __KF_STRING__( channel ) ] = __TO_STRING__( channel );
+        values[ __KF_STRING__( name ) ] = kfjson.GetString( __KF_STRING__( name ) );
+        values[ __KF_STRING__( sex ) ] = kfjson.GetString( __KF_STRING__( sex ) );
+        values[ __KF_STRING__( icon ) ] = kfjson.GetString( __KF_STRING__( icon ) );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->VoidExecute( values, "hmset %s:%u", KFField::_extend.c_str(), accountid );
+        redisdriver->VoidExecute( values, "hmset %s:%u", __KF_CHAR__( extend ), accountid );
     }
 
     std::string KFPlatformModule::SaveLoginToken( uint32 accountid, MapString& accountdata )
     {
-        auto accountflag = KFUtility::ToValue<uint32>( accountdata[ KFField::_account_flag ] );
+        auto accountflag = KFUtility::ToValue<uint32>( accountdata[ __KF_STRING__( accountflag ) ] );
 
         // 创建token
-        auto strtime = __KF_STRING__( KFGlobal::Instance()->_game_time );
+        auto strtime = __TO_STRING__( KFGlobal::Instance()->_game_time );
         auto md5temp = KFUtility::Format( "%u%u%s", accountid, accountflag, strtime.c_str() );
         auto token = KFCrypto::Md5Encode( md5temp );
 
         // 保存登录token, 设置有效时间300秒
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto rediskey = KFUtility::Format( "%s:%s", KFField::_login.c_str(), token.c_str() );
-        redisdriver->AppendCommand( "hset %s %s %u", rediskey, KFField::_account_id.c_str(), accountid );
+        auto rediskey = KFUtility::Format( "%s:%s", __KF_CHAR__( login ), token.c_str() );
+        redisdriver->AppendCommand( "hset %s %s %u", rediskey, __KF_CHAR__( accountid ), accountid );
         redisdriver->AppendCommand( "expire %s %u", rediskey, _kf_platform_config->_token_expire_time );
         redisdriver->PipelineExecute();
 
         // 返回内容
         KFJson response;
-        response.SetValue( KFField::_token, token );
-        response.SetValue( KFField::_account_id, accountid );
-        response.SetValue( KFField::_account_flag, accountflag );
-        response.SetValue( KFField::_server_list_type, _kf_platform_config->_server_list_type );
+        response.SetValue( __KF_STRING__( token ), token );
+        response.SetValue( __KF_STRING__( accountid ), accountid );
+        response.SetValue( __KF_STRING__( accountflag ), accountflag );
+        response.SetValue( __KF_STRING__( serverlisttype ), _kf_platform_config->_server_list_type );
 
         switch ( _kf_platform_config->_server_list_type )
         {
         case __SELECT_SERVER_DATA__:
         {
-            auto zoneid = KFUtility::ToValue<uint32>( accountdata[ KFField::_zone_id ] );
+            auto zoneid = KFUtility::ToValue<uint32>( accountdata[ __KF_STRING__( zoneid ) ] );
             if ( zoneid == _invalid_int )
             {
                 // 选择一个最小人数的分区
                 VectorString zonevalues;
-                redisdriver->VectorExecute( zonevalues, "zrevrange %s 0 0", KFField::_zone_balance.c_str() );
+                redisdriver->VectorExecute( zonevalues, "zrevrange %s 0 0", __KF_CHAR__( zonebalance ) );
                 if ( zonevalues.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::LoginCanNotFindGate );
@@ -165,8 +165,8 @@ namespace KFrame
                 }
 
                 redisdriver->AppendCommand( "hset %s:%u %s %u",
-                                            KFField::_account_id.c_str(), accountid, KFField::_zone_id.c_str(), zoneid );
-                redisdriver->AppendCommand( "zincrby %s 1 %u", KFField::_zone_balance.c_str(), 1 );
+                                            __KF_CHAR__( accountid ), accountid, __KF_CHAR__( zoneid ), zoneid );
+                redisdriver->AppendCommand( "zincrby %s 1 %u", __KF_CHAR__( zonebalance ), 1 );
                 redisdriver->PipelineExecute();
             }
 
@@ -179,31 +179,31 @@ namespace KFrame
                 return _kf_http_server->SendResponseCode( KFMsg::LoginCanNotFindGate );
             }
 
-            response.SetValue( KFField::_ip, ip );
-            response.SetValue( KFField::_port, port );
+            response.SetValue( __KF_STRING__( ip ), ip );
+            response.SetValue( __KF_STRING__( port ), port );
         }
         break;
         default:
         {
             KFJson kfserverlistjson;
             _kf_zone_manage->GetZoneJson( kfserverlistjson );
-            response.SetValue< Json::Value& >( KFField::_server_list, kfserverlistjson );
+            response.SetValue< Json::Value& >( __KF_STRING__( serverlist ), kfserverlistjson );
         }
         break;
         }
 
         // 判断是否已经在线
-        auto online = accountdata[ KFField::_online ];
+        auto online = accountdata[ __KF_STRING__( online ) ];
         if ( online == "1" )
         {
-            auto zoneid = KFUtility::ToValue< uint32 >( accountdata[ KFField::_zone_id ] );
+            auto zoneid = KFUtility::ToValue< uint32 >( accountdata[ __KF_STRING__( zoneid ) ] );
             auto url = _kf_zone_manage->GetZoneUrl( zoneid );
             if ( !url.empty() )
             {
                 KFJson kfjson;
-                kfjson.SetValue( KFField::_player_id, accountdata[ KFField::_player_id ] );
+                kfjson.SetValue( __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
 
-                auto kickurl = url + KFField::_kick_online;
+                auto kickurl = url + __KF_STRING__( kickonline );
                 _kf_http_client->StartMTHttpClient( kickurl, kfjson, false );
             }
         }
@@ -219,7 +219,7 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::SignError );
         }
 
-        auto accountid = request.GetUInt32( KFField::_account_id );
+        auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
         if ( accountid == _invalid_int )
         {
             return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
@@ -229,22 +229,22 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         MapString accountdata;
-        auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", KFField::_account_id.c_str(), accountid );
+        auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid );
         if ( !ok || accountdata.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformBusy );
         }
 
-        auto activation = accountdata[ KFField::_activation ];
+        auto activation = accountdata[ __KF_STRING__( activation ) ];
         if ( activation.empty() )
         {
             // 保存激活码
-            auto code = request.GetString( KFField::_code );
+            auto code = request.GetString( __KF_CHAR__( code ) );
 
             // 判断激活码是否存在
 
             uint64 isexist = 0;
-            if ( !redisdriver->UInt64Execute( isexist, "sismember %s %s", KFField::_activation_code.c_str(), code.c_str() ) )
+            if ( !redisdriver->UInt64Execute( isexist, "sismember %s %s", __KF_CHAR__( activationcode ), code.c_str() ) )
             {
                 return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
             }
@@ -254,9 +254,9 @@ namespace KFrame
                 return _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
             }
 
-            redisdriver->AppendCommand( "srem %s %s", KFField::_activation_code.c_str(), code.c_str() );
+            redisdriver->AppendCommand( "srem %s %s", __KF_CHAR__( activationcode ), code.c_str() );
             redisdriver->AppendCommand( "hset %s:%u %s %s",
-                                        KFField::_account_id.c_str(), accountid, KFField::_activation.c_str(), code.c_str() );
+                                        __KF_CHAR__( accountid ), accountid, __KF_CHAR__( activation ), code.c_str() );
             redisdriver->PipelineExecute();
         }
 
@@ -269,7 +269,7 @@ namespace KFrame
         _kf_zone_manage->GetZoneJson( kfserverlistjson );
 
         KFJson response;
-        response.SetValue< Json::Value& >( KFField::_server_list, kfserverlistjson );
+        response.SetValue< Json::Value& >( __KF_STRING__( serverlist ), kfserverlistjson );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -280,7 +280,7 @@ namespace KFrame
 
         // 先查询redis
         std::string queryvalue;
-        if ( !redisdriver->StringExecute( queryvalue, "hget %s:%s:%u %s", KFField::_account.c_str(), account.c_str(), channel, KFField::_account_id.c_str() ) )
+        if ( !redisdriver->StringExecute( queryvalue, "hget %s:%s:%u %s", __KF_CHAR__( account ), account.c_str(), channel, __KF_CHAR__( accountid ) ) )
         {
             return accountdata;
         }
@@ -288,7 +288,7 @@ namespace KFrame
         if ( queryvalue != FUNCTION_EMPTY_STRING )
         {
             uint32 accountid = KFUtility::ToValue<uint32>( queryvalue );
-            auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", KFField::_account_id.c_str(), accountid );
+            auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid );
             if ( !ok || !accountdata.empty() )
             {
                 return accountdata;
@@ -297,7 +297,7 @@ namespace KFrame
 
         // 创建账号id
         uint64 newid = 0;
-        redisdriver->UInt64Execute( newid, "incr %s", KFField::_account_make.c_str() );
+        redisdriver->UInt64Execute( newid, "incr %s", __KF_CHAR__( accountmake ) );
         if ( newid == 0 )
         {
             return accountdata;
@@ -305,14 +305,14 @@ namespace KFrame
 
         auto accountid = static_cast< uint32 >( newid ) + 500000;
 
-        accountdata[ KFField::_account_id ] = KFUtility::ToString( accountid );
-        accountdata[ KFField::_account_flag ] = "0";
-        accountdata[ KFField::_account ] = account;
-        accountdata[ KFField::_channel ] = KFUtility::ToString( channel );
+        accountdata[ __KF_STRING__( accountid ) ] = KFUtility::ToString( accountid );
+        accountdata[ __KF_STRING__( accountflag ) ] = "0";
+        accountdata[ __KF_STRING__( account ) ] = account;
+        accountdata[ __KF_STRING__( channel ) ] = KFUtility::ToString( channel );
 
-        redisdriver->AppendCommand( "hset %s:%s:%u %s %u", KFField::_account.c_str(), account.c_str(), channel, KFField::_account_id.c_str(), accountid );
-        redisdriver->AppendCommand( "sadd %s %u", KFField::_account_list.c_str(), accountid );
-        redisdriver->AppendCommand( accountdata, "hmset %s:%u", KFField::_account_id.c_str(), accountid );
+        redisdriver->AppendCommand( "hset %s:%s:%u %s %u", __KF_CHAR__( account ), account.c_str(), channel, __KF_CHAR__( accountid ), accountid );
+        redisdriver->AppendCommand( "sadd %s %u", __KF_CHAR__( accountlist ), accountid );
+        redisdriver->AppendCommand( accountdata, "hmset %s:%u", __KF_CHAR__( accountid ), accountid );
         redisdriver->PipelineExecute();
         return accountdata;
     }
@@ -320,14 +320,14 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFPlatformModule::HandleVerifyToken )
     {
         KFJson request( data );
-        auto token = request.GetString( KFField::_token );
+        auto token = request.GetString( __KF_STRING__( token ) );
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 判断token是否正确
-        auto loginkey = KFUtility::Format( "%s:%s", KFField::_login.c_str(), token.c_str() );
+        auto loginkey = KFUtility::Format( "%s:%s", __KF_CHAR__( login ), token.c_str() );
 
         std::string queryvalue = "";
-        if ( !redisdriver->StringExecute( queryvalue, "hget %s %s", loginkey, KFField::_account_id.c_str() ) )
+        if ( !redisdriver->StringExecute( queryvalue, "hget %s %s", loginkey, __KF_CHAR__( accountid ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
         }
@@ -343,16 +343,16 @@ namespace KFrame
         }
 
         MapString accountdata;
-        if ( !redisdriver->MapExecute( accountdata, "hgetall %s:%u", KFField::_account_id.c_str(), accountid ) )
+        if ( !redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
         }
 
         // 设置账号
         KFJson response;
-        response.SetValue( KFField::_token, token );
-        response.SetValue( KFField::_account_id, accountid );
-        response.SetValue( KFField::_channel, accountdata[ KFField::_channel ] );
+        response.SetValue( __KF_STRING__( token ), token );
+        response.SetValue( __KF_STRING__( accountid ), accountid );
+        response.SetValue( __KF_STRING__( channel ), accountdata[ __KF_STRING__( channel ) ] );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -381,8 +381,8 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::SignError );
         }
 
-        auto zoneid = request.GetUInt32( KFField::_zone_id );
-        auto url = request.GetString( KFField::_url );
+        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
+        auto url = request.GetString( __KF_STRING__( url ) );
 
         // 更新zone http
         _kf_zone_manage->UpdateZoneHttp( zoneid, url );
@@ -399,8 +399,8 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::SignError );
         }
 
-        auto zoneid = request.GetUInt32( KFField::_id );
-        auto appid = request.GetUInt32( KFField::_app_id );
+        auto zoneid = request.GetUInt32( __KF_STRING__( id ) );
+        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
         _kf_zone_manage->RemoveZoneAddress( zoneid, appid );
 
         return _kf_http_server->SendResponseCode( KFMsg::Success );
@@ -410,9 +410,9 @@ namespace KFrame
     {
         KFJson request( data );
 
-        auto zoneid = request.GetUInt32( KFField::_id );
-        auto zonestatus = request.GetUInt32( KFField::_status );
-        auto describe = request.GetString( KFField::_describe );
+        auto zoneid = request.GetUInt32( __KF_STRING__( id ) );
+        auto zonestatus = request.GetUInt32( __KF_STRING__( status ) );
+        auto describe = request.GetString( __KF_STRING__( describe ) );
 
         // 计算签名
         if ( !_kf_http_server->VerifySignature( request ) )
@@ -429,16 +429,16 @@ namespace KFrame
     {
         KFJson request( data );
 
-        auto zoneid = request.GetUInt32( KFField::_id );
+        auto zoneid = request.GetUInt32( __KF_STRING__( id ) );
 
         uint32 status = KFZoneStatusEnum::Shutoff;
         std::string describe = "";
         _kf_zone_manage->QueryZoneStatus( zoneid, status, describe );
 
         KFJson response;
-        response.SetValue( KFField::_id, zoneid );
-        response.SetValue( KFField::_status, status );
-        response.SetValue( KFField::_describe, describe );
+        response.SetValue( __KF_STRING__( id ), zoneid );
+        response.SetValue( __KF_STRING__( status ), status );
+        response.SetValue( __KF_STRING__( describe ), describe );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -446,18 +446,18 @@ namespace KFrame
     {
         KFJson request( data );
 
-        auto accountid = request.GetString( KFField::_account_id );
-        auto playerid = request.GetString( KFField::_player_id );
-        auto online = request.GetString( KFField::_online );
-        auto zoneid = request.GetString( KFField::_zone_id );
+        auto accountid = request.GetString( __KF_STRING__( accountid ) );
+        auto playerid = request.GetString( __KF_STRING__( playerid ) );
+        auto online = request.GetString( __KF_STRING__( online ) );
+        auto zoneid = request.GetString( __KF_STRING__( zoneid ) );
 
         MapString values;
-        values[ KFField::_player_id ] = playerid;
-        values[ KFField::_online ] = online;
-        values[ KFField::_zone_id ] = zoneid;
+        values[ __KF_STRING__( playerid ) ] = playerid;
+        values[ __KF_STRING__( online ) ] = online;
+        values[ __KF_STRING__( zoneid ) ] = zoneid;
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->VoidExecute( values, "hmset %s:%s", KFField::_account_id.c_str(), accountid.c_str() );
+        redisdriver->VoidExecute( values, "hmset %s:%s", __KF_CHAR__( accountid ), accountid.c_str() );
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 }

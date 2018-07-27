@@ -95,14 +95,14 @@ namespace KFrame
 
         //获取聊天数据和玩家数据
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
-        auto playername = kfbasic->GetValue< std::string >( KFField::_name );
-        auto playericon = kfbasic->GetValue< std::string >( KFField::_icon );
-        auto playersex = kfbasic->GetValue< uint32 >( KFField::_sex );
-        auto playergrading = kfbasic->GetValue< uint32 >( KFField::_grading );
-        auto playericonbox = kfbasic->GetValue< std::string >( KFField::_icon_box );
-        auto playerserverid = kfbasic->GetValue< uint32 >( KFField::_server_id );
+        auto playername = kfbasic->GetValue< std::string >( __KF_STRING__( name ) );
+        auto playericon = kfbasic->GetValue< std::string >( __KF_STRING__( icon ) );
+        auto playersex = kfbasic->GetValue< uint32 >( __KF_STRING__( sex ) );
+        auto playergrading = kfbasic->GetValue< uint32 >( __KF_STRING__( grading ) );
+        auto playericonbox = kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) );
+        auto playerserverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
 
         KFMsg::MsgSendChatInfo info;
         info.set_chatinfo( kfmsg.chatinfo() );
@@ -145,7 +145,7 @@ namespace KFrame
         info.set_playerid( playerid );
         info.set_chattype( kfmsg.chattype() );
         info.set_playerinfo( kfmsg.selfinfo() );
-        info.set_serverid( kfobject->GetValue< uint32 >( KFField::_basic, KFField::_server_id ) );
+        info.set_serverid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) ) );
 
         _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
     }
@@ -166,7 +166,7 @@ namespace KFrame
         auto kfobject = player->GetData();
 
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
-        auto gateid = kfobject->GetValue< uint32 >( KFField::_gate_id );
+        auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
 
         //创建江湖聊天室玩家
         auto chatplayer = _chat_player_list.Create( playerid );
@@ -179,7 +179,7 @@ namespace KFrame
     void KFChatModule::OnLeaveLeaveChat( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto playerid = kfobject->GetValue( KFField::_basic, KFField::_id );
+        auto playerid = kfobject->GetValue( __KF_STRING__( basic ), __KF_STRING__( id ) );
 
         _chat_player_list.Remove( playerid );
     }

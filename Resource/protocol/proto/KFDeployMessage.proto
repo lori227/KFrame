@@ -12,7 +12,7 @@ enum DeployProtocol
 	S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ = 10308;	// 关闭服务器
 	S2S_KILL_SERVER_TO_AGENT_REQ = 10309;		// 杀死服务器
 	S2S_UPDATE_SERVER_TO_AGENT_REQ = 10310;		// 更新服务器
-	S2S_START_SERVER_TO_AGENT_REQ = 10311;		// 重启服务器
+	S2S_RESTART_SERVER_TO_AGENT_REQ = 10311;	// 重启服务器
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ message S2SUpdateServerToAgentReq
 }
 
 // 重启服务器
-// S2S_START_SERVER_TO_AGENT_REQ
+// S2S_RESTART_SERVER_TO_AGENT_REQ
 message S2SRestartServerToAgentReq
 {
 	required string appname = 1;

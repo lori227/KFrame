@@ -41,6 +41,7 @@ namespace KFrame
             _deploy_type = _invalid_int;
             _delay_time = _invalid_int;
             _zone_id = _invalid_int;
+            _start_time = 0;
         }
 
     public:
@@ -61,6 +62,9 @@ namespace KFrame
 
         // 延迟时间
         uint32 _delay_time;
+
+        // 开始时间
+        uint64 _start_time;
     };
 
     class KFLaunchSetting;

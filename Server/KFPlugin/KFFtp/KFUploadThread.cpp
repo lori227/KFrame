@@ -199,7 +199,6 @@ namespace KFrame
         KFDate kfdate( _tm.tm_year, _tm.tm_mon, _tm.tm_mday, _tm.tm_hour, _tm.tm_min, _tm.tm_sec );
         auto ftptime = static_cast< int64 >( kfdate.GetTime() );
         ftptime += _time_difference;
-
         return localtime >= ftptime;
     }
 }

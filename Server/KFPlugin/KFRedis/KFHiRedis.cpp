@@ -323,6 +323,16 @@ namespace KFrame
                 }
             }
 
+            else if ( nullptr != reply->str )
+            {
+                values.push_back( reply->str );
+            }
+
+            else if ( nullptr == reply->str )
+            {
+                values.push_back( _invalid_str );
+            }
+
             freeReplyObject( reply );
             reply = nullptr;
         }

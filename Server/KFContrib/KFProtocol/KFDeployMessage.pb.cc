@@ -369,7 +369,7 @@ void protobuf_AddDesc_KFDeployMessage_2eproto() {
     "ype\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r"
     "\"p\n\032S2SRestartServerToAgentReq\022\017\n\007appnam"
     "e\030\001 \002(\t\022\017\n\007apptype\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022"
-    "\016\n\006zoneid\030\004 \002(\r\022\021\n\tdelaytime\030\005 \002(\r*\254\003\n\016D"
+    "\016\n\006zoneid\030\004 \002(\r\022\021\n\tdelaytime\030\005 \002(\r*\256\003\n\016D"
     "eployProtocol\022%\n S2S_REGISTER_AGENT_TO_S"
     "ERVER_REQ\020\275P\022!\n\034S2S_UPDATE_SERVER_STATUS"
     "_REQ\020\276P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_REQ\020"
@@ -379,8 +379,8 @@ void protobuf_AddDesc_KFDeployMessage_2eproto() {
     "2S_SHUT_DOWN_SERVER_TO_MASTER_REQ\020\303P\022\'\n\""
     "S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ\020\304P\022!\n"
     "\034S2S_KILL_SERVER_TO_AGENT_REQ\020\305P\022#\n\036S2S_"
-    "UPDATE_SERVER_TO_AGENT_REQ\020\306P\022\"\n\035S2S_STA"
-    "RT_SERVER_TO_AGENT_REQ\020\307P", 1625);
+    "UPDATE_SERVER_TO_AGENT_REQ\020\306P\022$\n\037S2S_RES"
+    "TART_SERVER_TO_AGENT_REQ\020\307P", 1627);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDeployMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterAgentToServerReq::default_instance_ = new S2SRegisterAgentToServerReq();

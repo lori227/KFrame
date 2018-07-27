@@ -58,7 +58,7 @@ namespace KFrame
 
     __KF_SERVER_LOST_FUNCTION__( KFLoginGameModule::OnServerLostHandle )
     {
-        if ( handletype == KFField::_proxy )
+        if ( handletype == __KF_STRING__( proxy ) )
         {
             // 更新到world
             KFMsg::S2SLoginProxyRemoveReq req;

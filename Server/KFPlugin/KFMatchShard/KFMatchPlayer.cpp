@@ -100,7 +100,7 @@ namespace KFrame
         req.set_matchshardid( KFGlobal::Instance()->_app_id );
         kfroom->SendMessageToBattle( KFMsg::S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ, &req );
 
-        auto strroomid = __KF_STRING__( kfroom->_battle_room_id );
+        auto strroomid = __TO_STRING__( kfroom->_battle_room_id );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] player[%u:%u] cancal match req!",
                             __FUNCTION__, strroomid.c_str(), _pb_player.campid(), _pb_player.playerid() );
     }

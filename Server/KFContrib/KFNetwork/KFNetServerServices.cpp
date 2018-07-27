@@ -41,6 +41,13 @@ namespace KFrame
         return KFNetServices::StartServices( kfsetting );
     }
 
+    void KFNetServerServices::ShutServices()
+    {
+        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_server ), nullptr );
+
+        KFNetServices::ShutServices();
+    }
+
     uint32 KFNetServerServices::MakeTrusteeID()
     {
         if ( _trustee_id >= 10000 )

@@ -29,7 +29,7 @@ namespace KFrame
     {
         _match_id = matchid;
         _battle_room_id = roomid;
-        _str_room_id = __KF_STRING__( _battle_room_id );
+        _str_room_id = __TO_STRING__( _battle_room_id );
         _max_player_count = maxplayercount;
         _battle_valid_time = KFGlobal::Instance()->_game_time + _kf_battle_config->_room_valid_time;
 

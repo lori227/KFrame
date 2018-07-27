@@ -14,13 +14,13 @@ namespace KFrame
         auto data = json.Serialize();
         auto temp = KFUtility::Format( "%s:%s", data.c_str(), _crypto_key );
         auto md4sign = KFCrypto::Md5Encode( temp );
-        json.SetValue< const std::string& >( KFField::_sign, md4sign );
+        json.SetValue< const std::string& >( __KF_STRING__( sign ), md4sign );
     }
 
     bool KFHttpCommon::VerifySignature( KFJson& json )
     {
-        auto sign = json.GetString( KFField::_sign );
-        json.removeMember( KFField::_sign );
+        auto sign = json.GetString( __KF_STRING__( sign ) );
+        json.removeMember( __KF_STRING__( sign ) );
 
         auto data = json.Serialize();
 
@@ -33,20 +33,20 @@ namespace KFrame
     std::string KFHttpCommon::SendResponseCode( uint32 code )
     {
         KFJson response;
-        response.SetValue( KFField::_ret_code, code );
+        response.SetValue( __KF_STRING__( retcode ), code );
         return SendResponse( response );
     }
 
     uint32 KFHttpCommon::GetResponseCode( KFJson& json )
     {
-        return json.GetUInt32( KFField::_ret_code );
+        return json.GetUInt32( __KF_STRING__( retcode ) );
     }
 
     std::string KFHttpCommon::SendResponse( KFJson& json )
     {
-        if ( !json.isMember( KFField::_ret_code ) )
+        if ( !json.isMember( __KF_STRING__( retcode ) ) )
         {
-            json.SetValue< uint32 >( KFField::_ret_code, KFCommonEnum::OK );
+            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFCommonEnum::OK );
         }
 
         return json.Serialize();
@@ -54,7 +54,7 @@ namespace KFrame
 
     std::string KFHttpCommon::SendResponse( KFJson& json, uint32 code )
     {
-        json.SetValue( KFField::_ret_code, code );
+        json.SetValue( __KF_STRING__( retcode ), code );
         return json.Serialize();
     }
 }

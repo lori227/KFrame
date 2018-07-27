@@ -484,7 +484,7 @@ namespace KFrame
         auto kfdata = kfparent->FindData( configid );
         if ( kfdata == nullptr )
         {
-            UpdateData( kfparent, configid, KFField::_id, KFOperateEnum::Set, configid );
+            UpdateData( kfparent, configid, __KF_STRING__( id ), KFOperateEnum::Set, configid );
         }
 
         for ( auto& iter : kfagent->_datas._objects )
@@ -723,7 +723,7 @@ namespace KFrame
         }
     }
 
-    KFMsg::PBObject* KFEntityEx::FindSyncUpdateFromPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
+    KFMsg::PBObject* KFEntityEx::FindObjectFromPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
     {
         auto datasetting = kfdata->GetDataSetting();
         for ( auto i = 0; i < pbobject->pbobject_size(); ++i )
@@ -761,11 +761,8 @@ namespace KFrame
         return retrecord;
     }
 
-    KFMsg::PBObject* KFEntityEx::FindSyncUpdateFromPBRecord( KFData* kfdata, KFMsg::PBObject* pbobject )
+    KFMsg::PBObject* KFEntityEx::FindObjectFromPBRecord( KFData* kfdata, KFMsg::PBRecord* pbrecord )
     {
-        // 查找记录
-        auto pbrecord = FindRecordFromPBObject( kfdata, pbobject );
-
         auto key = kfdata->GetKeyID();
         auto datasetting = kfdata->GetDataSetting();
         for ( auto i = 0; i < pbrecord->pbobject_size(); ++i )
@@ -824,7 +821,20 @@ namespace KFrame
 
             if ( savedata->GetType() == KFDataDefine::Type_Object )
             {
-                pbobject = FindSyncUpdateFromPBRecord( savedata, pbobject );
+                pbobject = FindObjectFromPBObject( savedata, pbobject );
+            }
+            else if ( savedata->GetType() == KFDataDefine::Type_Record )
+            {
+                auto pbrecord = FindRecordFromPBObject( savedata, pbobject );
+
+                savedata = datahierarchy.front();
+                datahierarchy.pop_front();
+
+                pbobject = FindObjectFromPBRecord( savedata, pbrecord );
+            }
+
+            if ( savedata == kfdata )
+            {
                 _kf_component->_kf_kernel_module->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Sync_Client );
             }
         } while ( !datahierarchy.empty() );
@@ -866,9 +876,19 @@ namespace KFrame
         {
             auto savedata = datahierarchy.front();
             datahierarchy.pop_front();
+
             if ( savedata->GetType() == KFDataDefine::Type_Object )
             {
-                FindSyncUpdateFromPBRecord( savedata, pbobject );
+                pbobject = FindObjectFromPBObject( savedata, pbobject );
+            }
+            else if ( savedata->GetType() == KFDataDefine::Type_Record )
+            {
+                auto pbrecord = FindRecordFromPBObject( savedata, pbobject );
+
+                savedata = datahierarchy.front();
+                datahierarchy.pop_front();
+
+                pbobject = FindObjectFromPBRecord( savedata, pbrecord );
             }
         } while ( !datahierarchy.empty() );
 
@@ -913,32 +933,23 @@ namespace KFrame
             auto savedata = datahierarchy.front();
             datahierarchy.pop_front();
 
-            auto datasetting = savedata->GetDataSetting();
-            switch ( datasetting->_type )
+            if ( savedata->GetType() == KFDataDefine::Type_Object )
             {
-            case KFDataDefine::Type_Object:
-            {
-                pbobject = FindSyncUpdateFromPBObject( savedata, pbobject );
+                pbobject = FindObjectFromPBObject( savedata, pbobject );
             }
-            break;
-            case KFDataDefine::Type_Record:
+            else if ( savedata->GetType() == KFDataDefine::Type_Record )
             {
-                if ( datahierarchy.empty() )
-                {
-                    return KFLogger::LogSystem( KFLogger::Error, "[%s] data[%s] datahierarchy empty!",
-                                                __FUNCTION__, datasetting->_name.c_str() );
-                }
+                auto pbrecord = FindRecordFromPBObject( savedata, pbobject );
 
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
-                pbobject = FindSyncUpdateFromPBRecord( savedata, pbobject );
+
+                pbobject = FindObjectFromPBRecord( savedata, pbrecord );
             }
-            break;
-            default: // 最后直接添加属性
+
+            if ( savedata == kfdata )
             {
                 AddSyncUpdateDataToPBObject( savedata, pbobject );
-            }
-            break;
             }
         } while ( !datahierarchy.empty() );
 
@@ -948,11 +959,11 @@ namespace KFrame
 
     void KFEntityEx::SyncEntityToClient()
     {
-        // 同步添加
-        SyncAddDataToClient();
-
         // 同步更新
         SyncUpdateDataToClient();
+
+        // 同步添加
+        SyncAddDataToClient();
 
         // 同步删除
         SyncRemoveDataToClient();

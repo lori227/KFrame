@@ -55,7 +55,7 @@ namespace KFrame
         // 如果是master, 返回false, 因为master会主动连, 不需要再这里再次连接
         // 如果是不同小区, 不能连接
         if ( connectname != kfglobal->_app_name ||
-                connecttype == KFField::_master ||
+                connecttype == __KF_STRING__( master ) ||
                 zoneid != kfglobal->_zone_id )
         {
             return false;
@@ -89,6 +89,13 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::TellRegisterToServer );
 
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfmsg.servername() != kfglobal->_app_name ||
+                kfmsg.serverzoneid() != kfglobal->_zone_id )
+        {
+            return;
+        }
+
         auto listendata = &kfmsg.listen();
         if ( !IsConnection( listendata->appname(), listendata->apptype(), listendata->appid(), listendata->zoneid() ) )
         {
@@ -101,6 +108,13 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer )
     {
         __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
+
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfmsg.servername() != kfglobal->_app_name ||
+                kfmsg.serverzoneid() != kfglobal->_zone_id )
+        {
+            return;
+        }
 
         if ( !IsConnection( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() ) )
         {

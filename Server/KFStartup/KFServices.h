@@ -18,13 +18,16 @@ namespace KFrame
         void Run();
 
         // 初始化服务
-        virtual bool InitService( KFApplication* application, const std::vector< std::string >& params );
+        bool InitService( KFApplication* application, const std::vector< std::string >& params );
 
         // 自动更新
-        virtual void RunUpdate();
+        void RunUpdate();
 
         // 关闭服务
-        virtual void ShutDown();
+        void ShutDown();
+
+        // 是否已经关闭
+        bool IsShutDown();
 
     protected:
         ////////////////////////////////////////////////////////////////////////////

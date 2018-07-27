@@ -21,9 +21,9 @@ namespace KFrame
 
     void KFTaskModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
-        _kf_component->RegisterUpdateDataFunction( KFField::_task, KFField::_value, this, &KFTaskModule::OnUpdateTaskValueCallBack );
-        _kf_component->RegisterUpdateDataFunction( KFField::_task, KFField::_flag, this, &KFTaskModule::OnUpdateTaskFlagCallBack );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ), this, &KFTaskModule::OnUpdateTaskValueCallBack );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ), this, &KFTaskModule::OnUpdateTaskFlagCallBack );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ, &KFTaskModule::HandleReceiveTaskRewardReq );
@@ -33,8 +33,8 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterUpdateDataFunction( KFField::_task, KFField::_value );
-        _kf_component->UnRegisterUpdateDataFunction( KFField::_task, KFField::_flag );
+        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ) );
+        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ );
@@ -77,14 +77,14 @@ namespace KFrame
 
         // 获得任务属性
         auto kfobject = player->GetData();
-        auto kftask = kfobject->FindData( KFField::_task, tasksetting->_id );
+        auto kftask = kfobject->FindData( __KF_STRING__( task ), tasksetting->_id );
         if ( kftask == nullptr )
         {
             return KFMsg::CanNotFindTaskData;
         }
 
         // 不是完成状态
-        auto taskflag = kftask->GetValue<uint32>( KFField::_flag );
+        auto taskflag = kftask->GetValue<uint32>( __KF_STRING__( flag ) );
         if ( taskflag == KFMsg::FlagEnum::Init )
         {
             return KFMsg::TaskNotDone;
@@ -96,7 +96,7 @@ namespace KFrame
         }
 
         // 更新标记
-        player->UpdateData( KFField::_task, tasksetting->_id, KFField::_flag, KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( __KF_STRING__( task ), tasksetting->_id, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
         player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
@@ -129,14 +129,14 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto flag = kfparent->GetValue<uint32>( KFField::_flag );
+        auto flag = kfparent->GetValue<uint32>( __KF_STRING__( flag ) );
         if ( flag != KFMsg::FlagEnum::Init )
         {
             return;
         }
 
         // 设置任务完成
-        player->UpdateData( kfparent->GetName(), key, KFField::_flag, KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+        player->UpdateData( kfparent->GetName(), key, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskFlagCallBack )
@@ -152,7 +152,7 @@ namespace KFrame
         case KFMsg::FlagEnum::Init:	// 初始化
         {
             auto initvalue = tasksetting->_init_value;
-            if ( tasksetting->_done_type == KFField::_item )
+            if ( tasksetting->_done_type == __KF_STRING__( item ) )
             {
 
             }
@@ -167,7 +167,7 @@ namespace KFrame
             if ( tasksetting->_next_value != 0 && tasksetting->_next_id != 0 )
             {
                 auto kfparent = kfdata->GetParent();
-                player->UpdateData( kfparent->GetName(), tasksetting->_next_id, KFField::_value, KFOperateEnum::Set, newvalue );
+                player->UpdateData( kfparent->GetName(), tasksetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, newvalue );
             }
             break;
         }

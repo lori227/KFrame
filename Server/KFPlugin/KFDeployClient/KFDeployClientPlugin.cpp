@@ -24,8 +24,8 @@ namespace KFrame
         __FIND_MODULE__( _kf_deploy_command, KFDeployCommandInterface );
 
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != KFField::_auth &&
-                kfglobal->_app_name != KFField::_platform )
+        if ( kfglobal->_app_name != __KF_STRING__( auth ) &&
+                kfglobal->_app_name != __KF_STRING__( platform ) )
         {
             __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         }

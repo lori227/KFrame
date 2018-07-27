@@ -45,7 +45,7 @@ namespace KFrame
 
     bool KFLogClientModule::SendMessageToLog( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( KFField::_log, msgid, message );
+        return _kf_cluster->SendMessageToShard( __KF_STRING__( log ), msgid, message );
     }
 
 }

@@ -277,8 +277,10 @@ namespace KFrame
     void KFTcpServerModule::BroadcastRegisterToServer( KFNetHandle* kfhandle )
     {
         KFMsg::TellRegisterToServer tell;
-        auto listendata = tell.mutable_listen();
+        tell.set_servername( KFGlobal::Instance()->_app_name );
+        tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
 
+        auto listendata = tell.mutable_listen();
         listendata->set_appid( kfhandle->_app_id );
         listendata->set_appname( kfhandle->_app_name );
         listendata->set_apptype( kfhandle->_app_type );
@@ -294,8 +296,10 @@ namespace KFrame
         {
             auto nethandle = iter.second;
             KFMsg::TellRegisterToServer tell;
-            auto listendata = tell.mutable_listen();
+            tell.set_servername( KFGlobal::Instance()->_app_name );
+            tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
 
+            auto listendata = tell.mutable_listen();
             listendata->set_appid( nethandle->_app_id );
             listendata->set_appname( nethandle->_app_name );
             listendata->set_apptype( nethandle->_app_type );
@@ -318,6 +322,8 @@ namespace KFrame
         tell.set_appname( kfhandle->_app_name );
         tell.set_apptype( kfhandle->_app_type );
         tell.set_zoneid( kfhandle->_zone_id );
+        tell.set_servername( KFGlobal::Instance()->_app_name );
+        tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_id );
 
         KFLogger::LogSystem( KFLogger::Error, "[%s:%s:%u|%s:%u] lost connect!",

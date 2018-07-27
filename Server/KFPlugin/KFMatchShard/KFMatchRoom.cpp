@@ -26,7 +26,7 @@ namespace KFrame
         _kf_match_queue = kfmatchqueue;
         _match_id = _kf_match_queue->_match_id;
         _battle_room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
-        _str_room_id = __KF_STRING__( _battle_room_id );
+        _str_room_id = __TO_STRING__( _battle_room_id );
 
         // 开启创建定时器
         _create_timer.StartTimer( 1, 10000 );
@@ -34,7 +34,7 @@ namespace KFrame
 
     bool KFMatchRoom::SendMessageToBattle( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( KFField::_battle, _battle_shard_id, msgid, message );
+        return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
     }
 
     void KFMatchRoom::RunRoom()

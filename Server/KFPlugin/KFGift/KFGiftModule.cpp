@@ -34,11 +34,11 @@ namespace KFrame
 
         // 访问平台服务器, 验证token
         KFJson sendjson;
-        sendjson.SetValue( KFField::_player_id, playerid );
-        sendjson.SetValue( KFField::_gift_key, kfmsg.giftkey() );
-        sendjson.SetValue( KFField::_server_id, _kf_zone->GetZone()->_id );
+        sendjson.SetValue( __KF_STRING__( playerid ), playerid );
+        sendjson.SetValue( __KF_STRING__( giftkey ), kfmsg.giftkey() );
+        sendjson.SetValue( __KF_STRING__( serverid ), _kf_zone->GetZone()->_id );
 
-        static auto url = _kf_ip_address->FindPlatformAddress( playerid ) + KFField::_gift;
+        static auto url = _kf_ip_address->FindPlatformAddress( playerid ) + __KF_STRING__( gift );
         _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFGiftModule::HandleReceiveGiftResult );
     }
 
@@ -48,7 +48,7 @@ namespace KFrame
         KFJson sendjson( senddata );
         KFJson recvjson( recvdata );
 
-        uint32 playerid = sendjson.GetUInt32( KFField::_player_id );
+        uint32 playerid = sendjson.GetUInt32( __KF_STRING__( playerid ) );
         auto player = _kf_player->FindPlayer( playerid, __FUNCTION_LINE__ );
         if ( player == nullptr )
         {
@@ -60,7 +60,7 @@ namespace KFrame
 
         if ( retcode == KFMsg::Success )
         {
-            auto reward = recvjson.GetString( KFField::_reward );
+            auto reward = recvjson.GetString( __KF_STRING__( reward ) );
 
             KFAgents kfagents;
             kfagents.ParseFromString( reward, __FUNCTION_LINE__ );

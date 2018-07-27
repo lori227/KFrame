@@ -41,10 +41,15 @@ namespace KFrame
         // 开启上传
         virtual void StartFtpUpload( uint32 ftpid, const std::string& apppath, KFFtpFunction& function );
 
+        // 添加ftp线程
+        void AddFtpThread( KFFtpThread* kfftpthread );
+
     private:
         // 请求的ftp列表
         std::map< std::string, KFFtpThread* > _ftp_thread_list;
 
+        // 正在执行的线程
+        KFFtpThread* _kf_ftp_thread;
     };
 }
 

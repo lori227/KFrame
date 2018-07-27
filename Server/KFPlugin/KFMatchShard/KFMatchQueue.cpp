@@ -254,7 +254,7 @@ namespace KFrame
         auto kfroom = _kf_room_list.Find( roomid );
         if ( kfroom == nullptr )
         {
-            auto strroomid = __KF_STRING__( roomid );
+            auto strroomid = __TO_STRING__( roomid );
             KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s:%u]",
                                 __FUNCTION__, strroomid.c_str(), campid );
             return false;

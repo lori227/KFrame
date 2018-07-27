@@ -21,13 +21,13 @@ namespace KFrame
 
     void KFClothesModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
-        _kf_component->RegisterAddDataFunction( KFField::_clothes, this, &KFClothesModule::OnAddClothesCallBack );
-        _kf_component->RegisterRemoveDataFunction( KFField::_clothes, this, &KFClothesModule::OnRemoveClothesCallBack );
-        _kf_component->RegisterUpdateDataFunction( KFField::_clothes, KFField::_count, this, &KFClothesModule::OnClothesCountUpdateCallBack );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component->RegisterAddDataFunction( __KF_STRING__( clothes ), this, &KFClothesModule::OnAddClothesCallBack );
+        _kf_component->RegisterRemoveDataFunction( __KF_STRING__( clothes ), this, &KFClothesModule::OnRemoveClothesCallBack );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( clothes ), __KF_STRING__( count ), this, &KFClothesModule::OnClothesCountUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        _kf_component->RegisterAddAgentFunction( KFField::_clothes, this, &KFClothesModule::AddClothesAgentData );
+        _kf_component->RegisterAddAgentFunction( __KF_STRING__( clothes ), this, &KFClothesModule::AddClothesAgentData );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         _kf_player->RegisterEnterFunction( this, &KFClothesModule::OnEnterStartClothesTimer );
@@ -43,11 +43,11 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
 
-        _kf_component->UnRegisterAddDataFunction( KFField::_clothes );
-        _kf_component->UnRegisterRemoveDataFunction( KFField::_clothes );
-        _kf_component->UnRegisterUpdateDataFunction( KFField::_clothes, KFField::_count );
+        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( clothes ) );
+        _kf_component->UnRegisterRemoveDataFunction( __KF_STRING__( clothes ) );
+        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( clothes ), __KF_STRING__( count ) );
 
-        _kf_component->UnRegisterAddAgentFunction( KFField::_clothes );
+        _kf_component->UnRegisterAddAgentFunction( __KF_STRING__( clothes ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         _kf_player->UnRegisterEnterFunction( this );
@@ -72,7 +72,7 @@ namespace KFrame
     void KFClothesModule::CheckStartClothesTimer( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto kfclothesrecord = kfobject->FindData( KFField::_clothes );
+        auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
 
         // 检查所有衣服, 找到时间最少的一个衣服
         uint32 _min_valid_time = 0xFFFFFFFF;
@@ -80,7 +80,7 @@ namespace KFrame
         auto kfclothes = kfclothesrecord->FirstData();
         while ( kfclothes != nullptr )
         {
-            auto validtime = kfclothes->GetValue( KFField::_time );
+            auto validtime = kfclothes->GetValue( __KF_STRING__( time ) );
             if ( validtime != 0 && validtime < _min_valid_time )
             {
                 _min_valid_time = validtime;
@@ -108,7 +108,7 @@ namespace KFrame
     void KFClothesModule::RemoveValidTimeoutClothes( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto kfclothesrecord = kfobject->FindData( KFField::_clothes );
+        auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
         if ( kfclothesrecord == nullptr )
         {
             return;
@@ -119,7 +119,7 @@ namespace KFrame
         auto kfclothes = kfclothesrecord->FirstData();
         while ( kfclothes != nullptr )
         {
-            auto validtime = kfclothes->GetValue( KFField::_time );
+            auto validtime = kfclothes->GetValue( __KF_STRING__( time ) );
             if ( validtime != 0 )
             {
                 timeclothes.insert( std::make_pair( kfclothes, validtime ) );
@@ -174,7 +174,7 @@ namespace KFrame
                                         function, line, kfagent->_string.c_str() );
         }
 
-        auto kfagengvalue = kfagent->FindAgentValue( KFField::_count );
+        auto kfagengvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
         if ( kfagengvalue == nullptr )
         {
             return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] clothes count = null!",
@@ -184,7 +184,7 @@ namespace KFrame
         auto clothescount = _kf_kernel->CalcAgentValue( kfagengvalue, multiple );
 
         auto kfobject = player->GetData();
-        auto kfclothesrecord = kfobject->FindData( KFField::_clothes );
+        auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
         if ( kfclothesrecord == nullptr )
         {
             return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] player[%s] clothes record = null!",
@@ -204,7 +204,7 @@ namespace KFrame
             {
                 auto name = iter.first;
                 auto value = _kf_kernel->CalcAgentValue( iter.second, multiple );
-                if ( name == KFField::_time )
+                if ( name == __KF_STRING__( time ) )
                 {
                     value = KFGlobal::Instance()->_real_time + value;
                 }
@@ -218,14 +218,14 @@ namespace KFrame
         else
         {
             // 存在, 判断有效时间
-            auto agenttime = kfagent->GetValue( KFField::_time );
-            auto validtime = kfclothes->GetValue< uint64 >( KFField::_time );
+            auto agenttime = kfagent->GetValue( __KF_STRING__( time ) );
+            auto validtime = kfclothes->GetValue< uint64 >( __KF_STRING__( time ) );
             if ( validtime == 0 )
             {
                 if ( agenttime == 0 )
                 {
                     // 永久时装, 更新数量
-                    player->UpdateData( kfclothes, KFField::_count, KFOperateEnum::Add, clothescount );
+                    player->UpdateData( kfclothes, __KF_STRING__( count ), KFOperateEnum::Add, clothescount );
                 }
                 else
                 {
@@ -242,13 +242,13 @@ namespace KFrame
                 if ( agenttime == 0 )
                 {
                     // 永久时装, 直接把时间更新成永久
-                    player->UpdateData( kfclothes, KFField::_time, KFOperateEnum::Set, 0 );
-                    player->UpdateData( kfclothes, KFField::_count, KFOperateEnum::Set, clothescount );
+                    player->UpdateData( kfclothes, __KF_STRING__( time ), KFOperateEnum::Set, 0 );
+                    player->UpdateData( kfclothes, __KF_STRING__( count ), KFOperateEnum::Set, clothescount );
                 }
                 else
                 {
                     // 时限时装
-                    player->UpdateData( kfclothes, KFField::_time, KFOperateEnum::Add, agenttime );
+                    player->UpdateData( kfclothes, __KF_STRING__( time ), KFOperateEnum::Add, agenttime );
                 }
             }
         }
@@ -263,12 +263,12 @@ namespace KFrame
         }
 
         // 数量为0, 删除该时装
-        player->RemoveData( KFField::_clothes, key );
+        player->RemoveData( __KF_STRING__( clothes ), key );
     }
 
     __KF_ADD_DATA_FUNCTION__( KFClothesModule::OnAddClothesCallBack )
     {
-        auto validtime = kfdata->GetValue< uint64 >( KFField::_time );
+        auto validtime = kfdata->GetValue< uint64 >( __KF_STRING__( time ) );
         if ( validtime == 0 )
         {
             return;
@@ -290,7 +290,7 @@ namespace KFrame
         {
             return;
         }
-        auto kfmodelrecord = kfobject->FindData( KFField::_model );
+        auto kfmodelrecord = kfobject->FindData( __KF_STRING__( model ) );
         if ( kfmodelrecord == nullptr )
         {
             return;
@@ -300,20 +300,20 @@ namespace KFrame
         auto kfmodel = kfmodelrecord->FirstData();
         while ( kfmodel != nullptr )
         {
-            auto clothesid = kfmodel->GetValue< uint32 >( KFField::_clothes_id );
+            auto clothesid = kfmodel->GetValue< uint32 >( __KF_STRING__( clothesid ) );
             if ( clothesid != _invalid_int && clothesid == key )
             {
-                player->UpdateData( kfmodel, KFField::_clothes_id, KFOperateEnum::Set, _invalid_int );
+                player->UpdateData( kfmodel, __KF_STRING__( clothesid ), KFOperateEnum::Set, _invalid_int );
             }
 
             kfmodel = kfmodelrecord->NextData();
         }
 
         //判断被删除时装是否是当前穿戴时装
-        auto kfclothesid = kfobject->GetValue< uint32 >( KFField::_clothes_id );
+        auto kfclothesid = kfobject->GetValue< uint32 >( __KF_STRING__( clothesid ) );
         if ( kfclothesid != _invalid_int && kfclothesid == key )
         {
-            player->UpdateData( KFField::_clothes_id, KFOperateEnum::Set, _invalid_int );
+            player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, _invalid_int );
         }
 
         // 发送邮件
@@ -327,7 +327,7 @@ namespace KFrame
         if ( _invalid_int != kfmsg.clothesid() )
         {
             auto kfobject = player->GetData();
-            auto kfclothes = kfobject->FindData( KFField::_clothes, kfmsg.clothesid() );
+            auto kfclothes = kfobject->FindData( __KF_STRING__( clothes ), kfmsg.clothesid() );
             if ( kfclothes == nullptr )
             {
                 return _kf_display->SendToClient( player, KFMsg::ClothesNotExist );
@@ -340,14 +340,14 @@ namespace KFrame
                 return _kf_display->SendToClient( player, KFMsg::ClothesDataError, kfmsg.clothesid() );
             }
 
-            auto modleid = kfobject->GetValue< uint32 >( KFField::_model_id );
+            auto modleid = kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) );
             if ( !kfsetting->HasModle( modleid ) )
             {
                 return _kf_display->SendToClient( player, KFMsg::ClothesModleNotMatch );
             }
         }
 
-        player->UpdateData( KFField::_clothes_id, KFOperateEnum::Set, kfmsg.clothesid() );
+        player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, kfmsg.clothesid() );
         _kf_display->SendToClient( player, KFMsg::ClothesDressOK );
     }
 
@@ -357,7 +357,7 @@ namespace KFrame
 
         // 玩家模型信息
         auto kfobject = player->GetData();
-        auto kfmodle = kfobject->FindData( KFField::_model, kfmsg.modelid() );
+        auto kfmodle = kfobject->FindData( __KF_STRING__( model ), kfmsg.modelid() );
         if ( kfmodle == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ModuleIdNotFind );
@@ -366,7 +366,7 @@ namespace KFrame
         // 判断是否有这个时装
         if ( kfmsg.clothesid() != _invalid_int )
         {
-            auto kfclothes = kfobject->FindData( KFField::_clothes, kfmsg.clothesid() );
+            auto kfclothes = kfobject->FindData( __KF_STRING__( clothes ), kfmsg.clothesid() );
             if ( kfclothes == nullptr )
             {
                 return _kf_display->SendToClient( player, KFMsg::ClothesNotExist );
@@ -374,7 +374,7 @@ namespace KFrame
         }
 
         _kf_display->SendToClient( player, KFMsg::SetModelClothesOK );
-        player->UpdateData( kfmodle, KFField::_clothes_id, KFOperateEnum::Set, kfmsg.clothesid() );
+        player->UpdateData( kfmodle, __KF_STRING__( clothesid ), KFOperateEnum::Set, kfmsg.clothesid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClothesModule::HandleChangeModelReq )
@@ -383,17 +383,17 @@ namespace KFrame
 
         // 判断存在模型
         auto kfobject = player->GetData();
-        auto kfmodel = kfobject->FindData( KFField::_model, kfmsg.modelid() );
+        auto kfmodel = kfobject->FindData( __KF_STRING__( model ), kfmsg.modelid() );
         if ( kfmodel == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ModelNotExist );
         }
 
-        player->UpdateData( KFField::_model_id, KFOperateEnum::Set, kfmsg.modelid() );
+        player->UpdateData( __KF_STRING__( modelid ), KFOperateEnum::Set, kfmsg.modelid() );
 
         // 判断默认时装
-        auto clothesid = kfmodel->GetValue< uint32 >( KFField::_clothes_id );
-        player->UpdateData( KFField::_clothes_id, KFOperateEnum::Set, clothesid );
+        auto clothesid = kfmodel->GetValue< uint32 >( __KF_STRING__( clothesid ) );
+        player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, clothesid );
 
         _kf_display->SendToClient( player, KFMsg::ModelChangeOK );
     }

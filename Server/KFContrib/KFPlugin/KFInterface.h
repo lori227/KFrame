@@ -5,7 +5,6 @@
 
 namespace KFrame
 {
-    class KFGlobal;
     class KFPluginManage;
     class KFInterface
     {

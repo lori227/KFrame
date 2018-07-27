@@ -12,6 +12,8 @@ namespace KFrame
     class KFRunable : public Poco::Runnable
     {
     public:
+        ~KFRunable();
+
         // 开启线程
         void StartThread( KFThreadFunction& function, const char* file, uint32 line );
 

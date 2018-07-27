@@ -108,7 +108,7 @@ namespace KFrame
         ack.set_result( KFMsg::MatchRequestSuccess );
         _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
-        auto strgroupid = __KF_STRING__( pbgroup->groupid() );
+        auto strgroupid = __TO_STRING__( pbgroup->groupid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] match allowgroup[%u]!",
                             __FUNCTION__, strgroupid.c_str(), kfmsg.allowgroup() ? 1 : 0 );
     }
@@ -174,7 +174,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleCancelMatchToMatchShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToMatchShardAck );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%u:%s] player[%u:%u] cancel match ack!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str(), kfmsg.campid(), kfmsg.playerid() );
 
@@ -196,7 +196,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleCreateRoomToMatchShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToMatchShardAck );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] create room[%u:%s] ack!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str() );
 
@@ -218,7 +218,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleAddCampToMatchShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SAddCampToMatchShardAck );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%u:%s] add camp[%u] result[%u] ack!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str(), kfmsg.campid(), ( kfmsg.addok() ? 1 : 0 ) );
@@ -246,7 +246,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleOpenRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenRoomToMatchShardReq );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
 
         KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%u:%s] open req!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str() );
@@ -274,7 +274,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandlePlayerLeaveRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerLeaveRoomToMatchShardReq );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] leave room[%u:%s] req!",
                             __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), strroomid.c_str() );
 
@@ -301,7 +301,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleTellRoomStartToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomStartToMatchShardReq );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] start room[%u:%s] req!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str() );
 
@@ -328,7 +328,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleTellRoomCloseToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomCloseToMatchShardReq );
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Error, "[%s] close room[%u:%s] req!",
                             __FUNCTION__, kfmsg.matchid(), strroomid.c_str() );
 

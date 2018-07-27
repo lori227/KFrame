@@ -22,6 +22,10 @@ namespace KFrame
         free( _buff_address );
         __KF_DELETE__( _net_event );
 
+        uv_mutex_destroy( &_uv_shut_mutex );
+        uv_mutex_destroy( &_uv_send_mutex );
+        uv_mutex_destroy( &_uv_connect_mutex );
+
         uv_loop_delete( _uv_loop );
         _uv_loop = nullptr;
     }
@@ -86,22 +90,24 @@ namespace KFrame
         {
             uv_run( netservices->_uv_loop, UV_RUN_DEFAULT );
         } while ( netservices->_thread_run );
+
+        uv_loop_close( netservices->_uv_loop );
     }
 
     void KFNetServices::ShutServices()
     {
         _thread_run = false;
 
-        uv_mutex_destroy( &_uv_shut_mutex );
-        uv_mutex_destroy( &_uv_send_mutex );
-        uv_mutex_destroy( &_uv_connect_mutex );
+        //uv_mutex_destroy( &_uv_shut_mutex );
+        //uv_mutex_destroy( &_uv_send_mutex );
+        //uv_mutex_destroy( &_uv_connect_mutex );
 
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_shut_async ), nullptr );
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_send_async ), nullptr );
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_connect_async ), nullptr );
+        //uv_close( reinterpret_cast< uv_handle_t* >( &_uv_shut_async ), nullptr );
+        //uv_close( reinterpret_cast< uv_handle_t* >( &_uv_send_async ), nullptr );
+        //uv_close( reinterpret_cast< uv_handle_t* >( &_uv_connect_async ), nullptr );
 
         uv_stop( _uv_loop );
-        uv_loop_close( _uv_loop );
+        uv_thread_join( &_thread_id );
     }
 
     void KFNetServices::SendNetMessage( KFNetSession* netsession )

@@ -110,7 +110,7 @@ namespace KFrame
                              kfglobal->_app_id, kfglobal->_zone_id, delaytime );
 
         // 如果是数据库
-        if ( appname == KFField::_data )
+        if ( appname == __KF_STRING__( data ) )
         {
             delaytime += 30000;
         }

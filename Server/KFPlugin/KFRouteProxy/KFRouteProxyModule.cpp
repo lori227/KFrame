@@ -40,7 +40,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFRouteProxyModule::OnClientConnectionRouteShard )
     {
-        if ( servertype != KFField::_shard )
+        if ( servertype != __KF_STRING__( shard ) )
         {
             return;
         }

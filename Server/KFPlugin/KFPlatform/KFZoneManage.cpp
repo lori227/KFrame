@@ -75,16 +75,16 @@ namespace KFrame
 
     void KFZoneData::SaveTo( std::map<std::string, std::string>& values, bool database )
     {
-        values[ KFField::_id ] = KFUtility::ToString<uint32>( _id );
-        values[ KFField::_type ] = KFUtility::ToString<uint32>( _type );
-        values[ KFField::_name ] = _name;
-        values[ KFField::_status ] = KFUtility::ToString<uint32>( _status );
-        values[ KFField::_describe ] = _describe;
+        values[ __KF_STRING__( id ) ] = KFUtility::ToString<uint32>( _id );
+        values[ __KF_STRING__( type ) ] = KFUtility::ToString<uint32>( _type );
+        values[ __KF_STRING__( name ) ] = _name;
+        values[ __KF_STRING__( status ) ] = KFUtility::ToString<uint32>( _status );
+        values[ __KF_STRING__( describe ) ] = _describe;
 
         if ( database )
         {
             // http
-            values[ KFField::_url ] = _zone_http;
+            values[ __KF_STRING__( url ) ] = _zone_http;
 
             std::string straddress = DEFAULT_SPLIT_STRING;
             for ( auto& kfaddress : _address_list )
@@ -94,36 +94,36 @@ namespace KFrame
                     continue;
                 }
 
-                straddress += __KF_STRING__( kfaddress._appid );
+                straddress += __TO_STRING__( kfaddress._appid );
 
                 straddress += FUNCTION_LINK_STRING;
                 straddress += kfaddress._address;
 
                 straddress += FUNCTION_LINK_STRING;
-                straddress += __KF_STRING__( kfaddress._port );
+                straddress += __TO_STRING__( kfaddress._port );
 
                 straddress += FUNCTION_LINK_STRING;
-                straddress += __KF_STRING__( kfaddress._is_online ? 1 : 0 );
+                straddress += __TO_STRING__( kfaddress._is_online ? 1 : 0 );
 
                 straddress += FUNCTION_LINK_STRING;
-                straddress += __KF_STRING__( kfaddress._platform_id );
+                straddress += __TO_STRING__( kfaddress._platform_id );
 
                 straddress += DEFAULT_SPLIT_STRING;
             }
-            values[ KFField::_address ] = straddress;
+            values[ __KF_STRING__( address ) ] = straddress;
         }
     }
 
     void KFZoneData::CopyFrom( std::map<std::string, std::string>& values )
     {
-        _id = KFUtility::ToValue<uint32>( values[ KFField::_id ] );
-        _type = KFUtility::ToValue<uint32>( values[ KFField::_type ] );
-        _name = values[ KFField::_name ];
-        _status = KFUtility::ToValue<uint32>( values[ KFField::_status ] );
-        _describe = values[ KFField::_describe ];
-        _zone_http = values[ KFField::_url ];
+        _id = KFUtility::ToValue<uint32>( values[ __KF_STRING__( id ) ] );
+        _type = KFUtility::ToValue<uint32>( values[ __KF_STRING__( type ) ] );
+        _name = values[ __KF_STRING__( name ) ];
+        _status = KFUtility::ToValue<uint32>( values[ __KF_STRING__( status ) ] );
+        _describe = values[ __KF_STRING__( describe ) ];
+        _zone_http = values[ __KF_STRING__( url ) ];
 
-        auto straddress = values[ KFField::_address ];
+        auto straddress = values[ __KF_STRING__( address ) ];
         while ( !straddress.empty() )
         {
             auto appaddress = KFUtility::SplitString( straddress, DEFAULT_SPLIT_STRING );
@@ -153,13 +153,13 @@ namespace KFrame
         auto kfaddress = SelectAddress();
         if ( kfaddress == nullptr )
         {
-            kfjson.SetValue( KFField::_ip, _invalid_str );
-            kfjson.SetValue( KFField::_port, _invalid_int );
+            kfjson.SetValue( __KF_STRING__( ip ), _invalid_str );
+            kfjson.SetValue( __KF_STRING__( port ), _invalid_int );
         }
         else
         {
-            kfjson.SetValue( KFField::_ip, kfaddress->_address );
-            kfjson.SetValue( KFField::_port, kfaddress->_port );
+            kfjson.SetValue( __KF_STRING__( ip ), kfaddress->_address );
+            kfjson.SetValue( __KF_STRING__( port ), kfaddress->_port );
         }
     }
 
@@ -211,7 +211,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-#define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_login )
+#define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( login ) )
 
     KFZoneManage::KFZoneManage()
     {
@@ -286,12 +286,12 @@ namespace KFrame
 
     bool KFZoneManage::AddZoneData( KFJson& kfjson )
     {
-        auto appid = kfjson.GetUInt32( KFField::_app_id );
-        auto zoneid = kfjson.GetUInt32( KFField::_id );
-        auto zonetype = kfjson.GetUInt32( KFField::_type );
-        auto zonename = kfjson.GetString( KFField::_name );
-        auto address = kfjson.GetString( KFField::_address );
-        auto port = kfjson.GetUInt32( KFField::_port );
+        auto appid = kfjson.GetUInt32( __KF_STRING__( appid ) );
+        auto zoneid = kfjson.GetUInt32( __KF_STRING__( id ) );
+        auto zonetype = kfjson.GetUInt32( __KF_STRING__( type ) );
+        auto zonename = kfjson.GetString( __KF_STRING__( name ) );
+        auto address = kfjson.GetString( __KF_STRING__( address ) );
+        auto port = kfjson.GetUInt32( __KF_STRING__( port ) );
 
         KFLocker kflock( _kf_mutex );
         auto zonedata = _kf_zone_data.Create( zoneid );
@@ -387,8 +387,8 @@ namespace KFrame
         }
 
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "hset %s:%u %s %s", KFField::_zone.c_str(), zoneid, KFField::_url.c_str(), url.c_str() );
-        redisdriver->AppendCommand( "incr %s", KFField::_zone_list_version.c_str() );
+        redisdriver->AppendCommand( "hset %s:%u %s %s", __KF_CHAR__( zone ), zoneid, __KF_CHAR__( url ), url.c_str() );
+        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
         redisdriver->PipelineExecute();
     }
 
@@ -403,19 +403,19 @@ namespace KFrame
         zonedata->SaveTo( values, true );
 
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "sadd %s %u", KFField::_zone_list.c_str(), zonedata->_id );
-        redisdriver->AppendCommand( values, "hmset %s:%u", KFField::_zone.c_str(), zonedata->_id );
-        redisdriver->AppendCommand( "incr %s", KFField::_zone_list_version.c_str() );
-        redisdriver->AppendCommand( "zincrby %s 0 %u", KFField::_zone_balance.c_str(), zonedata->_id );
+        redisdriver->AppendCommand( "sadd %s %u", __KF_CHAR__( zonelist ), zonedata->_id );
+        redisdriver->AppendCommand( values, "hmset %s:%u", __KF_CHAR__( zone ), zonedata->_id );
+        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
+        redisdriver->AppendCommand( "zincrby %s 0 %u", __KF_CHAR__( zonebalance ), zonedata->_id );
         redisdriver->PipelineExecute();
     }
 
     void KFZoneManage::RemoveZoneDataToDatabase( uint32 zoneid )
     {
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "rem %s %u", KFField::_zone_list.c_str(), zoneid );
-        redisdriver->AppendCommand( "del %s:%u", KFField::_zone.c_str(), zoneid );
-        redisdriver->AppendCommand( "incr %s", KFField::_zone_list_version.c_str() );
+        redisdriver->AppendCommand( "rem %s %u", __KF_CHAR__( zonelist ), zoneid );
+        redisdriver->AppendCommand( "del %s:%u", __KF_CHAR__( zone ), zoneid );
+        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
         redisdriver->PipelineExecute();
     }
 
@@ -425,14 +425,14 @@ namespace KFrame
 
         // 查询当前数据库的服务器列表版本比对, 如果不同就加载新的服务器列表
         std::string newzonelistversion = "";
-        redisdriver->StringExecute( newzonelistversion, "get %s", KFField::_zone_list_version.c_str() );
+        redisdriver->StringExecute( newzonelistversion, "get %s", __KF_CHAR__( zonelistversion ) );
         if ( newzonelistversion == _zone_list_version )
         {
             return;
         }
 
         VectorString queryvalue;
-        bool redisresult = redisdriver->VectorExecute( queryvalue, "smembers %s", KFField::_zone_list.c_str() );
+        bool redisresult = redisdriver->VectorExecute( queryvalue, "smembers %s", __KF_CHAR__( zonelist ) );
         if ( !redisresult || queryvalue.empty() )
         {
             return;
@@ -447,7 +447,7 @@ namespace KFrame
             auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
 
             MapString zonevalues;
-            redisdriver->MapExecute( zonevalues, "hgetall %s:%u", KFField::_zone.c_str(), zoneid );
+            redisdriver->MapExecute( zonevalues, "hgetall %s:%u", __KF_CHAR__( zone ), zoneid );
             if ( zonevalues.empty() )
             {
                 continue;

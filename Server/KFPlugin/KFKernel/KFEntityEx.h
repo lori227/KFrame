@@ -135,9 +135,11 @@ namespace KFrame
         void AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
 
         // 查找pbobject
-        KFMsg::PBObject* FindSyncUpdateFromPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
-        KFMsg::PBObject* FindSyncUpdateFromPBRecord( KFData* kfdata, KFMsg::PBObject* pbobject );
+        KFMsg::PBObject* FindObjectFromPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
         KFMsg::PBRecord* FindRecordFromPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
+        KFMsg::PBObject* FindObjectFromPBRecord( KFData* kfdata, KFMsg::PBRecord* pbrecord );
+
+
 
     public:
         // 组件

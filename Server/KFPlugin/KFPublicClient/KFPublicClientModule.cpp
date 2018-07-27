@@ -20,7 +20,7 @@ namespace KFrame
 
     void KFPublicClientModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterUpdateDataModule( this, &KFPublicClientModule::OnUpdateDataCallBack );
         _kf_component->RegisterUpdateStringModule( this, &KFPublicClientModule::OnUpdateStringCallBack );
 
@@ -47,13 +47,13 @@ namespace KFrame
 
     void KFPublicClientModule::OnceRun()
     {
-        _kf_basic = _kf_kernel->CreateObject( KFField::_basic );
+        _kf_basic = _kf_kernel->CreateObject( __KF_STRING__( basic ) );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFPublicClientModule::SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( KFField::_public, msgid, message );
+        return _kf_cluster->SendMessageToShard( __KF_STRING__( public ), msgid, message );
     }
 
     bool KFPublicClientModule::UpdatePublicData( KFEntity* player, const MapString& values )
@@ -105,20 +105,20 @@ namespace KFrame
     void KFPublicClientModule::OnEnterUpdatePublicData( KFEntity* player )
     {
         MapString values;
-        values[ KFField::_server_id ] = __KF_STRING__( KFGlobal::Instance()->_app_id );
-        values[ KFField::_id ] = __KF_STRING__( player->GetKeyID() );
-        values[ KFField::_status ] = __KF_STRING__( KFMsg::StatusEnum::OnlineStatus );
-        values[ KFField::_status_time ] = __KF_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
+        values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OnlineStatus );
+        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }
 
     void KFPublicClientModule::OnLeaveUpdatePublicData( KFEntity* player )
     {
         MapString values;
-        values[ KFField::_server_id ] = "0";
-        values[ KFField::_group_id ] = "0";
-        values[ KFField::_status ] = __KF_STRING__( KFMsg::StatusEnum::OfflineStatus );
-        values[ KFField::_status_time ] = __KF_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __KF_STRING__( serverid ) ] = "0";
+        values[ __KF_STRING__( groupid ) ] = "0";
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OfflineStatus );
+        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }
 

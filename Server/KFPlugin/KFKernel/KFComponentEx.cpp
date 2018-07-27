@@ -142,7 +142,7 @@ namespace KFrame
         {
             if ( line != _invalid_int )
             {
-                auto strkey = __KF_STRING__( key );
+                auto strkey = __TO_STRING__( key );
                 KFLogger::LogLogic( KFLogger::Error, "[%s:%u] can't find entity[%s:%s]!",
                                     function, line, _component_name.c_str(), strkey.c_str() );
             }

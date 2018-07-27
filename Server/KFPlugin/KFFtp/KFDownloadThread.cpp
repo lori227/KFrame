@@ -42,6 +42,7 @@ namespace KFrame
             }
 
             _ftp_result = KFFtpEnum::Process;
+            //ftpclient.SetResumeMode( false );
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
@@ -74,6 +75,9 @@ namespace KFrame
     void KFDownloadThread::RenameFile( const std::string& oldfile, const std::string& newfile )
     {
         rename( oldfile.c_str(), newfile.c_str() );
+#if __KF_SYSTEM__ == __KF_LINUX__
+        chmod( newfile.c_str(), 0777 );
+#endif
     }
 
     bool KFDownloadThread::CheckFileModifyTime( nsFTP::CFTPClient* ftpclient, nsFTP::TFTPFileStatusShPtr& file, std::string& localfile )
@@ -84,9 +88,8 @@ namespace KFrame
         // ftp
         auto _tm = gmtime( &file->MTime() );
         KFDate filetime( _tm->tm_year + KFTimeEnum::SinceYear, _tm->tm_mon + 1, _tm->tm_mday, _tm->tm_hour, _tm->tm_min, _tm->tm_sec );
-        auto ftptime = static_cast< int64 >( filetime.GetTime() );
-        ftptime += _time_difference;
 
+        auto ftptime = static_cast< int64 >( filetime.GetTime() );
         return localtime <= ftptime;
     }
 

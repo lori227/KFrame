@@ -18,7 +18,6 @@ namespace KFrame
 
     KFServices::~KFServices()
     {
-        _application = nullptr;
     }
 
     void KFServices::Run()
@@ -85,7 +84,7 @@ namespace KFrame
         }
 
         // 插件初始化
-        _kf_plugin_manage->InitPlugin();
+        KFPluginManage::Instance()->InitPlugin();
 
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
@@ -112,13 +111,20 @@ namespace KFrame
         // 打印内存信息
         PrintLogMemory();
 
-        _kf_plugin_manage->Run();
+        KFPluginManage::Instance()->Run();
     }
 
     void KFServices::ShutDown()
     {
-        _kf_plugin_manage->ShutDown();
+        KFPluginManage::Instance()->ShutDown();
         _kf_startup->ShutDown();
+
+        _application = nullptr;
+    }
+
+    bool KFServices::IsShutDown()
+    {
+        return _application == nullptr;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

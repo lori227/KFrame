@@ -42,12 +42,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_LOST_FUNCTION__( KFLoginLoginModule::OnServerLostHandle )
     {
-        if ( handletype == KFField::_gate )
+        if ( handletype == __KF_STRING__( gate ) )
         {
             KFJson sendjson;
-            sendjson.SetValue( KFField::_app_id, handleid );
-            sendjson.SetValue( KFField::_id, _kf_zone->GetZone()->_id );
-            static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + KFField::_lost_zone;
+            sendjson.SetValue( __KF_STRING__( appid ), handleid );
+            sendjson.SetValue( __KF_STRING__( id ), _kf_zone->GetZone()->_id );
+            static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + __KF_STRING__( lostzone );
             _kf_http_client->StartMTHttpClient( url, sendjson, true );
         }
     }
@@ -97,13 +97,13 @@ namespace KFrame
 
         // 访问平台服务器, 验证token
         KFJson sendjson;
-        sendjson.SetValue< const std::string& >( KFField::_token, kfmsg.token() );
-        sendjson.SetValue( KFField::_gate_id, gateid );
-        sendjson.SetValue( KFField::_account_id, kfmsg.accountid() );
-        sendjson.SetValue( KFField::_server_id, KFGlobal::Instance()->_app_id );
-        sendjson.SetValue( KFField::_ip, kfmsg.ip() );
+        sendjson.SetValue< const std::string& >( __KF_STRING__( token ), kfmsg.token() );
+        sendjson.SetValue( __KF_STRING__( gateid ), gateid );
+        sendjson.SetValue( __KF_STRING__( accountid ), kfmsg.accountid() );
+        sendjson.SetValue( __KF_STRING__( serverid ), KFGlobal::Instance()->_app_id );
+        sendjson.SetValue( __KF_STRING__( ip ), kfmsg.ip() );
 
-        auto url = _kf_ip_address->FindPlatformAddress( accountid ) + KFField::_token;
+        auto url = _kf_ip_address->FindPlatformAddress( accountid ) + __KF_STRING__( token );
         _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFLoginLoginModule::OnHttpPlatformLoginVerifyCallBack );
     }
 
@@ -113,8 +113,8 @@ namespace KFrame
         KFJson sendjson( senddata );
         KFJson recvjson( recvdata );
 
-        auto gateid = sendjson.GetUInt32( KFField::_gate_id );
-        auto accountid = sendjson.GetUInt32( KFField::_account_id );
+        auto gateid = sendjson.GetUInt32( __KF_STRING__( gateid ) );
+        auto accountid = sendjson.GetUInt32( __KF_STRING__( accountid ) );
 
         // 验证失败
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
@@ -123,8 +123,8 @@ namespace KFrame
             return SendLoginVerifyMessage( gateid, retcode, accountid, _invalid_int, _invalid_str, _invalid_str, _invalid_int );
         }
 
-        auto token = recvjson.GetString( KFField::_token );
-        auto channel = recvjson.GetUInt32( KFField::_channel );
+        auto token = recvjson.GetString( __KF_STRING__( token ) );
+        auto channel = recvjson.GetUInt32( __KF_STRING__( channel ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int )
         {
             return SendLoginVerifyMessage( gateid, KFMsg::HttpDataError, accountid, _invalid_int, _invalid_str, _invalid_str, _invalid_int );

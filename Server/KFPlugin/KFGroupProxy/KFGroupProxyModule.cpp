@@ -34,7 +34,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupProxyModule::HandleCreateMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateMatchGroupReq );
-        auto strgroupid = __KF_STRING__( kfmsg.groupid() );
+        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] create group[%s] req!",
                             __FUNCTION__, strgroupid.c_str() );
 

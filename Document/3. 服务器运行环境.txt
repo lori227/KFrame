@@ -66,3 +66,18 @@ centos 64
     2. 如果端口是动态计算出来的, 通过修改partition.config的ListenPort的端口来( 一次+1000, 如11000 ) 或者修改rund.bat中的启动id 目前是101...601, 一次+1, 如: 102 ...602
 3. rund.bat/rund.sh里面的Master启动id 如:101, 对应到partition.config和每个进程配置的Master, 需要一起修改
 
+
+
+/////////////////////////////////////////////////////////////////
+// linux 下开服 ( 开启uploadserver 和deployserver服务的前提下 )
+// 必须有ftp, 账号有删除和修改权限 )
+
+1. 先编译./build_debug.sh,
+2. 执行./test_version.sh , 
+3. 执行./test_deploy.sh -  上传到ftp    ( - 是更新所有 执行服务 可以输入服务名  如 ./test_deploy.sh public )
+	tail -f /data/upload/_output/2018-xx-xx/system/uplaod1.log  查看上传情况
+4. 执行 ./test_restart.sh -  ( - 是更新所有 执行服务 可以输入服务名  如 ./test_restart.sh public )
+	tail -f /data/deploy/_output/2018-xx-xx/system/agent1.log 查看任务执行情况
+
+现在内网都是散文件, 后面会加上打包功能和版本号比对
+

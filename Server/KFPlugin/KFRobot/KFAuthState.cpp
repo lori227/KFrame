@@ -31,44 +31,44 @@ namespace KFrame
 
         // 发送认证消息
         KFJson sendjson;
-        sendjson.SetValue( KFField::_channel, _kf_robot_config->_verify_channel );
-        sendjson.SetValue( KFField::_account,  kfrobot->_account );
-        auto url = _kf_robot_config->_auth_server_ip + KFField::_auth;
+        sendjson.SetValue( __KF_STRING__( channel ), _kf_robot_config->_verify_channel );
+        sendjson.SetValue( __KF_STRING__( account ),  kfrobot->_account );
+        auto url = _kf_robot_config->_auth_server_ip + __KF_STRING__( auth );
         auto authdata = _kf_http_client->StartSTHttpClient( url, sendjson, true );
 
         KFJson authjson( authdata );
-        uint32 recode = authjson.GetUInt32( KFField::_ret_code );
-        kfrobot->_accountid = authjson.GetUInt32( KFField::_account_id );
-        kfrobot->_token = authjson.GetString( KFField::_token );
+        uint32 recode = authjson.GetUInt32( __KF_STRING__( retcode ) );
+        kfrobot->_accountid = authjson.GetUInt32( __KF_STRING__( accountid ) );
+        kfrobot->_token = authjson.GetString( __KF_STRING__( token ) );
         if ( KFMsg::Success != recode )
         {
-            KFLogger::LogScript( KFLogger::Error, "url:[%s], accountid:%s code:%d", url.c_str(), kfrobot->_account, authjson.GetUInt32( KFField::_ret_code ) );
+            KFLogger::LogScript( KFLogger::Error, "url:[%s], accountid:%s code:%d", url.c_str(), kfrobot->_account, authjson.GetUInt32( __KF_STRING__( retcode ) ) );
             return;
         }
 
-        auto serverlisttype = authjson.GetUInt32( KFField::_server_list_type );
+        auto serverlisttype = authjson.GetUInt32( __KF_STRING__( serverlisttype ) );
 
         switch ( serverlisttype )
         {
         case 1:
         {
             std::vector<std::string> matchkeys;
-            matchkeys.push_back( KFField::_id );
-            matchkeys.push_back( KFField::_type );
-            matchkeys.push_back( KFField::_ip );
-            matchkeys.push_back( KFField::_port );
-            matchkeys.push_back( KFField::_name );
+            matchkeys.push_back( __KF_STRING__( id ) );
+            matchkeys.push_back( __KF_STRING__( type ) );
+            matchkeys.push_back( __KF_STRING__( ip ) );
+            matchkeys.push_back( __KF_STRING__( port ) );
+            matchkeys.push_back( __KF_STRING__( name ) );
             std::map<std::string, std::string> des;
             int cursor = 0;
-            while ( authjson.GetArray( KFField::_server_list, matchkeys, cursor, des ) )
+            while ( authjson.GetArray( __KF_STRING__( serverlist ), matchkeys, cursor, des ) )
             {
-                if ( des[ KFField::_id ] == __KF_STRING__( _kf_robot_config->_server_channel ) )
+                if ( des[ __KF_STRING__( id ) ] == __TO_STRING__( _kf_robot_config->_server_channel ) )
                 {
-                    kfrobot->_gate_server_id = des[ KFField::_id ];
-                    kfrobot->_gate_server_type = des[ KFField::_type ];
-                    kfrobot->_gate_ip = des[ KFField::_ip ];
-                    kfrobot->_gate_port = des[ KFField::_port ];
-                    kfrobot->_gate_name = des[ KFField::_name ];
+                    kfrobot->_gate_server_id = des[ __KF_STRING__( id ) ];
+                    kfrobot->_gate_server_type = des[ __KF_STRING__( type ) ];
+                    kfrobot->_gate_ip = des[ __KF_STRING__( ip ) ];
+                    kfrobot->_gate_port = des[ __KF_STRING__( port ) ];
+                    kfrobot->_gate_name = des[ __KF_STRING__( name ) ];
                     break;
                 }
             };
@@ -76,8 +76,8 @@ namespace KFrame
         break;
         case 2:
         {
-            kfrobot->_gate_ip = authjson.GetString( KFField::_ip );
-            kfrobot->_gate_port = authjson.GetUInt32( KFField::_port );
+            kfrobot->_gate_ip = authjson.GetString( __KF_STRING__( ip ) );
+            kfrobot->_gate_port = authjson.GetUInt32( __KF_STRING__( port ) );
         }
         break;
         default:

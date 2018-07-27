@@ -64,7 +64,7 @@ namespace KFrame
 
     void KFIpAddressConfig::SetZoneIpAddress( uint32 zoneid, const std::string& ip )
     {
-        auto kfaddress = FindIpAddress( KFField::_zone, KFField::_master, _invalid_int );
+        auto kfaddress = FindIpAddress( __KF_STRING__( zone ), __KF_STRING__( master ), _invalid_int );
         if ( kfaddress == nullptr )
         {
             return;

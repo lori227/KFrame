@@ -9,7 +9,6 @@ namespace KFrame
     KFNetClient::KFNetClient()
     {
         _is_connected = false;
-        _is_shutdown = false;
     }
 
     KFNetClient::~KFNetClient()

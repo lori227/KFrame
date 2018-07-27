@@ -31,6 +31,6 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFGuildClientModule::SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( KFField::_guild, guildid, msgid, message );
+        return _kf_cluster->SendMessageToObject( __KF_STRING__( guild ), guildid, msgid, message );
     }
 }

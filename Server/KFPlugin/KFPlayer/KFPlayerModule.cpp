@@ -28,7 +28,7 @@ namespace KFrame
         _kf_route->RegisterTransmitFunction( this, &KFPlayerModule::TransmitMessageToPlayer );
 
         // 注册逻辑函数
-        _kf_component = _kf_kernel->FindComponent( KFField::_player );
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->SetEntityDataMask( __NEED_TO_SAVE__ | __DELETE_AND_SAVE__ );
         _kf_component->RegisterEntitySaveFunction( this, &KFPlayerModule::SavePlayer );
 
@@ -68,7 +68,7 @@ namespace KFrame
 
     void KFPlayerModule::OnceRun()
     {
-        _kf_player_data = _kf_kernel->CreateObject( KFField::_player );
+        _kf_player_data = _kf_kernel->CreateObject( __KF_STRING__( player ) );
     }
 
     void KFPlayerModule::BeforeShut()
@@ -294,7 +294,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerEnterWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( KFField::_basic, KFField::_account_id ) );
+            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( accountid ) ) );
             _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
         }
     }
@@ -307,7 +307,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerLeaveWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( KFField::_basic, KFField::_account_id ) );
+            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( accountid ) ) );
             _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
         }
     }
@@ -323,7 +323,7 @@ namespace KFrame
 
         // 额外数据
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         for ( auto i = 0; i < extenddata->pbstring_size(); ++i )
         {
             auto pbdata = &extenddata->pbstring( i );
@@ -347,27 +347,30 @@ namespace KFrame
 
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid )
     {
-        auto kfobject = player->GetData();
-        kfobject->SetValue( KFField::_gate_id, gateid );
+        auto kfglobal = KFGlobal::Instance();
 
-        auto kfbasic = kfobject->FindData( KFField::_basic );
-        kfbasic->SetValue< uint32 >( KFField::_server_id, KFGlobal::Instance()->_app_id );
-        kfbasic->SetValue< uint32 >( KFField::_status, KFMsg::StatusEnum::OnlineStatus );
-        kfbasic->SetValue< uint64 >( KFField::_status_time, KFGlobal::Instance()->_real_time );
+        auto kfobject = player->GetData();
+        kfobject->SetValue( __KF_STRING__( gateid ), gateid );
+
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
+        kfbasic->SetValue< uint32 >( __KF_STRING__( serverid ), kfglobal->_app_id );
+        kfbasic->SetValue< uint32 >( __KF_STRING__( status ), KFMsg::StatusEnum::OnlineStatus );
+        kfbasic->SetValue< uint64 >( __KF_STRING__( statustime ), kfglobal->_real_time );
 
         // 设置名字
-        auto name = kfbasic->GetValue< std::string >( KFField::_name );
+        auto name = kfbasic->GetValue< std::string >( __KF_STRING__( name ) );
         auto asciiname = KFConvert::ToAscii( name );
         player->SetName( asciiname );
 
         // 判断新玩家
-        auto basicid = kfbasic->GetValue< uint32 >( KFField::_id );
+        auto basicid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
         if ( basicid != _invalid_int )
         {
             return;
         }
 
-        kfbasic->SetValue< uint32 >( KFField::_id, playerid );
+        kfbasic->SetValue< uint32 >( __KF_STRING__( id ), playerid );
+        kfobject->SetValue < uint64 >( __KF_STRING__( birthday ), kfglobal->_real_time );
         for ( auto iter : _new_player_function._objects )
         {
             auto kffunction = iter.second;
@@ -406,7 +409,7 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
-        auto gateid = kfobject->GetValue< uint32 >( KFField::_gate_id );
+        auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
 
         return _kf_game->SendMessageToClient( gateid, playerid, msgid, message );
     }
@@ -415,15 +418,15 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
-        auto gateid = kfobject->GetValue< uint32 >( KFField::_gate_id );
+        auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
 
         return _kf_game->SendMessageToClient( gateid, playerid, msgid, data, length );
     }
 
     bool KFPlayerModule::SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto serverid = kfbasic->GetValue< uint32 >( KFField::_server_id );
-        auto playerid = kfbasic->GetValue< uint32 >( KFField::_id );
+        auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
+        auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
 
         return _kf_route->SendMessageToRoute( serverid, playerid, msgid, message );
     }
@@ -434,14 +437,14 @@ namespace KFrame
         SendMessageToClient( player, msgid, message );
 
         auto kfobject = player->GetData();
-        auto kfmemberrecord = kfobject->FindData( KFField::_group, KFField::_group_member );
+        auto kfmemberrecord = kfobject->FindData( __KF_STRING__( group ), __KF_STRING__( groupmember ) );
 
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
             if ( kfmember->GetKeyID() != player->GetKeyID() )
             {
-                auto kfbasic = kfmember->FindData( KFField::_basic );
+                auto kfbasic = kfmember->FindData( __KF_STRING__( basic ) );
                 SendMessageToClient( kfbasic, msgid, message );
             }
 
@@ -452,7 +455,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFPlayerModule::OnClientConnectionWorld )
     {
-        if ( servertype != KFField::_world )
+        if ( servertype != __KF_STRING__( world ) )
         {
             return;
         }
@@ -620,9 +623,9 @@ namespace KFrame
 
         // 如果名字已经存在了, 说明已经创建过角色
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( KFField::_basic );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
-        auto modleid = kfbasic->GetValue< uint32 >( KFField::_model );
+        auto modleid = kfbasic->GetValue< uint32 >( __KF_STRING__( model ) );
         if ( modleid != _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::CreateRoleAlready );
@@ -649,11 +652,11 @@ namespace KFrame
             kfmsg.set_result( KFMsg::CreateRoleOK );
 
             // 设置模型
-            player->UpdateData( KFField::_model_id, KFOperateEnum::Set, kfmsg.modleid() );
-            player->UpdateData( KFField::_model, kfmsg.modleid(), KFField::_id, KFOperateEnum::Set, kfmsg.modleid() );
+            player->UpdateData( __KF_STRING__( modelid ), KFOperateEnum::Set, kfmsg.modleid() );
+            player->UpdateData( __KF_STRING__( model ), kfmsg.modleid(), __KF_STRING__( id ), KFOperateEnum::Set, kfmsg.modleid() );
 
             // 名字
-            player->UpdateData( KFField::_basic, KFField::_name, kfmsg.newname() );
+            player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );
 
             // 保存玩家
             SavePlayer( player );
@@ -667,7 +670,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgChangeSexReq );
 
         _kf_display->SendToClient( player, KFMsg::SexSetOK );
-        player->UpdateData( KFField::_basic, KFField::_sex, KFOperateEnum::Set, kfmsg.sex() );
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( sex ), KFOperateEnum::Set, kfmsg.sex() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleChangeNameReq )
@@ -680,7 +683,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto name = kfobject->GetValue<std::string>( KFField::_basic, KFField::_name );
+        auto name = kfobject->GetValue<std::string>( __KF_STRING__( basic ), __KF_STRING__( name ) );
         if ( !name.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::NameAlreadySet );
@@ -705,7 +708,7 @@ namespace KFrame
         if ( kfmsg.result() == KFMsg::Success )
         {
             kfmsg.set_result( KFMsg::NameSetOK );
-            player->UpdateData( KFField::_basic, KFField::_name, kfmsg.newname() );
+            player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );
         }
 
         _kf_display->SendToClient( player, kfmsg.result(), kfmsg.newname() );
@@ -716,7 +719,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgChangeIconReq );
 
         _kf_display->SendToClient( player, KFMsg::ChangeIconOK );
-        player->UpdateData( KFField::_basic, KFField::_icon, kfmsg.icon() );
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( icon ), kfmsg.icon() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleChangeMottoReq )
@@ -724,7 +727,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgChangeMottoReq );
 
         _kf_display->SendToClient( player, KFMsg::ChangeMottoOK );
-        player->UpdateData( KFField::_motto, kfmsg.motto() );
+        player->UpdateData( __KF_STRING__( motto ), kfmsg.motto() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQueryPlayerReq )
@@ -780,9 +783,9 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
 
-        player->UpdateData( kfmsg.dataname(), kfmsg.key(), KFField::_count, KFOperateEnum::Dec, kfmsg.count() );
+        player->UpdateData( kfmsg.dataname(), kfmsg.key(), __KF_STRING__( count ), KFOperateEnum::Dec, kfmsg.count() );
 
-        auto strkey = __KF_STRING__( kfmsg.key() );
+        auto strkey = __TO_STRING__( kfmsg.key() );
         KFLogger::LogLogic( KFLogger::Info, "[%s] remove data[%s:%s:%u] ok!",
                             __FUNCTION__, kfmsg.dataname().c_str(), strkey.c_str(), kfmsg.count() );
     }
@@ -792,7 +795,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgChangeIconBoxReq );
 
         _kf_display->SendToClient( player, KFMsg::ChangeIconBoxOK );
-        player->UpdateData( KFField::_basic, KFField::_icon_box, kfmsg.iconbox() );
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( iconbox ), kfmsg.iconbox() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQueryGuestReq )
@@ -843,7 +846,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryBasicReq );
 
         auto kfobject = player->GetData();
-        auto kfsetting = kfobject->FindData( KFField::_setting );
+        auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
 
         KFMsg::MsgQuerySettingAck ack;
         _kf_kernel->SerializeToData( kfsetting, ack.mutable_pbsetting() );
@@ -855,7 +858,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateSettingReq );
 
         auto kfobject = player->GetData();
-        auto kfsetting = kfobject->FindData( KFField::_setting );
+        auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
 
         for ( auto i = 0; i < kfmsg.strsetting_size(); ++i )
         {

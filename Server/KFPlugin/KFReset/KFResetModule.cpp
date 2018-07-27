@@ -65,20 +65,20 @@ namespace KFrame
         auto nowtime = KFGlobal::Instance()->_real_time;
 
         auto kfobject = player->GetData();
-        auto kfnoterecord = kfobject->FindData( KFField::_note );
+        auto kfnoterecord = kfobject->FindData( __KF_STRING__( note ) );
 
         for ( auto& iter : _kf_reset_config->_reset_setting._objects )
         {
             auto kfsetting = iter.second;
 
-            auto lasttime = kfnoterecord->GetValue< uint64 >( kfsetting->_note_id, KFField::_value );
+            auto lasttime = kfnoterecord->GetValue< uint64 >( kfsetting->_note_id, __KF_STRING__( value ) );
             if ( !KFDate::CheckTime( kfsetting->_time_type, kfsetting->_time_value, kfsetting->_time_hour, lasttime, nowtime ) )
             {
                 continue;
             }
 
             // 保存时间
-            player->UpdateData( kfnoterecord, kfsetting->_note_id, KFField::_value, KFOperateEnum::Set, nowtime );
+            player->UpdateData( kfnoterecord, kfsetting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, nowtime );
 
             // 重置变量
             for ( auto& resetdata : kfsetting->_reset_data_list )

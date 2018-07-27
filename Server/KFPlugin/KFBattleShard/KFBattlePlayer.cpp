@@ -38,7 +38,7 @@ namespace KFrame
     {
         _pb_player.CopyFrom( pbplayer );
 
-        auto temp = __KF_STRING__( KFUtility::Make64Guid( pbplayer.playerid() ) );
+        auto temp = __TO_STRING__( KFUtility::Make64Guid( pbplayer.playerid() ) );
         _token = KFCrypto::Md5Encode( temp.c_str() );
 
         _status = KFPlayerStatus::StatusEnterRoom;
@@ -267,13 +267,13 @@ namespace KFrame
         }
 
         // 排名分
-        auto rankingparam = _kf_battle_config->GetScoreParam( KFField::_ranking );
+        auto rankingparam = _kf_battle_config->GetScoreParam( __KF_STRING__( ranking ) );
         battlescore += rankingparam / pbscore->ranking();
 
         // 吃鸡奖励分
         if ( pbscore->ranking() == 1 )
         {
-            auto toponeparam = _kf_battle_config->GetScoreParam( KFField::_top_one );
+            auto toponeparam = _kf_battle_config->GetScoreParam( __KF_STRING__( topone ) );
             battlescore += toponeparam;
         }
 

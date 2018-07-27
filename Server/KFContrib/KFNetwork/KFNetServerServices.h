@@ -18,6 +18,9 @@ namespace KFrame
         // 开启服务
         int32 StartServices( const KFNetSetting* kfsetting );
 
+        // 关闭服务
+        virtual void ShutServices();
+
     protected:
         // 处理新连接
         static void OnConnectionCallBack( uv_stream_t* pstream, int status );

@@ -31,7 +31,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////
     KFNetProt::KFNetProt()
     {
-        _memory_type = KFField::_port;
+        _memory_type = __KF_STRING__( port );
     }
 
     KFNetProt::~KFNetProt()

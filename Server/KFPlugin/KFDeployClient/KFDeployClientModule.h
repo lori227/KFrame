@@ -26,10 +26,7 @@ namespace KFrame
     {
     public:
         KFDeployClientModule();
-        ~KFDeployClientModule();
-
-        // 初始化
-        virtual void InitModule();
+        ~KFDeployClientModule() = default;
 
         // 逻辑
         virtual void BeforeRun();

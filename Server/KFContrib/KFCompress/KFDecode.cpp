@@ -106,7 +106,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string& KFDecode::UByteToString( const std::string& source )
+    std::string KFDecode::UByteToString( const std::string& source )
     {
         static uint32 _length = KFBufferEnum::Buff_40M;
         static auto _buffer = __KF_INT8__( _length );
@@ -114,12 +114,12 @@ namespace KFrame
         // 转为可视字符串
         auto length = UByteToString( reinterpret_cast<const uint8*>( source.data() ), static_cast<uint32>( source.size() ), _buffer, _length );
 
-        static std::string result;
+        std::string result;
         result.assign( _buffer, length );
         return result;
     }
 
-    std::string& KFDecode::StringToUByte( const std::string& source )
+    std::string KFDecode::StringToUByte( const std::string& source )
     {
         static uint32 _length = KFBufferEnum::Buff_20M;
         static auto _buffer = __KF_UINT8__( _length );
@@ -127,7 +127,7 @@ namespace KFrame
         // 转为可视字符串
         auto length = StringToUByte( source.data(), static_cast<uint32>( source.size() ), _buffer, _length );
 
-        static std::string result;
+        std::string result;
         result.assign( reinterpret_cast<const int8*>( _buffer ), length );
         return result;
     }

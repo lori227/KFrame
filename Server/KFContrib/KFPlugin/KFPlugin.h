@@ -6,7 +6,6 @@
 
 namespace KFrame
 {
-    class KFPluginManage;
     class KFPlugin : public KFInterface
     {
     public:

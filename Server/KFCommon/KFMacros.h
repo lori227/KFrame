@@ -40,8 +40,12 @@
     #define __DELETE_OBJECT__( p ) if ( p != nullptr ) { delete p; p = nullptr; }
 #endif
 
-#ifndef __KF_STRING__
-    #define __KF_STRING__( value ) std::to_string( value )
+#ifndef __TO_STRING__
+    #define __TO_STRING__( value ) std::to_string( value )
+#endif
+
+#ifndef __TO_CHAR__
+    #define __TO_CHAR__( value ) std::to_string( value ).c_str()
 #endif
 
 

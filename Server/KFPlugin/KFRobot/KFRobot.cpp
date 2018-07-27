@@ -48,7 +48,7 @@ namespace KFrame
     void KFRobot::Initialize( uint32 robotid, KFNetClientEngine* netclient, KFComponent* kfcomponent )
     {
         _robot_id = robotid;
-        _account = __KF_STRING__( robotid );
+        _account = __TO_STRING__( robotid );
         _net_client = netclient;
         _kf_component = kfcomponent;
 
@@ -84,7 +84,7 @@ namespace KFrame
 
     void KFRobot::DisconnectServer( uint32 serverid )
     {
-        _net_client->CloseClient( _robot_id );
+        _net_client->CloseClient( _robot_id, __FUNCTION_LINE__ );
 
         _connect_token = "";
         _connect_ip = "";
@@ -104,7 +104,6 @@ namespace KFrame
         if ( RobotStateEnum::LoginVerify == _state )
         {
             KFMsg::MsgLoginVerifyReq req;
-            //uint32 accountid = KFUtility::ToValue<uint32>( _account );
             req.set_accountid( _accountid );
             req.set_token( _token );
             SendNetMessage( KFMsg::MSG_LOGIN_VERIFY_REQ, &req );
@@ -167,7 +166,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfmails = kfobject->FindData( KFField::_mail );
+        auto kfmails = kfobject->FindData( __KF_STRING__( mail ) );
 
         if ( kfmails == nullptr )
         {
@@ -179,10 +178,10 @@ namespace KFrame
 
         while ( nullptr != kfmail )
         {
-            if ( 0 == kfmail->GetValue<uint32>( KFField::_flag ) )
+            if ( 0 == kfmail->GetValue<uint32>( __KF_STRING__( flag ) ) )
             {
                 KFMsg::MsgViewMailReq req;
-                req.set_mailid( kfmail->GetValue<uint64>( KFField::_id ) );
+                req.set_mailid( kfmail->GetValue<uint64>( __KF_STRING__( id ) ) );
                 SendNetMessage( KFMsg::MSG_VIEW_MAIL_REQ, &req );
             }
 
@@ -200,7 +199,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfmails = kfobject->FindData( KFField::_mail );
+        auto kfmails = kfobject->FindData( __KF_STRING__( mail ) );
 
         if ( kfmails == nullptr )
         {
@@ -211,11 +210,11 @@ namespace KFrame
 
         while ( nullptr != kfmail )
         {
-            if ( ( KFMsg::FlagEnum::Received != kfmail->GetValue<uint32>( KFField::_flag )
-                    && !kfmail->GetValue<std::string>( KFField::_reward ).empty() ) )
+            if ( ( KFMsg::FlagEnum::Received != kfmail->GetValue<uint32>( __KF_STRING__( flag ) )
+                    && !kfmail->GetValue<std::string>( __KF_STRING__( reward ) ).empty() ) )
             {
                 KFMsg::MsgReceiveMailRewardReq req;
-                req.set_mailid( kfmail->GetValue<uint64>( KFField::_id ) );
+                req.set_mailid( kfmail->GetValue<uint64>( __KF_STRING__( id ) ) );
                 SendNetMessage( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ, &req );
             }
 
@@ -233,7 +232,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfmails = kfobject->FindData( KFField::_mail );
+        auto kfmails = kfobject->FindData( __KF_STRING__( mail ) );
 
         if ( kfmails == nullptr )
         {
@@ -244,12 +243,12 @@ namespace KFrame
 
         while ( nullptr != kfmail )
         {
-            if ( kfmail->GetValue<std::string>( KFField::_reward ).empty()
-                    || ( KFMsg::FlagEnum::Received == kfmail->GetValue<uint32>( KFField::_flag )
-                         && !kfmail->GetValue<std::string>( KFField::_reward ).empty() ) )
+            if ( kfmail->GetValue<std::string>( __KF_STRING__( reward ) ).empty()
+                    || ( KFMsg::FlagEnum::Received == kfmail->GetValue<uint32>( __KF_STRING__( flag ) )
+                         && !kfmail->GetValue<std::string>( __KF_STRING__( reward ) ).empty() ) )
             {
                 KFMsg::MsgDeleteMailReq req;
-                req.set_mailid( kfmail->GetValue<uint64>( KFField::_id ) );
+                req.set_mailid( kfmail->GetValue<uint64>( __KF_STRING__( id ) ) );
                 SendNetMessage( KFMsg::MSG_DELETE_MAIL_REQ, &req );
             }
 
@@ -272,7 +271,7 @@ namespace KFrame
     void KFRobot::SendChatMessage()
     {
         KFMsg::MsgSendChatReq req;
-        auto messageInfo = _account + ":" + "playerid:" + __KF_STRING__( _playerid );
+        auto messageInfo = _account + ":" + "playerid:" + __TO_STRING__( _playerid );
         req.set_chatinfo( messageInfo );
         req.set_isvoice( 0 );
         SendNetMessage( KFMsg::MSG_SEND_CHAT_REQ, &req );
@@ -334,7 +333,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kffriends = kfobject->FindData( KFField::_friend );
+        auto kffriends = kfobject->FindData( __KF_STRING__( friend ) );
 
         if ( kffriends == nullptr )
         {
@@ -380,7 +379,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kffriendinvites = kfobject->FindData( KFField::_friend_invite );
+        auto kffriendinvites = kfobject->FindData( __KF_STRING__( friendinvite ) );
 
         if ( kffriendinvites == nullptr )
         {
@@ -403,7 +402,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kffriends = kfobject->FindData( KFField::_friend );
+        auto kffriends = kfobject->FindData( __KF_STRING__( friend ) );
 
         if ( nullptr == kffriends )
         {
@@ -414,7 +413,7 @@ namespace KFrame
 
         while ( nullptr != kffriend )
         {
-            auto playerid = kffriend->GetValue<uint32>( KFField::_id );
+            auto playerid = kffriend->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != playerid )
             {
@@ -467,8 +466,8 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfbasics = kfobject->FindData( KFField::_basic );
-        auto sex = kfbasics->GetValue<uint32>( KFField::_sex );
+        auto kfbasics = kfobject->FindData( __KF_STRING__( basic ) );
+        auto sex = kfbasics->GetValue<uint32>( __KF_STRING__( sex ) );
         uint32 newsex = ( sex == _invalid_int ? 1 : _invalid_int );
 
         KFMsg::MsgChangeSexReq req;
@@ -486,7 +485,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kffriends = kfobject->FindData( KFField::_friend );
+        auto kffriends = kfobject->FindData( __KF_STRING__( friend ) );
 
         if ( nullptr == kffriends )
         {
@@ -497,7 +496,7 @@ namespace KFrame
 
         while ( nullptr != kffriend )
         {
-            auto playerid = kffriend->GetValue<uint32>( KFField::_id );
+            auto playerid = kffriend->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != playerid )
             {   /*
@@ -551,8 +550,8 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfmodels = kfobject->FindData( KFField::_model );
-        auto kfclothes = kfobject->FindData( KFField::_clothes );
+        auto kfmodels = kfobject->FindData( __KF_STRING__( model ) );
+        auto kfclothes = kfobject->FindData( __KF_STRING__( clothes ) );
 
         if ( nullptr == kfmodels )
         {
@@ -564,13 +563,13 @@ namespace KFrame
 
         while ( nullptr != kfmodel )
         {
-            auto modelid = kfmodel->GetValue<uint32>( KFField::_id );
+            auto modelid = kfmodel->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != modelid )
             {
                 while ( nullptr != kfcloth )
                 {
-                    auto clothid = kfcloth->GetValue<uint32>( KFField::_id );
+                    auto clothid = kfcloth->GetValue<uint32>( __KF_STRING__( id ) );
 
                     if ( _invalid_int != clothid )
                     {
@@ -598,12 +597,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfclothes = kfobject->FindData( KFField::_clothes );
+        auto kfclothes = kfobject->FindData( __KF_STRING__( clothes ) );
         auto kfcloth = kfclothes->FirstData();
 
         while ( nullptr != kfcloth )
         {
-            auto clothid = kfcloth->GetValue<uint32>( KFField::_id );
+            auto clothid = kfcloth->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != clothid )
             {
@@ -641,13 +640,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfactivitys = kfobject->FindData( KFField::_activity );
+        auto kfactivitys = kfobject->FindData( __KF_STRING__( activity ) );
         auto kfactivity = kfactivitys->FirstData();
 
         while ( nullptr != kfactivity )
         {
-            auto id = kfactivity->GetValue<uint32>( KFField::_id );
-            auto type = kfactivity->GetValue<uint32>( KFField::_type );
+            auto id = kfactivity->GetValue<uint32>( __KF_STRING__( id ) );
+            auto type = kfactivity->GetValue<uint32>( __KF_STRING__( type ) );
             KFMsg::MsgReceiveActivityRewardReq req;
             req.set_id( id );
             req.set_type( type );
@@ -666,12 +665,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kftasks = kfobject->FindData( KFField::_task );
+        auto kftasks = kfobject->FindData( __KF_STRING__( task ) );
         auto kftask = kftasks->FirstData();
 
         while ( nullptr != kftask )
         {
-            auto taskflag = kftask->GetValue<uint32>( KFField::_flag );
+            auto taskflag = kftask->GetValue<uint32>( __KF_STRING__( flag ) );
             auto taskid = kftask->GetKeyID();
 
             if ( KFMsg::FlagEnum::Done == taskflag )
@@ -695,12 +694,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kftasks = kfobject->FindData( KFField::_achieve );
+        auto kftasks = kfobject->FindData( __KF_STRING__( achieve ) );
         auto kftask = kftasks->FirstData();
 
         while ( nullptr != kftask )
         {
-            auto taskflag = kftask->GetValue<uint32>( KFField::_flag );
+            auto taskflag = kftask->GetValue<uint32>( __KF_STRING__( flag ) );
             auto taskid = kftask->GetKeyID();
 
             if ( KFMsg::FlagEnum::Done == taskflag )
@@ -771,8 +770,8 @@ namespace KFrame
                 if ( nullptr != inviteplayer )
                 {
                     auto kfobject = inviteplayer->GetData();
-                    auto kfbasics = kfobject->FindData( KFField::_basic );
-                    auto serverid = kfbasics->GetValue<uint32>( KFField::_server_id );
+                    auto kfbasics = kfobject->FindData( __KF_STRING__( basic ) );
+                    auto serverid = kfbasics->GetValue<uint32>( __KF_STRING__( serverid ) );
                     req.set_serverid( serverid );
                     SendNetMessage( KFMsg::MSG_INVITE_MATCH_GROUP_REQ, &req );
                     cursor++;
@@ -791,13 +790,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfinviterecord = kfobject->FindData( KFField::_group_invite );
+        auto kfinviterecord = kfobject->FindData( __KF_STRING__( groupinvite ) );
         auto kfinvite = kfinviterecord->FirstData();
 
         while ( nullptr != kfinvite )
         {
-            auto groupid = kfinvite->GetValue<uint64>( KFField::_group_id );
-            auto inviterid = kfinvite->GetValue<uint32>( KFField::_id );
+            auto groupid = kfinvite->GetValue<uint64>( __KF_STRING__( groupid ) );
+            auto inviterid = kfinvite->GetValue<uint32>( __KF_STRING__( id ) );
             KFMsg::MsgReplyInviteMatchGroupReq req;
             req.set_groupid( groupid );
             req.set_inviterid( inviterid );
@@ -817,13 +816,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfinviterecord = kfobject->FindData( KFField::_group_invite );
+        auto kfinviterecord = kfobject->FindData( __KF_STRING__( groupinvite ) );
         auto kfinvite = kfinviterecord->FirstData();
 
         while ( nullptr != kfinvite )
         {
-            auto groupid = kfinvite->GetValue<uint64>( KFField::_group_id );
-            auto inviterid = kfinvite->GetValue<uint32>( KFField::_id );
+            auto groupid = kfinvite->GetValue<uint64>( __KF_STRING__( groupid ) );
+            auto inviterid = kfinvite->GetValue<uint32>( __KF_STRING__( id ) );
             KFMsg::MsgReplyInviteMatchGroupReq req;
             req.set_groupid( groupid );
             req.set_inviterid( inviterid );
@@ -843,13 +842,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfinviterecord = kfobject->FindData( KFField::_group_invite );
+        auto kfinviterecord = kfobject->FindData( __KF_STRING__( groupinvite ) );
         auto kfinvite = kfinviterecord->FirstData();
 
         while ( nullptr != kfinvite )
         {
-            auto groupid = kfinvite->GetValue<uint64>( KFField::_group_id );
-            auto inviterid = kfinvite->GetValue<uint32>( KFField::_id );
+            auto groupid = kfinvite->GetValue<uint64>( __KF_STRING__( groupid ) );
+            auto inviterid = kfinvite->GetValue<uint32>( __KF_STRING__( id ) );
             KFMsg::MsgReplyInviteMatchGroupReq req;
             req.set_groupid( groupid );
             req.set_inviterid( inviterid );
@@ -875,13 +874,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kffriends = kfobject->FindData( KFField::_friend );
+        auto kffriends = kfobject->FindData( __KF_STRING__( friend ) );
         auto kffriend = kffriends->FirstData();
 
         while ( nullptr != kffriend )
         {
-            auto kfbasic = kffriend->FindData( KFField::_basic );
-            auto groupid = kfbasic->GetValue<uint64>( KFField::_group_id );
+            auto kfbasic = kffriend->FindData( __KF_STRING__( basic ) );
+            auto groupid = kfbasic->GetValue<uint64>( __KF_STRING__( groupid ) );
 
             if ( _invalid_int != groupid )
             {
@@ -904,12 +903,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfapplyrecord = kfobject->FindData( KFField::_group_apply );
+        auto kfapplyrecord = kfobject->FindData( __KF_STRING__( groupapply ) );
         auto kfapply = kfapplyrecord->FirstData();
 
         while ( nullptr != kfapply )
         {
-            auto applyid = kfapply->GetValue<uint32>( KFField::_id );
+            auto applyid = kfapply->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != applyid )
             {
@@ -932,12 +931,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfapplyrecord = kfobject->FindData( KFField::_group_apply );
+        auto kfapplyrecord = kfobject->FindData( __KF_STRING__( groupapply ) );
         auto kfapply = kfapplyrecord->FirstData();
 
         while ( nullptr != kfapply )
         {
-            auto applyid = kfapply->GetValue<uint32>( KFField::_id );
+            auto applyid = kfapply->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != applyid )
             {
@@ -961,12 +960,12 @@ namespace KFrame
 
         auto kfobject = player->GetData();
 
-        auto kfgroupmembers = kfobject->FindData( KFField::_group, KFField::_group_member );
+        auto kfgroupmembers = kfobject->FindData( __KF_STRING__( group ), __KF_STRING__( groupmember ) );
         auto kfgroupmember = kfgroupmembers->FirstData();
 
         while ( nullptr != kfgroupmember )
         {
-            auto memberid = kfgroupmember->GetValue<uint32>( KFField::_id );
+            auto memberid = kfgroupmember->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != memberid )
             {
@@ -1077,11 +1076,11 @@ namespace KFrame
 
     void KFRobot::QueryFriendRankList()
     {
-        /*
+
         KFMsg::MsgQueryFriendRankListReq req;
-        req.set_matchid( 4 );
-        req.set_ranktype( KFField::_eval_rank );
-        SendNetMessage( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &req );*/
+
+        req.set_rankid( 1 );
+        SendNetMessage( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &req );
     }
 
     void KFRobot::ParseUpdatePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key )
@@ -1134,12 +1133,12 @@ namespace KFrame
 
             if ( kfparent->FindData( key ) )
             {
-                player->UpdateData( kfparent->FindData( key ), name, __KF_STRING__( value ) );
+                player->UpdateData( kfparent->FindData( key ), name, __TO_STRING__( value ) );
             }
 
             else
             {
-                player->UpdateData( name, __KF_STRING__( value ) );
+                player->UpdateData( name, __TO_STRING__( value ) );
             }
 
         }
@@ -1152,12 +1151,12 @@ namespace KFrame
 
             if ( kfparent->FindData( key ) )
             {
-                player->UpdateData( kfparent->FindData( key ), name, __KF_STRING__( value ) );
+                player->UpdateData( kfparent->FindData( key ), name, __TO_STRING__( value ) );
             }
 
             else
             {
-                player->UpdateData( name, __KF_STRING__( value ) );
+                player->UpdateData( name, __TO_STRING__( value ) );
             }
         }
 
@@ -1169,12 +1168,12 @@ namespace KFrame
 
             if ( kfparent->FindData( key ) )
             {
-                player->UpdateData( kfparent->FindData( key ), name, __KF_STRING__( value ) );
+                player->UpdateData( kfparent->FindData( key ), name, __TO_STRING__( value ) );
             }
 
             else
             {
-                player->UpdateData( name, __KF_STRING__( value ) );
+                player->UpdateData( name, __TO_STRING__( value ) );
             }
 
         }
@@ -1187,12 +1186,12 @@ namespace KFrame
 
             if ( kfparent->FindData( key ) )
             {
-                player->UpdateData( kfparent->FindData( key ), name, __KF_STRING__( value ) );
+                player->UpdateData( kfparent->FindData( key ), name, __TO_STRING__( value ) );
             }
 
             else
             {
-                player->UpdateData( name, __KF_STRING__( value ) );
+                player->UpdateData( name, __TO_STRING__( value ) );
             }
         }
 
@@ -1204,12 +1203,12 @@ namespace KFrame
 
             if ( kfparent->FindData( key ) )
             {
-                player->UpdateData( kfparent->FindData( key ), name, __KF_STRING__( value ) );
+                player->UpdateData( kfparent->FindData( key ), name, __TO_STRING__( value ) );
             }
 
             else
             {
-                player->UpdateData( name, __KF_STRING__( value ) );
+                player->UpdateData( name, __TO_STRING__( value ) );
             }
         }
 
@@ -1272,7 +1271,7 @@ namespace KFrame
         req.set_command( "AddRecent" );
 
         auto randuid = KFRand::STRandDistrict( 1010001, 1014352, 1 );
-        req.add_params( __KF_STRING__( randuid ) );
+        req.add_params( __TO_STRING__( randuid ) );
         SendNetMessage( KFMsg::MSG_DEBUG_COMMAND_REQ, &req );
     }
 
@@ -1305,12 +1304,12 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfwishorders = kfobject->FindData( KFField::_wish_order );
+        auto kfwishorders = kfobject->FindData( __KF_STRING__( wishorder ) );
         auto kfwishorder = kfwishorders->FirstData();
 
         while ( nullptr != kfwishorder )
         {
-            auto wishorderid = kfwishorder->GetValue<uint32>( KFField::_id );
+            auto wishorderid = kfwishorder->GetValue<uint32>( __KF_STRING__( id ) );
 
             if ( _invalid_int != wishorderid )
             {
@@ -1333,13 +1332,13 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfwishorders = kfobject->FindData( KFField::_wish_order );
+        auto kfwishorders = kfobject->FindData( __KF_STRING__( wishorder ) );
         auto kfwishorder = kfwishorders->FirstData();
 
         while ( nullptr != kfwishorder )
         {
-            auto wishorderid = kfwishorder->GetValue<uint32>( KFField::_id );
-            auto status = kfwishorder->GetValue<uint32>( KFField::_status );
+            auto wishorderid = kfwishorder->GetValue<uint32>( __KF_STRING__( id ) );
+            auto status = kfwishorder->GetValue<uint32>( __KF_STRING__( status ) );
 
             if ( _invalid_int != wishorderid )
             {

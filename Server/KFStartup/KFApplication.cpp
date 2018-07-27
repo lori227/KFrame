@@ -64,10 +64,15 @@ namespace KFrame
 
         // 键盘消息
         ProcessKeyEvent();
-        KFThread::Sleep( 1000 );
+
+        // 等待服务关闭
+        while ( !_kf_services->IsShutDown() )
+        {
+            KFThread::Sleep( 20 );
+        }
 
         // 进程结束
-        terminate();
+        ServerApplication::terminate();
         return Poco::Util::Application::EXIT_OK;
     }
 
@@ -197,7 +202,7 @@ namespace KFrame
             }
             else
             {
-                _kf_plugin_manage->AddCommand( command );
+                KFPluginManage::Instance()->AddCommand( command );
             }
             break;
         }

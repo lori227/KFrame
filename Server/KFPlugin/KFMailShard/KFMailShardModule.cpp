@@ -7,7 +7,7 @@ namespace KFrame
 #ifdef __USE_WORKER__
     #define __REGISTER_MAIL_MESSAGE__ __REGISTER_WORKER_MESSAGE__
     #define __UNREGISTER_MAIL_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __MAIL_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_mail )
+    #define __MAIL_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( mail ) )
     #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendMessageToClient( kfguid, msgid, message )
 #else
     #define __REGISTER_MAIL_MESSAGE__ __REGISTER_MESSAGE__
@@ -56,7 +56,7 @@ namespace KFrame
     {
 #ifndef __USE_WORKER__
         // 初始化redis
-        _kf_redis_driver = _kf_redis->CreateExecute( KFField::_mail );
+        _kf_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( mail ) );
 #endif
 
         auto cleartime = _kf_option->GetValue<uint32>( "wholemailcleartime" );
@@ -75,7 +75,7 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         VectorString querymaillist;
-        redisdriver->VectorExecute( querymaillist, "zrangebyscore %s -inf +inf", KFField::_whole_mail.c_str() );
+        redisdriver->VectorExecute( querymaillist, "zrangebyscore %s -inf +inf", __KF_CHAR__( wholemail ) );
         if ( querymaillist.empty() )
         {
             return;
@@ -85,7 +85,7 @@ namespace KFrame
         for ( auto& strmailid : querymaillist )
         {
             std::string queryid = _invalid_str;
-            auto ok = redisdriver->StringExecute( queryid, "hget %s:%s %s", KFField::_mail.c_str(), strmailid.c_str(), KFField::_id.c_str() );
+            auto ok = redisdriver->StringExecute( queryid, "hget %s:%s %s", __KF_CHAR__( mail ), strmailid.c_str(), __KF_CHAR__( id ) );
             if ( !ok )
             {
                 continue;
@@ -99,7 +99,7 @@ namespace KFrame
 
         if ( !overduelist.empty() )
         {
-            redisdriver->VoidExecute( overduelist, "zrem %s", KFField::_whole_mail.c_str() );
+            redisdriver->VoidExecute( overduelist, "zrem %s", __KF_CHAR__( wholemail ) );
         }
     }
 
@@ -108,11 +108,11 @@ namespace KFrame
         switch ( mailtype )
         {
         case  KFMsg::MailEnum::WholeMail:
-            return KFUtility::Format( "%s:%u", KFField::_whole_mail.c_str(), playerid );
+            return KFUtility::Format( "%s:%u", __KF_CHAR__( wholemail ), playerid );
         case KFMsg::MailEnum::FriendMail:
-            return KFUtility::Format( "%s:%u", KFField::_person_mail_friend.c_str(), playerid );
+            return KFUtility::Format( "%s:%u", __KF_CHAR__( personmailfriend ), playerid );
         case KFMsg::MailEnum::GiftMail:
-            return KFUtility::Format( "%s:%u", KFField::_person_mail_gift.c_str(), playerid );
+            return KFUtility::Format( "%s:%u", __KF_CHAR__( personmailgift ), playerid );
         default:
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u] mailtype[%u] error!",
                                 function, line, playerid, mailtype );
@@ -151,7 +151,7 @@ namespace KFrame
         // 最大邮件数量
         auto maxmailcount = _kf_option->GetValue<uint32>( "maxmailcount", kfmsg.mailtype() );
 
-        auto strmaxmailid = __KF_STRING__( kfmsg.maxmailid() );
+        auto strmaxmailid = __TO_STRING__( kfmsg.maxmailid() );
         auto itermail = querymaillist.find( strmaxmailid );
         if ( _invalid_int == kfmsg.maxmailid() )
         {
@@ -169,7 +169,7 @@ namespace KFrame
             auto& strmailid = mailiter.first;
 
             MapString maildata;
-            auto ok = redisdriver->MapExecute( maildata, "hgetall %s:%s", KFField::_mail.c_str(), strmailid.c_str() );
+            auto ok = redisdriver->MapExecute( maildata, "hgetall %s:%s", __KF_CHAR__( mail ), strmailid.c_str() );
             if ( !ok )
             {
                 continue;
@@ -189,7 +189,7 @@ namespace KFrame
                 pbdata->set_name( iter.first );
 
                 // 系统邮件做特殊处理
-                if ( iter.first == KFField::_flag && kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
+                if ( iter.first == __KF_STRING__( flag ) && kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
                 {
                     pbdata->set_value( mailiter.second );
                 }
@@ -251,23 +251,23 @@ namespace KFrame
 
         // 创建一个邮件id
         uint64 mailid = _invalid_int;
-        redisdriver->UInt64Execute( mailid, "incr %s", KFField::_mail_id_creater.c_str() );
+        redisdriver->UInt64Execute( mailid, "incr %s", __KF_CHAR__( mailidcreater ) );
         if ( mailid == _invalid_int )
         {
             return false;
         }
 
-        auto strmailid = __KF_STRING__( mailid );
-        maildata[ KFField::_id ] = strmailid;
-        maildata[ KFField::_send_time ] = __KF_STRING__( KFGlobal::Instance()->_real_time );
+        auto strmailid = __TO_STRING__( mailid );
+        maildata[ __KF_STRING__( id ) ] = strmailid;
+        maildata[ __KF_STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         // 添加邮件
-        redisdriver->AppendCommand( maildata, "hmset %s:%s", KFField::_mail.c_str(), strmailid.c_str() );
+        redisdriver->AppendCommand( maildata, "hmset %s:%s", __KF_CHAR__( mail ), strmailid.c_str() );
 
-        auto validtime = KFUtility::ToValue< uint32 >( maildata[ KFField::_valid_time ] );
+        auto validtime = KFUtility::ToValue< uint32 >( maildata[ __KF_STRING__( validtime ) ] );
         if ( validtime != _invalid_int )
         {
-            redisdriver->AppendCommand( "expire %s:%s %u", KFField::_mail.c_str(), strmailid.c_str(), validtime );
+            redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( mail ), strmailid.c_str(), validtime );
         }
         redisdriver->AppendCommand( "zadd %s %u %s", maillistkey.c_str(), KFMsg::FlagEnum::Init, strmailid.c_str() );
         return redisdriver->PipelineExecute();
@@ -284,7 +284,7 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto strmailid = __KF_STRING__( mailid );
+        auto strmailid = __TO_STRING__( mailid );
         auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNCTION_LINE__ );
         if ( maillistkey == _invalid_str )
         {
@@ -295,7 +295,7 @@ namespace KFrame
 
         if ( mailtype != KFMsg::MailEnum::WholeMail )
         {
-            redisdriver->AppendCommand( "del %s:%s", KFField::_mail.c_str(), strmailid.c_str() );
+            redisdriver->AppendCommand( "del %s:%s", __KF_CHAR__( mail ), strmailid.c_str() );
         }
 
         auto ok = redisdriver->PipelineExecute();
@@ -314,7 +314,7 @@ namespace KFrame
 
         // 获取玩家已经加载的最近一封GM邮件id
         std::string strmaxmailid = "";
-        auto ok = redisdriver->StringExecute( strmaxmailid, "hget %s:%u %s", KFField::_mail_send_info.c_str(), playerid, KFField::_gm_email_last_id.c_str() );
+        auto ok = redisdriver->StringExecute( strmaxmailid, "hget %s:%u %s", __KF_CHAR__( mailsendinfo ), playerid, __KF_CHAR__( gmemaillastid ) );
         if ( !ok )
         {
             return;
@@ -327,14 +327,14 @@ namespace KFrame
 
         // 从全局GM邮件列表中取出玩家未获取的
         VectorString querymaillist;
-        redisdriver->VectorExecute( querymaillist, "zrangebyscore %s (%s +inf", KFField::_whole_mail.c_str(), strmaxmailid.c_str() );
+        redisdriver->VectorExecute( querymaillist, "zrangebyscore %s (%s +inf", __KF_CHAR__( wholemail ), strmaxmailid.c_str() );
         if ( querymaillist.empty() )
         {
             return;
         }
 
         auto& newmaxmailid = querymaillist.back();
-        redisdriver->AppendCommand( "hset %s:%u %s %s", KFField::_mail_send_info.c_str(), playerid, KFField::_gm_email_last_id.c_str(), newmaxmailid.c_str() );
+        redisdriver->AppendCommand( "hset %s:%u %s %s", __KF_CHAR__( mailsendinfo ), playerid, __KF_CHAR__( gmemaillastid ), newmaxmailid.c_str() );
 
         auto maillistkey = FormatMailKeyName( playerid, KFMsg::MailEnum::WholeMail, __FUNCTION_LINE__ );
         for ( auto& strmailid : querymaillist )
@@ -354,16 +354,16 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto strmailid = __KF_STRING__( mailid );
+        auto strmailid = __TO_STRING__( mailid );
 
         MapString maildata;
-        redisdriver->MapExecute( maildata, "hgetall %s:%s", KFField::_mail.c_str(), strmailid.c_str() );
+        redisdriver->MapExecute( maildata, "hgetall %s:%s", __KF_CHAR__( mail ), strmailid.c_str() );
         if ( maildata.empty() )
         {
             return false;
         }
 
-        auto oldflag = KFUtility::ToValue< uint32 >( maildata[ KFField::_flag ] );
+        auto oldflag = KFUtility::ToValue< uint32 >( maildata[ __KF_STRING__( flag ) ] );
         if ( oldflag == flag )
         {
             return false;
@@ -383,7 +383,7 @@ namespace KFrame
         {
             if ( mailtype != KFMsg::MailEnum::WholeMail )
             {
-                ok = redisdriver->VoidExecute( "hset %s:%s %s %u", KFField::_mail.c_str(), strmailid.c_str(), KFField::_flag.c_str(), flag );
+                ok = redisdriver->VoidExecute( "hset %s:%s %s %u", __KF_CHAR__( mail ), strmailid.c_str(), __KF_CHAR__( flag ), flag );
                 if ( !ok )
                 {
                     KFLogger::LogLogic( KFLogger::Error, "[%s:%u] mailid[%u:%s] player[%u] flag[%u] failed!",
@@ -430,14 +430,14 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         VectorString maxgmmails;
-        redisdriver->VectorExecute( maxgmmails, "zrevrange %s 0 0", KFField::_whole_mail.c_str() );
+        redisdriver->VectorExecute( maxgmmails, "zrevrange %s 0 0", __KF_CHAR__( wholemail ) );
         if ( maxgmmails.empty() )
         {
             return;
         }
 
         std::string strmaxmailid = maxgmmails[ 0 ];
-        auto ok = redisdriver->VoidExecute( "hset %s:%u %s %s", KFField::_mail_send_info.c_str(), kfmsg.playerid(), KFField::_gm_email_last_id.c_str(), strmaxmailid.c_str() );
+        auto ok = redisdriver->VoidExecute( "hset %s:%u %s %s", __KF_CHAR__( mailsendinfo ), kfmsg.playerid(), __KF_CHAR__( gmemaillastid ), strmaxmailid.c_str() );
         if ( !ok )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] HandleNewPlayerLoginMailReq playerid: %u mail[%s] failed!",

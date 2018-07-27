@@ -13,30 +13,33 @@ namespace KFrame
     class KFSingleton
     {
     public:
-        virtual ~KFSingleton()
-        {
-            if ( _instance != nullptr )
-            {
-                delete _instance;
-                _instance = nullptr;
-            }
-        }
+        virtual ~KFSingleton() = default;
 
         template <class...P>
-        static T* Instance( P&& ... params )
+        static inline T* Instance( P&& ... params )
         {
             if ( _instance == nullptr )
             {
                 _instance = new T( std::forward<P>( params )... );
+                std::atexit( &KFSingleton::UnInstance );
             }
 
             return _instance;
         }
 
+
     protected:
         KFSingleton()
         {
             _instance = nullptr;
+        }
+
+        static inline void UnInstance()
+        {
+            if ( _instance != nullptr )
+            {
+                delete _instance;
+            }
         }
 
     private:

@@ -3,6 +3,10 @@
 
 namespace KFrame
 {
+    KFRunable::~KFRunable()
+    {
+    }
+
     void KFRunable::StartThread( KFThreadFunction& function, const char* file, uint32 line )
     {
         _function = function;

@@ -6,7 +6,7 @@ namespace KFrame
 {
     static KFRedisDriver* _kf_account_redis = nullptr;
 #define __ACCOUNT_REDIS_DRIVER__ _kf_account_redis
-#define __PLAYER_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( KFField::_player, zoneid )
+#define __PLAYER_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( player ), zoneid )
 
 #define __REGISTER_DATA_MESSAGE__ __REGISTER_MESSAGE__
 #define __UNREGISTER_DATA_MESSAGE__ __UNREGISTER_MESSAGE__
@@ -55,7 +55,7 @@ namespace KFrame
 
     void KFDataShardModule::OnceRun()
     {
-        _kf_account_redis = _kf_redis->CreateExecute( KFField::_account );
+        _kf_account_redis = _kf_redis->CreateExecute( __KF_STRING__( account ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ namespace KFrame
 
         // 查询是否存在
         uint32 playerid = 0;
-        if ( !redisdriver->UInt32Execute( playerid, "hget %s:%u %u", KFField::_user.c_str(), accountid, logiczoneid ) )
+        if ( !redisdriver->UInt32Execute( playerid, "hget %s:%u %u", __KF_CHAR__( user ), accountid, logiczoneid ) )
         {
             return 0;
         }
@@ -96,7 +96,7 @@ namespace KFrame
 
         // 创建playerid
         uint64 newuserid = 0;
-        redisdriver->UInt64Execute( newuserid, "incr %s:%u", KFField::_player_id_create.c_str(), zoneid );
+        redisdriver->UInt64Execute( newuserid, "incr %s:%u", __KF_CHAR__( playeridcreate ), zoneid );
         if ( newuserid == 0 )
         {
             return 0;
@@ -104,7 +104,7 @@ namespace KFrame
 
         newuserid += 10000;
         playerid = KFUtility::CalcPlayerid( static_cast< uint32 >( newuserid ), zoneid );
-        if ( !redisdriver->VoidExecute( "hset %s:%u %u %u", KFField::_user.c_str(), accountid, logiczoneid, playerid ) )
+        if ( !redisdriver->VoidExecute( "hset %s:%u %u %u", __KF_CHAR__( user ), accountid, logiczoneid, playerid ) )
         {
             return 0;
         }
@@ -118,7 +118,7 @@ namespace KFrame
 
         // 查询角色是否存在, 已经存在, 不需要创建
         uint32 queryaccountid = 0;
-        redisdriver->UInt32Execute( queryaccountid, "hget %s:%u %s", KFField::_player.c_str(), playerid, KFField::_account_id.c_str() );
+        redisdriver->UInt32Execute( queryaccountid, "hget %s:%u %s", __KF_CHAR__( player ), playerid, __KF_CHAR__( accountid ) );
         if ( queryaccountid != 0 )
         {
             return;
@@ -126,13 +126,13 @@ namespace KFrame
 
         // 保存玩家信息
         MapString values;
-        values[ KFField::_zone_id ] = KFUtility::ToString( zoneid );
-        values[ KFField::_channel ] = KFUtility::ToString( channel );
-        values[ KFField::_account_id ] = KFUtility::ToString( accountid );
-        redisdriver->VoidExecute( values, "hmset %s:%u", KFField::_player.c_str(), playerid );
+        values[ __KF_STRING__( zoneid ) ] = KFUtility::ToString( zoneid );
+        values[ __KF_STRING__( channel ) ] = KFUtility::ToString( channel );
+        values[ __KF_STRING__( accountid ) ] = KFUtility::ToString( accountid );
+        redisdriver->VoidExecute( values, "hmset %s:%u", __KF_CHAR__( player ), playerid );
 
         // 保存到列表中
-        redisdriver->VoidExecute( "sadd %s:%u %u", KFField::_player_list.c_str(), zoneid, playerid );
+        redisdriver->VoidExecute( "sadd %s:%u %u", __KF_CHAR__( playerlist ), zoneid, playerid );
     }
 
     bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject )
@@ -148,7 +148,7 @@ namespace KFrame
         auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
 
         std::string querystring = "";
-        if ( !redisdriver->StringExecute( querystring, "hget %s:%u %s", KFField::_player.c_str(), id, KFField::_data.c_str() ) )
+        if ( !redisdriver->StringExecute( querystring, "hget %s:%u %s", __KF_CHAR__( player ), id, __KF_CHAR__( data ) ) )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u:%u] redis failed!",
                                 __FUNCTION_LINE__, zoneid, id );
@@ -175,7 +175,7 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         MapString values;
-        redisdriver->MapExecute( values, "hgetall %s:%u", KFField::_extend.c_str(), accountid );
+        redisdriver->MapExecute( values, "hgetall %s:%u", __KF_CHAR__( extend ), accountid );
         for ( auto& iter : values )
         {
             auto pbstring = extenddata->add_pbstring();
@@ -198,7 +198,7 @@ namespace KFrame
         }
 
         auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
-        if ( !redisdriver->VoidExecute( "hset %s:%u %s %s", KFField::_player.c_str(), id, KFField::_data.c_str(), compressstring.c_str() ) )
+        if ( !redisdriver->VoidExecute( "hset %s:%u %s %s", __KF_CHAR__( player ), id, __KF_CHAR__( data ), compressstring.c_str() ) )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u:%u] redis failed!",
                                 __FUNCTION_LINE__, zoneid, id );
@@ -237,7 +237,7 @@ namespace KFrame
 #endif
         auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
 
-        if ( !redisdriver->VoidExecute( "del %s:%u", KFField::_player.c_str(), id ) )
+        if ( !redisdriver->VoidExecute( "del %s:%u", __KF_CHAR__( player ), id ) )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%u:%u] redis failed!",
                                 __FUNCTION_LINE__, zoneid, id );
@@ -245,7 +245,7 @@ namespace KFrame
         }
 
         // 从列表中删除
-        if ( !redisdriver->VoidExecute( "srem %s:%u %u", KFField::_player_list.c_str(), zoneid, id ) )
+        if ( !redisdriver->VoidExecute( "srem %s:%u %u", __KF_CHAR__( playerlist ), zoneid, id ) )
         {
             KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player list [%u:%u] redis failed!",
                                 __FUNCTION_LINE__, zoneid, id );

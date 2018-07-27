@@ -27,14 +27,23 @@ namespace KFrame
 
     void KFFtpThread::StartThread( uint32 id, const std::string& apppath, KFFtpFunction& function )
     {
+        _ftp_id = id;
+        _app_path = apppath;
+        _ftp_function = function;
+
+        StartThread();
+    }
+
+    void KFFtpThread::StartThread()
+    {
         if ( _ftp_result != KFFtpEnum::Idle )
         {
             return;
         }
 
-        _ftp_id = id;
-        _app_path = apppath;
-        _ftp_function = function;
+        KFLogger::LogSystem( KFLogger::Info, "[%s:%u] ftp task start!",
+                             _app_path.c_str(), _ftp_id );
+
         _ftp_result = KFFtpEnum::Login;
         CreateFtpThread();
     }
@@ -45,6 +54,9 @@ namespace KFrame
         {
             _ftp_function( _ftp_id, _app_path, _ftp_result == KFFtpEnum::Finish );
         }
+
+        KFLogger::LogSystem( KFLogger::Info, "[%s:%u] ftp task finish!",
+                             _app_path.c_str(), _ftp_id );
     }
 
     bool KFFtpThread::IsFinish()

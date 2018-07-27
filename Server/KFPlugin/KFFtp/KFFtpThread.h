@@ -23,6 +23,7 @@ namespace KFrame
         virtual ~KFFtpThread();
 
         // 开始下载
+        void StartThread();
         void StartThread( uint32 id, const std::string& apppath, KFFtpFunction& function );
 
         // 结束下载
@@ -43,19 +44,19 @@ namespace KFrame
 #else
         int64 GetLinuxLocalFileTime( std::string& localfile );
 #endif
-
-    protected:
+    public:
         // ftpid
         uint32 _ftp_id;
 
         // 路径
         std::string _app_path;
 
-        // 下载结果
-        volatile uint32 _ftp_result;
-
         // 回调函数
         KFFtpFunction _ftp_function;
+
+    protected:
+        // 下载结果
+        volatile uint32 _ftp_result;
 
         // 时差
         uint32 _time_difference;

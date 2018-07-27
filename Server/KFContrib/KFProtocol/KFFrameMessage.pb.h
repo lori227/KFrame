@@ -460,10 +460,29 @@ class LIBPROTOC_EXPORT TellRegisterToServer : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required .KFMsg.ListenData listen = 1;
+  // required string servername = 1;
+  inline bool has_servername() const;
+  inline void clear_servername();
+  static const int kServernameFieldNumber = 1;
+  inline const ::std::string& servername() const;
+  inline void set_servername(const ::std::string& value);
+  inline void set_servername(const char* value);
+  inline void set_servername(const char* value, size_t size);
+  inline ::std::string* mutable_servername();
+  inline ::std::string* release_servername();
+  inline void set_allocated_servername(::std::string* servername);
+
+  // required uint32 serverzoneid = 2;
+  inline bool has_serverzoneid() const;
+  inline void clear_serverzoneid();
+  static const int kServerzoneidFieldNumber = 2;
+  inline ::google::protobuf::uint32 serverzoneid() const;
+  inline void set_serverzoneid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.ListenData listen = 3;
   inline bool has_listen() const;
   inline void clear_listen();
-  static const int kListenFieldNumber = 1;
+  static const int kListenFieldNumber = 3;
   inline const ::KFMsg::ListenData& listen() const;
   inline ::KFMsg::ListenData* mutable_listen();
   inline ::KFMsg::ListenData* release_listen();
@@ -471,15 +490,21 @@ class LIBPROTOC_EXPORT TellRegisterToServer : public ::google::protobuf::Message
 
   // @@protoc_insertion_point(class_scope:KFMsg.TellRegisterToServer)
  private:
+  inline void set_has_servername();
+  inline void clear_has_servername();
+  inline void set_has_serverzoneid();
+  inline void clear_has_serverzoneid();
   inline void set_has_listen();
   inline void clear_has_listen();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* servername_;
   ::KFMsg::ListenData* listen_;
+  ::google::protobuf::uint32 serverzoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFFrameMessage_2eproto();
   friend void protobuf_AssignDesc_KFFrameMessage_2eproto();
@@ -544,17 +569,36 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 appid = 1;
+  // required string servername = 1;
+  inline bool has_servername() const;
+  inline void clear_servername();
+  static const int kServernameFieldNumber = 1;
+  inline const ::std::string& servername() const;
+  inline void set_servername(const ::std::string& value);
+  inline void set_servername(const char* value);
+  inline void set_servername(const char* value, size_t size);
+  inline ::std::string* mutable_servername();
+  inline ::std::string* release_servername();
+  inline void set_allocated_servername(::std::string* servername);
+
+  // required uint32 serverzoneid = 2;
+  inline bool has_serverzoneid() const;
+  inline void clear_serverzoneid();
+  static const int kServerzoneidFieldNumber = 2;
+  inline ::google::protobuf::uint32 serverzoneid() const;
+  inline void set_serverzoneid(::google::protobuf::uint32 value);
+
+  // required uint32 appid = 3;
   inline bool has_appid() const;
   inline void clear_appid();
-  static const int kAppidFieldNumber = 1;
+  static const int kAppidFieldNumber = 3;
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required string appname = 2;
+  // required string appname = 4;
   inline bool has_appname() const;
   inline void clear_appname();
-  static const int kAppnameFieldNumber = 2;
+  static const int kAppnameFieldNumber = 4;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
@@ -563,10 +607,10 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
-  // required string apptype = 3;
+  // required string apptype = 5;
   inline bool has_apptype() const;
   inline void clear_apptype();
-  static const int kApptypeFieldNumber = 3;
+  static const int kApptypeFieldNumber = 5;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
@@ -575,15 +619,19 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // optional uint32 zoneid = 4;
+  // required uint32 zoneid = 6;
   inline bool has_zoneid() const;
   inline void clear_zoneid();
-  static const int kZoneidFieldNumber = 4;
+  static const int kZoneidFieldNumber = 6;
   inline ::google::protobuf::uint32 zoneid() const;
   inline void set_zoneid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.TellUnRegisterFromServer)
  private:
+  inline void set_has_servername();
+  inline void clear_has_servername();
+  inline void set_has_serverzoneid();
+  inline void clear_has_serverzoneid();
   inline void set_has_appid();
   inline void clear_has_appid();
   inline void set_has_appname();
@@ -595,13 +643,15 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* appname_;
+  ::std::string* servername_;
+  ::google::protobuf::uint32 serverzoneid_;
   ::google::protobuf::uint32 appid_;
-  ::google::protobuf::uint32 zoneid_;
+  ::std::string* appname_;
   ::std::string* apptype_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFFrameMessage_2eproto();
   friend void protobuf_AssignDesc_KFFrameMessage_2eproto();
@@ -1105,15 +1155,107 @@ inline void RegisterToServerAck::set_allocated_appname(::std::string* appname) {
 
 // TellRegisterToServer
 
-// required .KFMsg.ListenData listen = 1;
-inline bool TellRegisterToServer::has_listen() const {
+// required string servername = 1;
+inline bool TellRegisterToServer::has_servername() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void TellRegisterToServer::set_has_listen() {
+inline void TellRegisterToServer::set_has_servername() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void TellRegisterToServer::clear_has_listen() {
+inline void TellRegisterToServer::clear_has_servername() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void TellRegisterToServer::clear_servername() {
+  if (servername_ != &::google::protobuf::internal::kEmptyString) {
+    servername_->clear();
+  }
+  clear_has_servername();
+}
+inline const ::std::string& TellRegisterToServer::servername() const {
+  return *servername_;
+}
+inline void TellRegisterToServer::set_servername(const ::std::string& value) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(value);
+}
+inline void TellRegisterToServer::set_servername(const char* value) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(value);
+}
+inline void TellRegisterToServer::set_servername(const char* value, size_t size) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* TellRegisterToServer::mutable_servername() {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  return servername_;
+}
+inline ::std::string* TellRegisterToServer::release_servername() {
+  clear_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = servername_;
+    servername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void TellRegisterToServer::set_allocated_servername(::std::string* servername) {
+  if (servername_ != &::google::protobuf::internal::kEmptyString) {
+    delete servername_;
+  }
+  if (servername) {
+    set_has_servername();
+    servername_ = servername;
+  } else {
+    clear_has_servername();
+    servername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 serverzoneid = 2;
+inline bool TellRegisterToServer::has_serverzoneid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void TellRegisterToServer::set_has_serverzoneid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void TellRegisterToServer::clear_has_serverzoneid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void TellRegisterToServer::clear_serverzoneid() {
+  serverzoneid_ = 0u;
+  clear_has_serverzoneid();
+}
+inline ::google::protobuf::uint32 TellRegisterToServer::serverzoneid() const {
+  return serverzoneid_;
+}
+inline void TellRegisterToServer::set_serverzoneid(::google::protobuf::uint32 value) {
+  set_has_serverzoneid();
+  serverzoneid_ = value;
+}
+
+// required .KFMsg.ListenData listen = 3;
+inline bool TellRegisterToServer::has_listen() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void TellRegisterToServer::set_has_listen() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void TellRegisterToServer::clear_has_listen() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void TellRegisterToServer::clear_listen() {
   if (listen_ != NULL) listen_->::KFMsg::ListenData::Clear();
@@ -1147,15 +1289,107 @@ inline void TellRegisterToServer::set_allocated_listen(::KFMsg::ListenData* list
 
 // TellUnRegisterFromServer
 
-// optional uint32 appid = 1;
-inline bool TellUnRegisterFromServer::has_appid() const {
+// required string servername = 1;
+inline bool TellUnRegisterFromServer::has_servername() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void TellUnRegisterFromServer::set_has_appid() {
+inline void TellUnRegisterFromServer::set_has_servername() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void TellUnRegisterFromServer::clear_has_appid() {
+inline void TellUnRegisterFromServer::clear_has_servername() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void TellUnRegisterFromServer::clear_servername() {
+  if (servername_ != &::google::protobuf::internal::kEmptyString) {
+    servername_->clear();
+  }
+  clear_has_servername();
+}
+inline const ::std::string& TellUnRegisterFromServer::servername() const {
+  return *servername_;
+}
+inline void TellUnRegisterFromServer::set_servername(const ::std::string& value) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_servername(const char* value) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(value);
+}
+inline void TellUnRegisterFromServer::set_servername(const char* value, size_t size) {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  servername_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* TellUnRegisterFromServer::mutable_servername() {
+  set_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    servername_ = new ::std::string;
+  }
+  return servername_;
+}
+inline ::std::string* TellUnRegisterFromServer::release_servername() {
+  clear_has_servername();
+  if (servername_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = servername_;
+    servername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void TellUnRegisterFromServer::set_allocated_servername(::std::string* servername) {
+  if (servername_ != &::google::protobuf::internal::kEmptyString) {
+    delete servername_;
+  }
+  if (servername) {
+    set_has_servername();
+    servername_ = servername;
+  } else {
+    clear_has_servername();
+    servername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 serverzoneid = 2;
+inline bool TellUnRegisterFromServer::has_serverzoneid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void TellUnRegisterFromServer::set_has_serverzoneid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void TellUnRegisterFromServer::clear_has_serverzoneid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void TellUnRegisterFromServer::clear_serverzoneid() {
+  serverzoneid_ = 0u;
+  clear_has_serverzoneid();
+}
+inline ::google::protobuf::uint32 TellUnRegisterFromServer::serverzoneid() const {
+  return serverzoneid_;
+}
+inline void TellUnRegisterFromServer::set_serverzoneid(::google::protobuf::uint32 value) {
+  set_has_serverzoneid();
+  serverzoneid_ = value;
+}
+
+// required uint32 appid = 3;
+inline bool TellUnRegisterFromServer::has_appid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void TellUnRegisterFromServer::set_has_appid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void TellUnRegisterFromServer::clear_has_appid() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void TellUnRegisterFromServer::clear_appid() {
   appid_ = 0u;
@@ -1169,15 +1403,15 @@ inline void TellUnRegisterFromServer::set_appid(::google::protobuf::uint32 value
   appid_ = value;
 }
 
-// required string appname = 2;
+// required string appname = 4;
 inline bool TellUnRegisterFromServer::has_appname() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void TellUnRegisterFromServer::set_has_appname() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void TellUnRegisterFromServer::clear_has_appname() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void TellUnRegisterFromServer::clear_appname() {
   if (appname_ != &::google::protobuf::internal::kEmptyString) {
@@ -1239,15 +1473,15 @@ inline void TellUnRegisterFromServer::set_allocated_appname(::std::string* appna
   }
 }
 
-// required string apptype = 3;
+// required string apptype = 5;
 inline bool TellUnRegisterFromServer::has_apptype() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void TellUnRegisterFromServer::set_has_apptype() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void TellUnRegisterFromServer::clear_has_apptype() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void TellUnRegisterFromServer::clear_apptype() {
   if (apptype_ != &::google::protobuf::internal::kEmptyString) {
@@ -1309,15 +1543,15 @@ inline void TellUnRegisterFromServer::set_allocated_apptype(::std::string* appty
   }
 }
 
-// optional uint32 zoneid = 4;
+// required uint32 zoneid = 6;
 inline bool TellUnRegisterFromServer::has_zoneid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void TellUnRegisterFromServer::set_has_zoneid() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void TellUnRegisterFromServer::clear_has_zoneid() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void TellUnRegisterFromServer::clear_zoneid() {
   zoneid_ = 0u;

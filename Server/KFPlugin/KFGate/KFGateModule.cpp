@@ -39,11 +39,11 @@ namespace KFrame
 
     __KF_CLIENT_CONNECT_FUNCTION__( KFGateModule::OnClientConnectionLogin )
     {
-        if ( servertype == KFField::_login )
+        if ( servertype == __KF_STRING__( login ) )
         {
             _kf_login_conhash.AddHashNode( servertype, serverid, 100 );
         }
-        else if ( servertype == KFField::_game )
+        else if ( servertype == __KF_STRING__( game ) )
         {
             _kf_game_conhash.AddHashNode( servertype, serverid, 100 );
         }
@@ -51,11 +51,11 @@ namespace KFrame
 
     __KF_CLIENT_LOST_FUNCTION__( KFGateModule::OnClientLostLogin )
     {
-        if ( servertype == KFField::_login )
+        if ( servertype == __KF_STRING__( login ) )
         {
             _kf_login_conhash.RemoveHashNode( serverid );
         }
-        else if ( servertype == KFField::_game )
+        else if ( servertype == __KF_STRING__( game ) )
         {
             _kf_game_conhash.RemoveHashNode( serverid );
         }
@@ -63,7 +63,7 @@ namespace KFrame
 
     bool KFGateModule::SendMessageToLogin( uint32 msgid, ::google::protobuf::Message* message )
     {
-        _kf_tcp_client->SendMessageToType( KFField::_login, msgid, message );
+        _kf_tcp_client->SendMessageToType( __KF_STRING__( login ), msgid, message );
         return true;
     }
 

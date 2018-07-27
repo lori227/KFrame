@@ -39,12 +39,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFBattleClientModule::SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( KFField::_battle, msgid, message );
+        return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), msgid, message );
     }
 
     bool KFBattleClientModule::SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( KFField::_battle, roomid, msgid, message );
+        return _kf_cluster->SendMessageToObject( __KF_STRING__( battle ), roomid, msgid, message );
     }
 
     void KFBattleClientModule::OnEnterQueryBattleRoom( KFEntity* player )
@@ -57,7 +57,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto roomid = kfobject->GetValue< uint64 >( KFField::_room_id );
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
 
         if ( roomid == _invalid_int )
         {
@@ -71,16 +71,16 @@ namespace KFrame
         SendMessageToBattle( roomid, KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
 
         // 先设置成无效值
-        kfobject->SetValue< uint32 >( KFField::_match_id, _invalid_int );
-        kfobject->SetValue< uint64 >( KFField::_room_id, _invalid_int );
+        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
+        kfobject->SetValue< uint64 >( __KF_STRING__( roomid ), _invalid_int );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleNoticeMatchRoomReq )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchRoomReq );
 
-        player->UpdateData( KFField::_match_id, KFOperateEnum::Set, kfmsg.matchid() );
-        player->UpdateData( KFField::_room_id, KFOperateEnum::Set, kfmsg.roomid() );
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+        player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
 
         if ( !kfmsg.has_ip() )
         {
@@ -108,7 +108,7 @@ namespace KFrame
             SendMessageToBattle( kfmsg.roomid(), KFMsg::S2S_NOTICE_MATCH_ROOM_ACK, &ack );
         }
 
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Info, "[%s] player[%s] match[%u] room[%s|%s:%u]!",
                             __FUNCTION__, player->GetKeyString(), kfmsg.matchid(), strroomid.c_str(), kfmsg.ip().c_str(), kfmsg.port() );
     }
@@ -118,8 +118,8 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SLeaveBattleRoomToClientAck );
 
         // 取消配置信息
-        player->UpdateData( KFField::_match_id, KFOperateEnum::Set, _invalid_int );
-        player->UpdateData( KFField::_room_id, KFOperateEnum::Set, _invalid_int );
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+        player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
     }
 
 #define __TOP_ONE__ 1
@@ -129,22 +129,22 @@ namespace KFrame
     void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore )
     {
         // 游戏场数
-        auto totalcount = player->UpdateData( kfscore, KFField::_count, KFOperateEnum::Add, 1 );
+        auto totalcount = player->UpdateData( kfscore, __KF_STRING__( count ), KFOperateEnum::Add, 1 );
 
         // 排名
         if ( pbscore->ranking() == __TOP_ONE__ )
         {
-            player->UpdateData( kfscore, KFField::_victory, KFOperateEnum::Add, 1 );
+            player->UpdateData( kfscore, __KF_STRING__( victory ), KFOperateEnum::Add, 1 );
         }
 
         else if ( pbscore->ranking() <= __TOP_FIVE__ )
         {
-            player->UpdateData( kfscore, KFField::_top_five, KFOperateEnum::Add, 1 );
+            player->UpdateData( kfscore, __KF_STRING__( topfive ), KFOperateEnum::Add, 1 );
         }
 
         else if ( pbscore->ranking() <= __TOP_TEN__ )
         {
-            player->UpdateData( kfscore, KFField::_top_ten, KFOperateEnum::Add, 1 );
+            player->UpdateData( kfscore, __KF_STRING__( topten ), KFOperateEnum::Add, 1 );
         }
 
         // 各项数据
@@ -161,19 +161,19 @@ namespace KFrame
         }
 
         // 胜率
-        auto victorycount = kfscore->GetValue< uint32 >( KFField::_victory );
+        auto victorycount = kfscore->GetValue< uint32 >( __KF_STRING__( victory ) );
         auto winrate = static_cast< double >( victorycount ) / static_cast< double >( totalcount );
-        player->UpdateData( kfscore, KFField::_win_rate, KFOperateEnum::Set, winrate * KFScoreEnum::ScoreRatio );
+        player->UpdateData( kfscore, __KF_STRING__( winrate ), KFOperateEnum::Set, winrate * KFScoreEnum::ScoreRatio );
 
         // kda计算
-        auto killcount = kfscore->GetValue< uint32 >( KFField::_kill );
-        auto diecount = kfscore->GetValue< uint32 >( KFField::_die );
+        auto killcount = kfscore->GetValue< uint32 >( __KF_STRING__( kill ) );
+        auto diecount = kfscore->GetValue< uint32 >( __KF_STRING__( die ) );
         auto kda = static_cast< double >( killcount ) / static_cast< double >( __MAX__( 1, diecount ) );
-        player->UpdateData( kfscore, KFField::_kda, KFOperateEnum::Set, kda * KFScoreEnum::ScoreRatio );
+        player->UpdateData( kfscore, __KF_STRING__( kda ), KFOperateEnum::Set, kda * KFScoreEnum::ScoreRatio );
 
         // 场均击杀
         auto averagekill = static_cast< double >( killcount ) / static_cast< double >( totalcount );
-        player->UpdateData( kfscore, KFField::_average_kill, KFOperateEnum::Set, averagekill * KFScoreEnum::ScoreRatio );
+        player->UpdateData( kfscore, __KF_STRING__( averagekill ), KFOperateEnum::Set, averagekill * KFScoreEnum::ScoreRatio );
 
 
         // 奖励
@@ -193,7 +193,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto scorename = _kf_option->GetValue< std::string >( "matchscore", pbscore->matchid() );
 
-        auto strroomid = __KF_STRING__( kfmsg.roomid() );
+        auto strroomid = __TO_STRING__( kfmsg.roomid() );
         KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] balance battle[%s] score[%u:%s] req!",
                             __FUNCTION__, kfmsg.playerid(), strroomid.c_str(), pbscore->matchid(), scorename.c_str() );
 
@@ -211,16 +211,16 @@ namespace KFrame
 
         if ( score > 0 )
         {
-            player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Add, score );
+            player->UpdateData( kfscore, __KF_STRING__( score ), KFOperateEnum::Add, score );
         }
 
         else
         {
-            player->UpdateData( kfscore, KFField::_score, KFOperateEnum::Dec, abs( score ) );
+            player->UpdateData( kfscore, __KF_STRING__( score ), KFOperateEnum::Dec, abs( score ) );
         }
 
         // 计算总数据
-        auto kftotalscore = kfobject->FindData( KFField::_total_score );
+        auto kftotalscore = kfobject->FindData( __KF_STRING__( totalscore ) );
 
         if ( kftotalscore != nullptr )
         {
@@ -228,7 +228,7 @@ namespace KFrame
 
             // 总评分
             auto totalscore = CalcTotalScore( player );
-            player->UpdateData( kftotalscore, KFField::_score, KFOperateEnum::Set, totalscore );
+            player->UpdateData( kftotalscore, __KF_STRING__( score ), KFOperateEnum::Set, totalscore );
         }
 
         // 回复消息
@@ -253,21 +253,21 @@ namespace KFrame
     uint32 KFBattleClientModule::CalcTotalScore( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto singlescore = kfobject->FindData( KFField::_single_score );
-        auto doublescore = kfobject->FindData( KFField::_double_score );
-        auto fourscore = kfobject->FindData( KFField::_four_score );
+        auto singlescore = kfobject->FindData( __KF_STRING__( singlescore ) );
+        auto doublescore = kfobject->FindData( __KF_STRING__( doublescore ) );
+        auto fourscore = kfobject->FindData( __KF_STRING__( fourscore ) );
 
-        auto totalgametimes = singlescore->GetValue<uint32>( KFField::_count )
-                              + doublescore->GetValue<uint32>( KFField::_count ) + fourscore->GetValue<uint32>( KFField::_count );
+        auto totalgametimes = singlescore->GetValue<uint32>( __KF_STRING__( count ) )
+                              + doublescore->GetValue<uint32>( __KF_STRING__( count ) ) + fourscore->GetValue<uint32>( __KF_STRING__( count ) );
 
         if ( totalgametimes == _invalid_int )
         {
             return _invalid_int;
         }
 
-        auto tempvalue = singlescore->GetValue( KFField::_score ) * singlescore->GetValue( KFField::_count )
-                         + doublescore->GetValue( KFField::_score ) * doublescore->GetValue( KFField::_count )
-                         + fourscore->GetValue( KFField::_score ) * fourscore->GetValue( KFField::_count );
+        auto tempvalue = singlescore->GetValue( __KF_STRING__( score ) ) * singlescore->GetValue( __KF_STRING__( count ) )
+                         + doublescore->GetValue( __KF_STRING__( score ) ) * doublescore->GetValue( __KF_STRING__( count ) )
+                         + fourscore->GetValue( __KF_STRING__( score ) ) * fourscore->GetValue( __KF_STRING__( count ) );
 
         return tempvalue / totalgametimes;
     }
@@ -310,17 +310,17 @@ namespace KFrame
                 continue;
             }
 
-            if ( pbdata->name() == KFField::_total_player )
+            if ( pbdata->name() == __KF_STRING__( totalplayer  ) )
             {
                 recentdata->set_totalnum( pbdata->value() );
             }
 
-            else if ( pbdata->name() == KFField::_kill )
+            else if ( pbdata->name() == __KF_STRING__( kill ) )
             {
                 recentdata->set_kill( pbdata->value() );
             }
 
-            else if ( pbdata->name() == KFField::_be_killed )
+            else if ( pbdata->name() == __KF_STRING__( bekilled ) )
             {
                 recentdata->set_kill( pbdata->value() );
             }

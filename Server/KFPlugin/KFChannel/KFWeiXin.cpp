@@ -15,7 +15,7 @@ namespace KFrame
     {
 
     }
-#define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( KFField::_login )
+#define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( login ) )
 #define __Execute_Redis__( query ) \
     if ( !query ) \
     { \
@@ -24,8 +24,8 @@ namespace KFrame
 
     std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
-        auto machinecode = json.GetString( KFField::_machine );
-        auto weixincode = json.GetString( KFField::_code );
+        auto machinecode = json.GetString( __KF_CHAR__( machine ) );
+        auto weixincode = json.GetString( __KF_CHAR__( code ) );
 
         std::string accesstoken = "";
         std::string openid = "";
@@ -45,30 +45,30 @@ namespace KFrame
             KFJson accessjson( accessdata );
 
             // 如果出错, 返回错误码
-            if ( accessjson.isMember( KFField::_err_code ) )
+            if ( accessjson.isMember( __KF_STRING__( errcode ) ) )
             {
                 return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinCodeError );
             }
 
-            accesstoken = accessjson.GetString( KFField::_access_token );
-            openid = accessjson.GetString( KFField::_open_id );
-            auto refreshtoken = accessjson.GetString( KFField::_refresh_token );
-            auto expirestime = accessjson.GetUInt32( KFField::_expires_in );
-            auto scope = accessjson.GetString( KFField::_scope );
+            accesstoken = accessjson.GetString( __KF_STRING__( accesstoken ) );
+            openid = accessjson.GetString( __KF_STRING__( openid ) );
+            auto refreshtoken = accessjson.GetString( __KF_STRING__( refreshtoken ) );
+            auto expirestime = accessjson.GetUInt32( __KF_STRING__( expiresin ) );
+            auto scope = accessjson.GetString( __KF_STRING__( scope ) );
 
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
             // 保存access_token
             redisdriver->AppendCommand( "hmset %s:%s %s %s %s %s %s %s",
-                                        KFField::_access_token.c_str(), machinecode.c_str(),
-                                        KFField::_access_token.c_str(), accesstoken.c_str(),
-                                        KFField::_open_id.c_str(), openid.c_str(),
-                                        KFField::_scope.c_str(), scope.c_str() );
-            redisdriver->AppendCommand( "expire %s:%s %u", KFField::_access_token.c_str(), machinecode.c_str(), expirestime - 200 );
+                                        __KF_CHAR__( accesstoken ), machinecode.c_str(),
+                                        __KF_CHAR__( accesstoken ), accesstoken.c_str(),
+                                        __KF_CHAR__( openid ), openid.c_str(),
+                                        __KF_CHAR__( scope ), scope.c_str() );
+            redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( accesstoken ), machinecode.c_str(), expirestime - 200 );
 
             // 保存refresh_token
-            redisdriver->AppendCommand( "hset %s:%s %s %s", KFField::_refresh_token.c_str(), machinecode.c_str(), KFField::_refresh_token.c_str(), accesstoken.c_str() );
-            redisdriver->AppendCommand( "expire %s:%s %u", KFField::_refresh_token.c_str(), machinecode.c_str(), 2590000 );
+            redisdriver->AppendCommand( "hset %s:%s %s %s", __KF_CHAR__( refreshtoken ), machinecode.c_str(), __KF_CHAR__( refreshtoken ), accesstoken.c_str() );
+            redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( refreshtoken ), machinecode.c_str(), 2590000 );
             redisdriver->PipelineExecute();
         }
         else
@@ -76,17 +76,17 @@ namespace KFrame
             // 机器码获得账号的access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
             MapString accessdata;
-            __Execute_Redis__( redisdriver->MapExecute( accessdata, "hgetall %s:%s", KFField::_access_token.c_str(), machinecode.c_str() ) );
+            __Execute_Redis__( redisdriver->MapExecute( accessdata, "hgetall %s:%s", __KF_CHAR__( accesstoken ), machinecode.c_str() ) );
             if ( !accessdata.empty() )
             {
-                openid = accessdata[ KFField::_open_id ];
-                accesstoken = accessdata[ KFField::_access_token ];
+                openid = accessdata[ __KF_STRING__( openid ) ];
+                accesstoken = accessdata[ __KF_STRING__( accesstoken ) ];
             }
             else
             {
                 // 获得refresh_token
                 std::string refreshtoken = "";
-                __Execute_Redis__( redisdriver->StringExecute( refreshtoken, "hget %s:%s %s", KFField::_refresh_token.c_str(), machinecode.c_str(), KFField::_refresh_token.c_str() ) );
+                __Execute_Redis__( redisdriver->StringExecute( refreshtoken, "hget %s:%s %s", __KF_CHAR__( refreshtoken ), machinecode.c_str(), __KF_CHAR__( refreshtoken ) ) );
                 if ( refreshtoken.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::WeiXinTokenTimeout );
@@ -103,19 +103,19 @@ namespace KFrame
                 }
 
                 KFJson accessjson( accessdata );
-                if ( accessjson.isMember( KFField::_err_code ) )
+                if ( accessjson.isMember( __KF_STRING__( errcode ) ) )
                 {
                     return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinTokenError );
                 }
 
-                accesstoken = accessjson.GetString( KFField::_access_token );
-                openid = accessjson.GetString( KFField::_open_id );
-                auto expirestime = accessjson.GetUInt32( KFField::_expires_in );
-                auto scope = accessjson.GetString( KFField::_scope );
+                accesstoken = accessjson.GetString( __KF_STRING__( accesstoken ) );
+                openid = accessjson.GetString( __KF_STRING__( openid ) );
+                auto expirestime = accessjson.GetUInt32( __KF_STRING__( expiresin ) );
+                auto scope = accessjson.GetString( __KF_STRING__( scope ) );
 
                 // 保存access_token
-                redisdriver->AppendCommand( "hmset %s:%s %s %s", KFField::_access_token.c_str(), machinecode.c_str(), KFField::_access_token.c_str(), accesstoken.c_str() );
-                redisdriver->AppendCommand( "expire %s:%s %u", KFField::_access_token.c_str(), machinecode.c_str(), expirestime - 200 );
+                redisdriver->AppendCommand( "hmset %s:%s %s %s", __KF_CHAR__( accesstoken ), machinecode.c_str(), __KF_CHAR__( accesstoken ), accesstoken.c_str() );
+                redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( accesstoken ), machinecode.c_str(), expirestime - 200 );
                 redisdriver->PipelineExecute();
             }
         }
@@ -131,19 +131,19 @@ namespace KFrame
         }
 
         KFJson userjson( userdata );
-        if ( userjson.isMember( KFField::_err_code ) )
+        if ( userjson.isMember( __KF_STRING__( errcode ) ) )
         {
             return _kf_http_server->SendResponse( userjson, KFMsg::WeiXinUserError );
         }
 
         KFJson response;
-        response.SetValue( KFField::_channel, _channel );
-        response.SetValue( KFField::_app_id, kfsetting->_app_id );
-        response.SetValue( KFField::_app_key, kfsetting->_app_key );
-        response.SetValue( KFField::_account, userjson.GetString( KFField::_union_id ) );
-        response.SetValue( KFField::_name, userjson.GetString( KFField::_nick_name ) );
-        response.SetValue( KFField::_sex, userjson.GetInt32( KFField::_sex ) );
-        response.SetValue( KFField::_icon, userjson.GetString( KFField::_head_img_url ) );
+        response.SetValue( __KF_STRING__( channel ), _channel );
+        response.SetValue( __KF_STRING__( appid ), kfsetting->_app_id );
+        response.SetValue( __KF_STRING__( appkey ), kfsetting->_app_key );
+        response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( unionid ) ) );
+        response.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );
+        response.SetValue( __KF_STRING__( sex ), userjson.GetInt32( __KF_STRING__( sex ) ) );
+        response.SetValue( __KF_STRING__( icon ), userjson.GetString( __KF_STRING__( headimgurl ) ) );
         return _kf_http_server->SendResponse( response );
     }
 
