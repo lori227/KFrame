@@ -36,7 +36,7 @@ namespace KFrame
         }
         else
         {
-            _use_value = KFRand::STRandDistrict( static_cast< uint32 >( _min_value ), static_cast< uint32 >( _max_value ), 1 );
+            _use_value = KFGlobal::Instance()->RandInRange( static_cast< uint32 >( _min_value ), static_cast< uint32 >( _max_value ), 1 );
         }
 
         _use_value = static_cast< uint64 >( _use_value * multiple );
@@ -151,8 +151,7 @@ namespace KFrame
             KFJson kfjson;
             if ( !kfjson.Parse( temp ) )
             {
-                KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] parse agent failed!",
-                                     function, line, agentstring.c_str() );
+                __LOG_ERROR__( KFLogEnum::System, function, line, "[{}] parse agent failed!", agentstring );
                 return false;
             }
 
@@ -197,8 +196,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] parse agent failed!",
-                                 function, line, agentstring.c_str() );
+            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "[{}] parse agent failed!", agentstring );
             return false;
         }
 

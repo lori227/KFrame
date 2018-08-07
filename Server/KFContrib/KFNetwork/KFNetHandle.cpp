@@ -1,7 +1,6 @@
 ﻿#include "KFNetHandle.h"
 #include "KFNetEvent.h"
 #include "KFNetServerEngine.h"
-#include "KFLogger/KFLogger.h"
 #include "KFNetClientServices.h"
 
 namespace KFrame
@@ -82,13 +81,11 @@ namespace KFrame
         if ( !_is_shutdown )
         {
             _net_services->CloseSession( this );
-            KFLogger::LogNet( KFLogger::Debug, "[%s:%u] close handle[%u]!",
-                              __FUNCTION_LINE__, _id );
+            __LOG_DEBUG__( KFLogEnum::Net, "close handle[{}]!", _id );
         }
         else
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] [%u] already shutdown!",
-                              __FUNCTION_LINE__, _id );
+            __LOG_ERROR__( KFLogEnum::Net, "[{}] already shutdown!", _id );
         }
     }
 
@@ -100,8 +97,7 @@ namespace KFrame
         _uv_tcp->data = this;
         uv_close( reinterpret_cast< uv_handle_t* >( _uv_tcp ), OnShutCallBack );
 
-        KFLogger::LogNet( KFLogger::Debug, "[%s:%u] uv_close [%u]!",
-                          __FUNCTION_LINE__, _id );
+        __LOG_DEBUG__( KFLogEnum::Net, "uv_close [{}]!", _id );
     }
 
     void KFNetHandle::OnShutCallBack( uv_handle_t* handle )
@@ -109,7 +105,6 @@ namespace KFrame
         auto nethandle = reinterpret_cast< KFNetHandle* >( handle->data );
         nethandle->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, nethandle->_id );
 
-        KFLogger::LogNet( KFLogger::Debug, "[%s:%u] shut down [%u]!",
-                          __FUNCTION_LINE__, nethandle->_id );
+        __LOG_DEBUG__( KFLogEnum::Net, "shut down [{}]!", nethandle->_id );
     }
 }

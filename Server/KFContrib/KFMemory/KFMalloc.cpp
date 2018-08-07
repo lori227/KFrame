@@ -1,6 +1,7 @@
-﻿#include "KFMalloc.h"
+﻿#include "KFrame.h"
+#include "KFMalloc.h"
 #include "KFLogMemory.h"
-#include "KFBuffer.h"
+
 
 namespace KFrame
 {
@@ -79,7 +80,8 @@ namespace KFrame
             return _kf_memory->Malloc( mallocsize, batch, function, line );
         }
 
-        KFLogger::LogMemory( KFLogger::Error, "[%s:%u] memory too large[%u]!", function, line, size );
+        __LOG_WARN_FUNCTION__( KFLogEnum::System, function, line, "memory too large[{}]!", size );
+
         auto memory = new char[ size ];
         _new_memory.insert( memory );
         return memory;
@@ -107,7 +109,7 @@ namespace KFrame
             }
             else
             {
-                KFLogger::LogMemory( KFLogger::Error, "[%s:%u] memory not find[%u]!", function, line, size );
+                __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "memory not find[{}]!", size );
             }
         }
     }

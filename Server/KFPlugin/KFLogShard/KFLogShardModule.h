@@ -29,14 +29,15 @@ namespace KFrame
         void BeforeRun();
         void BeforeShut();
 
-        virtual void Log( const ELogCategory& category, const int level, const uint32 zone_id, const std::string& app_name, const std::string& app_type, const uint32 app_id, const std::string& log_info );
+    protected:
+
+        void Log( uint32 level, uint32 category, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& loginfo );
+
+        void CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& category );
+        const std::shared_ptr<spdlog::logger>& GetLogger( uint32 category, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid );
 
     protected:
-        void CreateLogger( const std::string& zone_name, const std::string& app_name, const std::string& app_type, const uint32 app_id, const std::string& category );
-        const std::shared_ptr<spdlog::logger>& GetLogger( const ELogCategory& category, const uint32 zone_id, const std::string& app_name, const std::string& app_type, const uint32 app_id );
-
-    protected:
-        __KF_MESSAGE_FUNCTION__( HandleLogReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoteLogReq );
 
     private:
         std::unordered_map< std::string, std::shared_ptr<spdlog::logger> > _loggers;

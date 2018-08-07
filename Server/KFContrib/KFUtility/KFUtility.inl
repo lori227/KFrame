@@ -91,7 +91,7 @@ namespace KFrame
     }
 
     template< class T >
-    inline std::string KFUtility::ToString( T value )
+    inline std::string KFUtility::ToString( const T& value )
     {
         std::stringstream ss;
         ss << value;
@@ -99,7 +99,7 @@ namespace KFrame
     }
 
     template<>
-    inline std::string KFUtility::ToString( std::string value )
+    inline std::string KFUtility::ToString( const std::string& value )
     {
         return value;
     }

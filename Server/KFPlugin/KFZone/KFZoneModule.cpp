@@ -21,6 +21,11 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
         auto kfzone = &_kf_zone_config->_kf_zone;
+        if ( kfzone->_id == _invalid_int )
+        {
+            return;
+        }
+
 
         kfglobal->_zone_id = kfzone->_id;
         kfglobal->_app_id = KFUtility::CalcZoneServerId( kfglobal->_app_id, kfzone->_id );

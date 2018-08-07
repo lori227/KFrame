@@ -2,8 +2,6 @@
 #include "KFJson.h"
 #include "KFEnum.h"
 #include "KFrame.h"
-#include "KFUtility/KFUtility.h"
-#include "KFCrypto/KFCrypto.h"
 
 namespace KFrame
 {
@@ -12,7 +10,7 @@ namespace KFrame
     void KFHttpCommon::MakeSignature( KFJson& json )
     {
         auto data = json.Serialize();
-        auto temp = KFUtility::Format( "%s:%s", data.c_str(), _crypto_key );
+        auto temp = __FORMAT__( "{}:{}", data, _crypto_key );
         auto md4sign = KFCrypto::Md5Encode( temp );
         json.SetValue< const std::string& >( __KF_STRING__( sign ), md4sign );
     }
@@ -25,7 +23,7 @@ namespace KFrame
         auto data = json.Serialize();
 
 
-        auto temp = KFUtility::Format( "%s:%s", data.c_str(), _crypto_key );
+        auto temp = __FORMAT__( "{}:{}", data, _crypto_key );
         auto md4sign = KFCrypto::Md5Encode( temp );
         return sign == md4sign;
     }
@@ -46,7 +44,7 @@ namespace KFrame
     {
         if ( !json.isMember( __KF_STRING__( retcode ) ) )
         {
-            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFCommonEnum::OK );
+            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFEnum::Error );
         }
 
         return json.Serialize();

@@ -215,7 +215,7 @@ namespace KFrame
             auto kfdata = iter.second;
 
             auto strdata = kfdata->ToString();
-            auto temp = KFUtility::Format( "%s=%s=%s,", key.c_str(), strdata.c_str(), key.c_str() );
+            auto temp = __FORMAT__( "{}={}={},", key, strdata, key );
             result += temp;
         }
 

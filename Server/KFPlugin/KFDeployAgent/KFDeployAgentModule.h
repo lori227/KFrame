@@ -19,34 +19,26 @@
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
     class KFDeployTask
     {
     public:
-        enum MyEnum
-        {
-            None = 0,
-            Startup = 1,		// 启动
-            ShutDown = 2,		// 关闭
-            Kill = 3,			// 强制关闭
-            Update = 4,			// 更新
-        };
-
-    public:
         KFDeployTask()
         {
             _app_id = _invalid_int;
-            _deploy_type = _invalid_int;
-            _delay_time = _invalid_int;
             _zone_id = _invalid_int;
             _start_time = 0;
         }
 
     public:
-        // 部署类型
-        uint32 _deploy_type;
+        // 部署命令
+        std::string _command;
+
+        // 数值
+        std::string _value;
 
         // appname
         std::string _app_name;
@@ -59,9 +51,6 @@ namespace KFrame
 
         // zoneid
         uint32 _zone_id;
-
-        // 延迟时间
-        uint32 _delay_time;
 
         // 开始时间
         uint64 _start_time;
@@ -95,19 +84,7 @@ namespace KFrame
 
     protected:
         // 启动服务器
-        __KF_MESSAGE_FUNCTION__( HandleStartupServerReq );
-
-        // 关闭服务器
-        __KF_MESSAGE_FUNCTION__( HandleShutDownServerReq );
-
-        // 杀死服务器
-        __KF_MESSAGE_FUNCTION__( HandleKillServerReq );
-
-        // 更新服务器
-        __KF_MESSAGE_FUNCTION__( HandleUpdateServerReq );
-
-        // 重启服务器
-        __KF_MESSAGE_FUNCTION__( HandleRestartServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
 
     protected:
         // 更新数据到部署服务
@@ -126,7 +103,7 @@ namespace KFrame
         void KillServerProcess( uint32 processid );
 
         // 保存进程信息到文件中
-        char* FormatPidFileName( KFLaunchSetting* kfsetting );
+        std::string FormatPidFileName( KFLaunchSetting* kfsetting );
 
         void SaveProcessToFile( KFLaunchSetting* kfsetting );
         void ReadProcessFromFile( KFLaunchSetting* kfsetting );
@@ -156,7 +133,7 @@ namespace KFrame
 
     protected:
         // 添加部署任务
-        void AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime = 0 );
+        void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
 
         // 开始任务
         void StartDeployTask();
@@ -172,6 +149,9 @@ namespace KFrame
 
         // ftp下载回调
         void OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok );
+
+        // 发送消息到master
+        void SendTaskToMaster();
 
     private:
         uint32 _deploy_server_id;

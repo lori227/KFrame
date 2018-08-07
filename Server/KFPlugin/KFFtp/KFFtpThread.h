@@ -4,13 +4,14 @@
 #include "KFrame.h"
 #include "ftp/FTPClient.h"
 #include "KFFtpInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
     enum KFFtpEnum
     {
         Idle = 0,
-        Login,
+        FtpLogin,
         Process,
         Failed,
         Finish,

@@ -10,11 +10,7 @@
         #pragma comment( lib, "KFPlugind.lib" )
         #pragma comment( lib, "KFMemoryd.lib" )
         #pragma comment( lib, "KFUtilityd.lib" )
-        #pragma comment( lib, "KFThreadd.lib" )
-        #pragma comment( lib, "KFTimed.lib" )
-        #pragma comment( lib, "KFXmld.lib" )
-        #pragma comment( lib, "KFRandd.lib" )
-        #pragma comment( lib, "KFLoggerd.lib" )
+        #pragma comment( lib, "KFGlobald.lib" )
 
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,11 +18,7 @@
         #pragma comment( lib, "KFPlugin.lib" )
         #pragma comment( lib, "KFMemory.lib" )
         #pragma comment( lib, "KFUtility.lib" )
-        #pragma comment( lib, "KFThread.lib" )
-        #pragma comment( lib, "KFTime.lib" )
-        #pragma comment( lib, "KFXml.lib" )
-        #pragma comment( lib, "KFRand.lib" )
-        #pragma comment( lib, "KFLogger.lib" )
+        #pragma comment( lib, "KFGlobal.lib" )
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

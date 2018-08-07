@@ -611,7 +611,9 @@ message S2SUpdateFriendLinessReq
 	required uint32 selfplayerid = 1;	// 申请id
 	required uint32 targetplayerid = 2;	// 对方id
 	required uint32 friendliness = 3;	// 好友度
-	required uint32 type = 4;		// 类型
+	required uint32 type = 4;			// 类型
+	//optional uint32 serverid = 5;		// 申请服务器id
+	//optional string targetname = 6;		// 对方名字
 }
 
 // 查询基础数据

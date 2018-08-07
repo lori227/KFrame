@@ -45,7 +45,7 @@ namespace KFrame
 
         // 计算ip
         kftcpsetting->_interanet_ip = _kf_ip_address->CalcIpAddress( kftcpsetting->_interanet_ip );
-        KF_LOG_INFO( "[{}:{}] interanet ip : [{}]", kfglobal->_app_name, kfglobal->_app_type, kftcpsetting->_interanet_ip );
+        __LOG_INFO__( KFLogEnum::Init, "[{}:{}] interanet ip : [{}]", kfglobal->_app_name, kfglobal->_app_type, kftcpsetting->_interanet_ip );
 
         // 计算端口
         if ( kftcpsetting->_port == 0 )
@@ -69,6 +69,7 @@ namespace KFrame
     void KFTcpServerModule::OnceRun()
     {
         auto kftcpsetting = FindTcpServerSetting();
+
         _kf_server_engine->InitEngine( kftcpsetting->_max_queue_size );
         _kf_server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
         _kf_server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
@@ -81,11 +82,13 @@ namespace KFrame
         auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
-            KF_LOG_INFO( "[{}:{}|{}:{}] tcp services ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port );
+            __LOG_INFO__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services ok!",
+                          kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port );
         }
         else
         {
-            KF_LOG_ERROR( "[{}:{}|{}:{}] tcp services failed[ {} ]!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
+            __LOG_ERROR__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services failed[{}]!",
+                           kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
     }
 
@@ -219,13 +222,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( kfguid, msgid, data, length );
             if ( !ok )
             {
-                KFLogger::LogNet( KFLogger::Error, "[%s] tcp server transmit msgid[%u] failed!",
-                                  __FUNCTION__, msgid );
+                __LOG_ERROR__( KFLogEnum::System, "tcp server transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "msgid[%u] can't find function!", msgid );
+            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find function!", msgid );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,8 +272,9 @@ namespace KFrame
         SendRegisterToServerToHandle( kfhandle );
 
         CallDiscoverFunction( kfhandle );
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] register ok!",
-                             name.c_str(), type.c_str(), handlid, listendata->ip().c_str(), listendata->port() );
+
+        __LOG_INFO__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] register ok!",
+                      name, type, handlid, listendata->ip(), listendata->port() );
     }
 
     void KFTcpServerModule::BroadcastRegisterToServer( KFNetHandle* kfhandle )
@@ -326,8 +329,8 @@ namespace KFrame
         tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_id );
 
-        KFLogger::LogSystem( KFLogger::Error, "[%s:%s:%u|%s:%u] lost connect!",
-                             kfhandle->_app_name.c_str(), kfhandle->_app_type.c_str(), kfhandle->_id, kfhandle->_listen_ip.c_str(), kfhandle->_listen_port );
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] lost connect!",
+                       kfhandle->_app_name, kfhandle->_app_type, kfhandle->_id, kfhandle->_listen_ip, kfhandle->_listen_port );
     }
 
     void KFTcpServerModule::SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message )

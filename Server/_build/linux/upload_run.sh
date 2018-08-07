@@ -10,6 +10,6 @@ server=uploadserver
 fi
 
 echo Starting Upload Server
-./$server 0 1 ./setting/upload.startup
+./$server appid=1 log=1 startup=./setting/upload.startup
 
 cd $basepath

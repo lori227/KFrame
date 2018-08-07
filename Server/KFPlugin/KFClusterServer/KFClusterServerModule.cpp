@@ -7,7 +7,7 @@ namespace KFrame
 {
     KFClusterServerModule::KFClusterServerModule()
     {
-
+        _cluster_serial = 0;
     }
 
     KFClusterServerModule::~KFClusterServerModule()
@@ -62,8 +62,8 @@ namespace KFrame
             return;
         }
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] Lost!",
-                             kfgate->_name.c_str(), kfgate->_type.c_str(), kfgate->_id, kfgate->_ip.c_str(), kfgate->_port );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}|{}:{}] Lost!",
+                       kfgate->_name, kfgate->_type, kfgate->_id, kfgate->_ip, kfgate->_port );
 
         _kf_proxy_manage->RemoveProxyServer( handleid );
     }
@@ -74,8 +74,8 @@ namespace KFrame
 
         _kf_proxy_manage->AddProxyServer( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port() );
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] Discover!",
-                             kfmsg.name().c_str(), kfmsg.type().c_str(), kfmsg.id(), kfmsg.ip().c_str(), kfmsg.port() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}|{}:{}] discovered!",
+                       kfmsg.name(), kfmsg.type(), kfmsg.id(), kfmsg.ip(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterServerModule::HandleClusterUpdateReq )
@@ -90,14 +90,12 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
         uint32 handleid = __KF_HEAD_ID__( kfguid );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] cluster[%u] key req!",
-                            kfmsg.clusterkey().c_str(), handleid );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}] cluster[{}] key req!", kfmsg.clusterkey(), handleid );
 
         if ( kfmsg.clusterkey() != _cluster_key )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s!=%s] cluster[%u] key error!",
-                                kfmsg.clusterkey().c_str(), _cluster_key.c_str(), handleid );
-            return;
+            return __LOG_ERROR__( KFLogEnum::System, "[{}!={}] cluster[{}] key error!",
+                                  kfmsg.clusterkey(), _cluster_key, handleid );
         }
 
         KFMsg::S2SClusterAuthAck ack;
@@ -112,8 +110,8 @@ namespace KFrame
             ack.set_type( "" );
             ack.set_id( 0 );
 
-            KFLogger::LogLogic( KFLogger::Error, "cluster[%s] can't find proxy!",
-                                kfmsg.clusterkey().c_str(), handleid );
+            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] can't find proxy, handleid[{}]!",
+                           kfmsg.clusterkey(), handleid );
         }
         else
         {
@@ -132,8 +130,8 @@ namespace KFrame
             tokenreq.set_gateid( handleid );
             _kf_tcp_server->SendNetMessage( kfproxy->_id, KFMsg::S2S_CLUSTER_TOKEN_REQ, &tokenreq );
 
-            KFLogger::LogLogic( KFLogger::Info, "[%s] cluster[%u] key ok!",
-                                kfmsg.clusterkey().c_str(), handleid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}] cluster[{}] key ok!",
+                           kfmsg.clusterkey(), handleid );
         }
 
         _kf_tcp_server->SendNetMessage( handleid, KFMsg::S2S_CLUSTER_AUTH_ACK, &ack );
@@ -146,7 +144,7 @@ namespace KFrame
         std::string dataid = KFUtility::ToString( guid._data_id );
         std::string date = KFUtility::ToString( KFDate::GetTimeEx() );
 
-        std::string temp = KFUtility::Format( "%s:%s-%s:%u", headid.c_str(), dataid.c_str(), date.c_str(), KFRand::STRand32() );
+        std::string temp = __FORMAT__( "{}:{}-{}:{}", headid, dataid, date, ++_cluster_serial );
         return KFCrypto::Md5Encode( temp );
     }
 }

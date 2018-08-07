@@ -251,6 +251,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgQueryFriendRankListAck_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgQueryFriendRankListAck_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgSevenSignInRewardReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgSevenSignInRewardReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgTellSevenExtendReward_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgTellSevenExtendReward_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor_ = NULL;
 
 }  // namespace
@@ -1475,6 +1481,37 @@ void protobuf_AssignDesc_KFClientMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgQueryFriendRankListAck));
+  MsgSevenSignInRewardReq_descriptor_ = file->message_type(77);
+  static const int MsgSevenSignInRewardReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSevenSignInRewardReq, day_),
+  };
+  MsgSevenSignInRewardReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgSevenSignInRewardReq_descriptor_,
+      MsgSevenSignInRewardReq::default_instance_,
+      MsgSevenSignInRewardReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSevenSignInRewardReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSevenSignInRewardReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgSevenSignInRewardReq));
+  MsgTellSevenExtendReward_descriptor_ = file->message_type(78);
+  static const int MsgTellSevenExtendReward_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTellSevenExtendReward, playername_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTellSevenExtendReward, reward_),
+  };
+  MsgTellSevenExtendReward_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgTellSevenExtendReward_descriptor_,
+      MsgTellSevenExtendReward::default_instance_,
+      MsgTellSevenExtendReward_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTellSevenExtendReward, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTellSevenExtendReward, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgTellSevenExtendReward));
   ClientProtocol_descriptor_ = file->enum_type(0);
 }
 
@@ -1642,6 +1679,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgQueryFriendRankListReq_descriptor_, &MsgQueryFriendRankListReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgQueryFriendRankListAck_descriptor_, &MsgQueryFriendRankListAck::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgSevenSignInRewardReq_descriptor_, &MsgSevenSignInRewardReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgTellSevenExtendReward_descriptor_, &MsgTellSevenExtendReward::default_instance());
 }
 
 }  // namespace
@@ -1801,6 +1842,10 @@ void protobuf_ShutdownFile_KFClientMessage_2eproto() {
   delete MsgQueryFriendRankListReq_reflection_;
   delete MsgQueryFriendRankListAck::default_instance_;
   delete MsgQueryFriendRankListAck_reflection_;
+  delete MsgSevenSignInRewardReq::default_instance_;
+  delete MsgSevenSignInRewardReq_reflection_;
+  delete MsgTellSevenExtendReward::default_instance_;
+  delete MsgTellSevenExtendReward_reflection_;
 }
 
 void protobuf_AddDesc_KFClientMessage_2eproto() {
@@ -1917,62 +1962,66 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
     "BRankDatas\"+\n\031MsgQueryFriendRankListReq\022"
     "\016\n\006rankid\030\001 \002(\r\"R\n\031MsgQueryFriendRankLis"
     "tAck\022\016\n\006rankid\030\001 \002(\r\022%\n\trankdatas\030\002 \002(\0132"
-    "\022.KFMsg.PBRankDatas*\210\021\n\016ClientProtocol\022\024"
-    "\n\020MSG_TELL_BE_KICK\020d\022\030\n\024MSG_LOGIN_VERIFY"
-    "_REQ\020e\022\030\n\024MSG_LOGIN_VERIFY_ACK\020f\022\026\n\022MSG_"
-    "LOGIN_GAME_REQ\020g\022\025\n\021MSG_LOGIN_OUT_REQ\020i\022"
-    "\026\n\022MSG_RESULT_DISPLAY\020j\022\027\n\023MSG_CREATE_RO"
-    "LE_REQ\020k\022\027\n\023MSG_CHANGE_NAME_REQ\020l\022\026\n\022MSG"
-    "_CHANGE_SEX_REQ\020m\022#\n\037MSG_RECEIVE_ACTIVIT"
-    "Y_REWARD_REQ\020n\022\037\n\033MSG_RECEIVE_TASK_REWAR"
-    "D_REQ\020o\022\"\n\036MSG_RECEIVE_ACHIEVE_REWARD_RE"
-    "Q\020p\022\037\n\033MSG_RECEIVE_GIFT_REWARD_REQ\020q\022\037\n\033"
-    "MSG_RECEIVE_MAIL_REWARD_REQ\020r\022\025\n\021MSG_VIE"
-    "W_MAIL_REQ\020s\022\027\n\023MSG_DELETE_MAIL_REQ\020t\022\026\n"
-    "\022MSG_QUERY_MAIL_REQ\020u\022\027\n\023MSG_START_MATCH"
-    "_REQ\020v\022\027\n\023MSG_START_MATCH_ACK\020w\022\030\n\024MSG_C"
-    "ANCEL_MATCH_REQ\020x\022\030\n\024MSG_MATCH_RESULT_AC"
-    "K\020y\022\035\n\031MSG_ADD_FRIEND_INVITE_REQ\020z\022\037\n\033MS"
-    "G_REPLY_FRIEND_INVITE_REQ\020{\022\026\n\022MSG_DEL_F"
-    "RIEND_REQ\020|\022\026\n\022MSG_ENTER_CHAT_REQ\020~\022\025\n\021M"
-    "SG_SEND_CHAT_REQ\020\177\022\027\n\022MSG_SEND_CHAT_INFO"
-    "\020\200\001\022\027\n\022MSG_LEAVE_CHAT_REQ\020\201\001\022%\n MSG_SET_"
-    "REFUSE_FRIEND_INVITE_REQ\020\202\001\022\030\n\023MSG_QUERY"
-    "_BASIC_REQ\020\203\001\022\031\n\024MSG_QUERY_PLAYER_REQ\020\204\001"
-    "\022\026\n\021MSG_BUY_STORE_REQ\020\205\001\022\027\n\022MSG_GIVE_STO"
-    "RE_REQ\020\206\001\022\037\n\032MSG_SEND_ONEBYONE_CHAT_REQ\020"
-    "\207\001\022 \n\033MSG_SEND_ONEBYONE_CHAT_INFO\020\210\001\022\030\n\023"
-    "MSG_CHANGE_ICON_REQ\020\211\001\022\032\n\025MSG_DEBUG_COMM"
-    "AND_REQ\020\217\001\022\031\n\024MSG_CHANGE_MOTTO_REQ\020\220\001\022&\n"
-    "!MSG_SET_MODEL_DEFAULT_CLOTHES_REQ\020\221\001\022\031\n"
-    "\024MSG_PLAYER_TOAST_REQ\020\222\001\022\030\n\023MSG_REMOVE_D"
-    "ATA_REQ\020\223\001\022\032\n\025MSG_DRESS_CLOTHES_REQ\020\224\001\022\031"
-    "\n\024MSG_CHANGE_MODEL_REQ\020\225\001\022\032\n\025MSG_SHOW_RE"
-    "WARD_AGENT\020\226\001\022\037\n\032MSG_INVITE_MATCH_GROUP_"
-    "REQ\020\227\001\022%\n MSG_REPLY_INVITE_MATCH_GROUP_R"
-    "EQ\020\231\001\022\036\n\031MSG_LEAVE_MATCH_GROUP_REQ\020\232\001\022\035\n"
-    "\030MSG_KICK_MATCH_GROUP_REQ\020\233\001\022\036\n\031MSG_APPL"
-    "Y_MATCH_GROUP_REQ\020\234\001\022$\n\037MSG_REPLY_APPLY_"
-    "MATCH_GROUP_REQ\020\235\001\022 \n\033MSG_MATCH_GROUP_PR"
-    "EPARE_REQ\020\240\001\022\034\n\027MSG_CHANGE_ICON_BOX_REQ\020"
-    "\241\001\022\030\n\023MSG_QUERY_GUEST_REQ\020\242\001\022\030\n\023MSG_QUER"
-    "Y_GUEST_ACK\020\243\001\022\031\n\024MSG_CANCEL_MATCH_ACK\020\244"
-    "\001\022\025\n\020MSG_USE_ITEM_REQ\020\245\001\022\036\n\031MSG_QUERY_TO"
-    "AST_COUNT_REQ\020\246\001\022\036\n\031MSG_QUERY_TOAST_COUN"
-    "T_ACK\020\247\001\022\035\n\030MSG_QUERY_STORE_INFO_REQ\020\252\001\022"
-    "\035\n\030MSG_QUERY_STORE_INFO_ACK\020\253\001\022\026\n\021MSG_BU"
-    "Y_STORE_ACK\020\255\001\022\037\n\032MSG_UPDATE_GROUP_MATCH"
-    "_REQ\020\256\001\022\033\n\026MSG_SEND_GROUPCHAT_REQ\020\257\001\022\034\n\027"
-    "MSG_SEND_GROUPCHAT_INFO\020\260\001\022\033\n\026MSG_SET_WI"
-    "SH_ORDER_REQ\020\261\001\022\032\n\025MSG_QUERY_SETTING_REQ"
-    "\020\262\001\022\032\n\025MSG_QUERY_SETTING_ACK\020\263\001\022\033\n\026MSG_U"
-    "PDATE_SETTING_REQ\020\264\001\022\036\n\031MSG_QUERY_RECENT"
-    "_LIST_REQ\020\265\001\022\036\n\031MSG_QUERY_RECENT_LIST_AC"
-    "K\020\266\001\022\034\n\027MSG_QUERY_RANK_LIST_REQ\020\267\001\022\034\n\027MS"
-    "G_QUERY_RANK_LIST_ACK\020\270\001\022#\n\036MSG_QUERY_FR"
-    "IEND_RANK_LIST_REQ\020\271\001\022#\n\036MSG_QUERY_FRIEN"
-    "D_RANK_LIST_ACK\020\272\001\022\032\n\025MSG_COMPOUND_DATA_"
-    "REQ\020\273\001", 6446);
+    "\022.KFMsg.PBRankDatas\"&\n\027MsgSevenSignInRew"
+    "ardReq\022\013\n\003day\030\001 \002(\r\">\n\030MsgTellSevenExten"
+    "dReward\022\022\n\nplayername\030\001 \002(\t\022\016\n\006reward\030\002 "
+    "\002(\t*\315\021\n\016ClientProtocol\022\024\n\020MSG_TELL_BE_KI"
+    "CK\020d\022\030\n\024MSG_LOGIN_VERIFY_REQ\020e\022\030\n\024MSG_LO"
+    "GIN_VERIFY_ACK\020f\022\026\n\022MSG_LOGIN_GAME_REQ\020g"
+    "\022\025\n\021MSG_LOGIN_OUT_REQ\020i\022\026\n\022MSG_RESULT_DI"
+    "SPLAY\020j\022\027\n\023MSG_CREATE_ROLE_REQ\020k\022\027\n\023MSG_"
+    "CHANGE_NAME_REQ\020l\022\026\n\022MSG_CHANGE_SEX_REQ\020"
+    "m\022#\n\037MSG_RECEIVE_ACTIVITY_REWARD_REQ\020n\022\037"
+    "\n\033MSG_RECEIVE_TASK_REWARD_REQ\020o\022\"\n\036MSG_R"
+    "ECEIVE_ACHIEVE_REWARD_REQ\020p\022\037\n\033MSG_RECEI"
+    "VE_GIFT_REWARD_REQ\020q\022\037\n\033MSG_RECEIVE_MAIL"
+    "_REWARD_REQ\020r\022\025\n\021MSG_VIEW_MAIL_REQ\020s\022\027\n\023"
+    "MSG_DELETE_MAIL_REQ\020t\022\026\n\022MSG_QUERY_MAIL_"
+    "REQ\020u\022\027\n\023MSG_START_MATCH_REQ\020v\022\027\n\023MSG_ST"
+    "ART_MATCH_ACK\020w\022\030\n\024MSG_CANCEL_MATCH_REQ\020"
+    "x\022\030\n\024MSG_MATCH_RESULT_ACK\020y\022\035\n\031MSG_ADD_F"
+    "RIEND_INVITE_REQ\020z\022\037\n\033MSG_REPLY_FRIEND_I"
+    "NVITE_REQ\020{\022\026\n\022MSG_DEL_FRIEND_REQ\020|\022\026\n\022M"
+    "SG_ENTER_CHAT_REQ\020~\022\025\n\021MSG_SEND_CHAT_REQ"
+    "\020\177\022\027\n\022MSG_SEND_CHAT_INFO\020\200\001\022\027\n\022MSG_LEAVE"
+    "_CHAT_REQ\020\201\001\022%\n MSG_SET_REFUSE_FRIEND_IN"
+    "VITE_REQ\020\202\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\203\001\022\031\n"
+    "\024MSG_QUERY_PLAYER_REQ\020\204\001\022\026\n\021MSG_BUY_STOR"
+    "E_REQ\020\205\001\022\027\n\022MSG_GIVE_STORE_REQ\020\206\001\022\037\n\032MSG"
+    "_SEND_ONEBYONE_CHAT_REQ\020\207\001\022 \n\033MSG_SEND_O"
+    "NEBYONE_CHAT_INFO\020\210\001\022\030\n\023MSG_CHANGE_ICON_"
+    "REQ\020\211\001\022\032\n\025MSG_DEBUG_COMMAND_REQ\020\217\001\022\031\n\024MS"
+    "G_CHANGE_MOTTO_REQ\020\220\001\022&\n!MSG_SET_MODEL_D"
+    "EFAULT_CLOTHES_REQ\020\221\001\022\031\n\024MSG_PLAYER_TOAS"
+    "T_REQ\020\222\001\022\030\n\023MSG_REMOVE_DATA_REQ\020\223\001\022\032\n\025MS"
+    "G_DRESS_CLOTHES_REQ\020\224\001\022\031\n\024MSG_CHANGE_MOD"
+    "EL_REQ\020\225\001\022\032\n\025MSG_SHOW_REWARD_AGENT\020\226\001\022\037\n"
+    "\032MSG_INVITE_MATCH_GROUP_REQ\020\227\001\022%\n MSG_RE"
+    "PLY_INVITE_MATCH_GROUP_REQ\020\231\001\022\036\n\031MSG_LEA"
+    "VE_MATCH_GROUP_REQ\020\232\001\022\035\n\030MSG_KICK_MATCH_"
+    "GROUP_REQ\020\233\001\022\036\n\031MSG_APPLY_MATCH_GROUP_RE"
+    "Q\020\234\001\022$\n\037MSG_REPLY_APPLY_MATCH_GROUP_REQ\020"
+    "\235\001\022 \n\033MSG_MATCH_GROUP_PREPARE_REQ\020\240\001\022\034\n\027"
+    "MSG_CHANGE_ICON_BOX_REQ\020\241\001\022\030\n\023MSG_QUERY_"
+    "GUEST_REQ\020\242\001\022\030\n\023MSG_QUERY_GUEST_ACK\020\243\001\022\031"
+    "\n\024MSG_CANCEL_MATCH_ACK\020\244\001\022\025\n\020MSG_USE_ITE"
+    "M_REQ\020\245\001\022\036\n\031MSG_QUERY_TOAST_COUNT_REQ\020\246\001"
+    "\022\036\n\031MSG_QUERY_TOAST_COUNT_ACK\020\247\001\022\035\n\030MSG_"
+    "QUERY_STORE_INFO_REQ\020\252\001\022\035\n\030MSG_QUERY_STO"
+    "RE_INFO_ACK\020\253\001\022\026\n\021MSG_BUY_STORE_ACK\020\255\001\022\037"
+    "\n\032MSG_UPDATE_GROUP_MATCH_REQ\020\256\001\022\033\n\026MSG_S"
+    "END_GROUPCHAT_REQ\020\257\001\022\034\n\027MSG_SEND_GROUPCH"
+    "AT_INFO\020\260\001\022\033\n\026MSG_SET_WISH_ORDER_REQ\020\261\001\022"
+    "\032\n\025MSG_QUERY_SETTING_REQ\020\262\001\022\032\n\025MSG_QUERY"
+    "_SETTING_ACK\020\263\001\022\033\n\026MSG_UPDATE_SETTING_RE"
+    "Q\020\264\001\022\036\n\031MSG_QUERY_RECENT_LIST_REQ\020\265\001\022\036\n\031"
+    "MSG_QUERY_RECENT_LIST_ACK\020\266\001\022\034\n\027MSG_QUER"
+    "Y_RANK_LIST_REQ\020\267\001\022\034\n\027MSG_QUERY_RANK_LIS"
+    "T_ACK\020\270\001\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_R"
+    "EQ\020\271\001\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_ACK\020"
+    "\272\001\022\032\n\025MSG_COMPOUND_DATA_REQ\020\273\001\022 \n\033MSG_SE"
+    "VEN_SIGNIN_REWARD_REQ\020\306\001\022!\n\034MSG_TELL_SEV"
+    "EN_EXTEND_REWARD\020\307\001", 6619);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClientMessage.proto", &protobuf_RegisterTypes);
   MsgResultDisplay::default_instance_ = new MsgResultDisplay();
@@ -2052,6 +2101,8 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
   MsgQueryRankListAck::default_instance_ = new MsgQueryRankListAck();
   MsgQueryFriendRankListReq::default_instance_ = new MsgQueryFriendRankListReq();
   MsgQueryFriendRankListAck::default_instance_ = new MsgQueryFriendRankListAck();
+  MsgSevenSignInRewardReq::default_instance_ = new MsgSevenSignInRewardReq();
+  MsgTellSevenExtendReward::default_instance_ = new MsgTellSevenExtendReward();
   MsgResultDisplay::default_instance_->InitAsDefaultInstance();
   MsgTellBeKick::default_instance_->InitAsDefaultInstance();
   MsgLoginVerifyReq::default_instance_->InitAsDefaultInstance();
@@ -2129,6 +2180,8 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
   MsgQueryRankListAck::default_instance_->InitAsDefaultInstance();
   MsgQueryFriendRankListReq::default_instance_->InitAsDefaultInstance();
   MsgQueryFriendRankListAck::default_instance_->InitAsDefaultInstance();
+  MsgSevenSignInRewardReq::default_instance_->InitAsDefaultInstance();
+  MsgTellSevenExtendReward::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFClientMessage_2eproto);
 }
 
@@ -2219,6 +2272,8 @@ bool ClientProtocol_IsValid(int value) {
     case 185:
     case 186:
     case 187:
+    case 198:
+    case 199:
       return true;
     default:
       return false;
@@ -21169,6 +21224,498 @@ void MsgQueryFriendRankListAck::Swap(MsgQueryFriendRankListAck* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgQueryFriendRankListAck_descriptor_;
   metadata.reflection = MsgQueryFriendRankListAck_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgSevenSignInRewardReq::kDayFieldNumber;
+#endif  // !_MSC_VER
+
+MsgSevenSignInRewardReq::MsgSevenSignInRewardReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgSevenSignInRewardReq::InitAsDefaultInstance() {
+}
+
+MsgSevenSignInRewardReq::MsgSevenSignInRewardReq(const MsgSevenSignInRewardReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgSevenSignInRewardReq::SharedCtor() {
+  _cached_size_ = 0;
+  day_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgSevenSignInRewardReq::~MsgSevenSignInRewardReq() {
+  SharedDtor();
+}
+
+void MsgSevenSignInRewardReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void MsgSevenSignInRewardReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgSevenSignInRewardReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgSevenSignInRewardReq_descriptor_;
+}
+
+const MsgSevenSignInRewardReq& MsgSevenSignInRewardReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFClientMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgSevenSignInRewardReq* MsgSevenSignInRewardReq::default_instance_ = NULL;
+
+MsgSevenSignInRewardReq* MsgSevenSignInRewardReq::New() const {
+  return new MsgSevenSignInRewardReq;
+}
+
+void MsgSevenSignInRewardReq::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    day_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgSevenSignInRewardReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 day = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &day_)));
+          set_has_day();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgSevenSignInRewardReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint32 day = 1;
+  if (has_day()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->day(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgSevenSignInRewardReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 day = 1;
+  if (has_day()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->day(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgSevenSignInRewardReq::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 day = 1;
+    if (has_day()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->day());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgSevenSignInRewardReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgSevenSignInRewardReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgSevenSignInRewardReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgSevenSignInRewardReq::MergeFrom(const MsgSevenSignInRewardReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_day()) {
+      set_day(from.day());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgSevenSignInRewardReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgSevenSignInRewardReq::CopyFrom(const MsgSevenSignInRewardReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgSevenSignInRewardReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void MsgSevenSignInRewardReq::Swap(MsgSevenSignInRewardReq* other) {
+  if (other != this) {
+    std::swap(day_, other->day_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgSevenSignInRewardReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgSevenSignInRewardReq_descriptor_;
+  metadata.reflection = MsgSevenSignInRewardReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgTellSevenExtendReward::kPlayernameFieldNumber;
+const int MsgTellSevenExtendReward::kRewardFieldNumber;
+#endif  // !_MSC_VER
+
+MsgTellSevenExtendReward::MsgTellSevenExtendReward()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgTellSevenExtendReward::InitAsDefaultInstance() {
+}
+
+MsgTellSevenExtendReward::MsgTellSevenExtendReward(const MsgTellSevenExtendReward& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgTellSevenExtendReward::SharedCtor() {
+  _cached_size_ = 0;
+  playername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgTellSevenExtendReward::~MsgTellSevenExtendReward() {
+  SharedDtor();
+}
+
+void MsgTellSevenExtendReward::SharedDtor() {
+  if (playername_ != &::google::protobuf::internal::kEmptyString) {
+    delete playername_;
+  }
+  if (reward_ != &::google::protobuf::internal::kEmptyString) {
+    delete reward_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void MsgTellSevenExtendReward::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgTellSevenExtendReward::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgTellSevenExtendReward_descriptor_;
+}
+
+const MsgTellSevenExtendReward& MsgTellSevenExtendReward::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFClientMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgTellSevenExtendReward* MsgTellSevenExtendReward::default_instance_ = NULL;
+
+MsgTellSevenExtendReward* MsgTellSevenExtendReward::New() const {
+  return new MsgTellSevenExtendReward;
+}
+
+void MsgTellSevenExtendReward::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_playername()) {
+      if (playername_ != &::google::protobuf::internal::kEmptyString) {
+        playername_->clear();
+      }
+    }
+    if (has_reward()) {
+      if (reward_ != &::google::protobuf::internal::kEmptyString) {
+        reward_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgTellSevenExtendReward::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string playername = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_playername()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->playername().data(), this->playername().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_reward;
+        break;
+      }
+
+      // required string reward = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_reward:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_reward()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->reward().data(), this->reward().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgTellSevenExtendReward::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required string playername = 1;
+  if (has_playername()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->playername().data(), this->playername().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->playername(), output);
+  }
+
+  // required string reward = 2;
+  if (has_reward()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->reward().data(), this->reward().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->reward(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgTellSevenExtendReward::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required string playername = 1;
+  if (has_playername()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->playername().data(), this->playername().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->playername(), target);
+  }
+
+  // required string reward = 2;
+  if (has_reward()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->reward().data(), this->reward().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->reward(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgTellSevenExtendReward::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string playername = 1;
+    if (has_playername()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->playername());
+    }
+
+    // required string reward = 2;
+    if (has_reward()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->reward());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgTellSevenExtendReward::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgTellSevenExtendReward* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgTellSevenExtendReward*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgTellSevenExtendReward::MergeFrom(const MsgTellSevenExtendReward& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_playername()) {
+      set_playername(from.playername());
+    }
+    if (from.has_reward()) {
+      set_reward(from.reward());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgTellSevenExtendReward::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgTellSevenExtendReward::CopyFrom(const MsgTellSevenExtendReward& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgTellSevenExtendReward::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+
+  return true;
+}
+
+void MsgTellSevenExtendReward::Swap(MsgTellSevenExtendReward* other) {
+  if (other != this) {
+    std::swap(playername_, other->playername_);
+    std::swap(reward_, other->reward_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgTellSevenExtendReward::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgTellSevenExtendReward_descriptor_;
+  metadata.reflection = MsgTellSevenExtendReward_reflection_;
   return metadata;
 }
 

@@ -142,9 +142,7 @@ namespace KFrame
         {
             if ( line != _invalid_int )
             {
-                auto strkey = __TO_STRING__( key );
-                KFLogger::LogLogic( KFLogger::Error, "[%s:%u] can't find entity[%s:%s]!",
-                                    function, line, _component_name.c_str(), strkey.c_str() );
+                __LOG_INFO__( KFLogEnum::Logic, "can't find entity[{}:{}]!", _component_name, key );
             }
         }
 
@@ -158,7 +156,7 @@ namespace KFrame
 
     bool KFComponentEx::RemoveEntity( uint64 key )
     {
-        auto kfentity = FindEntity( key, __FUNCTION_LINE__ );
+        auto kfentity = FindEntity( key, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return false;
@@ -557,13 +555,13 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFComponentEx::OnTimerSaveEntity )
     {
-        auto kfentity = FindEntity( objectid, __FUNCTION_LINE__ );
+        auto kfentity = FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return;
         }
 
-        SaveEntity( kfentity, __FUNCTION_LINE__ );
+        SaveEntity( kfentity, __FUNC_LINE__ );
     }
 
     void KFComponentEx::DeleteSaveEntity( KFEntity* kfentity )
@@ -572,11 +570,11 @@ namespace KFrame
         {
             // 删除定时器
             __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
-            SaveEntity( kfentity, __FUNCTION_LINE__ );
+            SaveEntity( kfentity, __FUNC_LINE__ );
         }
         else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_SAVE__ ) )
         {
-            SaveEntity( kfentity, __FUNCTION_LINE__ );
+            SaveEntity( kfentity, __FUNC_LINE__ );
         }
         else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_REMOVE__ ) )
         {
@@ -588,7 +586,6 @@ namespace KFrame
     {
         if ( _entity_save_function != nullptr )
         {
-            //KFLogger::LogLogic( KFLogger::Debug, "[%s:%u] save entity!", function, line );
             _entity_save_function( kfentity );
         }
     }

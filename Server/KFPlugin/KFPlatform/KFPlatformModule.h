@@ -15,7 +15,9 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-
+#include "KFConfig/KFConfigInterface.h"
+#include "KFRedis/KFRedisInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

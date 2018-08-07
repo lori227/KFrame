@@ -12,18 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFHiRedis.cpp" />
     <ClCompile Include="KFRedisConfig.cpp" />
     <ClCompile Include="KFRedisExecute.cpp" />
-    <ClCompile Include="KFRedisFormat.cpp" />
     <ClCompile Include="KFRedisManage.cpp" />
     <ClCompile Include="KFRedisModule.cpp" />
     <ClCompile Include="KFRedisPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFHiRedis.h" />
     <ClInclude Include="KFRedisConfig.h" />
-    <ClInclude Include="KFRedisException.h" />
     <ClInclude Include="KFRedisExecute.h" />
     <ClInclude Include="KFRedisFormat.h" />
     <ClInclude Include="KFRedisInterface.h" />
@@ -87,7 +83,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <IgnoreSpecificDefaultLibraries>WSOCK32.lib</IgnoreSpecificDefaultLibraries>
@@ -120,7 +116,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>

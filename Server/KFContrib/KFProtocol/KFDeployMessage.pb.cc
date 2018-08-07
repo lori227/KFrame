@@ -32,27 +32,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* S2SUpdateServerStatusReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   S2SUpdateServerStatusReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SStartupServerToAgentReq_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* PBDeployCommand_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SStartupServerToAgentReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SShutDownServerToAgentReq_descriptor_ = NULL;
+  PBDeployCommand_reflection_ = NULL;
+const ::google::protobuf::Descriptor* S2SDeployCommandToAgentReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SShutDownServerToAgentReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SShutDownServerToMasterReq_descriptor_ = NULL;
+  S2SDeployCommandToAgentReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* S2SDeployCommandToMasterReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SShutDownServerToMasterReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SShutDownServerToServerReq_descriptor_ = NULL;
+  S2SDeployCommandToMasterReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* S2SDeployCommandToServerReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SShutDownServerToServerReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SKillServerToAgentReq_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SKillServerToAgentReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SUpdateServerToAgentReq_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SUpdateServerToAgentReq_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SRestartServerToAgentReq_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SRestartServerToAgentReq_reflection_ = NULL;
+  S2SDeployCommandToServerReq_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* DeployProtocol_descriptor_ = NULL;
 
 }  // namespace
@@ -139,136 +130,71 @@ void protobuf_AssignDesc_KFDeployMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SUpdateServerStatusReq));
-  S2SStartupServerToAgentReq_descriptor_ = file->message_type(4);
-  static const int S2SStartupServerToAgentReq_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, zoneid_),
+  PBDeployCommand_descriptor_ = file->message_type(4);
+  static const int PBDeployCommand_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, command_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, appname_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, apptype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, appid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, zoneid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, value_),
   };
-  S2SStartupServerToAgentReq_reflection_ =
+  PBDeployCommand_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SStartupServerToAgentReq_descriptor_,
-      S2SStartupServerToAgentReq::default_instance_,
-      S2SStartupServerToAgentReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SStartupServerToAgentReq, _unknown_fields_),
+      PBDeployCommand_descriptor_,
+      PBDeployCommand::default_instance_,
+      PBDeployCommand_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SStartupServerToAgentReq));
-  S2SShutDownServerToAgentReq_descriptor_ = file->message_type(5);
-  static const int S2SShutDownServerToAgentReq_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, zoneid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, delaytime_),
+      sizeof(PBDeployCommand));
+  S2SDeployCommandToAgentReq_descriptor_ = file->message_type(5);
+  static const int S2SDeployCommandToAgentReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToAgentReq, deploycommand_),
   };
-  S2SShutDownServerToAgentReq_reflection_ =
+  S2SDeployCommandToAgentReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SShutDownServerToAgentReq_descriptor_,
-      S2SShutDownServerToAgentReq::default_instance_,
-      S2SShutDownServerToAgentReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToAgentReq, _unknown_fields_),
+      S2SDeployCommandToAgentReq_descriptor_,
+      S2SDeployCommandToAgentReq::default_instance_,
+      S2SDeployCommandToAgentReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToAgentReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToAgentReq, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SShutDownServerToAgentReq));
-  S2SShutDownServerToMasterReq_descriptor_ = file->message_type(6);
-  static const int S2SShutDownServerToMasterReq_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, zoneid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, delaytime_),
+      sizeof(S2SDeployCommandToAgentReq));
+  S2SDeployCommandToMasterReq_descriptor_ = file->message_type(6);
+  static const int S2SDeployCommandToMasterReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToMasterReq, deploycommand_),
   };
-  S2SShutDownServerToMasterReq_reflection_ =
+  S2SDeployCommandToMasterReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SShutDownServerToMasterReq_descriptor_,
-      S2SShutDownServerToMasterReq::default_instance_,
-      S2SShutDownServerToMasterReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToMasterReq, _unknown_fields_),
+      S2SDeployCommandToMasterReq_descriptor_,
+      S2SDeployCommandToMasterReq::default_instance_,
+      S2SDeployCommandToMasterReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToMasterReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToMasterReq, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SShutDownServerToMasterReq));
-  S2SShutDownServerToServerReq_descriptor_ = file->message_type(7);
-  static const int S2SShutDownServerToServerReq_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, zoneid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, delaytime_),
+      sizeof(S2SDeployCommandToMasterReq));
+  S2SDeployCommandToServerReq_descriptor_ = file->message_type(7);
+  static const int S2SDeployCommandToServerReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToServerReq, deploycommand_),
   };
-  S2SShutDownServerToServerReq_reflection_ =
+  S2SDeployCommandToServerReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SShutDownServerToServerReq_descriptor_,
-      S2SShutDownServerToServerReq::default_instance_,
-      S2SShutDownServerToServerReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SShutDownServerToServerReq, _unknown_fields_),
+      S2SDeployCommandToServerReq_descriptor_,
+      S2SDeployCommandToServerReq::default_instance_,
+      S2SDeployCommandToServerReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToServerReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SDeployCommandToServerReq, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SShutDownServerToServerReq));
-  S2SKillServerToAgentReq_descriptor_ = file->message_type(8);
-  static const int S2SKillServerToAgentReq_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, zoneid_),
-  };
-  S2SKillServerToAgentReq_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SKillServerToAgentReq_descriptor_,
-      S2SKillServerToAgentReq::default_instance_,
-      S2SKillServerToAgentReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SKillServerToAgentReq, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SKillServerToAgentReq));
-  S2SUpdateServerToAgentReq_descriptor_ = file->message_type(9);
-  static const int S2SUpdateServerToAgentReq_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, zoneid_),
-  };
-  S2SUpdateServerToAgentReq_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SUpdateServerToAgentReq_descriptor_,
-      S2SUpdateServerToAgentReq::default_instance_,
-      S2SUpdateServerToAgentReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SUpdateServerToAgentReq, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SUpdateServerToAgentReq));
-  S2SRestartServerToAgentReq_descriptor_ = file->message_type(10);
-  static const int S2SRestartServerToAgentReq_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, appname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, apptype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, appid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, zoneid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, delaytime_),
-  };
-  S2SRestartServerToAgentReq_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SRestartServerToAgentReq_descriptor_,
-      S2SRestartServerToAgentReq::default_instance_,
-      S2SRestartServerToAgentReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRestartServerToAgentReq, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SRestartServerToAgentReq));
+      sizeof(S2SDeployCommandToServerReq));
   DeployProtocol_descriptor_ = file->enum_type(0);
 }
 
@@ -291,19 +217,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     S2SUpdateServerStatusReq_descriptor_, &S2SUpdateServerStatusReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SStartupServerToAgentReq_descriptor_, &S2SStartupServerToAgentReq::default_instance());
+    PBDeployCommand_descriptor_, &PBDeployCommand::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SShutDownServerToAgentReq_descriptor_, &S2SShutDownServerToAgentReq::default_instance());
+    S2SDeployCommandToAgentReq_descriptor_, &S2SDeployCommandToAgentReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SShutDownServerToMasterReq_descriptor_, &S2SShutDownServerToMasterReq::default_instance());
+    S2SDeployCommandToMasterReq_descriptor_, &S2SDeployCommandToMasterReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SShutDownServerToServerReq_descriptor_, &S2SShutDownServerToServerReq::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SKillServerToAgentReq_descriptor_, &S2SKillServerToAgentReq::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SUpdateServerToAgentReq_descriptor_, &S2SUpdateServerToAgentReq::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SRestartServerToAgentReq_descriptor_, &S2SRestartServerToAgentReq::default_instance());
+    S2SDeployCommandToServerReq_descriptor_, &S2SDeployCommandToServerReq::default_instance());
 }
 
 }  // namespace
@@ -317,20 +237,14 @@ void protobuf_ShutdownFile_KFDeployMessage_2eproto() {
   delete S2SGetAgentIpAddressAck_reflection_;
   delete S2SUpdateServerStatusReq::default_instance_;
   delete S2SUpdateServerStatusReq_reflection_;
-  delete S2SStartupServerToAgentReq::default_instance_;
-  delete S2SStartupServerToAgentReq_reflection_;
-  delete S2SShutDownServerToAgentReq::default_instance_;
-  delete S2SShutDownServerToAgentReq_reflection_;
-  delete S2SShutDownServerToMasterReq::default_instance_;
-  delete S2SShutDownServerToMasterReq_reflection_;
-  delete S2SShutDownServerToServerReq::default_instance_;
-  delete S2SShutDownServerToServerReq_reflection_;
-  delete S2SKillServerToAgentReq::default_instance_;
-  delete S2SKillServerToAgentReq_reflection_;
-  delete S2SUpdateServerToAgentReq::default_instance_;
-  delete S2SUpdateServerToAgentReq_reflection_;
-  delete S2SRestartServerToAgentReq::default_instance_;
-  delete S2SRestartServerToAgentReq_reflection_;
+  delete PBDeployCommand::default_instance_;
+  delete PBDeployCommand_reflection_;
+  delete S2SDeployCommandToAgentReq::default_instance_;
+  delete S2SDeployCommandToAgentReq_reflection_;
+  delete S2SDeployCommandToMasterReq::default_instance_;
+  delete S2SDeployCommandToMasterReq_reflection_;
+  delete S2SDeployCommandToServerReq::default_instance_;
+  delete S2SDeployCommandToServerReq_reflection_;
 }
 
 void protobuf_AddDesc_KFDeployMessage_2eproto() {
@@ -351,60 +265,40 @@ void protobuf_AddDesc_KFDeployMessage_2eproto() {
     "tid\030\001 \002(\r\022\r\n\005appid\030\002 \002(\r\022\017\n\007appname\030\003 \002("
     "\t\022\017\n\007apptype\030\004 \002(\t\022\016\n\006zoneid\030\005 \002(\r\022\017\n\007pr"
     "ocess\030\006 \002(\r\022\023\n\013startuptime\030\007 \002(\004\022\022\n\nissh"
-    "utdown\030\010 \002(\r\"]\n\032S2SStartupServerToAgentR"
-    "eq\022\017\n\007appname\030\001 \002(\t\022\017\n\007apptype\030\002 \002(\t\022\r\n\005"
-    "appid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r\"q\n\033S2SShutDo"
-    "wnServerToAgentReq\022\017\n\007appname\030\001 \002(\t\022\017\n\007a"
-    "pptype\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022\016\n\006zoneid\030\004 "
-    "\002(\r\022\021\n\tdelaytime\030\005 \002(\r\"r\n\034S2SShutDownSer"
-    "verToMasterReq\022\017\n\007appname\030\001 \002(\t\022\017\n\007appty"
-    "pe\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r\022"
-    "\021\n\tdelaytime\030\005 \002(\r\"r\n\034S2SShutDownServerT"
-    "oServerReq\022\017\n\007appname\030\001 \002(\t\022\017\n\007apptype\030\002"
-    " \002(\t\022\r\n\005appid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r\022\021\n\td"
-    "elaytime\030\005 \002(\r\"Z\n\027S2SKillServerToAgentRe"
-    "q\022\017\n\007appname\030\001 \002(\t\022\017\n\007apptype\030\002 \002(\t\022\r\n\005a"
-    "ppid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r\"\\\n\031S2SUpdateS"
-    "erverToAgentReq\022\017\n\007appname\030\001 \002(\t\022\017\n\007appt"
-    "ype\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022\016\n\006zoneid\030\004 \002(\r"
-    "\"p\n\032S2SRestartServerToAgentReq\022\017\n\007appnam"
-    "e\030\001 \002(\t\022\017\n\007apptype\030\002 \002(\t\022\r\n\005appid\030\003 \002(\r\022"
-    "\016\n\006zoneid\030\004 \002(\r\022\021\n\tdelaytime\030\005 \002(\r*\256\003\n\016D"
-    "eployProtocol\022%\n S2S_REGISTER_AGENT_TO_S"
-    "ERVER_REQ\020\275P\022!\n\034S2S_UPDATE_SERVER_STATUS"
-    "_REQ\020\276P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_REQ\020"
-    "\277P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_ACK\020\300P\022$\n"
-    "\037S2S_STARTUP_SERVER_TO_AGENT_REQ\020\301P\022&\n!S"
-    "2S_SHUT_DOWN_SERVER_TO_AGENT_REQ\020\302P\022\'\n\"S"
-    "2S_SHUT_DOWN_SERVER_TO_MASTER_REQ\020\303P\022\'\n\""
-    "S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ\020\304P\022!\n"
-    "\034S2S_KILL_SERVER_TO_AGENT_REQ\020\305P\022#\n\036S2S_"
-    "UPDATE_SERVER_TO_AGENT_REQ\020\306P\022$\n\037S2S_RES"
-    "TART_SERVER_TO_AGENT_REQ\020\307P", 1627);
+    "utdown\030\010 \002(\r\"r\n\017PBDeployCommand\022\017\n\007comma"
+    "nd\030\001 \002(\t\022\017\n\007appname\030\002 \002(\t\022\017\n\007apptype\030\003 \002"
+    "(\t\022\r\n\005appid\030\004 \002(\r\022\016\n\006zoneid\030\005 \002(\r\022\r\n\005val"
+    "ue\030\006 \002(\t\"K\n\032S2SDeployCommandToAgentReq\022-"
+    "\n\rdeploycommand\030\001 \002(\0132\026.KFMsg.PBDeployCo"
+    "mmand\"L\n\033S2SDeployCommandToMasterReq\022-\n\r"
+    "deploycommand\030\001 \002(\0132\026.KFMsg.PBDeployComm"
+    "and\"L\n\033S2SDeployCommandToServerReq\022-\n\rde"
+    "ploycommand\030\001 \002(\0132\026.KFMsg.PBDeployComman"
+    "d*\224\002\n\016DeployProtocol\022%\n S2S_REGISTER_AGE"
+    "NT_TO_SERVER_REQ\020\275P\022!\n\034S2S_UPDATE_SERVER"
+    "_STATUS_REQ\020\276P\022!\n\034S2S_GET_AGENT_IP_ADDRE"
+    "SS_REQ\020\277P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_AC"
+    "K\020\300P\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020"
+    "\301P\022%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ\020\302"
+    "P\022%\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020\303P", 1080);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDeployMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterAgentToServerReq::default_instance_ = new S2SRegisterAgentToServerReq();
   S2SGetAgentIpAddressReq::default_instance_ = new S2SGetAgentIpAddressReq();
   S2SGetAgentIpAddressAck::default_instance_ = new S2SGetAgentIpAddressAck();
   S2SUpdateServerStatusReq::default_instance_ = new S2SUpdateServerStatusReq();
-  S2SStartupServerToAgentReq::default_instance_ = new S2SStartupServerToAgentReq();
-  S2SShutDownServerToAgentReq::default_instance_ = new S2SShutDownServerToAgentReq();
-  S2SShutDownServerToMasterReq::default_instance_ = new S2SShutDownServerToMasterReq();
-  S2SShutDownServerToServerReq::default_instance_ = new S2SShutDownServerToServerReq();
-  S2SKillServerToAgentReq::default_instance_ = new S2SKillServerToAgentReq();
-  S2SUpdateServerToAgentReq::default_instance_ = new S2SUpdateServerToAgentReq();
-  S2SRestartServerToAgentReq::default_instance_ = new S2SRestartServerToAgentReq();
+  PBDeployCommand::default_instance_ = new PBDeployCommand();
+  S2SDeployCommandToAgentReq::default_instance_ = new S2SDeployCommandToAgentReq();
+  S2SDeployCommandToMasterReq::default_instance_ = new S2SDeployCommandToMasterReq();
+  S2SDeployCommandToServerReq::default_instance_ = new S2SDeployCommandToServerReq();
   S2SRegisterAgentToServerReq::default_instance_->InitAsDefaultInstance();
   S2SGetAgentIpAddressReq::default_instance_->InitAsDefaultInstance();
   S2SGetAgentIpAddressAck::default_instance_->InitAsDefaultInstance();
   S2SUpdateServerStatusReq::default_instance_->InitAsDefaultInstance();
-  S2SStartupServerToAgentReq::default_instance_->InitAsDefaultInstance();
-  S2SShutDownServerToAgentReq::default_instance_->InitAsDefaultInstance();
-  S2SShutDownServerToMasterReq::default_instance_->InitAsDefaultInstance();
-  S2SShutDownServerToServerReq::default_instance_->InitAsDefaultInstance();
-  S2SKillServerToAgentReq::default_instance_->InitAsDefaultInstance();
-  S2SUpdateServerToAgentReq::default_instance_->InitAsDefaultInstance();
-  S2SRestartServerToAgentReq::default_instance_->InitAsDefaultInstance();
+  PBDeployCommand::default_instance_->InitAsDefaultInstance();
+  S2SDeployCommandToAgentReq::default_instance_->InitAsDefaultInstance();
+  S2SDeployCommandToMasterReq::default_instance_->InitAsDefaultInstance();
+  S2SDeployCommandToServerReq::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFDeployMessage_2eproto);
 }
 
@@ -427,10 +321,6 @@ bool DeployProtocol_IsValid(int value) {
     case 10305:
     case 10306:
     case 10307:
-    case 10308:
-    case 10309:
-    case 10310:
-    case 10311:
       return true;
     default:
       return false;
@@ -2030,73 +1920,88 @@ void S2SUpdateServerStatusReq::Swap(S2SUpdateServerStatusReq* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SStartupServerToAgentReq::kAppnameFieldNumber;
-const int S2SStartupServerToAgentReq::kApptypeFieldNumber;
-const int S2SStartupServerToAgentReq::kAppidFieldNumber;
-const int S2SStartupServerToAgentReq::kZoneidFieldNumber;
+const int PBDeployCommand::kCommandFieldNumber;
+const int PBDeployCommand::kAppnameFieldNumber;
+const int PBDeployCommand::kApptypeFieldNumber;
+const int PBDeployCommand::kAppidFieldNumber;
+const int PBDeployCommand::kZoneidFieldNumber;
+const int PBDeployCommand::kValueFieldNumber;
 #endif  // !_MSC_VER
 
-S2SStartupServerToAgentReq::S2SStartupServerToAgentReq()
+PBDeployCommand::PBDeployCommand()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void S2SStartupServerToAgentReq::InitAsDefaultInstance() {
+void PBDeployCommand::InitAsDefaultInstance() {
 }
 
-S2SStartupServerToAgentReq::S2SStartupServerToAgentReq(const S2SStartupServerToAgentReq& from)
+PBDeployCommand::PBDeployCommand(const PBDeployCommand& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void S2SStartupServerToAgentReq::SharedCtor() {
+void PBDeployCommand::SharedCtor() {
   _cached_size_ = 0;
+  command_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   appid_ = 0u;
   zoneid_ = 0u;
+  value_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-S2SStartupServerToAgentReq::~S2SStartupServerToAgentReq() {
+PBDeployCommand::~PBDeployCommand() {
   SharedDtor();
 }
 
-void S2SStartupServerToAgentReq::SharedDtor() {
+void PBDeployCommand::SharedDtor() {
+  if (command_ != &::google::protobuf::internal::kEmptyString) {
+    delete command_;
+  }
   if (appname_ != &::google::protobuf::internal::kEmptyString) {
     delete appname_;
   }
   if (apptype_ != &::google::protobuf::internal::kEmptyString) {
     delete apptype_;
   }
+  if (value_ != &::google::protobuf::internal::kEmptyString) {
+    delete value_;
+  }
   if (this != default_instance_) {
   }
 }
 
-void S2SStartupServerToAgentReq::SetCachedSize(int size) const {
+void PBDeployCommand::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* S2SStartupServerToAgentReq::descriptor() {
+const ::google::protobuf::Descriptor* PBDeployCommand::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return S2SStartupServerToAgentReq_descriptor_;
+  return PBDeployCommand_descriptor_;
 }
 
-const S2SStartupServerToAgentReq& S2SStartupServerToAgentReq::default_instance() {
+const PBDeployCommand& PBDeployCommand::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
   return *default_instance_;
 }
 
-S2SStartupServerToAgentReq* S2SStartupServerToAgentReq::default_instance_ = NULL;
+PBDeployCommand* PBDeployCommand::default_instance_ = NULL;
 
-S2SStartupServerToAgentReq* S2SStartupServerToAgentReq::New() const {
-  return new S2SStartupServerToAgentReq;
+PBDeployCommand* PBDeployCommand::New() const {
+  return new PBDeployCommand;
 }
 
-void S2SStartupServerToAgentReq::Clear() {
+void PBDeployCommand::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_command()) {
+      if (command_ != &::google::protobuf::internal::kEmptyString) {
+        command_->clear();
+      }
+    }
     if (has_appname()) {
       if (appname_ != &::google::protobuf::internal::kEmptyString) {
         appname_->clear();
@@ -2109,21 +2014,43 @@ void S2SStartupServerToAgentReq::Clear() {
     }
     appid_ = 0u;
     zoneid_ = 0u;
+    if (has_value()) {
+      if (value_ != &::google::protobuf::internal::kEmptyString) {
+        value_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool S2SStartupServerToAgentReq::MergePartialFromCodedStream(
+bool PBDeployCommand::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
+      // required string command = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_command()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->command().data(), this->command().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_appname;
+        break;
+      }
+
+      // required string appname = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_appname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_appname()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
@@ -2132,12 +2059,12 @@ bool S2SStartupServerToAgentReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_apptype;
+        if (input->ExpectTag(26)) goto parse_apptype;
         break;
       }
 
-      // required string apptype = 2;
-      case 2: {
+      // required string apptype = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_apptype:
@@ -2149,12 +2076,12 @@ bool S2SStartupServerToAgentReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(24)) goto parse_appid;
+        if (input->ExpectTag(32)) goto parse_appid;
         break;
       }
 
-      // required uint32 appid = 3;
-      case 3: {
+      // required uint32 appid = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_appid:
@@ -2165,783 +2092,14 @@ bool S2SStartupServerToAgentReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(32)) goto parse_zoneid;
+        if (input->ExpectTag(40)) goto parse_zoneid;
         break;
       }
 
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void S2SStartupServerToAgentReq::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* S2SStartupServerToAgentReq::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int S2SStartupServerToAgentReq::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void S2SStartupServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const S2SStartupServerToAgentReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SStartupServerToAgentReq*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void S2SStartupServerToAgentReq::MergeFrom(const S2SStartupServerToAgentReq& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void S2SStartupServerToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SStartupServerToAgentReq::CopyFrom(const S2SStartupServerToAgentReq& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SStartupServerToAgentReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-
-  return true;
-}
-
-void S2SStartupServerToAgentReq::Swap(S2SStartupServerToAgentReq* other) {
-  if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata S2SStartupServerToAgentReq::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SStartupServerToAgentReq_descriptor_;
-  metadata.reflection = S2SStartupServerToAgentReq_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int S2SShutDownServerToAgentReq::kAppnameFieldNumber;
-const int S2SShutDownServerToAgentReq::kApptypeFieldNumber;
-const int S2SShutDownServerToAgentReq::kAppidFieldNumber;
-const int S2SShutDownServerToAgentReq::kZoneidFieldNumber;
-const int S2SShutDownServerToAgentReq::kDelaytimeFieldNumber;
-#endif  // !_MSC_VER
-
-S2SShutDownServerToAgentReq::S2SShutDownServerToAgentReq()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void S2SShutDownServerToAgentReq::InitAsDefaultInstance() {
-}
-
-S2SShutDownServerToAgentReq::S2SShutDownServerToAgentReq(const S2SShutDownServerToAgentReq& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void S2SShutDownServerToAgentReq::SharedCtor() {
-  _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
-  delaytime_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-S2SShutDownServerToAgentReq::~S2SShutDownServerToAgentReq() {
-  SharedDtor();
-}
-
-void S2SShutDownServerToAgentReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void S2SShutDownServerToAgentReq::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* S2SShutDownServerToAgentReq::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return S2SShutDownServerToAgentReq_descriptor_;
-}
-
-const S2SShutDownServerToAgentReq& S2SShutDownServerToAgentReq::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
-  return *default_instance_;
-}
-
-S2SShutDownServerToAgentReq* S2SShutDownServerToAgentReq::default_instance_ = NULL;
-
-S2SShutDownServerToAgentReq* S2SShutDownServerToAgentReq::New() const {
-  return new S2SShutDownServerToAgentReq;
-}
-
-void S2SShutDownServerToAgentReq::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
-    }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
-    delaytime_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool S2SShutDownServerToAgentReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_delaytime;
-        break;
-      }
-
-      // required uint32 delaytime = 5;
+      // required uint32 zoneid = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_delaytime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &delaytime_)));
-          set_has_delaytime();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void S2SShutDownServerToAgentReq::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->delaytime(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* S2SShutDownServerToAgentReq::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->delaytime(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int S2SShutDownServerToAgentReq::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
-    }
-
-    // required uint32 delaytime = 5;
-    if (has_delaytime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->delaytime());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void S2SShutDownServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const S2SShutDownServerToAgentReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SShutDownServerToAgentReq*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void S2SShutDownServerToAgentReq::MergeFrom(const S2SShutDownServerToAgentReq& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
-    }
-    if (from.has_delaytime()) {
-      set_delaytime(from.delaytime());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void S2SShutDownServerToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SShutDownServerToAgentReq::CopyFrom(const S2SShutDownServerToAgentReq& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SShutDownServerToAgentReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-
-  return true;
-}
-
-void S2SShutDownServerToAgentReq::Swap(S2SShutDownServerToAgentReq* other) {
-  if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
-    std::swap(delaytime_, other->delaytime_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata S2SShutDownServerToAgentReq::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SShutDownServerToAgentReq_descriptor_;
-  metadata.reflection = S2SShutDownServerToAgentReq_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int S2SShutDownServerToMasterReq::kAppnameFieldNumber;
-const int S2SShutDownServerToMasterReq::kApptypeFieldNumber;
-const int S2SShutDownServerToMasterReq::kAppidFieldNumber;
-const int S2SShutDownServerToMasterReq::kZoneidFieldNumber;
-const int S2SShutDownServerToMasterReq::kDelaytimeFieldNumber;
-#endif  // !_MSC_VER
-
-S2SShutDownServerToMasterReq::S2SShutDownServerToMasterReq()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void S2SShutDownServerToMasterReq::InitAsDefaultInstance() {
-}
-
-S2SShutDownServerToMasterReq::S2SShutDownServerToMasterReq(const S2SShutDownServerToMasterReq& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void S2SShutDownServerToMasterReq::SharedCtor() {
-  _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
-  delaytime_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-S2SShutDownServerToMasterReq::~S2SShutDownServerToMasterReq() {
-  SharedDtor();
-}
-
-void S2SShutDownServerToMasterReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void S2SShutDownServerToMasterReq::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* S2SShutDownServerToMasterReq::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return S2SShutDownServerToMasterReq_descriptor_;
-}
-
-const S2SShutDownServerToMasterReq& S2SShutDownServerToMasterReq::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
-  return *default_instance_;
-}
-
-S2SShutDownServerToMasterReq* S2SShutDownServerToMasterReq::default_instance_ = NULL;
-
-S2SShutDownServerToMasterReq* S2SShutDownServerToMasterReq::New() const {
-  return new S2SShutDownServerToMasterReq;
-}
-
-void S2SShutDownServerToMasterReq::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
-    }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
-    delaytime_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool S2SShutDownServerToMasterReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_zoneid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -2950,19 +2108,20 @@ bool S2SShutDownServerToMasterReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(40)) goto parse_delaytime;
+        if (input->ExpectTag(50)) goto parse_value;
         break;
       }
 
-      // required uint32 delaytime = 5;
-      case 5: {
+      // required string value = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_delaytime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &delaytime_)));
-          set_has_delaytime();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_value:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_value()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->value().data(), this->value().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2986,39 +2145,52 @@ bool S2SShutDownServerToMasterReq::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void S2SShutDownServerToMasterReq::SerializeWithCachedSizes(
+void PBDeployCommand::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
+  // required string command = 1;
+  if (has_command()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->command().data(), this->command().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->command(), output);
+  }
+
+  // required string appname = 2;
   if (has_appname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->appname().data(), this->appname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
+      2, this->appname(), output);
   }
 
-  // required string apptype = 2;
+  // required string apptype = 3;
   if (has_apptype()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->apptype().data(), this->apptype().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
+      3, this->apptype(), output);
   }
 
-  // required uint32 appid = 3;
+  // required uint32 appid = 4;
   if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->appid(), output);
   }
 
-  // required uint32 zoneid = 4;
+  // required uint32 zoneid = 5;
   if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->zoneid(), output);
   }
 
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->delaytime(), output);
+  // required string value = 6;
+  if (has_value()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->value().data(), this->value().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      6, this->value(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3027,41 +2199,56 @@ void S2SShutDownServerToMasterReq::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* S2SShutDownServerToMasterReq::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PBDeployCommand::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
+  // required string command = 1;
+  if (has_command()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->command().data(), this->command().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->command(), target);
+  }
+
+  // required string appname = 2;
   if (has_appname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->appname().data(), this->appname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
+        2, this->appname(), target);
   }
 
-  // required string apptype = 2;
+  // required string apptype = 3;
   if (has_apptype()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->apptype().data(), this->apptype().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
+        3, this->apptype(), target);
   }
 
-  // required uint32 appid = 3;
+  // required uint32 appid = 4;
   if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->appid(), target);
   }
 
-  // required uint32 zoneid = 4;
+  // required uint32 zoneid = 5;
   if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->zoneid(), target);
   }
 
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->delaytime(), target);
+  // required string value = 6;
+  if (has_value()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->value().data(), this->value().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->value(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3071,43 +2258,50 @@ void S2SShutDownServerToMasterReq::SerializeWithCachedSizes(
   return target;
 }
 
-int S2SShutDownServerToMasterReq::ByteSize() const {
+int PBDeployCommand::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
+    // required string command = 1;
+    if (has_command()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->command());
+    }
+
+    // required string appname = 2;
     if (has_appname()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->appname());
     }
 
-    // required string apptype = 2;
+    // required string apptype = 3;
     if (has_apptype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->apptype());
     }
 
-    // required uint32 appid = 3;
+    // required uint32 appid = 4;
     if (has_appid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->appid());
     }
 
-    // required uint32 zoneid = 4;
+    // required uint32 zoneid = 5;
     if (has_zoneid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->zoneid());
     }
 
-    // required uint32 delaytime = 5;
-    if (has_delaytime()) {
+    // required string value = 6;
+    if (has_value()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->delaytime());
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->value());
     }
 
   }
@@ -3122,10 +2316,10 @@ int S2SShutDownServerToMasterReq::ByteSize() const {
   return total_size;
 }
 
-void S2SShutDownServerToMasterReq::MergeFrom(const ::google::protobuf::Message& from) {
+void PBDeployCommand::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const S2SShutDownServerToMasterReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SShutDownServerToMasterReq*>(
+  const PBDeployCommand* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PBDeployCommand*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3134,9 +2328,12 @@ void S2SShutDownServerToMasterReq::MergeFrom(const ::google::protobuf::Message& 
   }
 }
 
-void S2SShutDownServerToMasterReq::MergeFrom(const S2SShutDownServerToMasterReq& from) {
+void PBDeployCommand::MergeFrom(const PBDeployCommand& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_command()) {
+      set_command(from.command());
+    }
     if (from.has_appname()) {
       set_appname(from.appname());
     }
@@ -3149,49 +2346,50 @@ void S2SShutDownServerToMasterReq::MergeFrom(const S2SShutDownServerToMasterReq&
     if (from.has_zoneid()) {
       set_zoneid(from.zoneid());
     }
-    if (from.has_delaytime()) {
-      set_delaytime(from.delaytime());
+    if (from.has_value()) {
+      set_value(from.value());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void S2SShutDownServerToMasterReq::CopyFrom(const ::google::protobuf::Message& from) {
+void PBDeployCommand::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SShutDownServerToMasterReq::CopyFrom(const S2SShutDownServerToMasterReq& from) {
+void PBDeployCommand::CopyFrom(const PBDeployCommand& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SShutDownServerToMasterReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+bool PBDeployCommand::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }
 
-void S2SShutDownServerToMasterReq::Swap(S2SShutDownServerToMasterReq* other) {
+void PBDeployCommand::Swap(PBDeployCommand* other) {
   if (other != this) {
+    std::swap(command_, other->command_);
     std::swap(appname_, other->appname_);
     std::swap(apptype_, other->apptype_);
     std::swap(appid_, other->appid_);
     std::swap(zoneid_, other->zoneid_);
-    std::swap(delaytime_, other->delaytime_);
+    std::swap(value_, other->value_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata S2SShutDownServerToMasterReq::GetMetadata() const {
+::google::protobuf::Metadata PBDeployCommand::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SShutDownServerToMasterReq_descriptor_;
-  metadata.reflection = S2SShutDownServerToMasterReq_reflection_;
+  metadata.descriptor = PBDeployCommand_descriptor_;
+  metadata.reflection = PBDeployCommand_reflection_;
   return metadata;
 }
 
@@ -3199,173 +2397,83 @@ void S2SShutDownServerToMasterReq::Swap(S2SShutDownServerToMasterReq* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SShutDownServerToServerReq::kAppnameFieldNumber;
-const int S2SShutDownServerToServerReq::kApptypeFieldNumber;
-const int S2SShutDownServerToServerReq::kAppidFieldNumber;
-const int S2SShutDownServerToServerReq::kZoneidFieldNumber;
-const int S2SShutDownServerToServerReq::kDelaytimeFieldNumber;
+const int S2SDeployCommandToAgentReq::kDeploycommandFieldNumber;
 #endif  // !_MSC_VER
 
-S2SShutDownServerToServerReq::S2SShutDownServerToServerReq()
+S2SDeployCommandToAgentReq::S2SDeployCommandToAgentReq()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void S2SShutDownServerToServerReq::InitAsDefaultInstance() {
+void S2SDeployCommandToAgentReq::InitAsDefaultInstance() {
+  deploycommand_ = const_cast< ::KFMsg::PBDeployCommand*>(&::KFMsg::PBDeployCommand::default_instance());
 }
 
-S2SShutDownServerToServerReq::S2SShutDownServerToServerReq(const S2SShutDownServerToServerReq& from)
+S2SDeployCommandToAgentReq::S2SDeployCommandToAgentReq(const S2SDeployCommandToAgentReq& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void S2SShutDownServerToServerReq::SharedCtor() {
+void S2SDeployCommandToAgentReq::SharedCtor() {
   _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
-  delaytime_ = 0u;
+  deploycommand_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-S2SShutDownServerToServerReq::~S2SShutDownServerToServerReq() {
+S2SDeployCommandToAgentReq::~S2SDeployCommandToAgentReq() {
   SharedDtor();
 }
 
-void S2SShutDownServerToServerReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
+void S2SDeployCommandToAgentReq::SharedDtor() {
   if (this != default_instance_) {
+    delete deploycommand_;
   }
 }
 
-void S2SShutDownServerToServerReq::SetCachedSize(int size) const {
+void S2SDeployCommandToAgentReq::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* S2SShutDownServerToServerReq::descriptor() {
+const ::google::protobuf::Descriptor* S2SDeployCommandToAgentReq::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return S2SShutDownServerToServerReq_descriptor_;
+  return S2SDeployCommandToAgentReq_descriptor_;
 }
 
-const S2SShutDownServerToServerReq& S2SShutDownServerToServerReq::default_instance() {
+const S2SDeployCommandToAgentReq& S2SDeployCommandToAgentReq::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
   return *default_instance_;
 }
 
-S2SShutDownServerToServerReq* S2SShutDownServerToServerReq::default_instance_ = NULL;
+S2SDeployCommandToAgentReq* S2SDeployCommandToAgentReq::default_instance_ = NULL;
 
-S2SShutDownServerToServerReq* S2SShutDownServerToServerReq::New() const {
-  return new S2SShutDownServerToServerReq;
+S2SDeployCommandToAgentReq* S2SDeployCommandToAgentReq::New() const {
+  return new S2SDeployCommandToAgentReq;
 }
 
-void S2SShutDownServerToServerReq::Clear() {
+void S2SDeployCommandToAgentReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
+    if (has_deploycommand()) {
+      if (deploycommand_ != NULL) deploycommand_->::KFMsg::PBDeployCommand::Clear();
     }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
-    delaytime_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool S2SShutDownServerToServerReq::MergePartialFromCodedStream(
+bool S2SDeployCommandToAgentReq::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
+      // required .KFMsg.PBDeployCommand deploycommand = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_delaytime;
-        break;
-      }
-
-      // required uint32 delaytime = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_delaytime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &delaytime_)));
-          set_has_delaytime();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_deploycommand()));
         } else {
           goto handle_uninterpreted;
         }
@@ -3389,39 +2497,12 @@ bool S2SShutDownServerToServerReq::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void S2SShutDownServerToServerReq::SerializeWithCachedSizes(
+void S2SDeployCommandToAgentReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->delaytime(), output);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->deploycommand(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3430,41 +2511,13 @@ void S2SShutDownServerToServerReq::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* S2SShutDownServerToServerReq::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SDeployCommandToAgentReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->delaytime(), target);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->deploycommand(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3474,43 +2527,15 @@ void S2SShutDownServerToServerReq::SerializeWithCachedSizes(
   return target;
 }
 
-int S2SShutDownServerToServerReq::ByteSize() const {
+int S2SDeployCommandToAgentReq::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
+    // required .KFMsg.PBDeployCommand deploycommand = 1;
+    if (has_deploycommand()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
-    }
-
-    // required uint32 delaytime = 5;
-    if (has_delaytime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->delaytime());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->deploycommand());
     }
 
   }
@@ -3525,10 +2550,10 @@ int S2SShutDownServerToServerReq::ByteSize() const {
   return total_size;
 }
 
-void S2SShutDownServerToServerReq::MergeFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const S2SShutDownServerToServerReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SShutDownServerToServerReq*>(
+  const S2SDeployCommandToAgentReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SDeployCommandToAgentReq*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3537,64 +2562,51 @@ void S2SShutDownServerToServerReq::MergeFrom(const ::google::protobuf::Message& 
   }
 }
 
-void S2SShutDownServerToServerReq::MergeFrom(const S2SShutDownServerToServerReq& from) {
+void S2SDeployCommandToAgentReq::MergeFrom(const S2SDeployCommandToAgentReq& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
-    }
-    if (from.has_delaytime()) {
-      set_delaytime(from.delaytime());
+    if (from.has_deploycommand()) {
+      mutable_deploycommand()->::KFMsg::PBDeployCommand::MergeFrom(from.deploycommand());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void S2SShutDownServerToServerReq::CopyFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SShutDownServerToServerReq::CopyFrom(const S2SShutDownServerToServerReq& from) {
+void S2SDeployCommandToAgentReq::CopyFrom(const S2SDeployCommandToAgentReq& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SShutDownServerToServerReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+bool S2SDeployCommandToAgentReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
+  if (has_deploycommand()) {
+    if (!this->deploycommand().IsInitialized()) return false;
+  }
   return true;
 }
 
-void S2SShutDownServerToServerReq::Swap(S2SShutDownServerToServerReq* other) {
+void S2SDeployCommandToAgentReq::Swap(S2SDeployCommandToAgentReq* other) {
   if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
-    std::swap(delaytime_, other->delaytime_);
+    std::swap(deploycommand_, other->deploycommand_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata S2SShutDownServerToServerReq::GetMetadata() const {
+::google::protobuf::Metadata S2SDeployCommandToAgentReq::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SShutDownServerToServerReq_descriptor_;
-  metadata.reflection = S2SShutDownServerToServerReq_reflection_;
+  metadata.descriptor = S2SDeployCommandToAgentReq_descriptor_;
+  metadata.reflection = S2SDeployCommandToAgentReq_reflection_;
   return metadata;
 }
 
@@ -3602,154 +2614,83 @@ void S2SShutDownServerToServerReq::Swap(S2SShutDownServerToServerReq* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SKillServerToAgentReq::kAppnameFieldNumber;
-const int S2SKillServerToAgentReq::kApptypeFieldNumber;
-const int S2SKillServerToAgentReq::kAppidFieldNumber;
-const int S2SKillServerToAgentReq::kZoneidFieldNumber;
+const int S2SDeployCommandToMasterReq::kDeploycommandFieldNumber;
 #endif  // !_MSC_VER
 
-S2SKillServerToAgentReq::S2SKillServerToAgentReq()
+S2SDeployCommandToMasterReq::S2SDeployCommandToMasterReq()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void S2SKillServerToAgentReq::InitAsDefaultInstance() {
+void S2SDeployCommandToMasterReq::InitAsDefaultInstance() {
+  deploycommand_ = const_cast< ::KFMsg::PBDeployCommand*>(&::KFMsg::PBDeployCommand::default_instance());
 }
 
-S2SKillServerToAgentReq::S2SKillServerToAgentReq(const S2SKillServerToAgentReq& from)
+S2SDeployCommandToMasterReq::S2SDeployCommandToMasterReq(const S2SDeployCommandToMasterReq& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void S2SKillServerToAgentReq::SharedCtor() {
+void S2SDeployCommandToMasterReq::SharedCtor() {
   _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
+  deploycommand_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-S2SKillServerToAgentReq::~S2SKillServerToAgentReq() {
+S2SDeployCommandToMasterReq::~S2SDeployCommandToMasterReq() {
   SharedDtor();
 }
 
-void S2SKillServerToAgentReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
+void S2SDeployCommandToMasterReq::SharedDtor() {
   if (this != default_instance_) {
+    delete deploycommand_;
   }
 }
 
-void S2SKillServerToAgentReq::SetCachedSize(int size) const {
+void S2SDeployCommandToMasterReq::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* S2SKillServerToAgentReq::descriptor() {
+const ::google::protobuf::Descriptor* S2SDeployCommandToMasterReq::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return S2SKillServerToAgentReq_descriptor_;
+  return S2SDeployCommandToMasterReq_descriptor_;
 }
 
-const S2SKillServerToAgentReq& S2SKillServerToAgentReq::default_instance() {
+const S2SDeployCommandToMasterReq& S2SDeployCommandToMasterReq::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
   return *default_instance_;
 }
 
-S2SKillServerToAgentReq* S2SKillServerToAgentReq::default_instance_ = NULL;
+S2SDeployCommandToMasterReq* S2SDeployCommandToMasterReq::default_instance_ = NULL;
 
-S2SKillServerToAgentReq* S2SKillServerToAgentReq::New() const {
-  return new S2SKillServerToAgentReq;
+S2SDeployCommandToMasterReq* S2SDeployCommandToMasterReq::New() const {
+  return new S2SDeployCommandToMasterReq;
 }
 
-void S2SKillServerToAgentReq::Clear() {
+void S2SDeployCommandToMasterReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
+    if (has_deploycommand()) {
+      if (deploycommand_ != NULL) deploycommand_->::KFMsg::PBDeployCommand::Clear();
     }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool S2SKillServerToAgentReq::MergePartialFromCodedStream(
+bool S2SDeployCommandToMasterReq::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
+      // required .KFMsg.PBDeployCommand deploycommand = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_deploycommand()));
         } else {
           goto handle_uninterpreted;
         }
@@ -3773,34 +2714,12 @@ bool S2SKillServerToAgentReq::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void S2SKillServerToAgentReq::SerializeWithCachedSizes(
+void S2SDeployCommandToMasterReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->deploycommand(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3809,36 +2728,13 @@ void S2SKillServerToAgentReq::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* S2SKillServerToAgentReq::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SDeployCommandToMasterReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->deploycommand(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3848,36 +2744,15 @@ void S2SKillServerToAgentReq::SerializeWithCachedSizes(
   return target;
 }
 
-int S2SKillServerToAgentReq::ByteSize() const {
+int S2SDeployCommandToMasterReq::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
+    // required .KFMsg.PBDeployCommand deploycommand = 1;
+    if (has_deploycommand()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->deploycommand());
     }
 
   }
@@ -3892,10 +2767,10 @@ int S2SKillServerToAgentReq::ByteSize() const {
   return total_size;
 }
 
-void S2SKillServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToMasterReq::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const S2SKillServerToAgentReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SKillServerToAgentReq*>(
+  const S2SDeployCommandToMasterReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SDeployCommandToMasterReq*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3904,60 +2779,51 @@ void S2SKillServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from)
   }
 }
 
-void S2SKillServerToAgentReq::MergeFrom(const S2SKillServerToAgentReq& from) {
+void S2SDeployCommandToMasterReq::MergeFrom(const S2SDeployCommandToMasterReq& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
+    if (from.has_deploycommand()) {
+      mutable_deploycommand()->::KFMsg::PBDeployCommand::MergeFrom(from.deploycommand());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void S2SKillServerToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToMasterReq::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SKillServerToAgentReq::CopyFrom(const S2SKillServerToAgentReq& from) {
+void S2SDeployCommandToMasterReq::CopyFrom(const S2SDeployCommandToMasterReq& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SKillServerToAgentReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+bool S2SDeployCommandToMasterReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
+  if (has_deploycommand()) {
+    if (!this->deploycommand().IsInitialized()) return false;
+  }
   return true;
 }
 
-void S2SKillServerToAgentReq::Swap(S2SKillServerToAgentReq* other) {
+void S2SDeployCommandToMasterReq::Swap(S2SDeployCommandToMasterReq* other) {
   if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
+    std::swap(deploycommand_, other->deploycommand_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata S2SKillServerToAgentReq::GetMetadata() const {
+::google::protobuf::Metadata S2SDeployCommandToMasterReq::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SKillServerToAgentReq_descriptor_;
-  metadata.reflection = S2SKillServerToAgentReq_reflection_;
+  metadata.descriptor = S2SDeployCommandToMasterReq_descriptor_;
+  metadata.reflection = S2SDeployCommandToMasterReq_reflection_;
   return metadata;
 }
 
@@ -3965,154 +2831,83 @@ void S2SKillServerToAgentReq::Swap(S2SKillServerToAgentReq* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SUpdateServerToAgentReq::kAppnameFieldNumber;
-const int S2SUpdateServerToAgentReq::kApptypeFieldNumber;
-const int S2SUpdateServerToAgentReq::kAppidFieldNumber;
-const int S2SUpdateServerToAgentReq::kZoneidFieldNumber;
+const int S2SDeployCommandToServerReq::kDeploycommandFieldNumber;
 #endif  // !_MSC_VER
 
-S2SUpdateServerToAgentReq::S2SUpdateServerToAgentReq()
+S2SDeployCommandToServerReq::S2SDeployCommandToServerReq()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void S2SUpdateServerToAgentReq::InitAsDefaultInstance() {
+void S2SDeployCommandToServerReq::InitAsDefaultInstance() {
+  deploycommand_ = const_cast< ::KFMsg::PBDeployCommand*>(&::KFMsg::PBDeployCommand::default_instance());
 }
 
-S2SUpdateServerToAgentReq::S2SUpdateServerToAgentReq(const S2SUpdateServerToAgentReq& from)
+S2SDeployCommandToServerReq::S2SDeployCommandToServerReq(const S2SDeployCommandToServerReq& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void S2SUpdateServerToAgentReq::SharedCtor() {
+void S2SDeployCommandToServerReq::SharedCtor() {
   _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
+  deploycommand_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-S2SUpdateServerToAgentReq::~S2SUpdateServerToAgentReq() {
+S2SDeployCommandToServerReq::~S2SDeployCommandToServerReq() {
   SharedDtor();
 }
 
-void S2SUpdateServerToAgentReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
+void S2SDeployCommandToServerReq::SharedDtor() {
   if (this != default_instance_) {
+    delete deploycommand_;
   }
 }
 
-void S2SUpdateServerToAgentReq::SetCachedSize(int size) const {
+void S2SDeployCommandToServerReq::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* S2SUpdateServerToAgentReq::descriptor() {
+const ::google::protobuf::Descriptor* S2SDeployCommandToServerReq::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return S2SUpdateServerToAgentReq_descriptor_;
+  return S2SDeployCommandToServerReq_descriptor_;
 }
 
-const S2SUpdateServerToAgentReq& S2SUpdateServerToAgentReq::default_instance() {
+const S2SDeployCommandToServerReq& S2SDeployCommandToServerReq::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
   return *default_instance_;
 }
 
-S2SUpdateServerToAgentReq* S2SUpdateServerToAgentReq::default_instance_ = NULL;
+S2SDeployCommandToServerReq* S2SDeployCommandToServerReq::default_instance_ = NULL;
 
-S2SUpdateServerToAgentReq* S2SUpdateServerToAgentReq::New() const {
-  return new S2SUpdateServerToAgentReq;
+S2SDeployCommandToServerReq* S2SDeployCommandToServerReq::New() const {
+  return new S2SDeployCommandToServerReq;
 }
 
-void S2SUpdateServerToAgentReq::Clear() {
+void S2SDeployCommandToServerReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
+    if (has_deploycommand()) {
+      if (deploycommand_ != NULL) deploycommand_->::KFMsg::PBDeployCommand::Clear();
     }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool S2SUpdateServerToAgentReq::MergePartialFromCodedStream(
+bool S2SDeployCommandToServerReq::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
+      // required .KFMsg.PBDeployCommand deploycommand = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_deploycommand()));
         } else {
           goto handle_uninterpreted;
         }
@@ -4136,34 +2931,12 @@ bool S2SUpdateServerToAgentReq::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void S2SUpdateServerToAgentReq::SerializeWithCachedSizes(
+void S2SDeployCommandToServerReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->deploycommand(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4172,36 +2945,13 @@ void S2SUpdateServerToAgentReq::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* S2SUpdateServerToAgentReq::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SDeployCommandToServerReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
+  // required .KFMsg.PBDeployCommand deploycommand = 1;
+  if (has_deploycommand()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->deploycommand(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4211,36 +2961,15 @@ void S2SUpdateServerToAgentReq::SerializeWithCachedSizes(
   return target;
 }
 
-int S2SUpdateServerToAgentReq::ByteSize() const {
+int S2SDeployCommandToServerReq::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
+    // required .KFMsg.PBDeployCommand deploycommand = 1;
+    if (has_deploycommand()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->deploycommand());
     }
 
   }
@@ -4255,10 +2984,10 @@ int S2SUpdateServerToAgentReq::ByteSize() const {
   return total_size;
 }
 
-void S2SUpdateServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToServerReq::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const S2SUpdateServerToAgentReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SUpdateServerToAgentReq*>(
+  const S2SDeployCommandToServerReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SDeployCommandToServerReq*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -4267,463 +2996,51 @@ void S2SUpdateServerToAgentReq::MergeFrom(const ::google::protobuf::Message& fro
   }
 }
 
-void S2SUpdateServerToAgentReq::MergeFrom(const S2SUpdateServerToAgentReq& from) {
+void S2SDeployCommandToServerReq::MergeFrom(const S2SDeployCommandToServerReq& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
+    if (from.has_deploycommand()) {
+      mutable_deploycommand()->::KFMsg::PBDeployCommand::MergeFrom(from.deploycommand());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void S2SUpdateServerToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
+void S2SDeployCommandToServerReq::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SUpdateServerToAgentReq::CopyFrom(const S2SUpdateServerToAgentReq& from) {
+void S2SDeployCommandToServerReq::CopyFrom(const S2SDeployCommandToServerReq& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SUpdateServerToAgentReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+bool S2SDeployCommandToServerReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
+  if (has_deploycommand()) {
+    if (!this->deploycommand().IsInitialized()) return false;
+  }
   return true;
 }
 
-void S2SUpdateServerToAgentReq::Swap(S2SUpdateServerToAgentReq* other) {
+void S2SDeployCommandToServerReq::Swap(S2SDeployCommandToServerReq* other) {
   if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
+    std::swap(deploycommand_, other->deploycommand_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata S2SUpdateServerToAgentReq::GetMetadata() const {
+::google::protobuf::Metadata S2SDeployCommandToServerReq::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SUpdateServerToAgentReq_descriptor_;
-  metadata.reflection = S2SUpdateServerToAgentReq_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int S2SRestartServerToAgentReq::kAppnameFieldNumber;
-const int S2SRestartServerToAgentReq::kApptypeFieldNumber;
-const int S2SRestartServerToAgentReq::kAppidFieldNumber;
-const int S2SRestartServerToAgentReq::kZoneidFieldNumber;
-const int S2SRestartServerToAgentReq::kDelaytimeFieldNumber;
-#endif  // !_MSC_VER
-
-S2SRestartServerToAgentReq::S2SRestartServerToAgentReq()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void S2SRestartServerToAgentReq::InitAsDefaultInstance() {
-}
-
-S2SRestartServerToAgentReq::S2SRestartServerToAgentReq(const S2SRestartServerToAgentReq& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void S2SRestartServerToAgentReq::SharedCtor() {
-  _cached_size_ = 0;
-  appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appid_ = 0u;
-  zoneid_ = 0u;
-  delaytime_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-S2SRestartServerToAgentReq::~S2SRestartServerToAgentReq() {
-  SharedDtor();
-}
-
-void S2SRestartServerToAgentReq::SharedDtor() {
-  if (appname_ != &::google::protobuf::internal::kEmptyString) {
-    delete appname_;
-  }
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void S2SRestartServerToAgentReq::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* S2SRestartServerToAgentReq::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return S2SRestartServerToAgentReq_descriptor_;
-}
-
-const S2SRestartServerToAgentReq& S2SRestartServerToAgentReq::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_KFDeployMessage_2eproto();
-  return *default_instance_;
-}
-
-S2SRestartServerToAgentReq* S2SRestartServerToAgentReq::default_instance_ = NULL;
-
-S2SRestartServerToAgentReq* S2SRestartServerToAgentReq::New() const {
-  return new S2SRestartServerToAgentReq;
-}
-
-void S2SRestartServerToAgentReq::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_appname()) {
-      if (appname_ != &::google::protobuf::internal::kEmptyString) {
-        appname_->clear();
-      }
-    }
-    if (has_apptype()) {
-      if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-        apptype_->clear();
-      }
-    }
-    appid_ = 0u;
-    zoneid_ = 0u;
-    delaytime_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool S2SRestartServerToAgentReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string appname = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_apptype;
-        break;
-      }
-
-      // required string apptype = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_appid;
-        break;
-      }
-
-      // required uint32 appid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_appid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &appid_)));
-          set_has_appid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_zoneid;
-        break;
-      }
-
-      // required uint32 zoneid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_zoneid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-          set_has_zoneid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_delaytime;
-        break;
-      }
-
-      // required uint32 delaytime = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_delaytime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &delaytime_)));
-          set_has_delaytime();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void S2SRestartServerToAgentReq::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->appname(), output);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->apptype(), output);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->zoneid(), output);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->delaytime(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* S2SRestartServerToAgentReq::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string appname = 1;
-  if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->appname(), target);
-  }
-
-  // required string apptype = 2;
-  if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->apptype(), target);
-  }
-
-  // required uint32 appid = 3;
-  if (has_appid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
-  }
-
-  // required uint32 zoneid = 4;
-  if (has_zoneid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->zoneid(), target);
-  }
-
-  // required uint32 delaytime = 5;
-  if (has_delaytime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->delaytime(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int S2SRestartServerToAgentReq::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string appname = 1;
-    if (has_appname()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appname());
-    }
-
-    // required string apptype = 2;
-    if (has_apptype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->apptype());
-    }
-
-    // required uint32 appid = 3;
-    if (has_appid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->appid());
-    }
-
-    // required uint32 zoneid = 4;
-    if (has_zoneid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->zoneid());
-    }
-
-    // required uint32 delaytime = 5;
-    if (has_delaytime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->delaytime());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void S2SRestartServerToAgentReq::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const S2SRestartServerToAgentReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SRestartServerToAgentReq*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void S2SRestartServerToAgentReq::MergeFrom(const S2SRestartServerToAgentReq& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_appname()) {
-      set_appname(from.appname());
-    }
-    if (from.has_apptype()) {
-      set_apptype(from.apptype());
-    }
-    if (from.has_appid()) {
-      set_appid(from.appid());
-    }
-    if (from.has_zoneid()) {
-      set_zoneid(from.zoneid());
-    }
-    if (from.has_delaytime()) {
-      set_delaytime(from.delaytime());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void S2SRestartServerToAgentReq::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SRestartServerToAgentReq::CopyFrom(const S2SRestartServerToAgentReq& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SRestartServerToAgentReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-
-  return true;
-}
-
-void S2SRestartServerToAgentReq::Swap(S2SRestartServerToAgentReq* other) {
-  if (other != this) {
-    std::swap(appname_, other->appname_);
-    std::swap(apptype_, other->apptype_);
-    std::swap(appid_, other->appid_);
-    std::swap(zoneid_, other->zoneid_);
-    std::swap(delaytime_, other->delaytime_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata S2SRestartServerToAgentReq::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SRestartServerToAgentReq_descriptor_;
-  metadata.reflection = S2SRestartServerToAgentReq_reflection_;
+  metadata.descriptor = S2SDeployCommandToServerReq_descriptor_;
+  metadata.reflection = S2SDeployCommandToServerReq_reflection_;
   return metadata;
 }
 

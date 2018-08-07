@@ -23,10 +23,10 @@ chmod -R 777 *.sh
 cd ..
 
 
-cd log4cxx
-chmod -R 777 *.sh
-./setup.sh
-cd ..
+#cd log4cxx
+#chmod -R 777 *.sh
+#./setup.sh
+#cd ..
 
 cd luaplus/projects
 make clean

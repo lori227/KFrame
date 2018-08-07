@@ -14,13 +14,11 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFGroupClientModule.cpp" />
     <ClCompile Include="KFGroupClientPlugin.cpp" />
-    <ClCompile Include="KFGroupClientConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGroupClientInterface.h" />
     <ClInclude Include="KFGroupClientModule.h" />
     <ClInclude Include="KFGroupClientPlugin.h" />
-    <ClInclude Include="KFGroupClientConfig.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6EC6BF4B-FC2B-4E3C-BCA8-8AF17155CF44}</ProjectGuid>
@@ -80,7 +78,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -114,7 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>

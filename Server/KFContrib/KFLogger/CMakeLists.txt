@@ -1,1 +1,0 @@
-BUILD_CONTRIB_MACRO(KFLogger log4cxx)

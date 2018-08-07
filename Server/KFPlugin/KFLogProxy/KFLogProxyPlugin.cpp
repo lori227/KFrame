@@ -15,7 +15,5 @@ namespace KFrame
 
     void KFLogProxyPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_message, KFMessageInterface );
-        __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
     }
 }

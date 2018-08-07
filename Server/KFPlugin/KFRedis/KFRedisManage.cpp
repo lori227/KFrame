@@ -1,6 +1,5 @@
 ﻿#include "KFRedisManage.h"
 #include "KFRedisConfig.h"
-#include "KFThread/KFThread.h"
 
 namespace KFrame
 {
@@ -33,14 +32,14 @@ namespace KFrame
         }
 
         kfredisexecute = __KF_CREATE_BATCH__( KFRedisExecute, 5 );
-        auto result = kfredisexecute->Initialize( ip.c_str(), port, password.c_str() );
-        if ( result != KFCommonEnum::OK )
+        auto result = kfredisexecute->Initialize( ip, port, password );
+        if ( result != KFEnum::Ok )
         {
-            // KFLogger::LogInit( KFLogger::Error, "redis connect[ id=%u ip=%s:%u ] failed!", id, ip.c_str(), port );
+            __LOG_ERROR__( KFLogEnum::Sql, "redis connect[ id={} ip={}:{} ] failed!", id, ip, port );
         }
         else
         {
-            // KFLogger::LogInit( KFLogger::Info, "redis connect[ id=%u ip=%s:%u ] ok!", id, ip.c_str(), port );
+            __LOG_INFO__( KFLogEnum::Sql, "redis connect[ id={} ip={}:{} ] ok!", id, ip, port );
         }
 
         InsertRedisExecute( id, kfredisexecute );
@@ -55,7 +54,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return CreateExecute( id, kfsetting->_ip.c_str(), kfsetting->_port, kfsetting->_password.c_str() );
+        return CreateExecute( id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
     }
 
     KFRedisExecute* KFRedisManage::CreateExecute( const std::string& field, uint32 logicid )
@@ -66,7 +65,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return CreateExecute( kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port, kfsetting->_password.c_str() );
+        return CreateExecute( kfsetting->_id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
     }
 
     KFRedisExecute* KFRedisManage::FindRedisExecute( uint32 id )

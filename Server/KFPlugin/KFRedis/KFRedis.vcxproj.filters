@@ -2,18 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFHiRedis.cpp" />
     <ClCompile Include="KFRedisConfig.cpp" />
     <ClCompile Include="KFRedisExecute.cpp" />
-    <ClCompile Include="KFRedisFormat.cpp" />
     <ClCompile Include="KFRedisManage.cpp" />
     <ClCompile Include="KFRedisModule.cpp" />
     <ClCompile Include="KFRedisPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFHiRedis.h" />
     <ClInclude Include="KFRedisConfig.h" />
-    <ClInclude Include="KFRedisException.h" />
     <ClInclude Include="KFRedisExecute.h" />
     <ClInclude Include="KFRedisFormat.h" />
     <ClInclude Include="KFRedisInterface.h" />

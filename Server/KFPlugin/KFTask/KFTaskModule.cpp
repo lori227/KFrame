@@ -99,7 +99,7 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( task ), tasksetting->_id, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
-        player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNC_LINE__ );
 
         return KFMsg::TaskReceiveRewardOK;
     }

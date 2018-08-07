@@ -5,18 +5,18 @@
 
 namespace KFrame
 {
-	class HashFunction
-	{
-	public:
-		virtual uint32 GetHashValue( const char* data ) = 0;
-	};
-	/////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////
-	class MD5HashFunction : public HashFunction
-	{
-	public:
-		virtual uint32 GetHashValue( const char* data );
-	};
+    class HashFunction
+    {
+    public:
+        virtual uint32 GetHashValue( const std::string& data ) = 0;
+    };
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    class MD5HashFunction : public HashFunction
+    {
+    public:
+        virtual uint32 GetHashValue( const std::string& data );
+    };
 }
 
 #endif

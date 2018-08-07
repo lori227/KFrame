@@ -37,16 +37,20 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFLoginGateModule::OnTimerUpdateClientToLogin )
     {
-        auto zone = _kf_zone->GetZone();
+        auto kfzone = _kf_zone->GetZone();
         auto kfglobal = KFGlobal::Instance();
+        if ( kfzone->_id == _invalid_int )
+        {
+            return;
+        }
 
         KFJson sendjson;
         sendjson.SetValue< const std::string& >( __KF_STRING__( address ), kfglobal->_interanet_ip );
         sendjson.SetValue( __KF_STRING__( port ), kfglobal->_listen_port );
         sendjson.SetValue( __KF_STRING__( appid ), kfglobal->_app_id );
-        sendjson.SetValue( __KF_STRING__( id ), zone->_id );
-        sendjson.SetValue( __KF_STRING__( type ), zone->_type );
-        sendjson.SetValue< const std::string& >( __KF_STRING__( name ), zone->_name );
+        sendjson.SetValue( __KF_STRING__( id ), kfzone->_id );
+        sendjson.SetValue( __KF_STRING__( type ), kfzone->_type );
+        sendjson.SetValue< const std::string& >( __KF_STRING__( name ), kfzone->_name );
 
         static auto url = _kf_ip_address->FindPlatformAddress( KFGlobal::Instance()->_app_id ) + __KF_STRING__( updatezone );
         _kf_http_client->StartMTHttpClient( url, sendjson, true, this, &KFLoginGateModule::OnHttpLoginUpdateCallBack );
@@ -60,8 +64,8 @@ namespace KFrame
         if ( retcode != KFMsg::Success )
         {
             auto kfglobal = KFGlobal::Instance();
-            KFLogger::LogSystem( KFLogger::Error, "update login [%u|%s:%u] failed[%u]!",
-                                 kfglobal->_app_id, kfglobal->_interanet_ip.c_str(), kfglobal->_listen_port, retcode );
+            __LOG_ERROR__( KFLogEnum::System, "update login [{}|{}:{}] failed[{}]!",
+                           kfglobal->_app_id, kfglobal->_interanet_ip, kfglobal->_listen_port, retcode );
         }
     }
 
@@ -75,19 +79,14 @@ namespace KFrame
         auto accountid = kfmsg.accountid();
         auto& token = kfmsg.token();
 
-        KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] login gate req!",
-                            __FUNCTION__, accountid );
-
-        std::string log = KF_FORMAT_FUNCTION( "accountid[{}] login gate req!", accountid );
-        KF_REMOTE_LOG_INFO( ELC_LOGIN, log );
+        __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] login gate req!", accountid );
 
         // 注册连接器
         auto ok = _kf_gate->AddConnection( handleid, accountid );
         if ( !ok )
         {
-            _kf_gate->RemoveConnection( accountid, 100, __FUNCTION_LINE__ );
-            return KFLogger::LogLogin( KFLogger::Error, "[%s] accountid[%u] register connnection failed!",
-                                       __FUNCTION__, accountid );
+            _kf_gate->RemoveConnection( accountid, 100, __FUNC_LINE__ );
+            return __LOG_ERROR__( KFLogEnum::Login, "accountid[{}] register connection failed!", accountid );
         }
 
         auto& ip = _kf_gate->GetIp( accountid );
@@ -100,24 +99,20 @@ namespace KFrame
         ok = _kf_gate->SendMessageToLogin( accountid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u:%s] login verifty!",
-                                __FUNCTION__, accountid, ip.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}:{}] login verify!", accountid, ip );
         }
         else
         {
             // 发送错误
             _kf_display->SendToClient( handleid, KFMsg::LoginSystemBusy );
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u:%s] login failed!",
-                                __FUNCTION__, accountid, ip.c_str() );
+            __LOG_ERROR__( KFLogEnum::Login, "accountid[{}:{}] login failed!", accountid, ip );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFLoginGateModule::HandleLoginVerifyAck )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyAck );
-
-        KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login verifty result[%u] ack!",
-                            __FUNCTION__, kfmsg.accountid(), kfmsg.result(), kfmsg.result() );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login verify result[{}] ack!", kfmsg.accountid(), kfmsg.playerid(), kfmsg.result() );
 
         if ( kfmsg.result() != KFMsg::Success )
         {
@@ -133,18 +128,16 @@ namespace KFrame
             auto ok = _kf_gate->SendMessageToClient( kfmsg.accountid(), KFMsg::MSG_LOGIN_VERIFY_ACK, &ack );
             if ( ok )
             {
-                KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login verifty result[%u] ok!",
-                                    __FUNCTION__, kfmsg.accountid(), kfmsg.result(), kfmsg.result() );
+                __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login verify result[{}] ok!", kfmsg.accountid(), kfmsg.playerid(), kfmsg.result() );
             }
             else
             {
-                KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login verifty result[%u] failed!",
-                                    __FUNCTION__, kfmsg.accountid(), kfmsg.result(), kfmsg.result() );
+                __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login verify result[{}] failed!", kfmsg.accountid(), kfmsg.playerid(), kfmsg.result() );
             }
         }
 
         // 1秒以后, 断开连接
-        _kf_gate->RemoveConnection( kfmsg.accountid(), 1000, __FUNCTION_LINE__ );
+        _kf_gate->RemoveConnection( kfmsg.accountid(), 1000, __FUNC_LINE__ );
     }
 
 

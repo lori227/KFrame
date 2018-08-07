@@ -30,7 +30,7 @@
 		<Server AppName="relation" AppType="master" AppId="70000" Ip="192.168.1.9" Type="0" Port="10007"/>
 
 		<!-- group服务器 -->
-		<Server AppName="group" AppType="master" AppId="80000" Ip="192.168.1.9" Type="0" Port="10008"/>
+		<Server AppName="group" AppType="master" AppId="80000" Ip="127.0.0.1" Type="0" Port="10008"/>
 
 		<!-- rank服务器 -->
 		<Server AppName="rank" AppType="master" AppId="90000" Ip="192.168.1.9" Type="0" Port="10009"/>
@@ -44,8 +44,10 @@
 	</TcpServer>
 
 	<HttpServer>
-		<Platform Address="http://192.168.1.9:8011/" />
-		<Platform Address="http://192.168.1.9:8012/" />
+    	<!-- ip ip地址-->
+    	<!-- port 起始端口-->
+   	 	<!-- port 开启的数量-->
+		<Platform Ip="192.168.1.9" Port="8000" Id="2001" Count="2"/>
 	</HttpServer>
 
 </Config>

@@ -16,6 +16,5 @@ namespace KFrame
 
     void KFConfigPlugin::LoadModule()
     {
-
     }
 }

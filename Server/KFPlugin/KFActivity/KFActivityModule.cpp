@@ -84,7 +84,7 @@ namespace KFrame
 
         player->UpdateData( kfactivity, __KF_STRING__( received ), KFOperateEnum::ABit, activityid );
 
-        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
         return KFMsg::ActivityReceiveRewardOK;
     }
 

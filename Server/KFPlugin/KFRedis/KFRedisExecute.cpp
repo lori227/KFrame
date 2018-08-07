@@ -1,5 +1,4 @@
 ﻿#include "KFRedisExecute.h"
-#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {
@@ -7,22 +6,66 @@ namespace KFrame
     KFRedisExecute::KFRedisExecute()
     {
         _index = 0;
+        _port = 0;
+        _redis_context = nullptr;
     }
 
     KFRedisExecute::~KFRedisExecute()
     {
+
     }
 
-    int32 KFRedisExecute::Initialize( const char* ip, int32 port, const char* password )
+    int32 KFRedisExecute::Initialize( const std::string& ip, uint32 port, const std::string& password )
     {
-        _length = KFBufferEnum::Buff_10M;
-        _buffer = __KF_INT8__( _length );
-        return _redis.Connect( ip, port, password );
+        _ip = ip;
+        _port = port;
+        _password = password;
+
+        return TryConnect();
+    }
+
+    int32 KFRedisExecute::TryConnect()
+    {
+        ShutDown();
+
+        _redis_context = redisConnect( _ip.c_str(), _port );
+        if ( _redis_context->err != REDIS_OK )
+        {
+            return _redis_context->err;
+        }
+
+        redisEnableKeepAlive( _redis_context );
+
+        if ( !_password.empty() )
+        {
+            auto strsql = __FORMAT__( "auth {}", _password );
+            auto kfresult = UpdateExecute( __FUNC_LINE__, strsql );
+            if ( !kfresult->IsOk() )
+            {
+                return KFEnum::Error;
+            }
+        }
+
+        return KFEnum::Ok;
+    }
+
+    bool KFRedisExecute::IsDisconnected()
+    {
+        if ( _redis_context->err == REDIS_ERR_EOF || _redis_context->err == REDIS_ERR_IO )
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void KFRedisExecute::ShutDown()
     {
-        _redis.ShutDown();
+        if ( _redis_context != nullptr )
+        {
+            redisFree( _redis_context );
+            _redis_context = nullptr;
+        }
     }
 
     void KFRedisExecute::SelectIndex( uint32 index )
@@ -32,193 +75,337 @@ namespace KFrame
             return;
         }
 
-        _index = index;
-        VoidExecute( "select %u", _index );
+        auto strsql = __FORMAT__( "select {}", _index );
+        auto kfresult = UpdateExecute( __FUNC_LINE__, strsql );
+        if ( kfresult->IsOk() )
+        {
+            _index = index;
+        }
     }
 
-#define __FORMAT_BUFFER__\
-    memset( _buffer, 0, _length );\
-    va_list args;\
-    va_start( args, format );\
-    vsprintf( _buffer, format, args );\
-    va_end( args );\
+#define __FREE_REPLY__( p ) if ( p != nullptr ) { freeReplyObject( p ); }
+
+    redisReply* KFRedisExecute::Execute( const std::string& strsql )
+    {
+        redisReply* reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
+        if ( reply == nullptr )
+        {
+            __LOG_ERROR__( KFLogEnum::Sql, "redisreply = nullptr, [{}:{}]!", _redis_context->err, _redis_context->errstr );
+            return nullptr;
+        }
+
+        if ( reply->type == REDIS_REPLY_ERROR )
+        {
+            __LOG_ERROR__( KFLogEnum::Sql, "reply error [{}:{}]!", _redis_context->err, _redis_context->errstr );
+            freeReplyObject( reply );
+            return nullptr;
+        }
+
+        return reply;
+    }
+
+    redisReply* KFRedisExecute::TryExecute( KFBaseResult* kfresult, const char* function, uint32 line, const std::string& strsql )
+    {
+        auto redisreply = Execute( strsql );
+        if ( redisreply == nullptr )
+        {
+            if ( IsDisconnected() )
+            {
+                TryConnect();
+                redisreply = Execute( strsql );
+            }
+        }
+
+        if ( redisreply != nullptr )
+        {
+            kfresult->SetResult( KFEnum::Ok );
+        }
+        else
+        {
+            kfresult->SetResult( KFEnum::Error );
+            __LOG_ERROR_FUNCTION__( KFLogEnum::Sql, function, line, "redis[{}] execute error=[{}:{}]!",
+                                    strsql, _redis_context->err, _redis_context->errstr );
+        }
+
+        return redisreply;
+    }
+
+    KFResult< voidptr >* KFRedisExecute::UpdateExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        auto redisreply = TryExecute( &_void_result, function, line, strsql );
+        __FREE_REPLY__( redisreply );
+        return &_void_result;
+    }
+
+    KFResult< uint32 >* KFRedisExecute::UInt32Execute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _uint32_result._value = _invalid_int;
+        auto redisreply = TryExecute( &_uint32_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            if ( redisreply->str != nullptr )
+            {
+                _uint32_result._value = KFUtility::ToValue< uint32 >( redisreply->str );
+            }
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_uint32_result;
+    }
+
+    KFResult< std::string >* KFRedisExecute::StringExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _string_result._value.clear();
+        auto redisreply = TryExecute( &_string_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            _string_result._value = ( redisreply->str == nullptr ? _invalid_str : redisreply->str );
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_string_result;
+    }
+
+    KFResult< uint64 >* KFRedisExecute::UInt64Execute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _uint64_result._value = _invalid_int;
+        auto redisreply = TryExecute( &_uint64_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            _uint64_result._value = redisreply->integer;
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_uint64_result;
+    }
+
+    KFResult< MapString >* KFRedisExecute::MapExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _map_result._value.clear();
+        auto redisreply = TryExecute( &_map_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            for ( size_t i = 0; i < redisreply->elements; i += 2 )
+            {
+                auto keyelement = redisreply->element[ i ];
+                auto valueelement = redisreply->element[ i + 1 ];
+
+                std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+                std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+                if ( key != _invalid_str )
+                {
+                    _map_result._value[ key ] = value;
+                }
+            }
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_map_result;
+    }
+
+    KFResult< GreaterMapString >* KFRedisExecute::GreaterMapExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _greater_map_result._value.clear();
+        auto redisreply = TryExecute( &_greater_map_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            for ( size_t i = 0; i < redisreply->elements; i += 2 )
+            {
+                auto keyelement = redisreply->element[ i ];
+                auto valueelement = redisreply->element[ i + 1 ];
+
+                std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+                std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+                if ( key != _invalid_str )
+                {
+                    _greater_map_result._value[ key ] = value;
+                }
+            }
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_greater_map_result;
+    }
+
+    KFResult< VectorString >* KFRedisExecute::VectorExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _vector_result._value.clear();
+        auto redisreply = TryExecute( &_vector_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            for ( size_t i = 0; i < redisreply->elements; ++i )
+            {
+                auto element = redisreply->element[ i ];
+                _vector_result._value.push_back( element->str == nullptr ? _invalid_str : element->str );
+            }
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_vector_result;
+    }
+
+    KFResult< ListString >* KFRedisExecute::ListExecute( const char* function, uint32 line, const std::string& strsql )
+    {
+        _list_result._value.clear();
+        auto redisreply = TryExecute( &_list_result, function, line, strsql );
+        if ( redisreply != nullptr )
+        {
+            for ( size_t i = 0; i < redisreply->elements; ++i )
+            {
+                auto element = redisreply->element[ i ];
+                _list_result._value.push_back( element->str == nullptr ? _invalid_str : element->str );
+            }
+        }
+
+        __FREE_REPLY__( redisreply );
+        return &_list_result;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    void KFRedisExecute::AppendCommand( const char* format, ... )
+    void KFRedisExecute::AppendCommand( const std::string& strsql )
     {
-        __FORMAT_BUFFER__;
-        _commands.push_back( _buffer );
+        _commands.push_back( strsql );
     }
 
-    void KFRedisExecute::AppendCommand( const VectorString& fieldvalue, const char* format, ... )
+    // todo: 发生错误是否需要回滚
+    KFResult< voidptr >* KFRedisExecute::Pipeline( const char* function, uint32 line )
     {
-        __FORMAT_BUFFER__;
+        _void_result.SetResult( KFEnum::Ok );
 
-        KFRedisFormat kfformat;
-        kfformat.Append( _buffer );
-        kfformat.Append( fieldvalue );
-        _commands.push_back( kfformat.ToString().c_str() );
-    }
+        for ( auto& command : _commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                _void_result.SetResult( KFEnum::Error );
+            }
+        }
 
-    void KFRedisExecute::AppendCommand( const MapString& fieldvalue, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
+        for ( auto& command : _commands )
+        {
+            redisReply* reply = nullptr;
+            redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
+            {
+                if ( IsDisconnected() )
+                {
+                    TryConnect();
+                    redisGetReply( _redis_context, ( void** )&reply );
+                }
+            }
 
-        KFRedisFormat kfformat;
-        kfformat.Append( _buffer );
-        kfformat.Append( fieldvalue );
-        _commands.push_back( kfformat.ToString().c_str() );
-    }
+            if ( reply != nullptr )
+            {
+                freeReplyObject( reply );
+            }
+            else
+            {
+                _void_result.SetResult( KFEnum::Error );
+            }
+        }
 
-    bool KFRedisExecute::PipelineExecute()
-    {
-        bool result = PipelineExecute( _commands );
         _commands.clear();
-
-        return result;
+        return &_void_result;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRedisExecute::PipelineExecute( const ListString& commands )
+    KFResult< ListString >* KFRedisExecute::ListPipelineExecute( const char* function, uint32 line )
     {
-        try
-        {
-            return _redis.PipelineExecute( commands );
-        }
-        catch ( KFRedisException& )
-        {
-            // 已经断线, 重新连接
-            if ( _redis.IsDisconnected() )
-            {
-                _redis.ReConnect();
+        _list_result.SetResult( KFEnum::Ok );
+        _list_result._value.clear();
 
-                // 重新执行一遍
-                return _redis.PipelineExecute( commands );
+        for ( auto& command : _commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                _list_result.SetResult( KFEnum::Error );
             }
         }
 
-        return false;
-    }
-
-    bool KFRedisExecute::PipelineExecute( ListString& commands, MapString& value )
-    {
-        try
+        for ( auto& command : _commands )
         {
-            return _redis.PipelineExecute( commands, value );
-        }
-        catch ( KFRedisException& )
-        {
-            // 已经断线, 重新连接
-            if ( _redis.IsDisconnected() )
+            redisReply* reply = nullptr;
+            redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
             {
-                _redis.ReConnect();
+                if ( IsDisconnected() )
+                {
+                    TryConnect();
+                    redisGetReply( _redis_context, ( void** )&reply );
+                }
+            }
 
-                // 重新执行一遍
-                return _redis.PipelineExecute( commands, value );
+            if ( reply != nullptr )
+            {
+                _list_result._value.push_back( reply->str == nullptr ? _invalid_str : reply->str );
+                freeReplyObject( reply );
+            }
+            else
+            {
+                _list_result.SetResult( KFEnum::Error );
             }
         }
 
-        return false;
+        _commands.clear();
+        return &_list_result;
     }
 
-    bool KFRedisExecute::PipelineExecute( ListString& commands, VectorString& value )
+    KFResult< std::list< MapString > >* KFRedisExecute::ListMapPipelineExecute( const char* function, uint32 line )
     {
-        try
-        {
-            return _redis.PipelineExecute( commands, value );
-        }
-        catch ( KFRedisException& )
-        {
-            // 已经断线, 重新连接
-            if ( _redis.IsDisconnected() )
-            {
-                _redis.ReConnect();
+        _list_map_result.SetResult( KFEnum::Ok );
+        _list_map_result._value.clear();
 
-                // 重新执行一遍
-                return _redis.PipelineExecute( commands, value );
+        for ( auto& command : _commands )
+        {
+            auto result = redisAppendCommand( _redis_context, command.c_str() );
+            if ( result != REDIS_OK )
+            {
+                _list_map_result.SetResult( KFEnum::Error );
             }
         }
 
-        return false;
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRedisExecute::VoidExecute( const char* format, ... )
-    {
-        static uint32 _value = 0;
-
-        __FORMAT_BUFFER__;
-        return CommandExecute< uint32 >( _value, _buffer );
-    }
-
-    bool KFRedisExecute::VoidExecute( const VectorString& fieldvalue, const char* format, ... )
-    {
-        static uint32 _value = 0;
-
-        __FORMAT_BUFFER__;
-        KFRedisFormat kfformat;
-        kfformat.Append( _buffer );
-        kfformat.Append( fieldvalue );
-        return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
-    }
-
-    bool KFRedisExecute::VoidExecute( const MapString& fieldvalue, const char* format, ... )
-    {
-        static uint32 _value = 0;
-
-        __FORMAT_BUFFER__;
-        KFRedisFormat kfformat;
-        kfformat.Append( _buffer );
-        kfformat.Append( fieldvalue );
-        return CommandExecute< uint32 >( _value, kfformat.ToString().c_str() );
-    }
-
-    bool KFRedisExecute::UInt32Execute( uint32& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-
-        std::string strvalue = "";
-        bool result = CommandExecute< std::string >( strvalue, _buffer );
-        if ( result )
+        for ( auto& command : _commands )
         {
-            value = KFUtility::ToValue< uint32 >( strvalue );
+            redisReply* reply = nullptr;
+            redisGetReply( _redis_context, ( void** )&reply );
+            if ( reply == nullptr )
+            {
+                if ( IsDisconnected() )
+                {
+                    TryConnect();
+                    redisGetReply( _redis_context, ( void** )&reply );
+                }
+            }
+
+            if ( reply != nullptr )
+            {
+                MapString values;
+                for ( size_t i = 0; i < reply->elements; i += 2 )
+                {
+                    auto keyelement = reply->element[ i ];
+                    auto valueelement = reply->element[ i + 1 ];
+
+                    std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
+                    std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
+                    if ( key != _invalid_str )
+                    {
+                        values[ key ] = value;
+                    }
+                }
+
+                _list_map_result._value.push_back( values );
+                freeReplyObject( reply );
+            }
+            else
+            {
+                _list_map_result.SetResult( KFEnum::Error );
+            }
         }
 
-        return result;
+        _commands.clear();
+        return &_list_map_result;
     }
 
-    bool KFRedisExecute::UInt64Execute( uint64& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-        return CommandExecute< uint64 >( value, _buffer );
-    }
-
-    bool KFRedisExecute::StringExecute( std::string& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-        return CommandExecute< std::string >( value, _buffer );
-    }
-
-    bool KFRedisExecute::MapExecute( MapString& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-        return CommandExecute< MapString >( value, _buffer );
-    }
-
-    bool KFRedisExecute::VectorExecute( VectorString& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-        return CommandExecute< VectorString >( value, _buffer );
-    }
-
-    bool KFRedisExecute::MapExecute( GreaterMapString& value, const char* format, ... )
-    {
-        __FORMAT_BUFFER__;
-        return CommandExecute< GreaterMapString >( value, _buffer );
-    }
 
 }

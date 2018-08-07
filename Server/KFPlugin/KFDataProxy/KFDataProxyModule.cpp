@@ -43,8 +43,7 @@ namespace KFrame
             auto ok = kfhash->RemoveHashNode( serverid );
             if ( ok )
             {
-                KFLogger::LogSystem( KFLogger::Error, "[%s] remove zone[%u] server[%u]!",
-                                     __FUNCTION__, iter.first, serverid );
+                __LOG_ERROR__( KFLogEnum::System, "remove zone[{}] server[{}]!", iter.first, serverid );
             }
         }
     }
@@ -72,8 +71,7 @@ namespace KFrame
             auto* kfhash = _zone_hash.Create( zoneid );
             kfhash->AddHashNode( "zone", shardid, 100 );
 
-            KFLogger::LogSystem( KFLogger::Info, "[%s] add zone[%u] server[%u]!",
-                                 __FUNCTION__, zoneid, shardid );
+            __LOG_DEBUG__( KFLogEnum::System, "add zone[{}] server[{}]!", zoneid, shardid );
         }
     }
 
@@ -85,15 +83,13 @@ namespace KFrame
         auto shardid = FindZoneShardId( kfmsg.zoneid(), clientid );
         if ( shardid == _invalid_int )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] msgid[%u] can't find zone[%u] shardid!",
-                                       __FUNCTION__, kfmsg.msgid(), kfmsg.zoneid() );
+            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find zone[{}] shardid!", kfmsg.msgid(), kfmsg.zoneid() );
         }
 
         auto ok = _kf_tcp_client->SendNetMessage( shardid, clientid, kfmsg.msgid(), kfmsg.msgdata().data(), kfmsg.msgdata().length() );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] zone[%u] shardid[%s] send msgid[%u] failed!",
-                                __FUNCTION__, kfmsg.zoneid(), shardid, kfmsg.msgid() );
+            __LOG_ERROR__( KFLogEnum::System, "zone[{}] shardid[{}] send msgid[{}] failed!", kfmsg.zoneid(), shardid, kfmsg.msgid() );
         }
     }
 }

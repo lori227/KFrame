@@ -2,6 +2,7 @@
 #define __KF_UPLOAD_THREAD_H__
 
 #include "KFFtpThread.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

@@ -52,7 +52,7 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] _kf_player is nullptr!", __FUNCTION__ );
+            __LOG_ERROR__( KFLogEnum::System, "_kf_player is nullptr!" );
         }
     }
 
@@ -71,7 +71,7 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] _kf_player is nullptr!", __FUNCTION__ );
+            __LOG_ERROR__( KFLogEnum::System, "_kf_player is nullptr!" );
         }
     }
 
@@ -90,7 +90,7 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] _kf_cluster_shard is nullptr!", __FUNCTION__ );
+            __LOG_ERROR__( KFLogEnum::System, "_kf_cluster_shard is nullptr!" );
         }
     }
 
@@ -109,10 +109,9 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] _kf_route is nullptr!", __FUNCTION__ );
+            __LOG_ERROR__( KFLogEnum::System, "_kf_route is nullptr!" );
         }
     }
-
 
     void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )
     {

@@ -48,7 +48,7 @@ namespace KFrame
 
     void KFWorldModule::OnceRun()
     {
-        // 把自己注册到platfrom
+        // 把自己注册到 platform
         KFJson sendjson;
         sendjson.SetValue( __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
         sendjson.SetValue( __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
@@ -61,11 +61,11 @@ namespace KFrame
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
         if ( retcode == KFMsg::Success )
         {
-            KF_LOG_INFO( "update http[{}] to platform ok!", _kf_http_server->GetHttpUrl() );
+            __LOG_DEBUG__( KFLogEnum::Init, "update http[{}] to platform ok!", _kf_http_server->GetHttpUrl() );
         }
         else
         {
-            KF_LOG_ERROR( "update http[{}] to platform failed!", _kf_http_server->GetHttpUrl() );
+            __LOG_ERROR__( KFLogEnum::Init, "update http[{}] to platform failed!", _kf_http_server->GetHttpUrl() );
         }
     }
 
@@ -180,8 +180,7 @@ namespace KFrame
         // 更新到账号服务器
         UpdateOnlineToPlatfrom( kfmsg.accountid(), kfmsg.playerid(), 1 );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] online count=[%u]",
-                            __FUNCTION__, _online_list.Size() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "online count=[{}]", _online_list.Size() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerLeaveWorldReq )
@@ -193,8 +192,7 @@ namespace KFrame
         // 更新到账号服务器
         UpdateOnlineToPlatfrom( kfmsg.accountid(), kfmsg.playerid(), 0 );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] online count=[%u]",
-                            __FUNCTION__, _online_list.Size() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "online count=[%u]", _online_list.Size() );
     }
 
     bool KFWorldModule::KickOnline( uint32 playerid, const char* function, uint32 line )
@@ -205,7 +203,7 @@ namespace KFrame
             return false;
         }
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s:%u] kick player[%u]!", function, line, playerid );
+        __LOG_DEBUG__( KFLogEnum::Logic, "kick player[{}]!", playerid );
 
         // 发送踢出消息
         KFMsg::S2SKickGamePlayerReq req;
@@ -230,7 +228,7 @@ namespace KFrame
         KFJson kfjson( data );
 
         auto playerid = kfjson.GetUInt32( __KF_STRING__( playerid ) );
-        KickOnline( playerid, __FUNCTION_LINE__ );
+        KickOnline( playerid, __FUNC_LINE__ );
         return _invalid_str;
     }
 

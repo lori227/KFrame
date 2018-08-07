@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="KFLogger.h" />
+    <ClInclude Include="KFLog.h" />
+    <ClInclude Include="KFGlobal.h" />
+    <ClInclude Include="KFRand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFLogger.cpp" />
+    <ClCompile Include="KFLog.cpp" />
+    <ClCompile Include="KFGlobal.cpp" />
+    <ClCompile Include="KFRand.cpp" />
+  </ItemGroup>
+</Project>

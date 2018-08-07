@@ -26,8 +26,8 @@ namespace KFrame
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        // 关闭服务
-        virtual void ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime ) = 0;
+        // 部署命令
+        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid ) = 0;
 
     protected:
         virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function ) = 0;

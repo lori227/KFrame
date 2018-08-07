@@ -1,6 +1,4 @@
-﻿#include "KFBuffer.h"
-#include "KFThread/KFMutex.h"
-#include "KFThread/KFThread.h"
+﻿#include "KFrame.h"
 
 namespace KFrame
 {
@@ -30,9 +28,6 @@ namespace KFrame
         {
             kfbuffer->_length = length;
             kfbuffer->_buffer = new int8[ length ];
-
-            KFLogger::LogMemory( KFLogger::Info, "[%s:%u] thread[%u] malloc buffer[%u]!",
-                                 function, line, threadid, length );
         }
 
         return kfbuffer->_buffer;
@@ -53,9 +48,6 @@ namespace KFrame
         {
             kfbuffer->_length = length;
             kfbuffer->_buffer = new uint8[ length ];
-
-            KFLogger::LogMemory( KFLogger::Info, "[%s:%u] thread[%u] malloc buffer[%u]!",
-                                 function, line, threadid, length );
         }
 
         return kfbuffer->_buffer;

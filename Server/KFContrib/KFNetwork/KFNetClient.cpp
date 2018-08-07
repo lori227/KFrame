@@ -2,7 +2,6 @@
 #include "KFNetEvent.h"
 #include "KFNetClientEngine.h"
 #include "KFNetClientServices.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -121,11 +120,6 @@ namespace KFrame
             // 关闭连接
             _net_services->CloseSession( this );
         }
-        else
-        {
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] [%s:%u] already shutdown!",
-                              __FUNCTION_LINE__, _net_setting._name.c_str(), _net_setting._id );
-        }
     }
 
     void KFNetClient::CloseSession()
@@ -133,7 +127,7 @@ namespace KFrame
         KFNetSession::CloseSession();
 
         _uv_connect_timer.data = this;
-        uv_timer_stop( &_uv_connect_timer );
+        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_connect_timer ), nullptr );
 
         _uv_client.data = this;
         uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
@@ -144,5 +138,4 @@ namespace KFrame
         auto* netclinet = reinterpret_cast< KFNetClient* >( handle->data );
         netclinet->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclinet->_net_setting._id );
     }
-
 }

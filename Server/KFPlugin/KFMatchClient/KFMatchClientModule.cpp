@@ -5,6 +5,7 @@ namespace KFrame
 {
     KFMatchClientModule::KFMatchClientModule()
     {
+        _kf_component = nullptr;
     }
 
     KFMatchClientModule::~KFMatchClientModule()
@@ -18,19 +19,22 @@ namespace KFrame
 
     void KFMatchClientModule::BeforeRun()
     {
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_player->RegisterEnterFunction( this, &KFMatchClientModule::OnEnterQueryMatchRoom );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( matchid ), this, &KFMatchClientModule::OnMatchIdUpdateCallBack );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_START_MATCH_REQ, &KFMatchClientModule::HandleStartMatchReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_CLIENT_ACK, &KFMatchClientModule::HanldeMatchToClientAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_MATCH_REQ, &KFMatchClientModule::HandleCancelMatchReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &KFMatchClientModule::HandleQueryMatchRoomAck );
-
+        __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &KFMatchClientModule::HandleNoticeMatchStateAck );
     }
 
     void KFMatchClientModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
         _kf_player->UnRegisterEnterFunction( this );
+        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( matchid ) );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_START_MATCH_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_CLIENT_ACK );
@@ -189,7 +193,15 @@ namespace KFrame
         // 模型, 时装
         pbplayer->set_modelid( kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) ) );
         pbplayer->set_clothesid( kfobject->GetValue< uint32 >( __KF_STRING__( clothesid ) ) );
+
+        // 成就信息
+        auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
+        //auto kfachieve = kfachieves->FirstData();
+        auto pbacievedatas = pbplayer->mutable_achieve();
+        _kf_achieve->FormatBattleAchieve( kfachieves, pbacievedatas );
     }
+
+
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleCancelMatchReq )
     {
@@ -227,14 +239,18 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SMatchToClientAck );
 
         _kf_display->SendToGroup( player, kfmsg.result() );
-        if ( kfmsg.result() != KFMsg::MatchRequestSuccess )
-        {
-            player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
-        }
 
-        //KFMsg::MsgStartMatchAck ack;
-        //ack.set_matchid( kfmsg.matchid() );
-        //_kf_player->SendMessageToGroup( player, KFMsg::MSG_START_MATCH_ACK, &ack );
+        auto kfobject = player->GetData();
+        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
+
+        if ( kfmsg.result() == KFMsg::MatchRequestSuccess )
+        {
+            player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+
+            KFMsg::S2SNoticeMatchStateReq req;
+            req.set_matchid( kfmsg.matchid() );
+            _kf_player->SendMessageToGroup( player, KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &req, false );
+        }
     }
 
     void KFMatchClientModule::OnEnterQueryMatchRoom( KFEntity* player )
@@ -266,5 +282,37 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMatchRoomAck );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+
     }
+
+    __KF_UPDATE_DATA_FUNCTION__( KFMatchClientModule::OnMatchIdUpdateCallBack )
+    {
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
+
+        if ( newvalue != _invalid_int )
+        {
+            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::MatchStatus );
+        }
+        else
+        {
+            auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+            if ( groupid != _invalid_int )
+            {
+                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
+            }
+            else
+            {
+                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::OnlineStatus );
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleNoticeMatchStateAck )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchStateReq );
+
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+    }
+
 }

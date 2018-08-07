@@ -12,8 +12,8 @@
     #define POCO_STATIC
 #endif // !1
 
-#ifndef __FUNCTION_LINE__
-    #define __FUNCTION_LINE__ __FUNCTION__, __LINE__
+#ifndef __FUNC_LINE__
+    #define __FUNC_LINE__ __FUNCTION__, __LINE__
 #endif
 
 #ifndef __MIN__
@@ -49,39 +49,9 @@
 #endif
 
 
-enum ELogCategory
-{
-    ELC_NONE = 0,
-    ELC_SYSTEM,
-    ELC_INIT,
-    ELC_LOGIC,
-    ELC_NET,
-    ELC_SQL,
-    ELC_MEMORY,
-    ELC_SCRIPT,
-    ELC_LOGIN,
-    ELC_PLAYER,
-    //TO ADD
-    ELC_MAX,
-};
-
-static const std::string LogCategoryName[] =
-{
-    "none",
-    "system",
-    "init",
-    "logic",
-    "net",
-    "sql",
-    "memory",
-    "script",
-    "login",
-    "player",
-    //TO ADD
-};
-
-#define KF_FORMAT(my_fmt, ...)				fmt::format(my_fmt, ##__VA_ARGS__);
-#define KF_FORMAT_FUNCTION(my_fmt, ...)		fmt::format(std::string("[{}:{}]") + my_fmt, __FUNCTION_LINE__, ##__VA_ARGS__);
+#ifndef __FORMAT__
+    #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, ##__VA_ARGS__ );
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -12,7 +12,8 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/json/include
     ${ROOT_DIR}/KFLibrary/lua/lua53
     ${ROOT_DIR}/KFLibrary/google/protobuf/src
-    ${ROOT_DIR}/KFLibrary/log4cxx/log4cxx/src/main/include
+    ${ROOT_DIR}/KFLibrary/libuv/include
+    ${ROOT_DIR}/KFLibrary/openssl/include
 )
 
 #################################################################################
@@ -47,21 +48,14 @@ endmacro()
 #################################################################################
 #################################################################################
 
-add_subdirectory(KFThread)
-add_subdirectory(KFCompress)
 add_subdirectory(KFConHash)
-add_subdirectory(KFConvert)
-add_subdirectory(KFCrypto)
 add_subdirectory(KFCore)
-add_subdirectory(KFExcel)
+#add_subdirectory(KFExcel)
 add_subdirectory(KFHttp)
-add_subdirectory(KFLogger)
+add_subdirectory(KFGlobal)
 add_subdirectory(KFMath3D)
 add_subdirectory(KFMemory)
 add_subdirectory(KFNetwork)
 add_subdirectory(KFPlugin)
 add_subdirectory(KFProtocol)
-add_subdirectory(KFRand)
-add_subdirectory(KFTime)
 add_subdirectory(KFUtility)
-add_subdirectory(KFXml)

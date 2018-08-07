@@ -1,6 +1,4 @@
 ﻿#include "KFPlugin.h"
-#include "KFTime/KFClock.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {

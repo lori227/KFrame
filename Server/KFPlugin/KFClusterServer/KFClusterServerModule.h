@@ -14,6 +14,7 @@
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -56,6 +57,9 @@ namespace KFrame
     private:
         // 集群认证秘钥
         std::string _cluster_key;
+
+        // 序列号
+        uint32 _cluster_serial;
     };
 }
 

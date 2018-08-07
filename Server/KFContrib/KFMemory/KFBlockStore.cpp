@@ -1,4 +1,5 @@
-﻿#include "KFBlockStore.h"
+﻿#include "KFrame.h"
+#include "KFBlockStore.h"
 #include "KFBlockMemory.h"
 #include "KFLogMemory.h"
 

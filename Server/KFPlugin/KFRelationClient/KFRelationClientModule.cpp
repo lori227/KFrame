@@ -157,7 +157,7 @@ namespace KFrame
     {
         // 敬酒增加好友度
         auto targetplayerid = kfdata->GetValue< uint32 >( __KF_STRING__( id ) );
-        UpdateFriendLiness( player, targetplayerid, KFOperateEnum::Add, _kf_relation_config->_jing_jiu_friend_liness, KFFriendEnum::Laud );
+        UpdateFriendLiness( player, targetplayerid, KFOperateEnum::Add, _kf_relation_config->_jing_jiu_friend_liness, KFMsg::FriendLinessEnum::Laud );
     }
 
     void KFRelationClientModule::SendUpdateToFriend( KFEntity* player, MapString& values )
@@ -380,7 +380,7 @@ namespace KFrame
         if ( ok )
         {
             auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
-            _kf_display->SendToClient( player, KFMsg::FriendDelOK, kfmsg.playerid(), name );
+            _kf_display->SendToClient( player, KFMsg::FriendDelOK, name, kfmsg.playerid() );
 
             player->RemoveData( kffriendrecord, kfmsg.playerid() );
         }
@@ -570,7 +570,6 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( __KF_STRING__( friend ), friendid );
-
         if ( kffriend == nullptr )
         {
             return;
@@ -582,6 +581,8 @@ namespace KFrame
         req.set_targetplayerid( friendid );
         req.set_friendliness( value );
         req.set_type( type );
+        //req.set_serverid( KFGlobal::Instance()->_app_id );
+        //req.set_targetname( kffriend->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
         SendMessageToRelation( KFMsg::S2S_UPDATE_FRIEND_LINESS_REQ, &req );
     }
 

@@ -50,9 +50,9 @@ namespace KFrame
 
     uint32 KFNetServerServices::MakeTrusteeID()
     {
-        if ( _trustee_id >= 10000 )
+        if ( _trustee_id < 4000000000u )
         {
-            _trustee_id = 0;
+            _trustee_id = 4000000000u;
         }
 
         return ++_trustee_id;
@@ -62,6 +62,10 @@ namespace KFrame
     void KFNetServerServices::OnConnectionCallBack( uv_stream_t* stream, int status )
     {
         auto netservices = reinterpret_cast< KFNetServerServices* >( stream->data );
+        if ( netservices->_is_shutdown )
+        {
+            return;
+        }
 
         // 创建一个id
         auto id = netservices->MakeTrusteeID();

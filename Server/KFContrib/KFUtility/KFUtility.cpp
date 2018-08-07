@@ -1,6 +1,6 @@
 ﻿#include "KFUtility.h"
 #include "KFMacros.h"
-#include "KFTime/KFDate.h"
+#include "KFDate.h"
 
 #ifdef _WIN32
     #include <winsock2.h>
@@ -109,20 +109,6 @@ namespace KFrame
         }
     }
 
-    char* KFUtility::Format( const char* format, ... )
-    {
-        static const uint32 _length = 2048;
-        static char buff[ _length ];
-
-        va_list args;
-        va_start( args, format );
-        vsnprintf( buff, _length - 1, format, args );
-        va_end( args );
-
-        buff[ _length - 1 ] = 0;
-        return buff;
-    }
-
     uint64 KFUtility::Make64Guid( uint32 dataid )
     {
         static uint32 _sequence = 0;
@@ -133,5 +119,11 @@ namespace KFrame
         _sequence = ( _sequence + 1 ) & 0xFF; // 8位
 
         return ( time << 32 ) | ( dataid << 8 ) | _sequence;
+    }
+
+    // 格式化标题
+    std::string KFUtility::FormatTitleText( const std::string& appname, const std::string& apptype, uint32 appid )
+    {
+        return __FORMAT__( "{}-{}-{}", appname, apptype, appid );
     }
 }

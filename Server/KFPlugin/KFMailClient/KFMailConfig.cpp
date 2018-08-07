@@ -49,7 +49,7 @@ namespace KFrame
 
                 kfsetting->_extend = setting.GetString( "Extend" );
                 auto stragent = setting.GetString( "AgentList" );
-                kfsetting->_rewards.ParseFromString( stragent, __FUNCTION_LINE__ );
+                kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
                 _mail_setting.Insert( kfsetting->_config_id, kfsetting );
 
                 setting.NextNode();

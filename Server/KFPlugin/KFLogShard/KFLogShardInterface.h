@@ -15,7 +15,6 @@ namespace KFrame
     class KFLogShardInterface : public KFModule
     {
     public:
-        virtual void Log( const ELogCategory& category, const int level, const uint32 zone_id, const std::string& app_name, const std::string& app_type, const uint32 app_id, const std::string& log_info ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

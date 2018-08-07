@@ -64,9 +64,7 @@ namespace KFrame
 
         kfgroup->_kf_player_list.Clear( false );
 
-        auto strgroupid = __TO_STRING__( kfgroup->_group_id );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] camp[%u] match group[%s]!",
-                            __FUNCTION__, _camp_id, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::System, "camp[{}] match group[{}]!", _camp_id, kfgroup->_group_id );
     }
 
     void KFMatchCamp::EnterBattleRoomReq( KFMatchRoom* kfroom )
@@ -81,8 +79,7 @@ namespace KFrame
         SaveTo( req.mutable_pbcamp() );
         kfroom->SendMessageToBattle( KFMsg::S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ, &req );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] camp[%u] enter room[%s] req!",
-                            __FUNCTION__, _camp_id, kfroom->_str_room_id.c_str() );
+        __LOG_DEBUG__( KFLogEnum::System, "camp[{}] enter room[{}] req!", _camp_id, kfroom->_battle_room_id );
     }
 
     bool KFMatchCamp::EnterBattleRoomAck()

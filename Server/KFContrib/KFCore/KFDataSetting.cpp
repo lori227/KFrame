@@ -1,5 +1,4 @@
 ﻿#include "KFDataSetting.h"
-#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {

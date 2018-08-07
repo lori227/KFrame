@@ -26,7 +26,6 @@ namespace KFrame
         _kf_match_queue = kfmatchqueue;
         _match_id = _kf_match_queue->_match_id;
         _battle_room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
-        _str_room_id = __TO_STRING__( _battle_room_id );
 
         // 开启创建定时器
         _create_timer.StartTimer( 1, 10000 );
@@ -73,8 +72,7 @@ namespace KFrame
         req.set_maxplayercount( _kf_match_queue->_kf_setting->_max_player_count );
         SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] create battle room[%s] req",
-                            __FUNCTION__, _str_room_id.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "create battle room[{}] req", _battle_room_id );
     }
 
     void KFMatchRoom::CreateBattleRoom( uint32 battleshardid )
@@ -82,8 +80,7 @@ namespace KFrame
         _create_timer.StopTimer();
         _battle_shard_id = battleshardid;
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] create battle[%u] ok!",
-                            __FUNCTION__, _str_room_id.c_str(), _battle_shard_id );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] create battle[{}] ok!", _battle_room_id, _battle_shard_id );
     }
 
     bool KFMatchRoom::IsFull()
@@ -286,8 +283,7 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] open room[%s] ack!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "open room[{}] ack!", _battle_room_id );
         }
 
         return ok;
@@ -300,8 +296,7 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] start room[%s] failed!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "start room[{}] failed!", _battle_room_id );
         }
     }
 
@@ -343,4 +338,3 @@ namespace KFrame
     }
 
 }
-

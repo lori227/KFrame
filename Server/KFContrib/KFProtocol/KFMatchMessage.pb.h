@@ -51,6 +51,7 @@ class S2SQueryMatchRoomAck;
 class S2SQueryBattleRoomReq;
 class S2SQueryRoomToBattleShardReq;
 class S2SPlayerOnlineToBattleShardReq;
+class S2SNoticeMatchStateReq;
 
 enum MatchProtocol {
   S2S_REGISTER_MATCH_REQ = 11101,
@@ -68,11 +69,12 @@ enum MatchProtocol {
   S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ = 11116,
   S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118,
   S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK = 11119,
-  S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120
+  S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120,
+  S2S_NOTICE_MATCH_STATE_REQ = 11121
 };
 LIBPROTOC_EXPORT bool MatchProtocol_IsValid(int value);
 const MatchProtocol MatchProtocol_MIN = S2S_REGISTER_MATCH_REQ;
-const MatchProtocol MatchProtocol_MAX = S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ;
+const MatchProtocol MatchProtocol_MAX = S2S_NOTICE_MATCH_STATE_REQ;
 const int MatchProtocol_ARRAYSIZE = MatchProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MatchProtocol_descriptor();
@@ -1834,6 +1836,98 @@ class LIBPROTOC_EXPORT S2SPlayerOnlineToBattleShardReq : public ::google::protob
   void InitAsDefaultInstance();
   static S2SPlayerOnlineToBattleShardReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SNoticeMatchStateReq : public ::google::protobuf::Message {
+ public:
+  S2SNoticeMatchStateReq();
+  virtual ~S2SNoticeMatchStateReq();
+
+  S2SNoticeMatchStateReq(const S2SNoticeMatchStateReq& from);
+
+  inline S2SNoticeMatchStateReq& operator=(const S2SNoticeMatchStateReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SNoticeMatchStateReq& default_instance();
+
+  void Swap(S2SNoticeMatchStateReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SNoticeMatchStateReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SNoticeMatchStateReq& from);
+  void MergeFrom(const S2SNoticeMatchStateReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint32 matchid = 2;
+  inline bool has_matchid() const;
+  inline void clear_matchid();
+  static const int kMatchidFieldNumber = 2;
+  inline ::google::protobuf::uint32 matchid() const;
+  inline void set_matchid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SNoticeMatchStateReq)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_matchid();
+  inline void clear_has_matchid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 matchid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
+  friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFMatchMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SNoticeMatchStateReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -3306,6 +3400,54 @@ inline ::google::protobuf::uint32 S2SPlayerOnlineToBattleShardReq::serverid() co
 inline void S2SPlayerOnlineToBattleShardReq::set_serverid(::google::protobuf::uint32 value) {
   set_has_serverid();
   serverid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SNoticeMatchStateReq
+
+// required uint32 playerid = 1;
+inline bool S2SNoticeMatchStateReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SNoticeMatchStateReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SNoticeMatchStateReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SNoticeMatchStateReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SNoticeMatchStateReq::playerid() const {
+  return playerid_;
+}
+inline void S2SNoticeMatchStateReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint32 matchid = 2;
+inline bool S2SNoticeMatchStateReq::has_matchid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SNoticeMatchStateReq::set_has_matchid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SNoticeMatchStateReq::clear_has_matchid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SNoticeMatchStateReq::clear_matchid() {
+  matchid_ = 0u;
+  clear_has_matchid();
+}
+inline ::google::protobuf::uint32 S2SNoticeMatchStateReq::matchid() const {
+  return matchid_;
+}
+inline void S2SNoticeMatchStateReq::set_matchid(::google::protobuf::uint32 value) {
+  set_has_matchid();
+  matchid_ = value;
 }
 
 

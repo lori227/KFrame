@@ -134,6 +134,17 @@ namespace KFrame
         // 删除房间
         _kf_room_list.Remove( kfroom->_battle_room_id );
     }
+
+    KFBattleRoom* KFBattleShardModule::FindRoom( uint64 roomid, const char* function, uint32 line )
+    {
+        auto kfroom = _kf_room_list.Find( roomid );
+        if ( kfroom == nullptr )
+        {
+            __LOG_ERROR_FUNCTION__( KFLogEnum::Logic, function, line, "can't find room[{}]!", roomid );
+        }
+
+        return kfroom;
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFBattleShardModule::OnServerDiscoverBattleProxy )
@@ -156,10 +167,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterServerToBattleShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] register battle[%u|%s:%u|%s] req!",
-                            __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] req!",
+                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
         {
@@ -173,24 +183,22 @@ namespace KFrame
         ack.set_result( KFMsg::Success );
         _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] register battle[%u|%s:%u|%s] ok!",
-                            __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] ok!",
+                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellBattleRegisterToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellBattleRegisterToShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] battle[%u|%s:%u] update room[%s] req!",
-                            __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] req!",
+                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.roomid() != _invalid_int )
         {
             // roomid不为0 断线重连
             auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
             if ( kfroom != nullptr )
             {
                 kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
@@ -201,7 +209,6 @@ namespace KFrame
         {
             // roomid为0, 宕机重启
             auto kfroom = FindBattleRoomByServerId( kfmsg.serverid() );
-
             if ( kfroom != nullptr )
             {
                 if ( kfroom->IsBattleRoomStart() )
@@ -216,8 +223,8 @@ namespace KFrame
             }
         }
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] battle[%u|%s:%u] update room[%s] ok!",
-                            __FUNCTION__, kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] ok!",
+                       kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
     }
 
     KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint32 serverid )
@@ -228,7 +235,6 @@ namespace KFrame
         }
 
         auto kfroom = _kf_room_list.First();
-
         while ( kfroom != nullptr )
         {
             if ( kfroom->_battle_server._server_id == serverid )
@@ -248,18 +254,15 @@ namespace KFrame
 
         _kf_battle_manage->UnRegisterBattleServer( kfmsg.serverid() );
 
-        KFLogger::LogLogic( KFLogger::Error, "[%s] battle[%u] disconnect!",
-                            __FUNCTION__, kfmsg.serverid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}] disconnect!", kfmsg.serverid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleCreateRoomToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
 
         // 创建房间
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
         if ( kfroom == nullptr )
         {
             kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
@@ -283,31 +286,24 @@ namespace KFrame
         // 广播给所有的proxy
         _kf_cluster_shard->AddObjectToProxy( kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] matchid[%u] room[%s] create ok!",
-                            __FUNCTION__, kfmsg.matchid(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "matchid[{}] room[{}] create ok!", kfmsg.matchid(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleOpenBattleRoomToShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenBattleRoomToShardAck );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "open room[{}] result[{}]!", kfmsg.roomid(), kfmsg.result() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] open room[%s] result[%u]!",
-                            __FUNCTION__, strroomid.c_str(), kfmsg.result() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         if ( kfmsg.result() == KFMsg::BattleEnum::OpenSuccess )
         {
             kfroom->ConfirmOpenBattleRoom( true );
         }
-
         else
         {
             kfroom->ConfirmOpenBattleRoom( false );
@@ -317,52 +313,39 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleOpenRoomToBattleShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenRoomToBattleShardAck );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] ack!", kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] open match room[%s] ack!",
-                            __FUNCTION__, strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         kfroom->ConfirmOpenMatchRoom();
-
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] open match room[%s] ok!",
-                            __FUNCTION__, strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] ok!", kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleAddCampToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SAddCampToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] req!",
-                            __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
 
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+        auto pbcamp = &kfmsg.pbcamp();
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] add camp[{}] req!", kfmsg.roomid(), pbcamp->campid() );
 
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
-        auto kfcamp = kfroom->AddCamp( &kfmsg.pbcamp() );
-
+        auto kfcamp = kfroom->AddCamp( pbcamp );
         if ( kfcamp != nullptr )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] ok!",
-                                __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] add camp[{}] ok!", kfmsg.roomid(), pbcamp->campid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] room[%s] add camp[%u] failed!",
-                                __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] add camp[{}] failed!", kfmsg.roomid(), pbcamp->campid() );
         }
 
         KFMsg::S2SAddCampToMatchShardAck ack;
@@ -371,45 +354,34 @@ namespace KFrame
         ack.set_campid( kfmsg.pbcamp().campid() );
         ack.set_addok( kfcamp != nullptr );
         auto ok = kfroom->SendMessageToMatch( KFMsg::S2S_ADD_CAMP_TO_MATCH_SHARD_ACK, &ack );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] send ok!",
-                                __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] add camp[{}] send ok!", kfmsg.roomid(), pbcamp->campid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] add camp[%u] send failed!",
-                                __FUNCTION__, strroomid.c_str(), kfmsg.pbcamp().campid() );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] add camp[{}] send failed!", kfmsg.roomid(), pbcamp->campid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleCancelMatchToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] player[%u:%u] cancel match req!",
-                            __FUNCTION__, strroomid.c_str(), kfmsg.campid(), kfmsg.playerid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] player[{}:{}] cancel match req!", kfmsg.roomid(), kfmsg.campid(), kfmsg.playerid() );
 
         bool isopen = true;
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
         if ( kfroom != nullptr )
         {
             isopen = ( kfroom->_status >= KFRoomStatus::StatusBattleRoomOpen );
             auto ok = kfroom->CancelMatch( kfmsg.campid(), kfmsg.playerid() );
-
             if ( ok )
             {
-                KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] room[%s] cancel match ok!",
-                                    __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+                __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] room[{}] cancel match ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
             }
-
             else
             {
-                KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] room[%s] cancel match failed!",
-                                    __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+                __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] room[{}] cancel match failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
             }
         }
 
@@ -426,62 +398,44 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerEnterRoomToBattleShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerEnterRoomToBattleShardAck );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] enter room[{}] ack!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] enter room[%s] ack!",
-                            __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->ConfirmEnterBattleRoom( kfmsg.campid(), kfmsg.playerid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] enter room[%s] ok!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] enter room[{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%u] enter room[%s] failed!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] enter room[{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerLeaveRoomToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerLeaveRoomToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] leave room[{}] req!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] leave room[%s] req!",
-                            __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->LeaveBattleRoom( kfmsg.campid(), kfmsg.playerid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] leave room[%s] ok!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] leave room[{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] leave battle room[%s] failed!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] leave room[{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
 
         // 回复给战斗服务器
@@ -495,108 +449,78 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleNoticeMatchRoomAck )
     {
         __PROTO_PARSE__( KFMsg::S2SNoticeMatchRoomAck )
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] notice battle room[%s] ack!",
-                            __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] notice battle room[{}] ack!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
 
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->NoticeBattleRoom( kfmsg.campid(), kfmsg.playerid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] notice battle room[%s] ok!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] notice battle room[{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] notice battle room[%s] failed!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] notice battle room[{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerLoginRoomToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerLoginRoomToBattleShardReq );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] login room[{}] req!", kfmsg.playerid(), kfmsg.roomid() );
 
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] login room[%s] req!",
-                            __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->LoginBattleRoom( kfmsg.campid(), kfmsg.playerid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] [%u:%u] login battle room[%s] ok!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] login room[{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] [%u:%u] login battle room[%s] failed!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] login room[{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleQueryRoomToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRoomToBattleShardReq );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] req!", kfmsg.playerid(), kfmsg.roomid() );
 
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] query room[%s] req!",
-                            __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] can't find room[%s]",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->QueryBattleRoom( kfmsg.playerid(), kfmsg.serverid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] query room[%s] ok!",
-                                __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] ok!", kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] query room[%s] failed!",
-                                __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query room[{}] failed!", kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomStartToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomStartToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] start room[%s] req!",
-                            __FUNCTION__, strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}] req!", kfmsg.roomid() );
 
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         kfroom->StartBattleRoom();
@@ -606,229 +530,160 @@ namespace KFrame
         ack.set_roomid( kfmsg.roomid() );
         kfroom->SendMessageToBattle( KFMsg::S2S_TELL_BATTLE_ROOM_START_ACK, &ack );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] start ok!",
-                            __FUNCTION__, strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] start ok!", kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomStartToBattleShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomStartToMatchShardAck );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] start room[%s] ack!",
-                            __FUNCTION__, strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}] ack!", kfmsg.roomid() );
 
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         kfroom->ConfirmStartBattleRoom();
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] start room[%s] ok!",
-                            __FUNCTION__, strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}] ok!", kfmsg.roomid() );
     }
 
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomFinishToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomFinishToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] finish req!", kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] finish req!",
-                            __FUNCTION__, strroomid.c_str() );
-
-        // _kf_battle_manage->FreeBattleServer( kfmsg.serverid(), kfmsg.ip() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom != nullptr )
         {
             RemoveBattleRoom( kfroom );
-        }
-
-        else
-        {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                __FUNCTION__, strroomid.c_str() );
         }
 
         KFMsg::S2STellBattleRoomFinishAck ack;
         ack.set_roomid( kfmsg.roomid() );
         SerialzeBattleRoomFinish( kfmsg.roomid(), &ack );
         auto ok = _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
-
         if ( ok )
         {
             RemoveCalcBattleRoom( kfmsg.roomid() );
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] finish ok!",
-                                __FUNCTION__, strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] finish ok!", kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] finish failed!",
-                                __FUNCTION__, strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] finish failed!", kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerOnlineToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerOnlineToBattleShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] online room[{}] req!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] online room[%s] req!",
-                            __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto ok = kfroom->PlayerOnlineBattleRoom( kfmsg.campid(), kfmsg.playerid(), kfmsg.serverid() );
-
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] online room[%s] ok!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] online room[{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%u] online room[%s] failed!",
-                                __FUNCTION__, kfmsg.campid(), kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] online room[{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerBattleScoreAck )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerBattleScoreAck );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
-
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] balance ack req!",
-                            __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack req!", kfmsg.playerid(), kfmsg.roomid() );
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
-        auto ok = redisdriver->VoidExecute( "hdel %s:%u %s", __KF_CHAR__( score ), kfmsg.playerid(), strroomid.c_str() );
 
-        if ( ok )
+        auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hdel {}:{} {}",
+                                              __KF_STRING__( score ), kfmsg.playerid(), kfmsg.roomid() );
+        if ( kfresult->IsOk() )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] balance ack ok!",
-                                __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack ok!", kfmsg.playerid(), kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] balance ack failed!",
-                                __FUNCTION__, kfmsg.playerid(), strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] balance ack failed!", kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleBattleScoreBalanceToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SBattleScoreBalanceToShardReq );
-        auto strroomid = __TO_STRING__( kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}] balance req!", kfmsg.roomid() );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] battle[%s] balance req!",
-                            __FUNCTION__, strroomid.c_str() );
-
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-
+        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s]!",
-                                       __FUNCTION__, strroomid.c_str() );
+            return;
         }
 
         auto pbscore = kfmsg.mutable_pbscore();
         auto ok = kfroom->BattleScoreBalance( pbscore );
-
         if ( ok )
         {
             // 保存到数据库
             auto redisdriver = __BATTLE_REDIS_DRIVER__;
+            auto strdata = KFProto::Serialize( pbscore, KFCompressEnum::Compress );
 
-            auto pbdata = KFProto::Serialize( pbscore, KFCompressEnum::Compress );
-            redisdriver->VoidExecute( "hset %s:%u %s %s",
-                                      __KF_CHAR__( score ), pbscore->playerid(), strroomid.c_str(), pbdata.c_str() );
+            // 玩家战绩
+            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( score ), pbscore->playerid(), kfmsg.roomid(), strdata );
 
             // 记录房间单个玩家的数据,用于组队玩家数据的结算(亲密度,最近好友)
-            redisdriver->VoidExecute( "hset %s:%s %u %s",
-                                      __KF_CHAR__( battleroom ), strroomid.c_str(),
-                                      pbscore->playerid(), pbdata.c_str() );
+            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( battleroom ), kfmsg.roomid(), pbscore->playerid(), strdata );
+            redisdriver->Pipeline( __FUNC_LINE__ );
 
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] battlr[%s] balance ok!",
-                                __FUNCTION__, strroomid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "battlr[{}] balance ok!", kfmsg.roomid() );
         }
-
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] battlr[%s] balance failed!",
-                                __FUNCTION__, strroomid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "battlr[{}] balance failed!", kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleOnlieQueryBattleScoreReq )
     {
         __PROTO_PARSE__( KFMsg::S2SOnlieQueryBattleScoreReq );
+
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        // 保存guid, 后面sendmessage 会改变kfguid的值
-        auto guid = kfguid;
-
-        MapString mapdata;
-        redisdriver->MapExecute( mapdata, "hgetall %s:%u", __KF_CHAR__( score ), kfmsg.playerid() );
-
-        if ( mapdata.empty() )
-        {
-            return;
-        }
-
-        for ( auto& iter : mapdata )
+        auto kfresult = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+                                               __KF_STRING__( score ), kfmsg.playerid() );
+        for ( auto& iter : kfresult->_value )
         {
             KFMsg::S2SPlayerBattleScoreReq req;
             req.set_playerid( kfmsg.playerid() );
             req.set_roomid( KFUtility::ToValue< uint64 >( iter.first ) );
             KFProto::Parse( req.mutable_pbscore(), iter.second, KFCompressEnum::Compress );
-            _kf_cluster_shard->SendMessageToClient( guid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
+            _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
     }
 
     void KFBattleShardModule::RemoveCalcBattleRoom( uint64 roomid )
     {
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
-        auto ok = redisdriver->VoidExecute( "del %s:%s", __KF_CHAR__( battleroom ),
-                                            __TO_CHAR__( roomid ) );
-
-        if ( !ok )
-        {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] can't del battle room[%s]!",
-                                __FUNCTION__, __TO_CHAR__( roomid ) );
-        }
+        redisdriver->Execute( __FUNC_LINE__, "del {}:{}", __KF_STRING__( battleroom ), roomid );
     }
 
     void KFBattleShardModule::SerialzeBattleRoomFinish( uint64 roomid, KFMsg::S2STellBattleRoomFinishAck* ack )
     {
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
-        MapString mapdata;
-        redisdriver->MapExecute( mapdata, "hgetall %s:%s", __KF_CHAR__( battleroom ), __TO_CHAR__( roomid ) );
 
-        if ( mapdata.empty() )
-        {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] get battle room[%s] map empty!",
-                                __FUNCTION__, __TO_CHAR__( roomid ) );
-            return;
-        }
-
-        for ( auto iter : mapdata )
+        auto kfresult = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+                                               __KF_STRING__( battleroom ), roomid );
+        for ( auto& iter : kfresult->_value )
         {
             ack->add_pbscore( iter.second );
         }
-
     }
 }

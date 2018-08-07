@@ -82,7 +82,7 @@ namespace KFrame
         player->UpdateData( kfachieve, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
-        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
 
         return KFMsg::AchieveReceiveRewardOK;
     }
@@ -191,6 +191,45 @@ namespace KFrame
             // 获得使用的数值
             auto usevalue = achievesetting->GetUseValue( operatevalue );
             player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( value ), achievesetting->_operate, usevalue );
+            // player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( type ), KFOperateEnum::Set, KFAchieveEnum::lobby );
+
         }
+    }
+
+    void KFAchieveModule::FormatBattleAchieve( KFData* kfobject, KFMsg::PBTaskDatas* pbachieve )
+    {
+        auto battlecfg  = _kf_achieve_config->GetBattleAchieveCfg();
+        if ( battlecfg.empty() )
+        {
+            return;
+        }
+
+        for ( auto iter : battlecfg )
+        {
+            auto kfachieve = kfobject->FindData( iter.first );
+            if ( nullptr == kfachieve )
+            {
+                auto achievedata =  pbachieve->add_taskdata();
+                achievedata->set_id( iter.first );
+                achievedata->set_value( _invalid_int );
+            }
+
+            else
+            {
+                if ( KFMsg::FlagEnum::Init != kfachieve->GetValue<uint32 >( __KF_STRING__( flag ) ) )
+                {
+                    continue;
+                }
+
+                else
+                {
+                    auto achievedata = pbachieve->add_taskdata();
+                    achievedata->set_id( iter.first );
+                    achievedata->set_value( kfachieve->GetValue<uint32 >( __KF_STRING__( value ) ) );
+                }
+            }
+
+        }
+
     }
 }

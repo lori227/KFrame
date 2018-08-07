@@ -84,8 +84,8 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_ENTER_BATTLE_ROOM_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u] enter battle room[%s] req!",
-                                __FUNCTION__, _pb_player.campid(), _pb_player.playerid(), kfroom->_str_room_id.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] enter battle room[{}] req!",
+                           _pb_player.campid(), _pb_player.playerid(), kfroom->_battle_room_id );
         }
     }
 
@@ -117,9 +117,9 @@ namespace KFrame
                 _status = KFPlayerStatus::StatusDisconnetRoom;
             }
 
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%u:%u] notice battle room[%s] req[%u]!",
-                                __FUNCTION__, _pb_player.campid(), _pb_player.serverid(), _pb_player.playerid(),
-                                kfroom->_str_room_id.c_str(), _notice_count );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}:{}] notice battle room[{}] req[{}]!",
+                           _pb_player.campid(), _pb_player.serverid(), _pb_player.playerid(),
+                           kfroom->_battle_room_id, _notice_count );
         }
     }
 
@@ -140,8 +140,8 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK, &ack );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Info, "[%s] player[%u] login battle room[%s] failed!",
-                                __FUNCTION__, _pb_player.playerid(), kfroom->_str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] login battle room[{}] failed!",
+                           _pb_player.playerid(), kfroom->_battle_room_id );
         }
 
         return ok;
@@ -182,8 +182,8 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] online status[%u] failed!",
-                                __FUNCTION__, _pb_player.playerid(), _status );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] online status[{}] failed!",
+                           _pb_player.playerid(), _status );
         }
 
         return true;
@@ -196,8 +196,7 @@ namespace KFrame
         {
             _notice_count = 0;
             _status = KFPlayerStatus::StatusNoticeRoom;
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] online ok!",
-                                __FUNCTION__, _pb_player.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] online ok!", _pb_player.playerid() );
         }
     }
 
@@ -238,8 +237,7 @@ namespace KFrame
             auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_BATTLE_ROOM_SCORE_BALANCE_ACK, &ack );
             if ( !ok )
             {
-                KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u] balance score send failed!",
-                                    __FUNCTION__, _pb_player.playerid() );
+                __LOG_ERROR__( KFLogEnum::Logic, "player[{}] balance score send failed!", _pb_player.playerid() );
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿#include "KFTimerManage.h"
-#include "KFPlugin/KFGlobal.h"
 
 namespace KFrame
 {

@@ -32,8 +32,7 @@ namespace KFrame
     {
         for ( auto i = 0u; i < virtualcount; ++i )
         {
-            char temp[ 128 ] = "";
-            sprintf( temp, "%s:%u:%u", node->_name.c_str(), node->_id, i );
+            auto temp = __FORMAT__( "{}:{}:{}", node->_name, node->_id, i );
 
             auto hashkey = _hash_function.GetHashValue( temp );
             node->_virtual_list.push_back( hashkey );
@@ -79,7 +78,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto hashkey = _hash_function.GetHashValue( data.c_str() );
+        auto hashkey = _hash_function.GetHashValue( data );
 
         // 查找
         auto iter = _virtual_list._objects.lower_bound( hashkey );

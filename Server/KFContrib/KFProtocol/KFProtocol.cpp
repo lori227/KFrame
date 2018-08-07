@@ -1,8 +1,5 @@
-﻿#include "KFProtocol.h"
-#include "KFLogger/KFLogger.h"
-#include "KFUtility/KFUtility.h"
-#include "KFCompress/KFDecode.h"
-#include "KFCompress/KFCompress.h"
+﻿#include "KFrame.h"
+#include "KFProtocol.h"
 #include "google/protobuf/message.h"
 
 
@@ -20,8 +17,7 @@ namespace KFrame
         if ( !result )
         {
             std::string name = proto->GetTypeName();
-            KFLogger::LogSystem( KFLogger::Error, "[%s:%u] message[%s] parse failed!",
-                                 __FUNCTION_LINE__, name.c_str() );
+            __LOG_ERROR__( KFLogEnum::System, "message[{}] parse failed!", name );
         }
 
         return result;
@@ -75,8 +71,7 @@ namespace KFrame
         if ( !ok )
         {
             std::string name = proto->GetTypeName();
-            KFLogger::LogSystem( KFLogger::Error, "[%s:%u] message[%s] parse failed!",
-                                 __FUNCTION_LINE__, name.c_str() );
+            __LOG_ERROR__( KFLogEnum::System, "message[{}] parse failed!", name );
         }
 
         return ok;

@@ -8,26 +8,54 @@ namespace KFrame
     class KFRedisFormat
     {
     public:
-
-        std::string ToString();
+        template< typename T >
+        inline static std::string ToString( const T& value )
+        {
+            std::stringstream ss;
+            ss << value;
+            return ss.str();
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void Append( const std::string& param );
-        void Append( const VectorString& values );
-        void Append( const MapString& values );
-        void Append( const std::string& command, const std::string& key );
-        void Append( const std::string& command, const std::string& key, const std::string& value );
-        void Append( const std::string& command, const std::string& key, const std::string& field, const std::string& value );
-        void Append( const std::string& command, const VectorString& values );
-        void Append( const std::string& command, const std::string& key, const VectorString& values );
-        void Append( const std::string& command, const MapString& values );
-        void Append( const std::string& command, const std::string& key, const MapString& values );
-
-    private:
-        // 参数列表
-        ListString _params;
     };
+
+    template<>
+    inline std::string KFRedisFormat::ToString( const MapString& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter.first << " " << iter.second << " ";
+        }
+
+        return ss.str();
+    }
+
+    template<>
+    inline std::string KFRedisFormat::ToString( const VectorString& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter << " ";
+        }
+
+        return ss.str();
+    }
+
+    template<>
+    inline std::string KFRedisFormat::ToString( const ListString& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter << " ";
+        }
+
+        return ss.str();
+    }
+
 
 }
 #endif

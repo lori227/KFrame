@@ -13,6 +13,7 @@
 #include "KFZoneInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

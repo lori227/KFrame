@@ -7,6 +7,7 @@
 #include "Poco/Data/Extraction.h"
 #include "Poco/Data/AbstractBinding.h"
 #include "KFMySQLInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -36,9 +37,6 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public:
-        // 执行
-        virtual bool Execute( const char* format, ... );
 
         // 事务
         virtual void Pipeline( const VectorString& commands );
@@ -53,6 +51,7 @@ namespace KFrame
         bool SelectField( const std::string& table, const std::string& key, MapString& outvalue );
 
         // 更新
+        virtual bool UpdateExecute( const std::string& sql );
         virtual bool UpdateExecute( const std::string& table, const std::string& key, const std::string& field, const std::string& invalue );
 
     protected:
@@ -61,18 +60,11 @@ namespace KFrame
         char* FormatSlashes( char* buffer, uint32 length );
 
         // 执行操作
-        bool ExecuteSql( const char* sql );
+        bool ExecuteSql( const std::string& sql );
         bool ExecuteSql( Statement& statement );
 
         // 判断是否断线
         bool CheckDisconnected( int32 code );
-
-    private:
-        // 逻辑buffer
-        char* _buffer;
-
-        // 长度
-        uint32 _length;
     };
 }
 

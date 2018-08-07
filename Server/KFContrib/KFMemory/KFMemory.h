@@ -38,9 +38,6 @@ namespace KFrame
         BlockStore* FindMemoryBlock( void* memory );
         BlockStore* CreateMemoryBlock( const char* name, uint32 size, uint32 batch );
         ////////////////////////////////////////////////////////////////////////////
-        // 打印内存信息
-        void PrintLogMemory( const char* type, uint32 count, uint64 usesize, uint64 totalsize );
-
     private:
         // 内存日志
         KFLogMemory* _kf_log_memory;

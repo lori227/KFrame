@@ -1,9 +1,9 @@
 ﻿#include "KFHashFunction.hpp"
-#include "KFCrypto/KFCrypto.h"
+#include "KFUtility/KFCrypto.h"
 
 namespace KFrame
 {
-    uint32 MD5HashFunction::GetHashValue( const char* data )
+    uint32 MD5HashFunction::GetHashValue( const std::string& data )
     {
         auto md5value = KFCrypto::Md5Encode( data );
         auto digest = md5value.c_str();

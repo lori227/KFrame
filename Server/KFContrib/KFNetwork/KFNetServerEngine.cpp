@@ -132,13 +132,11 @@ namespace KFrame
 
         if ( ok )
         {
-            KFLogger::LogNet( KFLogger::Debug, "[%s] handle[%u] remove ok!",
-                              __FUNCTION__, eventdata->_id );
+            __LOG_DEBUG__( KFLogEnum::Net, "handle[{}] remove ok!", eventdata->_id );
         }
         else
         {
-            KFLogger::LogNet( KFLogger::Debug, "[%s] handle[%u] remove failed!",
-                              __FUNCTION__, eventdata->_id );
+            __LOG_DEBUG__( KFLogEnum::Net, "handle[{}] remove failed!", eventdata->_id );
         }
     }
 
@@ -158,8 +156,8 @@ namespace KFrame
             kfhandle = _trustee_handles.Find( eventdata->_id );
             if ( kfhandle == nullptr )
             {
-                return KFLogger::LogNet( KFLogger::Error, "[%s] can't find handle[%u]!",
-                                         __FUNCTION__, eventdata->_id );
+                __LOG_ERROR__( KFLogEnum::Net, "can't find handle[{}]!", eventdata->_id );
+                return;
             }
         }
 
@@ -168,9 +166,9 @@ namespace KFrame
 
     bool KFNetServerEngine::CloseHandle( uint32 id, uint32 delaytime, const char* function, uint32 line )
     {
-        _close_handles[ id ] = _now_time + delaytime;
-        KFLogger::LogNet( KFLogger::Debug, "[%s:%u] add close handle[%u]!", function, line, id );
+        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "add close handle[{}]!", id );
 
+        _close_handles[ id ] = _now_time + delaytime;
         return true;
     }
 
@@ -179,8 +177,7 @@ namespace KFrame
         auto kfhandle = _trustee_handles.Find( trusteeid );
         if ( kfhandle == nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] trustee handle[%u:%u] can't find!",
-                              __FUNCTION__, trusteeid, handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "trustee handle[{}:{}] can't find!", trusteeid, handleid );
             return nullptr;
         }
 
@@ -188,8 +185,7 @@ namespace KFrame
         auto findhandle = _kf_handles.Find( handleid );
         if ( findhandle != nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] handle[%u] already exist!",
-                              __FUNCTION__, handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "handle[{}] already exist!", handleid );
             return nullptr;
         }
 
@@ -337,8 +333,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] msgid[%u] can't find handle[%u]!",
-                              __FUNCTION__, msgid, handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}]!", msgid, handleid );
             return false;
         }
 
@@ -350,9 +345,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] msgid[%u] can't find handle[%u]!",
-                              __FUNCTION__, msgid, handleid );
-
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}]!", msgid, handleid );
             return false;
         }
 

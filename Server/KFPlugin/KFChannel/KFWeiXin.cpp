@@ -24,8 +24,8 @@ namespace KFrame
 
     std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
-        auto machinecode = json.GetString( __KF_CHAR__( machine ) );
-        auto weixincode = json.GetString( __KF_CHAR__( code ) );
+        auto machinecode = json.GetString( __KF_STRING__( machine ) );
+        auto weixincode = json.GetString( __KF_STRING__( code ) );
 
         std::string accesstoken = "";
         std::string openid = "";
@@ -33,8 +33,8 @@ namespace KFrame
         if ( !weixincode.empty() )
         {
             // 去请求access_token
-            auto urldata = KFUtility::Format( "%s/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-                                              kfsetting->_login_url.c_str(), kfsetting->_app_id.c_str(), kfsetting->_app_key.c_str(), weixincode.c_str() );
+            auto urldata = __FORMAT__( "{}/sns/oauth2/access_token?appid={}&secret={}&code={}&grant_type=authorization_code",
+                                       kfsetting->_login_url, kfsetting->_app_id, kfsetting->_app_key, weixincode );
 
             auto accessdata = _kf_http_client->StartSTHttpsClient( urldata, _invalid_str );
             if ( accessdata.empty() )
@@ -59,42 +59,53 @@ namespace KFrame
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
             // 保存access_token
-            redisdriver->AppendCommand( "hmset %s:%s %s %s %s %s %s %s",
-                                        __KF_CHAR__( accesstoken ), machinecode.c_str(),
-                                        __KF_CHAR__( accesstoken ), accesstoken.c_str(),
-                                        __KF_CHAR__( openid ), openid.c_str(),
-                                        __KF_CHAR__( scope ), scope.c_str() );
-            redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( accesstoken ), machinecode.c_str(), expirestime - 200 );
+            redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
+                                 __KF_STRING__( accesstoken ), machinecode,
+                                 __KF_STRING__( accesstoken ), accesstoken,
+                                 __KF_STRING__( openid ), openid,
+                                 __KF_STRING__( scope ), scope );
+            redisdriver->Append( "expire {}:{} {}", __KF_STRING__( accesstoken ), machinecode, expirestime - 200 );
 
             // 保存refresh_token
-            redisdriver->AppendCommand( "hset %s:%s %s %s", __KF_CHAR__( refreshtoken ), machinecode.c_str(), __KF_CHAR__( refreshtoken ), accesstoken.c_str() );
-            redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( refreshtoken ), machinecode.c_str(), 2590000 );
-            redisdriver->PipelineExecute();
+            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( refreshtoken ), machinecode, __KF_STRING__( refreshtoken ), accesstoken );
+            redisdriver->Append( "expire {}:{} {}", __KF_STRING__( refreshtoken ), machinecode, 2590000 );
+            redisdriver->Pipeline( __FUNC_LINE__ );
         }
         else
         {
             // 机器码获得账号的access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
-            MapString accessdata;
-            __Execute_Redis__( redisdriver->MapExecute( accessdata, "hgetall %s:%s", __KF_CHAR__( accesstoken ), machinecode.c_str() ) );
-            if ( !accessdata.empty() )
+
+            auto weixindata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+                              __KF_STRING__( accesstoken ), machinecode );
+            if ( !weixindata->IsOk() )
             {
-                openid = accessdata[ __KF_STRING__( openid ) ];
-                accesstoken = accessdata[ __KF_STRING__( accesstoken ) ];
+                return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
+            }
+
+            if ( !weixindata->_value.empty() )
+            {
+                openid = weixindata->_value[ __KF_STRING__( openid ) ];
+                accesstoken = weixindata->_value[ __KF_STRING__( accesstoken ) ];
             }
             else
             {
                 // 获得refresh_token
-                std::string refreshtoken = "";
-                __Execute_Redis__( redisdriver->StringExecute( refreshtoken, "hget %s:%s %s", __KF_CHAR__( refreshtoken ), machinecode.c_str(), __KF_CHAR__( refreshtoken ) ) );
-                if ( refreshtoken.empty() )
+                auto refreshtoken = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
+                                    __KF_STRING__( refreshtoken ), machinecode, __KF_STRING__( refreshtoken ) );
+                if ( !refreshtoken->IsOk() )
+                {
+                    return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
+                }
+
+                if ( refreshtoken->_value.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::WeiXinTokenTimeout );
                 }
 
                 // 刷新access_token
-                auto urldata = KFUtility::Format( "%s/sns/oauth2/refresh_token?grant_type=refresh_token&appid=%s&refresh_token=%s",
-                                                  kfsetting->_login_url.c_str(), kfsetting->_app_id.c_str(), refreshtoken.c_str() );
+                auto urldata = __FORMAT__( "{}/sns/oauth2/refresh_token?grant_type=refresh_token&appid={}&refresh_token={}",
+                                           kfsetting->_login_url, kfsetting->_app_id, refreshtoken->_value );
 
                 auto accessdata = _kf_http_client->StartSTHttpsClient( urldata, _invalid_str );
                 if ( accessdata.empty() )
@@ -114,15 +125,15 @@ namespace KFrame
                 auto scope = accessjson.GetString( __KF_STRING__( scope ) );
 
                 // 保存access_token
-                redisdriver->AppendCommand( "hmset %s:%s %s %s", __KF_CHAR__( accesstoken ), machinecode.c_str(), __KF_CHAR__( accesstoken ), accesstoken.c_str() );
-                redisdriver->AppendCommand( "expire %s:%s %u", __KF_CHAR__( accesstoken ), machinecode.c_str(), expirestime - 200 );
-                redisdriver->PipelineExecute();
+                redisdriver->Append( "hmset {}:{} {} {}", __KF_STRING__( accesstoken ), machinecode, __KF_STRING__( accesstoken ), accesstoken );
+                redisdriver->Append( "expire {}:{} {}", __KF_STRING__( accesstoken ), machinecode, expirestime - 200 );
+                redisdriver->Pipeline( __FUNC_LINE__ );
             }
         }
 
         // 获取用户资料
-        auto urldata = KFUtility::Format( "%s/sns/userinfo?access_token=%s&openid=%s",
-                                          kfsetting->_login_url.c_str(), accesstoken.c_str(), openid.c_str() );
+        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}",
+                                   kfsetting->_login_url, accesstoken, openid );
 
         auto userdata = _kf_http_client->StartSTHttpsClient( urldata, _invalid_str );
         if ( userdata.empty() )

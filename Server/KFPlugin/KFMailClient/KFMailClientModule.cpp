@@ -1,6 +1,5 @@
 ﻿#include "KFMailClientModule.h"
 #include "KFMailConfig.h"
-#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {
@@ -83,7 +82,7 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFMailClientModule::OnTimerQueryMail )
     {
         auto playerid = static_cast< uint32 >( objectid );
-        auto player = _kf_player->FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -322,8 +321,8 @@ namespace KFrame
         if ( !ok )
         {
             auto strmailid = __TO_STRING__( mailid );
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u] update mail[%u:%s] flag[%u] failed!",
-                                __FUNCTION__, playerid, mailtype, strmailid.c_str(), flag );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] update mail[{}:{}] flag[{}] failed!",
+                           playerid, mailtype, strmailid, flag );
         }
 
         return ok;
@@ -369,27 +368,24 @@ namespace KFrame
         auto kfmail = kfobject->FindData( __KF_STRING__( mail ), mailid );
         if ( kfmail == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%s] can't find mail[%s]!",
-                                       __FUNCTION_LINE__, player->GetKeyString(), strmailid.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] can't find mail[{}]!", player->GetKeyID(), strmailid );
         }
 
         auto reward = kfmail->GetValue< std::string >( __KF_STRING__( reward ) );
         if ( reward.empty() )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%s] mail[%s] no reward!",
-                                       __FUNCTION_LINE__, player->GetKeyString(), strmailid.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mail[{}] no reward!", player->GetKeyID(), strmailid );
         }
 
         KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( reward, __FUNCTION_LINE__ );
+        auto ok = kfagents.ParseFromString( reward, __FUNC_LINE__ );
         if ( !ok )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s:%u] player[%s] mail[%s] reward[%s] error!",
-                                       __FUNCTION_LINE__, player->GetKeyString(), strmailid.c_str(), reward.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mail[{}] reward[{}] error!", player->GetKeyID(), strmailid, reward );
         }
 
         player->UpdateData( kfmail, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
-        player->AddAgentData( &kfagents, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
 
         // 如果有配置回复邮件id, 回复邮件
         auto configid = kfmail->GetValue< uint32 >( __KF_STRING__( configid ) );
@@ -538,7 +534,7 @@ namespace KFrame
         auto kfsetting = _kf_mail_config->FindMailSetting( KFMsg::MailConfigEnum::ToastMail );
         if ( kfsetting == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "%s can't find ToastMail config!", __FUNCTION__ );
+            return __LOG_ERROR__( KFLogEnum::Logic, "can't find ToastMail config!" );
         }
 
         auto kfobject = player->GetData();

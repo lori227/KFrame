@@ -114,11 +114,19 @@ namespace KFrame
                 auto platform = httpnode.FindNode( "Platform" );
                 while ( platform.IsValid() )
                 {
-                    auto address = platform.GetString( "Address" );
+                    auto ip = platform.GetString( "Ip" );
+                    auto port = platform.GetUInt32( "Port" );
+                    auto Id = platform.GetUInt32( "Id" ) % 1000;
+                    auto count = platform.GetUInt32( "Count" );
 
-                    ++platformid;
-                    _platform_address[ platformid ] = address;
-                    _platform_hash.AddHashNode( "platform", platformid, 100 );
+                    for ( auto i = 0u; i < count; ++i  )
+                    {
+                        auto address = __FORMAT__( "http://{}:{}/", ip.c_str(), ( port + Id + i ) );
+
+                        ++platformid;
+                        _platform_address[ platformid ] = address;
+                        _platform_hash.AddHashNode( "platform", platformid, 100 );
+                    }
 
                     platform.NextNode();
                 }

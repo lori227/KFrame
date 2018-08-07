@@ -15,6 +15,7 @@
 #include "KFZone/KFZoneInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -48,7 +49,7 @@ namespace KFrame
 
     private:
         // 连接到RouteProxy
-        void OnConnectionRouteProxy( uint32 serverid );
+        void OnConnectionRouteCluster( uint32 serverid );
     private:
         // 转发函数
         KFTransmitFunction _kf_transmit_function;

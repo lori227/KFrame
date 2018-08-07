@@ -1,5 +1,4 @@
 ﻿#include "KFClassSetting.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {

@@ -1,5 +1,4 @@
 ﻿#include "KFUInt64.h"
-#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {

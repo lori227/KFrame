@@ -1,7 +1,6 @@
 ﻿#include "KFNetConnector.h"
 #include "KFDefine.h"
 #include "KFNetServices.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -73,16 +72,12 @@ namespace KFrame
                         if ( childmessage == nullptr ||
                                 childmessage->_msgid != KFNetDefine::CUT_MSGCHILD )
                         {
-                            KFLogger::LogNet( KFLogger::Error, "[%s:%u] message child error1!",
-                                              __FUNCTION_LINE__ );
                             return nullptr;
                         }
 
                         // 长度不足, 返回null
                         if ( leftlength < childmessage->_length )
                         {
-                            KFLogger::LogNet( KFLogger::Error, "[%s:%u] message child length[%u] error!",
-                                              __FUNCTION_LINE__, childmessage->_length );
                             _recv_queue.PopRemove();
                             return nullptr;
                         }
@@ -107,8 +102,6 @@ namespace KFrame
         break;
         case KFNetDefine::CUT_MSGCHILD:		// 如果取到的是子消息, 直接丢掉
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] message child[%s] error!",
-                              __FUNCTION_LINE__, message->_child );
             _recv_queue.PopRemove();
         }
         break;

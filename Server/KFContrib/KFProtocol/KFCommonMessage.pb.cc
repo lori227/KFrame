@@ -65,6 +65,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBRankDatas_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBRankDatas_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTaskData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTaskData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTaskDatas_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTaskDatas_reflection_ = NULL;
 const ::google::protobuf::Descriptor* PBBattlePlayer_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBBattlePlayer_reflection_ = NULL;
@@ -99,6 +105,7 @@ const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* StoreWishEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* WishStateEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* RankListEnum_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* FriendLinessEnum_descriptor_ = NULL;
 
 }  // namespace
 
@@ -366,8 +373,39 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBRankDatas));
-  PBBattlePlayer_descriptor_ = file->message_type(15);
-  static const int PBBattlePlayer_offsets_[12] = {
+  PBTaskData_descriptor_ = file->message_type(15);
+  static const int PBTaskData_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskData, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskData, value_),
+  };
+  PBTaskData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      PBTaskData_descriptor_,
+      PBTaskData::default_instance_,
+      PBTaskData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(PBTaskData));
+  PBTaskDatas_descriptor_ = file->message_type(16);
+  static const int PBTaskDatas_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskDatas, taskdata_),
+  };
+  PBTaskDatas_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      PBTaskDatas_descriptor_,
+      PBTaskDatas::default_instance_,
+      PBTaskDatas_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskDatas, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskDatas, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(PBTaskDatas));
+  PBBattlePlayer_descriptor_ = file->message_type(17);
+  static const int PBBattlePlayer_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, zoneid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, playerid_),
@@ -380,6 +418,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, clothesid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, campid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattlePlayer, achieve_),
   };
   PBBattlePlayer_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -392,7 +431,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBBattlePlayer));
-  PBBattleCamp_descriptor_ = file->message_type(16);
+  PBBattleCamp_descriptor_ = file->message_type(18);
   static const int PBBattleCamp_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleCamp, campid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleCamp, pbplayer_),
@@ -408,7 +447,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBBattleCamp));
-  PBMatchGroup_descriptor_ = file->message_type(17);
+  PBMatchGroup_descriptor_ = file->message_type(19);
   static const int PBMatchGroup_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBMatchGroup, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBMatchGroup, pbplayer_),
@@ -424,7 +463,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBMatchGroup));
-  PBGuestData_descriptor_ = file->message_type(18);
+  PBGuestData_descriptor_ = file->message_type(20);
   static const int PBGuestData_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGuestData, guestid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGuestData, guesticon_),
@@ -441,14 +480,15 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBGuestData));
-  PBBattleScore_descriptor_ = file->message_type(19);
-  static const int PBBattleScore_offsets_[6] = {
+  PBBattleScore_descriptor_ = file->message_type(21);
+  static const int PBBattleScore_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, playerid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, ranking_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, pbdata_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, score_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, reward_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, achieve_),
   };
   PBBattleScore_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -461,7 +501,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBBattleScore));
-  PBRecentData_descriptor_ = file->message_type(20);
+  PBRecentData_descriptor_ = file->message_type(22);
   static const int PBRecentData_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBRecentData, playerid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBRecentData, ranking_),
@@ -482,7 +522,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBRecentData));
-  PBPlayerIds_descriptor_ = file->message_type(21);
+  PBPlayerIds_descriptor_ = file->message_type(23);
   static const int PBPlayerIds_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBPlayerIds, playerid_),
   };
@@ -510,6 +550,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
   StoreWishEnum_descriptor_ = file->enum_type(10);
   WishStateEnum_descriptor_ = file->enum_type(11);
   RankListEnum_descriptor_ = file->enum_type(12);
+  FriendLinessEnum_descriptor_ = file->enum_type(13);
 }
 
 namespace {
@@ -552,6 +593,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
     PBRankData_descriptor_, &PBRankData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PBRankDatas_descriptor_, &PBRankDatas::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    PBTaskData_descriptor_, &PBTaskData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    PBTaskDatas_descriptor_, &PBTaskDatas::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PBBattlePlayer_descriptor_, &PBBattlePlayer::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -601,6 +646,10 @@ void protobuf_ShutdownFile_KFCommonMessage_2eproto() {
   delete PBRankData_reflection_;
   delete PBRankDatas::default_instance_;
   delete PBRankDatas_reflection_;
+  delete PBTaskData::default_instance_;
+  delete PBTaskData_reflection_;
+  delete PBTaskDatas::default_instance_;
+  delete PBTaskDatas_reflection_;
   delete PBBattlePlayer::default_instance_;
   delete PBBattlePlayer_reflection_;
   delete PBBattleCamp::default_instance_;
@@ -655,148 +704,155 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "\022\020\n\010playerid\030\002 \001(\r\022\021\n\trankscore\030\003 \001(\004\022 \n"
     "\006pbdata\030\004 \001(\0132\020.KFMsg.PBStrings\"2\n\013PBRan"
     "kDatas\022#\n\010rankdata\030\003 \003(\0132\021.KFMsg.PBRankD"
-    "ata\"\324\001\n\016PBBattlePlayer\022\016\n\006zoneid\030\001 \001(\r\022\020"
-    "\n\010serverid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\r\022\014\n\004na"
-    "me\030\004 \001(\t\022\013\n\003sex\030\005 \001(\r\022\014\n\004icon\030\006 \001(\t\022\017\n\007i"
-    "conbox\030\007 \001(\t\022\017\n\007grading\030\010 \001(\r\022\017\n\007modelid"
-    "\030\t \001(\r\022\021\n\tclothesid\030\n \001(\r\022\017\n\007groupid\030\013 \001"
-    "(\004\022\016\n\006campid\030\014 \001(\r\"G\n\014PBBattleCamp\022\016\n\006ca"
-    "mpid\030\001 \002(\r\022\'\n\010pbplayer\030\002 \003(\0132\025.KFMsg.PBB"
-    "attlePlayer\"H\n\014PBMatchGroup\022\017\n\007groupid\030\001"
-    " \002(\004\022\'\n\010pbplayer\030\002 \003(\0132\025.KFMsg.PBBattleP"
-    "layer\"G\n\013PBGuestData\022\017\n\007guestid\030\001 \002(\r\022\021\n"
-    "\tguesticon\030\002 \002(\t\022\024\n\014guesticonbox\030\003 \002(\t\"\203"
-    "\001\n\rPBBattleScore\022\020\n\010playerid\030\001 \002(\r\022\017\n\007ra"
-    "nking\030\002 \002(\r\022\037\n\006pbdata\030\003 \003(\0132\017.KFMsg.PBUI"
-    "nt32\022\r\n\005score\030\004 \001(\r\022\017\n\007matchid\030\005 \001(\r\022\016\n\006"
-    "reward\030\006 \001(\t\"\210\001\n\014PBRecentData\022\020\n\010playeri"
-    "d\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010totalnum\030\003 \002"
-    "(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020\n\010bekil"
-    "lid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037\n\013PBPla"
-    "yerIds\022\020\n\010playerid\030\001 \003(\r*\360 \n\007AckEnum\022\013\n\007"
-    "Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError\020"
-    "\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinTokenTim"
-    "eout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinUs"
-    "erError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016ChannelNo"
-    "tOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017LoginSys"
-    "temBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\020\n\014Platfo"
-    "rmBusy\020\r\022\030\n\024PlatformDatabaseBusy\020\016\022\022\n\016Ca"
-    "nNotFindGame\020\017\022\023\n\017LoginTokenError\020\020\022\022\n\016L"
-    "oadDataFailed\020\021\022\021\n\rHttpDataError\020\022\022\026\n\022Lo"
-    "ginDatabaseError\020\023\022\025\n\021CreatePlayerError\020"
-    "\024\022\014\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet\020\026\022\024\n\020N"
-    "ameAlreadyExist\020\027\022\027\n\023PublicDatabaseError"
-    "\020\030\022\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmpty\020\032\022\025\n"
-    "\021CreateRoleAlready\020\033\022\020\n\014CreateRoleOK\020\034\022\026"
-    "\n\022LoginAlreadyOnline\020\035\022\020\n\014ChangeIconOK\020\036"
-    "\022\r\n\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020 \022\023\n\017Mo"
-    "duleIdNotFind\020!\022\025\n\021SetModelClothesOK\020\"\022\023"
-    "\n\017ChangeIconBoxOK\020#\022\022\n\016DataSystemBusy\020$\022"
-    "\025\n\021ActivationAccount\020%\022\027\n\023ActivationCode"
-    "Error\020&\022\027\n\023LoginCanNotFindGate\020\'\022\024\n\020Task"
-    "IdCanNotFind\020(\022\026\n\022TaskNotInValidTime\020)\022\024"
-    "\n\020CanNotFindPlayer\020*\022\026\n\022CanNotFindTaskDa"
-    "ta\020+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlreadyRece"
-    "ived\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025\n\021CanNo"
-    "tInquireSelf\020/\022\030\n\024ActivityIdCanNotFind\0200"
-    "\022\032\n\026CanNotFindActivityType\0201\022\033\n\027Activity"
-    "AlreadyReceived\0202\022\023\n\017ActivityNotDone\0203\022\033"
-    "\n\027ActivityReceiveRewardOK\0204\022\027\n\023AchieveId"
-    "CanNotFind\0205\022\031\n\025CanNotFindAchieveData\0206\022"
-    "\032\n\026AchieveAlreadyReceived\0207\022\022\n\016AchieveNo"
-    "tDone\0208\022\032\n\026AchieveReceiveRewardOK\0209\022\021\n\rR"
-    "eceiveGiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\020\n"
-    "\014MailNotExist\020<\022\027\n\023MailAlreadyReceived\020="
-    "\022\025\n\021MailNotHaveReward\020>\022\024\n\020MailDeleteFai"
-    "led\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSendCount"
-    "Over\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021ToastGe"
-    "tCountOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007ToastOK"
-    "\020E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020MatchCluster"
-    "Busy\020G\022\031\n\025MatchCanNotFindServer\020H\022\030\n\024Mat"
-    "chCanNotFindMatch\020I\022\031\n\025MatchGroupPlayerL"
-    "imit\020J\022\027\n\023MatchRequestSuccess\020K\022\026\n\022Match"
-    "CancelSuccess\020L\022\022\n\016FriendInviteOK\020M\022\026\n\022F"
-    "riendRefuseInvite\020N\022\025\n\021FriendTargetLimit"
-    "\020O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFriendAlready"
-    "\020Q\022\022\n\016FriendNotExist\020R\022\017\n\013FriendDelOK\020S\022"
-    "\025\n\021FriendInviteLimit\020T\022\030\n\024FriendInviteNo"
-    "tExist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023FriendI"
-    "nviteAlready\020W\022\024\n\020MatchMustPrepare\020X\022\023\n\017"
-    "StoreParamError\020Y\022\021\n\rStoreLackCost\020Z\022\024\n\020"
-    "StoreOutOfLimits\020[\022\026\n\022StoreOutOfLimitOwm"
-    "\020\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016WishOrder"
-    "Empty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022WishOrd"
-    "erNoStoreId\020`\022\027\n\023WishOrderHadStoreId\020a\022\024"
-    "\n\020WishOrderMaxSize\020b\022\033\n\027WishOrderStateRe"
-    "peatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017ClothesNo"
-    "tExist\020e\022\024\n\020ClothesDataError\020f\022\030\n\024Clothe"
-    "sModleNotMatch\020g\022\022\n\016ClothesDressOK\020h\022\021\n\r"
-    "ModelNotExist\020i\022\021\n\rModelChangeOK\020j\022\023\n\017Ch"
-    "atByteTooLong\020k\022\025\n\021ChatNotFindPlayer\020l\022\025"
-    "\n\021ChatIntervalError\020m\022\025\n\021ChatFriendIdErr"
-    "or\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014GroupLea"
-    "veOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017GroupSe"
-    "rverBusy\020r\022\027\n\023GroupInviteNotExist\020s\022\027\n\023G"
-    "roupCanNotKickSelf\020t\022\020\n\014GroupInGroup\020u\022\026"
-    "\n\022GroupApplyNotExist\020v\022\023\n\017GroupNotInGrou"
-    "p\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemDataError\020y"
-    "\022\021\n\rItemCanNotUse\020z\022\021\n\rGroupNotExist\020{\022\016"
-    "\n\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022GroupPl"
-    "ayerOffline\020~\022\027\n\023GroupAlreadyInGroup\020\177\022\026"
-    "\n\021GroupRefuseInvite\020\200\001\022\032\n\025GroupRefuseYou"
-    "rInvite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001\022\025\n\020Gro"
-    "upRefuseApply\020\203\001\022\030\n\023GroupCaptainOffline\020"
-    "\204\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupNotCapti"
-    "on\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026FriendRe"
-    "fuseYourInvite\020\210\001\022\020\n\013FriendAddOK\020\211\001\022\024\n\017F"
-    "riendInviteReq\020\212\001\022\020\n\013GroupJoinOK\020\213\001\022\024\n\017G"
-    "roupMemberJoin\020\214\001\022\026\n\021GroupIsNewCaption\020\215"
-    "\001\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024FriendLinessA"
-    "ddLimit\020\217\001\022\035\n\030FriendLinessAddByWinGame\020\220"
-    "\001\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025WishPane"
-    "lAddSuccessed\020\222\001\022\027\n\022GroupInviteInMatch\020\223"
-    "\001\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022GroupInvite"
-    "TimeOut\020\225\001\022\032\n\025GroupInviteMatchError\020\226\001\022\026"
-    "\n\021GroupApplyTimeOut\020\227\001\022\026\n\021OperateFrequen"
-    "tly\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020CompoundNo"
-    "tExist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014RankNotE"
-    "xist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\032\n\025FriendFr"
-    "iendCountOver\020\220N\022\031\n\024FriendApplyCountOver"
-    "\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030FriendAdd"
-    "FriendSuccessed\020\223N\022\032\n\025EquipDeleteTipCont"
-    "ent\020\224N\022\034\n\027ClothesDeleteTipContent\020\225N\022\030\n\023"
-    "NoCanSettingDefault\020\226N\022\022\n\rClothesNotFit\020"
-    "\227N\022\024\n\017KickLoginBeKick\020\230N\022\027\n\022KickPlatform"
-    "BeKick\020\231N\022\034\n\027AutographCharOverLength\020\232N\022"
-    "\030\n\023ContainIIleagalChar\020\233N\022\031\n\024ClothesNotM"
-    "atchModel\020\234N\022\020\n\013MoneyIsLack\020\235N\022\022\n\rDiamon"
-    "dIsLack\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDiamondGet\020"
-    "\240N\022\022\n\rWishOverCount\020\241N\022\020\n\013PleaseLogin\020\242N"
-    "\022\032\n\025CreateRoleNameIllegal\020\243N\022\024\n\017PleaseCl"
-    "ickRole\020\244N\022\024\n\017ChatCharIllegal\020\245N\022\036\n\031Chat"
-    "UnCheckInNearbyChanel\020\246N\022\026\n\021ChatUnJoinWa"
-    "rTeam\020\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034\n\027MatchRe"
-    "peatInviteToCode\020\251N\022\022\n\rCopySuccessed\020\252N\022"
-    "\034\n\027GiveFaildForLimitsGoods\020\253N\022\025\n\020MatchHa"
-    "sPrepared\020\254N\022\025\n\020MatchHasCanceled\020\255N*\'\n\013C"
-    "hannelEnum\022\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002*+\n\007"
-    "SexEnum\022\n\n\006Unknow\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020"
-    "\002*/\n\010KickEnum\022\017\n\013LoginBeKick\020\001\022\022\n\016Platfo"
-    "rmBeKick\020\002*K\n\010FlagEnum\022\010\n\004Init\020\000\022\010\n\004Done"
-    "\020\001\022\014\n\010Received\020\002\022\n\n\006Remove\020\003\022\021\n\rReceiveR"
-    "emove\020\004*7\n\010MailEnum\022\r\n\tWholeMail\020\001\022\016\n\nFr"
-    "iendMail\020\002\022\014\n\010GiftMail\020\003*\037\n\016MailConfigEn"
-    "um\022\r\n\tToastMail\020\001*f\n\nStatusEnum\022\020\n\014Onlin"
-    "eStatus\020\001\022\017\n\013GroupStatus\020\002\022\017\n\013MatchStatu"
-    "s\020\003\022\021\n\rPlayingStatus\020\004\022\021\n\rOfflineStatus\020"
-    "\005*\027\n\010ChatEnum\022\013\n\007Jianghu\020\001*C\n\nInviteEnum"
-    "\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n"
-    "\014RefuseMinute\020\004*-\n\rStoreWishEnum\022\007\n\003Add\020"
-    "\001\022\007\n\003Del\020\002\022\n\n\006Modify\020\003*L\n\rWishStateEnum\022"
-    "\014\n\010AllWatch\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013FriendWa"
-    "tch\020\002\022\r\n\tTeamWatch\020\003*K\n\014RankListEnum\022\016\n\n"
-    "SingleRank\020\001\022\016\n\nDoubleRank\020\002\022\014\n\010FourRank"
-    "\020\003\022\r\n\tTotalRank\020\004", 6897);
+    "ata\"\'\n\nPBTaskData\022\n\n\002id\030\001 \001(\r\022\r\n\005value\030\002"
+    " \001(\r\"2\n\013PBTaskDatas\022#\n\010taskdata\030\001 \003(\0132\021."
+    "KFMsg.PBTaskData\"\371\001\n\016PBBattlePlayer\022\016\n\006z"
+    "oneid\030\001 \001(\r\022\020\n\010serverid\030\002 \001(\r\022\020\n\010playeri"
+    "d\030\003 \001(\r\022\014\n\004name\030\004 \001(\t\022\013\n\003sex\030\005 \001(\r\022\014\n\004ic"
+    "on\030\006 \001(\t\022\017\n\007iconbox\030\007 \001(\t\022\017\n\007grading\030\010 \001"
+    "(\r\022\017\n\007modelid\030\t \001(\r\022\021\n\tclothesid\030\n \001(\r\022\017"
+    "\n\007groupid\030\013 \001(\004\022\016\n\006campid\030\014 \001(\r\022#\n\007achie"
+    "ve\030\r \001(\0132\022.KFMsg.PBTaskDatas\"G\n\014PBBattle"
+    "Camp\022\016\n\006campid\030\001 \002(\r\022\'\n\010pbplayer\030\002 \003(\0132\025"
+    ".KFMsg.PBBattlePlayer\"H\n\014PBMatchGroup\022\017\n"
+    "\007groupid\030\001 \002(\004\022\'\n\010pbplayer\030\002 \003(\0132\025.KFMsg"
+    ".PBBattlePlayer\"G\n\013PBGuestData\022\017\n\007guesti"
+    "d\030\001 \002(\r\022\021\n\tguesticon\030\002 \002(\t\022\024\n\014guesticonb"
+    "ox\030\003 \002(\t\"\250\001\n\rPBBattleScore\022\020\n\010playerid\030\001"
+    " \002(\r\022\017\n\007ranking\030\002 \002(\r\022\037\n\006pbdata\030\003 \003(\0132\017."
+    "KFMsg.PBUInt32\022\r\n\005score\030\004 \001(\r\022\017\n\007matchid"
+    "\030\005 \001(\r\022\016\n\006reward\030\006 \001(\t\022#\n\007achieve\030\007 \001(\0132"
+    "\022.KFMsg.PBTaskDatas\"\210\001\n\014PBRecentData\022\020\n\010"
+    "playerid\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010total"
+    "num\030\003 \002(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020"
+    "\n\010bekillid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037"
+    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r*\263!\n\007AckE"
+    "num\022\013\n\007Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXi"
+    "nError\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinT"
+    "okenTimeout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017W"
+    "eiXinUserError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016Ch"
+    "annelNotOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017L"
+    "oginSystemBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\020\n"
+    "\014PlatformBusy\020\r\022\030\n\024PlatformDatabaseBusy\020"
+    "\016\022\022\n\016CanNotFindGame\020\017\022\023\n\017LoginTokenError"
+    "\020\020\022\022\n\016LoadDataFailed\020\021\022\021\n\rHttpDataError\020"
+    "\022\022\026\n\022LoginDatabaseError\020\023\022\025\n\021CreatePlaye"
+    "rError\020\024\022\014\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet"
+    "\020\026\022\024\n\020NameAlreadyExist\020\027\022\027\n\023PublicDataba"
+    "seError\020\030\022\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmp"
+    "ty\020\032\022\025\n\021CreateRoleAlready\020\033\022\020\n\014CreateRol"
+    "eOK\020\034\022\026\n\022LoginAlreadyOnline\020\035\022\020\n\014ChangeI"
+    "conOK\020\036\022\r\n\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020"
+    " \022\023\n\017ModuleIdNotFind\020!\022\025\n\021SetModelClothe"
+    "sOK\020\"\022\023\n\017ChangeIconBoxOK\020#\022\022\n\016DataSystem"
+    "Busy\020$\022\025\n\021ActivationAccount\020%\022\027\n\023Activat"
+    "ionCodeError\020&\022\027\n\023LoginCanNotFindGate\020\'\022"
+    "\024\n\020TaskIdCanNotFind\020(\022\026\n\022TaskNotInValidT"
+    "ime\020)\022\024\n\020CanNotFindPlayer\020*\022\026\n\022CanNotFin"
+    "dTaskData\020+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlre"
+    "adyReceived\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025"
+    "\n\021CanNotInquireSelf\020/\022\030\n\024ActivityIdCanNo"
+    "tFind\0200\022\032\n\026CanNotFindActivityType\0201\022\033\n\027A"
+    "ctivityAlreadyReceived\0202\022\023\n\017ActivityNotD"
+    "one\0203\022\033\n\027ActivityReceiveRewardOK\0204\022\027\n\023Ac"
+    "hieveIdCanNotFind\0205\022\031\n\025CanNotFindAchieve"
+    "Data\0206\022\032\n\026AchieveAlreadyReceived\0207\022\022\n\016Ac"
+    "hieveNotDone\0208\022\032\n\026AchieveReceiveRewardOK"
+    "\0209\022\021\n\rReceiveGiftOK\020:\022\025\n\021ReceiveGiftFail"
+    "ed\020;\022\020\n\014MailNotExist\020<\022\027\n\023MailAlreadyRec"
+    "eived\020=\022\025\n\021MailNotHaveReward\020>\022\024\n\020MailDe"
+    "leteFailed\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSe"
+    "ndCountOver\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021"
+    "ToastGetCountOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007"
+    "ToastOK\020E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020Match"
+    "ClusterBusy\020G\022\031\n\025MatchCanNotFindServer\020H"
+    "\022\030\n\024MatchCanNotFindMatch\020I\022\031\n\025MatchGroup"
+    "PlayerLimit\020J\022\027\n\023MatchRequestSuccess\020K\022\026"
+    "\n\022MatchCancelSuccess\020L\022\022\n\016FriendInviteOK"
+    "\020M\022\026\n\022FriendRefuseInvite\020N\022\025\n\021FriendTarg"
+    "etLimit\020O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFriend"
+    "Already\020Q\022\022\n\016FriendNotExist\020R\022\017\n\013FriendD"
+    "elOK\020S\022\025\n\021FriendInviteLimit\020T\022\030\n\024FriendI"
+    "nviteNotExist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023"
+    "FriendInviteAlready\020W\022\024\n\020MatchMustPrepar"
+    "e\020X\022\023\n\017StoreParamError\020Y\022\021\n\rStoreLackCos"
+    "t\020Z\022\024\n\020StoreOutOfLimits\020[\022\026\n\022StoreOutOfL"
+    "imitOwm\020\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016Wi"
+    "shOrderEmpty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022"
+    "WishOrderNoStoreId\020`\022\027\n\023WishOrderHadStor"
+    "eId\020a\022\024\n\020WishOrderMaxSize\020b\022\033\n\027WishOrder"
+    "StateRepeatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017Cl"
+    "othesNotExist\020e\022\024\n\020ClothesDataError\020f\022\030\n"
+    "\024ClothesModleNotMatch\020g\022\022\n\016ClothesDressO"
+    "K\020h\022\021\n\rModelNotExist\020i\022\021\n\rModelChangeOK\020"
+    "j\022\023\n\017ChatByteTooLong\020k\022\025\n\021ChatNotFindPla"
+    "yer\020l\022\025\n\021ChatIntervalError\020m\022\025\n\021ChatFrie"
+    "ndIdError\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014G"
+    "roupLeaveOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017"
+    "GroupServerBusy\020r\022\027\n\023GroupInviteNotExist"
+    "\020s\022\027\n\023GroupCanNotKickSelf\020t\022\020\n\014GroupInGr"
+    "oup\020u\022\026\n\022GroupApplyNotExist\020v\022\023\n\017GroupNo"
+    "tInGroup\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemData"
+    "Error\020y\022\021\n\rItemCanNotUse\020z\022\021\n\rGroupNotEx"
+    "ist\020{\022\016\n\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022"
+    "GroupPlayerOffline\020~\022\027\n\023GroupAlreadyInGr"
+    "oup\020\177\022\026\n\021GroupRefuseInvite\020\200\001\022\032\n\025GroupRe"
+    "fuseYourInvite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001"
+    "\022\025\n\020GroupRefuseApply\020\203\001\022\030\n\023GroupCaptainO"
+    "ffline\020\204\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupN"
+    "otCaption\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026F"
+    "riendRefuseYourInvite\020\210\001\022\020\n\013FriendAddOK\020"
+    "\211\001\022\024\n\017FriendInviteReq\020\212\001\022\020\n\013GroupJoinOK\020"
+    "\213\001\022\024\n\017GroupMemberJoin\020\214\001\022\026\n\021GroupIsNewCa"
+    "ption\020\215\001\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024Friend"
+    "LinessAddLimit\020\217\001\022\035\n\030FriendLinessAddByWi"
+    "nGame\020\220\001\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025W"
+    "ishPanelAddSuccessed\020\222\001\022\027\n\022GroupInviteIn"
+    "Match\020\223\001\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022Grou"
+    "pInviteTimeOut\020\225\001\022\032\n\025GroupInviteMatchErr"
+    "or\020\226\001\022\026\n\021GroupApplyTimeOut\020\227\001\022\026\n\021Operate"
+    "Frequently\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020Com"
+    "poundNotExist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014R"
+    "ankNotExist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n\014S"
+    "ignInNotDay\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030\n\023"
+    "SignInRewardAlready\020\243\001\022\032\n\025FriendFriendCo"
+    "untOver\020\220N\022\031\n\024FriendApplyCountOver\020\221N\022\026\n"
+    "\021FriendSearchEmpty\020\222N\022\035\n\030FriendAddFriend"
+    "Successed\020\223N\022\032\n\025EquipDeleteTipContent\020\224N"
+    "\022\034\n\027ClothesDeleteTipContent\020\225N\022\030\n\023NoCanS"
+    "ettingDefault\020\226N\022\022\n\rClothesNotFit\020\227N\022\024\n\017"
+    "KickLoginBeKick\020\230N\022\027\n\022KickPlatformBeKick"
+    "\020\231N\022\034\n\027AutographCharOverLength\020\232N\022\030\n\023Con"
+    "tainIIleagalChar\020\233N\022\031\n\024ClothesNotMatchMo"
+    "del\020\234N\022\020\n\013MoneyIsLack\020\235N\022\022\n\rDiamondIsLac"
+    "k\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDiamondGet\020\240N\022\022\n\r"
+    "WishOverCount\020\241N\022\020\n\013PleaseLogin\020\242N\022\032\n\025Cr"
+    "eateRoleNameIllegal\020\243N\022\024\n\017PleaseClickRol"
+    "e\020\244N\022\024\n\017ChatCharIllegal\020\245N\022\036\n\031ChatUnChec"
+    "kInNearbyChanel\020\246N\022\026\n\021ChatUnJoinWarTeam\020"
+    "\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034\n\027MatchRepeatIn"
+    "viteToCode\020\251N\022\022\n\rCopySuccessed\020\252N\022\034\n\027Giv"
+    "eFaildForLimitsGoods\020\253N\022\025\n\020MatchHasPrepa"
+    "red\020\254N\022\025\n\020MatchHasCanceled\020\255N*\'\n\013Channel"
+    "Enum\022\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnu"
+    "m\022\n\n\006Unknow\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010K"
+    "ickEnum\022\017\n\013LoginBeKick\020\001\022\022\n\016PlatformBeKi"
+    "ck\020\002*K\n\010FlagEnum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010"
+    "Received\020\002\022\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020"
+    "\004*7\n\010MailEnum\022\r\n\tWholeMail\020\001\022\016\n\nFriendMa"
+    "il\020\002\022\014\n\010GiftMail\020\003*\037\n\016MailConfigEnum\022\r\n\t"
+    "ToastMail\020\001*f\n\nStatusEnum\022\020\n\014OnlineStatu"
+    "s\020\001\022\017\n\013GroupStatus\020\002\022\017\n\013MatchStatus\020\003\022\021\n"
+    "\rPlayingStatus\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010C"
+    "hatEnum\022\013\n\007Jianghu\020\001*C\n\nInviteEnum\022\013\n\007Co"
+    "nsent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014Refus"
+    "eMinute\020\004*-\n\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003D"
+    "el\020\002\022\n\n\006Modify\020\003*L\n\rWishStateEnum\022\014\n\010All"
+    "Watch\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013FriendWatch\020\002\022"
+    "\r\n\tTeamWatch\020\003*K\n\014RankListEnum\022\016\n\nSingle"
+    "Rank\020\001\022\016\n\nDoubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\t"
+    "TotalRank\020\004*9\n\020FriendLinessEnum\022\010\n\004Team\020"
+    "\001\022\007\n\003Win\020\002\022\010\n\004Laud\020\003\022\010\n\004Give\020\004", 7190);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -814,6 +870,8 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
   PBRecord::default_instance_ = new PBRecord();
   PBRankData::default_instance_ = new PBRankData();
   PBRankDatas::default_instance_ = new PBRankDatas();
+  PBTaskData::default_instance_ = new PBTaskData();
+  PBTaskDatas::default_instance_ = new PBTaskDatas();
   PBBattlePlayer::default_instance_ = new PBBattlePlayer();
   PBBattleCamp::default_instance_ = new PBBattleCamp();
   PBMatchGroup::default_instance_ = new PBMatchGroup();
@@ -836,6 +894,8 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
   PBRecord::default_instance_->InitAsDefaultInstance();
   PBRankData::default_instance_->InitAsDefaultInstance();
   PBRankDatas::default_instance_->InitAsDefaultInstance();
+  PBTaskData::default_instance_->InitAsDefaultInstance();
+  PBTaskDatas::default_instance_->InitAsDefaultInstance();
   PBBattlePlayer::default_instance_->InitAsDefaultInstance();
   PBBattleCamp::default_instance_->InitAsDefaultInstance();
   PBMatchGroup::default_instance_->InitAsDefaultInstance();
@@ -1015,6 +1075,9 @@ bool AckEnum_IsValid(int value) {
     case 155:
     case 156:
     case 157:
+    case 161:
+    case 162:
+    case 163:
     case 10000:
     case 10001:
     case 10002:
@@ -1221,6 +1284,22 @@ const ::google::protobuf::EnumDescriptor* RankListEnum_descriptor() {
   return RankListEnum_descriptor_;
 }
 bool RankListEnum_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* FriendLinessEnum_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return FriendLinessEnum_descriptor_;
+}
+bool FriendLinessEnum_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
@@ -5860,6 +5939,457 @@ void PBRankDatas::Swap(PBRankDatas* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int PBTaskData::kIdFieldNumber;
+const int PBTaskData::kValueFieldNumber;
+#endif  // !_MSC_VER
+
+PBTaskData::PBTaskData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void PBTaskData::InitAsDefaultInstance() {
+}
+
+PBTaskData::PBTaskData(const PBTaskData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void PBTaskData::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = 0u;
+  value_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PBTaskData::~PBTaskData() {
+  SharedDtor();
+}
+
+void PBTaskData::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void PBTaskData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTaskData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTaskData_descriptor_;
+}
+
+const PBTaskData& PBTaskData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFCommonMessage_2eproto();
+  return *default_instance_;
+}
+
+PBTaskData* PBTaskData::default_instance_ = NULL;
+
+PBTaskData* PBTaskData::New() const {
+  return new PBTaskData;
+}
+
+void PBTaskData::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    id_ = 0u;
+    value_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool PBTaskData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &id_)));
+          set_has_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_value;
+        break;
+      }
+
+      // optional uint32 value = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_value:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &value_)));
+          set_has_value();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void PBTaskData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional uint32 id = 1;
+  if (has_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+  }
+
+  // optional uint32 value = 2;
+  if (has_value()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->value(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* PBTaskData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional uint32 id = 1;
+  if (has_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+  }
+
+  // optional uint32 value = 2;
+  if (has_value()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->value(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int PBTaskData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional uint32 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->id());
+    }
+
+    // optional uint32 value = 2;
+    if (has_value()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->value());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTaskData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const PBTaskData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PBTaskData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void PBTaskData::MergeFrom(const PBTaskData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_id()) {
+      set_id(from.id());
+    }
+    if (from.has_value()) {
+      set_value(from.value());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void PBTaskData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTaskData::CopyFrom(const PBTaskData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBTaskData::IsInitialized() const {
+
+  return true;
+}
+
+void PBTaskData::Swap(PBTaskData* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(value_, other->value_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata PBTaskData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTaskData_descriptor_;
+  metadata.reflection = PBTaskData_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int PBTaskDatas::kTaskdataFieldNumber;
+#endif  // !_MSC_VER
+
+PBTaskDatas::PBTaskDatas()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void PBTaskDatas::InitAsDefaultInstance() {
+}
+
+PBTaskDatas::PBTaskDatas(const PBTaskDatas& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void PBTaskDatas::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PBTaskDatas::~PBTaskDatas() {
+  SharedDtor();
+}
+
+void PBTaskDatas::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void PBTaskDatas::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTaskDatas::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTaskDatas_descriptor_;
+}
+
+const PBTaskDatas& PBTaskDatas::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFCommonMessage_2eproto();
+  return *default_instance_;
+}
+
+PBTaskDatas* PBTaskDatas::default_instance_ = NULL;
+
+PBTaskDatas* PBTaskDatas::New() const {
+  return new PBTaskDatas;
+}
+
+void PBTaskDatas::Clear() {
+  taskdata_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool PBTaskDatas::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .KFMsg.PBTaskData taskdata = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_taskdata:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_taskdata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(10)) goto parse_taskdata;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void PBTaskDatas::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // repeated .KFMsg.PBTaskData taskdata = 1;
+  for (int i = 0; i < this->taskdata_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->taskdata(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* PBTaskDatas::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated .KFMsg.PBTaskData taskdata = 1;
+  for (int i = 0; i < this->taskdata_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->taskdata(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int PBTaskDatas::ByteSize() const {
+  int total_size = 0;
+
+  // repeated .KFMsg.PBTaskData taskdata = 1;
+  total_size += 1 * this->taskdata_size();
+  for (int i = 0; i < this->taskdata_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->taskdata(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTaskDatas::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const PBTaskDatas* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PBTaskDatas*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void PBTaskDatas::MergeFrom(const PBTaskDatas& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  taskdata_.MergeFrom(from.taskdata_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void PBTaskDatas::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTaskDatas::CopyFrom(const PBTaskDatas& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBTaskDatas::IsInitialized() const {
+
+  return true;
+}
+
+void PBTaskDatas::Swap(PBTaskDatas* other) {
+  if (other != this) {
+    taskdata_.Swap(&other->taskdata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata PBTaskDatas::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTaskDatas_descriptor_;
+  metadata.reflection = PBTaskDatas_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int PBBattlePlayer::kZoneidFieldNumber;
 const int PBBattlePlayer::kServeridFieldNumber;
 const int PBBattlePlayer::kPlayeridFieldNumber;
@@ -5872,6 +6402,7 @@ const int PBBattlePlayer::kModelidFieldNumber;
 const int PBBattlePlayer::kClothesidFieldNumber;
 const int PBBattlePlayer::kGroupidFieldNumber;
 const int PBBattlePlayer::kCampidFieldNumber;
+const int PBBattlePlayer::kAchieveFieldNumber;
 #endif  // !_MSC_VER
 
 PBBattlePlayer::PBBattlePlayer()
@@ -5880,6 +6411,7 @@ PBBattlePlayer::PBBattlePlayer()
 }
 
 void PBBattlePlayer::InitAsDefaultInstance() {
+  achieve_ = const_cast< ::KFMsg::PBTaskDatas*>(&::KFMsg::PBTaskDatas::default_instance());
 }
 
 PBBattlePlayer::PBBattlePlayer(const PBBattlePlayer& from)
@@ -5902,6 +6434,7 @@ void PBBattlePlayer::SharedCtor() {
   clothesid_ = 0u;
   groupid_ = GOOGLE_ULONGLONG(0);
   campid_ = 0u;
+  achieve_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5920,6 +6453,7 @@ void PBBattlePlayer::SharedDtor() {
     delete iconbox_;
   }
   if (this != default_instance_) {
+    delete achieve_;
   }
 }
 
@@ -5972,6 +6506,9 @@ void PBBattlePlayer::Clear() {
     clothesid_ = 0u;
     groupid_ = GOOGLE_ULONGLONG(0);
     campid_ = 0u;
+    if (has_achieve()) {
+      if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -6173,6 +6710,20 @@ bool PBBattlePlayer::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(106)) goto parse_achieve;
+        break;
+      }
+
+      // optional .KFMsg.PBTaskDatas achieve = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_achieve:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_achieve()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -6267,6 +6818,12 @@ void PBBattlePlayer::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(12, this->campid(), output);
   }
 
+  // optional .KFMsg.PBTaskDatas achieve = 13;
+  if (has_achieve()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      13, this->achieve(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -6348,6 +6905,13 @@ void PBBattlePlayer::SerializeWithCachedSizes(
   // optional uint32 campid = 12;
   if (has_campid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(12, this->campid(), target);
+  }
+
+  // optional .KFMsg.PBTaskDatas achieve = 13;
+  if (has_achieve()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        13, this->achieve(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -6447,6 +7011,13 @@ int PBBattlePlayer::ByteSize() const {
           this->campid());
     }
 
+    // optional .KFMsg.PBTaskDatas achieve = 13;
+    if (has_achieve()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->achieve());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -6512,6 +7083,9 @@ void PBBattlePlayer::MergeFrom(const PBBattlePlayer& from) {
     if (from.has_campid()) {
       set_campid(from.campid());
     }
+    if (from.has_achieve()) {
+      mutable_achieve()->::KFMsg::PBTaskDatas::MergeFrom(from.achieve());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -6547,6 +7121,7 @@ void PBBattlePlayer::Swap(PBBattlePlayer* other) {
     std::swap(clothesid_, other->clothesid_);
     std::swap(groupid_, other->groupid_);
     std::swap(campid_, other->campid_);
+    std::swap(achieve_, other->achieve_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -7392,6 +7967,7 @@ const int PBBattleScore::kPbdataFieldNumber;
 const int PBBattleScore::kScoreFieldNumber;
 const int PBBattleScore::kMatchidFieldNumber;
 const int PBBattleScore::kRewardFieldNumber;
+const int PBBattleScore::kAchieveFieldNumber;
 #endif  // !_MSC_VER
 
 PBBattleScore::PBBattleScore()
@@ -7400,6 +7976,7 @@ PBBattleScore::PBBattleScore()
 }
 
 void PBBattleScore::InitAsDefaultInstance() {
+  achieve_ = const_cast< ::KFMsg::PBTaskDatas*>(&::KFMsg::PBTaskDatas::default_instance());
 }
 
 PBBattleScore::PBBattleScore(const PBBattleScore& from)
@@ -7415,6 +7992,7 @@ void PBBattleScore::SharedCtor() {
   score_ = 0u;
   matchid_ = 0u;
   reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  achieve_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7427,6 +8005,7 @@ void PBBattleScore::SharedDtor() {
     delete reward_;
   }
   if (this != default_instance_) {
+    delete achieve_;
   }
 }
 
@@ -7461,6 +8040,9 @@ void PBBattleScore::Clear() {
       if (reward_ != &::google::protobuf::internal::kEmptyString) {
         reward_->clear();
       }
+    }
+    if (has_achieve()) {
+      if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
     }
   }
   pbdata_.Clear();
@@ -7565,6 +8147,20 @@ bool PBBattleScore::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(58)) goto parse_achieve;
+        break;
+      }
+
+      // optional .KFMsg.PBTaskDatas achieve = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_achieve:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_achieve()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7622,6 +8218,12 @@ void PBBattleScore::SerializeWithCachedSizes(
       6, this->reward(), output);
   }
 
+  // optional .KFMsg.PBTaskDatas achieve = 7;
+  if (has_achieve()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      7, this->achieve(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -7665,6 +8267,13 @@ void PBBattleScore::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         6, this->reward(), target);
+  }
+
+  // optional .KFMsg.PBTaskDatas achieve = 7;
+  if (has_achieve()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        7, this->achieve(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -7711,6 +8320,13 @@ int PBBattleScore::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->reward());
+    }
+
+    // optional .KFMsg.PBTaskDatas achieve = 7;
+    if (has_achieve()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->achieve());
     }
 
   }
@@ -7764,6 +8380,9 @@ void PBBattleScore::MergeFrom(const PBBattleScore& from) {
     if (from.has_reward()) {
       set_reward(from.reward());
     }
+    if (from.has_achieve()) {
+      mutable_achieve()->::KFMsg::PBTaskDatas::MergeFrom(from.achieve());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -7794,6 +8413,7 @@ void PBBattleScore::Swap(PBBattleScore* other) {
     std::swap(score_, other->score_);
     std::swap(matchid_, other->matchid_);
     std::swap(reward_, other->reward_);
+    std::swap(achieve_, other->achieve_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

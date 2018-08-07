@@ -34,15 +34,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupProxyModule::HandleCreateMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateMatchGroupReq );
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] create group[%s] req!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] req!", kfmsg.groupid() );
 
         auto shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.groupid() );
         if ( shardid == _invalid_int )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] group[%s] can't find shard!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "group[{}] can't find shard!", kfmsg.groupid() );
         }
 
         // 发送给分片服务器
@@ -58,13 +55,11 @@ namespace KFrame
             // 先添加到列表
             _kf_cluster_proxy->AddObjectShard( kfmsg.groupid(), shardid );
 
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] create group[%s] ok!",
-                                __FUNCTION__, strgroupid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] ok!", kfmsg.groupid() );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] create group[%s] failed!",
-                                __FUNCTION__, strgroupid.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "create group[{}] failed!", kfmsg.groupid() );
         }
     }
 

@@ -22,7 +22,45 @@ namespace KFrame
 
         std::string GetStartupFile();
 
-        bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
+        inline bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid )
+        {
+            if ( appname == _globbing_str )
+            {
+                return true;
+            }
+
+            if ( appname != _app_name )
+            {
+                return false;
+            }
+
+            if ( zoneid != _zone_id )
+            {
+                return false;
+            }
+
+            if ( apptype == _globbing_str )
+            {
+                return true;
+            }
+
+            if ( apptype != _app_type )
+            {
+                return false;
+            }
+
+            if ( appid == _invalid_int )
+            {
+                return true;
+            }
+
+            if ( appid != _app_id )
+            {
+                return false;
+            }
+
+            return true;
+        }
 
     public:
         // 程序id
@@ -45,6 +83,9 @@ namespace KFrame
 
         // 小区id
         uint32 _zone_id;
+
+        // 日志类型
+        uint32 _log_type;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
 
@@ -60,6 +101,7 @@ namespace KFrame
         // 是否正在下载
         bool _is_download;
     };
+
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 

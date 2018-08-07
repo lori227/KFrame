@@ -2,7 +2,7 @@
 #define __KF_DATA_CLIENT_MODULE_H__
 
 /************************************************************************
-//    @Moudle			:    数据功能模块
+//    @Module			:    数据功能模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
@@ -13,6 +13,7 @@
 #include "KFDataClientInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

@@ -1,8 +1,5 @@
 ﻿#include "KFUploadThread.h"
 #include "KFFtpConfig.h"
-#include "KFTime/KFDate.h"
-#include "KFThread/KFThread.h"
-#include "KFConvert/KFConvert.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <windows.h>
@@ -20,7 +17,7 @@ namespace KFrame
 {
     void KFUploadThread::CreateFtpThread()
     {
-        KFThread::CreateThread( this, &KFUploadThread::Run, __FUNCTION_LINE__ );
+        KFThread::CreateThread( this, &KFUploadThread::Run, __FUNC_LINE__ );
     }
 
     void KFUploadThread::Run()
@@ -179,11 +176,11 @@ namespace KFrame
         auto ok = ftpclient->UploadFile( localfile, ftpfile );
         if ( ok )
         {
-            KFLogger::LogSystem( KFLogger::Info, "upload [ %s ] ok!", localfile.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "upload [{}] ok!", localfile );
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "upload [ %s ] failed!", localfile.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "upload [{}] failed!", localfile );
         }
     }
 

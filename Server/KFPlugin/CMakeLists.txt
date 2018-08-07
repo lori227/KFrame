@@ -4,14 +4,28 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/ftp
     ${ROOT_DIR}/KFLibrary/lua/lua53	
     ${ROOT_DIR}/KFLibrary/redis/linux/deps
+    ${ROOT_DIR}/KFLibrary/json/include
+    ${ROOT_DIR}/KFLibrary/poco/Foundation/include
+    ${ROOT_DIR}/KFLibrary/poco/Net/include
+    ${ROOT_DIR}/KFLibrary/poco/Crypto/include
+    ${ROOT_DIR}/KFLibrary/poco/NetSSL_OpenSSL/include
+    ${ROOT_DIR}/KFLibrary/poco/CppUnit/include
+    ${ROOT_DIR}/KFLibrary/poco/Util/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/MySQL/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/ODBC/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/SQLite/include
+    ${ROOT_DIR}/KFLibrary/libuv/include
 )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -shared")
 
+message("${CMAKE_CXX_FLAGS}")
 macro(LINK_SDK_MACRO project_name)
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug") 
-    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53d iconv log4cxx protobuf hiredis iconv mysqlclient ftp PocoCryptod PocoNetd PocoNetSSLd PocoJSONd PocoUtild PocoFoundationd PocoJSONd PocoXMLd PocoDatad PocoDataMySQLd KFLoggerd KFThreadd KFXmld KFPlugind KFTimed KFMemoryd KFConvertd KFProtocold KFRandd KFHttpd KFCored KFConHashd KFCompressd KFCryptod KFNetworkd KFUtilityd KFMath3Dd)
+    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53d iconv protobuf hiredis iconv mysqlclient ftp PocoCryptod PocoNetd PocoNetSSLd PocoJSONd PocoUtild PocoFoundationd PocoJSONd PocoXMLd PocoDatad PocoDataMySQLd KFGlobald KFPlugind KFMemoryd KFProtocold KFHttpd KFCored KFConHashd KFNetworkd KFUtilityd KFMath3Dd)
 else()
-    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53 iconv log4cxx protobuf hiredis iconv mysqlclient ftp PocoCrypto PocoNet PocoNetSSL PocoJSON PocoUtil PocoFoundation PocoJSON PocoXML PocoData PocoDataMySQL KFLogger KFThread KFXml KFPlugin KFTime KFMemory KFConvert KFProtocol KFRand KFHttp KFCore KFConHash KFCompress KFCrypto KFNetwork KFUtility KFMath3D)  
+    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53 iconv protobuf hiredis iconv mysqlclient ftp PocoCrypto PocoNet PocoNetSSL PocoJSON PocoUtil PocoFoundation PocoJSON PocoXML PocoData PocoDataMySQL KFGlobal  KFPlugin KFMemory KFProtocol KFHttp KFCore KFConHash KFNetwork KFUtility KFMath3D)  
 endif()
 
 endmacro(LINK_SDK_MACRO project_name)
@@ -20,24 +34,17 @@ macro(BUILD_PLUGIN_MACRO project_name)
 aux_source_directory(. KF_SRC)
 
 add_library(${project_name} SHARED ${KF_SRC})
-add_dependencies(${project_name} KFThread)
-add_dependencies(${project_name} KFCompress)
 add_dependencies(${project_name} KFConHash)
-add_dependencies(${project_name} KFConvert)
-add_dependencies(${project_name} KFCrypto)
 add_dependencies(${project_name} KFCore)
 add_dependencies(${project_name} KFExcel)
 add_dependencies(${project_name} KFHttp)
-add_dependencies(${project_name} KFLogger)
+add_dependencies(${project_name} KFGlobal)
 add_dependencies(${project_name} KFMath3D)
 add_dependencies(${project_name} KFMemory)
 add_dependencies(${project_name} KFNetwork)
 add_dependencies(${project_name} KFPlugin)
 add_dependencies(${project_name} KFProtocol)
-add_dependencies(${project_name} KFRand)
-add_dependencies(${project_name} KFTime)
 add_dependencies(${project_name} KFUtility)
-add_dependencies(${project_name} KFXml)
 
 set_target_properties(${project_name} PROPERTIES PREFIX "")
 set_target_properties(${project_name} PROPERTIES OUTPUT_NAME_DEBUG "${project_name}d")
@@ -130,6 +137,7 @@ add_subdirectory(KFRelationClient)
 add_subdirectory(KFRelationProxy)
 add_subdirectory(KFRelationShard)
 add_subdirectory(KFSchedule)
+add_subdirectory(KFSignIn)
 add_subdirectory(KFStore)
 add_subdirectory(KFTask)
 add_subdirectory(KFTcpClient)

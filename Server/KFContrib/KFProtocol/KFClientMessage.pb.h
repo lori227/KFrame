@@ -112,6 +112,8 @@ class MsgQueryRankListReq;
 class MsgQueryRankListAck;
 class MsgQueryFriendRankListReq;
 class MsgQueryFriendRankListAck;
+class MsgSevenSignInRewardReq;
+class MsgTellSevenExtendReward;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -188,11 +190,13 @@ enum ClientProtocol {
   MSG_QUERY_RANK_LIST_ACK = 184,
   MSG_QUERY_FRIEND_RANK_LIST_REQ = 185,
   MSG_QUERY_FRIEND_RANK_LIST_ACK = 186,
-  MSG_COMPOUND_DATA_REQ = 187
+  MSG_COMPOUND_DATA_REQ = 187,
+  MSG_SEVEN_SIGNIN_REWARD_REQ = 198,
+  MSG_TELL_SEVEN_EXTEND_REWARD = 199
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_COMPOUND_DATA_REQ;
+const ClientProtocol ClientProtocol_MAX = MSG_TELL_SEVEN_EXTEND_REWARD;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -7313,6 +7317,190 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Me
   void InitAsDefaultInstance();
   static MsgQueryFriendRankListAck* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Message {
+ public:
+  MsgSevenSignInRewardReq();
+  virtual ~MsgSevenSignInRewardReq();
+
+  MsgSevenSignInRewardReq(const MsgSevenSignInRewardReq& from);
+
+  inline MsgSevenSignInRewardReq& operator=(const MsgSevenSignInRewardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSevenSignInRewardReq& default_instance();
+
+  void Swap(MsgSevenSignInRewardReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgSevenSignInRewardReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgSevenSignInRewardReq& from);
+  void MergeFrom(const MsgSevenSignInRewardReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 day = 1;
+  inline bool has_day() const;
+  inline void clear_day();
+  static const int kDayFieldNumber = 1;
+  inline ::google::protobuf::uint32 day() const;
+  inline void set_day(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgSevenSignInRewardReq)
+ private:
+  inline void set_has_day();
+  inline void clear_has_day();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 day_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgSevenSignInRewardReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTellSevenExtendReward : public ::google::protobuf::Message {
+ public:
+  MsgTellSevenExtendReward();
+  virtual ~MsgTellSevenExtendReward();
+
+  MsgTellSevenExtendReward(const MsgTellSevenExtendReward& from);
+
+  inline MsgTellSevenExtendReward& operator=(const MsgTellSevenExtendReward& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellSevenExtendReward& default_instance();
+
+  void Swap(MsgTellSevenExtendReward* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTellSevenExtendReward* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTellSevenExtendReward& from);
+  void MergeFrom(const MsgTellSevenExtendReward& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string playername = 1;
+  inline bool has_playername() const;
+  inline void clear_playername();
+  static const int kPlayernameFieldNumber = 1;
+  inline const ::std::string& playername() const;
+  inline void set_playername(const ::std::string& value);
+  inline void set_playername(const char* value);
+  inline void set_playername(const char* value, size_t size);
+  inline ::std::string* mutable_playername();
+  inline ::std::string* release_playername();
+  inline void set_allocated_playername(::std::string* playername);
+
+  // required string reward = 2;
+  inline bool has_reward() const;
+  inline void clear_reward();
+  static const int kRewardFieldNumber = 2;
+  inline const ::std::string& reward() const;
+  inline void set_reward(const ::std::string& value);
+  inline void set_reward(const char* value);
+  inline void set_reward(const char* value, size_t size);
+  inline ::std::string* mutable_reward();
+  inline ::std::string* release_reward();
+  inline void set_allocated_reward(::std::string* reward);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellSevenExtendReward)
+ private:
+  inline void set_has_playername();
+  inline void clear_has_playername();
+  inline void set_has_reward();
+  inline void clear_has_reward();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* playername_;
+  ::std::string* reward_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTellSevenExtendReward* default_instance_;
+};
 // ===================================================================
 
 
@@ -12410,6 +12598,176 @@ inline void MsgQueryFriendRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDa
     set_has_rankdatas();
   } else {
     clear_has_rankdatas();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// MsgSevenSignInRewardReq
+
+// required uint32 day = 1;
+inline bool MsgSevenSignInRewardReq::has_day() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgSevenSignInRewardReq::set_has_day() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgSevenSignInRewardReq::clear_has_day() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgSevenSignInRewardReq::clear_day() {
+  day_ = 0u;
+  clear_has_day();
+}
+inline ::google::protobuf::uint32 MsgSevenSignInRewardReq::day() const {
+  return day_;
+}
+inline void MsgSevenSignInRewardReq::set_day(::google::protobuf::uint32 value) {
+  set_has_day();
+  day_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgTellSevenExtendReward
+
+// required string playername = 1;
+inline bool MsgTellSevenExtendReward::has_playername() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTellSevenExtendReward::set_has_playername() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTellSevenExtendReward::clear_has_playername() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTellSevenExtendReward::clear_playername() {
+  if (playername_ != &::google::protobuf::internal::kEmptyString) {
+    playername_->clear();
+  }
+  clear_has_playername();
+}
+inline const ::std::string& MsgTellSevenExtendReward::playername() const {
+  return *playername_;
+}
+inline void MsgTellSevenExtendReward::set_playername(const ::std::string& value) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(value);
+}
+inline void MsgTellSevenExtendReward::set_playername(const char* value) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(value);
+}
+inline void MsgTellSevenExtendReward::set_playername(const char* value, size_t size) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgTellSevenExtendReward::mutable_playername() {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  return playername_;
+}
+inline ::std::string* MsgTellSevenExtendReward::release_playername() {
+  clear_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = playername_;
+    playername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgTellSevenExtendReward::set_allocated_playername(::std::string* playername) {
+  if (playername_ != &::google::protobuf::internal::kEmptyString) {
+    delete playername_;
+  }
+  if (playername) {
+    set_has_playername();
+    playername_ = playername;
+  } else {
+    clear_has_playername();
+    playername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string reward = 2;
+inline bool MsgTellSevenExtendReward::has_reward() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgTellSevenExtendReward::set_has_reward() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgTellSevenExtendReward::clear_has_reward() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgTellSevenExtendReward::clear_reward() {
+  if (reward_ != &::google::protobuf::internal::kEmptyString) {
+    reward_->clear();
+  }
+  clear_has_reward();
+}
+inline const ::std::string& MsgTellSevenExtendReward::reward() const {
+  return *reward_;
+}
+inline void MsgTellSevenExtendReward::set_reward(const ::std::string& value) {
+  set_has_reward();
+  if (reward_ == &::google::protobuf::internal::kEmptyString) {
+    reward_ = new ::std::string;
+  }
+  reward_->assign(value);
+}
+inline void MsgTellSevenExtendReward::set_reward(const char* value) {
+  set_has_reward();
+  if (reward_ == &::google::protobuf::internal::kEmptyString) {
+    reward_ = new ::std::string;
+  }
+  reward_->assign(value);
+}
+inline void MsgTellSevenExtendReward::set_reward(const char* value, size_t size) {
+  set_has_reward();
+  if (reward_ == &::google::protobuf::internal::kEmptyString) {
+    reward_ = new ::std::string;
+  }
+  reward_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgTellSevenExtendReward::mutable_reward() {
+  set_has_reward();
+  if (reward_ == &::google::protobuf::internal::kEmptyString) {
+    reward_ = new ::std::string;
+  }
+  return reward_;
+}
+inline ::std::string* MsgTellSevenExtendReward::release_reward() {
+  clear_has_reward();
+  if (reward_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = reward_;
+    reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgTellSevenExtendReward::set_allocated_reward(::std::string* reward) {
+  if (reward_ != &::google::protobuf::internal::kEmptyString) {
+    delete reward_;
+  }
+  if (reward) {
+    set_has_reward();
+    reward_ = reward;
+  } else {
+    clear_has_reward();
+    reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

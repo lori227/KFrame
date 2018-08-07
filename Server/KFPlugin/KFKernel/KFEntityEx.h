@@ -5,6 +5,7 @@
 #include "KFCore/KFData.h"
 #include "KFCore/KFAgent.h"
 #include "KFProtocol/KFProtocol.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -23,7 +24,6 @@ namespace KFrame
         // selfid
         virtual void SetKeyID( uint64 id );
         virtual uint64 GetKeyID();
-        virtual const char* GetKeyString();
 
         virtual const char* GetName();
         virtual void SetName( const std::string& name );
@@ -147,7 +147,6 @@ namespace KFrame
     protected:
         // 数据
         KFData* _kf_object;
-        std::string _self_id_string;
 
         // 名字
         std::string _name;

@@ -3,11 +3,12 @@
 
 namespace KFrame
 {
-    namespace KFCommonEnum
+    namespace KFEnum
     {
         enum MyEnum
         {
-            OK = 1,		// 成功的结果
+            Error = 0,	// 错误
+            Ok = 1,		// 成功
         };
     }
     ////////////////////////////////////////////////////////////////
@@ -74,11 +75,11 @@ namespace KFrame
         };
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    namespace KFScoreEnum
+    namespace KFRatioEnum
     {
         enum MyEnum
         {
-            ScoreRatio = 10000,	// 积分比率
+            Ratio = 10000,	// 积分比率
         };
     }
 
@@ -92,6 +93,8 @@ namespace KFrame
             Compress = 0x3,		// 压缩转换
         };
     }
+
+
 }
 
 #endif

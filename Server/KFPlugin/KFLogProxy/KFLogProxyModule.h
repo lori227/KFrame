@@ -8,29 +8,20 @@
 #define __KF_LOG_PROXY_MODULE__
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFLogProxyInterface.h"
-#include "KFMessage/KFMessageInterface.h"
-#include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFClusterProxy/KFClusterProxyInterface.h"
 
 namespace KFrame
 {
-
     class KFLogProxyModule : public KFLogProxyInterface
     {
     public:
         KFLogProxyModule();
         ~KFLogProxyModule();
 
-        // 鍔犺浇閰嶇疆
         virtual void InitModule();
 
-        // 鍒濆鍖?
         virtual void BeforeRun();
 
-        // 鍏抽棴
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////

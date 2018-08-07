@@ -1,14 +1,11 @@
 ﻿#include "KFMySQLExecute.h"
 #include "Poco/Data/RecordSet.h"
-#include "KFMemory/KFBuffer.h"
 
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////
     KFMySQLExecute::KFMySQLExecute()
     {
-        _length = KFBufferEnum::Buff_10M;
-        _buffer = __KF_INT8__( _length );
     }
 
     KFMySQLExecute::~KFMySQLExecute()
@@ -33,7 +30,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::ExecuteSql( const char* sql )
+    bool KFMySQLExecute::ExecuteSql( const std::string& sql )
     {
         Statement statement( *_session );
         statement << sql;
@@ -55,7 +52,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ce.code() ) )
                 {
-                    KFLogger::LogSql( KFLogger::Error, "MySQL Failed [%s]!", ce.displayText().c_str() );
+                    __LOG_ERROR__( KFLogEnum::Sql, "mysql failed [{}]!", ce.displayText() );
                     return false;
                 }
 
@@ -65,7 +62,7 @@ namespace KFrame
         } while ( repeatcount < 3 );
 
         // 与mysql断开了
-        KFLogger::LogSql( KFLogger::Error, "MySQL Disconnected [%s]!", statement.toString().c_str() );
+        __LOG_ERROR__( KFLogEnum::Sql, "mysql disconnected [{}]!", statement.toString() );
         return false;
     }
 
@@ -90,22 +87,11 @@ namespace KFrame
         return buffer;
     }
 
-#define __MYSQL_BUFFER__\
-    memset( _buffer, 0, _length );
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::Execute( const char* format, ... )
+    bool KFMySQLExecute::UpdateExecute( const std::string& sql )
     {
-        __MYSQL_BUFFER__;
-
-        va_list args;
-        va_start( args, format );
-        vsprintf( _buffer, format, args );
-        va_end( args );
-
-        return ExecuteSql( _buffer );
+        return ExecuteSql( sql );
     }
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +99,7 @@ namespace KFrame
     {
         for ( auto& command : commands )
         {
-            ExecuteSql( command.c_str() );
+            ExecuteSql( command );
         }
     }
 
@@ -121,12 +107,8 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMySQLExecute::Delete( const std::string& table, const std::string& key )
     {
-        __MYSQL_BUFFER__;
-
-        sprintf( _buffer, "delete from %s where `%s`='%s';",
-                 table.c_str(), __KF_CHAR__( id ), key.c_str() );
-
-        return ExecuteSql( _buffer );
+        auto sql = __FORMAT__( "delete from {} where `{}`='{}';", table, __KF_STRING__( id ), key );
+        return ExecuteSql( sql );
     }
 
     bool KFMySQLExecute::Delete( const std::string& table, const ListString& keys )
@@ -142,26 +124,21 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMySQLExecute::UpdateExecute( const std::string& table, const std::string& key, const std::string& field, const std::string& invalue )
     {
-        __MYSQL_BUFFER__;
-
+        std::string sql = "";
         if ( key.empty() )
         {
-            sprintf( _buffer, "update %s set `%s`='%s';",
-                     table.c_str(), field.c_str(), invalue.c_str() );
+            sql = __FORMAT__( "update {} set `{}`='{}';", table, field, invalue );
         }
         else
         {
-            sprintf( _buffer, "update %s set `%s`='%s' where `%s`='%s';",
-                     table.c_str(), field.c_str(), invalue.c_str(), __KF_CHAR__( id ), key.c_str() );
+            sql = __FORMAT__( "update {} set `{}`='{}' where `{}`='{}';", table, field, invalue, __KF_STRING__( id ), key );
         }
 
-        return ExecuteSql( _buffer );
+        return ExecuteSql( sql );
     }
 
     bool KFMySQLExecute::Update( const std::string& table, const std::string& key, const MapString& invalue )
     {
-        __MYSQL_BUFFER__;
-
         std::ostringstream oss;
 
         auto isbegin = true;
@@ -179,24 +156,21 @@ namespace KFrame
             oss << '`' << iter.first << "`='" << iter.second << "'";
         }
 
+        std::string sql = "";
         if ( key.empty() )
         {
-            sprintf( _buffer, "update %s set %s;",
-                     table.c_str(), oss.str().c_str() );
+            sql = __FORMAT__( "update {} set {};", table, oss.str() );
         }
         else
         {
-            sprintf( _buffer, "update %s set %s where `%s`='%s';",
-                     table.c_str(), oss.str().c_str(), __KF_CHAR__( id ), key.c_str() );
+            sql = __FORMAT__( "update {} set {} where `{}`='{}';", table, oss.str(), __KF_STRING__( id ), key );
         }
 
-        return ExecuteSql( _buffer );
+        return ExecuteSql( sql );
     }
 
     bool KFMySQLExecute::Insert( const std::string& table, const MapString& invalue )
     {
-        __MYSQL_BUFFER__;
-
         std::ostringstream ossfields;
         std::ostringstream ossvalues;
         std::ostringstream ossupdate;
@@ -220,21 +194,18 @@ namespace KFrame
             ossupdate << '`' << iter.first << "`='" << iter.second << "'";
         }
 
-        sprintf( _buffer, "insert into %s(%s) values(%s) on duplicate key update %s;",
-                 table.c_str(), ossfields.str().c_str(), ossvalues.str().c_str(), ossupdate.str().c_str() );
+        auto sql = ( "insert into {}({}) values({}) on duplicate key update {};",
+                     table, ossfields.str(), ossvalues.str(), ossupdate.str() );
 
-        return ExecuteSql( _buffer );
+        return ExecuteSql( sql );
     }
 
     bool KFMySQLExecute::SelectExecute( const std::string& table, const std::string& key, const std::string& field, std::string& outvalue )
     {
-        __MYSQL_BUFFER__;
-
-        sprintf( _buffer, "select `%s` from %s where `%s`='%s';",
-                 field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
+        auto sql = __FORMAT__( "select `{}` from {} where `{}`='{}';", field, table, __KF_STRING__( id ), key );
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {
@@ -252,21 +223,20 @@ namespace KFrame
 
     bool KFMySQLExecute::SelectExecute( const std::string& table, const std::string& key, const std::string& field, uint32 limitcount, ListString& outvalue )
     {
-        __MYSQL_BUFFER__;
-
+        std::string sql = "";
         if ( limitcount == 0 )
         {
-            sprintf( _buffer, "select `%s` from %s where `%s`='%s';",
-                     field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
+            sql = __FORMAT__( "select `{}` from {} where `{}`='{}';",
+                              field, table, __KF_STRING__( id ), key );
         }
         else
         {
-            sprintf( _buffer, "select `%s` from %s where `%s`='%s' limit %u;",
-                     field.c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str(), limitcount );
+            sql = __FORMAT__( "select `{}` from {} where `{}`='{}' limit {};",
+                              field, table, __KF_STRING__( id ), key, limitcount );
         }
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {
@@ -299,13 +269,11 @@ namespace KFrame
 
     bool KFMySQLExecute::SelectAll( const std::string& table, const std::string& key, MapString& outvalue )
     {
-        __MYSQL_BUFFER__;
-
-        sprintf( _buffer, "select * from %s where `%s`='%s';",
-                 table.c_str(), __KF_CHAR__( id ), key.c_str() );
+        auto sql = __FORMAT__( "select * from {} where `{}`='{}';",
+                               table, __KF_STRING__( id ), key );
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {
@@ -335,8 +303,6 @@ namespace KFrame
 
     bool KFMySQLExecute::SelectField( const std::string& table, const std::string& key, MapString& outvalue )
     {
-        __MYSQL_BUFFER__;
-
         std::ostringstream ossfields;
 
         bool isbegin = true;
@@ -354,11 +320,11 @@ namespace KFrame
             ossfields << "`" << iter.first << "`";
         }
 
-        sprintf( _buffer, "select %s from %s where `%s`='%s';",
-                 ossfields.str().c_str(), table.c_str(), __KF_CHAR__( id ), key.c_str() );
+        auto sql = __FORMAT__( "select {} from {} where `{}`='{}';",
+                               ossfields.str(), table, __KF_STRING__( id ), key );
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {
@@ -381,21 +347,18 @@ namespace KFrame
 
     bool KFMySQLExecute::Select( const std::string& table, const std::string& key, std::list<MapString>& outvalue )
     {
-        __MYSQL_BUFFER__;
-
+        std::string sql = "";
         if ( key.empty() )
         {
-            sprintf( _buffer, "select * from %s;",
-                     table.c_str() );
+            sql = __FORMAT__( "select * from {};", table );
         }
         else
         {
-            sprintf( _buffer, "select * from %s where `%s`='%s';",
-                     table.c_str(), __KF_CHAR__( id ), key.c_str() );
+            sql = __FORMAT__( "select * from {} where `{}`='{}';", table, __KF_STRING__( id ), key );
         }
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {
@@ -425,21 +388,18 @@ namespace KFrame
 
     bool KFMySQLExecute::Select( const std::string& table, const std::string& key, ListString& fields, std::list<MapString>& outvalue )
     {
-        __MYSQL_BUFFER__;
-
+        std::string sql = "";
         if ( key.empty() )
         {
-            sprintf( _buffer, "select * from %s;",
-                     table.c_str() );
+            sql = __FORMAT__( "select * from {};", table );
         }
         else
         {
-            sprintf( _buffer, "select * from %s where `%s`='%s';",
-                     table.c_str(), __KF_CHAR__( id ), key.c_str() );
+            sql = __FORMAT__( "select * from {} where `{}`='{}';", table, __KF_STRING__( id ), key );
         }
 
         Statement statement( *_session );
-        statement << _buffer;
+        statement << sql;
         auto ok = ExecuteSql( statement );
         if ( !ok )
         {

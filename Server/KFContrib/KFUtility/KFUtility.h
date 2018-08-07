@@ -21,7 +21,7 @@ namespace KFrame
         template< class T = uint64 > static bool CheckOperate( T basevalue, uint32 operate, T operatevalue );
 
         // 转换成字符串
-        template< class T = uint32 > static std::string ToString( T value );
+        template< class T = uint32 > static std::string ToString( const T& value );
 
         // 转换成数值
         template< class T = uint32 > static T ToValue( const char* srcstring );
@@ -66,11 +66,11 @@ namespace KFrame
         static void ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew );
         static void ReplaceString( std::string& srcstring, const std::string& strold, const VectorString& params );
 
-        // 格式化
-        static char* Format( const char* format, ... );
-
         // 生产guid
         static uint64 Make64Guid( uint32 dataid );
+
+        // 格式化标题
+        static std::string FormatTitleText( const std::string& appname, const std::string& apptype, uint32 appid );
 
     };
 }

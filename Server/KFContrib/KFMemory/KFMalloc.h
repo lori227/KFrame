@@ -3,31 +3,31 @@
 
 #include "KFInclude.h"
 #include "KFEnum.h"
-#include "KFMemory/KFMemory.h"
-#include "KFLogger/KFLogger.h"
+#include "KFMacros.h"
+#include "KFMemory.h"
 
 namespace KFrame
 {
-#define __KF_NEW__( name, ... ) KFMalloc::Instance()->New< name >( __FUNCTION_LINE__, ##__VA_ARGS__ )
-#define __KF_DELETE__( object ) KFMalloc::Instance()->Delete( object, __FUNCTION_LINE__ )
+#define __KF_NEW__( name, ... ) KFMalloc::Instance()->New< name >( __FUNC_LINE__, ##__VA_ARGS__ )
+#define __KF_DELETE__( object ) KFMalloc::Instance()->Delete( object, __FUNC_LINE__ )
 
 #define __KF_INT8__( length )\
-    KFMalloc::Instance()->GetInt8( length, __FUNCTION_LINE__ )
+    KFMalloc::Instance()->GetInt8( length, __FUNC_LINE__ )
 
 #define __KF_UINT8__( length )\
-    KFMalloc::Instance()->GetUInt8( length, __FUNCTION_LINE__ )
+    KFMalloc::Instance()->GetUInt8( length, __FUNC_LINE__ )
 
     // 对象池
-#define __KF_CREATE__(name) KFMalloc::Instance()->Create<name >( __FUNCTION_LINE__ )
-#define __KF_CREATE_BATCH__(name, batch) KFMalloc::Instance()->Create< name, batch >( __FUNCTION_LINE__ )
-#define __KF_CREATE_PARAM1__(name, batch, param) KFMalloc::Instance()->Create< name, batch >( param, __FUNCTION_LINE__ )
-#define __KF_CREATE_PARAM2__(name, batch, param1, param2) KFMalloc::Instance()->Create< name, batch >( param1, param2, __FUNCTION_LINE__ )
-#define __KF_DESTROY__(name, object) KFMalloc::Instance()->Destroy< name >( object, __FUNCTION_LINE__ )
+#define __KF_CREATE__(name) KFMalloc::Instance()->Create<name >( __FUNC_LINE__ )
+#define __KF_CREATE_BATCH__(name, batch) KFMalloc::Instance()->Create< name, batch >( __FUNC_LINE__ )
+#define __KF_CREATE_PARAM1__(name, batch, param) KFMalloc::Instance()->Create< name, batch >( param, __FUNC_LINE__ )
+#define __KF_CREATE_PARAM2__(name, batch, param1, param2) KFMalloc::Instance()->Create< name, batch >( param1, param2, __FUNC_LINE__ )
+#define __KF_DESTROY__(name, object) KFMalloc::Instance()->Destroy< name >( object, __FUNC_LINE__ )
 
     // 内存池
-#define __KF_MALLOC_BATCH__(name, size, batch) KFMalloc::Instance()->Malloc< name >( size, batch, __FUNCTION_LINE__ );
+#define __KF_MALLOC_BATCH__(name, size, batch) KFMalloc::Instance()->Malloc< name >( size, batch, __FUNC_LINE__ );
 #define __KF_MALLOC__(name, size) __KF_MALLOC_BATCH__( name, size, 30 );
-#define __KF_FREE__(name, memory, size) KFMalloc::Instance()->Free< name >( memory, size, __FUNCTION_LINE__ );
+#define __KF_FREE__(name, memory, size) KFMalloc::Instance()->Free< name >( memory, size, __FUNC_LINE__ );
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +50,6 @@ namespace KFrame
         inline T* New( const char* function, uint32 line, P&& ...params )
         {
             auto object = new T( std::forward<P>( params )... );
-            KFLogger::LogMemory( KFLogger::Info, "[%s:%u] new object[0x%x:%s]!",
-                                 function, line, object, typeid( T ).name() );
             return object;
         }
 
@@ -62,9 +60,6 @@ namespace KFrame
             {
                 return;
             }
-
-            KFLogger::LogMemory( KFLogger::Info, "[%s:%u] delete object[0x%x:%s]!",
-                                 function, line, object, typeid( T ).name() );
 
             delete object;
             object = nullptr;

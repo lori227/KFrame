@@ -4,7 +4,7 @@
 		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
 		<Plguin Name="KFDisplay" Startup="1" Sort="110" Debug="KFDisplayd" Release="KFDisplay" Config=""/>
 		<Plguin Name="KFClusterShard" Startup="1" Sort="120" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plguin Name="KFGroupShard" Startup="1" Sort="130" Debug="KFGroupShardd" Release="KFGroupShard" Config="./config/group.config"/>
+		<Plguin Name="KFGroupShard" Startup="1" Sort="130" Debug="KFGroupShardd" Release="KFGroupShard" Config=""/>
 		<Plguin Name="KFKernel" Startup="1" Sort="140" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
 	</Plugins>
 </Setting>

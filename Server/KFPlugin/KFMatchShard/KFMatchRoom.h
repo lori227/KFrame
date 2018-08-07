@@ -2,7 +2,6 @@
 #define __KF_MATCH_ROOM_H__
 
 #include "KFMatchCamp.h"
-#include "KFTime/KFTimer.h"
 
 namespace KFrame
 {
@@ -78,7 +77,6 @@ namespace KFrame
 
         // 房间id
         uint64 _battle_room_id;
-        std::string _str_room_id;
 
         // 阵营列表
         KFMap< uint32, uint32, KFMatchCamp > _kf_camp_list;

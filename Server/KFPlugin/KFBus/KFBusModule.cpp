@@ -121,6 +121,6 @@ namespace KFrame
             return;
         }
 
-        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNCTION_LINE__ );
+        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNC_LINE__ );
     }
 }

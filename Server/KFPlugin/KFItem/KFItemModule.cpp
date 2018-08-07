@@ -142,7 +142,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFItemModule::OnTimerCheckItemValidTime )
     {
-        auto player = _kf_player->FindPlayer( objectid, __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -162,22 +162,19 @@ namespace KFrame
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] item id = 0!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] item id = 0!", kfagent->_string );
         }
 
         auto itemsetting = _kf_item_config->FindItemSetting( configid );
         if ( itemsetting == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] item setting = null!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] item id = 0!", kfagent->_string );
         }
 
         auto kfagentvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
         if ( kfagentvalue == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] item count = null!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] item count = null!", kfagent->_string );
         }
 
         auto itemcount = _kf_kernel->CalcAgentValue( kfagentvalue, multiple );
@@ -186,8 +183,7 @@ namespace KFrame
         auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
         if ( kfitemrecord == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] player[%s] item record = null!",
-                                        function, line, kfagent->_string.c_str(), player->GetKeyString() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] player[{}] item record = null!", kfagent->_string, player->GetKeyID() );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -528,7 +524,7 @@ namespace KFrame
         // 添加奖励
         if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
         {
-            player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+            player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
         }
 
         // 调用lua脚本

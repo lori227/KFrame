@@ -2,7 +2,6 @@
 #include "KFClothesConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
-
 namespace KFrame
 {
     KFClothesModule::KFClothesModule()
@@ -145,7 +144,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClothesModule::OnTimerCheckClothesValidTime )
     {
-        auto player = _kf_player->FindPlayer( objectid, __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -163,22 +162,19 @@ namespace KFrame
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] clothes id = 0!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes id = 0!", kfagent->_string );
         }
 
         auto kfsetting = _kf_clothes_config->FindClothesSetting( configid );
         if ( kfsetting == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] clothes setting = null!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes setting = null!", kfagent->_string );
         }
 
         auto kfagengvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
         if ( kfagengvalue == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] clothes count = null!",
-                                        function, line, kfagent->_string.c_str() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes count = null!", kfagent->_string );
         }
 
         auto clothescount = _kf_kernel->CalcAgentValue( kfagengvalue, multiple );
@@ -187,11 +183,10 @@ namespace KFrame
         auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
         if ( kfclothesrecord == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] [%s] player[%s] clothes record = null!",
-                                        function, line, kfagent->_string.c_str(), player->GetKeyString() );
+            return __LOG_ERROR__( KFLogEnum::System, "[{}] player[{}] clothes record = null!", kfagent->_string, player->GetKeyID() );
         }
-        auto datasetting = kfclothesrecord->GetDataSetting();
 
+        auto datasetting = kfclothesrecord->GetDataSetting();
         // 判断是否存在该时装
         auto kfclothes = kfclothesrecord->FindData( configid );
         if ( kfclothes == nullptr )
@@ -233,7 +228,7 @@ namespace KFrame
                     auto multiple = agenttime / KFTimeEnum::OneDaySecond;
                     if ( multiple != 0 )
                     {
-                        player->AddAgentData( &kfsetting->_exchange, multiple, true, __FUNCTION_LINE__ );
+                        player->AddAgentData( &kfsetting->_exchange, multiple, true, __FUNC_LINE__ );
                     }
                 }
             }
@@ -345,10 +340,11 @@ namespace KFrame
             {
                 return _kf_display->SendToClient( player, KFMsg::ClothesModleNotMatch );
             }
+
+            _kf_display->SendToClient( player, KFMsg::ClothesDressOK, kfmsg.clothesid() );
         }
 
         player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, kfmsg.clothesid() );
-        _kf_display->SendToClient( player, KFMsg::ClothesDressOK );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClothesModule::HandleSetModelDefaultClothesReq )

@@ -74,11 +74,10 @@ namespace KFrame
         auto playerid = kfmsg.playerid();
         auto accountid = kfmsg.accountid();
 
-        KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] verify req!",
-                            __FUNCTION__, accountid, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] player[{}] verify req!", accountid, playerid );
 
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
-        if ( _kf_world->KickOnline( playerid, __FUNCTION_LINE__ ) )
+        if ( _kf_world->KickOnline( playerid, __FUNC_LINE__ ) )
         {
             return SendLoginWorldVerifyMessage( loginid, gateid, KFMsg::LoginAlreadyOnline, 0, 0, _invalid_str, _invalid_str, 0 );
         }
@@ -108,13 +107,11 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( kflogingame->_game_id, KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login token to game ok!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login token to game ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Error, "[%s] accountid[%u] player[%u] login token to game failed!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login token to game failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -147,14 +144,11 @@ namespace KFrame
         auto ok = _kf_world->SendMessageToGame( serverid, KFMsg::S2S_LOGIN_WORLD_VERIFY_ACK, &ack );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login world verify result[%u] ok!",
-                                __FUNCTION__, accountid, playerid, result );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] world verify result[{}] ok!", accountid, playerid, result );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login world verify result[%u] failed!",
-                                __FUNCTION__, accountid, playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "aplayer[{}:{}] world verify result[{}] failed!", accountid, playerid, result );
         }
-
     }
 }

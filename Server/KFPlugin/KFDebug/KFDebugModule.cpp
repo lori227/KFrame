@@ -45,8 +45,7 @@ namespace KFrame
         return;
 #endif // __KF_DEBUG__
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] player[%u] debug command[%s]!",
-                            __FUNCTION__, playerid, kfmsg.command().c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] debug command[{}]!", playerid, kfmsg.command() );
 
         // 调用注册的函数
         auto kffunction = _kf_debug_function.Find( kfmsg.command() );

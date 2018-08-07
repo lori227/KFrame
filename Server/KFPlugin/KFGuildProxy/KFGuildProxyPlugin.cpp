@@ -15,7 +15,7 @@ namespace KFrame
 
     void KFGuildProxyPlugin::LoadModule()
     {
-
+        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 
 }

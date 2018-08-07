@@ -267,8 +267,8 @@ namespace KFrame
         kftoken->_gate_id = kfmsg.gateid();
         kftoken->_valid_time = KFGlobal::Instance()->_real_time + 60;
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] update client[%u] token[%s]!",
-                            __FUNCTION__, kftoken->_gate_id, kftoken->_token.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "update client[{}] token[{}]!",
+                       kftoken->_gate_id, kftoken->_token );
     }
 
     uint32 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint32 serverid )
@@ -303,13 +303,13 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
-            KFLogger::LogLogic( KFLogger::Info, "[%u:%s] cluster verify ok!",
-                                kfmsg.serverid(), kfmsg.token().c_str(), serverid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] cluster verify ok!",
+                           kfmsg.serverid(), kfmsg.token(), serverid );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%u:%s] cluster verify failed!",
-                                kfmsg.serverid(), kfmsg.token().c_str(), serverid );
+            __LOG_ERROR__( KFLogEnum::System, "[{}:{}] cluster verify failed!",
+                           kfmsg.serverid(), kfmsg.token(), serverid );
         }
     }
 
@@ -323,8 +323,7 @@ namespace KFrame
             shardserverid = SelectClusterShard( handleid, true );
             if ( shardserverid == _invalid_int )
             {
-                KFLogger::LogSystem( KFLogger::Error, "[%s] can not select cluster shard!",
-                                     __FUNCTION__ );
+                __LOG_ERROR__( KFLogEnum::System, "handleid[{}] can not select shard!", handleid );
                 return false;
             }
         }
@@ -350,10 +349,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard[ objectid ] = shardid;
 
-            auto strobjectid = __TO_STRING__( objectid );
-
-            KFLogger::LogLogic( KFLogger::Info, "[%s] add object[%s] ok!",
-                                __FUNCTION__, strobjectid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}] ok!", objectid );
         }
 
         // 添加数量
@@ -369,10 +365,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard.erase( objectid );
 
-            auto strobjectid = __TO_STRING__( objectid );
-
-            KFLogger::LogLogic( KFLogger::Info, "[%s] remove object[%s] ok!",
-                                __FUNCTION__, strobjectid.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "remove object[{}] ok!", objectid );
         }
 
         auto shardid = __KF_HEAD_ID__( kfguid );
@@ -434,9 +427,9 @@ namespace KFrame
         auto shardid = FindObjectShard( kfmsg.objectid() );
         if ( shardid == _invalid_int )
         {
-            auto strobjectid = __TO_STRING__( kfmsg.objectid() );
-            return KFLogger::LogLogic( KFLogger::Info, "[%s] msgid[%u] objectid[%s] can't find shard!",
-                                       __FUNCTION__, kfmsg.msgid(), strobjectid.c_str() );
+            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!",
+                           kfmsg.msgid(), kfmsg.objectid() );
+            return;
         }
 
         auto msgdata = kfmsg.msgdata();
@@ -445,7 +438,7 @@ namespace KFrame
 
     uint32 KFClusterProxyModule::FindMinObjectShard()
     {
-        auto mincount = 0xffffffff;
+        auto mincount = std::numeric_limits<uint32>::max();
         auto shardid = 0;
 
         for ( auto& iter : _kf_object_count )

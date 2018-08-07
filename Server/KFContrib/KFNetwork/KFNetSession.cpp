@@ -2,7 +2,6 @@
 #include "KFDefine.h"
 #include "KFNetEvent.h"
 #include "KFNetConnector.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -164,8 +163,8 @@ namespace KFrame
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] recv length[%u:%u] error",
-                              __FUNCTION_LINE__, _receive_length, length );
+            __LOG_CRITICAL__( KFLogEnum::System, "recv length[{}:{}] error",
+                              _receive_length, length );
 
             _receive_length = 0;
         }
@@ -233,9 +232,8 @@ namespace KFrame
                 nethead->_length > KFNetDefine::MaxMessageLength )
         {
             _receive_length = 0;
-
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] recv msgid[%u] length[%u] position[%u] error",
-                              __FUNCTION_LINE__, nethead->_msgid, nethead->_length, position );
+            __LOG_CRITICAL__( KFLogEnum::System, "recv msgid[{}] length[{}] position[{}] error",
+                              nethead->_msgid, nethead->_length, position );
             return nullptr;
         }
 
@@ -296,9 +294,7 @@ namespace KFrame
     void KFNetSession::OnDisconnect( const char* error, int32 code )
     {
         _is_connected = false;
-
-        KFLogger::LogNet( KFLogger::Debug, "[%s] session[%u] disconnet[%s:%d]!",
-                          __FUNCTION__, _id, error, code );
+        __LOG_DEBUG__( KFLogEnum::Net, "session[{}] disconnect[{}:{}]!", _id, error, code );
     }
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
@@ -310,8 +306,8 @@ namespace KFrame
             if ( !_is_send_queue_full )
             {
                 _is_send_queue_full = true;
-                KFLogger::LogNet( KFLogger::Error, "[%s] add msgid[%u] guid[%u:%u] failed!",
-                                  __FUNCTION__, message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
+                __LOG_CRITICAL__( KFLogEnum::System, "add send msgid[{}] guid[{}:{}] failed!",
+                                  message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
             }
         }
         else
@@ -331,8 +327,8 @@ namespace KFrame
             if ( !_is_recv_queue_full )
             {
                 _is_recv_queue_full = true;
-                KFLogger::LogNet( KFLogger::Error, "[%s] add msgid[%u] guid[%u:%u] failed!",
-                                  __FUNCTION__, message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
+                __LOG_CRITICAL__( KFLogEnum::System, "add recv msgid[{}] guid[{}:{}] failed!",
+                                  message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
             }
         }
         else

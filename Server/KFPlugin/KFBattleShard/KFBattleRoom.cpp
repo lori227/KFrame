@@ -29,7 +29,6 @@ namespace KFrame
     {
         _match_id = matchid;
         _battle_room_id = roomid;
-        _str_room_id = __TO_STRING__( _battle_room_id );
         _max_player_count = maxplayercount;
         _battle_valid_time = KFGlobal::Instance()->_game_time + _kf_battle_config->_room_valid_time;
 
@@ -47,8 +46,7 @@ namespace KFrame
             _status_timer.StartTimer( 1, intervaltime );
         }
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] change status[%u] time[%u]!",
-                            __FUNCTION__, _str_room_id.c_str(), status, intervaltime );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] change status[{}] time[{}]!", _battle_room_id, status, intervaltime );
     }
 
     bool KFBattleRoom::IsBattleRoomStart()
@@ -80,16 +78,14 @@ namespace KFrame
         // 已经开始, 或者人数已经满了
         if ( IsBattleRoomStart() )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] battle room[%s] is start!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "battle room[{}] is start!", _battle_room_id );
             return nullptr;
         }
 
         // 人数已经满了
         if ( _now_player_count + pbcamp->pbplayer_size() > _max_player_count )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] battle room[%s] is full!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "battle room[{}] is full!", _battle_room_id );
             return nullptr;
         }
 
@@ -192,8 +188,7 @@ namespace KFrame
         _kf_battle_manage->AllocBattleServer( &_battle_server );
         if ( !_battle_server.IsValid() )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] room[%s] alloc battle server failed!",
-                                       __FUNCTION__, _str_room_id.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alloc battle server failed!", _battle_room_id );
         }
 
         // 如果房间人数大于开启数量
@@ -207,8 +202,8 @@ namespace KFrame
             UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
         }
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] alloc battle[%u:%u:%s:%u] ok!",
-                            __FUNCTION__, _str_room_id.c_str(), _battle_server._server_id, _battle_server._proxy_id, _battle_server._ip.c_str(), _battle_server._port );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_room_id,
+                       _battle_server._server_id, _battle_server._proxy_id, _battle_server._ip, _battle_server._port );
     }
 
     void KFBattleRoom::OpenBattleRoom()
@@ -228,13 +223,11 @@ namespace KFrame
         if ( ok )
         {
             ++_req_count;
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] open battle room[%s] req!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "open battle room[{}] req!", _battle_room_id );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] open battle room[%s] req failed!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "open battle room[{}] req failed!", _battle_room_id );
         }
     }
 
@@ -261,8 +254,7 @@ namespace KFrame
             req.set_waittime( _kf_battle_config->_wait_enter_time );
             SendMessageToMatch( KFMsg::S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ, &req );
 
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] open match room[%s] req!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] req!", _battle_room_id );
         }
     }
 
@@ -321,16 +313,14 @@ namespace KFrame
         // 已经开始了, 不处理
         if ( _status == KFRoomStatus::StatisBattleRoomPlaying )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s:%u] room[%s] alread start!",
-                                __FUNCTION_LINE__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alread start!", _battle_room_id );
             return false;
         }
 
         auto kfcamp = _kf_camp_list.Find( campid );
         if ( kfcamp == nullptr )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s:%u] room[%s] can't find camp[%u]!",
-                                __FUNCTION_LINE__, _str_room_id.c_str(), campid );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] can't find camp[{}]!", _battle_room_id, campid );
             return false;
         }
 
@@ -357,8 +347,8 @@ namespace KFrame
             auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_CANCEL_MATCH_REQ, &req );
             if ( !ok )
             {
-                KFLogger::LogLogic( KFLogger::Error, "[%s:%u] room[%s] player[%u:%u] cancel battle failed!",
-                                    __FUNCTION_LINE__, _str_room_id.c_str(), campid, playerid );
+                __LOG_ERROR__( KFLogEnum::Logic, "room[{}] player[{}:{}] cancel battle failed!",
+                               _battle_room_id, campid, playerid );
             }
         }
 
@@ -402,8 +392,7 @@ namespace KFrame
         _battle_server._port = port;
 
         // 如果是进入状态, 重置到开启状态, 让流程循环起来
-        if ( _status == KFRoomStatus::StatusBattleRoomAlloc ||
-                _status == KFRoomStatus::StatusBattleRoomEnter )
+        if ( _status == KFRoomStatus::StatusBattleRoomAlloc || _status == KFRoomStatus::StatusBattleRoomEnter )
         {
             UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 5000 );
         }
@@ -423,8 +412,7 @@ namespace KFrame
         req.set_roomid( _battle_room_id );
         SendMessageToMatch( KFMsg::S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ, &req );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] start room[%s] to match req!",
-                            __FUNCTION__, _str_room_id.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}] to match req!", _battle_room_id );
     }
 
     void KFBattleRoom::ConfirmStartBattleRoom()
@@ -443,8 +431,8 @@ namespace KFrame
             kfcamp = _kf_camp_list.Next();
         }
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] battle[%u|%s:%u] finish ok!",
-                            __FUNCTION__, _str_room_id.c_str(), _battle_server._server_id, _battle_server._ip.c_str(), _battle_server._port );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] battle[{}|{}:{}] finish ok!", _battle_room_id,
+                       _battle_server._server_id, _battle_server._ip, _battle_server._port );
     }
 
     void KFBattleRoom::FreeBattleServer()
@@ -461,15 +449,12 @@ namespace KFrame
         auto ok = SendMessageToMatch( KFMsg::S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] close room[%s] to match req!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "close room[{}] to match req!", _battle_room_id );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] close room[%s] to match req failed!",
-                                __FUNCTION__, _str_room_id.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "close room[{}] to match req failed!", _battle_room_id );
         }
-
     }
 
     KFBattlePlayer* KFBattleRoom::FindBattlePlayer( uint32 playerid )

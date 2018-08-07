@@ -158,7 +158,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcrypto.lib;libssl.lib;Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
@@ -214,7 +214,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcrypto.lib;libssl.lib;Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>

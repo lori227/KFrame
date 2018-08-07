@@ -19,11 +19,7 @@ namespace KFrame
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFDeployServerModule::OnServerLostClient );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( startup ), true, &KFDeployServerModule::HandleStartupServer );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( shutdown ), true, &KFDeployServerModule::HandleShutDownServer );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( kill ), true, &KFDeployServerModule::HandleKillServer );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( download ), true, &KFDeployServerModule::HandleUpdateServer );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( restart ), true, &KFDeployServerModule::HandleRestartServer );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
@@ -38,11 +34,7 @@ namespace KFrame
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( startup ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( shutdown ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kill ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( download ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( restart ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_STATUS_REQ );
@@ -54,9 +46,37 @@ namespace KFrame
     {
         _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
 
-        // 清空数据库中的数据
-        _mysql_driver->Execute( "truncate table %s;", __KF_CHAR__( deploy ) );
+        // 加载部署信息
+        LoadTotalDeployData();
     }
+
+    void KFDeployServerModule::LoadTotalDeployData()
+    {
+        // 部署信息
+        std::list< MapString > deploydata;
+        _mysql_driver->Select( __KF_STRING__( deploy ), _invalid_str, deploydata );
+
+        for ( auto& values : deploydata )
+        {
+            auto kfsetting = __KF_CREATE__( KFDeployData );
+            kfsetting->CopyFrom( values );
+            _deploy_list.Insert( kfsetting->_app_id, kfsetting );
+        }
+
+        // 加载launch设定
+        std::list< MapString > launchdata;
+        _mysql_driver->Select( __KF_STRING__( launch ), _invalid_str, launchdata );
+
+        for ( auto& values : launchdata )
+        {
+            auto kfsetting = __KF_CREATE__( KFLaunchSetting );
+            kfsetting->CopyFrom( values );
+
+            LaunchKey key( kfsetting->_app_name, kfsetting->_app_type );
+            _launch_list.Insert( key, kfsetting );
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_LOST_FUNCTION__( KFDeployServerModule::OnServerLostClient )
@@ -139,156 +159,38 @@ namespace KFrame
         }
     }
 
-    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleShutDownServer )
+    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )
     {
         KFJson request( data );
 
         auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
         if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
         {
-            ShutDownServerToAgent( _invalid_int, data.c_str(), data.size() );
+            DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
         }
         else
         {
             auto kfsetting = _kf_schedule->CreateScheduleSetting();
             kfsetting->SetTime( scheduletime );
             kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::ShutDownServerToAgent );
+            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
         }
 
         return _invalid_str;
     }
 
-    void KFDeployServerModule::ShutDownServerToAgent( uint32 id, const char* data, uint32 size )
+    void KFDeployServerModule::DeployCommandToAgent( uint32 id, const char* data, uint32 size )
     {
         KFJson request( data, size );
 
-        auto appname = request.GetString( __KF_STRING__( appname ) );
-        auto apptype = request.GetString( __KF_STRING__( apptype ) );
-        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-        auto delaytime = request.GetUInt32( __KF_STRING__( delaytime ) );
-
-        KFMsg::S2SShutDownServerToAgentReq req;
-        req.set_appname( appname );
-        req.set_apptype( apptype );
-        req.set_appid( appid );
-        req.set_zoneid( zoneid );
-        req.set_delaytime( __MAX__( delaytime, 10000 ) );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ, &req );
-    }
-
-    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleStartupServer )
-    {
-        KFJson request( data );
-
-        auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
-        if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
-        {
-            StartupServerToAgent( _invalid_int, data.c_str(), data.size() );
-        }
-        else
-        {
-            auto kfsetting = _kf_schedule->CreateScheduleSetting();
-            kfsetting->SetTime( scheduletime );
-            kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::StartupServerToAgent );
-        }
-
-        return _invalid_str;
-    }
-
-    void KFDeployServerModule::StartupServerToAgent( uint32 id, const char* data, uint32 size )
-    {
-        KFJson request( data, size );
-
-        auto appname = request.GetString( __KF_STRING__( appname ) );
-        auto apptype = request.GetString( __KF_STRING__( apptype ) );
-        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-
-        KFMsg::S2SStartupServerToAgentReq req;
-        req.set_appname( appname );
-        req.set_apptype( apptype );
-        req.set_appid( appid );
-        req.set_zoneid( zoneid );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ, &req );
-    }
-
-    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleKillServer )
-    {
-        KFJson request( data );
-
-        auto appname = request.GetString( __KF_STRING__( appname ) );
-        auto apptype = request.GetString( __KF_STRING__( apptype ) );
-        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-
-        KFMsg::S2SKillServerToAgentReq req;
-        req.set_appname( appname );
-        req.set_apptype( apptype );
-        req.set_appid( appid );
-        req.set_zoneid( zoneid );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &req );
-
-        return _invalid_str;
-    }
-
-    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleUpdateServer )
-    {
-        KFJson request( data );
-
-        auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
-        if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
-        {
-            UpdateServerToAgnet( _invalid_int, data.c_str(), data.size() );
-        }
-        else
-        {
-            auto kfsetting = _kf_schedule->CreateScheduleSetting();
-            kfsetting->SetTime( scheduletime );
-            kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::UpdateServerToAgnet );
-        }
-
-        return _invalid_str;
-    }
-
-    void KFDeployServerModule::UpdateServerToAgnet( uint32 id, const char* data, uint32 size )
-    {
-        KFJson request( data, size );
-
-        auto appname = request.GetString( __KF_STRING__( appname ) );
-        auto apptype = request.GetString( __KF_STRING__( apptype ) );
-        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-
-        KFMsg::S2SUpdateServerToAgentReq req;
-        req.set_appname( appname );
-        req.set_apptype( apptype );
-        req.set_appid( appid );
-        req.set_zoneid( zoneid );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ, &req );
-    }
-
-    __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleRestartServer )
-    {
-        KFJson request( data );
-
-        auto appname = request.GetString( __KF_STRING__( appname ) );
-        auto apptype = request.GetString( __KF_STRING__( apptype ) );
-        auto appid = request.GetUInt32( __KF_STRING__( appid ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-        auto delaytime = request.GetUInt32( __KF_STRING__( delaytime ) );
-
-        KFMsg::S2SRestartServerToAgentReq req;
-        req.set_appname( appname );
-        req.set_apptype( apptype );
-        req.set_appid( appid );
-        req.set_zoneid( zoneid );
-        req.set_delaytime( delaytime );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_RESTART_SERVER_TO_AGENT_REQ, &req );
-
-        return _invalid_str;
+        KFMsg::S2SDeployCommandToAgentReq req;
+        auto pbdeploy = req.mutable_deploycommand();
+        pbdeploy->set_command( request.GetString( __KF_STRING__( command ) ) );
+        pbdeploy->set_value( request.GetString( __KF_STRING__( value ) ) );
+        pbdeploy->set_appname( request.GetString( __KF_STRING__( appname ) ) );
+        pbdeploy->set_apptype( request.GetString( __KF_STRING__( apptype ) ) );
+        pbdeploy->set_appid( request.GetUInt32( __KF_STRING__( appid ) ) );
+        pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
     }
 }

@@ -44,6 +44,13 @@ namespace Math3D
 
 namespace KFrame
 {
+    // 空类
+    class KFEmpty
+    {
+    public:
+        KFEmpty();
+        ~KFEmpty();
+    };
 
     ////////////////////////////////////////////////////////////////
     struct StringGreater : std::binary_function<std::string, std::string, bool >
@@ -101,10 +108,9 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
+    // 日志函数
+    typedef std::function< bool( uint32, uint32, const std::string& ) > KFLogFunction;
+
 }
-
-
-
-
 
 #endif // !__KF_DEFINE_H__

@@ -2,7 +2,7 @@
 #define __KF_LOGIN_PROXY_MODULE_H__
 
 /************************************************************************
-//    @Moudle			:    登录节点模块
+//    @Module			:    登录节点模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
@@ -19,6 +19,7 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

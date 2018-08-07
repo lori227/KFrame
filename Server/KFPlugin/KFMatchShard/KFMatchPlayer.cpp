@@ -73,8 +73,7 @@ namespace KFrame
             auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ, &req );
             if ( !ok )
             {
-                KFLogger::LogLogic( KFLogger::Info, "[%s] player[%u] online to room[%s] failed!",
-                                    __FUNCTION__, GetID(), kfroom->_str_room_id.c_str() );
+                __LOG_ERROR__( KFLogEnum::Logic, "player[{}] online to room[{}] failed!", GetID(), kfroom->_battle_room_id );
             }
         }
     }
@@ -100,8 +99,7 @@ namespace KFrame
         req.set_matchshardid( KFGlobal::Instance()->_app_id );
         kfroom->SendMessageToBattle( KFMsg::S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ, &req );
 
-        auto strroomid = __TO_STRING__( kfroom->_battle_room_id );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] room[%s] player[%u:%u] cancal match req!",
-                            __FUNCTION__, strroomid.c_str(), _pb_player.campid(), _pb_player.playerid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] player[{}:{}] cancal req!",
+                       kfroom->_battle_room_id, _pb_player.campid(), _pb_player.playerid() );
     }
 }

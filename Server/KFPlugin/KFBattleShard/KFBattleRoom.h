@@ -2,7 +2,6 @@
 #define __KF_BATTLE_ROOM_H__
 
 #include "KFBattleCamp.h"
-#include "KFTime/KFTimer.h"
 #include "KFBattleManage.h"
 
 namespace KFrame
@@ -130,7 +129,6 @@ namespace KFrame
 
         // 房间id
         uint64 _battle_room_id;
-        std::string _str_room_id;
 
         // 战场服务器
         KFBattleServer _battle_server;

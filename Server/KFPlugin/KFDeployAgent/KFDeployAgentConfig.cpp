@@ -96,6 +96,7 @@ namespace KFrame
                 auto appfile = launchs.GetString( "AppFile" );
                 auto appname = launchs.GetString( "AppName" );
                 auto zoneid = launchs.GetUInt32( "ZoneId", true, _invalid_int );
+                auto logtype = launchs.GetUInt32( "LogType" );
 
                 auto launchnode = launchs.FindNode( "Launch" );
                 while ( launchnode.IsValid() )
@@ -119,6 +120,7 @@ namespace KFrame
                         kfsetting->_app_id = appid + i - 1;
                         kfsetting->_zone_id = zoneid;
                         kfsetting->_app_config = appconfig;
+                        kfsetting->_log_type = logtype;
                         _kf_launch_setting.Insert( kfsetting->_app_id, kfsetting );
                     }
 

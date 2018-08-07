@@ -1,6 +1,4 @@
 ﻿#include "KFDataConfig.h"
-#include "KFXml/KFXml.h"
-#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {

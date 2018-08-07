@@ -255,8 +255,7 @@ namespace KFrame
         if ( kfroom == nullptr )
         {
             auto strroomid = __TO_STRING__( roomid );
-            KFLogger::LogLogic( KFLogger::Error, "[%s] can't find room[%s:%u]",
-                                __FUNCTION__, strroomid.c_str(), campid );
+            __LOG_ERROR__( KFLogEnum::Logic, "can't find room[{}:{}]", strroomid, campid );
             return false;
         }
 

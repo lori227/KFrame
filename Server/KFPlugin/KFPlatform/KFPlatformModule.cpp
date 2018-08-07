@@ -2,7 +2,6 @@
 #include "KFJson.h"
 #include "KFPlatformConfig.h"
 #include "KFZoneManage.h"
-#include "KFConvert/KFConvert.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -117,7 +116,7 @@ namespace KFrame
         values[ __KF_STRING__( icon ) ] = kfjson.GetString( __KF_STRING__( icon ) );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->VoidExecute( values, "hmset %s:%u", __KF_CHAR__( extend ), accountid );
+        redisdriver->Update( __FUNC_LINE__, values, "hmset {}:{}", __KF_STRING__( extend ), accountid );
     }
 
     std::string KFPlatformModule::SaveLoginToken( uint32 accountid, MapString& accountdata )
@@ -125,16 +124,15 @@ namespace KFrame
         auto accountflag = KFUtility::ToValue<uint32>( accountdata[ __KF_STRING__( accountflag ) ] );
 
         // 创建token
-        auto strtime = __TO_STRING__( KFGlobal::Instance()->_game_time );
-        auto md5temp = KFUtility::Format( "%u%u%s", accountid, accountflag, strtime.c_str() );
+        auto md5temp = __FORMAT__( "{}{}{}", accountid, accountflag, KFGlobal::Instance()->_game_time );
         auto token = KFCrypto::Md5Encode( md5temp );
 
         // 保存登录token, 设置有效时间300秒
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto rediskey = KFUtility::Format( "%s:%s", __KF_CHAR__( login ), token.c_str() );
-        redisdriver->AppendCommand( "hset %s %s %u", rediskey, __KF_CHAR__( accountid ), accountid );
-        redisdriver->AppendCommand( "expire %s %u", rediskey, _kf_platform_config->_token_expire_time );
-        redisdriver->PipelineExecute();
+        auto rediskey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
+        redisdriver->Append( "hset {} {} {}", rediskey, __KF_STRING__( accountid ), accountid );
+        redisdriver->Append( "expire {} {}", rediskey, _kf_platform_config->_token_expire_time );
+        redisdriver->Pipeline( __FUNC_LINE__ );
 
         // 返回内容
         KFJson response;
@@ -151,23 +149,21 @@ namespace KFrame
             if ( zoneid == _invalid_int )
             {
                 // 选择一个最小人数的分区
-                VectorString zonevalues;
-                redisdriver->VectorExecute( zonevalues, "zrevrange %s 0 0", __KF_CHAR__( zonebalance ) );
-                if ( zonevalues.empty() )
+                auto zonelist = redisdriver->QueryList( __FUNC_LINE__, "zrevrange {} 0 0", __KF_CHAR__( zonebalance ) );
+                if ( zonelist->_value.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::LoginCanNotFindGate );
                 }
 
-                zoneid = KFUtility::ToValue< uint32 >( zonevalues.front() );
+                zoneid = KFUtility::ToValue< uint32 >( zonelist->_value.front() );
                 if ( zoneid == _invalid_int )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::LoginCanNotFindGate );
                 }
 
-                redisdriver->AppendCommand( "hset %s:%u %s %u",
-                                            __KF_CHAR__( accountid ), accountid, __KF_CHAR__( zoneid ), zoneid );
-                redisdriver->AppendCommand( "zincrby %s 1 %u", __KF_CHAR__( zonebalance ), 1 );
-                redisdriver->PipelineExecute();
+                redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( accountid ), accountid, __KF_STRING__( zoneid ), zoneid );
+                redisdriver->Append( "zincrby {} 1 {}", __KF_STRING__( zonebalance ), 1 );
+                redisdriver->Pipeline( __FUNC_LINE__ );
             }
 
             std::string ip = "";
@@ -227,40 +223,36 @@ namespace KFrame
 
         // 查询创建账号
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-
-        MapString accountdata;
-        auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid );
-        if ( !ok || accountdata.empty() )
+        auto accountdata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
+        if ( !accountdata->IsOk() || accountdata->_value.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformBusy );
         }
 
-        auto activation = accountdata[ __KF_STRING__( activation ) ];
+        auto activation = accountdata->_value[ __KF_STRING__( activation ) ];
         if ( activation.empty() )
         {
             // 保存激活码
-            auto code = request.GetString( __KF_CHAR__( code ) );
+            auto code = request.GetString( __KF_STRING__( code ) );
 
             // 判断激活码是否存在
-
-            uint64 isexist = 0;
-            if ( !redisdriver->UInt64Execute( isexist, "sismember %s %s", __KF_CHAR__( activationcode ), code.c_str() ) )
+            auto isexist = redisdriver->QueryUInt64( __FUNC_LINE__, "sismember {} {}", __KF_STRING__( activationcode ), code );
+            if ( !isexist->IsOk() )
             {
                 return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
             }
 
-            if ( isexist == 0 )
+            if ( isexist->_value == _invalid_int )
             {
                 return _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
             }
 
-            redisdriver->AppendCommand( "srem %s %s", __KF_CHAR__( activationcode ), code.c_str() );
-            redisdriver->AppendCommand( "hset %s:%u %s %s",
-                                        __KF_CHAR__( accountid ), accountid, __KF_CHAR__( activation ), code.c_str() );
-            redisdriver->PipelineExecute();
+            redisdriver->Append( "srem {} {}", __KF_STRING__( activationcode ), code );
+            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( accountid ), accountid, __KF_STRING__( activation ), code );
+            redisdriver->Pipeline( __FUNC_LINE__ );
         }
 
-        return SaveLoginToken( accountid, accountdata );
+        return SaveLoginToken( accountid, accountdata->_value );
     }
 
     __KF_HTTP_FUNCTION__( KFPlatformModule::HandleQueryZoneList )
@@ -279,41 +271,50 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 先查询redis
-        std::string queryvalue;
-        if ( !redisdriver->StringExecute( queryvalue, "hget %s:%s:%u %s", __KF_CHAR__( account ), account.c_str(), channel, __KF_CHAR__( accountid ) ) )
+        auto queryaccountid = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {}:{}:{} {}",
+                              __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ) );
+        if ( !queryaccountid->IsOk() )
         {
             return accountdata;
         }
 
-        if ( queryvalue != FUNCTION_EMPTY_STRING )
+        uint32 accountid = queryaccountid->_value;
+        if ( accountid != _invalid_int )
         {
-            uint32 accountid = KFUtility::ToValue<uint32>( queryvalue );
-            auto ok = redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid );
-            if ( !ok || !accountdata.empty() )
+            auto queryaccountdata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+                                    __KF_STRING__( accountid ), accountid );
+            if ( !queryaccountdata->IsOk() || !queryaccountdata->_value.empty() )
+            {
+                return queryaccountdata->_value;
+            }
+        }
+        else
+        {
+            auto newid = redisdriver->QueryUInt64( __FUNC_LINE__, "incr {}", __KF_STRING__( accountmake ) );
+            if ( newid->_value == _invalid_int )
             {
                 return accountdata;
             }
+
+            accountid = static_cast< uint32 >( newid->_value ) + 500000;
         }
 
         // 创建账号id
-        uint64 newid = 0;
-        redisdriver->UInt64Execute( newid, "incr %s", __KF_CHAR__( accountmake ) );
-        if ( newid == 0 )
-        {
-            return accountdata;
-        }
-
-        auto accountid = static_cast< uint32 >( newid ) + 500000;
-
-        accountdata[ __KF_STRING__( accountid ) ] = KFUtility::ToString( accountid );
         accountdata[ __KF_STRING__( accountflag ) ] = "0";
         accountdata[ __KF_STRING__( account ) ] = account;
-        accountdata[ __KF_STRING__( channel ) ] = KFUtility::ToString( channel );
+        accountdata[ __KF_STRING__( channel ) ] = __TO_STRING__( channel );
+        accountdata[ __KF_STRING__( accountid ) ] = __TO_STRING__( accountid );
 
-        redisdriver->AppendCommand( "hset %s:%s:%u %s %u", __KF_CHAR__( account ), account.c_str(), channel, __KF_CHAR__( accountid ), accountid );
-        redisdriver->AppendCommand( "sadd %s %u", __KF_CHAR__( accountlist ), accountid );
-        redisdriver->AppendCommand( accountdata, "hmset %s:%u", __KF_CHAR__( accountid ), accountid );
-        redisdriver->PipelineExecute();
+        redisdriver->Append( "hset {}:{}:{} {} {}", __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ), accountid );
+        redisdriver->Append( "sadd {} {}", __KF_STRING__( accountlist ), accountid );
+        redisdriver->Append( accountdata, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
+        auto kfresult = redisdriver->Pipeline( __FUNC_LINE__ );
+        if ( !kfresult->IsOk() )
+        {
+            // 失败清空数据
+            accountdata.clear();
+        }
+
         return accountdata;
     }
 
@@ -324,26 +325,24 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 判断token是否正确
-        auto loginkey = KFUtility::Format( "%s:%s", __KF_CHAR__( login ), token.c_str() );
-
-        std::string queryvalue = "";
-        if ( !redisdriver->StringExecute( queryvalue, "hget %s %s", loginkey, __KF_CHAR__( accountid ) ) )
+        auto loginkey = __FORMAT__( "{}:{}", __KF_CHAR__( login ), token );
+        auto queryaccountid = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {} {}", loginkey, __KF_STRING__( accountid ) );
+        if ( !queryaccountid->IsOk() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
         }
 
-        // 删除token
-        redisdriver->VoidExecute( "del %s", loginkey );
-
-        // 获得accountid
-        auto accountid = KFUtility::ToValue<uint32>( queryvalue );
-        if ( accountid == 0 )
+        auto accountid = queryaccountid->_value;
+        if ( accountid == _invalid_int )
         {
             return _kf_http_server->SendResponseCode( KFMsg::LoginTokenError );
         }
 
-        MapString accountdata;
-        if ( !redisdriver->MapExecute( accountdata, "hgetall %s:%u", __KF_CHAR__( accountid ), accountid ) )
+        // 删除token
+        redisdriver->Execute( __FUNC_LINE__, "del {}", loginkey );
+
+        auto accountdata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
+        if ( !accountdata->IsOk() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::PlatformDatabaseBusy );
         }
@@ -352,7 +351,7 @@ namespace KFrame
         KFJson response;
         response.SetValue( __KF_STRING__( token ), token );
         response.SetValue( __KF_STRING__( accountid ), accountid );
-        response.SetValue( __KF_STRING__( channel ), accountdata[ __KF_STRING__( channel ) ] );
+        response.SetValue( __KF_STRING__( channel ), accountdata->_value[ __KF_STRING__( channel ) ] );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -457,7 +456,7 @@ namespace KFrame
         values[ __KF_STRING__( zoneid ) ] = zoneid;
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->VoidExecute( values, "hmset %s:%s", __KF_CHAR__( accountid ), accountid.c_str() );
+        redisdriver->Update( __FUNC_LINE__, values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
         return _kf_http_server->SendResponseCode( KFMsg::Success );
     }
 }

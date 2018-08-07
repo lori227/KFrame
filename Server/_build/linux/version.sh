@@ -52,10 +52,10 @@ copyfile 1 common.startup
 copyfile 1 cluster.setting
 copyfile 1 channel.setting
 copyfile 1 data.setting
-copyfile 0 ip.address
-copyfile 0 ftp.address
-copyfile 0 mysql.address
-copyfile 0 redis.address
+copyfile 1 ip.address
+copyfile 1 ftp.address
+copyfile 1 mysql.address
+copyfile 1 redis.address
 copyfile 0 zone.setting
 
 echo "copy setting"

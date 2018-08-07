@@ -67,8 +67,12 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     public:
-        // 执行
-        virtual bool Execute( const char* format, ... ) = 0;
+        template< typename... P >
+        bool Execute( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return UpdateExecute( strsql );
+        }
 
         // 事务
         virtual void Pipeline( const VectorString& commands ) = 0;
@@ -79,6 +83,7 @@ namespace KFrame
         virtual bool SelectExecute( const std::string& table, const std::string& key, const std::string& field, uint32 limit, ListString& outvalue ) = 0;
 
         // 更新
+        virtual bool UpdateExecute( const std::string& strsql ) = 0;
         virtual bool UpdateExecute( const std::string& table, const std::string& key, const std::string& field, const std::string& invalue ) = 0;
     };
 

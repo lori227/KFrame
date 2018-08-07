@@ -43,6 +43,8 @@ namespace KFrame
         __STRING_DEFINE__( appname );
         __STRING_DEFINE__( apptype );
         __STRING_DEFINE__( apppath );
+        __STRING_DEFINE__( appfile );
+        __STRING_DEFINE__( appconfig );
         __STRING_DEFINE__( appkey );
         __STRING_DEFINE__( localip );
         __STRING_DEFINE__( interanetip );
@@ -256,6 +258,17 @@ namespace KFrame
         __STRING_DEFINE__( totalplayer );
         __STRING_DEFINE__( bekilled );
         __STRING_DEFINE__( relationtype );
+        __STRING_DEFINE__( skill );
+        __STRING_DEFINE__( skillid );
+        __STRING_DEFINE__( signin );
+        __STRING_DEFINE__( sevenday );
+        __STRING_DEFINE__( sevenreward );
+        __STRING_DEFINE__( deploypath );
+        __STRING_DEFINE__( minid );
+        __STRING_DEFINE__( maxid );
+        __STRING_DEFINE__( logtype );
+        __STRING_DEFINE__( service );
+
     }
 }
 

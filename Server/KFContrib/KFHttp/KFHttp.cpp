@@ -70,6 +70,11 @@ namespace KFrame
             }
             catch ( Poco::Exception& exception )
             {
+                if ( exceptioncount == 0 )
+                {
+                    __LOG_ERROR__( KFLogEnum::System, "http request failed, error = {}, code = {}",
+                                   exception.what(), exception.code() );
+                }
                 ++exceptioncount;
             }
         } while ( exceptioncount < MAX_EXCEPTION );

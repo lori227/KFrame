@@ -19,6 +19,8 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFAchieve/KFAchieveInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -57,6 +59,12 @@ namespace KFrame
         // 查询匹配房间
         __KF_MESSAGE_FUNCTION__( HandleQueryMatchRoomAck );
 
+        // 处理玩家匹配状态
+        __KF_MESSAGE_FUNCTION__( HandleNoticeMatchStateAck );
+
+    protected:
+        __KF_UPDATE_DATA_FUNCTION__( OnMatchIdUpdateCallBack );
+
     private:
         // 处理开始匹配
         uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup );
@@ -72,6 +80,10 @@ namespace KFrame
 
         // 玩家上线回调
         void OnEnterQueryMatchRoom( KFEntity* player );
+
+    private:
+        KFComponent* _kf_component;
+
     };
 }
 

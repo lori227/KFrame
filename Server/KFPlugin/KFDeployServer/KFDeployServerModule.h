@@ -10,7 +10,7 @@
 //    @Date             :    2018-7-2
 ************************************************************************/
 
-#include "KFDeployDefine.h"
+#include "KFDeploy.h"
 #include "KFDeployServerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
 #include "KFConfig/KFConfigInterface.h"
@@ -18,6 +18,7 @@
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -41,19 +42,7 @@ namespace KFrame
 
     protected:
         // 启动服务器
-        __KF_HTTP_FUNCTION__( HandleStartupServer );
-
-        // 关闭服务器
-        __KF_HTTP_FUNCTION__( HandleShutDownServer );
-
-        // 杀死服务器
-        __KF_HTTP_FUNCTION__( HandleKillServer );
-
-        // 更新服务器
-        __KF_HTTP_FUNCTION__( HandleUpdateServer );
-
-        // 重启服务器
-        __KF_HTTP_FUNCTION__( HandleRestartServer );
+        __KF_HTTP_FUNCTION__( HandleDeployCommand );
 
     protected:
 
@@ -67,14 +56,12 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressReq );
 
     protected:
-        // 开启服务器
-        void StartupServerToAgent( uint32 id, const char* data, uint32 size );
+        // 部署命令
+        void DeployCommandToAgent( uint32 id, const char* data, uint32 size );
 
-        // 关闭服务器
-        void ShutDownServerToAgent( uint32 id, const char* data, uint32 size );
+        // 加载部署信息
+        void LoadTotalDeployData();
 
-        // 更新服务器
-        void UpdateServerToAgnet( uint32 id, const char* data, uint32 size );
     private:
 
         // mysql
@@ -82,6 +69,13 @@ namespace KFrame
 
         // Agent列表
         KFMap< uint32, uint32, KFAgentData > _agent_list;
+
+        // deploy列表
+        KFMap< uint32, uint32, KFDeployData > _deploy_list;
+
+        // launch列表
+        typedef std::pair< std::string, std::string > LaunchKey;
+        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
     };
 }
 
