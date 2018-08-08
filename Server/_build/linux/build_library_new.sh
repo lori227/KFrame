@@ -124,6 +124,7 @@ blue "start building redis"
 cd redis/linux/deps/hiredis
 make -j 4
 cp -R -f *.so ../../../../../_lib/linux/3rd/
+cp -R -f *.a ../../../../../_lib/linux/3rd/
 cd ../../../../
 
 blue "end building redis"
