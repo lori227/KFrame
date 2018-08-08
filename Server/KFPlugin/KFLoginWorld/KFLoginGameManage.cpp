@@ -24,7 +24,7 @@ namespace KFrame
         auto kfloginnode = FindLoginGame( handleid );
         if ( kfloginnode == nullptr )
         {
-            _kf_conhash.AddHashNode( "game", handleid, 100 );
+            _kf_conhash.AddHashNode( __KF_STRING__( game ), handleid, 100 );
             kfloginnode = AddLoginGame( handleid );
         }
 

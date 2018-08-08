@@ -98,7 +98,9 @@ enum ServerProtocol
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
 	S2S_UPDATE_RANK_DATA_REQ = 21193;				// 更新排行榜数据
 	S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194;			// 结算战斗好友相关数据
-	S2S_MODIFY_RECENT_LIST_REQ = 21195;			// 通知处理最近游戏列表	
+	S2S_QUERY_RECENT_LIST_REQ = 21195;			// 请求最近游戏列表
+	S2S_QUERY_RECENT_LIST_ACK = 21196;			// 通知处理最近游戏列表	
+
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -993,9 +995,18 @@ message PBUidBasic
 	repeated PBStrings basicdata = 1;
 }
 
+
+// 请求最近游戏列表
+// S2S_QUERY_RECENT_LIST_REQ
+message S2SQueryRecentListReq
+{
+	required uint32 playerid = 1;		// 玩家id
+}
+
+
 // 通知处理最近游戏列表	
-// S2S_MODIFY_RECENT_LIST_REQ
-message S2SModifyRecentListReq
+// S2S_QUERY_RECENT_LIST_ACK
+message S2SQueryRecentListAck
 {
 	required uint32 playerid = 1;	//  角色id
 	required PBPlayerIds uids = 2;// 玩家列表

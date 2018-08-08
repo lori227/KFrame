@@ -62,6 +62,8 @@ namespace KFrame
 
     void KFConfigModule::LoadConfig( KFConfig* config, const std::string& module, const std::string& file )
     {
+        __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}]!", module, file );
+
         bool result = config->LoadConfig( file.c_str() );
         if ( result )
         {

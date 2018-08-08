@@ -39,6 +39,8 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_REQ, &KFRelationShardModule::HandleDelFriendReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIEND_LINESS_REQ, &KFRelationShardModule::HandleUpdateFriendLinessReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_BATTLE_FRIEND_DATA_REQ, &KFRelationShardModule::HandleAddBattleFriendDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RECENT_LIST_REQ, &KFRelationShardModule::HandleQueryRecentListReq );
+
     }
 
     void KFRelationShardModule::BeforeShut()
@@ -65,7 +67,7 @@ namespace KFrame
     void KFRelationShardModule::OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size )
     {
         auto friendredisdriver = __RELATION_REDIS_DRIVER__;
-        friendredisdriver->Execute( __FUNC_LINE__, "del {}", __KF_CHAR__( friendlinesslimit ) );
+        friendredisdriver->Execute( __FUNC_LINE__, "del {}", __KF_STRING__( friendlinesslimit ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,9 +142,8 @@ namespace KFrame
         auto publicredisdriver = __PUBLIC_REDIS_DRIVER__;
         auto friendredisdriver = __RELATION_REDIS_DRIVER__;
 
-        // 查询最近的玩家
-        VectorString emptyuidinfo;
-        SendRecentListToClient( kfmsg.playerid(), KFOperateEnum::Set, emptyuidinfo );
+        //VectorString emptyuidinfo;
+        //  SendRecentListToClient( kfmsg.playerid(), KFOperateEnum::Set, emptyuidinfo );
 
         // 查询好友列表
         auto queryidlist = friendredisdriver->QueryList( __FUNC_LINE__, "smembers {}:{}",
@@ -501,14 +502,22 @@ namespace KFrame
             }
 
             DelRecentListToDB( selfrecentdata.playerid() );
-            VectorString emptyuidinfo;
-            SendRecentListToClient( selfrecentdata.playerid(), KFOperateEnum::Dec, emptyuidinfo );
+            //  VectorString emptyuidinfo;
+            // SendRecentListToClient( selfrecentdata.playerid(), KFOperateEnum::Dec, emptyuidinfo );
             SaveRecentListToDB( selfrecentdata.playerid(), recent_uids_info );
-            SendRecentListToClient( selfrecentdata.playerid(), KFOperateEnum::Add, recent_uids_info );
+            _add_uids.clear();
+            _del_uids.clear();
+            // SendRecentListToClient( selfrecentdata.playerid(), KFOperateEnum::Add, recent_uids_info );
 
         }
     }
 
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryRecentListReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SQueryRecentListReq );
+        VectorString emptyuidinfo;
+        SendRecentListToClient( kfmsg.playerid(), KFOperateEnum::Set, emptyuidinfo );
+    }
 
     void KFRelationShardModule::SendAddFriendLinessToClient( uint32 selfid, uint32 targetid, uint32 friendliness )
     {
@@ -532,7 +541,6 @@ namespace KFrame
     {
         auto friendredisdriver = __RELATION_REDIS_DRIVER__;
 
-        uint64 isFriend = _invalid_int;
         auto isfriend =  friendredisdriver->QueryUInt64( __FUNC_LINE__, "sismember {}:{} {}",
                          __KF_STRING__( friendlist ), playerid, targetid );
 
@@ -615,7 +623,7 @@ namespace KFrame
     {
         auto publicredisdriver = __PUBLIC_REDIS_DRIVER__;
         auto frienddriver = __RELATION_REDIS_DRIVER__;
-        KFMsg::S2SModifyRecentListReq req;
+        KFMsg::S2SQueryRecentListAck req;
         req.set_playerid( selfid );
         req.set_operate( operate );
 
@@ -720,7 +728,7 @@ namespace KFrame
                             __KF_STRING__( public ), selfid, __KF_STRING__( serverid ) );
             if ( serverid->_value != _invalid_int )
             {
-                _kf_cluster_shard->SendMessageToClient( serverid->_value, KFMsg::S2S_MODIFY_RECENT_LIST_REQ, &req );
+                _kf_cluster_shard->SendMessageToClient( serverid->_value, KFMsg::S2S_QUERY_RECENT_LIST_ACK, &req );
             }
         }
 

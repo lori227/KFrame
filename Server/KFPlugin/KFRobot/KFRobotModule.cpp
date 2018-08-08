@@ -105,8 +105,8 @@ namespace KFrame
     auto kfrobot = _robot_list.Find( robotid );\
     if ( kfrobot == nullptr )\
     {\
-        __LOG_ERROR__(KFLogEnum::System,"[{}:{}] can't find robot[{}]!",\
-                      __FUNCTION_LINE__, robotid);\
+        __LOG_ERROR__(KFLogEnum::System,"can't find robot[{}]!",\
+                      robotid);\
     }\
     __PROTO_PARSE__( msgtype );
 
@@ -177,7 +177,7 @@ namespace KFrame
         kfrobot->_connect_token = kfmsg.token();
         kfrobot->_connect_ip = kfmsg.ip();
         kfrobot->_connect_port = kfmsg.port();
-        _net_client->CloseClient( robotid, __FUNCTION_LINE__ );
+        _net_client->CloseClient( robotid, __FUNCTION__, __LINE__ );
 
         __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] login [{}:{}] verity ok!",
                       __FUNCTION__, robotid, kfmsg.ip().c_str(), kfmsg.port() );
@@ -243,7 +243,7 @@ namespace KFrame
         case KFMsg::NameAlreadyExist:
         case KFMsg::NameEmpty:
         {
-            auto name = __FORMAT__( "{}:{}:{}", __KF_CHAR__( robot ), _kf_robot_config->_server_channel, kfrobot->_account.c_str() );
+            auto name = __FORMAT__( "{}:{}:{}", __KF_STRING__( robot ), _kf_robot_config->_server_channel, kfrobot->_account.c_str() );
 
             KFMsg::MsgCreateRoleReq req;
             req.set_name( name );
@@ -278,7 +278,7 @@ namespace KFrame
 
         //std::cout << "HandleUpdateData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {
@@ -295,7 +295,7 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncAddData );
         // std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {
@@ -321,7 +321,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveData );
         // std::cout << "HandleRemoveData: " << kfmsg.DebugString() << std::endl;
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {

@@ -56,7 +56,7 @@ namespace KFrame
 
     uint32 KFGlobal::RandInRange( uint32 min, uint32 max, uint32 base )
     {
-        if ( max <= max )
+        if ( max <= min )
         {
             return base;
         }

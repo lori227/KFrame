@@ -1088,6 +1088,13 @@ namespace KFrame
         SendNetMessage( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &req );
     }
 
+
+    void KFRobot::QueryRecentList()
+    {
+        KFMsg::MsgQueryRecentListReq req;
+        SendNetMessage( KFMsg::MSG_QUERY_RECENT_LIST_REQ, &req );
+    }
+
     void KFRobot::ParseUpdatePB2KFData( KFEntity* player, const KFMsg::PBObject* pbobject, KFData*& kfparent, uint64& key )
     {
         if ( nullptr == kfparent )

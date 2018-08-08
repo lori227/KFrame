@@ -38,15 +38,20 @@ namespace KFrame
 
     int KFApplication::main( const std::vector< std::string >& args )
     {
-        SetAppDaemon();
-        SetupAppConsole();
-
         MapString params;
         for ( auto arg : args )
         {
             auto key = KFUtility::SplitString( arg, "=" );
             params[ key ] = arg;
         }
+
+        auto daemon = params[ __KF_STRING__( daemon ) ];
+        if ( daemon == "" || daemon == "1" )
+        {
+            SetAppDaemon();
+        }
+
+        SetupAppConsole();
 
         _kf_services = new KFServices();
         if ( !_kf_services->InitService( this, params ) )

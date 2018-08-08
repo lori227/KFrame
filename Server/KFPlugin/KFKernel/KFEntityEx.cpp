@@ -941,14 +941,14 @@ namespace KFrame
 
     void KFEntityEx::SyncEntityToClient()
     {
+        // 同步删除
+        SyncRemoveDataToClient();
+
         // 同步更新
         SyncUpdateDataToClient();
 
         // 同步添加
         SyncAddDataToClient();
-
-        // 同步删除
-        SyncRemoveDataToClient();
     }
 
     void KFEntityEx::SyncAddDataToClient()

@@ -57,6 +57,7 @@
     <ClCompile Include="KFQueryMailNumState.cpp" />
     <ClCompile Include="KFQueryMailState.cpp" />
     <ClCompile Include="KFQueryPlayerState.cpp" />
+    <ClCompile Include="KFQueryRecentState.cpp" />
     <ClCompile Include="KFQueryWholeRankState.cpp" />
     <ClCompile Include="KFReciveMailRewardState.cpp" />
     <ClCompile Include="KFRecvAchieveRewardState.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="KFQueryMailNumState.h" />
     <ClInclude Include="KFQueryMailState.h" />
     <ClInclude Include="KFQueryPlayerState.h" />
+    <ClInclude Include="KFQueryRecentState.h" />
     <ClInclude Include="KFQueryWholeRankState.h" />
     <ClInclude Include="KFReciveMailRewardState.h" />
     <ClInclude Include="KFRecvAchieveRewardState.h" />

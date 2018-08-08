@@ -3,21 +3,12 @@
 
 namespace KFrame
 {
-#define __STRING_DEFINE__( name ) \
-    static const std::string& str_##name()\
-    {\
-        static std::string _##name = #name;\
-        return _##name;\
-    }
-
-#define __KF_STRING__( name ) \
-    KFField::str_##name()
-
-#define __KF_CHAR__( name ) \
-    KFField::str_##name().c_str()
+#define __STRING_DEFINE__( name )  static std::string _##name = #name;
+#define __KF_STRING__( name )  KFField::_##name
 
     namespace KFField
     {
+        __STRING_DEFINE__( daemon );
         __STRING_DEFINE__( win64 );
         __STRING_DEFINE__( linux );
         __STRING_DEFINE__( shard );

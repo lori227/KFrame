@@ -121,11 +121,11 @@ namespace KFrame
 
                     for ( auto i = 0u; i < count; ++i  )
                     {
-                        auto address = __FORMAT__( "http://{}:{}/", ip.c_str(), ( port + Id + i ) );
+                        auto address = __FORMAT__( "http://{}:{}/", ip, ( port + Id + i ) );
 
                         ++platformid;
                         _platform_address[ platformid ] = address;
-                        _platform_hash.AddHashNode( "platform", platformid, 100 );
+                        _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
                     }
 
                     platform.NextNode();

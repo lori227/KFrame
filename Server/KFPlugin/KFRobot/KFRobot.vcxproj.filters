@@ -195,6 +195,9 @@
       <Filter>FSM\rank</Filter>
     </ClCompile>
     <ClCompile Include="KFAddRecentState.cpp" />
+    <ClCompile Include="KFQueryRecentState.cpp">
+      <Filter>FSM\friend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRobotInterface.h" />
@@ -397,6 +400,9 @@
       <Filter>FSM\rank</Filter>
     </ClInclude>
     <ClInclude Include="KFAddRecentState.h" />
+    <ClInclude Include="KFQueryRecentState.h">
+      <Filter>FSM\friend</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FSM">

@@ -239,7 +239,7 @@ namespace KFrame
                 //auto playerid = idlist.back();
                 //std::string minscore = "";
                 //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}",
-                //                             __KF_CHAR__( ranksort ), rankid, zoneid, playerid );
+                //                             __KF_STRING__( ranksort ), rankid, zoneid, playerid );
                 //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
 
                 // 删除指定数量以后的排序
@@ -257,7 +257,7 @@ namespace KFrame
         //// 查询玩家的信息
         //MapString playervalues;
         //_public_driver->MapExecute( playervalues, "hgetall {}:{}",
-        //                            __KF_CHAR__( public ), playerid );
+        //                            __KF_STRING__( public ), playerid );
 
         //for ( auto& showdata : _kf_rank_config->_player_data )
         //{

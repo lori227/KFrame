@@ -165,7 +165,7 @@ namespace KFrame
             return;
         }
 
-        _redis_driver->Execute( __FUNC_LINE__, "zadd {} {} {}", __KF_CHAR__( battlelist ), battlecount, ip );
+        _redis_driver->Execute( __FUNC_LINE__, "zadd {} {} {}", __KF_STRING__( battlelist ), battlecount, ip );
         __LOG_DEBUG__( KFLogEnum::Logic, "ip[{}] server count[{}]!", ip, battlecount );
     }
 }

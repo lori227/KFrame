@@ -39,7 +39,7 @@
 		<Server AppName="log" AppType="master" AppId="110000" Ip="192.168.1.9" Type="0" Port="10011"/>
 		
 		<!-- zone master 服务器 这个不需要配置, 由zone模块来更新 -->
-		<Server AppName="zone" AppType="master" AppId="100" Ip="192.168.1.9" Type="3" Port="11000" Key=""/>
+		<Server AppName="zone" AppType="master" AppId="100" Ip="192.168.1.9" Type="3" Port="11000"/>
 
 	</TcpServer>
 

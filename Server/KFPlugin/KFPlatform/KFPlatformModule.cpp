@@ -149,7 +149,7 @@ namespace KFrame
             if ( zoneid == _invalid_int )
             {
                 // 选择一个最小人数的分区
-                auto zonelist = redisdriver->QueryList( __FUNC_LINE__, "zrevrange {} 0 0", __KF_CHAR__( zonebalance ) );
+                auto zonelist = redisdriver->QueryList( __FUNC_LINE__, "zrevrange {} 0 0", __KF_STRING__( zonebalance ) );
                 if ( zonelist->_value.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::LoginCanNotFindGate );
@@ -325,7 +325,7 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 判断token是否正确
-        auto loginkey = __FORMAT__( "{}:{}", __KF_CHAR__( login ), token );
+        auto loginkey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
         auto queryaccountid = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {} {}", loginkey, __KF_STRING__( accountid ) );
         if ( !queryaccountid->IsOk() )
         {

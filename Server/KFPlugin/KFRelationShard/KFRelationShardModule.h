@@ -65,6 +65,8 @@ namespace KFrame
         // 添加最近的人
         __KF_MESSAGE_FUNCTION__( HandleAddBattleFriendDataReq );
 
+        // 查询最近的玩家列表
+        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
 
     protected:
         // 信息转换成好友信息

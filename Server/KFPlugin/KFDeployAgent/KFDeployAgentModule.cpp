@@ -290,14 +290,15 @@ namespace KFrame
         auto startupfile = kflaunch->GetStartupFile();
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
 
-        auto strpause = __FORMAT__( "{}={}", __KF_CHAR__( appid ), deploydata->_app_id );
+        auto strpause = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
         args.push_back( const_cast< char* >( strpause.c_str() ) );
 
-        auto strappid = __FORMAT__( "{}={}", __KF_CHAR__( log ), kflaunch->_log_type );
+        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( log ), kflaunch->_log_type );
         args.push_back( const_cast< char* >( strappid.c_str() ) );
 
-        auto strfile = __FORMAT__( "{}={}", __KF_CHAR__( startup ), kflaunch->_app_config );
+        auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );
         args.push_back( const_cast< char* >( strfile.c_str() ) );
+
         args.push_back( nullptr );
 
         auto pid = fork();
@@ -570,6 +571,8 @@ namespace KFrame
             {
                 deploydata->_is_startup = false;
                 KillServerProcess( deploydata->_process_id );
+
+                UpdateDeployToDatabase( deploydata );
             }
         }
     }
@@ -586,6 +589,7 @@ namespace KFrame
             if ( isserver )
             {
                 deploydata->_is_startup = false;
+                UpdateDeployToDatabase( deploydata );
             }
         }
 
@@ -624,6 +628,7 @@ namespace KFrame
             if ( isserver )
             {
                 deploydata->_is_startup = true;
+                UpdateDeployToDatabase( deploydata );
             }
         }
     }

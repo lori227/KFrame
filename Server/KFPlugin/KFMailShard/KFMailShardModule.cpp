@@ -94,7 +94,7 @@ namespace KFrame
 
         if ( !overduelist.empty() )
         {
-            redisdriver->Update( __FUNC_LINE__, overduelist, "zrem {}", __KF_CHAR__( wholemail ) );
+            redisdriver->Update( __FUNC_LINE__, overduelist, "zrem {}", __KF_STRING__( wholemail ) );
         }
     }
 
@@ -103,11 +103,11 @@ namespace KFrame
         switch ( mailtype )
         {
         case  KFMsg::MailEnum::WholeMail:
-            return __FORMAT__( "{}:{}", __KF_CHAR__( wholemail ), playerid );
+            return __FORMAT__( "{}:{}", __KF_STRING__( wholemail ), playerid );
         case KFMsg::MailEnum::FriendMail:
-            return __FORMAT__( "{}:{}", __KF_CHAR__( personmailfriend ), playerid );
+            return __FORMAT__( "{}:{}", __KF_STRING__( personmailfriend ), playerid );
         case KFMsg::MailEnum::GiftMail:
-            return __FORMAT__( "{}:{}", __KF_CHAR__( personmailgift ), playerid );
+            return __FORMAT__( "{}:{}", __KF_STRING__( personmailgift ), playerid );
         default:
             __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mailtype[{}] error!", playerid, mailtype );
             break;
@@ -344,7 +344,7 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         auto uint32result = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {}:{} {}",
-                            __KF_CHAR__( mail ), mailid, __KF_STRING__( flag ) );
+                            __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
         if ( !uint32result->IsOk() || uint32result->_value == flag )
         {
             return false;
@@ -365,7 +365,7 @@ namespace KFrame
             if ( mailtype != KFMsg::MailEnum::WholeMail )
             {
                 auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
-                                                      __KF_CHAR__( mail ), mailid, __KF_STRING__( flag ), flag );
+                                                      __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
                 if ( !kfresult->IsOk() )
                 {
                     __LOG_ERROR__( KFLogEnum::Logic, "mailid[{}:{}] player[{}] flag[{}] failed!", mailtype, mailid, playerid, flag );

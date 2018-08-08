@@ -18,6 +18,5 @@ namespace KFrame
     void KFMySQLPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

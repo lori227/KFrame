@@ -220,6 +220,9 @@ namespace KFrame
         // 查询好友排行榜信息
         void QueryFriendRankList();
 
+        // 查询最近的玩家列表
+        void QueryRecentList();
+
     protected:
 
         // 定时器

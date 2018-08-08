@@ -93,6 +93,9 @@ namespace KFrame
         // 更新最近游戏列表
         __KF_MESSAGE_FUNCTION__( HandleModifyRecentListReq );
 
+        // 查询最近游戏列表请求
+        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
+
     private:
         // 解析好友信息
         void PBFriendToKFData( const KFMsg::PBFriend* pbfriend, KFData* kffriend );

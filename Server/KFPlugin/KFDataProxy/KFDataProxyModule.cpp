@@ -69,7 +69,7 @@ namespace KFrame
             auto zoneid = kfmsg.zoneid( i );
 
             auto* kfhash = _zone_hash.Create( zoneid );
-            kfhash->AddHashNode( "zone", shardid, 100 );
+            kfhash->AddHashNode( __KF_STRING__( zone ), shardid, 100 );
 
             __LOG_DEBUG__( KFLogEnum::System, "add zone[{}] server[{}]!", zoneid, shardid );
         }

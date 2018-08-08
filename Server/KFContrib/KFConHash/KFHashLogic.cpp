@@ -99,21 +99,14 @@ namespace KFrame
 
     uint32 KFHashLogic::FindHashNode( uint64 objectid, bool cache )
     {
-        auto strid = __TO_STRING__( objectid );
-
-        char temp[ 128 ] = "";
-        sprintf( temp, "object:%s", strid.c_str() );
-
-        return FindHashNode( temp, cache );
+        auto strdata = __FORMAT__( "object:{}", objectid );
+        return FindHashNode( strdata, cache );
     }
 
     uint32 KFHashLogic::FindHashNode( const std::string& data, uint64 objectid, bool cache )
     {
-        auto strid = __TO_STRING__( objectid );
-
-        char temp[ 128 ] = "";
-        sprintf( temp, "%s:%s", data.c_str(), strid.c_str() );
-        return FindHashNode( temp, cache );
+        auto strdata = __FORMAT__( "{}:{}", data, objectid );
+        return FindHashNode( strdata, cache );
     }
 
     void KFHashLogic::GetAllHashNode( std::list<uint32>& nodes )
