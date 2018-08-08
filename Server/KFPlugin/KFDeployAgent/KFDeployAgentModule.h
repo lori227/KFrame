@@ -10,10 +10,11 @@
 //    @Date             :    2018-7-2
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFDeploy.h"
 #include "KFDeployAgentInterface.h"
 #include "KFFtp/KFFtpInterface.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFMySQL/KFMySQLInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
@@ -88,13 +89,13 @@ namespace KFrame
 
     protected:
         // 更新数据到部署服务
-        void UpdateProcessToServer( KFLaunchSetting* kfsetting );
+        void UpdateDeployToDatabase( KFDeployData* deploydata );
 
         // 启动服务器进程
-        void StartupServerProcess( KFLaunchSetting* kfsetting );
+        void StartupServerProcess( KFDeployData* deploydata );
 
         // 检查服务器进程
-        void CheckServerProcess( KFLaunchSetting* kfsetting );
+        void CheckServerProcess( KFDeployData* deploydata );
 
         // 绑定继承
         void BindServerProcess();
@@ -103,34 +104,33 @@ namespace KFrame
         void KillServerProcess( uint32 processid );
 
         // 保存进程信息到文件中
-        std::string FormatPidFileName( KFLaunchSetting* kfsetting );
+        std::string FormatPidFileName( KFDeployData* deploydata );
 
-        void SaveProcessToFile( KFLaunchSetting* kfsetting );
-        void ReadProcessFromFile( KFLaunchSetting* kfsetting );
+        void SaveProcessToFile( KFDeployData* deploydata );
+        void ReadProcessFromFile( KFDeployData* deploydata );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程
-        bool StartupWinProcess( KFLaunchSetting* kfsetting );
+        bool StartupWinProcess( KFDeployData* deploydata );
 
         // 检查进程是否存在
-        void CheckWinProcess( KFLaunchSetting* kfsetting );
+        void CheckWinProcess( KFDeployData* deploydata );
 
         // 杀死进程
         void KillWinProcess( uint32 processid );
 #else
         // 启动进程
-        bool StartupLinuxProcess( KFLaunchSetting* kfsetting );
+        bool StartupLinuxProcess( KFDeployData* deploydata );
 
         // 获得linux进程id
-        uint32 FindProcessIdByName( KFLaunchSetting* kfsetting, const std::string& startupfile );
+        uint32 FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile );
 
         // 检查进程是否存在
-        void CheckLinuxProcess( KFLaunchSetting* kfsetting );
+        void CheckLinuxProcess( KFDeployData* deploydata );
 
         // 杀死进程
         void KillLinuxProcess( uint32 processid );
 #endif
-
     protected:
         // 添加部署任务
         void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
@@ -153,8 +153,22 @@ namespace KFrame
         // 发送消息到master
         void SendTaskToMaster();
 
+        // 加载启动信息
+        void LoadTotalLaunchData();
+
     private:
+        // 部署服务器的
         uint32 _deploy_server_id;
+
+        // mysql
+        KFMySQLDriver* _mysql_driver;
+
+        // deploy列表
+        KFMap< uint32, uint32, KFDeployData > _deploy_list;
+
+        // launch列表
+        typedef std::pair< std::string, std::string > LaunchKey;
+        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
 
         // 当前执行的任务
         KFDeployTask* _kf_task;

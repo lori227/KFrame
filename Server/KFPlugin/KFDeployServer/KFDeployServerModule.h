@@ -10,7 +10,6 @@
 //    @Date             :    2018-7-2
 ************************************************************************/
 
-#include "KFDeploy.h"
 #include "KFDeployServerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
 #include "KFConfig/KFConfigInterface.h"
@@ -22,6 +21,37 @@
 
 namespace KFrame
 {
+    class KFAgentData
+    {
+    public:
+        KFAgentData()
+        {
+            _agent_id = 0;
+            _port = 0;
+            status = 0;
+        }
+
+    public:
+        // 服务器id
+        uint32 _agent_id;
+
+        // 局域网地址
+        std::string _local_ip;
+
+        // 名字
+        std::string _name;
+
+        // 类型
+        std::string _type;
+
+        // 端口
+        uint32 _port;
+
+        // 状态
+        uint32 status;
+    };
+
+
     class KFDeployServerModule : public KFDeployServerInterface
     {
     public:
@@ -39,7 +69,6 @@ namespace KFrame
         // 连接丢失
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
 
-
     protected:
         // 启动服务器
         __KF_HTTP_FUNCTION__( HandleDeployCommand );
@@ -49,9 +78,6 @@ namespace KFrame
         // 注册Agent
         __KF_MESSAGE_FUNCTION__( HandleRegisterAgentToServerReq );
 
-        // 更新服务器状态
-        __KF_MESSAGE_FUNCTION__( HandleUpdateServerStatusReq );
-
         // 请求分配Agent连接
         __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressReq );
 
@@ -59,23 +85,14 @@ namespace KFrame
         // 部署命令
         void DeployCommandToAgent( uint32 id, const char* data, uint32 size );
 
-        // 加载部署信息
-        void LoadTotalDeployData();
+        // 更新Agnet状态
+        void UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status );
 
     private:
-
-        // mysql
         KFMySQLDriver* _mysql_driver;
 
         // Agent列表
         KFMap< uint32, uint32, KFAgentData > _agent_list;
-
-        // deploy列表
-        KFMap< uint32, uint32, KFDeployData > _deploy_list;
-
-        // launch列表
-        typedef std::pair< std::string, std::string > LaunchKey;
-        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
     };
 }
 

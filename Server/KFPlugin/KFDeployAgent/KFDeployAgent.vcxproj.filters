@@ -4,12 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFDeployAgentModule.cpp" />
     <ClCompile Include="KFDeployAgentPlugin.cpp" />
-    <ClCompile Include="KFDeployAgentConfig.cpp" />
+    <ClCompile Include="KFDeploy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDeployAgentInterface.h" />
     <ClInclude Include="KFDeployAgentModule.h" />
     <ClInclude Include="KFDeployAgentPlugin.h" />
-    <ClInclude Include="KFDeployAgentConfig.h" />
+    <ClInclude Include="KFDeploy.h" />
   </ItemGroup>
 </Project>

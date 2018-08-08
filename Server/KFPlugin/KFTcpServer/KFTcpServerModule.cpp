@@ -77,7 +77,6 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_listen_port = kftcpsetting->_port;
-        kfglobal->_local_ip = kftcpsetting->_local_ip;
         kfglobal->_interanet_ip = kftcpsetting->_interanet_ip;
         auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )

@@ -5,86 +5,108 @@
 
 namespace KFrame
 {
-
     class KFMySQLDriver
     {
     public:
-        // 查询字段
-        template< class T >
-        bool Select( const std::string& table, const std::string& key, const std::string& field, T& outvalue )
-        {
-            std::string strvalue = "";
-            auto ok = SelectExecute( table, key, field, strvalue );
-            if ( ok )
-            {
-                outvalue = KFUtility::ToValue< T >( strvalue );
-            }
-
-            return ok;
-        }
-
-        // 查询字段列表
-        template< class T >
-        bool Select( const std::string& table, const std::string& key, const std::string& field, uint32 limitcount, std::list< T >& outvalue )
-        {
-            ListString queryvalue;
-            auto ok = SelectExecute( table, key, field, limitcount, queryvalue );
-            if ( ok )
-            {
-                for ( auto strvalue : queryvalue )
-                {
-                    outvalue.push_back( KFUtility::ToValue< T >( strvalue ) );
-                }
-            }
-
-            return ok;
-        }
-
-        // 查询多个字段的值
-        virtual bool Select( const std::string& table, const std::string& key, MapString& outvalue ) = 0;
-        virtual bool Select( const std::string& table, const std::string& key, std::list< MapString >& outvalue ) = 0;
-        virtual bool Select( const std::string& table, const std::string& key, ListString& fields, std::list< MapString >& outvalue ) = 0;
-
         // 插入记录
         virtual bool Insert( const std::string& table, const MapString& invalue ) = 0;
 
-        // 删除
+        // 删除几率
+        virtual bool Delete( const std::string& table ) = 0;
         virtual bool Delete( const std::string& table, const std::string& key ) = 0;
-        virtual bool Delete( const std::string& table, const ListString& keys ) = 0;
+        virtual bool Delete( const std::string& table, const MapString& keyvalues ) = 0;
 
+        ///////////////////////////////////////////////////////////////////////////////////////
         // 更新字段
+        template< class T >
+        bool Update( const std::string& table, const std::string& field, T invalue )
+        {
+            MapString updatevalue;
+            updatevalue[ field ] = KFUtility::ToString< T >( invalue );
+            return Update( table, updatevalue );
+        }
+
+        // 默认字段
         template< class T >
         bool Update( const std::string& table, const std::string& key, const std::string& field, T invalue )
         {
-            auto strvalue = KFUtility::ToString< T >( invalue );
-            return UpdateExecute( table, key, field, strvalue );
+            MapString updatevalue;
+            updatevalue[ field ] = KFUtility::ToString< T >( invalue );
+
+            MapString keyvalue;
+            keyvalue[ __KF_STRING__( id ) ] = keyvalue;
+
+            return Update( table, keyvalue, updatevalue );
         }
 
         // 更新多个字段
+        virtual bool Update( const std::string& table, const MapString& invalue ) = 0;
         virtual bool Update( const std::string& table, const std::string& key, const MapString& invalue ) = 0;
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public:
+        virtual bool Update( const std::string& table, const MapString& keyvalue, const MapString& invalue ) = 0;
+        ///////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////
         template< typename... P >
-        bool Execute( const char* myfmt, P&& ... args )
+        KFResult< voidptr >* Query( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return UpdateExecute( strsql );
+            return VoidExecute( strsql );
         }
 
-        // 事务
-        virtual void Pipeline( const VectorString& commands ) = 0;
+        template< typename... P >
+        KFResult< uint32 >* QueryUInt32( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return UInt32Execute( strsql );
+        }
 
+        template< typename... P >
+        KFResult< uint64 >* QueryUint64( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return UInt64Execute( strsql );
+        }
+
+        template< typename... P >
+        KFResult< std::string >* QueryString( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return StringExecute( strsql );
+        }
+
+        template< typename... P >
+        KFResult< MapString >* QueryMap( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return MapExecute( strsql );
+        }
+
+        template< typename... P >
+        KFResult< std::list< MapString > >* QueryListMap( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return ListMapExecute( strsql );
+        }
+
+        // 查询所有
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table ) = 0;
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const ListString& fields ) = 0;
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const std::string& key ) = 0;
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const std::string& key, const ListString& fields ) = 0;
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const MapString& key ) = 0;
+        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const MapString& key, const ListString& fields ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 事务( 目前只批量执行, 没有加上mysql事务锁 )
+        virtual void Pipeline( const ListString& commands ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
-        // 查询
-        virtual bool SelectExecute( const std::string& table, const std::string& key, const std::string& field, std::string& outvalue ) = 0;
-        virtual bool SelectExecute( const std::string& table, const std::string& key, const std::string& field, uint32 limit, ListString& outvalue ) = 0;
-
-        // 更新
-        virtual bool UpdateExecute( const std::string& strsql ) = 0;
-        virtual bool UpdateExecute( const std::string& table, const std::string& key, const std::string& field, const std::string& invalue ) = 0;
+        virtual KFResult< voidptr >* VoidExecute( const std::string& strsql ) = 0;
+        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql ) = 0;
+        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql ) = 0;
+        virtual KFResult< std::string >* StringExecute( const std::string& strsql ) = 0;
+        virtual KFResult< MapString >* MapExecute( const std::string& strsql ) = 0;
+        virtual KFResult< std::list< MapString > >* ListMapExecute( const std::string& strsql ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////

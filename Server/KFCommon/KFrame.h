@@ -9,6 +9,7 @@
 #include "KFDefine.h"
 #include "KFVector.h"
 #include "KFField.h"
+#include "KFResult.h"
 #include "KFSystem.h"
 #include "KFMacros.h"
 #include "KFInterfaces.h"

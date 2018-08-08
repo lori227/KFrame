@@ -3,7 +3,6 @@ package KFMsg;
 enum DeployProtocol
 {
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
-	S2S_UPDATE_SERVER_STATUS_REQ = 10302;		// 更新服务器状态
 	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// 请求分配Agent连接地址
 	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// 请求分配Agent连接地址
 	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10305;	// 部署命令
@@ -39,20 +38,6 @@ message S2SGetAgentIpAddressAck
 	required uint32 appid = 3;
 	required string ip = 4;	
 	required uint32 port = 5;
-}
-
-// 更新服务器状态
-// S2S_UPDATE_SERVER_STATUS_REQ
-message S2SUpdateServerStatusReq
-{
-	required uint32 agentid = 1;
-	required uint32 appid = 2;
-	required string appname = 3;
-	required string apptype = 4;
-	required uint32 zoneid = 5;
-	required uint32 process = 6;
-	required uint64 startuptime = 7;
-	required uint32 isshutdown = 8;
 }
 
 message PBDeployCommand

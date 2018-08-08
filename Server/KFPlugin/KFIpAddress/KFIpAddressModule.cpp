@@ -34,10 +34,14 @@ namespace KFrame
         __KF_ADD_CONFIG__( _kf_ip_config, true );
     }
 
-
     void KFIpAddressModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
+    }
+
+    void KFIpAddressModule::AfterLoad()
+    {
+        KFGlobal::Instance()->_local_ip = GetLocalIp();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

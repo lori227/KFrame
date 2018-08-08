@@ -23,7 +23,6 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_STATUS_REQ, &KFDeployServerModule::HandleUpdateServerStatusReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_REQ, &KFDeployServerModule::HandleGetAgentIpAddressReq );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -37,7 +36,6 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_STATUS_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_REQ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -45,36 +43,6 @@ namespace KFrame
     void KFDeployServerModule::OnceRun()
     {
         _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
-
-        // 加载部署信息
-        LoadTotalDeployData();
-    }
-
-    void KFDeployServerModule::LoadTotalDeployData()
-    {
-        // 部署信息
-        std::list< MapString > deploydata;
-        _mysql_driver->Select( __KF_STRING__( deploy ), _invalid_str, deploydata );
-
-        for ( auto& values : deploydata )
-        {
-            auto kfsetting = __KF_CREATE__( KFDeployData );
-            kfsetting->CopyFrom( values );
-            _deploy_list.Insert( kfsetting->_app_id, kfsetting );
-        }
-
-        // 加载launch设定
-        std::list< MapString > launchdata;
-        _mysql_driver->Select( __KF_STRING__( launch ), _invalid_str, launchdata );
-
-        for ( auto& values : launchdata )
-        {
-            auto kfsetting = __KF_CREATE__( KFLaunchSetting );
-            kfsetting->CopyFrom( values );
-
-            LaunchKey key( kfsetting->_app_name, kfsetting->_app_type );
-            _launch_list.Insert( key, kfsetting );
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -83,8 +51,12 @@ namespace KFrame
     {
         if ( handlename == __KF_STRING__( deploy ) )
         {
-            _agent_list.Remove( handleid );
-            _mysql_driver->Delete( __KF_STRING__( deploy ), __TO_STRING__( handleid ) );
+            auto kfagent = _agent_list.Find( handleid );
+            if ( kfagent != nullptr )
+            {
+                UpdateAgentToDatabase( kfagent, 0 );
+                _agent_list.Remove( handleid );
+            }
         }
     }
 
@@ -92,49 +64,26 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterAgentToServerReq );
 
-        // 删除老数据
-        _agent_list.Remove( kfmsg.agentid() );
-        _mysql_driver->Delete( __KF_STRING__( deploy ), __TO_STRING__( kfmsg.agentid() ) );
-
         auto kfagentdata = _agent_list.Create( kfmsg.agentid() );
         kfagentdata->_agent_id = kfmsg.agentid();
         kfagentdata->_local_ip = kfmsg.localip();
         kfagentdata->_name = kfmsg.name();
         kfagentdata->_type = kfmsg.type();
         kfagentdata->_port = kfmsg.port();
+
+        UpdateAgentToDatabase( kfagentdata, 1 );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleUpdateServerStatusReq )
+    void KFDeployServerModule::UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateServerStatusReq );
+        MapString keyvalue;
+        keyvalue[ __KF_STRING__( localip ) ] = kfagent->_local_ip;
 
-        auto kfagentdata = _agent_list.Find( kfmsg.agentid() );
-        if ( kfagentdata == nullptr )
-        {
-            return;
-        }
-
-        auto kfserverdata = kfagentdata->_server_list.Create( kfmsg.appid() );
-        kfserverdata->_app_id = kfmsg.appid();
-        kfserverdata->_app_name = kfmsg.appname();
-        kfserverdata->_app_type = kfmsg.apptype();
-        kfserverdata->_zone_id = kfmsg.zoneid();
-        kfserverdata->_process_id = kfmsg.process();
-        kfserverdata->_startup_time = kfmsg.startuptime();
-        kfserverdata->_is_shutdown = kfmsg.isshutdown();
-
-        // 更新数据库
-        MapString values;
-        values[ __KF_STRING__( appid ) ] = __TO_STRING__( kfserverdata->_app_id );
-        values[ __KF_STRING__( appname ) ] = kfserverdata->_app_name;
-        values[ __KF_STRING__( apptype ) ] = kfserverdata->_app_type;
-        values[ __KF_STRING__( zoneid ) ] = __TO_STRING__( kfserverdata->_zone_id );
-        values[ __KF_STRING__( process ) ] = __TO_STRING__( kfserverdata->_process_id );
-        values[ __KF_STRING__( time ) ] = __TO_STRING__( kfserverdata->_startup_time );
-        values[ __KF_STRING__( shutdown ) ] = __TO_STRING__( kfserverdata->_is_shutdown ? 1 : 0 );
-        values[ __KF_STRING__( agentid ) ] = __TO_STRING__( kfagentdata->_agent_id );
-        values[ __KF_STRING__( localip ) ] = kfagentdata->_local_ip;
-        _mysql_driver->Insert( __KF_STRING__( deploy ), values );
+        MapString updatevalue;
+        updatevalue[ __KF_STRING__( agentid ) ] = __TO_STRING__( kfagent->_agent_id );
+        updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
+        updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
+        _mysql_driver->Update( __KF_STRING__( machine ), keyvalue, updatevalue );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleGetAgentIpAddressReq )
