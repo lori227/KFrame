@@ -92,6 +92,9 @@ namespace KFrame
         // 是否需要启动
         bool _is_startup;
 
+        // 是否关闭
+        bool _is_shutdown;
+
         // 是否正在下载
         bool _is_download;
 

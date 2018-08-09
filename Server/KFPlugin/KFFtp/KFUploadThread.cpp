@@ -50,6 +50,8 @@ namespace KFrame
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
+            CreateUploadDirectory( &ftpclient, ftppath );
+
             UploadFiles( &ftpclient, uploadpath, ftppath );
 
             ftpclient.Logout();
@@ -60,6 +62,21 @@ namespace KFrame
         }
 
         __DELETE_OBJECT__( uploadpath );
+    }
+
+    void KFUploadThread::CreateUploadDirectory( nsFTP::CFTPClient* ftpclient, std::string ftppath )
+    {
+        std::string createpath = "/";
+
+        while ( !ftppath.empty() )
+        {
+            auto temp = KFUtility::SplitString( ftppath, "/" );
+            if ( !temp.empty() )
+            {
+                createpath += temp + "/";
+                ftpclient->MakeDirectory( createpath.c_str() );
+            }
+        }
     }
 
     void KFUploadThread::ListAllLocalFiles( KFUpLoadPath* uploadpath )
@@ -141,9 +158,8 @@ namespace KFrame
         if ( !uploadpath->_path_name.empty() )
         {
             newftppath = ftppath + "/" + uploadpath->_path_name;
+            ftpclient->MakeDirectory( newftppath.c_str() );
         }
-
-        ftpclient->MakeDirectory( newftppath.c_str() );
 
         // 先上传文件
         for ( auto& filename : uploadpath->_files )

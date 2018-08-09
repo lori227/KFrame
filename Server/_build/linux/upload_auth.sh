@@ -99,4 +99,4 @@ copyfile 1 KFLogClient.so
 
 
 #upload to ftp
-curl -sd '{"ftpid":1,"apppath":"auth"}' http://192.168.1.9:9998/upload
+curl -sd '{"ftpid":'$2',"apppath":"auth"}' $3

@@ -33,8 +33,8 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ) );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( value ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( flag ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ );

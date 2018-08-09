@@ -44,7 +44,7 @@ namespace KFrame
     {
         if ( !json.isMember( __KF_STRING__( retcode ) ) )
         {
-            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFEnum::Error );
+            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFEnum::Ok );
         }
 
         return json.Serialize();

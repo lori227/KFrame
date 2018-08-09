@@ -112,6 +112,7 @@ namespace KFrame
             req.set_port( kfglobal->_listen_port );
             req.set_localip( _kf_ip_address->GetLocalIp() );
             _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
+
         }
     }
 
@@ -127,7 +128,7 @@ namespace KFrame
     void KFDeployAgentModule::StartupServerProcess( KFDeployData* deploydata )
     {
         CheckServerProcess( deploydata );
-        if ( !deploydata->_is_startup || deploydata->_process_id != _invalid_int )
+        if ( !deploydata->_is_startup || deploydata->_is_shutdown || deploydata->_process_id != _invalid_int )
         {
             return;
         }
@@ -378,7 +379,7 @@ namespace KFrame
     void KFDeployAgentModule::UpdateDeployToDatabase( KFDeployData* deploydata )
     {
         MapString updatevalues;
-        updatevalues[ __KF_STRING__( startup ) ] = __TO_STRING__( deploydata->_is_startup ? 1 : 0 );
+        updatevalues[ __KF_STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
         updatevalues[ __KF_STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
         updatevalues[ __KF_STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
         updatevalues[ __KF_STRING__( agentid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
@@ -569,7 +570,7 @@ namespace KFrame
             auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                deploydata->_is_startup = false;
+                deploydata->_is_shutdown = true;
                 KillServerProcess( deploydata->_process_id );
 
                 UpdateDeployToDatabase( deploydata );
@@ -588,7 +589,7 @@ namespace KFrame
             auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                deploydata->_is_startup = false;
+                deploydata->_is_shutdown = true;
                 UpdateDeployToDatabase( deploydata );
             }
         }
@@ -627,7 +628,7 @@ namespace KFrame
             auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                deploydata->_is_startup = true;
+                deploydata->_is_shutdown = false;
                 UpdateDeployToDatabase( deploydata );
             }
         }

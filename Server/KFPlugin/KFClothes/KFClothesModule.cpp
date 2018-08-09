@@ -42,9 +42,9 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
 
-        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( clothes ) );
-        _kf_component->UnRegisterRemoveDataFunction( __KF_STRING__( clothes ) );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( clothes ), __KF_STRING__( count ) );
+        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( clothes ) );
+        _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( clothes ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( clothes ), __KF_STRING__( count ) );
 
         _kf_component->UnRegisterAddAgentFunction( __KF_STRING__( clothes ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////

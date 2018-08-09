@@ -40,7 +40,7 @@ namespace KFrame
         _kf_componnet->UnRegisterAddDataModule( this );
         _kf_componnet->UnRegisterRemoveDataModule( this );
         _kf_componnet->UnRegisterUpdateDataModule( this );
-        _kf_componnet->UnRegisterUpdateDataFunction( __KF_STRING__( activity ), __KF_STRING__( value ) );
+        _kf_componnet->UnRegisterUpdateDataFunction( this, __KF_STRING__( activity ), __KF_STRING__( value ) );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_ACTIVITY_REWARD_REQ );
     }

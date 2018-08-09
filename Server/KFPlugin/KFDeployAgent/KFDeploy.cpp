@@ -67,6 +67,7 @@ namespace KFrame
         _zone_id = 0;
         _agent_id = 0;
         _is_startup = false;
+        _is_shutdown = false;
         _is_download = false;
         _kf_launch = nullptr;
     }
@@ -118,6 +119,7 @@ namespace KFrame
         _app_type = values[ __KF_STRING__( apptype ) ];
         _zone_id = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( zoneid ) ] );
         _is_startup = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( startup ) ] );
+        _is_shutdown = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( shutdown ) ] );
         _process_id = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( process ) ] );
         _startup_time = KFUtility::ToValue< uint64 >( values[ __KF_STRING__( time ) ] );
         _agent_id = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( agentid ) ] );
@@ -130,6 +132,7 @@ namespace KFrame
         values[ __KF_STRING__( appname ) ] = _app_name;
         values[ __KF_STRING__( apptype ) ] = _app_type;
         values[ __KF_STRING__( zoneid ) ] = __TO_STRING__( _zone_id );
+        values[ __KF_STRING__( shutdown ) ] = __TO_STRING__( _is_shutdown ? 1 : 0 );
         values[ __KF_STRING__( startup ) ] = __TO_STRING__( _is_startup ? 1 : 0 );
         values[ __KF_STRING__( process ) ] = __TO_STRING__( _process_id );
         values[ __KF_STRING__( time ) ] = __TO_STRING__( _startup_time );

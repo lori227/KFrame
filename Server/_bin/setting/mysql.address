@@ -8,7 +8,7 @@
 	<!--User 登录用户名 -->
 	<!--Password 登录密码 -->
 	<MySQL>
-		<Connection Id="1" IP="192.168.1.9" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
+		<Connection Id="1" IP="127.0.0.1" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
 	</MySQL>
 
 	<!--逻辑功能对应redis映射-->

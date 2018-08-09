@@ -83,27 +83,23 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function );
         virtual void UnBindAddDataModule( const std::string& module );
-
-        virtual void BindAddDataFunction( const std::string& dataname, KFAddDataFunction& function );
-        virtual void UnRegisterAddDataFunction( const std::string& dataname );
+        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, KFAddDataFunction& function );
+        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname );
 
         virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function );
         virtual void UnBindRemoveDataModule( const std::string& module );
-
-        virtual void BindRemoveDataFunction( const std::string& dataname, KFRemoveDataFunction& function );
-        virtual void UnRegisterRemoveDataFunction( const std::string& dataname );
+        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname );
 
         virtual void BindUpdateDataModule( const std::string& module, KFUpdateDataFunction& function );
         virtual void UnBindUpdateDataModule( const std::string& module );
-
-        virtual void BindUpdateDataFunction( const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function );
-        virtual void UnRegisterUpdateDataFunction( const std::string& parentname, const std::string& dataname );
+        virtual void BindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function );
+        virtual void UnBindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname );
 
         virtual void BindUpdateStringModule( const std::string& module, KFUpdateStringFunction& function );
         virtual void UnBindUpdateStringModule( const std::string& module );
-
-        virtual void BindUpdateStringFunction( const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function );
-        virtual void UnRegisterUpdateStringFunction( const std::string& parentname, const std::string& dataname );
+        virtual void BindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function );
+        virtual void UnBindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindEntityInitializeFunction( KFEntityFunction& function );
         virtual void UnRegisterEntityInitializeFunction();
@@ -163,19 +159,19 @@ namespace KFrame
         // 属性更新回调列表
         typedef std::pair< std::string, std::string > DataKeyType;
         KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_module;
-        KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_function;
+        KFMap < std::string, const std::string&, KFBind< std::string, const std::string&, KFAddDataFunction > > _add_data_function;
 
         // 删除数据的回调函数
         KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_module;
-        KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_function;
+        KFMap< std::string, const std::string&, KFBind< std::string, const std::string&, KFRemoveDataFunction > > _remove_data_function;
 
         // 更新数据的回调函数
         KFBind< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
-        KFBind< DataKeyType, const DataKeyType&, KFUpdateDataFunction > _update_data_function;
+        KFMap< DataKeyType, const DataKeyType&, KFBind< std::string, const std::string&, KFUpdateDataFunction > > _update_data_function;
 
         // 更新数据的回调函数
         KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
-        KFBind< DataKeyType, const DataKeyType&, KFUpdateStringFunction > _update_string_function;
+        KFMap< DataKeyType, const DataKeyType&, KFBind< std::string, const std::string&, KFUpdateStringFunction > > _update_string_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         KFEntityFunction _entity_initialize_function;
         KFEntityFunction _entity_uninitialize_function;

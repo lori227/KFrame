@@ -78,7 +78,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_listen_port = kftcpsetting->_port;
         kfglobal->_interanet_ip = kftcpsetting->_interanet_ip;
-        auto result = _kf_server_engine->StartEngine( kfglobal->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
+        auto result = _kf_server_engine->StartEngine( kftcpsetting->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
             __LOG_INFO__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services ok!",
@@ -89,6 +89,7 @@ namespace KFrame
             __LOG_ERROR__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services failed[{}]!",
                            kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
+
     }
 
     void KFTcpServerModule::BeforeShut()

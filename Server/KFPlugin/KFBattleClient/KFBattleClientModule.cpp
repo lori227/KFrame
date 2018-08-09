@@ -31,7 +31,7 @@ namespace KFrame
     void KFBattleClientModule::BeforeShut()
     {
         _kf_player->UnRegisterEnterFunction( this );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( roomid ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( player ), __KF_STRING__( roomid ) );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK );

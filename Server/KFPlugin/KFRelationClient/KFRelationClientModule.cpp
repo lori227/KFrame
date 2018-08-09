@@ -51,7 +51,7 @@ namespace KFrame
 
         _kf_component->UnRegisterUpdateDataModule( this );
         _kf_component->UnRegisterUpdateStringModule( this );
-        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( toast ) );
+        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( toast ) );
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );

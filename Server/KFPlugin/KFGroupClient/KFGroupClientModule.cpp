@@ -68,11 +68,11 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( group ), __KF_STRING__( id ) );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( group ), __KF_STRING__( maxcount ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( group ), __KF_STRING__( id ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( group ), __KF_STRING__( maxcount ) );
 
-        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( groupmember ) );
-        _kf_component->UnRegisterRemoveDataFunction( __KF_STRING__( groupmember ) );
+        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( groupmember ) );
+        _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( groupmember ) );
         ///////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_INVITE_MATCH_GROUP_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ );
