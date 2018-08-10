@@ -39,10 +39,6 @@ namespace KFrame
     {
         auto kfzone = _kf_zone->GetZone();
         auto kfglobal = KFGlobal::Instance();
-        if ( kfzone->_id == _invalid_int )
-        {
-            return;
-        }
 
         KFJson sendjson;
         sendjson.SetValue< const std::string& >( __KF_STRING__( address ), kfglobal->_interanet_ip );

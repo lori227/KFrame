@@ -23,8 +23,9 @@ namespace KFrame
 
     void KFPlatformModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFPlatformModule::Run );
         _kf_zone_manage->BeforeRun();
+        __REGISTER_RUN_FUNCTION__( &KFPlatformModule::Run );
+        _server_list_type = _kf_platform_config->GetServerListType( KFGlobal::Instance()->_app_flag );
 
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( login ), false, &KFPlatformModule::HandleLoginToken );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( token ), false, &KFPlatformModule::HandleVerifyToken );
@@ -139,9 +140,9 @@ namespace KFrame
         response.SetValue( __KF_STRING__( token ), token );
         response.SetValue( __KF_STRING__( accountid ), accountid );
         response.SetValue( __KF_STRING__( accountflag ), accountflag );
-        response.SetValue( __KF_STRING__( serverlisttype ), _kf_platform_config->_server_list_type );
+        response.SetValue( __KF_STRING__( serverlisttype ), _server_list_type );
 
-        switch ( _kf_platform_config->_server_list_type )
+        switch ( _server_list_type )
         {
         case __SELECT_SERVER_DATA__:
         {

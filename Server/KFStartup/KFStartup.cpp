@@ -48,7 +48,6 @@ namespace KFrame
                 continue;
             }
 
-
 #ifdef __KF_DEBUG__
             auto& loadplguin = startupsetting->_debug;
 #else

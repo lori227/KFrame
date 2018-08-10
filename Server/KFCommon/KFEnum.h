@@ -13,6 +13,22 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
+    namespace KFServerEnum
+    {
+        enum MyEnum
+        {
+            LocalDevelop = 1,		// 内网研发服
+            LocalTest = 2,			// 内网测试服
+            InternetTest = 3,		// 外网测试服
+            InternetExperience = 4,	// 外网体验服
+            InternetOfficial = 5,	// 外网正式服
+
+            ///////////////////////////////////////////
+            ///////////////////////////////////////////
+
+        };
+    }
+
 
     namespace KFThreadEnum
     {
@@ -22,6 +38,7 @@ namespace KFrame
             MT = 2,		// 多线程
         };
     }
+
     namespace KFBufferEnum
     {
         enum MyEnum

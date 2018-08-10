@@ -317,6 +317,7 @@ namespace KFrame
 
         if ( zonedata->_status == KFZoneStatusEnum::Shutoff )
         {
+            update = true;
             zonedata->_status = KFZoneStatusEnum::Running;
         }
 

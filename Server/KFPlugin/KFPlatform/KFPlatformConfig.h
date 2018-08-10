@@ -16,6 +16,8 @@ namespace KFrame
 
         bool LoadConfig( const char* file );
 
+        uint32 GetServerListType( uint32 appflag );
+
     public:
         // token保存时间( 秒 );
         uint32 _token_expire_time;
@@ -24,7 +26,7 @@ namespace KFrame
         bool _is_open_activation;
 
         // 服务器列表类型
-        uint32 _server_list_type;
+        std::map< uint32, uint32 > _server_list_type;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

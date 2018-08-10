@@ -20,13 +20,24 @@ namespace KFrame
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Zone" );
+            auto zones = config.FindNode( "Zones" );
+            auto xmlnode = zones.FindNode( "Zone" );
+            while ( xmlnode.IsValid() )
+            {
+                auto kfzone = __KF_CREATE__( KFZone );
 
-            _kf_zone._id = xmlnode.GetUInt32( "Id" );
-            _kf_zone._type = xmlnode.GetUInt32( "Type" );
-            _kf_zone._name = xmlnode.GetString( "Name" );
-            _kf_zone._logic_id = xmlnode.GetUInt32( "LogicId", true, _kf_zone._id );
-            _kf_zone._ip = xmlnode.GetString( "Ip" );
+                kfzone->_id = xmlnode.GetUInt32( "Id" );
+                kfzone->_type = xmlnode.GetUInt32( "Type" );
+                kfzone->_name = xmlnode.GetString( "Name" );
+                kfzone->_logic_id = xmlnode.GetUInt32( "LogicId" );
+                kfzone->_ip = xmlnode.GetString( "Ip", true );
+
+                ZoneKey zonekey( kfzone->_type, kfzone->_id );
+                _zone_list.Insert( zonekey, kfzone );
+
+                xmlnode.NextNode();
+            }
+
         }
         catch ( ... )
         {
@@ -34,5 +45,11 @@ namespace KFrame
         }
 
         return true;
+    }
+
+    const KFZone* KFZoneConfig::FindZone( uint32 appflag, uint32 zoneid )
+    {
+        ZoneKey zonekey( appflag, zoneid );
+        return _zone_list.Find( zonekey );
     }
 }

@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_GOLBAL_H__
 #define __KF_GOLBAL_H__
 
-#include "KFInclude.h"
+#include "KFLog.h"
 #include "spdlog/spdlog.h"
 
 namespace KFrame
@@ -93,6 +93,9 @@ namespace KFrame
         // 分区id
         uint32 _zone_id;
 
+        // 服务标识
+        uint32 _app_flag;
+
         // 内网ip
         std::string _local_ip;
 
@@ -116,38 +119,6 @@ namespace KFrame
 
         // 单线程随机类
         KFRand* _rand;
-    };
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////
-    enum KFLogEnum
-    {
-        None = 0,
-        System,
-        Init,
-        Logic,
-        Net,
-        Sql,
-        Memory,
-        Login,
-        Player,
-        Script,
-        //TO ADD
-        Max,
-    };
-
-    static const std::string _log_category_name[] =
-    {
-        "none",
-        "system",
-        "init",
-        "logic",
-        "net",
-        "sql",
-        "memory",
-        "login",
-        "player",
-        "script",
-        //TO ADD
     };
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////

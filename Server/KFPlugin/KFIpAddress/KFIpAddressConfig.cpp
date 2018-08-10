@@ -62,7 +62,7 @@ namespace KFrame
         }
     }
 
-    void KFIpAddressConfig::SetZoneIpAddress( uint32 zoneid, const std::string& ip )
+    void KFIpAddressConfig::SetZoneIpAddress( const std::string& ip )
     {
         auto kfaddress = FindIpAddress( __KF_STRING__( zone ), __KF_STRING__( master ), _invalid_int );
         if ( kfaddress == nullptr )
@@ -71,9 +71,7 @@ namespace KFrame
         }
 
         auto* kfzoneaddress = const_cast< KFIpAddress* >( kfaddress );
-
         kfzoneaddress->_ip = ip;
-        kfzoneaddress->_app_id += ( zoneid + 1000 ) * 1000;
     }
 
     bool KFIpAddressConfig::LoadConfig( const char* file )

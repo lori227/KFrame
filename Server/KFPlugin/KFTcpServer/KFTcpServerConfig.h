@@ -21,9 +21,7 @@ namespace KFrame
 
         std::string _app_name;
         std::string _app_type;
-
         std::string _local_ip;
-        std::string _interanet_ip;
 
         uint32 _port_type;
         uint32 _port;
@@ -43,7 +41,7 @@ namespace KFrame
 
     public:
         // 服务器列表
-        std::vector < KFTcpSetting > _tcp_data_list;
+        std::vector < KFTcpSetting > _tcp_setting_list;
     };
 }
 

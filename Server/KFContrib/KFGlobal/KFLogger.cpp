@@ -1,28 +1,28 @@
 ﻿#include "KFLogger.h"
-#include "KFLog.h"
+#include "KFSpdLog.h"
 #include "KFMemory/KFMalloc.h"
 
 namespace KFrame
 {
     KFLocalLogger::KFLocalLogger()
     {
-        _log = new KFLog();
+        _spd_log = new KFSpdLog();
     }
 
     KFLocalLogger::~KFLocalLogger()
     {
-        delete _log;
+        delete _spd_log;
     }
 
     bool KFLocalLogger::Initialize( const std::string& appname, const std::string& apptype, uint32 appid )
     {
         std::string outpath = __FORMAT__( ".{}_output", spdlog::details::os::folder_sep );
-        return _log->Initialize( outpath, appname, apptype, appid );
+        return _spd_log->Initialize( outpath, appname, apptype, appid );
     }
 
     void KFLocalLogger::Log( uint32 loglevel, uint32 category, const std::string& content )
     {
-        _log->Log( loglevel, category, content );
+        _spd_log->Log( loglevel, category, content );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ namespace KFrame
         // 加载程序出错时候, 日志打在本地
         if ( loglevel == spdlog::level::off )
         {
-            _log->Log( spdlog::level::err, category, content );
+            _spd_log->Log( spdlog::level::err, category, content );
         }
         else
         {

@@ -36,6 +36,9 @@ namespace KFrame
         // 打印内存信息
         void PrintLogMemory();
 
+        // 解析appid
+        void ParseAppId( std::string strappid );
+
     protected:
         // 进程
         KFApplication* _application;

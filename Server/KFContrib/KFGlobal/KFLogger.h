@@ -35,7 +35,7 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////
-    class KFLog;
+    class KFSpdLog;
     class KFLocalLogger : public KFLogger
     {
     public:
@@ -50,7 +50,7 @@ namespace KFrame
 
     protected:
         // 日志逻辑
-        KFLog* _log;
+        KFSpdLog* _spd_log;
     };
 
     /////////////////////////////////////////////////////////////////////

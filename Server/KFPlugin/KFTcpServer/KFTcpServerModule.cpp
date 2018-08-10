@@ -43,12 +43,8 @@ namespace KFrame
             }
         }
 
-        // 计算ip
-        kftcpsetting->_interanet_ip = _kf_ip_address->CalcIpAddress( kftcpsetting->_interanet_ip );
-        __LOG_INFO__( KFLogEnum::Init, "[{}:{}] interanet ip : [{}]", kfglobal->_app_name, kfglobal->_app_type, kftcpsetting->_interanet_ip );
-
         // 计算端口
-        if ( kftcpsetting->_port == 0 )
+        if ( kftcpsetting->_port == _invalid_int )
         {
             auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
             kftcpsetting->_port_type = kfaddress->_port_type;
@@ -77,8 +73,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_listen_port = kftcpsetting->_port;
-        kfglobal->_interanet_ip = kftcpsetting->_interanet_ip;
-        auto result = _kf_server_engine->StartEngine( kftcpsetting->_local_ip, kfglobal->_listen_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
+        auto result = _kf_server_engine->StartEngine( kftcpsetting->_local_ip, kftcpsetting->_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
             __LOG_INFO__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services ok!",
@@ -89,7 +84,6 @@ namespace KFrame
             __LOG_ERROR__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services failed[{}]!",
                            kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
-
     }
 
     void KFTcpServerModule::BeforeShut()

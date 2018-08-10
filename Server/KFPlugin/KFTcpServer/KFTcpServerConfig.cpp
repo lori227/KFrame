@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFTcpSetting* KFTcpServerConfig::FindTcpSetting( const std::string& appname, const std::string& apptype )
     {
-        for ( auto& kfdata : _tcp_data_list )
+        for ( auto& kfdata : _tcp_setting_list )
         {
             if ( kfdata._app_name == appname &&
                     kfdata._app_type == apptype )
@@ -20,7 +20,7 @@ namespace KFrame
 
     bool KFTcpServerConfig::LoadConfig( const char* file )
     {
-        _tcp_data_list.clear();
+        _tcp_setting_list.clear();
         try
         {
             KFXml kfxml( file );
@@ -30,22 +30,17 @@ namespace KFrame
             auto tcpnode = config.FindNode( "TcpServer" );
             if ( tcpnode.IsValid() )
             {
-                auto maxqueue = tcpnode.GetUInt32( "MaxQueue" );
-
                 auto servernode = tcpnode.FindNode( "Server" );
                 while ( servernode.IsValid() )
                 {
-                    KFTcpSetting kfdata;
-
-                    kfdata._app_name = servernode.GetString( "AppName" );
-                    kfdata._app_type = servernode.GetString( "AppType" );
-                    kfdata._interanet_ip = servernode.GetString( "InteranetIp" );
-                    kfdata._port_type = servernode.GetUInt32( "Type", true, 0 );
-                    kfdata._port = servernode.GetUInt32( "Port", true, 0 );
-                    kfdata._time_out = servernode.GetUInt32( "TimeOut", true, 20 );
-                    kfdata._max_queue_size = servernode.GetUInt32( "MaxQueue", true, maxqueue );
-
-                    _tcp_data_list.push_back( kfdata );
+                    KFTcpSetting kfsetting;
+                    kfsetting._app_name = servernode.GetString( "AppName" );
+                    kfsetting._app_type = servernode.GetString( "AppType" );
+                    kfsetting._port_type = servernode.GetUInt32( "Type", true, 0 );
+                    kfsetting._port = servernode.GetUInt32( "Port", true, 0 );
+                    kfsetting._time_out = servernode.GetUInt32( "TimeOut", true, 20 );
+                    kfsetting._max_queue_size = servernode.GetUInt32( "MaxQueue" );
+                    _tcp_setting_list.push_back( kfsetting );
 
                     servernode.NextNode();
                 }

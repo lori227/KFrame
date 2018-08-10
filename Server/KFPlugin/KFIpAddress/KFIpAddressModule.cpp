@@ -41,7 +41,20 @@ namespace KFrame
 
     void KFIpAddressModule::AfterLoad()
     {
-        KFGlobal::Instance()->_local_ip = GetLocalIp();
+        auto kfglobal = KFGlobal::Instance();
+
+        kfglobal->_local_ip = GetLocalIp();
+        if ( kfglobal->_app_flag == KFServerEnum::LocalDevelop ||
+                kfglobal->_app_flag == KFServerEnum::LocalTest )
+        {
+            kfglobal->_interanet_ip = kfglobal->_local_ip;
+        }
+        else
+        {
+            kfglobal->_interanet_ip = GetInteranetIp();
+        }
+
+        __LOG_INFO__( KFLogEnum::Init, "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,27 +86,9 @@ namespace KFrame
         _kf_ip_config->FindIpAddress( appname, apptype, appid, outlist );
     }
 
-    void KFIpAddressModule::SetZoneIpAddress( uint32 zoneid, const std::string& ip )
+    void KFIpAddressModule::SetZoneIpAddress( const std::string& ip )
     {
-        _kf_ip_config->SetZoneIpAddress( zoneid, ip );
-    }
-
-    static std::string _default_local_ip = "127.0.0.1";
-    static std::string _default_interanet_ip = "0.0.0.0";
-    const std::string& KFIpAddressModule::CalcIpAddress( const std::string& ip )
-    {
-        // 计算ip
-        if ( ip == _default_interanet_ip )
-        {
-            // 获得外网地址
-            return GetInteranetIp();
-        }
-        else if ( ip == _default_local_ip )
-        {
-            return GetLocalIp();
-        }
-
-        return ip;
+        _kf_ip_config->SetZoneIpAddress( ip );
     }
 
     const std::string& KFIpAddressModule::GetInteranetIp()

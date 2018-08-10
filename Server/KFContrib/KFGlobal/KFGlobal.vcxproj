@@ -20,13 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGlobal.cpp" />
-    <ClCompile Include="KFLog.cpp" />
+    <ClCompile Include="KFSpdLog.cpp" />
     <ClCompile Include="KFLogger.cpp" />
     <ClCompile Include="KFRand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGlobal.h" />
-    <ClInclude Include="KFLog.h" />
+    <ClInclude Include="KFSpdLog.h" />
     <ClInclude Include="KFLogger.h" />
     <ClInclude Include="KFRand.h" />
   </ItemGroup>

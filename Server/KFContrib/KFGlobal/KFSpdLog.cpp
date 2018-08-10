@@ -1,4 +1,4 @@
-﻿#include "KFLog.h"
+﻿#include "KFSpdLog.h"
 #include "spdlog/contrib/sinks/date_and_hour_file_sink.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -8,12 +8,12 @@
 
 namespace KFrame
 {
-    KFLog::~KFLog()
+    KFSpdLog::~KFSpdLog()
     {
         spdlog::drop_all();
     }
 
-    bool KFLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid )
+    bool KFSpdLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid )
     {
 #if __KF_SYSTEM__ == __KF_WIN__
         _local_log_path = __FORMAT__( "{}\\{}-{}-{}", path, appname, apptype, appid );
@@ -23,7 +23,7 @@ namespace KFrame
         return true;
     }
 
-    void KFLog::Log( uint32 loglevel, uint32 category, const std::string& content )
+    void KFSpdLog::Log( uint32 loglevel, uint32 category, const std::string& content )
     {
         auto& logger = GetLogger( category );
         if ( logger == nullptr )
@@ -34,7 +34,7 @@ namespace KFrame
         logger->log( ( spdlog::level::level_enum )loglevel, content );
     }
 
-    const KFLog::spdlogger& KFLog::GetLogger( uint32 category )
+    const KFSpdLog::spdlogger& KFSpdLog::GetLogger( uint32 category )
     {
         std::string name = GetLoggerName( category );
         auto iter = _local_loggers.find( name );
@@ -46,7 +46,7 @@ namespace KFrame
         return CreateLogger( category );
     }
 
-    const KFLog::spdlogger& KFLog::CreateLogger( uint32 category )
+    const KFSpdLog::spdlogger& KFSpdLog::CreateLogger( uint32 category )
     {
         std::vector<spdlog::sink_ptr> sinks_vec;
         std::string log_name = __FORMAT__( "{}-{}.log", _local_log_path, _log_category_name[category] );
@@ -80,7 +80,7 @@ namespace KFrame
         return iter->second;
     }
 
-    std::string KFLog::GetLoggerName( uint32 category )
+    std::string KFSpdLog::GetLoggerName( uint32 category )
     {
         std::string log_name = __FORMAT__( "{}-{}", _local_log_path, _log_category_name[category] );
         std::string name;
