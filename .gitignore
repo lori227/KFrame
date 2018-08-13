@@ -53,3 +53,11 @@ Server/KFLibrary/google/protobuf/vsprojects/x64/
 Unity/obj/
 Server/KFLibrary/libiconv/win64/MSVC14/libiconv_dll/x64/Debug/
 Server/KFLibrary/libiconv/win64/MSVC14/libiconv_dll/x64/Release/
+Server/_lib/win64/KFProtocold.lib
+Server/_lib/win64/KFPlugind.lib
+Server/_lib/win64/KFMemoryd.lib
+Server/_lib/win64/KFMath3Dd.lib
+Server/_lib/win64/KFGlobald.lib
+Server/_lib/win64/KFExceld.lib
+Server/_lib/win64/KFCored.lib
+Server/_lib/win64/KFConHashd.lib
