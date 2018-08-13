@@ -19,6 +19,7 @@
 #include "KFWorker/KFWorkerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -91,7 +92,7 @@ namespace KFrame
         bool SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject );
 
         // 删除数据
-        bool DeletePlayerData( uint32 zoneid, uint32 id );
+        void DeletePlayerData( uint32 zoneid, uint32 id );
 
         // 查询角色id
         uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );

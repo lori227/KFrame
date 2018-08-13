@@ -15,29 +15,30 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
-	class KFCompoundModule : public KFCompoundInterface
-	{
-	public:
-		KFCompoundModule();
-		~KFCompoundModule();
-		
-		// 加载配置
-		virtual void InitModule();
+    class KFCompoundModule : public KFCompoundInterface
+    {
+    public:
+        KFCompoundModule();
+        ~KFCompoundModule();
 
-		virtual void BeforeRun();
+        // 加载配置
+        virtual void InitModule();
 
-		virtual void ShutDown();
+        virtual void BeforeRun();
 
-		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-	protected:
-		// 请求合成
-		__KF_MESSAGE_FUNCTION__( HandleCompoundDataReq );
+        virtual void ShutDown();
 
-	};
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 请求合成
+        __KF_MESSAGE_FUNCTION__( HandleCompoundDataReq );
+
+    };
 }
 
 

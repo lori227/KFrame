@@ -39,7 +39,7 @@ namespace KFrame
         uint64 LuaGetObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname );
 
         // 操作对象属性
-        uint64 LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value );
+        uint64 LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, const char* operate, const char* value );
 
         // 获得数组属性
         uint64 LuaGetRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname );

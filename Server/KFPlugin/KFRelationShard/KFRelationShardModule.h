@@ -20,6 +20,7 @@
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -64,6 +65,8 @@ namespace KFrame
         // 添加最近的人
         __KF_MESSAGE_FUNCTION__( HandleAddBattleFriendDataReq );
 
+        // 查询最近的玩家列表
+        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
 
     protected:
         // 信息转换成好友信息
@@ -72,8 +75,8 @@ namespace KFrame
         void MapStringToPBBasic( MapString& values, KFMsg::PBStrings* pbstrings );
 
         // 格式化好友key
-        const char* FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid );
-        const char* FormatFriendLimitKey( uint32 firstid, uint32 secondid, uint32 type );
+        std::string FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid );
+        std::string FormatFriendLimitKey( uint32 firstid, uint32 secondid, uint32 type );
 
         // 发送添加好友消息
         void SendAddFriendToClient( uint32 serverid, MapString& values, uint32 friendid, uint32 playerid );
@@ -91,16 +94,19 @@ namespace KFrame
         bool IsRecentFriend( uint32 playerid, uint32 targetid );
 
         // 删除已经存在的最近游戏列表
-        bool DelRecentListToDB( uint32 playerid );
+        void DelRecentListToDB( uint32 playerid );
 
         // 保存最近游戏列表
-        bool SaveRecentListToDB( uint32 playerid, VectorString& uidinfos );
-
-        // 判断玩家是否有public属性
-        bool IsPublicPlayer( uint32 playerid );
+        void SaveRecentListToDB( uint32 playerid, VectorString& uidinfos );
 
         // 通知客户端操作最近游戏列表
         void SendRecentListToClient( uint32 selfid, uint32 operate, VectorString& uidinfos );
+
+        // 更新好友度
+        void UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 addvalue, uint32 type );
+
+        // 处理战斗结算好感度
+        void HandleBattleFrinedLiness( const char* data, uint32 length );
 
     private:
         std::set< uint32 > _add_uids;

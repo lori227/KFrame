@@ -1,8 +1,5 @@
 ﻿#include "KFUploadThread.h"
 #include "KFFtpConfig.h"
-#include "KFTime/KFDate.h"
-#include "KFThread/KFThread.h"
-#include "KFConvert/KFConvert.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <windows.h>
@@ -20,7 +17,7 @@ namespace KFrame
 {
     void KFUploadThread::CreateFtpThread()
     {
-        KFThread::CreateThread( this, &KFUploadThread::Run, __FUNCTION_LINE__ );
+        KFThread::CreateThread( this, &KFUploadThread::Run, __FUNC_LINE__ );
     }
 
     void KFUploadThread::Run()
@@ -53,6 +50,8 @@ namespace KFrame
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
+            CreateUploadDirectory( &ftpclient, ftppath );
+
             UploadFiles( &ftpclient, uploadpath, ftppath );
 
             ftpclient.Logout();
@@ -63,6 +62,21 @@ namespace KFrame
         }
 
         __DELETE_OBJECT__( uploadpath );
+    }
+
+    void KFUploadThread::CreateUploadDirectory( nsFTP::CFTPClient* ftpclient, std::string ftppath )
+    {
+        std::string createpath = "/";
+
+        while ( !ftppath.empty() )
+        {
+            auto temp = KFUtility::SplitString( ftppath, "/" );
+            if ( !temp.empty() )
+            {
+                createpath += temp + "/";
+                ftpclient->MakeDirectory( createpath.c_str() );
+            }
+        }
     }
 
     void KFUploadThread::ListAllLocalFiles( KFUpLoadPath* uploadpath )
@@ -144,9 +158,8 @@ namespace KFrame
         if ( !uploadpath->_path_name.empty() )
         {
             newftppath = ftppath + "/" + uploadpath->_path_name;
+            ftpclient->MakeDirectory( newftppath.c_str() );
         }
-
-        ftpclient->MakeDirectory( newftppath.c_str() );
 
         // 先上传文件
         for ( auto& filename : uploadpath->_files )
@@ -179,11 +192,11 @@ namespace KFrame
         auto ok = ftpclient->UploadFile( localfile, ftpfile );
         if ( ok )
         {
-            KFLogger::LogSystem( KFLogger::Info, "upload [ %s ] ok!", localfile.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "upload [{}] ok!", localfile );
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "upload [ %s ] failed!", localfile.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "upload [{}] failed!", localfile );
         }
     }
 

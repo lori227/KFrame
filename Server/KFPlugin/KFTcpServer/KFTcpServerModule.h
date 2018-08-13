@@ -15,6 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -39,7 +40,6 @@ namespace KFrame
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 );
-        virtual void SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message );
 
         virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
         virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message );
@@ -51,6 +51,10 @@ namespace KFrame
         // 给指定对象发送消息
         virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
         virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
+
+        // 给指定类型发送消息
+        virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器

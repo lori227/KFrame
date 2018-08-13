@@ -139,7 +139,7 @@ namespace KFrame
         virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到队伍客户端
-        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -174,7 +174,7 @@ namespace KFrame
 #define __CLIENT_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
     auto playerid = __KF_DATA_ID__( kfguid ); \
-    auto player = _kf_player->FindPlayer( playerid, __FUNCTION_LINE__ );\
+    auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );\
     if ( player == nullptr )\
     {\
         return;\

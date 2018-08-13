@@ -81,7 +81,7 @@ namespace KFrame
         }
 
         //检测扣除物品是否足够
-        if ( !player->CheckAgentData( kfagents, __FUNCTION_LINE__ ) )
+        if ( !player->CheckAgentData( kfagents, __FUNC_LINE__ ) )
         {
             return KFMsg::StoreLackCost;
         }
@@ -102,10 +102,10 @@ namespace KFrame
         }
 
         //扣除道具
-        player->RemoveAgentData( kfagents, __FUNCTION_LINE__ );
+        player->RemoveAgentData( kfagents, __FUNC_LINE__ );
 
         //发送道具
-        player->AddAgentData( &storedatasetting->_buy_item, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &storedatasetting->_buy_item, 1.0f, true, __FUNC_LINE__ );
 
         return KFMsg::StoreBuyOK;
     }
@@ -140,7 +140,7 @@ namespace KFrame
     ///FIXME:目前只判断玩家是否有物品，如果有返回false,不进行数量的判断
     bool KFStoreModule::CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFAgents* kfagents )
     {
-        return !player->CheckAgentData( kfagents, __FUNCTION_LINE__ );
+        return !player->CheckAgentData( kfagents, __FUNC_LINE__ );
     }
 
     void KFStoreModule::SetLimitInfo( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime )
@@ -174,6 +174,16 @@ namespace KFrame
 
         auto toserverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
         auto result = GiveStoreResult( player, kfmsg.shopid(), kfmsg.toplayerid(), toserverid );
+
+        // 增加好感度
+        auto storedatasetting = _kf_store_config->FindStoreSetting( kfmsg.shopid() );
+        if ( KFMsg::GiveBuyOK == result &&
+                _invalid_int < storedatasetting->_give_friend_liness )
+        {
+            _kf_relation->UpdateFriendLiness( player, kfmsg.toplayerid(), KFOperateEnum::Add, storedatasetting->_give_friend_liness, KFMsg::FriendLinessEnum::Give );
+
+        }
+
         _kf_display->SendToClient( player, result, kfmsg.shopid() );
     }
 
@@ -198,12 +208,12 @@ namespace KFrame
             return KFMsg::StoreParamError;
         }
 
-        if ( !player->CheckAgentData( kfcostagents, __FUNCTION_LINE__ ) )
+        if ( !player->CheckAgentData( kfcostagents, __FUNC_LINE__ ) )
         {
             return KFMsg::GiveLackCost;
         }
 
-        player->RemoveAgentData( kfcostagents, __FUNCTION_LINE__ );
+        player->RemoveAgentData( kfcostagents, __FUNC_LINE__ );
 
         // 发送邮件
         _kf_mail->SendMail( player, KFGuid( toserverid, toplayid ), storedatasetting->_give_mail_id, &storedatasetting->_buy_item );

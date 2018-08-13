@@ -22,6 +22,8 @@ enum MatchProtocol
 	S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118; 	// 取消匹配
 	S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK = 11119;	// 取消匹配
 	S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120;	// 玩家上线
+	S2S_NOTICE_MATCH_STATE_REQ = 11121;			// 处理玩家匹配状态
+
  }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -177,4 +179,12 @@ message S2SPlayerOnlineToBattleShardReq
 	required uint32 campid = 2;
 	required uint32 playerid = 3;
 	required uint32 serverid = 4;	
+}
+
+// 通知玩家处于匹配状态
+// S2S_NOTICE_MATCH_STATE_REQ
+message S2SNoticeMatchStateReq
+{
+	required uint32 playerid = 1;
+	required uint32 matchid = 2;
 }

@@ -61,8 +61,7 @@ namespace KFrame
 
     __KF_SERVER_LOST_FUNCTION__( KFProxyModule::OnPlayerDisconnection )
     {
-        KFLogger::LogLogin( KFLogger::Info, "[%s] client[%u] disconnection!",
-                            __FUNCTION__, handleid );
+        __LOG_DEBUG__( KFLogEnum::Login, "client[{}] disconnection!", handleid );
 
         KFMsg::S2SPlayerDisconnectionReq req;
         req.set_playerid( handleid );
@@ -86,8 +85,7 @@ namespace KFrame
         auto playerid = __KF_DATA_ID__( kfguid );
         if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] client[%u] msgid[%u] length[%u] error!",
-                                __FUNCTION__, playerid, msgid, length );
+            __LOG_ERROR__( KFLogEnum::Logic, "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
             return false;
         }
 
@@ -105,8 +103,7 @@ namespace KFrame
         auto playerid = __KF_HEAD_ID__( kfguid );
         if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] client[%u] msgid[%u] length[%u] error!",
-                                __FUNCTION__, playerid, msgid, length );
+            __LOG_ERROR__( KFLogEnum::Logic, "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
             return false;
         }
 
@@ -153,6 +150,6 @@ namespace KFrame
         RemoveProxy( playerid );
 
         // 删除链接
-        _kf_gate->RemoveConnection( playerid, 100, __FUNCTION_LINE__ );
+        _kf_gate->RemoveConnection( playerid, 100, __FUNC_LINE__ );
     }
 }

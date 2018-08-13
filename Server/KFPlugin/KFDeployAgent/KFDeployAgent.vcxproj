@@ -12,12 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFDeployAgentConfig.cpp" />
+    <ClCompile Include="KFDeploy.cpp" />
     <ClCompile Include="KFDeployAgentModule.cpp" />
     <ClCompile Include="KFDeployAgentPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFDeployAgentConfig.h" />
+    <ClInclude Include="KFDeploy.h" />
     <ClInclude Include="KFDeployAgentInterface.h" />
     <ClInclude Include="KFDeployAgentModule.h" />
     <ClInclude Include="KFDeployAgentPlugin.h" />
@@ -80,7 +80,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -114,7 +114,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>

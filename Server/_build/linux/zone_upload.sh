@@ -166,6 +166,8 @@ copyfile 1 KFRouteClient.so
 copyfile 1 KFRouteClientd.so
 copyfile 1 KFSchedule.so
 copyfile 1 KFScheduled.so
+copyfile 1 KFSignIn.so
+copyfile 1 KFSignInd.so
 copyfile 1 KFStore.so
 copyfile 1 KFStored.so
 copyfile 1 KFTask.so

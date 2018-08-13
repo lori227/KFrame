@@ -16,6 +16,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

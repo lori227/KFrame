@@ -46,10 +46,11 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
-        void SendNetMessage( const std::string& name, uint32 msgid, const char* data, uint32 length );
-
         bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
         bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
+
+        void SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length );
+        void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
     public:
         // 绑定消息事件

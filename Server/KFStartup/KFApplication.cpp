@@ -1,6 +1,5 @@
-﻿#include "KFApplication.h"
-#include "KFServices.h"
-#include "KFThread/KFThread.h"
+﻿#include "KFServices.h"
+#include "KFApplication.h"
 
 #if __KF_SYSTEM__ == __KF_LINUX__
     #include <unistd.h>
@@ -39,24 +38,23 @@ namespace KFrame
 
     int KFApplication::main( const std::vector< std::string >& args )
     {
-        if ( args.size() < 3 )
+        MapString params;
+        for ( auto arg : args )
         {
-            SetAppPause();
-            return Poco::Util::Application::EXIT_USAGE;
+            auto key = KFUtility::SplitString( arg, "=" );
+            params[ key ] = arg;
         }
 
-#ifdef __KF_DEBUG__
-        if ( args[ 0 ] == "1" )
+        auto daemon = params[ __KF_STRING__( daemon ) ];
+        if ( daemon == "" || daemon == "1" )
         {
-            SetAppPause();
+            SetAppDaemon();
         }
-#endif
 
-        SetAppDaemon();
         SetupAppConsole();
 
         _kf_services = new KFServices();
-        if ( !_kf_services->InitService( this, args ) )
+        if ( !_kf_services->InitService( this, params ) )
         {
             SetAppPause();
             return Poco::Util::Application::EXIT_CONFIG;

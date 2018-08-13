@@ -2,6 +2,13 @@
 #define __KF_HTTP_H__
 
 #include "KFrame.h"
+#include "Poco/Net/HTTPClientSession.h"
+#include "Poco/Net/HTTPRequest.h"
+#include "Poco/Net/HTTPResponse.h"
+#include "Poco/URI.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/ThreadPool.h"
+#include "Poco/Exception.h"
 
 namespace KFrame
 {

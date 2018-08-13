@@ -33,7 +33,7 @@ namespace KFrame
                 kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
 
                 auto strbuyitem = xmlnode.GetString( "BuyItem" );
-                kfsetting->_buy_item.ParseFromString( strbuyitem, __FUNCTION_LINE__ );
+                kfsetting->_buy_item.ParseFromString( strbuyitem, __FUNC_LINE__ );
 
                 StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Money" ), "money" );
                 StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Diamond" ), "diamond" );
@@ -50,6 +50,9 @@ namespace KFrame
                 kfsetting->_max_owm_ = xmlnode.GetUInt32( "MaxOwn" );
                 kfsetting->_give_mail_id = xmlnode.GetUInt32( "GiveMailid" );
                 kfsetting->_return_mail_id = xmlnode.GetUInt32( "ReturnMailId" );
+                kfsetting->_give_friend_liness = xmlnode.GetUInt32( "GiveFriendLiness" );
+
+
                 _version = xmlnode.GetUInt32( "Version" );
                 _store_setting.Insert( kfsetting->_id, kfsetting );
 
@@ -109,9 +112,9 @@ namespace KFrame
         }
 
         auto kfagents = des.Create( key );
-        if ( !kfagents->ParseFromString( src, __FUNCTION_LINE__ ) )
+        if ( !kfagents->ParseFromString( src, __FUNC_LINE__ ) )
         {
-            KFLogger::LogSystem( KFLogger::Error, "Parse StoreConfig Error key:%s,src:%s!", key.c_str(), src.c_str() );
+            __LOG_ERROR__( KFLogEnum::System, "Parse StoreConfig Error key:{},src:{}", key, src );
             return false;
         }
 

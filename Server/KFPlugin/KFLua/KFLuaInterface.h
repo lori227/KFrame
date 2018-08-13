@@ -3,7 +3,7 @@
 
 #include "KFrame.h"
 #include "luaplus/LuaPlus.h"
-#include "KFLogger/KFLogger.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -23,8 +23,7 @@ namespace KFrame
             }
             catch ( LuaPlus::LuaException& e )
             {
-                KFLogger::LogScript( KFLogger::Error, "call [ %s ] [ %s ] failed = [ %s ]",
-                                     _lua_file.c_str(), function, e.GetErrorMessage() );
+                __LOG_ERROR__( KFLogEnum::Script, "call [{}] [{}] failed=[{}]", _lua_file, function, e.GetErrorMessage() );
             }
         }
 

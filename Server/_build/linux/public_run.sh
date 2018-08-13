@@ -9,12 +9,12 @@ server=publicserverd
 fi
 
 echo Starting Public Cluster Server
-./$server 0 20000 ./setting/master.startup
+./$server appid=20000 log=1 startup=./setting/master.startup
 
 echo Starting Public Proxy Server
-./$server 0 20001 ./setting/proxy.startup
+./$server appid=20001 log=1 startup=./setting/proxy.startup
 
 echo Starting Public Shard Server
-./$server 0 22001 ./setting/shard.startup
+./$server appid=22001 log=1 startup=./setting/shard.startup
 
 cd $basepath

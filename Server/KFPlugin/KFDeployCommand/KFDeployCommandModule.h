@@ -13,6 +13,7 @@
 #include "KFDeployCommandInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -32,18 +33,23 @@ namespace KFrame
         virtual void BeforeShut();
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // 关闭服务
-        virtual void ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime );
+        // 部署命令
+        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
 
     protected:
         virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function );
         virtual void RemoveShutDownFunction( const std::string& module );
 
+
         // 判断是不是自己
         bool IsSelfServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
+
+        // 关闭服务器
+        void ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime );
+
     protected:
         // 处理关闭服务器
-        __KF_MESSAGE_FUNCTION__( HandleShutDownServerToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandToServerReq );
 
     protected:
         // 准备关闭服务器

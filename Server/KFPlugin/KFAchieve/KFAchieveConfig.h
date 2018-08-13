@@ -14,6 +14,13 @@ namespace KFrame
             UseOperate = 1,
             UseFinal = 2,
         };
+
+        enum EAchieveTypeEnum
+        {
+            lobby = 1,		// 平台成就
+            battle = 2,		// 战服成就
+        };
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -89,6 +96,12 @@ namespace KFrame
         // 读取配置
         bool LoadConfig( const char* file );
 
+        // 获取战服成就配置
+        inline std::map<uint32, KFAchieveSetting*>& GetBattleAchieveCfg( )
+        {
+            return _battle_achieve_setting._objects;
+        };
+
     protected:
 
         void AddKFAchieveSetting( KFAchieveSetting* kfsetting );
@@ -98,6 +111,9 @@ namespace KFrame
     private:
         // 成就列表
         KFMap< uint32, uint32, KFAchieveSetting > _achieve_setting;
+
+        // 战斗成就列表
+        KFMap< uint32, uint32, KFAchieveSetting > _battle_achieve_setting;
 
         // 类型列表
         std::map< std::string, KFDataAchieveTypes > _object_types;

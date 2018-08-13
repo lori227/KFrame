@@ -1,11 +1,5 @@
 ﻿#include "KFHttp.h"
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-#include "Poco/URI.h"
-#include "Poco/StreamCopier.h"
-#include "Poco/ThreadPool.h"
-#include "Poco/Exception.h"
+
 
 namespace KFrame
 {
@@ -70,6 +64,11 @@ namespace KFrame
             }
             catch ( Poco::Exception& exception )
             {
+                if ( exceptioncount == 0 )
+                {
+                    __LOG_ERROR__( KFLogEnum::System, "http request failed, error = {}, code = {}",
+                                   exception.what(), exception.code() );
+                }
                 ++exceptioncount;
             }
         } while ( exceptioncount < MAX_EXCEPTION );

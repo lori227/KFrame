@@ -1,8 +1,0 @@
-#! /bin/sh
-#
-# Created by configure
-
-"./configure" \
-"--prefix=/usr/local" \
-"--with-apr=/usr/local" \
-"$@"

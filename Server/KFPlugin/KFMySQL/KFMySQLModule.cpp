@@ -1,6 +1,5 @@
 ﻿#include "KFMySQLModule.h"
 #include "KFMySQLConfig.h"
-#include "KFThread/KFThread.h"
 #include "Poco/Data/MySQL/Connector.h"
 
 namespace KFrame

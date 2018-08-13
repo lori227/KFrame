@@ -2,7 +2,6 @@
 #define __KF_SERVICES_H__
 
 #include "KFrame.h"
-#include "KFTime/KFTimer.h"
 
 namespace KFrame
 {
@@ -18,7 +17,7 @@ namespace KFrame
         void Run();
 
         // 初始化服务
-        bool InitService( KFApplication* application, const std::vector< std::string >& params );
+        bool InitService( KFApplication* application, MapString& params );
 
         // 自动更新
         void RunUpdate();
@@ -36,6 +35,9 @@ namespace KFrame
 
         // 打印内存信息
         void PrintLogMemory();
+
+        // 解析appid
+        void ParseAppId( std::string strappid );
 
     protected:
         // 进程

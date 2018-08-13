@@ -24,7 +24,10 @@ namespace KFrame
         const std::string& FindPlatformAddress( uint32 id );
 
         // 修改Zone
-        void SetZoneIpAddress( uint32 zoneid, const std::string& ip );
+        void SetZoneIpAddress( const std::string& ip );
+
+        // 修改appid
+        void SetMasterAppId( uint32 appchannel, uint32 zoneid );
 
     protected:
         // 配置的连接地址

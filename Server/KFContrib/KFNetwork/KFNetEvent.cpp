@@ -1,5 +1,4 @@
 ﻿#include "KFNetEvent.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -29,11 +28,7 @@ namespace KFrame
         eventdata->_code = code;
         eventdata->_describe = describe;
         eventdata->_data = data;
-        auto ok = _net_event_data.PushObject( eventdata );
-        if ( !ok )
-        {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] event queue full!", __FUNCTION__ );
-        }
+        _net_event_data.PushObject( eventdata );
     }
 
     void KFNetEvent::RunEvent()

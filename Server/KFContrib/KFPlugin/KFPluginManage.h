@@ -25,7 +25,7 @@
     _kf_plugin_manage->UnRegistModule< name##Plugin, name##Interface >()
 
 #define __FIND_MODULE__( module, classname ) \
-    module = _kf_plugin_manage->FindModule< classname >( __FUNCTION_LINE__ );
+    module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ );
 
 #define __REGISTER_RUN_FUNCTION__( function ) \
     _kf_plugin_manage->RegisterRunFunction( _kf_plugin->_sort, this, function )
@@ -120,10 +120,10 @@ namespace KFrame
 
         // 查找模块
         template< class ModuleType >
-        ModuleType* FindModule( const char* function, uint32 line )
+        ModuleType* FindModule( const char* file, uint32 line )
         {
             std::string name = typeid( ModuleType ).name();
-            return dynamic_cast<ModuleType*>( FindModule( name, function, line ) );
+            return dynamic_cast<ModuleType*>( FindModule( name, file, line ) );
         }
 
         /////////////////////////////////////////////////////////////////
@@ -148,8 +148,7 @@ namespace KFrame
             auto kffunction = _run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                KF_LOG_ERROR( "sort[{}] run is already register!", sort );
-                return;
+                return __LOG_ERROR__( KFLogEnum::Init, "sort[{}] run is already register!", sort );
             }
 
             kffunction = _run_functions.Create( sort );
@@ -168,8 +167,7 @@ namespace KFrame
             auto kffunction = _after_run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                KF_LOG_ERROR( "sort[{}] after run is already register!", sort );
-                return;
+                return __LOG_ERROR__( KFLogEnum::Init, "sort[{}] afterrun is already register!", sort );
             }
 
             kffunction = _after_run_functions.Create( sort );
@@ -216,7 +214,7 @@ namespace KFrame
         KFPlugin* FindPlugin( const std::string& name );
 
         // 查找模块
-        KFModule* FindModule( const std::string& name, const char* function, uint32 line );
+        KFModule* FindModule( const std::string& name, const char* file, uint32 line );
 
     protected:
         std::vector< KFPlugin* > _plugins;

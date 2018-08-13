@@ -3,21 +3,12 @@
 
 namespace KFrame
 {
-#define __STRING_DEFINE__( name ) \
-    static const std::string& str_##name()\
-    {\
-        static std::string _##name = #name;\
-        return _##name;\
-    }
-
-#define __KF_STRING__( name ) \
-    KFField::str_##name()
-
-#define __KF_CHAR__( name ) \
-    KFField::str_##name().c_str()
+#define __STRING_DEFINE__( name )  static std::string _##name = #name;
+#define __KF_STRING__( name )  KFField::_##name
 
     namespace KFField
     {
+        __STRING_DEFINE__( daemon );
         __STRING_DEFINE__( win64 );
         __STRING_DEFINE__( linux );
         __STRING_DEFINE__( shard );
@@ -43,6 +34,8 @@ namespace KFrame
         __STRING_DEFINE__( appname );
         __STRING_DEFINE__( apptype );
         __STRING_DEFINE__( apppath );
+        __STRING_DEFINE__( appfile );
+        __STRING_DEFINE__( appconfig );
         __STRING_DEFINE__( appkey );
         __STRING_DEFINE__( localip );
         __STRING_DEFINE__( interanetip );
@@ -256,6 +249,17 @@ namespace KFrame
         __STRING_DEFINE__( totalplayer );
         __STRING_DEFINE__( bekilled );
         __STRING_DEFINE__( relationtype );
+        __STRING_DEFINE__( skill );
+        __STRING_DEFINE__( skillid );
+        __STRING_DEFINE__( signin );
+        __STRING_DEFINE__( sevenday );
+        __STRING_DEFINE__( sevenreward );
+        __STRING_DEFINE__( deploypath );
+        __STRING_DEFINE__( minid );
+        __STRING_DEFINE__( maxid );
+        __STRING_DEFINE__( logtype );
+        __STRING_DEFINE__( service );
+
     }
 }
 

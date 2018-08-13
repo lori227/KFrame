@@ -20,6 +20,7 @@
     <ClCompile Include="KFStartup.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\KFCommon\KFAppID.h" />
     <ClInclude Include="KFAppConfig.h" />
     <ClInclude Include="KFApplication.h" />
     <ClInclude Include="KFDump.h" />
@@ -85,7 +86,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\_lib\win64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\_lib\win64\;..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Link>
@@ -115,7 +116,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\_lib\win64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\_lib\win64\;..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Link>

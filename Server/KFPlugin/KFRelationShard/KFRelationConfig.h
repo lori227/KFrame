@@ -3,18 +3,10 @@
 
 #include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
-    namespace KFFriendEnum
-    {
-        enum EConstDefine
-        {
-            Team = 1,	//组队
-            Win = 2,	//胜利
-            Laud = 3,	//敬酒
-        };
-    }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     class KFRelationConfig : public KFConfig, public KFSingleton< KFRelationConfig >
@@ -27,7 +19,13 @@ namespace KFrame
         bool LoadConfig( const char* file );
 
         // 返回好友度上限
-        uint32 getMaxFriendLine( uint32 operate );
+        uint32 GetMaxFriendLine( uint32 operate );
+
+        //返回总的好友度上限
+        inline uint32 GetMaxFriendLine()
+        {
+            return _max_friend_liness;
+        }
 
     public:
         // 最大好友数量
@@ -62,6 +60,10 @@ namespace KFrame
 
         // 最大最近玩家列表长度
         uint32 _max_recent_list;
+
+        // 最大好友度
+        uint32 _max_friend_liness;
+
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -33,8 +33,8 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ) );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( value ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( flag ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ );
@@ -99,7 +99,7 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( task ), tasksetting->_id, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
-        player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNC_LINE__ );
 
         return KFMsg::TaskReceiveRewardOK;
     }

@@ -20,13 +20,13 @@ namespace KFrame
 
     void KFDeployCommandModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ, &KFDeployCommandModule::HandleShutDownServerToServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_SERVER_REQ, &KFDeployCommandModule::HandleDeployCommandToServerReq );
         /////////////////////////////////////////////////////////////////////////////
     }
 
     void KFDeployCommandModule::BeforeShut()
     {
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_SERVER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_SERVER_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
@@ -85,17 +85,19 @@ namespace KFrame
 
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployCommandModule::HandleShutDownServerToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployCommandModule::HandleDeployCommandToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SShutDownServerToServerReq );
+        __PROTO_PARSE__( KFMsg::S2SDeployCommandToServerReq );
 
-        ShutDownServer( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), kfmsg.delaytime() );
+        auto* pbdeploy = &kfmsg.deploycommand();
+        DeployCommand( pbdeploy->command(), pbdeploy->value(),
+                       pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
     }
 
-    void KFDeployCommandModule::ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime )
+    void KFDeployCommandModule::DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid )
     {
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u:%u:%u] shutdown req!",
-                             appname.c_str(), apptype.c_str(), appid, zoneid, delaytime );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] deploy command req!",
+                      command, value, appname, apptype, appid, zoneid );
 
         // 判断是不是自己
         auto ok = IsSelfServer( appname, apptype, appid, zoneid );
@@ -104,10 +106,26 @@ namespace KFrame
             return;
         }
 
+        if ( command == __KF_STRING__( shutdown ) )
+        {
+            auto delaytime = KFUtility::ToValue< uint32 >( value );
+            ShutDownServer( appname, apptype, appid, zoneid, delaytime );
+        }
+        else if ( command == __KF_STRING__( log ) )
+        {
+            auto level = KFUtility::ToValue< uint32 >( value );
+            KFGlobal::Instance()->SetLogLevel( level );
+        }
+    }
+
+
+
+    void KFDeployCommandModule::ShutDownServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime )
+    {
         auto kfglobal = KFGlobal::Instance();
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u:%u:%u] shutdown start!",
-                             kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(),
-                             kfglobal->_app_id, kfglobal->_zone_id, delaytime );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}:{}:{}] shutdown start!",
+                      kfglobal->_app_name, kfglobal->_app_type,
+                      kfglobal->_app_id, kfglobal->_zone_id, delaytime );
 
         // 如果是数据库
         if ( appname == __KF_STRING__( data ) )
@@ -124,9 +142,9 @@ namespace KFrame
         __REGISTER_LIMIT_TIMER__( objectid, 10000, 1, &KFDeployCommandModule::OnTimerShutDownServer );
 
         auto kfglobal = KFGlobal::Instance();
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u:%u] shutdown prepare!",
-                             kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(),
-                             kfglobal->_app_id, kfglobal->_zone_id );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}:{}] shutdown prepare!",
+                      kfglobal->_app_name, kfglobal->_app_type,
+                      kfglobal->_app_id, kfglobal->_zone_id );
 
         // 回调关闭回调
         for ( auto& iter : _shutdown_function._objects )
@@ -140,10 +158,12 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u:%u] shutdown ok!",
-                             kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(),
-                             kfglobal->_app_id, kfglobal->_zone_id );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}:{}] shutdown ok!",
+                      kfglobal->_app_name, kfglobal->_app_type,
+                      kfglobal->_app_id, kfglobal->_zone_id );
 
-        kfglobal->_app_run = false;
+        // linux程序正常退出时会core, 判断是每个so文件中的同名全局函数造成
+        // 这里不让程序退出, 由agent等待超时kill
+        // kfglobal->_app_run = false;
     }
 }

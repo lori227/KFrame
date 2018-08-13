@@ -19,10 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KFClock.cpp" />
+    <ClCompile Include="KFCompress.cpp" />
+    <ClCompile Include="KFConvert.cpp" />
+    <ClCompile Include="KFCrypto.cpp" />
+    <ClCompile Include="KFDate.cpp" />
+    <ClCompile Include="KFDecode.cpp" />
+    <ClCompile Include="KFMutex.cpp" />
+    <ClCompile Include="KFNode.cpp" />
+    <ClCompile Include="KFRunable.cpp" />
+    <ClCompile Include="KFThread.cpp" />
     <ClCompile Include="KFUtility.cpp" />
+    <ClCompile Include="KFXml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFClock.h" />
+    <ClInclude Include="KFCompress.h" />
+    <ClInclude Include="KFConvert.h" />
+    <ClInclude Include="KFCrypto.h" />
+    <ClInclude Include="KFDate.h" />
+    <ClInclude Include="KFDecode.h" />
+    <ClInclude Include="KFMutex.h" />
+    <ClInclude Include="KFNode.h" />
+    <ClInclude Include="KFRunable.hpp" />
+    <ClInclude Include="KFThread.h" />
+    <ClInclude Include="KFTimer.h" />
     <ClInclude Include="KFUtility.h" />
+    <ClInclude Include="KFXml.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KFUtility.inl" />
@@ -135,8 +158,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\libiconv\win64\source\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\openssl\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -144,8 +167,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libiconvd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -188,8 +211,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\libiconv\win64\source\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\openssl\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -200,8 +223,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>

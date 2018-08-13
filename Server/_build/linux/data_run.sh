@@ -9,21 +9,21 @@ server=dataserver
 fi
 
 echo Starting Data Cluster Server
-./$server 0 10000 ./setting/master.startup
+./$server appid=10000 log=1 startup=./setting/master.startup
 
 echo Starting Data Proxy Server
-./$server 0 10001 ./setting/proxy.startup
+./$server appid=10001 log=1 startup=./setting/proxy.startup
 
 echo Starting Data Shard Server
-./$server 0 12001 ./setting/shard.startup
-./$server 0 12002 ./setting/shard.startup
-./$server 0 12003 ./setting/shard.startup
-./$server 0 12004 ./setting/shard.startup
-./$server 0 12005 ./setting/shard.startup
-./$server 0 12006 ./setting/shard.startup
-./$server 0 12007 ./setting/shard.startup
-./$server 0 12008 ./setting/shard.startup
-./$server 0 12009 ./setting/shard.startup
-./$server 0 12010 ./setting/shard.startup
+./$server appid=12001 log=1 startup=./setting/shard.startup
+./$server appid=12002 log=1 startup=./setting/shard.startup
+./$server appid=12003 log=1 startup=./setting/shard.startup
+./$server appid=12004 log=1 startup=./setting/shard.startup
+./$server appid=12005 log=1 startup=./setting/shard.startup
+./$server appid=12006 log=1 startup=./setting/shard.startup
+./$server appid=12007 log=1 startup=./setting/shard.startup
+./$server appid=12008 log=1 startup=./setting/shard.startup
+./$server appid=12009 log=1 startup=./setting/shard.startup
+./$server appid=12010 log=1 startup=./setting/shard.startup
 
 cd $basepath

@@ -1,5 +1,4 @@
 ﻿#include "KFMySQL.h"
-#include "KFLogger/KFLogger.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -19,7 +18,8 @@ namespace KFrame
 
     bool KFMySQL::InitMySQL( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port )
     {
-        _connect_data = KF_FORMAT( "host={};port={};user={};password={};db={};compress=true;auto-reconnect=true;character-set=utf8", ip, port, user, password, database );
+        _connect_data = __FORMAT__( "host={};port={};user={};password={};db={};compress=true;auto-reconnect=true;character-set=utf8",
+                                    ip, port, user, password, database );
 
         try
         {
@@ -27,18 +27,21 @@ namespace KFrame
         }
         catch ( Poco::Exception& ex )
         {
-            KF_LOG_ERROR( "mysql[{}:{}] connect failed = [{}]!", id, _connect_data, ex.displayText() );
+            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = [{}]!",
+                           id, _connect_data, ex.displayText() );
             return false;
         }
 
         auto ok = _session->isConnected();
         if ( ok )
         {
-            KF_LOG_INFO( "mysql[{}] connect[ {}|{}:{} ] ok!", id, database, ip, port );
+            __LOG_INFO__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] ok!",
+                          id, database, ip, port );
         }
         else
         {
-            KF_LOG_ERROR( "mysql[{}] connect[ {}|{}:{} ] failed!", id, database, ip, port );
+            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] failed!",
+                           id, database, ip, port );
         }
 
         return ok;

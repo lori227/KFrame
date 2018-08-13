@@ -60,6 +60,8 @@
 #include "KFQueryWholeRankState.h"
 #include "KFQueryFriendRankState.h"
 #include "KFAddRecentState.h"
+#include "KFQueryRecentState.h"
+
 
 namespace KFrame
 {
@@ -142,6 +144,8 @@ namespace KFrame
         AddState( RobotStateEnum::QueryWholeRankList, new KFQueryWholeRankState() );
         AddState( RobotStateEnum::QueryFriendRankList, new KFQueryFriendRankState() );
 
+        // 请求最近玩家列表
+        AddState( RobotStateEnum::QueryRecentList, new KFQueryRecentState() );
 
         // GM加钱
         AddState( RobotStateEnum::GMAddMoney, new KFAddMoneyState() );

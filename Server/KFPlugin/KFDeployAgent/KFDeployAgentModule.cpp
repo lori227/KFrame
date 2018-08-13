@@ -1,5 +1,4 @@
 ﻿#include "KFDeployAgentModule.h"
-#include "KFDeployAgentConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -30,20 +29,24 @@ namespace KFrame
 
     void KFDeployAgentModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_deploy_agent_config, true );
     }
 
     void KFDeployAgentModule::BeforeRun()
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
-        __REGISTER_LOOP_TIMER__( 0, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
-        __REGISTER_LOOP_TIMER__( 1, 1000, &KFDeployAgentModule::OnTimerCheckTaskFinish );
+        __REGISTER_LOOP_TIMER__( 1, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
+        __REGISTER_LOOP_TIMER__( 2, 1000, &KFDeployAgentModule::OnTimerCheckTaskFinish );
         ////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleStartupServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleShutDownServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleKillServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleUpdateServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_RESTART_SERVER_TO_AGENT_REQ, &KFDeployAgentModule::HandleRestartServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
+    }
+
+
+    void KFDeployAgentModule::ShutDown()
+    {
+        __UNREGISTER_TIMER__();
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        //////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
     }
 
     static std::string _pid_path = "./pid";
@@ -51,23 +54,47 @@ namespace KFrame
     void KFDeployAgentModule::OnceRun()
     {
         __MKDIR__( _pid_path );
+        _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
+
+        // 加载部署信息
+        LoadTotalLaunchData();
+    }
+
+    void KFDeployAgentModule::LoadTotalLaunchData()
+    {
+        _launch_list.Clear();
+        _deploy_list.Clear();
+
+        // 加载launch设定
+        {
+            auto querylaunchdata = _mysql_driver->Select( __KF_STRING__( launch ) );
+            for ( auto& values : querylaunchdata->_value )
+            {
+                auto kfsetting = __KF_CREATE__( KFLaunchSetting );
+                kfsetting->CopyFrom( values );
+
+                LaunchKey key( kfsetting->_app_name, kfsetting->_app_type );
+                _launch_list.Insert( key, kfsetting );
+            }
+        }
+
+        // 部署信息
+        {
+            MapString keyvalue;
+            keyvalue[ __KF_STRING__( localip ) ] = KFGlobal::Instance()->_local_ip;
+            auto querydeploydata = _mysql_driver->Select( __KF_STRING__( deploy ), keyvalue );
+            for ( auto& values : querydeploydata->_value )
+            {
+                auto deploydata = __KF_CREATE__( KFDeployData );
+                deploydata->CopyFrom( values );
+                deploydata->_kf_launch = _launch_list.Find( LaunchKey( deploydata->_app_name, deploydata->_app_type ) );
+                _deploy_list.Insert( deploydata->_app_id, deploydata );
+            }
+        }
+
         BindServerProcess();
     }
 
-    void KFDeployAgentModule::ShutDown()
-    {
-        __KF_REMOVE_CONFIG__();
-        __UNREGISTER_TIMER__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        //////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_STARTUP_SERVER_TO_AGENT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SHUT_DOWN_SERVER_TO_AGENT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KILL_SERVER_TO_AGENT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_SERVER_TO_AGENT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_RESTART_SERVER_TO_AGENT_REQ );
-    }
-
-    /////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFDeployAgentModule::OnClientConnectServer )
     {
         // 连接成功
@@ -86,90 +113,78 @@ namespace KFrame
             req.set_localip( _kf_ip_address->GetLocalIp() );
             _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
 
-            // 更新服务器状态
-            for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
-            {
-                auto kfsetting = iter.second;
-                UpdateProcessToServer( kfsetting );
-            }
         }
     }
 
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerStartupProcess )
     {
-        // 不是自动启动
-        if ( !_kf_deploy_agent_config->_is_auto_startup )
+        for ( auto& iter : _deploy_list._objects )
         {
-            return;
-        }
-
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
-        {
-            auto kfsetting = iter.second;
-            StartupServerProcess( kfsetting );
+            auto deploydata = iter.second;
+            StartupServerProcess( deploydata );
         }
     }
 
-    void KFDeployAgentModule::StartupServerProcess( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::StartupServerProcess( KFDeployData* deploydata )
     {
-        CheckServerProcess( kfsetting );
-        if ( kfsetting->_is_shutdown || kfsetting->_process_id != 0 )
+        CheckServerProcess( deploydata );
+        if ( !deploydata->_is_startup || deploydata->_is_shutdown || deploydata->_process_id != _invalid_int )
         {
             return;
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        auto ok = StartupWinProcess( kfsetting );
+        auto ok = StartupWinProcess( deploydata );
 #else
-        auto ok = StartupLinuxProcess( kfsetting );
+        auto ok = StartupLinuxProcess( deploydata );
 #endif
         if ( ok )
         {
-            kfsetting->_startup_time = KFGlobal::Instance()->_real_time;
-            UpdateProcessToServer( kfsetting );
+            deploydata->_startup_time = KFGlobal::Instance()->_real_time;
+            UpdateDeployToDatabase( deploydata );
 
             // 保存到文件中
-            SaveProcessToFile( kfsetting );
+            SaveProcessToFile( deploydata );
         }
     }
 
-    void KFDeployAgentModule::CheckServerProcess( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::CheckServerProcess( KFDeployData* deploydata )
     {
-        if ( kfsetting->_process_id == 0 )
+        if ( deploydata->_process_id == _invalid_int || deploydata->_kf_launch == nullptr )
         {
             return;
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        CheckWinProcess( kfsetting );
+        CheckWinProcess( deploydata );
 #else
-        CheckLinuxProcess( kfsetting );
+        CheckLinuxProcess( deploydata );
 #endif
-        if ( kfsetting->_process_id != 0 )
+        if ( deploydata->_process_id != _invalid_int )
         {
             return;
         }
 
         // 更新状态
-        UpdateProcessToServer( kfsetting );
+        UpdateDeployToDatabase( deploydata );
 
         // 保存到文件中
-        SaveProcessToFile( kfsetting );
+        SaveProcessToFile( deploydata );
     }
 
     void KFDeployAgentModule::BindServerProcess()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
-
-            ReadProcessFromFile( kfsetting );
-            if ( kfsetting->_process_id == 0 )
+            auto deploydata = iter.second;
+            if ( deploydata->_process_id == _invalid_int )
             {
-                continue;
+                ReadProcessFromFile( deploydata );
+                if ( deploydata->_process_id != _invalid_int )
+                {
+                    UpdateDeployToDatabase( deploydata );
+                }
             }
-
-            UpdateProcessToServer( kfsetting );
         }
     }
 
@@ -188,8 +203,14 @@ namespace KFrame
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__
-    bool KFDeployAgentModule::StartupWinProcess( KFLaunchSetting* kfsetting )
+    bool KFDeployAgentModule::StartupWinProcess( KFDeployData* deploydata )
     {
+        auto kflaunch = deploydata->_kf_launch;
+        if ( kflaunch == nullptr )
+        {
+            return false;
+        }
+
         // 启动进程
         STARTUPINFO startupinfo;
         memset( &startupinfo, 0, sizeof( STARTUPINFO ) );
@@ -197,42 +218,38 @@ namespace KFrame
         startupinfo.wShowWindow = SW_SHOW;
         startupinfo.dwFlags = STARTF_USESHOWWINDOW;
 
-        uint32 createflag = CREATE_NEW_CONSOLE;
-        if ( !_kf_deploy_agent_config->_is_show_window )
-        {
-            createflag = CREATE_NO_WINDOW;
-        }
-
-        auto apppatch = _kf_deploy_agent_config->_deploy_path + kfsetting->_app_path + "/";
-        auto startupfile = apppatch + kfsetting->GetStartupFile();
-        auto param = KFUtility::Format( " 0 %u %s", kfsetting->_app_id, kfsetting->_app_config.c_str() );
+        uint32 createflag = CREATE_NO_WINDOW;
+        auto apppath = kflaunch->GetAppPath();
+        auto startupfile = kflaunch->GetStartupFile();
+        auto param = __FORMAT__( " {}={} {}={} {}={}",
+                                 __KF_STRING__( appid ), deploydata->_app_id,
+                                 __KF_STRING__( log ), kflaunch->_log_type,
+                                 __KF_STRING__( startup ), kflaunch->_app_config );
 
         // 启动进程
         PROCESS_INFORMATION processinfo;
-        BOOL result = CreateProcess( startupfile.c_str(), param, NULL, NULL, FALSE, createflag, NULL,
-                                     apppatch.c_str(), &startupinfo, &processinfo );
+        BOOL result = CreateProcess( startupfile.c_str(), const_cast< char* >( param.c_str() ), NULL, NULL, FALSE,
+                                     createflag, NULL, apppath.c_str(), &startupinfo, &processinfo );
 
-        kfsetting->_process_id = processinfo.dwProcessId;
-        if ( kfsetting->_process_id != _invalid_int )
+        deploydata->_process_id = processinfo.dwProcessId;
+        if ( deploydata->_process_id != _invalid_int )
         {
-            KFLogger::LogLogic( KFLogger::Info, "startup [ %s:%s:%u ] ok! process=%u",
-                                kfsetting->_app_name.c_str(), kfsetting->_app_type.c_str(),
-                                kfsetting->_app_id, kfsetting->_process_id );
+            __LOG_DEBUG__( KFLogEnum::Logic, "startup [ {}:{}:{} ] ok! process={}",
+                           deploydata->_app_name, deploydata->_app_type, deploydata->_app_id, deploydata->_process_id );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "startup [ %s:%s:%u ] failed!",
-                                kfsetting->_app_name.c_str(), kfsetting->_app_type.c_str(),
-                                kfsetting->_app_id );
+            __LOG_ERROR__( KFLogEnum::System, "startup [ {}:{}:{} ] failed!",
+                           deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
 
-        return kfsetting->_process_id != _invalid_int;
+        return deploydata->_process_id != _invalid_int;
     }
 
-    void KFDeployAgentModule::CheckWinProcess( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::CheckWinProcess( KFDeployData* deploydata )
     {
         DWORD flag = PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION;
-        HANDLE handle = OpenProcess( flag, FALSE, kfsetting->_process_id );
+        HANDLE handle = OpenProcess( flag, FALSE, deploydata->_process_id );
         if ( handle != nullptr )
         {
             DWORD code = STILL_ACTIVE;
@@ -245,7 +262,7 @@ namespace KFrame
             TerminateProcess( handle, 0 );
         }
 
-        kfsetting->_process_id = 0;
+        deploydata->_process_id = 0;
     }
 
     void KFDeployAgentModule::KillWinProcess( uint32 processid )
@@ -261,27 +278,35 @@ namespace KFrame
     }
 
 #else
-    bool KFDeployAgentModule::StartupLinuxProcess( KFLaunchSetting* kfsetting )
+    bool KFDeployAgentModule::StartupLinuxProcess( KFDeployData* deploydata )
     {
+        auto kflaunch = deploydata->_kf_launch;
+        if ( kflaunch == nullptr )
+        {
+            return false;
+        }
+
         std::vector<char*> args;
 
-        auto apppath = _kf_deploy_agent_config->_deploy_path + kfsetting->_app_path + "/";
-        auto startupfile = apppath + kfsetting->GetStartupFile();
+        auto startupfile = kflaunch->GetStartupFile();
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
 
-        auto strpause = __TO_STRING__( 0 );
+        auto strpause = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
         args.push_back( const_cast< char* >( strpause.c_str() ) );
 
-        auto strappid = __TO_STRING__( kfsetting->_app_id );
+        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( log ), kflaunch->_log_type );
         args.push_back( const_cast< char* >( strappid.c_str() ) );
 
-        args.push_back( const_cast< char* >( kfsetting->_app_config.c_str() ) );
+        auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );
+        args.push_back( const_cast< char* >( strfile.c_str() ) );
+
         args.push_back( nullptr );
 
         auto pid = fork();
         if ( pid == 0 )	 // 子进程
         {
             // 新的目录
+            auto apppath = kflaunch->GetAppPath();
             if ( chdir( apppath.c_str() ) != 0 )
             {
                 _exit( 72 );
@@ -306,20 +331,15 @@ namespace KFrame
             rc = waitpid( pid, &status, 0 );
         } while ( rc < 0 && errno == EINTR );
 
-        kfsetting->_process_id = FindProcessIdByName( kfsetting, startupfile );
+        deploydata->_process_id = FindProcessIdByName( deploydata, startupfile );
         return true;
     }
 
-    uint32 KFDeployAgentModule::FindProcessIdByName( KFLaunchSetting* kfsetting, const std::string& startupfile )
+    uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile )
     {
-        char strtext[ 128 ] = { 0 };
-        sprintf( strtext, "%s 0 %u", startupfile.c_str(), kfsetting->_app_id );
-
-        char strshell[ 256 ] = { 0 };
-        sprintf( strshell, "ps -ef|grep '%s'|grep -v 'grep'|awk '{print $2}'",
-                 strtext );
-
-        FILE* fp = popen( strshell, "r" );
+        auto strshell = __FORMAT__( "ps -ef|grep '{} {}={}'|grep -v 'grep'|awk '{{print $2}}'",
+                                    startupfile, __KF_STRING__( appid ), deploydata->_app_id );
+        FILE* fp = popen( strshell.c_str(), "r" );
         if ( fp != nullptr )
         {
             // 逐行读取执行结果
@@ -336,18 +356,19 @@ namespace KFrame
         return _invalid_int;
     }
 
-    void KFDeployAgentModule::CheckLinuxProcess( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::CheckLinuxProcess( KFDeployData* deploydata )
     {
-        if ( kill( kfsetting->_process_id, 0 ) != 0 )
+        if ( kill( deploydata->_process_id, 0 ) != 0 )
         {
-            kfsetting->_process_id = 0;
+            auto startupfile = deploydata->_kf_launch->GetStartupFile();
+            deploydata->_process_id = FindProcessIdByName( deploydata, startupfile );
         }
     }
 
     void KFDeployAgentModule::KillLinuxProcess( uint32 processid )
     {
-        auto strkill = KFUtility::Format( "kill -s 9 %u", processid );
-        FILE* fp = popen( strkill, "r" );
+        auto strkill = __FORMAT__( "kill -s 9 {}", processid );
+        FILE* fp = popen( strkill.c_str(), "r" );
         if ( fp != nullptr )
         {
             pclose( fp );
@@ -355,41 +376,30 @@ namespace KFrame
     }
 #endif
 
-    void KFDeployAgentModule::UpdateProcessToServer( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::UpdateDeployToDatabase( KFDeployData* deploydata )
     {
-        if ( _deploy_server_id == 0 )
-        {
-            return;
-        }
+        MapString updatevalues;
+        updatevalues[ __KF_STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
+        updatevalues[ __KF_STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
+        updatevalues[ __KF_STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
+        updatevalues[ __KF_STRING__( agentid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
 
-        KFMsg::S2SUpdateServerStatusReq req;
-        req.set_agentid( KFGlobal::Instance()->_app_id );
-        req.set_appid( kfsetting->_app_id );
-        req.set_appname( kfsetting->_app_name );
-        req.set_apptype( kfsetting->_app_type );
-        req.set_zoneid( kfsetting->_zone_id );
-        req.set_process( kfsetting->_process_id );
-        req.set_startuptime( kfsetting->_startup_time );
-        req.set_isshutdown( kfsetting->_is_shutdown );
-        _kf_tcp_client->SendNetMessage( _deploy_server_id, KFMsg::S2S_UPDATE_SERVER_STATUS_REQ, &req );
+        MapString keyvalues;
+        keyvalues[ __KF_STRING__( appid ) ] = __TO_STRING__( deploydata->_app_id );
+        _mysql_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
     }
 
-    char* KFDeployAgentModule::FormatPidFileName( KFLaunchSetting* kfsetting )
+    std::string KFDeployAgentModule::FormatPidFileName( KFDeployData* deploydata )
     {
-        static char file[ 128 ] = "";
-
         // 文件名字
-        sprintf( file, "%s/%s/%s-%s-%u", _pid_path.c_str(), kfsetting->_app_path.c_str(),
-                 kfsetting->_app_name.c_str(), kfsetting->_app_type.c_str(), kfsetting->_app_id );
-
-        return file;
+        return __FORMAT__( "{}/{}-{}-{}", _pid_path, deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
     }
 
-    void KFDeployAgentModule::SaveProcessToFile( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::SaveProcessToFile( KFDeployData* deploydata )
     {
-        auto file = FormatPidFileName( kfsetting );
+        auto file = FormatPidFileName( deploydata );
 
-        auto pidpath = _pid_path + "/" + kfsetting->_app_path;
+        auto pidpath = _pid_path + "/";
         __MKDIR__( pidpath );
 
         std::ofstream offile( file );
@@ -398,17 +408,17 @@ namespace KFrame
             return;
         }
 
-        offile << kfsetting->_process_id;
+        offile << deploydata->_process_id;
         offile << DEFAULT_SPLIT_STRING;
-        offile << kfsetting->_startup_time;
+        offile << deploydata->_startup_time;
 
         offile.flush();
         offile.close();
     }
 
-    void KFDeployAgentModule::ReadProcessFromFile( KFLaunchSetting* kfsetting )
+    void KFDeployAgentModule::ReadProcessFromFile( KFDeployData* deploydata )
     {
-        auto file = FormatPidFileName( kfsetting );
+        auto file = FormatPidFileName( deploydata );
 
         std::ifstream infile( file );
         if ( !infile )
@@ -421,61 +431,38 @@ namespace KFrame
         infile.close();
 
         std::string strdata = os.str();
-        kfsetting->_process_id = KFUtility::SplitValue< uint32 >( strdata, DEFAULT_SPLIT_STRING );
-        kfsetting->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
+        deploydata->_process_id = KFUtility::SplitValue< uint32 >( strdata, DEFAULT_SPLIT_STRING );
+        deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleStartupServerReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SStartupServerToAgentReq );
+        __PROTO_PARSE__( KFMsg::S2SDeployCommandToAgentReq );
 
-        AddDeployTask( KFDeployTask::Startup, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
+        auto pbdeploy = &kfmsg.deploycommand();
+
+        if ( pbdeploy->command() == __KF_STRING__( restart ) )
+        {
+            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( download ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( startup ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        }
+        else
+        {
+            AddDeployTask( pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleShutDownServerReq )
+    void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype,
+            uint32 appid, uint32 zoneid )
     {
-        __PROTO_PARSE__( KFMsg::S2SShutDownServerToAgentReq );
-
-        // 添加到任务队列
-        AddDeployTask( KFDeployTask::ShutDown, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), kfmsg.delaytime() );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleKillServerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SKillServerToAgentReq );
-
-        AddDeployTask( KFDeployTask::Kill, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleUpdateServerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SUpdateServerToAgentReq );
-
-        AddDeployTask( KFDeployTask::Update, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleRestartServerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SRestartServerToAgentReq );
-
-        AddDeployTask( KFDeployTask::ShutDown, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid(), 10000 );
-        AddDeployTask( KFDeployTask::Update, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
-        AddDeployTask( KFDeployTask::Startup, kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.zoneid() );
-    }
-
-    void KFDeployAgentModule::AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime /* = 0 */ )
-    {
-        KFLogger::LogSystem( KFLogger::Info, "add task [%u | %s:%s:%u:%u:%u] tasklist cout[%u]!",
-                             type, appname.c_str(), apptype.c_str(), appid, zoneid, delaytime, _deploy_task.size() );
-
         auto kftask = __KF_CREATE__( KFDeployTask );
-        kftask->_deploy_type = type;
+        kftask->_command = command;
+        kftask->_value = value;
         kftask->_app_name = appname;
         kftask->_app_type = apptype;
         kftask->_app_id = appid;
         kftask->_zone_id = zoneid;
-        kftask->_delay_time = delaytime;
-        kftask->_start_time = KFGlobal::Instance()->_game_time + delaytime;
 
         if ( _kf_task == nullptr )
         {
@@ -485,6 +472,9 @@ namespace KFrame
         else
         {
             _deploy_task.push_back( kftask );
+
+            __LOG_INFO__( KFLogEnum::Logic, "add task [{}:{} | {}:{}:{}:{}] tasklist cout[{}]!",
+                          command, value, appname, apptype, appid, zoneid, _deploy_task.size() );
         }
     }
 
@@ -495,35 +485,35 @@ namespace KFrame
             return;
         }
 
-        auto ok = false;
-        switch ( _kf_task->_deploy_type )
+        auto ok = true;
+        if ( _kf_task->_command == __KF_STRING__( kill ) || _kf_task->_command == __KF_STRING__( shutdown ) )
         {
-        case KFDeployTask::Kill:
-        case KFDeployTask::ShutDown:
             ok = CheckShutDownServerTaskFinish();
             if ( !ok )
             {
                 // 判断当前时间, 如果任务不能完成, 直接杀死进程
                 if ( KFGlobal::Instance()->_game_time > _kf_task->_start_time + 60000 )
                 {
-                    _kf_task->_deploy_type = KFDeployTask::Kill;
+                    _kf_task->_command = __KF_STRING__( kill );
                     StartDeployTask();
                 }
             }
-            break;
-        case KFDeployTask::Startup:
+        }
+        else if ( _kf_task->_command == __KF_STRING__( startup ) )
+        {
             ok = CheckStartupServerTaskFinish();
-            break;
-        case KFDeployTask::Update:
+        }
+        else if ( _kf_task->_command == __KF_STRING__( download ) )
+        {
             ok = CheckUpdateServerTaskFinish();
-            break;
-        default:
-            ok = true;
-            break;
         }
 
         if ( ok )
         {
+            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task finish!",
+                          _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
+                          _kf_task->_app_id, _kf_task->_zone_id );
+
             __KF_DESTROY__( KFDeployTask, _kf_task );
             _kf_task = nullptr;
 
@@ -539,73 +529,85 @@ namespace KFrame
 
     void KFDeployAgentModule::StartDeployTask()
     {
-        switch ( _kf_task->_deploy_type )
+        _kf_task->_start_time = KFGlobal::Instance()->_game_time;
+
+        if ( _kf_task->_command == __KF_STRING__( startup ) )
         {
-        case KFDeployTask::Kill:
-            StartKillServerTask();
-            break;
-        case KFDeployTask::ShutDown:
-            StartShutDownServerTask();
-            break;
-        case KFDeployTask::Startup:
             StartStartupServerTask();
-            break;
-        case KFDeployTask::Update:
-            StartUpdateServerTask();
-            break;
-        default:
-            break;
         }
+        else if ( _kf_task->_command == __KF_STRING__( kill ) )
+        {
+            StartKillServerTask();
+        }
+        else if ( _kf_task->_command == __KF_STRING__( shutdown ) )
+        {
+            StartShutDownServerTask();
+        }
+        else if ( _kf_task->_command == __KF_STRING__( download ) )
+        {
+            StartUpdateServerTask();
+        }
+        else if ( _kf_task->_command == __KF_STRING__( launch ) )
+        {
+            LoadTotalLaunchData();
+        }
+        else
+        {
+            SendTaskToMaster();
+        }
+
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task start!",
+                      _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
+                      _kf_task->_app_id, _kf_task->_zone_id );
     }
 
     void KFDeployAgentModule::StartKillServerTask()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                kfsetting->_is_shutdown = true;
-                KillServerProcess( kfsetting->_process_id );
+                deploydata->_is_shutdown = true;
+                KillServerProcess( deploydata->_process_id );
+
+                UpdateDeployToDatabase( deploydata );
             }
         }
     }
 
     void KFDeployAgentModule::StartShutDownServerTask()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
-        {
-            auto kfsetting = iter.second;
+        _kf_task->_start_time += KFUtility::ToValue< uint32 >( _kf_task->_value );
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+        for ( auto& iter : _deploy_list._objects )
+        {
+            auto deploydata = iter.second;
+
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                kfsetting->_is_shutdown = true;
+                deploydata->_is_shutdown = true;
+                UpdateDeployToDatabase( deploydata );
             }
         }
 
-        KFMsg::S2SShutDownServerToMasterReq req;
-        req.set_appname( _kf_task->_app_name );
-        req.set_apptype( _kf_task->_app_type );
-        req.set_appid( _kf_task->_app_id );
-        req.set_zoneid( _kf_task->_zone_id );
-        req.set_delaytime( _kf_task->_delay_time );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_SHUT_DOWN_SERVER_TO_MASTER_REQ, &req );
+        SendTaskToMaster();
     }
 
     bool KFDeployAgentModule::CheckShutDownServerTaskFinish()
     {
         // 指定的server都关闭了
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                if ( kfsetting->_process_id != 0 )
+                if ( deploydata->_process_id != _invalid_int )
                 {
                     return false;
                 }
@@ -617,28 +619,31 @@ namespace KFrame
 
     void KFDeployAgentModule::StartStartupServerTask()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
-        {
-            auto kfsetting = iter.second;
+        __REGISTER_LOOP_TIMER__( 1, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+        for ( auto& iter : _deploy_list._objects )
+        {
+            auto deploydata = iter.second;
+
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                kfsetting->_is_shutdown = false;
+                deploydata->_is_shutdown = false;
+                UpdateDeployToDatabase( deploydata );
             }
         }
     }
 
     bool KFDeployAgentModule::CheckStartupServerTaskFinish()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                if ( kfsetting->_process_id == 0 )
+                if ( deploydata->_process_id == _invalid_int )
                 {
                     return false;
                 }
@@ -650,29 +655,34 @@ namespace KFrame
 
     void KFDeployAgentModule::StartUpdateServerTask()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
+            auto kflaunch = deploydata->_kf_launch;
+            if ( kflaunch == nullptr )
+            {
+                continue;
+            }
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                kfsetting->_is_download = true;
-                _kf_ftp->StartDownload( _kf_deploy_agent_config->_ftp_id, kfsetting->_app_path, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
+                deploydata->_is_download = true;
+                _kf_ftp->StartDownload( kflaunch->_ftp_id, kflaunch->_app_path, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
             }
         }
     }
 
     bool KFDeployAgentModule::CheckUpdateServerTaskFinish()
     {
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                if ( kfsetting->_is_download )
+                if ( deploydata->_is_download )
                 {
                     return false;
                 }
@@ -685,16 +695,21 @@ namespace KFrame
     void KFDeployAgentModule::OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok )
     {
         // 设置不在下载
-        for ( auto& iter : _kf_deploy_agent_config->_kf_launch_setting._objects )
+        for ( auto& iter : _deploy_list._objects )
         {
-            auto kfsetting = iter.second;
+            auto deploydata = iter.second;
+            auto kflaunch = deploydata->_kf_launch;
+            if ( kflaunch == nullptr )
+            {
+                continue;
+            }
 
-            auto isserver = kfsetting->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                if ( kfsetting->_app_path == apppath )
+                if ( kflaunch->_app_path == apppath )
                 {
-                    kfsetting->_is_download = false;
+                    deploydata->_is_download = false;
                 }
             }
         }
@@ -706,5 +721,19 @@ namespace KFrame
             *kftask = *_kf_task;
             _deploy_task.push_front( kftask );
         }
+    }
+
+    void KFDeployAgentModule::SendTaskToMaster()
+    {
+        KFMsg::S2SDeployCommandToMasterReq req;
+        auto pbdeploy = req.mutable_deploycommand();
+
+        pbdeploy->set_command( _kf_task->_command );
+        pbdeploy->set_value( _kf_task->_value );
+        pbdeploy->set_appname( _kf_task->_app_name );
+        pbdeploy->set_apptype( _kf_task->_app_type );
+        pbdeploy->set_appid( _kf_task->_app_id );
+        pbdeploy->set_zoneid( _kf_task->_zone_id );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_MASTER_REQ, &req );
     }
 }

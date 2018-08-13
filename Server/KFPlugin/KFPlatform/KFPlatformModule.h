@@ -15,7 +15,9 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-
+#include "KFConfig/KFConfigInterface.h"
+#include "KFRedis/KFRedisInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -67,7 +69,7 @@ namespace KFrame
         // 更新在线信息
         __KF_HTTP_FUNCTION__( HandleUpdateOnline );
 
-    private:
+    protected:
         void Run();
 
         // 查询创建账号
@@ -78,6 +80,10 @@ namespace KFrame
 
         // 保存额外数据
         void UpdateExtendData( uint32 accountid, uint32 channel, KFJson& kfjson );
+
+    protected:
+        // 服务器列表类型
+        uint32 _server_list_type;
     };
 }
 

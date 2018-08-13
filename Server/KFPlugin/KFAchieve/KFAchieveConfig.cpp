@@ -36,6 +36,8 @@ namespace KFrame
     {
         _achieve_setting.Clear();
         _object_types.clear();
+        _battle_achieve_setting.Clear();
+
     }
 
     const KFAchieveSetting* KFAchieveConfig::FindAchieveSetting( uint32 id ) const
@@ -155,9 +157,17 @@ namespace KFrame
                 kfsetting->_data_name = xmlnode.GetString( "DataName" );
 
                 auto rewards = xmlnode.GetString( "Rewards" );
-                kfsetting->_rewards.ParseFromString( rewards, __FUNCTION_LINE__ );
+                kfsetting->_rewards.ParseFromString( rewards, __FUNC_LINE__ );
 
-                AddKFAchieveSetting( kfsetting );
+                if ( KFAchieveEnum::lobby == xmlnode.GetUInt32( "HandleType" ) )
+                {
+                    AddKFAchieveSetting( kfsetting );
+                }
+
+                else
+                {
+                    _battle_achieve_setting.Insert( kfsetting->_id, kfsetting );
+                }
 
                 xmlnode.NextNode();
             }

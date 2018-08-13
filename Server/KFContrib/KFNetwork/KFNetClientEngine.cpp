@@ -1,7 +1,6 @@
 ﻿#include "KFNetClientEngine.h"
 #include "KFNetClientServices.h"
 #include "KFNetEvent.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -92,8 +91,10 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogNet( KFLogger::Info, "[%s:%s:%u|%s:%u] client connected!",
-                          kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
+
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] connect ok!",
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         // 上层回调
         if ( _client_connect_function != nullptr )
@@ -111,8 +112,9 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogNet( KFLogger::Info, "[%s:%s:%u|%s:%u] client disconnect!",
-                          kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] disconnect!",
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         // 上层回调
         if ( _client_disconnect_function != nullptr )
@@ -130,8 +132,9 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogNet( KFLogger::Info, "[%s:%s:%u|%s:%u] client shutdown!",
-                          kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] client shutdown!",
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         _kf_clients.Remove( eventdata->_id );
     }
@@ -145,8 +148,9 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogSystem( KFLogger::Error, "[%s:%s:%u|%s:%u] connect failed!",
-                             kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
+        __LOG_ERROR__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] connect failed!",
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
     }
 
     void KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
@@ -168,7 +172,7 @@ namespace KFrame
 
     void KFNetClientEngine::RunWaitClient()
     {
-        if ( _wait_clients.empty() )
+        if ( _net_client_services->_is_shutdown || _wait_clients.empty() )
         {
             return;
         }
@@ -178,9 +182,6 @@ namespace KFrame
             auto& kfsetting = iter.second;
             auto kfclient = _kf_clients.Create( kfsetting._id );
             kfclient->StartClient( _net_client_services, kfsetting );
-
-            KFLogger::LogNet( KFLogger::Info, "[%s:%s:%u|%s:%u] start connect!",
-                              kfsetting._name.c_str(), kfsetting._type.c_str(), kfsetting._id, kfsetting._ip.c_str(), kfsetting._port );
         }
 
         _wait_clients.clear();
@@ -200,9 +201,6 @@ namespace KFrame
         }
 
         auto kfsetting = &kfclient->_net_setting;
-        KFLogger::LogNet( KFLogger::Info, "[%s:%u][%s:%s:%u|%s:%u] connect close!", function, line,
-                          kfsetting->_name.c_str(), kfsetting->_type.c_str(), kfsetting->_id, kfsetting->_ip.c_str(), kfsetting->_port );
-
         kfclient->CloseClient();
     }
 
@@ -220,9 +218,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] msgid[%u] can't find server[%u]!",
-                              __FUNCTION__, msgid, serverid );
-
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, KFAppID::ToString( serverid ) );
             return false;
         }
 
@@ -234,9 +230,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            KFLogger::LogNet( KFLogger::Error, "[%s] msgid[%u] can't find server[%u]!",
-                              __FUNCTION__, msgid, serverid );
-
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, KFAppID::ToString( serverid ) );
             return false;
         }
 

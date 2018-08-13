@@ -1,52 +1,43 @@
 ﻿#include "KFLogClientModule.h"
-#include "KFUtility/KFUtility.h"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
-    KFLogClientModule::KFLogClientModule()
-    {
-    }
-
-    KFLogClientModule::~KFLogClientModule()
-    {
-
-    }
-
-    void KFLogClientModule::InitModule()
-    {
-
-    }
-
     void KFLogClientModule::BeforeRun()
     {
-
+        _kf_cluster->RegisterConnectionFunction( __KF_STRING__( log ), this, &KFLogClientModule::OnConnectionLogCluster );
     }
 
     void KFLogClientModule::BeforeShut()
     {
-
+        _kf_cluster->UnRegisterConnectionFunction( __KF_STRING__( log ) );
     }
 
-    void KFLogClientModule::LogRemote( const int log_level, const int log_category, const std::string& log_info )
+    void KFLogClientModule::OnConnectionLogCluster( uint32 serverid )
+    {
+        auto kfglobal = KFGlobal::Instance();
+
+        // 注册log函数
+        kfglobal->RegisterRemoteLogFunction( this, &KFLogClientModule::LogRemote );
+    }
+
+    bool KFLogClientModule::LogRemote( uint32 loglevel, uint32 category, const std::string& loginfo )
     {
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SLogReq req;
-        req.set_log_level( log_level );
-        req.set_log_category( log_category );
+        req.set_log_level( loglevel );
+        req.set_log_category( category );
         req.set_app_name( kfglobal->_app_name );
         req.set_app_type( kfglobal->_app_type );
         req.set_app_id( kfglobal->_app_id );
         req.set_zone_id( kfglobal->_zone_id );
-        req.set_log_info( log_info );
+        req.set_log_info( loginfo );
 
-        SendMessageToLog( KFMsg::S2S_LOG_REQ, &req );
-    }
-
-    bool KFLogClientModule::SendMessageToLog( uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( log ), msgid, message );
+        return _kf_cluster->SendMessageToShard( __KF_STRING__( log ), KFMsg::S2S_LOG_REQ, &req );
     }
 
 }
+
+
 

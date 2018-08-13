@@ -20,5 +20,6 @@ namespace KFrame
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
         __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
+        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

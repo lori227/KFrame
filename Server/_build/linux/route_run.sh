@@ -10,12 +10,12 @@ server=routeserver
 fi
 
 echo Starting Route Cluster Server
-./$server 0 30000 ./setting/master.startup
+./$server appid=30000 log=1 startup=./setting/master.startup
 
 echo Starting Route Proxy Server
-./$server 0 30001 ./setting/proxy.startup
+./$server appid=30001 log=1 startup=./setting/proxy.startup
 
 echo Starting Route Shard Server
-./$server 0 32001 ./setting/shard.startup
+./$server appid=32001 log=1 startup=./setting/shard.startup
 
 cd $basepath

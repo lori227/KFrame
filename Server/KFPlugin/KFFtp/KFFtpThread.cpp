@@ -41,10 +41,9 @@ namespace KFrame
             return;
         }
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%u] ftp task start!",
-                             _app_path.c_str(), _ftp_id );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{}] ftp start!", _app_path, _ftp_id );
 
-        _ftp_result = KFFtpEnum::Login;
+        _ftp_result = KFFtpEnum::FtpLogin;
         CreateFtpThread();
     }
 
@@ -55,8 +54,7 @@ namespace KFrame
             _ftp_function( _ftp_id, _app_path, _ftp_result == KFFtpEnum::Finish );
         }
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s:%u] ftp task finish!",
-                             _app_path.c_str(), _ftp_id );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{}] ftp finish!", _app_path, _ftp_id );
     }
 
     bool KFFtpThread::IsFinish()

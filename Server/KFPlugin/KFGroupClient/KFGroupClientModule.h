@@ -17,9 +17,11 @@
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFMatchClient/KFMatchClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

@@ -9,6 +9,6 @@ server=platformserver
 fi
 
 echo Starting Platform Server
-./$server 0 2011 ./setting/platform.startup
-./$server 0 2012 ./setting/platform.startup
+./$server appid=2011 log=1 startup=./setting/platform.startup
+./$server appid=2012 log=1 startup=./setting/platform.startup
 cd $basepath

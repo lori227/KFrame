@@ -68,6 +68,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* S2SPlayerOnlineToBattleShardReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   S2SPlayerOnlineToBattleShardReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* S2SNoticeMatchStateReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  S2SNoticeMatchStateReq_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MatchProtocol_descriptor_ = NULL;
 
 }  // namespace
@@ -361,6 +364,22 @@ void protobuf_AssignDesc_KFMatchMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SPlayerOnlineToBattleShardReq));
+  S2SNoticeMatchStateReq_descriptor_ = file->message_type(16);
+  static const int S2SNoticeMatchStateReq_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SNoticeMatchStateReq, playerid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SNoticeMatchStateReq, matchid_),
+  };
+  S2SNoticeMatchStateReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      S2SNoticeMatchStateReq_descriptor_,
+      S2SNoticeMatchStateReq::default_instance_,
+      S2SNoticeMatchStateReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SNoticeMatchStateReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SNoticeMatchStateReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(S2SNoticeMatchStateReq));
   MatchProtocol_descriptor_ = file->enum_type(0);
 }
 
@@ -406,6 +425,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     S2SQueryRoomToBattleShardReq_descriptor_, &S2SQueryRoomToBattleShardReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     S2SPlayerOnlineToBattleShardReq_descriptor_, &S2SPlayerOnlineToBattleShardReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    S2SNoticeMatchStateReq_descriptor_, &S2SNoticeMatchStateReq::default_instance());
 }
 
 }  // namespace
@@ -443,6 +464,8 @@ void protobuf_ShutdownFile_KFMatchMessage_2eproto() {
   delete S2SQueryRoomToBattleShardReq_reflection_;
   delete S2SPlayerOnlineToBattleShardReq::default_instance_;
   delete S2SPlayerOnlineToBattleShardReq_reflection_;
+  delete S2SNoticeMatchStateReq::default_instance_;
+  delete S2SNoticeMatchStateReq_reflection_;
 }
 
 void protobuf_AddDesc_KFMatchMessage_2eproto() {
@@ -491,21 +514,24 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
     "\n\010playerid\030\002 \002(\r\022\020\n\010serverid\030\003 \002(\r\"e\n\037S2"
     "SPlayerOnlineToBattleShardReq\022\016\n\006roomid\030"
     "\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\022"
-    "\020\n\010serverid\030\004 \002(\r*\274\004\n\rMatchProtocol\022\033\n\026S"
-    "2S_REGISTER_MATCH_REQ\020\335V\022\033\n\026S2S_MATCH_TO"
-    "_PROXY_REQ\020\336V\022\033\n\026S2S_MATCH_TO_SHARD_REQ\020"
-    "\337V\022\034\n\027S2S_MATCH_TO_CLIENT_ACK\020\340V\022\"\n\035S2S_"
-    "CANCEL_MATCH_TO_PROXY_REQ\020\343V\022\"\n\035S2S_CANC"
-    "EL_MATCH_TO_SHARD_REQ\020\344V\022\036\n\031S2S_NOTICE_M"
-    "ATCH_ROOM_REQ\020\345V\022\036\n\031S2S_NOTICE_MATCH_ROO"
-    "M_ACK\020\346V\022\035\n\030S2S_QUERY_MATCH_ROOM_REQ\020\347V\022"
-    "\035\n\030S2S_QUERY_MATCH_ROOM_ACK\020\350V\022\036\n\031S2S_QU"
-    "ERY_BATTLE_ROOM_REQ\020\351V\022&\n!S2S_QUERY_ROOM"
-    "_TO_MATCH_SHARD_REQ\020\353V\022\'\n\"S2S_QUERY_ROOM"
-    "_TO_BATTLE_SHARD_REQ\020\354V\022)\n$S2S_CANCEL_MA"
-    "TCH_TO_BATTLE_SHARD_REQ\020\356V\022(\n#S2S_CANCEL"
-    "_MATCH_TO_MATCH_SHARD_ACK\020\357V\022*\n%S2S_PLAY"
-    "ER_ONLINE_TO_BATTLE_SHARD_REQ\020\360V", 2112);
+    "\020\n\010serverid\030\004 \002(\r\";\n\026S2SNoticeMatchState"
+    "Req\022\020\n\010playerid\030\001 \002(\r\022\017\n\007matchid\030\002 \002(\r*\335"
+    "\004\n\rMatchProtocol\022\033\n\026S2S_REGISTER_MATCH_R"
+    "EQ\020\335V\022\033\n\026S2S_MATCH_TO_PROXY_REQ\020\336V\022\033\n\026S2"
+    "S_MATCH_TO_SHARD_REQ\020\337V\022\034\n\027S2S_MATCH_TO_"
+    "CLIENT_ACK\020\340V\022\"\n\035S2S_CANCEL_MATCH_TO_PRO"
+    "XY_REQ\020\343V\022\"\n\035S2S_CANCEL_MATCH_TO_SHARD_R"
+    "EQ\020\344V\022\036\n\031S2S_NOTICE_MATCH_ROOM_REQ\020\345V\022\036\n"
+    "\031S2S_NOTICE_MATCH_ROOM_ACK\020\346V\022\035\n\030S2S_QUE"
+    "RY_MATCH_ROOM_REQ\020\347V\022\035\n\030S2S_QUERY_MATCH_"
+    "ROOM_ACK\020\350V\022\036\n\031S2S_QUERY_BATTLE_ROOM_REQ"
+    "\020\351V\022&\n!S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ"
+    "\020\353V\022\'\n\"S2S_QUERY_ROOM_TO_BATTLE_SHARD_RE"
+    "Q\020\354V\022)\n$S2S_CANCEL_MATCH_TO_BATTLE_SHARD"
+    "_REQ\020\356V\022(\n#S2S_CANCEL_MATCH_TO_MATCH_SHA"
+    "RD_ACK\020\357V\022*\n%S2S_PLAYER_ONLINE_TO_BATTLE"
+    "_SHARD_REQ\020\360V\022\037\n\032S2S_NOTICE_MATCH_STATE_"
+    "REQ\020\361V", 2206);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMatchMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterMatchReq::default_instance_ = new S2SRegisterMatchReq();
@@ -524,6 +550,7 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
   S2SQueryBattleRoomReq::default_instance_ = new S2SQueryBattleRoomReq();
   S2SQueryRoomToBattleShardReq::default_instance_ = new S2SQueryRoomToBattleShardReq();
   S2SPlayerOnlineToBattleShardReq::default_instance_ = new S2SPlayerOnlineToBattleShardReq();
+  S2SNoticeMatchStateReq::default_instance_ = new S2SNoticeMatchStateReq();
   S2SRegisterMatchReq::default_instance_->InitAsDefaultInstance();
   S2SMatchToProxyReq::default_instance_->InitAsDefaultInstance();
   S2SMatchToClientAck::default_instance_->InitAsDefaultInstance();
@@ -540,6 +567,7 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
   S2SQueryBattleRoomReq::default_instance_->InitAsDefaultInstance();
   S2SQueryRoomToBattleShardReq::default_instance_->InitAsDefaultInstance();
   S2SPlayerOnlineToBattleShardReq::default_instance_->InitAsDefaultInstance();
+  S2SNoticeMatchStateReq::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFMatchMessage_2eproto);
 }
 
@@ -571,6 +599,7 @@ bool MatchProtocol_IsValid(int value) {
     case 11118:
     case 11119:
     case 11120:
+    case 11121:
       return true;
     default:
       return false;
@@ -5650,6 +5679,255 @@ void S2SPlayerOnlineToBattleShardReq::Swap(S2SPlayerOnlineToBattleShardReq* othe
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = S2SPlayerOnlineToBattleShardReq_descriptor_;
   metadata.reflection = S2SPlayerOnlineToBattleShardReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int S2SNoticeMatchStateReq::kPlayeridFieldNumber;
+const int S2SNoticeMatchStateReq::kMatchidFieldNumber;
+#endif  // !_MSC_VER
+
+S2SNoticeMatchStateReq::S2SNoticeMatchStateReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void S2SNoticeMatchStateReq::InitAsDefaultInstance() {
+}
+
+S2SNoticeMatchStateReq::S2SNoticeMatchStateReq(const S2SNoticeMatchStateReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void S2SNoticeMatchStateReq::SharedCtor() {
+  _cached_size_ = 0;
+  playerid_ = 0u;
+  matchid_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+S2SNoticeMatchStateReq::~S2SNoticeMatchStateReq() {
+  SharedDtor();
+}
+
+void S2SNoticeMatchStateReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void S2SNoticeMatchStateReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* S2SNoticeMatchStateReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return S2SNoticeMatchStateReq_descriptor_;
+}
+
+const S2SNoticeMatchStateReq& S2SNoticeMatchStateReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFMatchMessage_2eproto();
+  return *default_instance_;
+}
+
+S2SNoticeMatchStateReq* S2SNoticeMatchStateReq::default_instance_ = NULL;
+
+S2SNoticeMatchStateReq* S2SNoticeMatchStateReq::New() const {
+  return new S2SNoticeMatchStateReq;
+}
+
+void S2SNoticeMatchStateReq::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    playerid_ = 0u;
+    matchid_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool S2SNoticeMatchStateReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 playerid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &playerid_)));
+          set_has_playerid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_matchid;
+        break;
+      }
+
+      // required uint32 matchid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_matchid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &matchid_)));
+          set_has_matchid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void S2SNoticeMatchStateReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint32 playerid = 1;
+  if (has_playerid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+  }
+
+  // required uint32 matchid = 2;
+  if (has_matchid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->matchid(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* S2SNoticeMatchStateReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 playerid = 1;
+  if (has_playerid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+  }
+
+  // required uint32 matchid = 2;
+  if (has_matchid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->matchid(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int S2SNoticeMatchStateReq::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 playerid = 1;
+    if (has_playerid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->playerid());
+    }
+
+    // required uint32 matchid = 2;
+    if (has_matchid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->matchid());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void S2SNoticeMatchStateReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const S2SNoticeMatchStateReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SNoticeMatchStateReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void S2SNoticeMatchStateReq::MergeFrom(const S2SNoticeMatchStateReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_playerid()) {
+      set_playerid(from.playerid());
+    }
+    if (from.has_matchid()) {
+      set_matchid(from.matchid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void S2SNoticeMatchStateReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void S2SNoticeMatchStateReq::CopyFrom(const S2SNoticeMatchStateReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S2SNoticeMatchStateReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+
+  return true;
+}
+
+void S2SNoticeMatchStateReq::Swap(S2SNoticeMatchStateReq* other) {
+  if (other != this) {
+    std::swap(playerid_, other->playerid_);
+    std::swap(matchid_, other->matchid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata S2SNoticeMatchStateReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = S2SNoticeMatchStateReq_descriptor_;
+  metadata.reflection = S2SNoticeMatchStateReq_reflection_;
   return metadata;
 }
 

@@ -16,6 +16,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -95,6 +96,9 @@ namespace KFrame
 
         // 发送到对象
         __KF_MESSAGE_FUNCTION__( HandleSendToObjectReq );
+
+        // 分配shard
+        __KF_MESSAGE_FUNCTION__( HandleAllocShardAck );
 
     protected:
         // 转发消息到Shard

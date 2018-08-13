@@ -12,7 +12,6 @@
 #include "KFrame.h"
 #include "KFMySQLInterface.h"
 #include "KFMySQLExecute.h"
-#include "KFThread/KFMutex.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame

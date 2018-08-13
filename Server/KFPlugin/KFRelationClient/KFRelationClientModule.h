@@ -19,6 +19,7 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -91,6 +92,9 @@ namespace KFrame
 
         // 更新最近游戏列表
         __KF_MESSAGE_FUNCTION__( HandleModifyRecentListReq );
+
+        // 查询最近游戏列表请求
+        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
 
     private:
         // 解析好友信息

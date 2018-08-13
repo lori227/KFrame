@@ -154,13 +154,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( guid, msgid, data, length );
             if ( !ok )
             {
-                KFLogger::LogNet( KFLogger::Error, "[%s] tcp client transmit msgid[%u] failed!",
-                                  __FUNCTION__, msgid );
+                __LOG_ERROR__( KFLogEnum::System, "tcp client transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "msgid[%u] can't find function!", msgid );
+            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find function!", msgid );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,6 +172,9 @@ namespace KFrame
         }
 
         _kf_client_engine->StartClient( name, type, id, ip, port );
+
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] start connect!",
+                       name, type, KFAppID::ToString( id ), ip, port );
     }
 
     bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint32 id )
@@ -191,6 +193,9 @@ namespace KFrame
     void KFTcpClientModule::CloseClient( uint32 serverid, const char* function, uint32 line )
     {
         _kf_client_engine->CloseClient( serverid, function, line );
+
+        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "[{}:{}] connect close!",
+                                serverid, KFAppID::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,8 +267,9 @@ namespace KFrame
         {
             auto kfsetting = &kfclient->_net_setting;
 
-            KFLogger::LogSystem( KFLogger::Info, "[%s:%s:%u|%s:%u] connect ok!",
-                                 servername.c_str(), servertype.c_str(), serverid, kfsetting->_ip.c_str(), kfsetting->_port );
+            __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] service ok!",
+                           servername, servertype, KFAppID::ToString( serverid ),
+                           kfsetting->_ip, kfsetting->_port );
         }
     }
 }

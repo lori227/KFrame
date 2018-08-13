@@ -1,12 +1,12 @@
 @echo off
 
 echo Starting Data Cluster Server
-start "Data_Master" "KFStartupd.exe" "0" "10000" "./setting/master.startup"
+start "Data_Master" "KFStartupd.exe" "appid=10000" "log=1" "startup=./setting/master.startup"
 
 echo Starting Data Proxy Server
-start "Data_Proxy" "KFStartupd.exe" "0" "10001" "./setting/proxy.startup"
+start "Data_Proxy" "KFStartupd.exe" "appid=10001" "log=1" "startup=./setting/proxy.startup"
 
 echo Starting Data Shard Server
-start "Data_Shard" "KFStartupd.exe" "0" "12006" "./setting/shard.startup"
+start "Data_Shard" "KFStartupd.exe" "appid=12006" "log=1" "startup=./setting/shard.startup"
 
 

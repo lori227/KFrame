@@ -55,37 +55,24 @@ namespace KFrame
 
     std::string KFFtpSetting::GetFtpPath( const std::string& apppath ) const
     {
-        char buff[ 128 ] = "";
-
 #if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), __KF_CHAR__( win64 ) );
+        return __FORMAT__( "{}/{}/{}", _ftp_root_path, apppath, __KF_STRING__( win64 ) );
 #else
-        sprintf( buff, "%s/%s/%s", _ftp_root_path.c_str(), apppath.c_str(), __KF_CHAR__( linux ) );
+        return __FORMAT__( "{}/{}/{}", _ftp_root_path, apppath, __KF_STRING__( linux ) );
 #endif
-        return buff;
     }
 
     std::string KFFtpSetting::GetDownloadPath( const std::string& apppath ) const
     {
-        char buff[ 128 ] = "";
-
-#if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s", _download_path.c_str(), apppath.c_str() );
-#else
-        sprintf( buff, "%s/%s", _download_path.c_str(), apppath.c_str() );
-#endif
-        return buff;
+        return __FORMAT__( "{}/{}", _download_path, apppath );
     }
 
     std::string KFFtpSetting::GetUploadPath( const std::string& apppath ) const
     {
-        char buff[ 128 ] = "";
-
 #if __KF_SYSTEM__ == __KF_WIN__
-        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), __KF_CHAR__( win64 ) );
+        return __FORMAT__( "{}/{}/{}", _upload_path, apppath, __KF_STRING__( win64 ) );
 #else
-        sprintf( buff, "%s/%s/%s", _upload_path.c_str(), apppath.c_str(), __KF_CHAR__( linux ) );
+        return __FORMAT__( "{}/{}/{}", _upload_path, apppath, __KF_STRING__( linux ) );
 #endif
-        return buff;
     }
 }

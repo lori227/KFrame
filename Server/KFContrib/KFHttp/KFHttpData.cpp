@@ -1,7 +1,6 @@
 ﻿#include "KFHttpData.h"
 #include "KFHttpClient.h"
 #include "KFHttpsClient.h"
-#include "KFThread/KFThread.h"
 
 namespace KFrame
 {

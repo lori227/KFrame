@@ -1,6 +1,7 @@
 ﻿#include "KFLoginLoginModule.h"
 #include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -71,13 +72,11 @@ namespace KFrame
         auto ok = _kf_login->SendMessageToGate( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login verify result[%u] ok!",
-                                __FUNCTION__, accountid, playerid, result );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login verify result[{}] ok!", accountid, playerid, result );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] login verify result[%u] failed!",
-                                __FUNCTION__, accountid, playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login verify result[{}] failed!", accountid, playerid, result );
         }
     }
 
@@ -88,7 +87,8 @@ namespace KFrame
         auto gateid = __KF_HEAD_ID__( kfguid );
         auto accountid = kfmsg.accountid();
         auto& token = kfmsg.token();
-        KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] login verify", __FUNCTION__, accountid );
+
+        __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] login verify", accountid );
 
         if ( _is_login_close )
         {
@@ -142,7 +142,7 @@ namespace KFrame
         auto ok = _kf_data->SendMessageToData( _kf_zone->GetZone()->_id, KFMsg::S2S_LOGIN_QUERY_PLAYERID_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] query playerid", __FUNCTION__, accountid );
+            __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] query playerid", accountid );
         }
         else
         {
@@ -173,8 +173,7 @@ namespace KFrame
         auto ok = _kf_login->SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] query player[%u] ok!",
-                                __FUNCTION__, accountid, playerid );
+            __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] query player[{}] ok!", accountid, playerid );
         }
         else
         {

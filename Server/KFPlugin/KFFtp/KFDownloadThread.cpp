@@ -1,8 +1,5 @@
 ﻿#include "KFDownloadThread.h"
 #include "KFFtpConfig.h"
-#include "KFTime/KFDate.h"
-#include "KFThread/KFThread.h"
-#include "KFConvert/KFConvert.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <windows.h>
@@ -18,7 +15,7 @@ namespace KFrame
 {
     void KFDownloadThread::CreateFtpThread()
     {
-        KFThread::CreateThread( this, &KFDownloadThread::Run, __FUNCTION_LINE__ );
+        KFThread::CreateThread( this, &KFDownloadThread::Run, __FUNC_LINE__ );
     }
 
     void KFDownloadThread::Run()
@@ -42,7 +39,6 @@ namespace KFrame
             }
 
             _ftp_result = KFFtpEnum::Process;
-            //ftpclient.SetResumeMode( false );
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
@@ -132,12 +128,13 @@ namespace KFrame
         if ( !ftpclient->DownloadFile( ftpfile, downloadfile ) )
         {
             DeleteLocalFile( downloadfile );
-            return KFLogger::LogSystem( KFLogger::Error, "download [ %s ] failed!", localfile.c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "download [{}] failed!", localfile );
         }
-
-        DeleteLocalFile( localfile );
-        RenameFile( downloadfile, localfile );
-
-        KFLogger::LogSystem( KFLogger::Info, "download [ %s ] ok!", localfile.c_str() );
+        else
+        {
+            DeleteLocalFile( localfile );
+            RenameFile( downloadfile, localfile );
+            __LOG_INFO__( KFLogEnum::Logic, "download [{}] ok!", localfile );
+        }
     }
 }

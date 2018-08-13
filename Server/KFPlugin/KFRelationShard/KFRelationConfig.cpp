@@ -16,6 +16,7 @@ namespace KFrame
         _invite_keep_time = 0;
         _max_jing_jiu_friend_liness = 0;
         _max_recent_list = 0;
+        _max_friend_liness = 0;
     }
 
     KFRelationConfig::~KFRelationConfig()
@@ -42,6 +43,7 @@ namespace KFrame
             _friend_liness_reset_time = setting.GetUInt32( "ResetFriendLinessTime" );
             _max_jing_jiu_friend_liness = setting.GetUInt32( "MaxJingJiuFriendLiness" );
             _max_recent_list = setting.GetUInt32( "MaxRecentList" );
+            _max_friend_liness = setting.GetUInt32( "MaxFriendLiness" );
             //////////////////////////////////////////////////////////////////
         }
 
@@ -53,22 +55,26 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFRelationConfig::getMaxFriendLine( uint32 operate )
+
+
+    uint32 KFRelationConfig::GetMaxFriendLine( uint32 operate )
     {
         switch ( operate )
         {
-        case KFFriendEnum::Team:
+        case KFMsg::FriendLinessEnum::Team:
             return _max_team_friend_liness;
             break;
 
-        case KFFriendEnum::Win:
+        case KFMsg::FriendLinessEnum::Win:
             return _max_win_friend_liness;
             break;
 
-        case KFFriendEnum::Laud:
+        case KFMsg::FriendLinessEnum::Laud:
             return _max_jing_jiu_friend_liness;
             break;
 
+        case KFMsg::FriendLinessEnum::Give:
+            return _max_friend_liness;
         default:
             break;
         }

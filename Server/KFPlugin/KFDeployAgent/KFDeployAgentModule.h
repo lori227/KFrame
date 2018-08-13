@@ -10,43 +10,36 @@
 //    @Date             :    2018-7-2
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFDeploy.h"
 #include "KFDeployAgentInterface.h"
 #include "KFFtp/KFFtpInterface.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFMySQL/KFMySQLInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
     class KFDeployTask
     {
     public:
-        enum MyEnum
-        {
-            None = 0,
-            Startup = 1,		// 启动
-            ShutDown = 2,		// 关闭
-            Kill = 3,			// 强制关闭
-            Update = 4,			// 更新
-        };
-
-    public:
         KFDeployTask()
         {
             _app_id = _invalid_int;
-            _deploy_type = _invalid_int;
-            _delay_time = _invalid_int;
             _zone_id = _invalid_int;
             _start_time = 0;
         }
 
     public:
-        // 部署类型
-        uint32 _deploy_type;
+        // 部署命令
+        std::string _command;
+
+        // 数值
+        std::string _value;
 
         // appname
         std::string _app_name;
@@ -59,9 +52,6 @@ namespace KFrame
 
         // zoneid
         uint32 _zone_id;
-
-        // 延迟时间
-        uint32 _delay_time;
 
         // 开始时间
         uint64 _start_time;
@@ -95,29 +85,17 @@ namespace KFrame
 
     protected:
         // 启动服务器
-        __KF_MESSAGE_FUNCTION__( HandleStartupServerReq );
-
-        // 关闭服务器
-        __KF_MESSAGE_FUNCTION__( HandleShutDownServerReq );
-
-        // 杀死服务器
-        __KF_MESSAGE_FUNCTION__( HandleKillServerReq );
-
-        // 更新服务器
-        __KF_MESSAGE_FUNCTION__( HandleUpdateServerReq );
-
-        // 重启服务器
-        __KF_MESSAGE_FUNCTION__( HandleRestartServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
 
     protected:
         // 更新数据到部署服务
-        void UpdateProcessToServer( KFLaunchSetting* kfsetting );
+        void UpdateDeployToDatabase( KFDeployData* deploydata );
 
         // 启动服务器进程
-        void StartupServerProcess( KFLaunchSetting* kfsetting );
+        void StartupServerProcess( KFDeployData* deploydata );
 
         // 检查服务器进程
-        void CheckServerProcess( KFLaunchSetting* kfsetting );
+        void CheckServerProcess( KFDeployData* deploydata );
 
         // 绑定继承
         void BindServerProcess();
@@ -126,37 +104,36 @@ namespace KFrame
         void KillServerProcess( uint32 processid );
 
         // 保存进程信息到文件中
-        char* FormatPidFileName( KFLaunchSetting* kfsetting );
+        std::string FormatPidFileName( KFDeployData* deploydata );
 
-        void SaveProcessToFile( KFLaunchSetting* kfsetting );
-        void ReadProcessFromFile( KFLaunchSetting* kfsetting );
+        void SaveProcessToFile( KFDeployData* deploydata );
+        void ReadProcessFromFile( KFDeployData* deploydata );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程
-        bool StartupWinProcess( KFLaunchSetting* kfsetting );
+        bool StartupWinProcess( KFDeployData* deploydata );
 
         // 检查进程是否存在
-        void CheckWinProcess( KFLaunchSetting* kfsetting );
+        void CheckWinProcess( KFDeployData* deploydata );
 
         // 杀死进程
         void KillWinProcess( uint32 processid );
 #else
         // 启动进程
-        bool StartupLinuxProcess( KFLaunchSetting* kfsetting );
+        bool StartupLinuxProcess( KFDeployData* deploydata );
 
         // 获得linux进程id
-        uint32 FindProcessIdByName( KFLaunchSetting* kfsetting, const std::string& startupfile );
+        uint32 FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile );
 
         // 检查进程是否存在
-        void CheckLinuxProcess( KFLaunchSetting* kfsetting );
+        void CheckLinuxProcess( KFDeployData* deploydata );
 
         // 杀死进程
         void KillLinuxProcess( uint32 processid );
 #endif
-
     protected:
         // 添加部署任务
-        void AddDeployTask( uint32 type, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid, uint32 delaytime = 0 );
+        void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
 
         // 开始任务
         void StartDeployTask();
@@ -173,8 +150,25 @@ namespace KFrame
         // ftp下载回调
         void OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok );
 
+        // 发送消息到master
+        void SendTaskToMaster();
+
+        // 加载启动信息
+        void LoadTotalLaunchData();
+
     private:
+        // 部署服务器的
         uint32 _deploy_server_id;
+
+        // mysql
+        KFMySQLDriver* _mysql_driver;
+
+        // deploy列表
+        KFMap< uint32, uint32, KFDeployData > _deploy_list;
+
+        // launch列表
+        typedef std::pair< std::string, std::string > LaunchKey;
+        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
 
         // 当前执行的任务
         KFDeployTask* _kf_task;

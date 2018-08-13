@@ -2,7 +2,6 @@
 #define __KF_REDIS_MANAGE_H__
 
 #include "KFRedisExecute.h"
-#include "KFThread/KFMutex.h"
 
 namespace KFrame
 {

@@ -2,6 +2,7 @@
 #define __KF_UPLOAD_THREAD_H__
 
 #include "KFFtpThread.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -42,6 +43,9 @@ namespace KFrame
 
         // 列出所有的文件
         void ListAllLocalFiles( KFUpLoadPath* uploadpath );
+
+        // 创建目录
+        void CreateUploadDirectory( nsFTP::CFTPClient* ftpclient, std::string ftppath );
 
         // 长传文件夹
         void UploadFiles( nsFTP::CFTPClient* ftpclient, KFUpLoadPath* uploadpath, std::string& ftppath );

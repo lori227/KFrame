@@ -1,5 +1,5 @@
 ﻿#include "KFPlayerModule.h"
-#include "KFConvert/KFConvert.h"
+#include "KFUtility/KFConvert.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -208,7 +208,7 @@ namespace KFrame
 
         auto name = player->GetName();
         auto playerid = player->GetKeyID();
-        KFLogger::LogPlayer( KFLogger::Info, "[%s]\t[%u] %s", name, playerid, _buffer );
+        __LOG_INFO__( KFLogEnum::Player, "[{}] [{}] {}", name, playerid, _buffer );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,13 +277,10 @@ namespace KFrame
         if ( ok )
         {
             kfentity->SetNeetToSave( false );
-            //KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u:%s] save send ok!",
-            //__FUNCTION__, zoneid, kfentity->GetKeyString() );
         }
         else
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%s] save send failed!",
-                                __FUNCTION__, zoneid, kfentity->GetKeyString() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] save send failed!", zoneid, kfentity->GetKeyID() );
         }
     }
 
@@ -364,7 +361,7 @@ namespace KFrame
 
         // 判断新玩家
         auto basicid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
-        if ( basicid != _invalid_int )
+        if ( basicid == playerid )
         {
             return;
         }
@@ -385,7 +382,7 @@ namespace KFrame
 
     bool KFPlayerModule::SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto player = FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return false;
@@ -396,7 +393,7 @@ namespace KFrame
 
     bool KFPlayerModule::SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length )
     {
-        auto player = FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return false;
@@ -431,10 +428,13 @@ namespace KFrame
         return _kf_route->SendMessageToRoute( serverid, playerid, msgid, message );
     }
 
-    void KFPlayerModule::SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
+    void KFPlayerModule::SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself )
     {
         // 先发送给自己
-        SendMessageToClient( player, msgid, message );
+        if ( sendself )
+        {
+            SendMessageToClient( player, msgid, message );
+        }
 
         auto kfobject = player->GetData();
         auto kfmemberrecord = kfobject->FindData( __KF_STRING__( group ), __KF_STRING__( groupmember ) );
@@ -489,7 +489,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerDisconnectionReq );
 
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] disconnection!", __FUNCTION__, kfmsg.playerid() );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] disconnection!", kfmsg.playerid() );
 
         _kf_component->RemoveEntity( kfmsg.playerid() );
     }
@@ -499,7 +499,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SKickGamePlayerReq );
 
         auto playerid = kfmsg.playerid();
-        KickPlayer( playerid, kfmsg.type(), __FUNCTION_LINE__ );
+        KickPlayer( playerid, kfmsg.type(), __FUNC_LINE__ );
     }
 
     __KF_COMMAND_FUNCTION__( KFPlayerModule::OnDeployShutDownServer )
@@ -520,7 +520,7 @@ namespace KFrame
             return;
         }
 
-        KFLogger::LogLogin( KFLogger::Info, "[%s:%u] kick player[%u] by type[%u]!", function, line, playerid, type );
+        __LOG_DEBUG__( KFLogEnum::Login, "kick player[{}] by type[{}]!", playerid, type );
 
         // 发送消息到proxy
         KFMsg::S2SKickProxyPlayerReq req;
@@ -534,9 +534,9 @@ namespace KFrame
 
     void KFPlayerModule::LogoutPlayer( uint32 playerid )
     {
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] logout!", __FUNCTION__, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] logout!", playerid );
 
-        auto player = FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -559,7 +559,6 @@ namespace KFrame
         if ( _update_print == 1 )
         {
             auto temp = pbobect.DebugString();
-            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 
@@ -575,7 +574,6 @@ namespace KFrame
         if ( _print == 1 )
         {
             auto temp = pbobect.DebugString();
-            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 
@@ -591,7 +589,6 @@ namespace KFrame
         if ( _print == 1 )
         {
             auto temp = pbobect.DebugString();
-            //KFLogger::LogLogic( KFLogger::Debug, temp.c_str() );
         }
 #endif
 
@@ -609,7 +606,7 @@ namespace KFrame
             SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
-        LogPlayer( player, "[ %s:%u ] add agent [ %s ]!", function, line, reward.c_str() );
+        LogPlayer( player, "[ {}:{} ] add agent [ {} ]!", function, line, reward.c_str() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCreateRoleReq )
@@ -638,8 +635,7 @@ namespace KFrame
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_CREATE_ROLE_REQ, &req );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%s] create role to public failed!",
-                                __FUNCTION__, playerid, kfmsg.name().c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] create role to public failed!", playerid, kfmsg.name() );
         }
     }
 
@@ -696,8 +692,7 @@ namespace KFrame
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_SET_PLAYER_NAME_REQ, &req );
         if ( !ok )
         {
-            KFLogger::LogLogic( KFLogger::Error, "[%s] player[%u:%s:%s] set name to public failed!",
-                                __FUNCTION__, playerid, name.c_str(), kfmsg.name().c_str() );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}:{}] set name to public failed!", playerid, name, kfmsg.name() );
         }
     }
 
@@ -785,9 +780,7 @@ namespace KFrame
 
         player->UpdateData( kfmsg.dataname(), kfmsg.key(), __KF_STRING__( count ), KFOperateEnum::Dec, kfmsg.count() );
 
-        auto strkey = __TO_STRING__( kfmsg.key() );
-        KFLogger::LogLogic( KFLogger::Info, "[%s] remove data[%s:%s:%u] ok!",
-                            __FUNCTION__, kfmsg.dataname().c_str(), strkey.c_str(), kfmsg.count() );
+        __LOG_INFO__( KFLogEnum::Logic, "remove data[{}:{}:{}] ok!", kfmsg.dataname(), kfmsg.key(), kfmsg.count() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleChangeIconBoxReq )

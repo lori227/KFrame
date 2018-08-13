@@ -62,6 +62,8 @@ namespace KFrame
         PentaMatchGroup = 50,	// 四人匹配允许组队
         PentaMatch = 51,		// 四人匹配不允许组队
 
+        //
+        QueryRecentList = 52,	// 请求最近的玩家列表
         // 心愿单
         AddWishOrder = 100,		// 增加心愿单
         // 删除心愿单

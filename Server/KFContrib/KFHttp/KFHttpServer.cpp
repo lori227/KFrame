@@ -15,7 +15,7 @@ namespace KFrame
 
     KFHttpServer::~KFHttpServer()
     {
-        __KF_DELETE__( _http_server );
+        __DELETE_OBJECT__( _http_server );
     }
 
     void KFHttpServer::ShutDown()
@@ -34,7 +34,7 @@ namespace KFrame
     {
         try
         {
-            Poco::Net::HTTPServerParams* params = __KF_NEW__( Poco::Net::HTTPServerParams );
+            Poco::Net::HTTPServerParams* params = new Poco::Net::HTTPServerParams();
             params->setKeepAlive( keeplive );
             params->setMaxThreads( maxthread );
             params->setMaxQueued( maxqueue );
@@ -43,13 +43,14 @@ namespace KFrame
             Poco::Net::SocketAddress address( ip, port );
             Poco::Net::ServerSocket socket( address );
 
-            auto httpfactory = __KF_NEW__( KFHttpFactory, this );
-            _http_server = __KF_NEW__( Poco::Net::HTTPServer, httpfactory, socket, params );
+            auto httpfactory = new KFHttpFactory( this );
+            _http_server = new Poco::Net::HTTPServer( httpfactory, socket, params );
             _http_server->start();
         }
         catch ( Poco::Exception& exc )
         {
-            KF_LOG_ERROR( "init http server[{}:{}] failed[{}:{}]!", ip, port, exc.code(), exc.message() );
+            __LOG_ERROR__( KFLogEnum::Init, "init http server[{}:{}] failed[{}:{}]!",
+                           ip, port, exc.code(), exc.message() );
         }
     }
 
@@ -88,7 +89,7 @@ namespace KFrame
             _kf_function_data.push_back( kfdata );
         }
 
-        return KFHttpCommon::SendResponseCode( KFCommonEnum::OK );
+        return KFHttpCommon::SendResponseCode( KFEnum::Ok );
     }
 
     void KFHttpServer::Run()

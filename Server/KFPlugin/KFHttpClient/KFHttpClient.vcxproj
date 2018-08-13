@@ -69,14 +69,14 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN;POCO_EXTERNAL_OPENSSL;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -99,7 +99,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN;POCO_EXTERNAL_OPENSSL;POCO_STATIC;_WINDOWS;_USRDLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -108,7 +108,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>

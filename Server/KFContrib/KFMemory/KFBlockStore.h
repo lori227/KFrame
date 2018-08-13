@@ -2,7 +2,6 @@
 #define __BLOCK_STORE_H__
 
 #include "KFDefine.h"
-#include "KFThread/KFMutex.h"
 
 namespace KFrame
 {

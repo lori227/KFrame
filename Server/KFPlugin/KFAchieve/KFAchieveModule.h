@@ -15,6 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -33,6 +34,8 @@ namespace KFrame
 
         // 关闭
         virtual void BeforeShut();
+
+        virtual void FormatBattleAchieve( KFData* kfobject, KFMsg::PBTaskDatas* pbachieve );
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////

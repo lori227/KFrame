@@ -1,5 +1,4 @@
 ﻿#include "KFGroupClientModule.h"
-#include "KFGroupClientConfig.h"
 
 namespace KFrame
 {
@@ -15,7 +14,6 @@ namespace KFrame
 
     void KFGroupClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_group_config, true );
     }
 
     void KFGroupClientModule::BeforeRun()
@@ -58,12 +56,10 @@ namespace KFrame
     void KFGroupClientModule::OnceRun()
     {
         _kf_group_member = _kf_kernel->CreateObject( "Group", __KF_STRING__( groupmember ) );
-
     }
 
     void KFGroupClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
         _kf_kernel->ReleaseObject( _kf_group_member );
 
         _kf_component->UnRegisterUpdateDataModule( this );
@@ -72,11 +68,11 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( group ), __KF_STRING__( id ) );
-        _kf_component->UnRegisterUpdateDataFunction( __KF_STRING__( group ), __KF_STRING__( maxcount ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( group ), __KF_STRING__( id ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( group ), __KF_STRING__( maxcount ) );
 
-        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( groupmember ) );
-        _kf_component->UnRegisterRemoveDataFunction( __KF_STRING__( groupmember ) );
+        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( groupmember ) );
+        _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( groupmember ) );
         ///////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_INVITE_MATCH_GROUP_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ );
@@ -142,7 +138,7 @@ namespace KFrame
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
         auto nowcount = kfparent->Size();
-        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
+        player->UpdateData( kfbasic, __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFGroupClientModule::OnRemoveGroupMemberCallBack )
@@ -158,7 +154,7 @@ namespace KFrame
         }
 
         auto nowcount = kfparent->Size();
-        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
+        player->UpdateData( kfbasic, __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,7 +319,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SReceiveInviteMatchGroupReq );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
@@ -331,7 +327,7 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
         if ( groupid != _invalid_int )
         {
             return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
@@ -380,7 +376,8 @@ namespace KFrame
         {
             if ( kfmsg.operate() == KFMsg::InviteEnum::RefuseMinute )
             {
-                auto refusetime = KFGlobal::Instance()->_real_time + _kf_group_config->_refuse_time;
+                static auto _refuse_time = _kf_option->GetValue< uint32 >( "groupinviterefusetime" );
+                auto refusetime = KFGlobal::Instance()->_real_time + _refuse_time;
                 kfobject->SetValue< uint64 >( __KF_STRING__( refusegroupinvite ), refusetime );
             }
 
@@ -405,9 +402,11 @@ namespace KFrame
                 return _kf_display->SendToClient( player, KFMsg::OperateFrequently );
             }
 
+            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
+
             // 判断邀请时间
             auto invitetime = kfinvite->GetValue< uint64 >( __KF_STRING__( time ) );
-            if ( KFGlobal::Instance()->_real_time > invitetime + _kf_group_config->_invite_valid_time )
+            if ( KFGlobal::Instance()->_real_time > invitetime + _invite_valid_time )
             {
                 // 超时
                 _kf_display->SendToClient( player, KFMsg::GroupInviteTimeOut );
@@ -443,7 +442,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SConsentInviteMatchGroupReq );
 
         auto playerid = __KF_DATA_ID__( kfguid );
-        auto player = _kf_player->FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
@@ -719,22 +718,25 @@ namespace KFrame
         }
 
         // 是否存在邀请
-        auto kfapply = kfobject->FindData( __KF_STRING__( groupapply ), kfmsg.applyid(), __KF_STRING__( basic ) );
-        if ( kfapply == nullptr )
+        auto kfgroupapply = kfobject->FindData( __KF_STRING__( groupapply ), kfmsg.applyid() );
+        if ( kfgroupapply == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupApplyNotExist );
         }
 
+        auto kfapplyer = kfgroupapply->FindData( __KF_STRING__( basic ) );
         if ( kfmsg.operate() == KFMsg::InviteEnum::Refuse )
         {
             // 拒绝
             auto name = kfbasic->GetValue< std::string >( __KF_STRING__( name ) );
-            _kf_display->SendToPlayer( kfapply, KFMsg::GroupRefuseApply, name );
+            _kf_display->SendToPlayer( kfapplyer, KFMsg::GroupRefuseApply, name );
         }
         else if ( kfmsg.operate() == KFMsg::InviteEnum::Consent )
         {
-            auto applytime = kfapply->GetValue< uint64 >( __KF_STRING__( time ) );
-            if ( KFGlobal::Instance()->_real_time > ( applytime + _kf_group_config->_invite_valid_time ) )
+            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
+
+            auto applytime = kfgroupapply->GetValue< uint64 >( __KF_STRING__( time ) );
+            if ( KFGlobal::Instance()->_real_time > ( applytime + _invite_valid_time ) )
             {
                 _kf_display->SendToClient( player, KFMsg::GroupApplyTimeOut );
             }
@@ -756,8 +758,8 @@ namespace KFrame
                     ack.set_captainid( playerid );
                     ack.set_serverid( KFGlobal::Instance()->_app_id );
                     ack.set_playerid( kfmsg.applyid() );
-                    ack.set_playername( kfapply->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
-                    auto ok = _kf_player->SendMessageToClient( kfapply, KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &ack );
+                    ack.set_playername( kfapplyer->GetValue< std::string >( __KF_STRING__( name ) ) );
+                    auto ok = _kf_player->SendMessageToClient( kfapplyer, KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &ack );
                     if ( ok )
                     {
                         return _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
@@ -774,7 +776,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SConsentApplyMatchGroupAck );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupPlayerOffline, kfmsg.playername() );
@@ -795,7 +797,7 @@ namespace KFrame
         req.set_playerid( kfmsg.playerid() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         FormatMatchGroupMember( player, req.mutable_pbmember() );
-        auto ok = SendMessageToGroup( groupid, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
+        auto ok = SendMessageToGroup( kfmsg.groupid(), KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToPlayer( kfmsg.playerid(), kfmsg.captainid(), KFMsg::GroupServerBusy );
@@ -805,7 +807,7 @@ namespace KFrame
     void KFGroupClientModule::OnEnterQueryMatchGroup( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
+        auto kfbasic = kfobject->FindData( __KF_STRING__( group ) );
         auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
         if ( groupid == _invalid_int )
         {

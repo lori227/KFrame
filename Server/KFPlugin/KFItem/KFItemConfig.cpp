@@ -51,7 +51,7 @@ namespace KFrame
                 kfsetting->_reward_type = xmlnode.GetUInt32( "RewardType" );
 
                 auto rewardvalue = xmlnode.GetString( "RewardValue" );
-                kfsetting->_rewards.ParseFromString( rewardvalue, __FUNCTION_LINE__ );
+                kfsetting->_rewards.ParseFromString( rewardvalue, __FUNC_LINE__ );
 
                 kfsetting->_lua_file = xmlnode.GetString( "LuaFile" );
                 auto addfunction = xmlnode.GetString( "AddFunction" );

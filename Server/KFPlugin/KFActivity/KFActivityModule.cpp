@@ -40,7 +40,7 @@ namespace KFrame
         _kf_componnet->UnRegisterAddDataModule( this );
         _kf_componnet->UnRegisterRemoveDataModule( this );
         _kf_componnet->UnRegisterUpdateDataModule( this );
-        _kf_componnet->UnRegisterUpdateDataFunction( __KF_STRING__( activity ), __KF_STRING__( value ) );
+        _kf_componnet->UnRegisterUpdateDataFunction( this, __KF_STRING__( activity ), __KF_STRING__( value ) );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_ACTIVITY_REWARD_REQ );
     }
@@ -84,7 +84,7 @@ namespace KFrame
 
         player->UpdateData( kfactivity, __KF_STRING__( received ), KFOperateEnum::ABit, activityid );
 
-        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNCTION_LINE__ );
+        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
         return KFMsg::ActivityReceiveRewardOK;
     }
 

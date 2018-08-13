@@ -9,7 +9,8 @@
 		<Plguin Name="KFMessage" Startup="1" Sort="30" Debug="KFMessaged" Release="KFMessage" Config=""/>
 		<Plguin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
 		<Plguin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plguin Name="KFDeployAgent" Startup="1" Sort="60" Debug="KFDeployAgentd" Release="KFDeployAgent" Config="./config/agent.config"/>
+		<Plguin Name="KFDeployAgent" Startup="1" Sort="60" Debug="KFDeployAgentd" Release="KFDeployAgent" Config=""/>
 		<Plguin Name="KFFtp" Startup="1" Sort="70" Debug="KFFtpd" Release="KFFtp" Config="./setting/ftp.address"/>
+		<Plguin Name="KFMySQL" Startup="1" Sort="80" Debug="KFMySQLd" Release="KFMySQL" Config="./setting/mysql.address"/>
 	</Plugins>
 </Setting>

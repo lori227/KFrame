@@ -1,7 +1,6 @@
 ﻿#ifndef __NET_SERVICES_H__
 #define __NET_SERVICES_H__
 
-
 #include "KFNetSetting.h"
 #include "KFNetEvent.h"
 
@@ -60,6 +59,9 @@ namespace KFrame
 
         // 消息队列大小
         uint32 _queue_size;
+
+        // 是否已经关闭
+        volatile bool _is_shutdown;
 
     protected:
         // 线程逻辑标识

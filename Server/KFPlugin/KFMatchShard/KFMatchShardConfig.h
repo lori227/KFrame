@@ -19,11 +19,6 @@ namespace KFrame
             _wait_confirm_time = 10000;
         }
 
-        bool IsOpen( uint32 serverid ) const
-        {
-            return _open_server_list.find( serverid ) != _open_server_list.end();
-        }
-
     public:
         // 匹配模式id
         uint32 _match_id;
@@ -43,8 +38,6 @@ namespace KFrame
         // 重复请求间隔时间( 毫秒 )
         uint32 _wait_confirm_time;
 
-        // 服务器列表
-        std::set< uint32 > _open_server_list;
     };
 
     /////////////////////////////////////////////////////////////////////////////////

@@ -64,8 +64,7 @@ namespace KFrame
             auto pbdata = &kfmsg.zonedata( i );
 
             _kf_proxy_manage->AddRouteProxy( pbdata->zoneid(), pbdata->serverid(), handleid );
-            KFLogger::LogLogic( KFLogger::Info, "[%s] register route server[%u=>%u]!",
-                                __FUNCTION__, pbdata->serverid(), handleid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "register route server[{}=>{}]!", pbdata->serverid(), handleid );
         }
     }
 
@@ -78,8 +77,7 @@ namespace KFrame
         auto kfrouteproxy = _kf_proxy_manage->FindRouteProxy( transmitdata->serverid() );
         if ( kfrouteproxy == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Error, "[%s] can't route server[%u] !",
-                                       __FUNCTION__, transmitdata->serverid() );
+            return __LOG_ERROR__( KFLogEnum::System, "can't route server[{}] !", transmitdata->serverid() );
         }
 
         KFMsg::S2STransmitRouteProxyMessageAck ack;

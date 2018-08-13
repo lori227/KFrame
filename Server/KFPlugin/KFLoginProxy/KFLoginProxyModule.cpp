@@ -116,13 +116,11 @@ namespace KFrame
         auto ok = _kf_gate->SendMessageToGame( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_ACK, &ack );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to game ok!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] token to game ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to game failed!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( KFLogEnum::Login, "Player[{}:{}] token to game failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -131,20 +129,17 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::MsgLoginGameReq );
         auto hendleid = __KF_HEAD_ID__( kfguid );
         auto playerid = kfmsg.playerid();
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login proxy req!",
-                            __FUNCTION__, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login proxy req!", playerid );
 
         auto kftoken = _kf_token_list.Find( playerid );
         if ( kftoken == nullptr )
         {
-            return KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u] can't find token!",
-                                       __FUNCTION__, playerid );
+            return __LOG_ERROR__( KFLogEnum::Login, "player[{}] can't find token!", playerid );
         }
 
         if ( kftoken->_token != kfmsg.token() )
         {
-            return KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u] token error!",
-                                       __FUNCTION__, playerid );
+            return __LOG_ERROR__( KFLogEnum::Login, "player[{}] token error!", playerid );
         }
 
         auto gameid = kftoken->_game_id;
@@ -157,9 +152,8 @@ namespace KFrame
         auto ok = _kf_gate->AddConnection( hendleid, playerid );
         if ( !ok )
         {
-            _kf_gate->RemoveConnection( playerid, 100, __FUNCTION_LINE__ );
-            return KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u] register connection failed!",
-                                       __FUNCTION__, playerid );
+            _kf_gate->RemoveConnection( playerid, 100, __FUNC_LINE__ );
+            return __LOG_ERROR__( KFLogEnum::Login, "player[{}] register connection failed!", playerid );
         }
 
         // 创建一个Proxy对象
@@ -177,13 +171,11 @@ namespace KFrame
         ok = kfproxy->SendMessageToGame( KFMsg::S2S_LOGIN_GAME_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u:%s] login proxy ok!",
-                                __FUNCTION__, playerid, ip.c_str() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login proxy ok!", playerid, ip );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u:%s] login proxy failed!",
-                                __FUNCTION__, playerid, ip.c_str() );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login proxy failed!", playerid, ip );
         }
     }
 
@@ -195,22 +187,20 @@ namespace KFrame
 
         if ( result != KFMsg::Success )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login failed result[%u]!",
-                                __FUNCTION__, playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}] login failed result[{}]!", playerid, result );
 
             // 发送错误消息
             _kf_display->SendToClient( playerid, result );
 
             // 断开连接, 客户端重新走登录流程
-            _kf_gate->RemoveConnection( playerid, 1000, __FUNCTION_LINE__ );
+            _kf_gate->RemoveConnection( playerid, 1000, __FUNC_LINE__ );
         }
         else
         {
             auto kfproxy = _kf_proxy->FindProxy( playerid );
             if ( kfproxy == nullptr )
             {
-                return KFLogger::LogLogin( KFLogger::Info, "[%s] can not find proxy[%u]",
-                                           __FUNCTION__, playerid );
+                return __LOG_ERROR__( KFLogEnum::Login, "can not find proxy[{}]", playerid );
             }
 
             KFMsg::MsgEnterGame enter;
@@ -219,13 +209,11 @@ namespace KFrame
             auto ok = kfproxy->SendMessageToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
             if ( ok )
             {
-                KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] enter game ok!",
-                                    __FUNCTION__, playerid );
+                __LOG_DEBUG__( KFLogEnum::Login, "player[{}] enter game ok!", playerid );
             }
             else
             {
-                KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u] enter game failed!",
-                                    __FUNCTION__, playerid );
+                __LOG_ERROR__( KFLogEnum::Login, "player[{}] enter game failed!", playerid );
             }
         }
     }
@@ -233,7 +221,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFLoginProxyModule::HandleLoginOutReq )
     {
         auto playerid = __KF_HEAD_ID__( kfguid );
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login out!", __FUNCTION__, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login out!", playerid );
 
         KFMsg::S2SLoginOutReq req;
         req.set_playerid( playerid );
@@ -247,7 +235,7 @@ namespace KFrame
         }
 
         // 断开链接
-        _kf_gate->RemoveConnection( playerid, 1000, __FUNCTION_LINE__ );
+        _kf_gate->RemoveConnection( playerid, 1000, __FUNC_LINE__ );
     }
 
 }

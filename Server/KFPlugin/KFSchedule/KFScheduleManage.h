@@ -2,7 +2,6 @@
 #define __KF_SCHEDULE_MANAGE_H__
 
 #include "KFScheduleData.h"
-#include "KFTime/KFTimer.h"
 #include "KFScheduleInterface.h"
 
 // 非线程安全

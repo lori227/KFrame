@@ -49,7 +49,7 @@ namespace KFrame
         KFJson recvjson( recvdata );
 
         uint32 playerid = sendjson.GetUInt32( __KF_STRING__( playerid ) );
-        auto player = _kf_player->FindPlayer( playerid, __FUNCTION_LINE__ );
+        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -63,8 +63,8 @@ namespace KFrame
             auto reward = recvjson.GetString( __KF_STRING__( reward ) );
 
             KFAgents kfagents;
-            kfagents.ParseFromString( reward, __FUNCTION_LINE__ );
-            player->AddAgentData( &kfagents, 1.0f, true, __FUNCTION_LINE__ );
+            kfagents.ParseFromString( reward, __FUNC_LINE__ );
+            player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
         }
     }
 }

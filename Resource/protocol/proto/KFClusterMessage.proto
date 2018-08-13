@@ -13,6 +13,8 @@ enum ClusterProtocol
 	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// 添加对象映射
 	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// 删除对象映射
 	S2S_SEND_TO_CLUSTER_OBJECT_REQ = 10111;		// 发送到集群对象
+	S2S_ALLOC_SHARD_REQ = 10112;				// 请求分配shard
+	S2S_ALLOC_SHARD_ACK = 10113;				// 请求分配shard
  }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +112,21 @@ message S2SSendToClusterObjectReq
 	required uint64 objectid = 1;
 	required uint32 msgid = 2;
 	required string msgdata = 3;
+}
+
+// 请求分派Shard
+// S2S_ALLOC_SHARD_REQ
+message S2SAllocShardReq
+{
+	repeated uint64 objectid = 1;
+}
+
+// 请求分派Shard
+// S2S_ALLOC_SHARD_ACK
+message S2SAllocShardAck
+{
+	repeated uint64 objectid = 1;
+	repeated uint32 shardid = 2;
 }
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////

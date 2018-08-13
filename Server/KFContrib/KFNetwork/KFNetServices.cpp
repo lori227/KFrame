@@ -9,6 +9,7 @@ namespace KFrame
     KFNetServices::KFNetServices()
     {
         _thread_run = false;
+        _is_shutdown = false;
         _uv_loop = nullptr;
         _net_event = nullptr;
         _buff_address = nullptr;
@@ -48,32 +49,9 @@ namespace KFrame
         uv_mutex_init( &_uv_send_mutex );
         uv_mutex_init( &_uv_connect_mutex );
 
-        {
-            auto result = uv_async_init( _uv_loop, &_uv_shut_async, OnAsyncShutCallBack );
-            if ( result != 0 )
-            {
-                KFLogger::LogNet( KFLogger::Error, "[%s] session[%u] shut_async_init error[%d]!",
-                                  __FUNCTION__, result );
-            }
-        }
-
-        {
-            auto result = uv_async_init( _uv_loop, &_uv_send_async, OnAsyncSendCallBack );
-            if ( result != 0 )
-            {
-                KFLogger::LogNet( KFLogger::Error, "[%s] session[%u] send_async_init error[%d]!",
-                                  __FUNCTION__, result );
-            }
-        }
-
-        {
-            auto result = uv_async_init( _uv_loop, &_uv_connect_async, OnAsyncConnectCallBack );
-            if ( result != 0 )
-            {
-                KFLogger::LogNet( KFLogger::Error, "[%s] connect_async_init error[%d]!",
-                                  __FUNCTION__, result );
-            }
-        }
+        uv_async_init( _uv_loop, &_uv_shut_async, OnAsyncShutCallBack );
+        uv_async_init( _uv_loop, &_uv_send_async, OnAsyncSendCallBack );
+        uv_async_init( _uv_loop, &_uv_connect_async, OnAsyncConnectCallBack );
     }
 
     int32 KFNetServices::StartServices( const KFNetSetting* kfsetting )
@@ -97,6 +75,7 @@ namespace KFrame
     void KFNetServices::ShutServices()
     {
         _thread_run = false;
+        _is_shutdown = true;
 
         //uv_mutex_destroy( &_uv_shut_mutex );
         //uv_mutex_destroy( &_uv_send_mutex );
@@ -214,13 +193,6 @@ namespace KFrame
             if ( length < 2 * KFNetDefine::SerializeBuffLength )
             {
                 _buff_address = reinterpret_cast< char* >( realloc( _buff_address, length ) );
-                KFLogger::LogNet( KFLogger::Info, "msgid[%u] realloc buffer length[%u]!",
-                                  msgid, length );
-            }
-            else
-            {
-                KFLogger::LogNet( KFLogger::Error, "msgid[%u] length[%u] error!",
-                                  msgid, length );
             }
         }
 

@@ -33,8 +33,7 @@ namespace KFrame
             auto kfplayer = KFBattlePlayer::Create( pbplayer );
             _kf_player_list.Insert( kfplayer->GetID(), kfplayer );
 
-            KFLogger::LogLogic( KFLogger::Debug, "[%s] camp[%u] add player[%u]!",
-                                __FUNCTION__, _camp_id, kfplayer->GetID() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] add player[{}]!", _camp_id, kfplayer->GetID() );
         }
     }
 

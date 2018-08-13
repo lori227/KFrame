@@ -9,7 +9,6 @@ _out/
 *.opendb
 *.db
 _bin/win64/
-_lib/
 *.user
 *.idb
 *.lst
@@ -21,9 +20,7 @@ Bin/platform/setting/
 Resource/excel/~*.xlsx
 *.o
 *.lo
-*.a
 *.la
-*.so*
 Server/_build/linux/cmake_install.cmake
 Server/_build/linux/KFPlugin/
 Server/_build/linux/KFContrib/

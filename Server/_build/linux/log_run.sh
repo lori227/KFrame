@@ -9,12 +9,12 @@ server=logserver
 fi
 
 echo Starting Log Cluster Server
-./$server 0 110000 ./setting/master.startup
+./$server appid=110000 log=1 startup=./setting/master.startup
 
 echo Starting Log Proxy Server
-./$server 0 110001 ./setting/proxy.startup
+./$server appid=110001 log=1 startup=./setting/proxy.startup
 
 echo Starting Log Shard Server
-./$server 0 112001 ./setting/shard.startup
+./$server appid=112001 log=1 startup=./setting/shard.startup
 
 cd $basepath

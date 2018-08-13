@@ -9,26 +9,26 @@ server=zoneserver
 fi
 
 echo Starting Master Server
-./$server 0 100 ./setting/master.startup
+./$server appid=100 log=1 startup=./setting/master.startup
 
 echo Starting World Server
-./$server 0 200 ./setting/world.startup
+./$server appid=200 log=1 startup=./setting/world.startup
 
 echo Starting Gate Server
-./$server 0 301 ./setting/gate.startup
-./$server 0 302 ./setting/gate.startup
+./$server appid=301 log=1 startup=./setting/gate.startup
+./$server appid=302 log=1 startup=./setting/gate.startup
 
 echo Starting Login Server
-./$server 0 401 ./setting/login.startup
-./$server 0 402 ./setting/login.startup
+./$server appid=401 log=1 startup=./setting/login.startup
+./$server appid=402 log=1 startup=./setting/login.startup
 
 echo Starting Proxy Server
-./$server 0 501 ./setting/proxy.startup
-./$server 0 502 ./setting/proxy.startup
+./$server appid=501 log=1 startup=./setting/proxy.startup
+./$server appid=502 log=1 startup=./setting/proxy.startup
 
 echo Starting Game Server
-./$server 0 601 ./setting/game.startup
-./$server 0 602 ./setting/game.startup
+./$server appid=601 log=1 startup=./setting/game.startup
+./$server appid=602 log=1 startup=./setting/game.startup
 
 
 cd $basepath

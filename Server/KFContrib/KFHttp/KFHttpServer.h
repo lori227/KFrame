@@ -2,7 +2,6 @@
 #define __KF_HTTP_SERVER_H__
 
 #include "KFrame.h"
-#include "KFThread/KFMutex.h"
 
 namespace Poco
 {

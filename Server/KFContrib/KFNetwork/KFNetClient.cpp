@@ -2,7 +2,6 @@
 #include "KFNetEvent.h"
 #include "KFNetClientEngine.h"
 #include "KFNetClientServices.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -84,7 +83,10 @@ namespace KFrame
     void KFNetClient::ConnectFailed( int32 status )
     {
         _uv_client.data = this;
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), nullptr );
+        if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( &_uv_client ) ) )
+        {
+            uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        }
 
         // 再次启动一个定时器
         StartConnectTimer( KFNetDefine::ConncectTime );
@@ -121,11 +123,6 @@ namespace KFrame
             // 关闭连接
             _net_services->CloseSession( this );
         }
-        else
-        {
-            KFLogger::LogNet( KFLogger::Error, "[%s:%u] [%s:%u] already shutdown!",
-                              __FUNCTION_LINE__, _net_setting._name.c_str(), _net_setting._id );
-        }
     }
 
     void KFNetClient::CloseSession()
@@ -133,16 +130,22 @@ namespace KFrame
         KFNetSession::CloseSession();
 
         _uv_connect_timer.data = this;
-        uv_timer_stop( &_uv_connect_timer );
+        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_connect_timer ), nullptr );
 
         _uv_client.data = this;
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( &_uv_client ) ) )
+        {
+            uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        }
     }
 
     void KFNetClient::OnShutDownCallBack( uv_handle_t* handle )
     {
-        auto* netclinet = reinterpret_cast< KFNetClient* >( handle->data );
-        netclinet->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclinet->_net_setting._id );
-    }
+        auto* netclient = reinterpret_cast< KFNetClient* >( handle->data );
 
+        if ( netclient->_is_shutdown )
+        {
+            netclient->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclient->_net_setting._id );
+        }
+    }
 }

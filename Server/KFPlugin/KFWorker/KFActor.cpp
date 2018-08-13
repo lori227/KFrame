@@ -1,6 +1,5 @@
 ﻿#include "KFActor.h"
 #include "KFWorkerModule.h"
-#include "KFThread/KFThread.h"
 #include "google/protobuf/message.h"
 
 namespace KFrame
@@ -24,7 +23,7 @@ namespace KFrame
 
         // 创建执行线程
         _actor_thread_run = true;
-        KFThread::CreateThread( this, &KFActor::RunActorThread, __FUNCTION_LINE__ );
+        KFThread::CreateThread( this, &KFActor::RunActorThread, __FUNC_LINE__ );
     }
 
     void KFActor::StopActor()

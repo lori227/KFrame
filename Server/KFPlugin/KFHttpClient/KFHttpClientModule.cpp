@@ -7,7 +7,7 @@ namespace KFrame
 {
     KFHttpClientModule::KFHttpClientModule()
     {
-        _kf_http_manage = __KF_NEW__( KFHttpClientManage );
+        _kf_http_manage = new KFHttpClientManage();
     }
 
     KFHttpClientModule::~KFHttpClientModule()

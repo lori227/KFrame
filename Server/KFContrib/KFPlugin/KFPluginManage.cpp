@@ -1,5 +1,4 @@
 ﻿#include "KFPluginManage.h"
-#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -58,7 +57,7 @@ namespace KFrame
         return nullptr;
     }
 
-    KFModule* KFPluginManage::FindModule( const std::string& name, const char* function, uint32 line )
+    KFModule* KFPluginManage::FindModule( const std::string& name, const char* file, uint32 line )
     {
         for ( auto plugin : _plugins )
         {
@@ -69,7 +68,7 @@ namespace KFrame
             }
         }
 
-        KF_LOG_ERROR( "[{}:{}] can't find [{}] module!", function, line, name );
+        __LOG_ERROR_FUNCTION__( KFLogEnum::Init, file, line, "can't find [{}] module!", name );
         return nullptr;
     }
 
@@ -238,7 +237,8 @@ namespace KFrame
         auto paramvalue = KFUtility::SplitString( cmd, split );
         auto looptime = 0;
 
-        while ( !paramvalue.empty() ) {
+        while ( !paramvalue.empty() )
+        {
             if ( looptime >= 10 )
             {
                 // replace log4cxx

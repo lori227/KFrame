@@ -8,31 +8,25 @@
 #define __KF_LOG_CLIENT_MODULE__
 
 #include "KFLogClientInterface.h"
-#include "KFKernel/KFKernelInterface.h"
-#include "KFMessage/KFMessageInterface.h"
-#include "KFProtocol/KFProtocol.h"
-#include "KFTimer/KFTimerInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
-#include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFOption/KFOptionInterface.h"
-#include "KFZone/KFZoneInterface.h"
 
 namespace KFrame
 {
     class KFLogClientModule : public KFLogClientInterface
     {
     public :
-        KFLogClientModule();
-        ~KFLogClientModule();
+        KFLogClientModule() = default;
+        ~KFLogClientModule() = default;
 
-        virtual void InitModule();
         virtual void BeforeRun();
         virtual void BeforeShut();
 
-        virtual void LogRemote( const int log_level, const int log_category, const std::string& log_info );
+        // 远程日志
+        bool LogRemote( uint32 loglevel, uint32 category, const std::string& loginfo );
 
     protected:
-        bool SendMessageToLog( uint32 msgid, ::google::protobuf::Message* message );
+        // 连接到LogProxy
+        void OnConnectionLogCluster( uint32 serverid );
     };
 }
 

@@ -35,7 +35,7 @@ namespace KFrame
 
     std::string KFVector3D::ToString()
     {
-        return KFUtility::Format( "(%0.2f,%0.2f,%0.2f)", _data.GetX(), _data.GetY(), _data.GetY() );
+        return __FORMAT__( "(:.2f,:.2f,:.2f)", _data.GetX(), _data.GetY(), _data.GetY() );
     }
 
     void KFVector3D::FromString( const std::string& value )

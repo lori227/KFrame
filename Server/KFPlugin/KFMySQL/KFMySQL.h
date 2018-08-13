@@ -9,6 +9,7 @@
 #include "Poco/Data/SessionFactory.h"
 #include "Poco/Data/MySQL/Connector.h"
 #include "Poco/Data/MySQL/MySQLException.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

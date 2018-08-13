@@ -2,7 +2,7 @@
 #define __KF_ROBOT_H__
 
 #include "KFrame.h"
-#include "KFTime/KFClock.h"
+#include "KFUtility/KFClock.h"
 #include "KFNetwork/KFNetClientEngine.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -219,6 +219,9 @@ namespace KFrame
 
         // 查询好友排行榜信息
         void QueryFriendRankList();
+
+        // 查询最近的玩家列表
+        void QueryRecentList();
 
     protected:
 

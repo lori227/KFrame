@@ -1,12 +1,8 @@
 ﻿#ifndef __KF_REDIS_EXECUTE_H__
 #define __KF_REDIS_EXECUTE_H__
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#include "KFHiRedis.h"
-#include "KFRedisFormat.h"
-#include "KFRedisException.h"
 #include "KFRedisInterface.h"
-#include "KFMemory/KFBuffer.h"
+#include "hiredis/hiredis.h"
 
 namespace KFrame
 {
@@ -17,36 +13,8 @@ namespace KFrame
         KFRedisExecute();
         ~KFRedisExecute();
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual bool VoidExecute( const char* format, ... );
-        virtual bool VoidExecute( const MapString& fieldvalue, const char* format, ... );
-        virtual bool VoidExecute( const VectorString& fieldvalue, const char* format, ... );
-
-        virtual bool UInt32Execute( uint32& value, const char* format, ... );
-        virtual bool UInt64Execute( uint64& value, const char* format, ... );
-        virtual bool StringExecute( std::string& value, const char* format, ... );
-        virtual bool MapExecute( MapString& value, const char* format, ... );
-        virtual bool MapExecute( GreaterMapString& value, const char* format, ... );
-        virtual bool VectorExecute( VectorString& value, const char* format, ... );
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // 添加指令
-        virtual void AppendCommand( const char* format, ... );
-        virtual void AppendCommand( const MapString& fieldvalue, const char* format, ... );
-        virtual void AppendCommand( const VectorString& fieldvalue, const char* format, ... );
-
-        // 执行指令集
-        virtual bool PipelineExecute();
-        virtual bool PipelineExecute( const ListString& commands );
-        virtual bool PipelineExecute( ListString& commands, MapString& value );
-        virtual bool PipelineExecute( ListString& commands, VectorString& value );
-
-    public:
-
         // 初始化
-        int32 Initialize( const char* ip, int32 port, const char* password );
+        int32 Initialize( const std::string& ip, uint32 port, const std::string& password );
 
         // 关闭
         void ShutDown();
@@ -54,70 +22,69 @@ namespace KFrame
         // 切换索引
         void SelectIndex( uint32 index );
 
-    private:
-        template< class T >
-        bool CommandExecute( T& value, const char* command )
-        {
-            bool result = false;
-            try
-            {
-                result = _redis.Execute< T >( value, command );
-            }
-            catch ( KFRedisException& exception )
-            {
-                result = ExecuteException< T >( value, exception );
-            }
 
-            return result;
-        }
+    protected:
+        // 连接
+        int32 TryConnect();
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 是否断开连接
+        bool IsDisconnected();
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
-        template< class T >
-        bool ExecuteException( T& value, KFRedisException& exception )
-        {
-            if ( !_redis.IsDisconnected() )
-            {
-                return RetCode< T >( exception );
-            }
+        // 执行更新
+        virtual KFResult< voidptr >* UpdateExecute( const char* function, uint32 line, const std::string& strsql );
 
-            _redis.ReConnect();
+        // 查询数据库
+        virtual KFResult< uint32 >* UInt32Execute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< uint64 >* UInt64Execute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< std::string >* StringExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< MapString >* MapExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< GreaterMapString >* GreaterMapExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< ListString >* ListExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< VectorString >* VectorExecute( const char* function, uint32 line, const std::string& strsql );
 
-            bool result = false;
-            try
-            {
-                result = _redis.Execute< T >( value, exception._command.c_str() );
-            }
-            catch ( KFRedisException& newexception )
-            {
-                result = RetCode< T >( newexception );
-            }
-
-            return result;
-        }
-
-        template< class T >
-        inline bool RetCode( KFRedisException& exception )
-        {
-            KFLogger::LogSql( KFLogger::Error, "[%d] [%s] [%s]",
-                              exception._flags, exception._command.c_str(), exception._display.c_str() );
-
-            return false;
-        }
+        // 添加执行命令
+        virtual void AppendCommand( const std::string& strsql );
+        virtual KFResult< voidptr >* Pipeline( const char* function, uint32 line );
+        virtual KFResult< ListString >* ListPipelineExecute( const char* function, uint32 line );
+        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute( const char* function, uint32 line );
 
     private:
-        // redis
-        KFHiRedis _redis;
+        // 执行语句
+        redisReply* Execute( const std::string& strsql );
+        redisReply* TryExecute( KFBaseResult* kfresult, const char* function, uint32 line, const std::string& strsql );
+
+    private:
+        // ip
+        std::string _ip;
+
+        // 端口
+        uint32 _port;
+
+        // 密码
+        std::string _password;
+
+        // redis环境
+        redisContext* _redis_context;
 
         // 数据库索引
         uint32 _index;
 
-        // 执行的命令
+        // 需要执行的命令集
         ListString _commands;
 
-        // buffer
-        int8* _buffer;
-        uint32 _length;
+        //////////////////////////////////////////////////////////////
+        // 返回结果
+        KFResult< voidptr > _void_result;
+        KFResult< uint32 > _uint32_result;
+        KFResult< std::string > _string_result;
+        KFResult< uint64 > _uint64_result;
+        KFResult< MapString > _map_result;
+        KFResult< GreaterMapString > _greater_map_result;
+        KFResult< VectorString > _vector_result;
+        KFResult< ListString > _list_result;
+        KFResult< std::list< MapString > > _list_map_result;
     };
 }
 #endif

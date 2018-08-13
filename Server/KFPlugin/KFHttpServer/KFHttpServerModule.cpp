@@ -39,9 +39,9 @@ namespace KFrame
 
         // 重新获得外网ip
         auto localip = _kf_ip_address->GetLocalIp();
-        _full_url = KFUtility::Format( "http://%s:%u/", localip.c_str(), kfsetting->_port );
+        _full_url = __FORMAT__( "http://{}:{}/", localip, kfsetting->_port );
 
-        KF_LOG_INFO( "http server[{}] startup ok!", _full_url );
+        __LOG_INFO__( KFLogEnum::Init, "http server[{}] startup ok!", _full_url );
     }
 
     void KFHttpServerModule::Run()

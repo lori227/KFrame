@@ -105,10 +105,10 @@ namespace KFrame
     auto kfrobot = _robot_list.Find( robotid );\
     if ( kfrobot == nullptr )\
     {\
-        return KFLogger::LogSystem( KFLogger::Error, "[%s:%u] can't find robot[%u]!",\
-                                    __FUNCTION_LINE__, robotid );\
+        __LOG_ERROR__(KFLogEnum::System,"can't find robot[{}]!",\
+                      robotid);\
     }\
-    __PROTO_PARSE__( msgtype );\
+    __PROTO_PARSE__( msgtype );
 
 
     __KF_TIMER_FUNCTION__( KFRobotModule::OnTimerCreateRobot )
@@ -130,21 +130,22 @@ namespace KFrame
         }
 
         auto robotid = __KF_HEAD_ID__( guid );
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] recv msgid[%u]!",
-                            __FUNCTION__, robotid, msgid );
+        __LOG_INFO__( KFLogEnum ::Net, "[{}] robot[{}] recv msgid[{}]!",
+                      __FUNCTION__, robotid, msgid );
     }
 
     // 连接断开
     __KF_CLIENT_LOST_FUNCTION__( KFRobotModule::OnClientDisconnect )
     {
-        KFLogger::LogSystem( KFLogger::Error, "[%s] robot[%u] disconect!",
-                             __FUNCTION__, serverid );
+        __LOG_ERROR__( KFLogEnum::Net, "[{}] robot[{}] disconect!",
+                       __FUNCTION__, serverid );
         auto kfrobot = _robot_list.Find( serverid );
 
         if ( kfrobot == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "No Find Robot at [%s] robotid:%u",
-                                        __FUNCTION__, serverid );
+            __LOG_ERROR__( KFLogEnum::System, "No Find Robot at [{}] robotid:{}",
+                           __FUNCTION__, serverid );
+            return;
         }
 
         kfrobot->DisconnectServer( serverid );
@@ -159,8 +160,8 @@ namespace KFrame
 
         if ( kfrobot == nullptr )
         {
-            return KFLogger::LogSystem( KFLogger::Error, "No Find Robot at [%s] robotid:%u",
-                                        __FUNCTION__, serverid );
+            __LOG_ERROR__( KFLogEnum::System, "No Find Robot at [{}] robotid:{}", __FUNCTION__, serverid );
+            return;
         }
 
         kfrobot->OnConnectSendMessage();
@@ -176,10 +177,10 @@ namespace KFrame
         kfrobot->_connect_token = kfmsg.token();
         kfrobot->_connect_ip = kfmsg.ip();
         kfrobot->_connect_port = kfmsg.port();
-        _net_client->CloseClient( robotid, __FUNCTION_LINE__ );
+        _net_client->CloseClient( robotid, __FUNCTION__, __LINE__ );
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s] robot[%u] login [%s:%u] verity ok!",
-                             __FUNCTION__, robotid, kfmsg.ip().c_str(), kfmsg.port() );
+        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] login [{}:{}] verity ok!",
+                      __FUNCTION__, robotid, kfmsg.ip().c_str(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleEnterGame )
@@ -213,9 +214,8 @@ namespace KFrame
         }
 
         KFRobotPolicMgr::Instance()->AddRoleInfo( kfrobot->_playerid, player );
+        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] enter game!", __FUNCTION__, robotid );
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s] robot[%u] enter game!",
-                             __FUNCTION__, robotid );
     }
 
     //__KF_MESSAGE_FUNCTION__( KFRobotModule::HandleLoginGameAck )
@@ -229,8 +229,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgResultDisplay );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] display result[%u]!",
-                            __FUNCTION__, robotid, kfmsg.result() );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] display result[{}]!", __FUNCTION__, robotid, kfmsg.result() );
 
         switch ( kfmsg.result() )
         {
@@ -244,7 +243,7 @@ namespace KFrame
         case KFMsg::NameAlreadyExist:
         case KFMsg::NameEmpty:
         {
-            auto name = KFUtility::Format( "%s:%u:%s", KFField::_robot.c_str(), _kf_robot_config->_server_channel, kfrobot->_account.c_str() );
+            auto name = __FORMAT__( "{}:{}:{}", __KF_STRING__( robot ), _kf_robot_config->_server_channel, kfrobot->_account.c_str() );
 
             KFMsg::MsgCreateRoleReq req;
             req.set_name( name );
@@ -263,8 +262,7 @@ namespace KFrame
 
             else
             {
-                KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] start match success! waitting...",
-                                    __FUNCTION__, robotid );
+                __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] start match success! waitting...", __FUNCTION__, robotid );
             }
         }
         break;
@@ -280,7 +278,7 @@ namespace KFrame
 
         //std::cout << "HandleUpdateData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {
@@ -297,7 +295,7 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncAddData );
         // std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {
@@ -323,7 +321,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveData );
         // std::cout << "HandleRemoveData: " << kfmsg.DebugString() << std::endl;
-        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION_LINE__ );
+        auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
         {
@@ -340,16 +338,17 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSendChatInfo );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] recv chat[%s]!",
-                            __FUNCTION__, robotid, kfmsg.chatinfo().c_str() );
+
+        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] recv chat[{}]!",
+                      __FUNCTION__, robotid, kfmsg.chatinfo().c_str() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleBeKick )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgTellBeKick );
 
-        KFLogger::LogSystem( KFLogger::Info, "[%s] robot[%u] be kick[%u]!",
-                             __FUNCTION__, robotid, kfmsg.type() );
+        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] be kick[{}]!",
+                      __FUNCTION__, robotid, kfmsg.type() );
 
         auto ok = _kf_component->RemoveEntity( kfrobot->_playerid );
 
@@ -371,8 +370,8 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgTellQueryPlayer );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] query player ok!",
-                            __FUNCTION__, robotid );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] query player ok!",
+                      __FUNCTION__, robotid	);
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleWholeRankDisplay )
@@ -389,16 +388,15 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgQueryGuestAck );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] query guest ok!",
-                            __FUNCTION__, robotid );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] query guest ok!", __FUNCTION__, robotid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleShowReward )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgShowRewardAgent );
 
-        KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] show reward[%s]!",
-                            __FUNCTION__, robotid, kfmsg.reward().c_str() );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] show reward[{}]!",
+                      __FUNCTION__, robotid, kfmsg.reward().c_str() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleCancleMatch )

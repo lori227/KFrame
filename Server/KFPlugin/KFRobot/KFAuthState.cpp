@@ -42,7 +42,7 @@ namespace KFrame
         kfrobot->_token = authjson.GetString( __KF_STRING__( token ) );
         if ( KFMsg::Success != recode )
         {
-            KFLogger::LogScript( KFLogger::Error, "url:[%s], accountid:%s code:%d", url.c_str(), kfrobot->_account, authjson.GetUInt32( __KF_STRING__( retcode ) ) );
+            __LOG_ERROR__( KFLogEnum::Script, "url:[{}], accountid:{} code:{}", url.c_str(), kfrobot->_account, authjson.GetUInt32( __KF_STRING__( retcode ) ) );
             return;
         }
 

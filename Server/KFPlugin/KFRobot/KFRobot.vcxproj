@@ -57,6 +57,7 @@
     <ClCompile Include="KFQueryMailNumState.cpp" />
     <ClCompile Include="KFQueryMailState.cpp" />
     <ClCompile Include="KFQueryPlayerState.cpp" />
+    <ClCompile Include="KFQueryRecentState.cpp" />
     <ClCompile Include="KFQueryWholeRankState.cpp" />
     <ClCompile Include="KFReciveMailRewardState.cpp" />
     <ClCompile Include="KFRecvAchieveRewardState.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="KFQueryMailNumState.h" />
     <ClInclude Include="KFQueryMailState.h" />
     <ClInclude Include="KFQueryPlayerState.h" />
+    <ClInclude Include="KFQueryRecentState.h" />
     <ClInclude Include="KFQueryWholeRankState.h" />
     <ClInclude Include="KFReciveMailRewardState.h" />
     <ClInclude Include="KFRecvAchieveRewardState.h" />
@@ -214,7 +216,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -245,7 +247,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_out\$(ProjectName)\$(Configuration)\;..\..\_lib\win64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>

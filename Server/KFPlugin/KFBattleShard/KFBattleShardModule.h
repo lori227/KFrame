@@ -108,6 +108,9 @@ namespace KFrame
         // 逻辑
         void Run();
 
+        // 查找房间
+        KFBattleRoom* FindRoom( uint64 roomid, const char* function, uint32 line );
+
         // 服务器id
         KFBattleRoom* FindBattleRoomByServerId( uint32 serverid );
 

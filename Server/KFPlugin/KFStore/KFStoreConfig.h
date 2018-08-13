@@ -5,6 +5,7 @@
 #include "KFCore/KFAgent.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFProtocol/KFProtocol.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -77,9 +78,11 @@ namespace KFrame
         // 赠送道具收到的邮件id
         uint32 _give_mail_id;
 
-        //  赠送道具收到的感谢邮件id
+        // 赠送道具收到的感谢邮件id
         uint32 _return_mail_id;
 
+        // 赠送物品好感度增加值
+        uint32 _give_friend_liness;
 
         //判断参数列表合法（检测购买和赠送的消耗列表是否存在）
         bool CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime ) const;
@@ -99,7 +102,7 @@ namespace KFrame
             return _limit_type != KFStoreEnum::NoLimit;
         }
 
-        //获取道具最大拥有数量
+        // 获取道具最大拥有数量
         inline uint32 GetMaxOwns() const
         {
             return _max_owm_;

@@ -24,6 +24,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
         __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
+        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 
 }

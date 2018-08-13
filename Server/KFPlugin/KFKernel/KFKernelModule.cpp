@@ -58,13 +58,9 @@ namespace KFrame
     bool KFKernelModule::AddDataConfig( const char* file )
     {
         bool result = _kf_data_config->LoadConfig( file );
-        if ( result )
+        if ( !result )
         {
-            KF_LOG_INFO( "load [{}] ok!", file );
-        }
-        else
-        {
-            KF_LOG_ERROR( "load [{}] failed!", file );
+            __LOG_ERROR__( KFLogEnum::Init, "load [{}] failed!", file );
         }
 
         return result;

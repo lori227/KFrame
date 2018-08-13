@@ -43,6 +43,9 @@ namespace KFrame
         static void OnShutCallBack( uv_handle_t* handle );
 
     public:
+        // 状态
+        bool _is_trustee;
+
         // appid
         uint32 _app_id;
 

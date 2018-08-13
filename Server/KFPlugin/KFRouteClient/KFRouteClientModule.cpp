@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFRouteClientModule::BeforeRun()
     {
-        _kf_cluster->RegisterConnectionFunction( __KF_STRING__( route ), this, &KFRouteClientModule::OnConnectionRouteProxy );
+        _kf_cluster->RegisterConnectionFunction( __KF_STRING__( route ), this, &KFRouteClientModule::OnConnectionRouteCluster );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &KFRouteClientModule::HandleTransmitRouteZoneMessageAck );
     }
@@ -44,7 +44,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRouteClientModule::OnConnectionRouteProxy( uint32 serverid )
+    void KFRouteClientModule::OnConnectionRouteCluster( uint32 serverid )
     {
         // 只有Game才注册路由信息
         auto kfglobal = KFGlobal::Instance();
@@ -117,14 +117,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( tempguid, msgid, msgdata, msglength );
             if ( !ok )
             {
-                KFLogger::LogNet( KFLogger::Error, "[%s] route transmit msgid[%u] failed!",
-                                  __FUNCTION__, msgid );
+                __LOG_ERROR__( KFLogEnum::System, "route transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            KFLogger::LogSystem( KFLogger::Error, "[%s] msgid[%u] can't find handle",
-                                 __FUNCTION__, msgid );
+            __LOG_ERROR__( KFLogEnum::System, "msgid[%u] can't find handle", msgid );
         }
     }
 }

@@ -133,7 +133,8 @@ class S2SQueryFriendRankListReq;
 class S2SAddBattleFriendDataReq;
 class PBUidsInfo;
 class PBUidBasic;
-class S2SModifyRecentListReq;
+class S2SQueryRecentListReq;
+class S2SQueryRecentListAck;
 
 enum ServerProtocol {
   S2S_TRANSMIT_MESSAGE_REQ = 21001,
@@ -229,11 +230,12 @@ enum ServerProtocol {
   S2S_TELL_MATCH_GROUP_DATA_ACK = 21192,
   S2S_UPDATE_RANK_DATA_REQ = 21193,
   S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194,
-  S2S_MODIFY_RECENT_LIST_REQ = 21195
+  S2S_QUERY_RECENT_LIST_REQ = 21195,
+  S2S_QUERY_RECENT_LIST_ACK = 21196
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
 const ServerProtocol ServerProtocol_MIN = S2S_TRANSMIT_MESSAGE_REQ;
-const ServerProtocol ServerProtocol_MAX = S2S_MODIFY_RECENT_LIST_REQ;
+const ServerProtocol ServerProtocol_MAX = S2S_QUERY_RECENT_LIST_ACK;
 const int ServerProtocol_ARRAYSIZE = ServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerProtocol_descriptor();
@@ -10616,14 +10618,14 @@ class LIBPROTOC_EXPORT PBUidBasic : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SModifyRecentListReq : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SQueryRecentListReq : public ::google::protobuf::Message {
  public:
-  S2SModifyRecentListReq();
-  virtual ~S2SModifyRecentListReq();
+  S2SQueryRecentListReq();
+  virtual ~S2SQueryRecentListReq();
 
-  S2SModifyRecentListReq(const S2SModifyRecentListReq& from);
+  S2SQueryRecentListReq(const S2SQueryRecentListReq& from);
 
-  inline S2SModifyRecentListReq& operator=(const S2SModifyRecentListReq& from) {
+  inline S2SQueryRecentListReq& operator=(const S2SQueryRecentListReq& from) {
     CopyFrom(from);
     return *this;
   }
@@ -10637,17 +10639,99 @@ class LIBPROTOC_EXPORT S2SModifyRecentListReq : public ::google::protobuf::Messa
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SModifyRecentListReq& default_instance();
+  static const S2SQueryRecentListReq& default_instance();
 
-  void Swap(S2SModifyRecentListReq* other);
+  void Swap(S2SQueryRecentListReq* other);
 
   // implements Message ----------------------------------------------
 
-  S2SModifyRecentListReq* New() const;
+  S2SQueryRecentListReq* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SModifyRecentListReq& from);
-  void MergeFrom(const S2SModifyRecentListReq& from);
+  void CopyFrom(const S2SQueryRecentListReq& from);
+  void MergeFrom(const S2SQueryRecentListReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRecentListReq)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 playerid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SQueryRecentListReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SQueryRecentListAck : public ::google::protobuf::Message {
+ public:
+  S2SQueryRecentListAck();
+  virtual ~S2SQueryRecentListAck();
+
+  S2SQueryRecentListAck(const S2SQueryRecentListAck& from);
+
+  inline S2SQueryRecentListAck& operator=(const S2SQueryRecentListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SQueryRecentListAck& default_instance();
+
+  void Swap(S2SQueryRecentListAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SQueryRecentListAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SQueryRecentListAck& from);
+  void MergeFrom(const S2SQueryRecentListAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -10711,7 +10795,7 @@ class LIBPROTOC_EXPORT S2SModifyRecentListReq : public ::google::protobuf::Messa
   inline ::KFMsg::PBUidBasic* release_basicdatas();
   inline void set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SModifyRecentListReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRecentListAck)
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
@@ -10740,7 +10824,7 @@ class LIBPROTOC_EXPORT S2SModifyRecentListReq : public ::google::protobuf::Messa
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SModifyRecentListReq* default_instance_;
+  static S2SQueryRecentListAck* default_instance_;
 };
 // ===================================================================
 
@@ -19913,59 +19997,85 @@ PBUidBasic::mutable_basicdata() {
 
 // -------------------------------------------------------------------
 
-// S2SModifyRecentListReq
+// S2SQueryRecentListReq
 
 // required uint32 playerid = 1;
-inline bool S2SModifyRecentListReq::has_playerid() const {
+inline bool S2SQueryRecentListReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SModifyRecentListReq::set_has_playerid() {
+inline void S2SQueryRecentListReq::set_has_playerid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void S2SModifyRecentListReq::clear_has_playerid() {
+inline void S2SQueryRecentListReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void S2SModifyRecentListReq::clear_playerid() {
+inline void S2SQueryRecentListReq::clear_playerid() {
   playerid_ = 0u;
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SModifyRecentListReq::playerid() const {
+inline ::google::protobuf::uint32 S2SQueryRecentListReq::playerid() const {
   return playerid_;
 }
-inline void S2SModifyRecentListReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryRecentListReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SQueryRecentListAck
+
+// required uint32 playerid = 1;
+inline bool S2SQueryRecentListAck::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SQueryRecentListAck::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SQueryRecentListAck::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SQueryRecentListAck::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SQueryRecentListAck::playerid() const {
+  return playerid_;
+}
+inline void S2SQueryRecentListAck::set_playerid(::google::protobuf::uint32 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
 // required .KFMsg.PBPlayerIds uids = 2;
-inline bool S2SModifyRecentListReq::has_uids() const {
+inline bool S2SQueryRecentListAck::has_uids() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SModifyRecentListReq::set_has_uids() {
+inline void S2SQueryRecentListAck::set_has_uids() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SModifyRecentListReq::clear_has_uids() {
+inline void S2SQueryRecentListAck::clear_has_uids() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void S2SModifyRecentListReq::clear_uids() {
+inline void S2SQueryRecentListAck::clear_uids() {
   if (uids_ != NULL) uids_->::KFMsg::PBPlayerIds::Clear();
   clear_has_uids();
 }
-inline const ::KFMsg::PBPlayerIds& S2SModifyRecentListReq::uids() const {
+inline const ::KFMsg::PBPlayerIds& S2SQueryRecentListAck::uids() const {
   return uids_ != NULL ? *uids_ : *default_instance_->uids_;
 }
-inline ::KFMsg::PBPlayerIds* S2SModifyRecentListReq::mutable_uids() {
+inline ::KFMsg::PBPlayerIds* S2SQueryRecentListAck::mutable_uids() {
   set_has_uids();
   if (uids_ == NULL) uids_ = new ::KFMsg::PBPlayerIds;
   return uids_;
 }
-inline ::KFMsg::PBPlayerIds* S2SModifyRecentListReq::release_uids() {
+inline ::KFMsg::PBPlayerIds* S2SQueryRecentListAck::release_uids() {
   clear_has_uids();
   ::KFMsg::PBPlayerIds* temp = uids_;
   uids_ = NULL;
   return temp;
 }
-inline void S2SModifyRecentListReq::set_allocated_uids(::KFMsg::PBPlayerIds* uids) {
+inline void S2SQueryRecentListAck::set_allocated_uids(::KFMsg::PBPlayerIds* uids) {
   delete uids_;
   uids_ = uids;
   if (uids) {
@@ -19976,56 +20086,56 @@ inline void S2SModifyRecentListReq::set_allocated_uids(::KFMsg::PBPlayerIds* uid
 }
 
 // required uint32 operate = 3;
-inline bool S2SModifyRecentListReq::has_operate() const {
+inline bool S2SQueryRecentListAck::has_operate() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SModifyRecentListReq::set_has_operate() {
+inline void S2SQueryRecentListAck::set_has_operate() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SModifyRecentListReq::clear_has_operate() {
+inline void S2SQueryRecentListAck::clear_has_operate() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SModifyRecentListReq::clear_operate() {
+inline void S2SQueryRecentListAck::clear_operate() {
   operate_ = 0u;
   clear_has_operate();
 }
-inline ::google::protobuf::uint32 S2SModifyRecentListReq::operate() const {
+inline ::google::protobuf::uint32 S2SQueryRecentListAck::operate() const {
   return operate_;
 }
-inline void S2SModifyRecentListReq::set_operate(::google::protobuf::uint32 value) {
+inline void S2SQueryRecentListAck::set_operate(::google::protobuf::uint32 value) {
   set_has_operate();
   operate_ = value;
 }
 
 // optional .KFMsg.PBUidsInfo uidsinfos = 4;
-inline bool S2SModifyRecentListReq::has_uidsinfos() const {
+inline bool S2SQueryRecentListAck::has_uidsinfos() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SModifyRecentListReq::set_has_uidsinfos() {
+inline void S2SQueryRecentListAck::set_has_uidsinfos() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SModifyRecentListReq::clear_has_uidsinfos() {
+inline void S2SQueryRecentListAck::clear_has_uidsinfos() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void S2SModifyRecentListReq::clear_uidsinfos() {
+inline void S2SQueryRecentListAck::clear_uidsinfos() {
   if (uidsinfos_ != NULL) uidsinfos_->::KFMsg::PBUidsInfo::Clear();
   clear_has_uidsinfos();
 }
-inline const ::KFMsg::PBUidsInfo& S2SModifyRecentListReq::uidsinfos() const {
+inline const ::KFMsg::PBUidsInfo& S2SQueryRecentListAck::uidsinfos() const {
   return uidsinfos_ != NULL ? *uidsinfos_ : *default_instance_->uidsinfos_;
 }
-inline ::KFMsg::PBUidsInfo* S2SModifyRecentListReq::mutable_uidsinfos() {
+inline ::KFMsg::PBUidsInfo* S2SQueryRecentListAck::mutable_uidsinfos() {
   set_has_uidsinfos();
   if (uidsinfos_ == NULL) uidsinfos_ = new ::KFMsg::PBUidsInfo;
   return uidsinfos_;
 }
-inline ::KFMsg::PBUidsInfo* S2SModifyRecentListReq::release_uidsinfos() {
+inline ::KFMsg::PBUidsInfo* S2SQueryRecentListAck::release_uidsinfos() {
   clear_has_uidsinfos();
   ::KFMsg::PBUidsInfo* temp = uidsinfos_;
   uidsinfos_ = NULL;
   return temp;
 }
-inline void S2SModifyRecentListReq::set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos) {
+inline void S2SQueryRecentListAck::set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos) {
   delete uidsinfos_;
   uidsinfos_ = uidsinfos;
   if (uidsinfos) {
@@ -20036,34 +20146,34 @@ inline void S2SModifyRecentListReq::set_allocated_uidsinfos(::KFMsg::PBUidsInfo*
 }
 
 // optional .KFMsg.PBUidBasic basicdatas = 5;
-inline bool S2SModifyRecentListReq::has_basicdatas() const {
+inline bool S2SQueryRecentListAck::has_basicdatas() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void S2SModifyRecentListReq::set_has_basicdatas() {
+inline void S2SQueryRecentListAck::set_has_basicdatas() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void S2SModifyRecentListReq::clear_has_basicdatas() {
+inline void S2SQueryRecentListAck::clear_has_basicdatas() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void S2SModifyRecentListReq::clear_basicdatas() {
+inline void S2SQueryRecentListAck::clear_basicdatas() {
   if (basicdatas_ != NULL) basicdatas_->::KFMsg::PBUidBasic::Clear();
   clear_has_basicdatas();
 }
-inline const ::KFMsg::PBUidBasic& S2SModifyRecentListReq::basicdatas() const {
+inline const ::KFMsg::PBUidBasic& S2SQueryRecentListAck::basicdatas() const {
   return basicdatas_ != NULL ? *basicdatas_ : *default_instance_->basicdatas_;
 }
-inline ::KFMsg::PBUidBasic* S2SModifyRecentListReq::mutable_basicdatas() {
+inline ::KFMsg::PBUidBasic* S2SQueryRecentListAck::mutable_basicdatas() {
   set_has_basicdatas();
   if (basicdatas_ == NULL) basicdatas_ = new ::KFMsg::PBUidBasic;
   return basicdatas_;
 }
-inline ::KFMsg::PBUidBasic* S2SModifyRecentListReq::release_basicdatas() {
+inline ::KFMsg::PBUidBasic* S2SQueryRecentListAck::release_basicdatas() {
   clear_has_basicdatas();
   ::KFMsg::PBUidBasic* temp = basicdatas_;
   basicdatas_ = NULL;
   return temp;
 }
-inline void S2SModifyRecentListReq::set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas) {
+inline void S2SQueryRecentListAck::set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas) {
   delete basicdatas_;
   basicdatas_ = basicdatas;
   if (basicdatas) {

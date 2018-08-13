@@ -1,8 +1,7 @@
-﻿#include "KFMemory.h"
+﻿#include "KFrame.h"
+#include "KFMemory.h"
 #include "KFBlockStore.h"
 #include "KFLogMemory.h"
-#include "KFThread/KFMutex.h"
-#include "KFLogger/KFLogger.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 #define Memory_Alignment 4
@@ -64,7 +63,7 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogMemory( KFLogger::Error, "[%s:%u] [%s] object malloc failed!", function, line, name );
+            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "[{}] object malloc failed!", name );
         }
 
         return object;
@@ -78,12 +77,14 @@ namespace KFrame
         }
 
         auto blockstore = FindObjectBlock( object );
-        if ( blockstore == nullptr )
+        if ( blockstore != nullptr )
         {
-            return KFLogger::LogMemory( KFLogger::Error, "[%s:%u] object[0x%x] free failed!", function, line, object );
+            blockstore->FreeBlock( object );
         }
-
-        blockstore->FreeBlock( object );
+        else
+        {
+            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "object[{:p}] free failed!", ( void* )object );
+        }
     }
 
     BlockStore* KFMemory::CreateObjectBlock( const char* name, uint32 size, uint32 batch )
@@ -129,7 +130,7 @@ namespace KFrame
         }
         else
         {
-            KFLogger::LogMemory( KFLogger::Error, "[%s:%u] [char] memory malloc failed!", function, line );
+            __LOG_ERROR__( KFLogEnum::System, function, line, "[char] memory malloc failed!" );
         }
 
         return memory;
@@ -143,12 +144,14 @@ namespace KFrame
         }
 
         auto blockstore = FindMemoryBlock( memory );
-        if ( blockstore == nullptr )
+        if ( blockstore != nullptr )
         {
-            return KFLogger::LogMemory( KFLogger::Error, "[%s:%u] memory free failed!", function, line );
+            blockstore->FreeBlock( memory );
         }
-
-        blockstore->FreeBlock( memory );
+        else
+        {
+            __LOG_ERROR__( KFLogEnum::System, function, line, "[char] memory free failed!" );
+        }
     }
 
     BlockStore* KFMemory::CreateMemoryBlock( const char* name, uint32 size, uint32 batch )
@@ -196,8 +199,7 @@ namespace KFrame
             return;
         }
 
-        KFLogger::LogMemory( KFLogger::Info, " " );
-        KFLogger::LogMemory( KFLogger::Info, "***********************************print memory start****************************************************" );
+        __LOG_DEBUG__( KFLogEnum::Memory, "*******************print memory start********************" );
 
         uint64 totalusesize = 0;
         uint64 totalmallocsize = 0;
@@ -219,23 +221,12 @@ namespace KFrame
 
             totalusesize += logdata->_use_size;
             totalmallocsize += logdata->_total_size;
-            PrintLogMemory( iter->first.c_str(), logdata->_count, logdata->_use_size, logdata->_total_size );
+
+            __LOG_DEBUG__( KFLogEnum::Memory, "count[{}] use[{}] total[{}] name[{}]",
+                           logdata->_count, logdata->_use_size, logdata->_total_size, iter->first );
         }
 
-        auto strtotalusesize = __TO_STRING__( totalusesize );
-        auto totalmmallocsize = __TO_STRING__( totalmallocsize );
-
-        KFLogger::LogMemory( KFLogger::Info, " " );
-        KFLogger::LogMemory( KFLogger::Info, "******************print memory end, use[%s], total[%s]*************************",
-                             strtotalusesize.c_str(), totalmmallocsize.c_str() );
-    }
-
-    void KFMemory::PrintLogMemory( const char* type, uint32 count, uint64 usesize, uint64 totalsize )
-    {
-        auto strusesize = __TO_STRING__( usesize );
-        auto strtotalsize = __TO_STRING__( totalsize );
-
-        KFLogger::LogMemory( KFLogger::Info, "count[%u] use[%s] total[%s] [%s]",
-                             count, strusesize.c_str(), strtotalsize.c_str(), type );
+        __LOG_DEBUG__( KFLogEnum::Memory, "**************print memory end, use[{}], total[{}]*************",
+                       totalusesize, totalmallocsize );
     }
 }

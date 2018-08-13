@@ -32,8 +32,7 @@ namespace KFrame
     {
         for ( auto i = 0u; i < virtualcount; ++i )
         {
-            char temp[ 128 ] = "";
-            sprintf( temp, "%s:%u:%u", node->_name.c_str(), node->_id, i );
+            auto temp = __FORMAT__( "{}:{}:{}", node->_name, node->_id, i );
 
             auto hashkey = _hash_function.GetHashValue( temp );
             node->_virtual_list.push_back( hashkey );
@@ -79,7 +78,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto hashkey = _hash_function.GetHashValue( data.c_str() );
+        auto hashkey = _hash_function.GetHashValue( data );
 
         // 查找
         auto iter = _virtual_list._objects.lower_bound( hashkey );
@@ -100,21 +99,14 @@ namespace KFrame
 
     uint32 KFHashLogic::FindHashNode( uint64 objectid, bool cache )
     {
-        auto strid = __TO_STRING__( objectid );
-
-        char temp[ 128 ] = "";
-        sprintf( temp, "object:%s", strid.c_str() );
-
-        return FindHashNode( temp, cache );
+        auto strdata = __FORMAT__( "object:{}", objectid );
+        return FindHashNode( strdata, cache );
     }
 
     uint32 KFHashLogic::FindHashNode( const std::string& data, uint64 objectid, bool cache )
     {
-        auto strid = __TO_STRING__( objectid );
-
-        char temp[ 128 ] = "";
-        sprintf( temp, "%s:%s", data.c_str(), strid.c_str() );
-        return FindHashNode( temp, cache );
+        auto strdata = __FORMAT__( "{}:{}", data, objectid );
+        return FindHashNode( strdata, cache );
     }
 
     void KFHashLogic::GetAllHashNode( std::list<uint32>& nodes )

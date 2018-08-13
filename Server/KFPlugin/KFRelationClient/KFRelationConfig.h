@@ -6,15 +6,6 @@
 
 namespace KFrame
 {
-    namespace KFFriendEnum
-    {
-        enum EConstDefine
-        {
-            Team = 1,	//组队
-            Win = 2,	//胜利
-            Laud = 3,	//敬酒
-        };
-    }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     class KFRelationConfig : public KFConfig, public KFSingleton< KFRelationConfig >

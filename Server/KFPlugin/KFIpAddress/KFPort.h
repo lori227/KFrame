@@ -2,8 +2,6 @@
 #define __KF_NET_PORT_H__
 
 #include "KFrame.h"
-#include "KFThread/KFMutex.h"
-#include "KFMemory/KFShareMemory.h"
 
 namespace KFrame
 {

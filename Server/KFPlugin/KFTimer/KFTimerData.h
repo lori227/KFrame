@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_TIMER_DATA_H__
 #define __KF_TIMER_DATA_H__
 
-#include "KFTime/KFTimer.h"
 #include "KFTimerInterface.h"
 
 namespace KFrame

@@ -72,7 +72,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint64 KFLuaModule::LuaGetValue( const char* module, uint32 objectid, const char* dataname )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -85,7 +85,7 @@ namespace KFrame
 
     uint64 KFLuaModule::LuaOperateValue( const char* module, uint32 objectid, const char* dataname, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -97,7 +97,7 @@ namespace KFrame
 
     uint64 KFLuaModule::LuaGetObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -108,21 +108,22 @@ namespace KFrame
         return kfobject->GetValue( parentname, dataname );
     }
 
-    uint64 KFLuaModule::LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, const char* operate, const char* value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
             return _invalid_int;
         }
-
-        return kfentity->UpdateData( parentname, dataname, operate, value );
+        auto uoperate = KFUtility::ToValue< uint32 >( operate );
+        auto uvalue = KFUtility::ToValue< uint64 >( value );
+        return kfentity->UpdateData( parentname, dataname, uoperate, uvalue );
     }
 
     uint64 KFLuaModule::LuaGetRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -135,7 +136,7 @@ namespace KFrame
 
     uint64 KFLuaModule::LuaOperateRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -172,7 +173,7 @@ namespace KFrame
 
     void KFLuaModule::LuaAddData( const char* module, uint32 objectid, const char* stragent, bool showclient )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -180,17 +181,17 @@ namespace KFrame
         }
 
         KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNCTION_LINE__ );
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
 
         if ( ok )
         {
-            kfentity->AddAgentData( &kfagents, 1.0f, showclient, __FUNCTION_LINE__ );
+            kfentity->AddAgentData( &kfagents, 1.0f, showclient, __FUNC_LINE__ );
         }
     }
 
     void KFLuaModule::LuaSetData( const char* module, uint32 objectid, const char* stragent, bool showclient )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -198,18 +199,18 @@ namespace KFrame
         }
 
         KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNCTION_LINE__ );
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
 
         if ( ok )
         {
             kfagents.SetOperate( KFOperateEnum::Set );
-            kfentity->AddAgentData( &kfagents, 1.0f, showclient, __FUNCTION_LINE__ );
+            kfentity->AddAgentData( &kfagents, 1.0f, showclient, __FUNC_LINE__ );
         }
     }
 
     void KFLuaModule::LuaDecData( const char* module, uint32 objectid, const char* stragent )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNCTION_LINE__ );
+        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
 
         if ( kfentity == nullptr )
         {
@@ -217,11 +218,11 @@ namespace KFrame
         }
 
         KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNCTION_LINE__ );
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
 
         if ( ok )
         {
-            kfentity->RemoveAgentData( &kfagents, __FUNCTION_LINE__ );
+            kfentity->RemoveAgentData( &kfagents, __FUNC_LINE__ );
         }
     }
 

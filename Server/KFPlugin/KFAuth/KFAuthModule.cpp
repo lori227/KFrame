@@ -1,6 +1,5 @@
 ﻿#include "KFAuthModule.h"
 #include "KFJson.h"
-#include "KFThread/KFThread.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame

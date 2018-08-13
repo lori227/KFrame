@@ -27,6 +27,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_public, KFPublicClientInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
         __FIND_MODULE__( _kf_deploy_command, KFDeployCommandInterface );
+        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 
 }

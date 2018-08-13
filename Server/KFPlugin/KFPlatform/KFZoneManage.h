@@ -2,7 +2,7 @@
 #define __KF_ZONE_MANAGE_H__
 
 #include "KFrame.h"
-#include "KFThread/KFMutex.h"
+#include "KFUtility/KFMutex.h"
 #include "KFTimer/KFTimerInterface.h"
 
 namespace KFrame
@@ -44,6 +44,7 @@ namespace KFrame
         uint64 _offline_time;
     };
 
+    class KFJson;
     class KFZoneData
     {
     public:
@@ -60,8 +61,8 @@ namespace KFrame
         // 选择ip地址
         KFAddress* SelectAddress();
 
-        void SaveTo( std::map<std::string, std::string>& values, bool database );
-        void CopyFrom( std::map<std::string, std::string>& values );
+        void SaveTo( MapString& values, bool database );
+        void CopyFrom( MapString& values );
 
         // 判断在线
         void CheckOnline( KFAddress* kfaddress );

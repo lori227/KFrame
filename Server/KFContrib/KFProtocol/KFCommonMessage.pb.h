@@ -49,6 +49,8 @@ class PBObject;
 class PBRecord;
 class PBRankData;
 class PBRankDatas;
+class PBTaskData;
+class PBTaskDatas;
 class PBBattlePlayer;
 class PBBattleCamp;
 class PBMatchGroup;
@@ -215,6 +217,9 @@ enum AckEnum {
   LoginIsClose = 155,
   RankNotExist = 156,
   RankServerBusy = 157,
+  SignInNotDay = 161,
+  SignInDataError = 162,
+  SignInRewardAlready = 163,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,
@@ -501,6 +506,27 @@ inline bool RankListEnum_Parse(
     const ::std::string& name, RankListEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<RankListEnum>(
     RankListEnum_descriptor(), name, value);
+}
+enum FriendLinessEnum {
+  Team = 1,
+  Win = 2,
+  Laud = 3,
+  Give = 4
+};
+LIBPROTOC_EXPORT bool FriendLinessEnum_IsValid(int value);
+const FriendLinessEnum FriendLinessEnum_MIN = Team;
+const FriendLinessEnum FriendLinessEnum_MAX = Give;
+const int FriendLinessEnum_ARRAYSIZE = FriendLinessEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FriendLinessEnum_descriptor();
+inline const ::std::string& FriendLinessEnum_Name(FriendLinessEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    FriendLinessEnum_descriptor(), value);
+}
+inline bool FriendLinessEnum_Parse(
+    const ::std::string& name, FriendLinessEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<FriendLinessEnum>(
+    FriendLinessEnum_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -2177,6 +2203,183 @@ class LIBPROTOC_EXPORT PBRankDatas : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT PBTaskData : public ::google::protobuf::Message {
+ public:
+  PBTaskData();
+  virtual ~PBTaskData();
+
+  PBTaskData(const PBTaskData& from);
+
+  inline PBTaskData& operator=(const PBTaskData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTaskData& default_instance();
+
+  void Swap(PBTaskData* other);
+
+  // implements Message ----------------------------------------------
+
+  PBTaskData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTaskData& from);
+  void MergeFrom(const PBTaskData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+
+  // optional uint32 value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline ::google::protobuf::uint32 value() const;
+  inline void set_value(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBTaskData)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_value();
+  inline void clear_has_value();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 id_;
+  ::google::protobuf::uint32 value_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBTaskData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBTaskDatas : public ::google::protobuf::Message {
+ public:
+  PBTaskDatas();
+  virtual ~PBTaskDatas();
+
+  PBTaskDatas(const PBTaskDatas& from);
+
+  inline PBTaskDatas& operator=(const PBTaskDatas& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTaskDatas& default_instance();
+
+  void Swap(PBTaskDatas* other);
+
+  // implements Message ----------------------------------------------
+
+  PBTaskDatas* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTaskDatas& from);
+  void MergeFrom(const PBTaskDatas& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBTaskData taskdata = 1;
+  inline int taskdata_size() const;
+  inline void clear_taskdata();
+  static const int kTaskdataFieldNumber = 1;
+  inline const ::KFMsg::PBTaskData& taskdata(int index) const;
+  inline ::KFMsg::PBTaskData* mutable_taskdata(int index);
+  inline ::KFMsg::PBTaskData* add_taskdata();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBTaskData >&
+      taskdata() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBTaskData >*
+      mutable_taskdata();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBTaskDatas)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBTaskData > taskdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBTaskDatas* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
  public:
   PBBattlePlayer();
@@ -2330,6 +2533,15 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
+  // optional .KFMsg.PBTaskDatas achieve = 13;
+  inline bool has_achieve() const;
+  inline void clear_achieve();
+  static const int kAchieveFieldNumber = 13;
+  inline const ::KFMsg::PBTaskDatas& achieve() const;
+  inline ::KFMsg::PBTaskDatas* mutable_achieve();
+  inline ::KFMsg::PBTaskDatas* release_achieve();
+  inline void set_allocated_achieve(::KFMsg::PBTaskDatas* achieve);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBBattlePlayer)
  private:
   inline void set_has_zoneid();
@@ -2356,6 +2568,8 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline void clear_has_groupid();
   inline void set_has_campid();
   inline void clear_has_campid();
+  inline void set_has_achieve();
+  inline void clear_has_achieve();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -2371,9 +2585,10 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   ::google::protobuf::uint64 groupid_;
   ::google::protobuf::uint32 clothesid_;
   ::google::protobuf::uint32 campid_;
+  ::KFMsg::PBTaskDatas* achieve_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
   friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
@@ -2792,6 +3007,15 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline ::std::string* release_reward();
   inline void set_allocated_reward(::std::string* reward);
 
+  // optional .KFMsg.PBTaskDatas achieve = 7;
+  inline bool has_achieve() const;
+  inline void clear_achieve();
+  static const int kAchieveFieldNumber = 7;
+  inline const ::KFMsg::PBTaskDatas& achieve() const;
+  inline ::KFMsg::PBTaskDatas* mutable_achieve();
+  inline ::KFMsg::PBTaskDatas* release_achieve();
+  inline void set_allocated_achieve(::KFMsg::PBTaskDatas* achieve);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBBattleScore)
  private:
   inline void set_has_playerid();
@@ -2804,6 +3028,8 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline void clear_has_matchid();
   inline void set_has_reward();
   inline void clear_has_reward();
+  inline void set_has_achieve();
+  inline void clear_has_achieve();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -2813,9 +3039,10 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   ::google::protobuf::uint32 score_;
   ::google::protobuf::uint32 matchid_;
   ::std::string* reward_;
+  ::KFMsg::PBTaskDatas* achieve_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
   friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
@@ -4789,6 +5016,83 @@ PBRankDatas::mutable_rankdata() {
 
 // -------------------------------------------------------------------
 
+// PBTaskData
+
+// optional uint32 id = 1;
+inline bool PBTaskData::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PBTaskData::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PBTaskData::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PBTaskData::clear_id() {
+  id_ = 0u;
+  clear_has_id();
+}
+inline ::google::protobuf::uint32 PBTaskData::id() const {
+  return id_;
+}
+inline void PBTaskData::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// optional uint32 value = 2;
+inline bool PBTaskData::has_value() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PBTaskData::set_has_value() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PBTaskData::clear_has_value() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PBTaskData::clear_value() {
+  value_ = 0u;
+  clear_has_value();
+}
+inline ::google::protobuf::uint32 PBTaskData::value() const {
+  return value_;
+}
+inline void PBTaskData::set_value(::google::protobuf::uint32 value) {
+  set_has_value();
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PBTaskDatas
+
+// repeated .KFMsg.PBTaskData taskdata = 1;
+inline int PBTaskDatas::taskdata_size() const {
+  return taskdata_.size();
+}
+inline void PBTaskDatas::clear_taskdata() {
+  taskdata_.Clear();
+}
+inline const ::KFMsg::PBTaskData& PBTaskDatas::taskdata(int index) const {
+  return taskdata_.Get(index);
+}
+inline ::KFMsg::PBTaskData* PBTaskDatas::mutable_taskdata(int index) {
+  return taskdata_.Mutable(index);
+}
+inline ::KFMsg::PBTaskData* PBTaskDatas::add_taskdata() {
+  return taskdata_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBTaskData >&
+PBTaskDatas::taskdata() const {
+  return taskdata_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBTaskData >*
+PBTaskDatas::mutable_taskdata() {
+  return &taskdata_;
+}
+
+// -------------------------------------------------------------------
+
 // PBBattlePlayer
 
 // optional uint32 zoneid = 1;
@@ -5197,6 +5501,44 @@ inline ::google::protobuf::uint32 PBBattlePlayer::campid() const {
 inline void PBBattlePlayer::set_campid(::google::protobuf::uint32 value) {
   set_has_campid();
   campid_ = value;
+}
+
+// optional .KFMsg.PBTaskDatas achieve = 13;
+inline bool PBBattlePlayer::has_achieve() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void PBBattlePlayer::set_has_achieve() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void PBBattlePlayer::clear_has_achieve() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void PBBattlePlayer::clear_achieve() {
+  if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
+  clear_has_achieve();
+}
+inline const ::KFMsg::PBTaskDatas& PBBattlePlayer::achieve() const {
+  return achieve_ != NULL ? *achieve_ : *default_instance_->achieve_;
+}
+inline ::KFMsg::PBTaskDatas* PBBattlePlayer::mutable_achieve() {
+  set_has_achieve();
+  if (achieve_ == NULL) achieve_ = new ::KFMsg::PBTaskDatas;
+  return achieve_;
+}
+inline ::KFMsg::PBTaskDatas* PBBattlePlayer::release_achieve() {
+  clear_has_achieve();
+  ::KFMsg::PBTaskDatas* temp = achieve_;
+  achieve_ = NULL;
+  return temp;
+}
+inline void PBBattlePlayer::set_allocated_achieve(::KFMsg::PBTaskDatas* achieve) {
+  delete achieve_;
+  achieve_ = achieve;
+  if (achieve) {
+    set_has_achieve();
+  } else {
+    clear_has_achieve();
+  }
 }
 
 // -------------------------------------------------------------------
@@ -5654,6 +5996,44 @@ inline void PBBattleScore::set_allocated_reward(::std::string* reward) {
   }
 }
 
+// optional .KFMsg.PBTaskDatas achieve = 7;
+inline bool PBBattleScore::has_achieve() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PBBattleScore::set_has_achieve() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PBBattleScore::clear_has_achieve() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PBBattleScore::clear_achieve() {
+  if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
+  clear_has_achieve();
+}
+inline const ::KFMsg::PBTaskDatas& PBBattleScore::achieve() const {
+  return achieve_ != NULL ? *achieve_ : *default_instance_->achieve_;
+}
+inline ::KFMsg::PBTaskDatas* PBBattleScore::mutable_achieve() {
+  set_has_achieve();
+  if (achieve_ == NULL) achieve_ = new ::KFMsg::PBTaskDatas;
+  return achieve_;
+}
+inline ::KFMsg::PBTaskDatas* PBBattleScore::release_achieve() {
+  clear_has_achieve();
+  ::KFMsg::PBTaskDatas* temp = achieve_;
+  achieve_ = NULL;
+  return temp;
+}
+inline void PBBattleScore::set_allocated_achieve(::KFMsg::PBTaskDatas* achieve) {
+  delete achieve_;
+  achieve_ = achieve;
+  if (achieve) {
+    set_has_achieve();
+  } else {
+    clear_has_achieve();
+  }
+}
+
 // -------------------------------------------------------------------
 
 // PBRecentData
@@ -5901,6 +6281,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::WishStateEnum>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RankListEnum>() {
   return ::KFMsg::RankListEnum_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FriendLinessEnum>() {
+  return ::KFMsg::FriendLinessEnum_descriptor();
 }
 
 }  // namespace google

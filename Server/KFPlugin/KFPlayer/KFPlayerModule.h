@@ -22,6 +22,7 @@
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFPublicClient/KFPublicClientInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -82,7 +83,7 @@ namespace KFrame
 
         virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message );
 
-        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true );
 
     protected:
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );

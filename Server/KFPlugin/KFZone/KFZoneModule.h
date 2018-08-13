@@ -13,6 +13,7 @@
 #include "KFZoneInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -37,6 +38,9 @@ namespace KFrame
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint32 serverid );
         virtual bool IsPlayerSameZone( uint32 playerid );
+
+    private:
+        const KFZone* _kf_zone;
     };
 }
 

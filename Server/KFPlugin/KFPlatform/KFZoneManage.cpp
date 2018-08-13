@@ -73,7 +73,7 @@ namespace KFrame
         }
     }
 
-    void KFZoneData::SaveTo( std::map<std::string, std::string>& values, bool database )
+    void KFZoneData::SaveTo( MapString& values, bool database )
     {
         values[ __KF_STRING__( id ) ] = KFUtility::ToString<uint32>( _id );
         values[ __KF_STRING__( type ) ] = KFUtility::ToString<uint32>( _type );
@@ -114,7 +114,7 @@ namespace KFrame
         }
     }
 
-    void KFZoneData::CopyFrom( std::map<std::string, std::string>& values )
+    void KFZoneData::CopyFrom( MapString& values )
     {
         _id = KFUtility::ToValue<uint32>( values[ __KF_STRING__( id ) ] );
         _type = KFUtility::ToValue<uint32>( values[ __KF_STRING__( type ) ] );
@@ -317,6 +317,7 @@ namespace KFrame
 
         if ( zonedata->_status == KFZoneStatusEnum::Shutoff )
         {
+            update = true;
             zonedata->_status = KFZoneStatusEnum::Running;
         }
 
@@ -387,9 +388,9 @@ namespace KFrame
         }
 
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "hset %s:%u %s %s", __KF_CHAR__( zone ), zoneid, __KF_CHAR__( url ), url.c_str() );
-        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
-        redisdriver->PipelineExecute();
+        redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( zone ), zoneid, __KF_STRING__( url ), url );
+        redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
+        redisdriver->Pipeline( __FUNC_LINE__ );
     }
 
     KFZoneData* KFZoneManage::FindZoneData( uint32 id )
@@ -403,20 +404,20 @@ namespace KFrame
         zonedata->SaveTo( values, true );
 
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "sadd %s %u", __KF_CHAR__( zonelist ), zonedata->_id );
-        redisdriver->AppendCommand( values, "hmset %s:%u", __KF_CHAR__( zone ), zonedata->_id );
-        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
-        redisdriver->AppendCommand( "zincrby %s 0 %u", __KF_CHAR__( zonebalance ), zonedata->_id );
-        redisdriver->PipelineExecute();
+        redisdriver->Append( values, "hmset {}:{}", __KF_STRING__( zone ), zonedata->_id );
+        redisdriver->Append( "sadd {} {}", __KF_STRING__( zonelist ), zonedata->_id );
+        redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
+        redisdriver->Append( "zincrby {} 0 {}", __KF_STRING__( zonebalance ), zonedata->_id );
+        redisdriver->Pipeline( __FUNC_LINE__ );
     }
 
     void KFZoneManage::RemoveZoneDataToDatabase( uint32 zoneid )
     {
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
-        redisdriver->AppendCommand( "rem %s %u", __KF_CHAR__( zonelist ), zoneid );
-        redisdriver->AppendCommand( "del %s:%u", __KF_CHAR__( zone ), zoneid );
-        redisdriver->AppendCommand( "incr %s", __KF_CHAR__( zonelistversion ) );
-        redisdriver->PipelineExecute();
+        redisdriver->Append( "rem {} {}", __KF_STRING__( zonelist ), zoneid );
+        redisdriver->Append( "del {}:{}", __KF_STRING__( zone ), zoneid );
+        redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
+        redisdriver->Pipeline( __FUNC_LINE__ );
     }
 
     __KF_TIMER_FUNCTION__( KFZoneManage::OnTimerLoadZoneDataFormDatabase )
@@ -424,37 +425,34 @@ namespace KFrame
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
         // 查询当前数据库的服务器列表版本比对, 如果不同就加载新的服务器列表
-        std::string newzonelistversion = "";
-        redisdriver->StringExecute( newzonelistversion, "get %s", __KF_CHAR__( zonelistversion ) );
-        if ( newzonelistversion == _zone_list_version )
+        auto zoneversion = redisdriver->QueryString( __FUNC_LINE__, "get {}", __KF_STRING__( zonelistversion ) );
+        if ( !zoneversion->IsOk() || zoneversion->_value == _zone_list_version )
         {
             return;
         }
 
-        VectorString queryvalue;
-        bool redisresult = redisdriver->VectorExecute( queryvalue, "smembers %s", __KF_CHAR__( zonelist ) );
-        if ( !redisresult || queryvalue.empty() )
+        auto queryzonelist = redisdriver->QueryList( __FUNC_LINE__, "smembers {}", __KF_STRING__( zonelist ) );
+        if ( !queryzonelist->IsOk() || queryzonelist->_value.empty() )
         {
             return;
         }
 
         // 设置新版本
-        _zone_list_version = newzonelistversion;
+        _zone_list_version = zoneversion->_value;
 
         KFLocker kflock( _kf_mutex );
-        for ( auto& strzoneid : queryvalue )
+        for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
 
-            MapString zonevalues;
-            redisdriver->MapExecute( zonevalues, "hgetall %s:%u", __KF_CHAR__( zone ), zoneid );
-            if ( zonevalues.empty() )
+            auto queryzonedata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
+            if ( queryzonedata->_value.empty() )
             {
                 continue;
             }
 
             auto zonedata = _kf_zone_data.Create( zoneid );
-            zonedata->CopyFrom( zonevalues );
+            zonedata->CopyFrom( queryzonedata->_value );
         }
     }
 }

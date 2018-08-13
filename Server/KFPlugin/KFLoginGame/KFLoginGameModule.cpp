@@ -88,13 +88,11 @@ namespace KFrame
         auto ok = _kf_game->SendMessageToGate( kfmsg.proxyid(), KFMsg::S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to proxy ok!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] token to proxy ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to proxy failed!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] token to proxy failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -113,13 +111,11 @@ namespace KFrame
         auto ok = _kf_game->SendMessageToWorld( KFMsg::S2S_LOGIN_TELL_TOKEN_TO_WORLD_ACK, &ack );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to world ok!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] token to world ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] accountid[%u] player[%u] token to world failed!",
-                                __FUNCTION__, kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] token to world failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -129,8 +125,7 @@ namespace KFrame
 
         auto gateid = __KF_HEAD_ID__( kfguid );
         uint32 playerid = kfmsg.playerid();
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login game req!",
-                            __FUNCTION__, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login game req!", playerid );
 
         // 踢掉在线玩家
         _kf_player->KickPlayer( playerid, KFMsg::KickEnum::LoginBeKick, __FUNCTION__, _invalid_int );
@@ -146,13 +141,11 @@ namespace KFrame
         auto ok = _kf_data->SendMessageToData( zoneid, KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &req );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login game ok!",
-                                __FUNCTION__, playerid );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login game ok!", playerid );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] login game failed!",
-                                __FUNCTION__, playerid );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}] login game failed!", playerid );
         }
     }
 
@@ -166,8 +159,7 @@ namespace KFrame
         auto playerdata = kfmsg.mutable_playerdata();
         auto extenddata = kfmsg.mutable_extenddata();
 
-        KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] load data ack!",
-                            __FUNCTION__, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] load data ack!", playerid );
 
         if ( result != KFMsg::Success )
         {
@@ -192,13 +184,11 @@ namespace KFrame
         auto ok = _kf_game->SendMessageToGate( gateid, KFMsg::S2S_LOGIN_GAME_ACK, &ack );
         if ( ok )
         {
-            KFLogger::LogLogin( KFLogger::Info, "[%s] player[%u] load game result[%u] ok!",
-                                __FUNCTION__, playerid, result );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] load game result[{}] ok!", playerid, result );
         }
         else
         {
-            KFLogger::LogLogin( KFLogger::Error, "[%s] player[%u] load game result[%u] failed!",
-                                __FUNCTION__, playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}] load game result[{}] failed!", playerid, result );
         }
     }
 

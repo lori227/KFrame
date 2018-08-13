@@ -162,6 +162,9 @@ enum AckEnum
 	LoginIsClose				= 155;		// 登录已经关闭
 	RankNotExist				= 156;		// 排行榜不存在
 	RankServerBusy				= 157;		// 排行榜服务器忙
+	SignInNotDay				= 161;		// 还没有签到
+	SignInDataError				= 162;		// 签到配置错误
+	SignInRewardAlready			= 163;		// 已经领取签到奖励
 	
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
@@ -285,6 +288,15 @@ enum RankListEnum
 }
 
 
+enum FriendLinessEnum
+{
+	Team = 1;		// 组队
+	Win = 2;		// 胜利
+	Laud =3;		// 敬酒
+	Give = 4;		// 送礼
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 message Vector3D
@@ -397,6 +409,19 @@ message PBRankDatas
 	repeated PBRankData rankdata = 3;		// 排行榜数据
 }
 
+message PBTaskData
+{
+	optional uint32 id = 1;			// id
+	optional uint32 value = 2;		// 完成数值
+}
+
+
+message PBTaskDatas
+{
+	repeated PBTaskData taskdata = 1;	//任务数据
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 进入房间的房间信息
@@ -414,6 +439,7 @@ message PBBattlePlayer
 	optional uint32 clothesid = 10;		// 时装id
 	optional uint64 groupid = 11;		// 队伍id
 	optional uint32 campid = 12;		// 阵营id( 根据此id来判断是否敌对 )
+	optional PBTaskDatas achieve = 13;	// 成就数据
 
 }
 
@@ -452,6 +478,7 @@ message PBBattleScore
 	optional uint32 score = 4;		// 评分
 	optional uint32 matchid = 5;	// 属性字段( 服务器使用 )
 	optional string reward = 6;		// 奖励字串( 服务器使用 )
+	optional PBTaskDatas achieve = 7;	// 成就数据	
 }
 
 // 最近玩家

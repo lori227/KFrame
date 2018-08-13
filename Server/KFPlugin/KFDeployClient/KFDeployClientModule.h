@@ -19,6 +19,7 @@
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -46,7 +47,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressAck );
 
         // 关闭服务器
-        __KF_MESSAGE_FUNCTION__( HandleShutDownServerToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandToMasterReq );
 
     private:
 

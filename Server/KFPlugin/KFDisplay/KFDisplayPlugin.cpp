@@ -29,5 +29,7 @@ namespace KFrame
             __FIND_MODULE__( _kf_player, KFPlayerInterface );
             __FIND_MODULE__( _kf_route, KFRouteClientInterface );
         }
+
+        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

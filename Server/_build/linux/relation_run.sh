@@ -10,12 +10,12 @@ server=relationserver
 fi
 
 echo Starting Relation Cluster Server
-./$server 0 70000 ./setting/master.startup
+./$server appid=70000 log=1 startup=./setting/master.startup
 
 echo Starting Relation Proxy Server
-./$server 0 70001 ./setting/proxy.startup
+./$server appid=70001 log=1 startup=./setting/proxy.startup
 
 echo Starting Relation Shard Server
-./$server 0 72001 ./setting/shard.startup
+./$server appid=72001 log=1 startup=./setting/shard.startup
 
 cd $basepath

@@ -60,7 +60,7 @@ namespace KFrame
                 }
 
                 auto strexchange = xmlnode.GetString( "Exchange" );
-                kfsetting->_exchange.ParseFromString( strexchange, __FUNCTION_LINE__ );
+                kfsetting->_exchange.ParseFromString( strexchange, __FUNC_LINE__ );
 
                 AddClothesSetting( kfsetting );
                 xmlnode.NextNode();

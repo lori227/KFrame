@@ -25,6 +25,7 @@ namespace KFrame
 
         // 服务器id
         uint32 _app_id;
+        std::string _str_app_id;
 
         // 服务器ip
         std::string _ip;
@@ -51,9 +52,6 @@ namespace KFrame
 
         // 获得本机外网ip
         virtual const std::string& GetInteranetIp() = 0;
-
-        // 计算ip地址
-        virtual const std::string& CalcIpAddress( const std::string& ip ) = 0;
         /////////////////////////////////////////////////////////////////////////
         // 查找ip地址
         virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid ) = 0;
@@ -64,7 +62,7 @@ namespace KFrame
         virtual uint32 CalcHttpListenPort( uint32 type, uint32 port, uint32 appid ) = 0;
 
         // 修改小区master地址
-        virtual void SetZoneIpAddress( uint32 zoneid, const std::string& ip ) = 0;
+        virtual void SetZoneIpAddress( const std::string& ip ) = 0;
 
         // 平台访问地址
         virtual const std::string& FindPlatformAddress( uint32 id ) = 0;

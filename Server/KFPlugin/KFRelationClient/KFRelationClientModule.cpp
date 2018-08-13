@@ -40,7 +40,9 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleReplyInviteReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseFriendInviteReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK, &KFRelationClientModule::HandleUpdateFriendLinessAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_MODIFY_RECENT_LIST_REQ, &KFRelationClientModule::HandleModifyRecentListReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RECENT_LIST_ACK, &KFRelationClientModule::HandleModifyRecentListReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RECENT_LIST_REQ, &KFRelationClientModule::HandleQueryRecentListReq );
+
     }
 
     void KFRelationClientModule::BeforeShut()
@@ -49,7 +51,7 @@ namespace KFrame
 
         _kf_component->UnRegisterUpdateDataModule( this );
         _kf_component->UnRegisterUpdateStringModule( this );
-        _kf_component->UnRegisterAddDataFunction( __KF_STRING__( toast ) );
+        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( toast ) );
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
@@ -65,7 +67,8 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_MODIFY_RECENT_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RECENT_LIST_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_RECENT_LIST_REQ );
     }
 
     void KFRelationClientModule::OnceRun()
@@ -157,7 +160,7 @@ namespace KFrame
     {
         // 敬酒增加好友度
         auto targetplayerid = kfdata->GetValue< uint32 >( __KF_STRING__( id ) );
-        UpdateFriendLiness( player, targetplayerid, KFOperateEnum::Add, _kf_relation_config->_jing_jiu_friend_liness, KFFriendEnum::Laud );
+        UpdateFriendLiness( player, targetplayerid, KFOperateEnum::Add, _kf_relation_config->_jing_jiu_friend_liness, KFMsg::FriendLinessEnum::Laud );
     }
 
     void KFRelationClientModule::SendUpdateToFriend( KFEntity* player, MapString& values )
@@ -380,7 +383,7 @@ namespace KFrame
         if ( ok )
         {
             auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
-            _kf_display->SendToClient( player, KFMsg::FriendDelOK, kfmsg.playerid(), name );
+            _kf_display->SendToClient( player, KFMsg::FriendDelOK, name, kfmsg.playerid() );
 
             player->RemoveData( kffriendrecord, kfmsg.playerid() );
         }
@@ -570,7 +573,6 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( __KF_STRING__( friend ), friendid );
-
         if ( kffriend == nullptr )
         {
             return;
@@ -582,6 +584,8 @@ namespace KFrame
         req.set_targetplayerid( friendid );
         req.set_friendliness( value );
         req.set_type( type );
+        //req.set_serverid( KFGlobal::Instance()->_app_id );
+        //req.set_targetname( kffriend->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
         SendMessageToRelation( KFMsg::S2S_UPDATE_FRIEND_LINESS_REQ, &req );
     }
 
@@ -607,10 +611,13 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleModifyRecentListReq )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SModifyRecentListReq );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRecentListAck );
+
+        // 先删除最近玩家列表
+        player->RemoveData( __KF_STRING__( recentplayer ) );
+
         auto kfobject = player->GetData();
         auto kfrecentplayer = kfobject->FindData( __KF_STRING__( recentplayer ) );
-
         switch ( kfmsg.operate() )
         {
         case KFOperateEnum::Add:
@@ -620,12 +627,12 @@ namespace KFrame
             auto uidsize = kfmsg.uids().playerid_size();
             auto basicsize = kfmsg.basicdatas().basicdata_size();
 
-            if ( kfmsg.uids().playerid_size() != kfmsg.basicdatas().basicdata_size() )
+            if ( uidsize != basicsize )
             {
                 return;
             }
 
-            for ( auto i = 0; i < kfmsg.uids().playerid_size(); ++i )
+            for ( auto i = 0; i < uidsize; ++i )
             {
                 auto recentid = kfmsg.uids().playerid( i );
 
@@ -649,7 +656,7 @@ namespace KFrame
             }
         }
         break;
-
+        /*
         case KFOperateEnum::Dec:
         {
             for ( auto i = 0; i < kfmsg.uids().playerid_size(); ++i )
@@ -658,14 +665,21 @@ namespace KFrame
             }
 
         }
-        break;
-
+        break;*/
         default:
             break;
         }
 
     }
 
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRecentListReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRecentListReq );
+
+        KFMsg::S2SQueryRecentListReq req;
+        req.set_playerid( playerid );
+        SendMessageToRelation( KFMsg::S2S_QUERY_RECENT_LIST_REQ, &req );
+    }
 
     KFData* KFRelationClientModule::PBRecentListToKFData( uint32 playerid, const KFMsg::PBRecentData* pbrecentdata,
             const KFMsg::PBStrings* basicdata, const KFDataSetting* kfsetting )

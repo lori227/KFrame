@@ -9,11 +9,11 @@ server=groupserver
 fi
 
 echo Starting Cluster Server
-./$server 0 80000 ./setting/master.startup
+./$server appid=80000 log=1 startup=./setting/master.startup
 
 echo Starting Proxy Server
-./$server 0 80001 ./setting/proxy.startup
+./$server appid=80001 log=1 startup=./setting/proxy.startup
 echo Starting Shard Server
-./$server 0 82001 ./setting/shard.startup
+./$server appid=82001 log=1 startup=./setting/shard.startup
 
 cd $basepath

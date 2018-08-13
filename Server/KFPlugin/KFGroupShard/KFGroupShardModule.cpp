@@ -1,5 +1,4 @@
 ﻿#include "KFGroupShardModule.h"
-#include "KFGroupShardConfig.h"
 
 namespace KFrame
 {
@@ -15,7 +14,6 @@ namespace KFrame
 
     void KFGroupShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_group_config, true );
     }
 
     void KFGroupShardModule::BeforeRun()
@@ -104,10 +102,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleCreateMatchGroupToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateMatchGroupToShardReq );
-
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] create group[%s] req!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] req!", kfmsg.groupid() );
 
         auto kfgroup = _kf_component->CreateEntity( kfmsg.groupid() );
 
@@ -126,23 +121,18 @@ namespace KFrame
 
         // 更新到proxy
         _kf_cluster_shard->AddObjectToProxy( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] create group[%s] ok!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] ok!", kfmsg.groupid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleAddMatchGroupMemberReq )
     {
         __PROTO_PARSE__( KFMsg::S2SAddMatchGroupMemberReq );
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] add member req!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add member req!", kfmsg.groupid() );
 
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
         }
 
         // 判断成员数量
@@ -152,9 +142,7 @@ namespace KFrame
         auto kfmemberrecord = kfobject->FindData( __KF_STRING__( groupmember ) );
         if ( kfmemberrecord->Size() >= maxcount )
         {
-            _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupMemberIsFull );
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] is full!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupMemberIsFull );
         }
 
         // 加入新成员
@@ -170,16 +158,14 @@ namespace KFrame
         // 通知新队员队伍信息
         SendGroupDataToMember( kfmemberrecord, kfnewmember, kfgroup, true );
 
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] reply invite group[%s] ok!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add member ok!", kfmsg.groupid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleApplyMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SApplyMatchGroupReq );
 
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
@@ -190,9 +176,7 @@ namespace KFrame
         auto kfmember = kfobject->FindData( __KF_STRING__( groupmember ), captainid );
         if ( kfmember == nullptr )
         {
-            _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNoCaption );
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't captain!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNoCaption );
         }
 
         KFMsg::S2SApplyMatchGroupAck ack;
@@ -209,16 +193,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleLeaveMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLeaveMatchGroupReq );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave group[{}] req!", kfmsg.playerid(), kfmsg.groupid() );
 
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] leave group[%s] req!",
-                            __FUNCTION__, kfmsg.playerid(), strgroupid.c_str() );
-
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return __LOG_ERROR__( KFLogEnum::Logic, "group[{}] can't find!", kfmsg.groupid() );
         }
 
         auto kfobject = kfgroup->GetData();
@@ -283,7 +263,7 @@ namespace KFrame
 
         KFMsg::S2SUpdateGroupDataAck ack;
         auto pbstring = ack.add_pbstring();
-        pbstring->set_name( __KF_STRING__( campid ) );
+        pbstring->set_name( __KF_STRING__( captainid ) );
         pbstring->set_value( __TO_STRING__( kfmember->GetKeyID() ) );
         SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
 
@@ -298,34 +278,26 @@ namespace KFrame
         // 通知proxy
         _kf_cluster_shard->RemoveObjectToProxy( groupid );
 
-        auto strgroupid = __TO_STRING__( groupid );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] disband!",
-                            __FUNCTION__, strgroupid.c_str() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] disband!", groupid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleKickMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SKickMatchGroupReq );
+        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] player[{}] kick member[{}] req!",
+                       kfmsg.groupid(), kfmsg.captainid(), kfmsg.memberid() );
 
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] player[%u] kick member[%u] req!",
-                            __FUNCTION__, strgroupid.c_str(), kfmsg.captainid(), kfmsg.memberid() );
-
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            _kf_display->SendToGame( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupNotExist );
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupNotExist );
         }
 
         auto kfobject = kfgroup->GetData();
         auto captainid = kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) );
         if ( captainid != kfmsg.captainid() )
         {
-            _kf_display->SendToGame( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupNotCaption );
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] player[%u] not captainid[%u]!",
-                                       __FUNCTION__, strgroupid.c_str(), kfmsg.captainid(), captainid );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupNotCaption );
         }
 
         // 踢掉玩家
@@ -346,24 +318,16 @@ namespace KFrame
         KFMsg::S2SRemoveMatchGroupMemberAck req;
         req.set_memberid( kfmsg.memberid() );
         SendMessageToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
-
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] player[%u] kick member[%u] ok!",
-                            __FUNCTION__, strgroupid.c_str(), kfmsg.captainid(), kfmsg.memberid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleOnLineQueryGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SOnLineQueryMatchGroupReq );
 
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] online query group[%s] req!",
-                            __FUNCTION__, kfmsg.playerid(), strgroupid.c_str() );
-
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return;
         }
 
         auto kfobject = kfgroup->GetData();
@@ -371,8 +335,7 @@ namespace KFrame
         auto kfquerymember = kfmemberrecord->FindData( kfmsg.playerid() );
         if ( kfquerymember == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find member[%u]!",
-                                       __FUNCTION__, strgroupid.c_str(), kfmsg.playerid() );
+            return;
         }
 
         // 上线更新数据
@@ -418,15 +381,10 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SOffLineUpdateMatchGroupReq );
 
-        auto strgroupid = __TO_STRING__( kfmsg.groupid() );
-        KFLogger::LogLogic( KFLogger::Debug, "[%s] player[%u] offline update group[%s] req!",
-                            __FUNCTION__, kfmsg.playerid(), strgroupid.c_str() );
-
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find!",
-                                       __FUNCTION__, strgroupid.c_str() );
+            return;
         }
 
         auto kfobject = kfgroup->GetData();
@@ -436,8 +394,7 @@ namespace KFrame
             auto ok = ProcessChooseGroupCaptain( kfgroup );
             if ( !ok )
             {
-                return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] disband!",
-                                           __FUNCTION__, strgroupid.c_str() );
+                return;
             }
         }
 
@@ -445,8 +402,7 @@ namespace KFrame
         auto kfmember = kfmemberrecord->FindData( kfmsg.playerid() );
         if ( kfmember == nullptr )
         {
-            return KFLogger::LogLogic( KFLogger::Debug, "[%s] group[%s] can't find member[%u]!",
-                                       __FUNCTION__, strgroupid.c_str(), kfmsg.playerid() );
+            return;
         }
 
         // 离线更新数据
@@ -473,7 +429,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateGroupMemberReq );
 
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
             return;
@@ -520,7 +476,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateGroupMatchReq );
 
-        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNCTION_LINE__ );
+        auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
             return;

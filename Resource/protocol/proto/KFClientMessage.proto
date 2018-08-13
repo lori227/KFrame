@@ -79,6 +79,8 @@ enum ClientProtocol
 	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// 查询好友排行榜
 	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// 查询好友排行榜
 	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
+	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
+	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -736,3 +738,17 @@ message MsgQueryFriendRankListAck
 	required PBRankDatas rankdatas = 2;	// 榜单数据
 }
 
+// 领取7天签到奖励
+// MSG_SEVEN_SIGNIN_REWARD_REQ
+message MsgSevenSignInRewardReq
+{
+	required uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
+}
+
+// 广播获得额外奖励
+// MSG_TELL_SEVEN_EXTEND_REWARD
+message MsgTellSevenExtendReward
+{
+	required string playername = 1;	// 玩家名字
+	required string reward = 2;		// 奖励内容
+}

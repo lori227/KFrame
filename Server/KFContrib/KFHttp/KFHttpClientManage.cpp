@@ -2,7 +2,6 @@
 #include "KFHttpData.h"
 #include "KFHttpClient.h"
 #include "KFHttpsClient.h"
-#include "KFThread/KFThread.h"
 
 namespace KFrame
 {
@@ -69,7 +68,7 @@ namespace KFrame
         if ( !_thread_run )
         {
             _thread_run = true;
-            KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNCTION_LINE__ );
+            KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNC_LINE__ );
         }
 
         _req_http_data.PushObject( httpdata );

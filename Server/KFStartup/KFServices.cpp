@@ -2,7 +2,6 @@
 #include "KFStartup.h"
 #include "KFAppConfig.h"
 #include "KFApplication.h"
-#include "KFThread/KFThread.h"
 #include "KFMemory/KFLogMemory.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -35,7 +34,18 @@ namespace KFrame
             {
             }
 #else
-            RunUpdate();
+            try
+            {
+                RunUpdate();
+            }
+            catch ( std::exception& ex )
+            {
+                std::cout << ex.what() << std::endl;
+            }
+            catch ( ... )                                                                                                                            \
+            {
+                int a = 0;
+            }
 #endif
             KFThread::Sleep( 1 );
         } while ( KFGlobal::Instance()->_app_run );
@@ -45,7 +55,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFServices::InitService( KFApplication* application, const std::vector< std::string >& params )
+    bool KFServices::InitService( KFApplication* application, MapString& params )
     {
         _application = application;
 
@@ -62,21 +72,20 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
-        kfglobal->_app_id = KFUtility::ToValue<uint32>( params[ 1 ] );
+
+        auto strappid = params[ __KF_STRING__( appid ) ];
+        ParseAppId( strappid );
 
         // 读取配置
-        if ( !_kf_startup->InitStartup( params[ 2 ].c_str() ) )
+        auto strfile = params[ __KF_STRING__( startup ) ];
+        if ( !_kf_startup->InitStartup( strfile.c_str() ) )
         {
             return false;
         }
 
-        // 设置日志
-        static std::string _init_log_file = "./setting/initapp.log4cxx";
-        KFLogger::Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id, _init_log_file );
-
-        //new logger
-        std::string out_dir = KF_FORMAT( ".{}_output", spdlog::details::os::folder_sep );
-        kfglobal->_logger->Initialize( out_dir, kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+        // 初始化log
+        auto strlogtype = params[ __KF_STRING__( log ) ];
+        kfglobal->InitLogger( KFUtility::ToValue< uint32 >( strlogtype ) );
 
         if ( !_kf_startup->LoadPlugin() )
         {
@@ -90,28 +99,43 @@ namespace KFrame
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
 #endif
         // 设置标题
-        kfglobal->_title_text = kfglobal->FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+        kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
         _application->SetTitleText( kfglobal->_title_text.c_str() );
 
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        KF_LOG_INFO( "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+        __LOG_INFO__( KFLogEnum::Init, "[{}:{}:{}] startup ok!",
+                      kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
 
-        // log4cxx重新初始化
-        static std::string _template_log_file = "./setting/templateapp.log4cxx";
-        KFLogger::Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id, _template_log_file );
-
-        KFThread::CreateThread( this, &KFServices::Run, __FUNCTION_LINE__ );
+        KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
         return true;
+    }
+
+    void KFServices::ParseAppId( std::string strappid )
+    {
+        // cluster 101.0.xxxx.1
+        // game    101.1.xxxx.1
+
+        auto kfglobal = KFGlobal::Instance();
+        auto appid = KFUtility::ToValue<uint32>( strappid );
+        kfglobal->_str_app_id = strappid;
+
+        KFAppID kfappid( strappid );
+        kfglobal->_app_id = kfappid._union._app_id;
+        kfglobal->_zone_id = kfappid._union._app_data._zone_id;
+        kfglobal->_app_channel = kfappid._union._app_data._channel_id;
     }
 
     void KFServices::RunUpdate()
     {
+        KFPluginManage::Instance()->Run();
+
         // 打印内存信息
         PrintLogMemory();
 
-        KFPluginManage::Instance()->Run();
+        // 全局逻辑
+        KFGlobal::Instance()->RunUpdate();
     }
 
     void KFServices::ShutDown()
@@ -131,9 +155,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFServices::InitLogMemoryTimer()
     {
+        auto kfglobal = KFGlobal::Instance();
+
         // 把log时间分来, 每日切换的时候, 有可能创建文件夹的时候被占用, 然后切换日志失败
-        auto spacetime = KFGlobal::Instance()->_app_id % 10000 + KFRand::STRandDistrict( 100, 1000, 0 );
-        _memory_timer.StartTimer( KFGlobal::Instance()->_game_time, 5 * KFTimeEnum::OneMinuteMicSecond + spacetime );
+        auto spacetime = kfglobal->_app_id % 10000 + kfglobal->RandInRange( 100, 1000, 0 );
+        _memory_timer.StartTimer( kfglobal->_game_time, 5 * KFTimeEnum::OneMinuteMicSecond + spacetime );
     }
 
     void KFServices::PrintLogMemory()

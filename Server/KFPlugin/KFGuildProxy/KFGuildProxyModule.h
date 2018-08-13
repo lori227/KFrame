@@ -10,6 +10,7 @@
 ************************************************************************/
 
 #include "KFGuildProxyInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

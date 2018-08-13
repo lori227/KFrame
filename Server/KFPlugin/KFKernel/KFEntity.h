@@ -15,7 +15,6 @@ namespace KFrame
 
         virtual void SetKeyID( uint64 id ) = 0;
         virtual uint64 GetKeyID() = 0;
-        virtual const char* GetKeyString() = 0;
         virtual const char* GetName() = 0;
         virtual void SetName( const std::string& name ) = 0;
 

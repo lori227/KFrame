@@ -15,7 +15,7 @@
 		<Plguin Name="KFRelationClient" Startup="1" Sort="165" Debug="KFRelationClientd" Release="KFRelationClient" Config="./config/relation.config"/>
 		<Plguin Name="KFMatchClient" Startup="1" Sort="166" Debug="KFMatchClientd" Release="KFMatchClient" Config="./config/match.config"/>
 		<Plguin Name="KFBattleClient" Startup="1" Sort="167" Debug="KFBattleClientd" Release="KFBattleClient" Config=""/>
-		<Plguin Name="KFGroupClient" Startup="1" Sort="168" Debug="KFGroupClientd" Release="KFGroupClient" Config="./config/group.config"/>
+		<Plguin Name="KFGroupClient" Startup="1" Sort="168" Debug="KFGroupClientd" Release="KFGroupClient" Config=""/>
 		<Plguin Name="KFRankClient" Startup="1" Sort="169" Debug="KFRankClientd" Release="KFRankClient" Config="./config/rank.config"/>
 		<Plguin Name="KFKernel" Startup="1" Sort="180" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
 		<Plguin Name="KFPlayer" Startup="1" Sort="190" Debug="KFPlayerd" Release="KFPlayer" Config=""/>
@@ -28,5 +28,6 @@
 		<Plguin Name="KFAchieve" Startup="1" Sort="260" Debug="KFAchieved" Release="KFAchieve" Config="./config/achieve.config"/>
 		<Plguin Name="KFStore" Startup="1" Sort="270" Debug="KFStored" Release="KFStore" Config="./config/store.config"/>
 		<Plguin Name="KFClothes" Startup="1" Sort="280" Debug="KFClothesd" Release="KFClothes" Config="./config/clothes.config"/>
+		<Plguin Name="KFSignIn" Startup="1" Sort="290" Debug="KFSignInd" Release="KFSignIn" Config="./config/signin.config"/>
 	</Plugins>
 </Setting>
