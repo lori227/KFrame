@@ -1,11 +1,5 @@
 ﻿#include "KFHttp.h"
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-#include "Poco/URI.h"
-#include "Poco/StreamCopier.h"
-#include "Poco/ThreadPool.h"
-#include "Poco/Exception.h"
+
 
 namespace KFrame
 {

@@ -73,7 +73,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL;POCO_NO_AUTOMATIC_LIBS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

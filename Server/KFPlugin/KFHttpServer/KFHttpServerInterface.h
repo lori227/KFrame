@@ -6,6 +6,7 @@
 // Cinatra http://purecpp.org/ httpserver框架
 namespace KFrame
 {
+    class KFJson;
     class KFHttpServerInterface : public KFModule
     {
     public:

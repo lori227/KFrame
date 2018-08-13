@@ -327,12 +327,6 @@ namespace KFrame
                        kfhandle->_app_name, kfhandle->_app_type, kfhandle->_id, kfhandle->_listen_ip, kfhandle->_listen_port );
     }
 
-    void KFTcpServerModule::SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message )
-    {
-        auto strdata = message->SerializeAsString();
-        _kf_server_engine->SendNetMessage( name, msgid, strdata.data(), strdata.size() );
-    }
-
     void KFTcpServerModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid /* = 0 */ )
     {
         auto strdata = message->SerializeAsString();
@@ -378,5 +372,17 @@ namespace KFrame
         auto handleid = __KF_HEAD_ID__( kfguid );
         auto objectid = __KF_DATA_ID__( kfguid );
         return SendNetMessage( handleid, objectid, msgid, message );
+    }
+
+    void KFTcpServerModule::SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        _kf_server_engine->SendMessageToName( name, msgid, strdata.data(), strdata.size() );
+    }
+
+    void KFTcpServerModule::SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        _kf_server_engine->SendMessageToType( type, msgid, strdata.data(), strdata.size() );
     }
 }

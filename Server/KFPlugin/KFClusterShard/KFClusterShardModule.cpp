@@ -185,4 +185,16 @@ namespace KFrame
         }
         SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
+
+    void KFClusterShardModule::AllocObjectToMaster( const std::list<uint64>& objectlist )
+    {
+        KFMsg::S2SAllocShardReq req;
+        for ( auto objectid : objectlist )
+        {
+            req.add_objectid( objectid );
+        }
+
+        auto kfglobal = KFGlobal::Instance();
+        _kf_tcp_client->SendMessageToServer( kfglobal->_app_name, __KF_STRING__( master ), KFMsg::S2S_ALLOC_SHARD_REQ, &req );
+    }
 }

@@ -13,6 +13,7 @@
 #include "KFMatchShardInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
@@ -67,8 +68,8 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleTellRoomCloseToMatchShardReq );
 
     protected:
-        // Match Proxy连接成功
-        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverMatchProxy );
+        // Match Master连接成功
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectMatchMaster );
 
     protected:
         // 逻辑run

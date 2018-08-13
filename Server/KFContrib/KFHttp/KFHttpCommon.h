@@ -5,6 +5,7 @@
 
 namespace KFrame
 {
+    class KFJson;
     class KFHttpCommon
     {
     public:

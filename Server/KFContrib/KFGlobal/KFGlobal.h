@@ -83,6 +83,7 @@ namespace KFrame
 
         // appid
         uint32 _app_id;
+        std::string _str_app_id;
 
         // 类型
         std::string _app_type;
@@ -93,8 +94,8 @@ namespace KFrame
         // 分区id
         uint32 _zone_id;
 
-        // 服务标识
-        uint32 _app_flag;
+        // 服务渠道
+        uint32 _app_channel;
 
         // 内网ip
         std::string _local_ip;

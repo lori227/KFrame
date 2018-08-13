@@ -83,7 +83,10 @@ namespace KFrame
     void KFNetClient::ConnectFailed( int32 status )
     {
         _uv_client.data = this;
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), nullptr );
+        if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( &_uv_client ) ) )
+        {
+            uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        }
 
         // 再次启动一个定时器
         StartConnectTimer( KFNetDefine::ConncectTime );
@@ -130,12 +133,19 @@ namespace KFrame
         uv_close( reinterpret_cast< uv_handle_t* >( &_uv_connect_timer ), nullptr );
 
         _uv_client.data = this;
-        uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( &_uv_client ) ) )
+        {
+            uv_close( reinterpret_cast< uv_handle_t* >( &_uv_client ), OnShutDownCallBack );
+        }
     }
 
     void KFNetClient::OnShutDownCallBack( uv_handle_t* handle )
     {
-        auto* netclinet = reinterpret_cast< KFNetClient* >( handle->data );
-        netclinet->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclinet->_net_setting._id );
+        auto* netclient = reinterpret_cast< KFNetClient* >( handle->data );
+
+        if ( netclient->_is_shutdown )
+        {
+            netclient->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclient->_net_setting._id );
+        }
     }
 }

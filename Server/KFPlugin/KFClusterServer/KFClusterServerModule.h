@@ -46,6 +46,9 @@ namespace KFrame
         // 登录认证
         __KF_MESSAGE_FUNCTION__( HandleClusterAuthReq );
 
+        // 请求分配shard
+        __KF_MESSAGE_FUNCTION__( HandleAllocShardReq );
+
     protected:
         // 连接丢失
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClusterProxy );
@@ -54,12 +57,33 @@ namespace KFrame
         // 生成认证token
         std::string MakeAuthToken( const KFGuid& guid );
 
+        // 获得 objectid 的数量
+        std::set< uint64 > GetShardObject( uint32 shardid );
+
+        // 获得最大数量的shardid
+        uint32 GetMaxObjectShard();
+
+        // 分配shard
+        void BalanceAllocShard( uint32 shardid );
+
+        // 发送分配shard到proxy
+        void SendAllocShardToProxy( uint32 proxyid );
+
     private:
         // 集群认证秘钥
         std::string _cluster_key;
 
         // 序列号
         uint32 _cluster_serial;
+
+        // 记录shard分配数据
+        std::map< uint64, uint32 > _object_to_shard;
+
+        // shard存在的objectid
+        std::map< uint32, std::set< uint64 > > _shard_objects;
+
+        // 所有的objectid列表
+        std::set< uint64 > _total_objects;
     };
 }
 

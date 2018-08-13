@@ -83,7 +83,8 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SMatchToProxyReq );
         auto clientid = __KF_HEAD_ID__( kfguid );
 
-        auto shardid = FindMatchShard( kfmsg.matchid(), kfmsg.playerid() );
+        // auto shardid = FindMatchShard( kfmsg.matchid(), kfmsg.playerid() );
+        auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )
         {
             KFMsg::S2SMatchToClientAck ack;

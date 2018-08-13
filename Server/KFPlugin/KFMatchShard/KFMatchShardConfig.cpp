@@ -39,16 +39,6 @@ namespace KFrame
                 kfsetting->_max_room_wait_time = xmlnode.GetUInt32( "MaxRoomWaitTime" ) * KFTimeEnum::OneMinuteMicSecond;
                 kfsetting->_wait_confirm_time = xmlnode.GetUInt32( "WaitConfirmTime" ) * KFTimeEnum::OneSecondMicSecond;
 
-                auto stropenserver = xmlnode.GetString( "OpenServer" );
-                while ( !stropenserver.empty() )
-                {
-                    auto serverid = KFUtility::SplitValue< uint32 >( stropenserver, DEFAULT_SPLIT_STRING );
-                    if ( serverid != _invalid_int )
-                    {
-                        kfsetting->_open_server_list.insert( serverid );
-                    }
-                }
-
                 _kf_match_setting.Insert( kfsetting->_match_id, kfsetting );
 
                 xmlnode.NextNode();

@@ -157,7 +157,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;_DEBUG;_LIB;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;_DEBUG;_LIB;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -169,7 +169,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuvd.lib;Psapi.lib;Iphlpapi.lib;zlibd.lib;userenv.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;libuvd.lib;Psapi.lib;Iphlpapi.lib;zlibd.lib;userenv.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -212,7 +212,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;NDEBUG;_LIB;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;NDEBUG;_LIB;POCO_STATIC;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
@@ -225,7 +225,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;Iphlpapi.lib;zlib.lib;userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;libuv.lib;ws2_32.lib;Psapi.lib;Iphlpapi.lib;zlib.lib;userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBC.lib LIBCMT.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>

@@ -12,6 +12,73 @@ namespace KFrame
 
     }
 
+    bool KFIpAddressConfig::LoadConfig( const char* file )
+    {
+        _ip_address_list.clear();
+        _platform_address.clear();
+        _platform_hash.ClearHashNode();
+
+        try
+        {
+            KFXml kfxml( file );
+            auto config = kfxml.RootNode();
+            //////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+            auto tcpnode = config.FindNode( "TcpServer" );
+            if ( tcpnode.IsValid() )
+            {
+                auto servernode = tcpnode.FindNode( "Server" );
+                while ( servernode.IsValid() )
+                {
+                    KFIpAddress kfaddress;
+                    kfaddress._app_name = servernode.GetString( "AppName" );
+                    kfaddress._app_type = servernode.GetString( "AppType" );
+                    kfaddress._str_app_id = servernode.GetString( "AppId" );
+                    kfaddress._ip = servernode.GetString( "Ip" );
+                    kfaddress._port_type = servernode.GetUInt32( "Type" );
+                    kfaddress._port = servernode.GetUInt32( "Port" );
+                    _ip_address_list.push_back( kfaddress );
+
+                    servernode.NextNode();
+                }
+            }
+            //////////////////////////////////////////////////////////////////
+            auto httpnode = config.FindNode( "HttpServer" );
+            if ( httpnode.IsValid() )
+            {
+                uint32 platformid = 0;
+                auto platform = httpnode.FindNode( "Platform" );
+                while ( platform.IsValid() )
+                {
+                    auto ip = platform.GetString( "Ip" );
+                    auto port = platform.GetUInt32( "Port" );
+                    auto Id = platform.GetUInt32( "Id" ) % 1000;
+                    auto count = platform.GetUInt32( "Count" );
+
+                    for ( auto i = 0u; i < count; ++i )
+                    {
+                        auto address = __FORMAT__( "http://{}:{}/", ip, ( port + Id + i ) );
+
+                        ++platformid;
+                        _platform_address[ platformid ] = address;
+                        _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
+                    }
+
+                    platform.NextNode();
+                }
+            }
+            //////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////
+        }
+        catch ( ... )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
     const std::string& KFIpAddressConfig::FindPlatformAddress( uint32 id )
     {
         auto platformid = _platform_hash.FindHashNode( id );
@@ -74,69 +141,17 @@ namespace KFrame
         kfzoneaddress->_ip = ip;
     }
 
-    bool KFIpAddressConfig::LoadConfig( const char* file )
+    void KFIpAddressConfig::SetMasterAppId( uint32 appchannel, uint32 zoneid )
     {
-        _ip_address_list.clear();
-        _platform_address.clear();
-        _platform_hash.ClearHashNode();
-
-        try
+        for ( auto& kfaddress : _ip_address_list )
         {
-            KFXml kfxml( file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////
-            auto tcpnode = config.FindNode( "TcpServer" );
-            if ( tcpnode.IsValid() )
-            {
-                auto servernode = tcpnode.FindNode( "Server" );
-                while ( servernode.IsValid() )
-                {
-                    KFIpAddress kfaddress;
-                    kfaddress._app_name = servernode.GetString( "AppName" );
-                    kfaddress._app_type = servernode.GetString( "AppType" );
-                    kfaddress._app_id = servernode.GetUInt32( "AppId" );
-                    kfaddress._ip = servernode.GetString( "Ip" );
-                    kfaddress._port_type = servernode.GetUInt32( "Type" );
-                    kfaddress._port = servernode.GetUInt32( "Port" );
-                    _ip_address_list.push_back( kfaddress );
+            KFAppID kfappid( kfaddress._str_app_id );
 
-                    servernode.NextNode();
-                }
-            }
-            //////////////////////////////////////////////////////////////////
-            auto httpnode = config.FindNode( "HttpServer" );
-            if ( httpnode.IsValid() )
-            {
-                uint32 platformid = 0;
-                auto platform = httpnode.FindNode( "Platform" );
-                while ( platform.IsValid() )
-                {
-                    auto ip = platform.GetString( "Ip" );
-                    auto port = platform.GetUInt32( "Port" );
-                    auto Id = platform.GetUInt32( "Id" ) % 1000;
-                    auto count = platform.GetUInt32( "Count" );
+            kfappid._union._app_data._channel_id = appchannel;
+            kfappid._union._app_data._zone_id = zoneid;
 
-                    for ( auto i = 0u; i < count; ++i  )
-                    {
-                        auto address = __FORMAT__( "http://{}:{}/", ip, ( port + Id + i ) );
-
-                        ++platformid;
-                        _platform_address[ platformid ] = address;
-                        _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
-                    }
-
-                    platform.NextNode();
-                }
-            }
-            //////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////
+            kfaddress._app_id = kfappid._union._app_id;
         }
-        catch ( ... )
-        {
-            return false;
-        }
-
-        return true;
     }
+
 }

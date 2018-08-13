@@ -148,8 +148,7 @@ namespace KFrame
             auto kffunction = _run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "sort[{}] run is already register!", sort );
-                return;
+                return __LOG_ERROR__( KFLogEnum::Init, "sort[{}] run is already register!", sort );
             }
 
             kffunction = _run_functions.Create( sort );
@@ -168,8 +167,7 @@ namespace KFrame
             auto kffunction = _after_run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "sort[{}] afterrun is already register!", sort );
-                return;
+                return __LOG_ERROR__( KFLogEnum::Init, "sort[{}] afterrun is already register!", sort );
             }
 
             kffunction = _after_run_functions.Create( sort );

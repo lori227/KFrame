@@ -28,15 +28,6 @@ namespace KFMsg
     class PBArray;
 }
 
-namespace Poco
-{
-    class URI;
-    namespace Net
-    {
-        class HTTPRequest;
-        class HTTPClientSession;
-    }
-}
 namespace Math3D
 {
     class Vector3D;
@@ -44,14 +35,6 @@ namespace Math3D
 
 namespace KFrame
 {
-    // 空类
-    class KFEmpty
-    {
-    public:
-        KFEmpty();
-        ~KFEmpty();
-    };
-
     ////////////////////////////////////////////////////////////////
     struct StringGreater : std::binary_function<std::string, std::string, bool >
     {
@@ -70,8 +53,6 @@ namespace KFrame
             return ( x > y ? true : false );
         }
     };
-
-    class KFJson;
 
     class KFIpAddress;
     typedef std::set< KFIpAddress* > IpAddressList;

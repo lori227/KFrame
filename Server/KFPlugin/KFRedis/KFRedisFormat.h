@@ -26,7 +26,10 @@ namespace KFrame
         std::stringstream ss;
         for ( auto& iter : value )
         {
-            ss << iter.first << " " << iter.second << " ";
+            if ( !iter.first.empty() && !iter.second.empty() )
+            {
+                ss << iter.first << " " << iter.second << " ";
+            }
         }
 
         return ss.str();

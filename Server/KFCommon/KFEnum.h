@@ -17,15 +17,69 @@ namespace KFrame
     {
         enum MyEnum
         {
-            LocalDevelop = 1,		// 内网研发服
-            LocalTest = 2,			// 内网测试服
-            InternetTest = 3,		// 外网测试服
-            InternetExperience = 4,	// 外网体验服
-            InternetOfficial = 5,	// 外网正式服
+            InternetTest = 1,			// 0 外网测试
+            InternetExperience = 2,		// 1 外网体验
 
+            LocalDevelop = 100,			// 100 内网开发
+            LocalTest = 101,			// 101 内网测试
             ///////////////////////////////////////////
             ///////////////////////////////////////////
+            DeployUpload = 1,			// 部署upload
+            DeployServer = 2,			// 部署server
+            DeployAgent = 3,			// 部署Agent
+            Auth = 4,					// 认证服务器
+            Platform = 5,				// 账号服务器
 
+            DataMaster = 11,			// 数据服务器master
+            DataProxy = 12,				// 数据服务器proxy
+            DataShard = 13,				// 数据服务器shard
+
+            PublicMaster = 21,			// 公共属性服务器master
+            PublicProxy = 22,			// 公共属性服务器proxy
+            PublicShard = 23,			// 公共属性服务器shard
+
+            RouteMaster = 31,			// 转发服务器master
+            RouteProxy = 32,			// 转发服务器proxy
+            RouteShard = 33,			// 转发服务器shard
+
+            MatchMaster = 41,			// 匹配服务器master
+            MatchProxy = 42,			// 匹配服务器proxy
+            MatchShard = 43,			// 匹配服务器shard
+
+            BattleMaster = 51,			// 战斗服务器master
+            BattleProxy = 52,			// 战斗服务器proxy
+            BattleShard = 53,			// 战斗服务器shard
+
+            MailMaster = 61,			// 邮件服务器master
+            MaileProxy = 62,			// 邮件服务器proxy
+            MailShard = 63,				// 邮件服务器shard
+
+            RelationMaster = 71,		// 关系服务器master
+            RelationProxy = 72,			// 关系服务器proxy
+            RelationShard = 73,			// 关系服务器shard
+
+            GroupMaster = 81,			// 组队服务器master
+            GroupProxy = 82,			// 组队服务器proxy
+            GroupShard = 83,			// 组队服务器shard
+
+            RankMaster = 91,			// 排行榜服务器master
+            RankProxy = 92,				// 排行榜服务器proxy
+            RankShard = 93,				// 排行榜服务器shard
+
+            GuildMaster = 101,			// 公会服务器master
+            GuildProxy = 102,			// 公会服务器proxy
+            GuildShard = 103,			// 公会服务器shard
+
+            LogMaster = 111,			// 日志服务器master
+            LogProxy = 112,				// 日志服务器proxy
+            LogShard = 113,				// 日志服务器shard
+
+            ZoneMaster = 241,			// 小区服务器master
+            ZoneWorld = 242,			// 小区服务器world
+            ZoneGate = 243,				// 小区服务器gate
+            ZoneLogin = 244,			// 小区服务器login
+            ZoneProxy = 245,			// 小区服务器proxy
+            ZoneGame = 246,				// 小区服务器game
         };
     }
 

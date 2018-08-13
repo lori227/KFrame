@@ -44,8 +44,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         kfglobal->_local_ip = GetLocalIp();
-        if ( kfglobal->_app_flag == KFServerEnum::LocalDevelop ||
-                kfglobal->_app_flag == KFServerEnum::LocalTest )
+        if ( kfglobal->_app_channel >= KFServerEnum::LocalDevelop )
         {
             kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
@@ -53,6 +52,9 @@ namespace KFrame
         {
             kfglobal->_interanet_ip = GetInteranetIp();
         }
+
+        // 修改appid
+        _kf_ip_config->SetMasterAppId( kfglobal->_app_channel, kfglobal->_zone_id );
 
         __LOG_INFO__( KFLogEnum::Init, "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }

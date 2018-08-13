@@ -114,36 +114,17 @@ namespace KFrame
 
     void KFServices::ParseAppId( std::string strappid )
     {
+        // cluster 101.0.xxxx.1
+        // game    101.1.xxxx.1
+
         auto kfglobal = KFGlobal::Instance();
-        kfglobal->_app_id = KFUtility::ToValue<uint32>( strappid.substr( 1 ) );
+        auto appid = KFUtility::ToValue<uint32>( strappid );
+        kfglobal->_str_app_id = strappid;
 
-        struct busaddr
-        {
-            int bus_id;
-            union
-            {
-                uint8_t channel_id;
-                uint8_t zone_id;
-                uint8_t server_type;
-                uint8_t instance_id;
-            };
-        };
-
-        1001 game -> 100.1.6.1 6.2 6.255
-        1001 - service 100.24.1.1
-
-        // 解析appid			如: 1997001001;
-        // 1-1 服务器类型	对应 KFServerEnum枚举
-        // 2-3 服务类型		11=server 12=agent 13=auth 14=platform
-        //					21=data 22=public 23=route 24=match
-        //  				25=battle 26=mail 27=relation 28=group
-        //					29=guild 30=rank 31=log 99=zone
-        // 4				0=none 1=master 2=proxy 3=shard 4=world 5=gate 6=login 7=game
-        // 5-7				zoneid
-        // 8-10				1=master 2=world 3=gate 4=login 5=proxy 6=game
-        // 9-10				编号
-        kfglobal->_app_flag = KFUtility::ToValue<uint32>( strappid.substr( 0, 1 ) );
-        kfglobal->_zone_id = KFUtility::ToValue< uint32 >( strappid.substr( 3, 3 ) );
+        KFAppID kfappid( strappid );
+        kfglobal->_app_id = kfappid._union._app_id;
+        kfglobal->_zone_id = kfappid._union._app_data._zone_id;
+        kfglobal->_app_channel = kfappid._union._app_data._channel_id;
     }
 
     void KFServices::RunUpdate()

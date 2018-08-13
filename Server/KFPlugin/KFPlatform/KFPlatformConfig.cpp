@@ -7,6 +7,7 @@ namespace KFrame
     {
         _token_expire_time = 0;
         _is_open_activation = false;
+        _default_server_list_type = __TOTAL_SERVER_LIST__;
     }
 
     KFPlatformConfig::~KFPlatformConfig()
@@ -27,12 +28,17 @@ namespace KFrame
             _is_open_activation = platform.GetBoolen( "OpenActivation" );
 
             auto serverlisttypes = config.FindNode( "ServerListTypes" );
+            _default_server_list_type = serverlisttypes.GetUInt32( "Default" );
+
             auto serverlisttype = serverlisttypes.FindNode( "ServerListType" );
             while ( serverlisttype.IsValid() )
             {
-                auto flag = serverlisttype.GetUInt32( "AppFlag" );
-                auto type = serverlisttype.GetUInt32( "Type" );
-                _server_list_type[ flag ] = type;
+                KFServerListType kftype;
+
+                kftype._min_flag = serverlisttype.GetUInt32( "MinFlag" );
+                kftype._max_flag = serverlisttype.GetUInt32( "MaxFlag" );
+                kftype._list_type = serverlisttype.GetUInt32( "Type" );
+                _server_list_type.push_back( kftype );
 
                 serverlisttype.NextNode();
             }
@@ -47,12 +53,14 @@ namespace KFrame
 
     uint32 KFPlatformConfig::GetServerListType( uint32 appflag )
     {
-        auto iter = _server_list_type.find( appflag );
-        if ( iter == _server_list_type.end() )
+        for ( auto& kftype : _server_list_type )
         {
-            return _invalid_int;
+            if ( appflag >= kftype._min_flag && appflag <= kftype._max_flag )
+            {
+                return kftype._list_type;
+            }
         }
 
-        return iter->second;
+        return _default_server_list_type;
     }
 }

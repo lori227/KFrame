@@ -93,7 +93,8 @@ namespace KFrame
         auto kfsetting = &kfclient->_net_setting;
 
         __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] connect ok!",
-                       kfsetting->_name, kfsetting->_type, kfsetting->_id, kfsetting->_ip, kfsetting->_port );
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         // 上层回调
         if ( _client_connect_function != nullptr )
@@ -112,7 +113,8 @@ namespace KFrame
 
         auto kfsetting = &kfclient->_net_setting;
         __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] disconnect!",
-                       kfsetting->_name, kfsetting->_type, kfsetting->_id, kfsetting->_ip, kfsetting->_port );
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         // 上层回调
         if ( _client_disconnect_function != nullptr )
@@ -131,7 +133,8 @@ namespace KFrame
 
         auto kfsetting = &kfclient->_net_setting;
         __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] client shutdown!",
-                       kfsetting->_name, kfsetting->_type, kfsetting->_id, kfsetting->_ip, kfsetting->_port );
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
 
         _kf_clients.Remove( eventdata->_id );
     }
@@ -146,7 +149,8 @@ namespace KFrame
 
         auto kfsetting = &kfclient->_net_setting;
         __LOG_ERROR__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] connect failed!",
-                       kfsetting->_name, kfsetting->_type, kfsetting->_id, kfsetting->_ip, kfsetting->_port );
+                       kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ),
+                       kfsetting->_ip, kfsetting->_port );
     }
 
     void KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
@@ -214,7 +218,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, serverid );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}:{}]!", msgid, serverid, KFAppID::ToString( serverid ) );
             return false;
         }
 
@@ -226,7 +230,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, serverid );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}:{}]!", msgid, serverid, KFAppID::ToString( serverid ) );
             return false;
         }
 

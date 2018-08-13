@@ -10,6 +10,7 @@ namespace KFrame
         _uv_tcp = nullptr;
 
         _app_id = 0;
+        _is_trustee = true;
         _listen_port = 0;
         _trustee_timeout = 0;
         _zone_id = 0;
@@ -23,6 +24,7 @@ namespace KFrame
     void KFNetHandle::InitHandle( uint32 id, void* uvtcp, KFNetServerServices* netservices )
     {
         SetID( id );
+        _is_trustee = true;
         _net_services = netservices;
         InitConnector( id, netservices );
 
@@ -81,11 +83,6 @@ namespace KFrame
         if ( !_is_shutdown )
         {
             _net_services->CloseSession( this );
-            __LOG_DEBUG__( KFLogEnum::Net, "close handle[{}]!", _id );
-        }
-        else
-        {
-            __LOG_ERROR__( KFLogEnum::Net, "[{}] already shutdown!", _id );
         }
     }
 
@@ -96,15 +93,13 @@ namespace KFrame
 
         _uv_tcp->data = this;
         uv_close( reinterpret_cast< uv_handle_t* >( _uv_tcp ), OnShutCallBack );
-
-        __LOG_DEBUG__( KFLogEnum::Net, "uv_close [{}]!", _id );
     }
 
     void KFNetHandle::OnShutCallBack( uv_handle_t* handle )
     {
         auto nethandle = reinterpret_cast< KFNetHandle* >( handle->data );
-        nethandle->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, nethandle->_id );
 
-        __LOG_DEBUG__( KFLogEnum::Net, "shut down [{}]!", nethandle->_id );
+        uint64 istrustee = nethandle->_is_trustee ? 1 : 0;
+        nethandle->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, nethandle->_id, reinterpret_cast< void*>( istrustee ) );
     }
 }

@@ -21,7 +21,7 @@ namespace KFrame
     void KFZoneModule::AfterLoad()
     {
         auto kfglobal = KFGlobal::Instance();
-        _kf_zone = _kf_zone_config->FindZone( kfglobal->_app_flag, kfglobal->_zone_id );
+        _kf_zone = _kf_zone_config->FindZone( kfglobal->_app_channel, kfglobal->_zone_id );
 
         // 修改服务器ip
         if ( !_kf_zone->_ip.empty() )

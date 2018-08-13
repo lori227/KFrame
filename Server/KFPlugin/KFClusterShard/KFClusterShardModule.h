@@ -70,6 +70,10 @@ namespace KFrame
         // 删除对象映射
         virtual void RemoveObjectToProxy( uint64 objectid );
         virtual void RemoveObjectToProxy( const std::list< uint64 >& objectlist );
+
+        // 分配Shard
+        virtual void AllocObjectToMaster( const std::list< uint64 >& objectlist );
+
     protected:
         // 查找路由信息
         uint32 FindProxyId( uint32 clientid );

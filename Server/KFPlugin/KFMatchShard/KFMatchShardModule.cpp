@@ -18,7 +18,7 @@ namespace KFrame
     void KFMatchShardModule::BeforeRun()
     {
         __REGISTER_RUN_FUNCTION__( &KFMatchShardModule::Run );
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFMatchShardModule::OnServerDiscoverMatchProxy );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFMatchShardModule::OnClientConnectMatchMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ, &KFMatchShardModule::HandleMatchToShardReq );
@@ -63,20 +63,20 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_SERVER_DISCOVER_FUNCTION__( KFMatchShardModule::OnServerDiscoverMatchProxy )
+    __KF_CLIENT_CONNECT_FUNCTION__( KFMatchShardModule::OnClientConnectMatchMaster )
     {
-        KFMsg::S2SRegisterMatchReq req;
-
-        for ( auto& iter : _kf_match_config->_kf_match_setting._objects )
+        if ( servername == KFGlobal::Instance()->_app_name && servertype == __KF_STRING__( master ) )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->IsOpen( KFGlobal::Instance()->_app_id ) )
-            {
-                req.add_matchid( kfsetting->_match_id );
-            }
-        }
+            std::list< uint64 > objectlist;
 
-        _kf_cluster_shard->SendMessageToProxy( handleid, KFMsg::S2S_REGISTER_MATCH_REQ, &req );
+            for ( auto& iter : _kf_match_config->_kf_match_setting._objects )
+            {
+                auto kfsetting = iter.second;
+                objectlist.push_back( kfsetting->_match_id );
+            }
+
+            _kf_cluster_shard->AllocObjectToMaster( objectlist );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleMatchToShardReq )

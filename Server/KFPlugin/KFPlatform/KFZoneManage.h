@@ -44,6 +44,7 @@ namespace KFrame
         uint64 _offline_time;
     };
 
+    class KFJson;
     class KFZoneData
     {
     public:

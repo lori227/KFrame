@@ -50,11 +50,6 @@ namespace KFrame
 
     uint32 KFNetServerServices::MakeTrusteeID()
     {
-        if ( _trustee_id < 4000000000u )
-        {
-            _trustee_id = 4000000000u;
-        }
-
         return ++_trustee_id;
     }
 

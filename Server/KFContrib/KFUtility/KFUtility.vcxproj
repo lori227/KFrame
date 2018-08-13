@@ -158,7 +158,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;NO_WARN_MBCS_MFC_DEPRECATION;_AFXDLL;ZLIB_WINAPI;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\libiconv\win64\source\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\openssl\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

@@ -4,16 +4,25 @@
 		<!--Zone -->
 		<!--Id 游戏区id, 与appid不同 -->
 		<!--LogicId 逻辑区id, 与appid不同 -->
-		<!--Type 游戏服类型 1 内网研发  2 内网测试 3外网测试 4外网体验  5外网正式 -->
+		<!--Type 游戏服类型 100 内网研发  101 内网测试 1外网测试 2外网体验  3外网正式 -->
 		<!--Name 游戏服名字, 最好是一个id映射到客户端的字串-->
 		<!--Ip Master服务器ip-->
-		<Zone Type="1"  Id="1" LogicId="1" Name="内网测试服" Ip=""/>
-		<Zone Type="2"  Id="2" LogicId="1" Name="鹏博研发服" Ip=""/>
-		<Zone Type="2"  Id="3" LogicId="1" Name="小兵研发服" Ip=""/>
-		<Zone Type="2"  Id="4" LogicId="1" Name="昭展研发服" Ip=""/>
+		<!-- 内网研发 -->
+		<Channel Type="100"/>
+			<Zone Id="2" LogicId="1" Name="鹏博研发服" Ip="">
+			<Zone Id="3" LogicId="1" Name="小兵研发服" Ip="">
+			<Zone Id="4" LogicId="1" Name="昭展研发服" Ip="">
+		</Channel>
+
+		<!-- 内网测试-->
+		<Channel Type="101"/>
+			<Zone Id="1" LogicId="1" Name="内网测试服" Ip="">
+		</Channel>
 
 		<!-- 外网测试-->
-		<Zone Type="3"  Id="1" LogicId="1" Name="外网测试服" Ip=""/>
+		<Channel Type="1"/>
+			<Zone Id="1" LogicId="1" Name="外网测试服" Ip="">
+		</Channel>
 	</Zones>
 </Config>
 

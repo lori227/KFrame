@@ -124,19 +124,18 @@ namespace KFrame
 
     void KFNetServerEngine::OnServerShutDown( const KFEventData* eventdata )
     {
-        auto ok = _kf_handles.Remove( eventdata->_id );
-        if ( !ok )
+        auto istrustee = reinterpret_cast< uint64 >( eventdata->_data ) == 1 ? true : false;
+        if ( istrustee )
         {
-            ok = _trustee_handles.Remove( eventdata->_id );
-        }
-
-        if ( ok )
-        {
-            __LOG_DEBUG__( KFLogEnum::Net, "handle[{}] remove ok!", eventdata->_id );
+            _trustee_handles.Remove( eventdata->_id );
         }
         else
         {
-            __LOG_DEBUG__( KFLogEnum::Net, "handle[{}] remove failed!", eventdata->_id );
+            auto ok = _kf_handles.Remove( eventdata->_id );
+            if ( ok )
+            {
+                __LOG_DEBUG__( KFLogEnum::Net, "handle[{}:{}] shutdown ok!", eventdata->_id, KFAppID::ToString( eventdata->_id ) );
+            }
         }
     }
 
@@ -156,8 +155,7 @@ namespace KFrame
             kfhandle = _trustee_handles.Find( eventdata->_id );
             if ( kfhandle == nullptr )
             {
-                __LOG_ERROR__( KFLogEnum::Net, "can't find handle[{}]!", eventdata->_id );
-                return;
+                return __LOG_ERROR__( KFLogEnum::Net, "can't find handle[{}]!", eventdata->_id );
             }
         }
 
@@ -166,7 +164,7 @@ namespace KFrame
 
     bool KFNetServerEngine::CloseHandle( uint32 id, uint32 delaytime, const char* function, uint32 line )
     {
-        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "add close handle[{}]!", id );
+        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "add close handle[{}:{}]!", id, KFAppID::ToString( id ) );
 
         _close_handles[ id ] = _now_time + delaytime;
         return true;
@@ -185,13 +183,14 @@ namespace KFrame
         auto findhandle = _kf_handles.Find( handleid );
         if ( findhandle != nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "handle[{}] already exist!", handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "handle[{}:{}] already exist!", handleid, KFAppID::ToString( handleid ) );
             return nullptr;
         }
 
         // 从代理列表中删除
         _remove_trustees[ trusteeid ] = false;
         kfhandle->SetID( handleid );
+        kfhandle->_is_trustee = false;
 
         _kf_handles.Insert( handleid, kfhandle );
         return kfhandle;
@@ -314,7 +313,7 @@ namespace KFrame
         }
     }
 
-    void KFNetServerEngine::SendNetMessage( const std::string& name, uint32 msgid, const char* data, uint32 length )
+    void KFNetServerEngine::SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length )
     {
         auto kfhandle = _kf_handles.First();
         while ( kfhandle != nullptr )
@@ -328,12 +327,26 @@ namespace KFrame
         }
     }
 
+    void KFNetServerEngine::SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length )
+    {
+        auto kfhandle = _kf_handles.First();
+        while ( kfhandle != nullptr )
+        {
+            if ( kfhandle->_app_type == type )
+            {
+                kfhandle->SendNetMessage( kfhandle->_id, msgid, data, length );
+            }
+
+            kfhandle = _kf_handles.Next();
+        }
+    }
+
     bool KFNetServerEngine::SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}]!", msgid, handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}:{}]!", msgid, handleid, KFAppID::ToString( handleid ) );
             return false;
         }
 
@@ -345,7 +358,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}]!", msgid, handleid );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find handle[{}:{}]!", msgid, handleid, KFAppID::ToString( handleid ) );
             return false;
         }
 

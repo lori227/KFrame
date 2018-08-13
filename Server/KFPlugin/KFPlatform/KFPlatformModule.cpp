@@ -25,7 +25,7 @@ namespace KFrame
     {
         _kf_zone_manage->BeforeRun();
         __REGISTER_RUN_FUNCTION__( &KFPlatformModule::Run );
-        _server_list_type = _kf_platform_config->GetServerListType( KFGlobal::Instance()->_app_flag );
+        _server_list_type = _kf_platform_config->GetServerListType( KFGlobal::Instance()->_app_channel );
 
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( login ), false, &KFPlatformModule::HandleLoginToken );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( token ), false, &KFPlatformModule::HandleVerifyToken );

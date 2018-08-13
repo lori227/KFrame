@@ -152,7 +152,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SBroadcastMessageReq );
 
-        _kf_tcp_server->SendNetMessage( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_MESSAGE_REQ, &kfmsg );
+        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_MESSAGE_REQ, &kfmsg );
     }
 
     void KFWorldModule::UpdateOnlineToPlatfrom( uint32 accountid, uint32 playerid, uint32 online )

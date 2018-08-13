@@ -35,6 +35,8 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleAddObjectToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleRemoveObjectToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ, &KFClusterProxyModule::HandleSendToObjectReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_ACK, &KFClusterProxyModule::HandleAllocShardAck );
+
     }
 
     void KFClusterProxyModule::BeforeShut()
@@ -59,6 +61,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_ACK );
     }
 
     void KFClusterProxyModule::Run()
@@ -349,11 +352,25 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}] ok!", objectid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, shardid );
         }
 
         // 添加数量
         AddObjectCount( shardid, kfmsg.objectid_size() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleAllocShardAck )
+    {
+        __PROTO_PARSE__( KFMsg::S2SAllocShardAck );
+
+        for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
+        {
+            auto objectid = kfmsg.objectid( i );
+            auto shardid = kfmsg.shardid( i );
+            _kf_object_shard[ objectid ] = shardid;
+
+            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, shardid );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleRemoveObjectToProxyReq )
@@ -406,7 +423,7 @@ namespace KFrame
 
     void KFClusterProxyModule::AddObjectCount( uint32 shardid, uint32 count )
     {
-        _kf_object_shard[ shardid ] += count;
+        _kf_object_count[ shardid ] += count;
     }
 
     void KFClusterProxyModule::DecObjectCount( uint32 shardid, uint32 count )

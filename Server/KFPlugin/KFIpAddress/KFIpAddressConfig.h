@@ -26,6 +26,9 @@ namespace KFrame
         // 修改Zone
         void SetZoneIpAddress( const std::string& ip );
 
+        // 修改appid
+        void SetMasterAppId( uint32 appchannel, uint32 zoneid );
+
     protected:
         // 配置的连接地址
         std::vector< KFIpAddress > _ip_address_list;

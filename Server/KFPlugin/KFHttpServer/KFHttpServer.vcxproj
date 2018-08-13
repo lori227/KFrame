@@ -71,7 +71,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL;POCO_EXTERNAL_OPENSSL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFLibrary\json\include\;..\..\KFLibrary\poco\Foundation\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -101,7 +101,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN;POCO_STATIC;_WINDOWS;_USRDLL;POCO_EXTERNAL_OPENSSL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFLibrary\json\include\;..\..\KFLibrary\poco\Foundation\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

@@ -29,7 +29,6 @@ namespace KFrame
         // 给全部客户端发送消息
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 ) = 0;
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 ) = 0;
-        virtual void SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给指定客户端发送消息
         virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
@@ -42,6 +41,10 @@ namespace KFrame
         // 给指定对象发送消息
         virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) = 0;
         virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
+
+        // 给指定类型发送消息
+        virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给某一类型客户端发送消息
         //////////////////////////////////////////////////////////////////////////////////////////

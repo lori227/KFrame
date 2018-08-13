@@ -149,7 +149,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_EXTERNAL_OPENSSL;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;..\..\KFLibrary\json\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -159,7 +159,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcrypto.lib;libssl.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -202,7 +202,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;..\..\KFLibrary\json\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
@@ -215,7 +215,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcrypto.lib;libssl.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>

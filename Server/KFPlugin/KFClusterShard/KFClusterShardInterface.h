@@ -40,6 +40,9 @@ namespace KFrame
         // 删除对象映射
         virtual void RemoveObjectToProxy( uint64 objectid ) = 0;
         virtual void RemoveObjectToProxy( const std::list< uint64 >& objectlist ) = 0;
+
+        // 分配Shard
+        virtual void AllocObjectToMaster( const std::list< uint64 >& objectlist ) = 0;
     };
 
 

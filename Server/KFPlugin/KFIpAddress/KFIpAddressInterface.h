@@ -25,6 +25,7 @@ namespace KFrame
 
         // 服务器id
         uint32 _app_id;
+        std::string _str_app_id;
 
         // 服务器ip
         std::string _ip;

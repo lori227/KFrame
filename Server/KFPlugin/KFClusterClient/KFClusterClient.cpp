@@ -21,7 +21,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFClusterClient::OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid )
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "connect cluster server[{}:{}:{}]", servername, servertype, serverid );
+        __LOG_DEBUG__( KFLogEnum::Logic, "connect cluster server[{}:{}:{}:{}]",
+                       servername, servertype, serverid, KFAppID::ToString( serverid ) );
 
         if ( servertype == _cluster_setting._type )
         {
@@ -59,8 +60,9 @@ namespace KFrame
         auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_setting._name, _cluster_setting._type, _cluster_setting._id );
         if ( kfaddress == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "can't find cluster[{}:{}:{}] address!",
-                           _cluster_setting._name, _cluster_setting._type, _cluster_setting._id );
+            __LOG_ERROR__( KFLogEnum::System, "can't find cluster[{}:{}:{}:{}] address!",
+                           _cluster_setting._name, _cluster_setting._type,
+                           _cluster_setting._id, KFAppID::ToString( _cluster_setting._id ) );
             return;
         }
 
@@ -77,8 +79,8 @@ namespace KFrame
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_setting._id, KFMsg::S2S_CLUSTER_AUTH_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::System, "send cluster[{}] auth failed!",
-                           _cluster_setting._id );
+            __LOG_ERROR__( KFLogEnum::System, "send cluster[{}:{}] auth failed!",
+                           _cluster_setting._id, KFAppID::ToString( _cluster_setting._id ) );
         }
     }
 
@@ -150,7 +152,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] is not in services! msgid[{}]",
+            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] not in services! msgid[{}]",
                            _cluster_setting._name, msgid );
             return false;
         }
@@ -162,7 +164,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] is not in services! objectid[{}] msgid[{}]",
+            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] not in services! objectid[{}] msgid[{}]",
                            _cluster_setting._name, objectid, msgid );
             return false;
         }
