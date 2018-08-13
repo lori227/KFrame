@@ -454,12 +454,12 @@ namespace KFrame
         for ( auto& iter : kffile->_datas )
         {
             auto kfdata = &iter;
-            xmlfile << KFUtility::Format( "\t<Setting" );
+            xmlfile << "\t<Setting";
 
             for ( auto& miter : kfdata->_datas )
             {
                 auto name = kffile->_class.GetAttribute( miter.first )->_name;
-                xmlfile << KFUtility::Format( " %s=\"%s\"", name.c_str(), miter.second.c_str() );
+                xmlfile << __FORMAT__( " {}=\"{}\"", name, miter.second );
             }
 
             xmlfile << "/>\n";
@@ -586,8 +586,8 @@ namespace KFrame
         csharpfile << "\n";
 
         // 写读取类
-        csharpfile << "\t" << KFUtility::Format( "public class %sConfig : IConfig<%sSetting>, ISingleton<%sConfig>\n",
-                   kffile->_class._class_name.c_str(), kffile->_class._class_name.c_str(), kffile->_class._class_name.c_str() );
+        csharpfile << "\t" << __FORMAT__( "public class {}Config : IConfig<{}Setting>, ISingleton<{}Config>\n",
+                                          kffile->_class._class_name, kffile->_class._class_name, kffile->_class._class_name );
         csharpfile << "\t{\n";
 
         // load
@@ -598,7 +598,8 @@ namespace KFrame
 
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
-        csharpfile << "\t\t\t" << KFUtility::Format( "var datatable = configreader.ReadFile(IConfig._path + \"%s.csv\");", filename.c_str() ) << "\n";
+        csharpfile << "\t\t\t" << __FORMAT__( "var datatable = configreader.ReadFile(IConfig._path + \"{}.csv\");", filename );
+        csharpfile << "\n";
         csharpfile << "\t\t\t" << "if(datatable == null)" << "\n";
         csharpfile << "\t\t\t" << "{" << "\n";
         csharpfile << "\t\t\t\t" << "return false;" << "\n";
@@ -607,7 +608,8 @@ namespace KFrame
 
         csharpfile << "\t\t\t" << "foreach(var row in datatable.Rows)" << "\n";
         csharpfile << "\t\t\t" << "{" << "\n";
-        csharpfile << "\t\t\t\t" << KFUtility::Format( "var setting = new %sSetting();", kffile->_class._class_name.c_str() ) << "\n";
+        csharpfile << "\t\t\t\t" << __FORMAT__( "var setting = new {}Setting();", kffile->_class._class_name );
+        csharpfile << "\n";
 
         for ( auto iter : kffile->_class._attributes )
         {
@@ -626,19 +628,19 @@ namespace KFrame
             csharpfile << "\t\t\t\t";
             if ( subtype.empty() )
             {
-                csharpfile << KFUtility::Format( "setting.%s = datareader.GetValue<%s>(row[\"%s\"].ToString());", attribute->_name.c_str(),
-                                                 maintype.c_str(), attribute->_name.c_str() );
+                csharpfile << __FORMAT__( "setting.{} = datareader.GetValue<{}>(row[\"{}\"].ToString());",
+                                          attribute->_name, maintype, attribute->_name );
             }
             else
             {
-                csharpfile << KFUtility::Format( "setting.%s = datareader.Get%s%s(row[\"%s\"].ToString());", attribute->_name.c_str(),
-                                                 maintype.c_str(), subtype.c_str(), attribute->_name.c_str() );
+                csharpfile << __FORMAT__( "setting.{} = datareader.Get{}{}(row[\"{}\"].ToString());",
+                                          attribute->_name, maintype, subtype, attribute->_name );
             }
             csharpfile << "\n";
         }
 
         csharpfile << "\t\t\t\t";
-        csharpfile << KFUtility::Format( "_settings[setting.%s] = setting;", kffile->_class._attributes[ 1 ]._name.c_str() );
+        csharpfile << __FORMAT__( "_settings[setting.{}] = setting;", kffile->_class._attributes[ 1 ]._name );
         csharpfile << "\n";
 
         csharpfile << "\t\t\t" << "}" << "\n";

@@ -173,8 +173,8 @@ namespace KFrame
 
         _kf_client_engine->StartClient( name, type, id, ip, port );
 
-        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}:{}|{}:{}] start connect!",
-                       name, type, id, KFAppID::ToString( id ), ip, port );
+        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] start connect!",
+                       name, type, KFAppID::ToString( id ), ip, port );
     }
 
     bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint32 id )
@@ -267,8 +267,8 @@ namespace KFrame
         {
             auto kfsetting = &kfclient->_net_setting;
 
-            __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}:{}|{}:{}] service ok!",
-                           servername, servertype, serverid, KFAppID::ToString( serverid ),
+            __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] service ok!",
+                           servername, servertype, KFAppID::ToString( serverid ),
                            kfsetting->_ip, kfsetting->_port );
         }
     }

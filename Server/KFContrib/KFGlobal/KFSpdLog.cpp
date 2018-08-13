@@ -15,10 +15,12 @@ namespace KFrame
 
     bool KFSpdLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid )
     {
+        auto strappid = KFAppID::ToString( appid );
+
 #if __KF_SYSTEM__ == __KF_WIN__
-        _local_log_path = __FORMAT__( "{}\\{}-{}-{}", path, appname, apptype, appid );
+        _local_log_path = __FORMAT__( "{}\\{}-{}-{}", path, appname, apptype, strappid );
 #else
-        _local_log_path = __FORMAT__( "{}//{}-{}-{}", path, appname, apptype, appid );
+        _local_log_path = __FORMAT__( "{}//{}-{}-{}", path, appname, apptype, strappid );
 #endif
         return true;
     }

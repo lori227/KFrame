@@ -218,7 +218,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}:{}]!", msgid, serverid, KFAppID::ToString( serverid ) );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, KFAppID::ToString( serverid ) );
             return false;
         }
 
@@ -230,7 +230,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}:{}]!", msgid, serverid, KFAppID::ToString( serverid ) );
+            __LOG_ERROR__( KFLogEnum::Net, "msgid[{}] can't find server[{}]!", msgid, KFAppID::ToString( serverid ) );
             return false;
         }
 
