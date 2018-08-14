@@ -67,6 +67,7 @@ namespace KFrame
         }
         catch ( ... )
         {
+            __LOG_CRITICAL__( KFLogEnum::System, "load launch exception!" );
         }
     }
 
@@ -122,27 +123,27 @@ namespace KFrame
             req.set_port( kfglobal->_listen_port );
             req.set_localip( _kf_ip_address->GetLocalIp() );
             _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
-
         }
     }
 
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerStartupProcess )
     {
-        for ( auto& iter : _deploy_list._objects )
+
+        try
         {
-            auto deploydata = iter.second;
-            try
+            for ( auto& iter : _deploy_list._objects )
             {
+                auto deploydata = iter.second;
                 StartupServerProcess( deploydata );
             }
-            catch ( std::exception& exception )
-            {
-                __LOG_CRITICAL__( KFLogEnum::System, "startup exception={}!", exception.what() );
-            }
-            catch ( ... )
-            {
-                __LOG_CRITICAL__( KFLogEnum::System, "startup exception unknown!" );
-            }
+        }
+        catch ( std::exception& exception )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "startup exception={}!", exception.what() );
+        }
+        catch ( ... )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "startup exception unknown!" );
         }
     }
 
