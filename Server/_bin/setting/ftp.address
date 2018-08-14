@@ -9,7 +9,7 @@
 	<!--DownLoadPath 本地资源下载根路径 -->
 	<!--UpLoadPath 本地资源上传根路径 -->
 	<Ftps>
-		<Ftp Id="1" FtpRootPath="/deploy" DownLoadPath=".." UpLoadPath="./deploy" TimeDifference="28800">
+		<Ftp Id="1" Address="127.0.0.1" Port="21" User="ftpuser" Password="ftp@lori227-=" FtpRootPath="/deploy" DownLoadPath=".." UpLoadPath="./deploy" TimeDifference="28800">
 			<Channel Id="100" Address="192.168.1.7" Port="21" User="liuxiaobing" Password="489%*ON*&^ujfnm"/>
 			<Channel Id="1" Address="123.206.102.191" Port="21" User="ftpuser" Password="ftp@lori227-="/>
 		</Ftp>

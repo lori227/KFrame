@@ -31,11 +31,14 @@ namespace KFrame
                 auto kfsetting = __KF_CREATE__( KFFtpSetting );
 
                 kfsetting->_id = ftpnode.GetUInt32( "Id" );
+                kfsetting->_address = ftpnode.GetString( "Address" );
+                kfsetting->_port = ftpnode.GetUInt32( "Port" );
+                kfsetting->_user = ftpnode.GetString( "User" );
+                kfsetting->_password = ftpnode.GetString( "Password" );
                 kfsetting->_ftp_root_path = ftpnode.GetString( "FtpRootPath" );
                 kfsetting->_download_path = ftpnode.GetString( "DownLoadPath" );
                 kfsetting->_upload_path = ftpnode.GetString( "UpLoadPath" );
                 kfsetting->_time_difference = ftpnode.GetUInt32( "TimeDifference" );
-
                 auto channelnode = ftpnode.FindNode( "Channel" );
                 while ( channelnode.IsValid() )
                 {
