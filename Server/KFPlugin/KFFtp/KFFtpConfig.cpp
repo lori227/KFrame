@@ -15,28 +15,44 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     bool KFFtpConfig::LoadConfig()
     {
+        _ftp_setting.Clear();
+
+        auto kfglobal = KFGlobal::Instance();
         try
         {
             KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////
-            auto ftpnode = config.FindNode( "Ftp" );
+            auto ftpsnode = config.FindNode( "Ftps" );
+            auto ftpnode = ftpsnode.FindNode( "Ftp" );
             while ( ftpnode.IsValid() )
             {
                 auto kfsetting = __KF_CREATE__( KFFtpSetting );
 
                 kfsetting->_id = ftpnode.GetUInt32( "Id" );
-                kfsetting->_address = ftpnode.GetString( "Address" );
-                kfsetting->_port = ftpnode.GetUInt32( "Port" );
-                kfsetting->_user = ftpnode.GetString( "User" );
-                kfsetting->_password = ftpnode.GetString( "Password" );
                 kfsetting->_ftp_root_path = ftpnode.GetString( "FtpRootPath" );
                 kfsetting->_download_path = ftpnode.GetString( "DownLoadPath" );
                 kfsetting->_upload_path = ftpnode.GetString( "UpLoadPath" );
                 kfsetting->_time_difference = ftpnode.GetUInt32( "TimeDifference" );
-                _ftp_setting.Insert( kfsetting->_id, kfsetting );
 
+                auto channelnode = ftpnode.FindNode( "Channel" );
+                while ( channelnode.IsValid() )
+                {
+                    auto channelid = channelnode.GetUInt32( "Id" );
+                    if ( channelid == kfglobal->_app_channel )
+                    {
+                        kfsetting->_address = channelnode.GetString( "Address" );
+                        kfsetting->_port = channelnode.GetUInt32( "Port" );
+                        kfsetting->_user = channelnode.GetString( "User" );
+                        kfsetting->_password = channelnode.GetString( "Password" );
+                        break;
+                    }
+
+                    channelnode.NextNode();
+                }
+
+                _ftp_setting.Insert( kfsetting->_id, kfsetting );
                 ftpnode.NextNode();
             }
         }

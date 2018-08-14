@@ -80,3 +80,8 @@ Bin/battlecluster/plugin/
 Bin/battlecluster/config/
 Bin/battlecluster/*.dll
 Bin/battlecluster/*.exe
+Bin/*/setting/
+Bin/*/plugin/
+Bin/*/config/
+Bin/*/*.dll
+Bin/*/*.exe
