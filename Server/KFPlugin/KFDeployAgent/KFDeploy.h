@@ -23,12 +23,6 @@ namespace KFrame
         // 部署ftp
         uint32 _ftp_id;
 
-        // 最小id
-        uint32 _min_id;
-
-        // 最大id
-        uint32 _max_id;
-
         // 运行路径
         std::string _app_path;
 
@@ -58,7 +52,7 @@ namespace KFrame
     public:
         KFDeployData();
 
-        bool IsAppServer( const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
+        bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
         void CopyFrom( MapString& values );
         void SaveTo( MapString& values );
 
@@ -70,7 +64,7 @@ namespace KFrame
         std::string _app_type;
 
         // 程序id
-        uint32 _app_id;
+        std::string _app_id;
 
         // 小区id
         uint32 _zone_id;
@@ -78,7 +72,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
         // 部署agentid
-        uint32 _agent_id;
+        std::string _agent_id;
 
         // agent ip
         std::string _local_ip;

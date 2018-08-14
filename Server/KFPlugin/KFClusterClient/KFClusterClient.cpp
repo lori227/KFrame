@@ -21,12 +21,14 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFClusterClient::OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid )
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "connect cluster server[{}:{}:{}:{}]",
-                       servername, servertype, serverid, KFAppID::ToString( serverid ) );
+        auto strid = KFAppID::ToString( serverid );
+        __LOG_DEBUG__( KFLogEnum::Logic, "connect cluster server[{}:{}:{}]",
+                       servername, servertype, strid );
 
         if ( servertype == _cluster_setting._type )
         {
             _cluster_setting._id = serverid;
+            _cluster_setting._str_id = strid;
 
             // 开启认证定时器
             __REGISTER_LOOP_TIMER__( serverid, 5000, &KFClusterClient::OnTimerSendClusterAuthMessage );
@@ -57,13 +59,12 @@ namespace KFrame
         _cluster_proxy_type.clear();
         _cluster_in_services = false;
 
-        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_setting._name, _cluster_setting._type, _cluster_setting._id );
+        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_setting._name, _cluster_setting._type, _cluster_setting._str_id );
         if ( kfaddress == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "can't find cluster[{}:{}:{}:{}] address!",
-                           _cluster_setting._name, _cluster_setting._type,
-                           _cluster_setting._id, KFAppID::ToString( _cluster_setting._id ) );
-            return;
+            return __LOG_ERROR__( KFLogEnum::System, "can't find cluster[{}:{}:{}:{}] address!",
+                                  _cluster_setting._name, _cluster_setting._type,
+                                  _cluster_setting._id, _cluster_setting._str_id );
         }
 
         _kf_tcp_client->StartClient( kfaddress->_app_name, kfaddress->_app_type, kfaddress->_app_id, kfaddress->_ip, kfaddress->_port );
@@ -80,7 +81,7 @@ namespace KFrame
         if ( !ok )
         {
             __LOG_ERROR__( KFLogEnum::System, "send cluster[{}:{}] auth failed!",
-                           _cluster_setting._id, KFAppID::ToString( _cluster_setting._id ) );
+                           _cluster_setting._id, _cluster_setting._str_id );
         }
     }
 

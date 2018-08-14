@@ -13,7 +13,7 @@ namespace KFrame
 
     }
 
-    bool KFRankClientConfig::LoadConfig( const char* file )
+    bool KFRankClientConfig::LoadConfig()
     {
         _player_data.clear();
         _kf_rank_data_list.clear();
@@ -21,7 +21,7 @@ namespace KFrame
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto playernode = config.FindNode( "PlayerData" );

@@ -61,7 +61,8 @@ namespace KFrame
         _deploy_server_id = 0;
 
         // 连接Agent
-        _kf_tcp_client->StartClient( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid(), kfmsg.ip(), kfmsg.port() );
+        auto appid = KFAppID::ToUInt32( kfmsg.appid() );
+        _kf_tcp_client->StartClient( kfmsg.appname(), kfmsg.apptype(), appid, kfmsg.ip(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleDeployCommandToMasterReq )

@@ -16,7 +16,7 @@ namespace KFrame
         ~KFRelationConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 返回好友度上限
         uint32 GetMaxFriendLine( uint32 operate );

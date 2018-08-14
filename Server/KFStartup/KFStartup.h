@@ -16,7 +16,7 @@ namespace KFrame
         ~KFStartup();
 
         // 初始化
-        bool InitStartup( const char* file );
+        bool InitStartup( const std::string& file );
 
         // 加载插件
         bool LoadPlugin();

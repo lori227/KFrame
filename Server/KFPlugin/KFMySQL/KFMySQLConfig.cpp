@@ -27,14 +27,14 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFMySQLConfig::LoadConfig( const char* file )
+    bool KFMySQLConfig::LoadConfig()
     {
         _mysql_setting.Clear();
         _logic_mysql_map.clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

@@ -64,7 +64,7 @@ namespace KFrame
         ~KFRankClientConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找排行榜设定
         const KFRankSetting* FindRankSetting( uint32 rankid ) const;

@@ -121,12 +121,17 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
 
   // accessors -------------------------------------------------------
 
-  // required uint32 agentid = 1;
+  // required string agentid = 1;
   inline bool has_agentid() const;
   inline void clear_agentid();
   static const int kAgentidFieldNumber = 1;
-  inline ::google::protobuf::uint32 agentid() const;
-  inline void set_agentid(::google::protobuf::uint32 value);
+  inline const ::std::string& agentid() const;
+  inline void set_agentid(const ::std::string& value);
+  inline void set_agentid(const char* value);
+  inline void set_agentid(const char* value, size_t size);
+  inline ::std::string* mutable_agentid();
+  inline ::std::string* release_agentid();
+  inline void set_allocated_agentid(::std::string* agentid);
 
   // required string localip = 2;
   inline bool has_localip() const;
@@ -186,11 +191,11 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* agentid_;
   ::std::string* localip_;
   ::std::string* name_;
-  ::google::protobuf::uint32 agentid_;
-  ::google::protobuf::uint32 port_;
   ::std::string* type_;
+  ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
@@ -369,12 +374,17 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressAck : public ::google::protobuf::Mess
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required uint32 appid = 3;
+  // required string appid = 3;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 3;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline const ::std::string& appid() const;
+  inline void set_appid(const ::std::string& value);
+  inline void set_appid(const char* value);
+  inline void set_appid(const char* value, size_t size);
+  inline ::std::string* mutable_appid();
+  inline ::std::string* release_appid();
+  inline void set_allocated_appid(::std::string* appid);
 
   // required string ip = 4;
   inline bool has_ip() const;
@@ -412,8 +422,8 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressAck : public ::google::protobuf::Mess
 
   ::std::string* appname_;
   ::std::string* apptype_;
+  ::std::string* appid_;
   ::std::string* ip_;
-  ::google::protobuf::uint32 appid_;
   ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
@@ -518,12 +528,17 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required uint32 appid = 4;
+  // required string appid = 4;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 4;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline const ::std::string& appid() const;
+  inline void set_appid(const ::std::string& value);
+  inline void set_appid(const char* value);
+  inline void set_appid(const char* value, size_t size);
+  inline ::std::string* mutable_appid();
+  inline ::std::string* release_appid();
+  inline void set_allocated_appid(::std::string* appid);
 
   // required uint32 zoneid = 5;
   inline bool has_zoneid() const;
@@ -564,9 +579,9 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   ::std::string* command_;
   ::std::string* appname_;
   ::std::string* apptype_;
-  ::google::protobuf::uint32 appid_;
-  ::google::protobuf::uint32 zoneid_;
+  ::std::string* appid_;
   ::std::string* value_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -837,7 +852,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::
 
 // S2SRegisterAgentToServerReq
 
-// required uint32 agentid = 1;
+// required string agentid = 1;
 inline bool S2SRegisterAgentToServerReq::has_agentid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -848,15 +863,63 @@ inline void S2SRegisterAgentToServerReq::clear_has_agentid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SRegisterAgentToServerReq::clear_agentid() {
-  agentid_ = 0u;
+  if (agentid_ != &::google::protobuf::internal::kEmptyString) {
+    agentid_->clear();
+  }
   clear_has_agentid();
 }
-inline ::google::protobuf::uint32 S2SRegisterAgentToServerReq::agentid() const {
+inline const ::std::string& S2SRegisterAgentToServerReq::agentid() const {
+  return *agentid_;
+}
+inline void S2SRegisterAgentToServerReq::set_agentid(const ::std::string& value) {
+  set_has_agentid();
+  if (agentid_ == &::google::protobuf::internal::kEmptyString) {
+    agentid_ = new ::std::string;
+  }
+  agentid_->assign(value);
+}
+inline void S2SRegisterAgentToServerReq::set_agentid(const char* value) {
+  set_has_agentid();
+  if (agentid_ == &::google::protobuf::internal::kEmptyString) {
+    agentid_ = new ::std::string;
+  }
+  agentid_->assign(value);
+}
+inline void S2SRegisterAgentToServerReq::set_agentid(const char* value, size_t size) {
+  set_has_agentid();
+  if (agentid_ == &::google::protobuf::internal::kEmptyString) {
+    agentid_ = new ::std::string;
+  }
+  agentid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRegisterAgentToServerReq::mutable_agentid() {
+  set_has_agentid();
+  if (agentid_ == &::google::protobuf::internal::kEmptyString) {
+    agentid_ = new ::std::string;
+  }
   return agentid_;
 }
-inline void S2SRegisterAgentToServerReq::set_agentid(::google::protobuf::uint32 value) {
-  set_has_agentid();
-  agentid_ = value;
+inline ::std::string* S2SRegisterAgentToServerReq::release_agentid() {
+  clear_has_agentid();
+  if (agentid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = agentid_;
+    agentid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRegisterAgentToServerReq::set_allocated_agentid(::std::string* agentid) {
+  if (agentid_ != &::google::protobuf::internal::kEmptyString) {
+    delete agentid_;
+  }
+  if (agentid) {
+    set_has_agentid();
+    agentid_ = agentid;
+  } else {
+    clear_has_agentid();
+    agentid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // required string localip = 2;
@@ -1309,7 +1372,7 @@ inline void S2SGetAgentIpAddressAck::set_allocated_apptype(::std::string* apptyp
   }
 }
 
-// required uint32 appid = 3;
+// required string appid = 3;
 inline bool S2SGetAgentIpAddressAck::has_appid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1320,15 +1383,63 @@ inline void S2SGetAgentIpAddressAck::clear_has_appid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SGetAgentIpAddressAck::clear_appid() {
-  appid_ = 0u;
+  if (appid_ != &::google::protobuf::internal::kEmptyString) {
+    appid_->clear();
+  }
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 S2SGetAgentIpAddressAck::appid() const {
+inline const ::std::string& S2SGetAgentIpAddressAck::appid() const {
+  return *appid_;
+}
+inline void S2SGetAgentIpAddressAck::set_appid(const ::std::string& value) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_appid(const char* value) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(value);
+}
+inline void S2SGetAgentIpAddressAck::set_appid(const char* value, size_t size) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SGetAgentIpAddressAck::mutable_appid() {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
   return appid_;
 }
-inline void S2SGetAgentIpAddressAck::set_appid(::google::protobuf::uint32 value) {
-  set_has_appid();
-  appid_ = value;
+inline ::std::string* S2SGetAgentIpAddressAck::release_appid() {
+  clear_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = appid_;
+    appid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SGetAgentIpAddressAck::set_allocated_appid(::std::string* appid) {
+  if (appid_ != &::google::protobuf::internal::kEmptyString) {
+    delete appid_;
+  }
+  if (appid) {
+    set_has_appid();
+    appid_ = appid;
+  } else {
+    clear_has_appid();
+    appid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // required string ip = 4;
@@ -1637,7 +1748,7 @@ inline void PBDeployCommand::set_allocated_apptype(::std::string* apptype) {
   }
 }
 
-// required uint32 appid = 4;
+// required string appid = 4;
 inline bool PBDeployCommand::has_appid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1648,15 +1759,63 @@ inline void PBDeployCommand::clear_has_appid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void PBDeployCommand::clear_appid() {
-  appid_ = 0u;
+  if (appid_ != &::google::protobuf::internal::kEmptyString) {
+    appid_->clear();
+  }
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 PBDeployCommand::appid() const {
+inline const ::std::string& PBDeployCommand::appid() const {
+  return *appid_;
+}
+inline void PBDeployCommand::set_appid(const ::std::string& value) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(value);
+}
+inline void PBDeployCommand::set_appid(const char* value) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(value);
+}
+inline void PBDeployCommand::set_appid(const char* value, size_t size) {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
+  appid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PBDeployCommand::mutable_appid() {
+  set_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    appid_ = new ::std::string;
+  }
   return appid_;
 }
-inline void PBDeployCommand::set_appid(::google::protobuf::uint32 value) {
-  set_has_appid();
-  appid_ = value;
+inline ::std::string* PBDeployCommand::release_appid() {
+  clear_has_appid();
+  if (appid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = appid_;
+    appid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PBDeployCommand::set_allocated_appid(::std::string* appid) {
+  if (appid_ != &::google::protobuf::internal::kEmptyString) {
+    delete appid_;
+  }
+  if (appid) {
+    set_has_appid();
+    appid_ = appid;
+  } else {
+    clear_has_appid();
+    appid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // required uint32 zoneid = 5;

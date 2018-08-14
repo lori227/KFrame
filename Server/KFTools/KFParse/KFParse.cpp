@@ -239,7 +239,7 @@ namespace KFrame
         hppfile << "\t\tKF" << filename << "Config();\n";
         hppfile << "\t\t~KF" << filename << "Config();\n";
         hppfile << "\n";
-        hppfile << "\t\tbool LoadConfig( const char* file );\n";
+        hppfile << "\t\tbool LoadConfig();\n";
         hppfile << "\n";
 
         //判断key的类型
@@ -340,7 +340,7 @@ namespace KFrame
         cppfile << "\n";
 
         //LoadConfig函数
-        cppfile << "\tbool KF" << filename << "Config::LoadConfig( const char* file )\n";
+        cppfile << "\tbool KF" << filename << "Config::LoadConfig()\n";
         cppfile << "\t{\n";
         cppfile << "\t\t" << "try" << "\n";
         cppfile << "\t\t" << "{" << "\n";

@@ -64,7 +64,7 @@ namespace KFrame
     {
         __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}]!", module, file );
 
-        bool result = config->LoadConfig( file.c_str() );
+        bool result = config->LoadConfig( file );
         if ( result )
         {
             __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}] ok!", module, file );

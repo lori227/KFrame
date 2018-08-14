@@ -2,7 +2,7 @@
 
 namespace KFrame
 {
-    bool KFTaskConfig::LoadConfig( const char* file )
+    bool KFTaskConfig::LoadConfig()
     {
         _task_setting.Clear();
 

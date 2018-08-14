@@ -25,13 +25,13 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    bool KFItemConfig::LoadConfig( const char* file )
+    bool KFItemConfig::LoadConfig()
     {
         _item_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

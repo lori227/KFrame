@@ -26,13 +26,13 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    bool KFClothesConfig::LoadConfig( const char* file )
+    bool KFClothesConfig::LoadConfig()
     {
         _clothes_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

@@ -26,6 +26,7 @@ namespace KFrame
 
         // 集群服务器id
         uint32 _id;
+        std::string _str_id;
     };
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,7 @@ namespace KFrame
     {
     public:
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         const KFClusterSetting* FindClusterSetting( const std::string& name );
 

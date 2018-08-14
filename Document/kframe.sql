@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-08-09 11:43:28
+Date: 2018-08-14 18:19:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,15 +20,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `deploy`;
 CREATE TABLE `deploy` (
-  `appid` int(10) unsigned NOT NULL COMMENT '服务器id',
+  `appid` varchar(50) NOT NULL COMMENT '服务器id',
   `appname` varchar(50) NOT NULL COMMENT '服务器名字',
   `apptype` varchar(50) NOT NULL COMMENT '服务器类型',
-  `zoneid` int(10) unsigned NOT NULL DEFAULT '0',
   `startup` int(10) unsigned NOT NULL COMMENT '是否已经关闭',
   `shutdown` int(10) NOT NULL DEFAULT '0',
   `process` int(10) unsigned NOT NULL COMMENT '进程id',
   `time` bigint(20) unsigned NOT NULL COMMENT '状态时间( 启动或者关闭 )',
-  `agentid` int(10) unsigned NOT NULL COMMENT '部署agentid',
+  `agentid` varchar(50) NOT NULL COMMENT '部署agentid',
   `localip` varchar(50) NOT NULL COMMENT '局域网ip',
   PRIMARY KEY (`appid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -36,58 +35,51 @@ CREATE TABLE `deploy` (
 -- ----------------------------
 -- Records of deploy
 -- ----------------------------
-INSERT INTO `deploy` VALUES ('1001', 'auth', 'auth', '0', '1', '0', '14270', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('2001', 'platform', 'platform', '0', '1', '0', '14277', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('2002', 'platform', 'platform', '0', '1', '0', '14284', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('10000', 'data', 'master', '0', '1', '0', '14291', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('10001', 'data', 'proxy', '0', '1', '0', '14308', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12001', 'data', 'shard', '0', '1', '0', '14315', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12002', 'data', 'shard', '0', '1', '0', '14322', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12003', 'data', 'shard', '0', '1', '0', '14329', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12004', 'data', 'shard', '0', '1', '0', '14336', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12005', 'data', 'shard', '0', '1', '0', '14348', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12006', 'data', 'shard', '0', '1', '0', '14355', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12007', 'data', 'shard', '0', '1', '0', '14362', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12008', 'data', 'shard', '0', '1', '0', '14381', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12009', 'data', 'shard', '0', '1', '0', '14396', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12010', 'data', 'shard', '0', '1', '0', '14406', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12011', 'data', 'shard', '0', '1', '0', '14416', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('12012', 'data', 'shard', '0', '1', '0', '14426', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('20000', 'public', 'master', '0', '1', '0', '14442', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('20001', 'public', 'proxy', '0', '1', '0', '14452', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('22001', 'public', 'shard', '0', '1', '0', '14462', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('30000', 'route', 'master', '0', '1', '0', '14469', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('30001', 'route', 'proxy', '0', '1', '0', '14476', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('32001', 'route', 'shard', '0', '1', '0', '14489', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('40000', 'match', 'master', '0', '1', '0', '14499', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('40001', 'match', 'proxy', '0', '1', '0', '14506', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('42001', 'match', 'shard', '0', '1', '0', '14519', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('42002', 'match', 'shard', '0', '1', '0', '14529', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('42003', 'match', 'shard', '0', '1', '0', '14536', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('50000', 'battle', 'master', '0', '1', '0', '14549', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('50001', 'battle', 'proxy', '0', '1', '0', '14565', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('52001', 'battle', 'shard', '0', '1', '0', '14572', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('60000', 'mail', 'master', '0', '1', '0', '14579', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('60001', 'mail', 'proxy', '0', '1', '0', '14586', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('62001', 'mail', 'shard', '0', '1', '0', '14595', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('70000', 'relation', 'master', '0', '1', '0', '14604', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('70001', 'relation', 'proxy', '0', '1', '0', '14611', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('72001', 'relation', 'shard', '0', '1', '0', '14620', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('80000', 'group', 'master', '0', '1', '0', '14630', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('80001', 'group', 'proxy', '0', '1', '0', '14649', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('82001', 'group', 'shard', '0', '1', '0', '14668', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('90000', 'rank', 'master', '0', '1', '0', '14677', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('90001', 'rank', 'proxy', '0', '1', '0', '14684', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('92001', 'rank', 'shard', '0', '1', '0', '14691', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('110000', 'log', 'master', '0', '1', '0', '14704', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('110001', 'log', 'proxy', '0', '1', '0', '14715', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('112001', 'log', 'shard', '0', '1', '0', '14722', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001100', 'zone', 'master', '1', '1', '0', '14740', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001200', 'zone', 'world', '1', '1', '0', '14747', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001301', 'zone', 'gate', '1', '1', '0', '14757', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001401', 'zone', 'login', '1', '1', '0', '14764', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001501', 'zone', 'proxy', '1', '1', '0', '14776', '1533785499', '101', '192.168.1.9');
-INSERT INTO `deploy` VALUES ('1001601', 'zone', 'game', '1', '1', '0', '14794', '1533785499', '101', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.11.1', 'data', 'master', '1', '0', '17204', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.111.1', 'log', 'master', '1', '0', '17211', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.112.1', 'log', 'proxy', '1', '0', '17219', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.113.1', 'log', 'shard', '1', '0', '17227', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.12.1', 'data', 'proxy', '1', '0', '17235', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.13.1', 'data', 'shard', '1', '0', '17242', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.21.1', 'public', 'master', '1', '0', '17261', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.22.1', 'public', 'proxy', '1', '0', '17272', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.23.1', 'public', 'shard', '1', '0', '17290', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.31.1', 'route', 'master', '1', '0', '17300', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.32.1', 'route', 'proxy', '1', '0', '17307', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.33.1', 'route', 'shard', '1', '0', '17326', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.4.1', 'auth', 'auth', '1', '0', '17940', '1534240738', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.41.1', 'match', 'master', '1', '0', '17357', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.42.1', 'match', 'proxy', '1', '0', '17366', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.43.1', 'match', 'shard', '1', '0', '17379', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.5.1', 'platform', 'platform', '1', '0', '17785', '1534240328', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.5.2', 'platform', 'platform', '1', '0', '17796', '1534240328', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.51.1', 'battle', 'master', '1', '0', '17414', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.52.1', 'battle', 'proxy', '1', '0', '17427', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.53.1', 'battle', 'shard', '1', '0', '17449', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.61.1', 'mail', 'master', '1', '0', '17461', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.62.1', 'mail', 'proxy', '1', '0', '17478', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.63.1', 'mail', 'shard', '1', '0', '17491', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.71.1', 'relation', 'master', '1', '0', '17508', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.72.1', 'relation', 'proxy', '1', '0', '17524', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.73.1', 'relation', 'shard', '1', '0', '17533', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.81.1', 'group', 'master', '1', '0', '17545', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.82.1', 'group', 'proxy', '1', '0', '17558', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.83.1', 'group', 'shard', '1', '0', '17571', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.91.1', 'rank', 'master', '1', '0', '17584', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.92.1', 'rank', 'proxy', '1', '0', '17601', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.0.93.1', 'rank', 'shard', '1', '0', '17614', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.241.1', 'zone', 'master', '1', '0', '17624', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.242.1', 'zone', 'world', '1', '0', '17643', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.243.1', 'zone', 'gate', '1', '0', '17650', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.244.1', 'zone', 'login', '1', '0', '17664', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.245.1', 'zone', 'proxy', '1', '0', '17682', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.1.246.1', 'zone', 'game', '1', '0', '17700', '1534240169', '100.0.3.1', '192.168.1.9');
+INSERT INTO `deploy` VALUES ('100.3.241.1', 'zone', 'master', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
+INSERT INTO `deploy` VALUES ('100.3.242.1', 'zone', 'world', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
+INSERT INTO `deploy` VALUES ('100.3.243.1', 'zone', 'gate', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
+INSERT INTO `deploy` VALUES ('100.3.244.1', 'zone', 'login', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
+INSERT INTO `deploy` VALUES ('100.3.245.1', 'zone', 'proxy', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
+INSERT INTO `deploy` VALUES ('100.3.245.6', 'zone', 'game', '1', '0', '0', '1534241867', '100.0.3.227', '192.168.10.230');
 
 -- ----------------------------
 -- Table structure for `launch`
@@ -98,8 +90,6 @@ CREATE TABLE `launch` (
   `apptype` varchar(50) NOT NULL DEFAULT '' COMMENT '进程类型',
   `apppath` varchar(50) NOT NULL DEFAULT '' COMMENT '程序目录',
   `appfile` varchar(50) NOT NULL DEFAULT '' COMMENT '进程文件名',
-  `minid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '起始id',
-  `maxid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大的id',
   `appconfig` varchar(100) NOT NULL DEFAULT '' COMMENT '配置路径',
   `logtype` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '日志类型 0 不打日志 1 本地日志  2远程日志',
   `service` varchar(50) NOT NULL DEFAULT '' COMMENT '服务类型  cluster 集群服务  zone 游戏分区',
@@ -111,47 +101,47 @@ CREATE TABLE `launch` (
 -- ----------------------------
 -- Records of launch
 -- ----------------------------
-INSERT INTO `launch` VALUES ('auth', 'auth', 'auth', 'authserver', '1001', '1999', './setting/auth.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('battle', 'master', 'battlecluster', 'battleserver', '50000', '50000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('battle', 'proxy', 'battlecluster', 'battleserver', '50001', '51999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('battle', 'shard', 'battlecluster', 'battleserver', '52001', '59999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('data', 'master', 'datacluster', 'dataserver', '10000', '10000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('data', 'proxy', 'datacluster', 'dataserver', '10001', '11999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('data', 'shard', 'datacluster', 'dataserver', '12001', '19999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('group', 'master', 'groupcluster', 'groupserver', '80000', '80000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('group', 'proxy', 'groupcluster', 'groupserver', '80001', '81999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('group', 'shard', 'groupcluster', 'groupserver', '82001', '89999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('guild', 'master', 'guildcluster', 'guildserver', '100000', '100000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('guild', 'proxy', 'guildcluster', 'guildserver', '100001', '101999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('guild', 'shard', 'guildcluster', 'guildserver', '102001', '109999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('log', 'master', 'logcluster', 'logserver', '110000', '110000', './setting/master.startup', '1', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('log', 'proxy', 'logcluster', 'logserver', '110001', '111999', './setting/proxy.startup', '1', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('log', 'shard', 'logcluster', 'logserver', '112001', '119999', './setting/shard.startup', '1', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('mail', 'master', 'mailcluster', 'mailserver', '60000', '60000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('mail', 'proxy', 'mailcluster', 'mailserver', '60001', '61999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('mail', 'shard', 'mailcluster', 'mailserver', '62001', '69999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('match', 'master', 'matchcluster', 'matchserver', '40000', '40000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('match', 'proxy', 'matchcluster', 'matchserver', '40001', '41999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('match', 'shard', 'matchcluster', 'matchserver', '42001', '49999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('platform', 'platform', 'platform', 'platformserver', '2001', '2999', './setting/platform.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('public', 'master', 'publiccluster', 'publicserver', '20000', '20000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('public', 'proxy', 'publiccluster', 'publicserver', '20001', '21999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('public', 'shard', 'publiccluster', 'publicserver', '22001', '29999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('rank', 'master', 'rankcluster', 'rankserver', '90000', '90000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('rank', 'proxy', 'rankcluster', 'rankserver', '90001', '91999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('rank', 'shard', 'rankcluster', 'rankserver', '92001', '99999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('relation', 'master', 'relationcluster', 'relationserver', '70000', '70000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('relation', 'proxy', 'relationcluster', 'relationserver', '70001', '71999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('relation', 'shard', 'relationcluster', 'relationserver', '72001', '79999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('route', 'master', 'routecluster', 'routeserver', '30000', '30000', './setting/master.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('route', 'proxy', 'routecluster', 'routeserver', '30001', '31999', './setting/proxy.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('route', 'shard', 'routecluster', 'routeserver', '32001', '39999', './setting/shard.startup', '2', 'cluster', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'game', 'zone', 'zoneserver', '601', '699', './setting/game.startup', '2', 'zone', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'gate', 'zone', 'zoneserver', '301', '399', './setting/gate.startup', '2', 'zone', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'login', 'zone', 'zoneserver', '401', '499', './setting/login.startup', '2', 'zone', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'master', 'zone', 'zoneserver', '100', '100', './setting/master.startup', '2', 'zone', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'proxy', 'zone', 'zoneserver', '501', '599', './setting/proxy.startup', '2', 'zone', '1', '../');
-INSERT INTO `launch` VALUES ('zone', 'world', 'zone', 'zoneserver', '200', '200', './setting/world.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('auth', 'auth', 'auth', 'authserver', './setting/auth.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('battle', 'master', 'battle', 'battleserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('battle', 'proxy', 'battle', 'battleserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('battle', 'shard', 'battle', 'battleserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('data', 'master', 'data', 'dataserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('data', 'proxy', 'data', 'dataserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('data', 'shard', 'data', 'dataserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('group', 'master', 'group', 'groupserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('group', 'proxy', 'group', 'groupserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('group', 'shard', 'group', 'groupserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('guild', 'master', 'guild', 'guildserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('guild', 'proxy', 'guild', 'guildserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('guild', 'shard', 'guild', 'guildserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('log', 'master', 'log', 'logserver', './setting/master.startup', '1', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('log', 'proxy', 'log', 'logserver', './setting/proxy.startup', '1', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('log', 'shard', 'log', 'logserver', './setting/shard.startup', '1', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('mail', 'master', 'mail', 'mailserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('mail', 'proxy', 'mail', 'mailserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('mail', 'shard', 'mail', 'mailserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('match', 'master', 'match', 'matchserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('match', 'proxy', 'match', 'matchserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('match', 'shard', 'match', 'matchserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('platform', 'platform', 'platform', 'platformserver', './setting/platform.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('public', 'master', 'public', 'publicserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('public', 'proxy', 'public', 'publicserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('public', 'shard', 'public', 'publicserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('rank', 'master', 'rank', 'rankserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('rank', 'proxy', 'rank', 'rankserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('rank', 'shard', 'rank', 'rankserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('relation', 'master', 'relation', 'relationserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('relation', 'proxy', 'relation', 'relationserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('relation', 'shard', 'relation', 'relationserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('route', 'master', 'route', 'routeserver', './setting/master.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('route', 'proxy', 'route', 'routeserver', './setting/proxy.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('route', 'shard', 'route', 'routeserver', './setting/shard.startup', '2', 'cluster', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'game', 'zone', 'zoneserver', './setting/game.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'gate', 'zone', 'zoneserver', './setting/gate.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'login', 'zone', 'zoneserver', './setting/login.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'master', 'zone', 'zoneserver', './setting/master.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'proxy', 'zone', 'zoneserver', './setting/proxy.startup', '2', 'zone', '1', '../');
+INSERT INTO `launch` VALUES ('zone', 'world', 'zone', 'zoneserver', './setting/world.startup', '2', 'zone', '1', '../');
 
 -- ----------------------------
 -- Table structure for `machine`
@@ -165,7 +155,7 @@ CREATE TABLE `machine` (
   `thread` int(10) NOT NULL DEFAULT '16',
   `memory` int(10) NOT NULL DEFAULT '16',
   `harddisk` int(10) NOT NULL DEFAULT '100',
-  `agentid` int(10) NOT NULL DEFAULT '0' COMMENT '开启的agentid',
+  `agentid` varchar(50) NOT NULL DEFAULT '0' COMMENT '开启的agentid',
   `status` int(10) NOT NULL DEFAULT '0' COMMENT '状态 0 agent断开连接 1 agent保持连接',
   `port` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`localip`),
@@ -175,4 +165,5 @@ CREATE TABLE `machine` (
 -- ----------------------------
 -- Records of machine
 -- ----------------------------
-INSERT INTO `machine` VALUES ('内网测试机', '192.168.1.9', '192.168.1.9', '4', '8', '16', '320', '101', '1', '12001');
+INSERT INTO `machine` VALUES ('内网测试机', '192.168.1.9', '192.168.1.9', '4', '8', '16', '320', '100.0.3.1', '1', '12001');
+INSERT INTO `machine` VALUES ('小兵测试机', '192.168.10.230', '192.168.10.230', '8', '16', '16', '100', '100.0.3.227', '1', '12001');

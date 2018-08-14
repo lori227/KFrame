@@ -20,11 +20,11 @@ namespace KFrame
 
     }
 
-    bool KFRelationConfig::LoadConfig( const char* file )
+    bool KFRelationConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto setting = config.FindNode( "Setting" );

@@ -67,7 +67,7 @@ namespace KFrame
 
     KFData* KFDataFactory::CreateData( const std::string& classname, const std::string& dataname )
     {
-        auto datasetting = _kf_data_config->GetDataSetting( classname, dataname );
+        auto datasetting = _kf_data_config->FindDataSetting( classname, dataname );
         if ( datasetting == nullptr )
         {
             __LOG_ERROR__( KFLogEnum::System, "[{}:{}] datasetting can't find!",
@@ -80,7 +80,7 @@ namespace KFrame
 
     KFData* KFDataFactory::CreateData( const KFDataSetting* datasetting )
     {
-        auto classsetting = _kf_data_config->GetClassSetting( datasetting->_contain_class );
+        auto classsetting = _kf_data_config->FindClassSetting( datasetting->_contain_class );
         if ( classsetting == nullptr )
         {
             __LOG_ERROR__( KFLogEnum::System, "[{}:{}] dataclass can't find!",
@@ -122,7 +122,7 @@ namespace KFrame
             auto initsetting = classsetting;
             if ( !childdatasetting->_contain_class.empty() )
             {
-                auto tempsetting = _kf_data_config->GetClassSetting( childdatasetting->_contain_class );
+                auto tempsetting = _kf_data_config->FindClassSetting( childdatasetting->_contain_class );
                 if ( tempsetting != nullptr )
                 {
                     initsetting = tempsetting;

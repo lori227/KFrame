@@ -12,9 +12,8 @@ namespace KFrame
     class KFKernelInterface : public KFModule
     {
     public:
-        // 添加配置读取
-        virtual bool AddDataConfig( const char* file ) = 0;
-        virtual const KFClassSetting* GetClassSetting( const std::string& dataname ) = 0;
+        // 查找配置
+        virtual const KFClassSetting* FindClassSetting( const std::string& dataname ) = 0;
 
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +29,6 @@ namespace KFrame
         virtual KFData* CreateObject( const std::string& classname, const std::string& dataname ) = 0;
 
         virtual KFData* CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto ) = 0;
-
 
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata ) = 0;

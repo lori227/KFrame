@@ -26,7 +26,12 @@ namespace KFrame
     {
         __REGISTER_RUN_FUNCTION__( &KFKernelModule::Run );
         __REGISTER_AFTER_RUN_FUNCTION__( &KFKernelModule::AfterRun );
-        AddDataConfig( _kf_kernel_config->_class_file.c_str() );
+
+        bool result = _kf_data_config->LoadDataConfig( _kf_kernel_config->_class_file );
+        if ( !result )
+        {
+            __LOG_ERROR__( KFLogEnum::Init, "load [{}] failed!", _kf_kernel_config->_class_file );
+        }
     }
 
     void KFKernelModule::Run()
@@ -55,26 +60,15 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFKernelModule::AddDataConfig( const char* file )
+    const KFClassSetting* KFKernelModule::FindClassSetting( const std::string& dataname )
     {
-        bool result = _kf_data_config->LoadConfig( file );
-        if ( !result )
-        {
-            __LOG_ERROR__( KFLogEnum::Init, "load [{}] failed!", file );
-        }
-
-        return result;
-    }
-
-    const KFClassSetting* KFKernelModule::GetClassSetting( const std::string& dataname )
-    {
-        auto kfdatasetting = _kf_data_config->GetDataSetting( _kf_kernel_config->_global_class_name, dataname );
+        auto kfdatasetting = _kf_data_config->FindDataSetting( _kf_kernel_config->_global_class_name, dataname );
         if ( kfdatasetting == nullptr )
         {
             return nullptr;
         }
 
-        return _kf_data_config->GetClassSetting( kfdatasetting->_contain_class );
+        return _kf_data_config->FindClassSetting( kfdatasetting->_contain_class );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

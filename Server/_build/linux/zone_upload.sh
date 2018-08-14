@@ -48,11 +48,10 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 initapp.log4cxx
-copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
 copyfile 1 cluster.setting
-copyfile 0 zone.setting
+copyfile 1 zone.setting
+copyfile 1 kernel.setting
 
 path1=$versionpath/setting/zone
 copyfile 1 gate.startup

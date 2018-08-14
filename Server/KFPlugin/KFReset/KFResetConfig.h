@@ -43,7 +43,7 @@ namespace KFrame
         KFResetConfig();
         ~KFResetConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     protected:
         // 添加重置数据

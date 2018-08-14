@@ -60,10 +60,6 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        // 客户端连接
-        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
-
-    protected:
         // 定时保存数据
         __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
 

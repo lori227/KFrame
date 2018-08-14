@@ -29,7 +29,7 @@ namespace KFrame
         KFRedisConfig();
         ~KFRedisConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找redis配置
         const KFRedisSetting* FindRedisSetting( uint32 id ) const;

@@ -21,11 +21,11 @@ namespace KFrame
 
     }
 
-    bool KFBattleConfig::LoadConfig( const char* file )
+    bool KFBattleConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ namespace KFrame
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             ////////////////////////////////////////////////////////////////////

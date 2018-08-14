@@ -64,7 +64,7 @@ namespace KFrame
         KFMailConfig();
         ~KFMailConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找邮件设定
         const KFMailSetting* FindMailSetting( uint32 configid ) const;

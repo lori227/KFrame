@@ -13,14 +13,14 @@ namespace KFrame
 
     }
 
-    bool KFRankShardConfig::LoadConfig( const char* file )
+    bool KFRankShardConfig::LoadConfig()
     {
         _player_data.clear();
         _kf_rank_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto playernode = config.FindNode( "PlayerData" );

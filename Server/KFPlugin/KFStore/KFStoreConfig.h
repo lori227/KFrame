@@ -126,7 +126,7 @@ namespace KFrame
         ~KFStoreConfig();
 
         //加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         //查找商城配置
         const KFStoreSetting* FindStoreSetting( uint32 id ) const;

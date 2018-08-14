@@ -12,7 +12,7 @@ namespace KFrame
 
     }
 
-    bool KFStoreConfig::LoadConfig( const char* file )
+    bool KFStoreConfig::LoadConfig()
     {
         _version = 0;
         _store_setting.Clear();
@@ -20,7 +20,7 @@ namespace KFrame
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             auto xmlnode = config.FindNode( "Setting" );
             while ( xmlnode.IsValid() )

@@ -15,11 +15,11 @@ namespace KFrame
 
     }
 
-    bool KFPlatformConfig::LoadConfig( const char* file )
+    bool KFPlatformConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

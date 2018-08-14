@@ -11,7 +11,6 @@ namespace KFrame
     public:
         KFIpAddress()
         {
-            _app_id = 0;
             _port = 0;
             _port_type = 0;
         }
@@ -54,12 +53,11 @@ namespace KFrame
         virtual const std::string& GetInteranetIp() = 0;
         /////////////////////////////////////////////////////////////////////////
         // 查找ip地址
-        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid ) = 0;
-        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist ) = 0;
+        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid ) = 0;
+        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist ) = 0;
 
         // 计算监听端口
-        virtual uint32 CalcTcpListenPort( uint32 type, uint32 port, uint32 appid ) = 0;
-        virtual uint32 CalcHttpListenPort( uint32 type, uint32 port, uint32 appid ) = 0;
+        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint32 appid ) = 0;
 
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip ) = 0;

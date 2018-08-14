@@ -18,13 +18,13 @@ namespace KFrame
         return _kf_match_setting.Find( matchid );
     }
 
-    bool KFMatchClientConfig::LoadConfig( const char* file )
+    bool KFMatchClientConfig::LoadConfig()
     {
         _kf_match_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

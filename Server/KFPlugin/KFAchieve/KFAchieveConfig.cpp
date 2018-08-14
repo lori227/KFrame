@@ -127,7 +127,7 @@ namespace KFrame
         return _use_value;
     }
 
-    bool KFAchieveConfig::LoadConfig( const char* file )
+    bool KFAchieveConfig::LoadConfig()
     {
         _achieve_setting.Clear();
         _object_types.clear();
@@ -135,7 +135,7 @@ namespace KFrame
         try
         {
             //////////////////////////////////////////////////////////////////
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

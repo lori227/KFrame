@@ -28,13 +28,13 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFChannelConfig::LoadConfig( const char* file )
+    bool KFChannelConfig::LoadConfig()
     {
         _kf_channel.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

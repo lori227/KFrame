@@ -15,7 +15,7 @@ namespace KFrame
         ~KFRelationConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     public:
         // 最大好友数量

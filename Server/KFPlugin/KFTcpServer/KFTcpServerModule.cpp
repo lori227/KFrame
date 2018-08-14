@@ -46,12 +46,12 @@ namespace KFrame
         // 计算端口
         if ( kftcpsetting->_port == _invalid_int )
         {
-            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
             kftcpsetting->_port_type = kfaddress->_port_type;
             kftcpsetting->_port = kfaddress->_port;
         }
 
-        kftcpsetting->_port = _kf_ip_address->CalcTcpListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id );
+        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id );
         return kftcpsetting;
     }
 
@@ -268,7 +268,7 @@ namespace KFrame
         CallDiscoverFunction( kfhandle );
 
         __LOG_INFO__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] register ok!",
-                      name, type, handlid, listendata->ip(), listendata->port() );
+                      name, type, KFAppID::ToString( handlid ), listendata->ip(), listendata->port() );
     }
 
     void KFTcpServerModule::BroadcastRegisterToServer( KFNetHandle* kfhandle )
@@ -324,7 +324,8 @@ namespace KFrame
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_id );
 
         __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] lost connect!",
-                       kfhandle->_app_name, kfhandle->_app_type, kfhandle->_id, kfhandle->_listen_ip, kfhandle->_listen_port );
+                       kfhandle->_app_name, kfhandle->_app_type, KFAppID::ToString( kfhandle->_id ),
+                       kfhandle->_listen_ip, kfhandle->_listen_port );
     }
 
     void KFTcpServerModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid /* = 0 */ )

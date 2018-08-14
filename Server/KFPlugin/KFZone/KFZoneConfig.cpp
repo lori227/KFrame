@@ -13,40 +13,30 @@ namespace KFrame
 
     }
 
-    bool KFZoneConfig::LoadConfig( const char* file )
+    bool KFZoneConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto zones = config.FindNode( "Zones" );
-
-            auto xmlchannel = zones.FindNode( "Channel" );
-            while ( xmlchannel.IsValid() )
+            auto xmlnode = zones.FindNode( "Zone" );
+            while ( xmlnode.IsValid() )
             {
-                auto type = xmlchannel.GetUInt32( "Type" );
+                auto kfzone = __KF_CREATE__( KFZone );
 
-                auto xmlnode = xmlchannel.FindNode( "Zone" );
-                while ( xmlnode.IsValid() )
-                {
-                    auto kfzone = __KF_CREATE__( KFZone );
+                kfzone->_type = xmlnode.GetUInt32( "Type" );
+                kfzone->_id = xmlnode.GetUInt32( "Id" );
+                kfzone->_name = xmlnode.GetString( "Name" );
+                kfzone->_logic_id = xmlnode.GetUInt32( "LogicId" );
+                kfzone->_ip = xmlnode.GetString( "Ip", true );
 
-                    kfzone->_type = type;
-                    kfzone->_id = xmlnode.GetUInt32( "Id" );
-                    kfzone->_name = xmlnode.GetString( "Name" );
-                    kfzone->_logic_id = xmlnode.GetUInt32( "LogicId" );
-                    kfzone->_ip = xmlnode.GetString( "Ip", true );
+                ZoneKey zonekey( kfzone->_type, kfzone->_id );
+                _zone_list.Insert( zonekey, kfzone );
 
-                    ZoneKey zonekey( kfzone->_type, kfzone->_id );
-                    _zone_list.Insert( zonekey, kfzone );
-
-                    xmlnode.NextNode();
-                }
-
-                xmlchannel.NextNode();
+                xmlnode.NextNode();
             }
-
         }
         catch ( ... )
         {

@@ -11,11 +11,11 @@ namespace KFrame
     {
     }
 
-    bool KFOptionConfig::LoadConfig( const char* file )
+    bool KFOptionConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Option" );

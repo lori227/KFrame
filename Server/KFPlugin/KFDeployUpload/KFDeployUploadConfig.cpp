@@ -15,11 +15,11 @@ namespace KFrame
 
     }
 
-    bool KFDeployUploadConfig::LoadConfig( const char* file )
+    bool KFDeployUploadConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto root = kfxml.FindNode( "Setting" );
             _ftp_id = root.GetUInt32( "FtpId" );
             /////////////////////////////////////////////////////////////////////

@@ -54,16 +54,10 @@ namespace KFrame
         KFNetProt();
         ~KFNetProt();
 
-        // 设置类型
-        void InitMemoryType( const std::string& type );
-
         // 计算一个监听端口
-        uint32 CalcListenPort( uint32 type, uint32 baseport, uint32 appid );
+        uint32 CalcListenPort( uint32 porttype, uint32 baseport, uint32 appid );
 
     private:
-        // 内存类型
-        std::string _memory_type;
-
         // 共享内存
         KFShareMemory _kf_share_memory;
     };

@@ -5,6 +5,6 @@
 		<Plguin Name="KFDisplay" Startup="1" Sort="110" Debug="KFDisplayd" Release="KFDisplay" Config=""/>
 		<Plguin Name="KFClusterShard" Startup="1" Sort="120" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
 		<Plguin Name="KFGroupShard" Startup="1" Sort="130" Debug="KFGroupShardd" Release="KFGroupShard" Config=""/>
-		<Plguin Name="KFKernel" Startup="1" Sort="140" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
+		<Plguin Name="KFKernel" Startup="1" Sort="140" Debug="KFKerneld" Release="KFKernel" Config="./setting/kernel.setting"/>
 	</Plugins>
 </Setting>

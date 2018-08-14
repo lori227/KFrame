@@ -8,7 +8,7 @@
 	<!--User 登录用户名 -->
 	<!--Password 登录密码 -->
 	<Redis>
-		<Connection Id="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		<Connection Id="1" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
 	</Redis>
 
 	<!--逻辑功能对应redis映射-->
@@ -19,45 +19,46 @@
 
 	<LogicRedis DefaultRedis="1">
 		<!--保存服务器列表信息-->
-		<Logic Filed="login" LogicId="0" Id="1"/>
+		<Logic Filed="login" Id="1"/>
 
 		<!--保存账号信息-->
-		<Logic Filed="account" LogicId="0" Id="1"/>
+		<Logic Filed="account" Id="1"/>
 
 		<!--公共数据信息-->
-		<Logic Filed="public" LogicId="0" Id="1"/>
+		<Logic Filed="public" Id="1"/>
 
 		<!--关系数据信息-->
-		<Logic Filed="relation" LogicId="0" Id="1"/>
+		<Logic Filed="relation" Id="1"/>
 
 		<!--保存邮件信息-->
-		<Logic Filed="mail" LogicId="0" Id="1"/>
+		<Logic Filed="mail" Id="1"/>
 
 		<!--保存战斗服务器信息-->
-		<Logic Filed="battle" LogicId="0" Id="1"/>
+		<Logic Filed="battle" Id="1"/>
 		
 		<!--保存排行榜信息-->
-		<Logic Filed="rank" LogicId="0" Id="1"/>
+		<Logic Filed="rank" Id="1"/>
 		
-		<!--保存玩家数据信息-->
-		<Logic Filed="player" LogicId="1" Id="1"/>
-		<Logic Filed="player" LogicId="2" Id="1"/>
-		<Logic Filed="player" LogicId="3" Id="1"/>
-		<Logic Filed="player" LogicId="4" Id="1"/>
-		<Logic Filed="player" LogicId="5" Id="1"/>
-		<Logic Filed="player" LogicId="6" Id="1"/>
-		<Logic Filed="player" LogicId="7" Id="1"/>
-		<Logic Filed="player" LogicId="8" Id="1"/>
-		<Logic Filed="player" LogicId="9" Id="1"/>
-		<Logic Filed="player" LogicId="10" Id="1"/>
-		<Logic Filed="player" LogicId="11" Id="1"/>
-		<Logic Filed="player" LogicId="12" Id="1"/>
-		<Logic Filed="player" LogicId="13" Id="1"/>
-		<Logic Filed="player" LogicId="14" Id="1"/>
-		<Logic Filed="player" LogicId="15" Id="1"/>
-		<Logic Filed="player" LogicId="16" Id="1"/>
-		<Logic Filed="player" LogicId="17" Id="1"/>
-		<Logic Filed="player" LogicId="18" Id="1"/>
+		<!--保存小区玩家数据信息-->
+		<Logic Filed="zone" LogicId="1" Id="1"/>
+		<Logic Filed="zone" LogicId="2" Id="1"/>
+		<Logic Filed="zone" LogicId="3" Id="1"/>
+		<Logic Filed="zone" LogicId="4" Id="1"/>
+		<Logic Filed="zone" LogicId="5" Id="1"/>
+		<Logic Filed="zone" LogicId="6" Id="1"/>
+		<Logic Filed="zone" LogicId="7" Id="1"/>
+		<Logic Filed="zone" LogicId="8" Id="1"/>
+		<Logic Filed="zone" LogicId="9" Id="1"/>
+		<Logic Filed="zone" LogicId="10" Id="1"/>
+		<Logic Filed="zone" LogicId="11" Id="1"/>
+		<Logic Filed="zone" LogicId="12" Id="1"/>
+		<Logic Filed="zone" LogicId="13" Id="1"/>
+		<Logic Filed="zone" LogicId="14" Id="1"/>
+		<Logic Filed="zone" LogicId="15" Id="1"/>
+		<Logic Filed="zone" LogicId="16" Id="1"/>
+		<Logic Filed="zone" LogicId="17" Id="1"/>
+		<Logic Filed="zone" LogicId="18" Id="1"/>
+		<Logic Filed="zone" LogicId="100" Id="1"/>
 	</LogicRedis>
 </Config>
 

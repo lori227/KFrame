@@ -51,7 +51,12 @@ namespace KFrame
         auto kfsetting = _kf_redis_config->FindRedisSetting( id );
         if ( kfsetting == nullptr )
         {
-            return nullptr;
+            _kf_redis_config->LoadConfig();
+            kfsetting = _kf_redis_config->FindRedisSetting( id );
+            if ( kfsetting == nullptr )
+            {
+                return nullptr;
+            }
         }
 
         return CreateExecute( id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
@@ -62,7 +67,12 @@ namespace KFrame
         auto kfsetting = _kf_redis_config->FindRedisSetting( field, logicid );
         if ( kfsetting == nullptr )
         {
-            return nullptr;
+            _kf_redis_config->LoadConfig();
+            kfsetting = _kf_redis_config->FindRedisSetting( field, logicid );
+            if ( kfsetting == nullptr )
+            {
+                return nullptr;
+            }
         }
 
         return CreateExecute( kfsetting->_id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );

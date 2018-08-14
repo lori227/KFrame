@@ -34,7 +34,7 @@ namespace KFrame
         ~KFChatConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找聊天室设置
         const KFChatSetting* FindChatSetting( uint32 chattype ) const;

@@ -14,7 +14,7 @@ namespace KFrame
         ~KFKernelConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 倍数属性
         bool IsMultipleData( const std::string& dataname ) const;

@@ -303,16 +303,16 @@ namespace KFrame
             zonedata->_id = zoneid;
         }
 
-        if ( zonedata->_name != zonename )
-        {
-            update = true;
-            zonedata->_name = zonename;
-        }
-
         if ( zonedata->_type != zonetype )
         {
             update = true;
             zonedata->_type = zonetype;
+        }
+
+        if ( zonedata->_name != zonename )
+        {
+            update = true;
+            zonedata->_name = zonename;
         }
 
         if ( zonedata->_status == KFZoneStatusEnum::Shutoff )

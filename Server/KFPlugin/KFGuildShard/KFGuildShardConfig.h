@@ -12,7 +12,7 @@ namespace KFrame
         KFGuildShardConfig();
         ~KFGuildShardConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     public:
 

@@ -13,13 +13,13 @@ namespace KFrame
         return &iter->second;
     }
 
-    bool KFClusterServerConfig::LoadConfig( const char* file )
+    bool KFClusterServerConfig::LoadConfig()
     {
         _cluster_setting_list.clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

@@ -5,6 +5,6 @@
 		<Plguin Name="KFWorker" Startup="1" Sort="110" Debug="KFWorkerd" Release="KFWorker" Config=""/>
 		<Plguin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
 		<Plguin Name="KFClusterShard" Startup="1" Sort="130" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plguin Name="KFDataShard" Startup="1" Sort="140" Debug="KFDataShardd" Release="KFDataShard" Config="./setting/data.setting"/>
+		<Plguin Name="KFDataShard" Startup="1" Sort="140" Debug="KFDataShardd" Release="KFDataShard" Config=""/>
 	</Plugins>
 </Setting>

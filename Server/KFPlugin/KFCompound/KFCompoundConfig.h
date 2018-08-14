@@ -31,7 +31,7 @@ namespace KFrame
         KFCompoundConfig();
         ~KFCompoundConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         const KFCompoundSetting* FindCompoundSetting( const std::string& dataname, uint32 id );
 

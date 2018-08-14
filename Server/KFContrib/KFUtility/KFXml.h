@@ -10,7 +10,7 @@ namespace KFrame
     class KFXml
     {
     public:
-        KFXml( const char* file );
+        KFXml( const std::string& file );
         ~KFXml();
 
         // 查找节点
@@ -21,7 +21,7 @@ namespace KFrame
 
     protected:
         // 解析文件
-        void Parse( const char* file );
+        void Parse();
 
     private:
         void* _document;

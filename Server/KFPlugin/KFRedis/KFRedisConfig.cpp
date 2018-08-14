@@ -41,14 +41,14 @@ namespace KFrame
         return iter->second;
     }
 
-    bool KFRedisConfig::LoadConfig( const char* file )
+    bool KFRedisConfig::LoadConfig()
     {
         _redis_setting.Clear();
         _logic_redis_map.clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////
@@ -77,7 +77,7 @@ namespace KFrame
             while ( logic.IsValid() )
             {
                 auto dataname = logic.GetString( "Filed" );
-                auto logicid = logic.GetUInt32( "LogicId" );
+                auto logicid = logic.GetUInt32( "LogicId", true, _invalid_int );
                 auto redisid = logic.GetUInt32( "Id" );
 
                 auto key = LogicKey( dataname, logicid );

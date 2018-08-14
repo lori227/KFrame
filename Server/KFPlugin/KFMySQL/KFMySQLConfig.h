@@ -23,7 +23,7 @@ namespace KFrame
     public:
 
         // 加载配置文件
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         const KFMySQLSetting* FindSetting( uint32 id ) const;
         const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid ) const;

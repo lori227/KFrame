@@ -27,7 +27,7 @@ namespace KFrame
         ~KFBattleConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 加载奖励配置
         bool LoadRewardConfig( const char* file );

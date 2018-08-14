@@ -13,7 +13,7 @@ namespace KFrame
 
     }
 
-    bool KFStartup::InitStartup( const char* file )
+    bool KFStartup::InitStartup( const std::string& file )
     {
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )

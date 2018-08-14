@@ -13,7 +13,7 @@ namespace KFrame
         KFDeployUploadConfig();
         ~KFDeployUploadConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     public:
         // ftp 地址

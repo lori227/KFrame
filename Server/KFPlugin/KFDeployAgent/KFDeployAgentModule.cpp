@@ -55,9 +55,19 @@ namespace KFrame
     {
         __MKDIR__( _pid_path );
         _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
+        if ( _mysql_driver == nullptr )
+        {
+            return __LOG_CRITICAL__( KFLogEnum::System, "deploy mysql is nullprt" );
+        }
 
         // 加载部署信息
-        LoadTotalLaunchData();
+        try
+        {
+            LoadTotalLaunchData();
+        }
+        catch ( ... )
+        {
+        }
     }
 
     void KFDeployAgentModule::LoadTotalLaunchData()
@@ -106,7 +116,7 @@ namespace KFrame
 
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;
-            req.set_agentid( kfglobal->_app_id );
+            req.set_agentid( kfglobal->_str_app_id );
             req.set_name( kfglobal->_app_name );
             req.set_type( kfglobal->_app_type );
             req.set_port( kfglobal->_listen_port );
@@ -121,7 +131,18 @@ namespace KFrame
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
-            StartupServerProcess( deploydata );
+            try
+            {
+                StartupServerProcess( deploydata );
+            }
+            catch ( std::exception& exception )
+            {
+                __LOG_CRITICAL__( KFLogEnum::System, "startup exception={}!", exception.what() );
+            }
+            catch ( ... )
+            {
+                __LOG_CRITICAL__( KFLogEnum::System, "startup exception unknown!" );
+            }
         }
     }
 
@@ -195,11 +216,22 @@ namespace KFrame
             return;
         }
 
+        try
+        {
 #if __KF_SYSTEM__ == __KF_WIN__
-        KillWinProcess( processid );
+            KillWinProcess( processid );
 #else
-        KillLinuxProcess( processid );
+            KillLinuxProcess( processid );
 #endif
+        }
+        catch ( std::exception& exception )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "kill exception={}!", exception.what() );
+        }
+        catch ( ... )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "kill exception unknown!" );
+        }
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -382,10 +414,10 @@ namespace KFrame
         updatevalues[ __KF_STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
         updatevalues[ __KF_STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
         updatevalues[ __KF_STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
-        updatevalues[ __KF_STRING__( agentid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
+        updatevalues[ __KF_STRING__( agentid ) ] = KFGlobal::Instance()->_str_app_id;
 
         MapString keyvalues;
-        keyvalues[ __KF_STRING__( appid ) ] = __TO_STRING__( deploydata->_app_id );
+        keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
         _mysql_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
     }
 
@@ -454,7 +486,7 @@ namespace KFrame
     }
 
     void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype,
-            uint32 appid, uint32 zoneid )
+            const std::string& appid, uint32 zoneid )
     {
         auto kftask = __KF_CREATE__( KFDeployTask );
         kftask->_command = command;
@@ -480,9 +512,42 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerCheckTaskFinish )
     {
+        try
+        {
+            auto ok = CheckTaskFinish();
+            if ( ok )
+            {
+                __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task finish!",
+                              _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
+                              _kf_task->_app_id, _kf_task->_zone_id );
+
+                __KF_DESTROY__( KFDeployTask, _kf_task );
+                _kf_task = nullptr;
+
+                if ( !_deploy_task.empty() )
+                {
+                    _kf_task = _deploy_task.front();
+                    _deploy_task.pop_front();
+
+                    StartDeployTask();
+                }
+            }
+        }
+        catch ( std::exception& exception )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "check finish exception={}!", exception.what() );
+        }
+        catch ( ... )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "check finish exception unknown!" );
+        }
+    }
+
+    bool KFDeployAgentModule::CheckTaskFinish()
+    {
         if ( _kf_task == nullptr )
         {
-            return;
+            return false;
         }
 
         auto ok = true;
@@ -508,57 +573,52 @@ namespace KFrame
             ok = CheckUpdateServerTaskFinish();
         }
 
-        if ( ok )
-        {
-            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task finish!",
-                          _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
-                          _kf_task->_app_id, _kf_task->_zone_id );
-
-            __KF_DESTROY__( KFDeployTask, _kf_task );
-            _kf_task = nullptr;
-
-            if ( !_deploy_task.empty() )
-            {
-                _kf_task = _deploy_task.front();
-                _deploy_task.pop_front();
-
-                StartDeployTask();
-            }
-        }
+        return ok;
     }
 
     void KFDeployAgentModule::StartDeployTask()
     {
         _kf_task->_start_time = KFGlobal::Instance()->_game_time;
 
-        if ( _kf_task->_command == __KF_STRING__( startup ) )
+        try
         {
-            StartStartupServerTask();
-        }
-        else if ( _kf_task->_command == __KF_STRING__( kill ) )
-        {
-            StartKillServerTask();
-        }
-        else if ( _kf_task->_command == __KF_STRING__( shutdown ) )
-        {
-            StartShutDownServerTask();
-        }
-        else if ( _kf_task->_command == __KF_STRING__( download ) )
-        {
-            StartUpdateServerTask();
-        }
-        else if ( _kf_task->_command == __KF_STRING__( launch ) )
-        {
-            LoadTotalLaunchData();
-        }
-        else
-        {
-            SendTaskToMaster();
-        }
+            if ( _kf_task->_command == __KF_STRING__( startup ) )
+            {
+                StartStartupServerTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( kill ) )
+            {
+                StartKillServerTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( shutdown ) )
+            {
+                StartShutDownServerTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( download ) )
+            {
+                StartUpdateServerTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( launch ) )
+            {
+                LoadTotalLaunchData();
+            }
+            else
+            {
+                SendTaskToMaster();
+            }
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task start!",
-                      _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
-                      _kf_task->_app_id, _kf_task->_zone_id );
+            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task start!",
+                          _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
+                          _kf_task->_app_id, _kf_task->_zone_id );
+        }
+        catch ( std::exception& exception )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "start task exception={}!", exception.what() );
+        }
+        catch ( ... )
+        {
+            __LOG_CRITICAL__( KFLogEnum::System, "start task exception unknown!" );
+        }
     }
 
     void KFDeployAgentModule::StartKillServerTask()

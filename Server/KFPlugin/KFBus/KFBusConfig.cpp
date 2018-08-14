@@ -3,8 +3,8 @@
 namespace KFrame
 {
 
-    bool KFBusConfig::IsValidConnection( const std::string& appname, const std::string& apptype, uint32 appid,
-                                         const std::string& connectname, const std::string& connecttype, uint32 connectid )
+    bool KFBusConfig::IsValidConnection( const std::string& appname, const std::string& apptype, const std::string& appid,
+                                         const std::string& connectname, const std::string& connecttype, const std::string& connectid )
     {
         for ( auto& kfconnection : _bus_connection )
         {
@@ -18,7 +18,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfconnection._app_id != _invalid_int && kfconnection._app_id != appid )
+            if ( kfconnection._app_id != _globbing_str && kfconnection._app_id != appid )
             {
                 continue;
             }
@@ -34,7 +34,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfconnection._connect_id != _invalid_int && kfconnection._connect_id != connectid )
+            if ( kfconnection._connect_id != _globbing_str && kfconnection._connect_id != connectid )
             {
                 continue;
             }
@@ -45,7 +45,7 @@ namespace KFrame
         return false;
     }
 
-    void KFBusConfig::FindConnection( const std::string& appname, const std::string& apptype, uint32 appid, std::set<KFConnection*>& outlist )
+    void KFBusConfig::FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set<KFConnection*>& outlist )
     {
         outlist.clear();
 
@@ -61,7 +61,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfconnection._app_id != _invalid_int && kfconnection._app_id != appid )
+            if ( kfconnection._app_id != _globbing_str && kfconnection._app_id != appid )
             {
                 continue;
             }
@@ -71,12 +71,12 @@ namespace KFrame
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFBusConfig::LoadConfig( const char* file )
+    bool KFBusConfig::LoadConfig()
     {
         _bus_connection.clear();
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////
@@ -90,12 +90,12 @@ namespace KFrame
 
                     kfconnection._app_name = connectionnode.GetString( "AppName" );
                     kfconnection._app_type = connectionnode.GetString( "AppType" );
-                    kfconnection._app_id = connectionnode.GetUInt32( "AppId" );
+                    kfconnection._app_id = connectionnode.GetString( "AppId" );
 
 
                     kfconnection._connect_name = connectionnode.GetString( "ConnectName" );
                     kfconnection._connect_type = connectionnode.GetString( "ConnectType" );
-                    kfconnection._connect_id = connectionnode.GetUInt32( "ConnectId" );
+                    kfconnection._connect_id = connectionnode.GetString( "ConnectId" );
                     _bus_connection.push_back( kfconnection );
 
                     connectionnode.NextNode();

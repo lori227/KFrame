@@ -106,7 +106,7 @@ namespace KFrame
         // 获得某种类型的所有成就
         const KFActivityType* FindActivityType( const std::string& parentname, const std::string& dataname ) const;
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     protected:
         void AddActivitySetting( KFActivitySetting* setting, KFActivityData* eventdata );

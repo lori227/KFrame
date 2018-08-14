@@ -14,11 +14,11 @@ namespace KFrame
         KFIpAddressConfig();
         ~KFIpAddressConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找连接
-        const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid );
-        void FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist );
+        const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
+        void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
         // 查找平台地址
         const std::string& FindPlatformAddress( uint32 id );

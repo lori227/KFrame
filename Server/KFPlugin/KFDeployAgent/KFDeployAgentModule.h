@@ -29,9 +29,8 @@ namespace KFrame
     public:
         KFDeployTask()
         {
-            _app_id = _invalid_int;
             _zone_id = _invalid_int;
-            _start_time = 0;
+            _start_time = _invalid_int;
         }
 
     public:
@@ -48,7 +47,7 @@ namespace KFrame
         std::string _app_type;
 
         // appid
-        uint32 _app_id;
+        std::string _app_id;
 
         // zoneid
         uint32 _zone_id;
@@ -133,7 +132,7 @@ namespace KFrame
 #endif
     protected:
         // 添加部署任务
-        void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid );
+        void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 开始任务
         void StartDeployTask();
@@ -143,6 +142,7 @@ namespace KFrame
         void StartUpdateServerTask();
 
         // 检查任务完成
+        bool CheckTaskFinish();
         bool CheckShutDownServerTaskFinish();
         bool CheckStartupServerTaskFinish();
         bool CheckUpdateServerTaskFinish();
@@ -164,7 +164,7 @@ namespace KFrame
         KFMySQLDriver* _mysql_driver;
 
         // deploy列表
-        KFMap< uint32, uint32, KFDeployData > _deploy_list;
+        KFMap< std::string, const std::string&, KFDeployData > _deploy_list;
 
         // launch列表
         typedef std::pair< std::string, std::string > LaunchKey;

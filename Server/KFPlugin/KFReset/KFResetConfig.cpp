@@ -27,13 +27,13 @@ namespace KFrame
         kfsetting->_reset_data_list.push_back( resetdata );
     }
 
-    bool KFResetConfig::LoadConfig( const char* file )
+    bool KFResetConfig::LoadConfig()
     {
         _reset_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto setting = config.FindNode( "Setting" );

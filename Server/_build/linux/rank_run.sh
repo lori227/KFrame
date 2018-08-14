@@ -10,12 +10,12 @@ server=rankserver
 fi
 
 echo Starting Rank Cluster Server
-./$server appid=90000 log=1 startup=./setting/master.startup
+./$server appid=100.0.91.1 log=1 startup=./setting/master.startup
 
 echo Starting Rank Proxy Server
-./$server appid=90001 log=1 startup=./setting/proxy.startup
+./$server appid=100.0.92.1 log=1 startup=./setting/proxy.startup
 
 echo Starting Rank Shard Server
-./$server appid=92001 log=1 startup=./setting/shard.startup
+./$server appid=100.0.93.1 log=1 startup=./setting/shard.startup
 
 cd $basepath

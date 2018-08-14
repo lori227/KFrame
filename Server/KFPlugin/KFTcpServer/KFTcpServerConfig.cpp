@@ -18,12 +18,12 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFTcpServerConfig::LoadConfig( const char* file )
+    bool KFTcpServerConfig::LoadConfig()
     {
         _tcp_setting_list.clear();
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
 

@@ -78,7 +78,7 @@ namespace KFrame
 
         // 读取配置
         auto strfile = params[ __KF_STRING__( startup ) ];
-        if ( !_kf_startup->InitStartup( strfile.c_str() ) )
+        if ( !_kf_startup->InitStartup( strfile ) )
         {
             return false;
         }
@@ -106,7 +106,7 @@ namespace KFrame
         InitLogMemoryTimer();
 
         __LOG_INFO__( KFLogEnum::Init, "[{}:{}:{}] startup ok!",
-                      kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+                      kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
 
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
         return true;
@@ -118,7 +118,6 @@ namespace KFrame
         // game    101.1.xxxx.1
 
         auto kfglobal = KFGlobal::Instance();
-        auto appid = KFUtility::ToValue<uint32>( strappid );
         kfglobal->_str_app_id = strappid;
 
         KFAppID kfappid( strappid );

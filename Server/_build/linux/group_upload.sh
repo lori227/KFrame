@@ -34,7 +34,7 @@ if [ ! -n "$3" ]; then
 fi
 
 versionpath=/kframe/$1
-deploypath=/data/upload/deploy/groupcluster/linux
+deploypath=/data/upload/deploy/group/linux
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
@@ -47,10 +47,9 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 initapp.log4cxx
-copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
 copyfile 1 cluster.setting
+copyfile 1 kernel.setting
 
 path1=$versionpath/setting/group
 copyfile 1 master.startup
@@ -61,7 +60,6 @@ copyfile 1 shard.startup
 path1=$versionpath/config
 path2=$deploypath/config
 copyfile 1 group.config
-copyfile 1 kernel.config
 copyfile 1 class.config
 
 #plugin
@@ -112,4 +110,4 @@ copyfile 1 KFLogClientd.so
 copyfile 1 KFLogClient.so
 
 #upload to ftp
-curl -sd '{"ftpid":'$2',"apppath":"groupcluster"}' $3
+curl -sd '{"ftpid":'$2',"apppath":"group"}' $3

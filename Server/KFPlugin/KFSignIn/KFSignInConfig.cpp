@@ -20,13 +20,13 @@ namespace KFrame
         return _signin_setting.Find( key );
     }
 
-    bool KFSignInConfig::LoadConfig( const char* file )
+    bool KFSignInConfig::LoadConfig()
     {
         _signin_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

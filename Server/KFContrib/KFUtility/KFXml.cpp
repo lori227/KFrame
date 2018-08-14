@@ -5,13 +5,13 @@
 
 namespace KFrame
 {
-    KFXml::KFXml( const char* file )
+    KFXml::KFXml( const std::string& file )
     {
         _file = file;
         _data = new rapidxml::file<>();
         _document = new rapidxml::xml_document<>();
 
-        Parse( file );
+        Parse();
     }
 
     KFXml::~KFXml()
@@ -25,12 +25,12 @@ namespace KFrame
         return _file.c_str();
     }
 
-    void KFXml::Parse( const char* file )
+    void KFXml::Parse()
     {
         auto xmlfile = reinterpret_cast<rapidxml::file<>*>( _data );
         auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        xmlfile->from( file );
+        xmlfile->from( _file.c_str() );
         xmldocument->parse<0>( xmlfile->data() );
     }
 

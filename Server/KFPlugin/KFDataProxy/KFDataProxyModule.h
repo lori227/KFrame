@@ -43,14 +43,6 @@ namespace KFrame
 
         // 消息转发
         __KF_MESSAGE_FUNCTION__( HandleTransmitToDataShardReq );
-
-    protected:
-        // 查找逻辑分片
-        uint32 FindZoneShardId( uint32 zoneid, uint32 clientid );
-
-    private:
-        // 分区hash列表
-        KFMap< uint32, uint32, KFConHash > _zone_hash;
     };
 }
 

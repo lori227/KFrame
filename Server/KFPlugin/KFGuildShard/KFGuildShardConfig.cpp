@@ -15,11 +15,11 @@ namespace KFrame
     }
 
 
-    bool KFGuildShardConfig::LoadConfig( const char* file )
+    bool KFGuildShardConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

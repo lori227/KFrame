@@ -26,14 +26,13 @@ namespace KFrame
     public:
         KFAgentData()
         {
-            _agent_id = 0;
             _port = 0;
             status = 0;
         }
 
     public:
         // 服务器id
-        uint32 _agent_id;
+        std::string _agent_id;
 
         // 局域网地址
         std::string _local_ip;
@@ -92,7 +91,7 @@ namespace KFrame
         KFMySQLDriver* _mysql_driver;
 
         // Agent列表
-        KFMap< uint32, uint32, KFAgentData > _agent_list;
+        KFMap< std::string, const std::string&, KFAgentData > _agent_list;
     };
 }
 

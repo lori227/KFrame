@@ -25,11 +25,11 @@ namespace KFrame
 
     }
 
-    bool KFRobotConfig::LoadConfig( const char* file )
+    bool KFRobotConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             /////////////////////////////////////////////////////

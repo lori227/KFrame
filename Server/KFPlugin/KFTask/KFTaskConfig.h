@@ -44,7 +44,7 @@ namespace KFrame
         const KFTaskSetting* FindTaskSetting( uint32 taskid ) const;
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     protected:
         // 添加任务配置

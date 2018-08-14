@@ -18,12 +18,12 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFHttpServerConfig::LoadConfig( const char* file )
+    bool KFHttpServerConfig::LoadConfig()
     {
         _http_setting_list.clear();
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             //////////////////////////////////////////////////////////////////

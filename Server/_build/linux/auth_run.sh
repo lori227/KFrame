@@ -9,5 +9,5 @@ server=authserver
 fi
 
 echo Starting Auth Server
-./$server appid=1001 log=1 startup=./setting/auth.startup
+./$server appid=100.0.4.1 log=1 startup=./setting/auth.startup
 cd $basepath                 

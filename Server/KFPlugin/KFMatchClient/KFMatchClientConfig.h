@@ -36,7 +36,7 @@ namespace KFrame
         ~KFMatchClientConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找匹配设置
         const KFMatchSetting* FindMatchSetting( uint32 matchid ) const;

@@ -28,7 +28,7 @@ function copyfile()
 binpath=../../_bin/linux
 respath=../../../Resource
 settingpath=../../_bin/setting
-deploypath=/data/groupcluster
+deploypath=/data/group
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
@@ -41,16 +41,14 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 initapp.log4cxx
-copyfile 1 templateapp.log4cxx
 copyfile 1 common.startup
 copyfile 1 cluster.setting
+copyfile 1 kernel.setting
 
 #config
 path1=$respath/config
 path2=$deploypath/config
 copyfile 1 group.config
-copyfile 1 kernel.config
 copyfile 1 class.config
 
 path1=$settingpath/group

@@ -20,8 +20,6 @@ namespace KFrame
 {
     KFIpAddressModule::KFIpAddressModule()
     {
-        _tcp_net_port.InitMemoryType( "tcp" );
-        _http_net_port.InitMemoryType( "http" );
     }
 
     KFIpAddressModule::~KFIpAddressModule()
@@ -63,14 +61,9 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFIpAddressModule::CalcTcpListenPort( uint32 type, uint32 port, uint32 appid )
+    uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint32 appid )
     {
-        return _tcp_net_port.CalcListenPort( type, port, appid );
-    }
-
-    uint32 KFIpAddressModule::CalcHttpListenPort( uint32 type, uint32 port, uint32 appid )
-    {
-        return _http_net_port.CalcListenPort( type, port, appid );
+        return _net_port.CalcListenPort( type, port, appid );
     }
 
     const std::string& KFIpAddressModule::FindPlatformAddress( uint32 id )
@@ -78,12 +71,12 @@ namespace KFrame
         return _kf_ip_config->FindPlatformAddress( id );
     }
 
-    const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid )
+    const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
         return _kf_ip_config->FindIpAddress( appname, apptype, appid );
     }
 
-    void KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist )
+    void KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist )
     {
         _kf_ip_config->FindIpAddress( appname, apptype, appid, outlist );
     }

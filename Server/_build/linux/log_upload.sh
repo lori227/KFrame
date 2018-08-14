@@ -34,7 +34,7 @@ if [ ! -n "$3" ]; then
 fi
 
 versionpath=/kframe/$1
-deploypath=/data/upload/deploy/logcluster/linux
+deploypath=/data/upload/deploy/log/linux
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
@@ -47,8 +47,6 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 initapp.log4cxx
-copyfile 1 templateapp.log4cxx
 copyfile 1 cluster.setting
 
 path1=$versionpath/setting/log
@@ -100,4 +98,4 @@ copyfile 1 KFDeployCommand.so
 copyfile 1 KFDeployCommandd.so
 
 #upload to ftp
-curl -sd '{"ftpid":'$2',"apppath":"logcluster"}' $3
+curl -sd '{"ftpid":'$2',"apppath":"log"}' $3

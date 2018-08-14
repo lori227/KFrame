@@ -11,18 +11,16 @@ namespace KFrame
     public:
         KFConnection()
         {
-            _app_id = 0;
-            _connect_id = 0;
         }
 
     public:
         std::string _app_name;
         std::string _app_type;
-        uint32 _app_id;
+        std::string _app_id;
 
         std::string _connect_name;
         std::string _connect_type;
-        uint32 _connect_id;
+        std::string _connect_id;
     };
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -31,19 +29,14 @@ namespace KFrame
     {
     public:
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找连接
-        void FindConnection( const std::string& appname, const std::string& apptype, uint32 appid, std::set< KFConnection* >& outlist );
+        void FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set< KFConnection* >& outlist );
 
         // 判断是否是连接
-        bool IsValidConnection( const std::string& appname, const std::string& apptype, uint32 appid,
-                                const std::string& connectname, const std::string& connecttype, uint32 connectid );
-
-    protected:
-        bool IsSame( const std::string& appname, const std::string& apptype, uint32 appid,
-                     const std::string& connectname, const std::string& connecttype, uint32 connectid );
-
+        bool IsValidConnection( const std::string& appname, const std::string& apptype, const std::string& appid,
+                                const std::string& connectname, const std::string& connecttype, const std::string& connectid );
     public:
         // 连接信息
         std::vector< KFConnection > _bus_connection;

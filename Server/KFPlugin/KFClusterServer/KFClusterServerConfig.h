@@ -34,7 +34,7 @@ namespace KFrame
     {
     public:
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         const KFClusterSetting* FindClusterSetting( const std::string& name );
 

@@ -27,7 +27,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // ²¿ÊðÃüÁî
-        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, uint32 appid, uint32 zoneid ) = 0;
+        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid ) = 0;
 
     protected:
         virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function ) = 0;

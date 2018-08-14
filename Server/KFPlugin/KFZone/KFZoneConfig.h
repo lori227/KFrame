@@ -15,7 +15,7 @@ namespace KFrame
         KFZoneConfig();
         ~KFZoneConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 获得zoneid
         const KFZone* FindZone( uint32 appflag, uint32 zoneid );

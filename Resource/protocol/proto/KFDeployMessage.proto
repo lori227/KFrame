@@ -15,7 +15,7 @@ enum DeployProtocol
 // S2S_REGISTER_AGENT_TO_SERVER_REQ
 message S2SRegisterAgentToServerReq
 {
-	required uint32 agentid = 1;
+	required string agentid = 1;
 	required string localip = 2;
 	required string name = 3;
 	required string type = 4;
@@ -35,7 +35,7 @@ message S2SGetAgentIpAddressAck
 {
 	required string appname = 1;
 	required string apptype = 2;
-	required uint32 appid = 3;
+	required string appid = 3;
 	required string ip = 4;	
 	required uint32 port = 5;
 }
@@ -45,7 +45,7 @@ message PBDeployCommand
 	required string command = 1;	// command
 	required string appname = 2;	// appname
 	required string apptype = 3;	// apptype
-	required uint32 appid = 4;		// appid
+	required string appid = 4;		// appid
 	required uint32 zoneid = 5;		// 分区
 	required string value = 6;		// 数值
 }

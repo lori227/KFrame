@@ -18,7 +18,7 @@ namespace KFrame
         const KFItemSetting* FindItemSetting( uint32 itemid ) const;
 
         // 读取配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     protected:
         void AddItemSetting( KFItemSetting* kfsetting );

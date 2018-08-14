@@ -194,8 +194,8 @@ namespace KFrame
     {
         _kf_client_engine->CloseClient( serverid, function, line );
 
-        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "[{}:{}] connect close!",
-                                serverid, KFAppID::ToString( serverid ) );
+        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "[{}] connect close!",
+                                KFAppID::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,9 +267,9 @@ namespace KFrame
         {
             auto kfsetting = &kfclient->_net_setting;
 
-            __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] service ok!",
-                           servername, servertype, KFAppID::ToString( serverid ),
-                           kfsetting->_ip, kfsetting->_port );
+            __LOG_INFO__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] service ok!",
+                          servername, servertype, KFAppID::ToString( serverid ),
+                          kfsetting->_ip, kfsetting->_port );
         }
     }
 }

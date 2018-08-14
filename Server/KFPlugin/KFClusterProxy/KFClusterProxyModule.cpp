@@ -363,6 +363,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAllocShardAck );
 
+        _kf_object_shard.clear();
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {
             auto objectid = kfmsg.objectid( i );

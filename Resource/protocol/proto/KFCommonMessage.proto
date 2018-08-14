@@ -197,7 +197,6 @@ enum AckEnum
 	GiveFaildForLimitsGoods		= 10027;	//商城：限量商品无法赠送
 	MatchHasPrepared			= 10028;	//匹配: 已准备就绪
 	MatchHasCanceled			= 10029;	//匹配: 已取消准备
-
 }
 
 enum ChannelEnum

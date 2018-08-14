@@ -10,14 +10,12 @@ server=matchserver
 fi
 
 echo Starting Match Cluster Server
-./$server appid=40000 log=1 startup=./setting/master.startup
+./$server appid=100.0.31.1 log=1 startup=./setting/master.startup
 
 echo Starting Match Proxy Server
-./$server appid=40001 log=1 startup=./setting/proxy.startup
+./$server appid=100.0.42.1 log=1 startup=./setting/proxy.startup
 
 echo Starting Match Shard Server
-./$server appid=42001 log=1 startup=./setting/shard.startup
-./$server appid=42002 log=1 startup=./setting/shard.startup
-./$server appid=42003 log=1 startup=./setting/shard.startup
+./$server appid=100.0.43.1 log=1 startup=./setting/shard.startup
 
 cd $basepath

@@ -40,7 +40,7 @@ namespace KFrame
 
         for ( auto* kfaddress : connectionlist )
         {
-            auto port = _kf_ip_address->CalcTcpListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_app_id );
+            auto port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_app_id );
             _kf_tcp_client->StartClient( kfaddress->_app_name, kfaddress->_app_type, kfaddress->_app_id, kfaddress->_ip, port );
         }
     }
@@ -61,8 +61,9 @@ namespace KFrame
             return false;
         }
 
-        auto ok = _kf_bus_config->IsValidConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id,
-                  connectname, connecttype, connectid );
+        auto strconnectid = KFAppID::ToString( connectid );
+        auto ok = _kf_bus_config->IsValidConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id,
+                  connectname, connecttype, strconnectid );
 
         return ok;
     }
@@ -73,7 +74,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         std::set< KFConnection* > connectionlist;
-        _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id, connectionlist );
+        _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, connectionlist );
 
         // 查找连接的ip地址
         for ( auto* kfconnection : connectionlist )

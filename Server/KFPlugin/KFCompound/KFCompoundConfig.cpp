@@ -25,13 +25,13 @@ namespace KFrame
         return _compound_setting.Find( key );
     }
 
-    bool KFCompoundConfig::LoadConfig( const char* file )
+    bool KFCompoundConfig::LoadConfig()
     {
         _compound_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto setting = config.FindNode( "Setting" );

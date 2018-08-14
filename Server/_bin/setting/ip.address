@@ -6,47 +6,47 @@
 	<!-- tcp服务器配置 -->
 	<TcpServer>
 		<!-- 部署服务器 -->
-		<Server AppName="deploy" AppType="server" AppId="0.0.2.1" Ip="127.0.0.1" Type="0" Port="10000"/>
+		<Server AppName="deploy" AppType="server" AppId="0.0.2.1" Ip="192.168.1.9" Type="0" Port="10000"/>
 
 		<!-- data服务器 -->
-		<Server AppName="data" AppType="master" AppId="0.0.11.1" Ip="127.0.0.1" Type="0" Port="10001"/>
+		<Server AppName="data" AppType="master" AppId="0.0.11.1" Ip="192.168.1.9" Type="0" Port="10001"/>
 
 		<!-- public服务器 -->
-		<Server AppName="public" AppType="master" AppId="0.0.21.1" Ip="127.0.0.1" Type="0" Port="10002"/>
+		<Server AppName="public" AppType="master" AppId="0.0.21.1" Ip="192.168.1.9" Type="0" Port="10002"/>
 
 		<!-- route服务器 -->
-		<Server AppName="route" AppType="master" AppId="0.0.31.1" Ip="127.0.0.1" Type="0" Port="10003"/>
+		<Server AppName="route" AppType="master" AppId="0.0.31.1" Ip="192.168.1.9" Type="0" Port="10003"/>
 
 		<!-- match服务器 -->
-		<Server AppName="match" AppType="master" AppId="0.0.41.1" Ip="127.0.0.1" Type="0" Port="10004"/>	
+		<Server AppName="match" AppType="master" AppId="0.0.41.1" Ip="192.168.1.9" Type="0" Port="10004"/>	
 		
 		<!-- battle服务器 -->
-		<Server AppName="battle" AppType="master" AppId="0.0.51.1" Ip="127.0.0.1" Type="0" Port="10005"/>
+		<Server AppName="battle" AppType="master" AppId="0.0.51.1" Ip="192.168.1.9" Type="0" Port="10005"/>
 
 		<!-- mail服务器 -->
-		<Server AppName="mail" AppType="master" AppId="0.0.61.1" Ip="127.0.0.1" Type="0" Port="10006"/>
+		<Server AppName="mail" AppType="master" AppId="0.0.61.1" Ip="192.168.1.9" Type="0" Port="10006"/>
 
 		<!-- relation服务器 -->
-		<Server AppName="relation" AppType="master" AppId="0.0.71.1" Ip="127.0.0.1" Type="0" Port="10007"/>
+		<Server AppName="relation" AppType="master" AppId="0.0.71.1" Ip="192.168.1.9" Type="0" Port="10007"/>
 
 		<!-- group服务器 -->
-		<Server AppName="group" AppType="master" AppId="0.0.81.1" Ip="127.0.0.1" Type="0" Port="10008"/>
+		<Server AppName="group" AppType="master" AppId="0.0.81.1" Ip="192.168.1.9" Type="0" Port="10008"/>
 
 		<!-- rank服务器 -->
-		<Server AppName="rank" AppType="master" AppId="0.0.91.1" Ip="127.0.0.1" Type="0" Port="10009"/>
+		<Server AppName="rank" AppType="master" AppId="0.0.91.1" Ip="192.168.1.9" Type="0" Port="10009"/>
 
 		<!-- log服务器 -->
-		<Server AppName="log" AppType="master" AppId="0.0.111.1" Ip="127.0.0.1" Type="0" Port="10011"/>
+		<Server AppName="log" AppType="master" AppId="0.0.111.1" Ip="192.168.1.9" Type="0" Port="10011"/>
 	
 		<!-- zone master -->
-		<Server AppName="zone" AppType="master" AppId="0.0.241.1" Ip="127.0.0.1" Type="0" Port="11000"/>
+		<Server AppName="zone" AppType="master" AppId="0.0.241.1" Ip="192.168.1.9" Type="0" Port="11000"/>
 	</TcpServer>
 
 	<HttpServer>
     	<!-- ip ip地址-->
     	<!-- port 起始端口-->
    	 	<!-- port 开启的数量-->
-		<Platform Ip="127.0.0.1" Port="8000" Id="2001" Count="2"/>
+		<Platform Ip="192.168.1.9" Port="8000" Id="2001" Count="2"/>
 	</HttpServer>
 
 </Config>

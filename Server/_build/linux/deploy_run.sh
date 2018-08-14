@@ -10,9 +10,9 @@ server=deployserver
 fi
 
 echo Starting Deploy Server
-./$server appid=1 log=1 startup=./setting/server.startup
+./$server appid=100.0.2.1 log=1 startup=./setting/server.startup
 
 echo Starting Deploy Agent
-./$server appid=101 log=1 startup=./setting/agent.startup
+./$server appid=100.0.3.1 log=1 startup=./setting/agent.startup
 
 cd $basepath

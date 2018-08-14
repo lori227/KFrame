@@ -51,11 +51,13 @@ namespace KFrame
     {
         if ( handlename == __KF_STRING__( deploy ) )
         {
-            auto kfagent = _agent_list.Find( handleid );
+            auto strhandleid = KFAppID::ToString( handleid );
+
+            auto kfagent = _agent_list.Find( strhandleid );
             if ( kfagent != nullptr )
             {
                 UpdateAgentToDatabase( kfagent, 0 );
-                _agent_list.Remove( handleid );
+                _agent_list.Remove( strhandleid );
             }
         }
     }
@@ -80,7 +82,7 @@ namespace KFrame
         keyvalue[ __KF_STRING__( localip ) ] = kfagent->_local_ip;
 
         MapString updatevalue;
-        updatevalue[ __KF_STRING__( agentid ) ] = __TO_STRING__( kfagent->_agent_id );
+        updatevalue[ __KF_STRING__( agentid ) ] = kfagent->_agent_id;
         updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
         updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
         _mysql_driver->Update( __KF_STRING__( machine ), keyvalue, updatevalue );
@@ -138,7 +140,7 @@ namespace KFrame
         pbdeploy->set_value( request.GetString( __KF_STRING__( value ) ) );
         pbdeploy->set_appname( request.GetString( __KF_STRING__( appname ) ) );
         pbdeploy->set_apptype( request.GetString( __KF_STRING__( apptype ) ) );
-        pbdeploy->set_appid( request.GetUInt32( __KF_STRING__( appid ) ) );
+        pbdeploy->set_appid( request.GetString( __KF_STRING__( appid ) ) );
         pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
     }

@@ -12,7 +12,7 @@ namespace KFrame
 
     }
 
-    const KFClassSetting* KFDataConfig::GetClassSetting( const std::string& classname ) const
+    const KFClassSetting* KFDataConfig::FindClassSetting( const std::string& classname ) const
     {
         return _class_setting.Find( classname );
     }
@@ -24,9 +24,9 @@ namespace KFrame
         kfclasssetting->AddDataSetting( kfdatasetting );
     }
 
-    const KFDataSetting* KFDataConfig::GetDataSetting( const std::string& classname, const std::string& propertyname ) const
+    const KFDataSetting* KFDataConfig::FindDataSetting( const std::string& classname, const std::string& propertyname ) const
     {
-        auto classsetting = GetClassSetting( classname );
+        auto classsetting = FindClassSetting( classname );
         if ( classsetting == nullptr )
         {
             return nullptr;
@@ -37,7 +37,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFDataConfig::LoadConfig( const char* file )
+    bool KFDataConfig::LoadDataConfig( const std::string& file )
     {
         _class_setting.Clear();
 

@@ -11,13 +11,13 @@ namespace KFrame
     {
     }
 
-    bool KFChatConfig::LoadConfig( const char* file )
+    bool KFChatConfig::LoadConfig()
     {
         _kf_chat_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto xmlnode = config.FindNode( "Setting" );

@@ -14,13 +14,13 @@ namespace KFrame
     }
 
 
-    bool KFEnterConfig::LoadConfig( const char* file )
+    bool KFEnterConfig::LoadConfig()
     {
         _kf_enter_setting.clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto node = config.FindNode( "Setting" );

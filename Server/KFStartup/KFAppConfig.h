@@ -43,13 +43,13 @@ namespace KFrame
         ~KFAppConfig();
 
         // 加载启动配置
-        bool LoadStartupConfig( const char* file );
+        bool LoadStartupConfig( const std::string& file );
 
 
     protected:
 
-        bool LoadServerConfig( const char* file );
-        bool LoadCommonConfig( const char* file );
+        bool LoadServerConfig( const std::string& file );
+        bool LoadCommonConfig( const std::string& file );
 
         // 读取插件配置
         void ReadPluginSetting( KFNode& root );

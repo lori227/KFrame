@@ -20,11 +20,11 @@ namespace KFrame
         return _multiple_data.find( dataname ) != _multiple_data.end();
     }
 
-    bool KFKernelConfig::LoadConfig( const char* file )
+    bool KFKernelConfig::LoadConfig()
     {
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
 
             /////////////////////////////////////////////////////

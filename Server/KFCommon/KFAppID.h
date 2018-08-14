@@ -47,6 +47,12 @@ namespace KFrame
             return kfappid.ToString();
         }
 
+        static uint32 ToUInt32( std::string strappid )
+        {
+            KFAppID kfappid( strappid );
+            return kfappid._union._app_id;
+        }
+
     public:
         MyUnion _union;
     };

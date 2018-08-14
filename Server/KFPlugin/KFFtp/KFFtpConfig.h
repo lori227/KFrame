@@ -58,7 +58,7 @@ namespace KFrame
         KFFtpConfig();
         ~KFFtpConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 查找配置
         const KFFtpSetting* FindFtpSetting( uint32 ftpid );

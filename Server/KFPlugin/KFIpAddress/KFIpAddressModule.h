@@ -40,12 +40,11 @@ namespace KFrame
         virtual const std::string& GetInteranetIp();
 
         // 计算监听端口
-        virtual uint32 CalcTcpListenPort( uint32 type, uint32 port, uint32 appid );
-        virtual uint32 CalcHttpListenPort( uint32 type, uint32 port, uint32 appid );
+        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint32 appid );
 
         // 查找ip地址
-        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid );
-        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist );
+        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
+        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip );
@@ -61,8 +60,7 @@ namespace KFrame
 #endif
 
     protected:
-        KFNetProt _tcp_net_port;
-        KFNetProt _http_net_port;
+        KFNetProt _net_port;
 
         // 内网ip
         std::string _local_ip;

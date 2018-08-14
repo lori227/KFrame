@@ -14,7 +14,7 @@ namespace KFrame
         ~KFRobotConfig();
 
         // 加载配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
     public:
         // 认证服务器IP地址

@@ -28,21 +28,21 @@ namespace KFrame
         _startups[ setting._name ] = setting;
     }
 
-    bool KFAppConfig::LoadStartupConfig( const char* file )
+    bool KFAppConfig::LoadStartupConfig( const std::string& file )
     {
         auto ok = LoadServerConfig( file );
         if ( ok )
         {
             if ( !_common_startup_file.empty() )
             {
-                ok = LoadCommonConfig( _common_startup_file.c_str() );
+                ok = LoadCommonConfig( _common_startup_file );
             }
         }
 
         return ok;
     }
 
-    bool KFAppConfig::LoadServerConfig( const char* file )
+    bool KFAppConfig::LoadServerConfig( const std::string& file )
     {
         try
         {
@@ -64,7 +64,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFAppConfig::LoadCommonConfig( const char* file )
+    bool KFAppConfig::LoadCommonConfig( const std::string& file )
     {
         try
         {

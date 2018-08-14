@@ -94,7 +94,7 @@ namespace KFrame
         const KFAchieveType* FindTypeAchieve( const std::string& parentname, const std::string& dataname ) const;
 
         // 读取配置
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         // 获取战服成就配置
         inline std::map<uint32, KFAchieveSetting*>& GetBattleAchieveCfg( )

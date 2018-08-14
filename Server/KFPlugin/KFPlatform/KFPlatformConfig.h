@@ -31,7 +31,7 @@ namespace KFrame
         KFPlatformConfig();
         ~KFPlatformConfig();
 
-        bool LoadConfig( const char* file );
+        bool LoadConfig();
 
         uint32 GetServerListType( uint32 appflag );
 

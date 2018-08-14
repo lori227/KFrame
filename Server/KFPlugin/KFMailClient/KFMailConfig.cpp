@@ -18,13 +18,13 @@ namespace KFrame
         return _mail_setting.Find( configid );
     }
 
-    bool KFMailConfig::LoadConfig( const char* file )
+    bool KFMailConfig::LoadConfig()
     {
         _mail_setting.Clear();
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             auto setting = config.FindNode( "Setting" );

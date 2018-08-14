@@ -12,7 +12,7 @@ namespace KFrame
 
     }
 
-    bool KFIpAddressConfig::LoadConfig( const char* file )
+    bool KFIpAddressConfig::LoadConfig()
     {
         _ip_address_list.clear();
         _platform_address.clear();
@@ -20,7 +20,7 @@ namespace KFrame
 
         try
         {
-            KFXml kfxml( file );
+            KFXml kfxml( _file );
             auto config = kfxml.RootNode();
             //////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////
@@ -91,13 +91,13 @@ namespace KFrame
         return iter->second;
     }
 
-    const KFIpAddress* KFIpAddressConfig::FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid )
+    const KFIpAddress* KFIpAddressConfig::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
         for ( auto& kfaddress : _ip_address_list )
         {
             if ( kfaddress._app_name == appname &&
                     kfaddress._app_type == apptype &&
-                    ( appid == _invalid_int || kfaddress._app_id == appid ) )
+                    ( appid == _globbing_str || kfaddress._str_app_id == appid ) )
             {
                 return &kfaddress;
             }
@@ -106,7 +106,7 @@ namespace KFrame
         return nullptr;
     }
 
-    void KFIpAddressConfig::FindIpAddress( const std::string& appname, const std::string& apptype, uint32 appid, IpAddressList& outlist )
+    void KFIpAddressConfig::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist )
     {
         for ( auto& kfaddress : _ip_address_list )
         {
@@ -120,7 +120,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( appid != _invalid_int && appid != kfaddress._app_id )
+            if ( appid != _globbing_str && appid != kfaddress._str_app_id )
             {
                 continue;
             }
@@ -131,7 +131,7 @@ namespace KFrame
 
     void KFIpAddressConfig::SetZoneIpAddress( const std::string& ip )
     {
-        auto kfaddress = FindIpAddress( __KF_STRING__( zone ), __KF_STRING__( master ), _invalid_int );
+        auto kfaddress = FindIpAddress( __KF_STRING__( zone ), __KF_STRING__( master ), _globbing_str );
         if ( kfaddress == nullptr )
         {
             return;
@@ -148,9 +148,13 @@ namespace KFrame
             KFAppID kfappid( kfaddress._str_app_id );
 
             kfappid._union._app_data._channel_id = appchannel;
-            kfappid._union._app_data._zone_id = zoneid;
+            if ( kfaddress._app_name == __KF_STRING__( zone ) )
+            {
+                kfappid._union._app_data._zone_id = zoneid;
+            }
 
             kfaddress._app_id = kfappid._union._app_id;
+            kfaddress._str_app_id = kfappid.ToString();
         }
     }
 

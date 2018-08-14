@@ -1,12 +1,11 @@
 ﻿#include "KFDataShardModule.h"
 #include "KFUtility/KFCompress.h"
-#include "KFDataShardConfig.h"
 
 namespace KFrame
 {
     static KFRedisDriver* _kf_account_redis = nullptr;
 #define __ACCOUNT_REDIS_DRIVER__ _kf_account_redis
-#define __PLAYER_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( player ), zoneid )
+#define __ZONE_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( zone ), zoneid )
 
 #define __REGISTER_DATA_MESSAGE__ __REGISTER_MESSAGE__
 #define __UNREGISTER_DATA_MESSAGE__ __UNREGISTER_MESSAGE__
@@ -24,12 +23,10 @@ namespace KFrame
 
     void KFDataShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_data_config, true );
     }
 
     void KFDataShardModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFDataShardModule::OnServerDiscoverClient );
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
@@ -43,7 +40,6 @@ namespace KFrame
     void KFDataShardModule::BeforeShut()
     {
         __UNREGISTER_TIMER__();
-        __KF_REMOVE_CONFIG__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
@@ -59,24 +55,6 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_SERVER_DISCOVER_FUNCTION__( KFDataShardModule::OnServerDiscoverClient )
-    {
-        // 分区信息同步到代理服务器
-        auto zonelist = _kf_data_config->FindZoneId( KFGlobal::Instance()->_app_id );
-        if ( zonelist == nullptr )
-        {
-            return __LOG_ERROR__( KFLogEnum::System, "server[{}] can't find zone list", KFGlobal::Instance()->_app_id );
-        }
-
-        KFMsg::S2SUpdateZoneToProxyReq req;
-        for ( auto zoneid : *zonelist )
-        {
-            req.add_zoneid( zoneid );
-        }
-
-        _kf_cluster_shard->SendMessageToProxy( handleid, KFMsg::S2S_UPDATE_ZONE_TO_PROXY_REQ, &req );
-    }
-
     uint32 KFDataShardModule::QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
@@ -118,7 +96,11 @@ namespace KFrame
 
     void KFDataShardModule::CreatePlayer( uint32 channel, uint32 accountid, uint32 zoneid, uint32 playerid )
     {
-        auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid  );
+        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid  );
+        if ( redisdriver == nullptr )
+        {
+            return;
+        }
 
         // 查询角色是否存在, 已经存在, 不需要创建
         auto kfresult = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {}:{} {}",
@@ -148,7 +130,13 @@ namespace KFrame
             return true;
         }
 
-        auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        if ( redisdriver == nullptr )
+        {
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] can't find redis!", zoneid, id );
+            return false;
+        }
+
         auto kfresult = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
                         __KF_STRING__( player ), id, __KF_STRING__( data ) );
         if ( !kfresult->IsOk() )
@@ -192,7 +180,13 @@ namespace KFrame
             return false;
         }
 
-        auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        if ( redisdriver == nullptr )
+        {
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] can't find redis!", zoneid, id );
+            return false;
+        }
+
         auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
                                               __KF_STRING__( player ), id, __KF_STRING__( data ), strdata );
         if ( !kfresult->IsOk() )
@@ -230,7 +224,11 @@ namespace KFrame
 #ifndef __KF_DEBUG__
         return;
 #endif
-        auto redisdriver = __PLAYER_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        if ( redisdriver == nullptr )
+        {
+            return;
+        }
 
         redisdriver->Append( "del {}:{}", __KF_STRING__( player ), id );
         redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, id );
