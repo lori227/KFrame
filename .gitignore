@@ -75,3 +75,8 @@ Server/_lib/win64/KFProtocol.lib
 Server/_lib/win64/KFUtility.lib
 Server/_lib/win64/KFCore.lib
 Server/_lib/win64/KFNetwork.lib
+Bin/battlecluster/setting/
+Bin/battlecluster/plugin/
+Bin/battlecluster/config/
+Bin/battlecluster/*.dll
+Bin/battlecluster/*.exe

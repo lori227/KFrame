@@ -18,6 +18,8 @@ namespace KFrame
         _platform_address.clear();
         _platform_hash.ClearHashNode();
 
+        auto kfglobal = KFGlobal::Instance();
+
         try
         {
             KFXml kfxml( _file );
@@ -37,6 +39,20 @@ namespace KFrame
                     kfaddress._ip = servernode.GetString( "Ip" );
                     kfaddress._port_type = servernode.GetUInt32( "Type" );
                     kfaddress._port = servernode.GetUInt32( "Port" );
+
+                    auto channelnode = servernode.FindNode( "Channel" );
+                    while ( channelnode.IsValid() )
+                    {
+                        auto channelid = channelnode.GetUInt32( "Id" );
+                        if ( channelid == kfglobal->_app_channel )
+                        {
+                            kfaddress._ip = channelnode.GetString( "Ip" );
+                            break;
+                        }
+
+                        channelnode.NextNode();
+                    }
+
                     _ip_address_list.push_back( kfaddress );
 
                     servernode.NextNode();

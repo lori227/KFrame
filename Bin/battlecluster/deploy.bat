@@ -88,6 +88,8 @@ call :copyfile 1 KFDeployCommand.dll
 call :copyfile 1 KFDeployCommandd.dll
 call :copyfile 1 KFDeployClient.dll
 call :copyfile 1 KFDeployClientd.dll
+call :copyfile 1 KFLogClient.dll
+call :copyfile 1 KFLogClientd.dll
 
 rem pause
 rem ===========================================================================
