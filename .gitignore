@@ -61,3 +61,17 @@ Server/_lib/win64/KFGlobald.lib
 Server/_lib/win64/KFExceld.lib
 Server/_lib/win64/KFCored.lib
 Server/_lib/win64/KFConHashd.lib
+Server/_lib/win64/KFHttpd.lib
+Server/_lib/win64/KFNetworkd.lib
+Server/_lib/win64/KFUtilityd.lib
+Server/_lib/win64/KFConHash.lib
+Server/_lib/win64/KFExcel.lib
+Server/_lib/win64/KFGlobal.lib
+Server/_lib/win64/KFHttp.lib
+Server/_lib/win64/KFMath3D.lib
+Server/_lib/win64/KFMemory.lib
+Server/_lib/win64/KFPlugin.lib
+Server/_lib/win64/KFProtocol.lib
+Server/_lib/win64/KFUtility.lib
+Server/_lib/win64/KFCore.lib
+Server/_lib/win64/KFNetwork.lib
