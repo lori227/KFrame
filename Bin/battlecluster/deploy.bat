@@ -18,10 +18,11 @@ set path2=.
 
 call :copyfile 1 KFStartupd.exe
 call :copyfile 1 KFStartup.exe
-call :copyfile 1 log4cxxd.dll
-call :copyfile 1 log4cxx.dll
-call :copyfile 1 libcrypto-1_1-x64.dll
-call :copyfile 1 libssl-1_1-x64.dll
+
+set path1=..\..\Server\_bin\win64\3rd
+set path2=.
+call :copyfile 1 ssleay32.dll
+call :copyfile 1 libeay32.dll
 
 rem »´æ÷≈‰÷√
 set path1=..\..\Server\_bin\setting
