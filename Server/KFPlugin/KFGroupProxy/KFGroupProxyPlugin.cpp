@@ -18,6 +18,5 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

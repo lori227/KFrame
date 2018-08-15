@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

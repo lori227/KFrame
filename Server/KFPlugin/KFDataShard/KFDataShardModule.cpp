@@ -5,7 +5,7 @@ namespace KFrame
 {
     static KFRedisDriver* _kf_account_redis = nullptr;
 #define __ACCOUNT_REDIS_DRIVER__ _kf_account_redis
-#define __ZONE_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( zone ), zoneid )
+#define __ZONE_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( zone ), _invalid_int )
 
 #define __REGISTER_DATA_MESSAGE__ __REGISTER_MESSAGE__
 #define __UNREGISTER_DATA_MESSAGE__ __UNREGISTER_MESSAGE__

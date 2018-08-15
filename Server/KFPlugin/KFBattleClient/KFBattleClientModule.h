@@ -18,7 +18,6 @@
 #include "KFOption/KFOptionInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 #include "KFRelationClient/KFRelationClientInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

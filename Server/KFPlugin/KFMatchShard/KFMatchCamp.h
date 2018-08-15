@@ -2,7 +2,6 @@
 #define __KF_MATCH_CAMP_H__
 
 #include "KFMatchGroup.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

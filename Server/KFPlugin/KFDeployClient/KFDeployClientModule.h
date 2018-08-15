@@ -19,7 +19,6 @@
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

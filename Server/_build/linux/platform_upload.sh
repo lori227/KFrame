@@ -50,12 +50,10 @@ copyfile 1 bus.relation
 copyfile 1 common.startup
 copyfile 1 cluster.setting
 copyfile 1 redis.address
+copyfile 1 platform.setting
 
 path1=$versionpath/setting/platform
 copyfile 1 platform.startup
-
-path2=$deploypath/config
-copyfile 1 platform.config
 
 #config
 path1=$versionpath/config

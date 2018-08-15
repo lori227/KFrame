@@ -18,7 +18,6 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

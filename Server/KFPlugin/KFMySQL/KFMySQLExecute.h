@@ -7,7 +7,6 @@
 #include "Poco/Data/Extraction.h"
 #include "Poco/Data/AbstractBinding.h"
 #include "KFMySQLInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

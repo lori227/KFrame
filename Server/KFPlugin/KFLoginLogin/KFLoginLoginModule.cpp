@@ -1,7 +1,6 @@
 ﻿#include "KFLoginLoginModule.h"
 #include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

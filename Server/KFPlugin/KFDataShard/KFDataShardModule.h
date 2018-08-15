@@ -19,7 +19,6 @@
 #include "KFWorker/KFWorkerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

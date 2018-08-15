@@ -14,7 +14,6 @@
 #include "KFComponentEx.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

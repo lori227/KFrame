@@ -4,7 +4,6 @@
 #include "KFrame.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFClusterClientConfig.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

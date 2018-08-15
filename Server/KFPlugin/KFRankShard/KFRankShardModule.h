@@ -21,7 +21,6 @@
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFRankShardConfig.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

@@ -19,7 +19,6 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRelationClient/KFRelationClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

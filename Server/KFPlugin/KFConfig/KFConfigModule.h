@@ -12,7 +12,6 @@
 
 #include "KFrame.h"
 #include "KFConfigInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

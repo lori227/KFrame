@@ -13,7 +13,6 @@
 #include "KFDeployCommandInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

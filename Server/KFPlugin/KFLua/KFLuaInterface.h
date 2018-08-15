@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "luaplus/LuaPlus.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

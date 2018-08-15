@@ -25,6 +25,5 @@ namespace KFrame
         __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

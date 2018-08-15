@@ -5,7 +5,6 @@
 #include "KFCore/KFAgent.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

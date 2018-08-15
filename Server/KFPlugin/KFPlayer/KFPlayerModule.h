@@ -22,7 +22,7 @@
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFPublicClient/KFPublicClientInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
+#include "KFDebug/KFDebugInterface.h"
 
 namespace KFrame
 {

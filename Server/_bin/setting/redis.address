@@ -44,25 +44,8 @@
 		<Logic Filed="rank" Id="1"/>
 		
 		<!--保存小区玩家数据信息-->
-		<Logic Filed="zone" LogicId="1" Id="1"/>
-		<Logic Filed="zone" LogicId="2" Id="1"/>
-		<Logic Filed="zone" LogicId="3" Id="1"/>
-		<Logic Filed="zone" LogicId="4" Id="1"/>
-		<Logic Filed="zone" LogicId="5" Id="1"/>
-		<Logic Filed="zone" LogicId="6" Id="1"/>
-		<Logic Filed="zone" LogicId="7" Id="1"/>
-		<Logic Filed="zone" LogicId="8" Id="1"/>
-		<Logic Filed="zone" LogicId="9" Id="1"/>
-		<Logic Filed="zone" LogicId="10" Id="1"/>
-		<Logic Filed="zone" LogicId="11" Id="1"/>
-		<Logic Filed="zone" LogicId="12" Id="1"/>
-		<Logic Filed="zone" LogicId="13" Id="1"/>
-		<Logic Filed="zone" LogicId="14" Id="1"/>
-		<Logic Filed="zone" LogicId="15" Id="1"/>
-		<Logic Filed="zone" LogicId="16" Id="1"/>
-		<Logic Filed="zone" LogicId="17" Id="1"/>
-		<Logic Filed="zone" LogicId="18" Id="1"/>
-		<Logic Filed="zone" LogicId="100" Id="1"/>
+		<Logic Filed="zone" Id="1"/>
 	</LogicRedis>
+
 </Config>
 

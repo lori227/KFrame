@@ -2,7 +2,6 @@
 #define __KF_BATTLE_CAMP_H__
 
 #include "KFBattlePlayer.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

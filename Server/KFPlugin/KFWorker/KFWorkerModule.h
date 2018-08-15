@@ -16,7 +16,6 @@
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

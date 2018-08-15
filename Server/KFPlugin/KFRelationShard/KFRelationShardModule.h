@@ -20,7 +20,6 @@
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

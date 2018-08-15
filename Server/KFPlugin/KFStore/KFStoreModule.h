@@ -10,7 +10,6 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMailClient/KFMailClientInterface.h"
 #include "KFOption/KFOptionInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 #include "KFRelationClient/KFRelationClientInterface.h"
 
 namespace KFrame

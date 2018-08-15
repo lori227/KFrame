@@ -6,8 +6,8 @@
 	<!--ServerListType 1 所有服务器列表 2 直接随机一个服务器登录-->
 	<Platform TokenExpireTime="300" OpenActivation="0"/>
 	<ServerListTypes Default="1">
-		<ServerListType MinFlag="1" MaxFlag="99" Type="2" >
-		<ServerListType MinFlag="100" MaxFlag="255" Type="1" >
+		<ServerListType MinFlag="1" MaxFlag="99" Type="2"/>
+		<ServerListType MinFlag="100" MaxFlag="255" Type="1"/>
 	</ServerListTypes>
 </Config>
 

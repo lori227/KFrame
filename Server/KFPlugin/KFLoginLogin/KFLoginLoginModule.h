@@ -19,7 +19,6 @@
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

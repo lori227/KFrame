@@ -20,7 +20,6 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 #include "KFAchieve/KFAchieveInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

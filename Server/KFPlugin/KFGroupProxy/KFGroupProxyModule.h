@@ -13,7 +13,6 @@
 #include "KFGroupProxyInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterProxy/KFClusterProxyInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

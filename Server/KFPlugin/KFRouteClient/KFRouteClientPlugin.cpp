@@ -20,6 +20,5 @@ namespace KFrame
         __FIND_MODULE__( _kf_game, KFGameInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

@@ -18,6 +18,5 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_relation, KFRelationClientInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

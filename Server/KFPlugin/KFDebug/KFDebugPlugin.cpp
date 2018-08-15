@@ -21,6 +21,5 @@ namespace KFrame
         __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
-        __FIND_MODULE__( _kf_log_client, KFLogClientInterface );
     }
 }

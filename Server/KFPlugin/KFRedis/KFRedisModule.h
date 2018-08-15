@@ -11,7 +11,6 @@
 
 #include "KFrame.h"
 #include "KFRedisInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

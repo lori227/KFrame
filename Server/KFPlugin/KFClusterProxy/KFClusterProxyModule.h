@@ -16,7 +16,6 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

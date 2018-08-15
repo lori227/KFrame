@@ -14,7 +14,6 @@
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

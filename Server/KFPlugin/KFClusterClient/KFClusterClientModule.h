@@ -18,7 +18,6 @@
 #include "KFBus/KFBusInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

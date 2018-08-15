@@ -4,7 +4,6 @@
 #include "KFrame.h"
 #include "ftp/FTPClient.h"
 #include "KFFtpInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

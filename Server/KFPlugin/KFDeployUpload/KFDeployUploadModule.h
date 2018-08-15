@@ -14,7 +14,6 @@
 #include "KFFtp/KFFtpInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

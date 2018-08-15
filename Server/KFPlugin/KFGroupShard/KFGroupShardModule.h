@@ -18,7 +18,6 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {

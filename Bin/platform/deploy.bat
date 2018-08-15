@@ -40,20 +40,15 @@ set path2=setting
 call :copyfile 1 server.network
 call :copyfile 1 ip.address
 call :copyfile 1 bus.relation
-call :copyfile 1 initapp.log4cxx
-call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 common.startup
 call :copyfile 1 redis.address
-
+call :copyfile 1 platform.setting
 rem ===========================================================================
 
 rem ÅäÖÃÄ¿Â¼
 set path1=..\..\Server\_bin\setting\platform
 set path2=setting
 call :copyfile 1 platform.startup
-
-set path2=config
-call :copyfile 1 platform.config
 
 rem config
 set path1=..\..\Resource\config
@@ -101,6 +96,12 @@ call :copyfile 1 KFDeployClientd.dll
 
 call :copyfile 1 KFDeployCommandd.dll
 call :copyfile 1 KFDeployCommand.dll
+
+call :copyfile 1 KFClusterClient.dll
+call :copyfile 1 KFClusterClientd.dll
+
+call :copyfile 1 KFLogClient.dll
+call :copyfile 1 KFLogClientd.dll
 
 rem pause
 rem ===========================================================================

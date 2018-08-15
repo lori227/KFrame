@@ -19,7 +19,6 @@
 #include "KFOption/KFOptionInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
-#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
