@@ -1,5 +1,4 @@
 ﻿#include "KFPlayerModule.h"
-#include "KFUtility/KFConvert.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -35,13 +34,22 @@ namespace KFrame
         _kf_component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
         _kf_component->RegisterEntityUninitializeFunction( this, &KFPlayerModule::UnInitPlayer );
         _kf_component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
-        _kf_component->RegisterEntityAfterRunFunction( this, &KFPlayerModule::AfterRunPlayer );
 
         // 注册更新函数
         _kf_component->RegisterSyncAddFunction( this, &KFPlayerModule::SendAddDataToClient );
         _kf_component->RegisterSyncRemoveFunction( this, &KFPlayerModule::SendRemoveDataToClient );
         _kf_component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
         _kf_component->RegisterShowRewardFunction( this, &KFPlayerModule::SendRewardAgentToClient );
+
+        // 创建公用玩家数据
+        _kf_player_data = _kf_kernel->CreateObject( __KF_STRING__( player ) );
+
+        // 注册Debug函数
+        __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ), &KFPlayerModule::DebugAddData );
+        __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ), &KFPlayerModule::DebugSetData );
+        __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( decdata ), &KFPlayerModule::DebugDecData );
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         // 注册消息处理
         __REGISTER_MESSAGE__( KFMsg::MSG_CHANGE_SEX_REQ, &KFPlayerModule::HandleChangeSexReq );
@@ -66,11 +74,6 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    void KFPlayerModule::OnceRun()
-    {
-        _kf_player_data = _kf_kernel->CreateObject( __KF_STRING__( player ) );
-    }
-
     void KFPlayerModule::BeforeShut()
     {
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
@@ -92,6 +95,12 @@ namespace KFrame
         _kf_component->UnRegisterSyncRemoveFunction();
         _kf_component->UnRegisterSyncUpdateFunction();
         _kf_component->UnRegisterShowRewardFunction();
+
+        // 取消注册debug函数
+        __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ) );
+        __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ) );
+        __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( decdata ) );
+        ////////////////////////////////////////////////////////////////////////////
 
         // 卸载消息处理
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CHANGE_SEX_REQ );
@@ -195,22 +204,6 @@ namespace KFrame
         _new_player_function.Remove( moudle );
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::LogPlayer( KFEntity* player, const char* format, ... )
-    {
-        char _buffer[ 4096 ] = "";
-
-        va_list args;
-        va_start( args, format );
-        vsprintf( _buffer, format, args );
-        va_end( args );
-
-        auto name = player->GetName();
-        auto playerid = player->GetKeyID();
-        __LOG_INFO__( KFLogEnum::Player, "[{}] [{}] {}", name, playerid, _buffer );
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::RunPlayer( KFEntity* kfentity )
@@ -223,11 +216,6 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::AfterRunPlayer( KFEntity* kfentity )
-    {
-        // 更新属性
-        //UpdatePlayerDataToClient( selfid, kfobject );
-    }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )
@@ -606,7 +594,8 @@ namespace KFrame
             SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
-        LogPlayer( player, "[ {}:{} ] add agent [ {} ]!", function, line, reward.c_str() );
+        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[ {} ]!",
+                               player->GetKeyID(), reward );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCreateRoleReq )
@@ -863,6 +852,58 @@ namespace KFrame
         {
             auto setting = kfmsg.intsetting( i );
             player->UpdateData( kfsetting, setting.name(), KFOperateEnum::Set, setting.value() );
+        }
+    }
+
+    __KF_DEBUG_FUNCTION__( KFPlayerModule::DebugAddData )
+    {
+        if ( params.size() < 1 )
+        {
+            return;
+        }
+
+        auto& stragent = params[ 0 ];
+
+        KFAgents kfagents;
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        if ( ok )
+        {
+            player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
+        }
+    }
+
+    __KF_DEBUG_FUNCTION__( KFPlayerModule::DebugSetData )
+    {
+        if ( params.size() < 1 )
+        {
+            return;
+        }
+
+        auto& stragent = params[ 0 ];
+
+        KFAgents kfagents;
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        if ( ok )
+        {
+            kfagents.SetOperate( KFOperateEnum::Set );
+            player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
+        }
+    }
+
+    __KF_DEBUG_FUNCTION__( KFPlayerModule::DebugDecData )
+    {
+        if ( params.size() < 1 )
+        {
+            return;
+        }
+
+        auto& stragent = params[ 0 ];
+
+        KFAgents kfagents;
+        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        if ( ok )
+        {
+            player->RemoveAgentData( &kfagents, __FUNC_LINE__ );
         }
     }
 }

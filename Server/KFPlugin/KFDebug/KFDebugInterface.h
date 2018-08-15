@@ -30,6 +30,15 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_debug, KFDebugInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __KF_DEBUG_FUNCTION__( function ) \
+    void function( KFEntity* player, const VectorString& params )
+
+#define  __REGISTER_DEBUG_FUNCTION__( command, function ) \
+    _kf_debug->RegisterDebugFunction( command, this, function )
+
+#define  __UNREGISTER_DEBUG_FUNCTION__( command ) \
+    _kf_debug->UnRegisterDebugFunction( command )
 }
 
 

@@ -38,7 +38,6 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -51,13 +50,9 @@ namespace KFrame
 
         // 逻辑刷新
         void RunPlayer( KFEntity* kfentity );
-        void AfterRunPlayer( KFEntity* kfentity );
 
         // 保存玩家
         void SavePlayer( KFEntity* kfentity );
-        ////////////////////////////////////////////////////////////////////////////
-        // 打印玩家日志
-        virtual void LogPlayer( KFEntity* player, const char* format, ... );
         ////////////////////////////////////////////////////////////////////////////
         // 玩家数量
         virtual uint32 GetPlayerCount();
@@ -116,6 +111,15 @@ namespace KFrame
 
         // 部署服务器关闭
         __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
+
+        // 添加属性
+        __KF_DEBUG_FUNCTION__( DebugAddData );
+
+        // 减少属性
+        __KF_DEBUG_FUNCTION__( DebugDecData );
+
+        // 设置属性
+        __KF_DEBUG_FUNCTION__( DebugSetData );
 
     protected:
         // 处理玩家掉线

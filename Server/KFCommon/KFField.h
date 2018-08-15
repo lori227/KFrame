@@ -259,6 +259,9 @@ namespace KFrame
         __STRING_DEFINE__( maxid );
         __STRING_DEFINE__( logtype );
         __STRING_DEFINE__( service );
+        __STRING_DEFINE__( adddata );
+        __STRING_DEFINE__( setdata );
+        __STRING_DEFINE__( decdata );
 
     }
 }

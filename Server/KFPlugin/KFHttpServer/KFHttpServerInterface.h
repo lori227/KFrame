@@ -49,7 +49,6 @@ namespace KFrame
     __KF_INTERFACE__( _kf_http_server, KFHttpServerInterface );
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
 #define __KF_HTTP_FUNCTION__( function ) \
     std::string function( const std::string& ip, const std::string& data )
 
@@ -59,7 +58,5 @@ namespace KFrame
 #define __UNREGISTER_HTTP_FUNCTION__( url )\
     _kf_http_server->UnRegisterFunction( url )
 }
-
-
 
 #endif

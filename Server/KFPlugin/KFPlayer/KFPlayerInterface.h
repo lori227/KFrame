@@ -111,9 +111,6 @@ namespace KFrame
             RemoveNewPlayerFunction( typeid( T ).name() );
         }
 
-        // 打印玩家日志
-        virtual void LogPlayer( KFEntity* player, const char* format, ... ) = 0;
-
         // 玩家数量
         virtual uint32 GetPlayerCount() = 0;
 

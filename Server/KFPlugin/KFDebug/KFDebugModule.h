@@ -11,8 +11,6 @@
 
 #include "KFrame.h"
 #include "KFDebugInterface.h"
-#include "KFLua/KFLuaInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 
