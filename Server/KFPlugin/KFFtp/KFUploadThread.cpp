@@ -192,7 +192,7 @@ namespace KFrame
         auto ok = ftpclient->UploadFile( localfile, ftpfile );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "upload [{}] ok!", localfile );
+            __LOG_INFO__( KFLogEnum::Logic, "upload [{}] ok!", localfile );
         }
         else
         {

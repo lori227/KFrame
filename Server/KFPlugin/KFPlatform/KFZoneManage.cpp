@@ -293,6 +293,12 @@ namespace KFrame
         auto address = kfjson.GetString( __KF_STRING__( address ) );
         auto port = kfjson.GetUInt32( __KF_STRING__( port ) );
 
+        // 只注册相同渠道
+        if ( KFGlobal::Instance()->_app_channel != zonetype )
+        {
+            return false;
+        }
+
         KFLocker kflock( _kf_mutex );
         auto zonedata = _kf_zone_data.Create( zoneid );
 

@@ -8,100 +8,100 @@
 		<!-- 部署服务器 -->
 		<Server AppName="deploy" AppType="server" AppId="0.0.2.1" Ip="127.0.0.1" Type="0" Port="10000">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- data服务器 -->
 		<Server AppName="data" AppType="master" AppId="0.0.11.1" Ip="127.0.0.1" Type="0" Port="10001">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- public服务器 -->
 		<Server AppName="public" AppType="master" AppId="0.0.21.1" Ip="127.0.0.1" Type="0" Port="10002">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- route服务器 -->
 		<Server AppName="route" AppType="master" AppId="0.0.31.1" Ip="127.0.0.1" Type="0" Port="10003">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- match服务器 -->
 		<Server AppName="match" AppType="master" AppId="0.0.41.1" Ip="127.0.0.1" Type="0" Port="10004">	
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- battle服务器 -->
 		<Server AppName="battle" AppType="master" AppId="0.0.51.1" Ip="127.0.0.1" Type="0" Port="10005">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- mail服务器 -->
 		<Server AppName="mail" AppType="master" AppId="0.0.61.1" Ip="127.0.0.1" Type="0" Port="10006">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- relation服务器 -->
 		<Server AppName="relation" AppType="master" AppId="0.0.71.1" Ip="127.0.0.1" Type="0" Port="10007">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- group服务器 -->
 		<Server AppName="group" AppType="master" AppId="0.0.81.1" Ip="127.0.0.1" Type="0" Port="10008">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- rank服务器 -->
 		<Server AppName="rank" AppType="master" AppId="0.0.91.1" Ip="127.0.0.1" Type="0" Port="10009">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- log服务器 -->
 		<Server AppName="log" AppType="master" AppId="0.0.111.1" Ip="127.0.0.1" Type="0" Port="10011">
 			<!--内网测试-->
-			<Channel Id="100" Ip="192.168.1.9"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
-			<Channel Id="1" Ip="192.168.1.9"/>
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
 		<!-- zone master 根据zone.setting动态更新-->
@@ -113,8 +113,23 @@
 	<HttpServer>
     	<!-- ip ip地址-->
     	<!-- port 起始端口-->
-   	 	<!-- port 开启的数量-->
-		<Platform Ip="127.0.0.1" Port="8000" Id="2001" Count="2"/>
+   	 	<!-- Instance 序列号-->
+   	 	<!-- Count 开启的数量-->
+		
+		<!-- 默认 -->
+		<Channel ChannelId="100">
+			<Platform Ip="127.0.0.1" Port="8000" Instance="1" Count="1"/>
+		</Channel>
+
+		<!-- 内网测试 -->
+		<Channel ChannelId="101">
+			<Platform Ip="192.168.1.9" Port="8000" Instance="1" Count="1"/>
+		</Channel>
+			
+		<!-- 外网测试 -->
+		<Channel ChannelId="1">
+			<Platform Ip="10.105.6.78" Port="8000" Instance="1" Count="1"/>
+		</Channel>
 	</HttpServer>
 
 </Config>

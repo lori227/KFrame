@@ -1,14 +1,18 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
 	<!--Redis数据库配置 -->
-	<!--Id 配置id -->
+	<!--RedisId 配置id -->
 	<!--Name 数据库名字 -->
 	<!--Ip 数据库地址 -->
 	<!--Port 数据库端口 -->
 	<!--User 登录用户名 -->
 	<!--Password 登录密码 -->
+	<!--ChannelId 渠道id -->
 	<Redis>
-		<Connection Id="1" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
+		<Connection RedisId="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<Channel ChannelId="101" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
+			<Channel ChannelId="1" IP="10.105.6.78" Port="6379" Password="redis@lori227-="/>
+		</Connection>
 	</Redis>
 
 	<!--逻辑功能对应redis映射-->

@@ -30,7 +30,7 @@ namespace KFrame
             {
                 auto kfsetting = __KF_CREATE__( KFFtpSetting );
 
-                kfsetting->_id = ftpnode.GetUInt32( "Id" );
+                kfsetting->_id = ftpnode.GetUInt32( "FtpId" );
                 kfsetting->_address = ftpnode.GetString( "Address" );
                 kfsetting->_port = ftpnode.GetUInt32( "Port" );
                 kfsetting->_user = ftpnode.GetString( "User" );
@@ -42,7 +42,7 @@ namespace KFrame
                 auto channelnode = ftpnode.FindNode( "Channel" );
                 while ( channelnode.IsValid() )
                 {
-                    auto channelid = channelnode.GetUInt32( "Id" );
+                    auto channelid = channelnode.GetUInt32( "ChannelId" );
                     if ( channelid == kfglobal->_app_channel )
                     {
                         kfsetting->_address = channelnode.GetString( "Address" );

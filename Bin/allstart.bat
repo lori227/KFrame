@@ -1,34 +1,38 @@
 @echo off
 
-cd datacluster
+cd data
 call rund.bat
 cd ..
 
-cd routecluster
+cd route
 call rund.bat
 cd ..
 
-cd publiccluster
+cd public
 call rund.bat
 cd ..
 
-cd matchcluster
+cd match
 call rund.bat
 cd ..
 
-cd battlecluster
+cd battle
 call rund.bat
 cd ..
 
-cd mailcluster
+cd mail
 call rund.bat
 cd ..
 
-cd friendcluster
+cd relation
 call rund.bat
 cd ..
 
-cd logcluster
+cd rank
+call rund.bat
+cd ..
+
+cd log
 call rund.bat
 cd ..
 

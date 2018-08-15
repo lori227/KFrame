@@ -20,21 +20,21 @@ set path2=.
 
 call :copyfile 1 KFStartupd.exe
 call :copyfile 1 KFStartup.exe
-call :copyfile 1 log4cxxd.dll
-call :copyfile 1 log4cxx.dll
-call :copyfile 1 libcrypto-1_1-x64.dll
-call :copyfile 1 libssl-1_1-x64.dll
+
+set path1=..\..\Server\_lib\win64\3rd
+set path2=.
+call :copyfile 1 libeay32.dll
+call :copyfile 1 ssleay32.dll
 call :copyfile 1 libmysql.dll
+
 rem ===========================================================================
 rem ===========================================================================
 rem »´æ÷≈‰÷√
 set path1=..\..\Server\_bin\setting
 set path2=setting
-call :copyfile 0 ip.address
+call :copyfile 1 ip.address
 call :copyfile 1 bus.relation
 call :copyfile 1 server.network
-call :copyfile 1 initapp.log4cxx
-call :copyfile 1 templateapp.log4cxx
 call :copyfile 1 ftp.address
 call :copyfile 1 mysql.address
 
@@ -48,9 +48,6 @@ call :copyfile 1 server.startup
 
 call :copyfile 1 agent.network
 call :copyfile 1 agent.startup
-
-set path2=config
-call :copyfile 1 agent.config
 
 
 rem config

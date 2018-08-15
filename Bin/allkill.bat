@@ -4,42 +4,42 @@ cd  zone
 call kill.bat
 cd ..
 
-cd routecluster
+cd route
 call kill.bat
 cd ..
 
-cd publiccluster
+cd public
 call kill.bat
 cd ..
 
-cd matchcluster
+cd match
 call kill.bat
 cd ..
 
-cd battlecluster
+cd battle
 call kill.bat
 cd ..
 
-cd mailcluster
+cd mail
 call kill.bat
 cd ..
 
-cd friendcluster
+cd relation
 call kill.bat
 cd ..
 
-cd groupcluster
+cd group
 call kill.bat
 cd ..
 
-cd datacluster
+cd data
 call kill.bat
 cd ..
 
-cd rankcluster
+cd rank
 call kill.bat
 cd ..
 
-cd logcluster
+cd log
 call kill.bat
 cd ..

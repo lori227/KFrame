@@ -43,7 +43,7 @@ namespace KFrame
                     auto channelnode = servernode.FindNode( "Channel" );
                     while ( channelnode.IsValid() )
                     {
-                        auto channelid = channelnode.GetUInt32( "Id" );
+                        auto channelid = channelnode.GetUInt32( "ChannelId" );
                         if ( channelid == kfglobal->_app_channel )
                         {
                             kfaddress._ip = channelnode.GetString( "Ip" );
@@ -60,29 +60,39 @@ namespace KFrame
             }
             //////////////////////////////////////////////////////////////////
             auto httpnode = config.FindNode( "HttpServer" );
-            if ( httpnode.IsValid() )
+            auto channelnode = httpnode.FindNode( "Channel" );
+            while ( channelnode.IsValid() )
             {
-                uint32 platformid = 0;
-                auto platform = httpnode.FindNode( "Platform" );
-                while ( platform.IsValid() )
+                auto channelid = channelnode.GetUInt32( "ChannelId" );
+                if ( channelid == kfglobal->_app_channel )
                 {
-                    auto ip = platform.GetString( "Ip" );
-                    auto port = platform.GetUInt32( "Port" );
-                    auto Id = platform.GetUInt32( "Id" ) % 1000;
-                    auto count = platform.GetUInt32( "Count" );
-
-                    for ( auto i = 0u; i < count; ++i )
+                    uint32 platformid = 0;
+                    auto platform = channelnode.FindNode( "Platform" );
+                    while ( platform.IsValid() )
                     {
-                        auto address = __FORMAT__( "http://{}:{}/", ip, ( port + Id + i ) );
+                        auto ip = platform.GetString( "Ip" );
+                        auto port = platform.GetUInt32( "Port" );
+                        auto instance = platform.GetUInt32( "Instance" );
 
-                        ++platformid;
-                        _platform_address[ platformid ] = address;
-                        _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
+                        auto count = platform.GetUInt32( "Count" );
+                        for ( auto i = 0u; i < count; ++i )
+                        {
+                            auto address = __FORMAT__( "http://{}:{}/", ip, ( port + instance + i ) );
+
+                            ++platformid;
+                            _platform_address[ platformid ] = address;
+                            _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
+                        }
+
+                        platform.NextNode();
                     }
 
-                    platform.NextNode();
+                    break;
                 }
+
+                channelnode.NextNode();
             }
+
             //////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////
         }

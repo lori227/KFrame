@@ -46,6 +46,7 @@ namespace KFrame
         _redis_setting.Clear();
         _logic_redis_map.clear();
 
+        auto kfglobal = KFGlobal::Instance();
         try
         {
             KFXml kfxml( _file );
@@ -60,10 +61,26 @@ namespace KFrame
                 {
                     auto kfsetting = __KF_CREATE__( KFRedisSetting );
 
-                    kfsetting->_id = childnode.GetUInt32( "Id" );
+                    kfsetting->_id = childnode.GetUInt32( "RedisId" );
                     kfsetting->_ip = childnode.GetString( "IP" );
                     kfsetting->_port = childnode.GetUInt32( "Port" );
                     kfsetting->_password = childnode.GetString( "Password" );
+
+                    auto channelnode = childnode.FindNode( "Channel" );
+                    while ( channelnode.IsValid() )
+                    {
+                        auto channelid = channelnode.GetUInt32( "ChannelId" );
+                        if ( channelid == kfglobal->_app_channel )
+                        {
+                            kfsetting->_ip = channelnode.GetString( "IP" );
+                            kfsetting->_port = channelnode.GetUInt32( "Port" );
+                            kfsetting->_password = channelnode.GetString( "Password" );
+                            break;
+                        }
+
+                        channelnode.NextNode();
+                    }
+
                     AddRedisSetting( kfsetting );
 
                     childnode.NextNode();
