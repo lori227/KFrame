@@ -1,21 +1,4 @@
 
-include_directories(
-    ${ROOT_DIR}/KFLibrary/poco/Foundation/include
-    ${ROOT_DIR}/KFLibrary/poco/Net/include
-    ${ROOT_DIR}/KFLibrary/poco/Crypto/include
-    ${ROOT_DIR}/KFLibrary/poco/NetSSL_OpenSSL/include
-    ${ROOT_DIR}/KFLibrary/poco/CppUnit/include
-    ${ROOT_DIR}/KFLibrary/poco/Util/include
-    ${ROOT_DIR}/KFLibrary/poco/Data/MySQL/include
-    ${ROOT_DIR}/KFLibrary/poco/Data/ODBC/include
-    ${ROOT_DIR}/KFLibrary/poco/Data/SQLite/include
-    ${ROOT_DIR}/KFLibrary/json/include
-    ${ROOT_DIR}/KFLibrary/lua/lua53
-    ${ROOT_DIR}/KFLibrary/google/protobuf/src
-    ${ROOT_DIR}/KFLibrary/libuv/include
-    ${ROOT_DIR}/KFLibrary/openssl/include
-)
-
 #################################################################################
 #################################################################################
 macro(BUILD_CONTRIB_MACRO project_name)

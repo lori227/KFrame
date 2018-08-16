@@ -594,7 +594,7 @@ namespace KFrame
             SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
-        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[ {} ]!",
+        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[{}]!",
                                player->GetKeyID(), reward );
     }
 

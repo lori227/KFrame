@@ -1,6 +1,8 @@
 #ifndef __KF_KFRAME_H__
 #define __KF_KFRAME_H__
 
+#include "KFSystem.h"
+#include "KFMacros.h"
 #include "KFLog.h"
 #include "KFMap.h"
 #include "KFEnum.h"
@@ -11,8 +13,6 @@
 #include "KFVector.h"
 #include "KFField.h"
 #include "KFResult.h"
-#include "KFSystem.h"
-#include "KFMacros.h"
 #include "KFAppID.h"
 #include "KFInterfaces.h"
 #include "KFSingleton.h"

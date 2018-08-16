@@ -192,7 +192,7 @@ namespace KFrame
         // 更新到账号服务器
         UpdateOnlineToPlatfrom( kfmsg.accountid(), kfmsg.playerid(), 0 );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "online count=[%u]", _online_list.Size() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "online count=[{}]", _online_list.Size() );
     }
 
     bool KFWorldModule::KickOnline( uint32 playerid, const char* function, uint32 line )

@@ -34,4 +34,3 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 else()
     target_link_libraries(KFStartup dl rt pthread iconv PocoJSON PocoUtil PocoFoundation PocoJSON PocoXML KFGlobal KFPlugin KFMemory KFUtility)  
 endif()
-

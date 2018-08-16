@@ -149,7 +149,7 @@ namespace KFrame
         {
         	auto fielddata = iter.second;
 
-        	content += KFUtility::Format( "\t\tstatic const std::string& _%s = \"%s\";\n",
+        	content += KFUtility::Format( "\t\tstatic const std::string& _{} = \"{}\";\n",
         		fielddata->_name.c_str(), fielddata->_value.c_str() );
         }
 

@@ -122,7 +122,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[%u] can't find handle", msgid );
+            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find handle", msgid );
         }
     }
 }

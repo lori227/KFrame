@@ -2,6 +2,8 @@
 
 namespace KFrame
 {
+#define __FREE_REPLY__( p ) if ( p != nullptr ) { freeReplyObject( p ); p = nullptr; }
+
     /////////////////////////////////////////////////////////////////////////////
     KFRedisExecute::KFRedisExecute()
     {
@@ -24,6 +26,7 @@ namespace KFrame
         return TryConnect();
     }
 
+
     int32 KFRedisExecute::TryConnect()
     {
         ShutDown();
@@ -39,11 +42,13 @@ namespace KFrame
         if ( !_password.empty() )
         {
             auto strsql = __FORMAT__( "auth {}", _password );
-            auto kfresult = UpdateExecute( __FUNC_LINE__, strsql );
-            if ( !kfresult->IsOk() )
+            auto reply = Execute( strsql );
+            if ( reply == nullptr )
             {
                 return KFEnum::Error;
             }
+
+            __FREE_REPLY__( reply );
         }
 
         return KFEnum::Ok;
@@ -83,21 +88,22 @@ namespace KFrame
         }
     }
 
-#define __FREE_REPLY__( p ) if ( p != nullptr ) { freeReplyObject( p ); }
 
     redisReply* KFRedisExecute::Execute( const std::string& strsql )
     {
-        redisReply* reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
+        auto reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
         if ( reply == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "redisreply = nullptr, [{}:{}]!", _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( KFLogEnum::Sql, "redisreply = nullptr, [{}:{}]!",
+                           _redis_context->err, _redis_context->errstr );
             return nullptr;
         }
 
         if ( reply->type == REDIS_REPLY_ERROR )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "reply error [{}:{}]!", _redis_context->err, _redis_context->errstr );
-            freeReplyObject( reply );
+            __LOG_ERROR__( KFLogEnum::Sql, "reply error [{}:{}]!",
+                           _redis_context->err, _redis_context->errstr );
+            __FREE_REPLY__( reply );
             return nullptr;
         }
 
@@ -268,6 +274,10 @@ namespace KFrame
         _commands.push_back( strsql );
     }
 
+#define __REDIS_GET_REPLY__( rediscontext, reply ) \
+    redisGetReply( rediscontext, ( void** )&reply )
+    //__COROUTINE__( redisGetReply( rediscontext, ( void** )&reply ) )
+
     // todo: 发生错误是否需要回滚
     KFResult< voidptr >* KFRedisExecute::Pipeline( const char* function, uint32 line )
     {
@@ -285,13 +295,13 @@ namespace KFrame
         for ( auto& command : _commands )
         {
             redisReply* reply = nullptr;
-            redisGetReply( _redis_context, ( void** )&reply );
+            __REDIS_GET_REPLY__( _redis_context, reply );
             if ( reply == nullptr )
             {
                 if ( IsDisconnected() )
                 {
                     TryConnect();
-                    redisGetReply( _redis_context, ( void** )&reply );
+                    __REDIS_GET_REPLY__( _redis_context, reply );
                 }
             }
 
@@ -326,13 +336,13 @@ namespace KFrame
         for ( auto& command : _commands )
         {
             redisReply* reply = nullptr;
-            redisGetReply( _redis_context, ( void** )&reply );
+            __REDIS_GET_REPLY__( _redis_context, reply );
             if ( reply == nullptr )
             {
                 if ( IsDisconnected() )
                 {
                     TryConnect();
-                    redisGetReply( _redis_context, ( void** )&reply );
+                    __REDIS_GET_REPLY__( _redis_context, reply );
                 }
             }
 
@@ -368,13 +378,13 @@ namespace KFrame
         for ( auto& command : _commands )
         {
             redisReply* reply = nullptr;
-            redisGetReply( _redis_context, ( void** )&reply );
+            __REDIS_GET_REPLY__( _redis_context, reply );
             if ( reply == nullptr )
             {
                 if ( IsDisconnected() )
                 {
                     TryConnect();
-                    redisGetReply( _redis_context, ( void** )&reply );
+                    __REDIS_GET_REPLY__( _redis_context, reply );
                 }
             }
 

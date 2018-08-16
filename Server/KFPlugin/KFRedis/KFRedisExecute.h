@@ -22,8 +22,8 @@ namespace KFrame
         // 切换索引
         void SelectIndex( uint32 index );
 
-
     protected:
+
         // 连接
         int32 TryConnect();
 

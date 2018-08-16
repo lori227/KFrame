@@ -362,16 +362,13 @@ namespace KFrame
     {
         //__ROBOT_PROTO_PARSE__( KFMsg::MsgSendFriendChatInfo );
 
-        /*KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] recv friend chat[%s]!",
-        	__FUNCTION__, robotid, kfmsg.chatinfo().c_str() );*/
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryPlayAck )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgTellQueryPlayer );
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] query player ok!",
-                      __FUNCTION__, robotid	);
+        __LOG_INFO__( KFLogEnum::Logic, "robot[{}] query player ok!", robotid	);
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleWholeRankDisplay )
@@ -379,9 +376,6 @@ namespace KFrame
         //__ROBOT_PROTO_PARSE__( KFMsg::MsgQueryRankListAck );
         __PROTO_PARSE__( KFMsg::MsgQueryRankListAck );
         //	std::cout << "HandleWholeRankDisplay: " << kfmsg.DebugString() << std::endl;
-
-        /*KFLogger::LogLogic( KFLogger::Info, "[%s] robot[%u] query player ok!",
-        	__FUNCTION__, robotid );*/
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryGuestAck )

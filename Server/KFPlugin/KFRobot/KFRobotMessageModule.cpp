@@ -18,7 +18,6 @@ namespace KFrame
         auto kffunction = _kf_message_function.Find( msgid );
         if ( kffunction != nullptr )
         {
-            //KFLogger::LogSystem( KFLogger::Error, "msgid[%u] already register!", msgid );
         }
 
         kffunction = _kf_message_function.Create( msgid );
@@ -42,7 +41,6 @@ namespace KFrame
         auto ok = _kf_message_function.Remove( msgid );
         if ( !ok )
         {
-            //KFLogger::LogSystem( KFLogger::Error, "msgid[%u] unregister failed!", msgid );
         }
     }
 

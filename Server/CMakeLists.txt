@@ -13,6 +13,27 @@ include_directories(
     ${ROOT_DIR}/KFCommon
     ${ROOT_DIR}/KFContrib
     ${ROOT_DIR}/KFLibrary
+    ${ROOT_DIR}/KFPlugin
+   ${ROOT_DIR}/KFLibrary/json/include
+    ${ROOT_DIR}/KFLibrary/lua/lua53
+    ${ROOT_DIR}/KFLibrary/google/protobuf/src
+    ${ROOT_DIR}/KFLibrary/libuv/include
+    ${ROOT_DIR}/KFLibrary/openssl/include
+    ${ROOT_DIR}/KFLibrary/ftp
+    ${ROOT_DIR}/KFLibrary/libgo
+    ${ROOT_DIR}/KFLibrary/libgo/libgo/linux
+    ${ROOT_DIR}/KFLibrary/redis/linux/deps
+    ${ROOT_DIR}/KFLibrary/libuv/include
+    ${ROOT_DIR}/KFLibrary/poco/Foundation/include
+    ${ROOT_DIR}/KFLibrary/poco/Net/include
+    ${ROOT_DIR}/KFLibrary/poco/Crypto/include
+    ${ROOT_DIR}/KFLibrary/poco/NetSSL_OpenSSL/include
+    ${ROOT_DIR}/KFLibrary/poco/CppUnit/include
+    ${ROOT_DIR}/KFLibrary/poco/Util/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/MySQL/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/ODBC/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/SQLite/include
+    ${ROOT_DIR}/KFLibrary/poco/Data/include
 )
 #set(LIB_DIR /data/_lib)
 #set(BIN_DIR /data/_bin)
@@ -32,6 +53,11 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 else()
     set(CMAKE_BUILD_TYPE "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+endif()
+
+if(COROUTINE MATCHES "Enable")
+    message("use coroutine...")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_COROUTINE")
 endif()
 
 message("${CMAKE_CXX_FLAGS}")

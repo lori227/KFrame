@@ -143,6 +143,21 @@ blue "end building zlib"
 
 #pause
 #-----------------------------------------------------
+blue "start building libgo"
+
+cd libgo
+mkdir -p build
+cd build
+cmake ..
+cp -R -f *.so* ../../../_lib/linux/3rd/
+cp -R -f *.a* ../../../_lib/linux/3rd/
+cd ../../
+
+blue "end building libgo"
+
+#pause
+#-----------------------------------------------------
+
 blue "start building poco"
 
 cd poco
