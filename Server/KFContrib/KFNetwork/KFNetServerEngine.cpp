@@ -196,7 +196,7 @@ namespace KFrame
         return kfhandle;
     }
 
-    bool KFNetServerEngine::SetHandleID( uint32 handleid, uint32 objectid )
+    bool KFNetServerEngine::BindObjectId( uint32 handleid, uint32 objectid )
     {
         auto kfhandle = _kf_handles.Find( handleid );
         if ( kfhandle == nullptr )

@@ -151,9 +151,9 @@ namespace KFrame
         return _kf_server_engine->GetHandleIp( handleid );
     }
 
-    bool KFTcpServerModule::SetHandleID( uint32 handleid, uint32 objectid )
+    bool KFTcpServerModule::BindObjectId( uint32 handleid, uint32 objectid )
     {
-        return _kf_server_engine->SetHandleID( handleid, objectid );
+        return _kf_server_engine->BindObjectId( handleid, objectid );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

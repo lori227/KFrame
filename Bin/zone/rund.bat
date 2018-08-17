@@ -13,4 +13,4 @@ echo Starting Login Server
 start "zone-login" "KFStartupd.exe" "appid=100.1.244.1" "log=1" "startup=./setting/login.startup"
 
 echo Starting Game Server
-start "zone-game" "KFStartupd.exe" "appid=100.1.246.1" "log=1" "startup=./setting/game.startup"
+start "zone-game" "KFStartupd.exe" "appid=100.1.245.1" "log=1" "startup=./setting/game.startup"

@@ -45,7 +45,7 @@ namespace KFrame
         const std::string& GetHandleIp( uint32 handleid );
 
         // 设置id
-        bool SetHandleID( uint32 handleid, uint32 objectid );
+        bool BindObjectId( uint32 handleid, uint32 objectid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );

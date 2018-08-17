@@ -72,7 +72,7 @@ namespace KFrame
         virtual const std::string& GetHandleIp( uint32 handleid );
 
         // 设置id
-        virtual bool SetHandleID( uint32 handleid, uint32 objectid );
+        virtual bool BindObjectId( uint32 handleid, uint32 objectid );
         /////////////////////////////////////////////////////////////////////////
     protected:
         // 处理客户端注册

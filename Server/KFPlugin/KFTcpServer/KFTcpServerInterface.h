@@ -26,7 +26,7 @@ namespace KFrame
         virtual const std::string& GetHandleIp( uint32 handleid ) = 0;
 
         // 设置id
-        virtual bool SetHandleID( uint32 handleid, uint32 objectid ) = 0;
+        virtual bool BindObjectId( uint32 handleid, uint32 objectid ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////
 
         // 给全部客户端发送消息

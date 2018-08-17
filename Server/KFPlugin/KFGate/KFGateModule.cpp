@@ -265,8 +265,8 @@ namespace KFrame
         }
         else
         {
-            // 设置连接属性的id为角色id
-            if ( !_kf_tcp_server->SetHandleID( sessionid, playerid ) )
+            // 绑定角色id
+            if ( !_kf_tcp_server->BindObjectId( sessionid, playerid ) )
             {
                 return __LOG_ERROR__( KFLogEnum::Login, "player[{}] session[{}] failed!", playerid, sessionid );
             }
