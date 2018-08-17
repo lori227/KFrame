@@ -47,9 +47,6 @@
 
 		<!-- gate服务器 -->
 		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200"/>
-
-		<!-- proxy服务器 -->
-		<Server AppName="zone" AppType="proxy" Type="2" Port="12000" MaxQueue="200"/>
 	</TcpServer>
 </Config>
 

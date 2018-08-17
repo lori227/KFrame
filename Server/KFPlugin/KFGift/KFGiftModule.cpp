@@ -38,8 +38,8 @@ namespace KFrame
         sendjson.SetValue( __KF_STRING__( giftkey ), kfmsg.giftkey() );
         sendjson.SetValue( __KF_STRING__( serverid ), _kf_zone->GetZone()->_id );
 
-        static auto url = _kf_ip_address->FindPlatformAddress( playerid ) + __KF_STRING__( gift );
-        _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFGiftModule::HandleReceiveGiftResult );
+        //static auto url = _kf_ip_address->FindPlatformAddress( playerid ) + __KF_STRING__( gift );
+        // _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFGiftModule::HandleReceiveGiftResult );
     }
 
     void KFGiftModule::HandleReceiveGiftResult( std::string& senddata, std::string& recvdata )

@@ -11,5 +11,6 @@
     <ClInclude Include="KFWorldModule.h" />
     <ClInclude Include="KFWorldPlugin.h" />
     <ClInclude Include="KFOnlineEx.h" />
+    <ClInclude Include="KFOnline.h" />
   </ItemGroup>
 </Project>

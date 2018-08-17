@@ -9,11 +9,16 @@
 //    @Date             :    2017-11-1
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFRoleEx.h"
 #include "KFGateInterface.h"
+#include "KFZone/KFZoneInterface.h"
+#include "KFTimer/KFTimerInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
 {
@@ -33,30 +38,15 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 是否连接到登录服务器
-        virtual bool IsLoginConnected();
+        // 创建代理玩家
+        virtual KFRole* CreateRole( uint32 roleid );
 
-        // 发送消息到登录服务器
-        virtual bool SendMessageToLogin( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToLogin( uint32 accountid, uint32 msgid, ::google::protobuf::Message* message );
+        // 查找代理玩家
+        virtual KFRole* FindRole( uint32 roleid );
 
-        // 发送消息到游戏服务器
-        virtual bool SendMessageToGame( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToGame( uint32 gameid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        // 删除代理玩家
+        virtual bool RemoveRole( uint32 roleid );
 
-        // 发送消息到客户端
-        virtual void SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-
-        // 添加链接
-        virtual bool AddConnection( uint32 connectid, uint32 playerid );
-
-        // 删除链接
-        virtual bool RemoveConnection( uint32 playerid, uint32 delaytime, const char* function, uint32 line );
-
-        // 获得ip
-        virtual const std::string& GetIp( uint32 connectid );
     protected:
         // 连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionLogin );
@@ -64,12 +54,45 @@ namespace KFrame
         // 断开连接
         __KF_CLIENT_LOST_FUNCTION__( OnClientLostLogin );
 
+        // 玩家掉线
+        __KF_SERVER_LOST_FUNCTION__( OnPlayerDisconnection );
+
+    protected:
+        // 发送消息到客户端
+        __KF_TRANSMIT_FUNCTION__( SendMessageToClient );
+
+        // 发送消息到游戏服务器
+        __KF_TRANSMIT_FUNCTION__( SendMessageToGame );
+
+    protected:
+        // 登录验证
+        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );
+
+        // 验证结果
+        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
+
+        // 处理消息广播
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastMessageReq );
+
+        // 踢出玩家
+        __KF_MESSAGE_FUNCTION__( HandleKickGatePlayerReq );
+
+        // 处理登录回馈
+        __KF_MESSAGE_FUNCTION__( HandleLoginGameAck );
+
+        // 登出游戏
+        __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
+
+    protected:
+        // 更新在线负载回调
+        void OnHttpDirUpdateCallBack( std::string& senddata, std::string& recvdata );
+
     private:
         // login服务器列表
         KFConHash _kf_login_conhash;
 
-        // game 服务器列表
-        KFConHash _kf_game_conhash;
+        // 玩家列表
+        KFMap< uint32, uint32, KFRoleEx > _kf_role_list;
     };
 }
 

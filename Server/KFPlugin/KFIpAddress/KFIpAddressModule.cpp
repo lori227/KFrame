@@ -66,9 +66,9 @@ namespace KFrame
         return _net_port.CalcListenPort( type, port, appid );
     }
 
-    const std::string& KFIpAddressModule::FindPlatformAddress( uint32 id )
+    const std::string& KFIpAddressModule::FindAuthAddress( )
     {
-        return _kf_ip_config->FindPlatformAddress( id );
+        return _kf_ip_config->_auth_address;
     }
 
     const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )

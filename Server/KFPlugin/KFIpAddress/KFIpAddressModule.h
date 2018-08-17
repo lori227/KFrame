@@ -49,7 +49,7 @@ namespace KFrame
         virtual void SetZoneIpAddress( const std::string& ip );
 
         // 平台访问地址
-        virtual const std::string& FindPlatformAddress( uint32 id );
+        virtual const std::string& FindAuthAddress();
 
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__

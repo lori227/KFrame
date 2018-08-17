@@ -6,7 +6,6 @@
 		<Plguin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
 		<Plguin Name="KFZone" Startup="1" Sort="130" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
 		<Plguin Name="KFGame" Startup="1" Sort="140" Debug="KFGamed" Release="KFGame" Config=""/>
-		<Plguin Name="KFLoginGame" Startup="1" Sort="150" Debug="KFLoginGamed" Release="KFLoginGame" Config=""/>
 		<Plguin Name="KFClusterClient" Startup="1" Sort="160" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/cluster.setting"/>
 		<Plguin Name="KFRouteClient" Startup="1" Sort="161" Debug="KFRouteClientd" Release="KFRouteClient" Config=""/>
 		<Plguin Name="KFDataClient" Startup="1" Sort="162" Debug="KFDataClientd" Release="KFDataClient" Config=""/>

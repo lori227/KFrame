@@ -188,7 +188,7 @@ namespace KFrame
         pbplayer->set_icon( kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) );
         pbplayer->set_iconbox( kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) ) );
         pbplayer->set_grading( kfbasic->GetValue< uint32 >( __KF_STRING__( grading ) ) );
-        pbplayer->set_groupid( kfbasic->GetValue< uint32 >( __KF_STRING__( groupid ) ) );
+        pbplayer->set_groupid( kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) ) );
 
         // 模型, 时装
         pbplayer->set_modelid( kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) ) );

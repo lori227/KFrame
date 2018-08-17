@@ -111,25 +111,17 @@
 	</TcpServer>
 
 	<HttpServer>
-    	<!-- ip ip地址-->
-    	<!-- port 起始端口-->
-   	 	<!-- Instance 序列号-->
-   	 	<!-- Count 开启的数量-->
+    	<!-- ip ip地址 使用域名可以多绑几个ip-->
+    	<!-- port 起始端口 ps:如果使用域名, port不用填, ""就可以-->
 		
 		<!-- 默认 -->
-		<Channel ChannelId="100">
-			<Platform Ip="127.0.0.1" Port="8000" Instance="1" Count="1"/>
-		</Channel>
+		<Channel ChannelId="100" Ip="127.0.0.1" Port="7777"/>
 
 		<!-- 内网测试 -->
-		<Channel ChannelId="101">
-			<Platform Ip="192.168.1.9" Port="8000" Instance="1" Count="1"/>
-		</Channel>
+		<Channel ChannelId="101" Ip="192.168.1.9" Port="7777"/>
 			
 		<!-- 外网测试 -->
-		<Channel ChannelId="1">
-			<Platform Ip="10.105.6.78" Port="8000" Instance="1" Count="1"/>
-		</Channel>
+		<Channel ChannelId="1" Ip="10.105.6.78" Port="7777"/>
 	</HttpServer>
 
 </Config>

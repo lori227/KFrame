@@ -63,7 +63,7 @@ namespace KFrame
         virtual void SetZoneIpAddress( const std::string& ip ) = 0;
 
         // 平台访问地址
-        virtual const std::string& FindPlatformAddress( uint32 id ) = 0;
+        virtual const std::string& FindAuthAddress() = 0;
 
     };
 

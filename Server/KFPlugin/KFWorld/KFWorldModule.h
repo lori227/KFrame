@@ -18,6 +18,7 @@
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFOnlineEx.h"
 
 namespace KFrame
 {
@@ -32,7 +33,6 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -64,7 +64,13 @@ namespace KFrame
         // 断开Game
         __KF_SERVER_LOST_FUNCTION__( OnServerLostGame );
 
+        // 发现Game
+        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDisCoverGame );
+
     protected:
+        // 验证登录
+        __KF_MESSAGE_FUNCTION__( HandleLoginWorldVerifyReq );
+
         // 在线玩家同步
         __KF_MESSAGE_FUNCTION__( HandleGameSyncOnlineReq );
 
@@ -84,12 +90,19 @@ namespace KFrame
         // 处理踢人
         __KF_HTTP_FUNCTION__( HandleHttpKickOnline );
 
-        // 更新玩家在线状态
-        void UpdateOnlineToPlatfrom( uint32 accountid, uint32 playerid, uint32 online );
+        // 发送验证结果消息
+        void SendVerifyFailedToLogin( uint32 result, uint32 loginid, uint32 gateid,  uint32 accountid, uint32 sessionid );
+
+        // 更新在线状态
+        void UpdateOnlineToAuth( uint32 accountid, uint32 playerid, bool online );
 
     private:
-        // 代理玩家列表
-        KFMap< uint32, uint32, KFOnline > _online_list;
+        // 在线玩家列表
+        KFMap< uint32, uint32, KFOnlineEx > _kf_online_list;
+
+        // 游戏服务列表
+        KFConHash _kf_game_conhash;
+
     };
 }
 

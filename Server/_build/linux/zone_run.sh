@@ -20,9 +20,6 @@ echo Starting Gate Server
 echo Starting Login Server
 ./$server appid=100.1.244.1 log=1 startup=./setting/login.startup
 
-echo Starting Proxy Server
-./$server appid=100.1.245.1 log=1 startup=./setting/proxy.startup
-
 echo Starting Game Server
 ./$server appid=100.1.246.1 log=1 startup=./setting/game.startup
 

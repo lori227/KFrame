@@ -5,7 +5,7 @@ namespace KFrame
 {
     KFGameModule::KFGameModule()
     {
-        _world_server_id = 0;
+        _world_server_id = _invalid_int;
     }
 
     KFGameModule::~KFGameModule()
@@ -23,6 +23,7 @@ namespace KFrame
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGameModule::OnClientConnectionServer );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ, &KFGameModule::HandleBroadcastMessageReq );
+
     }
 
     void KFGameModule::BeforeShut()
@@ -38,31 +39,21 @@ namespace KFrame
     {
         if ( servertype == __KF_STRING__( world ) )
         {
-            OnClientConnectionWorld( serverid );
+            _world_server_id = serverid;
         }
-    }
-
-    void KFGameModule::OnClientConnectionWorld( uint32 serverid )
-    {
-        _world_server_id = serverid;
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFGameModule::OnClientLostServer )
     {
         if ( servertype == __KF_STRING__( world ) )
         {
-            OnClientLostWorld();
+            _world_server_id = _invalid_int;
         }
-    }
-
-    void KFGameModule::OnClientLostWorld()
-    {
-        _world_server_id = 0;
     }
 
     bool KFGameModule::SendMessageToWorld( uint32 msgid, ::google::protobuf::Message* message )
     {
-        if ( _world_server_id == 0 )
+        if ( _world_server_id == _invalid_int )
         {
             return false;
         }
@@ -124,4 +115,6 @@ namespace KFrame
         req.set_msgdata( message->SerializeAsString() );
         return SendMessageToWorld( KFMsg::S2S_TRANSMIT_MESSAGE_REQ, &req );
     }
+
+
 }

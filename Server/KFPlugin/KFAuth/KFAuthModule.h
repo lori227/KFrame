@@ -12,6 +12,8 @@
 #include "KFrame.h"
 #include "KFInterfaces.h"
 #include "KFAuthInterface.h"
+#include "KFRedis/KFRedisInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFChannel/KFChannelInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -38,11 +40,32 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 处理登录请求
-        __KF_HTTP_FUNCTION__( HandleAuthChannelLogin );
+        __KF_HTTP_FUNCTION__( HandleAuthLogin );
 
         // 激活请求
         __KF_HTTP_FUNCTION__( HandleAuthActivation );
 
+        // 验证token
+        __KF_HTTP_FUNCTION__( HandleVerifyToken );
+
+    protected:
+        // 查询创建账号
+        MapString QueryCreateAccount( const std::string& account, uint32 channel );
+
+        // 保存渠道数据
+        void UpdateChannelData( uint32 accountid, uint32 channel, KFJson& kfjson );
+
+        // 创建登录Token
+        std::string CreateLoginToken( uint32 accountid, MapString& accountdata );
+
+        // 踢人下线
+        bool KickAccountOffline( MapString& accountdata );
+
+        // 获得目录服务器列表
+        std::string QueryDirList( uint32 accountid, const std::string& token, MapString& accountdata );
+
+        // 创建小区的玩家id
+        uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
     };
 }
 

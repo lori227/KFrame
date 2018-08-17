@@ -57,7 +57,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint32 sessionid, uint32 objectid );
+        virtual bool RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid );
 
         // 删除连接器
         virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line );
@@ -70,6 +70,9 @@ namespace KFrame
 
         // 获得连接ip
         virtual const std::string& GetHandleIp( uint32 handleid );
+
+        // 设置id
+        virtual bool SetHandleID( uint32 handleid, uint32 objectid );
         /////////////////////////////////////////////////////////////////////////
     protected:
         // 处理客户端注册

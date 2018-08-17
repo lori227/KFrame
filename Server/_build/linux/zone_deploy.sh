@@ -53,7 +53,6 @@ path2=$deploypath/setting
 copyfile 1 gate.startup
 copyfile 1 login.startup
 copyfile 1 master.startup
-copyfile 1 proxy.startup
 copyfile 1 game.startup
 copyfile 1 world.startup
 

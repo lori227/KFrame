@@ -11,18 +11,18 @@
 
 #include "KFrame.h"
 #include "KFPlayerInterface.h"
-#include "KFTimer/KFTimerInterface.h"
-#include "KFKernel/KFKernelInterface.h"
-#include "KFMessage/KFMessageInterface.h"
 #include "KFGame/KFGameInterface.h"
 #include "KFZone/KFZoneInterface.h"
+#include "KFDebug/KFDebugInterface.h"
+#include "KFTimer/KFTimerInterface.h"
+#include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFPublicClient/KFPublicClientInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
-#include "KFDebug/KFDebugInterface.h"
 
 namespace KFrame
 {
@@ -57,8 +57,6 @@ namespace KFrame
         // 玩家数量
         virtual uint32 GetPlayerCount();
 
-        // 创建角色
-        virtual KFEntity* CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* extenddata );
 
         // 登出游戏
         virtual void LogoutPlayer( uint32 playerid );
@@ -122,6 +120,15 @@ namespace KFrame
         __KF_DEBUG_FUNCTION__( DebugSetData );
 
     protected:
+        // 登录token
+        __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
+
+        // 处理加载玩家数据请求
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerAck );
+
+        // 处理登出游戏
+        __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
+
         // 处理玩家掉线
         __KF_MESSAGE_FUNCTION__( HandlePlayerDisconnectionReq );
 
@@ -180,6 +187,12 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateSettingReq );
 
     private:
+        // 创建角色
+        KFEntity* CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata );
+
+        // 发送登录回应消息
+        void SendLoginGameMessage( uint32 result, uint32 playerid, uint32 gateid, uint32 sessionid, const KFMsg::PBObject* playerdata );
+
         // 创建角色
         void OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid );
 

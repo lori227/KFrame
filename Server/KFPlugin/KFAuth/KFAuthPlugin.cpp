@@ -17,6 +17,8 @@ namespace KFrame
 
     void KFAuthPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_redis, KFRedisInterface );
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_channel, KFChannelInterface );
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );

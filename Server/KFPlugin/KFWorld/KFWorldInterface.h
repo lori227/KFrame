@@ -1,33 +1,10 @@
 ﻿#ifndef __KF_WORLD_INTERFACE_H__
 #define __KF_WORLD_INTERFACE_H__
 
-#include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFOnline.h"
 
 namespace KFrame
 {
-    class KFOnline
-    {
-    public:
-        virtual ~KFOnline() {}
-
-        // playerid
-        virtual void SetPlayerId( uint32 playerid ) = 0;
-        virtual uint32 GetPlayerId() = 0;
-
-        // gameid
-        virtual void SetGameId( uint32 gameid ) = 0;
-        virtual uint32 GetGameId() = 0;
-
-        // accountid
-        virtual void SetAccountId( uint32 accountid ) = 0;
-        virtual uint32 GetAccountId() = 0;
-
-        // 发送消息到Game
-        virtual void SendMessageToOnline( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual void SendMessageToOnline( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-    };
-
     /////////////////////////////////////////////////////////////////////////////////////////////
     class KFWorldInterface : public KFModule
     {

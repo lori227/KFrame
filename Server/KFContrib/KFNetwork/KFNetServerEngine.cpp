@@ -170,7 +170,7 @@ namespace KFrame
         return true;
     }
 
-    KFNetHandle* KFNetServerEngine::RegisteHandle( uint32 trusteeid, uint32 handleid )
+    KFNetHandle* KFNetServerEngine::RegisteHandle( uint32 trusteeid, uint32 handleid, uint32 objectid )
     {
         auto kfhandle = _trustee_handles.Find( trusteeid );
         if ( kfhandle == nullptr )
@@ -189,11 +189,23 @@ namespace KFrame
 
         // 从代理列表中删除
         _remove_trustees[ trusteeid ] = false;
-        kfhandle->SetID( handleid );
+        kfhandle->SetID( objectid );
         kfhandle->_is_trustee = false;
 
         _kf_handles.Insert( handleid, kfhandle );
         return kfhandle;
+    }
+
+    bool KFNetServerEngine::SetHandleID( uint32 handleid, uint32 objectid )
+    {
+        auto kfhandle = _kf_handles.Find( handleid );
+        if ( kfhandle == nullptr )
+        {
+            return false;
+        }
+
+        kfhandle->SetID( objectid );
+        return true;
     }
 
     void KFNetServerEngine::RunRemoveTrusteeHandle()

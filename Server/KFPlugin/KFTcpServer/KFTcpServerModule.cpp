@@ -120,9 +120,9 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFTcpServerModule::RegisteNetHandle( uint32 sessionid, uint32 objectid )
+    bool KFTcpServerModule::RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid )
     {
-        auto kfhandle = _kf_server_engine->RegisteHandle( sessionid, objectid );
+        auto kfhandle = _kf_server_engine->RegisteHandle( sessionid, handleid, objectid );
         if ( kfhandle == nullptr )
         {
             return false;
@@ -149,6 +149,11 @@ namespace KFrame
     const std::string& KFTcpServerModule::GetHandleIp( uint32 handleid )
     {
         return _kf_server_engine->GetHandleIp( handleid );
+    }
+
+    bool KFTcpServerModule::SetHandleID( uint32 handleid, uint32 objectid )
+    {
+        return _kf_server_engine->SetHandleID( handleid, objectid );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,7 +240,7 @@ namespace KFrame
         auto name = listendata->appname();
         auto type = listendata->apptype();
 
-        auto kfhandle = _kf_server_engine->RegisteHandle( sessionid, handlid );
+        auto kfhandle = _kf_server_engine->RegisteHandle( sessionid, handlid, handlid );
         if ( kfhandle == nullptr )
         {
             return;

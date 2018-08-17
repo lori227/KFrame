@@ -57,7 +57,6 @@ path1=$versionpath/setting/zone
 copyfile 1 gate.startup
 copyfile 1 login.startup
 copyfile 1 master.startup
-copyfile 1 proxy.startup
 copyfile 1 game.startup
 copyfile 1 world.startup
 
@@ -129,16 +128,6 @@ copyfile 1 KFLogClient.so
 copyfile 1 KFLogClientd.so
 copyfile 1 KFLogin.so
 copyfile 1 KFLogind.so
-copyfile 1 KFLoginGame.so
-copyfile 1 KFLoginGamed.so
-copyfile 1 KFLoginGate.so
-copyfile 1 KFLoginGated.so
-copyfile 1 KFLoginLogin.so
-copyfile 1 KFLoginLogind.so
-copyfile 1 KFLoginProxy.so
-copyfile 1 KFLoginProxyd.so
-copyfile 1 KFLoginWorld.so
-copyfile 1 KFLoginWorldd.so
 copyfile 1 KFLua.so
 copyfile 1 KFLuad.so
 copyfile 1 KFMailClient.so
@@ -151,8 +140,6 @@ copyfile 1 KFOption.so
 copyfile 1 KFOptiond.so
 copyfile 1 KFPlayer.so
 copyfile 1 KFPlayerd.so
-copyfile 1 KFProxy.so
-copyfile 1 KFProxyd.so
 copyfile 1 KFPublicClient.so
 copyfile 1 KFPublicClientd.so
 copyfile 1 KFRankClient.so

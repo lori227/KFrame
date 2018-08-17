@@ -17,6 +17,7 @@
     <ClCompile Include="KFWorldPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFOnline.h" />
     <ClInclude Include="KFOnlineEx.h" />
     <ClInclude Include="KFWorldInterface.h" />
     <ClInclude Include="KFWorldModule.h" />

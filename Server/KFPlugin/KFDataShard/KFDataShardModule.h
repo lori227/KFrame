@@ -52,7 +52,6 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -63,9 +62,6 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
 
     protected:
-        // 处理查询角色id
-        __KF_MESSAGE_FUNCTION__( HandleLoginQueryPlayerIdReq );
-
         // 玩家登陆
         __KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );
 
@@ -81,19 +77,12 @@ namespace KFrame
     protected:
         // 加载数据
         bool LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject );
-        void LoadExtendData( uint32 accountid, KFMsg::PBStrings* extenddata );
 
         // 保存数据
         bool SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject );
 
         // 删除数据
         void DeletePlayerData( uint32 zoneid, uint32 id );
-
-        // 查询角色id
-        uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
-
-        // 创建角色
-        void CreatePlayer( uint32 channel, uint32 accountid, uint32 zoneid, uint32 playerid );
 
     private:
         // 数据保存

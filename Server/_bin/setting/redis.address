@@ -23,7 +23,7 @@
 
 	<LogicRedis DefaultRedis="1">
 		<!--保存服务器列表信息-->
-		<Logic Filed="login" Id="1"/>
+		<Logic Filed="dir" Id="1"/>
 
 		<!--保存账号信息-->
 		<Logic Filed="account" Id="1"/>

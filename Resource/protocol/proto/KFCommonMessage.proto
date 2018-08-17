@@ -17,8 +17,8 @@ enum AckEnum
 	WorldSystemBusy 			= 10;		// 世界服务器出错了
 	LoginSystemBusy 			= 11;		// 登录服务器出错了
 	CanNotFindProxy 			= 12;		// 没有可登录的节点
-	PlatformBusy 				= 13;		// 平台服务器出错了
-	PlatformDatabaseBusy		= 14;		// 平台数据库出错了 
+	AuthServerBusy 				= 13;		// 认证服务器出错了
+	AuthDatabaseBusy			= 14;		// 平台数据库出错了 
 	CanNotFindGame 				= 15;		// 没有可登录的游戏服务器
 	LoginTokenError 			= 16;		// 登录token错误
 	LoadDataFailed 				= 17;		// 加载失败
@@ -165,6 +165,7 @@ enum AckEnum
 	SignInNotDay				= 161;		// 还没有签到
 	SignInDataError				= 162;		// 签到配置错误
 	SignInRewardAlready			= 163;		// 已经领取签到奖励
+	DirServerBusy				= 164;		// 目录服务器忙
 	
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

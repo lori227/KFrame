@@ -5,6 +5,5 @@
 		<Plguin Name="KFZone" Startup="1" Sort="110" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
 		<Plguin Name="KFDisplay" Startup="1" Sort="120" Debug="KFDisplayd" Release="KFDisplay" Config=""/>		
 		<Plguin Name="KFGate" Startup="1" Sort="130" Debug="KFGated" Release="KFGate" Config=""/>
-		<Plguin Name="KFLoginGate" Startup="1" Sort="140" Debug="KFLoginGated" Release="KFLoginGate" Config=""/>
 	</Plugins>
 </Setting>

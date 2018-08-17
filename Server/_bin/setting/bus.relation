@@ -60,9 +60,7 @@
 
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="login" ConnectId="*"/>
-		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="data" ConnectType="master" ConnectId="*"/>	
 		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
-		<Connection AppName="zone" AppType="proxy" AppId="*" ConnectName="zone" ConnectType="game" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="*" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>

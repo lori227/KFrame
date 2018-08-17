@@ -30,7 +30,7 @@ namespace KFrame
         bool CloseHandle( uint32 id, uint32 delaytime, const char* function, uint32 line );
 
         // 注册一个Handle
-        KFNetHandle* RegisteHandle( uint32 trusteeid, uint32 handleid );
+        KFNetHandle* RegisteHandle( uint32 trusteeid, uint32 handleid, uint32 objectid );
 
         // 获得一个Handle
         KFNetHandle* FindNetHandle( uint32 handleid );
@@ -43,6 +43,9 @@ namespace KFrame
 
         // 获得连接ip
         const std::string& GetHandleIp( uint32 handleid );
+
+        // 设置id
+        bool SetHandleID( uint32 handleid, uint32 objectid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );

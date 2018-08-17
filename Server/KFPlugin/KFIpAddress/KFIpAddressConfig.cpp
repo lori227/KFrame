@@ -15,8 +15,7 @@ namespace KFrame
     bool KFIpAddressConfig::LoadConfig()
     {
         _ip_address_list.clear();
-        _platform_address.clear();
-        _platform_hash.ClearHashNode();
+        _auth_address.clear();
 
         auto kfglobal = KFGlobal::Instance();
 
@@ -66,34 +65,22 @@ namespace KFrame
                 auto channelid = channelnode.GetUInt32( "ChannelId" );
                 if ( channelid == kfglobal->_app_channel )
                 {
-                    uint32 platformid = 0;
-                    auto platform = channelnode.FindNode( "Platform" );
-                    while ( platform.IsValid() )
+                    auto ip = channelnode.GetString( "Ip" );
+                    auto port = channelnode.GetString( "Port" );
+                    if ( port == _invalid_str )
                     {
-                        auto ip = platform.GetString( "Ip" );
-                        auto port = platform.GetUInt32( "Port" );
-                        auto instance = platform.GetUInt32( "Instance" );
-
-                        auto count = platform.GetUInt32( "Count" );
-                        for ( auto i = 0u; i < count; ++i )
-                        {
-                            auto address = __FORMAT__( "http://{}:{}/", ip, ( port + instance + i ) );
-
-                            ++platformid;
-                            _platform_address[ platformid ] = address;
-                            _platform_hash.AddHashNode( __KF_STRING__( platform ), platformid, 100 );
-                        }
-
-                        platform.NextNode();
+                        _auth_address = __FORMAT__( "http://{}/", ip );
                     }
-
+                    else
+                    {
+                        _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
+                    }
                     break;
                 }
 
                 channelnode.NextNode();
             }
 
-            //////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////
         }
         catch ( ... )
@@ -102,19 +89,6 @@ namespace KFrame
         }
 
         return true;
-    }
-
-
-    const std::string& KFIpAddressConfig::FindPlatformAddress( uint32 id )
-    {
-        auto platformid = _platform_hash.FindHashNode( id );
-        auto iter = _platform_address.find( platformid );
-        if ( iter == _platform_address.end() )
-        {
-            return _invalid_str;
-        }
-
-        return iter->second;
     }
 
     const KFIpAddress* KFIpAddressConfig::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )

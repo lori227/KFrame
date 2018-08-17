@@ -44,9 +44,13 @@ namespace KFrame
         __STRING_DEFINE__( activation );
         __STRING_DEFINE__( activationcode );
         __STRING_DEFINE__( channel );
+        __STRING_DEFINE__( channeldata );
         __STRING_DEFINE__( flag );
         __STRING_DEFINE__( id );
         __STRING_DEFINE__( zone );
+        __STRING_DEFINE__( dir );
+        __STRING_DEFINE__( dirurl );
+        __STRING_DEFINE__( dirlist );
         __STRING_DEFINE__( updatezone );
         __STRING_DEFINE__( lostzone );
         __STRING_DEFINE__( zonelist );
@@ -58,6 +62,7 @@ namespace KFrame
         __STRING_DEFINE__( serverlist );
         __STRING_DEFINE__( serverlisttype );
         __STRING_DEFINE__( token );
+        __STRING_DEFINE__( verify );
         __STRING_DEFINE__( type );
         __STRING_DEFINE__( ip );
         __STRING_DEFINE__( port );
@@ -109,8 +114,10 @@ namespace KFrame
         __STRING_DEFINE__( serverid );
         __STRING_DEFINE__( server );
         __STRING_DEFINE__( zoneid );
+        __STRING_DEFINE__( logiczoneid );
         __STRING_DEFINE__( zonebalance );
         __STRING_DEFINE__( gateid );
+        __STRING_DEFINE__( sessionid );
         __STRING_DEFINE__( var );
         __STRING_DEFINE__( note );
         __STRING_DEFINE__( gift );

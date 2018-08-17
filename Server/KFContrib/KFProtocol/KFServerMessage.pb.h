@@ -43,20 +43,17 @@ class S2SSavePlayerReq;
 class S2SDeletePlayerReq;
 class S2SUpdatePublicDataReq;
 class S2SKickGamePlayerReq;
-class S2SKickProxyPlayerReq;
-class S2SLoginProxyUpdateReq;
+class S2SKickGatePlayerReq;
 class S2SLoginProxyRemoveReq;
 class S2SLoginGameUpdateReq;
 class S2SLoginLoginVerifyReq;
 class S2SLoginLoginVerifyAck;
 class S2SLoginWorldVerifyReq;
-class S2SLoginWorldVerifyAck;
+class S2SLoginFailedToLoginAck;
 class S2SLoginTellTokenToGameReq;
 class S2SLoginTellTokenToGameAck;
 class S2SLoginTellTokenToProxyReq;
 class S2SLoginTellTokenToWorldAck;
-class S2SLoginQueryPlayerIdReq;
-class S2SLoginQueryPlayerIdAck;
 class S2SLoginGameReq;
 class S2SLoginGameAck;
 class S2SLoginLoadPlayerReq;
@@ -149,16 +146,13 @@ enum ServerProtocol {
   S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ = 21099,
   S2S_LOGIN_PROXY_REMOVE_REQ = 21100,
   S2S_KICK_GAME_PLAYER_REQ = 21101,
-  S2S_KICK_PROXY_PLAYER_REQ = 21102,
-  S2S_LOGIN_PROXY_UPDATE_REQ = 21103,
+  S2S_KICK_GATE_PLAYER_REQ = 21102,
   S2S_LOGIN_LOGIN_VERIFY_REQ = 21104,
   S2S_LOGIN_LOGIN_VERIFY_ACK = 21105,
   S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106,
   S2S_LOGIN_GAME_UPDATE_REQ = 21107,
   S2S_LOGIN_WORLD_VERIFY_REQ = 21108,
-  S2S_LOGIN_WORLD_VERIFY_ACK = 21109,
-  S2S_LOGIN_QUERY_PLAYERID_REQ = 21110,
-  S2S_LOGIN_QUERY_PLAYERID_ACK = 21111,
+  S2S_LOGIN_FAILED_TO_LOGIN_ACK = 21109,
   S2S_GAME_SYNC_ONLINE_REQ = 21113,
   S2S_LOGIN_GAME_REQ = 21114,
   S2S_LOGIN_GAME_ACK = 21115,
@@ -1029,14 +1023,14 @@ class LIBPROTOC_EXPORT S2SKickGamePlayerReq : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SKickProxyPlayerReq : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SKickGatePlayerReq : public ::google::protobuf::Message {
  public:
-  S2SKickProxyPlayerReq();
-  virtual ~S2SKickProxyPlayerReq();
+  S2SKickGatePlayerReq();
+  virtual ~S2SKickGatePlayerReq();
 
-  S2SKickProxyPlayerReq(const S2SKickProxyPlayerReq& from);
+  S2SKickGatePlayerReq(const S2SKickGatePlayerReq& from);
 
-  inline S2SKickProxyPlayerReq& operator=(const S2SKickProxyPlayerReq& from) {
+  inline S2SKickGatePlayerReq& operator=(const S2SKickGatePlayerReq& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1050,17 +1044,17 @@ class LIBPROTOC_EXPORT S2SKickProxyPlayerReq : public ::google::protobuf::Messag
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SKickProxyPlayerReq& default_instance();
+  static const S2SKickGatePlayerReq& default_instance();
 
-  void Swap(S2SKickProxyPlayerReq* other);
+  void Swap(S2SKickGatePlayerReq* other);
 
   // implements Message ----------------------------------------------
 
-  S2SKickProxyPlayerReq* New() const;
+  S2SKickGatePlayerReq* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SKickProxyPlayerReq& from);
-  void MergeFrom(const S2SKickProxyPlayerReq& from);
+  void CopyFrom(const S2SKickGatePlayerReq& from);
+  void MergeFrom(const S2SKickGatePlayerReq& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1097,7 +1091,7 @@ class LIBPROTOC_EXPORT S2SKickProxyPlayerReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 type() const;
   inline void set_type(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SKickProxyPlayerReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SKickGatePlayerReq)
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
@@ -1117,124 +1111,7 @@ class LIBPROTOC_EXPORT S2SKickProxyPlayerReq : public ::google::protobuf::Messag
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SKickProxyPlayerReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SLoginProxyUpdateReq : public ::google::protobuf::Message {
- public:
-  S2SLoginProxyUpdateReq();
-  virtual ~S2SLoginProxyUpdateReq();
-
-  S2SLoginProxyUpdateReq(const S2SLoginProxyUpdateReq& from);
-
-  inline S2SLoginProxyUpdateReq& operator=(const S2SLoginProxyUpdateReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SLoginProxyUpdateReq& default_instance();
-
-  void Swap(S2SLoginProxyUpdateReq* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SLoginProxyUpdateReq* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SLoginProxyUpdateReq& from);
-  void MergeFrom(const S2SLoginProxyUpdateReq& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 proxyid = 1;
-  inline bool has_proxyid() const;
-  inline void clear_proxyid();
-  static const int kProxyidFieldNumber = 1;
-  inline ::google::protobuf::uint32 proxyid() const;
-  inline void set_proxyid(::google::protobuf::uint32 value);
-
-  // required uint32 count = 2;
-  inline bool has_count() const;
-  inline void clear_count();
-  static const int kCountFieldNumber = 2;
-  inline ::google::protobuf::uint32 count() const;
-  inline void set_count(::google::protobuf::uint32 value);
-
-  // required string ip = 3;
-  inline bool has_ip() const;
-  inline void clear_ip();
-  static const int kIpFieldNumber = 3;
-  inline const ::std::string& ip() const;
-  inline void set_ip(const ::std::string& value);
-  inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
-  inline ::std::string* mutable_ip();
-  inline ::std::string* release_ip();
-  inline void set_allocated_ip(::std::string* ip);
-
-  // required uint32 port = 4;
-  inline bool has_port() const;
-  inline void clear_port();
-  static const int kPortFieldNumber = 4;
-  inline ::google::protobuf::uint32 port() const;
-  inline void set_port(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginProxyUpdateReq)
- private:
-  inline void set_has_proxyid();
-  inline void clear_has_proxyid();
-  inline void set_has_count();
-  inline void clear_has_count();
-  inline void set_has_ip();
-  inline void clear_has_ip();
-  inline void set_has_port();
-  inline void clear_has_port();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 proxyid_;
-  ::google::protobuf::uint32 count_;
-  ::std::string* ip_;
-  ::google::protobuf::uint32 port_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SLoginProxyUpdateReq* default_instance_;
+  static S2SKickGatePlayerReq* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1497,6 +1374,13 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyReq : public ::google::protobuf::Messa
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
 
+  // required uint32 sessionid = 4;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 4;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoginVerifyReq)
  private:
   inline void set_has_accountid();
@@ -1505,15 +1389,18 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyReq : public ::google::protobuf::Messa
   inline void clear_has_token();
   inline void set_has_ip();
   inline void clear_has_ip();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* token_;
-  ::std::string* ip_;
   ::google::protobuf::uint32 accountid_;
+  ::google::protobuf::uint32 sessionid_;
+  ::std::string* ip_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -1592,43 +1479,12 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyAck : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required string token = 4;
-  inline bool has_token() const;
-  inline void clear_token();
-  static const int kTokenFieldNumber = 4;
-  inline const ::std::string& token() const;
-  inline void set_token(const ::std::string& value);
-  inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
-  inline ::std::string* mutable_token();
-  inline ::std::string* release_token();
-  inline void set_allocated_token(::std::string* token);
-
-  // optional string ip = 5;
-  inline bool has_ip() const;
-  inline void clear_ip();
-  static const int kIpFieldNumber = 5;
-  inline const ::std::string& ip() const;
-  inline void set_ip(const ::std::string& value);
-  inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
-  inline ::std::string* mutable_ip();
-  inline ::std::string* release_ip();
-  inline void set_allocated_ip(::std::string* ip);
-
-  // optional uint32 port = 6;
-  inline bool has_port() const;
-  inline void clear_port();
-  static const int kPortFieldNumber = 6;
-  inline ::google::protobuf::uint32 port() const;
-  inline void set_port(::google::protobuf::uint32 value);
+  // required uint32 sessionid = 3;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 3;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoginVerifyAck)
  private:
@@ -1636,26 +1492,17 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyAck : public ::google::protobuf::Messa
   inline void clear_has_result();
   inline void set_has_accountid();
   inline void clear_has_accountid();
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_token();
-  inline void clear_has_token();
-  inline void set_has_ip();
-  inline void clear_has_ip();
-  inline void set_has_port();
-  inline void clear_has_port();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 accountid_;
-  ::std::string* token_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 port_;
-  ::std::string* ip_;
+  ::google::protobuf::uint32 sessionid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -1753,6 +1600,22 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
+  // required uint32 sessionid = 5;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 5;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 6;
+  inline bool has_channeldata() const;
+  inline void clear_channeldata();
+  static const int kChanneldataFieldNumber = 6;
+  inline const ::KFMsg::PBStrings& channeldata() const;
+  inline ::KFMsg::PBStrings* mutable_channeldata();
+  inline ::KFMsg::PBStrings* release_channeldata();
+  inline void set_allocated_channeldata(::KFMsg::PBStrings* channeldata);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginWorldVerifyReq)
  private:
   inline void set_has_accountid();
@@ -1763,6 +1626,10 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   inline void clear_has_gateid();
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
+  inline void set_has_channeldata();
+  inline void clear_has_channeldata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1770,9 +1637,11 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 gateid_;
   ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 sessionid_;
+  ::KFMsg::PBStrings* channeldata_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -1783,14 +1652,14 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SLoginWorldVerifyAck : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SLoginFailedToLoginAck : public ::google::protobuf::Message {
  public:
-  S2SLoginWorldVerifyAck();
-  virtual ~S2SLoginWorldVerifyAck();
+  S2SLoginFailedToLoginAck();
+  virtual ~S2SLoginFailedToLoginAck();
 
-  S2SLoginWorldVerifyAck(const S2SLoginWorldVerifyAck& from);
+  S2SLoginFailedToLoginAck(const S2SLoginFailedToLoginAck& from);
 
-  inline S2SLoginWorldVerifyAck& operator=(const S2SLoginWorldVerifyAck& from) {
+  inline S2SLoginFailedToLoginAck& operator=(const S2SLoginFailedToLoginAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1804,17 +1673,17 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyAck : public ::google::protobuf::Messa
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SLoginWorldVerifyAck& default_instance();
+  static const S2SLoginFailedToLoginAck& default_instance();
 
-  void Swap(S2SLoginWorldVerifyAck* other);
+  void Swap(S2SLoginFailedToLoginAck* other);
 
   // implements Message ----------------------------------------------
 
-  S2SLoginWorldVerifyAck* New() const;
+  S2SLoginFailedToLoginAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SLoginWorldVerifyAck& from);
-  void MergeFrom(const S2SLoginWorldVerifyAck& from);
+  void CopyFrom(const S2SLoginFailedToLoginAck& from);
+  void MergeFrom(const S2SLoginFailedToLoginAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1858,45 +1727,14 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyAck : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 4;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  // required uint32 sessionid = 4;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 4;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
 
-  // required string token = 5;
-  inline bool has_token() const;
-  inline void clear_token();
-  static const int kTokenFieldNumber = 5;
-  inline const ::std::string& token() const;
-  inline void set_token(const ::std::string& value);
-  inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
-  inline ::std::string* mutable_token();
-  inline ::std::string* release_token();
-  inline void set_allocated_token(::std::string* token);
-
-  // required string ip = 6;
-  inline bool has_ip() const;
-  inline void clear_ip();
-  static const int kIpFieldNumber = 6;
-  inline const ::std::string& ip() const;
-  inline void set_ip(const ::std::string& value);
-  inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
-  inline ::std::string* mutable_ip();
-  inline ::std::string* release_ip();
-  inline void set_allocated_ip(::std::string* ip);
-
-  // required uint32 port = 7;
-  inline bool has_port() const;
-  inline void clear_port();
-  static const int kPortFieldNumber = 7;
-  inline ::google::protobuf::uint32 port() const;
-  inline void set_port(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginWorldVerifyAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginFailedToLoginAck)
  private:
   inline void set_has_gateid();
   inline void clear_has_gateid();
@@ -1904,34 +1742,25 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyAck : public ::google::protobuf::Messa
   inline void clear_has_result();
   inline void set_has_accountid();
   inline void clear_has_accountid();
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_token();
-  inline void clear_has_token();
-  inline void set_has_ip();
-  inline void clear_has_ip();
-  inline void set_has_port();
-  inline void clear_has_port();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 gateid_;
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 accountid_;
-  ::google::protobuf::uint32 playerid_;
-  ::std::string* token_;
-  ::std::string* ip_;
-  ::google::protobuf::uint32 port_;
+  ::google::protobuf::uint32 sessionid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SLoginWorldVerifyAck* default_instance_;
+  static S2SLoginFailedToLoginAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1989,17 +1818,10 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required string token = 2;
+  // required string token = 1;
   inline bool has_token() const;
   inline void clear_token();
-  static const int kTokenFieldNumber = 2;
+  static const int kTokenFieldNumber = 1;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
@@ -2008,57 +1830,66 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required uint32 proxyid = 3;
-  inline bool has_proxyid() const;
-  inline void clear_proxyid();
-  static const int kProxyidFieldNumber = 3;
-  inline ::google::protobuf::uint32 proxyid() const;
-  inline void set_proxyid(::google::protobuf::uint32 value);
+  // required uint32 playerid = 2;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required uint32 accountid = 4;
+  // required uint32 accountid = 3;
   inline bool has_accountid() const;
   inline void clear_accountid();
-  static const int kAccountidFieldNumber = 4;
+  static const int kAccountidFieldNumber = 3;
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
-  // required uint32 loginid = 5;
-  inline bool has_loginid() const;
-  inline void clear_loginid();
-  static const int kLoginidFieldNumber = 5;
-  inline ::google::protobuf::uint32 loginid() const;
-  inline void set_loginid(::google::protobuf::uint32 value);
-
-  // required uint32 gateid = 6;
+  // required uint32 gateid = 4;
   inline bool has_gateid() const;
   inline void clear_gateid();
-  static const int kGateidFieldNumber = 6;
+  static const int kGateidFieldNumber = 4;
   inline ::google::protobuf::uint32 gateid() const;
   inline void set_gateid(::google::protobuf::uint32 value);
 
+  // required uint32 sessionid = 5;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 5;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 6;
+  inline bool has_channeldata() const;
+  inline void clear_channeldata();
+  static const int kChanneldataFieldNumber = 6;
+  inline const ::KFMsg::PBStrings& channeldata() const;
+  inline ::KFMsg::PBStrings* mutable_channeldata();
+  inline ::KFMsg::PBStrings* release_channeldata();
+  inline void set_allocated_channeldata(::KFMsg::PBStrings* channeldata);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginTellTokenToGameReq)
  private:
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
   inline void set_has_token();
   inline void clear_has_token();
-  inline void set_has_proxyid();
-  inline void clear_has_proxyid();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
   inline void set_has_accountid();
   inline void clear_has_accountid();
-  inline void set_has_loginid();
-  inline void clear_has_loginid();
   inline void set_has_gateid();
   inline void clear_has_gateid();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
+  inline void set_has_channeldata();
+  inline void clear_has_channeldata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* token_;
   ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 proxyid_;
   ::google::protobuf::uint32 accountid_;
-  ::google::protobuf::uint32 loginid_;
   ::google::protobuf::uint32 gateid_;
+  ::google::protobuf::uint32 sessionid_;
+  ::KFMsg::PBStrings* channeldata_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -2503,280 +2334,6 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToWorldAck : public ::google::protobuf::
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SLoginQueryPlayerIdReq : public ::google::protobuf::Message {
- public:
-  S2SLoginQueryPlayerIdReq();
-  virtual ~S2SLoginQueryPlayerIdReq();
-
-  S2SLoginQueryPlayerIdReq(const S2SLoginQueryPlayerIdReq& from);
-
-  inline S2SLoginQueryPlayerIdReq& operator=(const S2SLoginQueryPlayerIdReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SLoginQueryPlayerIdReq& default_instance();
-
-  void Swap(S2SLoginQueryPlayerIdReq* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SLoginQueryPlayerIdReq* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SLoginQueryPlayerIdReq& from);
-  void MergeFrom(const S2SLoginQueryPlayerIdReq& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 loginserverid = 1;
-  inline bool has_loginserverid() const;
-  inline void clear_loginserverid();
-  static const int kLoginserveridFieldNumber = 1;
-  inline ::google::protobuf::uint32 loginserverid() const;
-  inline void set_loginserverid(::google::protobuf::uint32 value);
-
-  // required uint32 gateid = 2;
-  inline bool has_gateid() const;
-  inline void clear_gateid();
-  static const int kGateidFieldNumber = 2;
-  inline ::google::protobuf::uint32 gateid() const;
-  inline void set_gateid(::google::protobuf::uint32 value);
-
-  // required uint32 accountid = 3;
-  inline bool has_accountid() const;
-  inline void clear_accountid();
-  static const int kAccountidFieldNumber = 3;
-  inline ::google::protobuf::uint32 accountid() const;
-  inline void set_accountid(::google::protobuf::uint32 value);
-
-  // required uint32 channel = 4;
-  inline bool has_channel() const;
-  inline void clear_channel();
-  static const int kChannelFieldNumber = 4;
-  inline ::google::protobuf::uint32 channel() const;
-  inline void set_channel(::google::protobuf::uint32 value);
-
-  // required string token = 5;
-  inline bool has_token() const;
-  inline void clear_token();
-  static const int kTokenFieldNumber = 5;
-  inline const ::std::string& token() const;
-  inline void set_token(const ::std::string& value);
-  inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
-  inline ::std::string* mutable_token();
-  inline ::std::string* release_token();
-  inline void set_allocated_token(::std::string* token);
-
-  // required uint32 zoneid = 6;
-  inline bool has_zoneid() const;
-  inline void clear_zoneid();
-  static const int kZoneidFieldNumber = 6;
-  inline ::google::protobuf::uint32 zoneid() const;
-  inline void set_zoneid(::google::protobuf::uint32 value);
-
-  // required uint32 logiczoneid = 7;
-  inline bool has_logiczoneid() const;
-  inline void clear_logiczoneid();
-  static const int kLogiczoneidFieldNumber = 7;
-  inline ::google::protobuf::uint32 logiczoneid() const;
-  inline void set_logiczoneid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginQueryPlayerIdReq)
- private:
-  inline void set_has_loginserverid();
-  inline void clear_has_loginserverid();
-  inline void set_has_gateid();
-  inline void clear_has_gateid();
-  inline void set_has_accountid();
-  inline void clear_has_accountid();
-  inline void set_has_channel();
-  inline void clear_has_channel();
-  inline void set_has_token();
-  inline void clear_has_token();
-  inline void set_has_zoneid();
-  inline void clear_has_zoneid();
-  inline void set_has_logiczoneid();
-  inline void clear_has_logiczoneid();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 loginserverid_;
-  ::google::protobuf::uint32 gateid_;
-  ::google::protobuf::uint32 accountid_;
-  ::google::protobuf::uint32 channel_;
-  ::std::string* token_;
-  ::google::protobuf::uint32 zoneid_;
-  ::google::protobuf::uint32 logiczoneid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SLoginQueryPlayerIdReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SLoginQueryPlayerIdAck : public ::google::protobuf::Message {
- public:
-  S2SLoginQueryPlayerIdAck();
-  virtual ~S2SLoginQueryPlayerIdAck();
-
-  S2SLoginQueryPlayerIdAck(const S2SLoginQueryPlayerIdAck& from);
-
-  inline S2SLoginQueryPlayerIdAck& operator=(const S2SLoginQueryPlayerIdAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SLoginQueryPlayerIdAck& default_instance();
-
-  void Swap(S2SLoginQueryPlayerIdAck* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SLoginQueryPlayerIdAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SLoginQueryPlayerIdAck& from);
-  void MergeFrom(const S2SLoginQueryPlayerIdAck& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 loginserverid = 1;
-  inline bool has_loginserverid() const;
-  inline void clear_loginserverid();
-  static const int kLoginserveridFieldNumber = 1;
-  inline ::google::protobuf::uint32 loginserverid() const;
-  inline void set_loginserverid(::google::protobuf::uint32 value);
-
-  // required uint32 gateid = 2;
-  inline bool has_gateid() const;
-  inline void clear_gateid();
-  static const int kGateidFieldNumber = 2;
-  inline ::google::protobuf::uint32 gateid() const;
-  inline void set_gateid(::google::protobuf::uint32 value);
-
-  // required uint32 accountid = 3;
-  inline bool has_accountid() const;
-  inline void clear_accountid();
-  static const int kAccountidFieldNumber = 3;
-  inline ::google::protobuf::uint32 accountid() const;
-  inline void set_accountid(::google::protobuf::uint32 value);
-
-  // required uint32 playerid = 4;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required string token = 5;
-  inline bool has_token() const;
-  inline void clear_token();
-  static const int kTokenFieldNumber = 5;
-  inline const ::std::string& token() const;
-  inline void set_token(const ::std::string& value);
-  inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
-  inline ::std::string* mutable_token();
-  inline ::std::string* release_token();
-  inline void set_allocated_token(::std::string* token);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginQueryPlayerIdAck)
- private:
-  inline void set_has_loginserverid();
-  inline void clear_has_loginserverid();
-  inline void set_has_gateid();
-  inline void clear_has_gateid();
-  inline void set_has_accountid();
-  inline void clear_has_accountid();
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_token();
-  inline void clear_has_token();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 loginserverid_;
-  ::google::protobuf::uint32 gateid_;
-  ::google::protobuf::uint32 accountid_;
-  ::google::protobuf::uint32 playerid_;
-  ::std::string* token_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SLoginQueryPlayerIdAck* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class LIBPROTOC_EXPORT S2SLoginGameReq : public ::google::protobuf::Message {
  public:
   S2SLoginGameReq();
@@ -2952,19 +2509,26 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBObject playerdata = 3;
+  // required uint32 sessionid = 3;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 3;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBObject playerdata = 4;
   inline bool has_playerdata() const;
   inline void clear_playerdata();
-  static const int kPlayerdataFieldNumber = 3;
+  static const int kPlayerdataFieldNumber = 4;
   inline const ::KFMsg::PBObject& playerdata() const;
   inline ::KFMsg::PBObject* mutable_playerdata();
   inline ::KFMsg::PBObject* release_playerdata();
   inline void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
 
-  // required uint64 servertime = 4;
+  // required uint64 servertime = 5;
   inline bool has_servertime() const;
   inline void clear_servertime();
-  static const int kServertimeFieldNumber = 4;
+  static const int kServertimeFieldNumber = 5;
   inline ::google::protobuf::uint64 servertime() const;
   inline void set_servertime(::google::protobuf::uint64 value);
 
@@ -2974,6 +2538,8 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message {
   inline void clear_has_result();
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
   inline void set_has_playerdata();
   inline void clear_has_playerdata();
   inline void set_has_servertime();
@@ -2985,9 +2551,10 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message {
   ::google::protobuf::uint32 playerid_;
   ::KFMsg::PBObject* playerdata_;
   ::google::protobuf::uint64 servertime_;
+  ::google::protobuf::uint32 sessionid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -3080,6 +2647,22 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
+  // required uint32 sessionid = 5;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 5;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 6;
+  inline bool has_channeldata() const;
+  inline void clear_channeldata();
+  static const int kChanneldataFieldNumber = 6;
+  inline const ::KFMsg::PBStrings& channeldata() const;
+  inline ::KFMsg::PBStrings* mutable_channeldata();
+  inline ::KFMsg::PBStrings* release_channeldata();
+  inline void set_allocated_channeldata(::KFMsg::PBStrings* channeldata);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoadPlayerReq)
  private:
   inline void set_has_gateid();
@@ -3090,6 +2673,10 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   inline void clear_has_playerid();
   inline void set_has_accountid();
   inline void clear_has_accountid();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
+  inline void set_has_channeldata();
+  inline void clear_has_channeldata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -3097,9 +2684,11 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 accountid_;
+  ::KFMsg::PBStrings* channeldata_;
+  ::google::protobuf::uint32 sessionid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -3185,23 +2774,30 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 gateid() const;
   inline void set_gateid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBObject playerdata = 4;
+  // required uint32 sessionid = 4;
+  inline bool has_sessionid() const;
+  inline void clear_sessionid();
+  static const int kSessionidFieldNumber = 4;
+  inline ::google::protobuf::uint32 sessionid() const;
+  inline void set_sessionid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBObject playerdata = 5;
   inline bool has_playerdata() const;
   inline void clear_playerdata();
-  static const int kPlayerdataFieldNumber = 4;
+  static const int kPlayerdataFieldNumber = 5;
   inline const ::KFMsg::PBObject& playerdata() const;
   inline ::KFMsg::PBObject* mutable_playerdata();
   inline ::KFMsg::PBObject* release_playerdata();
   inline void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
 
-  // required .KFMsg.PBStrings extenddata = 5;
-  inline bool has_extenddata() const;
-  inline void clear_extenddata();
-  static const int kExtenddataFieldNumber = 5;
-  inline const ::KFMsg::PBStrings& extenddata() const;
-  inline ::KFMsg::PBStrings* mutable_extenddata();
-  inline ::KFMsg::PBStrings* release_extenddata();
-  inline void set_allocated_extenddata(::KFMsg::PBStrings* extenddata);
+  // required .KFMsg.PBStrings channeldata = 6;
+  inline bool has_channeldata() const;
+  inline void clear_channeldata();
+  static const int kChanneldataFieldNumber = 6;
+  inline const ::KFMsg::PBStrings& channeldata() const;
+  inline ::KFMsg::PBStrings* mutable_channeldata();
+  inline ::KFMsg::PBStrings* release_channeldata();
+  inline void set_allocated_channeldata(::KFMsg::PBStrings* channeldata);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoadPlayerAck)
  private:
@@ -3211,21 +2807,24 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   inline void clear_has_playerid();
   inline void set_has_gateid();
   inline void clear_has_gateid();
+  inline void set_has_sessionid();
+  inline void clear_has_sessionid();
   inline void set_has_playerdata();
   inline void clear_has_playerdata();
-  inline void set_has_extenddata();
-  inline void clear_has_extenddata();
+  inline void set_has_channeldata();
+  inline void clear_has_channeldata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 playerid_;
-  ::KFMsg::PBObject* playerdata_;
-  ::KFMsg::PBStrings* extenddata_;
   ::google::protobuf::uint32 gateid_;
+  ::google::protobuf::uint32 sessionid_;
+  ::KFMsg::PBObject* playerdata_;
+  ::KFMsg::PBStrings* channeldata_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -11425,190 +11024,50 @@ inline void S2SKickGamePlayerReq::set_type(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// S2SKickProxyPlayerReq
+// S2SKickGatePlayerReq
 
 // required uint32 playerid = 1;
-inline bool S2SKickProxyPlayerReq::has_playerid() const {
+inline bool S2SKickGatePlayerReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SKickProxyPlayerReq::set_has_playerid() {
+inline void S2SKickGatePlayerReq::set_has_playerid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void S2SKickProxyPlayerReq::clear_has_playerid() {
+inline void S2SKickGatePlayerReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void S2SKickProxyPlayerReq::clear_playerid() {
+inline void S2SKickGatePlayerReq::clear_playerid() {
   playerid_ = 0u;
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SKickProxyPlayerReq::playerid() const {
+inline ::google::protobuf::uint32 S2SKickGatePlayerReq::playerid() const {
   return playerid_;
 }
-inline void S2SKickProxyPlayerReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SKickGatePlayerReq::set_playerid(::google::protobuf::uint32 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
 // required uint32 type = 2;
-inline bool S2SKickProxyPlayerReq::has_type() const {
+inline bool S2SKickGatePlayerReq::has_type() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SKickProxyPlayerReq::set_has_type() {
+inline void S2SKickGatePlayerReq::set_has_type() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SKickProxyPlayerReq::clear_has_type() {
+inline void S2SKickGatePlayerReq::clear_has_type() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void S2SKickProxyPlayerReq::clear_type() {
+inline void S2SKickGatePlayerReq::clear_type() {
   type_ = 0u;
   clear_has_type();
 }
-inline ::google::protobuf::uint32 S2SKickProxyPlayerReq::type() const {
+inline ::google::protobuf::uint32 S2SKickGatePlayerReq::type() const {
   return type_;
 }
-inline void S2SKickProxyPlayerReq::set_type(::google::protobuf::uint32 value) {
+inline void S2SKickGatePlayerReq::set_type(::google::protobuf::uint32 value) {
   set_has_type();
   type_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SLoginProxyUpdateReq
-
-// required uint32 proxyid = 1;
-inline bool S2SLoginProxyUpdateReq::has_proxyid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SLoginProxyUpdateReq::set_has_proxyid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SLoginProxyUpdateReq::clear_has_proxyid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SLoginProxyUpdateReq::clear_proxyid() {
-  proxyid_ = 0u;
-  clear_has_proxyid();
-}
-inline ::google::protobuf::uint32 S2SLoginProxyUpdateReq::proxyid() const {
-  return proxyid_;
-}
-inline void S2SLoginProxyUpdateReq::set_proxyid(::google::protobuf::uint32 value) {
-  set_has_proxyid();
-  proxyid_ = value;
-}
-
-// required uint32 count = 2;
-inline bool S2SLoginProxyUpdateReq::has_count() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SLoginProxyUpdateReq::set_has_count() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SLoginProxyUpdateReq::clear_has_count() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SLoginProxyUpdateReq::clear_count() {
-  count_ = 0u;
-  clear_has_count();
-}
-inline ::google::protobuf::uint32 S2SLoginProxyUpdateReq::count() const {
-  return count_;
-}
-inline void S2SLoginProxyUpdateReq::set_count(::google::protobuf::uint32 value) {
-  set_has_count();
-  count_ = value;
-}
-
-// required string ip = 3;
-inline bool S2SLoginProxyUpdateReq::has_ip() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SLoginProxyUpdateReq::set_has_ip() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SLoginProxyUpdateReq::clear_has_ip() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SLoginProxyUpdateReq::clear_ip() {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    ip_->clear();
-  }
-  clear_has_ip();
-}
-inline const ::std::string& S2SLoginProxyUpdateReq::ip() const {
-  return *ip_;
-}
-inline void S2SLoginProxyUpdateReq::set_ip(const ::std::string& value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginProxyUpdateReq::set_ip(const char* value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginProxyUpdateReq::set_ip(const char* value, size_t size) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginProxyUpdateReq::mutable_ip() {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  return ip_;
-}
-inline ::std::string* S2SLoginProxyUpdateReq::release_ip() {
-  clear_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ip_;
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginProxyUpdateReq::set_allocated_ip(::std::string* ip) {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    delete ip_;
-  }
-  if (ip) {
-    set_has_ip();
-    ip_ = ip;
-  } else {
-    clear_has_ip();
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required uint32 port = 4;
-inline bool S2SLoginProxyUpdateReq::has_port() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SLoginProxyUpdateReq::set_has_port() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SLoginProxyUpdateReq::clear_has_port() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SLoginProxyUpdateReq::clear_port() {
-  port_ = 0u;
-  clear_has_port();
-}
-inline ::google::protobuf::uint32 S2SLoginProxyUpdateReq::port() const {
-  return port_;
-}
-inline void S2SLoginProxyUpdateReq::set_port(::google::protobuf::uint32 value) {
-  set_has_port();
-  port_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -11851,6 +11310,28 @@ inline void S2SLoginLoginVerifyReq::set_allocated_ip(::std::string* ip) {
   }
 }
 
+// required uint32 sessionid = 4;
+inline bool S2SLoginLoginVerifyReq::has_sessionid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SLoginLoginVerifyReq::set_has_sessionid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SLoginLoginVerifyReq::clear_has_sessionid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SLoginLoginVerifyReq::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginLoginVerifyReq::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginLoginVerifyReq::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SLoginLoginVerifyAck
@@ -11899,188 +11380,26 @@ inline void S2SLoginLoginVerifyAck::set_accountid(::google::protobuf::uint32 val
   accountid_ = value;
 }
 
-// required uint32 playerid = 3;
-inline bool S2SLoginLoginVerifyAck::has_playerid() const {
+// required uint32 sessionid = 3;
+inline bool S2SLoginLoginVerifyAck::has_sessionid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SLoginLoginVerifyAck::set_has_playerid() {
+inline void S2SLoginLoginVerifyAck::set_has_sessionid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SLoginLoginVerifyAck::clear_has_playerid() {
+inline void S2SLoginLoginVerifyAck::clear_has_sessionid() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SLoginLoginVerifyAck::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
+inline void S2SLoginLoginVerifyAck::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
 }
-inline ::google::protobuf::uint32 S2SLoginLoginVerifyAck::playerid() const {
-  return playerid_;
+inline ::google::protobuf::uint32 S2SLoginLoginVerifyAck::sessionid() const {
+  return sessionid_;
 }
-inline void S2SLoginLoginVerifyAck::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required string token = 4;
-inline bool S2SLoginLoginVerifyAck::has_token() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SLoginLoginVerifyAck::set_has_token() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SLoginLoginVerifyAck::clear_has_token() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SLoginLoginVerifyAck::clear_token() {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    token_->clear();
-  }
-  clear_has_token();
-}
-inline const ::std::string& S2SLoginLoginVerifyAck::token() const {
-  return *token_;
-}
-inline void S2SLoginLoginVerifyAck::set_token(const ::std::string& value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginLoginVerifyAck::set_token(const char* value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginLoginVerifyAck::set_token(const char* value, size_t size) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginLoginVerifyAck::mutable_token() {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  return token_;
-}
-inline ::std::string* S2SLoginLoginVerifyAck::release_token() {
-  clear_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = token_;
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginLoginVerifyAck::set_allocated_token(::std::string* token) {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    delete token_;
-  }
-  if (token) {
-    set_has_token();
-    token_ = token;
-  } else {
-    clear_has_token();
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional string ip = 5;
-inline bool S2SLoginLoginVerifyAck::has_ip() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SLoginLoginVerifyAck::set_has_ip() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SLoginLoginVerifyAck::clear_has_ip() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SLoginLoginVerifyAck::clear_ip() {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    ip_->clear();
-  }
-  clear_has_ip();
-}
-inline const ::std::string& S2SLoginLoginVerifyAck::ip() const {
-  return *ip_;
-}
-inline void S2SLoginLoginVerifyAck::set_ip(const ::std::string& value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginLoginVerifyAck::set_ip(const char* value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginLoginVerifyAck::set_ip(const char* value, size_t size) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginLoginVerifyAck::mutable_ip() {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  return ip_;
-}
-inline ::std::string* S2SLoginLoginVerifyAck::release_ip() {
-  clear_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ip_;
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginLoginVerifyAck::set_allocated_ip(::std::string* ip) {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    delete ip_;
-  }
-  if (ip) {
-    set_has_ip();
-    ip_ = ip;
-  } else {
-    clear_has_ip();
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional uint32 port = 6;
-inline bool S2SLoginLoginVerifyAck::has_port() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void S2SLoginLoginVerifyAck::set_has_port() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void S2SLoginLoginVerifyAck::clear_has_port() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void S2SLoginLoginVerifyAck::clear_port() {
-  port_ = 0u;
-  clear_has_port();
-}
-inline ::google::protobuf::uint32 S2SLoginLoginVerifyAck::port() const {
-  return port_;
-}
-inline void S2SLoginLoginVerifyAck::set_port(::google::protobuf::uint32 value) {
-  set_has_port();
-  port_ = value;
+inline void S2SLoginLoginVerifyAck::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -12223,295 +11542,171 @@ inline void S2SLoginWorldVerifyReq::set_playerid(::google::protobuf::uint32 valu
   playerid_ = value;
 }
 
+// required uint32 sessionid = 5;
+inline bool S2SLoginWorldVerifyReq::has_sessionid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SLoginWorldVerifyReq::set_has_sessionid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SLoginWorldVerifyReq::clear_has_sessionid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SLoginWorldVerifyReq::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginWorldVerifyReq::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginWorldVerifyReq::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 6;
+inline bool S2SLoginWorldVerifyReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SLoginWorldVerifyReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SLoginWorldVerifyReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginWorldVerifyReq::clear_channeldata() {
+  if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
+  clear_has_channeldata();
+}
+inline const ::KFMsg::PBStrings& S2SLoginWorldVerifyReq::channeldata() const {
+  return channeldata_ != NULL ? *channeldata_ : *default_instance_->channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginWorldVerifyReq::mutable_channeldata() {
+  set_has_channeldata();
+  if (channeldata_ == NULL) channeldata_ = new ::KFMsg::PBStrings;
+  return channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginWorldVerifyReq::release_channeldata() {
+  clear_has_channeldata();
+  ::KFMsg::PBStrings* temp = channeldata_;
+  channeldata_ = NULL;
+  return temp;
+}
+inline void S2SLoginWorldVerifyReq::set_allocated_channeldata(::KFMsg::PBStrings* channeldata) {
+  delete channeldata_;
+  channeldata_ = channeldata;
+  if (channeldata) {
+    set_has_channeldata();
+  } else {
+    clear_has_channeldata();
+  }
+}
+
 // -------------------------------------------------------------------
 
-// S2SLoginWorldVerifyAck
+// S2SLoginFailedToLoginAck
 
 // required uint32 gateid = 1;
-inline bool S2SLoginWorldVerifyAck::has_gateid() const {
+inline bool S2SLoginFailedToLoginAck::has_gateid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SLoginWorldVerifyAck::set_has_gateid() {
+inline void S2SLoginFailedToLoginAck::set_has_gateid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void S2SLoginWorldVerifyAck::clear_has_gateid() {
+inline void S2SLoginFailedToLoginAck::clear_has_gateid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void S2SLoginWorldVerifyAck::clear_gateid() {
+inline void S2SLoginFailedToLoginAck::clear_gateid() {
   gateid_ = 0u;
   clear_has_gateid();
 }
-inline ::google::protobuf::uint32 S2SLoginWorldVerifyAck::gateid() const {
+inline ::google::protobuf::uint32 S2SLoginFailedToLoginAck::gateid() const {
   return gateid_;
 }
-inline void S2SLoginWorldVerifyAck::set_gateid(::google::protobuf::uint32 value) {
+inline void S2SLoginFailedToLoginAck::set_gateid(::google::protobuf::uint32 value) {
   set_has_gateid();
   gateid_ = value;
 }
 
 // required uint32 result = 2;
-inline bool S2SLoginWorldVerifyAck::has_result() const {
+inline bool S2SLoginFailedToLoginAck::has_result() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SLoginWorldVerifyAck::set_has_result() {
+inline void S2SLoginFailedToLoginAck::set_has_result() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SLoginWorldVerifyAck::clear_has_result() {
+inline void S2SLoginFailedToLoginAck::clear_has_result() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void S2SLoginWorldVerifyAck::clear_result() {
+inline void S2SLoginFailedToLoginAck::clear_result() {
   result_ = 0u;
   clear_has_result();
 }
-inline ::google::protobuf::uint32 S2SLoginWorldVerifyAck::result() const {
+inline ::google::protobuf::uint32 S2SLoginFailedToLoginAck::result() const {
   return result_;
 }
-inline void S2SLoginWorldVerifyAck::set_result(::google::protobuf::uint32 value) {
+inline void S2SLoginFailedToLoginAck::set_result(::google::protobuf::uint32 value) {
   set_has_result();
   result_ = value;
 }
 
 // required uint32 accountid = 3;
-inline bool S2SLoginWorldVerifyAck::has_accountid() const {
+inline bool S2SLoginFailedToLoginAck::has_accountid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SLoginWorldVerifyAck::set_has_accountid() {
+inline void S2SLoginFailedToLoginAck::set_has_accountid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SLoginWorldVerifyAck::clear_has_accountid() {
+inline void S2SLoginFailedToLoginAck::clear_has_accountid() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SLoginWorldVerifyAck::clear_accountid() {
+inline void S2SLoginFailedToLoginAck::clear_accountid() {
   accountid_ = 0u;
   clear_has_accountid();
 }
-inline ::google::protobuf::uint32 S2SLoginWorldVerifyAck::accountid() const {
+inline ::google::protobuf::uint32 S2SLoginFailedToLoginAck::accountid() const {
   return accountid_;
 }
-inline void S2SLoginWorldVerifyAck::set_accountid(::google::protobuf::uint32 value) {
+inline void S2SLoginFailedToLoginAck::set_accountid(::google::protobuf::uint32 value) {
   set_has_accountid();
   accountid_ = value;
 }
 
-// required uint32 playerid = 4;
-inline bool S2SLoginWorldVerifyAck::has_playerid() const {
+// required uint32 sessionid = 4;
+inline bool S2SLoginFailedToLoginAck::has_sessionid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SLoginWorldVerifyAck::set_has_playerid() {
+inline void S2SLoginFailedToLoginAck::set_has_sessionid() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SLoginWorldVerifyAck::clear_has_playerid() {
+inline void S2SLoginFailedToLoginAck::clear_has_sessionid() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void S2SLoginWorldVerifyAck::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
+inline void S2SLoginFailedToLoginAck::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
 }
-inline ::google::protobuf::uint32 S2SLoginWorldVerifyAck::playerid() const {
-  return playerid_;
+inline ::google::protobuf::uint32 S2SLoginFailedToLoginAck::sessionid() const {
+  return sessionid_;
 }
-inline void S2SLoginWorldVerifyAck::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required string token = 5;
-inline bool S2SLoginWorldVerifyAck::has_token() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SLoginWorldVerifyAck::set_has_token() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SLoginWorldVerifyAck::clear_has_token() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SLoginWorldVerifyAck::clear_token() {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    token_->clear();
-  }
-  clear_has_token();
-}
-inline const ::std::string& S2SLoginWorldVerifyAck::token() const {
-  return *token_;
-}
-inline void S2SLoginWorldVerifyAck::set_token(const ::std::string& value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginWorldVerifyAck::set_token(const char* value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginWorldVerifyAck::set_token(const char* value, size_t size) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginWorldVerifyAck::mutable_token() {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  return token_;
-}
-inline ::std::string* S2SLoginWorldVerifyAck::release_token() {
-  clear_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = token_;
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginWorldVerifyAck::set_allocated_token(::std::string* token) {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    delete token_;
-  }
-  if (token) {
-    set_has_token();
-    token_ = token;
-  } else {
-    clear_has_token();
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required string ip = 6;
-inline bool S2SLoginWorldVerifyAck::has_ip() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void S2SLoginWorldVerifyAck::set_has_ip() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void S2SLoginWorldVerifyAck::clear_has_ip() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void S2SLoginWorldVerifyAck::clear_ip() {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    ip_->clear();
-  }
-  clear_has_ip();
-}
-inline const ::std::string& S2SLoginWorldVerifyAck::ip() const {
-  return *ip_;
-}
-inline void S2SLoginWorldVerifyAck::set_ip(const ::std::string& value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginWorldVerifyAck::set_ip(const char* value) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(value);
-}
-inline void S2SLoginWorldVerifyAck::set_ip(const char* value, size_t size) {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  ip_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginWorldVerifyAck::mutable_ip() {
-  set_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    ip_ = new ::std::string;
-  }
-  return ip_;
-}
-inline ::std::string* S2SLoginWorldVerifyAck::release_ip() {
-  clear_has_ip();
-  if (ip_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = ip_;
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginWorldVerifyAck::set_allocated_ip(::std::string* ip) {
-  if (ip_ != &::google::protobuf::internal::kEmptyString) {
-    delete ip_;
-  }
-  if (ip) {
-    set_has_ip();
-    ip_ = ip;
-  } else {
-    clear_has_ip();
-    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required uint32 port = 7;
-inline bool S2SLoginWorldVerifyAck::has_port() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void S2SLoginWorldVerifyAck::set_has_port() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void S2SLoginWorldVerifyAck::clear_has_port() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void S2SLoginWorldVerifyAck::clear_port() {
-  port_ = 0u;
-  clear_has_port();
-}
-inline ::google::protobuf::uint32 S2SLoginWorldVerifyAck::port() const {
-  return port_;
-}
-inline void S2SLoginWorldVerifyAck::set_port(::google::protobuf::uint32 value) {
-  set_has_port();
-  port_ = value;
+inline void S2SLoginFailedToLoginAck::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
 }
 
 // -------------------------------------------------------------------
 
 // S2SLoginTellTokenToGameReq
 
-// required uint32 playerid = 1;
-inline bool S2SLoginTellTokenToGameReq::has_playerid() const {
+// required string token = 1;
+inline bool S2SLoginTellTokenToGameReq::has_token() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SLoginTellTokenToGameReq::set_has_playerid() {
+inline void S2SLoginTellTokenToGameReq::set_has_token() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void S2SLoginTellTokenToGameReq::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SLoginTellTokenToGameReq::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
-}
-inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::playerid() const {
-  return playerid_;
-}
-inline void S2SLoginTellTokenToGameReq::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required string token = 2;
-inline bool S2SLoginTellTokenToGameReq::has_token() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SLoginTellTokenToGameReq::set_has_token() {
-  _has_bits_[0] |= 0x00000002u;
-}
 inline void S2SLoginTellTokenToGameReq::clear_has_token() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_token() {
   if (token_ != &::google::protobuf::internal::kEmptyString) {
@@ -12573,37 +11768,37 @@ inline void S2SLoginTellTokenToGameReq::set_allocated_token(::std::string* token
   }
 }
 
-// required uint32 proxyid = 3;
-inline bool S2SLoginTellTokenToGameReq::has_proxyid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+// required uint32 playerid = 2;
+inline bool S2SLoginTellTokenToGameReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SLoginTellTokenToGameReq::set_has_proxyid() {
-  _has_bits_[0] |= 0x00000004u;
+inline void S2SLoginTellTokenToGameReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SLoginTellTokenToGameReq::clear_has_proxyid() {
-  _has_bits_[0] &= ~0x00000004u;
+inline void S2SLoginTellTokenToGameReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000002u;
 }
-inline void S2SLoginTellTokenToGameReq::clear_proxyid() {
-  proxyid_ = 0u;
-  clear_has_proxyid();
+inline void S2SLoginTellTokenToGameReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::proxyid() const {
-  return proxyid_;
+inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::playerid() const {
+  return playerid_;
 }
-inline void S2SLoginTellTokenToGameReq::set_proxyid(::google::protobuf::uint32 value) {
-  set_has_proxyid();
-  proxyid_ = value;
+inline void S2SLoginTellTokenToGameReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
 }
 
-// required uint32 accountid = 4;
+// required uint32 accountid = 3;
 inline bool S2SLoginTellTokenToGameReq::has_accountid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void S2SLoginTellTokenToGameReq::set_has_accountid() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_has_accountid() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_accountid() {
   accountid_ = 0u;
@@ -12617,37 +11812,15 @@ inline void S2SLoginTellTokenToGameReq::set_accountid(::google::protobuf::uint32
   accountid_ = value;
 }
 
-// required uint32 loginid = 5;
-inline bool S2SLoginTellTokenToGameReq::has_loginid() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SLoginTellTokenToGameReq::set_has_loginid() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SLoginTellTokenToGameReq::clear_has_loginid() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SLoginTellTokenToGameReq::clear_loginid() {
-  loginid_ = 0u;
-  clear_has_loginid();
-}
-inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::loginid() const {
-  return loginid_;
-}
-inline void S2SLoginTellTokenToGameReq::set_loginid(::google::protobuf::uint32 value) {
-  set_has_loginid();
-  loginid_ = value;
-}
-
-// required uint32 gateid = 6;
+// required uint32 gateid = 4;
 inline bool S2SLoginTellTokenToGameReq::has_gateid() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SLoginTellTokenToGameReq::set_has_gateid() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_has_gateid() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_gateid() {
   gateid_ = 0u;
@@ -12659,6 +11832,66 @@ inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::gateid() const {
 inline void S2SLoginTellTokenToGameReq::set_gateid(::google::protobuf::uint32 value) {
   set_has_gateid();
   gateid_ = value;
+}
+
+// required uint32 sessionid = 5;
+inline bool S2SLoginTellTokenToGameReq::has_sessionid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SLoginTellTokenToGameReq::set_has_sessionid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_has_sessionid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginTellTokenToGameReq::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 6;
+inline bool S2SLoginTellTokenToGameReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SLoginTellTokenToGameReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_channeldata() {
+  if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
+  clear_has_channeldata();
+}
+inline const ::KFMsg::PBStrings& S2SLoginTellTokenToGameReq::channeldata() const {
+  return channeldata_ != NULL ? *channeldata_ : *default_instance_->channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginTellTokenToGameReq::mutable_channeldata() {
+  set_has_channeldata();
+  if (channeldata_ == NULL) channeldata_ = new ::KFMsg::PBStrings;
+  return channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginTellTokenToGameReq::release_channeldata() {
+  clear_has_channeldata();
+  ::KFMsg::PBStrings* temp = channeldata_;
+  channeldata_ = NULL;
+  return temp;
+}
+inline void S2SLoginTellTokenToGameReq::set_allocated_channeldata(::KFMsg::PBStrings* channeldata) {
+  delete channeldata_;
+  channeldata_ = channeldata;
+  if (channeldata) {
+    set_has_channeldata();
+  } else {
+    clear_has_channeldata();
+  }
 }
 
 // -------------------------------------------------------------------
@@ -13333,374 +12566,6 @@ inline void S2SLoginTellTokenToWorldAck::set_port(::google::protobuf::uint32 val
 
 // -------------------------------------------------------------------
 
-// S2SLoginQueryPlayerIdReq
-
-// required uint32 loginserverid = 1;
-inline bool S2SLoginQueryPlayerIdReq::has_loginserverid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_loginserverid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_loginserverid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_loginserverid() {
-  loginserverid_ = 0u;
-  clear_has_loginserverid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::loginserverid() const {
-  return loginserverid_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_loginserverid(::google::protobuf::uint32 value) {
-  set_has_loginserverid();
-  loginserverid_ = value;
-}
-
-// required uint32 gateid = 2;
-inline bool S2SLoginQueryPlayerIdReq::has_gateid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_gateid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_gateid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_gateid() {
-  gateid_ = 0u;
-  clear_has_gateid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::gateid() const {
-  return gateid_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_gateid(::google::protobuf::uint32 value) {
-  set_has_gateid();
-  gateid_ = value;
-}
-
-// required uint32 accountid = 3;
-inline bool S2SLoginQueryPlayerIdReq::has_accountid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_accountid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_accountid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_accountid() {
-  accountid_ = 0u;
-  clear_has_accountid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::accountid() const {
-  return accountid_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_accountid(::google::protobuf::uint32 value) {
-  set_has_accountid();
-  accountid_ = value;
-}
-
-// required uint32 channel = 4;
-inline bool S2SLoginQueryPlayerIdReq::has_channel() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_channel() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_channel() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_channel() {
-  channel_ = 0u;
-  clear_has_channel();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::channel() const {
-  return channel_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_channel(::google::protobuf::uint32 value) {
-  set_has_channel();
-  channel_ = value;
-}
-
-// required string token = 5;
-inline bool S2SLoginQueryPlayerIdReq::has_token() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_token() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_token() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_token() {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    token_->clear();
-  }
-  clear_has_token();
-}
-inline const ::std::string& S2SLoginQueryPlayerIdReq::token() const {
-  return *token_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_token(const ::std::string& value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginQueryPlayerIdReq::set_token(const char* value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginQueryPlayerIdReq::set_token(const char* value, size_t size) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginQueryPlayerIdReq::mutable_token() {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  return token_;
-}
-inline ::std::string* S2SLoginQueryPlayerIdReq::release_token() {
-  clear_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = token_;
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginQueryPlayerIdReq::set_allocated_token(::std::string* token) {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    delete token_;
-  }
-  if (token) {
-    set_has_token();
-    token_ = token;
-  } else {
-    clear_has_token();
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required uint32 zoneid = 6;
-inline bool S2SLoginQueryPlayerIdReq::has_zoneid() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_zoneid() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_zoneid() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_zoneid() {
-  zoneid_ = 0u;
-  clear_has_zoneid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::zoneid() const {
-  return zoneid_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_zoneid(::google::protobuf::uint32 value) {
-  set_has_zoneid();
-  zoneid_ = value;
-}
-
-// required uint32 logiczoneid = 7;
-inline bool S2SLoginQueryPlayerIdReq::has_logiczoneid() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void S2SLoginQueryPlayerIdReq::set_has_logiczoneid() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_has_logiczoneid() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void S2SLoginQueryPlayerIdReq::clear_logiczoneid() {
-  logiczoneid_ = 0u;
-  clear_has_logiczoneid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdReq::logiczoneid() const {
-  return logiczoneid_;
-}
-inline void S2SLoginQueryPlayerIdReq::set_logiczoneid(::google::protobuf::uint32 value) {
-  set_has_logiczoneid();
-  logiczoneid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SLoginQueryPlayerIdAck
-
-// required uint32 loginserverid = 1;
-inline bool S2SLoginQueryPlayerIdAck::has_loginserverid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SLoginQueryPlayerIdAck::set_has_loginserverid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_has_loginserverid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_loginserverid() {
-  loginserverid_ = 0u;
-  clear_has_loginserverid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdAck::loginserverid() const {
-  return loginserverid_;
-}
-inline void S2SLoginQueryPlayerIdAck::set_loginserverid(::google::protobuf::uint32 value) {
-  set_has_loginserverid();
-  loginserverid_ = value;
-}
-
-// required uint32 gateid = 2;
-inline bool S2SLoginQueryPlayerIdAck::has_gateid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SLoginQueryPlayerIdAck::set_has_gateid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_has_gateid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_gateid() {
-  gateid_ = 0u;
-  clear_has_gateid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdAck::gateid() const {
-  return gateid_;
-}
-inline void S2SLoginQueryPlayerIdAck::set_gateid(::google::protobuf::uint32 value) {
-  set_has_gateid();
-  gateid_ = value;
-}
-
-// required uint32 accountid = 3;
-inline bool S2SLoginQueryPlayerIdAck::has_accountid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SLoginQueryPlayerIdAck::set_has_accountid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_has_accountid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_accountid() {
-  accountid_ = 0u;
-  clear_has_accountid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdAck::accountid() const {
-  return accountid_;
-}
-inline void S2SLoginQueryPlayerIdAck::set_accountid(::google::protobuf::uint32 value) {
-  set_has_accountid();
-  accountid_ = value;
-}
-
-// required uint32 playerid = 4;
-inline bool S2SLoginQueryPlayerIdAck::has_playerid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SLoginQueryPlayerIdAck::set_has_playerid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
-}
-inline ::google::protobuf::uint32 S2SLoginQueryPlayerIdAck::playerid() const {
-  return playerid_;
-}
-inline void S2SLoginQueryPlayerIdAck::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required string token = 5;
-inline bool S2SLoginQueryPlayerIdAck::has_token() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SLoginQueryPlayerIdAck::set_has_token() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_has_token() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SLoginQueryPlayerIdAck::clear_token() {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    token_->clear();
-  }
-  clear_has_token();
-}
-inline const ::std::string& S2SLoginQueryPlayerIdAck::token() const {
-  return *token_;
-}
-inline void S2SLoginQueryPlayerIdAck::set_token(const ::std::string& value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginQueryPlayerIdAck::set_token(const char* value) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(value);
-}
-inline void S2SLoginQueryPlayerIdAck::set_token(const char* value, size_t size) {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  token_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2SLoginQueryPlayerIdAck::mutable_token() {
-  set_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    token_ = new ::std::string;
-  }
-  return token_;
-}
-inline ::std::string* S2SLoginQueryPlayerIdAck::release_token() {
-  clear_has_token();
-  if (token_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = token_;
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void S2SLoginQueryPlayerIdAck::set_allocated_token(::std::string* token) {
-  if (token_ != &::google::protobuf::internal::kEmptyString) {
-    delete token_;
-  }
-  if (token) {
-    set_has_token();
-    token_ = token;
-  } else {
-    clear_has_token();
-    token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
-
 // S2SLoginGameReq
 
 // required uint32 playerid = 1;
@@ -13865,15 +12730,37 @@ inline void S2SLoginGameAck::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required .KFMsg.PBObject playerdata = 3;
-inline bool S2SLoginGameAck::has_playerdata() const {
+// required uint32 sessionid = 3;
+inline bool S2SLoginGameAck::has_sessionid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SLoginGameAck::set_has_playerdata() {
+inline void S2SLoginGameAck::set_has_sessionid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SLoginGameAck::clear_has_playerdata() {
+inline void S2SLoginGameAck::clear_has_sessionid() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SLoginGameAck::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginGameAck::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginGameAck::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
+// required .KFMsg.PBObject playerdata = 4;
+inline bool S2SLoginGameAck::has_playerdata() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SLoginGameAck::set_has_playerdata() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SLoginGameAck::clear_has_playerdata() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SLoginGameAck::clear_playerdata() {
   if (playerdata_ != NULL) playerdata_->::KFMsg::PBObject::Clear();
@@ -13903,15 +12790,15 @@ inline void S2SLoginGameAck::set_allocated_playerdata(::KFMsg::PBObject* playerd
   }
 }
 
-// required uint64 servertime = 4;
+// required uint64 servertime = 5;
 inline bool S2SLoginGameAck::has_servertime() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void S2SLoginGameAck::set_has_servertime() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void S2SLoginGameAck::clear_has_servertime() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SLoginGameAck::clear_servertime() {
   servertime_ = GOOGLE_ULONGLONG(0);
@@ -14017,6 +12904,66 @@ inline void S2SLoginLoadPlayerReq::set_accountid(::google::protobuf::uint32 valu
   accountid_ = value;
 }
 
+// required uint32 sessionid = 5;
+inline bool S2SLoginLoadPlayerReq::has_sessionid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SLoginLoadPlayerReq::set_has_sessionid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SLoginLoadPlayerReq::clear_has_sessionid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SLoginLoadPlayerReq::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerReq::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginLoadPlayerReq::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 6;
+inline bool S2SLoginLoadPlayerReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SLoginLoadPlayerReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SLoginLoadPlayerReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginLoadPlayerReq::clear_channeldata() {
+  if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
+  clear_has_channeldata();
+}
+inline const ::KFMsg::PBStrings& S2SLoginLoadPlayerReq::channeldata() const {
+  return channeldata_ != NULL ? *channeldata_ : *default_instance_->channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginLoadPlayerReq::mutable_channeldata() {
+  set_has_channeldata();
+  if (channeldata_ == NULL) channeldata_ = new ::KFMsg::PBStrings;
+  return channeldata_;
+}
+inline ::KFMsg::PBStrings* S2SLoginLoadPlayerReq::release_channeldata() {
+  clear_has_channeldata();
+  ::KFMsg::PBStrings* temp = channeldata_;
+  channeldata_ = NULL;
+  return temp;
+}
+inline void S2SLoginLoadPlayerReq::set_allocated_channeldata(::KFMsg::PBStrings* channeldata) {
+  delete channeldata_;
+  channeldata_ = channeldata;
+  if (channeldata) {
+    set_has_channeldata();
+  } else {
+    clear_has_channeldata();
+  }
+}
+
 // -------------------------------------------------------------------
 
 // S2SLoginLoadPlayerAck
@@ -14087,15 +13034,37 @@ inline void S2SLoginLoadPlayerAck::set_gateid(::google::protobuf::uint32 value) 
   gateid_ = value;
 }
 
-// required .KFMsg.PBObject playerdata = 4;
-inline bool S2SLoginLoadPlayerAck::has_playerdata() const {
+// required uint32 sessionid = 4;
+inline bool S2SLoginLoadPlayerAck::has_sessionid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SLoginLoadPlayerAck::set_has_playerdata() {
+inline void S2SLoginLoadPlayerAck::set_has_sessionid() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SLoginLoadPlayerAck::clear_has_playerdata() {
+inline void S2SLoginLoadPlayerAck::clear_has_sessionid() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SLoginLoadPlayerAck::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerAck::sessionid() const {
+  return sessionid_;
+}
+inline void S2SLoginLoadPlayerAck::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+}
+
+// required .KFMsg.PBObject playerdata = 5;
+inline bool S2SLoginLoadPlayerAck::has_playerdata() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SLoginLoadPlayerAck::set_has_playerdata() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SLoginLoadPlayerAck::clear_has_playerdata() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SLoginLoadPlayerAck::clear_playerdata() {
   if (playerdata_ != NULL) playerdata_->::KFMsg::PBObject::Clear();
@@ -14125,41 +13094,41 @@ inline void S2SLoginLoadPlayerAck::set_allocated_playerdata(::KFMsg::PBObject* p
   }
 }
 
-// required .KFMsg.PBStrings extenddata = 5;
-inline bool S2SLoginLoadPlayerAck::has_extenddata() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+// required .KFMsg.PBStrings channeldata = 6;
+inline bool S2SLoginLoadPlayerAck::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void S2SLoginLoadPlayerAck::set_has_extenddata() {
-  _has_bits_[0] |= 0x00000010u;
+inline void S2SLoginLoadPlayerAck::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000020u;
 }
-inline void S2SLoginLoadPlayerAck::clear_has_extenddata() {
-  _has_bits_[0] &= ~0x00000010u;
+inline void S2SLoginLoadPlayerAck::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000020u;
 }
-inline void S2SLoginLoadPlayerAck::clear_extenddata() {
-  if (extenddata_ != NULL) extenddata_->::KFMsg::PBStrings::Clear();
-  clear_has_extenddata();
+inline void S2SLoginLoadPlayerAck::clear_channeldata() {
+  if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
+  clear_has_channeldata();
 }
-inline const ::KFMsg::PBStrings& S2SLoginLoadPlayerAck::extenddata() const {
-  return extenddata_ != NULL ? *extenddata_ : *default_instance_->extenddata_;
+inline const ::KFMsg::PBStrings& S2SLoginLoadPlayerAck::channeldata() const {
+  return channeldata_ != NULL ? *channeldata_ : *default_instance_->channeldata_;
 }
-inline ::KFMsg::PBStrings* S2SLoginLoadPlayerAck::mutable_extenddata() {
-  set_has_extenddata();
-  if (extenddata_ == NULL) extenddata_ = new ::KFMsg::PBStrings;
-  return extenddata_;
+inline ::KFMsg::PBStrings* S2SLoginLoadPlayerAck::mutable_channeldata() {
+  set_has_channeldata();
+  if (channeldata_ == NULL) channeldata_ = new ::KFMsg::PBStrings;
+  return channeldata_;
 }
-inline ::KFMsg::PBStrings* S2SLoginLoadPlayerAck::release_extenddata() {
-  clear_has_extenddata();
-  ::KFMsg::PBStrings* temp = extenddata_;
-  extenddata_ = NULL;
+inline ::KFMsg::PBStrings* S2SLoginLoadPlayerAck::release_channeldata() {
+  clear_has_channeldata();
+  ::KFMsg::PBStrings* temp = channeldata_;
+  channeldata_ = NULL;
   return temp;
 }
-inline void S2SLoginLoadPlayerAck::set_allocated_extenddata(::KFMsg::PBStrings* extenddata) {
-  delete extenddata_;
-  extenddata_ = extenddata;
-  if (extenddata) {
-    set_has_extenddata();
+inline void S2SLoginLoadPlayerAck::set_allocated_channeldata(::KFMsg::PBStrings* channeldata) {
+  delete channeldata_;
+  channeldata_ = channeldata;
+  if (channeldata) {
+    set_has_channeldata();
   } else {
-    clear_has_extenddata();
+    clear_has_channeldata();
   }
 }
 

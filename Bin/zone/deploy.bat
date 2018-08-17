@@ -42,7 +42,6 @@ set path2=setting
 call :copyfile 1 gate.startup
 call :copyfile 1 login.startup
 call :copyfile 1 master.startup
-call :copyfile 1 proxy.startup
 call :copyfile 1 world.startup
 call :copyfile 1 game.startup
 

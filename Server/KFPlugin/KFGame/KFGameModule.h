@@ -63,13 +63,6 @@ namespace KFrame
         __KF_CLIENT_LOST_FUNCTION__( OnClientLostServer );
 
     private:
-        // 连接World服务器
-        void OnClientConnectionWorld( uint32 serverid );
-
-        // 断开World服务器
-        void OnClientLostWorld();
-
-    private:
         // 世界服务器id
         uint32 _world_server_id;
     };
