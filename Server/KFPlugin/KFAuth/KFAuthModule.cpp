@@ -303,7 +303,7 @@ namespace KFrame
         // 判断token是否正确
         auto token = request.GetString( __KF_STRING__( token ) );
         auto loginkey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
-        auto querytoken = redisdriver->QueryMap( "hgetall {} {}", loginkey );
+        auto querytoken = redisdriver->QueryMap( "hgetall {}", loginkey );
         if ( !querytoken->IsOk() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
@@ -372,7 +372,7 @@ namespace KFrame
         uint64 newuserid = uint64result->_value + 10000;
         auto playerid = KFUtility::CalcPlayerid( static_cast< uint32 >( newuserid ), zoneid );
 
-        auto voidresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}", __KF_STRING__( user ), accountid, logiczoneid, playerid );
+        auto voidresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, logiczoneid, playerid );
         if ( !voidresult->IsOk() )
         {
             return _invalid_int;

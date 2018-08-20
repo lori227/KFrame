@@ -340,7 +340,7 @@ namespace KFrame
         }
 
         // 删除token
-        redisdriver->Execute( __FUNC_LINE__, "del {}", loginkey );
+        redisdriver->Execute( "del {}", loginkey );
 
         auto accountdata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
         if ( !accountdata->IsOk() )

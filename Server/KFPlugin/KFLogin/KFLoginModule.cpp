@@ -6,6 +6,7 @@ namespace KFrame
 {
     KFLoginModule::KFLoginModule()
     {
+        _is_login_close = false;
         _world_server_id = _invalid_int;
     }
 
@@ -92,7 +93,7 @@ namespace KFrame
         KFMsg::S2SLoginLoginVerifyAck ack;
         ack.set_result( result );
         ack.set_accountid( accountid );
-        ack.set_accountid( sessionid );
+        ack.set_sessionid( sessionid );
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
         if ( ok )
         {

@@ -605,7 +605,7 @@ namespace KFrame
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hdel {}:{} {}",
+        auto kfresult = redisdriver->Execute( "hdel {}:{} {}",
                                               __KF_STRING__( score ), kfmsg.playerid(), kfmsg.roomid() );
         if ( kfresult->IsOk() )
         {
@@ -672,7 +672,7 @@ namespace KFrame
     void KFBattleShardModule::RemoveCalcBattleRoom( uint64 roomid )
     {
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
-        redisdriver->Execute( __FUNC_LINE__, "del {}:{}", __KF_STRING__( battleroom ), roomid );
+        redisdriver->Execute( "del {}:{}", __KF_STRING__( battleroom ), roomid );
     }
 
     void KFBattleShardModule::SerialzeBattleRoomFinish( uint64 roomid, KFMsg::S2STellBattleRoomFinishAck* ack )

@@ -31,9 +31,6 @@ xcopy /y %path1%\match\*.bat %path2%\match
 if not exist log (mkdir log)
 xcopy /y %path1%\log\*.bat %path2%\log
 
-if not exist platform (mkdir platform)
-xcopy /y %path1%\platform\*.bat %path2%\platform
-
 if not exist public (mkdir public)
 xcopy /y %path1%\public\*.bat %path2%\public
 

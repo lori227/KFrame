@@ -78,7 +78,7 @@ namespace KFrame
     {
         //清除所有玩家的被敬酒次数
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Execute( __FUNC_LINE__, "del {}", __KF_STRING__( toast ) );
+        redisdriver->Execute( "del {}", __KF_STRING__( toast ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +196,7 @@ namespace KFrame
 
         // 保存访客信息
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Execute( __FUNC_LINE__, "zadd {}:{} {} {}",
+        redisdriver->Execute( "zadd {}:{} {} {}",
                               __KF_STRING__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
     }
 
@@ -210,7 +210,7 @@ namespace KFrame
         uint64 validtime = KFTimeEnum::OneDaySecond * KFTimeEnum::OneMonthDay;
         if ( querytime > validtime )
         {
-            redisdriver->Execute( __FUNC_LINE__, "zremrangebyscore {}:{} {} {}",
+            redisdriver->Execute( "zremrangebyscore {}:{} {} {}",
                                   __KF_STRING__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
         }
 
@@ -273,7 +273,7 @@ namespace KFrame
         }
 
         // 保存名字
-        auto kfresult = redisdriver->Execute( __FUNC_LINE__, "set {}:{} {}", __KF_STRING__( name ), newname, playerid );
+        auto kfresult = redisdriver->Execute( "set {}:{} {}", __KF_STRING__( name ), newname, playerid );
         if ( !kfresult->IsOk() )
         {
             return KFMsg::PublicDatabaseError;
@@ -282,7 +282,7 @@ namespace KFrame
         // 删除旧的名字关联
         if ( !oldname.empty() )
         {
-            redisdriver->Execute( __FUNC_LINE__, "del {}:{}", __KF_STRING__( name ), oldname );
+            redisdriver->Execute( "del {}:{}", __KF_STRING__( name ), oldname );
         }
 
         return KFMsg::Success;

@@ -246,7 +246,7 @@ namespace KFrame
                 auto rankcount = _rank_driver->QueryUInt64( "zcard {}", ranksortkey );
                 if ( rankcount->_value > kfsetting->_max_count )
                 {
-                    _rank_driver->Execute( __FUNC_LINE__, "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count );
+                    _rank_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count );
                 }
             }
         }

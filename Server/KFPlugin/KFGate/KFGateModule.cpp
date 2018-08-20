@@ -132,7 +132,7 @@ namespace KFrame
         req.set_token( token );
         req.set_sessionid( handleid );
         req.set_accountid( accountid );
-        ok = _kf_tcp_client->SendNetMessage( accountid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
+        ok = _kf_tcp_client->SendNetMessage( loginserverid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
         if ( ok )
         {
             __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}:{}] login verify!", accountid, ip );

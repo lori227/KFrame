@@ -134,7 +134,7 @@ namespace KFrame
         }
 
         auto redisdriver = __MAIL_REDIS_DRIVER__;
-        auto greatermapresult = redisdriver->QueryGreaterMap( __FUNC_LINE__, "zrange {} 0 -1 WITHSCORES",
+        auto greatermapresult = redisdriver->QueryGreaterMap( "zrange {} 0 -1 WITHSCORES",
                                 maillistkey );
         if ( greatermapresult->_value.empty() )
         {
@@ -364,7 +364,7 @@ namespace KFrame
         {
             if ( mailtype != KFMsg::MailEnum::WholeMail )
             {
-                auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
+                auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
                                                       __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
                 if ( !kfresult->IsOk() )
                 {
@@ -375,7 +375,7 @@ namespace KFrame
             auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
             if ( !maillistkey.empty() )
             {
-                ok = redisdriver->Execute( __FUNC_LINE__, "zadd {} {} {}", maillistkey, flag, mailid );
+                ok = redisdriver->Execute( "zadd {} {} {}", maillistkey, flag, mailid );
             }
         }
         break;
@@ -417,7 +417,7 @@ namespace KFrame
         }
 
         auto& strmaxmailid = listresult->_value.front();
-        auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
+        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
                                               __KF_STRING__( mailsendinfo ), kfmsg.playerid(),
                                               __KF_STRING__( gmemaillastid ), strmaxmailid );
         if ( !kfresult->IsOk() )

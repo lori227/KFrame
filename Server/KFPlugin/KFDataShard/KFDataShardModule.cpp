@@ -101,7 +101,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
+        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
                                               __KF_STRING__( player ), id, __KF_STRING__( data ), strdata );
         if ( !kfresult->IsOk() )
         {
@@ -161,6 +161,7 @@ namespace KFrame
         KFMsg::S2SLoginLoadPlayerAck ack;
         ack.set_playerid( kfmsg.playerid() );
         ack.set_gateid( kfmsg.gateid() );
+        ack.set_sessionid( kfmsg.sessionid() );
         ack.mutable_channeldata()->CopyFrom( kfmsg.channeldata() );
         bool ok = LoadPlayerData( kfmsg.zoneid(), kfmsg.playerid(), ack.mutable_playerdata() );
         if ( ok )

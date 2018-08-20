@@ -67,7 +67,7 @@ namespace KFrame
     void KFRelationShardModule::OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size )
     {
         auto friendredisdriver = __RELATION_REDIS_DRIVER__;
-        friendredisdriver->Execute( __FUNC_LINE__, "del {}", __KF_STRING__( friendlinesslimit ) );
+        friendredisdriver->Execute( "del {}", __KF_STRING__( friendlinesslimit ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
