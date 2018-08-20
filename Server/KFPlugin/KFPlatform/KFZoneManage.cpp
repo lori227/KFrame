@@ -396,7 +396,7 @@ namespace KFrame
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
         redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( zone ), zoneid, __KF_STRING__( url ), url );
         redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
-        redisdriver->Pipeline( __FUNC_LINE__ );
+        redisdriver->Pipeline();
     }
 
     KFZoneData* KFZoneManage::FindZoneData( uint32 id )
@@ -414,7 +414,7 @@ namespace KFrame
         redisdriver->Append( "sadd {} {}", __KF_STRING__( zonelist ), zonedata->_id );
         redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
         redisdriver->Append( "zincrby {} 0 {}", __KF_STRING__( zonebalance ), zonedata->_id );
-        redisdriver->Pipeline( __FUNC_LINE__ );
+        redisdriver->Pipeline();
     }
 
     void KFZoneManage::RemoveZoneDataToDatabase( uint32 zoneid )
@@ -423,7 +423,7 @@ namespace KFrame
         redisdriver->Append( "rem {} {}", __KF_STRING__( zonelist ), zoneid );
         redisdriver->Append( "del {}:{}", __KF_STRING__( zone ), zoneid );
         redisdriver->Append( "incr {}", __KF_STRING__( zonelistversion ) );
-        redisdriver->Pipeline( __FUNC_LINE__ );
+        redisdriver->Pipeline();
     }
 
     __KF_TIMER_FUNCTION__( KFZoneManage::OnTimerLoadZoneDataFormDatabase )
@@ -431,13 +431,13 @@ namespace KFrame
         auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
         // 查询当前数据库的服务器列表版本比对, 如果不同就加载新的服务器列表
-        auto zoneversion = redisdriver->QueryString( __FUNC_LINE__, "get {}", __KF_STRING__( zonelistversion ) );
+        auto zoneversion = redisdriver->QueryString( "get {}", __KF_STRING__( zonelistversion ) );
         if ( !zoneversion->IsOk() || zoneversion->_value == _zone_list_version )
         {
             return;
         }
 
-        auto queryzonelist = redisdriver->QueryList( __FUNC_LINE__, "smembers {}", __KF_STRING__( zonelist ) );
+        auto queryzonelist = redisdriver->QueryList( "smembers {}", __KF_STRING__( zonelist ) );
         if ( !queryzonelist->IsOk() || queryzonelist->_value.empty() )
         {
             return;
@@ -451,7 +451,7 @@ namespace KFrame
         {
             auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
 
-            auto queryzonedata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
+            auto queryzonedata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
             if ( queryzonedata->_value.empty() )
             {
                 continue;

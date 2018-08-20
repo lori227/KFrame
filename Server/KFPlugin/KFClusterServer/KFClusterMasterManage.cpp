@@ -1,4 +1,4 @@
-﻿#include "KFClusterServerManage.h"
+﻿#include "KFClusterMasterManage.h"
 
 namespace KFrame
 {

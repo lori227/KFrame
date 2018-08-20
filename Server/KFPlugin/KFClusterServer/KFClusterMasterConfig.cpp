@@ -1,8 +1,8 @@
-﻿#include "KFClusterServerConfig.h"
+﻿#include "KFClusterMasterConfig.h"
 
 namespace KFrame
 {
-    const KFClusterSetting* KFClusterServerConfig::FindClusterSetting( const std::string& name )
+    const KFClusterSetting* KFClusterMasterConfig::FindClusterSetting( const std::string& name )
     {
         auto iter = _cluster_setting_list.find( name );
         if ( iter == _cluster_setting_list.end() )
@@ -13,7 +13,7 @@ namespace KFrame
         return &iter->second;
     }
 
-    bool KFClusterServerConfig::LoadConfig()
+    bool KFClusterMasterConfig::LoadConfig()
     {
         _cluster_setting_list.clear();
 

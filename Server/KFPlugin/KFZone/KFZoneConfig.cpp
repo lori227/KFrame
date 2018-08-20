@@ -26,13 +26,13 @@ namespace KFrame
             {
                 auto kfzone = __KF_CREATE__( KFZone );
 
-                kfzone->_type = xmlnode.GetUInt32( "Type" );
+                kfzone->_channel = xmlnode.GetUInt32( "Channel" );
                 kfzone->_id = xmlnode.GetUInt32( "Id" );
                 kfzone->_name = xmlnode.GetString( "Name" );
                 kfzone->_logic_id = xmlnode.GetUInt32( "LogicId" );
                 kfzone->_ip = xmlnode.GetString( "Ip", true );
 
-                ZoneKey zonekey( kfzone->_type, kfzone->_id );
+                ZoneKey zonekey( kfzone->_channel, kfzone->_id );
                 _zone_list.Insert( zonekey, kfzone );
 
                 xmlnode.NextNode();

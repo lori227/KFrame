@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting AppName="dir" AppType="shard" Common="./setting/common.startup">
+	<Plugins>
+		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFHttpServer" Startup="1" Sort="110" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plguin Name="KFClusterShard" Startup="1" Sort="120" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
+		<Plguin Name="KFDirShard" Startup="1" Sort="130" Debug="KFDirShardd" Release="KFDirShard" Config="./setting/dir.setting"/>
+		<Plguin Name="KFRedis" Startup="1" Sort="140" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
+	</Plugins>
+</Setting>

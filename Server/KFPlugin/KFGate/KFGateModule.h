@@ -2,7 +2,7 @@
 #define __KF_GATE_MODULE_H__
 
 /************************************************************************
-//    @Moudle			:    网关功能模块
+//    @Module			:    网关功能模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
@@ -47,6 +47,8 @@ namespace KFrame
         // 删除代理玩家
         virtual bool RemoveRole( uint32 roleid );
 
+        // 获得玩家数量
+        virtual uint32 GetRoleCount();
     protected:
         // 连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionLogin );
@@ -82,10 +84,6 @@ namespace KFrame
 
         // 登出游戏
         __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
-
-    protected:
-        // 更新在线负载回调
-        void OnHttpDirUpdateCallBack( std::string& senddata, std::string& recvdata );
 
     private:
         // login服务器列表

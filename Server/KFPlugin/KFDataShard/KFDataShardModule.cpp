@@ -64,7 +64,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfresult = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
+        auto kfresult = redisdriver->QueryString( "hget {}:{} {}",
                         __KF_STRING__( player ), id, __KF_STRING__( data ) );
         if ( !kfresult->IsOk() )
         {
@@ -146,7 +146,7 @@ namespace KFrame
 
         redisdriver->Append( "del {}:{}", __KF_STRING__( player ), id );
         redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, id );
-        redisdriver->Pipeline( __FUNC_LINE__ );
+        redisdriver->Pipeline();
 
         __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] delete ok!", zoneid, id );
     }

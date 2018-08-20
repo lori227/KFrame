@@ -81,7 +81,7 @@ namespace KFrame
         }
 
         auto strsql = __FORMAT__( "select {}", _index );
-        auto kfresult = UpdateExecute( __FUNC_LINE__, strsql );
+        auto kfresult = UpdateExecute( strsql );
         if ( kfresult->IsOk() )
         {
             _index = index;
@@ -110,7 +110,7 @@ namespace KFrame
         return reply;
     }
 
-    redisReply* KFRedisExecute::TryExecute( KFBaseResult* kfresult, const char* function, uint32 line, const std::string& strsql )
+    redisReply* KFRedisExecute::TryExecute( KFBaseResult* kfresult, const std::string& strsql )
     {
         auto redisreply = Execute( strsql );
         if ( redisreply == nullptr )
@@ -129,24 +129,24 @@ namespace KFrame
         else
         {
             kfresult->SetResult( KFEnum::Error );
-            __LOG_ERROR_FUNCTION__( KFLogEnum::Sql, function, line, "redis[{}] execute error=[{}:{}]!",
-                                    strsql, _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( KFLogEnum::Sql, "redis[{}] execute error=[{}:{}]!",
+                           strsql, _redis_context->err, _redis_context->errstr );
         }
 
         return redisreply;
     }
 
-    KFResult< voidptr >* KFRedisExecute::UpdateExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< voidptr >* KFRedisExecute::UpdateExecute( const std::string& strsql )
     {
-        auto redisreply = TryExecute( &_void_result, function, line, strsql );
+        auto redisreply = TryExecute( &_void_result, strsql );
         __FREE_REPLY__( redisreply );
         return &_void_result;
     }
 
-    KFResult< uint32 >* KFRedisExecute::UInt32Execute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< uint32 >* KFRedisExecute::UInt32Execute( const std::string& strsql )
     {
         _uint32_result._value = _invalid_int;
-        auto redisreply = TryExecute( &_uint32_result, function, line, strsql );
+        auto redisreply = TryExecute( &_uint32_result, strsql );
         if ( redisreply != nullptr )
         {
             if ( redisreply->str != nullptr )
@@ -159,10 +159,10 @@ namespace KFrame
         return &_uint32_result;
     }
 
-    KFResult< std::string >* KFRedisExecute::StringExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< std::string >* KFRedisExecute::StringExecute( const std::string& strsql )
     {
         _string_result._value.clear();
-        auto redisreply = TryExecute( &_string_result, function, line, strsql );
+        auto redisreply = TryExecute( &_string_result, strsql );
         if ( redisreply != nullptr )
         {
             _string_result._value = ( redisreply->str == nullptr ? _invalid_str : redisreply->str );
@@ -172,10 +172,10 @@ namespace KFrame
         return &_string_result;
     }
 
-    KFResult< uint64 >* KFRedisExecute::UInt64Execute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< uint64 >* KFRedisExecute::UInt64Execute( const std::string& strsql )
     {
         _uint64_result._value = _invalid_int;
-        auto redisreply = TryExecute( &_uint64_result, function, line, strsql );
+        auto redisreply = TryExecute( &_uint64_result, strsql );
         if ( redisreply != nullptr )
         {
             _uint64_result._value = redisreply->integer;
@@ -185,10 +185,10 @@ namespace KFrame
         return &_uint64_result;
     }
 
-    KFResult< MapString >* KFRedisExecute::MapExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< MapString >* KFRedisExecute::MapExecute( const std::string& strsql )
     {
         _map_result._value.clear();
-        auto redisreply = TryExecute( &_map_result, function, line, strsql );
+        auto redisreply = TryExecute( &_map_result, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; i += 2 )
@@ -209,10 +209,10 @@ namespace KFrame
         return &_map_result;
     }
 
-    KFResult< GreaterMapString >* KFRedisExecute::GreaterMapExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< GreaterMapString >* KFRedisExecute::GreaterMapExecute( const std::string& strsql )
     {
         _greater_map_result._value.clear();
-        auto redisreply = TryExecute( &_greater_map_result, function, line, strsql );
+        auto redisreply = TryExecute( &_greater_map_result, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; i += 2 )
@@ -233,10 +233,10 @@ namespace KFrame
         return &_greater_map_result;
     }
 
-    KFResult< VectorString >* KFRedisExecute::VectorExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< VectorString >* KFRedisExecute::VectorExecute( const std::string& strsql )
     {
         _vector_result._value.clear();
-        auto redisreply = TryExecute( &_vector_result, function, line, strsql );
+        auto redisreply = TryExecute( &_vector_result, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
@@ -250,10 +250,10 @@ namespace KFrame
         return &_vector_result;
     }
 
-    KFResult< ListString >* KFRedisExecute::ListExecute( const char* function, uint32 line, const std::string& strsql )
+    KFResult< ListString >* KFRedisExecute::ListExecute( const std::string& strsql )
     {
         _list_result._value.clear();
-        auto redisreply = TryExecute( &_list_result, function, line, strsql );
+        auto redisreply = TryExecute( &_list_result, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
@@ -279,7 +279,7 @@ namespace KFrame
     //__COROUTINE__( redisGetReply( rediscontext, ( void** )&reply ) )
 
     // todo: 发生错误是否需要回滚
-    KFResult< voidptr >* KFRedisExecute::Pipeline( const char* function, uint32 line )
+    KFResult< voidptr >* KFRedisExecute::Pipeline()
     {
         _void_result.SetResult( KFEnum::Ok );
 
@@ -319,7 +319,7 @@ namespace KFrame
         return &_void_result;
     }
 
-    KFResult< ListString >* KFRedisExecute::ListPipelineExecute( const char* function, uint32 line )
+    KFResult< ListString >* KFRedisExecute::ListPipelineExecute()
     {
         _list_result.SetResult( KFEnum::Ok );
         _list_result._value.clear();
@@ -361,7 +361,7 @@ namespace KFrame
         return &_list_result;
     }
 
-    KFResult< std::list< MapString > >* KFRedisExecute::ListMapPipelineExecute( const char* function, uint32 line )
+    KFResult< std::list< MapString > >* KFRedisExecute::ListMapPipelineExecute()
     {
         _list_map_result.SetResult( KFEnum::Ok );
         _list_map_result._value.clear();

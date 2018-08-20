@@ -1,8 +1,8 @@
-﻿#ifndef __KF_CLUSTER_SERVER_MODULE_H__
-#define __KF_CLUSTER_SERVER_MODULE_H__
+﻿#ifndef __KF_CLUSTER_MASTER_MODULE_H__
+#define __KF_CLUSTER_MASTER_MODULE_H__
 
 /************************************************************************
-//    @Moudle			:    集群服务器模块
+//    @Module			:    集群服务器模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
@@ -10,18 +10,18 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFClusterServerInterface.h"
+#include "KFClusterMasterInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 
 namespace KFrame
 {
-    class KFClusterServerModule : public KFClusterServerInterface
+    class KFClusterMasterModule : public KFClusterMasterInterface
     {
     public:
-        KFClusterServerModule();
-        ~KFClusterServerModule();
+        KFClusterMasterModule();
+        ~KFClusterMasterModule();
 
         // 加载配置
         virtual void InitModule();

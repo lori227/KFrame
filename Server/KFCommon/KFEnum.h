@@ -74,12 +74,15 @@ namespace KFrame
             LogProxy = 112,				// 日志服务器proxy
             LogShard = 113,				// 日志服务器shard
 
+            DirMaster = 121,			// 目录服务器master
+            DirProxy = 122,				// 目录服务器proxy
+            DirShard = 123,				// 目录服务器shard
+
             ZoneMaster = 241,			// 小区服务器master
             ZoneWorld = 242,			// 小区服务器world
             ZoneGate = 243,				// 小区服务器gate
             ZoneLogin = 244,			// 小区服务器login
-            ZoneProxy = 245,			// 小区服务器proxy
-            ZoneGame = 246,				// 小区服务器game
+            ZoneGame = 245,				// 小区服务器game
         };
     }
 

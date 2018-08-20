@@ -99,7 +99,7 @@ namespace KFrame
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
 #endif
         // 设置标题
-        kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id );
+        kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
         _application->SetTitleText( kfglobal->_title_text.c_str() );
 
         // 初始化内存日志定时器

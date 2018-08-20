@@ -2,16 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFClusterServerModule.cpp" />
-    <ClCompile Include="KFClusterServerPlugin.cpp" />
-    <ClCompile Include="KFClusterServerManage.cpp" />
-    <ClCompile Include="KFClusterServerConfig.cpp" />
+    <ClCompile Include="KFClusterMasterConfig.cpp" />
+    <ClCompile Include="KFClusterMasterModule.cpp" />
+    <ClCompile Include="KFClusterMasterManage.cpp" />
+    <ClCompile Include="KFClusterMasterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFClusterServerManage.h" />
-    <ClInclude Include="KFClusterServerModule.h" />
-    <ClInclude Include="KFClusterServerPlugin.h" />
-    <ClInclude Include="KFClusterServerInterface.h" />
-    <ClInclude Include="KFClusterServerConfig.h" />
+    <ClInclude Include="KFClusterMasterConfig.h" />
+    <ClInclude Include="KFClusterMasterInterface.h" />
+    <ClInclude Include="KFClusterMasterModule.h" />
+    <ClInclude Include="KFClusterMasterManage.h" />
+    <ClInclude Include="KFClusterMasterPlugin.h" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 
 namespace KFrame
 {
-    class KFClusterServerPlugin : public KFPlugin
+    class KFClusterMasterPlugin : public KFPlugin
     {
     public:
         // 注册

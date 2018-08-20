@@ -1,5 +1,5 @@
-﻿#ifndef __KF_GATE_MANAGE_H__
-#define __KF_GATE_MANAGE_H__
+﻿#ifndef __KF_CLUSTER_MASTER_MANAGE_H__
+#define __KF_CLUSTER_MASTER_MANAGE_H__
 
 #include "KFrame.h"
 

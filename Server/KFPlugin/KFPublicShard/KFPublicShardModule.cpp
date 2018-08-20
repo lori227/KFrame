@@ -95,14 +95,14 @@ namespace KFrame
         }
 
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Update( __FUNC_LINE__, values, "hmset {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
+        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryBasicDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBasicReq );
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        auto queryid = redisdriver->QueryUInt32( __FUNC_LINE__, "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
+        auto queryid = redisdriver->QueryUInt32( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
 
         KFMsg::S2SQueryBasicAck ack;
         ack.set_playerid( kfmsg.playerid() );
@@ -113,7 +113,7 @@ namespace KFrame
         // 查询所有数据
         if ( queryid->_value != _invalid_int )
         {
-            auto querydata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
+            auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
             for ( auto& iter : querydata->_value )
             {
                 auto pbstring = pbobject->add_pbstring();
@@ -159,7 +159,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SPlayerToastReq );
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
-        auto queryserverid = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {}:{} {}",
+        auto queryserverid = redisdriver->QueryUInt32( "hget {}:{} {}",
                              __KF_STRING__( public ), kfmsg.targetplayerid(), __KF_STRING__( serverid ) );
         if ( !queryserverid->IsOk() )
         {
@@ -172,7 +172,7 @@ namespace KFrame
         ack.set_targetserverid( queryserverid->_value );
 
         // 判断被敬酒次数是否用完
-        auto querytoastcount = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {} {}", __KF_STRING__( toast ), kfmsg.targetplayerid() );
+        auto querytoastcount = redisdriver->QueryUInt32( "hget {} {}", __KF_STRING__( toast ), kfmsg.targetplayerid() );
         if ( querytoastcount->_value < kfmsg.dailygetlimit() )
         {
             ack.set_result( KFMsg::ToastOK );
@@ -180,7 +180,7 @@ namespace KFrame
             // 增加玩家今日被敬酒次数和总的被敬酒次数
             redisdriver->Append( "hincrby {} {} {}", __KF_STRING__( toast ), kfmsg.targetplayerid(), 1 );
             redisdriver->Append( "hincrby {} {} {}", __KF_STRING__( toastcount ), kfmsg.targetplayerid(), 1 );
-            redisdriver->Pipeline( __FUNC_LINE__ );
+            redisdriver->Pipeline();
         }
         else
         {
@@ -220,17 +220,17 @@ namespace KFrame
         ack.set_queryid( kfmsg.queryid() );
 
         // 获取访客数量
-        auto querycount = redisdriver->QueryUInt64( __FUNC_LINE__, "zcard {}:{}", __KF_STRING__( guest ), kfmsg.queryid() );
+        auto querycount = redisdriver->QueryUInt64( "zcard {}:{}", __KF_STRING__( guest ), kfmsg.queryid() );
         ack.set_guestcount( querycount->_value );
 
         // 获取最近四位访客的信息
         if ( querycount->_value != _invalid_int )
         {
-            auto guestlist = redisdriver->QueryList( __FUNC_LINE__, "zrevrange {}:{} 0 3", __KF_STRING__( guest ), kfmsg.queryid() );
+            auto guestlist = redisdriver->QueryList( "zrevrange {}:{} 0 3", __KF_STRING__( guest ), kfmsg.queryid() );
             for ( auto& strid : guestlist->_value )
             {
                 auto guestid = KFUtility::ToValue< uint32 >( strid );
-                auto querydata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}", __KF_STRING__( public ), guestid );
+                auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), guestid );
 
                 auto pbguestdata = ack.add_guestdata();
                 pbguestdata->set_guestid( guestid );
@@ -247,8 +247,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryToastCountReq );
 
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        auto querytoastcount = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {} {}",
-                               __KF_STRING__( toastcount ), kfmsg.targetplayerid() );
+        auto querytoastcount = redisdriver->QueryUInt32( "hget {} {}", __KF_STRING__( toastcount ), kfmsg.targetplayerid() );
 
         KFMsg::S2SQueryToastCountAck ack;
         ack.set_playerid( kfmsg.selfplayerid() );
@@ -261,7 +260,7 @@ namespace KFrame
     {
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
-        auto queryplayerid = redisdriver->QueryUInt32( __FUNC_LINE__, "get {}:{}", __KF_STRING__( name ), newname );
+        auto queryplayerid = redisdriver->QueryUInt32( "get {}:{}", __KF_STRING__( name ), newname );
         if ( !queryplayerid->IsOk() )
         {
             return KFMsg::PublicDatabaseError;

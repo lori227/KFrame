@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    class KFClusterServerInterface : public KFModule
+    class KFClusterMasterInterface : public KFModule
     {
     public:
 

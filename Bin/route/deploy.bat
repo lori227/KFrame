@@ -65,8 +65,8 @@ call :copyfile 1 KFClusterProxyd.dll
 call :copyfile 1 KFClusterProxy.dll
 call :copyfile 1 KFClusterShardd.dll
 call :copyfile 1 KFClusterShard.dll
-call :copyfile 1 KFClusterServerd.dll
-call :copyfile 1 KFClusterServer.dll
+call :copyfile 1 KFClusterMasterd.dll
+call :copyfile 1 KFClusterMaster.dll
 call :copyfile 1 KFRouteShardd.dll
 call :copyfile 1 KFRouteShard.dll
 call :copyfile 1 KFRouteProxyd.dll

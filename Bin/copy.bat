@@ -44,10 +44,13 @@ if not exist route (mkdir route)
 xcopy /y %path1%\route\*.bat %path2%\route
 
 if not exist guild (mkdir guild)
-xcopy /y %path1%\route\*.bat %path2%\guild
+xcopy /y %path1%\guild\*.bat %path2%\guild
 
 if not exist rank (mkdir rank)
-xcopy /y %path1%\route\*.bat %path2%\rank
+xcopy /y %path1%\rank\*.bat %path2%\rank
+
+if not exist dir (mkdir dir)
+xcopy /y %path1%\dir\*.bat %path2%\dir
 
 if not exist zone (mkdir zone)
 xcopy /y %path1%\zone\*.bat %path2%\zone

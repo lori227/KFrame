@@ -74,6 +74,11 @@ namespace KFrame
     {
         return _kf_role_list.Remove( roleid );
     }
+
+    uint32 KFGateModule::GetRoleCount()
+    {
+        return _kf_role_list.Size();
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGateModule::OnClientConnectionLogin )
     {

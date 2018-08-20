@@ -6,5 +6,6 @@
 		<Plguin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
 		<Plguin Name="KFChannel" Startup="1" Sort="130" Debug="KFChanneld" Release="KFChannel" Config="./setting/channel.setting"/>
 		<Plguin Name="KFAuth" Startup="1" Sort="140" Debug="KFAuthd" Release="KFAuth" Config=""/>
+		<Plguin Name="KFOption" Startup="1" Sort="150" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
 	</Plugins>
 </Setting>

@@ -6,6 +6,17 @@ enum FrameProtocol
 	S2S_REGISTER_TO_SERVER_ACK = 10002;					// 回馈注册
 	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
 	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// 通知取消注册
+
+	S2S_REGISTER_ROUTE_ZONE_REQ = 10011;				// 注册区信息
+	S2S_REGISTER_ROUTE_PROXY_REQ = 10012;				// 注册区信息
+	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ = 10013;		// 消息转发到RouteProxy
+	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK = 10014;		// 消息转发到RouteProxy
+	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ = 10015;		// 消息转发到RouteShard
+	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK = 10016;		// 消息转发到RouteShard
+
+	S2S_LOG_REQ = 10021;								// 记录日志到日志服务器
+	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// 更新登录数量到目录服务器
+	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// 删除登录数据
  }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,4 +66,86 @@ message TellUnRegisterFromServer
 	required string appname = 4;
 	required string apptype = 5;
 	required uint32 zoneid = 6;	
+}
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+message PBRouteZone
+{
+	required uint32 zoneid = 1;
+	required uint32 serverid = 2;
+}
+
+// S2S_REGISTER_ROUTE_ZONE_REQ
+message S2SRegisterRouteZoneReq
+{
+	required PBRouteZone zonedata = 1;
+}
+
+// S2S_REGISTER_ROUTE_PROXY_REQ
+message S2SRegisterRouteProxyReq
+{
+	repeated PBRouteZone zonedata = 1;
+}
+
+message PBTransmitRouteMessage
+{
+	required uint32 serverid = 2;
+	required uint32 playerid = 3;
+	required uint32 msgid = 4;
+	required string msgdata = 5;
+}
+
+// S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ
+message S2STransmitRouteZoneMessageReq
+{
+	required PBTransmitRouteMessage transmitdata = 1;
+}
+
+// S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK
+message S2STransmitRouteZoneMessageAck
+{
+	required PBTransmitRouteMessage transmitdata = 1;
+}
+
+// S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ
+message S2STransmitRouteProxyMessageReq
+{
+	required PBTransmitRouteMessage transmitdata = 1;
+}
+
+// S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK
+message S2STransmitRouteProxyMessageAck
+{
+	required PBTransmitRouteMessage transmitdata = 1;
+}
+//////////////////////////////////////////////////////////////////////////////////
+// S2S_LOG_REQ
+message S2SLogReq
+{
+	required int32 log_level		= 1;
+	required int32 log_category		= 2;
+	required int32 zone_id			= 3;
+	required string app_name		= 4;
+	required string app_type		= 5;
+	required int32 app_id			= 6;
+	required string log_info		= 7;
+}
+
+
+// S2S_UPDATE_ONLINE_TO_DIR_REQ
+message S2SUpdateOnlineToDirReq
+{
+	required uint32 zoneid = 1;			// 小区id
+	required string zonename = 2;		// 小区名字
+	required uint32 zonechannel = 3;	// 小区类型
+	required uint32 appid = 4;			// 服务器id
+	required string ip = 5;				// ip
+	required uint32 port = 6;			// port
+	required uint32 onlinecount = 7;	// 当前在线人数
+}
+
+// S2S_REMOVE_ONLINE_TO_DIR_REQ
+message S2SRemoveOnlineToDirReq
+{
+	required uint32 appid = 1;			// 服务器id
 }

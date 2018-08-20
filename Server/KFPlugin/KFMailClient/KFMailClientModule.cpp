@@ -148,7 +148,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfmailrecord = kfobject->FindData( __KF_STRING__( mail ) );
 
-        auto minmailid = std::numeric_limits<uint64>::max();;
+        auto minmailid = std::numeric_limits<uint64>::max();
 
         auto kfmail = kfmailrecord->FirstData();
         while ( kfmail != nullptr )

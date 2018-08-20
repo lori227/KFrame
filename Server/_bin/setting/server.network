@@ -12,8 +12,8 @@
 		<!-- 认证服务器 -->
 		<Server AppName="auth" AppType="auth" Type="1" Port="7776" />
 		
-		<!-- 账号服务器 -->
-		<Server AppName="platform" AppType="platform" Type="1" Port="8000"/>
+		<!-- 目录服务器 -->
+		<Server AppName="dir" AppType="shard" Type="1" Port="8000"/>
 
 		<!-- world服务器 -->
 		<Server AppName="zone" AppType="world" Type="1" Port="9000"/>	

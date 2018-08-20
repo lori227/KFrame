@@ -1,5 +1,5 @@
-﻿#ifndef __KF_CLUSTER_SERVER_CONFIG_H__
-#define __KF_CLUSTER_SERVER_CONFIG_H__
+﻿#ifndef __KF_CLUSTER_MASTER_CONFIG_H__
+#define __KF_CLUSTER_MASTER_CONFIG_H__
 
 #include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"
@@ -30,7 +30,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFClusterServerConfig : public KFConfig, public KFSingleton< KFClusterServerConfig >
+    class KFClusterMasterConfig : public KFConfig, public KFSingleton< KFClusterMasterConfig >
     {
     public:
 
@@ -44,7 +44,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_cluster_config = KFClusterServerConfig::Instance();
+    static auto _kf_cluster_config = KFClusterMasterConfig::Instance();
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

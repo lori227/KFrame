@@ -1,20 +1,20 @@
-﻿#include "KFClusterServerPlugin.h"
-#include "KFClusterServerModule.h"
+﻿#include "KFClusterMasterPlugin.h"
+#include "KFClusterMasterModule.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFClusterServerPlugin::Install()
+    void KFClusterMasterPlugin::Install()
     {
-        __REGISTER_MODULE__( KFClusterServer );
+        __REGISTER_MODULE__( KFClusterMaster );
     }
 
-    void KFClusterServerPlugin::UnInstall()
+    void KFClusterMasterPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFClusterServer );
+        __UNREGISTER_MODULE__( KFClusterMaster );
     }
 
-    void KFClusterServerPlugin::LoadModule()
+    void KFClusterMasterPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );

@@ -641,7 +641,7 @@ namespace KFrame
 
             // 记录房间单个玩家的数据,用于组队玩家数据的结算(亲密度,最近好友)
             redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( battleroom ), kfmsg.roomid(), pbscore->playerid(), strdata );
-            redisdriver->Pipeline( __FUNC_LINE__ );
+            redisdriver->Pipeline();
 
             __LOG_DEBUG__( KFLogEnum::Logic, "battlr[{}] balance ok!", kfmsg.roomid() );
         }
@@ -657,7 +657,7 @@ namespace KFrame
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
                                                __KF_STRING__( score ), kfmsg.playerid() );
         for ( auto& iter : kfresult->_value )
         {
@@ -679,7 +679,7 @@ namespace KFrame
     {
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
                                                __KF_STRING__( battleroom ), roomid );
         for ( auto& iter : kfresult->_value )
         {

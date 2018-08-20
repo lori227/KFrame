@@ -3,6 +3,6 @@
 	<Plugins>
 		<Plguin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
 		<Plguin Name="KFTcpClient" Startup="1" Sort="120" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plguin Name="KFClusterServer" Startup="1" Sort="130" Debug="KFClusterServerd" Release="KFClusterServer" Config="./setting/cluster.setting"/>
+		<Plguin Name="KFClusterMaster" Startup="1" Sort="130" Debug="KFClusterMasterd" Release="KFClusterMaster" Config="./setting/cluster.setting"/>
 	</Plugins>
 </Setting>

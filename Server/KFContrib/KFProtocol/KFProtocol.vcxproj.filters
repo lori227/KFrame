@@ -10,9 +10,7 @@
     <ClCompile Include="KFProtocol.cpp" />
     <ClCompile Include="KFClusterMessage.pb.cc" />
     <ClCompile Include="KFFrameMessage.pb.cc" />
-    <ClCompile Include="KFRouteMessage.pb.cc" />
     <ClCompile Include="KFDeployMessage.pb.cc" />
-    <ClCompile Include="KFLogMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClientMessage.pb.h" />
@@ -24,8 +22,6 @@
     <ClInclude Include="KFDataMessage.pb.h" />
     <ClInclude Include="KFClusterMessage.pb.h" />
     <ClInclude Include="KFFrameMessage.pb.h" />
-    <ClInclude Include="KFRouteMessage.pb.h" />
     <ClInclude Include="KFDeployMessage.pb.h" />
-    <ClInclude Include="KFLogMessage.pb.h" />
   </ItemGroup>
 </Project>

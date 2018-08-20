@@ -39,8 +39,8 @@ namespace KFrame
         bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
 
         // 指定发送消息
-        void SendMessageToName( const std::string& servertype, uint32 msgid, const char* data, uint32 length );
-        void SendMessageToType( const std::string& servername, uint32 msgid, const char* data, uint32 length );
+        void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );
+        void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length );
         void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length );
 
     public:

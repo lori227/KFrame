@@ -74,7 +74,7 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryList( __FUNC_LINE__, "zrangebyscore {} -inf +inf",
+        auto kfresult = redisdriver->QueryList( "zrangebyscore {} -inf +inf",
                                                 __KF_STRING__( wholemail ) );
         if ( kfresult->_value.empty() )
         {
@@ -84,7 +84,7 @@ namespace KFrame
         ListString overduelist;
         for ( auto& strmailid : kfresult->_value )
         {
-            auto stringresult = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
+            auto stringresult = redisdriver->QueryString( "hget {}:{} {}",
                                 __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
             if ( stringresult->IsOk() && stringresult->_value == _invalid_str )
             {
@@ -94,7 +94,7 @@ namespace KFrame
 
         if ( !overduelist.empty() )
         {
-            redisdriver->Update( __FUNC_LINE__, overduelist, "zrem {}", __KF_STRING__( wholemail ) );
+            redisdriver->Update( overduelist, "zrem {}", __KF_STRING__( wholemail ) );
         }
     }
 
@@ -161,7 +161,7 @@ namespace KFrame
         {
             auto& strmailid = mailiter.first;
 
-            auto kfresult = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
                                                    __KF_STRING__( mail ), strmailid );
             if ( !kfresult->IsOk() )
             {
@@ -206,7 +206,7 @@ namespace KFrame
         // 删除过期邮件
         if ( !overduelist.empty() )
         {
-            redisdriver->Update( __FUNC_LINE__, overduelist, "zrem {}", maillistkey );
+            redisdriver->Update( overduelist, "zrem {}", maillistkey );
         }
     }
 
@@ -242,7 +242,7 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 创建一个邮件id
-        auto uint64result = redisdriver->QueryUInt64( __FUNC_LINE__, "incr {}",
+        auto uint64result = redisdriver->QueryUInt64( "incr {}",
                             __KF_STRING__( mailidcreater ) );
         if ( uint64result->_value == _invalid_int )
         {
@@ -262,7 +262,7 @@ namespace KFrame
         }
 
         redisdriver->Append( "zadd {} {} {}", maillistkey, KFMsg::FlagEnum::Init, uint64result->_value );
-        auto kfresult = redisdriver->Pipeline( __FUNC_LINE__ );
+        auto kfresult = redisdriver->Pipeline();
         return kfresult->IsOk();
     }
 
@@ -289,7 +289,7 @@ namespace KFrame
             redisdriver->Append( "del {}:{}", __KF_STRING__( mail ), mailid );
         }
 
-        auto kfresult = redisdriver->Pipeline( __FUNC_LINE__ );
+        auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( KFLogEnum::Logic, "player[{}] del mail[{}:{}] failed!", playerid, mailtype, mailid );
@@ -303,7 +303,7 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 获取玩家已经加载的最近一封GM邮件id
-        auto stringresult = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
+        auto stringresult = redisdriver->QueryString( "hget {}:{} {}",
                             __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
         if ( !stringresult->IsOk() )
         {
@@ -317,7 +317,7 @@ namespace KFrame
         }
 
         // 从全局GM邮件列表中取出玩家未获取的
-        auto listresult = redisdriver->QueryList( __FUNC_LINE__, "zrangebyscore {} ({} +inf",
+        auto listresult = redisdriver->QueryList( "zrangebyscore {} ({} +inf",
                           __KF_STRING__( wholemail ), maxmailid );
         if ( listresult->_value.empty() )
         {
@@ -332,7 +332,7 @@ namespace KFrame
 
         auto& newmaxmailid = listresult->_value.back();
         redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ), newmaxmailid );
-        auto kfresult = redisdriver->Pipeline( __FUNC_LINE__ );
+        auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( KFLogEnum::Logic, "reload gm mail[{}] failed!", playerid );
@@ -343,7 +343,7 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto uint32result = redisdriver->QueryUInt32( __FUNC_LINE__, "hget {}:{} {}",
+        auto uint32result = redisdriver->QueryUInt32( "hget {}:{} {}",
                             __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
         if ( !uint32result->IsOk() || uint32result->_value == flag )
         {
@@ -410,7 +410,7 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 最大邮件id
-        auto listresult = redisdriver->QueryList( __FUNC_LINE__, "zrevrange {} 0 0", __KF_STRING__( wholemail ) );
+        auto listresult = redisdriver->QueryList( "zrevrange {} 0 0", __KF_STRING__( wholemail ) );
         if ( listresult->_value.empty() )
         {
             return;

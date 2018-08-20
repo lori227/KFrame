@@ -69,14 +69,14 @@ namespace KFrame
             // 保存refresh_token
             redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( refreshtoken ), machinecode, __KF_STRING__( refreshtoken ), accesstoken );
             redisdriver->Append( "expire {}:{} {}", __KF_STRING__( refreshtoken ), machinecode, 2590000 );
-            redisdriver->Pipeline( __FUNC_LINE__ );
+            redisdriver->Pipeline();
         }
         else
         {
             // 机器码获得账号的access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
-            auto weixindata = redisdriver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+            auto weixindata = redisdriver->QueryMap( "hgetall {}:{}",
                               __KF_STRING__( accesstoken ), machinecode );
             if ( !weixindata->IsOk() )
             {
@@ -91,8 +91,7 @@ namespace KFrame
             else
             {
                 // 获得refresh_token
-                auto refreshtoken = redisdriver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
-                                    __KF_STRING__( refreshtoken ), machinecode, __KF_STRING__( refreshtoken ) );
+                auto refreshtoken = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( refreshtoken ), machinecode, __KF_STRING__( refreshtoken ) );
                 if ( !refreshtoken->IsOk() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
@@ -127,7 +126,7 @@ namespace KFrame
                 // 保存access_token
                 redisdriver->Append( "hmset {}:{} {} {}", __KF_STRING__( accesstoken ), machinecode, __KF_STRING__( accesstoken ), accesstoken );
                 redisdriver->Append( "expire {}:{} {}", __KF_STRING__( accesstoken ), machinecode, expirestime - 200 );
-                redisdriver->Pipeline( __FUNC_LINE__ );
+                redisdriver->Pipeline();
             }
         }
 

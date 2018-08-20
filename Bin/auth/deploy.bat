@@ -52,6 +52,7 @@ call :copyfile 1 auth.startup
 rem config
 set path1=..\..\Resource\config
 set path2=config
+call :copyfile 1 option.config
 
 rem ===========================================================================
 rem ===========================================================================
@@ -68,6 +69,9 @@ call :copyfile 1 KFHttpClient.dll
 
 call :copyfile 1 KFConfigd.dll
 call :copyfile 1 KFConfig.dll
+
+call :copyfile 1 KFOptiond.dll
+call :copyfile 1 KFOption.dll
 
 call :copyfile 1 KFIpAddress.dll
 call :copyfile 1 KFIpAddressd.dll

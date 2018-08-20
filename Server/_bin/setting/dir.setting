@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--DirListType 1 所有服务器列表 2 直接随机一个服务器登录-->
+	<DirListTypes Default="1">
+		<DirListType MinChannel="1" MaxChannel="99" Type="2"/>
+		<DirListType MinChannel="100" MaxChannel="255" Type="1"/>
+	</DirListTypes>
+</Config>
+

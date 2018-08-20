@@ -26,10 +26,8 @@
     <ClCompile Include="KFDataMessage.pb.cc" />
     <ClCompile Include="KFDeployMessage.pb.cc" />
     <ClCompile Include="KFFrameMessage.pb.cc" />
-    <ClCompile Include="KFLogMessage.pb.cc" />
     <ClCompile Include="KFMatchMessage.pb.cc" />
     <ClCompile Include="KFProtocol.cpp" />
-    <ClCompile Include="KFRouteMessage.pb.cc" />
     <ClCompile Include="KFServerMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -40,10 +38,8 @@
     <ClInclude Include="KFDataMessage.pb.h" />
     <ClInclude Include="KFDeployMessage.pb.h" />
     <ClInclude Include="KFFrameMessage.pb.h" />
-    <ClInclude Include="KFLogMessage.pb.h" />
     <ClInclude Include="KFMatchMessage.pb.h" />
     <ClInclude Include="KFProtocol.h" />
-    <ClInclude Include="KFRouteMessage.pb.h" />
     <ClInclude Include="KFServerMessage.pb.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

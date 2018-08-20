@@ -1,37 +1,37 @@
-﻿#include "KFClusterServerModule.h"
-#include "KFClusterServerManage.h"
-#include "KFClusterServerConfig.h"
+﻿#include "KFClusterMasterModule.h"
+#include "KFClusterMasterManage.h"
+#include "KFClusterMasterConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
-    KFClusterServerModule::KFClusterServerModule()
+    KFClusterMasterModule::KFClusterMasterModule()
     {
         _cluster_serial = 0;
     }
 
-    KFClusterServerModule::~KFClusterServerModule()
+    KFClusterMasterModule::~KFClusterMasterModule()
     {
     }
 
-    void KFClusterServerModule::InitModule()
+    void KFClusterMasterModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_cluster_config, false );
         ///////////////////////////////////////////////////////////////////////////////
     }
 
-    void KFClusterServerModule::BeforeRun()
+    void KFClusterMasterModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterServerModule::OnServerLostClusterProxy );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterMasterModule::OnServerLostClusterProxy );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ, &KFClusterServerModule::HandleClusterRegisterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_REQ, &KFClusterServerModule::HandleClusterUpdateReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_REQ, &KFClusterServerModule::HandleClusterAuthReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_REQ, &KFClusterServerModule::HandleAllocShardReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ, &KFClusterMasterModule::HandleClusterRegisterReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_REQ, &KFClusterMasterModule::HandleClusterUpdateReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_REQ, &KFClusterMasterModule::HandleClusterAuthReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_REQ, &KFClusterMasterModule::HandleAllocShardReq );
     }
 
-    void KFClusterServerModule::BeforeShut()
+    void KFClusterMasterModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
@@ -44,7 +44,7 @@ namespace KFrame
 
     }
 
-    void KFClusterServerModule::OnceRun()
+    void KFClusterMasterModule::OnceRun()
     {
         auto kfsetting = _kf_cluster_config->FindClusterSetting( KFGlobal::Instance()->_app_name );
         if ( kfsetting == nullptr )
@@ -56,7 +56,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_SERVER_LOST_FUNCTION__( KFClusterServerModule::OnServerLostClusterProxy )
+    __KF_SERVER_LOST_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
     {
         KFProxyData* kfgate = _kf_proxy_manage->FindProxyServer( handleid );
         if ( kfgate == nullptr )
@@ -70,7 +70,7 @@ namespace KFrame
         _kf_proxy_manage->RemoveProxyServer( handleid );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterServerModule::HandleClusterRegisterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterRegisterReq );
 
@@ -81,14 +81,14 @@ namespace KFrame
                        kfmsg.name(), kfmsg.type(), kfmsg.id(), kfmsg.ip(), kfmsg.port() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterServerModule::HandleClusterUpdateReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterUpdateReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterUpdateReq );
 
         _kf_proxy_manage->UpdateProxyServer( kfmsg.gateid(), kfmsg.count() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterServerModule::HandleClusterAuthReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
         uint32 handleid = __KF_HEAD_ID__( kfguid );
@@ -141,7 +141,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    std::string KFClusterServerModule::MakeAuthToken( const KFGuid& guid )
+    std::string KFClusterMasterModule::MakeAuthToken( const KFGuid& guid )
     {
         std::string headid = KFUtility::ToString( guid._head_id );
         std::string dataid = KFUtility::ToString( guid._data_id );
@@ -151,7 +151,7 @@ namespace KFrame
         return KFCrypto::Md5Encode( temp );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterServerModule::HandleAllocShardReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleAllocShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SAllocShardReq );
 
@@ -171,7 +171,7 @@ namespace KFrame
         SendAllocShardToProxy( _invalid_int );
     }
 
-    std::set< uint64 > KFClusterServerModule::GetShardObject( uint32 shardid )
+    std::set< uint64 > KFClusterMasterModule::GetShardObject( uint32 shardid )
     {
         std::set< uint64 > outvalue;
         for ( auto& iter : _object_to_shard )
@@ -185,7 +185,7 @@ namespace KFrame
         return outvalue;
     }
 
-    uint32 KFClusterServerModule::GetMaxObjectShard()
+    uint32 KFClusterMasterModule::GetMaxObjectShard()
     {
         auto maxcount = _invalid_int;
         auto shardid = _invalid_int;
@@ -203,7 +203,7 @@ namespace KFrame
         return shardid;
     }
 
-    void KFClusterServerModule::BalanceAllocShard( uint32 shardid )
+    void KFClusterMasterModule::BalanceAllocShard( uint32 shardid )
     {
         // 已经分配
         {
@@ -241,7 +241,7 @@ namespace KFrame
         _object_to_shard[ objectid ] = shardid;
     }
 
-    void KFClusterServerModule::SendAllocShardToProxy( uint32 proxyid )
+    void KFClusterMasterModule::SendAllocShardToProxy( uint32 proxyid )
     {
         KFMsg::S2SAllocShardAck ack;
 

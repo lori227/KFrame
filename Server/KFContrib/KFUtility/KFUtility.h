@@ -70,7 +70,7 @@ namespace KFrame
         static uint64 Make64Guid( uint32 dataid );
 
         // 格式化标题
-        static std::string FormatTitleText( const std::string& appname, const std::string& apptype, uint32 appid );
+        static std::string FormatTitleText( const std::string& appname, const std::string& apptype, const std::string& appid );
 
     };
 }

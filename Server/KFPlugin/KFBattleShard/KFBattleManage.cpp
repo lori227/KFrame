@@ -51,7 +51,7 @@ namespace KFrame
 
         _redis_driver->Append( values, "hmset {}:{}", __KF_STRING__( battle ), serverid );
         _redis_driver->Append( "sadd {}:{} {}", __KF_STRING__( ip ), ip, serverid );
-        _redis_driver->Pipeline( __FUNC_LINE__ );
+        _redis_driver->Pipeline();
 
         // 设置数量
         UpdateBattleCount( ip );
@@ -59,7 +59,7 @@ namespace KFrame
 
     void KFBattleManage::UnRegisterBattleServer( uint32 serverid )
     {
-        auto kfresult = _redis_driver->QueryString( __FUNC_LINE__, "hget {}:{} {}",
+        auto kfresult = _redis_driver->QueryString( "hget {}:{} {}",
                         __KF_STRING__( battle ), serverid, __KF_STRING__( ip ) );
         if ( kfresult->_value.empty() )
         {
@@ -68,7 +68,7 @@ namespace KFrame
 
         _redis_driver->Append( "del {}:{}", __KF_STRING__( battle ), serverid );
         _redis_driver->Append( "srem {}:{} {}", __KF_STRING__( ip ), kfresult->_value, serverid );
-        _redis_driver->Pipeline( __FUNC_LINE__ );
+        _redis_driver->Pipeline();
 
         __LOG_DEBUG__( KFLogEnum::Logic, "unregister battle server[{}|{}]!", serverid, kfresult->_value );
 
@@ -79,7 +79,7 @@ namespace KFrame
     void KFBattleManage::AllocBattleServer( KFBattleServer* battleserver )
     {
         // 找到负载最小的一个
-        auto listresult = _redis_driver->QueryList( __FUNC_LINE__, "zrevrange {} 0 0",
+        auto listresult = _redis_driver->QueryList( "zrevrange {} 0 0",
                           __KF_STRING__( battlelist ) );
         if ( listresult->_value.empty() )
         {
@@ -89,7 +89,7 @@ namespace KFrame
         auto& queryip = listresult->_value.front();
 
         // 弹出一个可用的服务器
-        auto stringresult = _redis_driver->QueryString( __FUNC_LINE__, "spop {}:{}",
+        auto stringresult = _redis_driver->QueryString( "spop {}:{}",
                             __KF_STRING__( ip ), queryip );
         if ( stringresult->_value.empty() )
         {
@@ -101,7 +101,7 @@ namespace KFrame
         _redis_driver->Execute( __FUNC_LINE__, "zincrby {} -1 {}", __KF_STRING__( battlelist ), queryip );
 
         // 查询所有信息
-        auto mapresult = _redis_driver->QueryMap( __FUNC_LINE__, "hgetall {}:{}",
+        auto mapresult = _redis_driver->QueryMap( "hgetall {}:{}",
                          __KF_STRING__( battle ), stringresult->_value );
 
         if ( mapresult->_value.empty() )
@@ -159,7 +159,7 @@ namespace KFrame
     void KFBattleManage::UpdateBattleCount( const std::string& ip )
     {
         uint64 battlecount = 0;
-        auto kfresult = _redis_driver->QueryUInt64( __FUNC_LINE__, "scard {}:{}", __KF_STRING__( ip ), ip );
+        auto kfresult = _redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( ip ), ip );
         if ( !kfresult->IsOk() )
         {
             return;

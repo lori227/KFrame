@@ -33,27 +33,27 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         // 执行更新
-        virtual KFResult< voidptr >* UpdateExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< voidptr >* UpdateExecute( const std::string& strsql );
 
         // 查询数据库
-        virtual KFResult< uint32 >* UInt32Execute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< uint64 >* UInt64Execute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< std::string >* StringExecute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< MapString >* MapExecute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< GreaterMapString >* GreaterMapExecute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< ListString >* ListExecute( const char* function, uint32 line, const std::string& strsql );
-        virtual KFResult< VectorString >* VectorExecute( const char* function, uint32 line, const std::string& strsql );
+        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql );
+        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
+        virtual KFResult< std::string >* StringExecute( const std::string& strsql );
+        virtual KFResult< MapString >* MapExecute( const std::string& strsql );
+        virtual KFResult< GreaterMapString >* GreaterMapExecute( const std::string& strsql );
+        virtual KFResult< ListString >* ListExecute( const std::string& strsql );
+        virtual KFResult< VectorString >* VectorExecute( const std::string& strsql );
 
         // 添加执行命令
         virtual void AppendCommand( const std::string& strsql );
-        virtual KFResult< voidptr >* Pipeline( const char* function, uint32 line );
-        virtual KFResult< ListString >* ListPipelineExecute( const char* function, uint32 line );
-        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute( const char* function, uint32 line );
+        virtual KFResult< voidptr >* Pipeline();
+        virtual KFResult< ListString >* ListPipelineExecute();
+        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute();
 
     private:
         // 执行语句
         redisReply* Execute( const std::string& strsql );
-        redisReply* TryExecute( KFBaseResult* kfresult, const char* function, uint32 line, const std::string& strsql );
+        redisReply* TryExecute( KFBaseResult* kfresult, const std::string& strsql );
 
     private:
         // ip

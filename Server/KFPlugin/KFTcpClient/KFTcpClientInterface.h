@@ -25,11 +25,11 @@ namespace KFrame
         virtual bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
-        virtual void SendMessageToName( const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToName( const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length ) = 0;
 
-        virtual void SendMessageToType( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToType( const std::string& servername, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;
 
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;

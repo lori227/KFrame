@@ -104,6 +104,15 @@
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
+		<!-- dir服务器 -->
+		<Server AppName="dir" AppType="master" AppId="0.0.121.1" Ip="127.0.0.1" Type="0" Port="10012">
+			<!--内网测试-->
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
+
+			<!--外网测试-->
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
+		</Server>
+
 		<!-- zone master 根据zone.setting动态更新-->
 		<Server AppName="zone" AppType="master" AppId="0.0.241.1" Ip="127.0.0.1" Type="0" Port="11000">
 		</Server>

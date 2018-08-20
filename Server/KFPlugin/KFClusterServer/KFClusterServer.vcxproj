@@ -12,23 +12,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFClusterServerConfig.cpp" />
-    <ClCompile Include="KFClusterServerManage.cpp" />
-    <ClCompile Include="KFClusterServerModule.cpp" />
-    <ClCompile Include="KFClusterServerPlugin.cpp" />
+    <ClCompile Include="KFClusterMasterConfig.cpp" />
+    <ClCompile Include="KFClusterMasterManage.cpp" />
+    <ClCompile Include="KFClusterMasterModule.cpp" />
+    <ClCompile Include="KFClusterMasterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFClusterServerConfig.h" />
-    <ClInclude Include="KFClusterServerInterface.h" />
-    <ClInclude Include="KFClusterServerManage.h" />
-    <ClInclude Include="KFClusterServerModule.h" />
-    <ClInclude Include="KFClusterServerPlugin.h" />
+    <ClInclude Include="KFClusterMasterConfig.h" />
+    <ClInclude Include="KFClusterMasterInterface.h" />
+    <ClInclude Include="KFClusterMasterManage.h" />
+    <ClInclude Include="KFClusterMasterModule.h" />
+    <ClInclude Include="KFClusterMasterPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9BFD08E3-34E0-40C4-BAE6-2774BFDD7F7D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFClusterServer</ProjectName>
+    <ProjectName>KFClusterMaster</ProjectName>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

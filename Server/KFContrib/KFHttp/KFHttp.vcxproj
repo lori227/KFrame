@@ -159,7 +159,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -215,7 +215,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>

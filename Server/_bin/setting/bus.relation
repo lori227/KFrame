@@ -58,8 +58,12 @@
 		<Connection AppName="rank" AppType="proxy" AppId="*" ConnectName="rank" ConnectType="shard" ConnectId="*"/>
 		<Connection AppName="rank" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 
+		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="dir" AppType="proxy" AppId="*" ConnectName="dir" ConnectType="shard" ConnectId="*"/>
+
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="login" ConnectId="*"/>
+		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>	
 		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="*" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>

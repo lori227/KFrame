@@ -13,6 +13,7 @@
 		<Cluster Name="rank" Type="master" Key="RankCluster@KFrame,./"/>
 		<Cluster Name="guild" Type="master" Key="GuildCluster@KFrame,./"/>
 		<Cluster Name="log" Type="master" Key="LogCluster@KFrame,./"/>
+		<Cluster Name="dir" Type="master" Key="DirCluster@KFrame,./"/>
 	</Clusters>
 </Config>
 

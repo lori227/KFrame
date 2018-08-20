@@ -69,7 +69,7 @@ namespace KFrame
 
     void KFRankShardModule::LoadTotalRankData()
     {
-        auto ranklist = _rank_driver->QueryList( __FUNC_LINE__, "smembers {}:{}",
+        auto ranklist = _rank_driver->QueryList( "smembers {}:{}",
                         __KF_STRING__( ranklist ), KFGlobal::Instance()->_app_id );
         if ( !ranklist->IsOk() )
         {
@@ -78,7 +78,7 @@ namespace KFrame
 
         for ( auto& strrankkey : ranklist->_value )
         {
-            auto queryrankdata = _rank_driver->QueryMap( __FUNC_LINE__, "hgetall {}", strrankkey.c_str() );
+            auto queryrankdata = _rank_driver->QueryMap( "hgetall {}", strrankkey.c_str() );
             if ( !queryrankdata->IsOk() || queryrankdata->_value.empty()  )
             {
                 continue;
@@ -111,7 +111,7 @@ namespace KFrame
 
         _rank_driver->Append( rankdata, "hmset {}", rankkey );
         _rank_driver->Append( "sadd {}:{} {}", __KF_STRING__( ranklist ), KFGlobal::Instance()->_app_id, rankkey );
-        _rank_driver->Pipeline( __FUNC_LINE__ );
+        _rank_driver->Pipeline();
     }
 
     void KFRankShardModule::StartRefreshRankDataTimer()
@@ -185,7 +185,7 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        auto queryzonelist = _rank_driver->QueryList( __FUNC_LINE__, "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
+        auto queryzonelist = _rank_driver->QueryList( "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
         auto zonelist = queryzonelist->_value;
         for ( auto& strzoneid : zonelist )
         {
@@ -200,7 +200,7 @@ namespace KFrame
             auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
             auto& rankdatakey = FormatRankDataKey( rankid, zoneid );
 
-            auto queryidlist = _rank_driver->QueryList( __FUNC_LINE__, "zrevrange {} 0 {}", ranksortkey, kfsetting->_max_count - 1 );
+            auto queryidlist = _rank_driver->QueryList( "zrevrange {} 0 {}", ranksortkey, kfsetting->_max_count - 1 );
             if ( queryidlist->_value.empty() )
             {
                 continue;
@@ -212,7 +212,7 @@ namespace KFrame
                 auto playerid = KFUtility::ToValue< uint32 >( strplayerid );
 
                 // 读取排行榜信息
-                auto queryrankdata = _rank_driver->QueryString( __FUNC_LINE__, "hget {} {}", rankdatakey, playerid );
+                auto queryrankdata = _rank_driver->QueryString( "hget {} {}", rankdatakey, playerid );
 
                 auto pbrankdata = kfrankdata->_rank_datas.add_rankdata();
                 pbrankdata->set_rankindex( ++rankindex );
@@ -231,7 +231,7 @@ namespace KFrame
                 // 清空数据
                 _rank_driver->Append( "del {}", rankdatakey );
                 _rank_driver->Append( "del {}", ranksortkey );
-                _rank_driver->Pipeline( __FUNC_LINE__ );
+                _rank_driver->Pipeline();
             }
             else
             {
@@ -243,7 +243,7 @@ namespace KFrame
                 //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
 
                 // 删除指定数量以后的排序
-                auto rankcount = _rank_driver->QueryUInt64( __FUNC_LINE__, "zcard {}", ranksortkey );
+                auto rankcount = _rank_driver->QueryUInt64( "zcard {}", ranksortkey );
                 if ( rankcount->_value > kfsetting->_max_count )
                 {
                     _rank_driver->Execute( __FUNC_LINE__, "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count );
@@ -291,7 +291,7 @@ namespace KFrame
             _rank_driver->Append( "zadd {} {} {}", ranksortkey, pbrankdata->rankscore(), kfmsg.playerid() );
         }
 
-        _rank_driver->Pipeline( __FUNC_LINE__ );
+        _rank_driver->Pipeline();
     }
 
     bool KFRankShardModule::IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore )
@@ -341,7 +341,7 @@ namespace KFrame
             _rank_driver->Append( "hget {} {}", rankdatakey, friendid );
         }
 
-        auto rankdatalist = _rank_driver->PipelineList( __FUNC_LINE__ );
+        auto rankdatalist = _rank_driver->PipelineList();
 
         KFMsg::MsgQueryFriendRankListAck ack;
         ack.set_rankid( kfmsg.rankid() );

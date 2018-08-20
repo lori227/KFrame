@@ -12,7 +12,7 @@ namespace KFrame
         KFZone()
         {
             _id = 0;
-            _type = 0;
+            _channel = 0;
             _logic_id = 0;
         }
 
@@ -24,7 +24,7 @@ namespace KFrame
         uint32 _logic_id;
 
         // 游戏服类型
-        uint32 _type;
+        uint32 _channel;
 
         // 游戏服名字
         std::string _name;

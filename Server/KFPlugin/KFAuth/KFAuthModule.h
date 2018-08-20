@@ -48,6 +48,9 @@ namespace KFrame
         // 验证token
         __KF_HTTP_FUNCTION__( HandleVerifyToken );
 
+        // 更新在线信息
+        __KF_HTTP_FUNCTION__( HandleUpdateOnline );
+
     protected:
         // 查询创建账号
         MapString QueryCreateAccount( const std::string& account, uint32 channel );

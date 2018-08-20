@@ -49,11 +49,11 @@ namespace KFrame
         virtual bool SendNetMessage( uint32 serverid, uint32 msgid, const char* data, uint32 length );
         virtual bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
 
-        virtual void SendMessageToName( const std::string& servertype, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToName( const std::string& servertype, uint32 msgid, const char* data, uint32 length );;
+        virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );;
 
-        virtual void SendMessageToType( const std::string& servername, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToType( const std::string& servername, uint32 msgid, const char* data, uint32 length );
+        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length );
 
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message );
         virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length );

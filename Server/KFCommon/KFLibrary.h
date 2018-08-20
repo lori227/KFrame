@@ -14,6 +14,8 @@
         #pragma comment( lib, "Win32_Interopd.lib" )
         #pragma comment( lib, "Ws2_32.lib" )
         #pragma comment( lib, "Wldap32.lib" )
+        #pragma comment( lib, "libeay32.lib" )
+        #pragma comment( lib, "ssleay32.lib" )
 
         #pragma comment( lib, "KFPlugind.lib" )
         #pragma comment( lib, "KFMemoryd.lib" )
@@ -37,6 +39,9 @@
         #pragma comment( lib, "Win32_Interop.lib" )
         #pragma comment( lib, "Ws2_32.lib" )
         #pragma comment( lib, "Wldap32.lib" )
+        #pragma comment( lib, "libeay32.lib" )
+        #pragma comment( lib, "ssleay32.lib" )
+
 
         #pragma comment( lib, "KFPlugin.lib" )
         #pragma comment( lib, "KFMemory.lib" )

@@ -60,17 +60,14 @@ namespace KFrame
         __REGISTER_RUN_FUNCTION__( &KFTcpServerModule::Run );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
-    }
-
-    void KFTcpServerModule::OnceRun()
-    {
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
         auto kftcpsetting = FindTcpServerSetting();
-
         _kf_server_engine->InitEngine( kftcpsetting->_max_queue_size );
         _kf_server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
         _kf_server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
-        //////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 启动tcp服务器
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_listen_port = kftcpsetting->_port;
         auto result = _kf_server_engine->StartEngine( kftcpsetting->_local_ip, kftcpsetting->_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
