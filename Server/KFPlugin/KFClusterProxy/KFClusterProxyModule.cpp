@@ -19,9 +19,6 @@ namespace KFrame
 
     void KFClusterProxyModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFClusterProxyModule::Run );
-        __REGISTER_AFTER_RUN_FUNCTION__( &KFClusterProxyModule::AfterRun );
-
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterProxyModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterProxyModule::OnClientConnectionServer );
@@ -42,8 +39,6 @@ namespace KFrame
     void KFClusterProxyModule::BeforeShut()
     {
         __UNREGISTER_TIMER__();
-        __UNREGISTER_RUN_FUNCTION__();
-        __UNREGISTER_AFTER_RUN_FUNCTION__();
 
         _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
 

@@ -51,15 +51,9 @@ namespace KFrame
         _kf_ftp_thread->StartThread();
     }
 
-    void KFFtpModule::BeforeRun()
-    {
-        __REGISTER_RUN_FUNCTION__( &KFFtpModule::Run );
-    }
-
     void KFFtpModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

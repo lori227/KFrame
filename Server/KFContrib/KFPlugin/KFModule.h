@@ -29,21 +29,18 @@ namespace KFrame
         // 执行
         virtual void BeforeRun() {}
         virtual void OnceRun() {}
+        virtual void Run() {}
+        virtual void AfterRun() {}
 
         // 关闭
         virtual void BeforeShut() {}
         virtual void ShutDown() {}
         virtual void AfterShut() {}
         //////////////////////////////////////////////////////////////
-        // 初始化
-        virtual void Initialize( KFPlugin* plugin );
 
     public:
         // 插件
         KFPlugin* _kf_plugin;
-
-        // 最大消耗的时间
-        uint32 _max_cost_time;
     };
 }
 

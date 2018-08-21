@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/publiccluster
+cd /data/public
 
 if [ "$1" = "debug" ]; then
 server=publicserverd

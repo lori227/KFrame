@@ -188,13 +188,13 @@ namespace KFrame
 
     private:
         // 创建角色
-        KFEntity* CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata );
+        KFEntity* CreatePlayer( uint32 gateid, uint32 channel, uint32 accountid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata );
 
         // 发送登录回应消息
         void SendLoginGameMessage( uint32 result, uint32 playerid, uint32 gateid, uint32 sessionid, const KFMsg::PBObject* playerdata );
 
         // 创建角色
-        void OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid );
+        void OnEnterCreatePlayer( KFEntity* player, uint32 playerid );
 
         // 进入游戏世界
         void SendEnterMessageToWorld( KFEntity* player );

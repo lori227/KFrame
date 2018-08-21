@@ -14,7 +14,7 @@ include_directories(
     ${ROOT_DIR}/KFContrib
     ${ROOT_DIR}/KFLibrary
     ${ROOT_DIR}/KFPlugin
-   ${ROOT_DIR}/KFLibrary/json/include
+    ${ROOT_DIR}/KFLibrary/json/include
     ${ROOT_DIR}/KFLibrary/lua/lua53
     ${ROOT_DIR}/KFLibrary/google/protobuf/src
     ${ROOT_DIR}/KFLibrary/libuv/include
@@ -42,7 +42,7 @@ set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
 set(LIB_DIR ${ROOT_DIR}/_lib/linux)
 set(BIN_DIR ${ROOT_DIR}/_bin/linux)
 
-LINK_DIRECTORIES("/usr/local/lib")
+LINK_DIRECTORIES("/usr/local/lib" "/usr/lib64/mysql")
 LINK_DIRECTORIES("${ROOT_DIR}/_lib/linux")
 #LINK_DIRECTORIES(${3RD_LIB_DIR})
 

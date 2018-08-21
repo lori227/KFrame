@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="battle" AppType="master" Common="./setting/common.startup">
-	<Plugins>
-		<Plguin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="110" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFClusterMaster" Startup="1" Sort="120" Debug="KFClusterMasterd" Release="KFClusterMaster" Config="./setting/cluster.setting"/>
+<Setting>
+	<Plugins AppName="battle" AppType="master" Common="./setting/common.startup">
+		<Plugin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
+		<Plugin Name="KFTcpServer" Startup="1" Sort="110" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFClusterMaster" Startup="1" Sort="120" Debug="KFClusterMasterd" Release="KFClusterMaster" Config="./setting/cluster.setting"/>
 	</Plugins>
 </Setting>

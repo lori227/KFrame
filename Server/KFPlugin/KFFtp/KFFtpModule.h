@@ -24,17 +24,12 @@ namespace KFrame
         // 初始化
         virtual void InitModule();
 
-        virtual void BeforeRun();
-
+        virtual void Run();
         virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
 
     protected:
-
-        // 执行
-        void Run();
-
         // 开启下载
         virtual void StartFtpDownload( uint32 ftpid, const std::string& apppath, KFFtpFunction& function );
 

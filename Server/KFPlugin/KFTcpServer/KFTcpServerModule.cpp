@@ -57,7 +57,6 @@ namespace KFrame
 
     void KFTcpServerModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFTcpServerModule::Run );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +91,6 @@ namespace KFrame
     void KFTcpServerModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
         _kf_server_engine->ShutEngine();
     }
 

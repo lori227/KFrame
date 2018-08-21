@@ -12,16 +12,6 @@ namespace KFrame
 
     }
 
-    void KFScheduleModule::BeforeRun()
-    {
-        __REGISTER_RUN_FUNCTION__( &KFScheduleModule::Run );
-    }
-
-    void KFScheduleModule::ShutDown()
-    {
-        __UNREGISTER_RUN_FUNCTION__();
-    }
-
     void KFScheduleModule::Run()
     {
         _kf_schedule_manage->RunUpdate();

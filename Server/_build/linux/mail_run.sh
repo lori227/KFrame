@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/mailcluster
+cd /data/mail
 
 if [ "$1" = "debug" ]; then
 server=mailserverd

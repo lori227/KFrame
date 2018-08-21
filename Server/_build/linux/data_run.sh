@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/datacluster
+cd /data/data
 
 if [ "$1" = "debug" ]; then
 server=dataserverd

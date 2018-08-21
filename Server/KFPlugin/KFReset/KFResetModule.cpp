@@ -20,7 +20,6 @@ namespace KFrame
 
     void KFResetModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFResetModule::Run );
         _kf_player->RegisterEnterFunction( this, &KFResetModule::ResetPlayerData );
         _kf_player->RegisterRunDataFunction( this, &KFResetModule::RunResetPlayerData );
 
@@ -30,7 +29,6 @@ namespace KFrame
     void KFResetModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterRunDataFunction( this );
     }

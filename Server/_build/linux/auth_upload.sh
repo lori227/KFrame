@@ -58,6 +58,7 @@ copyfile 1 auth.startup
 #config
 path1=$versionpath/config
 path2=$deploypath/config
+copyfile 1 option.config
 
 #plugin
 path1=$versionpath
@@ -97,7 +98,8 @@ copyfile 1 KFClusterClientd.so
 copyfile 1 KFClusterClient.so
 copyfile 1 KFLogClientd.so
 copyfile 1 KFLogClient.so
-
+copyfile 1 KFOption.so
+copyfile 1 KFOptiond.so
 
 #upload to ftp
 curl -sd '{"ftpid":'$2',"apppath":"auth"}' $3

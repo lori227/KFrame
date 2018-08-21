@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="data" AppType="proxy" Common="./setting/common.startup">
-	<Plugins>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFClusterProxy" Startup="1" Sort="110" Debug="KFClusterProxyd" Release="KFClusterProxy" Config="./setting/server.network"/>
-		<Plguin Name="KFDataProxy" Startup="1" Sort="120" Debug="KFDataProxyd" Release="KFDataProxy" Config=""/>
+<Setting>
+	<Plugins AppName="data" AppType="proxy" Common="./setting/common.startup">
+		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFClusterProxy" Startup="1" Sort="110" Debug="KFClusterProxyd" Release="KFClusterProxy" Config="./setting/server.network"/>
+		<Plugin Name="KFDataProxy" Startup="1" Sort="120" Debug="KFDataProxyd" Release="KFDataProxy" Config=""/>
 	</Plugins>
 </Setting>

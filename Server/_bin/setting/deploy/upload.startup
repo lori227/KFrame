@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="upload" AppType="upload">
-	<Plugins>
-		<Plguin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="20" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plguin Name="KFHttpClient" Startup="1" Sort="30" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFHttpServer" Startup="1" Sort="40" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFFtp" Startup="1" Sort="50" Debug="KFFtpd" Release="KFFtp" Config="./setting/ftp.address"/>
-		<Plguin Name="KFDeployUpload" Startup="1" Sort="60" Debug="KFDeployUploadd" Release="KFDeployUpload" Config=""/>
+<Setting>
+	<Plugins AppName="upload" AppType="upload">
+		<Plugin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plugin Name="KFIpAddress" Startup="1" Sort="20" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Name="KFHttpClient" Startup="1" Sort="30" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plugin Name="KFHttpServer" Startup="1" Sort="40" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFFtp" Startup="1" Sort="50" Debug="KFFtpd" Release="KFFtp" Config="./setting/ftp.address"/>
+		<Plugin Name="KFDeployUpload" Startup="1" Sort="60" Debug="KFDeployUploadd" Release="KFDeployUpload" Config=""/>
 	</Plugins>
 </Setting>

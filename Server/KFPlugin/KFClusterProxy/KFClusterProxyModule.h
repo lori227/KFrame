@@ -49,6 +49,10 @@ namespace KFrame
         // 初始化
         virtual void BeforeRun();
 
+        // 逻辑
+        virtual void Run();
+        virtual void AfterRun();
+
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
@@ -121,10 +125,6 @@ namespace KFrame
         __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
     private:
-        // 逻辑
-        void Run();
-        void AfterRun();
-
         // 连接Cluster Server 成功
         void OnClientConnectionClusterServer( const std::string& servername, uint32 serverid );
 

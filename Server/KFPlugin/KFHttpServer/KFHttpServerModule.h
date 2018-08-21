@@ -27,6 +27,7 @@ namespace KFrame
 
         // 运行
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void ShutDown();
@@ -56,13 +57,9 @@ namespace KFrame
         // 验证签名
         virtual bool VerifySignature( KFJson& json );
     private:
-        void Run();
 
         // 注册httphandle
         virtual void RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function );
-
-    private:
-
     private:
         // http服务器
         KFHttpServer* _http_server;

@@ -18,26 +18,33 @@
         pluginmanage->UnRegistPlugin< classname >();\
     }\
 
+// 注册模块
 #define __REGISTER_MODULE__( name ) \
-    _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( new name##Module() )
+    auto kfmodule = new name##Module();\
+    _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( kfmodule );\
+    if ( &name##Module::Run != &KFModule::Run )\
+    {\
+        _kf_plugin_manage->RegisterRunFunction< name##Module >( _sort, kfmodule, &name##Module::Run );\
+    }\
+    if ( &name##Module::AfterRun != &KFModule::AfterRun )\
+    {\
+        _kf_plugin_manage->RegisterAfterRunFunction< name##Module >( _sort, kfmodule, &name##Module::AfterRun );\
+    }
 
+// 卸载模块
 #define __UNREGISTER_MODULE__( name ) \
-    _kf_plugin_manage->UnRegistModule< name##Plugin, name##Interface >()
+    _kf_plugin_manage->UnRegistModule< name##Plugin >();\
+    if ( &name##Module::Run != &KFModule::Run )\
+    {\
+        _kf_plugin_manage->UnRegisterRunFunction( _sort );\
+    }\
+    if ( &name##Module::AfterRun != &KFModule::AfterRun )\
+    {\
+        _kf_plugin_manage->UnRegisterAfterRunFunction( _sort );\
+    }
 
 #define __FIND_MODULE__( module, classname ) \
-    module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ );
-
-#define __REGISTER_RUN_FUNCTION__( function ) \
-    _kf_plugin_manage->RegisterRunFunction( _kf_plugin->_sort, this, function )
-
-#define __UNREGISTER_RUN_FUNCTION__() \
-    _kf_plugin_manage->UnRegisterRunFunction( _kf_plugin->_sort )
-
-#define __REGISTER_AFTER_RUN_FUNCTION__( function ) \
-    _kf_plugin_manage->RegisterAfterRunFunction( _kf_plugin->_sort, this, function )
-
-#define __UNREGISTER_AFTER_RUN_FUNCTION__() \
-    _kf_plugin_manage->UnRegisterAfterRunFunction( _kf_plugin->_sort )
+    module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -101,29 +108,27 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////
         // 注册模块
-        template< class PluginType, class ModuleType >
-        void RegistModule( ModuleType* module )
+        template< class PluginType, class InterfaceType >
+        void RegistModule( InterfaceType* module )
         {
             auto plugin = FindPlugin< PluginType >();
-
-            plugin->RegistModule< ModuleType >( module );
+            plugin->BindModule( typeid( InterfaceType ).name(), module );
         }
 
         // 卸载模块
-        template< class PluginType, class ModuleType >
+        template< class PluginType >
         void UnRegistModule()
         {
             auto plugin = FindPlugin< PluginType >();
-
-            plugin->UnRegistModule< ModuleType >();
+            plugin->UnBindModule();
         }
 
         // 查找模块
-        template< class ModuleType >
-        ModuleType* FindModule( const char* file, uint32 line )
+        template< class InterfaceType >
+        InterfaceType* FindModule( const char* file, uint32 line )
         {
-            std::string name = typeid( ModuleType ).name();
-            return dynamic_cast<ModuleType*>( FindModule( name, file, line ) );
+            std::string name = typeid( InterfaceType ).name();
+            return dynamic_cast< InterfaceType*>( FindModule( name, file, line ) );
         }
 
         /////////////////////////////////////////////////////////////////
@@ -182,8 +187,8 @@ namespace KFrame
 
     protected:
         ////////////////////////////////////////////////////////////////////
-        // 排序模块
-        void SortPlugin();
+        // 安装模块
+        void InstallPlugin();
 
         // 加载模块
         void LoadModule();

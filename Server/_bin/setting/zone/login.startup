@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="zone" AppType="login" Common="./setting/common.startup">
-	<Plugins>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFLogin" Startup="1" Sort="110" Debug="KFLogind" Release="KFLogin" Config=""/>
-		<Plguin Name="KFZone" Startup="1" Sort="120" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
-		<Plguin Name="KFClusterClient" Startup="1" Sort="140" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/cluster.setting"/>
-		<Plguin Name="KFDataClient" Startup="1" Sort="150" Debug="KFDataClientd" Release="KFDataClient" Config=""/>
+<Setting>
+	<Plugins AppName="zone" AppType="login" Common="./setting/common.startup">
+		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFLogin" Startup="1" Sort="110" Debug="KFLogind" Release="KFLogin" Config=""/>
+		<Plugin Name="KFZone" Startup="1" Sort="120" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
 	</Plugins>
 </Setting>

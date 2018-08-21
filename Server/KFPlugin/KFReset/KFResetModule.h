@@ -27,14 +27,13 @@ namespace KFrame
         virtual void InitModule();
 
         virtual void BeforeRun();
+        virtual void Run();
 
         virtual void ShutDown();
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        void Run();
-
         // 重置数据
         void ResetPlayerData( KFEntity* player );
 

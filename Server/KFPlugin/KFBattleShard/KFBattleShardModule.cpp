@@ -23,7 +23,6 @@ namespace KFrame
 
     void KFBattleShardModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFBattleShardModule::Run );
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFBattleShardModule::OnServerDiscoverBattleProxy );
 
         _kf_battle_config->LoadRewardConfig( _kf_battle_config->_reward_file.c_str() );
@@ -119,8 +118,6 @@ namespace KFrame
             kfroom->FreeBattleServer();
             kfroom = _kf_room_list.Next();
         }
-
-        __UNREGISTER_RUN_FUNCTION__();
     }
 
     void KFBattleShardModule::RemoveBattleRoom( KFBattleRoom* kfroom )

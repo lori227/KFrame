@@ -21,8 +21,7 @@ namespace KFrame
         KFScheduleModule();
         ~KFScheduleModule();
 
-        virtual void BeforeRun();
-        virtual void ShutDown();
+        virtual void Run();
 
         // 逻辑
         ////////////////////////////////////////////////////////////////////////////////
@@ -35,9 +34,6 @@ namespace KFrame
 
         // 删除计划任务
         void RemoveSchedule( const std::string& module );
-
-    private:
-        void Run();
     };
 }
 

@@ -38,7 +38,7 @@ namespace KFrame
         virtual void AfterShut() = 0;
 
     public:
-        // 名字
+        // 类名字
         std::string _class_name;
 
         // 插件名字

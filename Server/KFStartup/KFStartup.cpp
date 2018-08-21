@@ -111,10 +111,7 @@ namespace KFrame
         }
 
         PluginLeaveFunction function = ( PluginLeaveFunction )library->GetFunction( "DllPluginLeave" );
-        if ( function != nullptr )
-        {
-            function( KFPluginManage::Instance() );
-        }
+        function( KFPluginManage::Instance() );
 
         library->UnLoad();
         _kf_library.Remove( pluginname );

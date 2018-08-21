@@ -19,7 +19,6 @@ namespace KFrame
 
     void KFRankClientModule::BeforeRun()
     {
-        __REGISTER_AFTER_RUN_FUNCTION__( &KFRankClientModule::AfterRun );
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterUpdateDataModule( this, &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +30,6 @@ namespace KFrame
     void KFRankClientModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_AFTER_RUN_FUNCTION__();
         _kf_component->UnRegisterUpdateDataModule( this );
         ///////////////////////////////////////////////////////////////////////////////////////////
 

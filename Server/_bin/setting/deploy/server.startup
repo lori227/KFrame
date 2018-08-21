@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="deploy" AppType="server">
-	<Plugins>
-		<Plguin Name="KFConfig" Startup="1" Sort="1" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFSchedule" Startup="1" Sort="2" Debug="KFScheduled" Release="KFSchedule" Config=""/>	
-		<Plguin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plguin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFHttpServer" Startup="1" Sort="30" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFMessage" Startup="1" Sort="40" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFMySQL" Startup="1" Sort="60" Debug="KFMySQLd" Release="KFMySQL" Config="./setting/mysql.address"/>
-		<Plguin Name="KFDeployServer" Startup="1" Sort="70" Debug="KFDeployServerd" Release="KFDeployServer" Config=""/>
+<Setting>
+	<Plugins AppName="deploy" AppType="server">
+		<Plugin Name="KFConfig" Startup="1" Sort="1" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plugin Name="KFSchedule" Startup="1" Sort="2" Debug="KFScheduled" Release="KFSchedule" Config=""/>	
+		<Plugin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plugin Name="KFHttpServer" Startup="1" Sort="30" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFMessage" Startup="1" Sort="40" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plugin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFMySQL" Startup="1" Sort="60" Debug="KFMySQLd" Release="KFMySQL" Config="./setting/mysql.address"/>
+		<Plugin Name="KFDeployServer" Startup="1" Sort="70" Debug="KFDeployServerd" Release="KFDeployServer" Config=""/>
 	</Plugins>
 </Setting>

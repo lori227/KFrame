@@ -48,11 +48,6 @@ namespace KFrame
         {
             KFXml kfxml( file );
             auto root = kfxml.FindNode( "Setting" );
-
-            // apptype
-            _app_name = root.GetString( "AppName" );
-            _app_type = root.GetString( "AppType" );
-            _common_startup_file = root.GetString( "Common", true );
             //////////////////////////////////////////////////////////////////////////
             ReadPluginSetting( root );
         }
@@ -83,7 +78,23 @@ namespace KFrame
     void KFAppConfig::ReadPluginSetting( KFNode& root )
     {
         auto plugins = root.FindNode( "Plugins" );
-        auto node = plugins.FindNode( "Plguin" );
+
+        if ( plugins.GetString( "AppName" ) != _invalid_str )
+        {
+            _app_name = plugins.GetString( "AppName" );
+        }
+
+        if ( plugins.GetString( "AppType" ) != _invalid_str )
+        {
+            _app_type = plugins.GetString( "AppType" );
+        }
+
+        if ( plugins.GetString( "Common", true ) != _invalid_str )
+        {
+            _common_startup_file = plugins.GetString( "Common", true );
+        }
+
+        auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
             KFAppSetting setting;

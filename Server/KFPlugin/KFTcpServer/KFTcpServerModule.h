@@ -30,6 +30,7 @@ namespace KFrame
 
         // 逻辑
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
@@ -78,7 +79,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleRegisterReq );
 
     private:
-        void Run();
 
         virtual void AddDiscoverFunction( const char* module, KFServerDiscoverFunction& function );
         virtual void RemoveDiscoverFunction( const char* module );

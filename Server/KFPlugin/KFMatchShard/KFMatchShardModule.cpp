@@ -17,7 +17,6 @@ namespace KFrame
 
     void KFMatchShardModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFMatchShardModule::Run );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFMatchShardModule::OnClientConnectMatchMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +35,6 @@ namespace KFrame
     void KFMatchShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ );

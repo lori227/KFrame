@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/rankcluster
+cd /data/rank
 
 
 if [ "$1" = "debug" ]; then

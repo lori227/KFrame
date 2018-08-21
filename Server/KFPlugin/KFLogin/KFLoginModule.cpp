@@ -162,23 +162,26 @@ namespace KFrame
             return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid );
         }
 
-
         // 通知worldserver
         KFMsg::S2SLoginWorldVerifyReq req;
         req.set_token( token );
         req.set_gateid( gateid );
+        req.set_channel( channel );
         req.set_playerid( playerid );
         req.set_accountid( accountid );
         req.set_sessionid( sessionid );
 
         // 渠道数据
         auto pbchanneldata = req.mutable_channeldata();
-        auto channeldata = recvjson[ __KF_STRING__( channeldata ) ];
-        for ( auto iter = channeldata.begin(); iter != channeldata.end(); ++iter )
+        if ( recvjson.isMember( __KF_STRING__( channeldata ) ) )
         {
-            auto pbdata = pbchanneldata->add_pbstring();
-            pbdata->set_name( iter.name() );
-            pbdata->set_value( iter->asString() );
+            auto channeldata = recvjson[ __KF_STRING__( channeldata ) ];
+            for ( auto iter = channeldata.begin(); iter != channeldata.end(); ++iter )
+            {
+                auto pbdata = pbchanneldata->add_pbstring();
+                pbdata->set_name( iter.name() );
+                pbdata->set_value( iter->asString() );
+            }
         }
 
         auto ok = SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );

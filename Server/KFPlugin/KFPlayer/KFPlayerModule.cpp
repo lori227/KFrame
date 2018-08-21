@@ -323,6 +323,7 @@ namespace KFrame
         KFMsg::S2SLoginLoadPlayerReq req;
         req.set_zoneid( zoneid );
         req.set_gateid( kfmsg.gateid() );
+        req.set_channel( kfmsg.channel() );
         req.set_playerid( kfmsg.playerid() );
         req.set_accountid( kfmsg.accountid() );
         req.set_sessionid( kfmsg.sessionid() );
@@ -344,8 +345,10 @@ namespace KFrame
 
         auto result = kfmsg.result();
         auto gateid = kfmsg.gateid();
+        auto channel = kfmsg.channel();
         auto playerid = kfmsg.playerid();
         auto sessionid = kfmsg.sessionid();
+        auto accountid = kfmsg.accountid();
         auto playerdata = kfmsg.mutable_playerdata();
         auto channeldata = kfmsg.mutable_channeldata();
 
@@ -357,7 +360,7 @@ namespace KFrame
         else
         {
             // 创建玩家
-            auto player = CreatePlayer( gateid, playerid, playerdata, channeldata );
+            auto player = CreatePlayer( gateid, channel, accountid, playerid, playerdata, channeldata );
 
             // 同步给客户端
             _kf_kernel->SerializeToOnline( player->GetData(), playerdata );
@@ -385,12 +388,16 @@ namespace KFrame
     }
 
 
-    KFEntity* KFPlayerModule::CreatePlayer( uint32 gateid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata )
+    KFEntity* KFPlayerModule::CreatePlayer( uint32 gateid, uint32 channel, uint32 accountid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata )
     {
         auto player = _kf_component->CreateEntity( playerid, playerdata );
 
-        // 额外数据
         auto kfobject = player->GetData();
+        kfobject->SetValue( __KF_STRING__( gateid ), gateid );
+        kfobject->SetValue( __KF_STRING__( channel ), channel );
+        kfobject->SetValue( __KF_STRING__( accountid ), accountid );
+
+        // 渠道数据
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         for ( auto i = 0; i < channeldata->pbstring_size(); ++i )
         {
@@ -399,7 +406,7 @@ namespace KFrame
         }
 
         // 创建玩家
-        OnEnterCreatePlayer( player, gateid, playerid );
+        OnEnterCreatePlayer( player, playerid );
 
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto iter : _player_enter_function._objects )
@@ -413,12 +420,10 @@ namespace KFrame
         return player;
     }
 
-    void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint32 gateid, uint32 playerid )
+    void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint32 playerid )
     {
-        auto kfglobal = KFGlobal::Instance();
-
         auto kfobject = player->GetData();
-        kfobject->SetValue( __KF_STRING__( gateid ), gateid );
+        auto kfglobal = KFGlobal::Instance();
 
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         kfbasic->SetValue< uint32 >( __KF_STRING__( serverid ), kfglobal->_app_id );

@@ -80,8 +80,8 @@ copyfile 1 KFMessage.so
 copyfile 1 KFMessaged.so
 copyfile 1 KFConfig.so
 copyfile 1 KFConfigd.so
-copyfile 1 KFClusterServer.so
-copyfile 1 KFClusterServerd.so
+copyfile 1 KFClusterMaster.so
+copyfile 1 KFClusterMasterd.so
 copyfile 1 KFClusterProxy.so
 copyfile 1 KFClusterProxyd.so
 copyfile 1 KFTimer.so

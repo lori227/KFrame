@@ -18,12 +18,10 @@ namespace KFrame
     void KFHttpClientModule::BeforeRun()
     {
         _kf_http_manage->Initialize();
-        __REGISTER_RUN_FUNCTION__( &KFHttpClientModule::Run );
     }
 
     void KFHttpClientModule::ShutDown()
     {
-        __UNREGISTER_RUN_FUNCTION__();
         _kf_http_manage->ShutDown();
     }
 

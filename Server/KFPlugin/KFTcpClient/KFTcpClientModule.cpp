@@ -21,8 +21,6 @@ namespace KFrame
 
     void KFTcpClientModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFTcpClientModule::Run );
-
         _kf_client_engine->InitEngine( 10000 );
 
         _kf_client_engine->BindNetFunction( this, &KFTcpClientModule::HandleNetMessage );
@@ -35,7 +33,6 @@ namespace KFrame
 
     void KFTcpClientModule::ShutDown()
     {
-        __UNREGISTER_RUN_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
         _kf_client_engine->ShutEngine();

@@ -26,6 +26,8 @@ namespace KFrame
         virtual void InitModule();
 
         virtual void BeforeRun();
+        virtual void Run();
+        virtual void AfterRun();
 
         virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,9 +67,6 @@ namespace KFrame
         virtual uint32 CalcAgentValue( KFAgentValue* kfvalue, float multiple );
 
     public:
-        void Run();
-        void AfterRun();
-
         // copy from proto
         void CopyFromInt32( KFData* kfdata, const KFMsg::PBInt32* proto );
         void CopyFromUInt32( KFData* kfdata, const KFMsg::PBUInt32* proto );

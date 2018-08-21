@@ -128,6 +128,7 @@ namespace KFrame
         KFMsg::S2SLoginTellTokenToGameReq req;
         req.set_gateid( gateid );
         req.set_token( kfmsg.token() );
+        req.set_channel( kfmsg.channel() );
         req.set_accountid( accountid );
         req.set_sessionid( sessionid );
         req.set_playerid( kfmsg.playerid() );

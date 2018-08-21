@@ -159,9 +159,11 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerReq );
 
         KFMsg::S2SLoginLoadPlayerAck ack;
-        ack.set_playerid( kfmsg.playerid() );
+        ack.set_channel( kfmsg.channel() );
         ack.set_gateid( kfmsg.gateid() );
+        ack.set_playerid( kfmsg.playerid() );
         ack.set_sessionid( kfmsg.sessionid() );
+        ack.set_accountid( kfmsg.accountid() );
         ack.mutable_channeldata()->CopyFrom( kfmsg.channeldata() );
         bool ok = LoadPlayerData( kfmsg.zoneid(), kfmsg.playerid(), ack.mutable_playerdata() );
         if ( ok )

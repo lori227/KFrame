@@ -22,6 +22,7 @@ namespace KFrame
         ~KFTimerModule();
 
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void ShutDown();
@@ -33,9 +34,6 @@ namespace KFrame
         virtual uint32 FindLeftTime( const std::string& module, uint64 objectid );
 
     protected:
-        // 逻辑
-        void Run();
-
         // 注册定时器
         virtual void AddLoopTimer( const std::string& module, uint64 objectid, uint32 intervaltime, KFTimerFunction& function );
         virtual void AddLimitTimer( const std::string& module, uint64 objectid, uint32 intervaltime, uint32 count, KFTimerFunction& function );

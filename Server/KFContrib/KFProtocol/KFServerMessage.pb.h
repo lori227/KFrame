@@ -1607,10 +1607,17 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 sessionid() const;
   inline void set_sessionid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBStrings channeldata = 6;
+  // required uint32 channel = 6;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  static const int kChannelFieldNumber = 6;
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 7;
   inline bool has_channeldata() const;
   inline void clear_channeldata();
-  static const int kChanneldataFieldNumber = 6;
+  static const int kChanneldataFieldNumber = 7;
   inline const ::KFMsg::PBStrings& channeldata() const;
   inline ::KFMsg::PBStrings* mutable_channeldata();
   inline ::KFMsg::PBStrings* release_channeldata();
@@ -1628,6 +1635,8 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   inline void clear_has_playerid();
   inline void set_has_sessionid();
   inline void clear_has_sessionid();
+  inline void set_has_channel();
+  inline void clear_has_channel();
   inline void set_has_channeldata();
   inline void clear_has_channeldata();
 
@@ -1639,9 +1648,10 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 sessionid_;
   ::KFMsg::PBStrings* channeldata_;
+  ::google::protobuf::uint32 channel_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -1858,10 +1868,17 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 sessionid() const;
   inline void set_sessionid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBStrings channeldata = 6;
+  // required uint32 channel = 6;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  static const int kChannelFieldNumber = 6;
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 7;
   inline bool has_channeldata() const;
   inline void clear_channeldata();
-  static const int kChanneldataFieldNumber = 6;
+  static const int kChanneldataFieldNumber = 7;
   inline const ::KFMsg::PBStrings& channeldata() const;
   inline ::KFMsg::PBStrings* mutable_channeldata();
   inline ::KFMsg::PBStrings* release_channeldata();
@@ -1879,6 +1896,8 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
   inline void clear_has_gateid();
   inline void set_has_sessionid();
   inline void clear_has_sessionid();
+  inline void set_has_channel();
+  inline void clear_has_channel();
   inline void set_has_channeldata();
   inline void clear_has_channeldata();
 
@@ -1890,9 +1909,10 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
   ::google::protobuf::uint32 gateid_;
   ::google::protobuf::uint32 sessionid_;
   ::KFMsg::PBStrings* channeldata_;
+  ::google::protobuf::uint32 channel_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -2654,10 +2674,17 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 sessionid() const;
   inline void set_sessionid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBStrings channeldata = 6;
+  // required uint32 channel = 6;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  static const int kChannelFieldNumber = 6;
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBStrings channeldata = 7;
   inline bool has_channeldata() const;
   inline void clear_channeldata();
-  static const int kChanneldataFieldNumber = 6;
+  static const int kChanneldataFieldNumber = 7;
   inline const ::KFMsg::PBStrings& channeldata() const;
   inline ::KFMsg::PBStrings* mutable_channeldata();
   inline ::KFMsg::PBStrings* release_channeldata();
@@ -2675,6 +2702,8 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   inline void clear_has_accountid();
   inline void set_has_sessionid();
   inline void clear_has_sessionid();
+  inline void set_has_channel();
+  inline void clear_has_channel();
   inline void set_has_channeldata();
   inline void clear_has_channeldata();
 
@@ -2684,11 +2713,12 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 accountid_;
-  ::KFMsg::PBStrings* channeldata_;
   ::google::protobuf::uint32 sessionid_;
+  ::google::protobuf::uint32 channel_;
+  ::KFMsg::PBStrings* channeldata_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -2774,26 +2804,40 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 gateid() const;
   inline void set_gateid(::google::protobuf::uint32 value);
 
-  // required uint32 sessionid = 4;
+  // required uint32 channel = 4;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  static const int kChannelFieldNumber = 4;
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+
+  // required uint32 sessionid = 5;
   inline bool has_sessionid() const;
   inline void clear_sessionid();
-  static const int kSessionidFieldNumber = 4;
+  static const int kSessionidFieldNumber = 5;
   inline ::google::protobuf::uint32 sessionid() const;
   inline void set_sessionid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBObject playerdata = 5;
+  // required uint32 accountid = 6;
+  inline bool has_accountid() const;
+  inline void clear_accountid();
+  static const int kAccountidFieldNumber = 6;
+  inline ::google::protobuf::uint32 accountid() const;
+  inline void set_accountid(::google::protobuf::uint32 value);
+
+  // required .KFMsg.PBObject playerdata = 7;
   inline bool has_playerdata() const;
   inline void clear_playerdata();
-  static const int kPlayerdataFieldNumber = 5;
+  static const int kPlayerdataFieldNumber = 7;
   inline const ::KFMsg::PBObject& playerdata() const;
   inline ::KFMsg::PBObject* mutable_playerdata();
   inline ::KFMsg::PBObject* release_playerdata();
   inline void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
 
-  // required .KFMsg.PBStrings channeldata = 6;
+  // required .KFMsg.PBStrings channeldata = 8;
   inline bool has_channeldata() const;
   inline void clear_channeldata();
-  static const int kChanneldataFieldNumber = 6;
+  static const int kChanneldataFieldNumber = 8;
   inline const ::KFMsg::PBStrings& channeldata() const;
   inline ::KFMsg::PBStrings* mutable_channeldata();
   inline ::KFMsg::PBStrings* release_channeldata();
@@ -2807,8 +2851,12 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   inline void clear_has_playerid();
   inline void set_has_gateid();
   inline void clear_has_gateid();
+  inline void set_has_channel();
+  inline void clear_has_channel();
   inline void set_has_sessionid();
   inline void clear_has_sessionid();
+  inline void set_has_accountid();
+  inline void clear_has_accountid();
   inline void set_has_playerdata();
   inline void clear_has_playerdata();
   inline void set_has_channeldata();
@@ -2819,12 +2867,14 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 gateid_;
+  ::google::protobuf::uint32 channel_;
   ::google::protobuf::uint32 sessionid_;
+  ::google::protobuf::uint32 accountid_;
   ::KFMsg::PBObject* playerdata_;
   ::KFMsg::PBStrings* channeldata_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -11564,15 +11614,37 @@ inline void S2SLoginWorldVerifyReq::set_sessionid(::google::protobuf::uint32 val
   sessionid_ = value;
 }
 
-// required .KFMsg.PBStrings channeldata = 6;
-inline bool S2SLoginWorldVerifyReq::has_channeldata() const {
+// required uint32 channel = 6;
+inline bool S2SLoginWorldVerifyReq::has_channel() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void S2SLoginWorldVerifyReq::set_has_channeldata() {
+inline void S2SLoginWorldVerifyReq::set_has_channel() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void S2SLoginWorldVerifyReq::clear_has_channeldata() {
+inline void S2SLoginWorldVerifyReq::clear_has_channel() {
   _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginWorldVerifyReq::clear_channel() {
+  channel_ = 0u;
+  clear_has_channel();
+}
+inline ::google::protobuf::uint32 S2SLoginWorldVerifyReq::channel() const {
+  return channel_;
+}
+inline void S2SLoginWorldVerifyReq::set_channel(::google::protobuf::uint32 value) {
+  set_has_channel();
+  channel_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 7;
+inline bool S2SLoginWorldVerifyReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void S2SLoginWorldVerifyReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void S2SLoginWorldVerifyReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SLoginWorldVerifyReq::clear_channeldata() {
   if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
@@ -11856,15 +11928,37 @@ inline void S2SLoginTellTokenToGameReq::set_sessionid(::google::protobuf::uint32
   sessionid_ = value;
 }
 
-// required .KFMsg.PBStrings channeldata = 6;
-inline bool S2SLoginTellTokenToGameReq::has_channeldata() const {
+// required uint32 channel = 6;
+inline bool S2SLoginTellTokenToGameReq::has_channel() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void S2SLoginTellTokenToGameReq::set_has_channeldata() {
+inline void S2SLoginTellTokenToGameReq::set_has_channel() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void S2SLoginTellTokenToGameReq::clear_has_channeldata() {
+inline void S2SLoginTellTokenToGameReq::clear_has_channel() {
   _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_channel() {
+  channel_ = 0u;
+  clear_has_channel();
+}
+inline ::google::protobuf::uint32 S2SLoginTellTokenToGameReq::channel() const {
+  return channel_;
+}
+inline void S2SLoginTellTokenToGameReq::set_channel(::google::protobuf::uint32 value) {
+  set_has_channel();
+  channel_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 7;
+inline bool S2SLoginTellTokenToGameReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void S2SLoginTellTokenToGameReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void S2SLoginTellTokenToGameReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SLoginTellTokenToGameReq::clear_channeldata() {
   if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
@@ -12926,15 +13020,37 @@ inline void S2SLoginLoadPlayerReq::set_sessionid(::google::protobuf::uint32 valu
   sessionid_ = value;
 }
 
-// required .KFMsg.PBStrings channeldata = 6;
-inline bool S2SLoginLoadPlayerReq::has_channeldata() const {
+// required uint32 channel = 6;
+inline bool S2SLoginLoadPlayerReq::has_channel() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void S2SLoginLoadPlayerReq::set_has_channeldata() {
+inline void S2SLoginLoadPlayerReq::set_has_channel() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void S2SLoginLoadPlayerReq::clear_has_channeldata() {
+inline void S2SLoginLoadPlayerReq::clear_has_channel() {
   _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginLoadPlayerReq::clear_channel() {
+  channel_ = 0u;
+  clear_has_channel();
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerReq::channel() const {
+  return channel_;
+}
+inline void S2SLoginLoadPlayerReq::set_channel(::google::protobuf::uint32 value) {
+  set_has_channel();
+  channel_ = value;
+}
+
+// required .KFMsg.PBStrings channeldata = 7;
+inline bool S2SLoginLoadPlayerReq::has_channeldata() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void S2SLoginLoadPlayerReq::set_has_channeldata() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void S2SLoginLoadPlayerReq::clear_has_channeldata() {
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SLoginLoadPlayerReq::clear_channeldata() {
   if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();
@@ -13034,15 +13150,37 @@ inline void S2SLoginLoadPlayerAck::set_gateid(::google::protobuf::uint32 value) 
   gateid_ = value;
 }
 
-// required uint32 sessionid = 4;
-inline bool S2SLoginLoadPlayerAck::has_sessionid() const {
+// required uint32 channel = 4;
+inline bool S2SLoginLoadPlayerAck::has_channel() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void S2SLoginLoadPlayerAck::set_has_sessionid() {
+inline void S2SLoginLoadPlayerAck::set_has_channel() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void S2SLoginLoadPlayerAck::clear_has_sessionid() {
+inline void S2SLoginLoadPlayerAck::clear_has_channel() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SLoginLoadPlayerAck::clear_channel() {
+  channel_ = 0u;
+  clear_has_channel();
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerAck::channel() const {
+  return channel_;
+}
+inline void S2SLoginLoadPlayerAck::set_channel(::google::protobuf::uint32 value) {
+  set_has_channel();
+  channel_ = value;
+}
+
+// required uint32 sessionid = 5;
+inline bool S2SLoginLoadPlayerAck::has_sessionid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SLoginLoadPlayerAck::set_has_sessionid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SLoginLoadPlayerAck::clear_has_sessionid() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SLoginLoadPlayerAck::clear_sessionid() {
   sessionid_ = 0u;
@@ -13056,15 +13194,37 @@ inline void S2SLoginLoadPlayerAck::set_sessionid(::google::protobuf::uint32 valu
   sessionid_ = value;
 }
 
-// required .KFMsg.PBObject playerdata = 5;
+// required uint32 accountid = 6;
+inline bool S2SLoginLoadPlayerAck::has_accountid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SLoginLoadPlayerAck::set_has_accountid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SLoginLoadPlayerAck::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginLoadPlayerAck::clear_accountid() {
+  accountid_ = 0u;
+  clear_has_accountid();
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerAck::accountid() const {
+  return accountid_;
+}
+inline void S2SLoginLoadPlayerAck::set_accountid(::google::protobuf::uint32 value) {
+  set_has_accountid();
+  accountid_ = value;
+}
+
+// required .KFMsg.PBObject playerdata = 7;
 inline bool S2SLoginLoadPlayerAck::has_playerdata() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void S2SLoginLoadPlayerAck::set_has_playerdata() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void S2SLoginLoadPlayerAck::clear_has_playerdata() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SLoginLoadPlayerAck::clear_playerdata() {
   if (playerdata_ != NULL) playerdata_->::KFMsg::PBObject::Clear();
@@ -13094,15 +13254,15 @@ inline void S2SLoginLoadPlayerAck::set_allocated_playerdata(::KFMsg::PBObject* p
   }
 }
 
-// required .KFMsg.PBStrings channeldata = 6;
+// required .KFMsg.PBStrings channeldata = 8;
 inline bool S2SLoginLoadPlayerAck::has_channeldata() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void S2SLoginLoadPlayerAck::set_has_channeldata() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void S2SLoginLoadPlayerAck::clear_has_channeldata() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void S2SLoginLoadPlayerAck::clear_channeldata() {
   if (channeldata_ != NULL) channeldata_->::KFMsg::PBStrings::Clear();

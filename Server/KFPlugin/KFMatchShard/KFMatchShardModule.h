@@ -32,6 +32,7 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
@@ -73,7 +74,6 @@ namespace KFrame
 
     protected:
         // 逻辑run
-        void Run();
 
     private:
         // 匹配模式列表

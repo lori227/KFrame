@@ -7,7 +7,6 @@ namespace KFrame
     void KFWorkerPlugin::Install()
     {
         __REGISTER_MODULE__( KFWorker );
-        _kf_plugin_manage->RegistModule< KFWorkerPlugin, KFWorkerInterface >( new KFWorkerModule() );
     }
 
     void KFWorkerPlugin::UnInstall()

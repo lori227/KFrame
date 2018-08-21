@@ -24,9 +24,6 @@ namespace KFrame
 
     void KFKernelModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFKernelModule::Run );
-        __REGISTER_AFTER_RUN_FUNCTION__( &KFKernelModule::AfterRun );
-
         bool result = _kf_data_config->LoadDataConfig( _kf_kernel_config->_class_file );
         if ( !result )
         {
@@ -55,8 +52,6 @@ namespace KFrame
     void KFKernelModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
-        __UNREGISTER_AFTER_RUN_FUNCTION__();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

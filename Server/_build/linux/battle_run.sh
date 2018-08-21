@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/battlecluster
+cd /data/battle
 
 if [ "$1" = "debug" ]; then
 server=battleserverd

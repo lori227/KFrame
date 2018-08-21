@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="auth" AppType="auth" Common="./setting/common.startup">
-	<Plugins>
-		<Plguin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
-		<Plguin Name="KFHttpServer" Startup="1" Sort="110" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
-		<Plguin Name="KFChannel" Startup="1" Sort="130" Debug="KFChanneld" Release="KFChannel" Config="./setting/channel.setting"/>
-		<Plguin Name="KFAuth" Startup="1" Sort="140" Debug="KFAuthd" Release="KFAuth" Config=""/>
+<Setting>
+	<Plugins AppName="auth" AppType="auth" Common="./setting/common.startup">
+		<Plugin Name="KFDeployClient" Startup="1" Sort="100" Debug="KFDeployClientd" Release="KFDeployClient" Config=""/>
+		<Plugin Name="KFHttpServer" Startup="1" Sort="110" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Name="KFChannel" Startup="1" Sort="130" Debug="KFChanneld" Release="KFChannel" Config="./setting/channel.setting"/>
+		<Plugin Name="KFAuth" Startup="1" Sort="140" Debug="KFAuthd" Release="KFAuth" Config=""/>
 		<Plguin Name="KFOption" Startup="1" Sort="150" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
 	</Plugins>
 </Setting>

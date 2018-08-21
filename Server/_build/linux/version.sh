@@ -55,7 +55,7 @@ copyfile 1 ftp.address
 copyfile 1 mysql.address
 copyfile 1 redis.address
 copyfile 1 zone.setting
-copyfile 1 platform.setting
+copyfile 1 dir.setting
 
 echo "copy setting"
 for file in `ls $settingpath`

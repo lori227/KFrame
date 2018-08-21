@@ -28,6 +28,7 @@ namespace KFrame
 
         // 逻辑
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void ShutDown();
@@ -72,7 +73,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleRegisterAck );
 
     private:
-        void Run();
 
         // 连接回调
         void AddConnectionFunction( const char* name, KFClientConnectionFunction& function );

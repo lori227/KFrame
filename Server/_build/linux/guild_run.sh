@@ -1,7 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/guildcluster
-server=guildserver
+cd /data/guild
 
 if [ "$1" = "debug" ]; then
 server=guildserverd

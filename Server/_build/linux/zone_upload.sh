@@ -168,6 +168,8 @@ copyfile 1 KFWorld.so
 copyfile 1 KFWorldd.so
 copyfile 1 KFZone.so
 copyfile 1 KFZoned.so
+copyfile 1 KFDirClient.so
+copyfile 1 KFDirClientd.so
 
 #upload to ftp
 curl -sd '{"ftpid":'$2',"apppath":"zone"}' $3

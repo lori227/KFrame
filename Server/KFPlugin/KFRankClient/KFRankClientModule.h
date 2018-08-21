@@ -32,6 +32,7 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
+        virtual void AfterRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -56,8 +57,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListAck );
 
     protected:
-        // 延迟执行
-        void AfterRun();
+
 
         // 发送消息到Rank
         bool SendMessageToRank( uint32 rankid, uint32 msgid, ::google::protobuf::Message* message );

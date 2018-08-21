@@ -23,6 +23,8 @@ namespace KFrame
 
         // 逻辑
         virtual void BeforeRun();
+        virtual void Run();
+
         virtual void ShutDown();
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
@@ -55,9 +57,6 @@ namespace KFrame
         // 验证签名
         virtual bool VerifySignature( KFJson& json );
     protected:
-        // 逻辑
-        void Run();
-
         // http
         virtual void StartMTHttpClient( const std::string& url, const std::string& data, KFHttpClientFunction& function );
         virtual void StartMTHttpClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign );

@@ -39,38 +39,14 @@ namespace KFrame
         virtual void OnceRun();
         //////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////
-
         // 注册模块
-        template< class T >
-        void RegistModule( T* module )
-        {
-            std::string name = typeid( T ).name();
-            RegistModule( name, module );
-        }
+        void BindModule( const std::string& name, KFModule* module );
 
         // 卸载模块
-        template< class T >
-        void UnRegistModule()
-        {
-            std::string name = typeid( T ).name();
-            UnRegistModule( name );
-        }
+        void UnBindModule();
 
         // 查找模块
         KFModule* FindModule( const std::string& name );
-
-    protected:
-        // 注册模块
-        void RegistModule( const std::string& name, KFModule* module );
-
-        // 卸载模块
-        void UnRegistModule( const std::string& name );
-
-        // 添加模块
-        void AddModule( const std::string& name, KFModule* module );
-
-        // 删除模块
-        void RemoveModule( const std::string& name );
 
     public:
         // 排序
@@ -79,8 +55,8 @@ namespace KFrame
         // 配置文件
         std::string _config;
 
-        // 模块列表
-        std::map< std::string, KFModule* > _kf_module;
+        // 绑定模块
+        KFModule* _kf_module;
     };
 }
 

@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/logcluster
+cd /data/log
 
 if [ "$1" = "debug" ]; then
 server=logserverd

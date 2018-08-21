@@ -27,6 +27,8 @@ namespace KFrame
         ~KFWorkerModule();
 
         virtual void BeforeRun();
+        virtual void Run();
+
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +48,6 @@ namespace KFrame
         __KF_TRANSMIT_FUNCTION__( SendMessageToWorker );
 
     protected:
-        void Run();
 
         // 添加函数
         virtual void AddFunction( uint32 msgid, KFMessageFunction& function );

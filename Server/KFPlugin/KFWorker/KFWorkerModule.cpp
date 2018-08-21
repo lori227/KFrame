@@ -25,7 +25,6 @@ namespace KFrame
 
     void KFWorkerModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFWorkerModule::Run );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFWorkerModule::SendMessageToWorker );
         //////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -37,7 +36,6 @@ namespace KFrame
             kfactor->StopActor();
         }
 
-        __UNREGISTER_RUN_FUNCTION__();
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////
     }

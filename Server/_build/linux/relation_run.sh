@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/relationcluster
+cd /data/relation
 
 
 if [ "$1" = "debug" ]; then

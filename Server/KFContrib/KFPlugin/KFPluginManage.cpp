@@ -23,8 +23,6 @@ namespace KFrame
         plugin->_class_name = name;
         plugin->_kf_plugin_manage = this;
         _plugins.push_back( plugin );
-
-        plugin->Install();
         return plugin;
     }
 
@@ -75,52 +73,53 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////
     void KFPluginManage::LoadModule()
     {
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->LoadModule();
+            kfplugin->LoadModule();
         }
     }
 
     void KFPluginManage::InitModule()
     {
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->InitModule();
+            kfplugin->InitModule();
         }
     }
 
     void KFPluginManage::LoadConfig()
     {
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->LoadConfig();
+            kfplugin->LoadConfig();
         }
 
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->AfterLoad();
+            kfplugin->AfterLoad();
         }
     }
 
     void KFPluginManage::BeforeRun()
     {
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->BeforeRun();
+            kfplugin->BeforeRun();
         }
     }
 
     void KFPluginManage::OnceRun()
     {
-        for ( auto iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->OnceRun();
+            kfplugin->OnceRun();
         }
     }
 
     void KFPluginManage::InitPlugin()
     {
-        SortPlugin();
+        // 安装插件
+        InstallPlugin();
 
         // 加载模块
         LoadModule();
@@ -140,19 +139,19 @@ namespace KFrame
 
     void KFPluginManage::ShutDown()
     {
-        for ( auto& iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->BeforeShut();
+            kfplugin->BeforeShut();
         }
 
-        for ( auto& iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->ShutDown();
+            kfplugin->ShutDown();
         }
 
-        for ( auto& iter : _plugins )
+        for ( auto kfplugin : _plugins )
         {
-            iter->AfterShut();
+            kfplugin->AfterShut();
         }
     }
 
@@ -183,8 +182,14 @@ namespace KFrame
         }
     };
 
-    void KFPluginManage::SortPlugin()
+    void KFPluginManage::InstallPlugin()
     {
+        for ( auto kfplugin : _plugins )
+        {
+            kfplugin->Install();
+        }
+
+        // 排序
         std::sort( _plugins.begin(), _plugins.end(), PluginLesser< KFPlugin >() );
     }
 

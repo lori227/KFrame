@@ -23,8 +23,6 @@ namespace KFrame
 
     void KFHttpServerModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFHttpServerModule::Run );
-
         //////////////////////////////////////////////////////////////////////////////////
         auto kfglogal = KFGlobal::Instance();
         auto kfsetting = _kf_http_server_config->FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
@@ -51,7 +49,6 @@ namespace KFrame
     {
         _http_server->ShutDown();
         __KF_REMOVE_CONFIG__();
-        __UNREGISTER_RUN_FUNCTION__();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

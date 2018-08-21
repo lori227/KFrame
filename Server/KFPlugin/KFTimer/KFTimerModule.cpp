@@ -14,13 +14,11 @@ namespace KFrame
     void KFTimerModule::BeforeRun()
     {
         _kf_timer_manage->Initialize();
-        __REGISTER_RUN_FUNCTION__( &KFTimerModule::Run );
     }
 
     void KFTimerModule::ShutDown()
     {
         _kf_timer_manage->ShutDown();
-        __UNREGISTER_RUN_FUNCTION__();
     }
 
     void KFTimerModule::Run()

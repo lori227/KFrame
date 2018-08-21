@@ -32,6 +32,7 @@ namespace KFrame
         // 初始化
         virtual void BeforeRun();
         virtual void OnceRun();
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
@@ -105,8 +106,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleOnlieQueryBattleScoreReq );
 
     private:
-        // 逻辑
-        void Run();
 
         // 查找房间
         KFBattleRoom* FindRoom( uint64 roomid, const char* function, uint32 line );

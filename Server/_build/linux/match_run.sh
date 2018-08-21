@@ -1,6 +1,6 @@
 
 basepath=$(cd `dirname $0`; pwd)
-cd /data/matchcluster
+cd /data/match
 
 
 if [ "$1" = "debug" ]; then

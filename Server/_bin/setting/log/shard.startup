@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="log" AppType="shard">
-	<Plugins>
-		<Plguin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
-		<Plguin Name="KFHttpClient" Startup="1" Sort="2" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plguin Name="KFBus" Startup="1" Sort="3" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plguin Name="KFIpAddress" Startup="1" Sort="4" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plguin Name="KFTimer" Startup="1" Sort="6" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plguin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plguin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plguin Name="KFClusterShard" Startup="1" Sort="40" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="70" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFTcpClient" Startup="1" Sort="80" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plguin Name="KFLogShard" Startup="1" Sort="90" Debug="KFLogShardd" Release="KFLogShard" Config=""/>
+<Setting>
+	<Plugins AppName="log" AppType="shard">
+		<Plugin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
+		<Plugin Name="KFHttpClient" Startup="1" Sort="2" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
+		<Plugin Name="KFBus" Startup="1" Sort="3" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
+		<Plugin Name="KFIpAddress" Startup="1" Sort="4" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Name="KFTimer" Startup="1" Sort="6" Debug="KFTimerd" Release="KFTimer" Config=""/>
+		<Plugin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
+		<Plugin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
+		<Plugin Name="KFClusterShard" Startup="1" Sort="40" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
+		<Plugin Name="KFTcpServer" Startup="1" Sort="70" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFTcpClient" Startup="1" Sort="80" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
+		<Plugin Name="KFLogShard" Startup="1" Sort="90" Debug="KFLogShardd" Release="KFLogShard" Config=""/>
 	</Plugins>
 </Setting>

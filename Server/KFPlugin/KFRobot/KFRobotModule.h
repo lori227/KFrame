@@ -30,6 +30,7 @@ namespace KFrame
         // 刷新
         virtual void BeforeRun();
         virtual void OnceRun();
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
@@ -49,7 +50,6 @@ namespace KFrame
 
     protected:
 
-        void Run();
 
         void ChangeState( const VectorString& param );
 

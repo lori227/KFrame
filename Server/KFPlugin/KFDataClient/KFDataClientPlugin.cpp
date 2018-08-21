@@ -6,13 +6,11 @@ namespace KFrame
     void KFDataClientPlugin::Install()
     {
         __REGISTER_MODULE__( KFDataClient );
-        _kf_plugin_manage->RegistModule< KFDataClientPlugin, KFDataClientInterface >( new KFDataClientModule() );
     }
 
     void KFDataClientPlugin::UnInstall()
     {
         __UNREGISTER_MODULE__( KFDataClient );
-        _kf_plugin_manage->UnRegistModule< KFDataClientPlugin, KFDataClientInterface >();
     }
 
     void KFDataClientPlugin::LoadModule()

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Setting AppName="public" AppType="shard" Common="./setting/common.startup">
-	<Plugins>
-		<Plguin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plguin Name="KFWorker" Startup="1" Sort="110" Debug="KFWorkerd" Release="KFWorker" Config=""/>
-		<Plguin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
-		<Plguin Name="KFRedis" Startup="1" Sort="130" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
-		<Plguin Name="KFSchedule" Startup="1" Sort="140" Debug="KFScheduled" Release="KFSchedule" Config=""/>
-		<Plguin Name="KFClusterShard" Startup="1" Sort="150" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plguin Name="KFPublicShard" Startup="1" Sort="160" Debug="KFPublicShardd" Release="KFPublicShard" Config=""/>
+<Setting>
+	<Plugins AppName="public" AppType="shard" Common="./setting/common.startup">
+		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFWorker" Startup="1" Sort="110" Debug="KFWorkerd" Release="KFWorker" Config=""/>
+		<Plugin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFRedis" Startup="1" Sort="130" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Name="KFSchedule" Startup="1" Sort="140" Debug="KFScheduled" Release="KFSchedule" Config=""/>
+		<Plugin Name="KFClusterShard" Startup="1" Sort="150" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
+		<Plugin Name="KFPublicShard" Startup="1" Sort="160" Debug="KFPublicShardd" Release="KFPublicShard" Config=""/>
 	</Plugins>
 </Setting>
