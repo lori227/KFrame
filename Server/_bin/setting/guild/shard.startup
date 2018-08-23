@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Setting>
-	<Plugins AppName="guild" AppType="shard" Common="./setting/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFClusterShard" Startup="1" Sort="110" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plugin Name="KFGuildShard" Startup="1" Sort="120" Debug="KFGuildShardd" Release="KFGuildShard" Config="./config/guild.config"/>
-		<Plugin Name="KFKernel" Startup="1" Sort="130" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
-	</Plugins>
-</Setting>

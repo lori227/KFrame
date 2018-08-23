@@ -86,7 +86,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_bin\win64\plugin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -115,7 +115,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_bin\win64\plugin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

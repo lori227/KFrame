@@ -31,40 +31,21 @@ if [ ! -n "$1" ]; then
 fi
 
 deploypath=/kframe/"$1"
-binpath=../../_bin/linux
-respath=../../../Resource
-settingpath=../../_bin/setting
+respath=../../../Bin
 
 mkdir -p $deploypath
+mkdir -p $deploypath/bin
 mkdir -p $deploypath/setting
-mkdir -p $deploypath/plugin
+mkdir -p $deploypath/startup
 mkdir -p $deploypath/config
 mkdir -p $deploypath/script
 
 #setting
-path1=$settingpath
-path2=$deploypath/setting
-copyfile 1 bus.relation
-copyfile 1 server.network
-copyfile 1 common.startup
-copyfile 1 cluster.setting
-copyfile 1 channel.setting
-copyfile 1 kernel.setting
-copyfile 1 ip.address
-copyfile 1 ftp.address
-copyfile 1 mysql.address
-copyfile 1 redis.address
-copyfile 1 zone.setting
-copyfile 1 dir.setting
-
 echo "copy setting"
-for file in `ls $settingpath`
-do
-	if [ -d $settingpath/$file ]; then
-		mkdir -p $deploypath/setting/$file
-		cp -f $settingpath/$file/* $deploypath/setting/$file/
-	fi
-done
+cp -f $respath/setting/* $deploypath/setting/
+
+echo "copy startup"
+cp -f $respath/startup/* $deploypath/startup/
 
 #config
 echo "copy config"
@@ -75,15 +56,7 @@ echo "copy script"
 cp -f $respath/script/* $deploypath/script/
 
 #plugin
-path1=$binpath
-path2=$deploypath
-copyfile 1 KFStartup
-copyfile 1 KFStartupd
-
-path1=$binpath
-path2=$deploypath/plugin
-
 echo "copy plugin"
-cp -f $path1/*.so $path2/
+cp -f $respath/bin/* $deploypath/binm
 
 

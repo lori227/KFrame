@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins AppName="mail" AppType="shard" Common="./startup/common.startup">
+		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFSchedule" Startup="1" Sort="110" Debug="KFScheduled" Release="KFSchedule" Config=""/>
+		<Plugin Name="KFWorker" Startup="1" Sort="120" Debug="KFWorkerd" Release="KFWorker" Config=""/>
+		<Plugin Name="KFOption" Startup="1" Sort="130" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>
+		<Plugin Name="KFRedis" Startup="1" Sort="140" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Name="KFClusterShard" Startup="1" Sort="150" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
+		<Plugin Name="KFMailShard" Startup="1" Sort="160" Debug="KFMailShardd" Release="KFMailShard" Config=""/>
+
+	</Plugins>
+</Setting>

@@ -161,15 +161,14 @@ namespace KFrame
     {
         __LOG_DEBUG__( KFLogEnum::Login, "client[{}] disconnection!", handleid );
 
-        KFMsg::S2SPlayerDisconnectionReq req;
-        req.set_playerid( handleid );
-
         auto kfrole = FindRole( handleid );
         if ( kfrole == nullptr )
         {
             return;
         }
 
+        KFMsg::S2SPlayerDisconnectionReq req;
+        req.set_playerid( handleid );
         kfrole->SendMessageToGame( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &req );
 
         // 删除玩家
@@ -266,7 +265,7 @@ namespace KFrame
             _kf_display->SendToClient( playerid, result );
 
             // 断开连接, 客户端重新走登录流程
-            _kf_tcp_server->CloseNetHandle( playerid, 1000, __FUNC_LINE__ );
+            _kf_tcp_server->CloseNetHandle( sessionid, 1000, __FUNC_LINE__ );
         }
         else
         {
@@ -303,14 +302,14 @@ namespace KFrame
         auto playerid = __KF_HEAD_ID__( kfguid );
         __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login out!", playerid );
 
-        // 断开链接
-        _kf_tcp_server->CloseNetHandle( playerid, 1000, __FUNC_LINE__ );
-
         auto kfrole = FindRole( playerid );
         if ( kfrole == nullptr )
         {
             return;
         }
+
+        // 断开链接
+        _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );
 
         KFMsg::S2SLoginOutReq req;
         req.set_playerid( playerid );

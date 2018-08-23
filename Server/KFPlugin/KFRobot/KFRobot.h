@@ -269,6 +269,7 @@ namespace KFrame
         std::string _gate_port;
         std::string _gate_name;
         std::string _token;
+        bool _connect_ing;
 
 
     public:

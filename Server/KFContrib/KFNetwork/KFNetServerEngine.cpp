@@ -91,7 +91,7 @@ namespace KFrame
         auto kfhandle = _kf_handles.First();
         while ( kfhandle != nullptr )
         {
-            handlelist.push_back( kfhandle->_id );
+            handlelist.push_back( kfhandle->_object_id );
             kfhandle = _kf_handles.Next();
         }
     }
@@ -131,11 +131,13 @@ namespace KFrame
         }
         else
         {
-            auto ok = _kf_handles.Remove( eventdata->_id );
-            if ( ok )
+            auto kfhandle = _kf_handles.Find( eventdata->_id );
+            if ( kfhandle != nullptr )
             {
-                __LOG_DEBUG__( KFLogEnum::Net, "handle[{}:{}] shutdown ok!", eventdata->_id, KFAppID::ToString( eventdata->_id ) );
+                __LOG_DEBUG__( KFLogEnum::Net, "handle[{}:{}:{}] shutdown ok!", kfhandle->_session_id, kfhandle->_object_id, KFAppID::ToString( kfhandle->_object_id ) );
             }
+
+            _kf_handles.Remove( eventdata->_id );
         }
     }
 
@@ -147,7 +149,7 @@ namespace KFrame
             // 断开连接
             if ( _server_lost_function != nullptr )
             {
-                _server_lost_function( kfhandle->_app_id, kfhandle->_app_name, kfhandle->_app_type );
+                _server_lost_function( kfhandle->_session_id, kfhandle->_app_name, kfhandle->_app_type );
             }
         }
         else
@@ -189,9 +191,10 @@ namespace KFrame
 
         // 从代理列表中删除
         _remove_trustees[ trusteeid ] = false;
-        kfhandle->SetID( objectid );
-        kfhandle->_is_trustee = false;
 
+        kfhandle->_is_trustee = false;
+        kfhandle->_session_id = handleid;
+        kfhandle->_object_id = objectid;
         _kf_handles.Insert( handleid, kfhandle );
         return kfhandle;
     }
@@ -204,7 +207,7 @@ namespace KFrame
             return false;
         }
 
-        kfhandle->SetID( objectid );
+        kfhandle->_object_id = objectid;
         return true;
     }
 
@@ -316,9 +319,9 @@ namespace KFrame
         auto kfhandle = _kf_handles.First();
         while ( kfhandle != nullptr )
         {
-            if ( kfhandle->_id != excludeid )
+            if ( kfhandle->_object_id != excludeid )
             {
-                kfhandle->SendNetMessage( kfhandle->_id, msgid, data, length );
+                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
             }
 
             kfhandle = _kf_handles.Next();
@@ -332,7 +335,7 @@ namespace KFrame
         {
             if ( kfhandle->_app_name == name )
             {
-                kfhandle->SendNetMessage( kfhandle->_id, msgid, data, length );
+                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
             }
 
             kfhandle = _kf_handles.Next();
@@ -346,7 +349,7 @@ namespace KFrame
         {
             if ( kfhandle->_app_type == type )
             {
-                kfhandle->SendNetMessage( kfhandle->_id, msgid, data, length );
+                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
             }
 
             kfhandle = _kf_handles.Next();

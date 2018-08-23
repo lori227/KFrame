@@ -80,6 +80,9 @@ namespace KFrame
         // 玩家上线回调
         void OnEnterQueryMatchRoom( KFEntity* player );
 
+        // 通知匹配状态到队伍中
+        void UpdateMatchStateToGroup( KFEntity* player, uint32 matchid );
+
     private:
         KFComponent* _kf_component;
 

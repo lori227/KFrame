@@ -107,7 +107,7 @@ namespace KFrame
     void KFNetClient::OnDisconnect( const char* error, int32 code )
     {
         KFNetSession::OnDisconnect( error, code );
-        _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _id );
+        _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _net_setting._id );
 
         if ( !_is_shutdown )
         {

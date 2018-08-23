@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Setting>
-	<Plugins AppName="relation" AppType="proxy" Common="./setting/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-    	<Plugin Name="KFClusterProxy" Startup="1" Sort="110" Debug="KFClusterProxyd" Release="KFClusterProxy" Config=""/>
-   		<Plugin Name="KFRelationProxy" Startup="1" Sort="120" Debug="KFRelationProxyd" Release="KFRelationProxy" Config=""/>
-	</Plugins>
-</Setting>

@@ -18,7 +18,7 @@ namespace KFrame
     {
         if ( !kfrobot->_gate_ip.empty() && !kfrobot->_gate_port.empty() )
         {
-            kfrobot->ChangeState( RobotStateEnum::LoginVerify );
+            kfrobot->ChangeState( RobotStateEnum::LoginGame );
         }
     }
 
@@ -29,6 +29,7 @@ namespace KFrame
             return;
         }
 
+        kfrobot->_connect_ing = false;
         // 发送认证消息
         KFJson sendjson;
         sendjson.SetValue( __KF_STRING__( channel ), _kf_robot_config->_verify_channel );

@@ -157,7 +157,7 @@ namespace KFrame
     void KFMatchClientModule::FormatMatchGroup( KFEntity* player, KFMsg::PBMatchGroup* pbgroup )
     {
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             groupid = kfobject->GetKeyID();
@@ -196,33 +196,31 @@ namespace KFrame
 
         // 成就信息
         auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
-        //auto kfachieve = kfachieves->FirstData();
-        auto pbacievedatas = pbplayer->mutable_achieve();
-        _kf_achieve->FormatBattleAchieve( kfachieves, pbacievedatas );
+        _kf_achieve->FormatBattleAchieve( kfachieves, pbplayer->mutable_achieve() );
     }
-
-
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleCancelMatchReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelMatchReq );
 
         auto kfobject = player->GetData();
-        uint32 matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
         if ( matchid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::MatchNotInMatch );
         }
 
-        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+        // 如果已经在房间中
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        if ( roomid != _invalid_int )
+        {
+            return _kf_display->SendToClient( player, KFMsg::MatchCancelInBattle );
+        }
 
         {
-            _kf_display->SendToClient( player, KFMsg::MatchCancelSuccess );
-
-            //// 发送给队伍
-            //KFMsg::MsgCancelMatchAck ack;
-            //ack.set_matchid( matchid );
-            //_kf_player->SendMessageToGroup( player, KFMsg::MSG_CANCEL_MATCH_ACK, &ack );
+            UpdateMatchStateToGroup( player, _invalid_int );
+            _kf_display->SendToGroup( player, KFMsg::MatchCancelSuccess );
+            player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
         }
 
         {
@@ -245,12 +243,23 @@ namespace KFrame
 
         if ( kfmsg.result() == KFMsg::MatchRequestSuccess )
         {
+            UpdateMatchStateToGroup( player, kfmsg.matchid() );
             player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-
-            KFMsg::S2SNoticeMatchStateReq req;
-            req.set_matchid( kfmsg.matchid() );
-            _kf_player->SendMessageToGroup( player, KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &req, false );
         }
+    }
+
+    void KFMatchClientModule::UpdateMatchStateToGroup( KFEntity* player, uint32 matchid )
+    {
+        KFMsg::S2SNoticeMatchStateReq req;
+        req.set_matchid( matchid );
+        _kf_player->SendMessageToGroup( player, KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &req, false );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleNoticeMatchStateAck )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchStateReq );
+
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
     }
 
     void KFMatchClientModule::OnEnterQueryMatchRoom( KFEntity* player )
@@ -265,6 +274,7 @@ namespace KFrame
         auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
+            // roomid不为0, 在battleclient里处理
             return;
         }
 
@@ -282,7 +292,6 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMatchRoomAck );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFMatchClientModule::OnMatchIdUpdateCallBack )
@@ -296,7 +305,7 @@ namespace KFrame
         }
         else
         {
-            auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+            auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
             if ( groupid != _invalid_int )
             {
                 player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
@@ -307,12 +316,4 @@ namespace KFrame
             }
         }
     }
-
-    __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleNoticeMatchStateAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchStateReq );
-
-        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-    }
-
 }

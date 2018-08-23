@@ -9,7 +9,6 @@ namespace KFrame
     {
         _uv_tcp = nullptr;
 
-        _app_id = 0;
         _is_trustee = true;
         _listen_port = 0;
         _trustee_timeout = 0;
@@ -23,7 +22,6 @@ namespace KFrame
 
     void KFNetHandle::InitHandle( uint32 id, void* uvtcp, KFNetServerServices* netservices )
     {
-        SetID( id );
         _is_trustee = true;
         _net_services = netservices;
         InitConnector( id, netservices );
@@ -44,12 +42,6 @@ namespace KFrame
         }
 
         OnConnect( reinterpret_cast< uv_stream_t* >( _uv_tcp ) );
-    }
-
-    void KFNetHandle::SetID( uint32 id )
-    {
-        _id = id;
-        _app_id = id;
     }
 
     bool KFNetHandle::IsServer() const
@@ -75,7 +67,7 @@ namespace KFrame
     void KFNetHandle::OnDisconnect( const char* error, int32 code )
     {
         KFNetSession::OnDisconnect( error, code );
-        _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _id );
+        _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _session_id );
     }
 
     void KFNetHandle::CloseHandle()
@@ -100,6 +92,6 @@ namespace KFrame
         auto nethandle = reinterpret_cast< KFNetHandle* >( handle->data );
 
         uint64 istrustee = nethandle->_is_trustee ? 1 : 0;
-        nethandle->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, nethandle->_id, reinterpret_cast< void*>( istrustee ) );
+        nethandle->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, nethandle->_session_id, reinterpret_cast< void*>( istrustee ) );
     }
 }

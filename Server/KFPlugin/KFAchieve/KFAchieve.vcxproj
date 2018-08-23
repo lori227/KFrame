@@ -90,7 +90,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_bin\win64\plugin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,7 +118,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_bin\win64\plugin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

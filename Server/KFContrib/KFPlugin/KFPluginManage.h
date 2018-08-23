@@ -18,30 +18,50 @@
         pluginmanage->UnRegistPlugin< classname >();\
     }\
 
+#if __KF_SYSTEM__ == __KF_WIN__
+#define __CHECK_PLUGIN_FUNCTION__( name, function )\
+    if ( &KFModule::function != &name##Module::function )\
+
+#else
+#define __CHECK_PLUGIN_FUNCTION__( name, function )\
+    KFModule kfbase;\
+    void ( KFModule::*basemfp )() = &KFModule::function; \
+    auto bassaddress = ( void* )( kfbase.*basemfp ); \
+    auto kfmodule = static_cast < name##Module* >( _kf_module );\
+    void ( name##Module::*childmfp )() = &name##Module::function; \
+    auto childaddress = (void*)( kfmodule->*childmfp );\
+    if ( bassaddress != childaddress )\
+
+#endif
+
+#define __REGISTER_PLUGIN_FUNCTION__( name, function )\
+    {\
+        __CHECK_PLUGIN_FUNCTION__( name, function )\
+        {   \
+            _kf_plugin_manage->Register##function##Function< name##Module >( _sort, kfmodule, &name##Module::function );\
+        }\
+    }
+
+#define __UNREGISTER_PLUGIN_FUNCTION__( name, function )\
+    {\
+        __CHECK_PLUGIN_FUNCTION__( name, function )\
+        {   \
+            _kf_plugin_manage->UnRegister##function##Function( _sort );\
+        }\
+    }
+
 // 注册模块
 #define __REGISTER_MODULE__( name ) \
     auto kfmodule = new name##Module();\
     _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( kfmodule );\
-    if ( &name##Module::Run != &KFModule::Run )\
-    {\
-        _kf_plugin_manage->RegisterRunFunction< name##Module >( _sort, kfmodule, &name##Module::Run );\
-    }\
-    if ( &name##Module::AfterRun != &KFModule::AfterRun )\
-    {\
-        _kf_plugin_manage->RegisterAfterRunFunction< name##Module >( _sort, kfmodule, &name##Module::AfterRun );\
-    }
+    __REGISTER_PLUGIN_FUNCTION__( name, Run );\
+    __REGISTER_PLUGIN_FUNCTION__( name, AfterRun );\
 
 // 卸载模块
 #define __UNREGISTER_MODULE__( name ) \
+    __UNREGISTER_PLUGIN_FUNCTION__( name, Run );\
+    __UNREGISTER_PLUGIN_FUNCTION__( name, AfterRun );\
     _kf_plugin_manage->UnRegistModule< name##Plugin >();\
-    if ( &name##Module::Run != &KFModule::Run )\
-    {\
-        _kf_plugin_manage->UnRegisterRunFunction( _sort );\
-    }\
-    if ( &name##Module::AfterRun != &KFModule::AfterRun )\
-    {\
-        _kf_plugin_manage->UnRegisterAfterRunFunction( _sort );\
-    }
 
 #define __FIND_MODULE__( module, classname ) \
     module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )

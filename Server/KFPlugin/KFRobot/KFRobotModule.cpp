@@ -23,7 +23,7 @@ namespace KFrame
 
     void KFRobotModule::BeforeRun()
     {
-        __REGISTER_RUN_FUNCTION__( &KFRobotModule::Run );
+        //__REGISTER_RUN_FUNCTION__( &KFRobotModule::Run );
 
         _net_client = __KF_NEW__( KFNetClientEngine );
         _net_client->InitEngine( 10000 );
@@ -59,7 +59,7 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         __UNREGISTER_TIMER__();
-        __UNREGISTER_RUN_FUNCTION__();
+        //__UNREGISTER_RUN_FUNCTION__();
     }
 
     void KFRobotModule::OnceRun()
@@ -173,7 +173,7 @@ namespace KFrame
 
         kfrobot->_playerid = kfmsg.playerid();
         KFRobotPolicMgr::Instance()->PushSortRoleInfo( kfmsg.playerid() );
-        kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( kfmsg.playerid() );
+        //kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( kfmsg.playerid() );
         kfrobot->_connect_token = kfmsg.token();
         kfrobot->_connect_ip = kfmsg.ip();
         kfrobot->_connect_port = kfmsg.port();
@@ -187,6 +187,10 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgEnterGame );
         //std::cout << "HandleEnterGame : " << kfmsg.DebugString() << std::endl;
+        // 初始化机器人状态机
+        kfrobot->_playerid = robotid;
+        kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( robotid );
+
         auto playerdata = kfmsg.mutable_playerdata();
         auto player = _kf_component->CreateEntity( kfrobot->_playerid, playerdata );
 
@@ -239,6 +243,13 @@ namespace KFrame
             kfrobot->ChangeState( kfrobot->_state_list->_state );
         }
         break;
+
+        case KFMsg::LoadDataFailed:
+        {
+            kfrobot->ChangeState( RobotStateEnum::AuthState );
+            kfrobot->DisconnectServer( 2 );
+
+        }
 
         case KFMsg::NameAlreadyExist:
         case KFMsg::NameEmpty:

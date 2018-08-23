@@ -31,8 +31,8 @@ namespace KFrame
         if ( kfrobot->_state != 1000 )
         {
             //创建连接
-            kfrobot->ConnectServer( kfrobot->_gate_server_type, kfrobot->_robot_id,
-                                    kfrobot->_gate_name, kfrobot->_gate_ip, atoi( kfrobot->_gate_port.c_str() ) );
+            //kfrobot->ConnectServer( kfrobot->_gate_server_type, kfrobot->_robot_id,
+            // kfrobot->_gate_name, kfrobot->_gate_ip, atoi( kfrobot->_gate_port.c_str() ) );
         }
 
     }

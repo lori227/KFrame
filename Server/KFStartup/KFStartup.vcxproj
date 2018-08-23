@@ -91,7 +91,7 @@
       </AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\_bin\win64\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\Bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -121,7 +121,7 @@
       </AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\_bin\win64\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\Bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

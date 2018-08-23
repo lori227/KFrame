@@ -78,7 +78,7 @@ message S2SCancelMatchToProxyReq
 message S2SCancelMatchToShardReq
 {
 	required uint32 matchid = 1;	// 匹配模式	
-	required uint32 playerid = 2;	// 玩家id	
+	required uint32 playerid = 2;	// 玩家id		
 }
 
 // 取消匹配

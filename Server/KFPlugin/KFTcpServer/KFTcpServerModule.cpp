@@ -168,7 +168,7 @@ namespace KFrame
         for ( auto& iter : _kf_discover_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( tcphandle->_id, tcphandle->_app_name, tcphandle->_app_type, tcphandle->_listen_ip, tcphandle->_listen_port );
+            kffunction->_function( tcphandle->_object_id, tcphandle->_app_name, tcphandle->_app_type, tcphandle->_listen_ip, tcphandle->_listen_port );
         }
     }
 
@@ -188,7 +188,7 @@ namespace KFrame
         for ( auto& iter : _kf_lost_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( tcphandle->_id, tcphandle->_app_name, tcphandle->_app_type );
+            kffunction->_function( tcphandle->_object_id, tcphandle->_app_name, tcphandle->_app_type );
         }
     }
 
@@ -284,7 +284,7 @@ namespace KFrame
         listendata->set_zoneid( kfhandle->_zone_id );
         listendata->set_ip( kfhandle->_listen_ip );
         listendata->set_port( kfhandle->_listen_port );
-        SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, kfhandle->_id );
+        SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, kfhandle->_object_id );
     }
 
     void KFTcpServerModule::SendRegisterToServerToHandle( KFNetHandle* kfhandle )
@@ -303,7 +303,7 @@ namespace KFrame
             listendata->set_zoneid( nethandle->_zone_id );
             listendata->set_ip( nethandle->_listen_ip );
             listendata->set_port( nethandle->_listen_port );
-            SendNetMessage( kfhandle->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+            SendNetMessage( kfhandle->_object_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
         }
     }
 
@@ -321,10 +321,10 @@ namespace KFrame
         tell.set_zoneid( kfhandle->_zone_id );
         tell.set_servername( KFGlobal::Instance()->_app_name );
         tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
-        SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_id );
+        SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_object_id );
 
         __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] lost connect!",
-                       kfhandle->_app_name, kfhandle->_app_type, KFAppID::ToString( kfhandle->_id ),
+                       kfhandle->_app_name, kfhandle->_app_type, KFAppID::ToString( kfhandle->_app_id ),
                        kfhandle->_listen_ip, kfhandle->_listen_port );
     }
 

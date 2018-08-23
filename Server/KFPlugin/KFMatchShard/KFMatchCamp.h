@@ -54,6 +54,9 @@ namespace KFrame
         // 阵营id
         uint32 _camp_id;
 
+        // 房间id
+        uint64 _room_id;
+
         // 分配战场定时器
         KFClockTimer _enter_timer;
 

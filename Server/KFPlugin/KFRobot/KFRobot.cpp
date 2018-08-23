@@ -51,7 +51,7 @@ namespace KFrame
         _account = __TO_STRING__( robotid );
         _net_client = netclient;
         _kf_component = kfcomponent;
-
+        _connect_ing = false;
         ChangeState( RobotStateEnum::AuthState );
     }
 
@@ -101,7 +101,7 @@ namespace KFrame
 
     void KFRobot::OnConnectSendMessage()
     {
-        if ( RobotStateEnum::LoginVerify == _state )
+        if ( RobotStateEnum::LoginGame == _state )
         {
             KFMsg::MsgLoginVerifyReq req;
             req.set_accountid( _accountid );
@@ -109,13 +109,13 @@ namespace KFrame
             SendNetMessage( KFMsg::MSG_LOGIN_VERIFY_REQ, &req );
         }
 
-        else if ( RobotStateEnum::LoginGame == _state )
-        {
-            KFMsg::MsgLoginGameReq req;
-            req.set_playerid( _playerid );
-            req.set_token( _connect_token );
-            SendNetMessage( KFMsg::MSG_LOGIN_GAME_REQ, &req );
-        }
+        /* else if ( RobotStateEnum::LoginGame == _state )
+         {
+             KFMsg::MsgLoginGameReq req;
+             req.set_playerid( _playerid );
+             req.set_token( _connect_token );
+             SendNetMessage( KFMsg::MSG_LOGIN_GAME_REQ, &req );
+         }*/
     }
 
     void KFRobot::SendNetMessage( uint32 msgid, google::protobuf::Message* message )

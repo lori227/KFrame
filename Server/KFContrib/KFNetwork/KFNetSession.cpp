@@ -7,7 +7,6 @@ namespace KFrame
 {
     KFNetSession::KFNetSession()
     {
-        _id = 0;
         _send_length = 0;
         _receive_length = 0;
         _uv_stream = nullptr;
@@ -29,7 +28,8 @@ namespace KFrame
 
     void KFNetSession::InitSession( uint32 id, uint32 queuecount )
     {
-        _id = id;
+        _session_id = id;
+        _object_id = id;
         _uv_write.data = this;
         _send_queue.InitQueue( queuecount );
         _recv_queue.InitQueue( queuecount );
@@ -294,12 +294,12 @@ namespace KFrame
     void KFNetSession::OnDisconnect( const char* error, int32 code )
     {
         _is_connected = false;
-        __LOG_DEBUG__( KFLogEnum::Net, "session[{}] disconnect[{}:{}]!", _id, error, code );
+        __LOG_DEBUG__( KFLogEnum::Net, "session[{}:{}] disconnect[{}:{}]!", _session_id, _object_id, error, code );
     }
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
     {
-        message->_guid._head_id = _id;
+        message->_guid._head_id = _object_id;
         bool ok = _send_queue.PushObject( message );
         if ( !ok )
         {
@@ -320,7 +320,7 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        message->_guid._head_id = _id;
+        message->_guid._head_id = _object_id;
         auto ok = _recv_queue.PushObject( message );
         if ( !ok )
         {

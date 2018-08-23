@@ -100,6 +100,7 @@ namespace KFrame
     void KFMatchRoom::AddCamp( KFMatchCamp* kfcamp )
     {
         kfcamp->_camp_id = ++_camp_id_maker;
+        kfcamp->_room_id = _battle_room_id;
         kfcamp->_kf_match_queue = _kf_match_queue;
         for ( auto iter : kfcamp->_kf_player_list._objects )
         {

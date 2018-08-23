@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins AppName="zone" AppType="world" Common="./startup/common.startup">
+		<Plugin Name="KFHttpServer" Startup="1" Sort="100" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFTcpServer" Startup="1" Sort="120" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFZone" Startup="1" Sort="130" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
+		<Plugin Name="KFWorld" Startup="1" Sort="140" Debug="KFWorldd" Release="KFWorld" Config=""/>
+	</Plugins>
+</Setting>

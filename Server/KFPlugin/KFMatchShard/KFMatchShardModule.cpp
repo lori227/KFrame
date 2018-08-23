@@ -84,8 +84,7 @@ namespace KFrame
         auto kfsetting = _kf_match_config->FindMatchSetting( kfmsg.matchid() );
         if ( kfsetting == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "can't find matchsetting[{}]!", kfmsg.matchid() );
-            return;
+            return __LOG_ERROR__( KFLogEnum::System, "can't find matchsetting[{}]!", kfmsg.matchid() );
         }
 
         auto kfmatchqueue = _kf_match_queue.Find( kfmsg.matchid() );

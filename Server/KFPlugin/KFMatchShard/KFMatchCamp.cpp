@@ -6,6 +6,7 @@ namespace KFrame
     KFMatchCamp::KFMatchCamp()
     {
         _camp_id = 0;
+        _room_id = 0;
 
         // 启动加入定时器
         _enter_timer.StartTimer( 1, 5000 );

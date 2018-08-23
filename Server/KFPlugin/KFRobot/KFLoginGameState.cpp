@@ -25,9 +25,14 @@ namespace KFrame
         {
             return;
         }
-
+        if ( kfrobot->_connect_ing )
+        {
+            return;
+        }
 
         kfrobot->ConnectServer( kfrobot->_gate_server_type, kfrobot->_robot_id,
-                                "robot", kfrobot->_connect_ip, kfrobot->_connect_port );
+                                "robot", kfrobot->_gate_ip, KFUtility::ToValue<uint32>( kfrobot->_gate_port ) );
+        kfrobot->_connect_ing = true;
+
     }
 }

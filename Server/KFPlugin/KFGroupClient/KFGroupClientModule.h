@@ -24,6 +24,23 @@
 
 namespace KFrame
 {
+
+    class KFInviteGroup
+    {
+    public:
+        KFInviteGroup()
+        {
+            _match_id = 0;
+            _max_count = 0;
+            _group_id = 0;
+        }
+
+    public:
+        uint32 _match_id;
+        uint32 _max_count;
+        uint64 _group_id;
+    };
+
     class KFGroupClientModule : public KFGroupClientInterface
     {
     public:
@@ -140,11 +157,14 @@ namespace KFrame
         // 删除队员回调
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveGroupMemberCallBack );
     private:
+        // 创建邀请队伍信息
+        KFInviteGroup* CreateInviteGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
+
         // 准备匹配小队
         uint64 PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount );
 
         // 创建匹配小队
-        bool CreateMatchGroup( KFEntity* player, uint64 groupid );
+        bool CreateMatchGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount );
 
         // 格式化队伍成员
         void FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject );
@@ -160,12 +180,16 @@ namespace KFrame
 
         // 获得队伍当前数量
         uint32 GetGroupMemberCount( KFData* kfobject );
+
     private:
         // 匹配队伍成员
         KFData* _kf_group_member;
 
         // 组件
         KFComponent* _kf_component;
+
+        // 邀请列表
+        KFMap< uint32, uint32, KFInviteGroup > _invite_group_list;
     };
 }
 

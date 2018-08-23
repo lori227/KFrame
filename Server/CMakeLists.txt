@@ -40,7 +40,7 @@ include_directories(
 
 set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
 set(LIB_DIR ${ROOT_DIR}/_lib/linux)
-set(BIN_DIR ${ROOT_DIR}/_bin/linux)
+set(BIN_DIR ${ROOT_DIR}/../Bin/bin)
 
 LINK_DIRECTORIES("/usr/local/lib" "/usr/lib64/mysql")
 LINK_DIRECTORIES("${ROOT_DIR}/_lib/linux")
@@ -62,7 +62,7 @@ endif()
 
 message("${CMAKE_CXX_FLAGS}")
 ADD_DEFINITIONS(
- -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-strict-aliasing
+ -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-strict-aliasing -Wno-pmf-conversions
 )
 
 set(LDFLAGS "$ENV{LDFLAGS} -stdlib=libc++")

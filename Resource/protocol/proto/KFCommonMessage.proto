@@ -166,7 +166,12 @@ enum AckEnum
 	SignInDataError				= 162;		// 签到配置错误
 	SignInRewardAlready			= 163;		// 已经领取签到奖励
 	DirServerBusy				= 164;		// 目录服务器忙
-	
+	GroupTargetInMatch			= 165;		// <Text>%s</Text>正在匹配中!
+	GroupInMatch				= 166;		// 已经在匹配中不能加入队伍!
+	GroupKickInMatch			= 167;		// 已经在匹配中不能踢人
+	GroupLeaveInMatch			= 168;		// 已经在匹配中不能离开队伍
+	MatchCancelInBattle			= 169;		// 已经战斗中不能取消匹配
+
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
 	FriendApplyCountOver		= 10001;	// 申请列表已满

@@ -83,7 +83,6 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SMatchToProxyReq );
         auto clientid = __KF_HEAD_ID__( kfguid );
 
-        // auto shardid = FindMatchShard( kfmsg.matchid(), kfmsg.playerid() );
         auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )
         {
@@ -99,9 +98,9 @@ namespace KFrame
         // 发送消息
         KFMsg::S2SMatchToShardReq req;
         req.set_matchid( kfmsg.matchid() );
-        req.set_allowgroup( kfmsg.allowgroup() );
         req.set_playerid( kfmsg.playerid() );
         req.set_serverid( kfmsg.serverid() );
+        req.set_allowgroup( kfmsg.allowgroup() );
         req.mutable_pbgroup()->CopyFrom( kfmsg.pbgroup() );
         _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_MATCH_TO_SHARD_REQ, &req );
     }
@@ -110,7 +109,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryMatchRoomReq );
 
-        auto shardid = FindMatchShard( kfmsg.matchid(), kfmsg.playerid() );
+        auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )
         {
             __LOG_ERROR__( KFLogEnum::Logic, "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
@@ -134,7 +133,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToProxyReq );
 
-        auto shardid = FindMatchShard( kfmsg.matchid(), kfmsg.playerid() );
+        auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )
         {
             return;

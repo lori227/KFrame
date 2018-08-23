@@ -41,6 +41,7 @@ mkdir -p $deploypath/setting
 mkdir -p $deploypath/plugin
 mkdir -p $deploypath/config
 mkdir -p $deploypath/script
+mkdir -p $deploypath/startup
 
 #setting
 path1=$versionpath/setting
@@ -48,17 +49,18 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 common.startup
 copyfile 1 cluster.setting
 copyfile 1 zone.setting
 copyfile 1 kernel.setting
 
-path1=$versionpath/setting/zone
-copyfile 1 gate.startup
-copyfile 1 login.startup
-copyfile 1 master.startup
-copyfile 1 game.startup
-copyfile 1 world.startup
+path1=$versionpath/startup
+path2=$deploypath/startup
+copyfile 1 zone.gate.startup
+copyfile 1 zone.login.startup
+copyfile 1 zone.master.startup
+copyfile 1 zone.game.startup
+copyfile 1 zone.world.startup
+copyfile 1 common.startup
 
 #config
 cp -f $versionpath/config/* $deploypath/config/
@@ -67,12 +69,12 @@ cp -f $versionpath/config/* $deploypath/config/
 cp -f $versionpath/script/* $deploypath/script/
 
 #plugin
-path1=$versionpath
+path1=$versionpath/bin
 path2=$deploypath
 copyfile 1 KFStartup zoneserver
 copyfile 1 KFStartupd zoneserverd
 
-path1=$versionpath/plugin
+path1=$versionpath/bin
 path2=$deploypath/plugin
 copyfile 1 KFAchieve.so
 copyfile 1 KFAchieved.so

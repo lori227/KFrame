@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins AppName="zone" AppType="game" Common="./startup/common.startup">
+		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Name="KFDisplay" Startup="1" Sort="110" Debug="KFDisplayd" Release="KFDisplay" Config=""/>	
+		<Plugin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFZone" Startup="1" Sort="130" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
+		<Plugin Name="KFGame" Startup="1" Sort="140" Debug="KFGamed" Release="KFGame" Config=""/>
+		<Plugin Name="KFClusterClient" Startup="1" Sort="160" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/cluster.setting"/>
+		<Plugin Name="KFRouteClient" Startup="1" Sort="161" Debug="KFRouteClientd" Release="KFRouteClient" Config=""/>
+		<Plugin Name="KFDataClient" Startup="1" Sort="162" Debug="KFDataClientd" Release="KFDataClient" Config=""/>
+		<Plugin Name="KFMailClient" Startup="1" Sort="163" Debug="KFMailClientd" Release="KFMailClient" Config="./config/mail.config"/>
+		<Plugin Name="KFPublicClient" Startup="1" Sort="164" Debug="KFPublicClientd" Release="KFPublicClient" Config=""/>
+		<Plugin Name="KFRelationClient" Startup="1" Sort="165" Debug="KFRelationClientd" Release="KFRelationClient" Config="./config/relation.config"/>
+		<Plugin Name="KFMatchClient" Startup="1" Sort="166" Debug="KFMatchClientd" Release="KFMatchClient" Config="./config/match.config"/>
+		<Plugin Name="KFBattleClient" Startup="1" Sort="167" Debug="KFBattleClientd" Release="KFBattleClient" Config=""/>
+		<Plugin Name="KFGroupClient" Startup="1" Sort="168" Debug="KFGroupClientd" Release="KFGroupClient" Config=""/>
+		<Plugin Name="KFRankClient" Startup="1" Sort="169" Debug="KFRankClientd" Release="KFRankClient" Config="./config/rank.config"/>
+		<Plugin Name="KFKernel" Startup="1" Sort="180" Debug="KFKerneld" Release="KFKernel" Config="./setting/kernel.setting"/>
+		<Plugin Name="KFPlayer" Startup="1" Sort="190" Debug="KFPlayerd" Release="KFPlayer" Config=""/>
+		<Plugin Name="KFChat" Startup="1" Sort="200" Debug="KFChatd" Release="KFChat" Config="./config/chat.config"/>
+		<Plugin Name="KFLua" Startup="1" Sort="210" Debug="KFLuad" Release="KFLua" Config=""/>
+		<Plugin Name="KFEnter" Startup="1" Sort="220" Debug="KFEnterd" Release="KFEnter" Config="./config/enter.config"/>
+		<Plugin Name="KFReset" Startup="1" Sort="230" Debug="KFResetd" Release="KFReset" Config="./config/reset.config"/>
+		<Plugin Name="KFItem" Startup="1" Sort="240" Debug="KFItemd" Release="KFItem" Config="./config/item.config"/>
+		<Plugin Name="KFDebug" Startup="1" Sort="250" Debug="KFDebugd" Release="KFDebug" Config=""/>
+		<Plugin Name="KFAchieve" Startup="1" Sort="260" Debug="KFAchieved" Release="KFAchieve" Config="./config/achieve.config"/>
+		<Plugin Name="KFStore" Startup="1" Sort="270" Debug="KFStored" Release="KFStore" Config="./config/store.config"/>
+		<Plugin Name="KFClothes" Startup="1" Sort="280" Debug="KFClothesd" Release="KFClothes" Config="./config/clothes.config"/>
+		<Plugin Name="KFSignIn" Startup="1" Sort="290" Debug="KFSignInd" Release="KFSignIn" Config="./config/signin.config"/>
+	</Plugins>
+</Setting>

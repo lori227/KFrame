@@ -25,9 +25,6 @@ namespace KFrame
         // 断开事件
         virtual void OnDisconnect( const char* error, int32 code );
 
-        // 设置id
-        void SetID( uint32 id );
-
         // 是否是服务器
         bool IsServer() const;
 

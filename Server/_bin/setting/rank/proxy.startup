@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Setting>
-	<Plugins AppName="rank" AppType="proxy" Common="./setting/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-    	<Plugin Name="KFClusterProxy" Startup="1" Sort="120" Debug="KFClusterProxyd" Release="KFClusterProxy" Config=""/>
-   		<Plugin Name="KFRankProxy" Startup="1" Sort="130" Debug="KFRankProxyd" Release="KFRankProxy" Config=""/>
-	</Plugins>
-</Setting>

@@ -20,6 +20,8 @@ namespace KFrame
 
         // 离开状态
         virtual void LeaveState( KFRobot* kfrobot );
+
+
     };
 }
 

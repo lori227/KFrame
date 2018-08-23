@@ -84,8 +84,11 @@ namespace KFrame
         bool CheckBufferLength( uint32 totallength, uint32 messagelength );
 
     public:
-        // 标识id
-        uint32 _id;
+        // 连接id
+        uint32 _session_id;
+
+        // 绑定对象id
+        uint32 _object_id;
 
         // 是否已经连接
         volatile bool _is_connected;

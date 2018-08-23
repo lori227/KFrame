@@ -144,43 +144,54 @@ namespace KFrame
     __KF_REMOVE_DATA_FUNCTION__( KFGroupClientModule::OnRemoveGroupMemberCallBack )
     {
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-
-        // 有队伍才更新
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
-        if ( groupid == _invalid_int )
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+        if ( groupid != _invalid_int )
         {
-            return;
+            // 有队伍才更新
+            auto nowcount = kfparent->Size();
+            player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
         }
-
-        auto nowcount = kfparent->Size();
-        player->UpdateData( kfbasic, __KF_STRING__( nowgroupcount ), KFOperateEnum::Set, nowcount );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFInviteGroup* KFGroupClientModule::CreateInviteGroup( KFEntity* player, uint32 matchid, uint32 maxcount )
+    {
+        auto kfinvite = _invite_group_list.Find( player->GetKeyID() );
+        if ( kfinvite == nullptr )
+        {
+            kfinvite = __KF_CREATE__( KFInviteGroup );
+            kfinvite->_match_id = matchid;
+            kfinvite->_max_count = maxcount;
+            kfinvite->_group_id = KFUtility::Make64Guid( player->GetKeyID() );
+            _invite_group_list.Insert( player->GetKeyID(), kfinvite );
+        }
+        else
+        {
+            if ( maxcount > kfinvite->_max_count )
+            {
+                kfinvite->_match_id = matchid;
+                kfinvite->_max_count = maxcount;
+            }
+        }
+
+        return kfinvite;
+    }
+
     uint64 KFGroupClientModule::PrepareMatchGroup( KFEntity* player, uint32 matchid, uint32 maxcount )
     {
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
-            auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
-            groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
-            if ( groupid == _invalid_int )
-            {
-                // 没有创建小组
-                groupid = KFUtility::Make64Guid( player->GetKeyID() );
-                kfgroup->SetValue< uint64 >( __KF_STRING__( id ), groupid );
-                kfgroup->SetValue< uint32 >( __KF_STRING__( matchid ), matchid );
-                kfgroup->SetValue< uint64 >( __KF_STRING__( maxcount ), maxcount );
-            }
+            // 没有队伍, 添加一个组队邀请
+            auto kfinvite = CreateInviteGroup( player, matchid, maxcount );
+            groupid = kfinvite->_group_id;
         }
         else
         {
             // 判断最大数量
-            auto maxgroupcount = kfbasic->GetValue< uint32 >( __KF_STRING__( maxgroupcount ) );
+            auto maxgroupcount = kfgroup->GetValue< uint32 >( __KF_STRING__( maxcount ) );
             if ( maxcount > maxgroupcount )
             {
                 UpdateMatchToGroup( player, groupid, matchid, maxcount );
@@ -190,19 +201,8 @@ namespace KFrame
         return groupid;
     }
 
-    bool KFGroupClientModule::CreateMatchGroup( KFEntity* player, uint64 groupid )
+    bool KFGroupClientModule::CreateMatchGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount )
     {
-        auto kfobject = player->GetData();
-        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
-
-        auto matchid = kfgroup->GetValue< uint32 >( __KF_STRING__( matchid ) );
-        auto maxcount = kfgroup->GetValue< uint32 >( __KF_STRING__( maxcount ) );
-
-        // 先清空数据
-        kfgroup->SetValue< uint64 >( __KF_STRING__( id ), _invalid_int );
-        kfgroup->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
-        kfgroup->SetValue< uint32 >( __KF_STRING__( maxcount ), _invalid_int );
-
         // 发送到队伍集群
         KFMsg::S2SCreateMatchGroupReq req;
         req.set_groupid( groupid );
@@ -241,22 +241,22 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateGroupMatchReq );
 
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
 
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
         }
 
-        auto maxcount = _kf_match->GetMatchMaxCount( kfmsg.matchid() );
-        auto nowgroupcount = kfbasic->GetValue< uint32 >( __KF_STRING__( nowgroupcount ) );
-        if ( maxcount < nowgroupcount )
+        auto newmaxcount = _kf_match->GetMatchMaxCount( kfmsg.matchid() );
+        auto oldmaxcount = kfgroup->GetValue< uint32 >( __KF_STRING__( maxcount ) );
+        if ( newmaxcount < oldmaxcount )
         {
             return _kf_display->SendToClient( player, KFMsg::MatchGroupPlayerLimit );
         }
 
-        UpdateMatchToGroup( player, groupid, kfmsg.matchid(), maxcount );
+        UpdateMatchToGroup( player, groupid, kfmsg.matchid(), newmaxcount );
     }
 
     void KFGroupClientModule::UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount )
@@ -322,28 +322,32 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNC_LINE__ );
         if ( player == nullptr )
         {
-            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
-                                              KFMsg::GroupPlayerOffline, kfmsg.playername() );
+            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::GroupPlayerOffline, kfmsg.playername() );
         }
 
+        // 正在组队
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid != _invalid_int )
         {
-            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
-                                              KFMsg::GroupAlreadyInGroup, kfmsg.playername() );
+            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::GroupAlreadyInGroup, kfmsg.playername() );
+        }
+
+        // 对方在匹配中
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        if ( matchid != _invalid_int )
+        {
+            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::GroupTargetInMatch, kfmsg.playername() );
         }
 
         // 如果有设置5分钟内部接受邀请
         auto refusegrouptime = kfobject->GetValue< uint64 >( __KF_STRING__( refusegroupinvite ) );
         if ( refusegrouptime > KFGlobal::Instance()->_real_time )
         {
-            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
-                                              KFMsg::GroupRefuseInvite, kfmsg.playername() );
+            return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::GroupRefuseInvite, kfmsg.playername() );
         }
 
-        _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(),
-                                   KFMsg::InviteMatchGroupOK, kfmsg.playername() );
+        _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::InviteMatchGroupOK, kfmsg.playername() );
 
         // 添加到邀请列表
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( groupinvite ) );
@@ -374,6 +378,7 @@ namespace KFrame
 
         if ( kfmsg.operate() == KFMsg::InviteEnum::Refuse || kfmsg.operate() == KFMsg::InviteEnum::RefuseMinute )
         {
+            // 拒绝
             if ( kfmsg.operate() == KFMsg::InviteEnum::RefuseMinute )
             {
                 static auto _refuse_time = _kf_option->GetValue< uint32 >( "groupinviterefusetime" );
@@ -389,10 +394,18 @@ namespace KFrame
         }
         else if ( kfmsg.operate() == KFMsg::InviteEnum::Consent )
         {
-            auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+            // 已经有队伍了
+            auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
             if ( groupid != _invalid_int )
             {
                 return _kf_display->SendToClient( player, KFMsg::GroupInGroup );
+            }
+
+            // 正在匹配中
+            auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+            if ( matchid != _invalid_int )
+            {
+                return _kf_display->SendToClient( player, KFMsg::GroupInMatch );
             }
 
             // 防止操作太快, 加入两个队伍
@@ -402,9 +415,9 @@ namespace KFrame
                 return _kf_display->SendToClient( player, KFMsg::OperateFrequently );
             }
 
+            // 判断邀请时间
             static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
 
-            // 判断邀请时间
             auto invitetime = kfinvite->GetValue< uint64 >( __KF_STRING__( time ) );
             if ( KFGlobal::Instance()->_real_time > invitetime + _invite_valid_time )
             {
@@ -449,21 +462,21 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
 
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
-            // 没有队伍, 创建一个新的队伍
-            groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
-            if ( groupid == _invalid_int )
+            // 判断是否有邀请信息
+            auto kfinvite = _invite_group_list.Find( playerid );
+            if ( kfinvite == nullptr )
             {
-                groupid = kfmsg.groupid();
+                return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
             }
 
-            // 创建队伍
-            auto ok = CreateMatchGroup( player, groupid );
+            // 没有队伍, 创建一个新的队伍
+            groupid = kfinvite->_group_id;
+            auto ok = CreateMatchGroup( player, groupid, kfinvite->_match_id, kfinvite->_max_count );
             if ( !ok )
             {
                 return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupServerBusy );
@@ -529,6 +542,9 @@ namespace KFrame
         {
             _kf_display->SendToClient( player, KFMsg::GroupJoinOK );
         }
+
+        // 删除邀请信息
+        _invite_group_list.Remove( player->GetKeyID() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleAddMatchGroupMemberAck )
@@ -568,10 +584,16 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgLeaveMatchGroupReq );
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
+        }
+
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        if ( matchid != _invalid_int )
+        {
+            return _kf_display->SendToClient( player, KFMsg::GroupLeaveInMatch );
         }
 
         // 离开队伍
@@ -590,8 +612,14 @@ namespace KFrame
 
     void KFGroupClientModule::ProcessLeaveMatchGroup( KFEntity* player )
     {
-        // 清除队伍id
-        player->UpdateData( __KF_STRING__( group ), __KF_STRING__( id ), KFOperateEnum::Set, _invalid_int );
+        auto kfobject = player->GetData();
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
+
+        // 清除队伍信息
+        player->UpdateData( kfgroup, __KF_STRING__( id ), KFOperateEnum::Set, _invalid_int );
+        player->UpdateData( kfgroup, __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+        player->UpdateData( kfgroup, __KF_STRING__( maxcount ), KFOperateEnum::Set, _invalid_int );
+        player->UpdateData( kfgroup, __KF_STRING__( captainid ), KFOperateEnum::Set, _invalid_int );
 
         // 删除队员
         player->RemoveData( __KF_STRING__( groupinvite ) );
@@ -607,7 +635,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgKickMatchGroupReq );
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
@@ -616,6 +644,12 @@ namespace KFrame
         if ( kfmsg.memberid() == playerid )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupCanNotKickSelf );
+        }
+
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        if ( matchid != _invalid_int )
+        {
+            return _kf_display->SendToClient( player, KFMsg::GroupKickInMatch );
         }
 
         // 通知组队服务器
@@ -644,7 +678,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgApplyMatchGroupReq );
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid != _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupInGroup );
@@ -711,13 +745,16 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
+
+        // 不在队伍中了
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
         }
 
-        // 是否存在邀请
+        // 是否存在申请
         auto kfgroupapply = kfobject->FindData( __KF_STRING__( groupapply ), kfmsg.applyid() );
         if ( kfgroupapply == nullptr )
         {
@@ -735,6 +772,7 @@ namespace KFrame
         {
             static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
 
+            // 申请时间超时了
             auto applytime = kfgroupapply->GetValue< uint64 >( __KF_STRING__( time ) );
             if ( KFGlobal::Instance()->_real_time > ( applytime + _invite_valid_time ) )
             {
@@ -744,8 +782,7 @@ namespace KFrame
             {
                 // 判断数量
                 auto membercount = GetGroupMemberCount( kfobject );
-                auto maxcount = kfbasic->GetValue< uint32 >( __KF_STRING__( maxgroupcount ) );
-
+                auto maxcount = kfgroup->GetValue< uint32 >( __KF_STRING__( maxcount ) );
                 if ( membercount >= maxcount )
                 {
                     _kf_display->SendToClient( player, KFMsg::GroupMemberIsFull );
@@ -756,8 +793,8 @@ namespace KFrame
                     KFMsg::S2SConsentApplyMatchGroupAck ack;
                     ack.set_groupid( groupid );
                     ack.set_captainid( playerid );
-                    ack.set_serverid( KFGlobal::Instance()->_app_id );
                     ack.set_playerid( kfmsg.applyid() );
+                    ack.set_serverid( KFGlobal::Instance()->_app_id );
                     ack.set_playername( kfapplyer->GetValue< std::string >( __KF_STRING__( name ) ) );
                     auto ok = _kf_player->SendMessageToClient( kfapplyer, KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &ack );
                     if ( ok )
@@ -784,8 +821,7 @@ namespace KFrame
 
         // 判断是否有队伍
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid != _invalid_int )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupAlreadyInGroup, kfmsg.playername() );
@@ -807,15 +843,15 @@ namespace KFrame
     void KFGroupClientModule::OnEnterQueryMatchGroup( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( group ) );
-        auto groupid = kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) );
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return;
         }
 
         // 先设置成没有队伍
-        kfbasic->SetValue< uint64 >( __KF_STRING__( groupid ), _invalid_int );
+        kfgroup->SetValue< uint64 >( __KF_STRING__( id ), _invalid_int );
 
         // 查询玩家队伍信息
         KFMsg::S2SOnLineQueryMatchGroupReq req;
@@ -827,8 +863,12 @@ namespace KFrame
 
     void KFGroupClientModule::OnLeaveUpdateMatchGroup( KFEntity* player )
     {
+        // 删除组队邀请
+        _invite_group_list.Remove( player->GetKeyID() );
+
+        // 如果有队伍, 更新状态
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return;
@@ -861,7 +901,7 @@ namespace KFrame
 
         // 是否有队伍
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( groupid ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return;
@@ -915,9 +955,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMatchGroupPrepareReq );
 
         auto kfobject = player->GetData();
-        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
-
-        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );

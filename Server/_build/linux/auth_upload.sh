@@ -40,6 +40,7 @@ mkdir -p $deploypath
 mkdir -p $deploypath/setting
 mkdir -p $deploypath/plugin
 mkdir -p $deploypath/config
+mkdir -p $deploypath/startup
 
 #setting
 path1=$versionpath/setting
@@ -47,13 +48,14 @@ path2=$deploypath/setting
 copyfile 1 server.network
 copyfile 1 bus.relation
 copyfile 1 ip.address
-copyfile 1 common.startup
 copyfile 1 cluster.setting
 copyfile 1 redis.address
 copyfile 1 channel.setting
 
-path1=$versionpath/setting/auth
+path1=$versionpath/startup
+path2=$deploypath/startup
 copyfile 1 auth.startup
+copyfile 1 common.startup
 
 #config
 path1=$versionpath/config
@@ -61,12 +63,12 @@ path2=$deploypath/config
 copyfile 1 option.config
 
 #plugin
-path1=$versionpath
+path1=$versionpath/bin
 path2=$deploypath
 copyfile 1 KFStartup authserver
 copyfile 1 KFStartupd authserverd
 
-path1=$versionpath/plugin
+path1=$versionpath/bin
 path2=$deploypath/plugin
 copyfile 1 KFIpAddress.so
 copyfile 1 KFIpAddressd.so

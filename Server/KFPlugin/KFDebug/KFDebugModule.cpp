@@ -45,11 +45,11 @@ namespace KFrame
         return;
 #endif // __KF_DEBUG__
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] debug command[{}]!", playerid, kfmsg.command() );
-
         // 调用注册的函数
-        std::string command;
-        std::transform( kfmsg.command().begin(), kfmsg.command().end(), command.begin(), ::tolower );
+        std::string command = kfmsg.command();
+        std::transform( command.begin(), command.end(), command.begin(), ::tolower );
+
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] debug command[{}]!", playerid, command );
 
         auto kffunction = _kf_debug_function.Find( command );
         if ( kffunction != nullptr )

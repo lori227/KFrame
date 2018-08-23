@@ -40,6 +40,7 @@ mkdir -p $deploypath
 mkdir -p $deploypath/setting
 mkdir -p $deploypath/plugin
 mkdir -p $deploypath/config
+mkdir -p $deploypath/startup
 
 #setting
 path1=$versionpath/setting
@@ -47,25 +48,26 @@ path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 common.startup
 copyfile 1 cluster.setting
 
-path1=$versionpath/setting/route
-copyfile 1 master.startup
-copyfile 1 proxy.startup
-copyfile 1 shard.startup
+path1=$versionpath/startup
+path2=$deploypath/startup
+copyfile 1 route.master.startup
+copyfile 1 route.proxy.startup
+copyfile 1 route.shard.startup
+copyfile 1 common.startup
 
 #config
 path1=$versionpath/config
 path2=$deploypath/config
 
 #plugin
-path1=$versionpath
+path1=$versionpath/bin
 path2=$deploypath
 copyfile 1 KFStartup routeserver
 copyfile 1 KFStartupd routeserverd
 
-path1=$versionpath/plugin
+path1=$versionpath/bin
 path2=$deploypath/plugin
 copyfile 1 KFBus.so
 copyfile 1 KFBusd.so
