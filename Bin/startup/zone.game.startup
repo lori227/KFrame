@@ -3,7 +3,7 @@
 	<Plugins AppName="zone" AppType="game" Common="./startup/common.startup">
 		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Name="KFDisplay" Startup="1" Sort="110" Debug="KFDisplayd" Release="KFDisplay" Config=""/>	
-		<Plugin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFOption" Startup="1" Sort="120" Debug="KFOptiond" Release="KFOption" Config="./setting/option.setting"/>	
 		<Plugin Name="KFZone" Startup="1" Sort="130" Debug="KFZoned" Release="KFZone" Config="./setting/zone.setting"/>
 		<Plugin Name="KFGame" Startup="1" Sort="140" Debug="KFGamed" Release="KFGame" Config=""/>
 		<Plugin Name="KFClusterClient" Startup="1" Sort="160" Debug="KFClusterClientd" Release="KFClusterClient" Config="./setting/cluster.setting"/>
@@ -16,7 +16,7 @@
 		<Plugin Name="KFBattleClient" Startup="1" Sort="167" Debug="KFBattleClientd" Release="KFBattleClient" Config=""/>
 		<Plugin Name="KFGroupClient" Startup="1" Sort="168" Debug="KFGroupClientd" Release="KFGroupClient" Config=""/>
 		<Plugin Name="KFRankClient" Startup="1" Sort="169" Debug="KFRankClientd" Release="KFRankClient" Config="./config/rank.config"/>
-		<Plugin Name="KFKernel" Startup="1" Sort="180" Debug="KFKerneld" Release="KFKernel" Config="./setting/kernel.setting"/>
+		<Plugin Name="KFKernel" Startup="1" Sort="180" Debug="KFKerneld" Release="KFKernel" Config="./config/class.config"/>
 		<Plugin Name="KFPlayer" Startup="1" Sort="190" Debug="KFPlayerd" Release="KFPlayer" Config=""/>
 		<Plugin Name="KFChat" Startup="1" Sort="200" Debug="KFChatd" Release="KFChat" Config="./config/chat.config"/>
 		<Plugin Name="KFLua" Startup="1" Sort="210" Debug="KFLuad" Release="KFLua" Config=""/>

@@ -150,7 +150,6 @@ namespace KFrame
         std::list< uint64 > roomlist;
 
         auto kfroom = _kf_room_list.First();
-
         while ( kfroom != nullptr )
         {
             roomlist.push_back( kfroom->_battle_room_id );
@@ -164,7 +163,6 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterServerToBattleShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-
         __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] req!",
                        kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
@@ -188,7 +186,6 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2STellBattleRegisterToShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-
         __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] req!",
                        kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
@@ -212,7 +209,6 @@ namespace KFrame
                 {
                     RemoveBattleRoom( kfroom );
                 }
-
                 else
                 {
                     kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
@@ -332,6 +328,11 @@ namespace KFrame
         auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
         {
+            // 找不到房间了, 可能是进程重启了, 通知match重置房间
+            KFMsg::S2SResetMatchRoomReq req;
+            req.set_matchid( kfmsg.matchid() );
+            req.set_roomid( kfmsg.roomid() );
+            _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.matchshardid(), KFMsg::S2S_RESET_MATCH_ROOM_REQ, &req );
             return;
         }
 
@@ -364,32 +365,22 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleCancelMatchToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToBattleShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] player[{}:{}] cancel match req!", kfmsg.roomid(), kfmsg.campid(), kfmsg.playerid() );
-
-        bool isopen = true;
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match req!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-        if ( kfroom != nullptr )
+        if ( kfroom == nullptr )
         {
-            isopen = ( kfroom->_status >= KFRoomStatus::StatusBattleRoomOpen );
-            auto ok = kfroom->CancelMatch( kfmsg.campid(), kfmsg.playerid() );
-            if ( ok )
-            {
-                __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] room[{}] cancel match ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
-            }
-            else
-            {
-                __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] room[{}] cancel match failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.roomid() );
-            }
+            return;
         }
 
-        // 发送消息到集群
-        KFMsg::S2SCancelMatchToMatchShardAck ack;
-        ack.set_isroomopen( isopen );
-        ack.set_matchid( kfmsg.matchid() );
-        ack.set_roomid( kfmsg.roomid() );
-        ack.set_campid( kfmsg.campid() );
-        ack.set_playerid( kfmsg.playerid() );
-        _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.matchshardid(), KFMsg::S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK, &ack );
+        auto ok = kfroom->CancelMatch( kfmsg.campid(), kfmsg.groupid() );
+        if ( ok )
+        {
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match ok!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
+        }
+        else
+        {
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match failed!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerEnterRoomToBattleShardAck )
@@ -492,21 +483,23 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryRoomToBattleShardReq );
         __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] req!", kfmsg.playerid(), kfmsg.roomid() );
 
-        auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
-        if ( kfroom == nullptr )
+        KFMsg::S2SQueryBattleRoomAck ack;
+        ack.set_playerid( kfmsg.playerid() );
+        ack.set_roomid( _invalid_int );
+        ack.set_matchid( _invalid_int );
+
+        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
+        if ( kfroom != nullptr )
         {
-            return;
+            auto ok = kfroom->QueryBattleRoom( kfmsg.playerid(), kfmsg.serverid() );
+            if ( ok )
+            {
+                ack.set_roomid( kfroom->_battle_room_id );
+                ack.set_matchid( kfroom->_match_id );
+            }
         }
 
-        auto ok = kfroom->QueryBattleRoom( kfmsg.playerid(), kfmsg.serverid() );
-        if ( ok )
-        {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] ok!", kfmsg.playerid(), kfmsg.roomid() );
-        }
-        else
-        {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query room[{}] failed!", kfmsg.playerid(), kfmsg.roomid() );
-        }
+        _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomStartToBattleShardReq )
@@ -545,7 +538,6 @@ namespace KFrame
 
         __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}] ok!", kfmsg.roomid() );
     }
-
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomFinishToBattleShardReq )
     {

@@ -56,7 +56,7 @@ namespace KFrame
         bool LeaveBattleRoom( uint32 campid, uint32 playerid );
 
         // 取消匹配
-        bool CancelMatch( uint32 campid, uint32 playerid );
+        bool CancelMatch( uint32 campid, uint64 groupid );
 
         // 确认匹配结果
         bool NoticeBattleRoom( uint32 campid, uint32 playerid );

@@ -50,6 +50,7 @@ copyfile 1 bus.relation
 copyfile 1 server.network
 copyfile 1 redis.address
 copyfile 1 cluster.setting
+copyfile 1 option.setting
 
 path1=$versionpath/startup
 path2=$deploypath/startup
@@ -62,7 +63,6 @@ copyfile 1 common.startup
 path1=$versionpath/config
 path2=$deploypath/config
 copyfile 1 battle.config
-copyfile 1 option.config
 
 #plugin
 path1=$versionpath/bin

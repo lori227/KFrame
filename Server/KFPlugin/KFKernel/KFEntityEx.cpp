@@ -73,8 +73,10 @@ namespace KFrame
 
     void KFEntityEx::InitData( KFComponentEx* kfcomponent, const std::string& dataname )
     {
+        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+
         _kf_component = kfcomponent;
-        _kf_object = KFDataFactory::CreateData( _kf_kernel_config->_global_class_name, dataname );
+        _kf_object = KFDataFactory::CreateData( _global_class_name, dataname );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
@@ -941,14 +943,14 @@ namespace KFrame
 
     void KFEntityEx::SyncEntityToClient()
     {
-        // 同步删除
-        SyncRemoveDataToClient();
-
         // 同步更新
         SyncUpdateDataToClient();
 
         // 同步添加
         SyncAddDataToClient();
+
+        // 同步删除
+        SyncRemoveDataToClient();
     }
 
     void KFEntityEx::SyncAddDataToClient()

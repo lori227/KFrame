@@ -25,35 +25,34 @@ function copyfile()
 	fi
 }
 
-binpath=../../_bin/linux
-respath=../../../Resource
-settingpath=../../_bin/setting
+respath=../../../Bin
 deploypath=/data/route
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
 mkdir -p $deploypath/plugin
 mkdir -p $deploypath/config
+mkdir -p $deploypath/startup
 
 #setting
-path1=$settingpath
+path1=$respath
 path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 common.startup
 copyfile 1 cluster.setting
 
-path1=$settingpath/route
-path2=$deploypath/setting
-copyfile 1 master.startup
-copyfile 1 proxy.startup
-copyfile 1 shard.startup
+path1=$respath/startup
+path2=$deploypath/startup
+copyfile 1 common.startup
+copyfile 1 route.master.startup
+copyfile 1 route.proxy.startup
+copyfile 1 route.shard.startup
 
 #config
 
 #plugin
-path1=$binpath
+path1=$respath/bin
 path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd
@@ -61,7 +60,7 @@ copyfile 1 KFStartupd
 cp -f $deploypath/KFStartup $deploypath/routeserver
 cp -f $deploypath/KFStartupd $deploypath/routeserverd
 
-path1=$binpath
+path1=$respath
 path2=$deploypath/plugin
 
 copyfile 1 KFBus.so

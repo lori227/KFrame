@@ -308,12 +308,11 @@ namespace KFrame
         return true;
     }
 
-    bool KFBattleRoom::CancelMatch( uint32 campid, uint32 playerid )
+    bool KFBattleRoom::CancelMatch( uint32 campid, uint64 groupid )
     {
-        // 已经开始了, 不处理
         if ( _status == KFRoomStatus::StatisBattleRoomPlaying )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alread start!", _battle_room_id );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] is playing[{}]!", _battle_room_id, campid );
             return false;
         }
 
@@ -324,33 +323,24 @@ namespace KFrame
             return false;
         }
 
-        // 发送到战场服务器
-        if ( _status != KFRoomStatus::StatusBattleRoomOpen )
+        // 通知战场
+        if ( _battle_server._server_id != _invalid_int )
         {
-            _now_player_count -= __MIN__( kfcamp->PlayerCount(), _now_player_count );
-            _kf_camp_list.Remove( campid );
-        }
-        else
-        {
-            kfcamp->_kf_player_list.Remove( playerid );
-            _now_player_count -= __MIN__( 1, _now_player_count );
-            if ( kfcamp->PlayerCount() == 0 )
+            for ( auto& iter : kfcamp->_kf_player_list._objects )
             {
-                _kf_camp_list.Remove( campid );
-            }
+                auto kfplayer = iter.second;
 
-            // 发送消息到游戏房间
-            KFMsg::S2SPlayerCancelMatchReq req;
-            req.set_roomid( _battle_room_id );
-            req.set_campid( campid );
-            req.set_playerid( playerid );
-            auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_CANCEL_MATCH_REQ, &req );
-            if ( !ok )
-            {
-                __LOG_ERROR__( KFLogEnum::Logic, "room[{}] player[{}:{}] cancel battle failed!",
-                               _battle_room_id, campid, playerid );
+                KFMsg::S2SPlayerCancelMatchReq req;
+                req.set_roomid( _battle_room_id );
+                req.set_campid( campid );
+                req.set_playerid( kfplayer->GetID() );
+                SendMessageToBattle( KFMsg::S2S_PLAYER_CANCEL_MATCH_REQ, &req );
             }
         }
+
+        // 删除阵营
+        _now_player_count -= __MIN__( kfcamp->PlayerCount(), _now_player_count );
+        _kf_camp_list.Remove( campid );
 
         return true;
     }

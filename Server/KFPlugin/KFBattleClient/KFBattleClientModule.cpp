@@ -26,6 +26,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK, &KFBattleClientModule::HandleLeaveBattleRoomAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &KFBattleClientModule::HandlePlayerBattleScoreReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &KFBattleClientModule::HandleBattleFinishAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &KFBattleClientModule::HandleQueryBattleRoomAck );
     }
 
     void KFBattleClientModule::BeforeShut()
@@ -37,6 +38,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BATTLE_ROOM_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,7 +64,6 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
-
         if ( roomid == _invalid_int )
         {
             return;
@@ -73,25 +74,29 @@ namespace KFrame
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         SendMessageToBattle( roomid, KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
+    }
 
-        // 先设置成无效值
-        kfobject->SetValue< uint64 >( __KF_STRING__( roomid ), _invalid_int );
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
+    __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleQueryBattleRoomAck )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryBattleRoomAck );
 
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+        player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleNoticeMatchRoomReq )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchRoomReq );
 
-        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-        player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
-
-        if ( !kfmsg.has_ip() )
+        auto kfobject = player->GetData();
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        if ( matchid == _invalid_int || matchid != kfmsg.matchid() )
         {
+            // 已经取消匹配 获得匹配模式错误
             return;
         }
 
+        player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
         {
             // 发送到客户端
             KFMsg::MsgMatchResultAck ack;

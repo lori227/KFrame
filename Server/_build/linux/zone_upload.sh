@@ -51,7 +51,7 @@ copyfile 1 bus.relation
 copyfile 1 server.network
 copyfile 1 cluster.setting
 copyfile 1 zone.setting
-copyfile 1 kernel.setting
+copyfile 1 option.setting
 
 path1=$versionpath/startup
 path2=$deploypath/startup

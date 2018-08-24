@@ -61,14 +61,23 @@
 		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="dir" AppType="proxy" AppId="*" ConnectName="dir" ConnectType="shard" ConnectId="*"/>
 
+		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="login" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="game" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>	
 		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="*" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
-		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="data" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="public" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="route" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="match" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="battle" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="mail" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="relation" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="group" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="rank" ConnectType="master" ConnectId="*"/>
+
 	</Bus>	
 </Config>
 

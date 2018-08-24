@@ -74,7 +74,8 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryList( "zrangebyscore {} -inf +inf", __KF_STRING__( wholemail ) );
+        auto kfresult = redisdriver->QueryList( "zrangebyscore {} -inf +inf",
+                                                __KF_STRING__( wholemail ) );
         if ( kfresult->_value.empty() )
         {
             return;
@@ -83,7 +84,8 @@ namespace KFrame
         ListString overduelist;
         for ( auto& strmailid : kfresult->_value )
         {
-            auto stringresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
+            auto stringresult = redisdriver->QueryString( "hget {}:{} {}",
+                                __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
             if ( stringresult->IsOk() && stringresult->_value == _invalid_str )
             {
                 overduelist.push_back( strmailid );
@@ -132,7 +134,8 @@ namespace KFrame
         }
 
         auto redisdriver = __MAIL_REDIS_DRIVER__;
-        auto greatermapresult = redisdriver->QueryGreaterMap( "zrange {} 0 -1 WITHSCORES", maillistkey );
+        auto greatermapresult = redisdriver->QueryGreaterMap( "zrange {} 0 -1 WITHSCORES",
+                                maillistkey );
         if ( greatermapresult->_value.empty() )
         {
             return;
@@ -150,15 +153,16 @@ namespace KFrame
 
         KFMsg::S2SQueryMailAck ack;
         ack.set_playerid( kfmsg.playerid() );
-        ack.set_mailtype( kfmsg.mailtype() );
         auto pbmails = ack.mutable_mails();
+        ack.set_mailtype( kfmsg.mailtype() );
 
         VectorString overduelist;
         for ( auto& mailiter : greatermapresult->_value )
         {
             auto& strmailid = mailiter.first;
 
-            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( mail ), strmailid );
+            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
+                                                   __KF_STRING__( mail ), strmailid );
             if ( !kfresult->IsOk() )
             {
                 continue;
@@ -238,7 +242,8 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 创建一个邮件id
-        auto uint64result = redisdriver->QueryUInt64( "incr {}", __KF_STRING__( mailidcreater ) );
+        auto uint64result = redisdriver->QueryUInt64( "incr {}",
+                            __KF_STRING__( mailidcreater ) );
         if ( uint64result->_value == _invalid_int )
         {
             return false;
@@ -298,7 +303,8 @@ namespace KFrame
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 获取玩家已经加载的最近一封GM邮件id
-        auto stringresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
+        auto stringresult = redisdriver->QueryString( "hget {}:{} {}",
+                            __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
         if ( !stringresult->IsOk() )
         {
             return;
@@ -311,7 +317,8 @@ namespace KFrame
         }
 
         // 从全局GM邮件列表中取出玩家未获取的
-        auto listresult = redisdriver->QueryList( "zrangebyscore {} ({} +inf", __KF_STRING__( wholemail ), maxmailid );
+        auto listresult = redisdriver->QueryList( "zrangebyscore {} ({} +inf",
+                          __KF_STRING__( wholemail ), maxmailid );
         if ( listresult->_value.empty() )
         {
             return;
@@ -336,7 +343,8 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto uint32result = redisdriver->QueryUInt32( "hget {}:{} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
+        auto uint32result = redisdriver->QueryUInt32( "hget {}:{} {}",
+                            __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
         if ( !uint32result->IsOk() || uint32result->_value == flag )
         {
             return false;
@@ -356,7 +364,8 @@ namespace KFrame
         {
             if ( mailtype != KFMsg::MailEnum::WholeMail )
             {
-                auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
+                auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
+                                                      __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
                 if ( !kfresult->IsOk() )
                 {
                     __LOG_ERROR__( KFLogEnum::Logic, "mailid[{}:{}] player[{}] flag[{}] failed!", mailtype, mailid, playerid, flag );

@@ -5,6 +5,8 @@
 
 namespace KFrame
 {
+    class KFMatchQueue;
+
     // 匹配队伍
     class KFMatchGroup
     {
@@ -24,17 +26,18 @@ namespace KFrame
         // 是否存在玩家
         bool HavePlayer( uint32 playerid );
 
-        // 查询匹配房间
-        bool QueryMatchGroup( uint32 playerid, uint32 gameid );
-    public:
-        // 匹配队列
-        KFMatchQueue* _kf_match_queue;
+        // 删除玩家
+        bool RemovePlayer( uint32 playerid );
 
+    public:
         // 队伍id
         uint64 _group_id;
 
+        // 匹配队列
+        KFMatchQueue* _kf_match_queue;
+
         // 匹配的玩家列表
-        KFMap< uint32, uint32, KFMatchPlayer > _kf_player_list;
+        std::map< uint32, KFMatchPlayer* > _player_list;
     };
 }
 

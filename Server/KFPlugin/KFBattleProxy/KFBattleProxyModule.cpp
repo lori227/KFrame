@@ -162,19 +162,21 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryBattleRoomReq );
 
         auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.roomid() );
-
-        KFMsg::S2SQueryRoomToBattleShardReq req;
-        req.set_roomid( kfmsg.roomid() );
-        req.set_playerid( kfmsg.playerid() );
-        req.set_serverid( kfmsg.serverid() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ, &req );
-        if ( ok )
+        if ( shardid == _invalid_int )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] ok!", kfmsg.playerid(), kfmsg.roomid() );
+            KFMsg::S2SQueryBattleRoomAck ack;
+            ack.set_roomid( _invalid_int );
+            ack.set_matchid( _invalid_int );
+            ack.set_playerid( kfmsg.playerid() );
+            _kf_cluster_proxy->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query room[{}] failed!", kfmsg.playerid(), kfmsg.roomid() );
+            KFMsg::S2SQueryRoomToBattleShardReq req;
+            req.set_roomid( kfmsg.roomid() );
+            req.set_playerid( kfmsg.playerid() );
+            req.set_serverid( kfmsg.serverid() );
+            _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ, &req );
         }
     }
 
@@ -265,7 +267,6 @@ namespace KFrame
             __LOG_ERROR__( KFLogEnum::Logic, "leave room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
-
 
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleBattleRoomScoreBalanceReq )
     {

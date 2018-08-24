@@ -24,9 +24,10 @@
         #pragma comment( lib, "KFNetworkd.lib" )
         #pragma comment( lib, "KFHttpd.lib" )
         #pragma comment( lib, "KFConHashd.lib" )
-        #pragma comment( lib, "KFCored.lib" )
         #pragma comment( lib, "KFProtocold.lib" )
         #pragma comment( lib, "LuaPlusd.lib" )
+        #pragma comment( lib, "KFMath3Dd.lib" )
+        #pragma comment( lib, "KFCored.lib" )
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_RELEASE__
@@ -50,9 +51,10 @@
         #pragma comment( lib, "KFNetwork.lib" )
         #pragma comment( lib, "KFHttp.lib" )
         #pragma comment( lib, "KFConHash.lib" )
-        #pragma comment( lib, "KFCore.lib" )
         #pragma comment( lib, "KFProtocol.lib" )
         #pragma comment( lib, "LuaPlus.lib" )
+        #pragma comment( lib, "KFMath3D.lib" )
+        #pragma comment( lib, "KFCore.lib" )
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

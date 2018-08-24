@@ -47,6 +47,9 @@ namespace KFrame
         // 匹配结果
         __KF_MESSAGE_FUNCTION__( HandleNoticeMatchRoomReq );
 
+        // 查询匹配
+        __KF_MESSAGE_FUNCTION__( HandleQueryBattleRoomAck );
+
         // 离开房间
         __KF_MESSAGE_FUNCTION__( HandleLeaveBattleRoomAck );
 
@@ -55,8 +58,10 @@ namespace KFrame
 
         // 战斗结束
         __KF_MESSAGE_FUNCTION__( HandleBattleFinishAck );
+
     protected:
         __KF_UPDATE_DATA_FUNCTION__( OnRoomIdUpdateCallBack );
+
     private:
         // 玩家上线回调
         void OnEnterQueryBattleRoom( KFEntity* player );

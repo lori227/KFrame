@@ -114,7 +114,7 @@ namespace KFrame
             ack.set_id( 0 );
 
             __LOG_ERROR__( KFLogEnum::System, "cluster[{}] can't find proxy, handleid[{}]!",
-                           kfmsg.clusterkey(), handleid );
+                           kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
         }
         else
         {

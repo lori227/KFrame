@@ -47,9 +47,6 @@ namespace KFrame
         // 取消匹配
         __KF_MESSAGE_FUNCTION__( HandleCancelMatchToShardReq );
 
-        // 取消匹配
-        __KF_MESSAGE_FUNCTION__( HandleCancelMatchToMatchShardAck );
-
         // 创建房间回馈
         __KF_MESSAGE_FUNCTION__( HandleCreateRoomToMatchShardAck );
 
@@ -68,12 +65,15 @@ namespace KFrame
         // 战场关闭
         __KF_MESSAGE_FUNCTION__( HandleTellRoomCloseToMatchShardReq );
 
+        // 重置匹配房间
+        __KF_MESSAGE_FUNCTION__( HandleResetMatchRoomReq );
+
     protected:
         // Match Master连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectMatchMaster );
 
     protected:
-        // 逻辑run
+        KFMatchQueue* FindMatchQueue( uint32 matchid, const char* function, uint32 line );
 
     private:
         // 匹配模式列表

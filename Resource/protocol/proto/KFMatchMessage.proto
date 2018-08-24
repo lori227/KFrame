@@ -8,7 +8,6 @@ enum MatchProtocol
 	S2S_MATCH_TO_PROXY_REQ = 11102;					// 请求匹配
 	S2S_MATCH_TO_SHARD_REQ = 11103;					// 请求匹配
 	S2S_MATCH_TO_CLIENT_ACK = 11104;				// 匹配回馈
-	//S2S_MATCH_TO_GAME_ACK = 11105;					// 匹配回馈
 	S2S_CANCEL_MATCH_TO_PROXY_REQ = 11107;			// 取消匹配
 	S2S_CANCEL_MATCH_TO_SHARD_REQ = 11108;			// 取消匹配
 	S2S_NOTICE_MATCH_ROOM_REQ = 11109;				// 匹配结果
@@ -16,13 +15,13 @@ enum MatchProtocol
 	S2S_QUERY_MATCH_ROOM_REQ = 11111;				// 查询匹配
 	S2S_QUERY_MATCH_ROOM_ACK = 11112;				// 查询匹配	
 	S2S_QUERY_BATTLE_ROOM_REQ = 11113;				// 查询匹配
+	S2S_QUERY_BATTLE_ROOM_ACK = 11114;				// 查询匹配
 	S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ = 11115;		// 查询匹配
 	S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ = 11116;		// 查询匹配
-	//S2S_CANCEL_MATCH_TO_GAME_ACK = 11117;			// 取消匹配
 	S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118; 	// 取消匹配
-	S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK = 11119;	// 取消匹配
 	S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120;	// 玩家上线
-	S2S_NOTICE_MATCH_STATE_REQ = 11121;			// 处理玩家匹配状态
+	S2S_NOTICE_MATCH_STATE_REQ = 11121;				// 匹配状态
+	S2S_RESET_MATCH_ROOM_REQ = 11122;				// 重置房间
 
  }
 
@@ -87,20 +86,7 @@ message S2SCancelMatchToBattleShardReq
 {
 	required uint64 roomid = 1;
 	required uint32 campid = 2;
-	required uint32 playerid = 3; 
-	required uint32 matchid = 4;
-	required uint32 matchshardid = 5;
-}
-
-// 取消匹配
-// S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK
-message S2SCancelMatchToMatchShardAck
-{
-	required uint32 matchid = 1;
-	required uint64 roomid = 2;
-	required uint32 campid = 3;
-	required uint32 playerid = 4; 
-	required bool isroomopen = 5;
+	required uint64 groupid = 3;
 }
 
 // 匹配结果
@@ -162,6 +148,14 @@ message S2SQueryBattleRoomReq
 	required uint32 serverid = 3;		
 }
 
+// S2S_QUERY_BATTLE_ROOM_ACK
+message S2SQueryBattleRoomAck
+{
+	required uint32 playerid = 1;	
+	required uint64 roomid = 2;
+	required uint32 matchid = 3;
+}
+
 // 查询匹配信息
 // S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ
 message S2SQueryRoomToBattleShardReq
@@ -187,4 +181,12 @@ message S2SNoticeMatchStateReq
 {
 	required uint32 playerid = 1;
 	required uint32 matchid = 2;
+}
+
+// 重置匹配房间
+// S2S_RESET_MATCH_ROOM_REQ
+message S2SResetMatchRoomReq
+{
+	required uint32 matchid = 1;
+	required uint64 roomid = 2;
 }

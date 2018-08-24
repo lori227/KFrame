@@ -16,5 +16,5 @@ if [ ! -n "$zoneid" ]; then
 fi
 
 #restart 
-curl -sd '{"command":"restart","value":"0","appname":"'$appname'","apptype":"*","appid":0,"zoneid":'$zoneid'}' http://123.206.102.191:9999/deploy
+curl -sd '{"command":"restart","value":"0","appname":"'$appname'","apptype":"*","appid":"*","zoneid":'$zoneid'}' http://123.206.102.191:9999/deploy
 

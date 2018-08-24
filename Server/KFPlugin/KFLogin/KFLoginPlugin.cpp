@@ -17,7 +17,6 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_zone, KFZoneInterface );
         __FIND_MODULE__( _kf_login, KFLoginInterface );
-        __FIND_MODULE__( _kf_data, KFDataClientInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );

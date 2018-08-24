@@ -34,6 +34,11 @@ namespace KFrame
         return _pb_player.playerid();
     }
 
+    uint64 KFBattlePlayer::GetGroupID()
+    {
+        return _pb_player.groupid();
+    }
+
     void KFBattlePlayer::LoadFrom( const KFMsg::PBBattlePlayer& pbplayer )
     {
         _pb_player.CopyFrom( pbplayer );
@@ -162,11 +167,12 @@ namespace KFrame
             req.set_roomid( kfroom->_battle_room_id );
             req.set_campid( _pb_player.campid() );
             req.set_playerid( _pb_player.playerid() );
+            req.set_groupid( _pb_player.groupid() );
             kfroom->SendMessageToMatch( KFMsg::S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ, &req );
         }
 
-        // 发送到游戏服务器,
-        SendLeaveRoomToPlayer();
+        // 发送到游戏服务器
+        SendLeaveRoomToGame();
     }
 
     bool KFBattlePlayer::QueryBattleRoom( uint32 serverid )
@@ -182,8 +188,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] online status[{}] failed!",
-                           _pb_player.playerid(), _status );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] quer room status[{}] failed!", _pb_player.playerid(), _status );
         }
 
         return true;
@@ -208,10 +213,10 @@ namespace KFrame
         }
 
         _status = KFPlayerStatus::StatusLeaveRoom;
-        SendLeaveRoomToPlayer();
+        SendLeaveRoomToGame();
     }
 
-    void KFBattlePlayer::SendLeaveRoomToPlayer()
+    void KFBattlePlayer::SendLeaveRoomToGame()
     {
         KFMsg::S2SLeaveBattleRoomToClientAck ack;
         ack.set_playerid( GetID() );

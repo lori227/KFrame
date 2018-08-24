@@ -9,17 +9,13 @@ namespace KFrame
 {
     // 匹配玩家
     class KFMatchRoom;
-    class KFMatchQueue;
     class KFMatchSetting;
 
     class KFMatchPlayer
     {
     public:
         KFMatchPlayer();
-        ~KFMatchPlayer();
-
-        static KFMatchPlayer* Create( const KFMsg::PBBattlePlayer* pbplayer );
-        static void Release( KFMatchPlayer* kfplayer );
+        ~KFMatchPlayer() = default;
 
         // 加载
         void LoadFrom( const KFMsg::PBBattlePlayer* pbplayer );
@@ -31,30 +27,30 @@ namespace KFrame
         uint32 GetID() const;
 
         // 阵营id
-        void SetCampID( uint32 campid );
         uint32 GetCampID() const;
+        void SetCampID( uint32 campid );
 
         // 队伍id
-        uint32 GetGroupID() const;
+        uint64 GetGroupID() const;
+        void SetGroupID( uint64 gropuid );
 
-        // 取消匹配
-        void CancelMatchReq();
+        // 设置房间id
+        uint64 GetRoomID() const;
+        void SetRoomID( uint64 roomid );
 
-        // 取消匹配
-        void RunCancelMatch( KFMatchRoom* kfroom );
-
-        // 查询匹配
-        void QueryMatchRoom( uint32 serverid, KFMatchRoom* kfroom );
+        // 服务器id
+        uint32 GetServerID() const;
+        void SetServerID( uint32 serverid );
 
         // 发送消息
         bool SendMessageToGame( uint32 msgid, google::protobuf::Message* message );
 
     private:
+        // 所在房间
+        uint64 _room_id;
+
         // 游戏玩家数据
         KFMsg::PBBattlePlayer _pb_player;
-
-        // 取消匹配定时器
-        KFClockTimer _cancel_timer;
     };
 }
 

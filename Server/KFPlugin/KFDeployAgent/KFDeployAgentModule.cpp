@@ -489,6 +489,21 @@ namespace KFrame
     void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype,
             const std::string& appid, uint32 zoneid )
     {
+        if ( command == __KF_STRING__( kill ) )
+        {
+            for ( auto kftask : _deploy_task )
+            {
+                __KF_DESTROY__( KFDeployTask, kftask );
+            }
+            _deploy_task.clear();
+
+            if ( _kf_task != nullptr )
+            {
+                __KF_DESTROY__( KFDeployTask, _kf_task );
+                _kf_task = nullptr;
+            }
+        }
+
         auto kftask = __KF_CREATE__( KFDeployTask );
         kftask->_command = command;
         kftask->_value = value;

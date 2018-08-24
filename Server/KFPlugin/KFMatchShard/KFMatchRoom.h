@@ -12,6 +12,7 @@ namespace KFrame
         KFMatchRoom();
         ~KFMatchRoom();
 
+        // 初始化
         void Initialize( KFMatchQueue* kfmatchqueue );
 
         // 判断是否满了
@@ -20,53 +21,41 @@ namespace KFrame
         // 是否正在等待匹配
         bool IsWaitMatch( uint32 playercount );
 
-        // 取消匹配
-        bool CancelMatchReq( uint32 playerid );
-        bool CancelMatchAck( uint32 campid, uint32 playerid, bool isroomopen );
-
         // 添加阵营
-        KFMatchCamp* AddCamp( const KFMsg::PBMatchGroup* pbgroup );
         void AddCamp( KFMatchCamp* kfcamp );
 
-        // 请求分配
+        // 房间逻辑
         void RunRoom();
 
+        // 请求创建战场服务器
+        void CreateBatterRoomReq();
+
         // 创建房间
-        void CreateBattleRoom( uint32 battleshardid );
+        void CreateBattleRoomAck( uint32 battleshardid );
+
+        // 阵营进入战场
+        void EnterBattleRoomReq();
 
         // 进入游戏房间
-        bool EnterBattleRoom( uint32 campid, bool addok );
+        bool EnterBattleRoomAck( uint32 campid, bool addok );
 
-        // 开启房间
-        bool OpenBattleRoom( uint32 waittime );
+        // 通知房间开启
+        bool TellRoomOpen( uint32 waittime );
 
         // 正式开始战斗
-        void StartBattleRoom();
+        void TellRoomStart();
 
         // 离开游戏房间
-        bool LeaveBattleRoom( uint32 campid, uint32 playerid );
+        bool LeaveBattleRoom( uint32 campid, uint64 groupid, uint32 playerid );
 
-        // 查询匹配房间
-        bool QueryMatchGroup( uint32 playerid, uint32 serverid );
+        // 取消匹配
+        bool CancelMatch( uint32 campid, uint64 groupid );
+
+        // 重置房间
+        void ResetRoom();
 
         // 发送消息到战场集群服务器
         bool SendMessageToBattle( uint32 msgid, google::protobuf::Message* message );
-
-    protected:
-        // 请求创建战场服务器
-        void RunCreateBatterRoom();
-
-        // 阵营进入战场
-        void RunEnterBattleRoom();
-
-        // 取消匹配
-        void RunCancelBattleRoom();
-
-        // 查找阵营
-        KFMatchCamp* FindMatchCamp( uint32 playerid );
-
-        // 拆分阵营到队伍
-        void SplitCampToGroup( KFMatchCamp* kfcamp );
 
     public:
         // 匹配队列
@@ -76,20 +65,17 @@ namespace KFrame
         uint32 _match_id;
 
         // 房间id
-        uint64 _battle_room_id;
+        uint64 _room_id;
 
         // 阵营列表
-        KFMap< uint32, uint32, KFMatchCamp > _kf_camp_list;
+        KFMap< uint32, uint32, KFMatchCamp > _camp_list;
 
     private:
         // 分配战场定时器
         KFClockTimer _create_timer;
 
-        // 阵营maker
-        uint32 _camp_id_maker;
-
         // 总人数
-        uint32 _total_player_count;
+        uint32 _room_player_count;
 
         // 战场开始的时间
         uint64 _battle_start_time;
@@ -97,8 +83,8 @@ namespace KFrame
         // 战场服务器集群的分片id
         uint32 _battle_shard_id;
 
-        // 设置不能再阵营了
-        bool _is_battle_room_full;
+        // 已经停止加入阵营了
+        bool _is_stop_add_camp;
     };
 }
 

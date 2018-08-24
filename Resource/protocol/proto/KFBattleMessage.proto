@@ -150,6 +150,8 @@ message S2SAddCampToBattleShardReq
 {
 	required uint64 roomid = 1;
 	required PBBattleCamp pbcamp = 2;	// 阵营信息
+	required uint32 matchid = 3;
+	required uint32 matchshardid = 4;
 }
 
 // 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
@@ -340,7 +342,8 @@ message S2SPlayerLeaveRoomToMatchShardReq
 	required uint64 matchid = 1;	// 匹配模式
 	required uint64 roomid = 2;		// 房间id
 	required uint32 campid = 3;		// 玩家阵营id
-	required uint32 playerid = 4;	// 玩家id
+	required uint64 groupid = 4;	// 队伍id
+	required uint32 playerid = 5;	// 玩家id
 }
 
 // 战斗服务器集群逻辑分片=>大厅服务器

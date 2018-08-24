@@ -57,6 +57,6 @@ cp -f $respath/script/* $deploypath/script/
 
 #plugin
 echo "copy plugin"
-cp -f $respath/bin/* $deploypath/binm
+cp -f $respath/bin/* $deploypath/bin
 
 

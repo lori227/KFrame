@@ -31,6 +31,9 @@ namespace KFrame
         // 玩家id
         uint32 GetID();
 
+        // 队伍id
+        uint64 GetGroupID();
+
         // 加载
         void LoadFrom( const KFMsg::PBBattlePlayer& pbplayer );
 
@@ -77,7 +80,7 @@ namespace KFrame
         void PlayerNoticeBattleRoom( KFBattleRoom* kfroom );
 
         // 发送离开消息
-        void SendLeaveRoomToPlayer();
+        void SendLeaveRoomToGame();
     public:
         // 玩家数据
         KFMsg::PBBattlePlayer _pb_player;

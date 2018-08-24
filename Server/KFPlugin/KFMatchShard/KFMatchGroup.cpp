@@ -10,12 +10,16 @@ namespace KFrame
 
     KFMatchGroup::~KFMatchGroup()
     {
-
+        for ( auto iter : _player_list )
+        {
+            _kf_match_queue->RemoveMatchPlayer( iter.first );
+        }
+        _player_list.clear();
     }
 
     uint32 KFMatchGroup::PlayerCount()
     {
-        return _kf_player_list.Size();
+        return static_cast< uint32 >( _player_list.size() );
     }
 
     bool KFMatchGroup::IsFull( const KFMatchSetting* kfsetting )
@@ -25,8 +29,8 @@ namespace KFrame
 
     bool KFMatchGroup::HavePlayer( uint32 playerid )
     {
-        auto kfplayer = _kf_player_list.Find( playerid );
-        return kfplayer != nullptr;
+        auto iter = _player_list.find( playerid );
+        return iter != _player_list.end();
     }
 
     void KFMatchGroup::LoadFrom( const KFMsg::PBMatchGroup* pbgroup )
@@ -36,21 +40,18 @@ namespace KFrame
         for ( auto i = 0; i < pbgroup->pbplayer_size(); ++i )
         {
             auto pbplayer = &pbgroup->pbplayer( i );
-            auto kfplayer = KFMatchPlayer::Create( pbplayer );
+            auto kfplayer = _kf_match_queue->CreateMatchPlayer( pbplayer );
+            kfplayer->SetGroupID( _group_id );
 
-            _kf_player_list.Insert( kfplayer->GetID(), kfplayer );
+            _player_list[ kfplayer->GetID() ] = kfplayer;
+
+            __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add player[{}]!", _group_id, kfplayer->GetID() );
         }
     }
 
-    bool KFMatchGroup::QueryMatchGroup( uint32 playerid, uint32 gameid )
+    bool KFMatchGroup::RemovePlayer( uint32 playerid )
     {
-        auto kfplayer = _kf_player_list.Find( playerid );
-        if ( kfplayer == nullptr )
-        {
-            return false;
-        }
-
-        kfplayer->QueryMatchRoom( gameid, nullptr );
-        return true;
+        _kf_match_queue->RemoveMatchPlayer( playerid );
+        return _player_list.erase( playerid ) > 0u;
     }
 }

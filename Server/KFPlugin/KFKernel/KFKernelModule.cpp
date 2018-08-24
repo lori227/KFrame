@@ -22,12 +22,13 @@ namespace KFrame
         __KF_ADD_CONFIG__( _kf_kernel_config, false );
     }
 
-    void KFKernelModule::BeforeRun()
+    void KFKernelModule::AfterLoad()
     {
-        bool result = _kf_data_config->LoadDataConfig( _kf_kernel_config->_class_file );
-        if ( !result )
+        auto multipledata = _kf_option->GetValue< std::string >( "multipledata" );
+
+        while ( !multipledata.empty() )
         {
-            __LOG_ERROR__( KFLogEnum::Init, "load [{}] failed!", _kf_kernel_config->_class_file );
+            _multiple_data.insert( KFUtility::SplitString( multipledata, ";" ) );
         }
     }
 
@@ -57,7 +58,8 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     const KFClassSetting* KFKernelModule::FindClassSetting( const std::string& dataname )
     {
-        auto kfdatasetting = _kf_data_config->FindDataSetting( _kf_kernel_config->_global_class_name, dataname );
+        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+        auto kfdatasetting = _kf_data_config->FindDataSetting( _global_class_name, dataname );
         if ( kfdatasetting == nullptr )
         {
             return nullptr;
@@ -91,7 +93,9 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFKernelModule::CreateObject( const std::string& dataname )
     {
-        return KFDataFactory::CreateData( _kf_kernel_config->_global_class_name, dataname );
+        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+
+        return KFDataFactory::CreateData( _global_class_name, dataname );
     }
 
     KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting )
@@ -641,9 +645,14 @@ namespace KFrame
         }
     }
 
+    bool KFKernelModule::IsMultipleData( const std::string& dataname )
+    {
+        return _multiple_data.find( dataname ) != _multiple_data.end();
+    }
+
     uint32 KFKernelModule::CalcAgentValue( KFAgentValue* kfvalue, float multiple )
     {
-        auto ok = _kf_kernel_config->IsMultipleData( kfvalue->_data_name );
+        auto ok = IsMultipleData( kfvalue->_data_name );
         if ( !ok )
         {
             multiple = 1.0f;
@@ -651,4 +660,6 @@ namespace KFrame
 
         return kfvalue->GetValue( multiple );
     }
+
+
 }

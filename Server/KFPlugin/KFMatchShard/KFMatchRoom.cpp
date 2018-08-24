@@ -7,28 +7,51 @@ namespace KFrame
 {
     KFMatchRoom::KFMatchRoom()
     {
-        _battle_room_id = _invalid_int;
+        _room_id = _invalid_int;
         _battle_shard_id = _invalid_int;
-        _total_player_count = _invalid_int;
+        _room_player_count = _invalid_int;
         _battle_start_time = _invalid_int;
-        _camp_id_maker = _invalid_int;
-        _is_battle_room_full = false;
+        _is_stop_add_camp = false;
         _match_id = _invalid_int;
     }
 
     KFMatchRoom::~KFMatchRoom()
     {
-
+        _camp_list.Clear();
     }
 
     void KFMatchRoom::Initialize( KFMatchQueue* kfmatchqueue )
     {
         _kf_match_queue = kfmatchqueue;
         _match_id = _kf_match_queue->_match_id;
-        _battle_room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
+        _room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
 
         // 开启创建定时器
         _create_timer.StartTimer( 1, 10000 );
+    }
+
+    void KFMatchRoom::ResetRoom()
+    {
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] reset!", _room_id );
+
+        _battle_shard_id = _invalid_int;
+        _create_timer.StartTimer( 1, 10000 );
+
+        // 玩家进入重置
+        for ( auto& campiter : _camp_list._objects )
+        {
+            auto kfcamp = campiter.second;
+            kfcamp->ResetEnterBattleRoom();
+        }
+    }
+
+    void KFMatchRoom::RunRoom()
+    {
+        // 分配房间
+        CreateBatterRoomReq();
+
+        // 进入战场房间
+        EnterBattleRoomReq();
     }
 
     bool KFMatchRoom::SendMessageToBattle( uint32 msgid, google::protobuf::Message* message )
@@ -36,88 +59,35 @@ namespace KFrame
         return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
     }
 
-    void KFMatchRoom::RunRoom()
-    {
-        // 分配房间
-        RunCreateBatterRoom();
-
-        // 进入战场房间
-        RunEnterBattleRoom();
-
-        // 取消匹配
-        RunCancelBattleRoom();
-    }
-
-    void KFMatchRoom::RunCancelBattleRoom()
-    {
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
-        {
-            kfcamp->RunCancelMatch( this );
-            kfcamp = _kf_camp_list.Next();
-        }
-    }
-
-    void KFMatchRoom::RunCreateBatterRoom()
-    {
-        if ( !_create_timer.DoneTimer( KFGlobal::Instance()->_game_time, true ) )
-        {
-            return;
-        }
-
-        // 发送消息
-        KFMsg::S2SCreateRoomToBattleProxyReq req;
-        req.set_roomid( _battle_room_id );
-        req.set_matchid( _kf_match_queue->_match_id );
-        req.set_maxplayercount( _kf_match_queue->_kf_setting->_max_player_count );
-        SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
-
-        __LOG_DEBUG__( KFLogEnum::Logic, "create battle room[{}] req", _battle_room_id );
-    }
-
-    void KFMatchRoom::CreateBattleRoom( uint32 battleshardid )
-    {
-        _create_timer.StopTimer();
-        _battle_shard_id = battleshardid;
-
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] create battle[{}] ok!", _battle_room_id, _battle_shard_id );
-    }
-
     bool KFMatchRoom::IsFull()
     {
-        return _total_player_count >= _kf_match_queue->_kf_setting->_max_player_count;
-    }
-
-    KFMatchCamp* KFMatchRoom::AddCamp( const KFMsg::PBMatchGroup* pbgroup )
-    {
-        auto kfcamp = __KF_CREATE_BATCH__( KFMatchCamp, 100 );
-        kfcamp->LoadFrom( pbgroup );
-        AddCamp( kfcamp );
-
-        return kfcamp;
+        return _room_player_count >= _kf_match_queue->_kf_setting->_max_player_count;
     }
 
     void KFMatchRoom::AddCamp( KFMatchCamp* kfcamp )
     {
-        kfcamp->_camp_id = ++_camp_id_maker;
-        kfcamp->_room_id = _battle_room_id;
-        kfcamp->_kf_match_queue = _kf_match_queue;
-        for ( auto iter : kfcamp->_kf_player_list._objects )
+        // 设置房间id
+        for ( auto& giter : kfcamp->_group_list._objects )
         {
-            auto kfplayer = iter.second;
-            kfplayer->SetCampID( kfcamp->_camp_id );
+            auto kfgroup = giter.second;
+            for ( auto& iter : kfgroup->_player_list )
+            {
+                auto kfplayer = iter.second;
+                kfplayer->SetRoomID( _room_id );
+            }
         }
 
-        _kf_camp_list.Insert( kfcamp->_camp_id, kfcamp );
+        // 加入列表中
+        _camp_list.Insert( kfcamp->_camp_id, kfcamp );
 
         // 玩家数量
-        _total_player_count += kfcamp->PlayerCount();
+        _room_player_count += kfcamp->PlayerCount();
     }
 
     bool KFMatchRoom::IsWaitMatch( uint32 playercount )
     {
-        // 判断人数
-        if ( _is_battle_room_full || IsFull() )
+        // 停止添加阵营, 判断人数
+        if ( _is_stop_add_camp || IsFull() )
         {
             return false;
         }
@@ -132,7 +102,7 @@ namespace KFrame
         }
 
         // 最大人数限制
-        if ( _total_player_count + playercount > _kf_match_queue->_kf_setting->_max_player_count )
+        if ( _room_player_count + playercount > _kf_match_queue->_kf_setting->_max_player_count )
         {
             return false;
         }
@@ -140,100 +110,38 @@ namespace KFrame
         return true;
     }
 
-    bool KFMatchRoom::CancelMatchReq( uint32 playerid )
+    void KFMatchRoom::CreateBatterRoomReq()
     {
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
+        if ( !_create_timer.DoneTimer( KFGlobal::Instance()->_game_time, true ) )
         {
-            if ( kfcamp->CancelMatchReq( playerid ) )
-            {
-                return true;
-            }
-
-            kfcamp = _kf_camp_list.Next();
+            return;
         }
 
-        return false;
-    }
-
-    bool KFMatchRoom::CancelMatchAck( uint32 campid, uint32 playerid, bool isroomopen )
-    {
-        auto kfcamp = _kf_camp_list.Find( campid );
-        if ( kfcamp == nullptr )
+        // 发送消息
+        KFMsg::S2SCreateRoomToBattleProxyReq req;
+        req.set_roomid( _room_id );
+        req.set_matchid( _kf_match_queue->_match_id );
+        req.set_maxplayercount( _kf_match_queue->_kf_setting->_max_player_count );
+        auto ok = SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
+        if ( ok )
         {
-            return false;
-        }
-
-        auto playercount = kfcamp->CancelMatch( playerid, isroomopen );
-        if ( playercount == _invalid_int )
-        {
-            return false;
-        }
-
-        _total_player_count -= __MIN__( playercount, _total_player_count );
-        if ( kfcamp->PlayerCount() == _invalid_int )
-        {
-            _kf_camp_list.Remove( kfcamp->_camp_id );
+            __LOG_DEBUG__( KFLogEnum::Logic, "create battle room[{}] req!", _room_id );
         }
         else
         {
-            // 把阵营拆分成队伍, 然后加入队伍匹配列表中
-            if ( !isroomopen )
-            {
-                SplitCampToGroup( kfcamp );
-                _kf_camp_list.Remove( kfcamp->_camp_id );
-            }
+            __LOG_ERROR__( KFLogEnum::Logic, "create battle room[{}] failed!", _room_id );
         }
-
-        return true;
     }
 
-    void KFMatchRoom::SplitCampToGroup( KFMatchCamp* kfcamp )
+    void KFMatchRoom::CreateBattleRoomAck( uint32 battleshardid )
     {
-        std::map< uint32, std::list< KFMatchPlayer* > > splitgrouplist;
+        _create_timer.StopTimer();
+        _battle_shard_id = battleshardid;
 
-        // 切分成队伍列表
-        auto kfplayer = kfcamp->_kf_player_list.First();
-        while ( kfplayer != nullptr )
-        {
-            splitgrouplist[ kfplayer->GetGroupID() ].push_back( kfplayer );
-            kfplayer = kfcamp->_kf_player_list.Next();
-        }
-
-        // 设置成匹配队伍
-        for ( auto iter : splitgrouplist )
-        {
-            auto kfgroup = __KF_CREATE_BATCH__( KFMatchGroup, 100 );
-            kfgroup->_group_id = iter.first;
-            kfgroup->_kf_match_queue = _kf_match_queue;
-            _kf_match_queue->_kf_group_list.Insert( kfgroup->_group_id, kfgroup );
-
-            auto& playerlist = iter.second;
-            for ( auto kftemp : playerlist )
-            {
-                kfcamp->_kf_player_list.Remove( kftemp->GetID(), false );
-                kfgroup->_kf_player_list.Insert( kftemp->GetID(), kftemp );
-            }
-        }
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] create battle[{}] ok!", _room_id, _battle_shard_id );
     }
 
-    KFMatchCamp* KFMatchRoom::FindMatchCamp( uint32 playerid )
-    {
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
-        {
-            if ( kfcamp->HavePlayer( playerid ) )
-            {
-                return kfcamp;
-            }
-
-            kfcamp = _kf_camp_list.Next();
-        }
-
-        return nullptr;
-    }
-
-    void KFMatchRoom::RunEnterBattleRoom()
+    void KFMatchRoom::EnterBattleRoomReq()
     {
         // 还没有创建战场房间
         if ( _battle_shard_id == _invalid_int )
@@ -241,17 +149,17 @@ namespace KFrame
             return;
         }
 
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
+        // 请求把matchroom的阵营加入到battleroom中
+        for ( auto& campiter : _camp_list._objects )
         {
+            auto kfcamp = campiter.second;
             kfcamp->EnterBattleRoomReq( this );
-            kfcamp = _kf_camp_list.Next();
         }
     }
 
-    bool KFMatchRoom::EnterBattleRoom( uint32 campid, bool addok )
+    bool KFMatchRoom::EnterBattleRoomAck( uint32 campid, bool addok )
     {
-        auto kfcamp = _kf_camp_list.Find( campid );
+        auto kfcamp = _camp_list.Find( campid );
         if ( kfcamp == nullptr )
         {
             return false;
@@ -259,20 +167,23 @@ namespace KFrame
 
         if ( addok )
         {
-            return kfcamp->EnterBattleRoomAck();
+            kfcamp->EnterBattleRoomAck( this );
+        }
+        else
+        {
+            // 删除阵营
+            _is_stop_add_camp = true;
+            _camp_list.Remove( campid, false );
+
+            // 找到一个新的战场
+            auto kfroom = _kf_match_queue->FindWaitMatchRoom( kfcamp->PlayerCount() );
+            kfroom->AddCamp( kfcamp );
         }
 
-        // 删除阵营
-        _is_battle_room_full = true;
-        _kf_camp_list.Remove( campid, false );
-
-        // 找到一个新的战场
-        auto kfroom = _kf_match_queue->FindWaitMatchRoom( kfcamp->PlayerCount() );
-        kfroom->AddCamp( kfcamp );
         return true;
     }
 
-    bool KFMatchRoom::OpenBattleRoom( uint32 waittime )
+    bool KFMatchRoom::TellRoomOpen( uint32 waittime )
     {
         // 设置战场开始的时间
         // 战场正式开始前10秒钟, 玩家不进入该战场了
@@ -280,62 +191,79 @@ namespace KFrame
 
         // 回复消息
         KFMsg::S2SOpenRoomToBattleShardAck ack;
-        ack.set_roomid( _battle_room_id );
+        ack.set_roomid( _room_id );
         auto ok = SendMessageToBattle( KFMsg::S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "open room[{}] ack!", _battle_room_id );
+            __LOG_ERROR__( KFLogEnum::Logic, "match room[{}] open failed!", _room_id );
         }
 
         return ok;
     }
 
-    void KFMatchRoom::StartBattleRoom()
+    void KFMatchRoom::TellRoomStart()
     {
         KFMsg::S2STellRoomStartToMatchShardAck ack;
-        ack.set_roomid( _battle_room_id );
+        ack.set_roomid( _room_id );
         auto ok = SendMessageToBattle( KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "start room[{}] failed!", _battle_room_id );
+            __LOG_ERROR__( KFLogEnum::Logic, "match room[{}] start failed!", _room_id );
         }
     }
 
-    bool KFMatchRoom::LeaveBattleRoom( uint32 campid, uint32 playerid )
+    bool KFMatchRoom::LeaveBattleRoom( uint32 campid, uint64 groupid, uint32 playerid )
     {
-        auto kfcamp = _kf_camp_list.Find( campid );
+        auto kfcamp = _camp_list.Find( campid );
         if ( kfcamp == nullptr )
         {
             return false;
         }
 
-        auto result = kfcamp->LeaveBattleRoom( playerid );
-        if ( result )
+        auto ok = kfcamp->RemovePlayer( groupid, playerid );
+        if ( ok )
         {
-            _total_player_count -= __MIN__( _total_player_count, 1 );
+            _room_player_count -= __MIN__( _room_player_count, 1 );
             if ( kfcamp->PlayerCount() == 0 )
             {
-                _kf_camp_list.Remove( campid );
+                _camp_list.Remove( campid );
             }
         }
 
-        return result;
+        return ok;
     }
 
-    bool KFMatchRoom::QueryMatchGroup( uint32 playerid, uint32 serverid )
+    bool KFMatchRoom::CancelMatch( uint32 campid, uint64 groupid )
     {
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
         {
-            if ( kfcamp->QueryMatchGroup( playerid, serverid, this ) )
-            {
-                return true;
-            }
-
-            kfcamp = _kf_camp_list.Next();
+            // 发送消息到战斗集群
+            KFMsg::S2SCancelMatchToBattleShardReq req;
+            req.set_roomid( _room_id );
+            req.set_campid( campid );
+            req.set_groupid( groupid );
+            SendMessageToBattle( KFMsg::S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ, &req );
         }
 
-        return false;
-    }
+        auto kfcamp = _camp_list.Find( campid );
+        if ( kfcamp == nullptr )
+        {
+            return false;
+        }
 
+        auto ok = kfcamp->RemoveGroup( groupid );
+        if ( ok )
+        {
+            // 将剩余的队伍, 重新加入等待队伍中
+            for ( auto& iter : kfcamp->_group_list._objects )
+            {
+                _kf_match_queue->AddWaitGroup( iter.second );
+            }
+            kfcamp->_group_list.Clear( false );
+
+            // 删除阵营
+            _camp_list.Remove( campid );
+        }
+
+        return ok;
+    }
 }

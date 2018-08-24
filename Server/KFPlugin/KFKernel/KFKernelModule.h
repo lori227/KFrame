@@ -14,6 +14,7 @@
 #include "KFComponentEx.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
+#include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
 {
@@ -24,11 +25,9 @@ namespace KFrame
         ~KFKernelModule();
 
         virtual void InitModule();
-
-        virtual void BeforeRun();
+        virtual void AfterLoad();
         virtual void Run();
         virtual void AfterRun();
-
         virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +65,9 @@ namespace KFrame
         // 获得数值
         virtual uint32 CalcAgentValue( KFAgentValue* kfvalue, float multiple );
 
+        // 是否可以倍率
+        bool IsMultipleData( const std::string& dataname );
+
     public:
         // copy from proto
         void CopyFromInt32( KFData* kfdata, const KFMsg::PBInt32* proto );
@@ -93,6 +95,9 @@ namespace KFrame
 
     private:
         KFMap< std::string, const std::string, KFComponentEx > _kf_component;
+
+        // 允许有倍数的属性
+        std::set< std::string > _multiple_data;
     };
 }
 

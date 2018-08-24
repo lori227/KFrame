@@ -25,41 +25,38 @@ function copyfile()
 	fi
 }
 
-binpath=../../_bin/linux
-respath=../../../Resource
-settingpath=../../_bin/setting
+respath=../../../Bin
 deploypath=/data/public
 
 mkdir -p $deploypath
 mkdir -p $deploypath/setting
 mkdir -p $deploypath/plugin
 mkdir -p $deploypath/config
+mkdir -p $deploypath/startup
 
 #setting
-path1=$settingpath
+path1=$respath/setting
 path2=$deploypath/setting
 copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
-copyfile 1 initapp.log4cxx
-copyfile 1 templateapp.log4cxx
-copyfile 1 common.startup
 copyfile 1 redis.address
 copyfile 1 cluster.setting
+copyfile 1 option.setting
 
-path1=$settingpath/public
-path2=$deploypath/setting
-copyfile 1 master.startup
-copyfile 1 proxy.startup
-copyfile 1 shard.startup
+path1=$respath/startup
+path2=$deploypath/startup
+copyfile 1 common.startup
+copyfile 1 public.master.startup
+copyfile 1 public.proxy.startup
+copyfile 1 public.shard.startup
 
 #config
 path1=$respath/config
 path2=$deploypath/config
-copyfile 1 option.config
 
 #plugin
-path1=$binpath
+path1=$respath/bin
 path2=$deploypath
 copyfile 1 KFStartup
 copyfile 1 KFStartupd

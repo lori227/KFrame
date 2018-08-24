@@ -9,12 +9,12 @@ server=dirserver
 fi
 
 echo Starting Mail Cluster Server
-./$server appid=100.0.121.1 log=1 startup=./setting/master.startup
+./$server appid=100.0.121.1 log=1 startup=./startup/dir.master.startup
 
 echo Starting Mail Proxy Server
-./$server appid=100.0.122.1 log=1 startup=./setting/proxy.startup
+./$server appid=100.0.122.1 log=1 startup=./startup/dir.proxy.startup
 
 echo Starting Mail Shard Server
-./$server appid=100.0.123.1 log=1 startup=./setting/shard.startup
+./$server appid=100.0.123.1 log=1 startup=./startup/dir.shard.startup
 
 cd $basepath

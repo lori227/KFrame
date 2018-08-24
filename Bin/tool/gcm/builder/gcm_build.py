@@ -59,10 +59,10 @@ plugin_path = bin_path
 setting_path = os.path.join('../../../setting')
 config_path = os.path.join('../../../config')
 startup_path = os.path.join('../../../startup')
+win_other_dll_path = os.path.join('../../../../Server/_lib/win64/3rd')
+
 
 # 获取本机ip
-
-
 def get_local_ip():
     hostname = socket.getfqdn(socket.gethostname())
     host = socket.gethostbyname(hostname)
@@ -126,8 +126,10 @@ def copy_plugin_and_setting(tree, config_folder, plugin_folder, setting_folder, 
 #生成shell文件bat/sh
 def generate_shell_file(folder, startup_name, proc_name):
     func_id = 0
+    zone_id = args['zone']
     if proc_name in g_proc_config.cluster_procs:
         func_id = g_proc_config.cluster_procs[proc_name].get('FuncID')
+        zone_id = 0
     elif proc_name in g_proc_config.zone_procs:
         func_id = g_proc_config.zone_procs[proc_name].get('FuncID')
     else:
@@ -136,13 +138,22 @@ def generate_shell_file(folder, startup_name, proc_name):
     if is_linux():
         file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
         file.write('echo Starting ' + proc_name + ' Server\n')
-        file.write('./%s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], 0, int(func_id), 1, proc_name))
+        file.write('./%s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
         file.close()
     else:  
         file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
         file.write('echo Starting ' + proc_name + ' Server\n')
-        file.write('start "%s" %s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], 0, int(func_id), 1, proc_name))
+        file.write('start "%s" %s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
         file.close()
+
+# 拷贝其他windows依赖的dll文件
+def copy_windows_other_dlls(out_folder):
+    if is_linux():
+        return
+    else:
+        shutil.copy(win_other_dll_path + '/libeay32.dll', out_folder)
+        shutil.copy(win_other_dll_path + '/ssleay32.dll', out_folder)
+        shutil.copy(win_other_dll_path + '/libmysql.dll', out_folder)
 
 # 拷贝进程的文件
 def copy_proc_files(node):
@@ -185,7 +196,7 @@ def copy_proc_files(node):
                              '.startup'), out_startup_folder)
 
     generate_shell_file(out_folder, startup_name, full_name)
-    
+    copy_windows_other_dlls(out_folder)
 
 def copy_files():
     print 'start to copy all necessary files'
@@ -210,7 +221,8 @@ def gen_configuration():
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
-    parser.add_argument('-c', '--channel', type=int, default='100', help="channel id")
+    parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
+    parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     if is_linux():
         parser.add_argument('-s', '--svn', type=int, required=True, help="svn version")
     return vars(parser.parse_args())

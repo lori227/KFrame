@@ -271,10 +271,10 @@ namespace KFrame
             return;
         }
 
+        // roomid不为0, 在battleclient里处理
         auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
-            // roomid不为0, 在battleclient里处理
             return;
         }
 
@@ -283,8 +283,6 @@ namespace KFrame
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         SendMessageToMatch( KFMsg::S2S_QUERY_MATCH_ROOM_REQ, &req );
-
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleQueryMatchRoomAck )

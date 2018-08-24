@@ -42,16 +42,17 @@ class S2SMatchToShardReq;
 class S2SCancelMatchToProxyReq;
 class S2SCancelMatchToShardReq;
 class S2SCancelMatchToBattleShardReq;
-class S2SCancelMatchToMatchShardAck;
 class S2SNoticeMatchRoomReq;
 class S2SNoticeMatchRoomAck;
 class S2SQueryMatchRoomReq;
 class S2SQueryRoomToMatchShardReq;
 class S2SQueryMatchRoomAck;
 class S2SQueryBattleRoomReq;
+class S2SQueryBattleRoomAck;
 class S2SQueryRoomToBattleShardReq;
 class S2SPlayerOnlineToBattleShardReq;
 class S2SNoticeMatchStateReq;
+class S2SResetMatchRoomReq;
 
 enum MatchProtocol {
   S2S_REGISTER_MATCH_REQ = 11101,
@@ -65,16 +66,17 @@ enum MatchProtocol {
   S2S_QUERY_MATCH_ROOM_REQ = 11111,
   S2S_QUERY_MATCH_ROOM_ACK = 11112,
   S2S_QUERY_BATTLE_ROOM_REQ = 11113,
+  S2S_QUERY_BATTLE_ROOM_ACK = 11114,
   S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ = 11115,
   S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ = 11116,
   S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118,
-  S2S_CANCEL_MATCH_TO_MATCH_SHARD_ACK = 11119,
   S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120,
-  S2S_NOTICE_MATCH_STATE_REQ = 11121
+  S2S_NOTICE_MATCH_STATE_REQ = 11121,
+  S2S_RESET_MATCH_ROOM_REQ = 11122
 };
 LIBPROTOC_EXPORT bool MatchProtocol_IsValid(int value);
 const MatchProtocol MatchProtocol_MIN = S2S_REGISTER_MATCH_REQ;
-const MatchProtocol MatchProtocol_MAX = S2S_NOTICE_MATCH_STATE_REQ;
+const MatchProtocol MatchProtocol_MAX = S2S_RESET_MATCH_ROOM_REQ;
 const int MatchProtocol_ARRAYSIZE = MatchProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MatchProtocol_descriptor();
@@ -776,26 +778,12 @@ class LIBPROTOC_EXPORT S2SCancelMatchToBattleShardReq : public ::google::protobu
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required uint32 matchid = 4;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 4;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // required uint32 matchshardid = 5;
-  inline bool has_matchshardid() const;
-  inline void clear_matchshardid();
-  static const int kMatchshardidFieldNumber = 5;
-  inline ::google::protobuf::uint32 matchshardid() const;
-  inline void set_matchshardid(::google::protobuf::uint32 value);
+  // required uint64 groupid = 3;
+  inline bool has_groupid() const;
+  inline void clear_groupid();
+  static const int kGroupidFieldNumber = 3;
+  inline ::google::protobuf::uint64 groupid() const;
+  inline void set_groupid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCancelMatchToBattleShardReq)
  private:
@@ -803,23 +791,17 @@ class LIBPROTOC_EXPORT S2SCancelMatchToBattleShardReq : public ::google::protobu
   inline void clear_has_roomid();
   inline void set_has_campid();
   inline void clear_has_campid();
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-  inline void set_has_matchshardid();
-  inline void clear_has_matchshardid();
+  inline void set_has_groupid();
+  inline void clear_has_groupid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint64 groupid_;
   ::google::protobuf::uint32 campid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 matchshardid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
   friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
@@ -827,128 +809,6 @@ class LIBPROTOC_EXPORT S2SCancelMatchToBattleShardReq : public ::google::protobu
 
   void InitAsDefaultInstance();
   static S2SCancelMatchToBattleShardReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SCancelMatchToMatchShardAck : public ::google::protobuf::Message {
- public:
-  S2SCancelMatchToMatchShardAck();
-  virtual ~S2SCancelMatchToMatchShardAck();
-
-  S2SCancelMatchToMatchShardAck(const S2SCancelMatchToMatchShardAck& from);
-
-  inline S2SCancelMatchToMatchShardAck& operator=(const S2SCancelMatchToMatchShardAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SCancelMatchToMatchShardAck& default_instance();
-
-  void Swap(S2SCancelMatchToMatchShardAck* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SCancelMatchToMatchShardAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SCancelMatchToMatchShardAck& from);
-  void MergeFrom(const S2SCancelMatchToMatchShardAck& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 matchid = 1;
-  inline bool has_matchid() const;
-  inline void clear_matchid();
-  static const int kMatchidFieldNumber = 1;
-  inline ::google::protobuf::uint32 matchid() const;
-  inline void set_matchid(::google::protobuf::uint32 value);
-
-  // required uint64 roomid = 2;
-  inline bool has_roomid() const;
-  inline void clear_roomid();
-  static const int kRoomidFieldNumber = 2;
-  inline ::google::protobuf::uint64 roomid() const;
-  inline void set_roomid(::google::protobuf::uint64 value);
-
-  // required uint32 campid = 3;
-  inline bool has_campid() const;
-  inline void clear_campid();
-  static const int kCampidFieldNumber = 3;
-  inline ::google::protobuf::uint32 campid() const;
-  inline void set_campid(::google::protobuf::uint32 value);
-
-  // required uint32 playerid = 4;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required bool isroomopen = 5;
-  inline bool has_isroomopen() const;
-  inline void clear_isroomopen();
-  static const int kIsroomopenFieldNumber = 5;
-  inline bool isroomopen() const;
-  inline void set_isroomopen(bool value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SCancelMatchToMatchShardAck)
- private:
-  inline void set_has_matchid();
-  inline void clear_has_matchid();
-  inline void set_has_roomid();
-  inline void clear_has_roomid();
-  inline void set_has_campid();
-  inline void clear_has_campid();
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_isroomopen();
-  inline void clear_has_isroomopen();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 campid_;
-  ::google::protobuf::uint32 playerid_;
-  bool isroomopen_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
-  friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFMatchMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SCancelMatchToMatchShardAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1624,6 +1484,108 @@ class LIBPROTOC_EXPORT S2SQueryBattleRoomReq : public ::google::protobuf::Messag
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT S2SQueryBattleRoomAck : public ::google::protobuf::Message {
+ public:
+  S2SQueryBattleRoomAck();
+  virtual ~S2SQueryBattleRoomAck();
+
+  S2SQueryBattleRoomAck(const S2SQueryBattleRoomAck& from);
+
+  inline S2SQueryBattleRoomAck& operator=(const S2SQueryBattleRoomAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SQueryBattleRoomAck& default_instance();
+
+  void Swap(S2SQueryBattleRoomAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SQueryBattleRoomAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SQueryBattleRoomAck& from);
+  void MergeFrom(const S2SQueryBattleRoomAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint64 roomid = 2;
+  inline bool has_roomid() const;
+  inline void clear_roomid();
+  static const int kRoomidFieldNumber = 2;
+  inline ::google::protobuf::uint64 roomid() const;
+  inline void set_roomid(::google::protobuf::uint64 value);
+
+  // required uint32 matchid = 3;
+  inline bool has_matchid() const;
+  inline void clear_matchid();
+  static const int kMatchidFieldNumber = 3;
+  inline ::google::protobuf::uint32 matchid() const;
+  inline void set_matchid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryBattleRoomAck)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_roomid();
+  inline void clear_has_roomid();
+  inline void set_has_matchid();
+  inline void clear_has_matchid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 matchid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
+  friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFMatchMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SQueryBattleRoomAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT S2SQueryRoomToBattleShardReq : public ::google::protobuf::Message {
  public:
   S2SQueryRoomToBattleShardReq();
@@ -1927,6 +1889,98 @@ class LIBPROTOC_EXPORT S2SNoticeMatchStateReq : public ::google::protobuf::Messa
 
   void InitAsDefaultInstance();
   static S2SNoticeMatchStateReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SResetMatchRoomReq : public ::google::protobuf::Message {
+ public:
+  S2SResetMatchRoomReq();
+  virtual ~S2SResetMatchRoomReq();
+
+  S2SResetMatchRoomReq(const S2SResetMatchRoomReq& from);
+
+  inline S2SResetMatchRoomReq& operator=(const S2SResetMatchRoomReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SResetMatchRoomReq& default_instance();
+
+  void Swap(S2SResetMatchRoomReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SResetMatchRoomReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SResetMatchRoomReq& from);
+  void MergeFrom(const S2SResetMatchRoomReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 matchid = 1;
+  inline bool has_matchid() const;
+  inline void clear_matchid();
+  static const int kMatchidFieldNumber = 1;
+  inline ::google::protobuf::uint32 matchid() const;
+  inline void set_matchid(::google::protobuf::uint32 value);
+
+  // required uint64 roomid = 2;
+  inline bool has_roomid() const;
+  inline void clear_roomid();
+  static const int kRoomidFieldNumber = 2;
+  inline ::google::protobuf::uint64 roomid() const;
+  inline void set_roomid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SResetMatchRoomReq)
+ private:
+  inline void set_has_matchid();
+  inline void clear_has_matchid();
+  inline void set_has_roomid();
+  inline void clear_has_roomid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint32 matchid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
+  friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFMatchMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SResetMatchRoomReq* default_instance_;
 };
 // ===================================================================
 
@@ -2434,184 +2488,26 @@ inline void S2SCancelMatchToBattleShardReq::set_campid(::google::protobuf::uint3
   campid_ = value;
 }
 
-// required uint32 playerid = 3;
-inline bool S2SCancelMatchToBattleShardReq::has_playerid() const {
+// required uint64 groupid = 3;
+inline bool S2SCancelMatchToBattleShardReq::has_groupid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SCancelMatchToBattleShardReq::set_has_playerid() {
+inline void S2SCancelMatchToBattleShardReq::set_has_groupid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SCancelMatchToBattleShardReq::clear_has_playerid() {
+inline void S2SCancelMatchToBattleShardReq::clear_has_groupid() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SCancelMatchToBattleShardReq::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
+inline void S2SCancelMatchToBattleShardReq::clear_groupid() {
+  groupid_ = GOOGLE_ULONGLONG(0);
+  clear_has_groupid();
 }
-inline ::google::protobuf::uint32 S2SCancelMatchToBattleShardReq::playerid() const {
-  return playerid_;
+inline ::google::protobuf::uint64 S2SCancelMatchToBattleShardReq::groupid() const {
+  return groupid_;
 }
-inline void S2SCancelMatchToBattleShardReq::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required uint32 matchid = 4;
-inline bool S2SCancelMatchToBattleShardReq::has_matchid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SCancelMatchToBattleShardReq::set_has_matchid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SCancelMatchToBattleShardReq::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SCancelMatchToBattleShardReq::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 S2SCancelMatchToBattleShardReq::matchid() const {
-  return matchid_;
-}
-inline void S2SCancelMatchToBattleShardReq::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
-}
-
-// required uint32 matchshardid = 5;
-inline bool S2SCancelMatchToBattleShardReq::has_matchshardid() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SCancelMatchToBattleShardReq::set_has_matchshardid() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SCancelMatchToBattleShardReq::clear_has_matchshardid() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SCancelMatchToBattleShardReq::clear_matchshardid() {
-  matchshardid_ = 0u;
-  clear_has_matchshardid();
-}
-inline ::google::protobuf::uint32 S2SCancelMatchToBattleShardReq::matchshardid() const {
-  return matchshardid_;
-}
-inline void S2SCancelMatchToBattleShardReq::set_matchshardid(::google::protobuf::uint32 value) {
-  set_has_matchshardid();
-  matchshardid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SCancelMatchToMatchShardAck
-
-// required uint32 matchid = 1;
-inline bool S2SCancelMatchToMatchShardAck::has_matchid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SCancelMatchToMatchShardAck::set_has_matchid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_has_matchid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_matchid() {
-  matchid_ = 0u;
-  clear_has_matchid();
-}
-inline ::google::protobuf::uint32 S2SCancelMatchToMatchShardAck::matchid() const {
-  return matchid_;
-}
-inline void S2SCancelMatchToMatchShardAck::set_matchid(::google::protobuf::uint32 value) {
-  set_has_matchid();
-  matchid_ = value;
-}
-
-// required uint64 roomid = 2;
-inline bool S2SCancelMatchToMatchShardAck::has_roomid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SCancelMatchToMatchShardAck::set_has_roomid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_has_roomid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_roomid() {
-  roomid_ = GOOGLE_ULONGLONG(0);
-  clear_has_roomid();
-}
-inline ::google::protobuf::uint64 S2SCancelMatchToMatchShardAck::roomid() const {
-  return roomid_;
-}
-inline void S2SCancelMatchToMatchShardAck::set_roomid(::google::protobuf::uint64 value) {
-  set_has_roomid();
-  roomid_ = value;
-}
-
-// required uint32 campid = 3;
-inline bool S2SCancelMatchToMatchShardAck::has_campid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SCancelMatchToMatchShardAck::set_has_campid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_has_campid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_campid() {
-  campid_ = 0u;
-  clear_has_campid();
-}
-inline ::google::protobuf::uint32 S2SCancelMatchToMatchShardAck::campid() const {
-  return campid_;
-}
-inline void S2SCancelMatchToMatchShardAck::set_campid(::google::protobuf::uint32 value) {
-  set_has_campid();
-  campid_ = value;
-}
-
-// required uint32 playerid = 4;
-inline bool S2SCancelMatchToMatchShardAck::has_playerid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SCancelMatchToMatchShardAck::set_has_playerid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
-}
-inline ::google::protobuf::uint32 S2SCancelMatchToMatchShardAck::playerid() const {
-  return playerid_;
-}
-inline void S2SCancelMatchToMatchShardAck::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required bool isroomopen = 5;
-inline bool S2SCancelMatchToMatchShardAck::has_isroomopen() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SCancelMatchToMatchShardAck::set_has_isroomopen() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_has_isroomopen() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SCancelMatchToMatchShardAck::clear_isroomopen() {
-  isroomopen_ = false;
-  clear_has_isroomopen();
-}
-inline bool S2SCancelMatchToMatchShardAck::isroomopen() const {
-  return isroomopen_;
-}
-inline void S2SCancelMatchToMatchShardAck::set_isroomopen(bool value) {
-  set_has_isroomopen();
-  isroomopen_ = value;
+inline void S2SCancelMatchToBattleShardReq::set_groupid(::google::protobuf::uint64 value) {
+  set_has_groupid();
+  groupid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -3242,6 +3138,76 @@ inline void S2SQueryBattleRoomReq::set_serverid(::google::protobuf::uint32 value
 
 // -------------------------------------------------------------------
 
+// S2SQueryBattleRoomAck
+
+// required uint32 playerid = 1;
+inline bool S2SQueryBattleRoomAck::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SQueryBattleRoomAck::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SQueryBattleRoomAck::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SQueryBattleRoomAck::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SQueryBattleRoomAck::playerid() const {
+  return playerid_;
+}
+inline void S2SQueryBattleRoomAck::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint64 roomid = 2;
+inline bool S2SQueryBattleRoomAck::has_roomid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SQueryBattleRoomAck::set_has_roomid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SQueryBattleRoomAck::clear_has_roomid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SQueryBattleRoomAck::clear_roomid() {
+  roomid_ = GOOGLE_ULONGLONG(0);
+  clear_has_roomid();
+}
+inline ::google::protobuf::uint64 S2SQueryBattleRoomAck::roomid() const {
+  return roomid_;
+}
+inline void S2SQueryBattleRoomAck::set_roomid(::google::protobuf::uint64 value) {
+  set_has_roomid();
+  roomid_ = value;
+}
+
+// required uint32 matchid = 3;
+inline bool S2SQueryBattleRoomAck::has_matchid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SQueryBattleRoomAck::set_has_matchid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SQueryBattleRoomAck::clear_has_matchid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SQueryBattleRoomAck::clear_matchid() {
+  matchid_ = 0u;
+  clear_has_matchid();
+}
+inline ::google::protobuf::uint32 S2SQueryBattleRoomAck::matchid() const {
+  return matchid_;
+}
+inline void S2SQueryBattleRoomAck::set_matchid(::google::protobuf::uint32 value) {
+  set_has_matchid();
+  matchid_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // S2SQueryRoomToBattleShardReq
 
 // required uint64 roomid = 1;
@@ -3448,6 +3414,54 @@ inline ::google::protobuf::uint32 S2SNoticeMatchStateReq::matchid() const {
 inline void S2SNoticeMatchStateReq::set_matchid(::google::protobuf::uint32 value) {
   set_has_matchid();
   matchid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SResetMatchRoomReq
+
+// required uint32 matchid = 1;
+inline bool S2SResetMatchRoomReq::has_matchid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SResetMatchRoomReq::set_has_matchid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SResetMatchRoomReq::clear_has_matchid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SResetMatchRoomReq::clear_matchid() {
+  matchid_ = 0u;
+  clear_has_matchid();
+}
+inline ::google::protobuf::uint32 S2SResetMatchRoomReq::matchid() const {
+  return matchid_;
+}
+inline void S2SResetMatchRoomReq::set_matchid(::google::protobuf::uint32 value) {
+  set_has_matchid();
+  matchid_ = value;
+}
+
+// required uint64 roomid = 2;
+inline bool S2SResetMatchRoomReq::has_roomid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SResetMatchRoomReq::set_has_roomid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SResetMatchRoomReq::clear_has_roomid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SResetMatchRoomReq::clear_roomid() {
+  roomid_ = GOOGLE_ULONGLONG(0);
+  clear_has_roomid();
+}
+inline ::google::protobuf::uint64 S2SResetMatchRoomReq::roomid() const {
+  return roomid_;
+}
+inline void S2SResetMatchRoomReq::set_roomid(::google::protobuf::uint64 value) {
+  set_has_roomid();
+  roomid_ = value;
 }
 
 

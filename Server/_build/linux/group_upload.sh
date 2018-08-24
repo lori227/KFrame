@@ -49,7 +49,7 @@ copyfile 1 ip.address
 copyfile 1 bus.relation
 copyfile 1 server.network
 copyfile 1 cluster.setting
-copyfile 1 kernel.setting
+copyfile 1 option.setting
 
 path1=$versionpath/startup
 path2=$deploypath/startup
@@ -110,6 +110,8 @@ copyfile 1 KFClusterClientd.so
 copyfile 1 KFClusterClient.so
 copyfile 1 KFLogClientd.so
 copyfile 1 KFLogClient.so
+copyfile 1 KFOptiond.so
+copyfile 1 KFOption.so
 
 #upload to ftp
 curl -sd '{"ftpid":'$2',"apppath":"group"}' $3
