@@ -203,7 +203,16 @@ enum AckEnum
 	GiveFaildForLimitsGoods		= 10027;	//商城：限量商品无法赠送
 	MatchHasPrepared			= 10028;	//匹配: 已准备就绪
 	MatchHasCanceled			= 10029;	//匹配: 已取消准备
+	
+	GuildHadExist				= 10030;	// 帮派已经存在
+	GuildCreateIllegal			= 10031;	// 创建帮派信息不完整
+	GuildNameTooLong			= 10032;	// 帮派名字过长
+	GuildManifestoTooLong			= 10033;	// 帮派宣言过长
+	GuildNameRepeat				= 10034;	// 帮派名字重复
+
+	GMParamError				= 20000;	// GM参数错误
 }
+
 
 enum ChannelEnum
 {

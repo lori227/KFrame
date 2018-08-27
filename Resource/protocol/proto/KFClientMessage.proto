@@ -81,6 +81,7 @@ enum ClientProtocol
 	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
+	MSG_CREATE_GUILD_REQ = 200;				// 创建帮派
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -752,3 +753,15 @@ message MsgTellSevenExtendReward
 	required string playername = 1;	// 玩家名字
 	required string reward = 2;		// 奖励内容
 }
+
+// 创建帮派
+// MSG_CREATE_GUILD_REQ
+message MsgCreateGuildReq
+{
+	required string guildname = 1;	// 帮派名字
+	required uint32 medal = 2;	// 帮派勋章
+	optional string manifesto = 3;	// 帮派宣言 
+}
+
+
+

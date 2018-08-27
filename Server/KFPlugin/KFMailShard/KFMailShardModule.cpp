@@ -134,22 +134,18 @@ namespace KFrame
         }
 
         auto redisdriver = __MAIL_REDIS_DRIVER__;
-        auto greatermapresult = redisdriver->QueryGreaterMap( "zrange {} 0 -1 WITHSCORES",
-                                maillistkey );
-        if ( greatermapresult->_value.empty() )
+        auto mapresult = redisdriver->QueryMap( "hgetall {}", maillistkey );
+        if ( mapresult->_value.empty() )
         {
             return;
         }
 
+        MapString mailist;
+        mailist.swap( mapresult->_value );
+
+
         // 最大邮件数量
         auto maxmailcount = _kf_option->GetValue<uint32>( "maxmailcount", kfmsg.mailtype() );
-
-        auto strmaxmailid = __TO_STRING__( kfmsg.maxmailid() );
-        auto itermail = greatermapresult->_value.find( strmaxmailid );
-        if ( _invalid_int == kfmsg.maxmailid() )
-        {
-            itermail = greatermapresult->_value.end();
-        }
 
         KFMsg::S2SQueryMailAck ack;
         ack.set_playerid( kfmsg.playerid() );
@@ -157,9 +153,16 @@ namespace KFrame
         ack.set_mailtype( kfmsg.mailtype() );
 
         VectorString overduelist;
-        for ( auto& mailiter : greatermapresult->_value )
+        for ( auto& mailiter : mailist )
         {
             auto& strmailid = mailiter.first;
+
+            // 这边是已经下发的邮件
+            if ( KFUtility::ToValue<uint64>( strmailid ) <= kfmsg.maxmailid() )
+            {
+                continue;
+            }
+
 
             auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
                                                    __KF_STRING__( mail ), strmailid );
@@ -261,7 +264,7 @@ namespace KFrame
             redisdriver->Append( "expire {}:{} {}", __KF_STRING__( mail ), uint64result->_value, validtime );
         }
 
-        redisdriver->Append( "zadd {} {} {}", maillistkey, KFMsg::FlagEnum::Init, uint64result->_value );
+        redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
         auto kfresult = redisdriver->Pipeline();
         return kfresult->IsOk();
     }
@@ -282,7 +285,7 @@ namespace KFrame
         }
 
         auto redisdriver = __MAIL_REDIS_DRIVER__;
-        redisdriver->Append( "zrem {} {}", maillistkey, mailid );
+        redisdriver->Append( "hdel {} {}", maillistkey, mailid );
 
         if ( mailtype != KFMsg::MailEnum::WholeMail )
         {
@@ -327,7 +330,7 @@ namespace KFrame
         auto maillistkey = FormatMailKeyName( playerid, KFMsg::MailEnum::WholeMail, __FUNC_LINE__ );
         for ( auto& strmailid : listresult->_value )
         {
-            redisdriver->Append( "zadd {} {} {}", maillistkey, KFMsg::FlagEnum::Init, strmailid );
+            redisdriver->Append( "hset {} {} {}", maillistkey, strmailid, KFMsg::FlagEnum::Init );
         }
 
         auto& newmaxmailid = listresult->_value.back();
@@ -343,9 +346,9 @@ namespace KFrame
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
-        auto uint32result = redisdriver->QueryUInt32( "hget {}:{} {}",
+        auto uint32result = redisdriver->QueryString( "hget {}:{} {}",
                             __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
-        if ( !uint32result->IsOk() || uint32result->_value == flag )
+        if ( !uint32result->IsOk() || uint32result->_value == _invalid_str )
         {
             return false;
         }
@@ -375,7 +378,7 @@ namespace KFrame
             auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
             if ( !maillistkey.empty() )
             {
-                ok = redisdriver->Execute( "zadd {} {} {}", maillistkey, flag, mailid );
+                ok = redisdriver->Execute( "hset {} {} {}", maillistkey, mailid, flag );
             }
         }
         break;

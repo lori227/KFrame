@@ -124,7 +124,7 @@ namespace KFrame
         }
 
         // ip
-        auto& ip = _kf_tcp_server->GetHandleIp( accountid );
+        auto& ip = _kf_tcp_server->GetHandleIp( handleid );
 
         // 发送到Login服务器验证
         KFMsg::S2SLoginLoginVerifyReq req;
