@@ -114,6 +114,7 @@ class MsgQueryFriendRankListReq;
 class MsgQueryFriendRankListAck;
 class MsgSevenSignInRewardReq;
 class MsgTellSevenExtendReward;
+class MsgCreateGuildReq;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -192,11 +193,12 @@ enum ClientProtocol {
   MSG_QUERY_FRIEND_RANK_LIST_ACK = 186,
   MSG_COMPOUND_DATA_REQ = 187,
   MSG_SEVEN_SIGNIN_REWARD_REQ = 198,
-  MSG_TELL_SEVEN_EXTEND_REWARD = 199
+  MSG_TELL_SEVEN_EXTEND_REWARD = 199,
+  MSG_CREATE_GUILD_REQ = 200
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_TELL_SEVEN_EXTEND_REWARD;
+const ClientProtocol ClientProtocol_MAX = MSG_CREATE_GUILD_REQ;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -2225,20 +2227,30 @@ class LIBPROTOC_EXPORT MsgStartMatchReq : public ::google::protobuf::Message {
   inline bool allowgroup() const;
   inline void set_allowgroup(bool value);
 
+  // optional uint32 battleserverid = 3;
+  inline bool has_battleserverid() const;
+  inline void clear_battleserverid();
+  static const int kBattleserveridFieldNumber = 3;
+  inline ::google::protobuf::uint32 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgStartMatchReq)
  private:
   inline void set_has_matchid();
   inline void clear_has_matchid();
   inline void set_has_allowgroup();
   inline void clear_has_allowgroup();
+  inline void set_has_battleserverid();
+  inline void clear_has_battleserverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 matchid_;
   bool allowgroup_;
+  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -7501,6 +7513,118 @@ class LIBPROTOC_EXPORT MsgTellSevenExtendReward : public ::google::protobuf::Mes
   void InitAsDefaultInstance();
   static MsgTellSevenExtendReward* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgCreateGuildReq : public ::google::protobuf::Message {
+ public:
+  MsgCreateGuildReq();
+  virtual ~MsgCreateGuildReq();
+
+  MsgCreateGuildReq(const MsgCreateGuildReq& from);
+
+  inline MsgCreateGuildReq& operator=(const MsgCreateGuildReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgCreateGuildReq& default_instance();
+
+  void Swap(MsgCreateGuildReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgCreateGuildReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgCreateGuildReq& from);
+  void MergeFrom(const MsgCreateGuildReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string guildname = 1;
+  inline bool has_guildname() const;
+  inline void clear_guildname();
+  static const int kGuildnameFieldNumber = 1;
+  inline const ::std::string& guildname() const;
+  inline void set_guildname(const ::std::string& value);
+  inline void set_guildname(const char* value);
+  inline void set_guildname(const char* value, size_t size);
+  inline ::std::string* mutable_guildname();
+  inline ::std::string* release_guildname();
+  inline void set_allocated_guildname(::std::string* guildname);
+
+  // required uint32 medal = 2;
+  inline bool has_medal() const;
+  inline void clear_medal();
+  static const int kMedalFieldNumber = 2;
+  inline ::google::protobuf::uint32 medal() const;
+  inline void set_medal(::google::protobuf::uint32 value);
+
+  // optional string manifesto = 3;
+  inline bool has_manifesto() const;
+  inline void clear_manifesto();
+  static const int kManifestoFieldNumber = 3;
+  inline const ::std::string& manifesto() const;
+  inline void set_manifesto(const ::std::string& value);
+  inline void set_manifesto(const char* value);
+  inline void set_manifesto(const char* value, size_t size);
+  inline ::std::string* mutable_manifesto();
+  inline ::std::string* release_manifesto();
+  inline void set_allocated_manifesto(::std::string* manifesto);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgCreateGuildReq)
+ private:
+  inline void set_has_guildname();
+  inline void clear_has_guildname();
+  inline void set_has_medal();
+  inline void clear_has_medal();
+  inline void set_has_manifesto();
+  inline void clear_has_manifesto();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* guildname_;
+  ::std::string* manifesto_;
+  ::google::protobuf::uint32 medal_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCreateGuildReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -8848,6 +8972,28 @@ inline bool MsgStartMatchReq::allowgroup() const {
 inline void MsgStartMatchReq::set_allowgroup(bool value) {
   set_has_allowgroup();
   allowgroup_ = value;
+}
+
+// optional uint32 battleserverid = 3;
+inline bool MsgStartMatchReq::has_battleserverid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void MsgStartMatchReq::set_has_battleserverid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void MsgStartMatchReq::clear_has_battleserverid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void MsgStartMatchReq::clear_battleserverid() {
+  battleserverid_ = 0u;
+  clear_has_battleserverid();
+}
+inline ::google::protobuf::uint32 MsgStartMatchReq::battleserverid() const {
+  return battleserverid_;
+}
+inline void MsgStartMatchReq::set_battleserverid(::google::protobuf::uint32 value) {
+  set_has_battleserverid();
+  battleserverid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -12768,6 +12914,172 @@ inline void MsgTellSevenExtendReward::set_allocated_reward(::std::string* reward
   } else {
     clear_has_reward();
     reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// MsgCreateGuildReq
+
+// required string guildname = 1;
+inline bool MsgCreateGuildReq::has_guildname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgCreateGuildReq::set_has_guildname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgCreateGuildReq::clear_has_guildname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgCreateGuildReq::clear_guildname() {
+  if (guildname_ != &::google::protobuf::internal::kEmptyString) {
+    guildname_->clear();
+  }
+  clear_has_guildname();
+}
+inline const ::std::string& MsgCreateGuildReq::guildname() const {
+  return *guildname_;
+}
+inline void MsgCreateGuildReq::set_guildname(const ::std::string& value) {
+  set_has_guildname();
+  if (guildname_ == &::google::protobuf::internal::kEmptyString) {
+    guildname_ = new ::std::string;
+  }
+  guildname_->assign(value);
+}
+inline void MsgCreateGuildReq::set_guildname(const char* value) {
+  set_has_guildname();
+  if (guildname_ == &::google::protobuf::internal::kEmptyString) {
+    guildname_ = new ::std::string;
+  }
+  guildname_->assign(value);
+}
+inline void MsgCreateGuildReq::set_guildname(const char* value, size_t size) {
+  set_has_guildname();
+  if (guildname_ == &::google::protobuf::internal::kEmptyString) {
+    guildname_ = new ::std::string;
+  }
+  guildname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgCreateGuildReq::mutable_guildname() {
+  set_has_guildname();
+  if (guildname_ == &::google::protobuf::internal::kEmptyString) {
+    guildname_ = new ::std::string;
+  }
+  return guildname_;
+}
+inline ::std::string* MsgCreateGuildReq::release_guildname() {
+  clear_has_guildname();
+  if (guildname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = guildname_;
+    guildname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgCreateGuildReq::set_allocated_guildname(::std::string* guildname) {
+  if (guildname_ != &::google::protobuf::internal::kEmptyString) {
+    delete guildname_;
+  }
+  if (guildname) {
+    set_has_guildname();
+    guildname_ = guildname;
+  } else {
+    clear_has_guildname();
+    guildname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 medal = 2;
+inline bool MsgCreateGuildReq::has_medal() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgCreateGuildReq::set_has_medal() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgCreateGuildReq::clear_has_medal() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgCreateGuildReq::clear_medal() {
+  medal_ = 0u;
+  clear_has_medal();
+}
+inline ::google::protobuf::uint32 MsgCreateGuildReq::medal() const {
+  return medal_;
+}
+inline void MsgCreateGuildReq::set_medal(::google::protobuf::uint32 value) {
+  set_has_medal();
+  medal_ = value;
+}
+
+// optional string manifesto = 3;
+inline bool MsgCreateGuildReq::has_manifesto() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void MsgCreateGuildReq::set_has_manifesto() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void MsgCreateGuildReq::clear_has_manifesto() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void MsgCreateGuildReq::clear_manifesto() {
+  if (manifesto_ != &::google::protobuf::internal::kEmptyString) {
+    manifesto_->clear();
+  }
+  clear_has_manifesto();
+}
+inline const ::std::string& MsgCreateGuildReq::manifesto() const {
+  return *manifesto_;
+}
+inline void MsgCreateGuildReq::set_manifesto(const ::std::string& value) {
+  set_has_manifesto();
+  if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
+    manifesto_ = new ::std::string;
+  }
+  manifesto_->assign(value);
+}
+inline void MsgCreateGuildReq::set_manifesto(const char* value) {
+  set_has_manifesto();
+  if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
+    manifesto_ = new ::std::string;
+  }
+  manifesto_->assign(value);
+}
+inline void MsgCreateGuildReq::set_manifesto(const char* value, size_t size) {
+  set_has_manifesto();
+  if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
+    manifesto_ = new ::std::string;
+  }
+  manifesto_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgCreateGuildReq::mutable_manifesto() {
+  set_has_manifesto();
+  if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
+    manifesto_ = new ::std::string;
+  }
+  return manifesto_;
+}
+inline ::std::string* MsgCreateGuildReq::release_manifesto() {
+  clear_has_manifesto();
+  if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = manifesto_;
+    manifesto_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgCreateGuildReq::set_allocated_manifesto(::std::string* manifesto) {
+  if (manifesto_ != &::google::protobuf::internal::kEmptyString) {
+    delete manifesto_;
+  }
+  if (manifesto) {
+    set_has_manifesto();
+    manifesto_ = manifesto;
+  } else {
+    clear_has_manifesto();
+    manifesto_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

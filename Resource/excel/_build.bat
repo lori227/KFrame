@@ -6,3 +6,6 @@ for /f "delims=\" %%x in ('dir /b /a-d /o-d "*.xlsx"') do (
 echo %%x
 _parse.exe %%~nx.xlsx --xml=..\config
 )
+
+
+xcopy /y ..\config\* ..\..\Bin\config\

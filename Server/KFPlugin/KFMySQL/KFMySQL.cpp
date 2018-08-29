@@ -24,27 +24,28 @@ namespace KFrame
         try
         {
             _session = __KF_NEW__( Session, SessionFactory::instance().create( MySQL::Connector::KEY, _connect_data ) );
+            auto ok = _session->isConnected();
+            if ( ok )
+            {
+                __LOG_INFO__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] ok!", id, database, ip, port );
+            }
+            else
+            {
+                __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] failed!", id, database, ip, port );
+            }
+
+            return ok;
         }
         catch ( Poco::Exception& ex )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = [{}]!",
-                           id, _connect_data, ex.displayText() );
-            return false;
+            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = [{}]!", id, _connect_data, ex.displayText() );
+        }
+        catch ( ... )
+        {
+            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = unknown!", id, _connect_data );
         }
 
-        auto ok = _session->isConnected();
-        if ( ok )
-        {
-            __LOG_INFO__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] ok!",
-                          id, database, ip, port );
-        }
-        else
-        {
-            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] failed!",
-                           id, database, ip, port );
-        }
-
-        return ok;
+        return false;
     }
 
     bool KFMySQL::IsConnected()

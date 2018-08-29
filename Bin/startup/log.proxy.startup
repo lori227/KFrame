@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="log" AppType="proxy">
-		<Plugin Name="KFDeployCommand" Startup="1" Sort="1" Debug="KFDeployCommandd" Release="KFDeployCommand" Config=""/>
-		<Plugin Name="KFHttpClient" Startup="1" Sort="2" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plugin Name="KFBus" Startup="1" Sort="3" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plugin Name="KFIpAddress" Startup="1" Sort="4" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plugin Name="KFTimer" Startup="1" Sort="6" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plugin Name="KFMessage" Startup="1" Sort="10" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plugin Name="KFConfig" Startup="1" Sort="20" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plugin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plugin Name="KFClusterProxy" Startup="1" Sort="80" Debug="KFClusterProxyd" Release="KFClusterProxy" Config=""/>
-   		<Plugin Name="KFLogProxy" Startup="1" Sort="90" Debug="KFLogProxyd" Release="KFLogProxy" Config=""/>
+		<Plugin Sort="1" Name="KFDeployCommand" Config=""/>
+		<Plugin Sort="2" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="3" Name="KFBus" Config="./setting/bus.relation"/>
+		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Sort="6" Name="KFTimer" Config=""/>
+		<Plugin Sort="10" Name="KFMessage" Config=""/>
+		<Plugin Sort="20" Name="KFConfig" Config=""/>
+		<Plugin Sort="40" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="50" Name="KFTcpClient" Config=""/>
+		<Plugin Sort="80" Name="KFClusterProxy" Config=""/>
+   		<Plugin Sort="90" Name="KFLogProxy" Config=""/>
 	</Plugins>
 </Setting>

@@ -145,11 +145,15 @@ namespace KFrame
             return _invalid_str;
         }
 
-        // 参数待定
         inline bool GetArray( const std::string& key, std::vector<std::string>& matchkeys, int& cursor, std::map<std::string, std::string>& des )
         {
             des.clear();
             auto& value = this->operator[]( key );
+            if ( value.isNull() )
+            {
+                return false;
+            }
+
             if ( !value.isArray() )
             {
                 return false;
@@ -189,6 +193,68 @@ namespace KFrame
             cursor++;
             return true;
         }
+
+        /*
+        template<typename T>
+        inline bool GetArray( const std::string& key, std::vector<T>& des )
+        {
+            des.clear();
+            if ( !this->isMember( key ) )
+            {
+                return false;
+            }
+
+            auto& value = this->operator[]( key );
+            if ( !value.isArray() )
+            {
+                return false;
+            }
+
+            for ( auto i = 0; i < value.size(); ++i )
+            {
+                auto elem = value[i];
+                if ( elem.isNull() )
+                {
+                    continue;
+                }
+                else if ( elem.isBool() )
+                {
+                    des.push_back( static_cast<T>( elem.asBool() ) );
+                }
+                else if ( elem.isInt() )
+                {
+                    des.push_back( static_cast<T>( elem.asInt() ) );
+                }
+                else if ( elem.isInt64() )
+                {
+                    des.push_back( static_cast<T>( elem.asInt64() ) );
+                }
+
+                else if ( elem.isUInt() )
+                {
+                    des.push_back( static_cast<T>( elem.asUInt() ) );
+                }
+
+                else if ( elem.isUInt64() )
+                {
+                    des.push_back( static_cast<T>( elem.asUInt64() ) );
+                }
+
+                else if ( elem.isIntegral() )
+                {
+                    des.push_back( static_cast<T>( elem.asLargestInt() ) );
+                }
+
+                else if ( elem.isDouble() )
+                {
+                    des.push_back( static_cast<T>( elem.asDouble() ) );
+                }
+
+            }
+
+            return true;
+        }*/
+
     };
 }
 

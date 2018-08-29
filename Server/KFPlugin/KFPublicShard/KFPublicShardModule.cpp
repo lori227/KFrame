@@ -135,6 +135,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_newname( kfmsg.newname() );
         ack.set_modleid( kfmsg.modleid() );
+        ack.set_sex( kfmsg.sex() );
         ack.set_result( result );
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_CREATE_ROLE_ACK, &ack );
     }

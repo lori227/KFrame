@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="robot" AppType="single">
-		<Plugin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plugin Name="KFMessage" Startup="1" Sort="20" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plugin Name="KFTimer" Startup="1" Sort="30" Debug="KFTimerd" Release="KFTimer" Config=""/> 
-		<Plugin Name="KFHttpClient" Startup="1" Sort="211" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plugin Name="KFKernel" Startup="1" Sort="100" Debug="KFKerneld" Release="KFKernel" Config="./config/kernel.config"/>
-		<Plugin Name="KFRobot" Startup="1" Sort="212" Debug="KFRobotd" Release="KFRobot" Config="./config/robot.config"/>
-		
-
+		<Plugin Sort="10" Name="KFConfig" Config=""/>
+		<Plugin Sort="20" Name="KFMessage" Config=""/>
+		<Plugin Sort="30" Name="KFTimer" Config=""/> 
+		<Plugin Sort="40" Name="KFKernel" Config="./config/kernel.config"/>
+		<Plugin Sort="50" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="60" Name="KFRobot" Config="./config/robot.config"/>
 	</Plugins>
 </Setting>

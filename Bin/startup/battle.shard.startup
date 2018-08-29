@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="battle" AppType="shard" Common="./startup/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
-		<Plugin Name="KFClusterShard" Startup="1" Sort="140" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plugin Name="KFBattleShard" Startup="1" Sort="150" Debug="KFBattleShardd" Release="KFBattleShard" Config="./config/battle.config"/>
+		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="120" Name="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Sort="140" Name="KFClusterShard" Config=""/>
+		<Plugin Sort="150" Name="KFBattleShard" Config="./config/battle.config"/>
 	</Plugins>
 </Setting>

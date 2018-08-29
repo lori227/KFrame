@@ -255,11 +255,17 @@ enum AckEnum {
   CopySuccessed = 10026,
   GiveFaildForLimitsGoods = 10027,
   MatchHasPrepared = 10028,
-  MatchHasCanceled = 10029
+  MatchHasCanceled = 10029,
+  GuildHadExist = 10030,
+  GuildCreateIllegal = 10031,
+  GuildNameTooLong = 10032,
+  GuildManifestoTooLong = 10033,
+  GuildNameRepeat = 10034,
+  GMParamError = 20000
 };
 LIBPROTOC_EXPORT bool AckEnum_IsValid(int value);
 const AckEnum AckEnum_MIN = Success;
-const AckEnum AckEnum_MAX = MatchHasCanceled;
+const AckEnum AckEnum_MAX = GMParamError;
 const int AckEnum_ARRAYSIZE = AckEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* AckEnum_descriptor();

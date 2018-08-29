@@ -82,6 +82,7 @@ enum ClientProtocol
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
 	MSG_CREATE_GUILD_REQ = 200;				// 创建帮派
+	MSG_INVITE_GUILD_REQ = 201;				// 邀请加入帮派
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,7 +277,7 @@ message MsgStartMatchReq
 {
 	required uint32 matchid = 1;
 	optional bool allowgroup = 2;		// 是否允许组队
-	
+	optional uint32 battleserverid = 3;		// 测试需要匹配的battleid
 }
 
 // 开始匹配回应
@@ -763,5 +764,10 @@ message MsgCreateGuildReq
 	optional string manifesto = 3;	// 帮派宣言 
 }
 
-
-
+// 邀请加入帮派
+// MSG_INVITE_GUILD_REQ
+message MsgInviteGuildReq
+{
+	required uint32 inviterid = 1; //被邀请人id
+	
+}

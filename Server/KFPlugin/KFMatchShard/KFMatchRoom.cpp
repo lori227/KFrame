@@ -8,6 +8,7 @@ namespace KFrame
     KFMatchRoom::KFMatchRoom()
     {
         _room_id = _invalid_int;
+        _battle_server_id = _invalid_int;
         _battle_shard_id = _invalid_int;
         _room_player_count = _invalid_int;
         _battle_start_time = _invalid_int;
@@ -20,9 +21,10 @@ namespace KFrame
         _camp_list.Clear();
     }
 
-    void KFMatchRoom::Initialize( KFMatchQueue* kfmatchqueue )
+    void KFMatchRoom::Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid )
     {
         _kf_match_queue = kfmatchqueue;
+        _battle_server_id = battleserverid;
         _match_id = _kf_match_queue->_match_id;
         _room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
 
@@ -84,8 +86,14 @@ namespace KFrame
         _room_player_count += kfcamp->PlayerCount();
     }
 
-    bool KFMatchRoom::IsWaitMatch( uint32 playercount )
+    bool KFMatchRoom::IsWaitMatch( uint32 battleserverid, uint32 playercount )
     {
+        // 判断是否指定战场id
+        if ( _battle_server_id != battleserverid )
+        {
+            return false;
+        }
+
         // 停止添加阵营, 判断人数
         if ( _is_stop_add_camp || IsFull() )
         {
@@ -120,6 +128,7 @@ namespace KFrame
         // 发送消息
         KFMsg::S2SCreateRoomToBattleProxyReq req;
         req.set_roomid( _room_id );
+        req.set_battleserverid( _battle_server_id );
         req.set_matchid( _kf_match_queue->_match_id );
         req.set_maxplayercount( _kf_match_queue->_kf_setting->_max_player_count );
         auto ok = SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
@@ -176,7 +185,7 @@ namespace KFrame
             _camp_list.Remove( campid, false );
 
             // 找到一个新的战场
-            auto kfroom = _kf_match_queue->FindWaitMatchRoom( kfcamp->PlayerCount() );
+            auto kfroom = _kf_match_queue->FindWaitMatchRoom( _battle_server_id, kfcamp->PlayerCount() );
             kfroom->AddCamp( kfcamp );
         }
 

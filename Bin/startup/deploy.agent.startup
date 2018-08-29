@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="deploy" AppType="agent">
-		<Plugin Name="KFTimer" Startup="1" Sort="1" Debug="KFTimerd" Release="KFTimer" Config=""/>
-		<Plugin Name="KFBus" Startup="1" Sort="2" Debug="KFBusd" Release="KFBus" Config="./setting/bus.relation"/>
-		<Plugin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plugin Name="KFConfig" Startup="1" Sort="10" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plugin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plugin Name="KFMessage" Startup="1" Sort="30" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plugin Name="KFTcpServer" Startup="1" Sort="40" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFTcpClient" Startup="1" Sort="50" Debug="KFTcpClientd" Release="KFTcpClient" Config=""/>
-		<Plugin Name="KFDeployAgent" Startup="1" Sort="60" Debug="KFDeployAgentd" Release="KFDeployAgent" Config=""/>
-		<Plugin Name="KFFtp" Startup="1" Sort="70" Debug="KFFtpd" Release="KFFtp" Config="./setting/ftp.address"/>
-		<Plugin Name="KFMySQL" Startup="1" Sort="80" Debug="KFMySQLd" Release="KFMySQL" Config="./setting/mysql.address"/>
+		<Plugin Sort="1" Name="KFTimer" Config=""/>
+		<Plugin Sort="2" Name="KFBus" Config="./setting/bus.relation"/>
+		<Plugin Sort="3" Name="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Sort="10" Name="KFConfig" Config=""/>
+		<Plugin Sort="20" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="30" Name="KFMessage" Config=""/>
+		<Plugin Sort="40" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="50" Name="KFTcpClient" Config=""/>
+		<Plugin Sort="60" Name="KFDeployAgent" Config=""/>
+		<Plugin Sort="70" Name="KFFtp" Config="./setting/ftp.address"/>
+		<Plugin Sort="80" Name="KFMySQL" Config="./setting/mysql.address"/>
 	</Plugins>
 </Setting>

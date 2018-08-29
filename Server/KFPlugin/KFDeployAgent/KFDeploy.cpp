@@ -13,13 +13,13 @@ namespace KFrame
         return _deploy_path + _app_path + "/";
     }
 
-    std::string KFLaunchSetting::GetStartupFile()
+    std::string KFLaunchSetting::GetStartupFile( bool isdebug )
     {
         auto file = _app_file;
-
-#ifdef __KF_DEBUG__
-        file += "d";
-#endif // __KF_DEBUG__
+        if ( isdebug )
+        {
+            file += "d";
+        }
 
 #if __KF_SYSTEM__ == __KF_WIN__
         file += ".exe";
@@ -63,6 +63,7 @@ namespace KFrame
         _is_startup = false;
         _is_shutdown = false;
         _is_download = false;
+        _is_debug = false;
         _kf_launch = nullptr;
     }
 
@@ -116,6 +117,7 @@ namespace KFrame
         _app_name = values[ __KF_STRING__( appname ) ];
         _app_type = values[ __KF_STRING__( apptype ) ];
         _is_startup = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( startup ) ] );
+        _is_debug = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( debug ) ] );
         _is_shutdown = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( shutdown ) ] );
         _process_id = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( process ) ] );
         _startup_time = KFUtility::ToValue< uint64 >( values[ __KF_STRING__( time ) ] );
@@ -130,6 +132,7 @@ namespace KFrame
         values[ __KF_STRING__( apptype ) ] = _app_type;
         values[ __KF_STRING__( shutdown ) ] = __TO_STRING__( _is_shutdown ? 1 : 0 );
         values[ __KF_STRING__( startup ) ] = __TO_STRING__( _is_startup ? 1 : 0 );
+        values[ __KF_STRING__( debug ) ] = __TO_STRING__( _is_startup ? 1 : 0 );
         values[ __KF_STRING__( process ) ] = __TO_STRING__( _process_id );
         values[ __KF_STRING__( time ) ] = __TO_STRING__( _startup_time );
         values[ __KF_STRING__( agentid ) ] = _agent_id;

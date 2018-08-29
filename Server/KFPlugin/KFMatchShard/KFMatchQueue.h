@@ -27,13 +27,13 @@ namespace KFrame
         uint32 MakeCampID();
 
         // 创建阵营
-        KFMatchCamp* CreateMatchCamp();
+        KFMatchCamp* CreateMatchCamp( uint32 battleserverid );
 
         // 查找正在匹配的房间
-        KFMatchRoom* FindWaitMatchRoom( uint32 playercount );
+        KFMatchRoom* FindWaitMatchRoom( uint32 battleid, uint32 playercount );
 
         // 开始匹配
-        void StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup );
+        void StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint32 battleserverid );
 
         // 取消匹配
         bool CancelMatch( uint32 playerid );
@@ -77,13 +77,13 @@ namespace KFrame
 
         // 查找队伍
         KFMatchGroup* FindMatchGroup( uint32 playerid );
-        KFMatchGroup* FindGroupByCount( uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
+        KFMatchGroup* FindGroupByCount( uint32 battleserverid, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
 
         // 匹配队伍到阵营
         KFMatchCamp* MatchGroupToCamp();
 
         // 匹配队伍列表
-        bool MatchGroupList( uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
+        bool MatchGroupList( uint32 battleserverid, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
 
     public:
         // 匹配id

@@ -38,6 +38,8 @@ namespace KFrame
 
         try
         {
+            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start login!", kfsetting->_address, kfsetting->_port );
+
             nsFTP::CFTPClient ftpclient;
             nsFTP::CLogonInfo logonInfo( kfsetting->_address, kfsetting->_port, kfsetting->_user, kfsetting->_password );
             if ( !ftpclient.Login( logonInfo ) )
@@ -47,6 +49,7 @@ namespace KFrame
             }
 
             _ftp_result = KFFtpEnum::Process;
+            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start upload!", kfsetting->_address, kfsetting->_port );
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );

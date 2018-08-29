@@ -76,6 +76,8 @@ copyfile 1 KFBus.so
 copyfile 1 KFBusd.so
 copyfile 1 KFIpAddress.so
 copyfile 1 KFIpAddressd.so
+copyfile 1 KFHttpServerd.so
+copyfile 1 KFHttpServer.so
 copyfile 1 KFHttpClient.so
 copyfile 1 KFHttpClientd.so
 copyfile 1 KFTcpServer.so
@@ -98,6 +100,8 @@ copyfile 1 KFTimer.so
 copyfile 1 KFTimerd.so
 copyfile 1 KFWorker.so
 copyfile 1 KFWorkerd.so
+copyfile 1 KFMailMaster.so
+copyfile 1 KFMailMasterd.so
 copyfile 1 KFMailProxy.so
 copyfile 1 KFMailProxyd.so
 copyfile 1 KFMailShard.so
@@ -114,6 +118,7 @@ copyfile 1 KFDeployCommand.so
 copyfile 1 KFDeployCommandd.so
 copyfile 1 KFLogClientd.so
 copyfile 1 KFLogClient.so
+
 
 #upload to ftp
 curl -sd '{"ftpid":'$2',"apppath":"mail"}' $3

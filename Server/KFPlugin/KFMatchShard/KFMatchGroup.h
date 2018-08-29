@@ -33,6 +33,9 @@ namespace KFrame
         // 队伍id
         uint64 _group_id;
 
+        // 指定的战场id
+        uint32 _battle_server_id;
+
         // 匹配队列
         KFMatchQueue* _kf_match_queue;
 

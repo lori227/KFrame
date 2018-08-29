@@ -11,24 +11,14 @@ namespace KFrame
     public:
         KFAppSetting()
         {
-            _starup = 1;
             _sort = 0;
         }
 
         // 名字
         std::string _name;
 
-        // 是否启动
-        uint32 _starup;
-
         // 排序
         uint32 _sort;
-
-        // debug
-        std::string _debug;
-
-        // release
-        std::string _release;
 
         // 配置路径
         std::string _config_file;

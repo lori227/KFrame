@@ -44,6 +44,7 @@ message S2SMatchToProxyReq
 	required bool allowgroup = 3;
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
+	required uint32 battleserverid = 6;
 }
 
 // S2S_MATCH_TO_CLIENT_ACK
@@ -62,6 +63,7 @@ message S2SMatchToShardReq
 	required bool allowgroup = 3;
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
+	required uint32 battleserverid = 6;
 }
 
 // È¡ÏûÆ¥Åä

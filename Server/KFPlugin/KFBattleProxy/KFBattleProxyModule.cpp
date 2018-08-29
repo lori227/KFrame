@@ -144,6 +144,7 @@ namespace KFrame
         KFMsg::S2SCreateRoomToBattleShardReq req;
         req.set_matchid( kfmsg.matchid() );
         req.set_roomid( kfmsg.roomid() );
+        req.set_battleserverid( kfmsg.battleserverid() );
         req.set_matchshardid( __KF_HEAD_ID__( kfguid ) );
         req.set_maxplayercount( kfmsg.maxplayercount() );
         auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );

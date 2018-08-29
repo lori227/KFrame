@@ -725,6 +725,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_newname( kfmsg.name() );
         req.set_modleid( kfmsg.model() );
+        req.set_sex( kfmsg.sex() );
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_CREATE_ROLE_REQ, &req );
         if ( !ok )
         {
@@ -746,6 +747,8 @@ namespace KFrame
 
             // 名字
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );
+            // 性别
+            player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( sex ), KFOperateEnum::Set, kfmsg.sex() );
 
             // 保存玩家
             SavePlayer( player );

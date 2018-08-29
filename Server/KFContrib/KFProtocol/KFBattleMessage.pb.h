@@ -770,6 +770,13 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleProxyReq : public ::google::protobuf
   inline ::google::protobuf::uint32 maxplayercount() const;
   inline void set_maxplayercount(::google::protobuf::uint32 value);
 
+  // required uint32 battleserverid = 4;
+  inline bool has_battleserverid() const;
+  inline void clear_battleserverid();
+  static const int kBattleserveridFieldNumber = 4;
+  inline ::google::protobuf::uint32 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateRoomToBattleProxyReq)
  private:
   inline void set_has_matchid();
@@ -778,15 +785,18 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleProxyReq : public ::google::protobuf
   inline void clear_has_roomid();
   inline void set_has_maxplayercount();
   inline void clear_has_maxplayercount();
+  inline void set_has_battleserverid();
+  inline void clear_has_battleserverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint32 maxplayercount_;
+  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -879,6 +889,13 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   inline ::google::protobuf::uint32 maxplayercount() const;
   inline void set_maxplayercount(::google::protobuf::uint32 value);
 
+  // required uint32 battleserverid = 5;
+  inline bool has_battleserverid() const;
+  inline void clear_battleserverid();
+  static const int kBattleserveridFieldNumber = 5;
+  inline ::google::protobuf::uint32 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateRoomToBattleShardReq)
  private:
   inline void set_has_matchid();
@@ -889,6 +906,8 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   inline void clear_has_matchshardid();
   inline void set_has_maxplayercount();
   inline void clear_has_maxplayercount();
+  inline void set_has_battleserverid();
+  inline void clear_has_battleserverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -896,9 +915,10 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint32 matchshardid_;
   ::google::protobuf::uint32 maxplayercount_;
+  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -5023,6 +5043,28 @@ inline void S2SCreateRoomToBattleProxyReq::set_maxplayercount(::google::protobuf
   maxplayercount_ = value;
 }
 
+// required uint32 battleserverid = 4;
+inline bool S2SCreateRoomToBattleProxyReq::has_battleserverid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SCreateRoomToBattleProxyReq::set_has_battleserverid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SCreateRoomToBattleProxyReq::clear_has_battleserverid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SCreateRoomToBattleProxyReq::clear_battleserverid() {
+  battleserverid_ = 0u;
+  clear_has_battleserverid();
+}
+inline ::google::protobuf::uint32 S2SCreateRoomToBattleProxyReq::battleserverid() const {
+  return battleserverid_;
+}
+inline void S2SCreateRoomToBattleProxyReq::set_battleserverid(::google::protobuf::uint32 value) {
+  set_has_battleserverid();
+  battleserverid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SCreateRoomToBattleShardReq
@@ -5113,6 +5155,28 @@ inline ::google::protobuf::uint32 S2SCreateRoomToBattleShardReq::maxplayercount(
 inline void S2SCreateRoomToBattleShardReq::set_maxplayercount(::google::protobuf::uint32 value) {
   set_has_maxplayercount();
   maxplayercount_ = value;
+}
+
+// required uint32 battleserverid = 5;
+inline bool S2SCreateRoomToBattleShardReq::has_battleserverid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SCreateRoomToBattleShardReq::set_has_battleserverid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SCreateRoomToBattleShardReq::clear_has_battleserverid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateRoomToBattleShardReq::clear_battleserverid() {
+  battleserverid_ = 0u;
+  clear_has_battleserverid();
+}
+inline ::google::protobuf::uint32 S2SCreateRoomToBattleShardReq::battleserverid() const {
+  return battleserverid_;
+}
+inline void S2SCreateRoomToBattleShardReq::set_battleserverid(::google::protobuf::uint32 value) {
+  set_has_battleserverid();
+  battleserverid_ = value;
 }
 
 // -------------------------------------------------------------------

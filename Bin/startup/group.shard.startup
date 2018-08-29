@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="group" AppType="shard" Common="./startup/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFDisplay" Startup="1" Sort="110" Debug="KFDisplayd" Release="KFDisplay" Config=""/>
-		<Plugin Name="KFClusterShard" Startup="1" Sort="120" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plugin Name="KFGroupShard" Startup="1" Sort="130" Debug="KFGroupShardd" Release="KFGroupShard" Config=""/>
-		<Plugin Name="KFOption" Startup="1" Sort="140" Debug="KFOptiond" Release="KFOption" Config="./setting/option.setting"/>	
-		<Plugin Name="KFKernel" Startup="1" Sort="150" Debug="KFKerneld" Release="KFKernel" Config="./config/class.config"/>
+		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="110" Name="KFDisplay" Config=""/>
+		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
+		<Plugin Sort="130" Name="KFGroupShard" Config=""/>
+		<Plugin Sort="140" Name="KFOption" Config="./setting/option.setting"/>	
+		<Plugin Sort="150" Name="KFKernel" Config="./config/class.config"/>
 	</Plugins>
 </Setting>

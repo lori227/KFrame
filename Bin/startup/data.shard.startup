@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="data" AppType="shard" Common="./startup/common.startup">
-		<Plugin Name="KFTcpServer" Startup="1" Sort="100" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFWorker" Startup="1" Sort="110" Debug="KFWorkerd" Release="KFWorker" Config=""/>
-		<Plugin Name="KFRedis" Startup="1" Sort="120" Debug="KFRedisd" Release="KFRedis" Config="./setting/redis.address"/>
-		<Plugin Name="KFClusterShard" Startup="1" Sort="130" Debug="KFClusterShardd" Release="KFClusterShard" Config=""/>
-		<Plugin Name="KFDataShard" Startup="1" Sort="140" Debug="KFDataShardd" Release="KFDataShard" Config=""/>
+		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="110" Name="KFWorker" Config=""/>
+		<Plugin Sort="120" Name="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Sort="130" Name="KFClusterShard" Config=""/>
+		<Plugin Sort="140" Name="KFDataShard" Config=""/>
 	</Plugins>
 </Setting>

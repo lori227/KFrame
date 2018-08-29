@@ -5,8 +5,9 @@ namespace KFrame
 {
     KFMatchCamp::KFMatchCamp()
     {
-        _camp_id = 0;
-        _player_count = 0;
+        _camp_id = _invalid_int;
+        _player_count = _invalid_int;
+        _battle_server_id = _invalid_int;
 
         // 启动加入定时器
         _enter_timer.StartTimer( 1, 5000 );
@@ -43,7 +44,7 @@ namespace KFrame
 
         _player_count += kfgroup->PlayerCount();
         _group_list.Insert( kfgroup->_group_id, kfgroup );
-        __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] add group[{}], playercount[{}]!", _camp_id, kfgroup->_group_id, _player_count );
+        __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] add group[{}] playercount[{}]!", _camp_id, kfgroup->_group_id, _player_count );
     }
 
     bool KFMatchCamp::RemoveGroup( uint64 groupid )

@@ -117,6 +117,7 @@ message S2SCreateRoomToBattleProxyReq
 	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
 	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
 	required uint32 maxplayercount = 3;	// 这个房间的最大人数
+	required uint32 battleserverid = 4;		// 指定的房间id
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -131,6 +132,7 @@ message S2SCreateRoomToBattleShardReq
 	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
 	required uint32 matchshardid = 3;	// 匹配shardid
 	required uint32 maxplayercount = 4;	// 这个房间的最大人数
+	required uint32 battleserverid = 5;		// 指定的房间id
 }
 
 // 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片

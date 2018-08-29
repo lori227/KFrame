@@ -16,6 +16,7 @@ def read_xml(in_path):
     in_path: xml路径
     return: ElementTree
     '''
+    print 'reading xml file: ' + in_path
     tree = et.parse(in_path)
     return tree
 

@@ -107,3 +107,7 @@ copyfile 1 KFClusterClientd.so
 copyfile 1 KFClusterClient.so
 copyfile 1 KFLogClientd.so
 copyfile 1 KFLogClient.so
+copyfile 1 KFHttpServerd.so
+copyfile 1 KFHttpServer.so
+copyfile 1 KFMailMasterd.so
+copyfile 1 KFMailMaster.so

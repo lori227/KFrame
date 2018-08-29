@@ -43,15 +43,10 @@ namespace KFrame
         for ( auto iter = _app_config->_startups.begin(); iter != _app_config->_startups.end(); ++iter )
         {
             auto startupsetting = &iter->second;
-            if ( startupsetting->_starup == 0 )
-            {
-                continue;
-            }
 
+            auto loadplguin = startupsetting->_name;
 #ifdef __KF_DEBUG__
-            auto& loadplguin = startupsetting->_debug;
-#else
-            auto& loadplguin = startupsetting->_release;
+            loadplguin += "d";
 #endif
             bool result = LoadPluginLibrary( loadplguin, startupsetting );
             if ( !result )

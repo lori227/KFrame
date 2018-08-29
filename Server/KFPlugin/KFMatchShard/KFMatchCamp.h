@@ -33,6 +33,9 @@ namespace KFrame
         void EnterBattleRoomAck( KFMatchRoom* kfroom );
 
     public:
+        // 指定的战场id
+        uint32 _battle_server_id;
+
         // 阵营id
         uint32 _camp_id;
 

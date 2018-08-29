@@ -22,7 +22,10 @@
 		<Server AppName="deploy" AppType="server" Type="0" Port="9999"/>	
 
 		<!-- upload 服务器 -->
-		<Server AppName="upload" AppType="upload" Type="0" Port="9998"/>	
+		<Server AppName="upload" AppType="upload" Type="0" Port="9998"/>
+	
+		<!-- gmmail 服务器 -->
+		<Server AppName="mail" AppType="master" Type="0" Port="27710"/>	
 	</HttpServer>
 
 

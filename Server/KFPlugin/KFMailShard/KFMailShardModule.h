@@ -58,6 +58,11 @@ namespace KFrame
         // 新玩家登陆邮件处理
         __KF_MESSAGE_FUNCTION__( HandleNewPlayerLoginMailReq );
 
+        ///////////////////////////////////////////////////////////////////////////////
+        //GM增加邮件
+        // 新玩家登陆邮件处理
+        __KF_MESSAGE_FUNCTION__( HandleGMAddMailReq );
+
     protected:
         // 计划清理过期的全局邮件
         void OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size );
@@ -76,7 +81,7 @@ namespace KFrame
         // 删除邮件
         bool RemoveMail( uint32 playerid, uint32 mailtype, uint64 mailid );
 
-        // 添加邮件
+        // 添加邮件 当maillistkey == ""发送系统邮件
         bool AddMail( const std::string& maillistkey, MapString& maildata );
 
 

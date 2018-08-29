@@ -14,10 +14,10 @@ namespace KFrame
 
     void KFBattleServer::Reset()
     {
-        _server_id = _invalid_int;
-        _proxy_id = _invalid_int;
         _ip.clear();
         _port = _invalid_int;
+        _proxy_id = _invalid_int;
+        _server_id = _invalid_int;
     }
 
     bool KFBattleServer::IsValid() const
@@ -76,37 +76,39 @@ namespace KFrame
         UpdateBattleCount( kfresult->_value );
     }
 
-    void KFBattleManage::AllocBattleServer( KFBattleServer* battleserver )
+    void KFBattleManage::AllocBattleServer( uint32 battleserverid, KFBattleServer* battleserver )
     {
         // 找到负载最小的一个
-        auto listresult = _redis_driver->QueryList( "zrevrange {} 0 0",
-                          __KF_STRING__( battlelist ) );
-        if ( listresult->_value.empty() )
+        auto queryserverid = battleserverid;
+        if ( queryserverid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "no battle server!" );
+            auto listresult = _redis_driver->QueryList( "zrevrange {} 0 0", __KF_STRING__( battlelist ) );
+            if ( listresult->_value.empty() )
+            {
+                return __LOG_ERROR__( KFLogEnum::Logic, "no battle server!" );
+            }
+
+            auto& queryip = listresult->_value.front();
+
+            // 弹出一个可用的服务器
+            auto stringresult = _redis_driver->QueryString( "spop {}:{}", __KF_STRING__( ip ), queryip );
+            if ( stringresult->_value.empty() )
+            {
+                _redis_driver->Execute( "zrem {} {}", __KF_STRING__( battlelist ), queryip );
+                return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle list empty!", queryip );
+            }
+
+            // 数量减1
+            _redis_driver->Execute( "zincrby {} -1 {}", __KF_STRING__( battlelist ), queryip );
+
+            queryserverid = KFUtility::ToValue< uint32 >( stringresult->_value );
         }
-
-        auto& queryip = listresult->_value.front();
-
-        // 弹出一个可用的服务器
-        auto stringresult = _redis_driver->QueryString( "spop {}:{}",
-                            __KF_STRING__( ip ), queryip );
-        if ( stringresult->_value.empty() )
-        {
-            _redis_driver->Execute( "zrem {} {}", __KF_STRING__( battlelist ), queryip );
-            return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle list empty!", queryip );
-        }
-
-        // 数量减1
-        _redis_driver->Execute( "zincrby {} -1 {}", __KF_STRING__( battlelist ), queryip );
 
         // 查询所有信息
-        auto mapresult = _redis_driver->QueryMap( "hgetall {}:{}",
-                         __KF_STRING__( battle ), stringresult->_value );
-
+        auto mapresult = _redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( battle ), queryserverid );
         if ( mapresult->_value.empty() )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle data empty!", stringresult->_value );
+            return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle data empty!", queryserverid );
         }
 
         auto ip = mapresult->_value[ __KF_STRING__( ip ) ];
@@ -116,6 +118,13 @@ namespace KFrame
         if ( ip.empty() || port == _invalid_int || proxyid == _invalid_int || serverid == _invalid_int )
         {
             return __LOG_ERROR__( KFLogEnum::Logic, "battle data [{}:{}:{}] error!", ip, port, proxyid );
+        }
+
+        if ( battleserverid != _invalid_int )
+        {
+            _redis_driver->Append( "srem {}:{} {}", __KF_STRING__( ip ), ip, battleserverid );
+            _redis_driver->Append( "zincrby {} -1 {}", __KF_STRING__( battlelist ), ip );
+            _redis_driver->Pipeline();
         }
 
         // 保存数据./

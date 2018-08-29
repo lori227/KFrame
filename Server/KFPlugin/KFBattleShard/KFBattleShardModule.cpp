@@ -259,7 +259,7 @@ namespace KFrame
         if ( kfroom == nullptr )
         {
             kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
-            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.maxplayercount() );
+            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount() );
             _kf_room_list.Insert( kfmsg.roomid(), kfroom );
         }
 

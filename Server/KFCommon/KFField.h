@@ -269,7 +269,23 @@ namespace KFrame
         __STRING_DEFINE__( adddata );
         __STRING_DEFINE__( setdata );
         __STRING_DEFINE__( decdata );
-
+        __STRING_DEFINE__( guildnameidhash );
+        __STRING_DEFINE__( guildidset );
+        __STRING_DEFINE__( medal );
+        __STRING_DEFINE__( creator );
+        __STRING_DEFINE__( manifesto );
+        __STRING_DEFINE__( masterid );
+        __STRING_DEFINE__( createtime );
+        __STRING_DEFINE__( totalactiveness );
+        __STRING_DEFINE__( guildmember );
+        __STRING_DEFINE__( memberlist );
+        __STRING_DEFINE__( jointime );
+        __STRING_DEFINE__( guildid );
+        __STRING_DEFINE__( addmail );
+        __STRING_DEFINE__( playerids );
+        __STRING_DEFINE__( version );
+        __STRING_DEFINE__( wget );
+        __STRING_DEFINE__( debug );
     }
 }
 

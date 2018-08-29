@@ -85,7 +85,7 @@ namespace KFrame
             _logger->Initialize( _app_name, _app_type, _app_id );
 
 #ifdef __KF_RELEASE__
-            _log_level = spdlog::level::info;
+            _log_level = spdlog::level::debug;
 #else
             _log_level = spdlog::level::trace;
 #endif

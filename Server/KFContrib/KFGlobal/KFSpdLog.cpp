@@ -69,13 +69,12 @@ namespace KFrame
         auto local_logger = std::make_shared<spdlog::async_logger>( name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
-        local_logger->set_level( spdlog::level::level_enum::trace );
         local_logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
-        local_logger->flush_on( spdlog::level::trace );
 #else
         local_logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
-        local_logger->flush_on( spdlog::level::warn );
 #endif
+        local_logger->set_level( spdlog::level::level_enum::trace );
+        local_logger->flush_on( spdlog::level::trace );
 
         spdlog::register_logger( local_logger );
         auto iter = _local_loggers.insert( std::make_pair( name, local_logger ) ).first;

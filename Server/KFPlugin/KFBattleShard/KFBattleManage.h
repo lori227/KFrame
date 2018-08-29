@@ -42,7 +42,7 @@ namespace KFrame
         void UnRegisterBattleServer( uint32 serverid );
 
         // 分配战场
-        void AllocBattleServer( KFBattleServer* battleserver );
+        void AllocBattleServer( uint32 battleserverid, KFBattleServer* battleserver );
 
         // 分配一个战场
         void RemoveBattleServer( uint32 serverid, const std::string& ip );

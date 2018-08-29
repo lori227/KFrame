@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="deploy" AppType="server">
-		<Plugin Name="KFConfig" Startup="1" Sort="1" Debug="KFConfigd" Release="KFConfig" Config=""/>
-		<Plugin Name="KFSchedule" Startup="1" Sort="2" Debug="KFScheduled" Release="KFSchedule" Config=""/>	
-		<Plugin Name="KFIpAddress" Startup="1" Sort="3" Debug="KFIpAddressd" Release="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plugin Name="KFHttpClient" Startup="1" Sort="20" Debug="KFHttpClientd" Release="KFHttpClient" Config=""/>
-		<Plugin Name="KFHttpServer" Startup="1" Sort="30" Debug="KFHttpServerd" Release="KFHttpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFMessage" Startup="1" Sort="40" Debug="KFMessaged" Release="KFMessage" Config=""/>
-		<Plugin Name="KFTcpServer" Startup="1" Sort="50" Debug="KFTcpServerd" Release="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Name="KFMySQL" Startup="1" Sort="60" Debug="KFMySQLd" Release="KFMySQL" Config="./setting/mysql.address"/>
-		<Plugin Name="KFDeployServer" Startup="1" Sort="70" Debug="KFDeployServerd" Release="KFDeployServer" Config=""/>
+		<Plugin Sort="1" Name="KFConfig" Config=""/>
+		<Plugin Sort="2" Name="KFSchedule" Config=""/>	
+		<Plugin Sort="3" Name="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Sort="20" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="30" Name="KFHttpServer" Config="./setting/server.network"/>
+		<Plugin Sort="40" Name="KFMessage" Config=""/>
+		<Plugin Sort="50" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="60" Name="KFMySQL" Config="./setting/mysql.address"/>
+		<Plugin Sort="70" Name="KFDeployServer" Config=""/>
 	</Plugins>
 </Setting>

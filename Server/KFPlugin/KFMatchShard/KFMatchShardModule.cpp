@@ -107,7 +107,7 @@ namespace KFrame
         }
 
         auto pbgroup = &kfmsg.pbgroup();
-        kfmatchqueue->StartMatch( pbgroup, kfmsg.allowgroup() );
+        kfmatchqueue->StartMatch( pbgroup, kfmsg.allowgroup(), kfmsg.battleserverid() );
 
         KFMsg::S2SMatchToClientAck ack;
         ack.set_matchid( kfmsg.matchid() );
@@ -115,7 +115,7 @@ namespace KFrame
         ack.set_result( KFMsg::MatchRequestSuccess );
         _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] match allowgroup[{}]!", pbgroup->groupid(), kfmsg.allowgroup() ? 1 : 0 );
+        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] match battleserverid[{}] allowgroup[{}]!", pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0 );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleQueryRoomToMatchShardReq )

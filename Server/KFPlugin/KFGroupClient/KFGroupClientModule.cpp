@@ -635,7 +635,9 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgKickMatchGroupReq );
 
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+        auto kfgroup = kfobject->FindData( __KF_STRING__( group ) );
+
+        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotInGroup );
@@ -652,6 +654,12 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::GroupKickInMatch );
         }
 
+        auto captainid = kfgroup->GetValue<uint32>( __KF_STRING__( captainid ) );
+        if ( captainid != playerid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::GroupNotCaption );
+        }
+		
         // 通知组队服务器
         KFMsg::S2SKickMatchGroupReq req;
         req.set_groupid( groupid );

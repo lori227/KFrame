@@ -86,6 +86,13 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
 
     protected:
+
+        // 判断是否agent进程
+        bool IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+
+        // 获得服务列表
+        void FindAppNameList( const std::string& appname,  std::set< std::string >& appnamelist );
+
         // 更新数据到部署服务
         void UpdateDeployToDatabase( KFDeployData* deploydata );
 
@@ -117,6 +124,17 @@ namespace KFrame
         // 杀死进程
         void KillWinProcess( uint32 processid );
 #else
+
+        template<typename... P>
+        std::string ExecuteShell( const char* myfmt, P&& ... args )
+        {
+            auto command = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return ExecuteShellCommand( command );
+        }
+
+        // 执行脚本命令
+        std::string ExecuteShellCommand( const std::string& command );
+
         // 启动进程
         bool StartupLinuxProcess( KFDeployData* deploydata );
 
@@ -128,6 +146,7 @@ namespace KFrame
 
         // 杀死进程
         void KillLinuxProcess( uint32 processid );
+
 #endif
     protected:
         // 添加部署任务
@@ -139,12 +158,14 @@ namespace KFrame
         void StartShutDownServerTask();
         void StartStartupServerTask();
         void StartUpdateServerTask();
+        void StartWgetVersionTask();
 
         // 检查任务完成
         bool CheckTaskFinish();
         bool CheckShutDownServerTaskFinish();
         bool CheckStartupServerTaskFinish();
         bool CheckUpdateServerTaskFinish();
+        bool CheckWgetVersionTaskFinish();
 
         // ftp下载回调
         void OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok );

@@ -112,19 +112,26 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )
     {
-        KFJson request( data );
+        try
+        {
+            KFJson request( data );
 
-        auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
-        if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
-        {
-            DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
+            auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
+            if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
+            {
+                DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
+            }
+            else
+            {
+                auto kfsetting = _kf_schedule->CreateScheduleSetting();
+                kfsetting->SetTime( scheduletime );
+                kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
+                _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
+            }
         }
-        else
+        catch ( ... )
         {
-            auto kfsetting = _kf_schedule->CreateScheduleSetting();
-            kfsetting->SetTime( scheduletime );
-            kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}] json parse failed!", data );
         }
 
         return _invalid_str;

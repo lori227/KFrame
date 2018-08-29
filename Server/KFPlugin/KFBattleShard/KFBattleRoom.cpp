@@ -17,7 +17,7 @@ namespace KFrame
         _battle_valid_time = 0;
         _status = 0;
         _req_count = 0;
-
+        _battle_server_id = 0;
     }
 
     KFBattleRoom::~KFBattleRoom()
@@ -25,11 +25,12 @@ namespace KFrame
 
     }
 
-    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 maxplayercount )
+    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount )
     {
         _match_id = matchid;
         _battle_room_id = roomid;
         _max_player_count = maxplayercount;
+        _battle_server_id = battleserverid;
         _battle_valid_time = KFGlobal::Instance()->_game_time + _kf_battle_config->_room_valid_time;
 
         // 开启申请定时器
@@ -185,7 +186,7 @@ namespace KFrame
     {
         // 分配战场
         _battle_server.Reset();
-        _kf_battle_manage->AllocBattleServer( &_battle_server );
+        _kf_battle_manage->AllocBattleServer( _battle_server_id, &_battle_server );
         if ( !_battle_server.IsValid() )
         {
             return __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alloc battle server failed!", _battle_room_id );

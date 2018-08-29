@@ -99,6 +99,11 @@ namespace KFrame
                 auto deploydata = __KF_CREATE__( KFDeployData );
                 deploydata->CopyFrom( values );
                 deploydata->_kf_launch = _launch_list.Find( LaunchKey( deploydata->_app_name, deploydata->_app_type ) );
+                if ( deploydata->_kf_launch == nullptr )
+                {
+                    __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] can't find launch data!", deploydata->_app_name, deploydata->_app_type );
+                }
+
                 _deploy_list.Insert( deploydata->_app_id, deploydata );
             }
         }
@@ -167,6 +172,8 @@ namespace KFrame
 
             // 保存到文件中
             SaveProcessToFile( deploydata );
+
+            __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}] startup ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
     }
 
@@ -253,7 +260,7 @@ namespace KFrame
 
         uint32 createflag = CREATE_NO_WINDOW;
         auto apppath = kflaunch->GetAppPath();
-        auto startupfile = kflaunch->GetStartupFile();
+        auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
         auto param = __FORMAT__( " {}={} {}={} {}={}",
                                  __KF_STRING__( appid ), deploydata->_app_id,
                                  __KF_STRING__( log ), kflaunch->_log_type,
@@ -321,7 +328,7 @@ namespace KFrame
 
         std::vector<char*> args;
 
-        auto startupfile = kflaunch->GetStartupFile();
+        auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
 
         auto strpause = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
@@ -370,42 +377,46 @@ namespace KFrame
 
     uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile )
     {
-        auto strshell = __FORMAT__( "ps -ef|grep '{} {}={}'|grep -v 'grep'|awk '{{print $2}}'",
-                                    startupfile, __KF_STRING__( appid ), deploydata->_app_id );
-        FILE* fp = popen( strshell.c_str(), "r" );
-        if ( fp != nullptr )
-        {
-            // 逐行读取执行结果
-            char buff[ 32 ] = { 0 };
-            if ( fgets( buff, sizeof( buff ), fp ) != NULL )
-            {
-                return atoi( buff );
-            }
-
-            // 关闭管道指针
-            pclose( fp );
-        }
-
-        return _invalid_int;
+        auto strprocessid = ExecuteShell( "ps -ef|grep '{} {}={}'|grep -v 'grep'|awk '{{print $2}}'",
+                                          startupfile, __KF_STRING__( appid ), deploydata->_app_id );
+        return KFUtility::ToValue< uint32 >( strprocessid );
     }
 
     void KFDeployAgentModule::CheckLinuxProcess( KFDeployData* deploydata )
     {
         if ( kill( deploydata->_process_id, 0 ) != 0 )
         {
-            auto startupfile = deploydata->_kf_launch->GetStartupFile();
+            auto startupfile = deploydata->_kf_launch->GetStartupFile( deploydata->_is_debug );
             deploydata->_process_id = FindProcessIdByName( deploydata, startupfile );
         }
     }
 
     void KFDeployAgentModule::KillLinuxProcess( uint32 processid )
     {
-        auto strkill = __FORMAT__( "kill -s 9 {}", processid );
-        FILE* fp = popen( strkill.c_str(), "r" );
-        if ( fp != nullptr )
+        ExecuteShell( "kill -s 9 {}", processid );
+    }
+
+    std::string KFDeployAgentModule::ExecuteShellCommand( const std::string& command )
+    {
+        FILE* fp = popen( command.c_str(), "r" );
+        if ( fp == nullptr )
         {
-            pclose( fp );
+            __LOG_ERROR__( KFLogEnum::Logic, "[{}] open failed!", command );
+            return _invalid_str;
         }
+
+        char buffer[ 1024 ] = { 0 };
+        if ( fgets( buffer, sizeof( buffer ), fp ) != NULL )
+        {
+            auto length = strlen( buffer ) - 1;
+            if ( buffer[ length ] == '\n' )
+            {
+                buffer[ length ] = '\0'; //去除换行符
+            }
+        }
+
+        pclose( fp );
+        return buffer;
     }
 #endif
 
@@ -468,16 +479,68 @@ namespace KFrame
         deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
     }
 
+    bool KFDeployAgentModule::IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    {
+        for ( auto& iter : _deploy_list._objects )
+        {
+            auto deploydata = iter.second;
+
+            auto isserver = deploydata->IsAppServer( appname, apptype, appid, zoneid );
+            if ( isserver )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void KFDeployAgentModule::FindAppNameList( const std::string& appname, std::set<std::string>& appnamelist )
+    {
+        appnamelist.clear();
+
+        if ( appname != _globbing_str )
+        {
+            appnamelist.insert( appname );
+        }
+        else
+        {
+            for ( auto& iter : _deploy_list._objects )
+            {
+                auto deploydata = iter.second;
+                appnamelist.insert( deploydata->_app_name );
+            }
+        }
+    }
+
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
     {
         __PROTO_PARSE__( KFMsg::S2SDeployCommandToAgentReq );
 
         auto pbdeploy = &kfmsg.deploycommand();
 
+        // 判断是否agent的进程
+        auto ok = IsAgentDeploy( pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        if ( !ok )
+        {
+            return;
+        }
+
         if ( pbdeploy->command() == __KF_STRING__( restart ) )
         {
             AddDeployTask( __KF_STRING__( shutdown ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
             AddDeployTask( __KF_STRING__( download ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( startup ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        }
+        else if ( pbdeploy->command() == __KF_STRING__( version ) )
+        {
+            if ( pbdeploy->value() == _invalid_str )
+            {
+                return __LOG_ERROR__( KFLogEnum::Logic, "version value is empty!" );
+            }
+
+            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( wget ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
             AddDeployTask( __KF_STRING__( startup ), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
         }
         else
@@ -486,8 +549,8 @@ namespace KFrame
         }
     }
 
-    void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype,
-            const std::string& appid, uint32 zoneid )
+    void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value,
+            const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
         if ( command == __KF_STRING__( kill ) )
         {
@@ -534,8 +597,8 @@ namespace KFrame
             if ( ok )
             {
                 __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task finish!",
-                              _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
-                              _kf_task->_app_id, _kf_task->_zone_id );
+                              _kf_task->_command, _kf_task->_value, _kf_task->_app_name,
+                              _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
                 __KF_DESTROY__( KFDeployTask, _kf_task );
                 _kf_task = nullptr;
@@ -588,6 +651,10 @@ namespace KFrame
         {
             ok = CheckUpdateServerTaskFinish();
         }
+        else if ( _kf_task->_command == __KF_STRING__( wget ) )
+        {
+            ok = CheckWgetVersionTaskFinish();
+        }
 
         return ok;
     }
@@ -617,6 +684,10 @@ namespace KFrame
             else if ( _kf_task->_command == __KF_STRING__( launch ) )
             {
                 LoadTotalLaunchData();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( wget ) )
+            {
+                StartWgetVersionTask();
             }
             else
             {
@@ -650,6 +721,8 @@ namespace KFrame
                 KillServerProcess( deploydata->_process_id );
 
                 UpdateDeployToDatabase( deploydata );
+
+                __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}] kill ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
             }
         }
     }
@@ -811,5 +884,62 @@ namespace KFrame
         pbdeploy->set_appid( _kf_task->_app_id );
         pbdeploy->set_zoneid( _kf_task->_zone_id );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_MASTER_REQ, &req );
+    }
+
+    void KFDeployAgentModule::StartWgetVersionTask()
+    {
+        // 查询版本路径
+        auto queryurl = _mysql_driver->QueryString( "select `version_url` from version where `version_name`='{}';", _kf_task->_value );
+        if ( !queryurl->IsOk() || queryurl->_value.empty() )
+        {
+            return;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 执行下载命令
+        ExecuteShell( "rm wget-log*" );
+        ExecuteShell( "rm -rf ./version/" );
+        ExecuteShell( "wget -b -c -P ./version/ {}", queryurl->_value );
+#endif
+    }
+
+    bool KFDeployAgentModule::CheckWgetVersionTaskFinish()
+    {
+        auto querymd5 = _mysql_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
+        if ( !querymd5->IsOk() || querymd5->_value.empty() )
+        {
+            return false;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+        return true;
+#else
+        // 执行下载命令
+        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value  );
+        if ( md5 != querymd5->_value )
+        {
+            return false;
+        }
+
+        // 解压
+        ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
+
+        // 把文件拷贝过去
+        std::set< std::string > appnamelist;
+        FindAppNameList( _kf_task->_app_name, appnamelist );
+        for ( auto& appname : appnamelist )
+        {
+            ExecuteShell( "rm /data/{}/ -rf", appname );
+            ExecuteShell( "cp -rf ./version/conf_output/{}/ /data/{}", appname, appname );
+            ExecuteShell( "chmod 777 /data/{}/*server*", appname );
+
+            __LOG_INFO__( KFLogEnum::Logic, "[{}] update version ok!", appname );
+        }
+
+        return true;
+#endif
     }
 }

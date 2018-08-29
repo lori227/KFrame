@@ -16,6 +16,7 @@ namespace KFrame
         Login,
         Player,
         Script,
+        GM,
         //TO ADD
         Max,
     };

@@ -169,6 +169,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFDirProxy", "KFPlugin\KFDi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFDirShard", "KFPlugin\KFDirShard\KFDirShard.vcxproj", "{1338E71B-5509-490B-BAF4-03A7C1F44A14}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFMailMaster", "KFPlugin\KFMailMaster\KFMailMaster.vcxproj", "{B996212F-2610-4F04-98F5-4CCC92C658E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -429,6 +431,10 @@ Global
 		{1338E71B-5509-490B-BAF4-03A7C1F44A14}.Debug|x64.Build.0 = Debug|x64
 		{1338E71B-5509-490B-BAF4-03A7C1F44A14}.Release|x64.ActiveCfg = Release|x64
 		{1338E71B-5509-490B-BAF4-03A7C1F44A14}.Release|x64.Build.0 = Release|x64
+		{B996212F-2610-4F04-98F5-4CCC92C658E8}.Debug|x64.ActiveCfg = Debug|x64
+		{B996212F-2610-4F04-98F5-4CCC92C658E8}.Debug|x64.Build.0 = Debug|x64
+		{B996212F-2610-4F04-98F5-4CCC92C658E8}.Release|x64.ActiveCfg = Release|x64
+		{B996212F-2610-4F04-98F5-4CCC92C658E8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -514,9 +520,10 @@ Global
 		{288542BF-787E-4F25-9BBE-EE9038B41CE9} = {05DAEA97-B15D-4E0A-A8D8-C7521A9B469D}
 		{4206FA3D-84C9-40BD-8088-4FA9875702EB} = {05DAEA97-B15D-4E0A-A8D8-C7521A9B469D}
 		{1338E71B-5509-490B-BAF4-03A7C1F44A14} = {05DAEA97-B15D-4E0A-A8D8-C7521A9B469D}
+		{B996212F-2610-4F04-98F5-4CCC92C658E8} = {6AF80BCB-3916-42CC-A338-95CD7E41B06E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal

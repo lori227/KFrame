@@ -15,10 +15,11 @@ namespace KFrame
         return ++_camp_id_maker;
     }
 
-    KFMatchCamp* KFMatchQueue::CreateMatchCamp()
+    KFMatchCamp* KFMatchQueue::CreateMatchCamp( uint32 battleserverid )
     {
         auto kfcamp = __KF_CREATE__( KFMatchCamp );
         kfcamp->_camp_id = MakeCampID();
+        kfcamp->_battle_server_id = battleserverid;
         kfcamp->_kf_match_queue = this;
         return kfcamp;
     }
@@ -66,10 +67,11 @@ namespace KFrame
         }
     }
     //////////////////////////////////////////////////////////////////////////////////
-    void KFMatchQueue::StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup )
+    void KFMatchQueue::StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint32 battleserverid )
     {
         auto kfgroup = __KF_CREATE__( KFMatchGroup );
         kfgroup->_kf_match_queue = this;
+        kfgroup->_battle_server_id = battleserverid;
         kfgroup->LoadFrom( pbgroup );
 
         // 已经满, 或者不需要组队, 直接丢入战场中
@@ -77,11 +79,11 @@ namespace KFrame
         if ( playercount >= _kf_setting->_max_group_player_count || !allowgroup )
         {
             // 初始化阵营
-            auto kfcamp = CreateMatchCamp();
+            auto kfcamp = CreateMatchCamp( battleserverid );
             kfcamp->AddGroup( kfgroup );
 
             // 找到一个正在等待的战场
-            auto kfroom = FindWaitMatchRoom( playercount );
+            auto kfroom = FindWaitMatchRoom( battleserverid, playercount );
             kfroom->AddCamp( kfcamp );
         }
         else
@@ -96,12 +98,12 @@ namespace KFrame
         _wait_group_list.Insert( kfgroup->_group_id, kfgroup );
     }
 
-    KFMatchRoom* KFMatchQueue::FindWaitMatchRoom( uint32 playercount )
+    KFMatchRoom* KFMatchQueue::FindWaitMatchRoom( uint32 battleserverid, uint32 playercount )
     {
         auto kfroom = _kf_room_list.First();
         while ( kfroom != nullptr )
         {
-            if ( kfroom->IsWaitMatch( playercount ) )
+            if ( kfroom->IsWaitMatch( battleserverid, playercount ) )
             {
                 return kfroom;
             }
@@ -111,7 +113,7 @@ namespace KFrame
 
         // 如果没有找到, 创建一个
         kfroom = __KF_CREATE_BATCH__( KFMatchRoom, 100 );
-        kfroom->Initialize( this );
+        kfroom->Initialize( this, battleserverid );
         _kf_room_list.Insert( kfroom->_room_id, kfroom );
         return kfroom;
     }
@@ -121,7 +123,7 @@ namespace KFrame
         auto kfcamp = MatchGroupToCamp();
         while ( kfcamp != nullptr )
         {
-            auto kfroom = FindWaitMatchRoom( kfcamp->PlayerCount() );
+            auto kfroom = FindWaitMatchRoom( kfcamp->_battle_server_id, kfcamp->PlayerCount() );
             kfroom->AddCamp( kfcamp );
 
             kfcamp = MatchGroupToCamp();
@@ -131,6 +133,7 @@ namespace KFrame
     KFMatchCamp* KFMatchQueue::MatchGroupToCamp()
     {
         bool ismatch = false;
+        uint32 battleid = _invalid_int;
         std::set< KFMatchGroup* > grouplist;
         for ( auto& iter : _wait_group_list._objects )
         {
@@ -140,9 +143,10 @@ namespace KFrame
             grouplist.insert( kfgroup );
 
             // 匹配队伍列表
-            ismatch = MatchGroupList( kfgroup->PlayerCount(), grouplist );
+            ismatch = MatchGroupList( kfgroup->_battle_server_id, kfgroup->PlayerCount(), grouplist );
             if ( ismatch )
             {
+                battleid = kfgroup->_battle_server_id;
                 break;
             }
         }
@@ -154,7 +158,7 @@ namespace KFrame
         }
 
         // 创建一个阵营, 加入队伍列表
-        auto kfcamp = CreateMatchCamp();
+        auto kfcamp = CreateMatchCamp( battleid );
         for ( auto kfgroup : grouplist )
         {
             kfcamp->AddGroup( kfgroup );
@@ -164,7 +168,7 @@ namespace KFrame
         return kfcamp;
     }
 
-    bool KFMatchQueue::MatchGroupList( uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
+    bool KFMatchQueue::MatchGroupList( uint32 battleserverid, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
     {
         // 如果 需要3个队伍, 先找3个人, 找不到就找2个人的队伍, 在找不到找1个人的队伍
         auto needcount = _kf_setting->_max_group_player_count - groupcount;
@@ -172,7 +176,7 @@ namespace KFrame
         do
         {
             // 找到数量合适的队伍
-            auto kfgroup = FindGroupByCount( needcount, grouplist );
+            auto kfgroup = FindGroupByCount( battleserverid, needcount, grouplist );
             if ( kfgroup != nullptr )
             {
                 grouplist.insert( kfgroup );
@@ -197,13 +201,19 @@ namespace KFrame
         return false;
     }
 
-    KFMatchGroup* KFMatchQueue::FindGroupByCount( uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
+    KFMatchGroup* KFMatchQueue::FindGroupByCount( uint32 battleserverid, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
     {
         for ( auto iter : _wait_group_list._objects )
         {
             auto kfgroup = iter.second;
             // 不能是列表中的队伍
             if ( grouplist.find( kfgroup ) != grouplist.end() )
+            {
+                continue;
+            }
+
+            // 不同的战场id
+            if ( kfgroup->_battle_server_id != battleserverid )
             {
                 continue;
             }

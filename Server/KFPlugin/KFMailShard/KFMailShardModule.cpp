@@ -39,6 +39,7 @@ namespace KFrame
         __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ, &KFMailShardModule::HandleDeleteMailReq );
         __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ, &KFMailShardModule::HandleUpdateMailFlagReq );
         __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ, &KFMailShardModule::HandleNewPlayerLoginMailReq );
+        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ, &KFMailShardModule::HandleGMAddMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -50,6 +51,7 @@ namespace KFrame
         __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ );
         __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ );
         __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ );
+        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ );
     }
 
     void KFMailShardModule::OnceRun()
@@ -251,6 +253,11 @@ namespace KFrame
         {
             return false;
         }
+        /*
+        if ( maildata[__KF_STRING__( flag )].empty() )
+        {
+            maildata[__KF_STRING__( flag )] = "0";
+        }*/
 
         maildata[ __KF_STRING__( id ) ] = __TO_STRING__( uint64result->_value );
         maildata[ __KF_STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
@@ -264,7 +271,16 @@ namespace KFrame
             redisdriver->Append( "expire {}:{} {}", __KF_STRING__( mail ), uint64result->_value, validtime );
         }
 
-        redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+        if ( maillistkey == _invalid_str )
+        {
+            redisdriver->Append( "zadd {} {} {}", __KF_STRING__( wholemail ), uint64result->_value, uint64result->_value );
+        }
+        else
+        {
+			// 非系统邮件
+			redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+        }
+
         auto kfresult = redisdriver->Pipeline();
         return kfresult->IsOk();
     }
@@ -427,5 +443,54 @@ namespace KFrame
         {
             __LOG_ERROR__( KFLogEnum::Logic, "playerid[{}] mail[{}] failed!", kfmsg.playerid(), strmaxmailid );
         }
+    }
+
+
+    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleGMAddMailReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SGMAddMailReq );
+
+        MapString maildata;
+        auto pbmail = &kfmsg.pbmail();
+        for ( auto i = 0; i < pbmail->data_size(); ++i )
+        {
+            auto pbdata = &pbmail->data( i );
+            maildata[pbdata->name()] = pbdata->value();
+        }
+
+        if ( kfmsg.has_playerids() )
+        {
+            for ( auto i = 0; i < kfmsg.playerids().playerid_size(); ++i )
+            {
+                auto playerid = kfmsg.playerids().playerid( i );
+                if ( _invalid_int == playerid )
+                {
+                    continue;
+                }
+                auto maillistkey = FormatMailKeyName( playerid, kfmsg.mailtype(), __FUNC_LINE__ );
+                if ( maillistkey.empty() )
+                {
+                    return;
+                }
+
+                auto ok = AddMail( maillistkey, maildata );
+                if ( !ok )
+                {
+                    auto strmaildata = kfmsg.DebugString();
+                    __LOG_ERROR__( KFLogEnum::GM, "player[{}] add mail[{}] failed!", playerid, strmaildata );
+                }
+
+            }
+        }
+        else
+        {
+            auto ok = AddMail( _invalid_str, maildata );
+            if ( !ok )
+            {
+                auto strmaildata = kfmsg.DebugString();
+                __LOG_ERROR__( KFLogEnum::GM, " add mail[{}] failed!", strmaildata );
+            }
+        }
+
     }
 }

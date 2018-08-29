@@ -11,7 +11,7 @@ namespace KFrame
         KFLaunchSetting();
 
         std::string GetAppPath();
-        std::string GetStartupFile();
+        std::string GetStartupFile( bool isdebug );
 
         void CopyFrom( MapString& values );
         void SaveTo( MapString& values );
@@ -82,6 +82,9 @@ namespace KFrame
 
         // 启动时间
         uint64 _startup_time;
+
+        // 是否debug模式
+        bool _is_debug;
 
         // 是否需要启动
         bool _is_startup;

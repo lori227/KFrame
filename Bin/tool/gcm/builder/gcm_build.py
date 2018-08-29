@@ -25,11 +25,13 @@ import gcm_xml
 import gcm_conf
 import gcm_scp
 import gcm_db
+import gcm_http
 
 input_folder = '../conf_input'
 output_folder = '../conf_output'
 
-default_version_ip = '192.168.1.9'
+default_version_api = 'http://version.leiwu.com/upload.php'
+default_version_url = 'http://version.leiwu.com/upload/'
 default_startup = 'KFStartup'
 default_mode_suffix = 'd'  # debug release后缀
 
@@ -97,11 +99,7 @@ def get_real_src_path(is_execute=False, is_dll=False, dll_name='', is_setting=Fa
 def copy_plugin_and_setting(tree, config_folder, plugin_folder, setting_folder, startup_folder):
     plugin_nodes = gcm_xml.find_nodes(tree, 'Plugins/Plugin')
     for node in plugin_nodes:
-        dll_name = ''
-        if len(default_mode_suffix) > 0:
-            dll_name = node.get('Debug')
-        else:
-            dll_name = node.get('Release')
+        dll_name = node.get('Name') + default_mode_suffix
         shutil.copy(get_real_src_path(
             is_dll=True, dll_name=dll_name), plugin_folder)
         config = node.get('Config')
@@ -136,15 +134,26 @@ def generate_shell_file(folder, startup_name, proc_name):
         raise Exception('[ERROR] %s is not a normal process' % proc_name)
 
     if is_linux():
-        file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
-        file.write('echo Starting ' + proc_name + ' Server\n')
-        file.write('./%s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
-        file.close()
+        run_file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
+        run_file.write('echo Starting ' + proc_name + ' Server\n')
+        run_file.write('./%s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.close()
+
+        kill_file = open(folder + '/kill' + default_mode_suffix + '.sh', 'a+')
+        kill_file.write('echo Killing ' + proc_name + ' Server\n')
+        kill_file.write('kill -9 $(pidof %s)' % proc_name)
+        kill_file.close()
     else:  
-        file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
-        file.write('echo Starting ' + proc_name + ' Server\n')
-        file.write('start "%s" %s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
-        file.close()
+        run_file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
+        run_file.write('echo Starting ' + proc_name + ' Server\n')
+        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.close()
+
+        kill_file = open(folder + '/kill' + default_mode_suffix + '.bat', 'a+')
+        kill_file.write('@echo off\n')
+        kill_file.write('echo Killing ' + proc_name + ' Server\n')
+        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s*"' % proc_name)
+        kill_file.close()
 
 # 拷贝其他windows依赖的dll文件
 def copy_windows_other_dlls(out_folder):
@@ -224,7 +233,7 @@ def parse_args():
     parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     if is_linux():
-        parser.add_argument('-s', '--svn', type=int, required=True, help="svn version")
+        parser.add_argument('-s', '--svn', type=int, help="svn version")
     return vars(parser.parse_args())
 
 # start
@@ -243,7 +252,7 @@ print '\nstart to generate configurations'
 gen_configuration()
 print 'generate configurations finished'
 
-if is_linux():
+if is_linux() and (args['svn'] is not None):
     print 'start pack RELEASE VERSION'
     release_version_name = 'sgame_svn_' + str(args['svn']) + '_' + datetime.datetime.now().strftime("%Y%m%d%H%M") + '.tar.gz'
     tar_cmd = 'tar -zcvf ' + release_version_name + ' ' + output_folder + '/*'
@@ -252,12 +261,15 @@ if is_linux():
     print 'pack RELEASE_VERSION finished'
 
     # scp to version repo
-    gcm_scp.ssh_scp_put(default_version_ip, 22, 'root', '123456#',
-                        release_version_name, '/home/sgversion/' + release_version_name)
+    #gcm_scp.ssh_scp_put(default_version_ip, 22, 'root', '123456#',
+    #                    release_version_name, '/home/sgversion/' + release_version_name)
+
+    # Post to web server
+    gcm_http.do_post(default_version_api, release_version_name)
 
     # get md5
     (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
 
     # insert into db(因暂时没有web管理，所以先用ssh的地址)
     gcm_db.insert_mysql_db("INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" %
-                        (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), release_version_name, default_version_ip + ':/home/sgversion/', output[0: output.find(' ')]))
+                        (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), release_version_name, default_version_url + release_version_name, output[0: output.find(' ')]))

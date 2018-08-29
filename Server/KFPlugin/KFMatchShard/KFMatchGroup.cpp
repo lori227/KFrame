@@ -5,7 +5,8 @@ namespace KFrame
 {
     KFMatchGroup::KFMatchGroup()
     {
-        _group_id = 0;
+        _group_id = _invalid_int;
+        _battle_server_id = _invalid_int;
     }
 
     KFMatchGroup::~KFMatchGroup()

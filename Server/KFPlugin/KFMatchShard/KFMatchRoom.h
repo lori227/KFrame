@@ -13,13 +13,13 @@ namespace KFrame
         ~KFMatchRoom();
 
         // 初始化
-        void Initialize( KFMatchQueue* kfmatchqueue );
+        void Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid );
 
         // 判断是否满了
         bool IsFull();
 
         // 是否正在等待匹配
-        bool IsWaitMatch( uint32 playercount );
+        bool IsWaitMatch( uint32 battleserverid, uint32 playercount );
 
         // 添加阵营
         void AddCamp( KFMatchCamp* kfcamp );
@@ -73,6 +73,9 @@ namespace KFrame
     private:
         // 分配战场定时器
         KFClockTimer _create_timer;
+
+        // 指定的战场id
+        uint32 _battle_server_id;
 
         // 总人数
         uint32 _room_player_count;

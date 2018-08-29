@@ -267,6 +267,13 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
+  // required uint32 battleserverid = 6;
+  inline bool has_battleserverid() const;
+  inline void clear_battleserverid();
+  static const int kBattleserveridFieldNumber = 6;
+  inline ::google::protobuf::uint32 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SMatchToProxyReq)
  private:
   inline void set_has_pbgroup();
@@ -279,6 +286,8 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   inline void clear_has_playerid();
   inline void set_has_serverid();
   inline void clear_has_serverid();
+  inline void set_has_battleserverid();
+  inline void clear_has_battleserverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -287,9 +296,10 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   bool allowgroup_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
   friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
@@ -493,6 +503,13 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
+  // required uint32 battleserverid = 6;
+  inline bool has_battleserverid() const;
+  inline void clear_battleserverid();
+  static const int kBattleserveridFieldNumber = 6;
+  inline ::google::protobuf::uint32 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SMatchToShardReq)
  private:
   inline void set_has_pbgroup();
@@ -505,6 +522,8 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   inline void clear_has_playerid();
   inline void set_has_serverid();
   inline void clear_has_serverid();
+  inline void set_has_battleserverid();
+  inline void clear_has_battleserverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -513,9 +532,10 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   bool allowgroup_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFMatchMessage_2eproto();
   friend void protobuf_AssignDesc_KFMatchMessage_2eproto();
@@ -2144,6 +2164,28 @@ inline void S2SMatchToProxyReq::set_serverid(::google::protobuf::uint32 value) {
   serverid_ = value;
 }
 
+// required uint32 battleserverid = 6;
+inline bool S2SMatchToProxyReq::has_battleserverid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SMatchToProxyReq::set_has_battleserverid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SMatchToProxyReq::clear_has_battleserverid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SMatchToProxyReq::clear_battleserverid() {
+  battleserverid_ = 0u;
+  clear_has_battleserverid();
+}
+inline ::google::protobuf::uint32 S2SMatchToProxyReq::battleserverid() const {
+  return battleserverid_;
+}
+inline void S2SMatchToProxyReq::set_battleserverid(::google::protobuf::uint32 value) {
+  set_has_battleserverid();
+  battleserverid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SMatchToClientAck
@@ -2342,6 +2384,28 @@ inline ::google::protobuf::uint32 S2SMatchToShardReq::serverid() const {
 inline void S2SMatchToShardReq::set_serverid(::google::protobuf::uint32 value) {
   set_has_serverid();
   serverid_ = value;
+}
+
+// required uint32 battleserverid = 6;
+inline bool S2SMatchToShardReq::has_battleserverid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SMatchToShardReq::set_has_battleserverid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SMatchToShardReq::clear_has_battleserverid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SMatchToShardReq::clear_battleserverid() {
+  battleserverid_ = 0u;
+  clear_has_battleserverid();
+}
+inline ::google::protobuf::uint32 S2SMatchToShardReq::battleserverid() const {
+  return battleserverid_;
+}
+inline void S2SMatchToShardReq::set_battleserverid(::google::protobuf::uint32 value) {
+  set_has_battleserverid();
+  battleserverid_ = value;
 }
 
 // -------------------------------------------------------------------

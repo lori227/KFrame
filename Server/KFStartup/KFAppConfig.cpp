@@ -79,17 +79,17 @@ namespace KFrame
     {
         auto plugins = root.FindNode( "Plugins" );
 
-        if ( plugins.GetString( "AppName" ) != _invalid_str )
+        if ( _app_name.empty() )
         {
             _app_name = plugins.GetString( "AppName" );
         }
 
-        if ( plugins.GetString( "AppType" ) != _invalid_str )
+        if ( _app_type.empty() )
         {
             _app_type = plugins.GetString( "AppType" );
         }
 
-        if ( plugins.GetString( "Common", true ) != _invalid_str )
+        if ( _common_startup_file.empty() )
         {
             _common_startup_file = plugins.GetString( "Common", true );
         }
@@ -99,11 +99,8 @@ namespace KFrame
         {
             KFAppSetting setting;
 
-            setting._name = node.GetString( "Name" );
-            setting._starup = node.GetUInt32( "Startup" );
             setting._sort = node.GetUInt32( "Sort" );
-            setting._debug = node.GetString( "Debug" );
-            setting._release = node.GetString( "Release" );
+            setting._name = node.GetString( "Name" );
             setting._config_file = node.GetString( "Config" );
 
             AddStartupSetting( setting );

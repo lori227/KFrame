@@ -23,7 +23,7 @@ namespace KFrame
         ~KFBattleRoom();
 
         // 初始化
-        void InitRoom( uint32 matchid, uint64 roomid, uint32 maxplayercount );
+        void InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount );
 
         // 添加阵营
         KFBattleCamp* AddCamp( const KFMsg::PBBattleCamp* pbcamp );
@@ -129,6 +129,9 @@ namespace KFrame
 
         // 房间id
         uint64 _battle_room_id;
+
+        // 指定的战场id
+        uint32 _battle_server_id;
 
         // 战场服务器
         KFBattleServer _battle_server;
