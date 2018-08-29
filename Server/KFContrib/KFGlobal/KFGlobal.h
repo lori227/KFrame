@@ -32,7 +32,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化日志
-        void InitLogger( uint32 type );
+        void InitLogger( std::string& strtype );
 
         // 设置日志登录
         void SetLogLevel( uint32 level );

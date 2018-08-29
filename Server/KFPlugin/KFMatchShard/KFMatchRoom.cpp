@@ -84,6 +84,7 @@ namespace KFrame
 
         // 玩家数量
         _room_player_count += kfcamp->PlayerCount();
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
     }
 
     bool KFMatchRoom::IsWaitMatch( uint32 battleserverid, uint32 playercount )
@@ -233,6 +234,8 @@ namespace KFrame
         if ( ok )
         {
             _room_player_count -= __MIN__( _room_player_count, 1 );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
+
             if ( kfcamp->PlayerCount() == 0 )
             {
                 _camp_list.Remove( campid );
@@ -259,6 +262,7 @@ namespace KFrame
             return false;
         }
 
+        auto campplayercount = kfcamp->PlayerCount();
         auto ok = kfcamp->RemoveGroup( groupid );
         if ( ok )
         {
@@ -271,6 +275,8 @@ namespace KFrame
 
             // 删除阵营
             _camp_list.Remove( campid );
+            _room_player_count -= __MIN__( _room_player_count, campplayercount );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
         }
 
         return ok;

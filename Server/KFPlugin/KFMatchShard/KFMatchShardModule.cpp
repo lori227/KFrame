@@ -162,7 +162,7 @@ namespace KFrame
         auto ok = kfmatchqueue->CancelMatch( kfmsg.playerid() );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] cancel match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] cancel match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
         }
     }
 

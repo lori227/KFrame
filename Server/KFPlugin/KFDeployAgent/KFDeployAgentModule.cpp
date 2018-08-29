@@ -263,7 +263,7 @@ namespace KFrame
         auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
         auto param = __FORMAT__( " {}={} {}={} {}={}",
                                  __KF_STRING__( appid ), deploydata->_app_id,
-                                 __KF_STRING__( log ), kflaunch->_log_type,
+                                 __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( startup ), kflaunch->_app_config );
 
         // 启动进程
@@ -334,7 +334,7 @@ namespace KFrame
         auto strpause = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
         args.push_back( const_cast< char* >( strpause.c_str() ) );
 
-        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( log ), kflaunch->_log_type );
+        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
         args.push_back( const_cast< char* >( strappid.c_str() ) );
 
         auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );

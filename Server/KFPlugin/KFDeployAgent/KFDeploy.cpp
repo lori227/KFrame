@@ -5,7 +5,6 @@ namespace KFrame
     KFLaunchSetting::KFLaunchSetting()
     {
         _ftp_id = 0;
-        _log_type = 0;
     }
 
     std::string KFLaunchSetting::GetAppPath()
@@ -38,7 +37,6 @@ namespace KFrame
         _app_path = values[ __KF_STRING__( apppath ) ];
         _app_file = values[ __KF_STRING__( appfile ) ];
         _app_config = values[ __KF_STRING__( appconfig ) ];
-        _log_type = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( logtype ) ] );
         _service = values[ __KF_STRING__( service ) ];
     }
 
@@ -51,7 +49,6 @@ namespace KFrame
         values[ __KF_STRING__( apppath ) ] = _app_path;
         values[ __KF_STRING__( appfile ) ] = _app_file;
         values[ __KF_STRING__( appconfig ) ] = _app_config;
-        values[ __KF_STRING__( logtype ) ] = __TO_STRING__( _log_type );
         values[ __KF_STRING__( service ) ] = _service;
     }
 
@@ -123,6 +120,8 @@ namespace KFrame
         _startup_time = KFUtility::ToValue< uint64 >( values[ __KF_STRING__( time ) ] );
         _agent_id = values[ __KF_STRING__( agentid ) ];
         _local_ip = values[ __KF_STRING__( localip ) ];
+        _log_type = values[ __KF_STRING__( logtype ) ];
+
     }
 
     void KFDeployData::SaveTo( MapString& values )
@@ -137,6 +136,7 @@ namespace KFrame
         values[ __KF_STRING__( time ) ] = __TO_STRING__( _startup_time );
         values[ __KF_STRING__( agentid ) ] = _agent_id;
         values[ __KF_STRING__( localip ) ] = _local_ip;
+        values[ __KF_STRING__( logtype ) ] = _log_type;
     }
 
 }

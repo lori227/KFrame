@@ -12,7 +12,7 @@ namespace KFrame
         _match_proxy_id = 0;
         _match_shard_id = 0;
         _battle_room_id = 0;
-        _now_player_count = 0;
+        _total_player_count = 0;
         _max_player_count = 0;
         _battle_valid_time = 0;
         _status = 0;
@@ -84,7 +84,7 @@ namespace KFrame
         }
 
         // 人数已经满了
-        if ( _now_player_count + pbcamp->pbplayer_size() > _max_player_count )
+        if ( _total_player_count + pbcamp->pbplayer_size() > _max_player_count )
         {
             __LOG_ERROR__( KFLogEnum::Logic, "battle room[{}] is full!", _battle_room_id );
             return nullptr;
@@ -107,7 +107,8 @@ namespace KFrame
     void KFBattleRoom::AddPlayerCount( uint32 playercount )
     {
         // 设置房间总人数
-        _now_player_count += playercount;
+        _total_player_count += playercount;
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]!", _battle_room_id, _total_player_count );
         if ( _kf_camp_list.Size() < _kf_battle_config->_min_open_room_camp_count )
         {
             return;
@@ -129,7 +130,8 @@ namespace KFrame
             return false;
         }
 
-        _now_player_count -= __MIN__( _now_player_count, kfcamp->PlayerCount() );
+        _total_player_count -= __MIN__( _total_player_count, kfcamp->PlayerCount() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]!", _battle_room_id, _total_player_count );
         return true;
     }
 
@@ -340,7 +342,7 @@ namespace KFrame
         }
 
         // 删除阵营
-        _now_player_count -= __MIN__( kfcamp->PlayerCount(), _now_player_count );
+        _total_player_count -= __MIN__( kfcamp->PlayerCount(), _total_player_count );
         _kf_camp_list.Remove( campid );
 
         return true;
@@ -410,6 +412,8 @@ namespace KFrame
     {
         // 停止定时器
         UpdateRoomStatus( KFRoomStatus::StatisBattleRoomPlaying, 0 );
+
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}] start!", _battle_room_id, _total_player_count );
     }
 
     void KFBattleRoom::FinishBattleRoom()

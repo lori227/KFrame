@@ -85,7 +85,7 @@ namespace KFrame
 
         // 初始化log
         auto strlogtype = params[ __KF_STRING__( log ) ];
-        kfglobal->InitLogger( KFUtility::ToValue< uint32 >( strlogtype ) );
+        kfglobal->InitLogger( strlogtype );
 
         if ( !_kf_startup->LoadPlugin() )
         {

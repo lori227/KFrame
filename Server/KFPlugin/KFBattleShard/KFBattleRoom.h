@@ -150,7 +150,7 @@ namespace KFrame
         uint32 _req_count;
 
         // 总人数
-        uint32 _now_player_count;
+        uint32 _total_player_count;
 
         // 最大玩家数量
         uint32 _max_player_count;

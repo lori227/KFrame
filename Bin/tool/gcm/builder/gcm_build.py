@@ -136,7 +136,7 @@ def generate_shell_file(folder, startup_name, proc_name):
     if is_linux():
         run_file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('./%s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.write('./%s appid=%d.%d.%d.%d log=1.0 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.sh', 'a+')
@@ -146,7 +146,7 @@ def generate_shell_file(folder, startup_name, proc_name):
     else:  
         run_file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=1 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=1.0 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.bat', 'a+')

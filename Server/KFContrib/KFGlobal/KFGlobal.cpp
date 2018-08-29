@@ -66,9 +66,10 @@ namespace KFrame
         return min + index;
     }
 
-    void KFGlobal::InitLogger( uint32 type )
+    void KFGlobal::InitLogger( std::string& strtype )
     {
-        switch ( type )
+        auto logtype = KFUtility::SplitValue< uint32 >( strtype, "." );
+        switch ( logtype )
         {
         case KFLogTypeEnum::Local:
             _logger = new KFLocalLogger();
@@ -83,12 +84,7 @@ namespace KFrame
         if ( _logger != nullptr )
         {
             _logger->Initialize( _app_name, _app_type, _app_id );
-
-#ifdef __KF_RELEASE__
-            _log_level = spdlog::level::debug;
-#else
-            _log_level = spdlog::level::trace;
-#endif
+            _log_level = KFUtility::SplitValue< uint32 >( strtype, "." );
         }
     }
 

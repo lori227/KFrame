@@ -38,9 +38,6 @@ namespace KFrame
         // 程序类型( 给web显示用 );
         std::string _app_type;
 
-        // 日志类型
-        uint32 _log_type;
-
         // 服务类型
         std::string _service;
     };
@@ -69,6 +66,8 @@ namespace KFrame
         // 小区id
         uint32 _zone_id;
 
+        // 日志类型
+        std::string _log_type;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
         // 部署agentid
