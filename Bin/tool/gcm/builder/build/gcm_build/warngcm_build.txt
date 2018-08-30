@@ -1,0 +1,63 @@
+missing module named org - imported by copy
+missing module named fcntl - imported by tempfile, subprocess, paramiko.agent
+missing module named readline - imported by cmd, pdb
+missing module named pwd - imported by posixpath, shutil, tarfile, getpass, netrc
+missing module named 'collections.abc' - imported by urllib3._collections, requests.compat
+missing module named 'urllib.request' - imported by requests.compat
+missing module named 'urllib.parse' - imported by asn1crypto._iri, requests.compat, requests_toolbelt._compat
+missing module named backports - imported by urllib3.packages.ssl_match_hostname
+missing module named 'org.python' - imported by pickle, xml.sax
+missing module named _dummy_threading - imported by dummy_threading
+missing module named SOCKS - imported by ftplib
+missing module named _scproxy - imported by urllib, future.backports.urllib.request
+missing module named EasyDialogs - imported by getpass
+missing module named termios - imported by getpass
+missing module named rourl2path - imported by urllib
+missing module named simplejson - imported by requests.compat
+missing module named "'urllib3.packages.six.moves.urllib'.parse" - imported by urllib3.request, urllib3.poolmanager, urllib3.contrib.appengine
+runtime module named urllib3.packages.six.moves - imported by httplib, urllib3.connectionpool, urllib3.util.response, 'urllib3.packages.six.moves.urllib', urllib3.response, urllib3.util.queue
+missing module named socks - imported by urllib3.contrib.socks
+missing module named winreg.HKEY_LOCAL_MACHINE - imported by winreg, platform
+missing module named winreg.CloseKey - imported by winreg, platform
+missing module named winreg.QueryValueEx - imported by winreg, platform
+missing module named winreg.OpenKeyEx - imported by winreg, platform
+missing module named 'six.moves.urllib_parse' - imported by 'six.moves.urllib_parse'
+runtime module named six.moves - imported by cryptography.x509.general_name
+missing module named cryptography.x509.UnsupportedExtension - imported by cryptography.x509, urllib3.contrib.pyopenssl
+missing module named 'OpenSSL.crypto' - imported by urllib3.contrib.pyopenssl
+missing module named OpenSSL - imported by urllib3.contrib.pyopenssl
+missing module named google - imported by urllib3.contrib.appengine
+missing module named 'requests.packages.urllib3' - imported by requests_toolbelt._compat
+missing module named configparser - imported by pymysql.optionfile
+missing module named 'dbm.ndbm' - imported by future.moves.dbm.ndbm
+missing module named gdbm - imported by anydbm, future.moves.dbm.gnu
+missing module named 'dbm.gnu' - imported by future.moves.dbm.gnu
+missing module named 'dbm.dumb' - imported by future.moves.dbm.dumb
+missing module named bsddb3 - imported by bsddb
+missing module named _pybsddb - imported by bsddb, bsddb.db
+missing module named dbm - imported by future.standard_library, future.moves.dbm, whichdb, anydbm, future.moves.dbm.ndbm
+missing module named resource - imported by posix, test.support
+missing module named _sysconfigdata - imported by distutils.sysconfig, sysconfig
+missing module named _datetime - imported by future.backports.datetime
+missing module named reprlib.recursive_repr - imported by reprlib, future.backports.misc
+missing module named _thread.get_ident - imported by _thread, future.backports.misc
+missing module named gssapi - imported by paramiko.ssh_gss
+missing module named ElementC14N - imported by xml.etree.ElementTree
+missing module named 'java.lang' - imported by platform, xml.sax._exceptions
+missing module named _xmlplus - imported by xml
+missing module named grp - imported by shutil, tarfile
+missing module named vms_lib - imported by platform
+missing module named java - imported by platform
+missing module named 'Carbon.File' - imported by plistlib
+missing module named 'Carbon.Files' - imported by plistlib
+missing module named Carbon - imported by plistlib
+missing module named MacOS - imported by platform
+missing module named macresource - imported by MacOS
+missing module named gestalt - imported by platform
+missing module named riscosenviron - imported by os
+missing module named riscospath - imported by os
+missing module named riscos - imported by os
+missing module named ce - imported by os
+missing module named _emx_link - imported by os
+missing module named os2 - imported by os
+missing module named posix - imported by os

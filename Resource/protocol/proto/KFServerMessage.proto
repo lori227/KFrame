@@ -312,6 +312,7 @@ message S2SLoginGameAck
 	required uint32 sessionid = 3;
 	required PBObject playerdata = 4;
 	required uint64 servertime = 5;
+	required uint32 accountid = 6;
 }
 
 // 加载游戏数据

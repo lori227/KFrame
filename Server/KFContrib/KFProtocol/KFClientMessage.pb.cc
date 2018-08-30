@@ -260,6 +260,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgCreateGuildReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgCreateGuildReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgInviteGuildReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgInviteGuildReq_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor_ = NULL;
 
 }  // namespace
@@ -1533,6 +1536,21 @@ void protobuf_AssignDesc_KFClientMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgCreateGuildReq));
+  MsgInviteGuildReq_descriptor_ = file->message_type(80);
+  static const int MsgInviteGuildReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgInviteGuildReq, inviterid_),
+  };
+  MsgInviteGuildReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgInviteGuildReq_descriptor_,
+      MsgInviteGuildReq::default_instance_,
+      MsgInviteGuildReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgInviteGuildReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgInviteGuildReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgInviteGuildReq));
   ClientProtocol_descriptor_ = file->enum_type(0);
 }
 
@@ -1706,6 +1724,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgTellSevenExtendReward_descriptor_, &MsgTellSevenExtendReward::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgCreateGuildReq_descriptor_, &MsgCreateGuildReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgInviteGuildReq_descriptor_, &MsgInviteGuildReq::default_instance());
 }
 
 }  // namespace
@@ -1871,6 +1891,8 @@ void protobuf_ShutdownFile_KFClientMessage_2eproto() {
   delete MsgTellSevenExtendReward_reflection_;
   delete MsgCreateGuildReq::default_instance_;
   delete MsgCreateGuildReq_reflection_;
+  delete MsgInviteGuildReq::default_instance_;
+  delete MsgInviteGuildReq_reflection_;
 }
 
 void protobuf_AddDesc_KFClientMessage_2eproto() {
@@ -1992,7 +2014,8 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
     "\002(\r\">\n\030MsgTellSevenExtendReward\022\022\n\nplaye"
     "rname\030\001 \002(\t\022\016\n\006reward\030\002 \002(\t\"H\n\021MsgCreate"
     "GuildReq\022\021\n\tguildname\030\001 \002(\t\022\r\n\005medal\030\002 \002"
-    "(\r\022\021\n\tmanifesto\030\003 \001(\t*\350\021\n\016ClientProtocol"
+    "(\r\022\021\n\tmanifesto\030\003 \001(\t\"&\n\021MsgInviteGuildR"
+    "eq\022\021\n\tinviterid\030\001 \002(\r*\203\022\n\016ClientProtocol"
     "\022\024\n\020MSG_TELL_BE_KICK\020d\022\030\n\024MSG_LOGIN_VERI"
     "FY_REQ\020e\022\030\n\024MSG_LOGIN_VERIFY_ACK\020f\022\026\n\022MS"
     "G_LOGIN_GAME_REQ\020g\022\025\n\021MSG_LOGIN_OUT_REQ\020"
@@ -2049,7 +2072,8 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
     "END_RANK_LIST_ACK\020\272\001\022\032\n\025MSG_COMPOUND_DAT"
     "A_REQ\020\273\001\022 \n\033MSG_SEVEN_SIGNIN_REWARD_REQ\020"
     "\306\001\022!\n\034MSG_TELL_SEVEN_EXTEND_REWARD\020\307\001\022\031\n"
-    "\024MSG_CREATE_GUILD_REQ\020\310\001", 6744);
+    "\024MSG_CREATE_GUILD_REQ\020\310\001\022\031\n\024MSG_INVITE_G"
+    "UILD_REQ\020\311\001", 6811);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClientMessage.proto", &protobuf_RegisterTypes);
   MsgResultDisplay::default_instance_ = new MsgResultDisplay();
@@ -2132,6 +2156,7 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
   MsgSevenSignInRewardReq::default_instance_ = new MsgSevenSignInRewardReq();
   MsgTellSevenExtendReward::default_instance_ = new MsgTellSevenExtendReward();
   MsgCreateGuildReq::default_instance_ = new MsgCreateGuildReq();
+  MsgInviteGuildReq::default_instance_ = new MsgInviteGuildReq();
   MsgResultDisplay::default_instance_->InitAsDefaultInstance();
   MsgTellBeKick::default_instance_->InitAsDefaultInstance();
   MsgLoginVerifyReq::default_instance_->InitAsDefaultInstance();
@@ -2212,6 +2237,7 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
   MsgSevenSignInRewardReq::default_instance_->InitAsDefaultInstance();
   MsgTellSevenExtendReward::default_instance_->InitAsDefaultInstance();
   MsgCreateGuildReq::default_instance_->InitAsDefaultInstance();
+  MsgInviteGuildReq::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFClientMessage_2eproto);
 }
 
@@ -2305,6 +2331,7 @@ bool ClientProtocol_IsValid(int value) {
     case 198:
     case 199:
     case 200:
+    case 201:
       return true;
     default:
       return false;
@@ -22110,6 +22137,215 @@ void MsgCreateGuildReq::Swap(MsgCreateGuildReq* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgCreateGuildReq_descriptor_;
   metadata.reflection = MsgCreateGuildReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgInviteGuildReq::kInviteridFieldNumber;
+#endif  // !_MSC_VER
+
+MsgInviteGuildReq::MsgInviteGuildReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgInviteGuildReq::InitAsDefaultInstance() {
+}
+
+MsgInviteGuildReq::MsgInviteGuildReq(const MsgInviteGuildReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgInviteGuildReq::SharedCtor() {
+  _cached_size_ = 0;
+  inviterid_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgInviteGuildReq::~MsgInviteGuildReq() {
+  SharedDtor();
+}
+
+void MsgInviteGuildReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void MsgInviteGuildReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgInviteGuildReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgInviteGuildReq_descriptor_;
+}
+
+const MsgInviteGuildReq& MsgInviteGuildReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFClientMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgInviteGuildReq* MsgInviteGuildReq::default_instance_ = NULL;
+
+MsgInviteGuildReq* MsgInviteGuildReq::New() const {
+  return new MsgInviteGuildReq;
+}
+
+void MsgInviteGuildReq::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    inviterid_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgInviteGuildReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 inviterid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &inviterid_)));
+          set_has_inviterid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgInviteGuildReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint32 inviterid = 1;
+  if (has_inviterid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->inviterid(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgInviteGuildReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 inviterid = 1;
+  if (has_inviterid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->inviterid(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgInviteGuildReq::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 inviterid = 1;
+    if (has_inviterid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->inviterid());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgInviteGuildReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgInviteGuildReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgInviteGuildReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgInviteGuildReq::MergeFrom(const MsgInviteGuildReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_inviterid()) {
+      set_inviterid(from.inviterid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgInviteGuildReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgInviteGuildReq::CopyFrom(const MsgInviteGuildReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgInviteGuildReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void MsgInviteGuildReq::Swap(MsgInviteGuildReq* other) {
+  if (other != this) {
+    std::swap(inviterid_, other->inviterid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgInviteGuildReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgInviteGuildReq_descriptor_;
+  metadata.reflection = MsgInviteGuildReq_reflection_;
   return metadata;
 }
 

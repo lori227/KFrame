@@ -109,7 +109,7 @@ namespace KFrame
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();
 
-        __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] player[{}] verify req!", accountid, playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] verify req!", accountid, playerid );
 
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
         if ( KickOnline( playerid, __FUNC_LINE__ ) )

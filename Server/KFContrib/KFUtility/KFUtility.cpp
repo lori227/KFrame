@@ -124,6 +124,6 @@ namespace KFrame
     // 格式化标题
     std::string KFUtility::FormatTitleText( const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        return __FORMAT__( "{}-{}-{}", appname, apptype, strappid );
+        return __FORMAT__( "{}.{}.{}", appname, apptype, strappid );
     }
 }

@@ -11,7 +11,7 @@
 		<!-- 部署数据库 -->
 		<Connection MySqlId="1" IP="127.0.0.1" Port="3306" Database="kframe" User="root" Password="mysql@lori227-=">
 			<Channel ChannelId="101" IP="192.168.1.9" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
-			<Channel ChannelId="1" IP="10.105.6.78" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
+			<Channel ChannelId="1" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 	</MySQL>
 

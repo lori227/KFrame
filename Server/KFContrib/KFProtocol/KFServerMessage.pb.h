@@ -136,6 +136,8 @@ class S2SCreateGuidReq;
 class S2SCreateGuildToShardReq;
 class S2SCreateGuildAck;
 class S2SUpdateMemberBasicDataReq;
+class S2SInviteGuildReq;
+class S2SInviteGuildAck;
 class S2SGMAddMailReq;
 
 enum ServerProtocol {
@@ -235,6 +237,8 @@ enum ServerProtocol {
   S2S_CREATE_GUILD_TO_SHARD_REQ = 21198,
   S2S_CREATE_GUILD_ACK = 21199,
   S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200,
+  S2S_INVITE_GUILD_REQ = 21201,
+  S2S_INVITE_GUILD_ACK = 21202,
   S2S_GM_ADD_MAIL_REQ = 21300
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
@@ -2562,6 +2566,13 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 servertime() const;
   inline void set_servertime(::google::protobuf::uint64 value);
 
+  // required uint32 accountid = 6;
+  inline bool has_accountid() const;
+  inline void clear_accountid();
+  static const int kAccountidFieldNumber = 6;
+  inline ::google::protobuf::uint32 accountid() const;
+  inline void set_accountid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginGameAck)
  private:
   inline void set_has_result();
@@ -2574,17 +2585,20 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message {
   inline void clear_has_playerdata();
   inline void set_has_servertime();
   inline void clear_has_servertime();
+  inline void set_has_accountid();
+  inline void clear_has_accountid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 playerid_;
   ::KFMsg::PBObject* playerdata_;
-  ::google::protobuf::uint64 servertime_;
   ::google::protobuf::uint32 sessionid_;
+  ::google::protobuf::uint32 accountid_;
+  ::google::protobuf::uint64 servertime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -10568,10 +10582,17 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string name = 2;
+  // required uint32 serverid = 2;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
+
+  // required string name = 3;
   inline bool has_name() const;
   inline void clear_name();
-  static const int kNameFieldNumber = 2;
+  static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
@@ -10580,10 +10601,10 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string guildname = 3;
+  // required string guildname = 4;
   inline bool has_guildname() const;
   inline void clear_guildname();
-  static const int kGuildnameFieldNumber = 3;
+  static const int kGuildnameFieldNumber = 4;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
@@ -10592,17 +10613,17 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
 
-  // required uint32 medal = 4;
+  // required uint32 medal = 5;
   inline bool has_medal() const;
   inline void clear_medal();
-  static const int kMedalFieldNumber = 4;
+  static const int kMedalFieldNumber = 5;
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 5;
+  // optional string manifesto = 6;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
-  static const int kManifestoFieldNumber = 5;
+  static const int kManifestoFieldNumber = 6;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
@@ -10611,10 +10632,10 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
 
-  // repeated .KFMsg.PBString pbdata = 6;
+  // repeated .KFMsg.PBString pbdata = 7;
   inline int pbdata_size() const;
   inline void clear_pbdata();
-  static const int kPbdataFieldNumber = 6;
+  static const int kPbdataFieldNumber = 7;
   inline const ::KFMsg::PBString& pbdata(int index) const;
   inline ::KFMsg::PBString* mutable_pbdata(int index);
   inline ::KFMsg::PBString* add_pbdata();
@@ -10627,6 +10648,8 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
   inline void set_has_name();
   inline void clear_has_name();
   inline void set_has_guildname();
@@ -10638,15 +10661,16 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* name_;
   ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 medal_;
+  ::google::protobuf::uint32 serverid_;
+  ::std::string* name_;
   ::std::string* guildname_;
   ::std::string* manifesto_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > pbdata_;
+  ::google::protobuf::uint32 medal_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -10718,10 +10742,17 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string name = 2;
+  // required uint32 serverid = 2;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
+
+  // required string name = 3;
   inline bool has_name() const;
   inline void clear_name();
-  static const int kNameFieldNumber = 2;
+  static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
@@ -10730,10 +10761,10 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string guildname = 3;
+  // required string guildname = 4;
   inline bool has_guildname() const;
   inline void clear_guildname();
-  static const int kGuildnameFieldNumber = 3;
+  static const int kGuildnameFieldNumber = 4;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
@@ -10742,17 +10773,17 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
 
-  // required uint32 medal = 4;
+  // required uint32 medal = 5;
   inline bool has_medal() const;
   inline void clear_medal();
-  static const int kMedalFieldNumber = 4;
+  static const int kMedalFieldNumber = 5;
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 5;
+  // optional string manifesto = 6;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
-  static const int kManifestoFieldNumber = 5;
+  static const int kManifestoFieldNumber = 6;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
@@ -10761,17 +10792,17 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
 
-  // required uint64 guildid = 6;
+  // required uint64 guildid = 7;
   inline bool has_guildid() const;
   inline void clear_guildid();
-  static const int kGuildidFieldNumber = 6;
+  static const int kGuildidFieldNumber = 7;
   inline ::google::protobuf::uint64 guildid() const;
   inline void set_guildid(::google::protobuf::uint64 value);
 
-  // repeated .KFMsg.PBString pbdata = 7;
+  // repeated .KFMsg.PBString pbdata = 8;
   inline int pbdata_size() const;
   inline void clear_pbdata();
-  static const int kPbdataFieldNumber = 7;
+  static const int kPbdataFieldNumber = 8;
   inline const ::KFMsg::PBString& pbdata(int index) const;
   inline ::KFMsg::PBString* mutable_pbdata(int index);
   inline ::KFMsg::PBString* add_pbdata();
@@ -10784,6 +10815,8 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
   inline void set_has_name();
   inline void clear_has_name();
   inline void set_has_guildname();
@@ -10797,16 +10830,17 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* name_;
   ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 medal_;
+  ::google::protobuf::uint32 serverid_;
+  ::std::string* name_;
   ::std::string* guildname_;
   ::std::string* manifesto_;
   ::google::protobuf::uint64 guildid_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > pbdata_;
+  ::google::protobuf::uint32 medal_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -11046,6 +11080,210 @@ class LIBPROTOC_EXPORT S2SUpdateMemberBasicDataReq : public ::google::protobuf::
 
   void InitAsDefaultInstance();
   static S2SUpdateMemberBasicDataReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SInviteGuildReq : public ::google::protobuf::Message {
+ public:
+  S2SInviteGuildReq();
+  virtual ~S2SInviteGuildReq();
+
+  S2SInviteGuildReq(const S2SInviteGuildReq& from);
+
+  inline S2SInviteGuildReq& operator=(const S2SInviteGuildReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SInviteGuildReq& default_instance();
+
+  void Swap(S2SInviteGuildReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SInviteGuildReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SInviteGuildReq& from);
+  void MergeFrom(const S2SInviteGuildReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 guildid = 1;
+  inline bool has_guildid() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 1;
+  inline ::google::protobuf::uint64 guildid() const;
+  inline void set_guildid(::google::protobuf::uint64 value);
+
+  // required uint32 invitor = 2;
+  inline bool has_invitor() const;
+  inline void clear_invitor();
+  static const int kInvitorFieldNumber = 2;
+  inline ::google::protobuf::uint32 invitor() const;
+  inline void set_invitor(::google::protobuf::uint32 value);
+
+  // required uint32 invitedid = 3;
+  inline bool has_invitedid() const;
+  inline void clear_invitedid();
+  static const int kInvitedidFieldNumber = 3;
+  inline ::google::protobuf::uint32 invitedid() const;
+  inline void set_invitedid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SInviteGuildReq)
+ private:
+  inline void set_has_guildid();
+  inline void clear_has_guildid();
+  inline void set_has_invitor();
+  inline void clear_has_invitor();
+  inline void set_has_invitedid();
+  inline void clear_has_invitedid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 guildid_;
+  ::google::protobuf::uint32 invitor_;
+  ::google::protobuf::uint32 invitedid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SInviteGuildReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SInviteGuildAck : public ::google::protobuf::Message {
+ public:
+  S2SInviteGuildAck();
+  virtual ~S2SInviteGuildAck();
+
+  S2SInviteGuildAck(const S2SInviteGuildAck& from);
+
+  inline S2SInviteGuildAck& operator=(const S2SInviteGuildAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SInviteGuildAck& default_instance();
+
+  void Swap(S2SInviteGuildAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SInviteGuildAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SInviteGuildAck& from);
+  void MergeFrom(const S2SInviteGuildAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 guildid = 1;
+  inline bool has_guildid() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 1;
+  inline ::google::protobuf::uint64 guildid() const;
+  inline void set_guildid(::google::protobuf::uint64 value);
+
+  // required uint32 invitor = 2;
+  inline bool has_invitor() const;
+  inline void clear_invitor();
+  static const int kInvitorFieldNumber = 2;
+  inline ::google::protobuf::uint32 invitor() const;
+  inline void set_invitor(::google::protobuf::uint32 value);
+
+  // required uint32 invitedid = 3;
+  inline bool has_invitedid() const;
+  inline void clear_invitedid();
+  static const int kInvitedidFieldNumber = 3;
+  inline ::google::protobuf::uint32 invitedid() const;
+  inline void set_invitedid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SInviteGuildAck)
+ private:
+  inline void set_has_guildid();
+  inline void clear_has_guildid();
+  inline void set_has_invitor();
+  inline void clear_has_invitor();
+  inline void set_has_invitedid();
+  inline void clear_has_invitedid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 guildid_;
+  ::google::protobuf::uint32 invitor_;
+  ::google::protobuf::uint32 invitedid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SInviteGuildAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -13582,6 +13820,28 @@ inline ::google::protobuf::uint64 S2SLoginGameAck::servertime() const {
 inline void S2SLoginGameAck::set_servertime(::google::protobuf::uint64 value) {
   set_has_servertime();
   servertime_ = value;
+}
+
+// required uint32 accountid = 6;
+inline bool S2SLoginGameAck::has_accountid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SLoginGameAck::set_has_accountid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SLoginGameAck::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SLoginGameAck::clear_accountid() {
+  accountid_ = 0u;
+  clear_has_accountid();
+}
+inline ::google::protobuf::uint32 S2SLoginGameAck::accountid() const {
+  return accountid_;
+}
+inline void S2SLoginGameAck::set_accountid(::google::protobuf::uint32 value) {
+  set_has_accountid();
+  accountid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -20060,15 +20320,37 @@ inline void S2SCreateGuidReq::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string name = 2;
-inline bool S2SCreateGuidReq::has_name() const {
+// required uint32 serverid = 2;
+inline bool S2SCreateGuidReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SCreateGuidReq::set_has_name() {
+inline void S2SCreateGuidReq::set_has_serverid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SCreateGuidReq::clear_has_name() {
+inline void S2SCreateGuidReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SCreateGuidReq::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 S2SCreateGuidReq::serverid() const {
+  return serverid_;
+}
+inline void S2SCreateGuidReq::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
+// required string name = 3;
+inline bool S2SCreateGuidReq::has_name() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SCreateGuidReq::set_has_name() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SCreateGuidReq::clear_has_name() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SCreateGuidReq::clear_name() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -20130,15 +20412,15 @@ inline void S2SCreateGuidReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string guildname = 3;
+// required string guildname = 4;
 inline bool S2SCreateGuidReq::has_guildname() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SCreateGuidReq::set_has_guildname() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SCreateGuidReq::clear_has_guildname() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SCreateGuidReq::clear_guildname() {
   if (guildname_ != &::google::protobuf::internal::kEmptyString) {
@@ -20200,15 +20482,15 @@ inline void S2SCreateGuidReq::set_allocated_guildname(::std::string* guildname) 
   }
 }
 
-// required uint32 medal = 4;
+// required uint32 medal = 5;
 inline bool S2SCreateGuidReq::has_medal() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void S2SCreateGuidReq::set_has_medal() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void S2SCreateGuidReq::clear_has_medal() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SCreateGuidReq::clear_medal() {
   medal_ = 0u;
@@ -20222,15 +20504,15 @@ inline void S2SCreateGuidReq::set_medal(::google::protobuf::uint32 value) {
   medal_ = value;
 }
 
-// optional string manifesto = 5;
+// optional string manifesto = 6;
 inline bool S2SCreateGuidReq::has_manifesto() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void S2SCreateGuidReq::set_has_manifesto() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void S2SCreateGuidReq::clear_has_manifesto() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SCreateGuidReq::clear_manifesto() {
   if (manifesto_ != &::google::protobuf::internal::kEmptyString) {
@@ -20292,7 +20574,7 @@ inline void S2SCreateGuidReq::set_allocated_manifesto(::std::string* manifesto) 
   }
 }
 
-// repeated .KFMsg.PBString pbdata = 6;
+// repeated .KFMsg.PBString pbdata = 7;
 inline int S2SCreateGuidReq::pbdata_size() const {
   return pbdata_.size();
 }
@@ -20343,15 +20625,37 @@ inline void S2SCreateGuildToShardReq::set_playerid(::google::protobuf::uint32 va
   playerid_ = value;
 }
 
-// required string name = 2;
-inline bool S2SCreateGuildToShardReq::has_name() const {
+// required uint32 serverid = 2;
+inline bool S2SCreateGuildToShardReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SCreateGuildToShardReq::set_has_name() {
+inline void S2SCreateGuildToShardReq::set_has_serverid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SCreateGuildToShardReq::clear_has_name() {
+inline void S2SCreateGuildToShardReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SCreateGuildToShardReq::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 S2SCreateGuildToShardReq::serverid() const {
+  return serverid_;
+}
+inline void S2SCreateGuildToShardReq::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
+// required string name = 3;
+inline bool S2SCreateGuildToShardReq::has_name() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SCreateGuildToShardReq::set_has_name() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SCreateGuildToShardReq::clear_has_name() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SCreateGuildToShardReq::clear_name() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -20413,15 +20717,15 @@ inline void S2SCreateGuildToShardReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string guildname = 3;
+// required string guildname = 4;
 inline bool S2SCreateGuildToShardReq::has_guildname() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SCreateGuildToShardReq::set_has_guildname() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SCreateGuildToShardReq::clear_has_guildname() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SCreateGuildToShardReq::clear_guildname() {
   if (guildname_ != &::google::protobuf::internal::kEmptyString) {
@@ -20483,15 +20787,15 @@ inline void S2SCreateGuildToShardReq::set_allocated_guildname(::std::string* gui
   }
 }
 
-// required uint32 medal = 4;
+// required uint32 medal = 5;
 inline bool S2SCreateGuildToShardReq::has_medal() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void S2SCreateGuildToShardReq::set_has_medal() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void S2SCreateGuildToShardReq::clear_has_medal() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SCreateGuildToShardReq::clear_medal() {
   medal_ = 0u;
@@ -20505,15 +20809,15 @@ inline void S2SCreateGuildToShardReq::set_medal(::google::protobuf::uint32 value
   medal_ = value;
 }
 
-// optional string manifesto = 5;
+// optional string manifesto = 6;
 inline bool S2SCreateGuildToShardReq::has_manifesto() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void S2SCreateGuildToShardReq::set_has_manifesto() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void S2SCreateGuildToShardReq::clear_has_manifesto() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SCreateGuildToShardReq::clear_manifesto() {
   if (manifesto_ != &::google::protobuf::internal::kEmptyString) {
@@ -20575,15 +20879,15 @@ inline void S2SCreateGuildToShardReq::set_allocated_manifesto(::std::string* man
   }
 }
 
-// required uint64 guildid = 6;
+// required uint64 guildid = 7;
 inline bool S2SCreateGuildToShardReq::has_guildid() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void S2SCreateGuildToShardReq::set_has_guildid() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void S2SCreateGuildToShardReq::clear_has_guildid() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void S2SCreateGuildToShardReq::clear_guildid() {
   guildid_ = GOOGLE_ULONGLONG(0);
@@ -20597,7 +20901,7 @@ inline void S2SCreateGuildToShardReq::set_guildid(::google::protobuf::uint64 val
   guildid_ = value;
 }
 
-// repeated .KFMsg.PBString pbdata = 7;
+// repeated .KFMsg.PBString pbdata = 8;
 inline int S2SCreateGuildToShardReq::pbdata_size() const {
   return pbdata_.size();
 }
@@ -20855,6 +21159,146 @@ S2SUpdateMemberBasicDataReq::pbdata() const {
 inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
 S2SUpdateMemberBasicDataReq::mutable_pbdata() {
   return &pbdata_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SInviteGuildReq
+
+// required uint64 guildid = 1;
+inline bool S2SInviteGuildReq::has_guildid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SInviteGuildReq::set_has_guildid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SInviteGuildReq::clear_has_guildid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SInviteGuildReq::clear_guildid() {
+  guildid_ = GOOGLE_ULONGLONG(0);
+  clear_has_guildid();
+}
+inline ::google::protobuf::uint64 S2SInviteGuildReq::guildid() const {
+  return guildid_;
+}
+inline void S2SInviteGuildReq::set_guildid(::google::protobuf::uint64 value) {
+  set_has_guildid();
+  guildid_ = value;
+}
+
+// required uint32 invitor = 2;
+inline bool S2SInviteGuildReq::has_invitor() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SInviteGuildReq::set_has_invitor() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SInviteGuildReq::clear_has_invitor() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SInviteGuildReq::clear_invitor() {
+  invitor_ = 0u;
+  clear_has_invitor();
+}
+inline ::google::protobuf::uint32 S2SInviteGuildReq::invitor() const {
+  return invitor_;
+}
+inline void S2SInviteGuildReq::set_invitor(::google::protobuf::uint32 value) {
+  set_has_invitor();
+  invitor_ = value;
+}
+
+// required uint32 invitedid = 3;
+inline bool S2SInviteGuildReq::has_invitedid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SInviteGuildReq::set_has_invitedid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SInviteGuildReq::clear_has_invitedid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SInviteGuildReq::clear_invitedid() {
+  invitedid_ = 0u;
+  clear_has_invitedid();
+}
+inline ::google::protobuf::uint32 S2SInviteGuildReq::invitedid() const {
+  return invitedid_;
+}
+inline void S2SInviteGuildReq::set_invitedid(::google::protobuf::uint32 value) {
+  set_has_invitedid();
+  invitedid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SInviteGuildAck
+
+// required uint64 guildid = 1;
+inline bool S2SInviteGuildAck::has_guildid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SInviteGuildAck::set_has_guildid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SInviteGuildAck::clear_has_guildid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SInviteGuildAck::clear_guildid() {
+  guildid_ = GOOGLE_ULONGLONG(0);
+  clear_has_guildid();
+}
+inline ::google::protobuf::uint64 S2SInviteGuildAck::guildid() const {
+  return guildid_;
+}
+inline void S2SInviteGuildAck::set_guildid(::google::protobuf::uint64 value) {
+  set_has_guildid();
+  guildid_ = value;
+}
+
+// required uint32 invitor = 2;
+inline bool S2SInviteGuildAck::has_invitor() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SInviteGuildAck::set_has_invitor() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SInviteGuildAck::clear_has_invitor() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SInviteGuildAck::clear_invitor() {
+  invitor_ = 0u;
+  clear_has_invitor();
+}
+inline ::google::protobuf::uint32 S2SInviteGuildAck::invitor() const {
+  return invitor_;
+}
+inline void S2SInviteGuildAck::set_invitor(::google::protobuf::uint32 value) {
+  set_has_invitor();
+  invitor_ = value;
+}
+
+// required uint32 invitedid = 3;
+inline bool S2SInviteGuildAck::has_invitedid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SInviteGuildAck::set_has_invitedid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SInviteGuildAck::clear_has_invitedid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SInviteGuildAck::clear_invitedid() {
+  invitedid_ = 0u;
+  clear_has_invitedid();
+}
+inline ::google::protobuf::uint32 S2SInviteGuildAck::invitedid() const {
+  return invitedid_;
+}
+inline void S2SInviteGuildAck::set_invitedid(::google::protobuf::uint32 value) {
+  set_has_invitedid();
+  invitedid_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -187,7 +187,7 @@ namespace KFrame
         auto ok = SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] query player[{}] ok!", accountid, playerid );
+            __LOG_DEBUG__( KFLogEnum::Login, "query player[{}:{}] ok!", accountid, playerid );
         }
         else
         {

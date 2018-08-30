@@ -77,7 +77,7 @@ namespace KFrame
         void FinishBattleRoom();
 
         // 释放战场
-        void FreeBattleServer();
+        void FreeInValidRoom();
 
         // 玩家上线
         bool PlayerOnlineBattleRoom( uint32 campid, uint32 playerid, uint32 serverid );

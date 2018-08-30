@@ -104,7 +104,7 @@ namespace KFrame
         // 删除无效的战场
         for ( auto kfroom : removelist )
         {
-            kfroom->FreeBattleServer();
+            kfroom->FreeInValidRoom();
             _kf_room_list.Remove( kfroom->_battle_room_id );
         }
     }
@@ -115,7 +115,7 @@ namespace KFrame
 
         while ( kfroom != nullptr )
         {
-            kfroom->FreeBattleServer();
+            kfroom->FreeInValidRoom();
             kfroom = _kf_room_list.Next();
         }
     }
@@ -198,7 +198,6 @@ namespace KFrame
                 kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
             }
         }
-
         else
         {
             // roomid为0, 宕机重启

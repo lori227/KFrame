@@ -726,7 +726,7 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "playerid\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010total"
     "num\030\003 \002(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020"
     "\n\010bekillid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037"
-    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r*\304#\n\007AckE"
+    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r*\267$\n\007AckE"
     "num\022\013\n\007Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXi"
     "nError\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinT"
     "okenTimeout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017W"
@@ -840,26 +840,29 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "d\020\255N\022\022\n\rGuildHadExist\020\256N\022\027\n\022GuildCreateI"
     "llegal\020\257N\022\025\n\020GuildNameTooLong\020\260N\022\032\n\025Guil"
     "dManifestoTooLong\020\261N\022\024\n\017GuildNameRepeat\020"
-    "\262N\022\022\n\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022\014\n"
-    "\010Internal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Un"
-    "know\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEnum"
-    "\022\017\n\013LoginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*K\n"
-    "\010FlagEnum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Receive"
-    "d\020\002\022\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010Ma"
-    "ilEnum\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n"
-    "\010GiftMail\020\003*\037\n\016MailConfigEnum\022\r\n\tToastMa"
-    "il\020\001*f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013"
-    "GroupStatus\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayin"
-    "gStatus\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEnum"
-    "\022\013\n\007Jianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001"
-    "\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute"
-    "\020\004*-\n\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n"
-    "\006Modify\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch\020\000"
-    "\022\r\n\tNoneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeam"
-    "Watch\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020\001\022"
-    "\016\n\nDoubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRa"
-    "nk\020\004*9\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003Wi"
-    "n\020\002\022\010\n\004Laud\020\003\022\010\n\004Give\020\004", 7463);
+    "\262N\022\022\n\rGuildHadBuild\020\263N\022\022\n\rGuildNotExist\020"
+    "\264N\022\023\n\016GuildHadInvite\020\265N\022\030\n\023playerisguild"
+    "member\020\266N\022\032\n\025GuildApplyListTooLong\020\267N\022\022\n"
+    "\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022\014\n\010Inte"
+    "rnal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Unknow\020"
+    "\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013L"
+    "oginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010Flag"
+    "Enum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022\n"
+    "\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEnu"
+    "m\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010Gift"
+    "Mail\020\003*\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001*"
+    "f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013Group"
+    "Status\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingStat"
+    "us\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007J"
+    "ianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006R"
+    "efuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-\n"
+    "\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modi"
+    "fy\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\tN"
+    "oneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatch"
+    "\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nDo"
+    "ubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004*"
+    "9\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022\010"
+    "\n\004Laud\020\003\022\010\n\004Give\020\004", 7578);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -1126,6 +1129,11 @@ bool AckEnum_IsValid(int value) {
     case 10032:
     case 10033:
     case 10034:
+    case 10035:
+    case 10036:
+    case 10037:
+    case 10038:
+    case 10039:
     case 20000:
       return true;
     default:

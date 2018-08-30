@@ -27,7 +27,7 @@
 		lib库路径: Server/_lib/linux/3rd/
 		如果你想使用仓库已经编译好的库文件, 跳过以下步骤.
 		进入Server/_build/linux目录下, 
-		执行build_library_new.sh, 等待编译结束,生成的结果在默认链接目录下
+		执行build_library.sh, 等待编译结束,生成的结果在默认链接目录下
 			
 - 编译框架工程
 	

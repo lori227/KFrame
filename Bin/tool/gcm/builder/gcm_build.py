@@ -62,7 +62,7 @@ setting_path = os.path.join('../../../setting')
 config_path = os.path.join('../../../config')
 startup_path = os.path.join('../../../startup')
 win_other_dll_path = os.path.join('../../../../Server/_lib/win64/3rd')
-
+script_path = os.path.join('../../../script')
 
 # 获取本机ip
 def get_local_ip():
@@ -136,23 +136,23 @@ def generate_shell_file(folder, startup_name, proc_name):
     if is_linux():
         run_file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('./%s appid=%d.%d.%d.%d log=1.0 startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.write('./%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.sh', 'a+')
         kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write('kill -9 $(pidof %s)' % proc_name)
+        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" |grep -v grep|cut -c 9-15|xargs kill -9\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1))
         kill_file.close()
     else:  
         run_file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=1.0 startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, proc_name))
+        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.bat', 'a+')
-        kill_file.write('@echo off\n')
+        #kill_file.write('@echo off\n')
         kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s*"' % proc_name)
+        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % proc_name)
         kill_file.close()
 
 # 拷贝其他windows依赖的dll文件
@@ -216,6 +216,9 @@ def copy_files():
     for key in g_proc_config.zone_procs:
         copy_proc_files(g_proc_config.zone_procs[key])
 
+    #单独拷贝下zone/script
+    shutil.copytree(script_path, os.path.join(output_folder, 'zone/script'))
+
     print 'copy all necessary files finished'
 
 
@@ -232,6 +235,7 @@ def parse_args():
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
     parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
+    parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     if is_linux():
         parser.add_argument('-s', '--svn', type=int, help="svn version")
     return vars(parser.parse_args())

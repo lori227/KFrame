@@ -430,8 +430,11 @@ namespace KFrame
                        _battle_server._server_id, _battle_server._ip, _battle_server._port );
     }
 
-    void KFBattleRoom::FreeBattleServer()
+    void KFBattleRoom::FreeInValidRoom()
     {
+        __LOG_ERROR__( KFLogEnum::Logic, "room[{}] battle[{}:{}] invalid!", _battle_room_id,
+                       _battle_server._server_id, _battle_server._ip );
+
         _kf_battle_manage->FreeBattleServer( &_battle_server );
 
         // 通知proxy

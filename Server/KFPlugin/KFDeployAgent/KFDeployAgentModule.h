@@ -17,6 +17,7 @@
 #include "KFMySQL/KFMySQLInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFSchedule/KFScheduleInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -113,6 +114,9 @@ namespace KFrame
 
         void SaveProcessToFile( KFDeployData* deploydata );
         void ReadProcessFromFile( KFDeployData* deploydata );
+
+        // 删除残留的版本
+        void ScheduleRemoveVersion( uint32 id, const char* data, uint32 size );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程

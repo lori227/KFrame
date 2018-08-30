@@ -158,6 +158,8 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerReq );
 
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] loaddata!", kfmsg.accountid(), kfmsg.playerid() );
+
         KFMsg::S2SLoginLoadPlayerAck ack;
         ack.set_channel( kfmsg.channel() );
         ack.set_gateid( kfmsg.gateid() );

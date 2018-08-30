@@ -6,6 +6,11 @@
 
 namespace KFrame
 {
+
+    // kfresult 是成员函数, 如果使用相同的query需要把先前的结果保存起来
+    // 如: 使用querymap以后, 把结果保存到自己定义的map中, 然后才能在次使用querymap,
+    // 否则使用第一次的查询结果会发生错误, 循环是导致宕机
+
     class KFRedisDriver
     {
     public:

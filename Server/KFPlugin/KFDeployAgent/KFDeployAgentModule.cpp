@@ -40,7 +40,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
     }
 
-
     void KFDeployAgentModule::ShutDown()
     {
         __UNREGISTER_TIMER__();
@@ -69,6 +68,13 @@ namespace KFrame
         {
             __LOG_CRITICAL__( KFLogEnum::System, "load launch exception!" );
         }
+
+        // 启动计划任务
+        auto kfsetting = _kf_schedule->CreateScheduleSetting();
+        kfsetting->SetDate( KFScheduleEnum::Loop, 0, 5 );
+        kfsetting->SetData( _invalid_int, nullptr, _invalid_int );
+        _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployAgentModule::ScheduleRemoveVersion );
+
     }
 
     void KFDeployAgentModule::LoadTotalLaunchData()
@@ -665,6 +671,10 @@ namespace KFrame
 
         try
         {
+            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task start!",
+                          _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
+                          _kf_task->_app_id, _kf_task->_zone_id );
+
             if ( _kf_task->_command == __KF_STRING__( startup ) )
             {
                 StartStartupServerTask();
@@ -693,10 +703,6 @@ namespace KFrame
             {
                 SendTaskToMaster();
             }
-
-            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] task start!",
-                          _kf_task->_command, _kf_task->_value, _kf_task->_app_name, _kf_task->_app_type,
-                          _kf_task->_app_id, _kf_task->_zone_id );
         }
         catch ( std::exception& exception )
         {
@@ -899,9 +905,7 @@ namespace KFrame
         // todo win64暂时没有实现
 #else
         // 执行下载命令
-        ExecuteShell( "rm wget-log*" );
-        ExecuteShell( "rm -rf ./version/" );
-        ExecuteShell( "wget -b -c -P ./version/ {}", queryurl->_value );
+        ExecuteShell( "wget -c -P ./version/ {}", queryurl->_value );
 #endif
     }
 
@@ -913,6 +917,9 @@ namespace KFrame
             return false;
         }
 
+        auto version = _kf_task->_value;
+        version = KFUtility::SplitString( version, "." );
+
 #if __KF_SYSTEM__ == __KF_WIN__
         // todo win64暂时没有实现
         return true;
@@ -921,10 +928,12 @@ namespace KFrame
         auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value  );
         if ( md5 != querymd5->_value )
         {
+            StartDeployTask();
             return false;
         }
 
         // 解压
+        ExecuteShell( "rm -rf ./version/conf_output/" );
         ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
 
         // 把文件拷贝过去
@@ -935,11 +944,23 @@ namespace KFrame
             ExecuteShell( "rm /data/{}/ -rf", appname );
             ExecuteShell( "cp -rf ./version/conf_output/{}/ /data/{}", appname, appname );
             ExecuteShell( "chmod 777 /data/{}/*server*", appname );
+            ExecuteShell( "echo {} > /data/{}/version.txt", version, appname );
 
             __LOG_INFO__( KFLogEnum::Logic, "[{}] update version ok!", appname );
         }
 
         return true;
+#endif
+    }
+
+    void KFDeployAgentModule::ScheduleRemoveVersion( uint32 id, const char* data, uint32 size )
+    {
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 删除旧的版本号
+        ExecuteShell( "rm wget-log*" );
+        ExecuteShell( "rm -rf ./version/" );
 #endif
     }
 }

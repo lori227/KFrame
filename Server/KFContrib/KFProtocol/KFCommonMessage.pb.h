@@ -261,6 +261,11 @@ enum AckEnum {
   GuildNameTooLong = 10032,
   GuildManifestoTooLong = 10033,
   GuildNameRepeat = 10034,
+  GuildHadBuild = 10035,
+  GuildNotExist = 10036,
+  GuildHadInvite = 10037,
+  playerisguildmember = 10038,
+  GuildApplyListTooLong = 10039,
   GMParamError = 20000
 };
 LIBPROTOC_EXPORT bool AckEnum_IsValid(int value);

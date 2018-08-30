@@ -285,7 +285,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerEnterWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( accountid ) ) );
+            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
             _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
         }
     }
@@ -298,7 +298,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerLeaveWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( accountid ) ) );
+            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
             _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
         }
     }
@@ -331,11 +331,11 @@ namespace KFrame
         auto ok = _kf_data->SendMessageToData( zoneid, KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login game ok!", kfmsg.playerid() );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login game ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}] login game failed!", kfmsg.playerid() );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login game failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -352,10 +352,10 @@ namespace KFrame
         auto playerdata = kfmsg.mutable_playerdata();
         auto channeldata = kfmsg.mutable_channeldata();
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] load data ack!", playerid );
+        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] load data ack!", accountid, playerid );
         if ( result != KFMsg::Success )
         {
-            SendLoginGameMessage( result, playerid, gateid, sessionid, playerdata );
+            SendLoginGameMessage( result, accountid, playerid, gateid, sessionid, playerdata );
         }
         else
         {
@@ -364,26 +364,27 @@ namespace KFrame
 
             // 同步给客户端
             _kf_kernel->SerializeToOnline( player->GetData(), playerdata );
-            SendLoginGameMessage( result, playerid, gateid, sessionid, playerdata );
+            SendLoginGameMessage( result, accountid, playerid, gateid, sessionid, playerdata );
         }
     }
 
-    void KFPlayerModule::SendLoginGameMessage( uint32 result, uint32 playerid, uint32 gateid, uint32 sessionid, const KFMsg::PBObject* playerdata )
+    void KFPlayerModule::SendLoginGameMessage( uint32 result, uint32 accountid, uint32 playerid, uint32 gateid, uint32 sessionid, const KFMsg::PBObject* playerdata )
     {
         KFMsg::S2SLoginGameAck ack;
         ack.set_result( result );
         ack.set_playerid( playerid );
         ack.set_sessionid( sessionid );
+        ack.set_accountid( accountid );
         ack.mutable_playerdata()->CopyFrom( *playerdata );
         ack.set_servertime( KFGlobal::Instance()->_real_time );
         auto ok = _kf_game->SendMessageToGate( gateid, KFMsg::S2S_LOGIN_GAME_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] load game result[{}] ok!", playerid, result );
+            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] load game result[{}] ok!", accountid, playerid, result );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}] load game result[{}] failed!", playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] load game result[{}] failed!", accountid, playerid, result );
         }
     }
 

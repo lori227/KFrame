@@ -256,10 +256,11 @@ namespace KFrame
         auto result = kfmsg.result();
         auto playerid = kfmsg.playerid();
         auto sessionid = kfmsg.sessionid();
+        auto accountid = kfmsg.accountid();
 
         if ( result != KFMsg::Success )
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}] login failed result[{}]!", playerid, result );
+            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login failed result[{}]!", accountid, playerid, result );
 
             // 发送错误消息
             _kf_display->SendToClient( playerid, result );
@@ -272,7 +273,7 @@ namespace KFrame
             // 绑定角色id
             if ( !_kf_tcp_server->BindObjectId( sessionid, playerid ) )
             {
-                return __LOG_ERROR__( KFLogEnum::Login, "player[{}] session[{}] failed!", playerid, sessionid );
+                return __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] session[{}] failed!", accountid, playerid, sessionid );
             }
 
             // 创建角色
@@ -288,11 +289,11 @@ namespace KFrame
             auto ok = kfrole->SendMessageToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
             if ( ok )
             {
-                __LOG_DEBUG__( KFLogEnum::Login, "player[{}] enter game ok!", playerid );
+                __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] session[{}] enter game ok!", accountid, playerid, sessionid );
             }
             else
             {
-                __LOG_ERROR__( KFLogEnum::Login, "player[{}] enter game failed!", playerid );
+                __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] session[{}] enter game failed!", accountid, playerid, sessionid );
             }
         }
     }

@@ -73,7 +73,7 @@ namespace KFrame
         req.set_roomid( roomid );
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
-        SendMessageToBattle( roomid, KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
+        SendMessageToBattle( KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleQueryBattleRoomAck )
