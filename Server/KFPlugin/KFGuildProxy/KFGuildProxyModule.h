@@ -9,7 +9,11 @@
 //    @Date             :    2018-5-16
 ************************************************************************/
 
+#include "KFrame.h"
 #include "KFGuildProxyInterface.h"
+#include "KFMessage/KFMessageInterface.h"
+#include "KFClusterProxy/KFClusterProxyInterface.h"
+#include "KFLogClient/KFLogClientInterface.h"
 
 namespace KFrame
 {
@@ -27,6 +31,9 @@ namespace KFrame
 
         // 关闭
         virtual void BeforeShut();
+
+    protected:
+        __KF_MESSAGE_FUNCTION__( HandleCreateGuildReq );
     };
 }
 

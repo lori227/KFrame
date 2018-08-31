@@ -15,6 +15,8 @@ namespace KFrame
 
     void KFGuildProxyPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_cluster_proxy, KFClusterProxyInterface );
     }
 
 }

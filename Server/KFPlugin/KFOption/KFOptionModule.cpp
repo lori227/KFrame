@@ -22,7 +22,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////
-    const std::string& KFOptionModule::GetString( const std::string& name, uint32 key /* = 0 */ )
+    const std::string& KFOptionModule::GetString( const std::string& name, const std::string& key )
     {
         return _kf_option_config->FindOption( name, key );
     }

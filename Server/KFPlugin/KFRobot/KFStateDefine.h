@@ -75,6 +75,10 @@ namespace KFrame
         QueryWholeRankList = 103,	// 查询全服排行榜
         QueryFriendRankList = 104,	// 查询好友排行榜
 
+        // 帮派
+        CreateGuild = 105,		// 创建帮派
+
+
 
         GMAddMoney = 1000,		// 加钱
         GMAddDiamond = 1001,	// 加钻石

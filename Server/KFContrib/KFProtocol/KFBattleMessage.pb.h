@@ -1451,6 +1451,13 @@ class LIBPROTOC_EXPORT S2SOpenBattleRoomAck : public ::google::protobuf::Message
   inline ::google::protobuf::uint32 result() const;
   inline void set_result(::google::protobuf::uint32 value);
 
+  // required uint32 waittime = 5;
+  inline bool has_waittime() const;
+  inline void clear_waittime();
+  static const int kWaittimeFieldNumber = 5;
+  inline ::google::protobuf::uint32 waittime() const;
+  inline void set_waittime(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SOpenBattleRoomAck)
  private:
   inline void set_has_battleshardid();
@@ -1461,6 +1468,8 @@ class LIBPROTOC_EXPORT S2SOpenBattleRoomAck : public ::google::protobuf::Message
   inline void clear_has_roomid();
   inline void set_has_result();
   inline void clear_has_result();
+  inline void set_has_waittime();
+  inline void clear_has_waittime();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1468,9 +1477,10 @@ class LIBPROTOC_EXPORT S2SOpenBattleRoomAck : public ::google::protobuf::Message
   ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 result_;
+  ::google::protobuf::uint32 waittime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -1556,6 +1566,13 @@ class LIBPROTOC_EXPORT S2SOpenBattleRoomToShardAck : public ::google::protobuf::
   inline ::google::protobuf::uint32 result() const;
   inline void set_result(::google::protobuf::uint32 value);
 
+  // required uint32 waittime = 4;
+  inline bool has_waittime() const;
+  inline void clear_waittime();
+  static const int kWaittimeFieldNumber = 4;
+  inline ::google::protobuf::uint32 waittime() const;
+  inline void set_waittime(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SOpenBattleRoomToShardAck)
  private:
   inline void set_has_matchid();
@@ -1564,15 +1581,18 @@ class LIBPROTOC_EXPORT S2SOpenBattleRoomToShardAck : public ::google::protobuf::
   inline void clear_has_roomid();
   inline void set_has_result();
   inline void clear_has_result();
+  inline void set_has_waittime();
+  inline void clear_has_waittime();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint32 result_;
+  ::google::protobuf::uint32 waittime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -5633,6 +5653,28 @@ inline void S2SOpenBattleRoomAck::set_result(::google::protobuf::uint32 value) {
   result_ = value;
 }
 
+// required uint32 waittime = 5;
+inline bool S2SOpenBattleRoomAck::has_waittime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SOpenBattleRoomAck::set_has_waittime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SOpenBattleRoomAck::clear_has_waittime() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SOpenBattleRoomAck::clear_waittime() {
+  waittime_ = 0u;
+  clear_has_waittime();
+}
+inline ::google::protobuf::uint32 S2SOpenBattleRoomAck::waittime() const {
+  return waittime_;
+}
+inline void S2SOpenBattleRoomAck::set_waittime(::google::protobuf::uint32 value) {
+  set_has_waittime();
+  waittime_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SOpenBattleRoomToShardAck
@@ -5701,6 +5743,28 @@ inline ::google::protobuf::uint32 S2SOpenBattleRoomToShardAck::result() const {
 inline void S2SOpenBattleRoomToShardAck::set_result(::google::protobuf::uint32 value) {
   set_has_result();
   result_ = value;
+}
+
+// required uint32 waittime = 4;
+inline bool S2SOpenBattleRoomToShardAck::has_waittime() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SOpenBattleRoomToShardAck::set_has_waittime() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SOpenBattleRoomToShardAck::clear_has_waittime() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SOpenBattleRoomToShardAck::clear_waittime() {
+  waittime_ = 0u;
+  clear_has_waittime();
+}
+inline ::google::protobuf::uint32 S2SOpenBattleRoomToShardAck::waittime() const {
+  return waittime_;
+}
+inline void S2SOpenBattleRoomToShardAck::set_waittime(::google::protobuf::uint32 value) {
+  set_has_waittime();
+  waittime_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -2,18 +2,9 @@
 
 namespace KFrame
 {
-    KFBattleRewardSrtting::KFBattleRewardSrtting()
-    {
-        _match_id = 0;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     KFBattleConfig::KFBattleConfig()
     {
-        _wait_enter_time = 90000;
-        _min_open_room_camp_count = 2;
-        _room_valid_time = 3600000;
-        _reward_file = "battlereward.config";
     }
 
     KFBattleConfig::~KFBattleConfig()
@@ -22,41 +13,6 @@ namespace KFrame
     }
 
     bool KFBattleConfig::LoadConfig()
-    {
-        try
-        {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            _min_open_room_camp_count = xmlnode.GetUInt32( "MinOpenRoomCount" );
-            _room_valid_time = xmlnode.GetUInt32( "RoomValidTime" ) * KFTimeEnum::OneMinuteMicSecond;
-            _wait_enter_time = xmlnode.GetUInt32( "WaitEnterTime" ) * KFTimeEnum::OneMinuteMicSecond;
-            _reward_file = xmlnode.GetString( "RewardFile" );
-
-            //////////////////////////////////////////////////////////////////
-            auto paramsnode = config.FindNode( "Params" );
-            auto itemnode = paramsnode.FindNode( "Item" );
-            while ( itemnode.IsValid() )
-            {
-                auto paramname = itemnode.GetString( "Name" );
-                auto paramvalue = itemnode.GetDouble( "Value" );
-                _score_param[ paramname ] = paramvalue;
-
-                itemnode.NextNode();
-            }
-        }
-        catch ( ... )
-        {
-            return false;
-        }
-
-        LoadRewardConfig( _reward_file.c_str() );
-        return true;
-    }
-
-    bool KFBattleConfig::LoadRewardConfig( const char* file )
     {
         try
         {
@@ -85,44 +41,34 @@ namespace KFrame
 
     void KFBattleConfig::AddBattleReward( uint32 matchid, uint32 rewardkey, std::string& rewardvalue )
     {
-        auto rewarditer = _battle_reward.find( matchid );
-        if ( rewarditer == _battle_reward.end() )
+        auto iter = _battle_reward_list.find( matchid );
+        if ( iter == _battle_reward_list.end() )
         {
-            KFBattleRewardSrtting kfsetting;
-            kfsetting._match_id = matchid;
-            kfsetting._score_reward.insert( std::make_pair( rewardkey, rewardvalue ) );
-            _battle_reward.insert( std::make_pair( matchid, kfsetting ) );
+            iter = _battle_reward_list.insert( std::make_pair( matchid, KFBattleRewardSetting() ) ).first;
         }
-        else
-        {
-            rewarditer->second._score_reward.insert( std::make_pair( rewardkey, rewardvalue ) );
-        }
+
+        KFRewardSetting kfsetting;
+        kfsetting._match_id = matchid;
+        kfsetting._score = rewardkey;
+        kfsetting._reward = rewardvalue;
+        _battle_reward_list[ matchid ]._reward_list.insert( std::make_pair( rewardkey, kfsetting ) );
     }
 
-    std::string KFBattleConfig::FindBattleReward( uint32 matchid, uint32 score )
+    const KFRewardSetting* KFBattleConfig::FindBattleReward( uint32 matchid, uint32 score )
     {
-        auto matchiter = _battle_reward.find( matchid );
-        if ( matchiter == _battle_reward.end() )
+        auto matchiter = _battle_reward_list.find( matchid );
+        if ( matchiter == _battle_reward_list.end() )
         {
-            return "";
+            return nullptr;
         }
+
         auto scorereward = matchiter->second;
-        auto scoreiter = scorereward._score_reward.lower_bound( score );
-        if ( scoreiter == scorereward._score_reward.end() )
+        auto scoreiter = scorereward._reward_list.lower_bound( score );
+        if ( scoreiter == scorereward._reward_list.end() )
         {
-            scoreiter = scorereward._score_reward.begin();
+            return nullptr;
         }
 
-        return scoreiter->second;
-    }
-
-    double KFBattleConfig::GetScoreParam( const std::string& paramname )
-    {
-        auto scoreiter = _score_param.find( paramname );
-        if ( scoreiter != _score_param.end() )
-        {
-            return scoreiter->second;
-        }
-        return 0.0;
+        return &scoreiter->second;
     }
 }

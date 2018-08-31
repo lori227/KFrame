@@ -3,6 +3,7 @@
 #include "KFRedis/KFRedisInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
 {
@@ -14,10 +15,10 @@ namespace KFrame
         _battle_room_id = 0;
         _total_player_count = 0;
         _max_player_count = 0;
-        _battle_valid_time = 0;
         _status = 0;
         _req_count = 0;
         _battle_server_id = 0;
+        _battle_valid_time = _invalid_int;
     }
 
     KFBattleRoom::~KFBattleRoom()
@@ -31,7 +32,9 @@ namespace KFrame
         _battle_room_id = roomid;
         _max_player_count = maxplayercount;
         _battle_server_id = battleserverid;
-        _battle_valid_time = KFGlobal::Instance()->_game_time + _kf_battle_config->_room_valid_time;
+
+        // 设置有效时间
+        SetValidTime();
 
         // 开启申请定时器
         UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
@@ -104,12 +107,18 @@ namespace KFrame
         return kfcamp;
     }
 
+    bool KFBattleRoom::CheckCanOpenBattleRoom()
+    {
+        static auto _min_open_room_camp_count = _kf_option->GetValue< uint32 >( "minopenroomcount" );
+        return _kf_camp_list.Size() >= _min_open_room_camp_count;
+    }
+
     void KFBattleRoom::AddPlayerCount( uint32 playercount )
     {
         // 设置房间总人数
         _total_player_count += playercount;
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]!", _battle_room_id, _total_player_count );
-        if ( _kf_camp_list.Size() < _kf_battle_config->_min_open_room_camp_count )
+        if ( !CheckCanOpenBattleRoom() )
         {
             return;
         }
@@ -133,6 +142,13 @@ namespace KFrame
         _total_player_count -= __MIN__( _total_player_count, kfcamp->PlayerCount() );
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]!", _battle_room_id, _total_player_count );
         return true;
+    }
+
+
+    void KFBattleRoom::SetValidTime()
+    {
+        static auto _room_valid_time = _kf_option->GetValue< uint32 >( "roomvalidtime" );
+        _battle_valid_time = KFGlobal::Instance()->_game_time + _room_valid_time;
     }
 
     bool KFBattleRoom::CheckValid()
@@ -195,14 +211,14 @@ namespace KFrame
         }
 
         // 如果房间人数大于开启数量
-        if ( _kf_camp_list.Size() < _kf_battle_config->_min_open_room_camp_count )
+        if ( CheckCanOpenBattleRoom() )
         {
-            // 停止定时器
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomIdle, 0 );
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
         }
         else
         {
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
+            // 停止定时器, 等待玩家加入
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomIdle, 0 );
         }
 
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_room_id,
@@ -234,7 +250,7 @@ namespace KFrame
         }
     }
 
-    void KFBattleRoom::ConfirmOpenBattleRoom( bool opensuccess )
+    void KFBattleRoom::ConfirmOpenBattleRoom( bool opensuccess, uint32 waittime )
     {
         if ( !opensuccess )
         {
@@ -248,13 +264,13 @@ namespace KFrame
             UpdateRoomStatus( KFRoomStatus::StatusBattleRoomEnter, 3000 );
 
             // 创建成功, 重新设置有效时间
-            _battle_valid_time = KFGlobal::Instance()->_game_time + _kf_battle_config->_room_valid_time;
+            SetValidTime();
 
             // 通知匹配集群, 战场已经开启
             KFMsg::S2SOpenRoomToMatchShardReq req;
             req.set_matchid( _match_id );
             req.set_roomid( _battle_room_id );
-            req.set_waittime( _kf_battle_config->_wait_enter_time );
+            req.set_waittime( waittime );
             SendMessageToMatch( KFMsg::S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ, &req );
 
             __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] req!", _battle_room_id );

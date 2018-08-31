@@ -1364,4 +1364,41 @@ namespace KFrame
             }
         }
     }
+
+    void KFRobot::CreateGuild()
+    {
+        KFMsg::MsgCreateGuildReq req;
+        req.set_guildname( "guild1" );
+        req.set_medal( 1 );
+        req.set_manifesto( "呵呵呵呵" );
+        SendNetMessage( KFMsg::MSG_CREATE_GUILD_REQ, &req );
+    }
+
+    void KFRobot::InviteGuild()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kffriends = kfobject->FindData( __KF_STRING__( friend ) );
+
+        if ( nullptr == kffriends )
+        {
+            return;
+        }
+
+        auto kffriend = kffriends->FirstData();
+
+        while ( nullptr != kffriend )
+        {
+            auto playerid = kffriend->GetValue<uint32>( __KF_STRING__( id ) );
+
+            if ( _invalid_int != playerid )
+            {
+                // KFMsg::MsgDelFriendReq req;
+                //req.set_playerid( playerid );
+                //SendNetMessage( KFMsg::MSG_DEL_FRIEND_REQ, &req );
+            }
+
+            kffriend = kffriends->NextData();
+        }
+    }
 }

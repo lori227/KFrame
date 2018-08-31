@@ -70,6 +70,7 @@ namespace KFrame
 
         return SendMessageToPublic( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &req );
     }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPublicClientModule::OnUpdateDataToPublic( KFEntity* player, KFData* kfdata )
     {
@@ -90,6 +91,24 @@ namespace KFrame
         MapString values;
         values[ kfdata->GetName() ] = kfdata->ToString();
         UpdatePublicData( player, values );
+
+        // 更新到帮派属性集群
+        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) ||
+                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) )
+        {
+            return;
+        }
+        auto kfobject = player->GetData();
+        auto kfbaisc = kfobject->FindData( __KF_STRING__( basic ) );
+        auto guildid = kfbaisc->GetValue<uint64>( __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        MapString guildvalues;
+        guildvalues[ kfdata->GetName() ] = kfdata->ToString();
+        _kf_guild->UpdateMemberBasic( player->GetKeyID(), guildid, guildvalues );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFPublicClientModule::OnUpdateDataCallBack )

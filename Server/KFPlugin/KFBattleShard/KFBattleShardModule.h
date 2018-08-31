@@ -10,13 +10,14 @@
 ************************************************************************/
 
 #include "KFrame.h"
+#include "KFBattleRoom.h"
 #include "KFBattleShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
-#include "KFBattleRoom.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
 {

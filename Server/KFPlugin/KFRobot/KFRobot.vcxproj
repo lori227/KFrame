@@ -30,6 +30,7 @@
     <ClCompile Include="KFChangeMottoState.cpp" />
     <ClCompile Include="KFChangeNameState.cpp" />
     <ClCompile Include="KFChangeSexState.cpp" />
+    <ClCompile Include="KFCreateGuildState.cpp" />
     <ClCompile Include="KFCreateRoleState.cpp" />
     <ClCompile Include="KFDelFriendState.cpp" />
     <ClCompile Include="KFDelMailState.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="KFChangeMottoState.h" />
     <ClInclude Include="KFChangeNameState.h" />
     <ClInclude Include="KFChangeSexState.h" />
+    <ClInclude Include="KFCreateGuildState.h" />
     <ClInclude Include="KFCreateRoleState.h" />
     <ClInclude Include="KFDelFriendState.h" />
     <ClInclude Include="KFDelMailState.h" />

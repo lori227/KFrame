@@ -4,12 +4,13 @@
 # author: Nick Yang
 # date: 2018/8/8
 # last update time: 2018/8/21
-# version: 0.3
+# version: 0.4
 # changelog:
 #   1.打包版本
 #   2.增加只在linux下打包版本
 #   3.增加开启服务器的shell
 #   4.startup配置和其他配置分开
+#   5.增加内外网配置区分 2018/8/31
 
 
 import os
@@ -26,6 +27,7 @@ import gcm_conf
 import gcm_scp
 import gcm_db
 import gcm_http
+import gcm_global_conf
 
 input_folder = '../conf_input'
 output_folder = '../conf_output'
@@ -65,6 +67,8 @@ win_other_dll_path = os.path.join('../../../../Server/_lib/win64/3rd')
 script_path = os.path.join('../../../script')
 
 # 获取本机ip
+
+
 def get_local_ip():
     hostname = socket.getfqdn(socket.gethostname())
     host = socket.gethostbyname(hostname)
@@ -114,14 +118,16 @@ def copy_plugin_and_setting(tree, config_folder, plugin_folder, setting_folder, 
                 shutil.copy(get_real_src_path(
                     is_config=True, conf_name=config_name), config_folder)
             elif config.find('startup') != -1:
-                #copy startup files to setting folder
+                # copy startup files to setting folder
                 shutil.copy(get_real_src_path(
                     is_startup=True, conf_name=config_name), startup_folder)
             else:
                 raise Exception(
                     '[ERROR] invalid filed, file = %s Config = %s' % (tree, config))
 
-#生成shell文件bat/sh
+# 生成shell文件bat/sh
+
+
 def generate_shell_file(folder, startup_name, proc_name):
     func_id = 0
     zone_id = args['zone']
@@ -136,26 +142,32 @@ def generate_shell_file(folder, startup_name, proc_name):
     if is_linux():
         run_file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('./%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
+        run_file.write('./%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
+                       (startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.sh', 'a+')
         kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" |grep -v grep|cut -c 9-15|xargs kill -9\n\n' % (startup_name, args['channel'], zone_id, int(func_id), 1))
+        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" |grep -v grep|cut -c 9-15|xargs kill -9\n\n' %
+                        (startup_name, args['channel'], zone_id, int(func_id), 1))
         kill_file.close()
-    else:  
+    else:
         run_file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
         run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' % (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
+        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
+                       (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
         run_file.close()
 
         kill_file = open(folder + '/kill' + default_mode_suffix + '.bat', 'a+')
-        #kill_file.write('@echo off\n')
+        # kill_file.write('@echo off\n')
         kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % proc_name)
+        kill_file.write(
+            'TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % proc_name)
         kill_file.close()
 
 # 拷贝其他windows依赖的dll文件
+
+
 def copy_windows_other_dlls(out_folder):
     if is_linux():
         return
@@ -165,6 +177,8 @@ def copy_windows_other_dlls(out_folder):
         shutil.copy(win_other_dll_path + '/libmysql.dll', out_folder)
 
 # 拷贝进程的文件
+
+
 def copy_proc_files(node):
     # 1.创建文件夹(根据proc配置)
     full_name = node.get('FuncName')
@@ -207,6 +221,7 @@ def copy_proc_files(node):
     generate_shell_file(out_folder, startup_name, full_name)
     copy_windows_other_dlls(out_folder)
 
+
 def copy_files():
     print 'start to copy all necessary files'
 
@@ -216,7 +231,7 @@ def copy_files():
     for key in g_proc_config.zone_procs:
         copy_proc_files(g_proc_config.zone_procs[key])
 
-    #单独拷贝下zone/script
+    # 单独拷贝下zone/script
     shutil.copytree(script_path, os.path.join(output_folder, 'zone/script'))
 
     print 'copy all necessary files finished'
@@ -232,48 +247,71 @@ def gen_configuration():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
-    parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
+    parser.add_argument('-m', '--mode', type=str,
+                        default='release', help="runtime mode, debug/release")
+    parser.add_argument('-c', '--channel', type=int,
+                        default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
-    parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
+    parser.add_argument('-l', '--log', type=str,
+                        default='1.0', help="log type")
     if is_linux():
         parser.add_argument('-s', '--svn', type=int, help="svn version")
+        parser.add_argument('-b', '--branch', type=int, default=0,
+                            help="version branch, 0(internal)/1(public)")
     return vars(parser.parse_args())
+
 
 # start
 args = parse_args()
 if args['mode'] == 'release':
     default_mode_suffix = ''  # release下没有后缀
 
-g_deploy_config = gcm_conf.load_deploy_config(
-    os.path.join(input_folder, 'gcm.conf'))
-g_host_config = gcm_conf.load_host_config(
-    os.path.join(input_folder, 'gcm_host.xml'))
+# g_deploy_config = gcm_conf.load_deploy_config(
+#    os.path.join(input_folder, 'gcm.conf'))
+# g_host_config = gcm_conf.load_host_config(
+#    os.path.join(input_folder, 'gcm_host.xml'))
 g_proc_config = gcm_conf.load_proc_config(
     os.path.join(input_folder, 'gcm_proc.xml'))
+g_global_config = gcm_global_conf.load_global_config(
+    os.path.join(input_folder, 'global.conf'))
 
 print '\nstart to generate configurations'
 gen_configuration()
 print 'generate configurations finished'
 
 if is_linux() and (args['svn'] is not None):
+    global_conf = dict()
+    prefix_name = ''
+    if args['branch'] == 0:
+        global_conf = g_global_config.get_internal_config()
+        prefix_name = 'internal'
+    else:
+        global_conf = g_global_config.get_public_config()
+        prefix_name = 'online'
+
     print 'start pack RELEASE VERSION'
-    release_version_name = 'sgame_svn_' + str(args['svn']) + '_' + datetime.datetime.now().strftime("%Y%m%d%H%M") + '.tar.gz'
+    release_version_name = 'sgame_' + prefix_name + '_svn_' + \
+        str(args['svn']) + '_' + \
+        datetime.datetime.now().strftime("%Y%m%d%H%M") + '.tar.gz'
     tar_cmd = 'tar -zcvf ' + release_version_name + ' ' + output_folder + '/*'
     print tar_cmd
     commands.getoutput(tar_cmd)
     print 'pack RELEASE_VERSION finished'
 
     # scp to version repo
-    #gcm_scp.ssh_scp_put(default_version_ip, 22, 'root', '123456#',
+    # gcm_scp.ssh_scp_put(default_version_ip, 22, 'root', '123456#',
     #                    release_version_name, '/home/sgversion/' + release_version_name)
 
     # Post to web server
-    gcm_http.do_post(default_version_api, release_version_name)
+    gcm_http.do_post(global_conf['web_api'], release_version_name)
 
     # get md5
-    (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
+    (status, output) = commands.getstatusoutput(
+        'md5sum %s' % release_version_name)
 
     # insert into db(因暂时没有web管理，所以先用ssh的地址)
-    gcm_db.insert_mysql_db("INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" %
-                        (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), release_version_name, default_version_url + release_version_name, output[0: output.find(' ')]))
+    sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (datetime.datetime.now(
+    ).strftime("%Y-%m-%d %H:%M:%S"), release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
+    mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'],
+                                   global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
+    gcm_db.insert_mysql_db(mysql_db_info, sql)

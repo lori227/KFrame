@@ -353,11 +353,12 @@ void protobuf_AssignDesc_KFBattleMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SOpenBattleRoomReq));
   S2SOpenBattleRoomAck_descriptor_ = file->message_type(11);
-  static const int S2SOpenBattleRoomAck_offsets_[4] = {
+  static const int S2SOpenBattleRoomAck_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomAck, battleshardid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomAck, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomAck, roomid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomAck, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomAck, waittime_),
   };
   S2SOpenBattleRoomAck_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -371,10 +372,11 @@ void protobuf_AssignDesc_KFBattleMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SOpenBattleRoomAck));
   S2SOpenBattleRoomToShardAck_descriptor_ = file->message_type(12);
-  static const int S2SOpenBattleRoomToShardAck_offsets_[3] = {
+  static const int S2SOpenBattleRoomToShardAck_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomToShardAck, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomToShardAck, roomid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomToShardAck, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SOpenBattleRoomToShardAck, waittime_),
   };
   S2SOpenBattleRoomToShardAck_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -1093,115 +1095,116 @@ void protobuf_AddDesc_KFBattleMessage_2eproto() {
     "(\004\022\016\n\006campid\030\003 \002(\r\022\r\n\005addok\030\004 \002(\010\"f\n\024S2S"
     "OpenBattleRoomReq\022\017\n\007matchid\030\001 \002(\r\022\016\n\006ro"
     "omid\030\002 \002(\004\022\025\n\rbattleshardid\030\003 \002(\r\022\026\n\016max"
-    "playercount\030\004 \002(\r\"^\n\024S2SOpenBattleRoomAc"
+    "playercount\030\004 \002(\r\"p\n\024S2SOpenBattleRoomAc"
     "k\022\025\n\rbattleshardid\030\001 \002(\r\022\017\n\007matchid\030\002 \002("
-    "\r\022\016\n\006roomid\030\003 \002(\004\022\016\n\006result\030\004 \002(\r\"N\n\033S2S"
-    "OpenBattleRoomToShardAck\022\017\n\007matchid\030\001 \002("
-    "\r\022\016\n\006roomid\030\002 \002(\004\022\016\n\006result\030\003 \002(\r\"O\n\032S2S"
-    "OpenRoomToMatchShardReq\022\017\n\007matchid\030\001 \002(\r"
-    "\022\016\n\006roomid\030\002 \002(\004\022\020\n\010waittime\030\003 \002(\r\"-\n\033S2"
-    "SOpenRoomToBattleShardAck\022\016\n\006roomid\030\001 \002("
-    "\004\"c\n\033S2SPlayerEnterBattleRoomReq\022\016\n\006room"
-    "id\030\001 \002(\004\022%\n\006player\030\002 \002(\0132\025.KFMsg.PBBattl"
-    "ePlayer\022\r\n\005token\030\003 \002(\t\"f\n\033S2SPlayerEnter"
-    "BattleRoomAck\022\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006"
-    "roomid\030\002 \002(\004\022\016\n\006campid\030\003 \002(\r\022\020\n\010playerid"
-    "\030\004 \002(\r\"V\n\"S2SPlayerEnterRoomToBattleShar"
-    "dAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010"
-    "playerid\030\003 \002(\r\"f\n\033S2SPlayerLoginBattleRo"
-    "omReq\022\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006roomid\030\002"
-    " \002(\004\022\016\n\006campid\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\"O"
-    "\n\033S2SPlayerLoginBattleRoomAck\022\016\n\006roomid\030"
-    "\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\""
-    "V\n\"S2SPlayerLoginRoomToBattleShardReq\022\016\n"
-    "\006roomid\030\002 \002(\004\022\016\n\006campid\030\003 \002(\r\022\020\n\010playeri"
-    "d\030\004 \002(\r\"K\n\027S2SPlayerCancelMatchReq\022\016\n\006ro"
-    "omid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003"
-    " \002(\r\"f\n\033S2SPlayerLeaveBattleRoomReq\022\016\n\006r"
-    "oomid\030\001 \002(\004\022\025\n\rbattleshardid\030\002 \002(\r\022\016\n\006ca"
-    "mpid\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\"O\n\033S2SPlaye"
-    "rLeaveBattleRoomAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006c"
-    "ampid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\"V\n\"S2SPlay"
-    "erLeaveRoomToBattleShardReq\022\016\n\006roomid\030\001 "
-    "\002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\"w\n"
-    "!S2SPlayerLeaveRoomToMatchShardReq\022\017\n\007ma"
-    "tchid\030\001 \002(\004\022\016\n\006roomid\030\002 \002(\004\022\016\n\006campid\030\003 "
-    "\002(\r\022\017\n\007groupid\030\004 \002(\004\022\020\n\010playerid\030\005 \002(\r\"1"
-    "\n\035S2SLeaveBattleRoomToClientAck\022\020\n\010playe"
-    "rid\030\001 \002(\r\"B\n\031S2STellBattleRoomStartReq\022\025"
-    "\n\rbattleshardid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\"2\n"
-    " S2STellRoomStartToBattleShardReq\022\016\n\006roo"
-    "mid\030\001 \002(\004\"+\n\031S2STellBattleRoomStartAck\022\016"
-    "\n\006roomid\030\001 \002(\004\"B\n\037S2STellRoomStartToMatc"
-    "hShardReq\022\017\n\007matchid\030\001 \002(\r\022\016\n\006roomid\030\002 \002"
-    "(\004\"1\n\037S2STellRoomStartToMatchShardAck\022\016\n"
-    "\006roomid\030\001 \002(\004\"a\n\032S2STellBattleRoomFinish"
-    "Req\022\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006roomid\030\002 \002"
-    "(\004\022\020\n\010serverid\030\003 \002(\r\022\n\n\002ip\030\004 \002(\t\"=\n\032S2ST"
-    "ellBattleRoomFinishAck\022\016\n\006roomid\030\001 \002(\004\022\017"
-    "\n\007pbscore\030\002 \003(\t\"l\n\034S2SBattleRoomScoreBal"
-    "anceReq\022\016\n\006roomid\030\001 \002(\004\022\025\n\rbattleshardid"
-    "\030\002 \002(\r\022%\n\007pbscore\030\003 \002(\0132\024.KFMsg.PBBattle"
-    "Score\"P\n\034S2SBattleRoomScoreBalanceAck\022\016\n"
-    "\006roomid\030\001 \002(\004\022\020\n\010playerid\030\002 \002(\r\022\016\n\006rewar"
-    "d\030\003 \002(\t\"X\n\037S2SBattleScoreBalanceToShardR"
-    "eq\022\016\n\006roomid\030\001 \002(\004\022%\n\007pbscore\030\002 \002(\0132\024.KF"
-    "Msg.PBBattleScore\"b\n\027S2SPlayerBattleScor"
-    "eReq\022\020\n\010playerid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022%"
-    "\n\007pbscore\030\003 \002(\0132\024.KFMsg.PBBattleScore\";\n"
-    "\027S2SPlayerBattleScoreAck\022\020\n\010playerid\030\001 \002"
-    "(\r\022\016\n\006roomid\030\002 \002(\004\"/\n\033S2SOnlieQueryBattl"
-    "eScoreReq\022\020\n\010playerid\030\001 \002(\r\"Q\n!S2STellRo"
-    "omFinishToBattleShardReq\022\016\n\006roomid\030\001 \002(\004"
-    "\022\020\n\010serverid\030\002 \002(\r\022\n\n\002ip\030\003 \002(\t\"B\n\037S2STel"
-    "lRoomCloseToMatchShardReq\022\017\n\007matchid\030\001 \002"
-    "(\004\022\016\n\006roomid\030\002 \002(\004*\207\016\n\016BattleProtocol\022#\n"
-    "\036S2S_REGISTER_BATTLE_SERVER_REQ\020\300W\022#\n\036S2"
-    "S_REGISTER_BATTLE_SERVER_ACK\020\301W\022.\n)S2S_D"
-    "ISCONNECT_SERVER_TO_BATTLE_SHARD_REQ\020\302W\022"
-    ",\n\'S2S_REGISTER_SERVER_TO_BATTLE_SHARD_R"
-    "EQ\020\303W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_PROXY"
-    "_REQ\020\304W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_SHA"
-    "RD_REQ\020\305W\022\'\n\"S2S_CREATE_ROOM_TO_MATCH_SH"
-    "ARD_ACK\020\306W\022\035\n\030S2S_OPEN_BATTLE_ROOM_REQ\020\307"
-    "W\022\035\n\030S2S_OPEN_BATTLE_ROOM_ACK\020\310W\022&\n!S2S_"
-    "OPEN_ROOM_TO_BATTLE_SHARD_ACK\020\311W\022%\n S2S_"
-    "PLAYER_ENTER_BATTLE_ROOM_REQ\020\312W\022%\n S2S_P"
-    "LAYER_ENTER_BATTLE_ROOM_ACK\020\313W\022.\n)S2S_PL"
-    "AYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK\020\314W\022%"
-    "\n S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ\020\315W\022-\n"
-    "(S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_RE"
-    "Q\020\316W\022#\n\036S2S_TELL_BATTLE_ROOM_START_REQ\020\317"
-    "W\022#\n\036S2S_TELL_BATTLE_ROOM_START_ACK\020\320W\022+"
-    "\n&S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ"
-    "\020\321W\022%\n S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ\020"
-    "\322W\022$\n\037S2S_TELL_BATTLE_ROOM_FINISH_REQ\020\323W"
-    "\022(\n#S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK\020"
-    "\324W\022,\n\'S2S_TELL_ROOM_START_TO_BATTLE_SHAR"
-    "D_REQ\020\325W\022-\n(S2S_TELL_ROOM_FINISH_TO_BATT"
-    "LE_SAHRD_REQ\020\326W\022%\n S2S_ADD_CAMP_TO_BATTL"
-    "E_SHARD_REQ\020\327W\022$\n\037S2S_ADD_CAMP_TO_MATCH_"
-    "SHARD_ACK\020\330W\022(\n#S2S_REMOVE_CAMP_TO_BATTL"
-    "E_SHARD_REQ\020\331W\022 \n\033S2S_PLAYER_CANCEL_MATC"
-    "H_REQ\020\332W\022%\n S2S_PLAYER_LEAVE_BATTLE_ROOM"
-    "_ACK\020\333W\022 \n\033S2S_PLAYER_CANCEL_MATCH_ACK\020\334"
-    "W\022$\n\037S2S_TELL_BATTLE_ROOM_FINISH_ACK\020\335W\022"
-    ".\n)S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD"
-    "_REQ\020\336W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_"
-    "REQ\020\337W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_A"
-    "CK\020\340W\022.\n)S2S_PLAYER_LOGIN_ROOM_TO_BATTLE"
-    "_SHARD_REQ\020\341W\022,\n\'S2S_TELL_ROOM_START_TO_"
-    "BATTLE_SHARD_ACK\020\342W\022*\n%S2S_TELL_BATTLE_R"
-    "EGISTER_TO_SHARD_REQ\020\343W\022+\n&S2S_TELL_ROOM"
-    "_CLOSE_TO_MATCH_SHARD_REQ\020\344W\022 \n\033S2S_PLAY"
-    "ER_BATTLE_SCORE_REQ\020\345W\022 \n\033S2S_PLAYER_BAT"
-    "TLE_SCORE_ACK\020\346W\022&\n!S2S_BATTLE_ROOM_SCOR"
-    "E_BALANCE_REQ\020\347W\022&\n!S2S_BATTLE_ROOM_SCOR"
-    "E_BALANCE_ACK\020\350W\022*\n%S2S_BATTLE_SCORE_BAL"
-    "ANCE_TO_SHARD_REQ\020\351W\022&\n!S2S_ONLINE_QUERY"
-    "_BATTLE_SCORE_REQ\020\352W\022&\n!S2S_OPEN_BATTLE_"
-    "ROOM_TO_SHARD_ACK\020\353W*-\n\nBattleEnum\022\017\n\013Op"
-    "enSuccess\020\001\022\016\n\nOpenFailed\020\002", 5467);
+    "\r\022\016\n\006roomid\030\003 \002(\004\022\016\n\006result\030\004 \002(\r\022\020\n\010wai"
+    "ttime\030\005 \002(\r\"`\n\033S2SOpenBattleRoomToShardA"
+    "ck\022\017\n\007matchid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022\016\n\006r"
+    "esult\030\003 \002(\r\022\020\n\010waittime\030\004 \002(\r\"O\n\032S2SOpen"
+    "RoomToMatchShardReq\022\017\n\007matchid\030\001 \002(\r\022\016\n\006"
+    "roomid\030\002 \002(\004\022\020\n\010waittime\030\003 \002(\r\"-\n\033S2SOpe"
+    "nRoomToBattleShardAck\022\016\n\006roomid\030\001 \002(\004\"c\n"
+    "\033S2SPlayerEnterBattleRoomReq\022\016\n\006roomid\030\001"
+    " \002(\004\022%\n\006player\030\002 \002(\0132\025.KFMsg.PBBattlePla"
+    "yer\022\r\n\005token\030\003 \002(\t\"f\n\033S2SPlayerEnterBatt"
+    "leRoomAck\022\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006room"
+    "id\030\002 \002(\004\022\016\n\006campid\030\003 \002(\r\022\020\n\010playerid\030\004 \002"
+    "(\r\"V\n\"S2SPlayerEnterRoomToBattleShardAck"
+    "\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010play"
+    "erid\030\003 \002(\r\"f\n\033S2SPlayerLoginBattleRoomRe"
+    "q\022\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004"
+    "\022\016\n\006campid\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\"O\n\033S2"
+    "SPlayerLoginBattleRoomAck\022\016\n\006roomid\030\001 \002("
+    "\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\"V\n\"S"
+    "2SPlayerLoginRoomToBattleShardReq\022\016\n\006roo"
+    "mid\030\002 \002(\004\022\016\n\006campid\030\003 \002(\r\022\020\n\010playerid\030\004 "
+    "\002(\r\"K\n\027S2SPlayerCancelMatchReq\022\016\n\006roomid"
+    "\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r"
+    "\"f\n\033S2SPlayerLeaveBattleRoomReq\022\016\n\006roomi"
+    "d\030\001 \002(\004\022\025\n\rbattleshardid\030\002 \002(\r\022\016\n\006campid"
+    "\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\"O\n\033S2SPlayerLea"
+    "veBattleRoomAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campi"
+    "d\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\"V\n\"S2SPlayerLe"
+    "aveRoomToBattleShardReq\022\016\n\006roomid\030\001 \002(\004\022"
+    "\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\"w\n!S2S"
+    "PlayerLeaveRoomToMatchShardReq\022\017\n\007matchi"
+    "d\030\001 \002(\004\022\016\n\006roomid\030\002 \002(\004\022\016\n\006campid\030\003 \002(\r\022"
+    "\017\n\007groupid\030\004 \002(\004\022\020\n\010playerid\030\005 \002(\r\"1\n\035S2"
+    "SLeaveBattleRoomToClientAck\022\020\n\010playerid\030"
+    "\001 \002(\r\"B\n\031S2STellBattleRoomStartReq\022\025\n\rba"
+    "ttleshardid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\"2\n S2S"
+    "TellRoomStartToBattleShardReq\022\016\n\006roomid\030"
+    "\001 \002(\004\"+\n\031S2STellBattleRoomStartAck\022\016\n\006ro"
+    "omid\030\001 \002(\004\"B\n\037S2STellRoomStartToMatchSha"
+    "rdReq\022\017\n\007matchid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\"1"
+    "\n\037S2STellRoomStartToMatchShardAck\022\016\n\006roo"
+    "mid\030\001 \002(\004\"a\n\032S2STellBattleRoomFinishReq\022"
+    "\025\n\rbattleshardid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022\020"
+    "\n\010serverid\030\003 \002(\r\022\n\n\002ip\030\004 \002(\t\"=\n\032S2STellB"
+    "attleRoomFinishAck\022\016\n\006roomid\030\001 \002(\004\022\017\n\007pb"
+    "score\030\002 \003(\t\"l\n\034S2SBattleRoomScoreBalance"
+    "Req\022\016\n\006roomid\030\001 \002(\004\022\025\n\rbattleshardid\030\002 \002"
+    "(\r\022%\n\007pbscore\030\003 \002(\0132\024.KFMsg.PBBattleScor"
+    "e\"P\n\034S2SBattleRoomScoreBalanceAck\022\016\n\006roo"
+    "mid\030\001 \002(\004\022\020\n\010playerid\030\002 \002(\r\022\016\n\006reward\030\003 "
+    "\002(\t\"X\n\037S2SBattleScoreBalanceToShardReq\022\016"
+    "\n\006roomid\030\001 \002(\004\022%\n\007pbscore\030\002 \002(\0132\024.KFMsg."
+    "PBBattleScore\"b\n\027S2SPlayerBattleScoreReq"
+    "\022\020\n\010playerid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022%\n\007pb"
+    "score\030\003 \002(\0132\024.KFMsg.PBBattleScore\";\n\027S2S"
+    "PlayerBattleScoreAck\022\020\n\010playerid\030\001 \002(\r\022\016"
+    "\n\006roomid\030\002 \002(\004\"/\n\033S2SOnlieQueryBattleSco"
+    "reReq\022\020\n\010playerid\030\001 \002(\r\"Q\n!S2STellRoomFi"
+    "nishToBattleShardReq\022\016\n\006roomid\030\001 \002(\004\022\020\n\010"
+    "serverid\030\002 \002(\r\022\n\n\002ip\030\003 \002(\t\"B\n\037S2STellRoo"
+    "mCloseToMatchShardReq\022\017\n\007matchid\030\001 \002(\004\022\016"
+    "\n\006roomid\030\002 \002(\004*\207\016\n\016BattleProtocol\022#\n\036S2S"
+    "_REGISTER_BATTLE_SERVER_REQ\020\300W\022#\n\036S2S_RE"
+    "GISTER_BATTLE_SERVER_ACK\020\301W\022.\n)S2S_DISCO"
+    "NNECT_SERVER_TO_BATTLE_SHARD_REQ\020\302W\022,\n\'S"
+    "2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ\020\303"
+    "W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ"
+    "\020\304W\022(\n#S2S_CREATE_ROOM_TO_BATTLE_SHARD_R"
+    "EQ\020\305W\022\'\n\"S2S_CREATE_ROOM_TO_MATCH_SHARD_"
+    "ACK\020\306W\022\035\n\030S2S_OPEN_BATTLE_ROOM_REQ\020\307W\022\035\n"
+    "\030S2S_OPEN_BATTLE_ROOM_ACK\020\310W\022&\n!S2S_OPEN"
+    "_ROOM_TO_BATTLE_SHARD_ACK\020\311W\022%\n S2S_PLAY"
+    "ER_ENTER_BATTLE_ROOM_REQ\020\312W\022%\n S2S_PLAYE"
+    "R_ENTER_BATTLE_ROOM_ACK\020\313W\022.\n)S2S_PLAYER"
+    "_ENTER_ROOM_TO_BATTLE_SHARD_ACK\020\314W\022%\n S2"
+    "S_PLAYER_LEAVE_BATTLE_ROOM_REQ\020\315W\022-\n(S2S"
+    "_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ\020\316W"
+    "\022#\n\036S2S_TELL_BATTLE_ROOM_START_REQ\020\317W\022#\n"
+    "\036S2S_TELL_BATTLE_ROOM_START_ACK\020\320W\022+\n&S2"
+    "S_TELL_ROOM_START_TO_MATCH_SHARD_REQ\020\321W\022"
+    "%\n S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ\020\322W\022$"
+    "\n\037S2S_TELL_BATTLE_ROOM_FINISH_REQ\020\323W\022(\n#"
+    "S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK\020\324W\022,"
+    "\n\'S2S_TELL_ROOM_START_TO_BATTLE_SHARD_RE"
+    "Q\020\325W\022-\n(S2S_TELL_ROOM_FINISH_TO_BATTLE_S"
+    "AHRD_REQ\020\326W\022%\n S2S_ADD_CAMP_TO_BATTLE_SH"
+    "ARD_REQ\020\327W\022$\n\037S2S_ADD_CAMP_TO_MATCH_SHAR"
+    "D_ACK\020\330W\022(\n#S2S_REMOVE_CAMP_TO_BATTLE_SH"
+    "ARD_REQ\020\331W\022 \n\033S2S_PLAYER_CANCEL_MATCH_RE"
+    "Q\020\332W\022%\n S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK"
+    "\020\333W\022 \n\033S2S_PLAYER_CANCEL_MATCH_ACK\020\334W\022$\n"
+    "\037S2S_TELL_BATTLE_ROOM_FINISH_ACK\020\335W\022.\n)S"
+    "2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ"
+    "\020\336W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ\020"
+    "\337W\022%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK\020\340"
+    "W\022.\n)S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHA"
+    "RD_REQ\020\341W\022,\n\'S2S_TELL_ROOM_START_TO_BATT"
+    "LE_SHARD_ACK\020\342W\022*\n%S2S_TELL_BATTLE_REGIS"
+    "TER_TO_SHARD_REQ\020\343W\022+\n&S2S_TELL_ROOM_CLO"
+    "SE_TO_MATCH_SHARD_REQ\020\344W\022 \n\033S2S_PLAYER_B"
+    "ATTLE_SCORE_REQ\020\345W\022 \n\033S2S_PLAYER_BATTLE_"
+    "SCORE_ACK\020\346W\022&\n!S2S_BATTLE_ROOM_SCORE_BA"
+    "LANCE_REQ\020\347W\022&\n!S2S_BATTLE_ROOM_SCORE_BA"
+    "LANCE_ACK\020\350W\022*\n%S2S_BATTLE_SCORE_BALANCE"
+    "_TO_SHARD_REQ\020\351W\022&\n!S2S_ONLINE_QUERY_BAT"
+    "TLE_SCORE_REQ\020\352W\022&\n!S2S_OPEN_BATTLE_ROOM"
+    "_TO_SHARD_ACK\020\353W*-\n\nBattleEnum\022\017\n\013OpenSu"
+    "ccess\020\001\022\016\n\nOpenFailed\020\002", 5503);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFBattleMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterBattleServerReq::default_instance_ = new S2SRegisterBattleServerReq();
@@ -4891,6 +4894,7 @@ const int S2SOpenBattleRoomAck::kBattleshardidFieldNumber;
 const int S2SOpenBattleRoomAck::kMatchidFieldNumber;
 const int S2SOpenBattleRoomAck::kRoomidFieldNumber;
 const int S2SOpenBattleRoomAck::kResultFieldNumber;
+const int S2SOpenBattleRoomAck::kWaittimeFieldNumber;
 #endif  // !_MSC_VER
 
 S2SOpenBattleRoomAck::S2SOpenBattleRoomAck()
@@ -4913,6 +4917,7 @@ void S2SOpenBattleRoomAck::SharedCtor() {
   matchid_ = 0u;
   roomid_ = GOOGLE_ULONGLONG(0);
   result_ = 0u;
+  waittime_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4952,6 +4957,7 @@ void S2SOpenBattleRoomAck::Clear() {
     matchid_ = 0u;
     roomid_ = GOOGLE_ULONGLONG(0);
     result_ = 0u;
+    waittime_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -5022,6 +5028,22 @@ bool S2SOpenBattleRoomAck::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(40)) goto parse_waittime;
+        break;
+      }
+
+      // required uint32 waittime = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_waittime:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &waittime_)));
+          set_has_waittime();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -5064,6 +5086,11 @@ void S2SOpenBattleRoomAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->result(), output);
   }
 
+  // required uint32 waittime = 5;
+  if (has_waittime()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->waittime(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -5090,6 +5117,11 @@ void S2SOpenBattleRoomAck::SerializeWithCachedSizes(
   // required uint32 result = 4;
   if (has_result()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->result(), target);
+  }
+
+  // required uint32 waittime = 5;
+  if (has_waittime()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->waittime(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -5131,6 +5163,13 @@ int S2SOpenBattleRoomAck::ByteSize() const {
           this->result());
     }
 
+    // required uint32 waittime = 5;
+    if (has_waittime()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->waittime());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -5170,6 +5209,9 @@ void S2SOpenBattleRoomAck::MergeFrom(const S2SOpenBattleRoomAck& from) {
     if (from.has_result()) {
       set_result(from.result());
     }
+    if (from.has_waittime()) {
+      set_waittime(from.waittime());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -5187,7 +5229,7 @@ void S2SOpenBattleRoomAck::CopyFrom(const S2SOpenBattleRoomAck& from) {
 }
 
 bool S2SOpenBattleRoomAck::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -5198,6 +5240,7 @@ void S2SOpenBattleRoomAck::Swap(S2SOpenBattleRoomAck* other) {
     std::swap(matchid_, other->matchid_);
     std::swap(roomid_, other->roomid_);
     std::swap(result_, other->result_);
+    std::swap(waittime_, other->waittime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -5219,6 +5262,7 @@ void S2SOpenBattleRoomAck::Swap(S2SOpenBattleRoomAck* other) {
 const int S2SOpenBattleRoomToShardAck::kMatchidFieldNumber;
 const int S2SOpenBattleRoomToShardAck::kRoomidFieldNumber;
 const int S2SOpenBattleRoomToShardAck::kResultFieldNumber;
+const int S2SOpenBattleRoomToShardAck::kWaittimeFieldNumber;
 #endif  // !_MSC_VER
 
 S2SOpenBattleRoomToShardAck::S2SOpenBattleRoomToShardAck()
@@ -5240,6 +5284,7 @@ void S2SOpenBattleRoomToShardAck::SharedCtor() {
   matchid_ = 0u;
   roomid_ = GOOGLE_ULONGLONG(0);
   result_ = 0u;
+  waittime_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5278,6 +5323,7 @@ void S2SOpenBattleRoomToShardAck::Clear() {
     matchid_ = 0u;
     roomid_ = GOOGLE_ULONGLONG(0);
     result_ = 0u;
+    waittime_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -5332,6 +5378,22 @@ bool S2SOpenBattleRoomToShardAck::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(32)) goto parse_waittime;
+        break;
+      }
+
+      // required uint32 waittime = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_waittime:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &waittime_)));
+          set_has_waittime();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -5369,6 +5431,11 @@ void S2SOpenBattleRoomToShardAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->result(), output);
   }
 
+  // required uint32 waittime = 4;
+  if (has_waittime()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->waittime(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -5390,6 +5457,11 @@ void S2SOpenBattleRoomToShardAck::SerializeWithCachedSizes(
   // required uint32 result = 3;
   if (has_result()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->result(), target);
+  }
+
+  // required uint32 waittime = 4;
+  if (has_waittime()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->waittime(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -5422,6 +5494,13 @@ int S2SOpenBattleRoomToShardAck::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->result());
+    }
+
+    // required uint32 waittime = 4;
+    if (has_waittime()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->waittime());
     }
 
   }
@@ -5460,6 +5539,9 @@ void S2SOpenBattleRoomToShardAck::MergeFrom(const S2SOpenBattleRoomToShardAck& f
     if (from.has_result()) {
       set_result(from.result());
     }
+    if (from.has_waittime()) {
+      set_waittime(from.waittime());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -5477,7 +5559,7 @@ void S2SOpenBattleRoomToShardAck::CopyFrom(const S2SOpenBattleRoomToShardAck& fr
 }
 
 bool S2SOpenBattleRoomToShardAck::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -5487,6 +5569,7 @@ void S2SOpenBattleRoomToShardAck::Swap(S2SOpenBattleRoomToShardAck* other) {
     std::swap(matchid_, other->matchid_);
     std::swap(roomid_, other->roomid_);
     std::swap(result_, other->result_);
+    std::swap(waittime_, other->waittime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

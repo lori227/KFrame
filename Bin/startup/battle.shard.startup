@@ -2,6 +2,7 @@
 <Setting>
 	<Plugins AppName="battle" AppType="shard" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="110" Name="KFOption" Config="./setting/option.setting"/>
 		<Plugin Sort="120" Name="KFRedis" Config="./setting/redis.address"/>
 		<Plugin Sort="140" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="150" Name="KFBattleShard" Config="./config/battle.config"/>

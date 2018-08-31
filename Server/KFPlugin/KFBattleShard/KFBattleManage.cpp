@@ -167,15 +167,14 @@ namespace KFrame
 
     void KFBattleManage::UpdateBattleCount( const std::string& ip )
     {
-        uint64 battlecount = 0;
         auto kfresult = _redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( ip ), ip );
         if ( !kfresult->IsOk() )
         {
             return;
         }
 
-        _redis_driver->Execute( "zadd {} {} {}", __KF_STRING__( battlelist ), battlecount, ip );
-        __LOG_DEBUG__( KFLogEnum::Logic, "ip[{}] server count[{}]!", ip, battlecount );
+        _redis_driver->Execute( "zadd {} {} {}", __KF_STRING__( battlelist ), kfresult->_value, ip );
+        __LOG_DEBUG__( KFLogEnum::Logic, "ip[{}] server count[{}]!", ip, kfresult->_value );
     }
 }
 

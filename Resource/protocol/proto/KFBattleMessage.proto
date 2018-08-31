@@ -196,6 +196,7 @@ message S2SOpenBattleRoomAck
 	required uint32 matchid = 2;		// 匹配模式id, 如果不需要就不用管, 先预留出来
 	required uint64 roomid = 3;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
 	required uint32 result = 4;			// 开启结果 ( 对应BattleEnum, 目前只有成功失败, 以后其他原因再细分)
+	required uint32 waittime = 5;		// 等待时间( 单位: 秒 )
 }
 
 // 战斗服务器=>战斗服务器集群逻辑分片
@@ -206,6 +207,7 @@ message S2SOpenBattleRoomToShardAck
 	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
 	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
 	required uint32 result = 3;			// 开启结果 ( 对应BattleEnum, 目前只有成功失败, 以后其他原因再细分)
+	required uint32 waittime = 4;		// 等待时间( 单位: 秒 )
 }
 
 // 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片

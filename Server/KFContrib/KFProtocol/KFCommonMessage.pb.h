@@ -58,6 +58,8 @@ class PBGuestData;
 class PBBattleScore;
 class PBRecentData;
 class PBPlayerIds;
+class PBApplicationlist;
+class PBApplicationlists;
 
 enum AckEnum {
   Success = 1,
@@ -266,6 +268,8 @@ enum AckEnum {
   GuildHadInvite = 10037,
   playerisguildmember = 10038,
   GuildApplyListTooLong = 10039,
+  PlayerINApplicanlist = 10040,
+  GuildHadApply = 10041,
   GMParamError = 20000
 };
 LIBPROTOC_EXPORT bool AckEnum_IsValid(int value);
@@ -544,6 +548,25 @@ inline bool FriendLinessEnum_Parse(
     const ::std::string& name, FriendLinessEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<FriendLinessEnum>(
     FriendLinessEnum_descriptor(), name, value);
+}
+enum GuildEnum {
+  JoinGuild = 1,
+  QuitGuild = 2
+};
+LIBPROTOC_EXPORT bool GuildEnum_IsValid(int value);
+const GuildEnum GuildEnum_MIN = JoinGuild;
+const GuildEnum GuildEnum_MAX = QuitGuild;
+const int GuildEnum_ARRAYSIZE = GuildEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* GuildEnum_descriptor();
+inline const ::std::string& GuildEnum_Name(GuildEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    GuildEnum_descriptor(), value);
+}
+inline bool GuildEnum_Parse(
+    const ::std::string& name, GuildEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GuildEnum>(
+    GuildEnum_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3294,6 +3317,195 @@ class LIBPROTOC_EXPORT PBPlayerIds : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static PBPlayerIds* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBApplicationlist : public ::google::protobuf::Message {
+ public:
+  PBApplicationlist();
+  virtual ~PBApplicationlist();
+
+  PBApplicationlist(const PBApplicationlist& from);
+
+  inline PBApplicationlist& operator=(const PBApplicationlist& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBApplicationlist& default_instance();
+
+  void Swap(PBApplicationlist* other);
+
+  // implements Message ----------------------------------------------
+
+  PBApplicationlist* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBApplicationlist& from);
+  void MergeFrom(const PBApplicationlist& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint64 time = 2;
+  inline bool has_time() const;
+  inline void clear_time();
+  static const int kTimeFieldNumber = 2;
+  inline ::google::protobuf::uint64 time() const;
+  inline void set_time(::google::protobuf::uint64 value);
+
+  // required .KFMsg.PBStrings basic = 3;
+  inline bool has_basic() const;
+  inline void clear_basic();
+  static const int kBasicFieldNumber = 3;
+  inline const ::KFMsg::PBStrings& basic() const;
+  inline ::KFMsg::PBStrings* mutable_basic();
+  inline ::KFMsg::PBStrings* release_basic();
+  inline void set_allocated_basic(::KFMsg::PBStrings* basic);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBApplicationlist)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_time();
+  inline void clear_has_time();
+  inline void set_has_basic();
+  inline void clear_has_basic();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 time_;
+  ::KFMsg::PBStrings* basic_;
+  ::google::protobuf::uint32 playerid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBApplicationlist* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBApplicationlists : public ::google::protobuf::Message {
+ public:
+  PBApplicationlists();
+  virtual ~PBApplicationlists();
+
+  PBApplicationlists(const PBApplicationlists& from);
+
+  inline PBApplicationlists& operator=(const PBApplicationlists& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBApplicationlists& default_instance();
+
+  void Swap(PBApplicationlists* other);
+
+  // implements Message ----------------------------------------------
+
+  PBApplicationlists* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBApplicationlists& from);
+  void MergeFrom(const PBApplicationlists& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBApplicationlist applylists = 1;
+  inline int applylists_size() const;
+  inline void clear_applylists();
+  static const int kApplylistsFieldNumber = 1;
+  inline const ::KFMsg::PBApplicationlist& applylists(int index) const;
+  inline ::KFMsg::PBApplicationlist* mutable_applylists(int index);
+  inline ::KFMsg::PBApplicationlist* add_applylists();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBApplicationlist >&
+      applylists() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBApplicationlist >*
+      mutable_applylists();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBApplicationlists)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBApplicationlist > applylists_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBApplicationlists* default_instance_;
 };
 // ===================================================================
 
@@ -6238,6 +6450,121 @@ PBPlayerIds::mutable_playerid() {
   return &playerid_;
 }
 
+// -------------------------------------------------------------------
+
+// PBApplicationlist
+
+// required uint32 playerid = 1;
+inline bool PBApplicationlist::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PBApplicationlist::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PBApplicationlist::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PBApplicationlist::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 PBApplicationlist::playerid() const {
+  return playerid_;
+}
+inline void PBApplicationlist::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint64 time = 2;
+inline bool PBApplicationlist::has_time() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PBApplicationlist::set_has_time() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PBApplicationlist::clear_has_time() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PBApplicationlist::clear_time() {
+  time_ = GOOGLE_ULONGLONG(0);
+  clear_has_time();
+}
+inline ::google::protobuf::uint64 PBApplicationlist::time() const {
+  return time_;
+}
+inline void PBApplicationlist::set_time(::google::protobuf::uint64 value) {
+  set_has_time();
+  time_ = value;
+}
+
+// required .KFMsg.PBStrings basic = 3;
+inline bool PBApplicationlist::has_basic() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PBApplicationlist::set_has_basic() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PBApplicationlist::clear_has_basic() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PBApplicationlist::clear_basic() {
+  if (basic_ != NULL) basic_->::KFMsg::PBStrings::Clear();
+  clear_has_basic();
+}
+inline const ::KFMsg::PBStrings& PBApplicationlist::basic() const {
+  return basic_ != NULL ? *basic_ : *default_instance_->basic_;
+}
+inline ::KFMsg::PBStrings* PBApplicationlist::mutable_basic() {
+  set_has_basic();
+  if (basic_ == NULL) basic_ = new ::KFMsg::PBStrings;
+  return basic_;
+}
+inline ::KFMsg::PBStrings* PBApplicationlist::release_basic() {
+  clear_has_basic();
+  ::KFMsg::PBStrings* temp = basic_;
+  basic_ = NULL;
+  return temp;
+}
+inline void PBApplicationlist::set_allocated_basic(::KFMsg::PBStrings* basic) {
+  delete basic_;
+  basic_ = basic;
+  if (basic) {
+    set_has_basic();
+  } else {
+    clear_has_basic();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// PBApplicationlists
+
+// repeated .KFMsg.PBApplicationlist applylists = 1;
+inline int PBApplicationlists::applylists_size() const {
+  return applylists_.size();
+}
+inline void PBApplicationlists::clear_applylists() {
+  applylists_.Clear();
+}
+inline const ::KFMsg::PBApplicationlist& PBApplicationlists::applylists(int index) const {
+  return applylists_.Get(index);
+}
+inline ::KFMsg::PBApplicationlist* PBApplicationlists::mutable_applylists(int index) {
+  return applylists_.Mutable(index);
+}
+inline ::KFMsg::PBApplicationlist* PBApplicationlists::add_applylists() {
+  return applylists_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBApplicationlist >&
+PBApplicationlists::applylists() const {
+  return applylists_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBApplicationlist >*
+PBApplicationlists::mutable_applylists() {
+  return &applylists_;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -6302,6 +6629,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RankListEnum>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FriendLinessEnum>() {
   return ::KFMsg::FriendLinessEnum_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::GuildEnum>() {
+  return ::KFMsg::GuildEnum_descriptor();
 }
 
 }  // namespace google

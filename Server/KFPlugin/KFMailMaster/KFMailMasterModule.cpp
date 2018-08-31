@@ -42,7 +42,7 @@ namespace KFrame
                 return _invalid_str;
             }
 
-            __LOG_INFO__( KFLogEnum::GM, "get gm addmail msg:{}", request.Serialize() );
+            __LOG_INFO__( KFLogEnum::Logic, "get gm addmail msg:{}", request.Serialize() );
 
             std::vector<uint32> playerids;
             auto strplayerids = request.GetString( __KF_STRING__( playerids ) );
@@ -57,7 +57,6 @@ namespace KFrame
 
                 request.removeMember( __KF_STRING__( playerids ) );
             }
-
 
             // 设置接收玩家id
             if ( playerids.size() > _invalid_int )

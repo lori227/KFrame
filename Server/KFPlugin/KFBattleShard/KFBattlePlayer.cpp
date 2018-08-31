@@ -1,6 +1,7 @@
 ﻿#include "KFBattlePlayer.h"
 #include "KFBattleRoom.h"
 #include "KFBattleConfig.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 
 namespace KFrame
@@ -123,7 +124,7 @@ namespace KFrame
             }
 
             __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}:{}] notice battle room[{}] req[{}]!",
-                           _pb_player.campid(), _pb_player.serverid(), _pb_player.playerid(),
+                           _pb_player.campid(), KFAppID::ToString( _pb_player.serverid() ), _pb_player.playerid(),
                            kfroom->_battle_room_id, _notice_count );
         }
     }
@@ -231,8 +232,13 @@ namespace KFrame
         // 计算评分
         ScoreBalance( pbscore );
 
-        // 计算奖励
-        auto reward = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
+        // 获得奖励
+        std::string reward = _invalid_str;
+        auto kfsetting = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
+        if ( kfsetting != nullptr )
+        {
+            reward = kfsetting->_reward;
+        }
 
         {
             KFMsg::S2SBattleRoomScoreBalanceAck ack;
@@ -260,23 +266,25 @@ namespace KFrame
 
     void KFBattlePlayer::ScoreBalance( KFMsg::PBBattleScore* pbscore )
     {
+        static std::string _battle_score_param = "battlescoreparam";
+
         // 各项数据
         double battlescore = 0.0f;
         for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
         {
             auto pbdata = &pbscore->pbdata( i );
-            auto scoreparam = _kf_battle_config->GetScoreParam( pbdata->name() );
+            auto scoreparam = _kf_option->GetValue< double >( _battle_score_param, pbdata->name() );
             battlescore += pbdata->value() * scoreparam;
         }
 
         // 排名分
-        auto rankingparam = _kf_battle_config->GetScoreParam( __KF_STRING__( ranking ) );
+        auto rankingparam = _kf_option->GetValue< uint32 >( _battle_score_param, __KF_STRING__( ranking ) );
         battlescore += rankingparam / pbscore->ranking();
 
         // 吃鸡奖励分
         if ( pbscore->ranking() == 1 )
         {
-            auto toponeparam = _kf_battle_config->GetScoreParam( __KF_STRING__( topone ) );
+            auto toponeparam = _kf_option->GetValue< uint32 >( _battle_score_param, __KF_STRING__( topone ) );
             battlescore += toponeparam;
         }
 

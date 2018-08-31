@@ -116,6 +116,7 @@ class MsgSevenSignInRewardReq;
 class MsgTellSevenExtendReward;
 class MsgCreateGuildReq;
 class MsgInviteGuildReq;
+class MsgApplyGuildReq;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -196,11 +197,12 @@ enum ClientProtocol {
   MSG_SEVEN_SIGNIN_REWARD_REQ = 198,
   MSG_TELL_SEVEN_EXTEND_REWARD = 199,
   MSG_CREATE_GUILD_REQ = 200,
-  MSG_INVITE_GUILD_REQ = 201
+  MSG_INVITE_GUILD_REQ = 201,
+  MSG_APPLY_GUILD_REQ = 202
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_INVITE_GUILD_REQ;
+const ClientProtocol ClientProtocol_MAX = MSG_APPLY_GUILD_REQ;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -7709,6 +7711,98 @@ class LIBPROTOC_EXPORT MsgInviteGuildReq : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static MsgInviteGuildReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgApplyGuildReq : public ::google::protobuf::Message {
+ public:
+  MsgApplyGuildReq();
+  virtual ~MsgApplyGuildReq();
+
+  MsgApplyGuildReq(const MsgApplyGuildReq& from);
+
+  inline MsgApplyGuildReq& operator=(const MsgApplyGuildReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgApplyGuildReq& default_instance();
+
+  void Swap(MsgApplyGuildReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgApplyGuildReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgApplyGuildReq& from);
+  void MergeFrom(const MsgApplyGuildReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 guildid = 1;
+  inline bool has_guildid() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 1;
+  inline ::google::protobuf::uint64 guildid() const;
+  inline void set_guildid(::google::protobuf::uint64 value);
+
+  // required uint64 invitor = 2;
+  inline bool has_invitor() const;
+  inline void clear_invitor();
+  static const int kInvitorFieldNumber = 2;
+  inline ::google::protobuf::uint64 invitor() const;
+  inline void set_invitor(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgApplyGuildReq)
+ private:
+  inline void set_has_guildid();
+  inline void clear_has_guildid();
+  inline void set_has_invitor();
+  inline void clear_has_invitor();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 guildid_;
+  ::google::protobuf::uint64 invitor_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgApplyGuildReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -13191,6 +13285,54 @@ inline ::google::protobuf::uint32 MsgInviteGuildReq::inviterid() const {
 inline void MsgInviteGuildReq::set_inviterid(::google::protobuf::uint32 value) {
   set_has_inviterid();
   inviterid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgApplyGuildReq
+
+// required uint64 guildid = 1;
+inline bool MsgApplyGuildReq::has_guildid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgApplyGuildReq::set_has_guildid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgApplyGuildReq::clear_has_guildid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgApplyGuildReq::clear_guildid() {
+  guildid_ = GOOGLE_ULONGLONG(0);
+  clear_has_guildid();
+}
+inline ::google::protobuf::uint64 MsgApplyGuildReq::guildid() const {
+  return guildid_;
+}
+inline void MsgApplyGuildReq::set_guildid(::google::protobuf::uint64 value) {
+  set_has_guildid();
+  guildid_ = value;
+}
+
+// required uint64 invitor = 2;
+inline bool MsgApplyGuildReq::has_invitor() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgApplyGuildReq::set_has_invitor() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgApplyGuildReq::clear_has_invitor() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgApplyGuildReq::clear_invitor() {
+  invitor_ = GOOGLE_ULONGLONG(0);
+  clear_has_invitor();
+}
+inline ::google::protobuf::uint64 MsgApplyGuildReq::invitor() const {
+  return invitor_;
+}
+inline void MsgApplyGuildReq::set_invitor(::google::protobuf::uint64 value) {
+  set_has_invitor();
+  invitor_ = value;
 }
 
 

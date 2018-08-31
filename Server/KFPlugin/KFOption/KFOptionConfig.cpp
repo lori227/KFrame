@@ -22,7 +22,7 @@ namespace KFrame
             while ( xmlnode.IsValid() )
             {
                 auto name = xmlnode.GetString( "Name" );
-                auto key = xmlnode.GetUInt32( "Key", true );
+                auto key = xmlnode.GetString( "Key", true );
                 auto value = xmlnode.GetString( "Value" );
 
                 OptionKey optionkey( name, key );
@@ -41,8 +41,7 @@ namespace KFrame
         return true;
     }
 
-
-    const std::string& KFOptionConfig::FindOption( const std::string& name, uint32 key ) const
+    const std::string& KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
     {
         OptionKey optionkey( name, key );
         auto iter = _option_list.find( optionkey );

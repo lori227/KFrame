@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFGuildClientConfig.cpp" />
     <ClCompile Include="KFGuildClientModule.cpp" />
     <ClCompile Include="KFGuildClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFGuildClientConfig.h" />
     <ClInclude Include="KFGuildClientInterface.h" />
     <ClInclude Include="KFGuildClientModule.h" />
     <ClInclude Include="KFGuildClientPlugin.h" />

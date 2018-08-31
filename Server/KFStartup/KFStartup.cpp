@@ -30,16 +30,6 @@ namespace KFrame
 
     bool KFStartup::LoadPlugin()
     {
-        return LoadPluginLibrarys();
-    }
-
-    void KFStartup::ShutDown()
-    {
-        _kf_library.Clear();
-    }
-
-    bool KFStartup::LoadPluginLibrarys()
-    {
         for ( auto iter = _app_config->_startups.begin(); iter != _app_config->_startups.end(); ++iter )
         {
             auto startupsetting = &iter->second;
@@ -56,6 +46,11 @@ namespace KFrame
         }
 
         return true;
+    }
+
+    void KFStartup::ShutDown()
+    {
+        _kf_library.Clear();
     }
 
     typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc );

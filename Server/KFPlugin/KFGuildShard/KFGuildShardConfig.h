@@ -6,6 +6,18 @@
 
 namespace KFrame
 {
+    namespace KFGuildShardEnum
+    {
+        enum EConstDefine
+        {
+            GuildMaster = 1,
+
+            GuildMember = 2,
+
+
+        };
+    };
+
     class KFGuildShardConfig : public KFConfig, public KFSingleton< KFGuildShardConfig >
     {
     public:

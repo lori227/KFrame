@@ -286,6 +286,11 @@ namespace KFrame
         __STRING_DEFINE__( version );
         __STRING_DEFINE__( wget );
         __STRING_DEFINE__( debug );
+        __STRING_DEFINE__( guildinvite );
+        __STRING_DEFINE__( invitetime );
+        __STRING_DEFINE__( applicantlist );
+        __STRING_DEFINE__( guildapply );
+        __STRING_DEFINE__( applytime );
     }
 }
 

@@ -83,6 +83,7 @@ enum ClientProtocol
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
 	MSG_CREATE_GUILD_REQ = 200;				// 创建帮派
 	MSG_INVITE_GUILD_REQ = 201;				// 邀请加入帮派
+	MSG_APPLY_GUILD_REQ = 202;				// 申请加入帮派
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -751,7 +752,7 @@ message MsgSevenSignInRewardReq
 // MSG_TELL_SEVEN_EXTEND_REWARD
 message MsgTellSevenExtendReward
 {
-	required string playername = 1;	// 玩家名字
+	required string playername = 1;		// 玩家名字
 	required string reward = 2;		// 奖励内容
 }
 
@@ -759,15 +760,23 @@ message MsgTellSevenExtendReward
 // MSG_CREATE_GUILD_REQ
 message MsgCreateGuildReq
 {
-	required string guildname = 1;	// 帮派名字
-	required uint32 medal = 2;	// 帮派勋章
-	optional string manifesto = 3;	// 帮派宣言 
+	required string guildname = 1;		// 帮派名字
+	required uint32 medal = 2;		// 帮派勋章
+	optional string manifesto = 3;		// 帮派宣言 
 }
 
 // 邀请加入帮派
 // MSG_INVITE_GUILD_REQ
 message MsgInviteGuildReq
 {
-	required uint32 inviterid = 1; //被邀请人id
+	required uint32 inviterid = 1;		// 被邀请人id
 	
+}
+
+// 申请加入帮派
+// MSG_APPLY_GUILD_REQ
+message MsgApplyGuildReq
+{
+	required uint64 guildid = 1;		// 帮派id
+	required uint64 invitor = 2;		// 邀请id
 }

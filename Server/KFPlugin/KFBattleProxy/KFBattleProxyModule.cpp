@@ -189,6 +189,7 @@ namespace KFrame
         ack.set_roomid( kfmsg.roomid() );
         ack.set_matchid( kfmsg.matchid() );
         ack.set_result( kfmsg.result() );
+        ack.set_waittime( kfmsg.waittime() );
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK, &ack );
         if ( !ok )
         {

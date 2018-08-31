@@ -277,8 +277,8 @@ namespace KFrame
         }
         else
         {
-			// 非系统邮件
-			redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+            // 非系统邮件
+            redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
         }
 
         auto kfresult = redisdriver->Pipeline();
@@ -477,7 +477,7 @@ namespace KFrame
                 if ( !ok )
                 {
                     auto strmaildata = kfmsg.DebugString();
-                    __LOG_ERROR__( KFLogEnum::GM, "player[{}] add mail[{}] failed!", playerid, strmaildata );
+                    __LOG_ERROR__( KFLogEnum::Logic, "player[{}] add mail[{}] failed!", playerid, strmaildata );
                 }
 
             }
@@ -488,7 +488,7 @@ namespace KFrame
             if ( !ok )
             {
                 auto strmaildata = kfmsg.DebugString();
-                __LOG_ERROR__( KFLogEnum::GM, " add mail[{}] failed!", strmaildata );
+                __LOG_ERROR__( KFLogEnum::Logic, " add mail[{}] failed!", strmaildata );
             }
         }
 

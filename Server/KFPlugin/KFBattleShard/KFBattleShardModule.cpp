@@ -24,8 +24,6 @@ namespace KFrame
     void KFBattleShardModule::BeforeRun()
     {
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFBattleShardModule::OnServerDiscoverBattleProxy );
-
-        _kf_battle_config->LoadRewardConfig( _kf_battle_config->_reward_file.c_str() );
         ///////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ, &KFBattleShardModule::HandleRegisterServerToBattleShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ, &KFBattleShardModule::HandleTellBattleRegisterToShardReq );
@@ -163,8 +161,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterServerToBattleShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] req!",
-                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] req!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
         {
@@ -178,16 +175,14 @@ namespace KFrame
         ack.set_result( KFMsg::Success );
         _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] ok!",
-                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}] ok!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellBattleRegisterToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellBattleRegisterToShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] req!",
-                       kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] req!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.roomid() != _invalid_int )
         {
@@ -215,8 +210,7 @@ namespace KFrame
             }
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] ok!",
-                       kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] ok!", kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
     }
 
     KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint32 serverid )
@@ -284,7 +278,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleOpenBattleRoomToShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenBattleRoomToShardAck );
-        __LOG_DEBUG__( KFLogEnum::Logic, "open room[{}] result[{}]!", kfmsg.roomid(), kfmsg.result() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "open room[{}] waittime[{}] result[{}]!", kfmsg.roomid(), kfmsg.waittime(), kfmsg.result() );
 
         auto kfroom = FindRoom( kfmsg.roomid(), __FUNC_LINE__ );
         if ( kfroom == nullptr )
@@ -294,11 +288,11 @@ namespace KFrame
 
         if ( kfmsg.result() == KFMsg::BattleEnum::OpenSuccess )
         {
-            kfroom->ConfirmOpenBattleRoom( true );
+            kfroom->ConfirmOpenBattleRoom( true, kfmsg.waittime() );
         }
         else
         {
-            kfroom->ConfirmOpenBattleRoom( false );
+            kfroom->ConfirmOpenBattleRoom( false, kfmsg.waittime() );
         }
     }
 
@@ -593,8 +587,7 @@ namespace KFrame
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->Execute( "hdel {}:{} {}",
-                                              __KF_STRING__( score ), kfmsg.playerid(), kfmsg.roomid() );
+        auto kfresult = redisdriver->Execute( "hdel {}:{} {}", __KF_STRING__( score ), kfmsg.playerid(), kfmsg.roomid() );
         if ( kfresult->IsOk() )
         {
             __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack ok!", kfmsg.playerid(), kfmsg.roomid() );
@@ -631,11 +624,11 @@ namespace KFrame
             redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( battleroom ), kfmsg.roomid(), pbscore->playerid(), strdata );
             redisdriver->Pipeline();
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "battlr[{}] balance ok!", kfmsg.roomid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}] balance ok!", kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "battlr[{}] balance failed!", kfmsg.roomid() );
+            __LOG_ERROR__( KFLogEnum::Logic, "battle[{}] balance failed!", kfmsg.roomid() );
         }
     }
 
@@ -645,8 +638,7 @@ namespace KFrame
 
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
-                                               __KF_STRING__( score ), kfmsg.playerid() );
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( score ), kfmsg.playerid() );
         for ( auto& iter : kfresult->_value )
         {
             KFMsg::S2SPlayerBattleScoreReq req;
@@ -667,8 +659,7 @@ namespace KFrame
     {
         auto redisdriver = __BATTLE_REDIS_DRIVER__;
 
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}",
-                                               __KF_STRING__( battleroom ), roomid );
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( battleroom ), roomid );
         for ( auto& iter : kfresult->_value )
         {
             ack->add_pbscore( iter.second );

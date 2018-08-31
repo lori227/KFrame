@@ -199,7 +199,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Memory, "*******************print memory start********************" );
+        __LOG_DEBUG__( KFLogEnum::Memory, "****************print memory start*****************" );
 
         uint64 totalusesize = 0;
         uint64 totalmallocsize = 0;
@@ -222,11 +222,9 @@ namespace KFrame
             totalusesize += logdata->_use_size;
             totalmallocsize += logdata->_total_size;
 
-            __LOG_DEBUG__( KFLogEnum::Memory, "count[{}] use[{}] total[{}] name[{}]",
-                           logdata->_count, logdata->_use_size, logdata->_total_size, iter->first );
+            __LOG_DEBUG__( KFLogEnum::Memory, "count[{}] use[{}] total[{}] name[{}]", logdata->_count, logdata->_use_size, logdata->_total_size, iter->first );
         }
 
-        __LOG_DEBUG__( KFLogEnum::Memory, "**************print memory end, use[{}], total[{}]*************",
-                       totalusesize, totalmallocsize );
+        __LOG_DEBUG__( KFLogEnum::Memory, "*********print memory end, use[{}], total[{}]********", totalusesize, totalmallocsize );
     }
 }

@@ -14,7 +14,10 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFConfig/KFConfigInterface.h"
+#include "KFMailClient/KFMailClientInterface.h"
 
 namespace KFrame
 {
@@ -38,6 +41,29 @@ namespace KFrame
         // 发送消息到Guild
         virtual bool SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message );
 
+        virtual bool SendMessageToGuild( uint32 msgid, ::google::protobuf::Message* message );
+
+        virtual void UpdateMemberBasic( uint32 playerid, uint64 guildid, MapString& basics );
+
+
+    protected:
+        // 处理创建帮派请求
+        __KF_MESSAGE_FUNCTION__( HandleCreateGuildReq );
+
+        // 处理创建帮派反馈
+        __KF_MESSAGE_FUNCTION__( HandleCreateGuildAck );
+
+        // 处理邀请玩家邀请加入帮派
+        __KF_MESSAGE_FUNCTION__( HnadleInviteGuildReq );
+
+        // 处理邀请玩家邀请加入帮派反馈
+        __KF_MESSAGE_FUNCTION__( HnadleInviteGuildAck );
+
+        // 处理玩家申请加入帮派
+        __KF_MESSAGE_FUNCTION__( HandleApplyGuildReq );
+
+        // 处理玩家帮派变化
+        __KF_MESSAGE_FUNCTION__( HandlePlayerGuildChangeReq );
     };
 }
 

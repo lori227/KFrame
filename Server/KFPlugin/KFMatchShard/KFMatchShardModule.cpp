@@ -238,7 +238,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleOpenRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenRoomToMatchShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] open req!", kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] open waittime[{}] req!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.waittime() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )

@@ -104,7 +104,9 @@ enum ServerProtocol
 	S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200;		// 更新帮派成员基础信息
 	S2S_INVITE_GUILD_REQ = 21201;				// 邀请好友加入帮派请求
 	S2S_INVITE_GUILD_ACK = 21202;				// 邀请好友加入帮派反馈
-	
+	S2S_APPLY_GUILD_REQ = 21203;				// 申请加入帮派请求
+	S2S_APPLY_GUILD_ACK = 21204;				// 申请加入帮派反馈
+	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// 玩家帮派状态变化guild->zone	
 
 
 	S2S_GM_ADD_MAIL_REQ = 21300;				// GM增加邮件
@@ -1007,7 +1009,6 @@ message S2SCreateGuidReq
 	required string guildname = 4;	// 帮派名字
 	required uint32 medal = 5;	// 帮派勋章
 	optional string manifesto = 6;	// 帮派宣言 
-	repeated PBString pbdata = 7;	// 帮主属性
 }
 
 // 创建帮派请求发送到shard
@@ -1021,7 +1022,6 @@ message S2SCreateGuildToShardReq
 	required uint32 medal = 5;	// 帮派勋章
 	optional string manifesto = 6;	// 帮派宣言
 	required uint64 guildid = 7;	// 帮派id
-	repeated PBString pbdata = 8;	// 帮主属性
 }
 
 // 创建帮派返回
@@ -1052,6 +1052,7 @@ message S2SInviteGuildReq
 	required uint64 guildid = 1;	// 邀请加入的帮派id
 	required uint32 invitor = 2;	// 邀请者id
 	required uint32 invitedid = 3;	// 被邀请者的id
+	required uint32 serverid = 4;	// 邀请者服务Id
 }
 
 // 邀请好友加入帮派反馈
@@ -1059,10 +1060,35 @@ message S2SInviteGuildReq
 message S2SInviteGuildAck
 {
 	required uint64 guildid = 1;	// 邀请加入的帮派id
-	required uint32 invitor = 2;	// 邀请者id
+	required uint32 playerid = 2;	// 邀请者id
 	required uint32 invitedid = 3;	// 被邀请者的id
 }
 
+// 申请加入帮派请求
+// S2S_APPLY_GUILD_REQ
+message S2SApplyGuildReq
+{
+	required uint64 guildid = 1;			// 申请加入的帮派
+	required uint32 invitor = 2;			// 推荐者id
+	required uint32 playerid = 3;			// 申请者id
+}
+
+// 申请加入帮派反馈
+// S2S_APPLY_GUILD_ACK
+message S2SApplyGuildAck
+{
+	required uint32 playerid = 1;			// 申请者id
+	required uint64 guildid = 2;			// 申请加入的帮派
+}
+
+// 玩家帮派状态变化
+// S2S_PLAYER_GUILD_CHANGE_REQ
+message S2SPlayerGuildChangeReq
+{
+	required uint32 playerid = 1;			// 玩家id
+	required uint64 guildid = 2;			// 帮派id
+	required uint32 code = 3;			// 状态码//加入帮派//退出帮派等
+}
 
 
 // GM增加邮件

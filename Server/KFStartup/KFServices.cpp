@@ -66,27 +66,32 @@ namespace KFrame
         KFMalloc::Initialize( nullptr );
 
 #ifdef __KF_RELEASE__
-        KFMalloc::Instance()->SetLogMemoryOpen( true );
+        KFMalloc::Instance()->SetLogMemoryOpen( false );
 #endif
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
 
+        // 初始化appid
         auto strappid = params[ __KF_STRING__( appid ) ];
         ParseAppId( strappid );
 
-        // 读取配置
+        // 初始化log
+        auto strlogtype = params[ __KF_STRING__( log ) ];
+        kfglobal->InitLogger( strlogtype );
+
+        // 读取启动配置
         auto strfile = params[ __KF_STRING__( startup ) ];
         if ( !_kf_startup->InitStartup( strfile ) )
         {
             return false;
         }
 
-        // 初始化log
-        auto strlogtype = params[ __KF_STRING__( log ) ];
-        kfglobal->InitLogger( strlogtype );
-
+#if __KF_SYSTEM__ == __KF_WIN__
+        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
+#endif
+        // 加载插件
         if ( !_kf_startup->LoadPlugin() )
         {
             return false;
@@ -95,9 +100,6 @@ namespace KFrame
         // 插件初始化
         KFPluginManage::Instance()->InitPlugin();
 
-#if __KF_SYSTEM__ == __KF_WIN__
-        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
-#endif
         // 设置标题
         kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
         _application->SetTitleText( kfglobal->_title_text.c_str() );
@@ -105,9 +107,9 @@ namespace KFrame
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        __LOG_INFO__( KFLogEnum::Init, "[{}:{}:{}] startup ok!",
-                      kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        __LOG_INFO__( KFLogEnum::Init, "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
 
+        // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
         return true;
     }

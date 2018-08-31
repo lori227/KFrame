@@ -214,6 +214,8 @@ enum AckEnum
 	GuildHadInvite				= 10037;	// 已经邀请过该玩家
 	playerisguildmember			= 10038;	// 玩家已经是帮派成员
 	GuildApplyListTooLong			= 10039;	// 帮派申请列表过长
+	PlayerINApplicanlist			= 10040;	// 玩家已经在申请列表中
+	GuildHadApply				= 10041;	// 已经申请过当前帮派
 
 	GMParamError				= 20000;	// GM参数错误
 }
@@ -315,6 +317,11 @@ enum FriendLinessEnum
 	Give = 4;		// 送礼
 }
 
+enum GuildEnum
+{
+	JoinGuild =1;		// 加入帮派
+	QuitGuild = 2;		// 离开帮派
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -519,3 +526,18 @@ message PBPlayerIds
 {
 	repeated uint32 playerid = 1;	// 玩家id
 }
+
+// 帮派申请列表数据结构
+message PBApplicationlist
+{
+	required uint32 playerid = 1;	// 申请者玩家id
+	required uint64 time = 2;	// 申请时间
+	required PBStrings basic = 3;	// 申请者基础信息
+}
+
+// 帮派申请列表
+message PBApplicationlists
+{
+	repeated PBApplicationlist applylists = 1;	// 玩家id
+}
+

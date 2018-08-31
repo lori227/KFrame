@@ -3,18 +3,26 @@
 
 import pymysql
 
+class db_info:
+    def __init__(self, h, p, u, pwd, db):
+        self.host = h
+        self.port = p
+        self.user = u
+        self.password = pwd
+        self.database = db
+        self.charset = 'utf8'
 
-def connect_mysql_db():
-    return pymysql.connect(host='192.168.1.9',
-                           port=3306,
-                           user='root',
-                           password='mysql@lori227-=',
-                           database='kframe',
-                           charset='utf8')
+def connect_mysql_db(mysql_info):
+    return pymysql.connect(host=mysql_info.host,
+                           port=mysql_info.port,
+                           user=mysql_info.user,
+                           password=mysql_info.password,
+                           database=mysql_info.database,
+                           charset=mysql_info.charset)
 
 
-def query_mysql_db(sql):
-    con = connect_mysql_db()
+def query_mysql_db(mysql_info, sql):
+    con = connect_mysql_db(mysql_info)
     cur = con.cursor()
     cur.execute(sql)
     rows = cur.fetchall()
@@ -25,9 +33,9 @@ def query_mysql_db(sql):
     return rows
 
 
-def insert_mysql_db(sql):
+def insert_mysql_db(mysql_info, sql):
     print sql
-    con = connect_mysql_db()
+    con = connect_mysql_db(mysql_info)
     cur = con.cursor()
     try:
         cur.execute(sql)
@@ -40,8 +48,8 @@ def insert_mysql_db(sql):
         con.close()
 
 
-def update_mysql_db(sql):
-    con = connect_mysql_db()
+def update_mysql_db(mysql_info, sql):
+    con = connect_mysql_db(mysql_info)
     cur = con.cursor()
     try:
         cur.execute(sql)

@@ -14,7 +14,7 @@ def do_post(url, path):
         })
     #print m
     #print m.content_type
-    r = requests.post(url, data=m, headers={'Content-Type': m.content_type})
+    r = requests.post(url, verify=True, data=m, headers={'Content-Type': m.content_type})
     
     retjson = json.loads(r.text)
     if retjson['code'] != 0 or retjson['msg'] != 'ok':
@@ -22,4 +22,4 @@ def do_post(url, path):
     else:
         print 'upload [%s] to web server success, info = %s' % (path, r.text)
 
-#do_post('http://version.leiwu.com/upload.php', 'sgame_svn_1234567_201808281738.tar.gz')
+#do_post('https://version.laywoodgames.com/upload.php', 'sgame_online_svn_12345678_201808311343.tar.gz')

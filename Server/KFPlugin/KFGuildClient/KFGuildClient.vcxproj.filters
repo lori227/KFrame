@@ -4,10 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFGuildClientModule.cpp" />
     <ClCompile Include="KFGuildClientPlugin.cpp" />
+    <ClCompile Include="KFGuildClientConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGuildClientInterface.h" />
     <ClInclude Include="KFGuildClientModule.h" />
     <ClInclude Include="KFGuildClientPlugin.h" />
+    <ClInclude Include="KFGuildClientConfig.h" />
   </ItemGroup>
 </Project>

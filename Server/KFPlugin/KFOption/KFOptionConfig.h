@@ -18,11 +18,11 @@ namespace KFrame
         bool LoadConfig();
 
         // 查找配置选项
-        const std::string& FindOption( const std::string& name, uint32 key ) const;
+        const std::string& FindOption( const std::string& name, const std::string& key ) const;
 
     public:
         // 选项配置列表
-        typedef std::pair< std::string, uint32 > OptionKey;
+        typedef std::pair< std::string, std::string > OptionKey;
         std::map< OptionKey, std::string > _option_list;
     };
 

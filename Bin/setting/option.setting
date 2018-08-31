@@ -42,7 +42,22 @@
 	<!-- 队伍属性 -->
 	<!-- 队伍拒绝邀请的时间 单位:秒-->
 	<!-- 队伍邀请/申请组队的有效时间 单位:秒-->
-	<Option Name="groupinviterefusetime" Key="0" Value="300"/>
-	<Option Name="groupinviteapplyvalidtime" Key="0" Value="60"/>
+	<Option Name="groupinviterefusetime" Value="300"/>
+	<Option Name="groupinviteapplyvalidtime" Value="60"/>
+
+	<!-- 战场属性 -->
+	<!-- 战场最小开启阵容数量 -->
+	<Option Name="minopenroomcount" Value="2"/>
+	<!-- 战场的有效时间 单位:秒 -->
+	<Option Name="roomvalidtime" Value="7200"/>
+	<!-- 计算战绩参数 -->
+	<Option Name="battlescoreparam" Key="hurt" Value="1"/>
+	<Option Name="battlescoreparam" Key="kill" Value="100"/>
+	<Option Name="battlescoreparam" Key="survival" Value="0.5"/>
+	<Option Name="battlescoreparam" Key="ranking" Value="500"/>
+	<Option Name="battlescoreparam" Key="topone" Value="1000"/>
+	<Option Name="battlescoreparam" Key="teamhurt" Value="-2"/>
+	<Option Name="battlescoreparam" Key="teamkill" Value="-500"/>
+	
 </Config>
 

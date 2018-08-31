@@ -61,6 +61,7 @@
 #include "KFQueryFriendRankState.h"
 #include "KFAddRecentState.h"
 #include "KFQueryRecentState.h"
+#include "KFCreateGuildState.h"
 
 
 namespace KFrame
@@ -157,6 +158,9 @@ namespace KFrame
         AddState( RobotStateEnum::ModifyWishOrder, new KFModifyWishOrderState() );
 
         AddState( RobotStateEnum::PauseState, new KFPauseState() );
+        // 帮派
+        AddState( RobotStateEnum::CreateGuild, new KFCreateGuildState() );
+
     }
 
     void KFStateManage::AddState( uint32 state, KFState* kfstate )

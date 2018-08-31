@@ -6,6 +6,7 @@ namespace KFrame
     void KFRobotPlugin::Install()
     {
         __REGISTER_MODULE__( KFRobot );
+
     }
 
     void KFRobotPlugin::UnInstall()

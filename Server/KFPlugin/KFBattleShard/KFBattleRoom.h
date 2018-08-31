@@ -36,12 +36,16 @@ namespace KFrame
 
         // 判断房间是否有效
         bool CheckValid();
+        void SetValidTime();
 
         // 战场是否开始
         bool IsBattleRoomStart();
 
+        // 判断是否可以开启战场房间
+        bool CheckCanOpenBattleRoom();
+
         // 开启房间
-        void ConfirmOpenBattleRoom( bool opensuccess );
+        void ConfirmOpenBattleRoom( bool opensuccess, uint32 waittime );
 
         // 确认开启匹配房间
         void ConfirmOpenMatchRoom();

@@ -223,6 +223,11 @@ namespace KFrame
         // 查询最近的玩家列表
         void QueryRecentList();
 
+
+        //////////////////////帮派相关///////////////////////////////
+        void CreateGuild();
+        void InviteGuild();
+
     protected:
 
         // 定时器

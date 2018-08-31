@@ -92,6 +92,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBPlayerIds_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBPlayerIds_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBApplicationlist_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBApplicationlist_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBApplicationlists_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBApplicationlists_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* AckEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* SexEnum_descriptor_ = NULL;
@@ -106,6 +112,7 @@ const ::google::protobuf::EnumDescriptor* StoreWishEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* WishStateEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* RankListEnum_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* FriendLinessEnum_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* GuildEnum_descriptor_ = NULL;
 
 }  // namespace
 
@@ -537,6 +544,38 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBPlayerIds));
+  PBApplicationlist_descriptor_ = file->message_type(24);
+  static const int PBApplicationlist_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlist, playerid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlist, time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlist, basic_),
+  };
+  PBApplicationlist_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      PBApplicationlist_descriptor_,
+      PBApplicationlist::default_instance_,
+      PBApplicationlist_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlist, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlist, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(PBApplicationlist));
+  PBApplicationlists_descriptor_ = file->message_type(25);
+  static const int PBApplicationlists_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlists, applylists_),
+  };
+  PBApplicationlists_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      PBApplicationlists_descriptor_,
+      PBApplicationlists::default_instance_,
+      PBApplicationlists_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlists, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBApplicationlists, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(PBApplicationlists));
   AckEnum_descriptor_ = file->enum_type(0);
   ChannelEnum_descriptor_ = file->enum_type(1);
   SexEnum_descriptor_ = file->enum_type(2);
@@ -551,6 +590,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
   WishStateEnum_descriptor_ = file->enum_type(11);
   RankListEnum_descriptor_ = file->enum_type(12);
   FriendLinessEnum_descriptor_ = file->enum_type(13);
+  GuildEnum_descriptor_ = file->enum_type(14);
 }
 
 namespace {
@@ -611,6 +651,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
     PBRecentData_descriptor_, &PBRecentData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PBPlayerIds_descriptor_, &PBPlayerIds::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    PBApplicationlist_descriptor_, &PBApplicationlist::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    PBApplicationlists_descriptor_, &PBApplicationlists::default_instance());
 }
 
 }  // namespace
@@ -664,6 +708,10 @@ void protobuf_ShutdownFile_KFCommonMessage_2eproto() {
   delete PBRecentData_reflection_;
   delete PBPlayerIds::default_instance_;
   delete PBPlayerIds_reflection_;
+  delete PBApplicationlist::default_instance_;
+  delete PBApplicationlist_reflection_;
+  delete PBApplicationlists::default_instance_;
+  delete PBApplicationlists_reflection_;
 }
 
 void protobuf_AddDesc_KFCommonMessage_2eproto() {
@@ -726,143 +774,149 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "playerid\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010total"
     "num\030\003 \002(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020"
     "\n\010bekillid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037"
-    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r*\267$\n\007AckE"
-    "num\022\013\n\007Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXi"
-    "nError\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinT"
-    "okenTimeout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017W"
-    "eiXinUserError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016Ch"
-    "annelNotOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017L"
-    "oginSystemBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\022\n"
-    "\016AuthServerBusy\020\r\022\024\n\020AuthDatabaseBusy\020\016\022"
-    "\022\n\016CanNotFindGame\020\017\022\023\n\017LoginTokenError\020\020"
-    "\022\022\n\016LoadDataFailed\020\021\022\021\n\rHttpDataError\020\022\022"
-    "\026\n\022LoginDatabaseError\020\023\022\025\n\021CreatePlayerE"
-    "rror\020\024\022\014\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet\020\026"
-    "\022\024\n\020NameAlreadyExist\020\027\022\027\n\023PublicDatabase"
-    "Error\020\030\022\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmpty"
-    "\020\032\022\025\n\021CreateRoleAlready\020\033\022\020\n\014CreateRoleO"
-    "K\020\034\022\026\n\022LoginAlreadyOnline\020\035\022\020\n\014ChangeIco"
-    "nOK\020\036\022\r\n\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020 \022"
-    "\023\n\017ModuleIdNotFind\020!\022\025\n\021SetModelClothesO"
-    "K\020\"\022\023\n\017ChangeIconBoxOK\020#\022\022\n\016DataSystemBu"
-    "sy\020$\022\025\n\021ActivationAccount\020%\022\027\n\023Activatio"
-    "nCodeError\020&\022\027\n\023LoginCanNotFindGate\020\'\022\024\n"
-    "\020TaskIdCanNotFind\020(\022\026\n\022TaskNotInValidTim"
-    "e\020)\022\024\n\020CanNotFindPlayer\020*\022\026\n\022CanNotFindT"
-    "askData\020+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlread"
-    "yReceived\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025\n\021"
-    "CanNotInquireSelf\020/\022\030\n\024ActivityIdCanNotF"
-    "ind\0200\022\032\n\026CanNotFindActivityType\0201\022\033\n\027Act"
-    "ivityAlreadyReceived\0202\022\023\n\017ActivityNotDon"
-    "e\0203\022\033\n\027ActivityReceiveRewardOK\0204\022\027\n\023Achi"
-    "eveIdCanNotFind\0205\022\031\n\025CanNotFindAchieveDa"
-    "ta\0206\022\032\n\026AchieveAlreadyReceived\0207\022\022\n\016Achi"
-    "eveNotDone\0208\022\032\n\026AchieveReceiveRewardOK\0209"
-    "\022\021\n\rReceiveGiftOK\020:\022\025\n\021ReceiveGiftFailed"
-    "\020;\022\020\n\014MailNotExist\020<\022\027\n\023MailAlreadyRecei"
-    "ved\020=\022\025\n\021MailNotHaveReward\020>\022\024\n\020MailDele"
-    "teFailed\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSend"
-    "CountOver\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021To"
-    "astGetCountOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007To"
-    "astOK\020E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020MatchCl"
-    "usterBusy\020G\022\031\n\025MatchCanNotFindServer\020H\022\030"
-    "\n\024MatchCanNotFindMatch\020I\022\031\n\025MatchGroupPl"
-    "ayerLimit\020J\022\027\n\023MatchRequestSuccess\020K\022\026\n\022"
-    "MatchCancelSuccess\020L\022\022\n\016FriendInviteOK\020M"
-    "\022\026\n\022FriendRefuseInvite\020N\022\025\n\021FriendTarget"
-    "Limit\020O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFriendAl"
-    "ready\020Q\022\022\n\016FriendNotExist\020R\022\017\n\013FriendDel"
-    "OK\020S\022\025\n\021FriendInviteLimit\020T\022\030\n\024FriendInv"
-    "iteNotExist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023Fr"
-    "iendInviteAlready\020W\022\024\n\020MatchMustPrepare\020"
-    "X\022\023\n\017StoreParamError\020Y\022\021\n\rStoreLackCost\020"
-    "Z\022\024\n\020StoreOutOfLimits\020[\022\026\n\022StoreOutOfLim"
-    "itOwm\020\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016Wish"
-    "OrderEmpty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022Wi"
-    "shOrderNoStoreId\020`\022\027\n\023WishOrderHadStoreI"
-    "d\020a\022\024\n\020WishOrderMaxSize\020b\022\033\n\027WishOrderSt"
-    "ateRepeatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017Clot"
-    "hesNotExist\020e\022\024\n\020ClothesDataError\020f\022\030\n\024C"
-    "lothesModleNotMatch\020g\022\022\n\016ClothesDressOK\020"
-    "h\022\021\n\rModelNotExist\020i\022\021\n\rModelChangeOK\020j\022"
-    "\023\n\017ChatByteTooLong\020k\022\025\n\021ChatNotFindPlaye"
-    "r\020l\022\025\n\021ChatIntervalError\020m\022\025\n\021ChatFriend"
-    "IdError\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014Gro"
-    "upLeaveOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017Gr"
-    "oupServerBusy\020r\022\027\n\023GroupInviteNotExist\020s"
-    "\022\027\n\023GroupCanNotKickSelf\020t\022\020\n\014GroupInGrou"
-    "p\020u\022\026\n\022GroupApplyNotExist\020v\022\023\n\017GroupNotI"
-    "nGroup\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemDataEr"
-    "ror\020y\022\021\n\rItemCanNotUse\020z\022\021\n\rGroupNotExis"
-    "t\020{\022\016\n\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022Gr"
-    "oupPlayerOffline\020~\022\027\n\023GroupAlreadyInGrou"
-    "p\020\177\022\026\n\021GroupRefuseInvite\020\200\001\022\032\n\025GroupRefu"
-    "seYourInvite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001\022\025"
-    "\n\020GroupRefuseApply\020\203\001\022\030\n\023GroupCaptainOff"
-    "line\020\204\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupNot"
-    "Caption\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026Fri"
-    "endRefuseYourInvite\020\210\001\022\020\n\013FriendAddOK\020\211\001"
-    "\022\024\n\017FriendInviteReq\020\212\001\022\020\n\013GroupJoinOK\020\213\001"
-    "\022\024\n\017GroupMemberJoin\020\214\001\022\026\n\021GroupIsNewCapt"
-    "ion\020\215\001\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024FriendLi"
-    "nessAddLimit\020\217\001\022\035\n\030FriendLinessAddByWinG"
-    "ame\020\220\001\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025Wis"
-    "hPanelAddSuccessed\020\222\001\022\027\n\022GroupInviteInMa"
-    "tch\020\223\001\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022GroupI"
-    "nviteTimeOut\020\225\001\022\032\n\025GroupInviteMatchError"
-    "\020\226\001\022\026\n\021GroupApplyTimeOut\020\227\001\022\026\n\021OperateFr"
-    "equently\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020Compo"
-    "undNotExist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014Ran"
-    "kNotExist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n\014Sig"
-    "nInNotDay\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030\n\023Si"
-    "gnInRewardAlready\020\243\001\022\022\n\rDirServerBusy\020\244\001"
-    "\022\027\n\022GroupTargetInMatch\020\245\001\022\021\n\014GroupInMatc"
-    "h\020\246\001\022\025\n\020GroupKickInMatch\020\247\001\022\026\n\021GroupLeav"
-    "eInMatch\020\250\001\022\030\n\023MatchCancelInBattle\020\251\001\022\032\n"
-    "\025FriendFriendCountOver\020\220N\022\031\n\024FriendApply"
-    "CountOver\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030"
-    "FriendAddFriendSuccessed\020\223N\022\032\n\025EquipDele"
-    "teTipContent\020\224N\022\034\n\027ClothesDeleteTipConte"
-    "nt\020\225N\022\030\n\023NoCanSettingDefault\020\226N\022\022\n\rCloth"
-    "esNotFit\020\227N\022\024\n\017KickLoginBeKick\020\230N\022\027\n\022Kic"
-    "kPlatformBeKick\020\231N\022\034\n\027AutographCharOverL"
-    "ength\020\232N\022\030\n\023ContainIIleagalChar\020\233N\022\031\n\024Cl"
-    "othesNotMatchModel\020\234N\022\020\n\013MoneyIsLack\020\235N\022"
-    "\022\n\rDiamondIsLack\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDi"
-    "amondGet\020\240N\022\022\n\rWishOverCount\020\241N\022\020\n\013Pleas"
-    "eLogin\020\242N\022\032\n\025CreateRoleNameIllegal\020\243N\022\024\n"
-    "\017PleaseClickRole\020\244N\022\024\n\017ChatCharIllegal\020\245"
-    "N\022\036\n\031ChatUnCheckInNearbyChanel\020\246N\022\026\n\021Cha"
-    "tUnJoinWarTeam\020\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034"
-    "\n\027MatchRepeatInviteToCode\020\251N\022\022\n\rCopySucc"
-    "essed\020\252N\022\034\n\027GiveFaildForLimitsGoods\020\253N\022\025"
-    "\n\020MatchHasPrepared\020\254N\022\025\n\020MatchHasCancele"
-    "d\020\255N\022\022\n\rGuildHadExist\020\256N\022\027\n\022GuildCreateI"
-    "llegal\020\257N\022\025\n\020GuildNameTooLong\020\260N\022\032\n\025Guil"
-    "dManifestoTooLong\020\261N\022\024\n\017GuildNameRepeat\020"
-    "\262N\022\022\n\rGuildHadBuild\020\263N\022\022\n\rGuildNotExist\020"
-    "\264N\022\023\n\016GuildHadInvite\020\265N\022\030\n\023playerisguild"
-    "member\020\266N\022\032\n\025GuildApplyListTooLong\020\267N\022\022\n"
-    "\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022\014\n\010Inte"
-    "rnal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Unknow\020"
-    "\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013L"
-    "oginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010Flag"
-    "Enum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022\n"
-    "\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEnu"
-    "m\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010Gift"
-    "Mail\020\003*\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001*"
-    "f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013Group"
-    "Status\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingStat"
-    "us\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007J"
-    "ianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006R"
-    "efuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-\n"
-    "\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modi"
-    "fy\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\tN"
-    "oneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatch"
-    "\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nDo"
-    "ubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004*"
-    "9\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022\010"
-    "\n\004Laud\020\003\022\010\n\004Give\020\004", 7578);
+    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r\"T\n\021PBApp"
+    "licationlist\022\020\n\010playerid\030\001 \002(\r\022\014\n\004time\030\002"
+    " \002(\004\022\037\n\005basic\030\003 \002(\0132\020.KFMsg.PBStrings\"B\n"
+    "\022PBApplicationlists\022,\n\napplylists\030\001 \003(\0132"
+    "\030.KFMsg.PBApplicationlist*\346$\n\007AckEnum\022\013\n"
+    "\007Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError"
+    "\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinTokenTi"
+    "meout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinU"
+    "serError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016ChannelN"
+    "otOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017LoginSy"
+    "stemBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\022\n\016AuthS"
+    "erverBusy\020\r\022\024\n\020AuthDatabaseBusy\020\016\022\022\n\016Can"
+    "NotFindGame\020\017\022\023\n\017LoginTokenError\020\020\022\022\n\016Lo"
+    "adDataFailed\020\021\022\021\n\rHttpDataError\020\022\022\026\n\022Log"
+    "inDatabaseError\020\023\022\025\n\021CreatePlayerError\020\024"
+    "\022\014\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet\020\026\022\024\n\020Na"
+    "meAlreadyExist\020\027\022\027\n\023PublicDatabaseError\020"
+    "\030\022\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmpty\020\032\022\025\n\021"
+    "CreateRoleAlready\020\033\022\020\n\014CreateRoleOK\020\034\022\026\n"
+    "\022LoginAlreadyOnline\020\035\022\020\n\014ChangeIconOK\020\036\022"
+    "\r\n\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020 \022\023\n\017Mod"
+    "uleIdNotFind\020!\022\025\n\021SetModelClothesOK\020\"\022\023\n"
+    "\017ChangeIconBoxOK\020#\022\022\n\016DataSystemBusy\020$\022\025"
+    "\n\021ActivationAccount\020%\022\027\n\023ActivationCodeE"
+    "rror\020&\022\027\n\023LoginCanNotFindGate\020\'\022\024\n\020TaskI"
+    "dCanNotFind\020(\022\026\n\022TaskNotInValidTime\020)\022\024\n"
+    "\020CanNotFindPlayer\020*\022\026\n\022CanNotFindTaskDat"
+    "a\020+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlreadyRecei"
+    "ved\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025\n\021CanNot"
+    "InquireSelf\020/\022\030\n\024ActivityIdCanNotFind\0200\022"
+    "\032\n\026CanNotFindActivityType\0201\022\033\n\027ActivityA"
+    "lreadyReceived\0202\022\023\n\017ActivityNotDone\0203\022\033\n"
+    "\027ActivityReceiveRewardOK\0204\022\027\n\023AchieveIdC"
+    "anNotFind\0205\022\031\n\025CanNotFindAchieveData\0206\022\032"
+    "\n\026AchieveAlreadyReceived\0207\022\022\n\016AchieveNot"
+    "Done\0208\022\032\n\026AchieveReceiveRewardOK\0209\022\021\n\rRe"
+    "ceiveGiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\020\n\014"
+    "MailNotExist\020<\022\027\n\023MailAlreadyReceived\020=\022"
+    "\025\n\021MailNotHaveReward\020>\022\024\n\020MailDeleteFail"
+    "ed\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSendCountO"
+    "ver\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021ToastGet"
+    "CountOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007ToastOK\020"
+    "E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020MatchClusterB"
+    "usy\020G\022\031\n\025MatchCanNotFindServer\020H\022\030\n\024Matc"
+    "hCanNotFindMatch\020I\022\031\n\025MatchGroupPlayerLi"
+    "mit\020J\022\027\n\023MatchRequestSuccess\020K\022\026\n\022MatchC"
+    "ancelSuccess\020L\022\022\n\016FriendInviteOK\020M\022\026\n\022Fr"
+    "iendRefuseInvite\020N\022\025\n\021FriendTargetLimit\020"
+    "O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFriendAlready\020"
+    "Q\022\022\n\016FriendNotExist\020R\022\017\n\013FriendDelOK\020S\022\025"
+    "\n\021FriendInviteLimit\020T\022\030\n\024FriendInviteNot"
+    "Exist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023FriendIn"
+    "viteAlready\020W\022\024\n\020MatchMustPrepare\020X\022\023\n\017S"
+    "toreParamError\020Y\022\021\n\rStoreLackCost\020Z\022\024\n\020S"
+    "toreOutOfLimits\020[\022\026\n\022StoreOutOfLimitOwm\020"
+    "\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016WishOrderE"
+    "mpty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022WishOrde"
+    "rNoStoreId\020`\022\027\n\023WishOrderHadStoreId\020a\022\024\n"
+    "\020WishOrderMaxSize\020b\022\033\n\027WishOrderStateRep"
+    "eatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017ClothesNot"
+    "Exist\020e\022\024\n\020ClothesDataError\020f\022\030\n\024Clothes"
+    "ModleNotMatch\020g\022\022\n\016ClothesDressOK\020h\022\021\n\rM"
+    "odelNotExist\020i\022\021\n\rModelChangeOK\020j\022\023\n\017Cha"
+    "tByteTooLong\020k\022\025\n\021ChatNotFindPlayer\020l\022\025\n"
+    "\021ChatIntervalError\020m\022\025\n\021ChatFriendIdErro"
+    "r\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014GroupLeav"
+    "eOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017GroupSer"
+    "verBusy\020r\022\027\n\023GroupInviteNotExist\020s\022\027\n\023Gr"
+    "oupCanNotKickSelf\020t\022\020\n\014GroupInGroup\020u\022\026\n"
+    "\022GroupApplyNotExist\020v\022\023\n\017GroupNotInGroup"
+    "\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemDataError\020y\022"
+    "\021\n\rItemCanNotUse\020z\022\021\n\rGroupNotExist\020{\022\016\n"
+    "\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022GroupPla"
+    "yerOffline\020~\022\027\n\023GroupAlreadyInGroup\020\177\022\026\n"
+    "\021GroupRefuseInvite\020\200\001\022\032\n\025GroupRefuseYour"
+    "Invite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001\022\025\n\020Grou"
+    "pRefuseApply\020\203\001\022\030\n\023GroupCaptainOffline\020\204"
+    "\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupNotCaptio"
+    "n\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026FriendRef"
+    "useYourInvite\020\210\001\022\020\n\013FriendAddOK\020\211\001\022\024\n\017Fr"
+    "iendInviteReq\020\212\001\022\020\n\013GroupJoinOK\020\213\001\022\024\n\017Gr"
+    "oupMemberJoin\020\214\001\022\026\n\021GroupIsNewCaption\020\215\001"
+    "\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024FriendLinessAd"
+    "dLimit\020\217\001\022\035\n\030FriendLinessAddByWinGame\020\220\001"
+    "\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025WishPanel"
+    "AddSuccessed\020\222\001\022\027\n\022GroupInviteInMatch\020\223\001"
+    "\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022GroupInviteT"
+    "imeOut\020\225\001\022\032\n\025GroupInviteMatchError\020\226\001\022\026\n"
+    "\021GroupApplyTimeOut\020\227\001\022\026\n\021OperateFrequent"
+    "ly\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020CompoundNot"
+    "Exist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014RankNotEx"
+    "ist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n\014SignInNot"
+    "Day\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030\n\023SignInRe"
+    "wardAlready\020\243\001\022\022\n\rDirServerBusy\020\244\001\022\027\n\022Gr"
+    "oupTargetInMatch\020\245\001\022\021\n\014GroupInMatch\020\246\001\022\025"
+    "\n\020GroupKickInMatch\020\247\001\022\026\n\021GroupLeaveInMat"
+    "ch\020\250\001\022\030\n\023MatchCancelInBattle\020\251\001\022\032\n\025Frien"
+    "dFriendCountOver\020\220N\022\031\n\024FriendApplyCountO"
+    "ver\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030Friend"
+    "AddFriendSuccessed\020\223N\022\032\n\025EquipDeleteTipC"
+    "ontent\020\224N\022\034\n\027ClothesDeleteTipContent\020\225N\022"
+    "\030\n\023NoCanSettingDefault\020\226N\022\022\n\rClothesNotF"
+    "it\020\227N\022\024\n\017KickLoginBeKick\020\230N\022\027\n\022KickPlatf"
+    "ormBeKick\020\231N\022\034\n\027AutographCharOverLength\020"
+    "\232N\022\030\n\023ContainIIleagalChar\020\233N\022\031\n\024ClothesN"
+    "otMatchModel\020\234N\022\020\n\013MoneyIsLack\020\235N\022\022\n\rDia"
+    "mondIsLack\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDiamondG"
+    "et\020\240N\022\022\n\rWishOverCount\020\241N\022\020\n\013PleaseLogin"
+    "\020\242N\022\032\n\025CreateRoleNameIllegal\020\243N\022\024\n\017Pleas"
+    "eClickRole\020\244N\022\024\n\017ChatCharIllegal\020\245N\022\036\n\031C"
+    "hatUnCheckInNearbyChanel\020\246N\022\026\n\021ChatUnJoi"
+    "nWarTeam\020\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034\n\027Matc"
+    "hRepeatInviteToCode\020\251N\022\022\n\rCopySuccessed\020"
+    "\252N\022\034\n\027GiveFaildForLimitsGoods\020\253N\022\025\n\020Matc"
+    "hHasPrepared\020\254N\022\025\n\020MatchHasCanceled\020\255N\022\022"
+    "\n\rGuildHadExist\020\256N\022\027\n\022GuildCreateIllegal"
+    "\020\257N\022\025\n\020GuildNameTooLong\020\260N\022\032\n\025GuildManif"
+    "estoTooLong\020\261N\022\024\n\017GuildNameRepeat\020\262N\022\022\n\r"
+    "GuildHadBuild\020\263N\022\022\n\rGuildNotExist\020\264N\022\023\n\016"
+    "GuildHadInvite\020\265N\022\030\n\023playerisguildmember"
+    "\020\266N\022\032\n\025GuildApplyListTooLong\020\267N\022\031\n\024Playe"
+    "rINApplicanlist\020\270N\022\022\n\rGuildHadApply\020\271N\022\022"
+    "\n\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022\014\n\010Int"
+    "ernal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Unknow"
+    "\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013"
+    "LoginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010Fla"
+    "gEnum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022"
+    "\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEn"
+    "um\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010Gif"
+    "tMail\020\003*\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001"
+    "*f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013Grou"
+    "pStatus\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingSta"
+    "tus\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007"
+    "Jianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006"
+    "Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-"
+    "\n\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Mod"
+    "ify\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\t"
+    "NoneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatc"
+    "h\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nD"
+    "oubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004"
+    "*9\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022"
+    "\010\n\004Laud\020\003\022\010\n\004Give\020\004*)\n\tGuildEnum\022\r\n\tJoin"
+    "Guild\020\001\022\r\n\tQuitGuild\020\002", 7822);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -889,6 +943,8 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
   PBBattleScore::default_instance_ = new PBBattleScore();
   PBRecentData::default_instance_ = new PBRecentData();
   PBPlayerIds::default_instance_ = new PBPlayerIds();
+  PBApplicationlist::default_instance_ = new PBApplicationlist();
+  PBApplicationlists::default_instance_ = new PBApplicationlists();
   Vector3D::default_instance_->InitAsDefaultInstance();
   PBInt32::default_instance_->InitAsDefaultInstance();
   PBUIntUInt::default_instance_->InitAsDefaultInstance();
@@ -913,6 +969,8 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
   PBBattleScore::default_instance_->InitAsDefaultInstance();
   PBRecentData::default_instance_->InitAsDefaultInstance();
   PBPlayerIds::default_instance_->InitAsDefaultInstance();
+  PBApplicationlist::default_instance_->InitAsDefaultInstance();
+  PBApplicationlists::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFCommonMessage_2eproto);
 }
 
@@ -1134,6 +1192,8 @@ bool AckEnum_IsValid(int value) {
     case 10037:
     case 10038:
     case 10039:
+    case 10040:
+    case 10041:
     case 20000:
       return true;
     default:
@@ -1332,6 +1392,20 @@ bool FriendLinessEnum_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* GuildEnum_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GuildEnum_descriptor_;
+}
+bool GuildEnum_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -9112,6 +9186,506 @@ void PBPlayerIds::Swap(PBPlayerIds* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = PBPlayerIds_descriptor_;
   metadata.reflection = PBPlayerIds_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int PBApplicationlist::kPlayeridFieldNumber;
+const int PBApplicationlist::kTimeFieldNumber;
+const int PBApplicationlist::kBasicFieldNumber;
+#endif  // !_MSC_VER
+
+PBApplicationlist::PBApplicationlist()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void PBApplicationlist::InitAsDefaultInstance() {
+  basic_ = const_cast< ::KFMsg::PBStrings*>(&::KFMsg::PBStrings::default_instance());
+}
+
+PBApplicationlist::PBApplicationlist(const PBApplicationlist& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void PBApplicationlist::SharedCtor() {
+  _cached_size_ = 0;
+  playerid_ = 0u;
+  time_ = GOOGLE_ULONGLONG(0);
+  basic_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PBApplicationlist::~PBApplicationlist() {
+  SharedDtor();
+}
+
+void PBApplicationlist::SharedDtor() {
+  if (this != default_instance_) {
+    delete basic_;
+  }
+}
+
+void PBApplicationlist::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBApplicationlist::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBApplicationlist_descriptor_;
+}
+
+const PBApplicationlist& PBApplicationlist::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFCommonMessage_2eproto();
+  return *default_instance_;
+}
+
+PBApplicationlist* PBApplicationlist::default_instance_ = NULL;
+
+PBApplicationlist* PBApplicationlist::New() const {
+  return new PBApplicationlist;
+}
+
+void PBApplicationlist::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    playerid_ = 0u;
+    time_ = GOOGLE_ULONGLONG(0);
+    if (has_basic()) {
+      if (basic_ != NULL) basic_->::KFMsg::PBStrings::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool PBApplicationlist::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 playerid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &playerid_)));
+          set_has_playerid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_time;
+        break;
+      }
+
+      // required uint64 time = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &time_)));
+          set_has_time();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_basic;
+        break;
+      }
+
+      // required .KFMsg.PBStrings basic = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_basic:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_basic()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void PBApplicationlist::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint32 playerid = 1;
+  if (has_playerid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+  }
+
+  // required uint64 time = 2;
+  if (has_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->time(), output);
+  }
+
+  // required .KFMsg.PBStrings basic = 3;
+  if (has_basic()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->basic(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* PBApplicationlist::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 playerid = 1;
+  if (has_playerid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+  }
+
+  // required uint64 time = 2;
+  if (has_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->time(), target);
+  }
+
+  // required .KFMsg.PBStrings basic = 3;
+  if (has_basic()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->basic(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int PBApplicationlist::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 playerid = 1;
+    if (has_playerid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->playerid());
+    }
+
+    // required uint64 time = 2;
+    if (has_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->time());
+    }
+
+    // required .KFMsg.PBStrings basic = 3;
+    if (has_basic()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->basic());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBApplicationlist::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const PBApplicationlist* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PBApplicationlist*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void PBApplicationlist::MergeFrom(const PBApplicationlist& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_playerid()) {
+      set_playerid(from.playerid());
+    }
+    if (from.has_time()) {
+      set_time(from.time());
+    }
+    if (from.has_basic()) {
+      mutable_basic()->::KFMsg::PBStrings::MergeFrom(from.basic());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void PBApplicationlist::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBApplicationlist::CopyFrom(const PBApplicationlist& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBApplicationlist::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  return true;
+}
+
+void PBApplicationlist::Swap(PBApplicationlist* other) {
+  if (other != this) {
+    std::swap(playerid_, other->playerid_);
+    std::swap(time_, other->time_);
+    std::swap(basic_, other->basic_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata PBApplicationlist::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBApplicationlist_descriptor_;
+  metadata.reflection = PBApplicationlist_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int PBApplicationlists::kApplylistsFieldNumber;
+#endif  // !_MSC_VER
+
+PBApplicationlists::PBApplicationlists()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void PBApplicationlists::InitAsDefaultInstance() {
+}
+
+PBApplicationlists::PBApplicationlists(const PBApplicationlists& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void PBApplicationlists::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PBApplicationlists::~PBApplicationlists() {
+  SharedDtor();
+}
+
+void PBApplicationlists::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void PBApplicationlists::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBApplicationlists::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBApplicationlists_descriptor_;
+}
+
+const PBApplicationlists& PBApplicationlists::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFCommonMessage_2eproto();
+  return *default_instance_;
+}
+
+PBApplicationlists* PBApplicationlists::default_instance_ = NULL;
+
+PBApplicationlists* PBApplicationlists::New() const {
+  return new PBApplicationlists;
+}
+
+void PBApplicationlists::Clear() {
+  applylists_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool PBApplicationlists::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .KFMsg.PBApplicationlist applylists = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_applylists:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_applylists()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(10)) goto parse_applylists;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void PBApplicationlists::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // repeated .KFMsg.PBApplicationlist applylists = 1;
+  for (int i = 0; i < this->applylists_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->applylists(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* PBApplicationlists::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated .KFMsg.PBApplicationlist applylists = 1;
+  for (int i = 0; i < this->applylists_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->applylists(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int PBApplicationlists::ByteSize() const {
+  int total_size = 0;
+
+  // repeated .KFMsg.PBApplicationlist applylists = 1;
+  total_size += 1 * this->applylists_size();
+  for (int i = 0; i < this->applylists_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->applylists(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBApplicationlists::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const PBApplicationlists* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PBApplicationlists*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void PBApplicationlists::MergeFrom(const PBApplicationlists& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  applylists_.MergeFrom(from.applylists_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void PBApplicationlists::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBApplicationlists::CopyFrom(const PBApplicationlists& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBApplicationlists::IsInitialized() const {
+
+  for (int i = 0; i < applylists_size(); i++) {
+    if (!this->applylists(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void PBApplicationlists::Swap(PBApplicationlists* other) {
+  if (other != this) {
+    applylists_.Swap(&other->applylists_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata PBApplicationlists::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBApplicationlists_descriptor_;
+  metadata.reflection = PBApplicationlists_reflection_;
   return metadata;
 }
 

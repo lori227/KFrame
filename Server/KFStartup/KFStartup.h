@@ -25,7 +25,6 @@ namespace KFrame
         void ShutDown();
 
     public:
-        bool LoadPluginLibrarys();
         bool LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting  );
 
         // 卸载
