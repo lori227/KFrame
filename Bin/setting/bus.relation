@@ -49,6 +49,10 @@
 		<Connection AppName="relation" AppType="*" AppId="*" ConnectName="relation" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="relation" AppType="proxy" AppId="*" ConnectName="relation" ConnectType="shard" ConnectId="*"/>
 		<Connection AppName="relation" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
+		
+		<Connection AppName="guild" AppType="*" AppId="*" ConnectName="guild" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="guild" AppType="proxy" AppId="*" ConnectName="guild" ConnectType="shard" ConnectId="*"/>
+		<Connection AppName="guild" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 
 		<Connection AppName="group" AppType="*" AppId="*" ConnectName="group" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="group" AppType="proxy" AppId="*" ConnectName="group" ConnectType="shard" ConnectId="*"/>

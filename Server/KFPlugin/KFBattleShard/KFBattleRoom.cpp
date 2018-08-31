@@ -147,7 +147,7 @@ namespace KFrame
 
     void KFBattleRoom::SetValidTime()
     {
-        static auto _room_valid_time = _kf_option->GetValue< uint32 >( "roomvalidtime" );
+        static auto _room_valid_time = _kf_option->GetValue< uint32 >( "roomvalidtime" ) * KFTimeEnum::OneSecondMicSecond;
         _battle_valid_time = KFGlobal::Instance()->_game_time + _room_valid_time;
     }
 

@@ -2,8 +2,13 @@
 <Setting>
 	<Plugins AppName="guild" AppType="shard" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="110" Name="KFWorker" Config=""/>
 		<Plugin Sort="110" Name="KFClusterShard" Config=""/>
-		<Plugin Sort="120" Name="KFGuildShard" Config="./config/guild.config"/>
-		<Plugin Sort="130" Name="KFKernel" Config="./config/kernel.config"/>
+		<Plugin Sort="120" Name="KFSchedule" Config=""/>
+		<Plugin Sort="130" Name="KFDisplay" Config=""/>
+		<Plugin Sort="140" Name="KFOption" Config="./setting/option.setting"/>
+		<Plugin Sort="150" Name="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Sort="160" Name="KFKernel" Config="./config/class.config"/>
+		<Plugin Sort="170" Name="KFGuildShard" Config="./config/guild.config"/>
 	</Plugins>
 </Setting>

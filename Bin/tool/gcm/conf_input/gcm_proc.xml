@@ -48,9 +48,9 @@
 		<Proc FuncName="rank.proxy"     FuncID="92"  ProcName="rankserver" seq="0" WorkPath="rank" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/rank.proxy.startup"/>
 		<Proc FuncName="rank.shard"     FuncID="93"  ProcName="rankserver" seq="0" WorkPath="rank" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/rank.shard.startup"/>
         <!-- cluster guild -->
-		<!-- <Proc FuncName="guild.master"   FuncID="101"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.master.startup"/> -->
-		<!-- <Proc FuncName="guild.proxy"    FuncID="102"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.proxy.startup"/> -->
-		<!-- <Proc FuncName="guild.shard"    FuncID="103"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.shard.startup"/> -->
+		<Proc FuncName="guild.master"   FuncID="101"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.master.startup"/>
+		<Proc FuncName="guild.proxy"    FuncID="102"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.proxy.startup"/>
+		<Proc FuncName="guild.shard"    FuncID="103"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/guild.shard.startup"/>
         <!-- cluster log -->
 		<Proc FuncName="log.master"     FuncID="111"  ProcName="logserver" seq="0" WorkPath="log" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/log.master.startup"/>
 		<Proc FuncName="log.proxy"      FuncID="112"  ProcName="logserver" seq="0" WorkPath="log" ConfigPath="./" Agrs="appid=$channel.$zone.$function.$instance log=1 startup=./setting/log.proxy.startup"/>

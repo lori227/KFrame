@@ -42,7 +42,7 @@ namespace KFrame
 
         auto sevenflag = kfsignin->GetValue< uint32 >( __KF_STRING__( sevenreward ) );
         auto flag = 1u << kfmsg.day();
-        if ( !KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
+        if ( KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
         {
             return _kf_display->SendToClient( player, KFMsg::SignInRewardAlready );
         }

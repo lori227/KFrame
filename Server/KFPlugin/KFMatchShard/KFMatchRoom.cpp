@@ -197,7 +197,7 @@ namespace KFrame
     {
         // 设置战场开始的时间
         // 战场正式开始前10秒钟, 玩家不进入该战场了
-        _battle_start_time = KFGlobal::Instance()->_game_time + waittime - 10000;
+        _battle_start_time = KFGlobal::Instance()->_game_time + ( waittime * KFTimeEnum::OneSecondMicSecond ) - 10000;
 
         // 回复消息
         KFMsg::S2SOpenRoomToBattleShardAck ack;

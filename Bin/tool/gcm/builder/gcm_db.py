@@ -6,7 +6,7 @@ import pymysql
 class db_info:
     def __init__(self, h, p, u, pwd, db):
         self.host = h
-        self.port = p
+        self.port = int(p)
         self.user = u
         self.password = pwd
         self.database = db

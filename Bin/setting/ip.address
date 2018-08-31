@@ -95,6 +95,15 @@
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
 		</Server>
 
+		<!-- guild服务器 -->
+		<Server AppName="guild" AppType="master" AppId="0.0.101.1" Ip="127.0.0.1" Type="0" Port="10010">
+			<!--内网测试-->
+			<Channel ChannelId="101" Ip="192.168.1.57"/>
+
+			<!--外网测试-->
+			<Channel ChannelId="1" Ip="10.105.6.78"/>
+		</Server>
+
 		<!-- log服务器 -->
 		<Server AppName="log" AppType="master" AppId="0.0.111.1" Ip="127.0.0.1" Type="0" Port="10011">
 			<!--内网测试-->
