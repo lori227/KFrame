@@ -61,11 +61,6 @@ namespace KFrame
         return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
     }
 
-    bool KFMatchRoom::IsFull()
-    {
-        return _room_player_count >= _kf_match_queue->_kf_setting->_max_player_count;
-    }
-
     void KFMatchRoom::AddCamp( KFMatchCamp* kfcamp )
     {
         // 设置房间id
@@ -96,7 +91,13 @@ namespace KFrame
         }
 
         // 停止添加阵营, 判断人数
-        if ( _is_stop_add_camp || IsFull() )
+        if ( _is_stop_add_camp )
+        {
+            return false;
+        }
+
+        // 最大人数限制
+        if ( _room_player_count + playercount > _kf_match_queue->_kf_setting->_max_player_count )
         {
             return false;
         }
@@ -108,12 +109,6 @@ namespace KFrame
             {
                 return false;
             }
-        }
-
-        // 最大人数限制
-        if ( _room_player_count + playercount > _kf_match_queue->_kf_setting->_max_player_count )
-        {
-            return false;
         }
 
         return true;

@@ -15,9 +15,6 @@ namespace KFrame
         // 初始化
         void Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid );
 
-        // 判断是否满了
-        bool IsFull();
-
         // 是否正在等待匹配
         bool IsWaitMatch( uint32 battleserverid, uint32 playercount );
 

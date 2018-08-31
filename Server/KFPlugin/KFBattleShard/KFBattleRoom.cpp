@@ -86,12 +86,12 @@ namespace KFrame
             return nullptr;
         }
 
-        // 人数已经满了
-        if ( _total_player_count + pbcamp->pbplayer_size() > _max_player_count )
-        {
-            __LOG_ERROR__( KFLogEnum::Logic, "battle room[{}] is full!", _battle_room_id );
-            return nullptr;
-        }
+        //// 人数已经满了
+        //if ( _total_player_count + pbcamp->pbplayer_size() > _max_player_count )
+        //{
+        //    __LOG_ERROR__( KFLogEnum::Logic, "battle room[{}] is full!", _battle_room_id );
+        //    return nullptr;
+        //}
 
         auto kfcamp = _kf_camp_list.Find( pbcamp->campid() );
         if ( kfcamp == nullptr )
