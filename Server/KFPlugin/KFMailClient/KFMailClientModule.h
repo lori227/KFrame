@@ -41,11 +41,14 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 发送邮件到自己
-        virtual bool SendMail( KFEntity* receiverplayer, uint32 mailconfigid, const KFAgents* kfagents = nullptr );
+        // 发送邮件
+        virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents );
 
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* senderplayer, const KFGuid& receiverguid, uint32 mailconfigid, const KFAgents* kfagents = nullptr, const std::string& extend = "" );
+        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const KFAgents* kfagents );
+
+        // 发送邮件到对方
+        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const std::string& extend );
 
     protected:
 
@@ -68,12 +71,6 @@ namespace KFrame
 
         // 处理邮件状态重置反馈
         __KF_MESSAGE_FUNCTION__( HandleUpdateMailFlagAck );
-
-        // 处理玩家敬酒请求
-        __KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
-
-        // 处理玩家敬酒回馈
-        __KF_MESSAGE_FUNCTION__( HandlePlayerToastAck );
 
         // 定时查询邮件变化
         __KF_TIMER_FUNCTION__( OnTimerQueryMail );
@@ -114,7 +111,7 @@ namespace KFrame
         KFData* ParsePBMailToData( const KFMsg::PBMail* pbmail, const KFDataSetting* kfsetting );
 
         // 格式化邮件内容
-        void FormatMailData( const KFMailSetting* kfsetting, MapString& maildata, const KFAgents* kfagents, KFEntity* sender = nullptr, const std::string& extend = "" );
+        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFAgents* kfagents, const std::string& extend );
 
         // 发送添加邮件
         bool SendAddMailToCluster( uint32 serverid, uint32 playerid, uint32 mailtype, const MapString& maildata );

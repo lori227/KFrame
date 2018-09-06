@@ -73,7 +73,7 @@ namespace KFrame
 
     void KFEntityEx::InitData( KFComponentEx* kfcomponent, const std::string& dataname )
     {
-        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+        static auto _global_class_name = _kf_option->GetValue< std::string >( __KF_STRING__( globalclassname ) );
 
         _kf_component = kfcomponent;
         _kf_object = KFDataFactory::CreateData( _global_class_name, dataname );
@@ -376,8 +376,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line )
     {
-        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player[{}] add agent[:.2f][{}]",
-                               GetKeyID(), multiple, kfagents->_string );
+        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player[{}] add agent[{:0.2f}][{}]", GetKeyID(), multiple, kfagents->_string );
 
         for ( auto& kfagent : kfagents->_agents )
         {

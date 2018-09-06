@@ -25,9 +25,11 @@ namespace KFrame
         // º”‘ÿ≈‰÷√
         virtual void InitModule();
 
+        // —”≥Ÿ¬ﬂº≠
+        virtual void AfterRun();
+
         // πÿ±’
         virtual void BeforeShut();
-        virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // ¥¥Ω®Execute

@@ -50,8 +50,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!",
-                               _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvale;
         }
@@ -68,8 +67,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!",
-                               _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }
@@ -77,7 +75,7 @@ namespace KFrame
         return KFUtility::ToValue<uint32>( attribute->value() );
     }
 
-    std::string KFNode::GetString( const char* key, bool optional /* = false */ )
+    std::string KFNode::GetString( const char* key, bool optional /* = false */, const std::string& defaultvalue /* = "" */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
@@ -86,10 +84,9 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!",
-                               _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
-            return _invalid_str;
+            return defaultvalue;
         }
 
         return attribute->value();
@@ -104,8 +101,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!",
-                               _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( KFLogEnum::Init, "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }

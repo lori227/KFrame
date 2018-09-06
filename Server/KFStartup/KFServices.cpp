@@ -77,10 +77,6 @@ namespace KFrame
         auto strappid = params[ __KF_STRING__( appid ) ];
         ParseAppId( strappid );
 
-        // 初始化log
-        auto strlogtype = params[ __KF_STRING__( log ) ];
-        kfglobal->InitLogger( strlogtype );
-
         // 读取启动配置
         auto strfile = params[ __KF_STRING__( startup ) ];
         if ( !_kf_startup->InitStartup( strfile ) )
@@ -91,6 +87,12 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
 #endif
+
+        // 初始化log
+        auto strlogtype = params[ __KF_STRING__( log ) ];
+        kfglobal->InitLogger( strlogtype );
+
+
         // 加载插件
         if ( !_kf_startup->LoadPlugin() )
         {

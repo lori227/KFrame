@@ -3116,20 +3116,30 @@ class LIBPROTOC_EXPORT S2STellBattleRoomStartReq : public ::google::protobuf::Me
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
+  // required uint32 maxtime = 3;
+  inline bool has_maxtime() const;
+  inline void clear_maxtime();
+  static const int kMaxtimeFieldNumber = 3;
+  inline ::google::protobuf::uint32 maxtime() const;
+  inline void set_maxtime(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2STellBattleRoomStartReq)
  private:
   inline void set_has_battleshardid();
   inline void clear_has_battleshardid();
   inline void set_has_roomid();
   inline void clear_has_roomid();
+  inline void set_has_maxtime();
+  inline void clear_has_maxtime();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 battleshardid_;
+  ::google::protobuf::uint32 maxtime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -3201,17 +3211,27 @@ class LIBPROTOC_EXPORT S2STellRoomStartToBattleShardReq : public ::google::proto
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
+  // required uint32 maxtime = 2;
+  inline bool has_maxtime() const;
+  inline void clear_maxtime();
+  static const int kMaxtimeFieldNumber = 2;
+  inline ::google::protobuf::uint32 maxtime() const;
+  inline void set_maxtime(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2STellRoomStartToBattleShardReq)
  private:
   inline void set_has_roomid();
   inline void clear_has_roomid();
+  inline void set_has_maxtime();
+  inline void clear_has_maxtime();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint32 maxtime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -3656,22 +3676,6 @@ class LIBPROTOC_EXPORT S2STellBattleRoomFinishAck : public ::google::protobuf::M
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // repeated string pbscore = 2;
-  inline int pbscore_size() const;
-  inline void clear_pbscore();
-  static const int kPbscoreFieldNumber = 2;
-  inline const ::std::string& pbscore(int index) const;
-  inline ::std::string* mutable_pbscore(int index);
-  inline void set_pbscore(int index, const ::std::string& value);
-  inline void set_pbscore(int index, const char* value);
-  inline void set_pbscore(int index, const char* value, size_t size);
-  inline ::std::string* add_pbscore();
-  inline void add_pbscore(const ::std::string& value);
-  inline void add_pbscore(const char* value);
-  inline void add_pbscore(const char* value, size_t size);
-  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& pbscore() const;
-  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_pbscore();
-
   // @@protoc_insertion_point(class_scope:KFMsg.S2STellBattleRoomFinishAck)
  private:
   inline void set_has_roomid();
@@ -3680,10 +3684,9 @@ class LIBPROTOC_EXPORT S2STellBattleRoomFinishAck : public ::google::protobuf::M
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::RepeatedPtrField< ::std::string> pbscore_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -6881,6 +6884,28 @@ inline void S2STellBattleRoomStartReq::set_roomid(::google::protobuf::uint64 val
   roomid_ = value;
 }
 
+// required uint32 maxtime = 3;
+inline bool S2STellBattleRoomStartReq::has_maxtime() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2STellBattleRoomStartReq::set_has_maxtime() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2STellBattleRoomStartReq::clear_has_maxtime() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2STellBattleRoomStartReq::clear_maxtime() {
+  maxtime_ = 0u;
+  clear_has_maxtime();
+}
+inline ::google::protobuf::uint32 S2STellBattleRoomStartReq::maxtime() const {
+  return maxtime_;
+}
+inline void S2STellBattleRoomStartReq::set_maxtime(::google::protobuf::uint32 value) {
+  set_has_maxtime();
+  maxtime_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2STellRoomStartToBattleShardReq
@@ -6905,6 +6930,28 @@ inline ::google::protobuf::uint64 S2STellRoomStartToBattleShardReq::roomid() con
 inline void S2STellRoomStartToBattleShardReq::set_roomid(::google::protobuf::uint64 value) {
   set_has_roomid();
   roomid_ = value;
+}
+
+// required uint32 maxtime = 2;
+inline bool S2STellRoomStartToBattleShardReq::has_maxtime() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2STellRoomStartToBattleShardReq::set_has_maxtime() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2STellRoomStartToBattleShardReq::clear_has_maxtime() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2STellRoomStartToBattleShardReq::clear_maxtime() {
+  maxtime_ = 0u;
+  clear_has_maxtime();
+}
+inline ::google::protobuf::uint32 S2STellRoomStartToBattleShardReq::maxtime() const {
+  return maxtime_;
+}
+inline void S2STellRoomStartToBattleShardReq::set_maxtime(::google::protobuf::uint32 value) {
+  set_has_maxtime();
+  maxtime_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -7171,50 +7218,6 @@ inline ::google::protobuf::uint64 S2STellBattleRoomFinishAck::roomid() const {
 inline void S2STellBattleRoomFinishAck::set_roomid(::google::protobuf::uint64 value) {
   set_has_roomid();
   roomid_ = value;
-}
-
-// repeated string pbscore = 2;
-inline int S2STellBattleRoomFinishAck::pbscore_size() const {
-  return pbscore_.size();
-}
-inline void S2STellBattleRoomFinishAck::clear_pbscore() {
-  pbscore_.Clear();
-}
-inline const ::std::string& S2STellBattleRoomFinishAck::pbscore(int index) const {
-  return pbscore_.Get(index);
-}
-inline ::std::string* S2STellBattleRoomFinishAck::mutable_pbscore(int index) {
-  return pbscore_.Mutable(index);
-}
-inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const ::std::string& value) {
-  pbscore_.Mutable(index)->assign(value);
-}
-inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const char* value) {
-  pbscore_.Mutable(index)->assign(value);
-}
-inline void S2STellBattleRoomFinishAck::set_pbscore(int index, const char* value, size_t size) {
-  pbscore_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* S2STellBattleRoomFinishAck::add_pbscore() {
-  return pbscore_.Add();
-}
-inline void S2STellBattleRoomFinishAck::add_pbscore(const ::std::string& value) {
-  pbscore_.Add()->assign(value);
-}
-inline void S2STellBattleRoomFinishAck::add_pbscore(const char* value) {
-  pbscore_.Add()->assign(value);
-}
-inline void S2STellBattleRoomFinishAck::add_pbscore(const char* value, size_t size) {
-  pbscore_.Add()->assign(reinterpret_cast<const char*>(value), size);
-}
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-S2STellBattleRoomFinishAck::pbscore() const {
-  return pbscore_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-S2STellBattleRoomFinishAck::mutable_pbscore() {
-  return &pbscore_;
 }
 
 // -------------------------------------------------------------------

@@ -75,7 +75,7 @@ class S2SQueryMailAck;
 class S2SDeleteMailReq;
 class S2SAddMailReq;
 class S2SNoticeNewMailReq;
-class PBFriend;
+class PBRelation;
 class S2SQueryFriendReq;
 class S2SQueryFriendInviteReq;
 class S2SQueryFriendAck;
@@ -98,7 +98,6 @@ class S2SUpdateMailFlagAck;
 class S2SPlayerToastReq;
 class S2SPlayerToastAck;
 class S2SQueryToastCountReq;
-class S2SQueryToastCountAck;
 class S2SUpdateFriendLinessAck;
 class S2SCreateMatchGroupReq;
 class S2SUpdateGroupMatchReq;
@@ -127,9 +126,7 @@ class S2SNewPlayerLoginMailReq;
 class S2SUpdateRankDataReq;
 class S2SQueryRankListReq;
 class S2SQueryFriendRankListReq;
-class S2SAddBattleFriendDataReq;
-class PBUidsInfo;
-class PBUidBasic;
+class S2SAddRecentPlayerDataReq;
 class S2SQueryRecentListReq;
 class S2SQueryRecentListAck;
 class S2SCreateGuidReq;
@@ -233,7 +230,7 @@ enum ServerProtocol {
   S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188,
   S2S_TELL_MATCH_GROUP_DATA_ACK = 21192,
   S2S_UPDATE_RANK_DATA_REQ = 21193,
-  S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194,
+  S2S_ADD_RECENT_PLAYER_DATA_REQ = 21194,
   S2S_QUERY_RECENT_LIST_REQ = 21195,
   S2S_QUERY_RECENT_LIST_ACK = 21196,
   S2S_CREATE_GUILD_REQ = 21197,
@@ -4602,14 +4599,14 @@ class LIBPROTOC_EXPORT S2SNoticeNewMailReq : public ::google::protobuf::Message 
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT PBFriend : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT PBRelation : public ::google::protobuf::Message {
  public:
-  PBFriend();
-  virtual ~PBFriend();
+  PBRelation();
+  virtual ~PBRelation();
 
-  PBFriend(const PBFriend& from);
+  PBRelation(const PBRelation& from);
 
-  inline PBFriend& operator=(const PBFriend& from) {
+  inline PBRelation& operator=(const PBRelation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -4623,17 +4620,17 @@ class LIBPROTOC_EXPORT PBFriend : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PBFriend& default_instance();
+  static const PBRelation& default_instance();
 
-  void Swap(PBFriend* other);
+  void Swap(PBRelation* other);
 
   // implements Message ----------------------------------------------
 
-  PBFriend* New() const;
+  PBRelation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBFriend& from);
-  void MergeFrom(const PBFriend& from);
+  void CopyFrom(const PBRelation& from);
+  void MergeFrom(const PBRelation& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -4663,39 +4660,37 @@ class LIBPROTOC_EXPORT PBFriend : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // repeated .KFMsg.PBString playerdata = 2;
-  inline int playerdata_size() const;
+  // required .KFMsg.PBStrings playerdata = 2;
+  inline bool has_playerdata() const;
   inline void clear_playerdata();
   static const int kPlayerdataFieldNumber = 2;
-  inline const ::KFMsg::PBString& playerdata(int index) const;
-  inline ::KFMsg::PBString* mutable_playerdata(int index);
-  inline ::KFMsg::PBString* add_playerdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-      playerdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-      mutable_playerdata();
+  inline const ::KFMsg::PBStrings& playerdata() const;
+  inline ::KFMsg::PBStrings* mutable_playerdata();
+  inline ::KFMsg::PBStrings* release_playerdata();
+  inline void set_allocated_playerdata(::KFMsg::PBStrings* playerdata);
 
-  // repeated .KFMsg.PBString frienddata = 3;
-  inline int frienddata_size() const;
-  inline void clear_frienddata();
-  static const int kFrienddataFieldNumber = 3;
-  inline const ::KFMsg::PBString& frienddata(int index) const;
-  inline ::KFMsg::PBString* mutable_frienddata(int index);
-  inline ::KFMsg::PBString* add_frienddata();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-      frienddata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-      mutable_frienddata();
+  // required .KFMsg.PBStrings relationdata = 3;
+  inline bool has_relationdata() const;
+  inline void clear_relationdata();
+  static const int kRelationdataFieldNumber = 3;
+  inline const ::KFMsg::PBStrings& relationdata() const;
+  inline ::KFMsg::PBStrings* mutable_relationdata();
+  inline ::KFMsg::PBStrings* release_relationdata();
+  inline void set_allocated_relationdata(::KFMsg::PBStrings* relationdata);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.PBFriend)
+  // @@protoc_insertion_point(class_scope:KFMsg.PBRelation)
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_playerdata();
+  inline void clear_has_playerdata();
+  inline void set_has_relationdata();
+  inline void clear_has_relationdata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > playerdata_;
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > frienddata_;
+  ::KFMsg::PBStrings* playerdata_;
+  ::KFMsg::PBStrings* relationdata_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
@@ -4706,7 +4701,7 @@ class LIBPROTOC_EXPORT PBFriend : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static PBFriend* default_instance_;
+  static PBRelation* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4955,16 +4950,16 @@ class LIBPROTOC_EXPORT S2SQueryFriendAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // repeated .KFMsg.PBFriend pbfriend = 2;
+  // repeated .KFMsg.PBRelation pbfriend = 2;
   inline int pbfriend_size() const;
   inline void clear_pbfriend();
   static const int kPbfriendFieldNumber = 2;
-  inline const ::KFMsg::PBFriend& pbfriend(int index) const;
-  inline ::KFMsg::PBFriend* mutable_pbfriend(int index);
-  inline ::KFMsg::PBFriend* add_pbfriend();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >&
+  inline const ::KFMsg::PBRelation& pbfriend(int index) const;
+  inline ::KFMsg::PBRelation* mutable_pbfriend(int index);
+  inline ::KFMsg::PBRelation* add_pbfriend();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
       pbfriend() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >*
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
       mutable_pbfriend();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendAck)
@@ -4974,7 +4969,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendAck : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend > pbfriend_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbfriend_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
@@ -5050,16 +5045,16 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteAck : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // repeated .KFMsg.PBFriend pbfriend = 2;
+  // repeated .KFMsg.PBRelation pbfriend = 2;
   inline int pbfriend_size() const;
   inline void clear_pbfriend();
   static const int kPbfriendFieldNumber = 2;
-  inline const ::KFMsg::PBFriend& pbfriend(int index) const;
-  inline ::KFMsg::PBFriend* mutable_pbfriend(int index);
-  inline ::KFMsg::PBFriend* add_pbfriend();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >&
+  inline const ::KFMsg::PBRelation& pbfriend(int index) const;
+  inline ::KFMsg::PBRelation* mutable_pbfriend(int index);
+  inline ::KFMsg::PBRelation* add_pbfriend();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
       pbfriend() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >*
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
       mutable_pbfriend();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendInviteAck)
@@ -5069,7 +5064,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteAck : public ::google::protobuf::Mess
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend > pbfriend_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbfriend_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
@@ -5277,14 +5272,14 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteAck : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBFriend pbfriend = 2;
+  // required .KFMsg.PBRelation pbfriend = 2;
   inline bool has_pbfriend() const;
   inline void clear_pbfriend();
   static const int kPbfriendFieldNumber = 2;
-  inline const ::KFMsg::PBFriend& pbfriend() const;
-  inline ::KFMsg::PBFriend* mutable_pbfriend();
-  inline ::KFMsg::PBFriend* release_pbfriend();
-  inline void set_allocated_pbfriend(::KFMsg::PBFriend* pbfriend);
+  inline const ::KFMsg::PBRelation& pbfriend() const;
+  inline ::KFMsg::PBRelation* mutable_pbfriend();
+  inline ::KFMsg::PBRelation* release_pbfriend();
+  inline void set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendInviteAck)
  private:
@@ -5295,7 +5290,7 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteAck : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::KFMsg::PBFriend* pbfriend_;
+  ::KFMsg::PBRelation* pbfriend_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
@@ -5764,14 +5759,14 @@ class LIBPROTOC_EXPORT S2SAddFriendAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBFriend pbfriend = 2;
+  // required .KFMsg.PBRelation pbfriend = 2;
   inline bool has_pbfriend() const;
   inline void clear_pbfriend();
   static const int kPbfriendFieldNumber = 2;
-  inline const ::KFMsg::PBFriend& pbfriend() const;
-  inline ::KFMsg::PBFriend* mutable_pbfriend();
-  inline ::KFMsg::PBFriend* release_pbfriend();
-  inline void set_allocated_pbfriend(::KFMsg::PBFriend* pbfriend);
+  inline const ::KFMsg::PBRelation& pbfriend() const;
+  inline ::KFMsg::PBRelation* mutable_pbfriend();
+  inline ::KFMsg::PBRelation* release_pbfriend();
+  inline void set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendAck)
  private:
@@ -5782,7 +5777,7 @@ class LIBPROTOC_EXPORT S2SAddFriendAck : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::KFMsg::PBFriend* pbfriend_;
+  ::KFMsg::PBRelation* pbfriend_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
@@ -6683,12 +6678,12 @@ class LIBPROTOC_EXPORT S2SPlayerToastReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 targetplayerid() const;
   inline void set_targetplayerid(::google::protobuf::uint32 value);
 
-  // required uint32 dailygetlimit = 3;
-  inline bool has_dailygetlimit() const;
-  inline void clear_dailygetlimit();
-  static const int kDailygetlimitFieldNumber = 3;
-  inline ::google::protobuf::uint32 dailygetlimit() const;
-  inline void set_dailygetlimit(::google::protobuf::uint32 value);
+  // required uint32 serverid = 3;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 3;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SPlayerToastReq)
  private:
@@ -6696,14 +6691,14 @@ class LIBPROTOC_EXPORT S2SPlayerToastReq : public ::google::protobuf::Message {
   inline void clear_has_selfplayerid();
   inline void set_has_targetplayerid();
   inline void clear_has_targetplayerid();
-  inline void set_has_dailygetlimit();
-  inline void clear_has_dailygetlimit();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 selfplayerid_;
   ::google::protobuf::uint32 targetplayerid_;
-  ::google::protobuf::uint32 dailygetlimit_;
+  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -6918,108 +6913,6 @@ class LIBPROTOC_EXPORT S2SQueryToastCountReq : public ::google::protobuf::Messag
 
   void InitAsDefaultInstance();
   static S2SQueryToastCountReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SQueryToastCountAck : public ::google::protobuf::Message {
- public:
-  S2SQueryToastCountAck();
-  virtual ~S2SQueryToastCountAck();
-
-  S2SQueryToastCountAck(const S2SQueryToastCountAck& from);
-
-  inline S2SQueryToastCountAck& operator=(const S2SQueryToastCountAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SQueryToastCountAck& default_instance();
-
-  void Swap(S2SQueryToastCountAck* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SQueryToastCountAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SQueryToastCountAck& from);
-  void MergeFrom(const S2SQueryToastCountAck& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 playerid = 1;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required uint32 targetplayerid = 2;
-  inline bool has_targetplayerid() const;
-  inline void clear_targetplayerid();
-  static const int kTargetplayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 targetplayerid() const;
-  inline void set_targetplayerid(::google::protobuf::uint32 value);
-
-  // required uint32 toastcount = 3;
-  inline bool has_toastcount() const;
-  inline void clear_toastcount();
-  static const int kToastcountFieldNumber = 3;
-  inline ::google::protobuf::uint32 toastcount() const;
-  inline void set_toastcount(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryToastCountAck)
- private:
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_targetplayerid();
-  inline void clear_has_targetplayerid();
-  inline void set_has_toastcount();
-  inline void clear_has_toastcount();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 targetplayerid_;
-  ::google::protobuf::uint32 toastcount_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SQueryToastCountAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10058,14 +9951,14 @@ class LIBPROTOC_EXPORT S2SQueryFriendRankListReq : public ::google::protobuf::Me
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAddBattleFriendDataReq : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SAddRecentPlayerDataReq : public ::google::protobuf::Message {
  public:
-  S2SAddBattleFriendDataReq();
-  virtual ~S2SAddBattleFriendDataReq();
+  S2SAddRecentPlayerDataReq();
+  virtual ~S2SAddRecentPlayerDataReq();
 
-  S2SAddBattleFriendDataReq(const S2SAddBattleFriendDataReq& from);
+  S2SAddRecentPlayerDataReq(const S2SAddRecentPlayerDataReq& from);
 
-  inline S2SAddBattleFriendDataReq& operator=(const S2SAddBattleFriendDataReq& from) {
+  inline S2SAddRecentPlayerDataReq& operator=(const S2SAddRecentPlayerDataReq& from) {
     CopyFrom(from);
     return *this;
   }
@@ -10079,17 +9972,17 @@ class LIBPROTOC_EXPORT S2SAddBattleFriendDataReq : public ::google::protobuf::Me
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAddBattleFriendDataReq& default_instance();
+  static const S2SAddRecentPlayerDataReq& default_instance();
 
-  void Swap(S2SAddBattleFriendDataReq* other);
+  void Swap(S2SAddRecentPlayerDataReq* other);
 
   // implements Message ----------------------------------------------
 
-  S2SAddBattleFriendDataReq* New() const;
+  S2SAddRecentPlayerDataReq* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SAddBattleFriendDataReq& from);
-  void MergeFrom(const S2SAddBattleFriendDataReq& from);
+  void CopyFrom(const S2SAddRecentPlayerDataReq& from);
+  void MergeFrom(const S2SAddRecentPlayerDataReq& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -10112,208 +10005,66 @@ class LIBPROTOC_EXPORT S2SAddBattleFriendDataReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBRecentData recentdata = 1;
-  inline int recentdata_size() const;
-  inline void clear_recentdata();
-  static const int kRecentdataFieldNumber = 1;
-  inline const ::KFMsg::PBRecentData& recentdata(int index) const;
-  inline ::KFMsg::PBRecentData* mutable_recentdata(int index);
-  inline ::KFMsg::PBRecentData* add_recentdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >&
-      recentdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >*
-      mutable_recentdata();
+  // required uint64 roomid = 1;
+  inline bool has_roomid() const;
+  inline void clear_roomid();
+  static const int kRoomidFieldNumber = 1;
+  inline ::google::protobuf::uint64 roomid() const;
+  inline void set_roomid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddBattleFriendDataReq)
+  // required uint32 playerid = 2;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // repeated uint32 members = 3;
+  inline int members_size() const;
+  inline void clear_members();
+  static const int kMembersFieldNumber = 3;
+  inline ::google::protobuf::uint32 members(int index) const;
+  inline void set_members(int index, ::google::protobuf::uint32 value);
+  inline void add_members(::google::protobuf::uint32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      members() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_members();
+
+  // required .KFMsg.PBStrings pbdata = 4;
+  inline bool has_pbdata() const;
+  inline void clear_pbdata();
+  static const int kPbdataFieldNumber = 4;
+  inline const ::KFMsg::PBStrings& pbdata() const;
+  inline ::KFMsg::PBStrings* mutable_pbdata();
+  inline ::KFMsg::PBStrings* release_pbdata();
+  inline void set_allocated_pbdata(::KFMsg::PBStrings* pbdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddRecentPlayerDataReq)
  private:
+  inline void set_has_roomid();
+  inline void clear_has_roomid();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_pbdata();
+  inline void clear_has_pbdata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData > recentdata_;
+  ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > members_;
+  ::KFMsg::PBStrings* pbdata_;
+  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
   friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SAddBattleFriendDataReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT PBUidsInfo : public ::google::protobuf::Message {
- public:
-  PBUidsInfo();
-  virtual ~PBUidsInfo();
-
-  PBUidsInfo(const PBUidsInfo& from);
-
-  inline PBUidsInfo& operator=(const PBUidsInfo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBUidsInfo& default_instance();
-
-  void Swap(PBUidsInfo* other);
-
-  // implements Message ----------------------------------------------
-
-  PBUidsInfo* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBUidsInfo& from);
-  void MergeFrom(const PBUidsInfo& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated string uidsinfo = 1;
-  inline int uidsinfo_size() const;
-  inline void clear_uidsinfo();
-  static const int kUidsinfoFieldNumber = 1;
-  inline const ::std::string& uidsinfo(int index) const;
-  inline ::std::string* mutable_uidsinfo(int index);
-  inline void set_uidsinfo(int index, const ::std::string& value);
-  inline void set_uidsinfo(int index, const char* value);
-  inline void set_uidsinfo(int index, const char* value, size_t size);
-  inline ::std::string* add_uidsinfo();
-  inline void add_uidsinfo(const ::std::string& value);
-  inline void add_uidsinfo(const char* value);
-  inline void add_uidsinfo(const char* value, size_t size);
-  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& uidsinfo() const;
-  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_uidsinfo();
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBUidsInfo)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::RepeatedPtrField< ::std::string> uidsinfo_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PBUidsInfo* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT PBUidBasic : public ::google::protobuf::Message {
- public:
-  PBUidBasic();
-  virtual ~PBUidBasic();
-
-  PBUidBasic(const PBUidBasic& from);
-
-  inline PBUidBasic& operator=(const PBUidBasic& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBUidBasic& default_instance();
-
-  void Swap(PBUidBasic* other);
-
-  // implements Message ----------------------------------------------
-
-  PBUidBasic* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBUidBasic& from);
-  void MergeFrom(const PBUidBasic& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated .KFMsg.PBStrings basicdata = 1;
-  inline int basicdata_size() const;
-  inline void clear_basicdata();
-  static const int kBasicdataFieldNumber = 1;
-  inline const ::KFMsg::PBStrings& basicdata(int index) const;
-  inline ::KFMsg::PBStrings* mutable_basicdata(int index);
-  inline ::KFMsg::PBStrings* add_basicdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
-      basicdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
-      mutable_basicdata();
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBUidBasic)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings > basicdata_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PBUidBasic* default_instance_;
+  static S2SAddRecentPlayerDataReq* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10460,63 +10211,30 @@ class LIBPROTOC_EXPORT S2SQueryRecentListAck : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required .KFMsg.PBPlayerIds uids = 2;
-  inline bool has_uids() const;
-  inline void clear_uids();
-  static const int kUidsFieldNumber = 2;
-  inline const ::KFMsg::PBPlayerIds& uids() const;
-  inline ::KFMsg::PBPlayerIds* mutable_uids();
-  inline ::KFMsg::PBPlayerIds* release_uids();
-  inline void set_allocated_uids(::KFMsg::PBPlayerIds* uids);
-
-  // required uint32 operate = 3;
-  inline bool has_operate() const;
-  inline void clear_operate();
-  static const int kOperateFieldNumber = 3;
-  inline ::google::protobuf::uint32 operate() const;
-  inline void set_operate(::google::protobuf::uint32 value);
-
-  // optional .KFMsg.PBUidsInfo uidsinfos = 4;
-  inline bool has_uidsinfos() const;
-  inline void clear_uidsinfos();
-  static const int kUidsinfosFieldNumber = 4;
-  inline const ::KFMsg::PBUidsInfo& uidsinfos() const;
-  inline ::KFMsg::PBUidsInfo* mutable_uidsinfos();
-  inline ::KFMsg::PBUidsInfo* release_uidsinfos();
-  inline void set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos);
-
-  // optional .KFMsg.PBUidBasic basicdatas = 5;
-  inline bool has_basicdatas() const;
-  inline void clear_basicdatas();
-  static const int kBasicdatasFieldNumber = 5;
-  inline const ::KFMsg::PBUidBasic& basicdatas() const;
-  inline ::KFMsg::PBUidBasic* mutable_basicdatas();
-  inline ::KFMsg::PBUidBasic* release_basicdatas();
-  inline void set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas);
+  // repeated .KFMsg.PBRelation pbrelation = 2;
+  inline int pbrelation_size() const;
+  inline void clear_pbrelation();
+  static const int kPbrelationFieldNumber = 2;
+  inline const ::KFMsg::PBRelation& pbrelation(int index) const;
+  inline ::KFMsg::PBRelation* mutable_pbrelation(int index);
+  inline ::KFMsg::PBRelation* add_pbrelation();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
+      pbrelation() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
+      mutable_pbrelation();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRecentListAck)
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
-  inline void set_has_uids();
-  inline void clear_has_uids();
-  inline void set_has_operate();
-  inline void clear_has_operate();
-  inline void set_has_uidsinfos();
-  inline void clear_has_uidsinfos();
-  inline void set_has_basicdatas();
-  inline void clear_has_basicdatas();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::KFMsg::PBPlayerIds* uids_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbrelation_;
   ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 operate_;
-  ::KFMsg::PBUidsInfo* uidsinfos_;
-  ::KFMsg::PBUidBasic* basicdatas_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -15839,78 +15557,104 @@ inline void S2SNoticeNewMailReq::set_mailtype(::google::protobuf::uint32 value) 
 
 // -------------------------------------------------------------------
 
-// PBFriend
+// PBRelation
 
 // required uint32 playerid = 1;
-inline bool PBFriend::has_playerid() const {
+inline bool PBRelation::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PBFriend::set_has_playerid() {
+inline void PBRelation::set_has_playerid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PBFriend::clear_has_playerid() {
+inline void PBRelation::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void PBFriend::clear_playerid() {
+inline void PBRelation::clear_playerid() {
   playerid_ = 0u;
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBFriend::playerid() const {
+inline ::google::protobuf::uint32 PBRelation::playerid() const {
   return playerid_;
 }
-inline void PBFriend::set_playerid(::google::protobuf::uint32 value) {
+inline void PBRelation::set_playerid(::google::protobuf::uint32 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// repeated .KFMsg.PBString playerdata = 2;
-inline int PBFriend::playerdata_size() const {
-  return playerdata_.size();
+// required .KFMsg.PBStrings playerdata = 2;
+inline bool PBRelation::has_playerdata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PBFriend::clear_playerdata() {
-  playerdata_.Clear();
+inline void PBRelation::set_has_playerdata() {
+  _has_bits_[0] |= 0x00000002u;
 }
-inline const ::KFMsg::PBString& PBFriend::playerdata(int index) const {
-  return playerdata_.Get(index);
+inline void PBRelation::clear_has_playerdata() {
+  _has_bits_[0] &= ~0x00000002u;
 }
-inline ::KFMsg::PBString* PBFriend::mutable_playerdata(int index) {
-  return playerdata_.Mutable(index);
+inline void PBRelation::clear_playerdata() {
+  if (playerdata_ != NULL) playerdata_->::KFMsg::PBStrings::Clear();
+  clear_has_playerdata();
 }
-inline ::KFMsg::PBString* PBFriend::add_playerdata() {
-  return playerdata_.Add();
+inline const ::KFMsg::PBStrings& PBRelation::playerdata() const {
+  return playerdata_ != NULL ? *playerdata_ : *default_instance_->playerdata_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-PBFriend::playerdata() const {
+inline ::KFMsg::PBStrings* PBRelation::mutable_playerdata() {
+  set_has_playerdata();
+  if (playerdata_ == NULL) playerdata_ = new ::KFMsg::PBStrings;
   return playerdata_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-PBFriend::mutable_playerdata() {
-  return &playerdata_;
+inline ::KFMsg::PBStrings* PBRelation::release_playerdata() {
+  clear_has_playerdata();
+  ::KFMsg::PBStrings* temp = playerdata_;
+  playerdata_ = NULL;
+  return temp;
+}
+inline void PBRelation::set_allocated_playerdata(::KFMsg::PBStrings* playerdata) {
+  delete playerdata_;
+  playerdata_ = playerdata;
+  if (playerdata) {
+    set_has_playerdata();
+  } else {
+    clear_has_playerdata();
+  }
 }
 
-// repeated .KFMsg.PBString frienddata = 3;
-inline int PBFriend::frienddata_size() const {
-  return frienddata_.size();
+// required .KFMsg.PBStrings relationdata = 3;
+inline bool PBRelation::has_relationdata() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void PBFriend::clear_frienddata() {
-  frienddata_.Clear();
+inline void PBRelation::set_has_relationdata() {
+  _has_bits_[0] |= 0x00000004u;
 }
-inline const ::KFMsg::PBString& PBFriend::frienddata(int index) const {
-  return frienddata_.Get(index);
+inline void PBRelation::clear_has_relationdata() {
+  _has_bits_[0] &= ~0x00000004u;
 }
-inline ::KFMsg::PBString* PBFriend::mutable_frienddata(int index) {
-  return frienddata_.Mutable(index);
+inline void PBRelation::clear_relationdata() {
+  if (relationdata_ != NULL) relationdata_->::KFMsg::PBStrings::Clear();
+  clear_has_relationdata();
 }
-inline ::KFMsg::PBString* PBFriend::add_frienddata() {
-  return frienddata_.Add();
+inline const ::KFMsg::PBStrings& PBRelation::relationdata() const {
+  return relationdata_ != NULL ? *relationdata_ : *default_instance_->relationdata_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-PBFriend::frienddata() const {
-  return frienddata_;
+inline ::KFMsg::PBStrings* PBRelation::mutable_relationdata() {
+  set_has_relationdata();
+  if (relationdata_ == NULL) relationdata_ = new ::KFMsg::PBStrings;
+  return relationdata_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-PBFriend::mutable_frienddata() {
-  return &frienddata_;
+inline ::KFMsg::PBStrings* PBRelation::release_relationdata() {
+  clear_has_relationdata();
+  ::KFMsg::PBStrings* temp = relationdata_;
+  relationdata_ = NULL;
+  return temp;
+}
+inline void PBRelation::set_allocated_relationdata(::KFMsg::PBStrings* relationdata) {
+  delete relationdata_;
+  relationdata_ = relationdata;
+  if (relationdata) {
+    set_has_relationdata();
+  } else {
+    clear_has_relationdata();
+  }
 }
 
 // -------------------------------------------------------------------
@@ -16035,27 +15779,27 @@ inline void S2SQueryFriendAck::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// repeated .KFMsg.PBFriend pbfriend = 2;
+// repeated .KFMsg.PBRelation pbfriend = 2;
 inline int S2SQueryFriendAck::pbfriend_size() const {
   return pbfriend_.size();
 }
 inline void S2SQueryFriendAck::clear_pbfriend() {
   pbfriend_.Clear();
 }
-inline const ::KFMsg::PBFriend& S2SQueryFriendAck::pbfriend(int index) const {
+inline const ::KFMsg::PBRelation& S2SQueryFriendAck::pbfriend(int index) const {
   return pbfriend_.Get(index);
 }
-inline ::KFMsg::PBFriend* S2SQueryFriendAck::mutable_pbfriend(int index) {
+inline ::KFMsg::PBRelation* S2SQueryFriendAck::mutable_pbfriend(int index) {
   return pbfriend_.Mutable(index);
 }
-inline ::KFMsg::PBFriend* S2SQueryFriendAck::add_pbfriend() {
+inline ::KFMsg::PBRelation* S2SQueryFriendAck::add_pbfriend() {
   return pbfriend_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >&
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
 S2SQueryFriendAck::pbfriend() const {
   return pbfriend_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >*
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
 S2SQueryFriendAck::mutable_pbfriend() {
   return &pbfriend_;
 }
@@ -16086,27 +15830,27 @@ inline void S2SQueryFriendInviteAck::set_playerid(::google::protobuf::uint32 val
   playerid_ = value;
 }
 
-// repeated .KFMsg.PBFriend pbfriend = 2;
+// repeated .KFMsg.PBRelation pbfriend = 2;
 inline int S2SQueryFriendInviteAck::pbfriend_size() const {
   return pbfriend_.size();
 }
 inline void S2SQueryFriendInviteAck::clear_pbfriend() {
   pbfriend_.Clear();
 }
-inline const ::KFMsg::PBFriend& S2SQueryFriendInviteAck::pbfriend(int index) const {
+inline const ::KFMsg::PBRelation& S2SQueryFriendInviteAck::pbfriend(int index) const {
   return pbfriend_.Get(index);
 }
-inline ::KFMsg::PBFriend* S2SQueryFriendInviteAck::mutable_pbfriend(int index) {
+inline ::KFMsg::PBRelation* S2SQueryFriendInviteAck::mutable_pbfriend(int index) {
   return pbfriend_.Mutable(index);
 }
-inline ::KFMsg::PBFriend* S2SQueryFriendInviteAck::add_pbfriend() {
+inline ::KFMsg::PBRelation* S2SQueryFriendInviteAck::add_pbfriend() {
   return pbfriend_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >&
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
 S2SQueryFriendInviteAck::pbfriend() const {
   return pbfriend_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBFriend >*
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
 S2SQueryFriendInviteAck::mutable_pbfriend() {
   return &pbfriend_;
 }
@@ -16347,7 +16091,7 @@ inline void S2SAddFriendInviteAck::set_playerid(::google::protobuf::uint32 value
   playerid_ = value;
 }
 
-// required .KFMsg.PBFriend pbfriend = 2;
+// required .KFMsg.PBRelation pbfriend = 2;
 inline bool S2SAddFriendInviteAck::has_pbfriend() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -16358,24 +16102,24 @@ inline void S2SAddFriendInviteAck::clear_has_pbfriend() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SAddFriendInviteAck::clear_pbfriend() {
-  if (pbfriend_ != NULL) pbfriend_->::KFMsg::PBFriend::Clear();
+  if (pbfriend_ != NULL) pbfriend_->::KFMsg::PBRelation::Clear();
   clear_has_pbfriend();
 }
-inline const ::KFMsg::PBFriend& S2SAddFriendInviteAck::pbfriend() const {
+inline const ::KFMsg::PBRelation& S2SAddFriendInviteAck::pbfriend() const {
   return pbfriend_ != NULL ? *pbfriend_ : *default_instance_->pbfriend_;
 }
-inline ::KFMsg::PBFriend* S2SAddFriendInviteAck::mutable_pbfriend() {
+inline ::KFMsg::PBRelation* S2SAddFriendInviteAck::mutable_pbfriend() {
   set_has_pbfriend();
-  if (pbfriend_ == NULL) pbfriend_ = new ::KFMsg::PBFriend;
+  if (pbfriend_ == NULL) pbfriend_ = new ::KFMsg::PBRelation;
   return pbfriend_;
 }
-inline ::KFMsg::PBFriend* S2SAddFriendInviteAck::release_pbfriend() {
+inline ::KFMsg::PBRelation* S2SAddFriendInviteAck::release_pbfriend() {
   clear_has_pbfriend();
-  ::KFMsg::PBFriend* temp = pbfriend_;
+  ::KFMsg::PBRelation* temp = pbfriend_;
   pbfriend_ = NULL;
   return temp;
 }
-inline void S2SAddFriendInviteAck::set_allocated_pbfriend(::KFMsg::PBFriend* pbfriend) {
+inline void S2SAddFriendInviteAck::set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend) {
   delete pbfriend_;
   pbfriend_ = pbfriend;
   if (pbfriend) {
@@ -16695,7 +16439,7 @@ inline void S2SAddFriendAck::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required .KFMsg.PBFriend pbfriend = 2;
+// required .KFMsg.PBRelation pbfriend = 2;
 inline bool S2SAddFriendAck::has_pbfriend() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -16706,24 +16450,24 @@ inline void S2SAddFriendAck::clear_has_pbfriend() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SAddFriendAck::clear_pbfriend() {
-  if (pbfriend_ != NULL) pbfriend_->::KFMsg::PBFriend::Clear();
+  if (pbfriend_ != NULL) pbfriend_->::KFMsg::PBRelation::Clear();
   clear_has_pbfriend();
 }
-inline const ::KFMsg::PBFriend& S2SAddFriendAck::pbfriend() const {
+inline const ::KFMsg::PBRelation& S2SAddFriendAck::pbfriend() const {
   return pbfriend_ != NULL ? *pbfriend_ : *default_instance_->pbfriend_;
 }
-inline ::KFMsg::PBFriend* S2SAddFriendAck::mutable_pbfriend() {
+inline ::KFMsg::PBRelation* S2SAddFriendAck::mutable_pbfriend() {
   set_has_pbfriend();
-  if (pbfriend_ == NULL) pbfriend_ = new ::KFMsg::PBFriend;
+  if (pbfriend_ == NULL) pbfriend_ = new ::KFMsg::PBRelation;
   return pbfriend_;
 }
-inline ::KFMsg::PBFriend* S2SAddFriendAck::release_pbfriend() {
+inline ::KFMsg::PBRelation* S2SAddFriendAck::release_pbfriend() {
   clear_has_pbfriend();
-  ::KFMsg::PBFriend* temp = pbfriend_;
+  ::KFMsg::PBRelation* temp = pbfriend_;
   pbfriend_ = NULL;
   return temp;
 }
-inline void S2SAddFriendAck::set_allocated_pbfriend(::KFMsg::PBFriend* pbfriend) {
+inline void S2SAddFriendAck::set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend) {
   delete pbfriend_;
   pbfriend_ = pbfriend;
   if (pbfriend) {
@@ -17402,26 +17146,26 @@ inline void S2SPlayerToastReq::set_targetplayerid(::google::protobuf::uint32 val
   targetplayerid_ = value;
 }
 
-// required uint32 dailygetlimit = 3;
-inline bool S2SPlayerToastReq::has_dailygetlimit() const {
+// required uint32 serverid = 3;
+inline bool S2SPlayerToastReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void S2SPlayerToastReq::set_has_dailygetlimit() {
+inline void S2SPlayerToastReq::set_has_serverid() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void S2SPlayerToastReq::clear_has_dailygetlimit() {
+inline void S2SPlayerToastReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void S2SPlayerToastReq::clear_dailygetlimit() {
-  dailygetlimit_ = 0u;
-  clear_has_dailygetlimit();
+inline void S2SPlayerToastReq::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SPlayerToastReq::dailygetlimit() const {
-  return dailygetlimit_;
+inline ::google::protobuf::uint32 S2SPlayerToastReq::serverid() const {
+  return serverid_;
 }
-inline void S2SPlayerToastReq::set_dailygetlimit(::google::protobuf::uint32 value) {
-  set_has_dailygetlimit();
-  dailygetlimit_ = value;
+inline void S2SPlayerToastReq::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -17562,76 +17306,6 @@ inline ::google::protobuf::uint32 S2SQueryToastCountReq::targetplayerid() const 
 inline void S2SQueryToastCountReq::set_targetplayerid(::google::protobuf::uint32 value) {
   set_has_targetplayerid();
   targetplayerid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SQueryToastCountAck
-
-// required uint32 playerid = 1;
-inline bool S2SQueryToastCountAck::has_playerid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SQueryToastCountAck::set_has_playerid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SQueryToastCountAck::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SQueryToastCountAck::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
-}
-inline ::google::protobuf::uint32 S2SQueryToastCountAck::playerid() const {
-  return playerid_;
-}
-inline void S2SQueryToastCountAck::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required uint32 targetplayerid = 2;
-inline bool S2SQueryToastCountAck::has_targetplayerid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SQueryToastCountAck::set_has_targetplayerid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SQueryToastCountAck::clear_has_targetplayerid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SQueryToastCountAck::clear_targetplayerid() {
-  targetplayerid_ = 0u;
-  clear_has_targetplayerid();
-}
-inline ::google::protobuf::uint32 S2SQueryToastCountAck::targetplayerid() const {
-  return targetplayerid_;
-}
-inline void S2SQueryToastCountAck::set_targetplayerid(::google::protobuf::uint32 value) {
-  set_has_targetplayerid();
-  targetplayerid_ = value;
-}
-
-// required uint32 toastcount = 3;
-inline bool S2SQueryToastCountAck::has_toastcount() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SQueryToastCountAck::set_has_toastcount() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SQueryToastCountAck::clear_has_toastcount() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SQueryToastCountAck::clear_toastcount() {
-  toastcount_ = 0u;
-  clear_has_toastcount();
-}
-inline ::google::protobuf::uint32 S2SQueryToastCountAck::toastcount() const {
-  return toastcount_;
-}
-inline void S2SQueryToastCountAck::set_toastcount(::google::protobuf::uint32 value) {
-  set_has_toastcount();
-  toastcount_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -20288,108 +19962,113 @@ S2SQueryFriendRankListReq::mutable_friendid() {
 
 // -------------------------------------------------------------------
 
-// S2SAddBattleFriendDataReq
+// S2SAddRecentPlayerDataReq
 
-// repeated .KFMsg.PBRecentData recentdata = 1;
-inline int S2SAddBattleFriendDataReq::recentdata_size() const {
-  return recentdata_.size();
+// required uint64 roomid = 1;
+inline bool S2SAddRecentPlayerDataReq::has_roomid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SAddBattleFriendDataReq::clear_recentdata() {
-  recentdata_.Clear();
+inline void S2SAddRecentPlayerDataReq::set_has_roomid() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline const ::KFMsg::PBRecentData& S2SAddBattleFriendDataReq::recentdata(int index) const {
-  return recentdata_.Get(index);
+inline void S2SAddRecentPlayerDataReq::clear_has_roomid() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::KFMsg::PBRecentData* S2SAddBattleFriendDataReq::mutable_recentdata(int index) {
-  return recentdata_.Mutable(index);
+inline void S2SAddRecentPlayerDataReq::clear_roomid() {
+  roomid_ = GOOGLE_ULONGLONG(0);
+  clear_has_roomid();
 }
-inline ::KFMsg::PBRecentData* S2SAddBattleFriendDataReq::add_recentdata() {
-  return recentdata_.Add();
+inline ::google::protobuf::uint64 S2SAddRecentPlayerDataReq::roomid() const {
+  return roomid_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >&
-S2SAddBattleFriendDataReq::recentdata() const {
-  return recentdata_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRecentData >*
-S2SAddBattleFriendDataReq::mutable_recentdata() {
-  return &recentdata_;
+inline void S2SAddRecentPlayerDataReq::set_roomid(::google::protobuf::uint64 value) {
+  set_has_roomid();
+  roomid_ = value;
 }
 
-// -------------------------------------------------------------------
-
-// PBUidsInfo
-
-// repeated string uidsinfo = 1;
-inline int PBUidsInfo::uidsinfo_size() const {
-  return uidsinfo_.size();
+// required uint32 playerid = 2;
+inline bool S2SAddRecentPlayerDataReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PBUidsInfo::clear_uidsinfo() {
-  uidsinfo_.Clear();
+inline void S2SAddRecentPlayerDataReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000002u;
 }
-inline const ::std::string& PBUidsInfo::uidsinfo(int index) const {
-  return uidsinfo_.Get(index);
+inline void S2SAddRecentPlayerDataReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000002u;
 }
-inline ::std::string* PBUidsInfo::mutable_uidsinfo(int index) {
-  return uidsinfo_.Mutable(index);
+inline void S2SAddRecentPlayerDataReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
 }
-inline void PBUidsInfo::set_uidsinfo(int index, const ::std::string& value) {
-  uidsinfo_.Mutable(index)->assign(value);
+inline ::google::protobuf::uint32 S2SAddRecentPlayerDataReq::playerid() const {
+  return playerid_;
 }
-inline void PBUidsInfo::set_uidsinfo(int index, const char* value) {
-  uidsinfo_.Mutable(index)->assign(value);
-}
-inline void PBUidsInfo::set_uidsinfo(int index, const char* value, size_t size) {
-  uidsinfo_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* PBUidsInfo::add_uidsinfo() {
-  return uidsinfo_.Add();
-}
-inline void PBUidsInfo::add_uidsinfo(const ::std::string& value) {
-  uidsinfo_.Add()->assign(value);
-}
-inline void PBUidsInfo::add_uidsinfo(const char* value) {
-  uidsinfo_.Add()->assign(value);
-}
-inline void PBUidsInfo::add_uidsinfo(const char* value, size_t size) {
-  uidsinfo_.Add()->assign(reinterpret_cast<const char*>(value), size);
-}
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-PBUidsInfo::uidsinfo() const {
-  return uidsinfo_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-PBUidsInfo::mutable_uidsinfo() {
-  return &uidsinfo_;
+inline void S2SAddRecentPlayerDataReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
 }
 
-// -------------------------------------------------------------------
+// repeated uint32 members = 3;
+inline int S2SAddRecentPlayerDataReq::members_size() const {
+  return members_.size();
+}
+inline void S2SAddRecentPlayerDataReq::clear_members() {
+  members_.Clear();
+}
+inline ::google::protobuf::uint32 S2SAddRecentPlayerDataReq::members(int index) const {
+  return members_.Get(index);
+}
+inline void S2SAddRecentPlayerDataReq::set_members(int index, ::google::protobuf::uint32 value) {
+  members_.Set(index, value);
+}
+inline void S2SAddRecentPlayerDataReq::add_members(::google::protobuf::uint32 value) {
+  members_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+S2SAddRecentPlayerDataReq::members() const {
+  return members_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+S2SAddRecentPlayerDataReq::mutable_members() {
+  return &members_;
+}
 
-// PBUidBasic
-
-// repeated .KFMsg.PBStrings basicdata = 1;
-inline int PBUidBasic::basicdata_size() const {
-  return basicdata_.size();
+// required .KFMsg.PBStrings pbdata = 4;
+inline bool S2SAddRecentPlayerDataReq::has_pbdata() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PBUidBasic::clear_basicdata() {
-  basicdata_.Clear();
+inline void S2SAddRecentPlayerDataReq::set_has_pbdata() {
+  _has_bits_[0] |= 0x00000008u;
 }
-inline const ::KFMsg::PBStrings& PBUidBasic::basicdata(int index) const {
-  return basicdata_.Get(index);
+inline void S2SAddRecentPlayerDataReq::clear_has_pbdata() {
+  _has_bits_[0] &= ~0x00000008u;
 }
-inline ::KFMsg::PBStrings* PBUidBasic::mutable_basicdata(int index) {
-  return basicdata_.Mutable(index);
+inline void S2SAddRecentPlayerDataReq::clear_pbdata() {
+  if (pbdata_ != NULL) pbdata_->::KFMsg::PBStrings::Clear();
+  clear_has_pbdata();
 }
-inline ::KFMsg::PBStrings* PBUidBasic::add_basicdata() {
-  return basicdata_.Add();
+inline const ::KFMsg::PBStrings& S2SAddRecentPlayerDataReq::pbdata() const {
+  return pbdata_ != NULL ? *pbdata_ : *default_instance_->pbdata_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
-PBUidBasic::basicdata() const {
-  return basicdata_;
+inline ::KFMsg::PBStrings* S2SAddRecentPlayerDataReq::mutable_pbdata() {
+  set_has_pbdata();
+  if (pbdata_ == NULL) pbdata_ = new ::KFMsg::PBStrings;
+  return pbdata_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
-PBUidBasic::mutable_basicdata() {
-  return &basicdata_;
+inline ::KFMsg::PBStrings* S2SAddRecentPlayerDataReq::release_pbdata() {
+  clear_has_pbdata();
+  ::KFMsg::PBStrings* temp = pbdata_;
+  pbdata_ = NULL;
+  return temp;
+}
+inline void S2SAddRecentPlayerDataReq::set_allocated_pbdata(::KFMsg::PBStrings* pbdata) {
+  delete pbdata_;
+  pbdata_ = pbdata;
+  if (pbdata) {
+    set_has_pbdata();
+  } else {
+    clear_has_pbdata();
+  }
 }
 
 // -------------------------------------------------------------------
@@ -20444,140 +20123,29 @@ inline void S2SQueryRecentListAck::set_playerid(::google::protobuf::uint32 value
   playerid_ = value;
 }
 
-// required .KFMsg.PBPlayerIds uids = 2;
-inline bool S2SQueryRecentListAck::has_uids() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+// repeated .KFMsg.PBRelation pbrelation = 2;
+inline int S2SQueryRecentListAck::pbrelation_size() const {
+  return pbrelation_.size();
 }
-inline void S2SQueryRecentListAck::set_has_uids() {
-  _has_bits_[0] |= 0x00000002u;
+inline void S2SQueryRecentListAck::clear_pbrelation() {
+  pbrelation_.Clear();
 }
-inline void S2SQueryRecentListAck::clear_has_uids() {
-  _has_bits_[0] &= ~0x00000002u;
+inline const ::KFMsg::PBRelation& S2SQueryRecentListAck::pbrelation(int index) const {
+  return pbrelation_.Get(index);
 }
-inline void S2SQueryRecentListAck::clear_uids() {
-  if (uids_ != NULL) uids_->::KFMsg::PBPlayerIds::Clear();
-  clear_has_uids();
+inline ::KFMsg::PBRelation* S2SQueryRecentListAck::mutable_pbrelation(int index) {
+  return pbrelation_.Mutable(index);
 }
-inline const ::KFMsg::PBPlayerIds& S2SQueryRecentListAck::uids() const {
-  return uids_ != NULL ? *uids_ : *default_instance_->uids_;
+inline ::KFMsg::PBRelation* S2SQueryRecentListAck::add_pbrelation() {
+  return pbrelation_.Add();
 }
-inline ::KFMsg::PBPlayerIds* S2SQueryRecentListAck::mutable_uids() {
-  set_has_uids();
-  if (uids_ == NULL) uids_ = new ::KFMsg::PBPlayerIds;
-  return uids_;
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
+S2SQueryRecentListAck::pbrelation() const {
+  return pbrelation_;
 }
-inline ::KFMsg::PBPlayerIds* S2SQueryRecentListAck::release_uids() {
-  clear_has_uids();
-  ::KFMsg::PBPlayerIds* temp = uids_;
-  uids_ = NULL;
-  return temp;
-}
-inline void S2SQueryRecentListAck::set_allocated_uids(::KFMsg::PBPlayerIds* uids) {
-  delete uids_;
-  uids_ = uids;
-  if (uids) {
-    set_has_uids();
-  } else {
-    clear_has_uids();
-  }
-}
-
-// required uint32 operate = 3;
-inline bool S2SQueryRecentListAck::has_operate() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SQueryRecentListAck::set_has_operate() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SQueryRecentListAck::clear_has_operate() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SQueryRecentListAck::clear_operate() {
-  operate_ = 0u;
-  clear_has_operate();
-}
-inline ::google::protobuf::uint32 S2SQueryRecentListAck::operate() const {
-  return operate_;
-}
-inline void S2SQueryRecentListAck::set_operate(::google::protobuf::uint32 value) {
-  set_has_operate();
-  operate_ = value;
-}
-
-// optional .KFMsg.PBUidsInfo uidsinfos = 4;
-inline bool S2SQueryRecentListAck::has_uidsinfos() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SQueryRecentListAck::set_has_uidsinfos() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SQueryRecentListAck::clear_has_uidsinfos() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SQueryRecentListAck::clear_uidsinfos() {
-  if (uidsinfos_ != NULL) uidsinfos_->::KFMsg::PBUidsInfo::Clear();
-  clear_has_uidsinfos();
-}
-inline const ::KFMsg::PBUidsInfo& S2SQueryRecentListAck::uidsinfos() const {
-  return uidsinfos_ != NULL ? *uidsinfos_ : *default_instance_->uidsinfos_;
-}
-inline ::KFMsg::PBUidsInfo* S2SQueryRecentListAck::mutable_uidsinfos() {
-  set_has_uidsinfos();
-  if (uidsinfos_ == NULL) uidsinfos_ = new ::KFMsg::PBUidsInfo;
-  return uidsinfos_;
-}
-inline ::KFMsg::PBUidsInfo* S2SQueryRecentListAck::release_uidsinfos() {
-  clear_has_uidsinfos();
-  ::KFMsg::PBUidsInfo* temp = uidsinfos_;
-  uidsinfos_ = NULL;
-  return temp;
-}
-inline void S2SQueryRecentListAck::set_allocated_uidsinfos(::KFMsg::PBUidsInfo* uidsinfos) {
-  delete uidsinfos_;
-  uidsinfos_ = uidsinfos;
-  if (uidsinfos) {
-    set_has_uidsinfos();
-  } else {
-    clear_has_uidsinfos();
-  }
-}
-
-// optional .KFMsg.PBUidBasic basicdatas = 5;
-inline bool S2SQueryRecentListAck::has_basicdatas() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void S2SQueryRecentListAck::set_has_basicdatas() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void S2SQueryRecentListAck::clear_has_basicdatas() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void S2SQueryRecentListAck::clear_basicdatas() {
-  if (basicdatas_ != NULL) basicdatas_->::KFMsg::PBUidBasic::Clear();
-  clear_has_basicdatas();
-}
-inline const ::KFMsg::PBUidBasic& S2SQueryRecentListAck::basicdatas() const {
-  return basicdatas_ != NULL ? *basicdatas_ : *default_instance_->basicdatas_;
-}
-inline ::KFMsg::PBUidBasic* S2SQueryRecentListAck::mutable_basicdatas() {
-  set_has_basicdatas();
-  if (basicdatas_ == NULL) basicdatas_ = new ::KFMsg::PBUidBasic;
-  return basicdatas_;
-}
-inline ::KFMsg::PBUidBasic* S2SQueryRecentListAck::release_basicdatas() {
-  clear_has_basicdatas();
-  ::KFMsg::PBUidBasic* temp = basicdatas_;
-  basicdatas_ = NULL;
-  return temp;
-}
-inline void S2SQueryRecentListAck::set_allocated_basicdatas(::KFMsg::PBUidBasic* basicdatas) {
-  delete basicdatas_;
-  basicdatas_ = basicdatas;
-  if (basicdatas) {
-    set_has_basicdatas();
-  } else {
-    clear_has_basicdatas();
-  }
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
+S2SQueryRecentListAck::mutable_pbrelation() {
+  return &pbrelation_;
 }
 
 // -------------------------------------------------------------------

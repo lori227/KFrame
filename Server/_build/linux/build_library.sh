@@ -46,7 +46,7 @@ function yellow(){
 #-----------------------------------------------------
 
 cd ../../KFLibrary
-
+libpath=_lib/linux/3rd/
 #-----------------------------------------------------
 blue "start building google protobuf"
 
@@ -55,7 +55,7 @@ bash ./autogen.sh
 bash ./configure --enable-shared=yes --prefix=/usr/local/
 make clean
 make -j 4
-cp -R -f src/.libs/*.so* ../../../_lib/linux/3rd/
+cp -R -f src/.libs/*.so* ../../../$libpath
 cd ../../
 
 blue "end building google protobuf"
@@ -73,7 +73,7 @@ fi
 mkdir build && cd build
 cmake -G "Unix Makefiles" -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DCMAKE_BUILD_TYPE=release ../
 make -j 4
-cp -R -f src/lib_json/*.so* ../../../_lib/linux/3rd/
+cp -R -f src/lib_json/*.so* ../../../$libpath
 cd ../../
 
 blue "end building json"
@@ -86,8 +86,8 @@ cd libiconv/linux/source
 chmod 777 configure
 ./configure --enable-shared=yes --prefix=/usr/local/
 make -j 4
-cp -R -f lib/*.so* ../../../../_lib/linux/3rd/
-cp -R -f lib/.libs/*.so* ../../../../_lib/linux/3rd/
+cp -R -f lib/*.so* ../../../../$libpath
+cp -R -f lib/.libs/*.so* ../../../../$libpath
 cd ../../../
 
 blue "end building libiconv"
@@ -100,7 +100,7 @@ cd libuv
 bash ./autogen.sh
 bash ./configure --prefix=/usr/local/
 make -j 4
-cp -R -f .libs/*.so* ../../_lib/linux/3rd/
+cp -R -f .libs/*.so* ../../$libpath
 cd ../
 
 blue "end building libuv"
@@ -111,8 +111,8 @@ blue "start building luaplus"
 
 cd luaplus/projects
 make -j 4
-cp -R -f bin/Debug/*.a ../../../_lib/linux/3rd/
-cp -R -f bin/Release/*.a ../../../_lib/linux/3rd/
+cp -R -f bin/Debug/*.a ../../../$libpath
+cp -R -f bin/Release/*.a ../../../$libpath
 cd ../../
 
 blue "end building luaplus"
@@ -123,8 +123,8 @@ blue "start building redis"
 
 cd redis/linux/deps/hiredis
 make -j 4
-cp -R -f *.so ../../../../../_lib/linux/3rd/
-cp -R -f *.a ../../../../../_lib/linux/3rd/
+cp -R -f *.so ../../../../../$libpath
+cp -R -f *.a ../../../../../$libpath
 cd ../../../../
 
 blue "end building redis"
@@ -136,7 +136,7 @@ blue "start building zlib"
 cd zlib
 bash ./configure --prefix=/usr/local
 make -j 4
-cp -R -f *.so* ../../_lib/linux/3rd/
+cp -R -f *.so* ../../$libpath
 cd ../
 
 blue "end building zlib"
@@ -149,8 +149,8 @@ cd libgo
 mkdir -p build
 cd build
 cmake ..
-cp -R -f *.so* ../../../_lib/linux/3rd/
-cp -R -f *.a* ../../../_lib/linux/3rd/
+cp -R -f *.so* ../../../$libpath
+cp -R -f *.a* ../../../$libpath
 cd ../../
 
 blue "end building libgo"
@@ -162,10 +162,10 @@ blue "start building poco"
 
 cd poco
 chmod -R 755 *
-bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler --include-path=../../openssl/include,../../../mysql/include --library-path=../../_lib/linux/3rd
+bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler,Data/ODBC --include-path=../../openssl/include,../../../mysql/include --library-path=../../_lib/linux/3rd
 make -j 4
-cp -R -f lib/Linux/x86_64/*.a ../../_lib/linux/3rd/
-cd ../../
+cp -R -f lib/Linux/x86_64/*.a ../../$libpath
+cd ../
 
 blue "start building poco"
 

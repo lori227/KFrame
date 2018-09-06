@@ -56,9 +56,6 @@ namespace KFrame
         // 结算战绩
         __KF_MESSAGE_FUNCTION__( HandlePlayerBattleScoreReq );
 
-        // 战斗结束
-        __KF_MESSAGE_FUNCTION__( HandleBattleFinishAck );
-
     protected:
         __KF_UPDATE_DATA_FUNCTION__( OnRoomIdUpdateCallBack );
 
@@ -71,9 +68,6 @@ namespace KFrame
 
         // 计算总评分
         uint32 CalcTotalScore( KFEntity* player );
-
-        // 过滤最近玩家所需数据
-        void FilterRecentData( KFMsg::PBBattleScore* pbbattlescore, KFMsg::PBRecentData* recentdata );
 
     private:
         KFComponent* _kf_component;

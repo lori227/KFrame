@@ -11,10 +11,10 @@
 
 #include "KFrame.h"
 #include "KFRedisInterface.h"
+#include "KFRedisExecute.h"
 
 namespace KFrame
 {
-    class KFRedisDriver;
     class KFRedisModule : public KFRedisInterface
     {
     public:
@@ -23,6 +23,7 @@ namespace KFrame
 
         // 加载配置
         virtual void InitModule();
+        virtual void AfterRun();
 
         // 关闭
         virtual void ShutDown();
@@ -33,6 +34,21 @@ namespace KFrame
         virtual KFRedisDriver* CreateExecute( uint32 id );
         virtual KFRedisDriver* CreateExecute( const std::string& field, uint32 logicid = 0 );
         virtual KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
+
+    protected:
+        // 查找
+        KFRedisExecute* FindRedisExecute( uint32 id );
+
+        // 插入redis
+        void InsertRedisExecute( uint32 id, KFRedisExecute* kfredisexecute );
+
+    private:
+        // 线程锁
+        KFMutex _mt_mutex;
+
+        // 多线程列表
+        typedef std::pair< uint32, uint32 > RedisKey;
+        KFMap< RedisKey, const RedisKey&, KFRedisExecute > _redis_execute;
     };
 }
 

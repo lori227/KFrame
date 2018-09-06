@@ -17,8 +17,8 @@ namespace KFrame
     class KFMessageModule : public KFMessageInterface
     {
     public:
-        KFMessageModule();
-        ~KFMessageModule();
+        KFMessageModule() = default;
+        ~KFMessageModule() = default;
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////

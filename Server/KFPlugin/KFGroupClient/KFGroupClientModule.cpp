@@ -381,7 +381,7 @@ namespace KFrame
             // 拒绝
             if ( kfmsg.operate() == KFMsg::InviteEnum::RefuseMinute )
             {
-                static auto _refuse_time = _kf_option->GetValue< uint32 >( "groupinviterefusetime" );
+                static auto _refuse_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviterefusetime ) );
                 auto refusetime = KFGlobal::Instance()->_real_time + _refuse_time;
                 kfobject->SetValue< uint64 >( __KF_STRING__( refusegroupinvite ), refusetime );
             }
@@ -416,7 +416,7 @@ namespace KFrame
             }
 
             // 判断邀请时间
-            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
+            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviteapplyvalidtime ) );
 
             auto invitetime = kfinvite->GetValue< uint64 >( __KF_STRING__( time ) );
             if ( KFGlobal::Instance()->_real_time > invitetime + _invite_valid_time )
@@ -659,7 +659,7 @@ namespace KFrame
         {
             return _kf_display->SendToClient( player, KFMsg::GroupNotCaption );
         }
-		
+
         // 通知组队服务器
         KFMsg::S2SKickMatchGroupReq req;
         req.set_groupid( groupid );
@@ -778,7 +778,7 @@ namespace KFrame
         }
         else if ( kfmsg.operate() == KFMsg::InviteEnum::Consent )
         {
-            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( "groupinviteapplyvalidtime" );
+            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviteapplyvalidtime ) );
 
             // 申请时间超时了
             auto applytime = kfgroupapply->GetValue< uint64 >( __KF_STRING__( time ) );

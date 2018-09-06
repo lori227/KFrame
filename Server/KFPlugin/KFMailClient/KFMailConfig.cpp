@@ -33,8 +33,8 @@ namespace KFrame
                 auto kfsetting = __KF_CREATE__( KFMailSetting );
 
                 kfsetting->_config_id = setting.GetUInt32( "ConfigId" );
-                kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
                 kfsetting->_type = setting.GetUInt32( "Type" );
+                kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
 
                 kfsetting->_title = setting.GetString( "Title" );
                 KFUtility::ReplaceString( kfsetting->_title, " ", "" );
@@ -43,12 +43,10 @@ namespace KFrame
                 KFUtility::ReplaceString( kfsetting->_content, " ", "" );
 
                 kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
-
-                kfsetting->_daily_get_limit = setting.GetUInt32( "DailyGetLimit" );
-                kfsetting->_daily_send_limit = setting.GetUInt32( "DailySendLimit" );
-
                 kfsetting->_extend = setting.GetString( "Extend" );
-                auto stragent = setting.GetString( "AgentList" );
+                KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
+
+                auto stragent = setting.GetString( "Reward" );
                 kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
                 _mail_setting.Insert( kfsetting->_config_id, kfsetting );
 

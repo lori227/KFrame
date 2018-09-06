@@ -365,6 +365,7 @@ message S2STellBattleRoomStartReq
 {
 	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id	
 	required uint64 roomid = 2;			// 房间id
+	required uint32 maxtime = 3;		// 这次战斗最长的时间 单位:秒
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -373,6 +374,7 @@ message S2STellBattleRoomStartReq
 message S2STellRoomStartToBattleShardReq
 {
 	required uint64 roomid = 1;			// 房间id
+	required uint32 maxtime = 2;		// 这次战斗最长的时间 单位:秒
 }
 
 // 战斗服务器集群逻辑分片=>战斗服务器
@@ -417,7 +419,6 @@ message S2STellBattleRoomFinishReq
 message S2STellBattleRoomFinishAck
 {
 	required uint64 roomid = 1;			// 房间id
-	repeated string pbscore = 2;			// 战绩
 }
 
 // 战斗服务器=>战斗服务器集群逻辑
@@ -489,6 +490,7 @@ message S2STellRoomCloseToMatchShardReq
 	required uint64 matchid = 1;	// 匹配模式
 	required uint64 roomid = 2;		// 房间id
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

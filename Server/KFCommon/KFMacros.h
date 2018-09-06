@@ -53,6 +53,19 @@
     #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, ##__VA_ARGS__ );
 #endif
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef __TOP_ONE__
+    #define __TOP_ONE__ 1
+#endif
+
+#ifndef __TOP_FIVE__
+    #define __TOP_FIVE__ 5
+#endif
+
+#ifndef __TOP_TEN__
+    #define __TOP_TEN__ 10
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 

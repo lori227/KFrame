@@ -38,10 +38,8 @@ namespace KFrame
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &KFPublicShardModule::HandleUpdatePublicDataReq );
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ, &KFPublicShardModule::HandleQueryBasicDataReq );
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ, &KFPublicShardModule::HandleSetPlayerNameReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_REQ, &KFPublicShardModule::HandlePlayerToastReq );
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &KFPublicShardModule::HandleUpdateGuestListReq );
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ, &KFPublicShardModule::HandleQueryGuestReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_TOAST_COUNT_REQ, &KFPublicShardModule::HandleQueryToastCountReq );
     }
 
     void KFPublicShardModule::BeforeShut()
@@ -50,10 +48,8 @@ namespace KFrame
         __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ );
         __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ );
         __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_REQ );
         __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ );
         __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_TOAST_COUNT_REQ );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_schedule->UnRegisterSchedule( this );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,20 +61,6 @@ namespace KFrame
         // 初始化redis
         _kf_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
 #endif
-
-        auto cleartime = _kf_option->GetValue< uint32 >( "dailytoastcleartime" );
-
-        auto kfsetting = _kf_schedule->CreateScheduleSetting();
-        kfsetting->SetDate( KFScheduleEnum::Loop, 0, cleartime );
-        kfsetting->SetData( __LINE__, nullptr, _invalid_int );
-        _kf_schedule->RegisterSchedule( kfsetting, this, &KFPublicShardModule::OnScheduleCleanDailyToast );
-    }
-
-    void KFPublicShardModule::OnScheduleCleanDailyToast( uint32 id, const char* data, uint32 size )
-    {
-        //清除所有玩家的被敬酒次数
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Execute( "del {}", __KF_STRING__( toast ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,42 +137,6 @@ namespace KFrame
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_SET_PLAYER_NAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandlePlayerToastReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SPlayerToastReq );
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-
-        auto queryserverid = redisdriver->QueryUInt32( "hget {}:{} {}",
-                             __KF_STRING__( public ), kfmsg.targetplayerid(), __KF_STRING__( serverid ) );
-        if ( !queryserverid->IsOk() )
-        {
-            return;
-        }
-
-        KFMsg::S2SPlayerToastAck ack;
-        ack.set_playerid( kfmsg.selfplayerid() );
-        ack.set_targetplayerid( kfmsg.targetplayerid() );
-        ack.set_targetserverid( queryserverid->_value );
-
-        // 判断被敬酒次数是否用完
-        auto querytoastcount = redisdriver->QueryUInt32( "hget {} {}", __KF_STRING__( toast ), kfmsg.targetplayerid() );
-        if ( querytoastcount->_value < kfmsg.dailygetlimit() )
-        {
-            ack.set_result( KFMsg::ToastOK );
-
-            // 增加玩家今日被敬酒次数和总的被敬酒次数
-            redisdriver->Append( "hincrby {} {} {}", __KF_STRING__( toast ), kfmsg.targetplayerid(), 1 );
-            redisdriver->Append( "hincrby {} {} {}", __KF_STRING__( toastcount ), kfmsg.targetplayerid(), 1 );
-            redisdriver->Pipeline();
-        }
-        else
-        {
-            ack.set_result( KFMsg::ToastGetCountOver );
-        }
-
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_PLAYER_TOAST_ACK, &ack );
-    }
-
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleUpdateGuestListReq )
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateGuestListReq );
@@ -241,20 +187,6 @@ namespace KFrame
         }
 
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_GUEST_ACK, &ack );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryToastCountReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SQueryToastCountReq );
-
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        auto querytoastcount = redisdriver->QueryUInt32( "hget {} {}", __KF_STRING__( toastcount ), kfmsg.targetplayerid() );
-
-        KFMsg::S2SQueryToastCountAck ack;
-        ack.set_playerid( kfmsg.selfplayerid() );
-        ack.set_targetplayerid( kfmsg.targetplayerid() );
-        ack.set_toastcount( querytoastcount->_value );
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &ack );
     }
 
     uint32 KFPublicShardModule::ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname )

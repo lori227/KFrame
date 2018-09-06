@@ -39,21 +39,28 @@ namespace KFrame
 
     void KFBattleCamp::RunEnterBattleRoom( KFBattleRoom* kfroom )
     {
-        auto kfplayer = _kf_player_list.First();
-        while ( kfplayer != nullptr )
+        for ( auto& iter : _kf_player_list._objects )
         {
+            auto kfplayer = iter.second;
             kfplayer->RunEnterRoom( kfroom );
-            kfplayer = _kf_player_list.Next();
         }
     }
 
     void KFBattleCamp::FinishLeaveBattleRoom()
     {
-        auto kfplayer = _kf_player_list.First();
-        while ( kfplayer != nullptr )
+        for ( auto& iter : _kf_player_list._objects )
         {
+            auto kfplayer = iter.second;
             kfplayer->FinishLeaveRoom();
-            kfplayer = _kf_player_list.Next();
+        }
+    }
+
+    void KFBattleCamp::SendMessageToCamp( uint32 msgid, google::protobuf::Message* message )
+    {
+        for ( auto& iter : _kf_player_list._objects )
+        {
+            auto kfplayer = iter.second;
+            kfplayer->SendMessageToClient( msgid, message );
         }
     }
 }

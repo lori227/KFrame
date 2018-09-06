@@ -130,5 +130,4 @@ namespace KFrame
             kfdata->AddData( childdatasetting->_name, kfchilddata );
         }
     }
-
 }

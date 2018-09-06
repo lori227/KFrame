@@ -72,6 +72,9 @@ namespace KFrame
 
         // 计算评分
         void ScoreBalance( KFMsg::PBBattleScore* pbscore );
+
+        // 获得和我一起战斗的人
+        void GetSaveCampPlayer( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore );
     protected:
         // 玩家进入战场
         void PlayerEnterBattleRoom( KFBattleRoom* kfroom );
@@ -93,6 +96,9 @@ namespace KFrame
 
         // 通知的次数
         uint32 _notice_count;
+
+        // 是否结算过
+        bool _is_balance_score;
     };
 }
 

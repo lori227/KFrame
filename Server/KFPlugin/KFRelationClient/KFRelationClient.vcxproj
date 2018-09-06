@@ -12,12 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFRelationConfig.cpp" />
     <ClCompile Include="KFRelationClientModule.cpp" />
     <ClCompile Include="KFRelationClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFRelationConfig.h" />
     <ClInclude Include="KFRelationClientInterface.h" />
     <ClInclude Include="KFRelationClientModule.h" />
     <ClInclude Include="KFRelationClientPlugin.h" />

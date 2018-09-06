@@ -27,7 +27,6 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut ();
@@ -42,7 +41,7 @@ namespace KFrame
         __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
         // 连接断开
-        __KF_SERVER_LOST_FUNCTION__( OnClientLostServer );
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
     private:
         // hash一致性列表
         KFConHash _kf_hash;

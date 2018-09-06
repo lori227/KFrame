@@ -16,8 +16,6 @@ namespace KFrame
             _config_id = 0;
             _type = 0;
             _valid_time = 0;
-            _daily_get_limit = 0;
-            _daily_send_limit = 0;
             _reply_id = 0;
         }
 
@@ -36,12 +34,6 @@ namespace KFrame
 
         // 有效时间
         uint32 _valid_time;
-
-        // 每日限制接收封数
-        uint32 _daily_get_limit;
-
-        // 每日限制发送封数
-        uint32 _daily_send_limit;
 
         // 附件奖励配置
         KFAgents _rewards;

@@ -56,9 +56,6 @@ namespace KFrame
         uint32 RemoveWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid );
         uint32 ModifyWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid, uint32 status );
 
-        //uint32 CalChNumInString( const std::string& src, char strlod = ',' );
-
-        uint32 GiveStoreResult( KFEntity* player, uint32 shopid, uint32 toplayid, uint32 toserverid );
     private:
         KFComponent* _kf_component;
 

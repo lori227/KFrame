@@ -488,7 +488,7 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PBGuestData));
   PBBattleScore_descriptor_ = file->message_type(21);
-  static const int PBBattleScore_offsets_[7] = {
+  static const int PBBattleScore_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, playerid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, ranking_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, pbdata_),
@@ -496,6 +496,8 @@ void protobuf_AssignDesc_KFCommonMessage_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, reward_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, achieve_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, members_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBBattleScore, playercount_),
   };
   PBBattleScore_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -766,157 +768,159 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "\007groupid\030\001 \002(\004\022\'\n\010pbplayer\030\002 \003(\0132\025.KFMsg"
     ".PBBattlePlayer\"G\n\013PBGuestData\022\017\n\007guesti"
     "d\030\001 \002(\r\022\021\n\tguesticon\030\002 \002(\t\022\024\n\014guesticonb"
-    "ox\030\003 \002(\t\"\250\001\n\rPBBattleScore\022\020\n\010playerid\030\001"
+    "ox\030\003 \002(\t\"\316\001\n\rPBBattleScore\022\020\n\010playerid\030\001"
     " \002(\r\022\017\n\007ranking\030\002 \002(\r\022\037\n\006pbdata\030\003 \003(\0132\017."
     "KFMsg.PBUInt32\022\r\n\005score\030\004 \001(\r\022\017\n\007matchid"
     "\030\005 \001(\r\022\016\n\006reward\030\006 \001(\t\022#\n\007achieve\030\007 \001(\0132"
-    "\022.KFMsg.PBTaskDatas\"\210\001\n\014PBRecentData\022\020\n\010"
-    "playerid\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010total"
-    "num\030\003 \002(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020"
-    "\n\010bekillid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037"
-    "\n\013PBPlayerIds\022\020\n\010playerid\030\001 \003(\r\"T\n\021PBApp"
-    "licationlist\022\020\n\010playerid\030\001 \002(\r\022\014\n\004time\030\002"
-    " \002(\004\022\037\n\005basic\030\003 \002(\0132\020.KFMsg.PBStrings\"B\n"
-    "\022PBApplicationlists\022,\n\napplylists\030\001 \003(\0132"
-    "\030.KFMsg.PBApplicationlist*\346$\n\007AckEnum\022\013\n"
-    "\007Success\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError"
-    "\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinTokenTi"
-    "meout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinU"
-    "serError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016ChannelN"
-    "otOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017LoginSy"
-    "stemBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\022\n\016AuthS"
-    "erverBusy\020\r\022\024\n\020AuthDatabaseBusy\020\016\022\022\n\016Can"
-    "NotFindGame\020\017\022\023\n\017LoginTokenError\020\020\022\022\n\016Lo"
-    "adDataFailed\020\021\022\021\n\rHttpDataError\020\022\022\026\n\022Log"
-    "inDatabaseError\020\023\022\025\n\021CreatePlayerError\020\024"
-    "\022\014\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet\020\026\022\024\n\020Na"
-    "meAlreadyExist\020\027\022\027\n\023PublicDatabaseError\020"
-    "\030\022\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmpty\020\032\022\025\n\021"
-    "CreateRoleAlready\020\033\022\020\n\014CreateRoleOK\020\034\022\026\n"
-    "\022LoginAlreadyOnline\020\035\022\020\n\014ChangeIconOK\020\036\022"
-    "\r\n\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020 \022\023\n\017Mod"
-    "uleIdNotFind\020!\022\025\n\021SetModelClothesOK\020\"\022\023\n"
-    "\017ChangeIconBoxOK\020#\022\022\n\016DataSystemBusy\020$\022\025"
-    "\n\021ActivationAccount\020%\022\027\n\023ActivationCodeE"
-    "rror\020&\022\027\n\023LoginCanNotFindGate\020\'\022\024\n\020TaskI"
-    "dCanNotFind\020(\022\026\n\022TaskNotInValidTime\020)\022\024\n"
-    "\020CanNotFindPlayer\020*\022\026\n\022CanNotFindTaskDat"
-    "a\020+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlreadyRecei"
-    "ved\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025\n\021CanNot"
-    "InquireSelf\020/\022\030\n\024ActivityIdCanNotFind\0200\022"
-    "\032\n\026CanNotFindActivityType\0201\022\033\n\027ActivityA"
-    "lreadyReceived\0202\022\023\n\017ActivityNotDone\0203\022\033\n"
-    "\027ActivityReceiveRewardOK\0204\022\027\n\023AchieveIdC"
-    "anNotFind\0205\022\031\n\025CanNotFindAchieveData\0206\022\032"
-    "\n\026AchieveAlreadyReceived\0207\022\022\n\016AchieveNot"
-    "Done\0208\022\032\n\026AchieveReceiveRewardOK\0209\022\021\n\rRe"
-    "ceiveGiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\020\n\014"
-    "MailNotExist\020<\022\027\n\023MailAlreadyReceived\020=\022"
-    "\025\n\021MailNotHaveReward\020>\022\024\n\020MailDeleteFail"
-    "ed\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSendCountO"
-    "ver\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021ToastGet"
-    "CountOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007ToastOK\020"
-    "E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020MatchClusterB"
-    "usy\020G\022\031\n\025MatchCanNotFindServer\020H\022\030\n\024Matc"
-    "hCanNotFindMatch\020I\022\031\n\025MatchGroupPlayerLi"
-    "mit\020J\022\027\n\023MatchRequestSuccess\020K\022\026\n\022MatchC"
-    "ancelSuccess\020L\022\022\n\016FriendInviteOK\020M\022\026\n\022Fr"
-    "iendRefuseInvite\020N\022\025\n\021FriendTargetLimit\020"
-    "O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFriendAlready\020"
-    "Q\022\022\n\016FriendNotExist\020R\022\017\n\013FriendDelOK\020S\022\025"
-    "\n\021FriendInviteLimit\020T\022\030\n\024FriendInviteNot"
-    "Exist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023FriendIn"
-    "viteAlready\020W\022\024\n\020MatchMustPrepare\020X\022\023\n\017S"
-    "toreParamError\020Y\022\021\n\rStoreLackCost\020Z\022\024\n\020S"
-    "toreOutOfLimits\020[\022\026\n\022StoreOutOfLimitOwm\020"
-    "\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016WishOrderE"
-    "mpty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022WishOrde"
-    "rNoStoreId\020`\022\027\n\023WishOrderHadStoreId\020a\022\024\n"
-    "\020WishOrderMaxSize\020b\022\033\n\027WishOrderStateRep"
-    "eatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017ClothesNot"
-    "Exist\020e\022\024\n\020ClothesDataError\020f\022\030\n\024Clothes"
-    "ModleNotMatch\020g\022\022\n\016ClothesDressOK\020h\022\021\n\rM"
-    "odelNotExist\020i\022\021\n\rModelChangeOK\020j\022\023\n\017Cha"
-    "tByteTooLong\020k\022\025\n\021ChatNotFindPlayer\020l\022\025\n"
-    "\021ChatIntervalError\020m\022\025\n\021ChatFriendIdErro"
-    "r\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014GroupLeav"
-    "eOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017GroupSer"
-    "verBusy\020r\022\027\n\023GroupInviteNotExist\020s\022\027\n\023Gr"
-    "oupCanNotKickSelf\020t\022\020\n\014GroupInGroup\020u\022\026\n"
-    "\022GroupApplyNotExist\020v\022\023\n\017GroupNotInGroup"
-    "\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemDataError\020y\022"
-    "\021\n\rItemCanNotUse\020z\022\021\n\rGroupNotExist\020{\022\016\n"
-    "\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022GroupPla"
-    "yerOffline\020~\022\027\n\023GroupAlreadyInGroup\020\177\022\026\n"
-    "\021GroupRefuseInvite\020\200\001\022\032\n\025GroupRefuseYour"
-    "Invite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001\022\025\n\020Grou"
-    "pRefuseApply\020\203\001\022\030\n\023GroupCaptainOffline\020\204"
-    "\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupNotCaptio"
-    "n\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026FriendRef"
-    "useYourInvite\020\210\001\022\020\n\013FriendAddOK\020\211\001\022\024\n\017Fr"
-    "iendInviteReq\020\212\001\022\020\n\013GroupJoinOK\020\213\001\022\024\n\017Gr"
-    "oupMemberJoin\020\214\001\022\026\n\021GroupIsNewCaption\020\215\001"
-    "\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024FriendLinessAd"
-    "dLimit\020\217\001\022\035\n\030FriendLinessAddByWinGame\020\220\001"
-    "\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025WishPanel"
-    "AddSuccessed\020\222\001\022\027\n\022GroupInviteInMatch\020\223\001"
-    "\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022GroupInviteT"
-    "imeOut\020\225\001\022\032\n\025GroupInviteMatchError\020\226\001\022\026\n"
-    "\021GroupApplyTimeOut\020\227\001\022\026\n\021OperateFrequent"
-    "ly\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020CompoundNot"
-    "Exist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014RankNotEx"
-    "ist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n\014SignInNot"
-    "Day\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030\n\023SignInRe"
-    "wardAlready\020\243\001\022\022\n\rDirServerBusy\020\244\001\022\027\n\022Gr"
-    "oupTargetInMatch\020\245\001\022\021\n\014GroupInMatch\020\246\001\022\025"
-    "\n\020GroupKickInMatch\020\247\001\022\026\n\021GroupLeaveInMat"
-    "ch\020\250\001\022\030\n\023MatchCancelInBattle\020\251\001\022\032\n\025Frien"
-    "dFriendCountOver\020\220N\022\031\n\024FriendApplyCountO"
-    "ver\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030Friend"
-    "AddFriendSuccessed\020\223N\022\032\n\025EquipDeleteTipC"
-    "ontent\020\224N\022\034\n\027ClothesDeleteTipContent\020\225N\022"
-    "\030\n\023NoCanSettingDefault\020\226N\022\022\n\rClothesNotF"
-    "it\020\227N\022\024\n\017KickLoginBeKick\020\230N\022\027\n\022KickPlatf"
-    "ormBeKick\020\231N\022\034\n\027AutographCharOverLength\020"
-    "\232N\022\030\n\023ContainIIleagalChar\020\233N\022\031\n\024ClothesN"
-    "otMatchModel\020\234N\022\020\n\013MoneyIsLack\020\235N\022\022\n\rDia"
-    "mondIsLack\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDiamondG"
-    "et\020\240N\022\022\n\rWishOverCount\020\241N\022\020\n\013PleaseLogin"
-    "\020\242N\022\032\n\025CreateRoleNameIllegal\020\243N\022\024\n\017Pleas"
-    "eClickRole\020\244N\022\024\n\017ChatCharIllegal\020\245N\022\036\n\031C"
-    "hatUnCheckInNearbyChanel\020\246N\022\026\n\021ChatUnJoi"
-    "nWarTeam\020\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034\n\027Matc"
-    "hRepeatInviteToCode\020\251N\022\022\n\rCopySuccessed\020"
-    "\252N\022\034\n\027GiveFaildForLimitsGoods\020\253N\022\025\n\020Matc"
-    "hHasPrepared\020\254N\022\025\n\020MatchHasCanceled\020\255N\022\022"
-    "\n\rGuildHadExist\020\256N\022\027\n\022GuildCreateIllegal"
-    "\020\257N\022\025\n\020GuildNameTooLong\020\260N\022\032\n\025GuildManif"
-    "estoTooLong\020\261N\022\024\n\017GuildNameRepeat\020\262N\022\022\n\r"
-    "GuildHadBuild\020\263N\022\022\n\rGuildNotExist\020\264N\022\023\n\016"
-    "GuildHadInvite\020\265N\022\030\n\023playerisguildmember"
-    "\020\266N\022\032\n\025GuildApplyListTooLong\020\267N\022\031\n\024Playe"
-    "rINApplicanlist\020\270N\022\022\n\rGuildHadApply\020\271N\022\022"
-    "\n\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022\014\n\010Int"
-    "ernal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006Unknow"
-    "\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEnum\022\017\n\013"
-    "LoginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*K\n\010Fla"
-    "gEnum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Received\020\002\022"
-    "\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010MailEn"
-    "um\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022\014\n\010Gif"
-    "tMail\020\003*\037\n\016MailConfigEnum\022\r\n\tToastMail\020\001"
-    "*f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017\n\013Grou"
-    "pStatus\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlayingSta"
-    "tus\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEnum\022\013\n\007"
-    "Jianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent\020\001\022\n\n\006"
-    "Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*-"
-    "\n\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Mod"
-    "ify\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch\020\000\022\r\n\t"
-    "NoneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTeamWatc"
-    "h\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020\001\022\016\n\nD"
-    "oubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotalRank\020\004"
-    "*9\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022"
-    "\010\n\004Laud\020\003\022\010\n\004Give\020\004*)\n\tGuildEnum\022\r\n\tJoin"
-    "Guild\020\001\022\r\n\tQuitGuild\020\002", 7822);
+    "\022.KFMsg.PBTaskDatas\022\017\n\007members\030\010 \003(\r\022\023\n\013"
+    "playercount\030\t \001(\r\"\210\001\n\014PBRecentData\022\020\n\010pl"
+    "ayerid\030\001 \002(\r\022\017\n\007ranking\030\002 \002(\r\022\020\n\010totalnu"
+    "m\030\003 \002(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020\n\010"
+    "bekillid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\r\"\037\n\013"
+    "PBPlayerIds\022\020\n\010playerid\030\001 \003(\r\"T\n\021PBAppli"
+    "cationlist\022\020\n\010playerid\030\001 \002(\r\022\014\n\004time\030\002 \002"
+    "(\004\022\037\n\005basic\030\003 \002(\0132\020.KFMsg.PBStrings\"B\n\022P"
+    "BApplicationlists\022,\n\napplylists\030\001 \003(\0132\030."
+    "KFMsg.PBApplicationlist*\226%\n\007AckEnum\022\013\n\007S"
+    "uccess\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError\020\003"
+    "\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiXinTokenTime"
+    "out\020\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinUse"
+    "rError\020\007\022\020\n\014ChannelError\020\010\022\022\n\016ChannelNot"
+    "Open\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017LoginSyst"
+    "emBusy\020\013\022\023\n\017CanNotFindProxy\020\014\022\022\n\016AuthSer"
+    "verBusy\020\r\022\024\n\020AuthDatabaseBusy\020\016\022\022\n\016CanNo"
+    "tFindGame\020\017\022\023\n\017LoginTokenError\020\020\022\022\n\016Load"
+    "DataFailed\020\021\022\021\n\rHttpDataError\020\022\022\026\n\022Login"
+    "DatabaseError\020\023\022\025\n\021CreatePlayerError\020\024\022\014"
+    "\n\010SexSetOK\020\025\022\022\n\016NameAlreadySet\020\026\022\024\n\020Name"
+    "AlreadyExist\020\027\022\027\n\023PublicDatabaseError\020\030\022"
+    "\r\n\tNameSetOK\020\031\022\022\n\016AccountIsEmpty\020\032\022\025\n\021Cr"
+    "eateRoleAlready\020\033\022\020\n\014CreateRoleOK\020\034\022\026\n\022L"
+    "oginAlreadyOnline\020\035\022\020\n\014ChangeIconOK\020\036\022\r\n"
+    "\tNameEmpty\020\037\022\021\n\rChangeMottoOK\020 \022\023\n\017Modul"
+    "eIdNotFind\020!\022\025\n\021SetModelClothesOK\020\"\022\023\n\017C"
+    "hangeIconBoxOK\020#\022\022\n\016DataSystemBusy\020$\022\025\n\021"
+    "ActivationAccount\020%\022\027\n\023ActivationCodeErr"
+    "or\020&\022\027\n\023LoginCanNotFindGate\020\'\022\024\n\020TaskIdC"
+    "anNotFind\020(\022\026\n\022TaskNotInValidTime\020)\022\024\n\020C"
+    "anNotFindPlayer\020*\022\026\n\022CanNotFindTaskData\020"
+    "+\022\017\n\013TaskNotDone\020,\022\027\n\023TaskAlreadyReceive"
+    "d\020-\022\027\n\023TaskReceiveRewardOK\020.\022\025\n\021CanNotIn"
+    "quireSelf\020/\022\030\n\024ActivityIdCanNotFind\0200\022\032\n"
+    "\026CanNotFindActivityType\0201\022\033\n\027ActivityAlr"
+    "eadyReceived\0202\022\023\n\017ActivityNotDone\0203\022\033\n\027A"
+    "ctivityReceiveRewardOK\0204\022\027\n\023AchieveIdCan"
+    "NotFind\0205\022\031\n\025CanNotFindAchieveData\0206\022\032\n\026"
+    "AchieveAlreadyReceived\0207\022\022\n\016AchieveNotDo"
+    "ne\0208\022\032\n\026AchieveReceiveRewardOK\0209\022\021\n\rRece"
+    "iveGiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\020\n\014Ma"
+    "ilNotExist\020<\022\027\n\023MailAlreadyReceived\020=\022\025\n"
+    "\021MailNotHaveReward\020>\022\024\n\020MailDeleteFailed"
+    "\020\?\022\017\n\013MailTimeOut\020@\022\026\n\022ToastSendCountOve"
+    "r\020A\022\025\n\021ToastCanNotRepeat\020B\022\025\n\021ToastGetCo"
+    "untOver\020C\022\017\n\013ToastFailed\020D\022\013\n\007ToastOK\020E\022"
+    "\024\n\020MatchAlreadyWait\020F\022\024\n\020MatchClusterBus"
+    "y\020G\022\031\n\025MatchCanNotFindServer\020H\022\030\n\024MatchC"
+    "anNotFindMatch\020I\022\031\n\025MatchGroupPlayerLimi"
+    "t\020J\022\027\n\023MatchRequestSuccess\020K\022\026\n\022MatchCan"
+    "celSuccess\020L\022\022\n\016FriendInviteOK\020M\022\026\n\022Frie"
+    "ndRefuseInvite\020N\022\025\n\021FriendTargetLimit\020O\022"
+    "\023\n\017FriendSelfLimit\020P\022\021\n\rFriendAlready\020Q\022"
+    "\022\n\016FriendNotExist\020R\022\017\n\013FriendDelOK\020S\022\025\n\021"
+    "FriendInviteLimit\020T\022\030\n\024FriendInviteNotEx"
+    "ist\020U\022\023\n\017MatchNotInMatch\020V\022\027\n\023FriendInvi"
+    "teAlready\020W\022\024\n\020MatchMustPrepare\020X\022\023\n\017Sto"
+    "reParamError\020Y\022\021\n\rStoreLackCost\020Z\022\024\n\020Sto"
+    "reOutOfLimits\020[\022\026\n\022StoreOutOfLimitOwm\020\\\022"
+    "\027\n\023StoreOutOfLimitDate\020]\022\022\n\016WishOrderEmp"
+    "ty\020^\022\024\n\020WishOrderNoExist\020_\022\026\n\022WishOrderN"
+    "oStoreId\020`\022\027\n\023WishOrderHadStoreId\020a\022\024\n\020W"
+    "ishOrderMaxSize\020b\022\033\n\027WishOrderStateRepea"
+    "tSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017ClothesNotEx"
+    "ist\020e\022\024\n\020ClothesDataError\020f\022\030\n\024ClothesMo"
+    "dleNotMatch\020g\022\022\n\016ClothesDressOK\020h\022\021\n\rMod"
+    "elNotExist\020i\022\021\n\rModelChangeOK\020j\022\023\n\017ChatB"
+    "yteTooLong\020k\022\025\n\021ChatNotFindPlayer\020l\022\025\n\021C"
+    "hatIntervalError\020m\022\025\n\021ChatFriendIdError\020"
+    "n\022\026\n\022InviteMatchGroupOK\020o\022\020\n\014GroupLeaveO"
+    "K\020p\022\025\n\021GroupMemberIsFull\020q\022\023\n\017GroupServe"
+    "rBusy\020r\022\027\n\023GroupInviteNotExist\020s\022\027\n\023Grou"
+    "pCanNotKickSelf\020t\022\020\n\014GroupInGroup\020u\022\026\n\022G"
+    "roupApplyNotExist\020v\022\023\n\017GroupNotInGroup\020w"
+    "\022\020\n\014ItemNotExist\020x\022\021\n\rItemDataError\020y\022\021\n"
+    "\rItemCanNotUse\020z\022\021\n\rGroupNotExist\020{\022\016\n\nS"
+    "toreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026\n\022GroupPlaye"
+    "rOffline\020~\022\027\n\023GroupAlreadyInGroup\020\177\022\026\n\021G"
+    "roupRefuseInvite\020\200\001\022\032\n\025GroupRefuseYourIn"
+    "vite\020\201\001\022\025\n\020GroupMemberLeave\020\202\001\022\025\n\020GroupR"
+    "efuseApply\020\203\001\022\030\n\023GroupCaptainOffline\020\204\001\022"
+    "\023\n\016GroupNoCaption\020\205\001\022\024\n\017GroupNotCaption\020"
+    "\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n\026FriendRefus"
+    "eYourInvite\020\210\001\022\020\n\013FriendAddOK\020\211\001\022\024\n\017Frie"
+    "ndInviteReq\020\212\001\022\020\n\013GroupJoinOK\020\213\001\022\024\n\017Grou"
+    "pMemberJoin\020\214\001\022\026\n\021GroupIsNewCaption\020\215\001\022\024"
+    "\n\017FriendLinessAdd\020\216\001\022\031\n\024FriendLinessAddL"
+    "imit\020\217\001\022\035\n\030FriendLinessAddByWinGame\020\220\001\022\031"
+    "\n\024FriendLinessMaxLimit\020\221\001\022\032\n\025WishPanelAd"
+    "dSuccessed\020\222\001\022\027\n\022GroupInviteInMatch\020\223\001\022\026"
+    "\n\021GroupApplyInMatch\020\224\001\022\027\n\022GroupInviteTim"
+    "eOut\020\225\001\022\032\n\025GroupInviteMatchError\020\226\001\022\026\n\021G"
+    "roupApplyTimeOut\020\227\001\022\026\n\021OperateFrequently"
+    "\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020CompoundNotEx"
+    "ist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n\014RankNotExis"
+    "t\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n\014SignInNotDa"
+    "y\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030\n\023SignInRewa"
+    "rdAlready\020\243\001\022\022\n\rDirServerBusy\020\244\001\022\027\n\022Grou"
+    "pTargetInMatch\020\245\001\022\021\n\014GroupInMatch\020\246\001\022\025\n\020"
+    "GroupKickInMatch\020\247\001\022\026\n\021GroupLeaveInMatch"
+    "\020\250\001\022\030\n\023MatchCancelInBattle\020\251\001\022\023\n\016MailSer"
+    "verBusy\020\252\001\022\031\n\024RelationDatabaseBusy\020\253\001\022\032\n"
+    "\025FriendFriendCountOver\020\220N\022\031\n\024FriendApply"
+    "CountOver\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030"
+    "FriendAddFriendSuccessed\020\223N\022\032\n\025EquipDele"
+    "teTipContent\020\224N\022\034\n\027ClothesDeleteTipConte"
+    "nt\020\225N\022\030\n\023NoCanSettingDefault\020\226N\022\022\n\rCloth"
+    "esNotFit\020\227N\022\024\n\017KickLoginBeKick\020\230N\022\027\n\022Kic"
+    "kPlatformBeKick\020\231N\022\034\n\027AutographCharOverL"
+    "ength\020\232N\022\030\n\023ContainIIleagalChar\020\233N\022\031\n\024Cl"
+    "othesNotMatchModel\020\234N\022\020\n\013MoneyIsLack\020\235N\022"
+    "\022\n\rDiamondIsLack\020\236N\022\r\n\010MoneyGet\020\237N\022\017\n\nDi"
+    "amondGet\020\240N\022\022\n\rWishOverCount\020\241N\022\020\n\013Pleas"
+    "eLogin\020\242N\022\032\n\025CreateRoleNameIllegal\020\243N\022\024\n"
+    "\017PleaseClickRole\020\244N\022\024\n\017ChatCharIllegal\020\245"
+    "N\022\036\n\031ChatUnCheckInNearbyChanel\020\246N\022\026\n\021Cha"
+    "tUnJoinWarTeam\020\247N\022\023\n\016ChatUnJoinTeam\020\250N\022\034"
+    "\n\027MatchRepeatInviteToCode\020\251N\022\022\n\rCopySucc"
+    "essed\020\252N\022\034\n\027GiveFaildForLimitsGoods\020\253N\022\025"
+    "\n\020MatchHasPrepared\020\254N\022\025\n\020MatchHasCancele"
+    "d\020\255N\022\022\n\rGuildHadExist\020\256N\022\027\n\022GuildCreateI"
+    "llegal\020\257N\022\025\n\020GuildNameTooLong\020\260N\022\032\n\025Guil"
+    "dManifestoTooLong\020\261N\022\024\n\017GuildNameRepeat\020"
+    "\262N\022\022\n\rGuildHadBuild\020\263N\022\022\n\rGuildNotExist\020"
+    "\264N\022\023\n\016GuildHadInvite\020\265N\022\030\n\023playerisguild"
+    "member\020\266N\022\032\n\025GuildApplyListTooLong\020\267N\022\031\n"
+    "\024PlayerINApplicanlist\020\270N\022\022\n\rGuildHadAppl"
+    "y\020\271N\022\022\n\014GMParamError\020\240\234\001*\'\n\013ChannelEnum\022"
+    "\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002*+\n\007SexEnum\022\n\n\006"
+    "Unknow\020\000\022\010\n\004Male\020\001\022\n\n\006Female\020\002*/\n\010KickEn"
+    "um\022\017\n\013LoginBeKick\020\001\022\022\n\016PlatformBeKick\020\002*"
+    "K\n\010FlagEnum\022\010\n\004Init\020\000\022\010\n\004Done\020\001\022\014\n\010Recei"
+    "ved\020\002\022\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*7\n\010"
+    "MailEnum\022\r\n\tWholeMail\020\001\022\016\n\nFriendMail\020\002\022"
+    "\014\n\010GiftMail\020\003*\037\n\016MailConfigEnum\022\r\n\tToast"
+    "Mail\020\001*f\n\nStatusEnum\022\020\n\014OnlineStatus\020\001\022\017"
+    "\n\013GroupStatus\020\002\022\017\n\013MatchStatus\020\003\022\021\n\rPlay"
+    "ingStatus\020\004\022\021\n\rOfflineStatus\020\005*\027\n\010ChatEn"
+    "um\022\013\n\007Jianghu\020\001*C\n\nInviteEnum\022\013\n\007Consent"
+    "\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinu"
+    "te\020\004*-\n\rStoreWishEnum\022\007\n\003Add\020\001\022\007\n\003Del\020\002\022"
+    "\n\n\006Modify\020\003*L\n\rWishStateEnum\022\014\n\010AllWatch"
+    "\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013FriendWatch\020\002\022\r\n\tTe"
+    "amWatch\020\003*K\n\014RankListEnum\022\016\n\nSingleRank\020"
+    "\001\022\016\n\nDoubleRank\020\002\022\014\n\010FourRank\020\003\022\r\n\tTotal"
+    "Rank\020\004*:\n\020FriendLinessEnum\022\010\n\004Team\020\001\022\007\n\003"
+    "Win\020\002\022\t\n\005Toast\020\003\022\010\n\004Give\020\004*)\n\tGuildEnum\022"
+    "\r\n\tJoinGuild\020\001\022\r\n\tQuitGuild\020\002", 7909);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -1152,6 +1156,8 @@ bool AckEnum_IsValid(int value) {
     case 167:
     case 168:
     case 169:
+    case 170:
+    case 171:
     case 10000:
     case 10001:
     case 10002:
@@ -8069,6 +8075,8 @@ const int PBBattleScore::kScoreFieldNumber;
 const int PBBattleScore::kMatchidFieldNumber;
 const int PBBattleScore::kRewardFieldNumber;
 const int PBBattleScore::kAchieveFieldNumber;
+const int PBBattleScore::kMembersFieldNumber;
+const int PBBattleScore::kPlayercountFieldNumber;
 #endif  // !_MSC_VER
 
 PBBattleScore::PBBattleScore()
@@ -8094,6 +8102,7 @@ void PBBattleScore::SharedCtor() {
   matchid_ = 0u;
   reward_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   achieve_ = NULL;
+  playercount_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8146,7 +8155,11 @@ void PBBattleScore::Clear() {
       if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
     }
   }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    playercount_ = 0u;
+  }
   pbdata_.Clear();
+  members_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -8262,6 +8275,44 @@ bool PBBattleScore::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(64)) goto parse_members;
+        break;
+      }
+
+      // repeated uint32 members = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_members:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 64, input, this->mutable_members())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_members())));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(64)) goto parse_members;
+        if (input->ExpectTag(72)) goto parse_playercount;
+        break;
+      }
+
+      // optional uint32 playercount = 9;
+      case 9: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_playercount:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &playercount_)));
+          set_has_playercount();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -8325,6 +8376,17 @@ void PBBattleScore::SerializeWithCachedSizes(
       7, this->achieve(), output);
   }
 
+  // repeated uint32 members = 8;
+  for (int i = 0; i < this->members_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+      8, this->members(i), output);
+  }
+
+  // optional uint32 playercount = 9;
+  if (has_playercount()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->playercount(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -8375,6 +8437,17 @@ void PBBattleScore::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         7, this->achieve(), target);
+  }
+
+  // repeated uint32 members = 8;
+  for (int i = 0; i < this->members_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32ToArray(8, this->members(i), target);
+  }
+
+  // optional uint32 playercount = 9;
+  if (has_playercount()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->playercount(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -8431,12 +8504,31 @@ int PBBattleScore::ByteSize() const {
     }
 
   }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional uint32 playercount = 9;
+    if (has_playercount()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->playercount());
+    }
+
+  }
   // repeated .KFMsg.PBUInt32 pbdata = 3;
   total_size += 1 * this->pbdata_size();
   for (int i = 0; i < this->pbdata_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->pbdata(i));
+  }
+
+  // repeated uint32 members = 8;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->members_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->members(i));
+    }
+    total_size += 1 * this->members_size() + data_size;
   }
 
   if (!unknown_fields().empty()) {
@@ -8465,6 +8557,7 @@ void PBBattleScore::MergeFrom(const ::google::protobuf::Message& from) {
 void PBBattleScore::MergeFrom(const PBBattleScore& from) {
   GOOGLE_CHECK_NE(&from, this);
   pbdata_.MergeFrom(from.pbdata_);
+  members_.MergeFrom(from.members_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_playerid()) {
       set_playerid(from.playerid());
@@ -8483,6 +8576,11 @@ void PBBattleScore::MergeFrom(const PBBattleScore& from) {
     }
     if (from.has_achieve()) {
       mutable_achieve()->::KFMsg::PBTaskDatas::MergeFrom(from.achieve());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_playercount()) {
+      set_playercount(from.playercount());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -8515,6 +8613,8 @@ void PBBattleScore::Swap(PBBattleScore* other) {
     std::swap(matchid_, other->matchid_);
     std::swap(reward_, other->reward_);
     std::swap(achieve_, other->achieve_);
+    members_.Swap(&other->members_);
+    std::swap(playercount_, other->playercount_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

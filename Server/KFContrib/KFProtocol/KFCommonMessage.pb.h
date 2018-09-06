@@ -228,6 +228,8 @@ enum AckEnum {
   GroupKickInMatch = 167,
   GroupLeaveInMatch = 168,
   MatchCancelInBattle = 169,
+  MailServerBusy = 170,
+  RelationDatabaseBusy = 171,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,
@@ -531,7 +533,7 @@ inline bool RankListEnum_Parse(
 enum FriendLinessEnum {
   Team = 1,
   Win = 2,
-  Laud = 3,
+  Toast = 3,
   Give = 4
 };
 LIBPROTOC_EXPORT bool FriendLinessEnum_IsValid(int value);
@@ -3056,6 +3058,25 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline ::KFMsg::PBTaskDatas* release_achieve();
   inline void set_allocated_achieve(::KFMsg::PBTaskDatas* achieve);
 
+  // repeated uint32 members = 8;
+  inline int members_size() const;
+  inline void clear_members();
+  static const int kMembersFieldNumber = 8;
+  inline ::google::protobuf::uint32 members(int index) const;
+  inline void set_members(int index, ::google::protobuf::uint32 value);
+  inline void add_members(::google::protobuf::uint32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      members() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_members();
+
+  // optional uint32 playercount = 9;
+  inline bool has_playercount() const;
+  inline void clear_playercount();
+  static const int kPlayercountFieldNumber = 9;
+  inline ::google::protobuf::uint32 playercount() const;
+  inline void set_playercount(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBBattleScore)
  private:
   inline void set_has_playerid();
@@ -3070,6 +3091,8 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline void clear_has_reward();
   inline void set_has_achieve();
   inline void clear_has_achieve();
+  inline void set_has_playercount();
+  inline void clear_has_playercount();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -3080,9 +3103,11 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   ::google::protobuf::uint32 matchid_;
   ::std::string* reward_;
   ::KFMsg::PBTaskDatas* achieve_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > members_;
+  ::google::protobuf::uint32 playercount_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
   friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
@@ -6261,6 +6286,53 @@ inline void PBBattleScore::set_allocated_achieve(::KFMsg::PBTaskDatas* achieve) 
   } else {
     clear_has_achieve();
   }
+}
+
+// repeated uint32 members = 8;
+inline int PBBattleScore::members_size() const {
+  return members_.size();
+}
+inline void PBBattleScore::clear_members() {
+  members_.Clear();
+}
+inline ::google::protobuf::uint32 PBBattleScore::members(int index) const {
+  return members_.Get(index);
+}
+inline void PBBattleScore::set_members(int index, ::google::protobuf::uint32 value) {
+  members_.Set(index, value);
+}
+inline void PBBattleScore::add_members(::google::protobuf::uint32 value) {
+  members_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBBattleScore::members() const {
+  return members_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBBattleScore::mutable_members() {
+  return &members_;
+}
+
+// optional uint32 playercount = 9;
+inline bool PBBattleScore::has_playercount() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void PBBattleScore::set_has_playercount() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void PBBattleScore::clear_has_playercount() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void PBBattleScore::clear_playercount() {
+  playercount_ = 0u;
+  clear_has_playercount();
+}
+inline ::google::protobuf::uint32 PBBattleScore::playercount() const {
+  return playercount_;
+}
+inline void PBBattleScore::set_playercount(::google::protobuf::uint32 value) {
+  set_has_playercount();
+  playercount_ = value;
 }
 
 // -------------------------------------------------------------------

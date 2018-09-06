@@ -143,7 +143,7 @@ namespace KFrame
         bool StartupLinuxProcess( KFDeployData* deploydata );
 
         // 获得linux进程id
-        uint32 FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile );
+        uint32 FindProcessIdByName( KFDeployData* deploydata );
 
         // 检查进程是否存在
         void CheckLinuxProcess( KFDeployData* deploydata );

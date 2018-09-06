@@ -6,11 +6,26 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFMySQLExecute::KFMySQLExecute()
     {
+        _result_queue_list.push_back( &_void_result_queue );
+        _result_queue_list.push_back( &_uint32_result_queue );
+        _result_queue_list.push_back( &_uint64_result_queue );
+        _result_queue_list.push_back( &_string_result_queue );
+        _result_queue_list.push_back( &_map_result_queue );
+        _result_queue_list.push_back( &_list_map_result_queue );
     }
 
     KFMySQLExecute::~KFMySQLExecute()
     {
 
+    }
+
+    void KFMySQLExecute::Run()
+    {
+        // 释放结果内存
+        for ( auto kfresultqueue : _result_queue_list )
+        {
+            kfresultqueue->Free();
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -284,7 +299,7 @@ namespace KFrame
 
     KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
     {
-        _list_map_result._value.clear();
+        auto kfresult = _list_map_result_queue.Alloc();
 
         std::string sql = "";
         auto strfield = FormatFieldString( fields );
@@ -304,8 +319,6 @@ namespace KFrame
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _list_map_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             auto rowcount = recordset.rowCount();
             for ( auto i = 0u; i < rowcount; ++i )
@@ -331,122 +344,115 @@ namespace KFrame
                         mapvalues[ field ] = row[ field ].toString();
                     }
                 }
-                _list_map_result._value.push_back( mapvalues );
+                kfresult->_value.push_back( mapvalues );
             }
         }
         else
         {
-            _list_map_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_list_map_result;
+        return kfresult;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     KFResult< voidptr >* KFMySQLExecute::VoidExecute( const std::string& strsql )
     {
+        auto kfresult = _void_result_queue.Alloc();
+
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _void_result.SetResult( KFEnum::Ok );
+            kfresult->SetResult( KFEnum::Ok );
         }
         else
         {
-            _void_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_void_result;
+        return kfresult;
     }
 
     KFResult< uint32 >*  KFMySQLExecute::UInt32Execute( const std::string& strsql )
     {
-        _uint32_result._value = _invalid_int;
+        auto kfresult = _uint32_result_queue.Alloc();
 
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _uint32_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                _uint32_result._value = recordset.value( 0, 0 );
+                kfresult->_value = recordset.value( 0, 0 );
             }
         }
         else
         {
-            _uint32_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_uint32_result;
+        return kfresult;
     }
 
     KFResult< uint64 >*  KFMySQLExecute::UInt64Execute( const std::string& strsql )
     {
-        _uint64_result._value = _invalid_int;
+        auto kfresult = _uint64_result_queue.Alloc();
 
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _uint64_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                _uint64_result._value = recordset.value( 0, 0 );
+                kfresult->_value = recordset.value( 0, 0 );
             }
         }
         else
         {
-            _uint64_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_uint64_result;
+        return kfresult;
     }
 
     KFResult< std::string >*  KFMySQLExecute::StringExecute( const std::string& strsql )
     {
-        _string_result._value = _invalid_str;
-
+        auto kfresult = _string_result_queue.Alloc();
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _string_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                _string_result._value = recordset.value( 0, 0 ).toString();
+                kfresult->_value = recordset.value( 0, 0 ).toString();
             }
         }
         else
         {
-            _string_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_string_result;
+        return kfresult;
     }
 
     KFResult< MapString >*  KFMySQLExecute::MapExecute( const std::string& strsql )
     {
-        _map_result._value.clear();
+        auto kfresult = _map_result_queue.Alloc();
 
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _map_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
@@ -457,29 +463,27 @@ namespace KFrame
                 auto size = names->size();
                 for ( auto j = 0u; j < size; ++j )
                 {
-                    _map_result._value[ names->at( j ) ] = values.at( j ).toString();
+                    kfresult->_value[ names->at( j ) ] = values.at( j ).toString();
                 }
             }
         }
         else
         {
-            _map_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_map_result;
+        return kfresult;
     }
 
     KFResult< std::list< MapString > >*  KFMySQLExecute::ListMapExecute( const std::string& strsql )
     {
-        _list_map_result._value.clear();
+        auto kfresult = _list_map_result_queue.Alloc();
 
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
         if ( ok )
         {
-            _list_map_result.SetResult( KFEnum::Ok );
-
             RecordSet recordset( statement );
             for ( auto i = 0u; i < recordset.rowCount(); ++i )
             {
@@ -487,18 +491,21 @@ namespace KFrame
                 auto names = row.names();
                 auto& values = row.values();
 
+                MapString mapvalues;
                 auto size = names->size();
                 for ( auto j = 0u; j < size; ++j )
                 {
-                    _map_result._value[ names->at( j ) ] = values.at( j ).toString();
+                    mapvalues[ names->at( j ) ] = values.at( j ).toString();
                 }
+
+                kfresult->_value.push_back( mapvalues );
             }
         }
         else
         {
-            _list_map_result.SetResult( KFEnum::Error );
+            kfresult->SetResult( KFEnum::Error );
         }
 
-        return &_list_map_result;
+        return kfresult;
     }
 }

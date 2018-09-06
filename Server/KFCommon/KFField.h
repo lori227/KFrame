@@ -178,6 +178,7 @@ namespace KFrame
         __STRING_DEFINE__( personmailgift );
         __STRING_DEFINE__( motto );
         __STRING_DEFINE__( toast );
+        __STRING_DEFINE__( dailytoast );
         __STRING_DEFINE__( toastcount );
         __STRING_DEFINE__( file );
         __STRING_DEFINE__( groupid );
@@ -253,7 +254,7 @@ namespace KFrame
         __STRING_DEFINE__( recentlist );
         __STRING_DEFINE__( recenthash );
         __STRING_DEFINE__( recentplayer );
-        __STRING_DEFINE__( totalplayer );
+        __STRING_DEFINE__( totalcount );
         __STRING_DEFINE__( bekilled );
         __STRING_DEFINE__( relationtype );
         __STRING_DEFINE__( skill );
@@ -291,6 +292,41 @@ namespace KFrame
         __STRING_DEFINE__( applicantlist );
         __STRING_DEFINE__( guildapply );
         __STRING_DEFINE__( applytime );
+        __STRING_DEFINE__( freindmaxcount );
+        __STRING_DEFINE__( freindinvitecount );
+        __STRING_DEFINE__( freindinvitekeeptime );
+        __STRING_DEFINE__( freindlinessresettime );
+        __STRING_DEFINE__( freindlinessmax );
+        __STRING_DEFINE__( freindlinessdailymax );
+        __STRING_DEFINE__( toastfriendliness );
+        __STRING_DEFINE__( toastmailid );
+        __STRING_DEFINE__( toastrecvlimitcount );
+        __STRING_DEFINE__( toastsendlimitcount );
+        __STRING_DEFINE__( roomvalidtime );
+        __STRING_DEFINE__( minopenroomcount );
+        __STRING_DEFINE__( groupinviteapplyvalidtime );
+        __STRING_DEFINE__( groupinviterefusetime );
+        __STRING_DEFINE__( wishordermaxcount );
+        __STRING_DEFINE__( matchscore );
+        __STRING_DEFINE__( delnow );
+        __STRING_DEFINE__( mailmaxcount );
+        __STRING_DEFINE__( wholemailcleartime );
+        __STRING_DEFINE__( multipledata );
+        __STRING_DEFINE__( globalclassname );
+        __STRING_DEFINE__( selaysavetime );
+        __STRING_DEFINE__( tokenexpiretime );
+        __STRING_DEFINE__( openactivation );
+        __STRING_DEFINE__( battlescoreparam );
+        __STRING_DEFINE__( recentmaxcount );
+        __STRING_DEFINE__( battlescoresavetime );
+        __STRING_DEFINE__( battlescore );
+        __STRING_DEFINE__( battletime );
+        __STRING_DEFINE__( teamfriendliness );
+        __STRING_DEFINE__( winfriendliness );
+        __STRING_DEFINE__( battlerecored );
+        __STRING_DEFINE__( recentkeeptime );
+
+
     }
 }
 

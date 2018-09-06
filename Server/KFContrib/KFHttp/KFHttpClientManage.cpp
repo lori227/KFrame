@@ -19,8 +19,8 @@ namespace KFrame
     {
         KFHttpsClient::Initialize();
 
-        _req_http_data.InitQueue( 1000 );
-        _ack_http_data.InitQueue( 1000 );
+        _req_http_data.InitQueue( 5000 );
+        _ack_http_data.InitQueue( 5000 );
     }
 
     void KFHttpClientManage::ShutDown()

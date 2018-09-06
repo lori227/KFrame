@@ -174,11 +174,6 @@ namespace KFrame
         // 查询访客信息回馈
         __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
 
-        // 查询总的被敬酒次数
-        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
-
-        // 查询总的被敬酒次数回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountAck );
 
         // 查询玩家设置请求
         __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );

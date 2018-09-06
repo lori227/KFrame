@@ -26,6 +26,8 @@ namespace KFMsg
     class PBObject;
     class PBRecord;
     class PBArray;
+
+    class PBBattleScore;
 }
 
 namespace Math3D
@@ -36,37 +38,18 @@ namespace Math3D
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////
-    struct StringGreater : std::binary_function<std::string, std::string, bool >
-    {
-        bool operator() ( const std::string& x, const std::string& y ) const
-        {
-            if ( x.length() > y.length() )
-            {
-                return true;
-            }
-
-            if ( x.length() < y.length() )
-            {
-                return false;
-            }
-
-            return ( x > y ? true : false );
-        }
-    };
-
+    static const uint32 _invalid_int = 0;
+    static const std::string _invalid_str = "";
+    static const std::string _globbing_str = "*";
+    /////////////////////////////////////////////////////////////////////////
     class KFIpAddress;
     typedef std::set< KFIpAddress* > IpAddressList;
 
     typedef std::list< std::string > ListString;
     typedef std::vector< std::string > VectorString;
     typedef std::map< std::string, std::string > MapString;
-    typedef std::map<std::string, std::string, StringGreater > GreaterMapString;
     /////////////////////////////////////////////////////////////////////////
-    static const uint32 _invalid_int = 0;
-    static const std::string _invalid_str = "";
-    static const std::string _globbing_str = "*";
-    static ListString _invalid_list_str;
-    /////////////////////////////////////////////////////////////////////////
+
     /////////////////////////////////////////////////////////////////////////
     // 网络函数
     typedef std::function<void( const KFGuid& guid, const char* data, uint32 length )> KFMessageFunction;

@@ -67,8 +67,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_CHANGE_MOTTO_REQ, &KFPlayerModule::HandleChangeMottoReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUEST_REQ, &KFPlayerModule::HandleQueryGuestReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_ACK, &KFPlayerModule::HandleQueryGuestAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_TOAST_COUNT_REQ, &KFPlayerModule::HandleQueryToastCountReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &KFPlayerModule::HandleQueryToastCountAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_SETTING_REQ, &KFPlayerModule::HandleQuerySettingReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_SETTING_REQ, &KFPlayerModule::HandleUpdateSettingReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ, &KFPlayerModule::HandleLoginOutReq );
@@ -121,8 +119,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CHANGE_MOTTO_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUEST_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_TOAST_COUNT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_TOAST_COUNT_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_SETTING_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_UPDATE_SETTING_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
@@ -699,8 +695,7 @@ namespace KFrame
             SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
-        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[{}]!",
-                               player->GetKeyID(), reward );
+        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[{}]!", player->GetKeyID(), reward );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCreateRoleReq )
@@ -859,11 +854,9 @@ namespace KFrame
             _kf_kernel->SerializeToView( _kf_player_data, pbplayer );
 
             //更新访客信息
-            auto kfobject = player->GetData();
-
             KFMsg::S2SUpdateGuestListReq req;
             req.set_playerid( pbobject->key() );
-            req.set_guestid( kfobject->GetKeyID() );
+            req.set_guestid( player->GetKeyID() );
             req.set_guesttime( KFGlobal::Instance()->_real_time );
             _kf_public->SendMessageToPublic( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &req );
         }
@@ -911,25 +904,6 @@ namespace KFrame
         SendMessageToClient( player, KFMsg::MSG_QUERY_GUEST_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQueryToastCountReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryToastCountReq );
-
-        KFMsg::S2SQueryToastCountReq req;
-        req.set_selfplayerid( playerid );
-        req.set_targetplayerid( kfmsg.playerid() );
-        _kf_public->SendMessageToPublic( KFMsg::S2S_QUERY_TOAST_COUNT_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQueryToastCountAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryToastCountAck );
-
-        KFMsg::MsgQueryToastCountAck ack;
-        ack.set_playerid( kfmsg.targetplayerid() );
-        ack.set_toastcount( kfmsg.toastcount() );
-        SendMessageToClient( player, KFMsg::MSG_QUERY_TOAST_COUNT_ACK, &ack );
-    }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQuerySettingReq )
     {

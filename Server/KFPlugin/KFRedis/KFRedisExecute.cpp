@@ -10,6 +10,15 @@ namespace KFrame
         _index = 0;
         _port = 0;
         _redis_context = nullptr;
+
+        _result_queue_list.push_back( &_void_result_queue );
+        _result_queue_list.push_back( &_uint32_result_queue );
+        _result_queue_list.push_back( &_uint64_result_queue );
+        _result_queue_list.push_back( &_string_result_queue );
+        _result_queue_list.push_back( &_map_result_queue );
+        _result_queue_list.push_back( &_vector_result_queue );
+        _result_queue_list.push_back( &_list_result_queue );
+        _result_queue_list.push_back( &_list_map_result_queue );
     }
 
     KFRedisExecute::~KFRedisExecute()
@@ -72,6 +81,16 @@ namespace KFrame
         }
     }
 
+    void KFRedisExecute::Run()
+    {
+        // 释放结果内存
+        for ( auto kfresultqueue : _result_queue_list )
+        {
+            kfresultqueue->Free();
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
     void KFRedisExecute::SelectIndex( uint32 index )
     {
         if ( index == _index )
@@ -86,7 +105,6 @@ namespace KFrame
             _index = index;
         }
     }
-
 
     redisReply* KFRedisExecute::Execute( const std::string& strsql )
     {
@@ -137,57 +155,58 @@ namespace KFrame
 
     KFResult< voidptr >* KFRedisExecute::UpdateExecute( const std::string& strsql )
     {
-        auto redisreply = TryExecute( &_void_result, strsql );
+        auto kfresult = _void_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         __FREE_REPLY__( redisreply );
-        return &_void_result;
+        return kfresult;
     }
 
     KFResult< uint32 >* KFRedisExecute::UInt32Execute( const std::string& strsql )
     {
-        _uint32_result._value = _invalid_int;
-        auto redisreply = TryExecute( &_uint32_result, strsql );
+        auto kfresult = _uint32_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
             if ( redisreply->str != nullptr )
             {
-                _uint32_result._value = KFUtility::ToValue< uint32 >( redisreply->str );
+                kfresult->_value = KFUtility::ToValue< uint32 >( redisreply->str );
             }
         }
 
         __FREE_REPLY__( redisreply );
-        return &_uint32_result;
+        return kfresult;
     }
 
     KFResult< std::string >* KFRedisExecute::StringExecute( const std::string& strsql )
     {
-        _string_result._value.clear();
-        auto redisreply = TryExecute( &_string_result, strsql );
+        auto kfresult = _string_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
-            _string_result._value = ( redisreply->str == nullptr ? _invalid_str : redisreply->str );
+            kfresult->_value = ( redisreply->str == nullptr ? _invalid_str : redisreply->str );
         }
 
         __FREE_REPLY__( redisreply );
-        return &_string_result;
+        return kfresult;
     }
 
     KFResult< uint64 >* KFRedisExecute::UInt64Execute( const std::string& strsql )
     {
-        _uint64_result._value = _invalid_int;
-        auto redisreply = TryExecute( &_uint64_result, strsql );
+        auto kfresult = _uint64_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
-            _uint64_result._value = redisreply->integer;
+            kfresult->_value = redisreply->integer;
         }
 
         __FREE_REPLY__( redisreply );
-        return &_uint64_result;
+        return kfresult;
     }
 
     KFResult< MapString >* KFRedisExecute::MapExecute( const std::string& strsql )
     {
-        _map_result._value.clear();
-        auto redisreply = TryExecute( &_map_result, strsql );
+        auto kfresult = _map_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; i += 2 )
@@ -199,71 +218,47 @@ namespace KFrame
                 std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
                 if ( key != _invalid_str )
                 {
-                    _map_result._value[ key ] = value;
+                    kfresult->_value[ key ] = value;
                 }
             }
         }
 
         __FREE_REPLY__( redisreply );
-        return &_map_result;
-    }
-
-    KFResult< GreaterMapString >* KFRedisExecute::GreaterMapExecute( const std::string& strsql )
-    {
-        _greater_map_result._value.clear();
-        auto redisreply = TryExecute( &_greater_map_result, strsql );
-        if ( redisreply != nullptr )
-        {
-            for ( size_t i = 0; i < redisreply->elements; i += 2 )
-            {
-                auto keyelement = redisreply->element[ i ];
-                auto valueelement = redisreply->element[ i + 1 ];
-
-                std::string key = ( keyelement->str == nullptr ? _invalid_str : keyelement->str );
-                std::string value = ( valueelement->str == nullptr ? _invalid_str : valueelement->str );
-                if ( key != _invalid_str )
-                {
-                    _greater_map_result._value[ key ] = value;
-                }
-            }
-        }
-
-        __FREE_REPLY__( redisreply );
-        return &_greater_map_result;
+        return kfresult;
     }
 
     KFResult< VectorString >* KFRedisExecute::VectorExecute( const std::string& strsql )
     {
-        _vector_result._value.clear();
-        auto redisreply = TryExecute( &_vector_result, strsql );
+        auto kfresult = _vector_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
             {
                 auto element = redisreply->element[ i ];
-                _vector_result._value.push_back( element->str == nullptr ? _invalid_str : element->str );
+                kfresult->_value.push_back( element->str == nullptr ? _invalid_str : element->str );
             }
         }
 
         __FREE_REPLY__( redisreply );
-        return &_vector_result;
+        return kfresult;
     }
 
     KFResult< ListString >* KFRedisExecute::ListExecute( const std::string& strsql )
     {
-        _list_result._value.clear();
-        auto redisreply = TryExecute( &_list_result, strsql );
+        auto kfresult = _list_result_queue.Alloc();
+        auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
             {
                 auto element = redisreply->element[ i ];
-                _list_result._value.push_back( element->str == nullptr ? _invalid_str : element->str );
+                kfresult->_value.push_back( element->str == nullptr ? _invalid_str : element->str );
             }
         }
 
         __FREE_REPLY__( redisreply );
-        return &_list_result;
+        return kfresult;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,19 +270,17 @@ namespace KFrame
 
 #define __REDIS_GET_REPLY__( rediscontext, reply ) \
     redisGetReply( rediscontext, ( void** )&reply )
-    //__COROUTINE__( redisGetReply( rediscontext, ( void** )&reply ) )
 
     // todo: 发生错误是否需要回滚
     KFResult< voidptr >* KFRedisExecute::Pipeline()
     {
-        _void_result.SetResult( KFEnum::Ok );
-
+        auto kfresult = _void_result_queue.Alloc();
         for ( auto& command : _commands )
         {
             auto result = redisAppendCommand( _redis_context, command.c_str() );
             if ( result != REDIS_OK )
             {
-                _void_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
@@ -310,25 +303,23 @@ namespace KFrame
             }
             else
             {
-                _void_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
         _commands.clear();
-        return &_void_result;
+        return kfresult;
     }
 
     KFResult< ListString >* KFRedisExecute::ListPipelineExecute()
     {
-        _list_result.SetResult( KFEnum::Ok );
-        _list_result._value.clear();
-
+        auto kfresult = _list_result_queue.Alloc();
         for ( auto& command : _commands )
         {
             auto result = redisAppendCommand( _redis_context, command.c_str() );
             if ( result != REDIS_OK )
             {
-                _list_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
@@ -347,30 +338,29 @@ namespace KFrame
 
             if ( reply != nullptr )
             {
-                _list_result._value.push_back( reply->str == nullptr ? _invalid_str : reply->str );
+                kfresult->_value.push_back( reply->str == nullptr ? _invalid_str : reply->str );
                 freeReplyObject( reply );
             }
             else
             {
-                _list_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
         _commands.clear();
-        return &_list_result;
+        return kfresult;
     }
 
     KFResult< std::list< MapString > >* KFRedisExecute::ListMapPipelineExecute()
     {
-        _list_map_result.SetResult( KFEnum::Ok );
-        _list_map_result._value.clear();
+        auto kfresult = _list_map_result_queue.Alloc();
 
         for ( auto& command : _commands )
         {
             auto result = redisAppendCommand( _redis_context, command.c_str() );
             if ( result != REDIS_OK )
             {
-                _list_map_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
@@ -403,17 +393,18 @@ namespace KFrame
                     }
                 }
 
-                _list_map_result._value.push_back( values );
+                kfresult->_value.push_back( values );
                 freeReplyObject( reply );
+
             }
             else
             {
-                _list_map_result.SetResult( KFEnum::Error );
+                kfresult->SetResult( KFEnum::Error );
             }
         }
 
         _commands.clear();
-        return &_list_map_result;
+        return kfresult;
     }
 
 

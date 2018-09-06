@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 
-//http://wiki.msdk.qq.com/Router/server.html#wxfriends_profile
 namespace KFrame
 {
     class KFData;
@@ -16,11 +15,14 @@ namespace KFrame
 
         // 发送消息到关系属性
         virtual bool SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendMessageToRelation( uint32 serverid, uint32 playerid, uint32 msgid, google::protobuf::Message* message ) = 0;
-
 
         // 添加好友度
-        virtual void UpdateFriendLiness( KFEntity* player, uint32 friendid, uint32 operate, uint64 value, uint32 type ) = 0;
+        virtual void AddFriendLiness( KFEntity* player, uint32 friendid, uint32 type, uint32 value ) = 0;
+        virtual void AddFriendLinessOnce( KFEntity* player, uint32 friendid, uint32 type, uint32 value ) = 0;
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 计算战场成绩, 好友度/ 最近的玩家战绩
+        virtual void BalanceBattleRelation( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

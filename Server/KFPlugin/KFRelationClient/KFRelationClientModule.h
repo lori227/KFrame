@@ -12,11 +12,13 @@
 #include "KFrame.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRelationClientInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFMailClient/KFMailClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 
@@ -41,14 +43,18 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 添加好友度 （目前只支持增加）
-        virtual void UpdateFriendLiness( KFEntity* player, uint32 friendid, uint32 operate, uint64 value, uint32 type );
+        virtual void AddFriendLiness( KFEntity* player, uint32 friendid, uint32 type, uint32 value );
+        virtual void AddFriendLinessOnce( KFEntity* player, uint32 friendid, uint32 type, uint32 value );
 
         // 发送消息到关系属性
         virtual bool SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message );
-        virtual bool SendMessageToRelation( uint32 serverid, uint32 playerid, uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息到关系集群
         virtual bool SendMessageToRelation( uint32 msgid, ::google::protobuf::Message* message );
+
+        // 计算战场成绩, 好友度/ 最近的玩家战绩
+        virtual void BalanceBattleRelation( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore );
+
     protected:
         // 上线查询好友数据
         void OnEnterQueryFriend( KFEntity* player );
@@ -89,19 +95,34 @@ namespace KFrame
         // 更新好感度
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessAck );
 
-        // 更新最近游戏列表
-        __KF_MESSAGE_FUNCTION__( HandleModifyRecentListReq );
-
         // 查询最近游戏列表请求
         __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
 
+        // 更新最近游戏列表
+        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListAck );
+
+        // 处理玩家敬酒请求
+        __KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
+
+        // 处理玩家敬酒回馈
+        __KF_MESSAGE_FUNCTION__( HandlePlayerToastAck );
+
+        // 查询总的被敬酒次数
+        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+
+    protected:
+
+        // 属性更新回调
+        __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );
+        __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
+
     private:
         // 解析好友信息
-        void PBFriendToKFData( const KFMsg::PBFriend* pbfriend, KFData* kffriend );
+        void PBRelationToKFData( const KFMsg::PBRelation* pbfriend, KFData* kffriend );
+
         // 解析最近列表消息
         KFData* PBRecentListToKFData( uint32 playerid, const KFMsg::PBRecentData* pbrecentdata,
                                       const KFMsg::PBStrings*  basicdata, const KFDataSetting* kfsetting );
-
         // 好友申请操作
         void ReplyFriendInvite( KFEntity* player, uint32 operate );
         void ReplyFriendInvite( KFEntity* player, uint32 playerid, uint32 operate );
@@ -110,13 +131,14 @@ namespace KFrame
         // 添加好友
         void AddFriend( KFEntity* player, KFData* kfinvite );
 
-        // 属性更新回调
-        __KF_ADD_DATA_FUNCTION__( OnAddToastCallBack );
-        __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );
-        __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
-
         // 发送好友更新消息
         void SendUpdateToFriend( KFEntity* player, MapString& values );
+
+        // 结算添加好友度
+        void BalanceFriendLiness( KFEntity* player, const KFMsg::PBBattleScore* pbscore );
+
+        // 添加最近游戏的人
+        void AddRecentPlayer( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore );
     private:
         // 玩家组件
         KFComponent* _kf_component;

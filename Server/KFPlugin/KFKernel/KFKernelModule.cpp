@@ -24,11 +24,10 @@ namespace KFrame
 
     void KFKernelModule::AfterLoad()
     {
-        auto multipledata = _kf_option->GetValue< std::string >( "multipledata" );
-
-        while ( !multipledata.empty() )
+        auto strmultipledata = _kf_option->GetValue< std::string >( __KF_STRING__( multipledata ) );
+        while ( !strmultipledata.empty() )
         {
-            _multiple_data.insert( KFUtility::SplitString( multipledata, ";" ) );
+            _multiple_data.insert( KFUtility::SplitString( strmultipledata, ";" ) );
         }
     }
 
@@ -58,7 +57,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     const KFClassSetting* KFKernelModule::FindClassSetting( const std::string& dataname )
     {
-        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+        static auto _global_class_name = _kf_option->GetValue< std::string >( __KF_STRING__( globalclassname ) );
         auto kfdatasetting = _kf_data_config->FindDataSetting( _global_class_name, dataname );
         if ( kfdatasetting == nullptr )
         {
@@ -93,7 +92,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFKernelModule::CreateObject( const std::string& dataname )
     {
-        static auto _global_class_name = _kf_option->GetValue< std::string >( "globalclassname" );
+        static auto _global_class_name = _kf_option->GetValue< std::string >( __KF_STRING__( globalclassname ) );
 
         return KFDataFactory::CreateData( _global_class_name, dataname );
     }

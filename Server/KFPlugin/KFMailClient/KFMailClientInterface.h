@@ -10,11 +10,14 @@ namespace KFrame
     {
     public:
         /////////////////////////////////////////////////////////////////////////////////////////
-        // 发送邮件到自己
-        virtual bool SendMail( KFEntity* receiverplayer, uint32 mailconfigid, const KFAgents* kfagents = nullptr ) = 0;
+        // 发送邮件
+        virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents ) = 0;
 
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* senderplayer, const KFGuid& receiverguid, uint32 mailconfigid, const KFAgents* kfagents = nullptr, const std::string& extend = "" ) = 0;
+        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const KFAgents* kfagents ) = 0;
+
+        // 发送邮件到对方
+        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const std::string& extend ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -109,6 +109,28 @@ namespace KFrame
         }
     }
 
+    bool KFUtility::DelString( std::string& srcstring, const std::string& delstr, std::string& strnew )
+    {
+        if ( delstr.size() > srcstring.size() )
+        {
+            return false;
+        }
+        auto npos = srcstring.find( delstr );
+        if ( npos == std::string::npos )
+        {
+            return false;
+        }
+
+        if ( npos + delstr.size() > srcstring.size() )
+        {
+            return false;
+        }
+
+        strnew = srcstring.substr( 0, npos ) + srcstring.substr( npos + delstr.size(), std::string::npos );
+        return true;
+    }
+
+
     uint64 KFUtility::Make64Guid( uint32 dataid )
     {
         static uint32 _sequence = 0;

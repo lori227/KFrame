@@ -2,29 +2,20 @@
 
 namespace KFrame
 {
-    KFMessageModule::KFMessageModule()
-    {
-
-    }
-
-    KFMessageModule::~KFMessageModule()
-    {
-
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMessageModule::AddFunction( uint32 msgid, KFMessageFunction& function )
     {
         auto kffunction = _kf_message_function.Find( msgid );
-        if ( kffunction != nullptr )
+        if ( kffunction == nullptr )
+        {
+            kffunction = _kf_message_function.Create( msgid );
+            kffunction->_function = function;
+        }
+        else
         {
             __LOG_ERROR__( KFLogEnum::System, "msgid[{}] already register!", msgid );
-            return;
         }
-
-        kffunction = _kf_message_function.Create( msgid );
-        kffunction->_function = function;
     }
 
     bool KFMessageModule::CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )

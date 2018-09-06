@@ -171,6 +171,8 @@ enum AckEnum
 	GroupKickInMatch			= 167;		// 已经在匹配中不能踢人
 	GroupLeaveInMatch			= 168;		// 已经在匹配中不能离开队伍
 	MatchCancelInBattle			= 169;		// 已经战斗中不能取消匹配
+	MailServerBusy				= 170;		// 邮件服务器繁忙
+	RelationDatabaseBusy		= 171;		// 关系数据库繁忙
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
@@ -313,7 +315,7 @@ enum FriendLinessEnum
 {
 	Team = 1;		// 组队
 	Win = 2;		// 胜利
-	Laud =3;		// 敬酒
+	Toast = 3;		// 敬酒
 	Give = 4;		// 送礼
 }
 
@@ -498,13 +500,15 @@ message PBGuestData
 // 战绩
 message PBBattleScore
 {
-	required uint32 playerid = 1;	// 玩家id
-	required uint32 ranking = 2;	// 排名( 从1开始 )
-	repeated PBUInt32 pbdata = 3;	// 各项数据
-	optional uint32 score = 4;		// 评分
-	optional uint32 matchid = 5;	// 属性字段( 服务器使用 )
-	optional string reward = 6;		// 奖励字串( 服务器使用 )
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 ranking = 2;		// 排名( 从1开始 )
+	repeated PBUInt32 pbdata = 3;		// 各项数据
+	optional uint32 score = 4;			// 评分
+	optional uint32 matchid = 5;		// 属性字段( 服务器使用 )
+	optional string reward = 6;			// 奖励字串( 服务器使用 )
 	optional PBTaskDatas achieve = 7;	// 成就数据	
+	repeated uint32 members = 8;		// 同阵营的玩家
+	optional uint32 playercount = 9;	// 战场总人数
 }
 
 // 最近玩家

@@ -6,11 +6,6 @@
 
 namespace KFrame
 {
-
-    // kfresult 是成员函数, 如果使用相同的query需要把先前的结果保存起来
-    // 如: 使用querymap以后, 把结果保存到自己定义的map中, 然后才能在次使用querymap,
-    // 否则使用第一次的查询结果会发生错误, 循环是导致宕机
-
     class KFRedisDriver
     {
     public:
@@ -68,13 +63,6 @@ namespace KFrame
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return MapExecute( strsql );
-        }
-
-        template< typename... P >
-        KFResult< GreaterMapString >* QueryGreaterMap( const char* myfmt, P&& ... args )
-        {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return GreaterMapExecute( strsql );
         }
 
         // liststring
@@ -141,7 +129,6 @@ namespace KFrame
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql ) = 0;
         virtual KFResult< std::string >* StringExecute( const std::string& strsql ) = 0;
         virtual KFResult< MapString >* MapExecute( const std::string& strsql ) = 0;
-        virtual KFResult< GreaterMapString >* GreaterMapExecute( const std::string& strsql ) = 0;
         virtual KFResult< ListString >* ListExecute( const std::string& strsql ) = 0;
         virtual KFResult< VectorString >* VectorExecute( const std::string& strsql ) = 0;
 

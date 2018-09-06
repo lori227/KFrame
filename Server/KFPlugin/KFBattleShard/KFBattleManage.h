@@ -32,6 +32,8 @@ namespace KFrame
     class KFBattleManage : public KFSingleton< KFBattleManage >
     {
     public:
+        KFBattleManage();
+
         // 初始化
         void Initialize();
 
@@ -49,14 +51,13 @@ namespace KFrame
 
         // 释放战斗服务器
         void FreeBattleServer( uint32 serverid, const std::string& ip );
-        void FreeBattleServer( KFBattleServer* battleserver );
 
     protected:
         // 更新战场数量
         void UpdateBattleCount( const std::string& ip );
 
     private:
-        KFRedisDriver* _redis_driver;
+        KFRedisDriver* _battle_redis_driver;
     };
 
     ////////////////////////////////////////////////////////////////////////////

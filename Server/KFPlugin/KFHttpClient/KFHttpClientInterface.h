@@ -5,6 +5,9 @@
 
 namespace KFrame
 {
+    // 里面使用了无锁环形队列, 目前只安全支持的在逻辑主线程使用,
+    // 多个线程使用mt可能会导致宕机问题
+
     class KFJson;
     class KFHttpClientInterface : public KFModule
     {

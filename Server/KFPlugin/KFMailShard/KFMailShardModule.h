@@ -67,8 +67,6 @@ namespace KFrame
         // 计划清理过期的全局邮件
         void OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size );
 
-    private:
-
         // 重载GM全局邮件
         void LoadWholeMailToPerson( uint32 playerid );
 
@@ -83,7 +81,6 @@ namespace KFrame
 
         // 添加邮件 当maillistkey == ""发送系统邮件
         bool AddMail( const std::string& maillistkey, MapString& maildata );
-
 
     };
 }

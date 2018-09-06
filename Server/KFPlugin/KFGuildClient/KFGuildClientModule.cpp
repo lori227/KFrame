@@ -242,7 +242,7 @@ namespace KFrame
         }
         // 发送邮件
         auto serverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-        _kf_mail->SendMail( player, KFGuid( serverid, kfmsg.invitedid() ), 6, nullptr, KFUtility::ToString( kfmsg.guildid() ) );
+        _kf_mail->SendMail( player, serverid, kfmsg.invitedid(), 6, KFUtility::ToString( kfmsg.guildid() ) );
 
     }
 

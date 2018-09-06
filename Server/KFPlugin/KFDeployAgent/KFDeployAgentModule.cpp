@@ -377,14 +377,14 @@ namespace KFrame
             rc = waitpid( pid, &status, 0 );
         } while ( rc < 0 && errno == EINTR );
 
-        deploydata->_process_id = FindProcessIdByName( deploydata, startupfile );
+        deploydata->_process_id = FindProcessIdByName( deploydata );
         return true;
     }
 
-    uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata, const std::string& startupfile )
+    uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata )
     {
-        auto strprocessid = ExecuteShell( "ps -ef|grep '{} {}={}'|grep -v 'grep'|awk '{{print $2}}'",
-                                          startupfile, __KF_STRING__( appid ), deploydata->_app_id );
+        auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'",
+                                          __KF_STRING__( appid ), deploydata->_app_id );
         return KFUtility::ToValue< uint32 >( strprocessid );
     }
 
@@ -392,8 +392,7 @@ namespace KFrame
     {
         if ( kill( deploydata->_process_id, 0 ) != 0 )
         {
-            auto startupfile = deploydata->_kf_launch->GetStartupFile( deploydata->_is_debug );
-            deploydata->_process_id = FindProcessIdByName( deploydata, startupfile );
+            deploydata->_process_id = FindProcessIdByName( deploydata );
         }
     }
 

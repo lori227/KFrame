@@ -20,6 +20,7 @@
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
 {
@@ -62,16 +63,21 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessReq );
 
         // 添加最近的人
-        __KF_MESSAGE_FUNCTION__( HandleAddBattleFriendDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddRecentPlayerDataReq );
 
         // 查询最近的玩家列表
         __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
 
+        // 处理玩家敬酒请求(被敬酒次数判断)
+        __KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
+
+        // 处理查询总的被敬酒次数请求
+        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+
     protected:
         // 信息转换成好友信息
-        void MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBFriend* pbfriend );
-        void MapStringToPBFriend( MapString& values, KFMsg::PBFriend* pbfriend, bool newadd );
-        void MapStringToPBBasic( MapString& values, KFMsg::PBStrings* pbstrings );
+        void MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBRelation* pbrelation );
+        void MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd );
 
         // 格式化好友key
         std::string FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid );
@@ -86,30 +92,15 @@ namespace KFrame
         // 计划清理数据库
         void OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size );
 
-        // 是否是好友成员信息
-        bool IsFriend( uint32 playerid, uint32 targetid );
-
-        // 是否已经在最近游戏列表
-        bool IsRecentFriend( uint32 playerid, uint32 targetid );
-
-        // 删除已经存在的最近游戏列表
-        void DelRecentListToDB( uint32 playerid );
-
-        // 保存最近游戏列表
-        void SaveRecentListToDB( uint32 playerid, VectorString& uidinfos );
-
-        // 通知客户端操作最近游戏列表
-        void SendRecentListToClient( uint32 selfid, uint32 operate, VectorString& uidinfos );
-
         // 更新好友度
-        void UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 addvalue, uint32 type );
-
-        // 处理战斗结算好感度
-        void HandleBattleFrinedLiness( const char* data, uint32 length );
+        void UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 type, uint32 addvalue );
 
     private:
-        std::set< uint32 > _add_uids;
-        std::set< uint32 > _del_uids;
+        // 公共属性数据库
+        KFRedisDriver* _public_redis_driver;
+
+        // 关系数据库
+        KFRedisDriver* _relation_redis_driver;
     };
 }
 

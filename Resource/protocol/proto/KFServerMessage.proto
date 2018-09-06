@@ -94,9 +94,9 @@ enum ServerProtocol
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
 	S2S_UPDATE_RANK_DATA_REQ = 21193;				// 更新排行榜数据
-	S2S_ADD_BATTLE_FRIEND_DATA_REQ = 21194;			// 结算战斗好友相关数据
-	S2S_QUERY_RECENT_LIST_REQ = 21195;			// 请求最近游戏列表
-	S2S_QUERY_RECENT_LIST_ACK = 21196;			// 通知处理最近游戏列表	
+	S2S_ADD_RECENT_PLAYER_DATA_REQ = 21194;			// 结算最近的人相关数据
+	S2S_QUERY_RECENT_LIST_REQ = 21195;				// 请求最近游戏列表
+	S2S_QUERY_RECENT_LIST_ACK = 21196;				// 通知处理最近游戏列表	
 
 	S2S_CREATE_GUILD_REQ = 21197;				// 创建帮派请求
 	S2S_CREATE_GUILD_TO_SHARD_REQ = 21198;			// 创建帮派请求发送到shard
@@ -482,11 +482,11 @@ message S2SNoticeNewMailReq
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-message PBFriend
+message PBRelation
 {
 	required uint32 playerid = 1;
-	repeated PBString playerdata = 2;
-	repeated PBString frienddata = 3;
+	required PBStrings playerdata = 2;
+	required PBStrings relationdata = 3;
 }
 
 // 查询好友信息
@@ -510,7 +510,7 @@ message S2SQueryFriendInviteReq
 message S2SQueryFriendAck
 {
 	required uint32 playerid = 1;	// 玩家id
-	repeated PBFriend pbfriend = 2;	// 好友数据	
+	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
 // 查询好友信息
@@ -518,7 +518,7 @@ message S2SQueryFriendAck
 message S2SQueryFriendInviteAck
 {
 	required uint32 playerid = 1;	// 玩家id
-	repeated PBFriend pbfriend = 2;	// 好友数据	
+	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
 // 添加好友请求
@@ -537,7 +537,7 @@ message S2SAddFriendInviteReq
 message S2SAddFriendInviteAck
 {
 	required uint32 playerid = 1;	// 玩家id
-	required PBFriend pbfriend = 2;	// 好友数据	
+	required PBRelation pbfriend = 2;	// 好友数据	
 }
 
 // 删除好友请求
@@ -579,7 +579,7 @@ message S2SAddFriendReq
 message S2SAddFriendAck
 {
 	required uint32 playerid = 1;		// 玩家id
-	required PBFriend pbfriend = 2;		// 好友信息
+	required PBRelation pbfriend = 2;		// 好友信息
 }
 
 // 更新好友属性
@@ -664,7 +664,7 @@ message S2SPlayerToastReq
 {
 	required uint32 selfplayerid = 1;			// 敬酒人
 	required uint32 targetplayerid = 2;         // 被敬酒人
-	required uint32 dailygetlimit = 3;			// 每日被敬酒次数上限
+	required uint32 serverid = 3;         		// 服务器id
 }
 
 //玩家敬酒回馈
@@ -683,15 +683,6 @@ message S2SQueryToastCountReq
 {
 	required uint32 selfplayerid = 1;
 	required uint32 targetplayerid = 2;
-}
-
-// 查询总的敬酒次数回馈
-//S2S_QUERY_TOAST_COUNT_ACK
-message S2SQueryToastCountAck
-{
-	required uint32 playerid = 1;
-	required uint32 targetplayerid = 2;
-	required uint32 toastcount = 3;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -962,23 +953,16 @@ message S2SQueryFriendRankListReq
 	required uint32 rankid = 3;			// 榜单类型
 	repeated uint32 friendid = 4;		// 待查询的玩家好友id
 }
-// 结算战斗好友相关数据
-// S2S_ADD_BATTLE_FRIEND_DATA_REQ
-message S2SAddBattleFriendDataReq
-{
-	repeated PBRecentData recentdata = 1;		// 战绩
-}
 
-message PBUidsInfo
+// 添加最近的人游戏数据
+// S2S_ADD_RECENT_PLAYER_DATA_REQ
+message S2SAddRecentPlayerDataReq
 {
-	repeated string uidsinfo = 1;
+	required uint64 roomid = 1;
+	required uint32 playerid = 2;
+	repeated uint32 members = 3;
+	required PBStrings pbdata = 4;
 }
-
-message PBUidBasic
-{
-	repeated PBStrings basicdata = 1;
-}
-
 
 // 请求最近游戏列表
 // S2S_QUERY_RECENT_LIST_REQ
@@ -987,16 +971,12 @@ message S2SQueryRecentListReq
 	required uint32 playerid = 1;		// 玩家id
 }
 
-
 // 通知处理最近游戏列表	
 // S2S_QUERY_RECENT_LIST_ACK
 message S2SQueryRecentListAck
 {
-	required uint32 playerid = 1;	//  角色id
-	required PBPlayerIds uids = 2;// 玩家列表
-	required uint32 operate = 3;// 操作类型
-	optional PBUidsInfo uidsinfos = 4;//玩家详细信息
-	optional PBUidBasic basicdatas = 5; // 玩家基础信息
+	required uint32 playerid = 1;		// 角色id
+	repeated PBRelation pbrelation = 2;	// 最近玩家数据	
 }
 
 // 创建帮派请求

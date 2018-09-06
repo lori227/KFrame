@@ -4,7 +4,6 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFRedisConfig.cpp" />
     <ClCompile Include="KFRedisExecute.cpp" />
-    <ClCompile Include="KFRedisManage.cpp" />
     <ClCompile Include="KFRedisModule.cpp" />
     <ClCompile Include="KFRedisPlugin.cpp" />
   </ItemGroup>
@@ -13,7 +12,6 @@
     <ClInclude Include="KFRedisExecute.h" />
     <ClInclude Include="KFRedisFormat.h" />
     <ClInclude Include="KFRedisInterface.h" />
-    <ClInclude Include="KFRedisManage.h" />
     <ClInclude Include="KFRedisModule.h" />
     <ClInclude Include="KFRedisPlugin.h" />
   </ItemGroup>

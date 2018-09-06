@@ -10,7 +10,7 @@
 		<Plugin Sort="162" Name="KFDataClient" Config=""/>
 		<Plugin Sort="163" Name="KFMailClient" Config="./config/mail.config"/>
 		<Plugin Sort="164" Name="KFPublicClient" Config=""/>
-		<Plugin Sort="165" Name="KFRelationClient" Config="./config/relation.config"/>
+		<Plugin Sort="165" Name="KFRelationClient" Config=""/>
 		<Plugin Sort="166" Name="KFMatchClient" Config="./config/match.config"/>
 		<Plugin Sort="167" Name="KFBattleClient" Config=""/>
 		<Plugin Sort="168" Name="KFGroupClient" Config=""/>

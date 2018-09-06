@@ -44,7 +44,8 @@ namespace KFrame
         virtual void Pipeline( const ListString& commands );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // 逻辑
+        void Run();
     protected:
         // 转译字符
         char* FormatSlashes( char* buffer, uint32 length );
@@ -69,12 +70,15 @@ namespace KFrame
         virtual KFResult< std::list< MapString > >* ListMapExecute( const std::string& strsql );
 
     private:
-        KFResult< voidptr > _void_result;
-        KFResult< uint32 > _uint32_result;
-        KFResult< uint64 > _uint64_result;
-        KFResult< std::string > _string_result;
-        KFResult< MapString > _map_result;
-        KFResult< std::list< MapString > > _list_map_result;
+        KFResultQueue< voidptr > _void_result_queue;
+        KFResultQueue< uint32 > _uint32_result_queue;
+        KFResultQueue< uint64 > _uint64_result_queue;
+        KFResultQueue< std::string > _string_result_queue;
+        KFResultQueue< MapString > _map_result_queue;
+        KFResultQueue< std::list< MapString > > _list_map_result_queue;
+
+        std::vector< KFBaseResultQueue* > _result_queue_list;
+
     };
 }
 

@@ -172,52 +172,46 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
         }
 
-        auto toserverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-        auto result = GiveStoreResult( player, kfmsg.shopid(), kfmsg.toplayerid(), toserverid );
-
-        // 增加好感度
-        auto storedatasetting = _kf_store_config->FindStoreSetting( kfmsg.shopid() );
-        if ( KFMsg::GiveBuyOK == result &&
-                _invalid_int < storedatasetting->_give_friend_liness )
+        auto kfsetting = _kf_store_config->FindStoreSetting( kfmsg.shopid() );
+        if ( kfsetting == nullptr )
         {
-            _kf_relation->UpdateFriendLiness( player, kfmsg.toplayerid(), KFOperateEnum::Add, storedatasetting->_give_friend_liness, KFMsg::FriendLinessEnum::Give );
-
-        }
-
-        _kf_display->SendToClient( player, result, kfmsg.shopid() );
-    }
-
-    uint32 KFStoreModule::GiveStoreResult( KFEntity* player, uint32 shopid, uint32 toplayid, uint32 toserverid )
-    {
-        auto storedatasetting = _kf_store_config->FindStoreSetting( shopid );
-        if ( storedatasetting == nullptr )
-        {
-            return KFMsg::StoreParamError;
+            return _kf_display->SendToClient( player, KFMsg::StoreParamError );
         }
 
         uint64 nowtime = KFGlobal::Instance()->_real_time;
-        if ( !storedatasetting->CheckParam( storedatasetting->_cost_give, KFStoreEnum::Give, 1, nowtime ) )
+        if ( !kfsetting->CheckParam( kfsetting->_cost_give, KFStoreEnum::Give, 1, nowtime ) )
         {
-            return KFMsg::StoreParamError;
+            return _kf_display->SendToClient( player, KFMsg::StoreOutOfLimits );
         }
 
-        //检测扣除物品是否足够
-        auto kfcostagents = storedatasetting->FindGiveCostAgents( nowtime );
+        auto kfcostagents = kfsetting->FindGiveCostAgents( nowtime );
         if ( kfcostagents == nullptr )
         {
-            return KFMsg::StoreParamError;
+            return _kf_display->SendToClient( player, KFMsg::StoreParamError );
         }
 
         if ( !player->CheckAgentData( kfcostagents, __FUNC_LINE__ ) )
         {
-            return KFMsg::GiveLackCost;
+            return _kf_display->SendToClient( player, KFMsg::GiveLackCost );
         }
 
-        player->RemoveAgentData( kfcostagents, __FUNC_LINE__ );
-
         // 发送邮件
-        _kf_mail->SendMail( player, KFGuid( toserverid, toplayid ), storedatasetting->_give_mail_id, &storedatasetting->_buy_item );
-        return KFMsg::GiveBuyOK;
+        auto toserverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
+        auto ok = _kf_mail->SendMail( player, toserverid, kfmsg.toplayerid(), kfsetting->_give_mail_id, &kfsetting->_buy_item );
+        if ( ok )
+        {
+            _kf_display->SendToClient( player, KFMsg::GiveBuyOK, kfmsg.shopid() );
+
+            // 扣除消耗
+            player->RemoveAgentData( kfcostagents, __FUNC_LINE__ );
+
+            // 添加好友度
+            _kf_relation->AddFriendLiness( player, kfmsg.toplayerid(), KFMsg::Give, kfsetting->_give_friend_liness );
+        }
+        else
+        {
+            _kf_display->SendToClient( player, KFMsg::MailServerBusy, kfmsg.shopid() );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleQueryStoreInfoReq )
@@ -241,7 +235,7 @@ namespace KFrame
         auto kfdata = player->GetData();
         auto kfwishorders = kfdata->FindData( __KF_STRING__( wishorder ) );
 
-        uint32 result = KFMsg::AckEnum::StoreParamError;
+        uint32 result = KFMsg::StoreParamError;
 
         switch ( kfmsg.type() )
         {
@@ -266,25 +260,25 @@ namespace KFrame
         // 找不到商品
         if ( nullptr == kfwishorders || nullptr == _kf_store_config->FindStoreSetting( storeid ) )
         {
-            return KFMsg::AckEnum::StoreParamError;
+            return KFMsg::StoreParamError;
         }
 
         if ( KFMsg::WishStateEnum_MIN > status || KFMsg::WishStateEnum_MAX < status )
         {
-            return KFMsg::AckEnum::StoreParamError;
+            return KFMsg::StoreParamError;
         }
 
         // 已经在心愿单中
         if ( nullptr != kfwishorders->FindData( storeid ) )
         {
-            return KFMsg::AckEnum::WishOrderHadStoreId;
+            return KFMsg::WishOrderHadStoreId;
         }
 
         // 超过心愿单最大限制
-        static auto wishordersize = _kf_option->GetValue<uint32>( "wishordersize" );
-        if ( wishordersize <= kfwishorders->Size() )
+        static auto _wish_order_size = _kf_option->GetValue<uint32>( __KF_STRING__( wishordermaxcount ) );
+        if ( _wish_order_size <= kfwishorders->Size() )
         {
-            return KFMsg::AckEnum::WishOrderMaxSize;
+            return KFMsg::WishOrderMaxSize;
         }
 
         auto kfwishorder = _kf_kernel->CreateObject( kfwishorders->GetDataSetting() );
@@ -292,42 +286,42 @@ namespace KFrame
         kfwishorder->SetValue< uint64 >( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
         kfwishorder->SetValue< uint32 >( __KF_STRING__( status ), status );
         player->AddData( kfwishorders, kfwishorder );
-        return KFMsg::AckEnum::WishPanelAddSuccessed;
+        return KFMsg::WishPanelAddSuccessed;
     }
 
     uint32 KFStoreModule::RemoveWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid )
     {
         if ( _invalid_int >= kfwishorders->Size() )
         {
-            return KFMsg::AckEnum::WishOrderEmpty;
+            return KFMsg::WishOrderEmpty;
         }
 
         // 查找心愿单中是否有该物品
         if ( nullptr == kfwishorders->FindData( storeid ) )
         {
-            return KFMsg::AckEnum::WishOrderNoExist;
+            return KFMsg::WishOrderNoExist;
         }
 
         player->RemoveData( kfwishorders, storeid );
-        return KFMsg::AckEnum::Success;
+        return KFMsg::Success;
     }
 
     uint32 KFStoreModule::ModifyWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid, uint32 status )
     {
         if ( KFMsg::WishStateEnum_MIN > status || KFMsg::WishStateEnum_MAX < status )
         {
-            return KFMsg::AckEnum::StoreParamError;
+            return KFMsg::StoreParamError;
         }
 
         // 查找心愿单中是否有该物品
         auto kfwishorder = kfwishorders->FindData( storeid );
         if ( nullptr == kfwishorder )
         {
-            return KFMsg::AckEnum::WishOrderNoExist;
+            return KFMsg::WishOrderNoExist;
         }
 
         player->UpdateData( __KF_STRING__( wishorder ), storeid, __KF_STRING__( status ), KFOperateEnum::Set, status );
-        return KFMsg::AckEnum::Success;
+        return KFMsg::Success;
     }
 
 

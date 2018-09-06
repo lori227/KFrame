@@ -30,8 +30,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ, &KFMailClientModule::HandleDeleteMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ, &KFMailClientModule::HandleReceiveMailReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_ACK, &KFMailClientModule::HandleUpdateMailFlagAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_PLAYER_TOAST_REQ, &KFMailClientModule::HandlePlayerToastReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_ACK, &KFMailClientModule::HandlePlayerToastAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &KFMailClientModule::HandleNoticeNewMailReq );
     }
 
@@ -50,8 +48,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_PLAYER_TOAST_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ );
     }
 
@@ -296,7 +292,7 @@ namespace KFrame
 
         auto mailtype = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
 
-        auto deltype = _kf_option->GetValue<uint32>( "delNow", mailtype );
+        auto deltype = _kf_option->GetValue< uint32 >( __KF_STRING__( delnow ), mailtype );
         if ( deltype == 1 )
         {
             UpdateFlagToMail( playerid, kfmail, KFMsg::FlagEnum::ReceiveRemove );
@@ -394,47 +390,53 @@ namespace KFrame
         {
             auto senderid = kfmail->GetValue< uint32 >( __KF_STRING__( senderid ) );
             auto serverid = kfmail->GetValue< uint32 >( __KF_STRING__( serverid ) );
-            SendMail( player, KFGuid( serverid, senderid ), kfsetting->_reply_id, nullptr, reward );
+            SendMail( player, serverid, senderid, kfsetting->_reply_id, reward );
         }
     }
 
-    void KFMailClientModule::FormatMailData( const KFMailSetting* kfsetting, MapString& maildata, const KFAgents* kfagents, KFEntity* sender /* = nullptr */, const std::string& extend/* = ""*/ )
+    MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFAgents* kfagents, const std::string& extend )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
+        static MapString _mail_data;
+        _mail_data.clear();
 
         // 配置id
-        maildata.insert( std::make_pair( __KF_STRING__( configid ), __TO_STRING__( kfsetting->_config_id ) ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( configid ), __TO_STRING__( kfsetting->_config_id ) ) );
 
         // 类型
-        maildata.insert( std::make_pair( __KF_STRING__( type ), __TO_STRING__( kfsetting->_type ) ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( type ), __TO_STRING__( kfsetting->_type ) ) );
 
         // 标识
-        maildata.insert( std::make_pair( __KF_STRING__( flag ), "0" ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( flag ), "0" ) );
 
         // 标题
-        maildata.insert( std::make_pair( __KF_STRING__( title ), kfsetting->_title ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( title ), kfsetting->_title ) );
 
         // 内容
-        maildata.insert( std::make_pair( __KF_STRING__( content ), kfsetting->_content ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( content ), kfsetting->_content ) );
 
         // 有效时间
-        maildata.insert( std::make_pair( __KF_STRING__( validtime ), __TO_STRING__( kfsetting->_valid_time ) ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( validtime ), __TO_STRING__( kfsetting->_valid_time ) ) );
 
         // 附加信息
         if ( !extend.empty() )
         {
-            maildata.insert( std::make_pair( __KF_STRING__( extend ), extend ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( extend ), extend ) );
         }
-        else
+        else if ( !kfsetting->_extend.empty() )
         {
-            maildata.insert( std::make_pair( __KF_STRING__( extend ), kfsetting->_extend ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( extend ), kfsetting->_extend ) );
         }
 
         // 奖励
         if ( kfagents != nullptr )
         {
-            maildata.insert( std::make_pair( __KF_STRING__( reward ), kfagents->_string ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfagents->_string ) );
+        }
+        else if ( !kfsetting->_rewards._string.empty() )
+        {
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfsetting->_rewards._string ) );
         }
 
         // 发送者信息
@@ -444,23 +446,25 @@ namespace KFrame
             auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
             // 发送者名字
-            maildata.insert( std::make_pair( __KF_STRING__( sendername ), kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( sendername ), kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) ) );
 
             // 发送者id
-            maildata.insert( std::make_pair( __KF_STRING__( senderid ), __TO_STRING__( kfobject->GetKeyID() ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( senderid ), __TO_STRING__( kfobject->GetKeyID() ) ) );
 
             // 发送者服务器id
-            maildata.insert( std::make_pair( __KF_STRING__( serverid ), __TO_STRING__( kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) ) ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( serverid ), __TO_STRING__( kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) ) ) ) );
 
             // 头像
-            maildata.insert( std::make_pair( __KF_STRING__( icon ), kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( icon ), kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) ) );
 
             // 头像
-            maildata.insert( std::make_pair( __KF_STRING__( iconbox ), kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( iconbox ), kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) ) ) );
 
             // 性别
-            maildata.insert( std::make_pair( __KF_STRING__( sex ), __TO_STRING__( kfbasic->GetValue< uint32 >( __KF_STRING__( sex ) ) ) ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( sex ), __TO_STRING__( kfbasic->GetValue< uint32 >( __KF_STRING__( sex ) ) ) ) );
         }
+
+        return _mail_data;
     }
 
     bool KFMailClientModule::SendAddMailToCluster( uint32 serverid, uint32 playerid, uint32 mailtype, const MapString& maildata )
@@ -495,10 +499,9 @@ namespace KFrame
 
         auto maxmailid = FindMaxMailId( player, kfmsg.mailtype() );
         SendQueryMailMessage( player->GetKeyID(), kfmsg.mailtype(), maxmailid );
-
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* receiverplayer, uint32 mailconfigid, const KFAgents* kfagents /* = nullptr */ )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -506,12 +509,11 @@ namespace KFrame
             return false;
         }
 
-        MapString maildata;
-        FormatMailData( kfsetting, maildata, kfagents );
-        return SendAddMailToCluster( KFGlobal::Instance()->_app_id, receiverplayer->GetKeyID(), kfsetting->_type, maildata );
+        auto& maildata = FormatMailData( nullptr, kfsetting, kfagents, _invalid_str );
+        return SendAddMailToCluster( KFGlobal::Instance()->_app_id, player->GetKeyID(), kfsetting->_type, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* senderplayer, const KFGuid& receiverguid, uint32 mailconfigid, const KFAgents* kfagents /* = nullptr */, const std::string& extend/* = ""*/ )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const KFAgents* kfagents )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -519,74 +521,21 @@ namespace KFrame
             return false;
         }
 
-        MapString maildata;
-        FormatMailData( kfsetting, maildata, kfagents, senderplayer, extend );
+        auto& maildata = FormatMailData( player, kfsetting, kfagents, _invalid_str  );
 
-        auto receiverid = __KF_DATA_ID__( receiverguid );
-        auto receiverserverid = __KF_HEAD_ID__( receiverguid );
-        return SendAddMailToCluster( receiverserverid, receiverid, kfsetting->_type, maildata );
+        return SendAddMailToCluster( toserverid, toplayerid, kfsetting->_type, maildata );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandlePlayerToastReq )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const std::string& extend )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgPlayerToastReq );
-
-        auto kfsetting = _kf_mail_config->FindMailSetting( KFMsg::MailConfigEnum::ToastMail );
+        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "can't find ToastMail config!" );
+            return false;
         }
 
-        auto kfobject = player->GetData();
-        auto toastrecord = kfobject->FindData( __KF_STRING__( toast ) );
-
-        //判断每日敬酒次数
-        auto toastcount = toastrecord->Size();
-        auto toastlimit = kfsetting->_daily_send_limit;
-        if ( toastcount >= toastlimit )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ToastSendCountOver );
-        }
-
-        //判断是否重复敬酒
-        auto toastplayer = toastrecord->FindData( kfmsg.playerid() );
-        if ( toastplayer != nullptr )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ToastCanNotRepeat );
-        }
-
-        //发送到public判断被敬酒次数
-        KFMsg::S2SPlayerToastReq req;
-        req.set_selfplayerid( __KF_DATA_ID__( kfguid ) );
-        req.set_targetplayerid( kfmsg.playerid() );
-        req.set_dailygetlimit( kfsetting->_daily_get_limit );
-        _kf_cluster->SendMessageToShard( __KF_STRING__( public ), KFMsg::S2S_PLAYER_TOAST_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandlePlayerToastAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SPlayerToastAck );
-
-        _kf_display->SendToClient( player, kfmsg.result() );
-
-        // 敬酒成功
-        if ( kfmsg.result() == KFMsg::ToastOK )
-        {
-            player->UpdateData( __KF_STRING__( toast ), kfmsg.targetplayerid(), __KF_STRING__( id ), KFOperateEnum::Set, kfmsg.targetplayerid() );
-
-            //发送敬酒邮件
-            const KFAgents* kfagents = nullptr;
-            auto kfsetting = _kf_mail_config->FindMailSetting( KFMsg::MailConfigEnum::ToastMail );
-            if ( kfsetting != nullptr )
-            {
-                kfagents = &kfsetting->_rewards;
-            }
-
-            KFGuid targetguid;
-            targetguid._head_id = kfmsg.targetserverid();
-            targetguid._data_id = kfmsg.targetplayerid();
-            SendMail( player, targetguid, KFMsg::MailConfigEnum::ToastMail, kfagents );
-        }
+        auto& maildata = FormatMailData( player, kfsetting, nullptr, extend );
+        return SendAddMailToCluster( toserverid, toplayerid, kfsetting->_type, maildata );
     }
 }
 

@@ -585,7 +585,7 @@ namespace KFrame
         {
             kfentity->SetNeetToSave( true );
 
-            static auto _delay_save_time = _kf_option->GetValue< uint32 >( "selaysavetime" );
+            static auto _delay_save_time = _kf_option->GetValue< uint32 >( __KF_STRING__( selaysavetime ) );
             __REGISTER_DELAY_TIMER__( kfentity->GetKeyID(), _delay_save_time, &KFComponentEx::OnTimerSaveEntity );
         }
     }

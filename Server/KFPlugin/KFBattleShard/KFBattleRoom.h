@@ -3,6 +3,7 @@
 
 #include "KFBattleCamp.h"
 #include "KFBattleManage.h"
+#include "KFRedis/KFRedisInterface.h"
 
 namespace KFrame
 {
@@ -69,7 +70,7 @@ namespace KFrame
         bool LoginBattleRoom( uint32 campid, uint32 playerid );
 
         // 开始游戏房间
-        void StartBattleRoom();
+        void StartBattleRoom( uint32 maxtime );
 
         // 确认开启房间
         void ConfirmStartBattleRoom();
@@ -86,14 +87,17 @@ namespace KFrame
         // 玩家上线
         bool PlayerOnlineBattleRoom( uint32 campid, uint32 playerid, uint32 serverid );
 
+        // 结算
+        bool BattleScoreBalance( KFMsg::PBBattleScore* pbscore );
+
         // 发送消息到Match
         bool SendMessageToMatch( uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息到战场
         bool SendMessageToBattle( uint32 msgid, google::protobuf::Message* message );
 
-        // 结算
-        bool BattleScoreBalance( KFMsg::PBBattleScore* pbscore );
+        // 发送消息到玩家
+        void SendMessageToRoom( uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 查找玩家
@@ -120,7 +124,6 @@ namespace KFrame
 
         // 房间正在游戏
         void BattleRoomPlaying();
-
     public:
         // 匹配模式
         uint32 _match_id;
@@ -143,6 +146,9 @@ namespace KFrame
         // 状态
         uint32 _status;
 
+        // 总人数
+        uint32 _total_player_count;
+
         // 阵营列表
         KFMap< uint32, uint32, KFBattleCamp > _kf_camp_list;
 
@@ -153,14 +159,20 @@ namespace KFrame
         // 请求次数
         uint32 _req_count;
 
-        // 总人数
-        uint32 _total_player_count;
-
         // 最大玩家数量
         uint32 _max_player_count;
 
         // 有效的时间
         uint64 _battle_valid_time;
+
+        // 匹配服务器已经开启
+        bool _is_match_room_open;
+
+        // 房间开启等待时间
+        uint32 _battle_wait_time;
+
+        // redis
+        KFRedisDriver* _battle_redis_driver;
     };
 }
 

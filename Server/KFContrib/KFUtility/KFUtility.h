@@ -66,6 +66,9 @@ namespace KFrame
         static void ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew );
         static void ReplaceString( std::string& srcstring, const std::string& strold, const VectorString& params );
 
+        // 删除一个字符串中的指定字符串
+        static bool DelString( std::string& srcstring, const std::string& delstr, std::string& strnew );
+
         // 生产guid
         static uint64 Make64Guid( uint32 dataid );
 

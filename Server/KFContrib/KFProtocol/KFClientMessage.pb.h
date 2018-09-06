@@ -62,6 +62,7 @@ class MsgStartMatchAck;
 class MsgCancelMatchReq;
 class MsgCancelMatchAck;
 class MsgMatchResultAck;
+class MsgTellMatchWaitTime;
 class MsgAddFriendInviteReq;
 class MsgReplyFriendInviteReq;
 class MsgDelFriendReq;
@@ -198,11 +199,12 @@ enum ClientProtocol {
   MSG_TELL_SEVEN_EXTEND_REWARD = 199,
   MSG_CREATE_GUILD_REQ = 200,
   MSG_INVITE_GUILD_REQ = 201,
-  MSG_APPLY_GUILD_REQ = 202
+  MSG_APPLY_GUILD_REQ = 202,
+  MSG_TELL_MATCH_WAIT_TIME = 203
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_APPLY_GUILD_REQ;
+const ClientProtocol ClientProtocol_MAX = MSG_TELL_MATCH_WAIT_TIME;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -2640,6 +2642,88 @@ class LIBPROTOC_EXPORT MsgMatchResultAck : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static MsgMatchResultAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTellMatchWaitTime : public ::google::protobuf::Message {
+ public:
+  MsgTellMatchWaitTime();
+  virtual ~MsgTellMatchWaitTime();
+
+  MsgTellMatchWaitTime(const MsgTellMatchWaitTime& from);
+
+  inline MsgTellMatchWaitTime& operator=(const MsgTellMatchWaitTime& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellMatchWaitTime& default_instance();
+
+  void Swap(MsgTellMatchWaitTime* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTellMatchWaitTime* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTellMatchWaitTime& from);
+  void MergeFrom(const MsgTellMatchWaitTime& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 waittime = 1;
+  inline bool has_waittime() const;
+  inline void clear_waittime();
+  static const int kWaittimeFieldNumber = 1;
+  inline ::google::protobuf::uint32 waittime() const;
+  inline void set_waittime(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellMatchWaitTime)
+ private:
+  inline void set_has_waittime();
+  inline void clear_has_waittime();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 waittime_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTellMatchWaitTime* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -9460,6 +9544,32 @@ inline void MsgMatchResultAck::set_allocated_token(::std::string* token) {
     clear_has_token();
     token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// MsgTellMatchWaitTime
+
+// required uint32 waittime = 1;
+inline bool MsgTellMatchWaitTime::has_waittime() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTellMatchWaitTime::set_has_waittime() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTellMatchWaitTime::clear_has_waittime() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTellMatchWaitTime::clear_waittime() {
+  waittime_ = 0u;
+  clear_has_waittime();
+}
+inline ::google::protobuf::uint32 MsgTellMatchWaitTime::waittime() const {
+  return waittime_;
+}
+inline void MsgTellMatchWaitTime::set_waittime(::google::protobuf::uint32 value) {
+  set_has_waittime();
+  waittime_ = value;
 }
 
 // -------------------------------------------------------------------

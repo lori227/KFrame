@@ -9,6 +9,7 @@ namespace KFrame
     KFBattlePlayer::KFBattlePlayer()
     {
         _notice_count = 0;
+        _is_balance_score = false;
         _status = KFPlayerStatus::StatusPlayerIdle;
     }
 
@@ -57,7 +58,7 @@ namespace KFrame
 
     bool KFBattlePlayer::SendMessageToClient( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendMessageToClient( _pb_player.serverid(), msgid, message );
+        return _kf_cluster_shard->SendMessageToPlayer( _pb_player.serverid(), _pb_player.playerid(), msgid, message );
     }
 
     void KFBattlePlayer::RunEnterRoom( KFBattleRoom* kfroom )
@@ -228,9 +229,13 @@ namespace KFrame
     {
         // 设置matchid
         pbscore->set_matchid( kfroom->_match_id );
+        pbscore->set_playercount( kfroom->_total_player_count );
 
         // 计算评分
         ScoreBalance( pbscore );
+
+        // 获得同阵营玩家
+        GetSaveCampPlayer( kfroom, pbscore );
 
         // 获得奖励
         std::string reward = _invalid_str;
@@ -252,7 +257,10 @@ namespace KFrame
             }
         }
 
+        if ( !_is_balance_score )
         {
+            _is_balance_score = true;
+
             // 发送到玩家
             KFMsg::S2SPlayerBattleScoreReq req;
             req.set_playerid( _pb_player.playerid() );
@@ -266,32 +274,46 @@ namespace KFrame
 
     void KFBattlePlayer::ScoreBalance( KFMsg::PBBattleScore* pbscore )
     {
-        static std::string _battle_score_param = "battlescoreparam";
-
         // 各项数据
         double battlescore = 0.0f;
         for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
         {
             auto pbdata = &pbscore->pbdata( i );
-            auto scoreparam = _kf_option->GetValue< double >( _battle_score_param, pbdata->name() );
+            auto scoreparam = _kf_option->GetValue< double >( __KF_STRING__( battlescoreparam ), pbdata->name() );
             battlescore += pbdata->value() * scoreparam;
         }
 
         // 排名分
-        auto rankingparam = _kf_option->GetValue< uint32 >( _battle_score_param, __KF_STRING__( ranking ) );
+        auto rankingparam = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoreparam ), __KF_STRING__( ranking ) );
         battlescore += rankingparam / pbscore->ranking();
 
         // 吃鸡奖励分
-        if ( pbscore->ranking() == 1 )
+        if ( pbscore->ranking() == __TOP_ONE__ )
         {
-            auto toponeparam = _kf_option->GetValue< uint32 >( _battle_score_param, __KF_STRING__( topone ) );
+            auto toponeparam = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoreparam ), __KF_STRING__( topone ) );
             battlescore += toponeparam;
         }
 
-        if ( battlescore < 0.0f )
+        pbscore->set_score( __MAX__( 0.0f, battlescore ) );
+    }
+
+    void KFBattlePlayer::GetSaveCampPlayer( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore )
+    {
+        auto kfcamp = kfroom->_kf_camp_list.Find( _pb_player.campid() );
+        if ( kfcamp == nullptr )
         {
-            battlescore = 0;
+            return;
         }
-        pbscore->set_score( battlescore );
+
+        for ( auto& iter : kfcamp->_kf_player_list._objects )
+        {
+            auto kfplayer = iter.second;
+            if ( kfplayer->GetID() == GetID() )
+            {
+                continue;
+            }
+
+            pbscore->add_members( kfplayer->GetID() );
+        }
     }
 }

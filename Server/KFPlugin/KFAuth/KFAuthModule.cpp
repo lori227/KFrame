@@ -69,7 +69,7 @@ namespace KFrame
         }
 
         // 判断是否需要激活
-        static auto _open_activation = _kf_option->GetValue< uint32 >( "openactivation" );
+        static auto _open_activation = _kf_option->GetValue< uint32 >( __KF_STRING__( openactivation ) );
         if ( _open_activation == 1 )
         {
             auto activation = accountdata[ __KF_STRING__( activation ) ];
@@ -165,7 +165,7 @@ namespace KFrame
 
     std::string KFAuthModule::CreateLoginToken( uint32 accountid, MapString& accountdata )
     {
-        static auto _token_expire_time = _kf_option->GetValue< uint32 >( "tokenexpiretime" );
+        static auto _token_expire_time = _kf_option->GetValue< uint32 >( __KF_STRING__( tokenexpiretime ) );
 
         // 创建token
         auto md5temp = __FORMAT__( "{}-{}", accountid, KFGlobal::Instance()->_game_time );

@@ -218,6 +218,7 @@ namespace KFrame
 
         KFMsg::S2STellRoomStartToBattleShardReq req;
         req.set_roomid( kfmsg.roomid() );
+        req.set_maxtime( kfmsg.maxtime() );
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {

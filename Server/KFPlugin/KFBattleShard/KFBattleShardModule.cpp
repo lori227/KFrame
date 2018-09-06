@@ -5,11 +5,9 @@
 
 namespace KFrame
 {
-    static KFRedisDriver* _kf_battle_driver = nullptr;
-#define __BATTLE_REDIS_DRIVER__ _kf_battle_driver;
-
     KFBattleShardModule::KFBattleShardModule()
     {
+        _battle_redis_driver = nullptr;
     }
 
     KFBattleShardModule::~KFBattleShardModule()
@@ -77,7 +75,7 @@ namespace KFrame
     void KFBattleShardModule::OnceRun()
     {
         _kf_battle_manage->Initialize();
-        _kf_battle_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
     }
 
     void KFBattleShardModule::Run()
@@ -358,7 +356,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleCancelMatchToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToBattleShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match req!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] campid[{}] group[{}] cancel match req!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
         if ( kfroom == nullptr )
         {
@@ -368,11 +366,11 @@ namespace KFrame
         auto ok = kfroom->CancelMatch( kfmsg.campid(), kfmsg.groupid() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match ok!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] campid[{}] group[{}] cancel match ok!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
         }
         else
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] group[{}] cancel match failed!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] campid[{}] group[{}] cancel match failed!", kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid() );
         }
     }
 
@@ -506,7 +504,7 @@ namespace KFrame
             return;
         }
 
-        kfroom->StartBattleRoom();
+        kfroom->StartBattleRoom( kfmsg.maxtime() );
 
         // 回复给战斗服务器
         KFMsg::S2STellBattleRoomStartAck ack;
@@ -545,16 +543,14 @@ namespace KFrame
 
         KFMsg::S2STellBattleRoomFinishAck ack;
         ack.set_roomid( kfmsg.roomid() );
-        SerialzeBattleRoomFinish( kfmsg.roomid(), &ack );
         auto ok = _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
         if ( ok )
         {
-            RemoveCalcBattleRoom( kfmsg.roomid() );
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] finish ok!", kfmsg.roomid() );
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] serverid[{}] ip[{}] finish ok!", kfmsg.roomid(), kfmsg.serverid(), kfmsg.ip() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] finish failed!", kfmsg.roomid() );
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] serverid[{}] ip[{}] finish failed!", kfmsg.roomid(), kfmsg.serverid(), kfmsg.ip() );
         }
     }
 
@@ -580,24 +576,6 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerBattleScoreAck )
-    {
-        __PROTO_PARSE__( KFMsg::S2SPlayerBattleScoreAck );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack req!", kfmsg.playerid(), kfmsg.roomid() );
-
-        auto redisdriver = __BATTLE_REDIS_DRIVER__;
-
-        auto kfresult = redisdriver->Execute( "hdel {}:{} {}", __KF_STRING__( score ), kfmsg.playerid(), kfmsg.roomid() );
-        if ( kfresult->IsOk() )
-        {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack ok!", kfmsg.playerid(), kfmsg.roomid() );
-        }
-        else
-        {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] balance ack failed!", kfmsg.playerid(), kfmsg.roomid() );
-        }
-    }
-
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleBattleScoreBalanceToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SBattleScoreBalanceToShardReq );
@@ -613,16 +591,12 @@ namespace KFrame
         auto ok = kfroom->BattleScoreBalance( pbscore );
         if ( ok )
         {
+            // 战场记录保存时间
+            static auto _battle_score_save_time = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoresavetime ) );
+
             // 保存到数据库
-            auto redisdriver = __BATTLE_REDIS_DRIVER__;
             auto strdata = KFProto::Serialize( pbscore, KFCompressEnum::Compress );
-
-            // 玩家战绩
-            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( score ), pbscore->playerid(), kfmsg.roomid(), strdata );
-
-            // 记录房间单个玩家的数据,用于组队玩家数据的结算(亲密度,最近好友)
-            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( battleroom ), kfmsg.roomid(), pbscore->playerid(), strdata );
-            redisdriver->Pipeline();
+            _battle_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( battlescore ), pbscore->playerid(), kfmsg.roomid(), strdata );
 
             __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}] balance ok!", kfmsg.roomid() );
         }
@@ -636,10 +610,8 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SOnlieQueryBattleScoreReq );
 
-        auto redisdriver = __BATTLE_REDIS_DRIVER__;
-
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( score ), kfmsg.playerid() );
-        for ( auto& iter : kfresult->_value )
+        auto queryscorelist = _battle_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( battlescore ), kfmsg.playerid() );
+        for ( auto& iter : queryscorelist->_value )
         {
             KFMsg::S2SPlayerBattleScoreReq req;
             req.set_playerid( kfmsg.playerid() );
@@ -649,20 +621,19 @@ namespace KFrame
         }
     }
 
-    void KFBattleShardModule::RemoveCalcBattleRoom( uint64 roomid )
+    __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandlePlayerBattleScoreAck )
     {
-        auto redisdriver = __BATTLE_REDIS_DRIVER__;
-        redisdriver->Execute( "del {}:{}", __KF_STRING__( battleroom ), roomid );
-    }
+        __PROTO_PARSE__( KFMsg::S2SPlayerBattleScoreAck );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack req!", kfmsg.playerid(), kfmsg.roomid() );
 
-    void KFBattleShardModule::SerialzeBattleRoomFinish( uint64 roomid, KFMsg::S2STellBattleRoomFinishAck* ack )
-    {
-        auto redisdriver = __BATTLE_REDIS_DRIVER__;
-
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( battleroom ), roomid );
-        for ( auto& iter : kfresult->_value )
+        auto kfresult = _battle_redis_driver->Execute( "hdel {}:{} {}", __KF_STRING__( battlescore ), kfmsg.playerid(), kfmsg.roomid() );
+        if ( kfresult->IsOk() )
         {
-            ack->add_pbscore( iter.second );
+            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] balance ack ok!", kfmsg.playerid(), kfmsg.roomid() );
+        }
+        else
+        {
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] balance ack failed!", kfmsg.playerid(), kfmsg.roomid() );
         }
     }
 }

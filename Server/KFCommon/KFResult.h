@@ -3,6 +3,7 @@
 
 #include "KFInclude.h"
 #include "KFEnum.h"
+#include "KFUtility/KFMutex.h"
 
 namespace KFrame
 {
@@ -21,7 +22,7 @@ namespace KFrame
 
         inline void Reset()
         {
-            _result = 0;
+            _result = KFEnum::Ok;
         }
 
         inline int32 GetResult() const
@@ -34,7 +35,7 @@ namespace KFrame
             _result = result;
         }
 
-    private:
+    protected:
         // 执行结果
         int32 _result;
     };
@@ -50,6 +51,14 @@ namespace KFrame
             _value = T();
         }
 
+        inline void Reset()
+        {
+            static auto _default = T();
+
+            _result = KFEnum::Ok;
+            _value = _default;
+        }
+
     public:
         // 数值
         T _value;
@@ -57,13 +66,21 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
+    class KFBaseResultQueue
+    {
+    public:
+        virtual void Free() = 0;
+    };
+
+
     template< class T >
-    class KFResultQueue
+    class KFResultQueue : public KFBaseResultQueue
     {
     public:
         KFResultQueue() = default;
         ~KFResultQueue()
         {
+            KFLocker locker( _kf_mutex );
             for ( auto kfresult : _idle_list )
             {
                 __KF_DESTROY__( KFResult<T>, kfresult );
@@ -81,6 +98,8 @@ namespace KFrame
         KFResult< T >* Alloc()
         {
             KFResult< T >* kfresult = nullptr;
+
+            KFLocker locker( _kf_mutex );
             if ( _idle_list.empty() )
             {
                 kfresult = __KF_CREATE_BATCH__( KFResult< T >, 10 );
@@ -91,14 +110,25 @@ namespace KFrame
                 _idle_list.pop_front();
             }
 
+            kfresult->Reset();
             _use_list.push_back( kfresult );
             return kfresult;
         }
 
         // 释放
-        void
+        void Free()
+        {
+            KFLocker locker( _kf_mutex );
+            if ( !_use_list.empty() )
+            {
+                _idle_list.splice( _idle_list.end(), _use_list );
+            }
+        }
 
     private:
+        // 队列锁
+        KFMutex _kf_mutex;
+
         // 空闲的列表
         std::list < KFResult< T >* > _idle_list;
 

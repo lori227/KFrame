@@ -76,7 +76,17 @@ namespace KFrame
 
         if ( !kffunction->_sync )
         {
-            return kffunction->_function( ip, data );
+            auto strdata = _invalid_str;
+            try
+            {
+                strdata = kffunction->_function( ip, data );
+            }
+            catch ( ... )
+            {
+                __LOG_ERROR__( KFLogEnum::Logic, "http function failed! data=[{}]", data );
+            }
+
+            return strdata;
         }
 
         auto kfdata = __KF_CREATE__( KFFunctionData );
@@ -102,7 +112,15 @@ namespace KFrame
 
         for ( auto kfdata : templist )
         {
-            kfdata->_kf_function->_function( kfdata->_ip, kfdata->_data );
+            try
+            {
+                kfdata->_kf_function->_function( kfdata->_ip, kfdata->_data );
+            }
+            catch ( ... )
+            {
+                __LOG_ERROR__( KFLogEnum::Logic, "http function failed! data=[{}]", kfdata->_data );
+            }
+
             __KF_DESTROY__( KFFunctionData, kfdata );
         }
     }

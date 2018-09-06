@@ -19,11 +19,13 @@ namespace KFrame
         _req_count = 0;
         _battle_server_id = 0;
         _battle_valid_time = _invalid_int;
+        _battle_redis_driver = nullptr;
+        _is_match_room_open = false;
+        _battle_wait_time = 0;
     }
 
     KFBattleRoom::~KFBattleRoom()
     {
-
     }
 
     void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount )
@@ -38,6 +40,8 @@ namespace KFrame
 
         // 开启申请定时器
         UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
+
+        _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
     }
 
     void KFBattleRoom::UpdateRoomStatus( uint32 status, uint32 intervaltime )
@@ -77,6 +81,15 @@ namespace KFrame
         return _kf_cluster_shard->SendMessageToClient( _battle_server._proxy_id, _battle_server._server_id, msgid, message );
     }
 
+    void KFBattleRoom::SendMessageToRoom( uint32 msgid, google::protobuf::Message* message )
+    {
+        for ( auto& iter : _kf_camp_list._objects )
+        {
+            auto kfcamp = iter.second;
+            kfcamp->SendMessageToCamp( msgid, message );
+        }
+    }
+
     KFBattleCamp* KFBattleRoom::AddCamp( const KFMsg::PBBattleCamp* pbcamp )
     {
         // 已经开始, 或者人数已经满了
@@ -85,13 +98,6 @@ namespace KFrame
             __LOG_DEBUG__( KFLogEnum::Logic, "battle room[{}] is start!", _battle_room_id );
             return nullptr;
         }
-
-        //// 人数已经满了
-        //if ( _total_player_count + pbcamp->pbplayer_size() > _max_player_count )
-        //{
-        //    __LOG_ERROR__( KFLogEnum::Logic, "battle room[{}] is full!", _battle_room_id );
-        //    return nullptr;
-        //}
 
         auto kfcamp = _kf_camp_list.Find( pbcamp->campid() );
         if ( kfcamp == nullptr )
@@ -109,7 +115,7 @@ namespace KFrame
 
     bool KFBattleRoom::CheckCanOpenBattleRoom()
     {
-        static auto _min_open_room_camp_count = _kf_option->GetValue< uint32 >( "minopenroomcount" );
+        static auto _min_open_room_camp_count = _kf_option->GetValue< uint32 >( __KF_STRING__( minopenroomcount ) );
         return _kf_camp_list.Size() >= _min_open_room_camp_count;
     }
 
@@ -127,7 +133,11 @@ namespace KFrame
         if ( _battle_server.IsValid() )
         {
             // 切掉换到开启战场状态
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
+            if ( _status == KFRoomStatus::StatusBattleRoomIdle ||
+                    _status == KFRoomStatus::StatusBattleRoomAlloc )
+            {
+                UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
+            }
         }
     }
 
@@ -140,6 +150,7 @@ namespace KFrame
         }
 
         _total_player_count -= __MIN__( _total_player_count, kfcamp->PlayerCount() );
+        _kf_camp_list.Remove( campid );
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]!", _battle_room_id, _total_player_count );
         return true;
     }
@@ -147,7 +158,7 @@ namespace KFrame
 
     void KFBattleRoom::SetValidTime()
     {
-        static auto _room_valid_time = _kf_option->GetValue< uint32 >( "roomvalidtime" ) * KFTimeEnum::OneSecondMicSecond;
+        static auto _room_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( roomvalidtime ) );
         _battle_valid_time = KFGlobal::Instance()->_game_time + _room_valid_time;
     }
 
@@ -207,22 +218,49 @@ namespace KFrame
         _kf_battle_manage->AllocBattleServer( _battle_server_id, &_battle_server );
         if ( !_battle_server.IsValid() )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alloc battle server failed!", _battle_room_id );
-        }
+            __LOG_ERROR__( KFLogEnum::Logic, "room[{}] alloc battle server failed!", _battle_room_id );
 
-        // 如果房间人数大于开启数量
-        if ( CheckCanOpenBattleRoom() )
-        {
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
+            // 通知玩家等待时间
+            auto kfresult = _battle_redis_driver->QueryMap( "zrange {} 0 0 withscores", __KF_STRING__( battletime ) );
+            if ( kfresult->IsOk() )
+            {
+                auto waittime = std::numeric_limits<uint32>::max();
+                if ( !kfresult->_value.empty() )
+                {
+                    auto begin = kfresult->_value.begin();
+                    auto endtime = KFUtility::ToValue< uint64 >( begin->second );
+                    if ( KFGlobal::Instance()->_real_time > endtime )
+                    {
+                        // 删除时间
+                        _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battletime ), begin->first );
+                    }
+                    else
+                    {
+                        waittime = endtime - KFGlobal::Instance()->_real_time;
+                    }
+                }
+
+                KFMsg::MsgTellMatchWaitTime tell;
+                tell.set_waittime( waittime );
+                SendMessageToRoom( KFMsg::MSG_TELL_MATCH_WAIT_TIME, &tell );
+            }
         }
         else
         {
-            // 停止定时器, 等待玩家加入
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomIdle, 0 );
-        }
+            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_room_id,
+                           _battle_server._server_id, _battle_server._proxy_id, _battle_server._ip, _battle_server._port );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_room_id,
-                       _battle_server._server_id, _battle_server._proxy_id, _battle_server._ip, _battle_server._port );
+            // 如果房间人数大于开启数量
+            if ( CheckCanOpenBattleRoom() )
+            {
+                UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
+            }
+            else
+            {
+                // 停止定时器, 等待玩家加入
+                UpdateRoomStatus( KFRoomStatus::StatusBattleRoomIdle, 0 );
+            }
+        }
     }
 
     void KFBattleRoom::OpenBattleRoom()
@@ -260,26 +298,21 @@ namespace KFrame
         }
         else
         {
-            // 玩家进入战场
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomEnter, 3000 );
-
             // 创建成功, 重新设置有效时间
             SetValidTime();
 
-            // 通知匹配集群, 战场已经开启
-            KFMsg::S2SOpenRoomToMatchShardReq req;
-            req.set_matchid( _match_id );
-            req.set_roomid( _battle_room_id );
-            req.set_waittime( waittime );
-            SendMessageToMatch( KFMsg::S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ, &req );
+            // 设置等待时间
+            _is_match_room_open = false;
+            _battle_wait_time = waittime;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] req!", _battle_room_id );
+            // 玩家进入战场
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomEnter, 3000 );
         }
     }
 
     void KFBattleRoom::ConfirmOpenMatchRoom()
     {
-
+        _is_match_room_open = true;
     }
 
     void KFBattleRoom::PlayerEnterBattleRoom()
@@ -289,6 +322,18 @@ namespace KFrame
         {
             kfcamp->RunEnterBattleRoom( this );
             kfcamp = _kf_camp_list.Next();
+        }
+
+        if ( !_is_match_room_open )
+        {
+            // 通知匹配集群, 战场已经开启
+            KFMsg::S2SOpenRoomToMatchShardReq req;
+            req.set_matchid( _match_id );
+            req.set_roomid( _battle_room_id );
+            req.set_waittime( _battle_wait_time );
+            SendMessageToMatch( KFMsg::S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ, &req );
+
+            __LOG_DEBUG__( KFLogEnum::Logic, "open match room[{}] req!", _battle_room_id );
         }
     }
 
@@ -407,10 +452,14 @@ namespace KFrame
         }
     }
 
-    void KFBattleRoom::StartBattleRoom()
+    void KFBattleRoom::StartBattleRoom( uint32 maxtime )
     {
         // 设置房间已经开始
         UpdateRoomStatus( KFRoomStatus::StatisBattleRoomPlaying, 5000 );
+
+        // 保存结束时间
+        auto endtime = KFGlobal::Instance()->_real_time + maxtime + 10;
+        _battle_redis_driver->Execute( "zadd {} {} {}", __KF_STRING__( battletime ), endtime, _battle_room_id );
     }
 
     void KFBattleRoom::BattleRoomPlaying()
@@ -442,6 +491,9 @@ namespace KFrame
             kfcamp = _kf_camp_list.Next();
         }
 
+        // 删除时间
+        _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battletime ), _battle_room_id );
+
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] battle[{}|{}:{}] finish ok!", _battle_room_id,
                        _battle_server._server_id, _battle_server._ip, _battle_server._port );
     }
@@ -451,7 +503,14 @@ namespace KFrame
         __LOG_ERROR__( KFLogEnum::Logic, "room[{}] battle[{}:{}] invalid!", _battle_room_id,
                        _battle_server._server_id, _battle_server._ip );
 
-        _kf_battle_manage->FreeBattleServer( &_battle_server );
+        // 删除时间
+        _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battletime ), _battle_room_id );
+
+        if ( _battle_server.IsValid() )
+        {
+            _kf_battle_manage->FreeBattleServer( _battle_server._server_id, _battle_server._ip );
+            _battle_server.Reset();
+        }
 
         // 通知proxy
         _kf_cluster_shard->RemoveObjectToProxy( _battle_room_id );
