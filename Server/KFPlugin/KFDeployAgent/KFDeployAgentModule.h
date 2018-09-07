@@ -86,6 +86,9 @@ namespace KFrame
         // 检查任务完成
         __KF_TIMER_FUNCTION__( OnTimerCheckTaskFinish );
 
+        // 定时删除残留的版本
+        __KF_SCHEDULE_FUNCTION__( OnScheduleRemoveVersion );
+
     protected:
         // 启动服务器
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
@@ -115,9 +118,6 @@ namespace KFrame
 
         void SaveProcessToFile( KFDeployData* deploydata );
         void ReadProcessFromFile( KFDeployData* deploydata );
-
-        // 删除残留的版本
-        void ScheduleRemoveVersion( uint32 id, const char* data, uint32 size );
 
         // 获得部署路径
         void FindAppDeployPath( const std::string& appname, std::set< std::string >& deploypathlist );

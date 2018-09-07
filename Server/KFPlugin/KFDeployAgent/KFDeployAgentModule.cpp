@@ -43,6 +43,7 @@ namespace KFrame
     void KFDeployAgentModule::ShutDown()
     {
         __UNREGISTER_TIMER__();
+        __UNREGISTER_SCHEDULE_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         //////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
@@ -73,7 +74,18 @@ namespace KFrame
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, 5 );
         kfsetting->SetData( _invalid_int, nullptr, _invalid_int );
-        _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployAgentModule::ScheduleRemoveVersion );
+        __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFDeployAgentModule::OnScheduleRemoveVersion );
+    }
+
+    __KF_SCHEDULE_FUNCTION__( KFDeployAgentModule::OnScheduleRemoveVersion )
+    {
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 删除旧的版本号
+        ExecuteShell( "rm wget-log*" );
+        ExecuteShell( "rm -rf ./version/" );
+#endif
     }
 
     void KFDeployAgentModule::LoadTotalLaunchData()
@@ -974,16 +986,5 @@ namespace KFrame
         }
 
         return true;
-    }
-
-    void KFDeployAgentModule::ScheduleRemoveVersion( uint32 id, const char* data, uint32 size )
-    {
-#if __KF_SYSTEM__ == __KF_WIN__
-        // todo win64暂时没有实现
-#else
-        // 删除旧的版本号
-        ExecuteShell( "rm wget-log*" );
-        ExecuteShell( "rm -rf ./version/" );
-#endif
     }
 }

@@ -65,7 +65,7 @@ namespace KFrame
 
     protected:
         // 计划清理过期的全局邮件
-        void OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size );
+        __KF_SCHEDULE_FUNCTION__( OnScheduleClearWholeOverdueMail );
 
         // 重载GM全局邮件
         void LoadWholeMailToPerson( uint32 playerid );

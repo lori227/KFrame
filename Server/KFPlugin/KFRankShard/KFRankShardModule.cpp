@@ -30,6 +30,7 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         __UNREGISTER_TIMER__();
+        __UNREGISTER_SCHEDULE_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -149,7 +150,7 @@ namespace KFrame
             break;
         }
 
-        _kf_schedule->RegisterSchedule( kfschedulesetting, this, &KFRankShardModule::OnScheduleRefreshRankData );
+        __REGISTER_SCHEDULE_FUNCTION__( kfschedulesetting, &KFRankShardModule::OnScheduleRefreshRankData );
     }
 
     __KF_TIMER_FUNCTION__( KFRankShardModule::OnTimerRefreshRankData )
@@ -157,9 +158,9 @@ namespace KFrame
         RefreshRankData( objectid );
     }
 
-    void KFRankShardModule::OnScheduleRefreshRankData( uint32 rankid, const char* data, uint32 size )
+    __KF_SCHEDULE_FUNCTION__( KFRankShardModule::OnScheduleRefreshRankData )
     {
-        RefreshRankData( rankid );
+        RefreshRankData( objectid );
     }
 
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )

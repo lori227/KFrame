@@ -20,7 +20,7 @@ namespace KFrame
     {
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, _kf_option->GetValue< uint32 >( __KF_STRING__( freindlinessresettime ) ) );
-        _kf_schedule->RegisterSchedule( kfsetting, this, &KFRelationShardModule::OnScheduleClearFriendLiness );
+        __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFRelationShardModule::OnScheduleClearFriendLiness );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_REQ, &KFRelationShardModule::HandleQueryFriendReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_REQ, &KFRelationShardModule::HandleQueryFriendInviteReq );
@@ -37,7 +37,7 @@ namespace KFrame
 
     void KFRelationShardModule::BeforeShut()
     {
-        _kf_schedule->UnRegisterSchedule( this );
+        __UNREGISTER_SCHEDULE_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_REQ );
@@ -58,7 +58,7 @@ namespace KFrame
         _relation_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( relation ) );
     }
 
-    void KFRelationShardModule::OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size )
+    __KF_SCHEDULE_FUNCTION__( KFRelationShardModule::OnScheduleClearFriendLiness )
     {
         _relation_redis_driver->Append( "del {}", __KF_STRING__( dailytoast ) );
         _relation_redis_driver->Append( "del {}", __KF_STRING__( friendlinesslimit ) );

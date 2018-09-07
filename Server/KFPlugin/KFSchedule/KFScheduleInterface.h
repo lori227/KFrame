@@ -52,9 +52,7 @@ namespace KFrame
         template< class T >
         void RegisterSchedule( KFScheduleSetting* kfsetting, T* object, void ( T::*handle )( uint32 objectid, const char* data, uint32 size ) )
         {
-            KFScheduleFunction function = std::bind( handle, object,
-                                          std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-
+            KFScheduleFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddSchedule( typeid( T ).name(), kfsetting, function );
         }
 
@@ -75,8 +73,15 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_schedule, KFScheduleInterface );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __KF_SCHEDULE_FUNCTION__( function )\
+    void function( uint32 objectid, const char* data, uint32 size )
+
+#define __REGISTER_SCHEDULE_FUNCTION__( kfsetting, function ) \
+    _kf_schedule->RegisterSchedule( kfsetting, this, function )
+
+#define  __UNREGISTER_SCHEDULE_FUNCTION__() \
+    _kf_schedule->UnRegisterSchedule( this )
 }
-
-
 
 #endif

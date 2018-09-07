@@ -75,6 +75,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
 
     protected:
+        // 计划清理数据库
+        __KF_SCHEDULE_FUNCTION__( OnScheduleClearFriendLiness );
+
+    protected:
         // 信息转换成好友信息
         void MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBRelation* pbrelation );
         void MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd );
@@ -88,9 +92,6 @@ namespace KFrame
 
         // 发送更新好友度
         void SendAddFriendLinessToClient( uint32 selfid, uint32 targetid, uint32 friendliness );
-
-        // 计划清理数据库
-        void OnScheduleClearFriendLiness( uint32 id, const char* data, uint32 size );
 
         // 更新好友度
         void UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 type, uint32 addvalue );

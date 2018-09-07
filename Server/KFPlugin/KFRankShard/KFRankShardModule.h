@@ -75,7 +75,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
 
         // 计划任务
-        void OnScheduleRefreshRankData( uint32 rankid, const char* data, uint32 size );
+        __KF_SCHEDULE_FUNCTION__( OnScheduleRefreshRankData );
 
     protected:
         // 更新排行榜

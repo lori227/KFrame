@@ -30,6 +30,7 @@ namespace KFrame
 
     void KFDeployServerModule::ShutDown()
     {
+        __UNREGISTER_SCHEDULE_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,20 +118,20 @@ namespace KFrame
         auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
         if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
         {
-            DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
+            OnDeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
         }
         else
         {
             auto kfsetting = _kf_schedule->CreateScheduleSetting();
             kfsetting->SetTime( scheduletime );
             kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
+            __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFDeployServerModule::OnDeployCommandToAgent );
         }
 
         return _invalid_str;
     }
 
-    void KFDeployServerModule::DeployCommandToAgent( uint32 id, const char* data, uint32 size )
+    __KF_SCHEDULE_FUNCTION__( KFDeployServerModule::OnDeployCommandToAgent )
     {
         KFJson request( data, size );
 

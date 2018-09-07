@@ -67,12 +67,13 @@ namespace KFrame
         // 连接丢失
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
 
-    protected:
         // 启动服务器
         __KF_HTTP_FUNCTION__( HandleDeployCommand );
 
-    protected:
+        // 部署命令
+        __KF_SCHEDULE_FUNCTION__( OnDeployCommandToAgent );
 
+    protected:
         // 注册Agent
         __KF_MESSAGE_FUNCTION__( HandleRegisterAgentToServerReq );
 
@@ -80,9 +81,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressReq );
 
     protected:
-        // 部署命令
-        void DeployCommandToAgent( uint32 id, const char* data, uint32 size );
-
         // 更新Agnet状态
         void UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status );
 

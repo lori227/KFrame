@@ -45,6 +45,7 @@ namespace KFrame
 
     void KFMailShardModule::BeforeShut()
     {
+        __UNREGISTER_SCHEDULE_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ );
         __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
@@ -65,13 +66,13 @@ namespace KFrame
         auto cleartime = _kf_option->GetValue<uint32>( __KF_STRING__( wholemailcleartime ) );
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, cleartime );
-        _kf_schedule->RegisterSchedule( kfsetting, this, &KFMailShardModule::OnScheduleClearWholeOverdueMail );
+        __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFMailShardModule::OnScheduleClearWholeOverdueMail );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMailShardModule::OnScheduleClearWholeOverdueMail( uint32 id, const char* data, uint32 size )
+    __KF_SCHEDULE_FUNCTION__( KFMailShardModule::OnScheduleClearWholeOverdueMail )
     {
         auto redisdriver = __MAIL_REDIS_DRIVER__;
 
