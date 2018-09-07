@@ -14,6 +14,7 @@ namespace KFrame
 
     void KFDirShardModule::BeforeRun()
     {
+        __REGISTER_LOOP_TIMER__( 0, 60000, &KFDirShardModule::OnTimerRegisterDirUrl );
         _dir_list_type = _kf_dir_config->GetDirListType( KFGlobal::Instance()->_app_channel );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &KFDirShardModule::HandleUpdateOnlineToDirReq );
@@ -26,6 +27,7 @@ namespace KFrame
     void KFDirShardModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__();
+        __UNREGISTER_TIMER__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOVE_ONLINE_TO_DIR_REQ );
@@ -33,7 +35,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( dirlist ) );
     }
 
-    void KFDirShardModule::OnceRun()
+    __KF_TIMER_FUNCTION__( KFDirShardModule::OnTimerRegisterDirUrl )
     {
         // 注册url
         auto dirlisturl = __FORMAT__( "{}{}", _kf_http_server->GetHttpUrl(), __KF_STRING__( dirlist ) );

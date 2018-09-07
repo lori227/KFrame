@@ -230,6 +230,8 @@ namespace KFrame
         auto dirretcode = _kf_http_server->GetResponseCode( kfdirjson );
         if ( dirretcode != KFMsg::Success )
         {
+            // 失败删除
+            loginredis->Execute( "srem {} {}", __KF_STRING__( dirurl ), dirurl );
             return _kf_http_server->SendResponseCode( dirretcode );
         }
 

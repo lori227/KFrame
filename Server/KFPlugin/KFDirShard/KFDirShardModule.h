@@ -14,6 +14,7 @@
 #include "KFRedis/KFRedisInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 
 namespace KFrame
@@ -63,7 +64,6 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut ();
@@ -80,6 +80,10 @@ namespace KFrame
     protected:
         // 请求http列表
         __KF_HTTP_FUNCTION__( HandleQueryDirList );
+
+    protected:
+        // 注册url地址
+        __KF_TIMER_FUNCTION__( OnTimerRegisterDirUrl );
 
     protected:
         uint32 BalanceAllocZoneId();
