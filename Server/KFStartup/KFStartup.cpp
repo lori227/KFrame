@@ -55,13 +55,13 @@ namespace KFrame
 
     typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc );
 
-    static const std::string _plugin_path = "./plugin/";
+    //static const std::string _plugin_path = "./plugin/";
     bool KFStartup::LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting )
     {
         auto kfglobal = KFGlobal::Instance();
 
         auto library = __KF_CREATE__( KFLibrary );
-        if ( !library->Load( _plugin_path, file ) )
+        if ( !library->Load( _app_config->_plugin_path, file ) )
         {
             __LOG_LOCAL__( KFLogEnum::Init, "load [{}] failed!", library->_path );
 

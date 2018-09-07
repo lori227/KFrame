@@ -198,6 +198,18 @@
     <ClCompile Include="KFQueryRecentState.cpp">
       <Filter>FSM\friend</Filter>
     </ClCompile>
+    <ClCompile Include="KFInviteGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCreateGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFApplyGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFReviewGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRobotInterface.h" />
@@ -403,6 +415,18 @@
     <ClInclude Include="KFQueryRecentState.h">
       <Filter>FSM\friend</Filter>
     </ClInclude>
+    <ClInclude Include="KFInviteGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCreateGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFApplyGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFReviewGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FSM">
@@ -437,6 +461,9 @@
     </Filter>
     <Filter Include="FSM\rank">
       <UniqueIdentifier>{ae89f025-88ac-4058-a305-18f5c1d08392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\guild">
+      <UniqueIdentifier>{d5e77667-225f-4d7f-a9e8-ff1686156e1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -33,6 +33,7 @@ namespace KFrame
         __STRING_DEFINE__( appid );
         __STRING_DEFINE__( appname );
         __STRING_DEFINE__( apptype );
+        __STRING_DEFINE__( appchannel );
         __STRING_DEFINE__( apppath );
         __STRING_DEFINE__( appfile );
         __STRING_DEFINE__( appconfig );
@@ -325,6 +326,9 @@ namespace KFrame
         __STRING_DEFINE__( winfriendliness );
         __STRING_DEFINE__( battlerecored );
         __STRING_DEFINE__( recentkeeptime );
+        __STRING_DEFINE__( guildrank );
+        __STRING_DEFINE__( cleantask );
+
 
 
     }

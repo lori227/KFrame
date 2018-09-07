@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<gcm>
-        <Hosts>
-                <Host Name="SERVICE_1_X64" PrivateIP="192.168.1.9"/>
-                <Host Name="SERVICE_2_X64" PrivateIP="192.168.1.9" PublicIP="192.168.1.9"/>
-        </Hosts>
-</gcm>
-
-

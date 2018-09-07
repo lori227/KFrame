@@ -64,6 +64,26 @@ namespace KFrame
 
         // 处理玩家帮派变化
         __KF_MESSAGE_FUNCTION__( HandlePlayerGuildChangeReq );
+
+        // 玩家退出帮派
+        __KF_MESSAGE_FUNCTION__( HandleExitGuildReq );
+
+        // 转让帮主
+        __KF_MESSAGE_FUNCTION__( HandleTransferGuildReq );
+
+        // 帮派审批
+        __KF_MESSAGE_FUNCTION__( HandleReviewApplyReq );
+
+        // 解散帮派
+        __KF_MESSAGE_FUNCTION__( HandleDissolveGuildReq );
+
+        // 修改帮派徽章
+        __KF_MESSAGE_FUNCTION__( HandleModifyMedalReq );
+
+        // 请求帮派列表
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildListReq );
+
+
     };
 }
 

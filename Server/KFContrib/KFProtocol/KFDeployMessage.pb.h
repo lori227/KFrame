@@ -559,6 +559,13 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline ::std::string* release_value();
   inline void set_allocated_value(::std::string* value);
 
+  // required uint32 appchannel = 7;
+  inline bool has_appchannel() const;
+  inline void clear_appchannel();
+  static const int kAppchannelFieldNumber = 7;
+  inline ::google::protobuf::uint32 appchannel() const;
+  inline void set_appchannel(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBDeployCommand)
  private:
   inline void set_has_command();
@@ -573,6 +580,8 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline void clear_has_zoneid();
   inline void set_has_value();
   inline void clear_has_value();
+  inline void set_has_appchannel();
+  inline void clear_has_appchannel();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -582,9 +591,10 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   ::std::string* appid_;
   ::std::string* value_;
   ::google::protobuf::uint32 zoneid_;
+  ::google::protobuf::uint32 appchannel_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1908,6 +1918,28 @@ inline void PBDeployCommand::set_allocated_value(::std::string* value) {
     clear_has_value();
     value_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// required uint32 appchannel = 7;
+inline bool PBDeployCommand::has_appchannel() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PBDeployCommand::set_has_appchannel() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PBDeployCommand::clear_has_appchannel() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PBDeployCommand::clear_appchannel() {
+  appchannel_ = 0u;
+  clear_has_appchannel();
+}
+inline ::google::protobuf::uint32 PBDeployCommand::appchannel() const {
+  return appchannel_;
+}
+inline void PBDeployCommand::set_appchannel(::google::protobuf::uint32 value) {
+  set_has_appchannel();
+  appchannel_ = value;
 }
 
 // -------------------------------------------------------------------

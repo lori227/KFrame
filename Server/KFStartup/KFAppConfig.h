@@ -64,6 +64,9 @@ namespace KFrame
         // 服务器id
         uint32 _server_id;
 
+        // Plugin path
+        std::string _plugin_path;
+
         // 配置
         std::map< std::string, KFAppSetting > _startups;
     };

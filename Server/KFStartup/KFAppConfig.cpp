@@ -89,6 +89,15 @@ namespace KFrame
             _app_type = plugins.GetString( "AppType" );
         }
 
+        if ( _plugin_path.empty() )
+        {
+#if __KF_SYSTEM__ == __KF_WIN__
+            _plugin_path = plugins.GetString( "WinPluginPath" );
+#else
+            _plugin_path = plugins.GetString( "LinuxPluginPath" );
+#endif
+        }
+
         if ( _common_startup_file.empty() )
         {
             _common_startup_file = plugins.GetString( "Common", true );

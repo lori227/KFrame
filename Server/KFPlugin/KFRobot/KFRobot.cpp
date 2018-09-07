@@ -1368,7 +1368,8 @@ namespace KFrame
     void KFRobot::CreateGuild()
     {
         KFMsg::MsgCreateGuildReq req;
-        req.set_guildname( "guild1" );
+        req.set_guildname( __TO_STRING__( _playerid ) );
+        //req.set_guildname( "guild1" );
         req.set_medal( 1 );
         req.set_manifesto( "呵呵呵呵" );
         SendNetMessage( KFMsg::MSG_CREATE_GUILD_REQ, &req );
@@ -1393,6 +1394,9 @@ namespace KFrame
 
             if ( _invalid_int != playerid )
             {
+                KFMsg::MsgInviteGuildReq req;
+                req.set_inviterid( playerid );
+                SendNetMessage( KFMsg::MSG_INVITE_GUILD_REQ, &req );
                 // KFMsg::MsgDelFriendReq req;
                 //req.set_playerid( playerid );
                 //SendNetMessage( KFMsg::MSG_DEL_FRIEND_REQ, &req );
@@ -1400,5 +1404,37 @@ namespace KFrame
 
             kffriend = kffriends->NextData();
         }
+    }
+
+    void KFRobot::ApplyGuild()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int != guildid )
+        {
+            return;
+        }
+
+        KFMsg::MsgApplyGuildReq req;
+        req.set_guildid( 6597698976096460545 );
+        req.set_invitor( 4010009 );
+        SendNetMessage( KFMsg::MSG_APPLY_GUILD_REQ, &req );
+    }
+
+    void KFRobot::AgreeGuildJoin()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        KFMsg::MsgReviewApplyReq req;
+        req.set_operatortype( KFMsg::AgreeApply );
+
+        SendNetMessage( KFMsg::MSG_REVIEW_APPLY_REQ, &req );
     }
 }

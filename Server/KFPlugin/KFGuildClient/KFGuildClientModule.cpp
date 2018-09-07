@@ -26,6 +26,11 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_INVITE_GUILD_ACK, &KFGuildClientModule::HnadleInviteGuildAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_APPLY_GUILD_REQ, &KFGuildClientModule::HandleApplyGuildReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_GUILD_CHANGE_REQ, &KFGuildClientModule::HandlePlayerGuildChangeReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_EXIT_GUILD_REQ, &KFGuildClientModule::HandleExitGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_TRANSFER_MASTER_REQ, &KFGuildClientModule::HandleTransferGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_REVIEW_APPLY_REQ, &KFGuildClientModule::HandleReviewApplyReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_DISSOLVE_GUILD_REQ, &KFGuildClientModule::HandleDissolveGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_MODIFY_GUILD_MEDAL_REQ, &KFGuildClientModule::HandleModifyMedalReq );
     }
 
     void KFGuildClientModule::BeforeShut()
@@ -37,6 +42,11 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_INVITE_GUILD_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_APPLY_GUILD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_GUILD_CHANGE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_EXIT_GUILD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_TRANSFER_MASTER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_REVIEW_APPLY_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_DISSOLVE_GUILD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_MODIFY_GUILD_MEDAL_REQ );
     }
 
     void KFGuildClientModule::OnceRun()
@@ -93,7 +103,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::GuildCreateIllegal );
         }
 
-        if ( kfmsg.guildname().length() > KFGuildEnum ::MaxNameLength )
+        if ( kfmsg.guildname().length() > KFGuildEnum::MaxNameLength )
         {
             return _kf_display->SendToClient( player, KFMsg::GuildNameTooLong );
         }
@@ -161,7 +171,7 @@ namespace KFrame
             auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
             // 创建成功设置玩家的guildid
-            player->UpdateData( kfbasic, __KF_STRING__( guildid ), KFUtility::ToString( kfmsg.guildid() )  );
+            player->UpdateData( kfbasic, __KF_STRING__( guildid ), KFUtility::ToString( kfmsg.guildid() ) );
 
         }
     }
@@ -170,7 +180,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgInviteGuildReq );
 
-        //判断自身是否有帮派
+        //判断自身是否有帮派 // 目前等回调成功才设置邀请列表，会造成玩家多次邀请;
         auto kfobject = player->GetData();
         auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
         if ( _invalid_int == guildid )
@@ -185,7 +195,7 @@ namespace KFrame
             auto guildid = kffriend->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
             if ( _invalid_int != guildid )
             {
-                return _kf_display->SendToClient( player, KFMsg::playerisguildmember );
+                return _kf_display->SendToClient( player, KFMsg::Playerisguildmember );
             }
         }
         else
@@ -295,9 +305,130 @@ namespace KFrame
         {
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( guildid ), KFUtility::ToString( kfmsg.guildid() ) );
         }
-        else if ( KFMsg::QuitGuild == kfmsg.code() )
+        else if ( KFMsg::ExitGuild == kfmsg.code() )
         {
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( guildid ), _invalid_str );
         }
     }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleExitGuildReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgExitGuildReq );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::PlayerNoGuild );
+        }
+
+        KFMsg::S2SExitGuildReq req;
+        req.set_guildid( guildid );
+        req.set_playerid( playerid );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
+        SendMessageToGuild( guildid, KFMsg::S2S_EXIT_GUILD_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleTransferGuildReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgTransferMasterReq );
+        if ( kfmsg.newmasterid() == _invalid_int )
+        {
+            return;
+        }
+
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::PlayerNoGuild );
+        }
+
+        KFMsg::S2STransferMasterReq req;
+        req.set_guildid( guildid );
+        req.set_playerid( playerid );
+        req.set_newmasterid( kfmsg.newmasterid() );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
+        SendMessageToGuild( guildid, KFMsg::S2S_TRANSFER_MASTER_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleReviewApplyReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgReviewApplyReq );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::PlayerNoGuild );
+        }
+        if ( kfmsg.operatortype() != KFMsg::AgreeApply && kfmsg.operatortype() != KFMsg::RefuseApply )
+        {
+            return;
+        }
+
+        KFMsg::S2SReviewApplyReq req;
+        if ( kfmsg.has_playerid() )
+        {
+            req.set_dealplayerid( kfmsg.playerid() );
+        }
+        req.set_playerid( playerid );
+        req.set_operatortype( kfmsg.operatortype() );
+        req.set_guildid( guildid );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
+        SendMessageToGuild( guildid, KFMsg::S2S_REVIEW_APPLY_REQ, &req );
+
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleDissolveGuildReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgDissolveGuildReq );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::PlayerNoGuild );
+        }
+
+        KFMsg::S2SDissolveGuildReq req;
+        req.set_playerid( playerid );
+        req.set_guildid( guildid );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
+        SendMessageToGuild( guildid, KFMsg::S2S_DISSOLVE_GUILD_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleModifyMedalReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgModifyGuildMedalReq );
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return _kf_display->SendToClient( player, KFMsg::PlayerNoGuild );
+        }
+
+        // 取最高等级所能设置的徽章
+        auto guilddatasetting = _kf_guild_config->FindGuildSetting( KFGuildEnum::MaxLevel );
+        if ( nullptr == guilddatasetting )
+        {
+            // log error
+            return;
+        }
+
+        if ( !guilddatasetting->IsValidMedal( kfmsg.newmedal() ) )
+        {
+            return _kf_display->SendToClient( player, KFMsg::GuildCreateIllegal );
+        }
+
+        KFMsg::S2SModifyMedalReq req;
+        req.set_playerid( playerid );
+        req.set_guildid( guildid );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
+        SendMessageToGuild( guildid, KFMsg::S2S_MODIFY_MEDAL_REQ, &req );
+
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleQueryGuildListReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryGuildListReq );
+    }
+
 }

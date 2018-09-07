@@ -10,8 +10,14 @@
 	<!--ChannelId 渠道id -->
 	<Redis>
 		<Connection RedisId="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网测试 -->
 			<Channel ChannelId="101" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
+
+			<!-- 外网测试 -->
 			<Channel ChannelId="1" IP="10.105.6.78" Port="6379" Password="redis@lori227-="/>
+
+			<!-- 渠道测试 -->
+			<Channel ChannelId="2" IP="10.105.51.22" Port="6379" Password="redis@lori227-="/>
 		</Connection>
 	</Redis>
 

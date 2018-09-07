@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="match" AppType="shard" Common="./startup/common.startup">
+	<Plugins AppName="match" AppType="shard" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="110" Name="KFClusterClient" Config="./setting/cluster.setting"/>
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>

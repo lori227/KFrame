@@ -23,8 +23,7 @@ namespace KFrame
 
     void KFRobotModule::BeforeRun()
     {
-        //__REGISTER_RUN_FUNCTION__( &KFRobotModule::Run );
-
+        //  __REGISTER_RUN_FUNCTION__( &KFRobotModule::Run );
         _net_client = __KF_NEW__( KFNetClientEngine );
         _net_client->InitEngine( 10000 );
         _net_client->BindNetFunction( this, &KFRobotModule::HandleNetMessage );
@@ -53,6 +52,11 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_SHOW_REWARD_AGENT, &KFRobotModule::HandleShowReward );
         __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_MATCH_ACK, &KFRobotModule::HandleCancleMatch );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_ACK, &KFRobotModule::HandleWholeRankDisplay );
+
+        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &KFRobotModule::HandleUpdateGuildData );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA, &KFRobotModule::HandleAddGuildData );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &KFRobotModule::HandleRemoveGuildData );
+
     }
 
     void KFRobotModule::BeforeShut()
@@ -172,7 +176,7 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgLoginVerifyAck );
 
         kfrobot->_playerid = kfmsg.playerid();
-        KFRobotPolicMgr::Instance()->PushSortRoleInfo( kfmsg.playerid() );
+
         //kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( kfmsg.playerid() );
         kfrobot->_connect_token = kfmsg.token();
         kfrobot->_connect_ip = kfmsg.ip();
@@ -188,10 +192,13 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgEnterGame );
         //std::cout << "HandleEnterGame : " << kfmsg.DebugString() << std::endl;
         // 初始化机器人状态机
-        kfrobot->_playerid = robotid;
-        kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( robotid );
 
         auto playerdata = kfmsg.mutable_playerdata();
+        auto playerid = playerdata->key();
+        kfrobot->_playerid = playerid;
+        KFRobotPolicMgr::Instance()->PushSortRoleInfo( kfrobot->_playerid );
+        kfrobot->_state_list = KFRobotPolicMgr::Instance()->GetStateListById( playerid );
+
         auto player = _kf_component->CreateEntity( kfrobot->_playerid, playerdata );
 
         // 这边判断名字是否为空 决定切换的状态
@@ -287,7 +294,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncUpdateData );
 
-        //std::cout << "HandleUpdateData: " << kfmsg.DebugString() << std::endl;
+        std::cout << "HandleUpdateData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
@@ -304,7 +311,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleAddData )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncAddData );
-        // std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
+        std::cout << "HandleAddData: " << kfmsg.DebugString() << std::endl;
         auto pbdata = kfmsg.mutable_pbdata();
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
@@ -414,6 +421,24 @@ namespace KFrame
             kfrobot->_matchid = _invalid_int;
             kfrobot->ChangeStateProxy();
         }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleUpdateGuildData )
+    {
+        __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncUpdateGuildData );
+        std::cout << "HandleUpdateGuildData:" << kfmsg.DebugString() << std::endl;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleAddGuildData )
+    {
+        __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncAddGuildData );
+        std::cout << "HandleAddGuildData:" << kfmsg.DebugString() << std::endl;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleRemoveGuildData )
+    {
+        __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveGuildData );
+        std::cout << "HandleRemoveGuildData:" << kfmsg.DebugString() << std::endl;
     }
 }
 

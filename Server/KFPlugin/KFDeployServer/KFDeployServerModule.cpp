@@ -112,26 +112,19 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )
     {
-        try
-        {
-            KFJson request( data );
+        KFJson request( data );
 
-            auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
-            if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
-            {
-                DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
-            }
-            else
-            {
-                auto kfsetting = _kf_schedule->CreateScheduleSetting();
-                kfsetting->SetTime( scheduletime );
-                kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
-                _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
-            }
-        }
-        catch ( ... )
+        auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
+        if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "[{}] json parse failed!", data );
+            DeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
+        }
+        else
+        {
+            auto kfsetting = _kf_schedule->CreateScheduleSetting();
+            kfsetting->SetTime( scheduletime );
+            kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
+            _kf_schedule->RegisterSchedule( kfsetting, this, &KFDeployServerModule::DeployCommandToAgent );
         }
 
         return _invalid_str;
@@ -149,6 +142,7 @@ namespace KFrame
         pbdeploy->set_apptype( request.GetString( __KF_STRING__( apptype ) ) );
         pbdeploy->set_appid( request.GetString( __KF_STRING__( appid ) ) );
         pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
+        pbdeploy->set_appchannel( request.GetUInt32( __KF_STRING__( appchannel ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
     }
 }

@@ -72,7 +72,7 @@ namespace KFrame
         auto pbdeploy = &kfmsg.deploycommand();
 
         // 关闭服务器
-        _kf_deploy_command->DeployCommand( pbdeploy->command(), pbdeploy->value(),
+        _kf_deploy_command->DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appchannel(),
                                            pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
 
         // 发送到客户端

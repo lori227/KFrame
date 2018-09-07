@@ -77,6 +77,9 @@ namespace KFrame
 
         // 帮派
         CreateGuild = 105,		// 创建帮派
+        InviteGuild = 106,		// 邀请加入帮派
+        ApplyGuild = 107,		// 申请加入帮派
+        AgreeAllJoin = 108,		// 一键同意加入帮派
 
 
 

@@ -42,9 +42,14 @@ namespace KFrame
         _shutdown_function.Remove( module );
     }
 
-    bool KFDeployCommandModule::IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployCommandModule::IsSelfServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
         auto kfglobal = KFGlobal::Instance();
+
+        if ( appchannel != kfglobal->_app_channel )
+        {
+            return false;
+        }
 
         if ( appname == _globbing_str )
         {
@@ -90,17 +95,18 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDeployCommandToServerReq );
 
         auto* pbdeploy = &kfmsg.deploycommand();
-        DeployCommand( pbdeploy->command(), pbdeploy->value(),
+        DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appchannel(),
                        pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
     }
 
-    void KFDeployCommandModule::DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    void KFDeployCommandModule::DeployCommand( const std::string& command, const std::string& value, uint32 appchannel,
+            const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
-        __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}] deploy command req!",
-                      command, value, appname, apptype, appid, zoneid );
+        __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}:{}] deploy command req!",
+                      command, value, appchannel, appname, apptype, appid, zoneid );
 
         // 判断是不是自己
-        auto ok = IsSelfServer( appname, apptype, appid, zoneid );
+        auto ok = IsSelfServer( appchannel, appname, apptype, appid, zoneid );
         if ( !ok )
         {
             return;
@@ -117,8 +123,6 @@ namespace KFrame
             KFGlobal::Instance()->SetLogLevel( level );
         }
     }
-
-
 
     void KFDeployCommandModule::ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime )
     {

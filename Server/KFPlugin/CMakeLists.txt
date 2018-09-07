@@ -1,43 +1,49 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -shared")
+set(CMAKE_STRIP "/usr/bin/eu-strip")
 
 message("${CMAKE_CXX_FLAGS}")
 macro(LINK_SDK_MACRO project_name)
 
-if(CMAKE_BUILD_TYPE MATCHES "Debug") 
-    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53d iconv protobuf hiredis iconv mysqlclient ftp PocoCryptod PocoNetd PocoNetSSLd PocoJSONd PocoUtild PocoFoundationd PocoJSONd PocoXMLd PocoDatad PocoDataMySQLd KFGlobald KFPlugind KFMemoryd KFProtocold KFHttpd KFCored KFConHashd KFNetworkd KFUtilityd KFMath3Dd)
-else()
-    target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53 iconv protobuf hiredis iconv mysqlclient ftp PocoCrypto PocoNet PocoNetSSL PocoJSON PocoUtil PocoFoundation PocoJSON PocoXML PocoData PocoDataMySQL KFGlobal  KFPlugin KFMemory KFProtocol KFHttp KFCore KFConHash KFNetwork KFUtility KFMath3D)  
-endif()
+    if(CMAKE_BUILD_TYPE MATCHES "Debug") 
+        target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53d iconv protobuf hiredis iconv mysqlclient ftp PocoCryptod PocoNetd PocoNetSSLd PocoJSONd PocoUtild PocoFoundationd PocoJSONd PocoXMLd PocoDatad PocoDataMySQLd KFGlobald KFPlugind KFMemoryd KFProtocold KFHttpd KFCored KFConHashd KFNetworkd KFUtilityd KFMath3Dd)
+    else()
+        target_link_libraries(${project_name} z dl jsoncpp ssl crypto pthread uv luaplus53 iconv protobuf hiredis iconv mysqlclient ftp PocoCrypto PocoNet PocoNetSSL PocoJSON PocoUtil PocoFoundation PocoJSON PocoXML PocoData PocoDataMySQL KFGlobal  KFPlugin KFMemory KFProtocol KFHttp KFCore KFConHash KFNetwork KFUtility KFMath3D)  
+    endif()
 
 endmacro(LINK_SDK_MACRO project_name)
 
 macro(BUILD_PLUGIN_MACRO project_name)
-aux_source_directory(. KF_SRC)
+    aux_source_directory(. KF_SRC)
+    add_library(${project_name} SHARED ${KF_SRC})
+    add_dependencies(${project_name} KFConHash)
+    add_dependencies(${project_name} KFCore)
+    add_dependencies(${project_name} KFHttp)
+    add_dependencies(${project_name} KFGlobal)
+    add_dependencies(${project_name} KFMath3D)
+    add_dependencies(${project_name} KFMemory)
+    add_dependencies(${project_name} KFNetwork)
+    add_dependencies(${project_name} KFPlugin)
+    add_dependencies(${project_name} KFProtocol)
+    add_dependencies(${project_name} KFUtility)
 
-add_library(${project_name} SHARED ${KF_SRC})
-add_dependencies(${project_name} KFConHash)
-add_dependencies(${project_name} KFCore)
-add_dependencies(${project_name} KFHttp)
-add_dependencies(${project_name} KFGlobal)
-add_dependencies(${project_name} KFMath3D)
-add_dependencies(${project_name} KFMemory)
-add_dependencies(${project_name} KFNetwork)
-add_dependencies(${project_name} KFPlugin)
-add_dependencies(${project_name} KFProtocol)
-add_dependencies(${project_name} KFUtility)
+    set_target_properties(${project_name} PROPERTIES PREFIX "")
+    set_target_properties(${project_name} PROPERTIES OUTPUT_NAME_DEBUG "${project_name}d")
+    set_target_properties(${project_name} PROPERTIES
+        FOLDER "KFPlugin"
+        ARCHIVE_OUTPUT_DIRECTORY ${BIN_DIR}
+        RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
+        LIBRARY_OUTPUT_DIRECTORY ${BIN_DIR})
 
-set_target_properties(${project_name} PROPERTIES PREFIX "")
-set_target_properties(${project_name} PROPERTIES OUTPUT_NAME_DEBUG "${project_name}d")
-set_target_properties(${project_name} PROPERTIES
-    FOLDER "KFPlugin"
-    ARCHIVE_OUTPUT_DIRECTORY ${BIN_DIR}
-    RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
-    LIBRARY_OUTPUT_DIRECTORY ${BIN_DIR})
+    LINK_SDK_MACRO(${project_name})
 
-LINK_SDK_MACRO(${project_name})
+    #if(CMAKE_BUILD_TYPE MATCHES "Release")
+    #    set(${project_name}_PLUGIN_NAME "${CMAKE_SHARED_LIBRARY_PREFIX}${project_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    #    message("KFContrib name = ${BIN_DIR}/${${project_name}_PLUGIN_NAME}") 
+    #    add_custom_command(TARGET ${project_name} POST_BUILD
+    #        COMMAND ${CMAKE_STRIP} ${BIN_DIR}/${${project_name}_PLUGIN_NAME} -f ${BIN_DIR}/${${project_name}_PLUGIN_NAME}.sym)
+    #endif()
+
 endmacro(BUILD_PLUGIN_MACRO project_name)
-
-
 
 add_subdirectory(KFAchieve)
 add_subdirectory(KFActivity)
@@ -125,4 +131,3 @@ add_subdirectory(KFZone)
 add_subdirectory(KFLogClient)
 add_subdirectory(KFLogProxy)
 add_subdirectory(KFLogShard)
-

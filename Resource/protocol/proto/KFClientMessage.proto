@@ -81,10 +81,18 @@ enum ClientProtocol
 	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
-	MSG_CREATE_GUILD_REQ = 200;					// 创建帮派
-	MSG_INVITE_GUILD_REQ = 201;					// 邀请加入帮派
-	MSG_APPLY_GUILD_REQ = 202;					// 申请加入帮派
+	MSG_CREATE_GUILD_REQ = 200;				// 创建帮派
+	MSG_INVITE_GUILD_REQ = 201;				// 邀请加入帮派
+	MSG_APPLY_GUILD_REQ = 202;				// 申请加入帮派
 	MSG_TELL_MATCH_WAIT_TIME = 203;				// 通知匹配预计等待时间
+	MSG_EXIT_GUILD_REQ = 204;				// 离开帮派
+	MSG_TRANSFER_MASTER_REQ = 205;				// 转让帮主
+	MSG_REVIEW_APPLY_REQ = 206;				// 审批申请列表
+	MSG_DISSOLVE_GUILD_REQ = 207;				// 解散帮派
+	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// 修改帮派徽章
+	MSG_QUERY_GUILD_LIST_REQ = 209;				// 请求帮派列表
+	MSG_QUERY_GUILD_LIST_ACK = 210;				// 
+	
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -786,4 +794,47 @@ message MsgApplyGuildReq
 {
 	required uint64 guildid = 1;		// 帮派id
 	required uint64 invitor = 2;		// 邀请id
+}
+
+// 离开帮派
+// MSG_EXIT_GUILD_REQ
+message MsgExitGuildReq
+{
+}
+
+// 转让帮主
+// MSG_TRANSFER_MASTER_REQ
+message MsgTransferMasterReq
+{
+	required uint32 newmasterid = 1;	// 接受者id
+}
+
+// 审批申请列表
+// MSG_REVIEW_APPLY_REQ
+message MsgReviewApplyReq
+{
+	optional uint32 playerid = 1;		// 被审核玩家(一键操作不填)
+	required uint32 operatortype =2;	// 操作类型 (1:同意,2:拒绝)
+	
+}
+
+// 解散帮派
+// MSG_DISSOLVE_GUILD_REQ
+message MsgDissolveGuildReq
+{
+}
+
+// 修改帮派徽章
+// MSG_MODIFY_GUILD_MEDAL_REQ
+message MsgModifyGuildMedalReq
+{
+	required uint32 newmedal = 1;		// 新的徽章id
+}
+
+// 请求帮派列表
+// MSG_QUERY_GUILD_LIST_REQ
+message MsgQueryGuildListReq
+{
+	optional PBGuildIdArray guilds = 1;	// 要查询的帮派id
+	required uint32 cursor = 2;		// 查询的游标（从0开始）
 }

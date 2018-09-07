@@ -1,5 +1,5 @@
 ﻿#include "KFGuildShardModule.h"
-#include "KFProtocol/KFProtocol.h"
+//#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -24,7 +24,7 @@ namespace KFrame
     }\
     ++cursor
 
-#define __REDIS_PIPE_LIMIT_END__   if ( _invalid_int != ( cursor - 1 ) % 10 )\
+#define __REDIS_PIPE_LIMIT_END__   if ( cursor > _invalid_int )\
     {\
         redisdriver->Pipeline();\
     }
@@ -42,7 +42,7 @@ namespace KFrame
 
     void KFGuildShardModule::InitModule()
     {
-
+        __KF_ADD_CONFIG__( _kf_guild_shard_config, true );
     }
 
     void KFGuildShardModule::BeforeRun()
@@ -52,9 +52,13 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_GUILD_TO_SHARD_REQ, &KFGuildShardModule::HandleCreateGuildToShard );
         __REGISTER_MESSAGE__( KFMsg::S2S_INVITE_GUILD_REQ, &KFGuildShardModule::HandleInviteGuildReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_APPLY_GUILD_REQ, &KFGuildShardModule::HandleApplyGuildReq );
-
-
+        __REGISTER_MESSAGE__( KFMsg::S2S_EXIT_GUILD_REQ, &KFGuildShardModule::HandleExitGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSFER_MASTER_REQ, &KFGuildShardModule::HandleTransferMasterReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MEMBER_BASIC_DATA_REQ, &KFGuildShardModule::HandleUpdateMemberBasic );
+        __REGISTER_MESSAGE__( KFMsg::S2S_REVIEW_APPLY_REQ, &KFGuildShardModule::HandleReviewApplyReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DISSOLVE_GUILD_REQ, &KFGuildShardModule::HandleDissolveGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_MODIFY_MEDAL_REQ, &KFGuildShardModule::HandleModifyMedalReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUILD_LIST_REQ, &KFGuildShardModule::HnadleQueryGuildListReq );
 
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFGuildShardModule::OnServerDiscoverClient );
 
@@ -65,6 +69,12 @@ namespace KFrame
         _kf_component->RegisterUpdateDataModule( this, &KFGuildShardModule::OnUpdateDataCallBack );
         _kf_component->RegisterUpdateStringModule( this, &KFGuildShardModule::OnUpdateStringCallBack );
 
+
+        // 注册更新函数
+        _kf_component->RegisterSyncAddFunction( this, &KFGuildShardModule::SendAddDataToClient );
+        _kf_component->RegisterSyncRemoveFunction( this, &KFGuildShardModule::SendRemoveDataToClient );
+        _kf_component->RegisterSyncUpdateFunction( this, &KFGuildShardModule::SendUpdateDataToClient );
+
     }
 
     void KFGuildShardModule::BeforeShut()
@@ -74,6 +84,13 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_INVITE_GUILD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MEMBER_BASIC_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_APPLY_GUILD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_EXIT_GUILD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSFER_MASTER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_REVIEW_APPLY_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DISSOLVE_GUILD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_MODIFY_MEDAL_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUILD_LIST_REQ );
+
 
         _kf_component->UnRegisterEntityDeleteFunction();
         _kf_component->UnRegisterRemoveDataModule( this );
@@ -81,11 +98,17 @@ namespace KFrame
         _kf_component->UnRegisterUpdateDataModule( this );
         _kf_component->UnRegisterUpdateStringModule( this );
 
+
+        // 卸载更新函数
+        _kf_component->UnRegisterSyncAddFunction();
+        _kf_component->UnRegisterSyncRemoveFunction();
+        _kf_component->UnRegisterSyncUpdateFunction();
+
     }
 
     void KFGuildShardModule::OnceRun()
     {
-
+        __REGISTER_LOOP_TIMER__( KFGlobal::Instance()->_app_id, KFTimeEnum::OneMinuteMicSecond * 10, &KFGuildShardModule::OnTimerRefreshGuild );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFGuildShardModule::OnServerDiscoverClient )
@@ -132,11 +155,13 @@ namespace KFrame
         redisdriver->Append( "hdel {} {}", __KF_STRING__( guildnameidhash ), guildname );
         // 移除本shard管理的guildid集合
         redisdriver->Append( "srem {} {}", __KF_STRING__( guildidset ), guildid );
+        // 删除帮派的排行榜
+        redisdriver->Append( "zrem {} {}", __KF_STRING__( guildrank ), guildid );
 
         redisdriver->Pipeline( );
 
         //  remove proxy handle
-
+        _kf_cluster_shard->RemoveObjectToProxy( guildid );
         // 这边处理帮派玩家列表 // 发送到client 通知在线玩家帮派解散，操作离线玩家public guild字段,是否添加邮件?
         auto kfguildmembers = kfobject->FindData( __KF_STRING__( guildmember ) );
 
@@ -156,10 +181,18 @@ namespace KFrame
 
             redisdriver->Append( "del {}:{}", __KF_STRING__( guildmember ), kfguildmember->GetKeyID() );
 
-            kfguildmember = kfguildmembers->NextData();
+            auto serverid = kfguildmember->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
+            auto playerid = kfguildmember->GetKeyID();
+
+            if ( _invalid_int != serverid ||
+                    SendPlayerGuildChangeToClient( KFGuid( serverid, playerid ), playerid, guildid, KFMsg::ExitGuild ) )
+            {
+                RemovePlayerGuildId( playerid );
+            }
         }
 
         __REDIS_PIPE_LIMIT_END__
+
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFGuildShardModule::OnRemoveDataCallBack )
@@ -200,14 +233,29 @@ namespace KFrame
         {
             return;
         }
+        auto redisdriver = __GUILD_REDIS_DRIVER__;
         if ( kfdata->HaveFlagMask( KFDataDefine::Mask_Save_Database ) &&
                 kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
-            auto redisdriver = __GUILD_REDIS_DRIVER__;
-            auto kfresult = redisdriver->Execute( __FUNC_LINE__, "hset {}:{} {} {}",
+
+            auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
                                                   kfdata->GetParent()->GetName(), key, kfdata->GetName(), newvalue );
 
         }
+
+        auto showdata = _kf_guild_shard_config->_show_data;
+        if ( !showdata.empty() )
+        {
+            if ( showdata.end() != std::find( showdata.begin(), showdata.end(), kfdata->GetName() ) )
+            {
+                auto score = CalcGuildRankDataScore( kfdata->GetParent() );
+                if ( _invalid_int < score )
+                {
+                    redisdriver->Execute( "zadd {}  {} {}", __KF_STRING__( guildrank ), score, kfdata->GetParent()->GetKeyID() );
+                }
+            }
+        }
+
 
     }
 
@@ -261,12 +309,26 @@ namespace KFrame
             return;
         }
 
+        auto redisdriver = __GUILD_REDIS_DRIVER__;
         if ( kfdata->HaveFlagMask( KFDataDefine::Mask_Save_Database ) &&
                 kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
-            auto redisdriver = __GUILD_REDIS_DRIVER__;
+
             auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
                                                   kfdata->GetParent()->GetName(), kfdata->GetParent()->GetKeyID(), kfdata->GetName(), kfdata->GetValue<std::string>() );
+        }
+
+        auto showdata = _kf_guild_shard_config->_show_data;
+        if ( !showdata.empty() )
+        {
+            if ( showdata.end() != std::find( showdata.begin(), showdata.end(), kfdata->GetName() ) )
+            {
+                auto score = CalcGuildRankDataScore( kfdata->GetParent() );
+                if ( _invalid_int < score )
+                {
+                    redisdriver->Execute( "zadd {}  {} {}", __KF_STRING__( guildrank ), score, kfdata->GetParent()->GetKeyID() );
+                }
+            }
         }
     }
 
@@ -320,6 +382,7 @@ namespace KFrame
         values[ __KF_STRING__( name ) ] = kfmsg.guildname();
         values[ __KF_STRING__( creator ) ] = kfmsg.name();
         values[ __KF_STRING__( masterid ) ] = strplayerid;
+        values[__KF_STRING__( level )] = "1";
         //values[ __KF_STRING__( memberlist ) ] = strplayerid + DEFAULT_SPLIT_STRING;
         values[ __KF_STRING__( totalactiveness ) ] = KFUtility::ToString( _invalid_int );
         if ( kfmsg.has_manifesto() )
@@ -333,6 +396,10 @@ namespace KFrame
             kfobject->SetValue< std::string >( iter.first, iter.second );
         }
         redisdriver->Append( values, "hmset {}:{}", __KF_STRING__( guild ), kfmsg.guildid() );
+
+        //添加帮派排行榜
+        redisdriver->Append( "zadd {} {} {}", __KF_STRING__( guildrank ), _invalid_int, kfmsg.guildid() );
+
         redisdriver->Pipeline();
         // 这边设置完初始化标志后 会根据updata kfdata 回调去hset对应的键值对
         kfguild->SetInited();
@@ -341,29 +408,6 @@ namespace KFrame
         {
             //log
         }
-
-        /*
-        // 添加成员信息
-        auto kfguildmembers = kfobject->FindData( __KF_STRING__( guildmember ) );
-        auto kfguildmember = _kf_kernel->CreateObject( kfguildmembers->GetDataSetting() );
-        // 设置帮派成员(帮主)详细信息
-        //auto kfguildmember = kfguild->CreateData( __KF_STRING__( guildmember ), kfmsg.playerid() );
-
-        //auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), kfmsg.playerid() );
-        kfguildmember->SetKeyID( kfmsg.playerid() );
-        kfguildmember->SetValue<uint64>( __KF_STRING__( jointime ), kfglobal->_real_time );
-        kfguildmember->SetValue<uint64>( __KF_STRING__( totalactiveness ), _invalid_int );
-        kfguildmember->SetValue<uint32>( __KF_STRING__( title ), KFGuildShardEnum::GuildManager );
-
-        auto kfbasic = kfguildmember->FindData( __KF_STRING__( basic ) );
-        kfbasic->SetKeyID( kfmsg.playerid() );
-        for ( int i = 0; i < kfmsg.pbdata_size(); ++i )
-        {
-            auto pbstring = kfmsg.pbdata( i );
-            kfbasic->SetValue<std::string>( pbstring.name(), pbstring.value() );
-        }
-
-        kfguild->AddData( kfguildmembers, kfguildmember );*/
 
 
         // 添加到代理
@@ -374,7 +418,7 @@ namespace KFrame
         // 通知client 创建军团成功
         ack.set_code( KFMsg::Success );
         _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
-        //__SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+
     }
 
 
@@ -418,7 +462,7 @@ namespace KFrame
 
         if ( IsInApplicanlist( kfmsg.guildid(), kfmsg.invitedid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::PlayerINApplicanlist );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::PlayerInApplicanlist );
         }
 
         KFMsg::S2SInviteGuildAck ack;
@@ -470,14 +514,206 @@ namespace KFrame
             return;
         }
 
-
         KFMsg::S2SApplyGuildAck ack;
         ack.set_guildid( kfmsg.guildid() );
         ack.set_playerid( kfmsg.playerid() );
         _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleExitGuildReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SExitGuildReq );
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return;
+        }
+        auto kfobject = kfguild->GetData();
+
+        if ( !IsGuildMember( kfmsg.playerid() ) )
+        {
+            return;
+        }
+
+        if ( IsMaster( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMaster );
+        }
+
+        // 删除成员列表信息
+        auto strmemberlist = kfobject->GetValue<std::string>( __KF_STRING__( memberlist ) );
+        auto delplayerid = KFUtility::ToString( kfmsg.playerid() ) + DEFAULT_SPLIT_STRING;
+        std::string newmemberlist = "";
+        if ( !KFUtility::DelString( strmemberlist, delplayerid, newmemberlist ) )
+        {
+            //TODO:log
+            return;
+        }
+        kfguild->UpdateData( __KF_STRING__( memberlist ), newmemberlist );
+        kfguild->RemoveData( __KF_STRING__( guildmember ), kfmsg.playerid() );
+
+        SendPlayerGuildChangeToClient( kfguid, kfmsg.playerid(), kfmsg.guildid(), KFMsg::ExitGuild );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleTransferMasterReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransferMasterReq );
+
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return;
+        }
+        auto kfobject = kfguild->GetData();
+        if ( !IsMaster( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoMaster );
+        }
+
+        if ( !IsSameGuild( kfmsg.playerid(), kfmsg.newmasterid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoSmallGuild );
+        }
+
+        // 更新老帮主的职位
+        auto kfoldmaster = kfobject->FindData( __KF_STRING__( guildmember ), kfmsg.playerid() );
+        auto kfnewmaster = kfobject->FindData( __KF_STRING__( guildmember ), kfmsg.newmasterid() );
+        if ( nullptr == kfoldmaster || nullptr == kfnewmaster )
+        {
+            return;
+        }
+
+        kfguild->UpdateData( kfoldmaster, __KF_STRING__( title ), KFOperateEnum::Set, KFGuildShardEnum::GuildMember );
+        kfguild->UpdateData( kfnewmaster, __KF_STRING__( title ), KFOperateEnum::Set, KFGuildShardEnum::GuildMaster );
+        // 设置新的帮主
+        kfguild->UpdateData( __KF_STRING__( masterid ), __TO_STRING__( kfmsg.newmasterid() ) );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleReviewApplyReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SReviewApplyReq );
+
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return;
+        }
+
+        // 判断是否有操作权限
+        if ( !IsMaster( kfmsg.playerid(), kfmsg.guildid() ) && !IsViceMaster( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoMaster );
+        }
+
+        // 处理单个人
+        if ( kfmsg.has_dealplayerid() )
+        {
+            if ( !RemoveApplicanlist( kfmsg.guildid(), kfmsg.dealplayerid() ) )
+            {
+                return  _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoInApplicanlist );
+            }
+
+            if ( KFMsg::RefuseApply == kfmsg.operatortype() )
+            {
+                return;
+            }
+            else
+            {
+                if ( IsGuildMember( kfmsg.dealplayerid() ) )
+                {
+                    return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::Playerisguildmember );
+                }
+
+                if ( !JoinGuild( kfmsg.guildid(), kfmsg.dealplayerid() ) )
+                {
+                    return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMemberlistTooLong );
+                }
+            }
+        }
+        else
+        {
+            // 一键拒绝
+            if ( KFMsg::RefuseApply == kfmsg.operatortype() )
+            {
+                auto ok = ClearApplicanlist( kfmsg.guildid() );
+            }
+            else
+            {
+                // 一键添加
+                MoveApplicantToGuild( kfmsg.guildid() );
+
+            }
+
+        }
 
     }
 
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleDissolveGuildReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SDissolveGuildReq );
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return;
+        }
+
+        // 判断是否有操作权限
+        if ( !IsMaster( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoMaster );
+        }
+
+        _kf_component->RemoveEntity( kfmsg.guildid() );
+
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleModifyMedalReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SModifyMedalReq );
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return;
+        }
+
+        // 判断是否有操作权限
+        if ( !IsMaster( kfmsg.playerid(), kfmsg.guildid() ) || !IsViceMaster( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoMaster );
+        }
+        auto kfobject = kfguild->GetData();
+        auto oldmedal = kfobject->GetValue<uint32>( __KF_STRING__( medal ) );
+        if ( oldmedal == kfmsg.newmedal() )
+        {
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMedalRepeat );
+        }
+
+        kfguild->UpdateData( __KF_STRING__( medal ), __TO_STRING__( kfmsg.newmedal() ) );
+
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HnadleQueryGuildListReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SQueryGuildListReq );
+
+
+
+
+    }
+
+
+    __KF_TIMER_FUNCTION__( KFGuildShardModule::OnTimerRefreshGuild )
+    {
+
+        auto* kfguild = _kf_component->FirstEntity();
+        while ( kfguild != nullptr )
+        {
+            auto guildid = kfguild->GetKeyID();
+            RefreshGuildApplicantlist( guildid );
+            kfguild = _kf_component->NextEntity();
+        }
+
+    }
     void KFGuildShardModule::LoadGuildData()
     {
         auto redisdriver = __GUILD_REDIS_DRIVER__;
@@ -512,7 +748,7 @@ namespace KFrame
             redisdriver->Append( "hgetall {}:{}", __KF_STRING__( guild ), strguildid );
 
         }
-        if ( _invalid_int != ( cursor - 1 ) % 10 )
+        if ( cursor > _invalid_int )
         {
             auto result = redisdriver->PipelineListMap( );
             if ( !result->IsOk() || result->_value.empty() )
@@ -526,7 +762,7 @@ namespace KFrame
 
     void KFGuildShardModule::LoadMultiGuildData( std::list< MapString >& guildidlists )
     {
-        for ( auto iter : guildidlists )
+        for ( auto& iter : guildidlists )
         {
             LoadSingleGuildData( iter );
         }
@@ -576,7 +812,7 @@ namespace KFrame
 
         }
 
-        if ( _invalid_int != ( cursor - 1 ) % 10 )
+        if ( cursor > _invalid_int )
         {
             auto result = redisdriver->PipelineListMap( );
             if ( !result->IsOk() || result->_value.empty() )
@@ -641,19 +877,53 @@ namespace KFrame
         return true;
     }
 
-    bool KFGuildShardModule::IsInApplicanlist( uint64 guildid, uint32 playerid )
+    bool KFGuildShardModule::IsMaster( uint32 playerid, uint64 guildid )
     {
         auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
-        if ( nullptr == kfguild )
+        if ( kfguild == nullptr )
         {
-            return true;
+            return false;
         }
-
         auto kfobject = kfguild->GetData();
-        auto strapplicantlist = kfobject->GetValue<std::string>( __KF_STRING__( applicantlist ) );
-        // 玩家申请列表 std::string转换成pb数据格式
+        auto masterid = kfobject->GetValue<uint32>( __KF_STRING__( masterid ) );
+        return masterid == playerid;
+    }
+
+    bool KFGuildShardModule::IsViceMaster( uint32 playerid, uint64 guildid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return false;
+        }
+        auto kfobject = kfguild->GetData();
+        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), playerid );
+        if ( nullptr == kfguildmember )
+        {
+            return false;
+        }
+        auto title = kfguildmember->GetValue<uint32>( __KF_STRING__( title ) );
+        return title == KFGuildShardEnum::GuildViceMaster;
+    }
+
+    bool KFGuildShardModule::IsSameGuild( uint32 playerid, uint32 desplayerid, uint64 guildid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( kfguild == nullptr )
+        {
+            return false;
+        }
+        auto kfobject = kfguild->GetData();
+        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), playerid );
+        auto deskfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), desplayerid );
+        return ( nullptr != kfguildmember && nullptr != deskfguildmember );
+
+    }
+
+    bool KFGuildShardModule::IsInApplicanlist( uint64 guildid, uint32 playerid )
+    {
         KFMsg::PBApplicationlists applylist;
-        KFProto::Parse( &applylist, strapplicantlist, KFCompressEnum::Compress );
+        GetGuildApplicantlist( guildid, applylist );
         // applylist.ParseFromString( strapplicantlist );
         for ( auto i = 0; i < applylist.applylists_size(); ++i )
         {
@@ -681,13 +951,8 @@ namespace KFrame
         }
 
         auto kfobject = kfguild->GetData();
-        auto strapplicantlist = kfobject->GetValue<std::string>( __KF_STRING__( applicantlist ) );
-        // 玩家申请列表 std::string转换成pb数据格式
         KFMsg::PBApplicationlists applylist;
-        if ( !strapplicantlist.empty() )
-        {
-            KFProto::Parse( &applylist, strapplicantlist, KFCompressEnum::Compress );
-        }
+        GetGuildApplicantlist( guildid, applylist );
 
         auto pbapplylist =  applylist.add_applylists();
         pbapplylist->set_playerid( playerid );
@@ -700,8 +965,18 @@ namespace KFrame
         /*field.push_back( __KF_STRING__( name ) );
         field.push_back( __KF_STRING__( sex ) );
         field.push_back( __KF_STRING__( icon ) );*/
-        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ) );
+        auto kfguildmembers = kfobject->FindData( __KF_STRING__( guildmember ) );
+        auto kfguildmember = _kf_kernel->CreateObject( kfguildmembers->GetDataSetting() );
+        if ( nullptr == kfguildmembers )
+        {
+            return false;
+        }
+
         auto kfbasics = kfguildmember->FindData( __KF_STRING__( basic ) );
+        if ( nullptr == kfbasics )
+        {
+            return false;
+        }
         auto kfbasic = kfbasics->FirstData();
         while ( nullptr != kfbasic )
         {
@@ -728,9 +1003,109 @@ namespace KFrame
         }
 
         auto newapplicantlist = KFProto::Serialize( &applylist, KFCompressEnum::Compress );
-        kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
+        if ( !newapplicantlist.empty() )
+        {
+            kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
+        }
+
         return true;
     }
+
+    bool KFGuildShardModule::ClearApplicanlist( uint64 guildid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return false;
+        }
+        kfguild->UpdateData( __KF_STRING__( applicantlist ), _invalid_str );
+        return true;
+    }
+
+
+    void KFGuildShardModule::RefreshGuildApplicantlist( uint64 guildid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+        KFMsg::PBApplicationlists applylist;
+        GetGuildApplicantlist( guildid, applylist );
+        KFMsg::PBApplicationlists newapplylist;
+        for ( auto i = 0; i < applylist.applylists_size(); ++i )
+        {
+            auto applydata = applylist.applylists( i );
+            auto playerid = applydata.playerid();
+            if ( _invalid_int == playerid )
+            {
+                continue;
+            }
+
+            // TODO:这边是查redis玩家加入其他帮派的话，暂时清除申请列表
+            if ( IsGuildMember( playerid ) )
+            {
+                continue;
+            }
+
+            auto applytime = applydata.time();
+            //存在申请列表中,但是不超过一天
+            if ( KFDate::CheckPassTime( applytime, KFTimeEnum::OneDaySecond ) )
+            {
+                continue;
+            }
+            auto pbapplylist = newapplylist.add_applylists();
+            pbapplylist->CopyFrom( applydata );
+        }
+        auto newapplicantlist = KFProto::Serialize( &newapplylist, KFCompressEnum::Compress );
+        if ( newapplicantlist != _invalid_str )
+        {
+            kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
+        }
+
+
+    }
+
+
+    bool KFGuildShardModule::RemoveApplicanlist( uint64 guildid, uint32 playerid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return false;
+        }
+        KFMsg::PBApplicationlists applylist;
+        GetGuildApplicantlist( guildid, applylist );
+        KFMsg::PBApplicationlists newapplylist;
+
+        auto result = false;
+        for ( auto i = 0; i < applylist.applylists_size(); ++i )
+        {
+            auto applydata = applylist.applylists( i );
+            // 申请列表中已经有该玩家
+            if ( applydata.playerid() == playerid )
+            {
+                auto applytime = applydata.time();
+                //存在申请列表中,但是不超过一天
+                if ( !KFDate::CheckPassTime( applytime, KFTimeEnum::OneDaySecond ) )
+                {
+                    result = true;
+                }
+                continue;
+            }
+            auto pbapplylist = newapplylist.add_applylists();
+            pbapplylist->CopyFrom( applydata );
+        }
+
+        auto newapplicantlist = KFProto::Serialize( &newapplylist, KFCompressEnum::Compress );
+        if ( !newapplicantlist.empty() )
+        {
+            kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
+        }
+
+        return result;
+    }
+
 
     bool KFGuildShardModule::JoinGuild( uint64 guildid, uint32 playerid, uint32 title )
     {
@@ -816,7 +1191,80 @@ namespace KFrame
         return querydata->IsOk();
     }
 
-    bool KFGuildShardModule::SendGuildMemberToClient( uint32 playerid, uint64 guild, uint32 msgid, ::google::protobuf::Message* message, VectorString& offlineids, bool containself )
+    void KFGuildShardModule::MoveApplicantToGuild( uint64 guildid )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+
+        KFMsg::PBApplicationlists applylist;
+        GetGuildApplicantlist( guildid, applylist );
+
+        KFMsg::PBApplicationlists newapplylist;
+        for ( auto i = 0; i < applylist.applylists_size(); ++i )
+        {
+            auto applydata = applylist.applylists( i );
+            auto playerid = applydata.playerid();
+            if ( _invalid_int == playerid )
+            {
+                continue;
+            }
+
+            auto applytime = applydata.time();
+            //存在申请列表中,但是不超过一天
+            if ( KFDate::CheckPassTime( applytime, KFTimeEnum::OneDaySecond ) )
+            {
+                continue;
+            }
+
+            if ( JoinGuild( guildid, playerid ) )
+            {
+                continue;
+            }
+
+            auto pbapplylist = newapplylist.add_applylists();
+            pbapplylist->CopyFrom( applydata );
+        }
+
+        auto newapplicantlist = KFProto::Serialize( &newapplylist, KFCompressEnum::Compress );
+        if ( !newapplicantlist.empty() )
+        {
+            kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
+        }
+
+
+    }
+
+    void  KFGuildShardModule::RemovePlayerGuildId( uint32 playerid )
+    {
+        auto publicredisdriver = __PUBLIC_REDIS_DRIVER__;
+        auto result = publicredisdriver->Execute( "hdel {}:{} {}",
+                      __KF_STRING__( public ), playerid, __KF_STRING__( guildid ) );
+        if ( !result->IsOk() )
+        {
+            //log
+        }
+    }
+
+    bool  KFGuildShardModule::QueryGuildListReq( uint32 cursor )
+    {
+        auto redisdriver = __GUILD_REDIS_DRIVER__;
+        auto result = redisdriver->QueryUInt32( "zcard {}", __KF_STRING__( guildrank ) );
+        auto pagecount =  _kf_guild_shard_config->GetGuildPage();
+        if ( !result->IsOk() || result->_value < cursor ||  _invalid_int > pagecount )
+        {
+            auto kfresult = redisdriver->QueryList( "zrevrange {} {} {}", __KF_STRING__( guildrank ), cursor, cursor + pagecount );
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    bool KFGuildShardModule::SendMessageToGuildMember( uint32 playerid, uint64 guild, uint32 msgid, ::google::protobuf::Message* message, VectorString& offlineids, bool containself )
     {
         offlineids.clear();
         auto kfguild = _kf_component->FindEntity( guild, __FUNC_LINE__ );
@@ -824,6 +1272,7 @@ namespace KFrame
         {
             return false;
         }
+
         auto kfobject = kfguild->GetData();
         auto kfguildmembers = kfobject->FindData( __KF_STRING__( guildmember ) );
         auto kfguildmember = kfguildmembers->FirstData();
@@ -849,7 +1298,7 @@ namespace KFrame
                 continue;
             }
 
-            _kf_cluster_shard->SendMessageToPlayer( serverid, playerid, msgid, message );
+            _kf_cluster_shard->SendMessageToPlayer( serverid, memberid, msgid, message );
 
             kfguildmember = kfguildmembers->NextData();
         }
@@ -864,5 +1313,104 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_code( code );
         return _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_PLAYER_GUILD_CHANGE_REQ, &req );
+    }
+
+    void KFGuildShardModule::GetGuildApplicantlist( uint64 guildid, KFMsg::PBApplicationlists& applylist )
+    {
+        applylist.Clear();
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+        auto kfobject = kfguild->GetData();
+        auto strapplicantlist = kfobject->GetValue<std::string>( __KF_STRING__( applicantlist ) );
+        if ( !strapplicantlist.empty() )
+        {
+            KFProto::Parse( &applylist, strapplicantlist, KFCompressEnum::Compress );
+        }
+    }
+
+    uint64 KFGuildShardModule::CalcGuildRankDataScore( KFData* kfparent )
+    {
+#define __RANK_SCORE_MULTIPLE__ 100000
+
+        uint64 rankscore = 0u;
+        auto i = 2u;
+
+        if ( _kf_guild_shard_config->_show_data.empty() )
+        {
+            return rankscore;
+        }
+
+
+        for ( auto& showdata : _kf_guild_shard_config->_show_data )
+        {
+            if ( i == 0 )
+            {
+                break;
+            }
+
+            auto kfdata = kfparent->FindData( showdata );
+            if ( kfdata != nullptr )
+            {
+                auto multiplevalue = pow( __RANK_SCORE_MULTIPLE__, --i );
+                rankscore += static_cast<uint64>( kfdata->GetValue< double >() * multiplevalue );
+            }
+        }
+
+        return rankscore;
+    }
+
+
+    void KFGuildShardModule::SendUpdateDataToClient( KFEntity* guild, const KFMsg::PBObject& pbobect )
+    {
+#ifdef __KF_DEBUG__
+        static uint32 _update_print = 0;
+        if ( _update_print == 1 )
+        {
+            auto temp = pbobect.DebugString();
+        }
+#endif
+
+        KFMsg::MsgSyncUpdateGuildData sync;
+        sync.mutable_pbdata()->CopyFrom( pbobect );
+        VectorString offlineids;
+        SendMessageToGuildMember( _invalid_int, guild->GetKeyID(), KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &sync, offlineids );
+
+    }
+
+
+    void KFGuildShardModule::SendAddDataToClient( KFEntity* guild, const KFMsg::PBObject& pbobect )
+    {
+#ifdef __KF_DEBUG__
+        static uint32 _print = 0;
+        if ( _print == 1 )
+        {
+            auto temp = pbobect.DebugString();
+        }
+#endif
+
+        KFMsg::MsgSyncAddGuildData sync;
+        sync.mutable_pbdata()->CopyFrom( pbobect );
+        VectorString offlineids;
+        SendMessageToGuildMember( _invalid_int, guild->GetKeyID(), KFMsg::MSG_SYNC_ADD_GUILD_DATA, &sync, offlineids );
+    }
+
+    void KFGuildShardModule::SendRemoveDataToClient( KFEntity* guild, const KFMsg::PBObject& pbobect )
+    {
+#ifdef __KF_DEBUG__
+        static uint32 _print = 0;
+        if ( _print == 1 )
+        {
+            auto temp = pbobect.DebugString();
+        }
+#endif
+
+        KFMsg::MsgSyncRemoveGuildData sync;
+        sync.mutable_pbdata()->CopyFrom( pbobect );
+        VectorString offlineids;
+        SendMessageToGuildMember( _invalid_int, guild->GetKeyID(), KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &sync, offlineids );
+
     }
 }

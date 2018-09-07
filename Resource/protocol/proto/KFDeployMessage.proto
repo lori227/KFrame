@@ -48,6 +48,7 @@ message PBDeployCommand
 	required string appid = 4;		// appid
 	required uint32 zoneid = 5;		// 分区
 	required string value = 6;		// 数值
+	required uint32 appchannel = 7; // appchannel
 }
 
 // 部署命令

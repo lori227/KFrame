@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="guild" AppType="proxy" Common="./startup/common.startup">
+	<Plugins AppName="guild" AppType="proxy" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/server.network"/>
     	<Plugin Sort="120" Name="KFClusterProxy" Config=""/>
    		<Plugin Sort="130" Name="KFGuildProxy" Config=""/>

@@ -38,6 +38,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgTellQueryBasic_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgTellQueryBasic_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgSyncUpdateGuildData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgSyncUpdateGuildData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgSyncAddGuildData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgSyncAddGuildData_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgSyncRemoveGuildData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgSyncRemoveGuildData_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* DataProtocol_descriptor_ = NULL;
 
 }  // namespace
@@ -140,6 +149,51 @@ void protobuf_AssignDesc_KFDataMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgTellQueryBasic));
+  MsgSyncUpdateGuildData_descriptor_ = file->message_type(6);
+  static const int MsgSyncUpdateGuildData_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncUpdateGuildData, pbdata_),
+  };
+  MsgSyncUpdateGuildData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgSyncUpdateGuildData_descriptor_,
+      MsgSyncUpdateGuildData::default_instance_,
+      MsgSyncUpdateGuildData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncUpdateGuildData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncUpdateGuildData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgSyncUpdateGuildData));
+  MsgSyncAddGuildData_descriptor_ = file->message_type(7);
+  static const int MsgSyncAddGuildData_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncAddGuildData, pbdata_),
+  };
+  MsgSyncAddGuildData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgSyncAddGuildData_descriptor_,
+      MsgSyncAddGuildData::default_instance_,
+      MsgSyncAddGuildData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncAddGuildData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncAddGuildData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgSyncAddGuildData));
+  MsgSyncRemoveGuildData_descriptor_ = file->message_type(8);
+  static const int MsgSyncRemoveGuildData_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncRemoveGuildData, pbdata_),
+  };
+  MsgSyncRemoveGuildData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgSyncRemoveGuildData_descriptor_,
+      MsgSyncRemoveGuildData::default_instance_,
+      MsgSyncRemoveGuildData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncRemoveGuildData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSyncRemoveGuildData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgSyncRemoveGuildData));
   DataProtocol_descriptor_ = file->enum_type(0);
 }
 
@@ -165,6 +219,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgTellQueryPlayer_descriptor_, &MsgTellQueryPlayer::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgTellQueryBasic_descriptor_, &MsgTellQueryBasic::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgSyncUpdateGuildData_descriptor_, &MsgSyncUpdateGuildData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgSyncAddGuildData_descriptor_, &MsgSyncAddGuildData::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgSyncRemoveGuildData_descriptor_, &MsgSyncRemoveGuildData::default_instance());
 }
 
 }  // namespace
@@ -182,6 +242,12 @@ void protobuf_ShutdownFile_KFDataMessage_2eproto() {
   delete MsgTellQueryPlayer_reflection_;
   delete MsgTellQueryBasic::default_instance_;
   delete MsgTellQueryBasic_reflection_;
+  delete MsgSyncUpdateGuildData::default_instance_;
+  delete MsgSyncUpdateGuildData_reflection_;
+  delete MsgSyncAddGuildData::default_instance_;
+  delete MsgSyncAddGuildData_reflection_;
+  delete MsgSyncRemoveGuildData::default_instance_;
+  delete MsgSyncRemoveGuildData_reflection_;
 }
 
 void protobuf_AddDesc_KFDataMessage_2eproto() {
@@ -201,12 +267,18 @@ void protobuf_AddDesc_KFDataMessage_2eproto() {
     "RemoveData\022\037\n\006pbdata\030\001 \002(\0132\017.KFMsg.PBObj"
     "ect\"5\n\022MsgTellQueryPlayer\022\037\n\006player\030\001 \002("
     "\0132\017.KFMsg.PBObject\"4\n\021MsgTellQueryBasic\022"
-    "\037\n\006player\030\001 \002(\0132\017.KFMsg.PBObject*\250\001\n\014Dat"
-    "aProtocol\022\030\n\024MSG_LOGIN_ENTER_GAME\020\n\022\030\n\024M"
-    "SG_SYNC_UPDATE_DATA\020\013\022\025\n\021MSG_SYNC_ADD_DA"
-    "TA\020\014\022\030\n\024MSG_SYNC_REMOVE_DATA\020\r\022\031\n\025MSG_TE"
-    "LL_QUERY_PLAYER\020\016\022\030\n\024MSG_TELL_QUERY_BASI"
-    "C\020\017", 563);
+    "\037\n\006player\030\001 \002(\0132\017.KFMsg.PBObject\"9\n\026MsgS"
+    "yncUpdateGuildData\022\037\n\006pbdata\030\001 \002(\0132\017.KFM"
+    "sg.PBObject\"6\n\023MsgSyncAddGuildData\022\037\n\006pb"
+    "data\030\001 \002(\0132\017.KFMsg.PBObject\"9\n\026MsgSyncRe"
+    "moveGuildData\022\037\n\006pbdata\030\001 \002(\0132\017.KFMsg.PB"
+    "Object*\205\002\n\014DataProtocol\022\030\n\024MSG_LOGIN_ENT"
+    "ER_GAME\020\n\022\030\n\024MSG_SYNC_UPDATE_DATA\020\013\022\025\n\021M"
+    "SG_SYNC_ADD_DATA\020\014\022\030\n\024MSG_SYNC_REMOVE_DA"
+    "TA\020\r\022\031\n\025MSG_TELL_QUERY_PLAYER\020\016\022\030\n\024MSG_T"
+    "ELL_QUERY_BASIC\020\017\022\036\n\032MSG_SYNC_UPDATE_GUI"
+    "LD_DATA\020\020\022\033\n\027MSG_SYNC_ADD_GUILD_DATA\020\021\022\036"
+    "\n\032MSG_SYNC_REMOVE_GUILD_DATA\020\022", 830);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDataMessage.proto", &protobuf_RegisterTypes);
   MsgEnterGame::default_instance_ = new MsgEnterGame();
@@ -215,12 +287,18 @@ void protobuf_AddDesc_KFDataMessage_2eproto() {
   MsgSyncRemoveData::default_instance_ = new MsgSyncRemoveData();
   MsgTellQueryPlayer::default_instance_ = new MsgTellQueryPlayer();
   MsgTellQueryBasic::default_instance_ = new MsgTellQueryBasic();
+  MsgSyncUpdateGuildData::default_instance_ = new MsgSyncUpdateGuildData();
+  MsgSyncAddGuildData::default_instance_ = new MsgSyncAddGuildData();
+  MsgSyncRemoveGuildData::default_instance_ = new MsgSyncRemoveGuildData();
   MsgEnterGame::default_instance_->InitAsDefaultInstance();
   MsgSyncUpdateData::default_instance_->InitAsDefaultInstance();
   MsgSyncAddData::default_instance_->InitAsDefaultInstance();
   MsgSyncRemoveData::default_instance_->InitAsDefaultInstance();
   MsgTellQueryPlayer::default_instance_->InitAsDefaultInstance();
   MsgTellQueryBasic::default_instance_->InitAsDefaultInstance();
+  MsgSyncUpdateGuildData::default_instance_->InitAsDefaultInstance();
+  MsgSyncAddGuildData::default_instance_->InitAsDefaultInstance();
+  MsgSyncRemoveGuildData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_KFDataMessage_2eproto);
 }
 
@@ -242,6 +320,9 @@ bool DataProtocol_IsValid(int value) {
     case 13:
     case 14:
     case 15:
+    case 16:
+    case 17:
+    case 18:
       return true;
     default:
       return false;
@@ -1569,6 +1650,648 @@ void MsgTellQueryBasic::Swap(MsgTellQueryBasic* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgTellQueryBasic_descriptor_;
   metadata.reflection = MsgTellQueryBasic_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgSyncUpdateGuildData::kPbdataFieldNumber;
+#endif  // !_MSC_VER
+
+MsgSyncUpdateGuildData::MsgSyncUpdateGuildData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgSyncUpdateGuildData::InitAsDefaultInstance() {
+  pbdata_ = const_cast< ::KFMsg::PBObject*>(&::KFMsg::PBObject::default_instance());
+}
+
+MsgSyncUpdateGuildData::MsgSyncUpdateGuildData(const MsgSyncUpdateGuildData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgSyncUpdateGuildData::SharedCtor() {
+  _cached_size_ = 0;
+  pbdata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgSyncUpdateGuildData::~MsgSyncUpdateGuildData() {
+  SharedDtor();
+}
+
+void MsgSyncUpdateGuildData::SharedDtor() {
+  if (this != default_instance_) {
+    delete pbdata_;
+  }
+}
+
+void MsgSyncUpdateGuildData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgSyncUpdateGuildData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgSyncUpdateGuildData_descriptor_;
+}
+
+const MsgSyncUpdateGuildData& MsgSyncUpdateGuildData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFDataMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgSyncUpdateGuildData* MsgSyncUpdateGuildData::default_instance_ = NULL;
+
+MsgSyncUpdateGuildData* MsgSyncUpdateGuildData::New() const {
+  return new MsgSyncUpdateGuildData;
+}
+
+void MsgSyncUpdateGuildData::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_pbdata()) {
+      if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgSyncUpdateGuildData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .KFMsg.PBObject pbdata = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_pbdata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgSyncUpdateGuildData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->pbdata(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgSyncUpdateGuildData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->pbdata(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgSyncUpdateGuildData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .KFMsg.PBObject pbdata = 1;
+    if (has_pbdata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pbdata());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgSyncUpdateGuildData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgSyncUpdateGuildData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgSyncUpdateGuildData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgSyncUpdateGuildData::MergeFrom(const MsgSyncUpdateGuildData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_pbdata()) {
+      mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgSyncUpdateGuildData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgSyncUpdateGuildData::CopyFrom(const MsgSyncUpdateGuildData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgSyncUpdateGuildData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void MsgSyncUpdateGuildData::Swap(MsgSyncUpdateGuildData* other) {
+  if (other != this) {
+    std::swap(pbdata_, other->pbdata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgSyncUpdateGuildData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgSyncUpdateGuildData_descriptor_;
+  metadata.reflection = MsgSyncUpdateGuildData_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgSyncAddGuildData::kPbdataFieldNumber;
+#endif  // !_MSC_VER
+
+MsgSyncAddGuildData::MsgSyncAddGuildData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgSyncAddGuildData::InitAsDefaultInstance() {
+  pbdata_ = const_cast< ::KFMsg::PBObject*>(&::KFMsg::PBObject::default_instance());
+}
+
+MsgSyncAddGuildData::MsgSyncAddGuildData(const MsgSyncAddGuildData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgSyncAddGuildData::SharedCtor() {
+  _cached_size_ = 0;
+  pbdata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgSyncAddGuildData::~MsgSyncAddGuildData() {
+  SharedDtor();
+}
+
+void MsgSyncAddGuildData::SharedDtor() {
+  if (this != default_instance_) {
+    delete pbdata_;
+  }
+}
+
+void MsgSyncAddGuildData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgSyncAddGuildData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgSyncAddGuildData_descriptor_;
+}
+
+const MsgSyncAddGuildData& MsgSyncAddGuildData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFDataMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgSyncAddGuildData* MsgSyncAddGuildData::default_instance_ = NULL;
+
+MsgSyncAddGuildData* MsgSyncAddGuildData::New() const {
+  return new MsgSyncAddGuildData;
+}
+
+void MsgSyncAddGuildData::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_pbdata()) {
+      if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgSyncAddGuildData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .KFMsg.PBObject pbdata = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_pbdata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgSyncAddGuildData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->pbdata(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgSyncAddGuildData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->pbdata(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgSyncAddGuildData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .KFMsg.PBObject pbdata = 1;
+    if (has_pbdata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pbdata());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgSyncAddGuildData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgSyncAddGuildData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgSyncAddGuildData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgSyncAddGuildData::MergeFrom(const MsgSyncAddGuildData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_pbdata()) {
+      mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgSyncAddGuildData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgSyncAddGuildData::CopyFrom(const MsgSyncAddGuildData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgSyncAddGuildData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void MsgSyncAddGuildData::Swap(MsgSyncAddGuildData* other) {
+  if (other != this) {
+    std::swap(pbdata_, other->pbdata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgSyncAddGuildData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgSyncAddGuildData_descriptor_;
+  metadata.reflection = MsgSyncAddGuildData_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgSyncRemoveGuildData::kPbdataFieldNumber;
+#endif  // !_MSC_VER
+
+MsgSyncRemoveGuildData::MsgSyncRemoveGuildData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void MsgSyncRemoveGuildData::InitAsDefaultInstance() {
+  pbdata_ = const_cast< ::KFMsg::PBObject*>(&::KFMsg::PBObject::default_instance());
+}
+
+MsgSyncRemoveGuildData::MsgSyncRemoveGuildData(const MsgSyncRemoveGuildData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgSyncRemoveGuildData::SharedCtor() {
+  _cached_size_ = 0;
+  pbdata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgSyncRemoveGuildData::~MsgSyncRemoveGuildData() {
+  SharedDtor();
+}
+
+void MsgSyncRemoveGuildData::SharedDtor() {
+  if (this != default_instance_) {
+    delete pbdata_;
+  }
+}
+
+void MsgSyncRemoveGuildData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MsgSyncRemoveGuildData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgSyncRemoveGuildData_descriptor_;
+}
+
+const MsgSyncRemoveGuildData& MsgSyncRemoveGuildData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFDataMessage_2eproto();
+  return *default_instance_;
+}
+
+MsgSyncRemoveGuildData* MsgSyncRemoveGuildData::default_instance_ = NULL;
+
+MsgSyncRemoveGuildData* MsgSyncRemoveGuildData::New() const {
+  return new MsgSyncRemoveGuildData;
+}
+
+void MsgSyncRemoveGuildData::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_pbdata()) {
+      if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgSyncRemoveGuildData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .KFMsg.PBObject pbdata = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_pbdata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgSyncRemoveGuildData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->pbdata(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgSyncRemoveGuildData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .KFMsg.PBObject pbdata = 1;
+  if (has_pbdata()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->pbdata(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgSyncRemoveGuildData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .KFMsg.PBObject pbdata = 1;
+    if (has_pbdata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pbdata());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgSyncRemoveGuildData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgSyncRemoveGuildData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgSyncRemoveGuildData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgSyncRemoveGuildData::MergeFrom(const MsgSyncRemoveGuildData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_pbdata()) {
+      mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgSyncRemoveGuildData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgSyncRemoveGuildData::CopyFrom(const MsgSyncRemoveGuildData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgSyncRemoveGuildData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void MsgSyncRemoveGuildData::Swap(MsgSyncRemoveGuildData* other) {
+  if (other != this) {
+    std::swap(pbdata_, other->pbdata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgSyncRemoveGuildData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgSyncRemoveGuildData_descriptor_;
+  metadata.reflection = MsgSyncRemoveGuildData_reflection_;
   return metadata;
 }
 

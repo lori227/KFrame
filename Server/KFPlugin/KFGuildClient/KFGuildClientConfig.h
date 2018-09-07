@@ -12,6 +12,7 @@ namespace KFrame
         enum EConstDefine
         {
             InitLevel = 1,
+            MaxLevel = 9,
 
             MaxNameLength = 10,
 

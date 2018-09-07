@@ -118,6 +118,12 @@ class MsgTellSevenExtendReward;
 class MsgCreateGuildReq;
 class MsgInviteGuildReq;
 class MsgApplyGuildReq;
+class MsgExitGuildReq;
+class MsgTransferMasterReq;
+class MsgReviewApplyReq;
+class MsgDissolveGuildReq;
+class MsgModifyGuildMedalReq;
+class MsgQueryGuildListReq;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -200,11 +206,18 @@ enum ClientProtocol {
   MSG_CREATE_GUILD_REQ = 200,
   MSG_INVITE_GUILD_REQ = 201,
   MSG_APPLY_GUILD_REQ = 202,
-  MSG_TELL_MATCH_WAIT_TIME = 203
+  MSG_TELL_MATCH_WAIT_TIME = 203,
+  MSG_EXIT_GUILD_REQ = 204,
+  MSG_TRANSFER_MASTER_REQ = 205,
+  MSG_REVIEW_APPLY_REQ = 206,
+  MSG_DISSOLVE_GUILD_REQ = 207,
+  MSG_MODIFY_GUILD_MEDAL_REQ = 208,
+  MSG_QUERY_GUILD_LIST_REQ = 209,
+  MSG_QUERY_GUILD_LIST_ACK = 210
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_TELL_MATCH_WAIT_TIME;
+const ClientProtocol ClientProtocol_MAX = MSG_QUERY_GUILD_LIST_ACK;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -7887,6 +7900,500 @@ class LIBPROTOC_EXPORT MsgApplyGuildReq : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static MsgApplyGuildReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgExitGuildReq : public ::google::protobuf::Message {
+ public:
+  MsgExitGuildReq();
+  virtual ~MsgExitGuildReq();
+
+  MsgExitGuildReq(const MsgExitGuildReq& from);
+
+  inline MsgExitGuildReq& operator=(const MsgExitGuildReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExitGuildReq& default_instance();
+
+  void Swap(MsgExitGuildReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgExitGuildReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExitGuildReq& from);
+  void MergeFrom(const MsgExitGuildReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgExitGuildReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgExitGuildReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTransferMasterReq : public ::google::protobuf::Message {
+ public:
+  MsgTransferMasterReq();
+  virtual ~MsgTransferMasterReq();
+
+  MsgTransferMasterReq(const MsgTransferMasterReq& from);
+
+  inline MsgTransferMasterReq& operator=(const MsgTransferMasterReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTransferMasterReq& default_instance();
+
+  void Swap(MsgTransferMasterReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTransferMasterReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTransferMasterReq& from);
+  void MergeFrom(const MsgTransferMasterReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 newmasterid = 1;
+  inline bool has_newmasterid() const;
+  inline void clear_newmasterid();
+  static const int kNewmasteridFieldNumber = 1;
+  inline ::google::protobuf::uint32 newmasterid() const;
+  inline void set_newmasterid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTransferMasterReq)
+ private:
+  inline void set_has_newmasterid();
+  inline void clear_has_newmasterid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 newmasterid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTransferMasterReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgReviewApplyReq : public ::google::protobuf::Message {
+ public:
+  MsgReviewApplyReq();
+  virtual ~MsgReviewApplyReq();
+
+  MsgReviewApplyReq(const MsgReviewApplyReq& from);
+
+  inline MsgReviewApplyReq& operator=(const MsgReviewApplyReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgReviewApplyReq& default_instance();
+
+  void Swap(MsgReviewApplyReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgReviewApplyReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgReviewApplyReq& from);
+  void MergeFrom(const MsgReviewApplyReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint32 operatortype = 2;
+  inline bool has_operatortype() const;
+  inline void clear_operatortype();
+  static const int kOperatortypeFieldNumber = 2;
+  inline ::google::protobuf::uint32 operatortype() const;
+  inline void set_operatortype(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgReviewApplyReq)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_operatortype();
+  inline void clear_has_operatortype();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 operatortype_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgReviewApplyReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgDissolveGuildReq : public ::google::protobuf::Message {
+ public:
+  MsgDissolveGuildReq();
+  virtual ~MsgDissolveGuildReq();
+
+  MsgDissolveGuildReq(const MsgDissolveGuildReq& from);
+
+  inline MsgDissolveGuildReq& operator=(const MsgDissolveGuildReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgDissolveGuildReq& default_instance();
+
+  void Swap(MsgDissolveGuildReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgDissolveGuildReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgDissolveGuildReq& from);
+  void MergeFrom(const MsgDissolveGuildReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgDissolveGuildReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgDissolveGuildReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgModifyGuildMedalReq : public ::google::protobuf::Message {
+ public:
+  MsgModifyGuildMedalReq();
+  virtual ~MsgModifyGuildMedalReq();
+
+  MsgModifyGuildMedalReq(const MsgModifyGuildMedalReq& from);
+
+  inline MsgModifyGuildMedalReq& operator=(const MsgModifyGuildMedalReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgModifyGuildMedalReq& default_instance();
+
+  void Swap(MsgModifyGuildMedalReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgModifyGuildMedalReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgModifyGuildMedalReq& from);
+  void MergeFrom(const MsgModifyGuildMedalReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 newmedal = 1;
+  inline bool has_newmedal() const;
+  inline void clear_newmedal();
+  static const int kNewmedalFieldNumber = 1;
+  inline ::google::protobuf::uint32 newmedal() const;
+  inline void set_newmedal(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgModifyGuildMedalReq)
+ private:
+  inline void set_has_newmedal();
+  inline void clear_has_newmedal();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 newmedal_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgModifyGuildMedalReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryGuildListReq : public ::google::protobuf::Message {
+ public:
+  MsgQueryGuildListReq();
+  virtual ~MsgQueryGuildListReq();
+
+  MsgQueryGuildListReq(const MsgQueryGuildListReq& from);
+
+  inline MsgQueryGuildListReq& operator=(const MsgQueryGuildListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryGuildListReq& default_instance();
+
+  void Swap(MsgQueryGuildListReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryGuildListReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryGuildListReq& from);
+  void MergeFrom(const MsgQueryGuildListReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .KFMsg.PBGuildIdArray guilds = 1;
+  inline bool has_guilds() const;
+  inline void clear_guilds();
+  static const int kGuildsFieldNumber = 1;
+  inline const ::KFMsg::PBGuildIdArray& guilds() const;
+  inline ::KFMsg::PBGuildIdArray* mutable_guilds();
+  inline ::KFMsg::PBGuildIdArray* release_guilds();
+  inline void set_allocated_guilds(::KFMsg::PBGuildIdArray* guilds);
+
+  // required uint32 cursor = 2;
+  inline bool has_cursor() const;
+  inline void clear_cursor();
+  static const int kCursorFieldNumber = 2;
+  inline ::google::protobuf::uint32 cursor() const;
+  inline void set_cursor(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryGuildListReq)
+ private:
+  inline void set_has_guilds();
+  inline void clear_has_guilds();
+  inline void set_has_cursor();
+  inline void clear_has_cursor();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::KFMsg::PBGuildIdArray* guilds_;
+  ::google::protobuf::uint32 cursor_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryGuildListReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -13443,6 +13950,178 @@ inline ::google::protobuf::uint64 MsgApplyGuildReq::invitor() const {
 inline void MsgApplyGuildReq::set_invitor(::google::protobuf::uint64 value) {
   set_has_invitor();
   invitor_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgExitGuildReq
+
+// -------------------------------------------------------------------
+
+// MsgTransferMasterReq
+
+// required uint32 newmasterid = 1;
+inline bool MsgTransferMasterReq::has_newmasterid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTransferMasterReq::set_has_newmasterid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTransferMasterReq::clear_has_newmasterid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTransferMasterReq::clear_newmasterid() {
+  newmasterid_ = 0u;
+  clear_has_newmasterid();
+}
+inline ::google::protobuf::uint32 MsgTransferMasterReq::newmasterid() const {
+  return newmasterid_;
+}
+inline void MsgTransferMasterReq::set_newmasterid(::google::protobuf::uint32 value) {
+  set_has_newmasterid();
+  newmasterid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgReviewApplyReq
+
+// optional uint32 playerid = 1;
+inline bool MsgReviewApplyReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgReviewApplyReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgReviewApplyReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgReviewApplyReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 MsgReviewApplyReq::playerid() const {
+  return playerid_;
+}
+inline void MsgReviewApplyReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint32 operatortype = 2;
+inline bool MsgReviewApplyReq::has_operatortype() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgReviewApplyReq::set_has_operatortype() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgReviewApplyReq::clear_has_operatortype() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgReviewApplyReq::clear_operatortype() {
+  operatortype_ = 0u;
+  clear_has_operatortype();
+}
+inline ::google::protobuf::uint32 MsgReviewApplyReq::operatortype() const {
+  return operatortype_;
+}
+inline void MsgReviewApplyReq::set_operatortype(::google::protobuf::uint32 value) {
+  set_has_operatortype();
+  operatortype_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgDissolveGuildReq
+
+// -------------------------------------------------------------------
+
+// MsgModifyGuildMedalReq
+
+// required uint32 newmedal = 1;
+inline bool MsgModifyGuildMedalReq::has_newmedal() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgModifyGuildMedalReq::set_has_newmedal() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgModifyGuildMedalReq::clear_has_newmedal() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgModifyGuildMedalReq::clear_newmedal() {
+  newmedal_ = 0u;
+  clear_has_newmedal();
+}
+inline ::google::protobuf::uint32 MsgModifyGuildMedalReq::newmedal() const {
+  return newmedal_;
+}
+inline void MsgModifyGuildMedalReq::set_newmedal(::google::protobuf::uint32 value) {
+  set_has_newmedal();
+  newmedal_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryGuildListReq
+
+// optional .KFMsg.PBGuildIdArray guilds = 1;
+inline bool MsgQueryGuildListReq::has_guilds() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryGuildListReq::set_has_guilds() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryGuildListReq::clear_has_guilds() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryGuildListReq::clear_guilds() {
+  if (guilds_ != NULL) guilds_->::KFMsg::PBGuildIdArray::Clear();
+  clear_has_guilds();
+}
+inline const ::KFMsg::PBGuildIdArray& MsgQueryGuildListReq::guilds() const {
+  return guilds_ != NULL ? *guilds_ : *default_instance_->guilds_;
+}
+inline ::KFMsg::PBGuildIdArray* MsgQueryGuildListReq::mutable_guilds() {
+  set_has_guilds();
+  if (guilds_ == NULL) guilds_ = new ::KFMsg::PBGuildIdArray;
+  return guilds_;
+}
+inline ::KFMsg::PBGuildIdArray* MsgQueryGuildListReq::release_guilds() {
+  clear_has_guilds();
+  ::KFMsg::PBGuildIdArray* temp = guilds_;
+  guilds_ = NULL;
+  return temp;
+}
+inline void MsgQueryGuildListReq::set_allocated_guilds(::KFMsg::PBGuildIdArray* guilds) {
+  delete guilds_;
+  guilds_ = guilds;
+  if (guilds) {
+    set_has_guilds();
+  } else {
+    clear_has_guilds();
+  }
+}
+
+// required uint32 cursor = 2;
+inline bool MsgQueryGuildListReq::has_cursor() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgQueryGuildListReq::set_has_cursor() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgQueryGuildListReq::clear_has_cursor() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgQueryGuildListReq::clear_cursor() {
+  cursor_ = 0u;
+  clear_has_cursor();
+}
+inline ::google::protobuf::uint32 MsgQueryGuildListReq::cursor() const {
+  return cursor_;
+}
+inline void MsgQueryGuildListReq::set_cursor(::google::protobuf::uint32 value) {
+  set_has_cursor();
+  cursor_ = value;
 }
 
 

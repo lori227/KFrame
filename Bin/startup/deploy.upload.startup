@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="upload" AppType="upload">
+	<Plugins AppName="upload" AppType="upload" WinPluginPath="./" LinuxPluginPath="./bin/" >
 		<Plugin Sort="10" Name="KFConfig" Config=""/>
 		<Plugin Sort="20" Name="KFIpAddress" Config="./setting/ip.address"/>	
 		<Plugin Sort="30" Name="KFHttpClient" Config=""/>

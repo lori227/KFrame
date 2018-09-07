@@ -60,6 +60,7 @@ class PBRecentData;
 class PBPlayerIds;
 class PBApplicationlist;
 class PBApplicationlists;
+class PBGuildIdArray;
 
 enum AckEnum {
   Success = 1,
@@ -268,10 +269,17 @@ enum AckEnum {
   GuildHadBuild = 10035,
   GuildNotExist = 10036,
   GuildHadInvite = 10037,
-  playerisguildmember = 10038,
+  Playerisguildmember = 10038,
   GuildApplyListTooLong = 10039,
-  PlayerINApplicanlist = 10040,
+  PlayerInApplicanlist = 10040,
   GuildHadApply = 10041,
+  PlayerNoGuild = 10042,
+  GuildMaster = 10043,
+  PlayerNoMaster = 10044,
+  PlayerNoSmallGuild = 10045,
+  PlayerNoInApplicanlist = 10046,
+  GuildMemberlistTooLong = 10047,
+  GuildMedalRepeat = 10048,
   GMParamError = 20000
 };
 LIBPROTOC_EXPORT bool AckEnum_IsValid(int value);
@@ -553,11 +561,11 @@ inline bool FriendLinessEnum_Parse(
 }
 enum GuildEnum {
   JoinGuild = 1,
-  QuitGuild = 2
+  ExitGuild = 2
 };
 LIBPROTOC_EXPORT bool GuildEnum_IsValid(int value);
 const GuildEnum GuildEnum_MIN = JoinGuild;
-const GuildEnum GuildEnum_MAX = QuitGuild;
+const GuildEnum GuildEnum_MAX = ExitGuild;
 const int GuildEnum_ARRAYSIZE = GuildEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* GuildEnum_descriptor();
@@ -569,6 +577,25 @@ inline bool GuildEnum_Parse(
     const ::std::string& name, GuildEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<GuildEnum>(
     GuildEnum_descriptor(), name, value);
+}
+enum GuildReviewEnum {
+  AgreeApply = 1,
+  RefuseApply = 2
+};
+LIBPROTOC_EXPORT bool GuildReviewEnum_IsValid(int value);
+const GuildReviewEnum GuildReviewEnum_MIN = AgreeApply;
+const GuildReviewEnum GuildReviewEnum_MAX = RefuseApply;
+const int GuildReviewEnum_ARRAYSIZE = GuildReviewEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* GuildReviewEnum_descriptor();
+inline const ::std::string& GuildReviewEnum_Name(GuildReviewEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    GuildReviewEnum_descriptor(), value);
+}
+inline bool GuildReviewEnum_Parse(
+    const ::std::string& name, GuildReviewEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GuildReviewEnum>(
+    GuildReviewEnum_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3531,6 +3558,91 @@ class LIBPROTOC_EXPORT PBApplicationlists : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static PBApplicationlists* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBGuildIdArray : public ::google::protobuf::Message {
+ public:
+  PBGuildIdArray();
+  virtual ~PBGuildIdArray();
+
+  PBGuildIdArray(const PBGuildIdArray& from);
+
+  inline PBGuildIdArray& operator=(const PBGuildIdArray& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBGuildIdArray& default_instance();
+
+  void Swap(PBGuildIdArray* other);
+
+  // implements Message ----------------------------------------------
+
+  PBGuildIdArray* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBGuildIdArray& from);
+  void MergeFrom(const PBGuildIdArray& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint64 guildid = 1;
+  inline int guildid_size() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 1;
+  inline ::google::protobuf::uint64 guildid(int index) const;
+  inline void set_guildid(int index, ::google::protobuf::uint64 value);
+  inline void add_guildid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+      guildid() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+      mutable_guildid();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBGuildIdArray)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > guildid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
+  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PBGuildIdArray* default_instance_;
 };
 // ===================================================================
 
@@ -6637,6 +6749,35 @@ PBApplicationlists::mutable_applylists() {
   return &applylists_;
 }
 
+// -------------------------------------------------------------------
+
+// PBGuildIdArray
+
+// repeated uint64 guildid = 1;
+inline int PBGuildIdArray::guildid_size() const {
+  return guildid_.size();
+}
+inline void PBGuildIdArray::clear_guildid() {
+  guildid_.Clear();
+}
+inline ::google::protobuf::uint64 PBGuildIdArray::guildid(int index) const {
+  return guildid_.Get(index);
+}
+inline void PBGuildIdArray::set_guildid(int index, ::google::protobuf::uint64 value) {
+  guildid_.Set(index, value);
+}
+inline void PBGuildIdArray::add_guildid(::google::protobuf::uint64 value) {
+  guildid_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+PBGuildIdArray::guildid() const {
+  return guildid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+PBGuildIdArray::mutable_guildid() {
+  return &guildid_;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -6705,6 +6846,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FriendLinessEnum>() {
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::GuildEnum>() {
   return ::KFMsg::GuildEnum_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::GuildReviewEnum>() {
+  return ::KFMsg::GuildReviewEnum_descriptor();
 }
 
 }  // namespace google

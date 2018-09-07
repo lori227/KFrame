@@ -20,6 +20,7 @@ namespace KFrame
     void KFGuildProxyModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_GUILD_REQ, &KFGuildProxyModule::HandleCreateGuildReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUILD_LIST_REQ, &KFGuildProxyModule::HandleQueryGuildListReq );
     }
 
     void KFGuildProxyModule::BeforeShut()
@@ -62,5 +63,16 @@ namespace KFrame
         {
             __LOG_ERROR__( KFLogEnum::Logic, "create guild[{}] failed!", guildid );
         }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGuildProxyModule::HandleQueryGuildListReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SQueryGuildListReq );
+        auto shardid = _kf_cluster_proxy->FindMinObjectShard();
+        if ( shardid == _invalid_int )
+        {
+            return __LOG_ERROR__( KFLogEnum::Logic, "query guildlist can't find shard!" );
+        }
+        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_GUILD_LIST_REQ, data, length );
     }
 }

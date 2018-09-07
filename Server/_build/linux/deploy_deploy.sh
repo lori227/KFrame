@@ -1,97 +1,59 @@
 #!/bin/sh
 
-function copyfile()
-{
-	file1=$path1/$2
-	file2=$path2/$2
-	
-	needcopyfile=0
-	if [ ! -f "$file1" ];then
-		needcopyfile=0
-	elif [ ! -f "$file2" ];then
-		needcopyfile=1	
-	elif [ $1 == "1" ];then
-		filetime1=`stat -c %Y $file1`
-        	filetime2=`stat -c %Y $file2`
-
-        	if [ $filetime1 -gt $filetime2 ];then
-                	needcopyfile=1
-        	fi
-	fi
-	
-	if [ $needcopyfile == 1 ];then
-		echo "copy $file1 $file2"
-		cp -f $file1 $file2
-	fi
-}
-
 respath=../../../Bin
 deploypath=/data/deploy
 
 mkdir -p $deploypath
+mkdir -p $deploypath/lib
+mkdir -p $deploypath/bin
 mkdir -p $deploypath/setting
-mkdir -p $deploypath/plugin
-mkdir -p $deploypath/config
 mkdir -p $deploypath/startup
 
 #setting
-path1=$respath/setting
-path2=$deploypath/setting
-copyfile 1 ip.address
-copyfile 1 bus.relation
-copyfile 1 server.network
-copyfile 1 mysql.address
-copyfile 1 ftp.address
+cp -f  $respath/setting/ip.address $deploypath/setting/
+cp -f  $respath/setting/bus.relation $deploypath/setting/
+cp -f  $respath/setting/server.network $deploypath/setting/
+cp -f  $respath/setting/mysql.address $deploypath/setting/
+cp -f  $respath/setting/ftp.address $deploypath/setting/
 
-path1=$respath/startup
-path2=$deploypath/startup
-copyfile 1 deploy.server.startup
-copyfile 1 deploy.agent.startup
+#startup
+cp -f  $respath/startup/deploy.server.startup $deploypath/startup/
+cp -f  $respath/startup/deploy.agent.startup $deploypath/startup/
 
-path2=$deploypath/config
+#lib
+cp -f $respath/lib/* $deploypath/lib/
 
-#config
-path1=$respath/config
-path2=$deploypath/config
+#bin
+cp -f $respath/bin/KFStartup $deploypath/bin/deployserver
+cp -f $respath/bin/KFStartupd $deploypath/bin/deployserverd
 
-#plugin
-path1=$respath/bin
-path2=$deploypath
-copyfile 1 KFStartup
-copyfile 1 KFStartupd
-
-cp -f $deploypath/KFStartup $deploypath/deployserver
-cp -f $deploypath/KFStartupd $deploypath/deployserverd
-
-path2=$deploypath/plugin
-copyfile 1 KFBus.so
-copyfile 1 KFBusd.so
-copyfile 1 KFIpAddress.so
-copyfile 1 KFIpAddressd.so
-copyfile 1 KFTimer.so
-copyfile 1 KFTimerd.so
-copyfile 1 KFHttpClient.so
-copyfile 1 KFHttpClientd.so
-copyfile 1 KFHttpServer.so
-copyfile 1 KFHttpServerd.so
-copyfile 1 KFTcpServer.so
-copyfile 1 KFTcpServerd.so
-copyfile 1 KFTcpClient.so
-copyfile 1 KFTcpClientd.so
-copyfile 1 KFMessage.so
-copyfile 1 KFMessaged.so
-copyfile 1 KFConfig.so
-copyfile 1 KFConfigd.so
-copyfile 1 KFDeployAgent.so
-copyfile 1 KFDeployAgentd.so
-copyfile 1 KFDeployServer.so
-copyfile 1 KFDeployServerd.so
-copyfile 1 KFMySQL.so
-copyfile 1 KFMySQLd.so
-copyfile 1 KFSchedule.so
-copyfile 1 KFScheduled.so
-copyfile 1 KFFtp.so
-copyfile 1 KFFtpd.so
-
+cp -f $respath/bin/KFBus.so $deploypath/bin/
+cp -f $respath/bin/KFBusd.so $deploypath/bin/
+cp -f $respath/bin/KFIpAddress.so $deploypath/bin/
+cp -f $respath/bin/KFIpAddressd.so $deploypath/bin/
+cp -f $respath/bin/KFTimer.so $deploypath/bin/
+cp -f $respath/bin/KFTimerd.so $deploypath/bin/
+cp -f $respath/bin/KFHttpClient.so $deploypath/bin/
+cp -f $respath/bin/KFHttpClientd.so $deploypath/bin/
+cp -f $respath/bin/KFHttpServer.so $deploypath/bin/
+cp -f $respath/bin/KFHttpServerd.so $deploypath/bin/
+cp -f $respath/bin/KFTcpServer.so $deploypath/bin/
+cp -f $respath/bin/KFTcpServerd.so $deploypath/bin/
+cp -f $respath/bin/KFTcpClient.so $deploypath/bin/
+cp -f $respath/bin/KFTcpClientd.so $deploypath/bin/
+cp -f $respath/bin/KFMessage.so $deploypath/bin/
+cp -f $respath/bin/KFMessaged.so $deploypath/bin/
+cp -f $respath/bin/KFConfig.so $deploypath/bin/
+cp -f $respath/bin/KFConfigd.so $deploypath/bin/
+cp -f $respath/bin/KFDeployAgent.so $deploypath/bin/
+cp -f $respath/bin/KFDeployAgentd.so $deploypath/bin/
+cp -f $respath/bin/KFDeployServer.so $deploypath/bin/
+cp -f $respath/bin/KFDeployServerd.so $deploypath/bin/
+cp -f $respath/bin/KFMySQL.so $deploypath/bin/
+cp -f $respath/bin/KFMySQLd.so $deploypath/bin/
+cp -f $respath/bin/KFSchedule.so $deploypath/bin/
+cp -f $respath/bin/KFScheduled.so $deploypath/bin/
+cp -f $respath/bin/KFFtp.so $deploypath/bin/
+cp -f $respath/bin/KFFtpd.so $deploypath/bin/
 
 

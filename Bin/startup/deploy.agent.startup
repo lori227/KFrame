@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="deploy" AppType="agent">
+	<Plugins AppName="deploy" AppType="agent" WinPluginPath="./" LinuxPluginPath="./bin/" >
 		<Plugin Sort="1" Name="KFTimer" Config=""/>
 		<Plugin Sort="2" Name="KFBus" Config="./setting/bus.relation"/>
 		<Plugin Sort="3" Name="KFIpAddress" Config="./setting/ip.address"/>	

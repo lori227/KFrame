@@ -42,9 +42,9 @@ set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
 set(LIB_DIR ${ROOT_DIR}/_lib/linux)
 set(BIN_DIR ${ROOT_DIR}/../Bin/bin)
 
-LINK_DIRECTORIES("/usr/local/lib" "/usr/lib64/mysql")
-LINK_DIRECTORIES("${ROOT_DIR}/_lib/linux")
-#LINK_DIRECTORIES(${3RD_LIB_DIR})
+#LINK_DIRECTORIES("/usr/local/lib" "/usr/lib64/mysql")
+#LINK_DIRECTORIES("${ROOT_DIR}/_lib/linux")
+LINK_DIRECTORIES(${3RD_LIB_DIR})
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
@@ -66,6 +66,12 @@ ADD_DEFINITIONS(
 )
 
 set(LDFLAGS "$ENV{LDFLAGS} -stdlib=libc++")
+
+if(UNIX)
+    #Set rpath
+    SET(CMAKE_INSTALL_RPATH "./lib/" "../lib/")
+    SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+endif()
 
 #log
 message("root dir=${ROOT_DIR}")

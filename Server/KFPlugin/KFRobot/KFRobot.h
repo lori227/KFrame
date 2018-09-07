@@ -227,6 +227,8 @@ namespace KFrame
         //////////////////////帮派相关///////////////////////////////
         void CreateGuild();
         void InviteGuild();
+        void ApplyGuild();
+        void AgreeGuildJoin();
 
     protected:
 

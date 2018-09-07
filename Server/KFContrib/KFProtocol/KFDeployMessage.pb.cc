@@ -106,13 +106,14 @@ void protobuf_AssignDesc_KFDeployMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SGetAgentIpAddressAck));
   PBDeployCommand_descriptor_ = file->message_type(3);
-  static const int PBDeployCommand_offsets_[6] = {
+  static const int PBDeployCommand_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, command_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, appname_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, apptype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, appid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, zoneid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, value_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBDeployCommand, appchannel_),
   };
   PBDeployCommand_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -232,21 +233,22 @@ void protobuf_AddDesc_KFDeployMessage_2eproto() {
     "sReq\022\017\n\007localip\030\001 \002(\t\"d\n\027S2SGetAgentIpAd"
     "dressAck\022\017\n\007appname\030\001 \002(\t\022\017\n\007apptype\030\002 \002"
     "(\t\022\r\n\005appid\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 "
-    "\002(\r\"r\n\017PBDeployCommand\022\017\n\007command\030\001 \002(\t\022"
-    "\017\n\007appname\030\002 \002(\t\022\017\n\007apptype\030\003 \002(\t\022\r\n\005app"
-    "id\030\004 \002(\t\022\016\n\006zoneid\030\005 \002(\r\022\r\n\005value\030\006 \002(\t\""
-    "K\n\032S2SDeployCommandToAgentReq\022-\n\rdeployc"
-    "ommand\030\001 \002(\0132\026.KFMsg.PBDeployCommand\"L\n\033"
-    "S2SDeployCommandToMasterReq\022-\n\rdeploycom"
-    "mand\030\001 \002(\0132\026.KFMsg.PBDeployCommand\"L\n\033S2"
-    "SDeployCommandToServerReq\022-\n\rdeploycomma"
-    "nd\030\001 \002(\0132\026.KFMsg.PBDeployCommand*\361\001\n\016Dep"
-    "loyProtocol\022%\n S2S_REGISTER_AGENT_TO_SER"
-    "VER_REQ\020\275P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_R"
-    "EQ\020\277P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_ACK\020\300P"
-    "\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020\301P\022%"
-    "\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ\020\302P\022%\n"
-    " S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020\303P", 876);
+    "\002(\r\"\206\001\n\017PBDeployCommand\022\017\n\007command\030\001 \002(\t"
+    "\022\017\n\007appname\030\002 \002(\t\022\017\n\007apptype\030\003 \002(\t\022\r\n\005ap"
+    "pid\030\004 \002(\t\022\016\n\006zoneid\030\005 \002(\r\022\r\n\005value\030\006 \002(\t"
+    "\022\022\n\nappchannel\030\007 \002(\r\"K\n\032S2SDeployCommand"
+    "ToAgentReq\022-\n\rdeploycommand\030\001 \002(\0132\026.KFMs"
+    "g.PBDeployCommand\"L\n\033S2SDeployCommandToM"
+    "asterReq\022-\n\rdeploycommand\030\001 \002(\0132\026.KFMsg."
+    "PBDeployCommand\"L\n\033S2SDeployCommandToSer"
+    "verReq\022-\n\rdeploycommand\030\001 \002(\0132\026.KFMsg.PB"
+    "DeployCommand*\361\001\n\016DeployProtocol\022%\n S2S_"
+    "REGISTER_AGENT_TO_SERVER_REQ\020\275P\022!\n\034S2S_G"
+    "ET_AGENT_IP_ADDRESS_REQ\020\277P\022!\n\034S2S_GET_AG"
+    "ENT_IP_ADDRESS_ACK\020\300P\022$\n\037S2S_DEPLOY_COMM"
+    "AND_TO_AGENT_REQ\020\301P\022%\n S2S_DEPLOY_COMMAN"
+    "D_TO_MASTER_REQ\020\302P\022%\n S2S_DEPLOY_COMMAND"
+    "_TO_SERVER_REQ\020\303P", 897);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDeployMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterAgentToServerReq::default_instance_ = new S2SRegisterAgentToServerReq();
@@ -1400,6 +1402,7 @@ const int PBDeployCommand::kApptypeFieldNumber;
 const int PBDeployCommand::kAppidFieldNumber;
 const int PBDeployCommand::kZoneidFieldNumber;
 const int PBDeployCommand::kValueFieldNumber;
+const int PBDeployCommand::kAppchannelFieldNumber;
 #endif  // !_MSC_VER
 
 PBDeployCommand::PBDeployCommand()
@@ -1424,6 +1427,7 @@ void PBDeployCommand::SharedCtor() {
   appid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   zoneid_ = 0u;
   value_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  appchannel_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1500,6 +1504,7 @@ void PBDeployCommand::Clear() {
         value_->clear();
       }
     }
+    appchannel_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1607,6 +1612,22 @@ bool PBDeployCommand::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(56)) goto parse_appchannel;
+        break;
+      }
+
+      // required uint32 appchannel = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_appchannel:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &appchannel_)));
+          set_has_appchannel();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1679,6 +1700,11 @@ void PBDeployCommand::SerializeWithCachedSizes(
       6, this->value(), output);
   }
 
+  // required uint32 appchannel = 7;
+  if (has_appchannel()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->appchannel(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1742,6 +1768,11 @@ void PBDeployCommand::SerializeWithCachedSizes(
         6, this->value(), target);
   }
 
+  // required uint32 appchannel = 7;
+  if (has_appchannel()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->appchannel(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -1795,6 +1826,13 @@ int PBDeployCommand::ByteSize() const {
           this->value());
     }
 
+    // required uint32 appchannel = 7;
+    if (has_appchannel()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->appchannel());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1840,6 +1878,9 @@ void PBDeployCommand::MergeFrom(const PBDeployCommand& from) {
     if (from.has_value()) {
       set_value(from.value());
     }
+    if (from.has_appchannel()) {
+      set_appchannel(from.appchannel());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1857,7 +1898,7 @@ void PBDeployCommand::CopyFrom(const PBDeployCommand& from) {
 }
 
 bool PBDeployCommand::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
+  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
 
   return true;
 }
@@ -1870,6 +1911,7 @@ void PBDeployCommand::Swap(PBDeployCommand* other) {
     std::swap(appid_, other->appid_);
     std::swap(zoneid_, other->zoneid_);
     std::swap(value_, other->value_);
+    std::swap(appchannel_, other->appchannel_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

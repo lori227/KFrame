@@ -24,19 +24,24 @@ import commands
 import argparse
 import gcm_xml
 import gcm_conf
-import gcm_scp
+import gcm_global_conf
 import gcm_db
 import gcm_http
-import gcm_global_conf
 
 input_folder = '../conf_input'
 output_folder = '../conf_output'
 
-default_version_api = 'http://version.leiwu.com/upload.php'
-default_version_url = 'http://version.leiwu.com/upload/'
+base_path = os.path.join('../../../')
+bin_path = 'bin'
+setting_path = 'setting'
+config_path = 'config'
+startup_path = 'startup'
+lib_path = 'lib'
+script_path = 'script'
+win_other_dll_path = os.path.join('../../../../Server/_lib/win64/3rd')
+
 default_startup = 'KFStartup'
 default_mode_suffix = 'd'  # debug release后缀
-
 
 def is_linux():
     if platform.system() == 'Windows':
@@ -44,274 +49,138 @@ def is_linux():
     else:
         return True
 
-
-platform_path = ''  # copy path
 platform_exe = ''  # executable suffix
-platform_dll = ''  # dynamic library suffix
-runtime_mode = ''  # debug release
 if is_linux():
-    platform_path = 'linux'
     platform_exe = ''
-    platform_dll = '.so'
 else:
-    platform_path = 'win64'
     platform_exe = '.exe'
-    platform_dll = '.dll'
 
-bin_path = os.path.join('../../../bin')
-plugin_path = bin_path
-setting_path = os.path.join('../../../setting')
-config_path = os.path.join('../../../config')
-startup_path = os.path.join('../../../startup')
-win_other_dll_path = os.path.join('../../../../Server/_lib/win64/3rd')
-script_path = os.path.join('../../../script')
+run_shell_file = 'run' # bat/shell
+kill_shell_file = 'kill'
+shell_ext = '' # shell extension
+if is_linux():
+    shell_ext = '.sh'
+else:
+    shell_ext = '.bat'
 
-# 获取本机ip
+def write_file(run_file, kill_file, node):
+    func_name = node.get('FuncName')
+    func_id = node.get('FuncID')
 
-
-def get_local_ip():
-    hostname = socket.getfqdn(socket.gethostname())
-    host = socket.gethostbyname(hostname)
-    return host
-
-
-def create_dir(dir):
-    os.makedirs(dir)
-
-
-def get_real_src_path(is_execute=False, is_dll=False, dll_name='', is_setting=False, is_config=False, is_startup=False, conf_name=''):
-    if not is_execute and not is_dll and not is_setting and not is_config and not is_startup:
-        raise Exception('get_real_src_path failed')
-
-    if is_dll and dll_name == '':
-        raise Exception('get_real_src_path failed, dll name is empty')
-
-    if is_execute:
-        return os.path.join(bin_path, default_startup + default_mode_suffix + platform_exe)
-    elif is_dll:
-        return os.path.join(plugin_path, dll_name + platform_dll)
-    elif is_setting:
-        return os.path.join(setting_path, conf_name)
-    elif is_config:
-        return os.path.join(config_path, conf_name)
-    elif is_startup:
-        return os.path.join(startup_path, conf_name)
-    else:
-        raise Exception('[ERROR] cannot get real path')
-
-
-def copy_plugin_and_setting(tree, config_folder, plugin_folder, setting_folder, startup_folder):
-    plugin_nodes = gcm_xml.find_nodes(tree, 'Plugins/Plugin')
-    for node in plugin_nodes:
-        dll_name = node.get('Name') + default_mode_suffix
-        shutil.copy(get_real_src_path(
-            is_dll=True, dll_name=dll_name), plugin_folder)
-        config = node.get('Config')
-        if len(config) > 0:
-            config_name = config[config.rfind('/') + 1:]
-            if config.find('setting') != -1:
-                # copy to setting folder
-                shutil.copy(get_real_src_path(
-                    is_setting=True, conf_name=config_name), setting_folder)
-            elif config.find('config') != -1:
-                # copy to config folder
-                shutil.copy(get_real_src_path(
-                    is_config=True, conf_name=config_name), config_folder)
-            elif config.find('startup') != -1:
-                # copy startup files to setting folder
-                shutil.copy(get_real_src_path(
-                    is_startup=True, conf_name=config_name), startup_folder)
-            else:
-                raise Exception(
-                    '[ERROR] invalid filed, file = %s Config = %s' % (tree, config))
-
-# 生成shell文件bat/sh
-
-
-def generate_shell_file(folder, startup_name, proc_name):
-    func_id = 0
+    channel_id = args['channel']
     zone_id = args['zone']
-    if proc_name in g_proc_config.cluster_procs:
-        func_id = g_proc_config.cluster_procs[proc_name].get('FuncID')
+    log_type = args['log']
+    if func_name in g_proc_config.cluster_procs:
         zone_id = 0
-    elif proc_name in g_proc_config.zone_procs:
-        func_id = g_proc_config.zone_procs[proc_name].get('FuncID')
-    else:
-        raise Exception('[ERROR] %s is not a normal process' % proc_name)
 
+    execute_file = default_startup + default_mode_suffix + platform_exe
+    run_file.write('echo Starting [%s] server\n' % func_name)
+    kill_file.write('echo Killing  [%s] server\n' % func_name)
     if is_linux():
-        run_file = open(folder + '/run' + default_mode_suffix + '.sh', 'a+')
-        run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('./%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
-                       (startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
-        run_file.close()
+        run_file.write('./bin/%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
+                       (execute_file, channel_id, zone_id, int(func_id), 1,log_type, func_name))
 
-        kill_file = open(folder + '/kill' + default_mode_suffix + '.sh', 'a+')
-        kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" |grep -v grep|cut -c 9-15|xargs kill -9\n\n' %
-                        (startup_name, args['channel'], zone_id, int(func_id), 1))
-        kill_file.close()
+        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
+                        (execute_file, channel_id, zone_id, int(func_id), 1))
     else:
-        run_file = open(folder + '/run' + default_mode_suffix + '.bat', 'a+')
-        run_file.write('echo Starting ' + proc_name + ' Server\n')
-        run_file.write('start "%s" %s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
-                       (proc_name, startup_name, args['channel'], zone_id, int(func_id), 1, args['log'], proc_name))
-        run_file.close()
+        run_file.write('start "%s" bin\\%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
+                       (func_name, execute_file, channel_id, zone_id, int(func_id), 1, log_type, func_name))
 
-        kill_file = open(folder + '/kill' + default_mode_suffix + '.bat', 'a+')
-        # kill_file.write('@echo off\n')
-        kill_file.write('echo Killing ' + proc_name + ' Server\n')
-        kill_file.write(
-            'TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % proc_name)
-        kill_file.close()
+        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % func_name)
 
-# 拷贝其他windows依赖的dll文件
+def copy_version():
+    shutil.copytree(base_path + bin_path, os.path.join(output_folder, bin_path))
+    shutil.copytree(base_path + setting_path, os.path.join(output_folder, setting_path))
+    shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
+    shutil.copytree(base_path + startup_path, os.path.join(output_folder, startup_path))
+    shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
+    shutil.copytree(base_path + script_path, os.path.join(output_folder, script_path))
 
-
-def copy_windows_other_dlls(out_folder):
     if is_linux():
         return
     else:
-        shutil.copy(win_other_dll_path + '/libeay32.dll', out_folder)
-        shutil.copy(win_other_dll_path + '/ssleay32.dll', out_folder)
-        shutil.copy(win_other_dll_path + '/libmysql.dll', out_folder)
+        shutil.copy(win_other_dll_path + '/libeay32.dll', os.path.join(output_folder, 'bin'))
+        shutil.copy(win_other_dll_path + '/ssleay32.dll', os.path.join(output_folder, 'bin'))
+        shutil.copy(win_other_dll_path + '/libmysql.dll', os.path.join(output_folder, 'bin'))
 
-# 拷贝进程的文件
-
-
-def copy_proc_files(node):
-    # 1.创建文件夹(根据proc配置)
-    full_name = node.get('FuncName')
-    func_name = (full_name if full_name.find('.') == -
-                 1 else full_name[0: (full_name.find('.'))])
-    out_folder = os.path.join(output_folder, func_name)
-    out_config_folder = os.path.join(output_folder, func_name, 'config')
-    out_plugin_folder = os.path.join(output_folder, func_name, 'plugin')
-    out_setting_folder = os.path.join(output_folder, func_name, 'setting')
-    out_startup_folder = os.path.join(output_folder, func_name, 'startup')
-    if not os.path.exists(out_folder):
-        create_dir(out_folder)
-        create_dir(out_config_folder)
-        create_dir(out_plugin_folder)
-        create_dir(out_setting_folder)
-        create_dir(out_startup_folder)
-
-    # 2.拷贝KFStartup(d).exe
-    startup_src_path = get_real_src_path(is_execute=True)
-    startup_name = node.get('ProcName') + default_mode_suffix + platform_exe
-    shutil.copy(startup_src_path, out_folder + '/' + startup_name)
-
-    # 3.拷贝dll/so(根据*.startup文件)
-    tree = gcm_xml.read_xml(os.path.join(startup_path, full_name + '.startup'))
-    plugins_nodes = gcm_xml.find_nodes(tree, 'Plugins')
-
-    common = plugins_nodes[0].get('Common')
-    if (common != None) and (len(common) > 0):
-        common = common[common.rfind('/') + 1:]
-        common_tree = gcm_xml.read_xml(os.path.join(startup_path, common))
-        copy_plugin_and_setting(
-            common_tree, out_config_folder, out_plugin_folder, out_setting_folder, out_startup_folder)
-        shutil.copy(os.path.join(startup_path, common), out_startup_folder)
-
-    copy_plugin_and_setting(tree, out_config_folder,
-                            out_plugin_folder, out_setting_folder, out_startup_folder)
-    shutil.copy(os.path.join(startup_path, full_name +
-                             '.startup'), out_startup_folder)
-
-    generate_shell_file(out_folder, startup_name, full_name)
-    copy_windows_other_dlls(out_folder)
-
-
-def copy_files():
-    print 'start to copy all necessary files'
-
-    for key in g_proc_config.cluster_procs:
-        copy_proc_files(g_proc_config.cluster_procs[key])
-
-    for key in g_proc_config.zone_procs:
-        copy_proc_files(g_proc_config.zone_procs[key])
-
-    # 单独拷贝下zone/script
-    shutil.copytree(script_path, os.path.join(output_folder, 'zone/script'))
-
-    print 'copy all necessary files finished'
-
-
-def gen_configuration():
+def gen_shell():
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
     os.mkdir(output_folder)
 
-    copy_files()
+    copy_version()
 
+    run_file_name = os.path.join(output_folder, run_shell_file + default_mode_suffix + shell_ext)
+    kill_file_name = os.path.join(output_folder, kill_shell_file + default_mode_suffix + shell_ext)
+
+    if os.path.exists(run_file_name):
+        os.remove(run_file_name)
+    if os.path.exists(kill_file_name):
+        os.remove(kill_file_name)
+
+    run_file = open(run_file_name, 'a+')
+    kill_file = open(kill_file_name, 'a+')
+    for key in g_proc_config.cluster_procs:
+        write_file(run_file, kill_file, g_proc_config.cluster_procs[key])
+
+    for key in g_proc_config.zone_procs:
+        write_file(run_file, kill_file, g_proc_config.zone_procs[key])
+
+    run_file.close()
+    kill_file.close()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--mode', type=str,
-                        default='release', help="runtime mode, debug/release")
-    parser.add_argument('-c', '--channel', type=int,
-                        default=100, help="channel id")
+    parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
+    parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
-    parser.add_argument('-l', '--log', type=str,
-                        default='1.0', help="log type")
+    parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     if is_linux():
         parser.add_argument('-s', '--svn', type=int, help="svn version")
-        parser.add_argument('-b', '--branch', type=int, default=0,
-                            help="version branch, 0(internal)/1(public)")
+        parser.add_argument('-b', '--branch', type=int, default=0, help="version branch, 0(internal)/1(online)/2(grayscale)")
     return vars(parser.parse_args())
-
 
 # start
 args = parse_args()
 if args['mode'] == 'release':
     default_mode_suffix = ''  # release下没有后缀
 
-# g_deploy_config = gcm_conf.load_deploy_config(
-#    os.path.join(input_folder, 'gcm.conf'))
-# g_host_config = gcm_conf.load_host_config(
-#    os.path.join(input_folder, 'gcm_host.xml'))
-g_proc_config = gcm_conf.load_proc_config(
-    os.path.join(input_folder, 'gcm_proc.xml'))
-g_global_config = gcm_global_conf.load_global_config(
-    os.path.join(input_folder, 'global.conf'))
+g_proc_config = gcm_conf.load_proc_config(os.path.join(input_folder, 'gcm_proc.xml'))
+g_global_config = gcm_global_conf.load_global_config( os.path.join(input_folder, 'global.conf'))
 
-print '\nstart to generate configurations'
-gen_configuration()
-print 'generate configurations finished'
+print '\nstart to generate shell'
+gen_shell()
+print 'generate shell finished'
 
 if is_linux() and (args['svn'] is not None):
     global_conf = dict()
-    prefix_name = ''
+    branch_name = ''
     if args['branch'] == 0:
         global_conf = g_global_config.get_internal_config()
-        prefix_name = 'internal'
+        branch_name = 'internal'
+    elif args['branch'] == 1:
+        global_conf = g_global_config.get_public_config()
+        branch_name = 'online'
     else:
         global_conf = g_global_config.get_public_config()
-        prefix_name = 'online'
+        branch_name = 'grayscale'
 
     print 'start pack RELEASE VERSION'
-    release_version_name = 'sgame_' + prefix_name + '_svn_' + \
-        str(args['svn']) + '_' + \
-        datetime.datetime.now().strftime("%Y%m%d%H%M") + '.tar.gz'
-    tar_cmd = 'tar -zcvf ' + release_version_name + ' ' + output_folder + '/*'
+    now_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
+    release_version_name = 'sgame_%s_svn_%s_%s.tar.gz' % (branch_name, str(args['svn']), now_time)
+    tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
     print tar_cmd
     commands.getoutput(tar_cmd)
     print 'pack RELEASE_VERSION finished'
-
-    # scp to version repo
-    # gcm_scp.ssh_scp_put(default_version_ip, 22, 'root', '123456#',
-    #                    release_version_name, '/home/sgversion/' + release_version_name)
 
     # Post to web server
     gcm_http.do_post(global_conf['web_api'], release_version_name)
 
     # get md5
-    (status, output) = commands.getstatusoutput(
-        'md5sum %s' % release_version_name)
+    (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
 
-    # insert into db(因暂时没有web管理，所以先用ssh的地址)
-    sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (datetime.datetime.now(
-    ).strftime("%Y-%m-%d %H:%M:%S"), release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
-    mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'],
-                                   global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
+    # insert into db
+    db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
+    mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
     gcm_db.insert_mysql_db(mysql_db_info, sql)

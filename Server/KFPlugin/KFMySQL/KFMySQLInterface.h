@@ -34,7 +34,7 @@ namespace KFrame
             updatevalue[ field ] = KFUtility::ToString< T >( invalue );
 
             MapString keyvalue;
-            keyvalue[ __KF_STRING__( id ) ] = keyvalue;
+            keyvalue[ __KF_STRING__( id ) ] = key;
 
             return Update( table, keyvalue, updatevalue );
         }
@@ -46,7 +46,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////
         template< typename... P >
-        KFResult< voidptr >* Query( const char* myfmt, P&& ... args )
+        KFResult< voidptr >* Execute( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return VoidExecute( strsql );

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="zone" AppType="world" Common="./startup/common.startup">
+	<Plugins AppName="zone" AppType="world" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFHttpServer" Config="./setting/server.network"/>
 		<Plugin Sort="120" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="130" Name="KFZone" Config="./setting/zone.setting"/>

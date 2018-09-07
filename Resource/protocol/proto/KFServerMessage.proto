@@ -107,7 +107,12 @@ enum ServerProtocol
 	S2S_APPLY_GUILD_REQ = 21203;				// 申请加入帮派请求
 	S2S_APPLY_GUILD_ACK = 21204;				// 申请加入帮派反馈
 	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// 玩家帮派状态变化guild->zone	
-
+	S2S_EXIT_GUILD_REQ = 21206;				// 玩家退出帮派
+	S2S_TRANSFER_MASTER_REQ = 21207;			// 转让帮派请求
+	S2S_REVIEW_APPLY_REQ = 21208;				// 审核帮派成员加入	
+	S2S_DISSOLVE_GUILD_REQ = 21209;				// 解散帮派
+	S2S_MODIFY_MEDAL_REQ = 21210;				// 修改帮派徽章
+	S2S_QUERY_GUILD_LIST_REQ = 21211;			// 请求帮派列表
 
 	S2S_GM_ADD_MAIL_REQ = 21300;				// GM增加邮件
 
@@ -1070,6 +1075,65 @@ message S2SPlayerGuildChangeReq
 	required uint32 code = 3;			// 状态码//加入帮派//退出帮派等
 }
 
+// 玩家退出帮派
+// S2S_EXIT_GUILD_REQ
+message S2SExitGuildReq
+{
+	required uint64 guildid = 1;			// 帮派id
+	required uint32 playerid = 2;			// 玩家id
+	required uint32 serverid = 3;			// 服务器id
+}
+
+// 转让帮派请求
+// S2S_TRANSFER_MASTER_REQ
+message S2STransferMasterReq
+{
+	required uint64 guildid = 1;			// 帮派id
+	required uint32 playerid = 2;			// 现任帮主id
+	required uint32 newmasterid = 3;		// 新的帮主id
+	required uint32 serverid = 4;			// 服务器id
+}
+
+// 审核帮派成员加入
+// S2S_REVIEW_APPLY_REQ
+message S2SReviewApplyReq
+{
+	required uint32 playerid = 1;			// 操作者id
+	optional uint32 dealplayerid = 2;		// 被操作人id
+	required uint32 operatortype = 3;		// 操作类型
+	required uint32 guildid= 4;			// 帮派id
+	required uint32 serverid = 5;			// 服务器id
+}
+
+// 解散帮派
+// S2S_DISSOLVE_GUILD_REQ
+message S2SDissolveGuildReq
+{
+	required uint32 playerid =1;			// 操作者id
+	required uint64 guildid = 2;			// 帮派id
+	required uint32 serverid = 3;			// 服务器id
+}
+
+// 修改帮派徽章
+// S2S_MODIFY_MEDAL_REQ
+message S2SModifyMedalReq
+{
+	required uint32 playerid = 1;			// 操作者id
+	required uint64 guildid = 2;			// 帮派id
+	required uint32 serverid =3;			// 服务器id
+	required uint32 newmedal = 4;		// 新的徽章id
+}
+
+// 请求帮派列表
+// S2S_QUERY_GUILD_LIST_REQ
+message S2SQueryGuildListReq
+{
+	required uint32 playerid = 1;			// 操作者id
+	required uint64 guildid = 2;			// 帮派id
+	required uint32 serverid = 3;			// 服务器id
+	optional PBGuildIdArray guilds = 4;	// 要查询的帮派id
+	required uint32 cursor = 5;		// 查询的游标（从0开始）
+}
 
 // GM增加邮件
 // S2S_GM_ADD_MAIL_REQ

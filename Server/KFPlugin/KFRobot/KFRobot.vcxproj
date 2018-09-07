@@ -20,6 +20,7 @@
     <ClCompile Include="KFAgreeApplyTeamState.cpp" />
     <ClCompile Include="KFAgreeInviteTeamState.cpp" />
     <ClCompile Include="KFApplyGroupState.cpp" />
+    <ClCompile Include="KFApplyGuildState.cpp" />
     <ClCompile Include="KFAuthState.cpp" />
     <ClCompile Include="KFBuyStoreState.cpp" />
     <ClCompile Include="KFCancleMatchState.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="KFFSM.cpp" />
     <ClCompile Include="KFGiveStoreState.cpp" />
     <ClCompile Include="KFIdleState.cpp" />
+    <ClCompile Include="KFInviteGuildState.cpp" />
     <ClCompile Include="KFInviteTeamState.cpp" />
     <ClCompile Include="KFKickGroupState.cpp" />
     <ClCompile Include="KFLeaveChatState.cpp" />
@@ -68,6 +70,7 @@
     <ClCompile Include="KFRefuseApplyTeamState.cpp" />
     <ClCompile Include="KFRefuseInviteTeamState.cpp" />
     <ClCompile Include="KFRefuseMinuInviteTeamState.cpp" />
+    <ClCompile Include="KFReviewGuildState.cpp" />
     <ClCompile Include="KFRobot.cpp" />
     <ClCompile Include="KFRobotConfig.cpp" />
     <ClCompile Include="KFRobotMessageModule.cpp" />
@@ -93,6 +96,7 @@
     <ClInclude Include="KFAgreeApplyTeamState.h" />
     <ClInclude Include="KFAgreeInviteTeamState.h" />
     <ClInclude Include="KFApplyGroupState.h" />
+    <ClInclude Include="KFApplyGuildState.h" />
     <ClInclude Include="KFAuthState.h" />
     <ClInclude Include="KFBuyStoreState.h" />
     <ClInclude Include="KFCancleMatchState.h" />
@@ -115,6 +119,7 @@
     <ClInclude Include="KFFSM.h" />
     <ClInclude Include="KFGiveStoreState.h" />
     <ClInclude Include="KFIdleState.h" />
+    <ClInclude Include="KFInviteGuildState.h" />
     <ClInclude Include="KFInviteTeamState.h" />
     <ClInclude Include="KFKickGroupState.h" />
     <ClInclude Include="KFLeaveChatState.h" />
@@ -141,6 +146,7 @@
     <ClInclude Include="KFRefuseApplyTeamState.h" />
     <ClInclude Include="KFRefuseInviteTeamState.h" />
     <ClInclude Include="KFRefuseMinuInviteTeamState.h" />
+    <ClInclude Include="KFReviewGuildState.h" />
     <ClInclude Include="KFRobot.h" />
     <ClInclude Include="KFRobotConfig.h" />
     <ClInclude Include="KFRobotInterface.h" />

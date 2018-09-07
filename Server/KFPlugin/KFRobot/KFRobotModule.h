@@ -87,7 +87,6 @@ namespace KFrame
         // 游戏属性移除
         __KF_MESSAGE_FUNCTION__( HandleRemoveData );
 
-
         ///////////////////////////// 业务逻辑/////////////////////////////////////////////
 
         // 江湖聊天消息显示
@@ -113,6 +112,19 @@ namespace KFrame
 
         // 所有排行榜
         __KF_MESSAGE_FUNCTION__( HandleWholeRankDisplay );
+
+        ///////////////////////////// 帮派逻辑/////////////////////////////////////////////
+        // 游戏属性更新
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGuildData );
+
+        // 游戏属性添加
+        __KF_MESSAGE_FUNCTION__( HandleAddGuildData );
+
+        // 游戏属性移除
+        __KF_MESSAGE_FUNCTION__( HandleRemoveGuildData );
+
+
+
     };
 }
 

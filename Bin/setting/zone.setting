@@ -20,6 +20,8 @@
 		<!-- 外网测试-->
 		<Zone Channel="1" Id="1" LogicId="1" Name="外网测试服" Ip="10.105.6.78"/>
 
+		<!-- 渠道测试-->
+		<Zone Channel="2" Id="1" LogicId="1" Name="渠道测试服" Ip="10.105.51.22"/>
 	</Zones>
 </Config>
 

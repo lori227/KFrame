@@ -31,6 +31,7 @@ namespace KFrame
         {
             _zone_id = _invalid_int;
             _start_time = _invalid_int;
+            _app_channel = _invalid_int;
         }
 
     public:
@@ -48,6 +49,9 @@ namespace KFrame
 
         // appid
         std::string _app_id;
+
+        // appchannel
+        uint32 _app_channel;
 
         // zoneid
         uint32 _zone_id;
@@ -89,10 +93,7 @@ namespace KFrame
     protected:
 
         // 判断是否agent进程
-        bool IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
-
-        // 获得服务列表
-        void FindAppNameList( const std::string& appname,  std::set< std::string >& appnamelist );
+        bool IsAgentDeploy( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 更新数据到部署服务
         void UpdateDeployToDatabase( KFDeployData* deploydata );
@@ -117,6 +118,9 @@ namespace KFrame
 
         // 删除残留的版本
         void ScheduleRemoveVersion( uint32 id, const char* data, uint32 size );
+
+        // 获得部署路径
+        void FindAppDeployPath( const std::string& appname, std::set< std::string >& deploylist );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程
@@ -154,7 +158,8 @@ namespace KFrame
 #endif
     protected:
         // 添加部署任务
-        void AddDeployTask( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        void AddDeployTask( const std::string& command, const std::string& value,
+                            uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 开始任务
         void StartDeployTask();

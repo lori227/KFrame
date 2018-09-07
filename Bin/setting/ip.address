@@ -12,6 +12,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.217.149"/>
+
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.217.149"/>
 		</Server>
 
 		<!-- data服务器 -->
@@ -21,6 +24,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- public服务器 -->
@@ -30,6 +36,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- route服务器 -->
@@ -39,6 +48,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- match服务器 -->
@@ -48,6 +60,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- battle服务器 -->
@@ -57,6 +72,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- mail服务器 -->
@@ -66,6 +84,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- relation服务器 -->
@@ -75,6 +96,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- group服务器 -->
@@ -84,6 +108,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- rank服务器 -->
@@ -93,6 +120,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- guild服务器 -->
@@ -102,6 +132,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- log服务器 -->
@@ -111,6 +144,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- dir服务器 -->
@@ -120,6 +156,9 @@
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
+			
+			<!--渠道测试-->
+			<Channel ChannelId="2" Ip="10.105.51.22"/>
 		</Server>
 
 		<!-- zone master 根据zone.setting动态更新-->
@@ -140,6 +179,9 @@
 			
 		<!-- 外网测试 -->
 		<Channel ChannelId="1" Ip="10.105.6.78" Port="7777"/>
+
+		<!-- 渠道测试 -->
+		<Channel ChannelId="2" Ip="10.105.51.22" Port="7777"/>
 	</HttpServer>
 
 </Config>
