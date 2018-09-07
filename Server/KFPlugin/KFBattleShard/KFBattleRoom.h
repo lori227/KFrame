@@ -13,7 +13,7 @@ namespace KFrame
         StatusBattleRoomAlloc = 1,		// 分配战场房间
         StatusBattleRoomOpen = 2,		// 通知战斗服务器开启房间
         StatusBattleRoomEnter = 3,		// 玩家进入战场
-        StatisBattleRoomPlaying = 4,	// 通知匹配服务器战场正式开始
+        StatusBattleRoomPlaying = 4,	// 通知匹配服务器战场正式开始
     };
 
     // 战斗房间

@@ -177,7 +177,7 @@ namespace KFrame
         SendLeaveRoomToGame();
     }
 
-    bool KFBattlePlayer::QueryBattleRoom( uint32 serverid )
+    bool KFBattlePlayer::QueryBattleRoom( KFBattleRoom* kfroom, uint32 serverid )
     {
         // 设置游戏服务器id
         _pb_player.set_serverid( serverid );
@@ -185,12 +185,11 @@ namespace KFrame
         // 已经离开了
         if ( _status != KFPlayerStatus::StatusLeaveRoom )
         {
-            _notice_count = 0;
-            _status = KFPlayerStatus::StatusNoticeRoom;
+            PlayerNoticeBattleRoom( kfroom );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] quer room status[{}] failed!", _pb_player.playerid(), _status );
+            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query room status[{}] failed!", _pb_player.playerid(), _status );
         }
 
         return true;

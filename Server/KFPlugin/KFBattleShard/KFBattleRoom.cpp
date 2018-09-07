@@ -61,7 +61,7 @@ namespace KFrame
     {
         switch ( _status )
         {
-        case KFRoomStatus::StatisBattleRoomPlaying:
+        case KFRoomStatus::StatusBattleRoomPlaying:
             return true;
             break;
         default:
@@ -200,7 +200,7 @@ namespace KFrame
             PlayerEnterBattleRoom();
         }
         break;
-        case KFRoomStatus::StatisBattleRoomPlaying:
+        case KFRoomStatus::StatusBattleRoomPlaying:
         {
             // 战场正在游戏
             BattleRoomPlaying();
@@ -374,7 +374,7 @@ namespace KFrame
 
     bool KFBattleRoom::CancelMatch( uint32 campid, uint64 groupid )
     {
-        if ( _status == KFRoomStatus::StatisBattleRoomPlaying )
+        if ( _status == KFRoomStatus::StatusBattleRoomPlaying )
         {
             __LOG_ERROR__( KFLogEnum::Logic, "room[{}] is playing[{}]!", _battle_room_id, campid );
             return false;
@@ -429,7 +429,7 @@ namespace KFrame
             return false;
         }
 
-        return kfplayer->QueryBattleRoom( serverid );
+        return kfplayer->QueryBattleRoom( this, serverid );
     }
 
     void KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port )
@@ -455,7 +455,7 @@ namespace KFrame
     void KFBattleRoom::StartBattleRoom( uint32 maxtime )
     {
         // 设置房间已经开始
-        UpdateRoomStatus( KFRoomStatus::StatisBattleRoomPlaying, 5000 );
+        UpdateRoomStatus( KFRoomStatus::StatusBattleRoomPlaying, 5000 );
 
         // 保存结束时间
         auto endtime = KFGlobal::Instance()->_real_time + maxtime + 10;
@@ -476,7 +476,7 @@ namespace KFrame
     void KFBattleRoom::ConfirmStartBattleRoom()
     {
         // 停止定时器
-        UpdateRoomStatus( KFRoomStatus::StatisBattleRoomPlaying, 0 );
+        UpdateRoomStatus( KFRoomStatus::StatusBattleRoomPlaying, 0 );
 
         __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}] start!", _battle_room_id, _total_player_count );
     }

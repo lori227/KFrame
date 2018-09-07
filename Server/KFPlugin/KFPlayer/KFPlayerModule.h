@@ -210,7 +210,8 @@ namespace KFrame
         // 显示添加奖励消息
         void SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // 检查名字的有效性
+        bool CheckNameValid( const std::string& name );
     private:
         // 玩家组件
         KFComponent* _kf_component;

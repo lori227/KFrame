@@ -231,6 +231,7 @@ enum AckEnum {
   MatchCancelInBattle = 169,
   MailServerBusy = 170,
   RelationDatabaseBusy = 171,
+  NameInvalid = 172,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,

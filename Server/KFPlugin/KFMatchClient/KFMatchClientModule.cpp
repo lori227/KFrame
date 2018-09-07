@@ -225,6 +225,7 @@ namespace KFrame
             UpdateMatchStateToGroup( player, _invalid_int );
             _kf_display->SendToGroup( player, KFMsg::MatchCancelSuccess );
             player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+            player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
         }
 
         {

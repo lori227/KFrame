@@ -120,7 +120,7 @@ namespace KFrame
         void ScheduleRemoveVersion( uint32 id, const char* data, uint32 size );
 
         // 获得部署路径
-        void FindAppDeployPath( const std::string& appname, std::set< std::string >& deploylist );
+        void FindAppDeployPath( const std::string& appname, std::set< std::string >& deploypathlist );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程

@@ -717,6 +717,12 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::CreateRoleAlready );
         }
 
+        // 检查名字的有效性
+        if ( !CheckNameValid( kfmsg.name() ) )
+        {
+            return _kf_display->SendToClient( player, KFMsg::NameInvalid );
+        }
+
         KFMsg::S2SCreateRoleReq req;
         req.set_playerid( playerid );
         req.set_newname( kfmsg.name() );
@@ -777,6 +783,13 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::NameAlreadySet );
         }
 
+        // 检查名字的有效性
+        // 检查名字的有效性
+        if ( !CheckNameValid( kfmsg.name() ) )
+        {
+            return _kf_display->SendToClient( player, KFMsg::NameInvalid );
+        }
+
         KFMsg::S2SSetPlayerNameReq req;
         req.set_playerid( playerid );
         req.set_oldname( name );
@@ -786,6 +799,23 @@ namespace KFrame
         {
             __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}:{}] set name to public failed!", playerid, name, kfmsg.name() );
         }
+    }
+
+    bool KFPlayerModule::CheckNameValid( const std::string& name )
+    {
+        // 不能有空格
+        if ( name.find( " " ) != std::string::npos )
+        {
+            return false;
+        }
+
+        // 不能有%
+        if ( name.find( "%" ) != std::string::npos )
+        {
+            return false;
+        }
+
+        return true;
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSetPlayerNameAck )

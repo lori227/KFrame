@@ -474,23 +474,22 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryRoomToBattleShardReq );
         __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] req!", kfmsg.playerid(), kfmsg.roomid() );
 
-        KFMsg::S2SQueryBattleRoomAck ack;
-        ack.set_playerid( kfmsg.playerid() );
-        ack.set_roomid( _invalid_int );
-        ack.set_matchid( _invalid_int );
-
         auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
         if ( kfroom != nullptr )
         {
             auto ok = kfroom->QueryBattleRoom( kfmsg.playerid(), kfmsg.serverid() );
             if ( ok )
             {
-                ack.set_roomid( kfroom->_battle_room_id );
-                ack.set_matchid( kfroom->_match_id );
+                return __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query room[{}] ok!", kfmsg.playerid(), kfmsg.roomid() );
             }
         }
 
+        KFMsg::S2SQueryBattleRoomAck ack;
+        ack.set_playerid( kfmsg.playerid() );
+        ack.set_roomid( _invalid_int );
+        ack.set_matchid( _invalid_int );
         _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] not in room[{}]!", kfmsg.playerid(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellRoomStartToBattleShardReq )

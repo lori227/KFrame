@@ -56,7 +56,7 @@ namespace KFrame
         void LeaveBattleRoomReq( KFBattleRoom* kfroom );
 
         // 查询游戏房间
-        bool QueryBattleRoom( uint32 serverid );
+        bool QueryBattleRoom( KFBattleRoom* kfroom, uint32 serverid );
 
         // 玩家上线
         void OnlineBattleRoom( uint32 serverid );

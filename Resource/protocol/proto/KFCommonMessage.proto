@@ -173,6 +173,7 @@ enum AckEnum
 	MatchCancelInBattle			= 169;		// 已经战斗中不能取消匹配
 	MailServerBusy				= 170;		// 邮件服务器繁忙
 	RelationDatabaseBusy		= 171;		// 关系数据库繁忙
+	NameInvalid					= 172;		// 名字含有非法字符
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

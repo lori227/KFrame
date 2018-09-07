@@ -77,7 +77,12 @@ namespace KFrame
         {
             auto pbdata = pbmail->add_data();
             pbdata->set_name( iter.name() );
-            pbdata->set_value( iter->asString() );
+
+            // 删除空格和%
+            auto strdata = iter->asString();
+            KFUtility::ReplaceString( strdata, " ", "" );
+            KFUtility::ReplaceString( strdata, "%", "" );
+            pbdata->set_value( strdata );
         }
 
         auto serverid = _kf_hash.FindHashNode( data );
