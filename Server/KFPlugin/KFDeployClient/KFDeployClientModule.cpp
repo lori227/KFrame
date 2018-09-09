@@ -33,7 +33,9 @@ namespace KFrame
         // 连接成功
         if ( servername == __KF_STRING__( deploy ) && servertype == __KF_STRING__( server ) )
         {
-            _deploy_server_id = serverid;
+            KFAppID kfappid( serverid );
+            kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_channel;
+            _deploy_server_id = kfappid._union._app_id;
         }
     }
 
