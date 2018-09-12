@@ -20,11 +20,18 @@ namespace KFrame
         _result = _http->RunHttp( _url, _data );
     }
 
-    void KFHttpData::Finish()
+    void KFHttpData::Response()
     {
         if ( _function != nullptr )
         {
-            _function( _data, _result );
+            try
+            {
+                _function( _data, _result );
+            }
+            catch ( ... )
+            {
+                __LOG_ERROR__( KFLogEnum::Logic, "http response exception! result=[{}]", _result );
+            }
         }
     }
 }

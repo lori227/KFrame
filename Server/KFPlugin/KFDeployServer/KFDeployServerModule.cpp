@@ -27,7 +27,6 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-
     void KFDeployServerModule::ShutDown()
     {
         __UNREGISTER_SCHEDULE_FUNCTION__();
@@ -116,6 +115,10 @@ namespace KFrame
         KFJson request( data );
 
         auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
+        auto logurl = request.GetString( __KF_STRING__( callback ) );
+
+        LogDeploy( logurl, "server recv command=[{}]", data );
+
         if ( scheduletime == _invalid_int || scheduletime <= KFGlobal::Instance()->_real_time )
         {
             OnDeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
@@ -126,6 +129,8 @@ namespace KFrame
             kfsetting->SetTime( scheduletime );
             kfsetting->SetData( _invalid_int, data.c_str(), data.size() );
             __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFDeployServerModule::OnDeployCommandToAgent );
+
+            LogDeploy( logurl, "start schedule at [{}]", KFDate::GetTimeString( scheduletime ) );
         }
 
         return _invalid_str;
@@ -144,6 +149,22 @@ namespace KFrame
         pbdeploy->set_appid( request.GetString( __KF_STRING__( appid ) ) );
         pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
         pbdeploy->set_appchannel( request.GetUInt32( __KF_STRING__( appchannel ) ) );
+        pbdeploy->set_logurl( request.GetString( __KF_STRING__( callback ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
+
+        auto logurl = request.GetString( __KF_STRING__( callback ) );
+        LogDeploy( logurl, "server distribute command=[{}]", data );
+    }
+
+    void KFDeployServerModule::SendLogMessage( const std::string& url, const std::string& msg )
+    {
+        __LOG_DEBUG__( KFLogEnum::Logic, "{}", msg );
+
+        if ( !url.empty() )
+        {
+            KFJson response;
+            response[ __KF_STRING__( msg ) ] = msg;
+            _kf_http_client->StartMTHttpClient( url, response, false );
+        }
     }
 }

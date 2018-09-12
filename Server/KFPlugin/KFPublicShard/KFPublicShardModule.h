@@ -22,11 +22,8 @@ namespace KFrame
     class KFPublicShardModule : public KFPublicShardInterface
     {
     public:
-        KFPublicShardModule();
-        ~KFPublicShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFPublicShardModule() = default;
+        ~KFPublicShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();

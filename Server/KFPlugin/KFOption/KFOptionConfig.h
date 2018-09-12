@@ -11,8 +11,8 @@ namespace KFrame
     class KFOptionConfig : public KFConfig, public KFSingleton< KFOptionConfig >
     {
     public:
-        KFOptionConfig();
-        ~KFOptionConfig();
+        KFOptionConfig() = default;
+        ~KFOptionConfig() = default;
 
         // 加载配置
         bool LoadConfig();

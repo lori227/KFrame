@@ -21,42 +21,35 @@ namespace KFrame
     bool KFMailConfig::LoadConfig()
     {
         _mail_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto setting = config.FindNode( "Setting" );
+        while ( setting.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto setting = config.FindNode( "Setting" );
-            while ( setting.IsValid() )
-            {
-                auto kfsetting = __KF_CREATE__( KFMailSetting );
+            auto kfsetting = __KF_CREATE__( KFMailSetting );
 
-                kfsetting->_config_id = setting.GetUInt32( "ConfigId" );
-                kfsetting->_type = setting.GetUInt32( "Type" );
-                kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
+            kfsetting->_config_id = setting.GetUInt32( "ConfigId" );
+            kfsetting->_type = setting.GetUInt32( "Type" );
+            kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
 
-                kfsetting->_title = setting.GetString( "Title" );
-                KFUtility::ReplaceString( kfsetting->_title, " ", "" );
+            kfsetting->_title = setting.GetString( "Title" );
+            KFUtility::ReplaceString( kfsetting->_title, " ", "" );
 
-                kfsetting->_content = setting.GetString( "Content" );
-                KFUtility::ReplaceString( kfsetting->_content, " ", "" );
+            kfsetting->_content = setting.GetString( "Content" );
+            KFUtility::ReplaceString( kfsetting->_content, " ", "" );
 
-                kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
-                kfsetting->_extend = setting.GetString( "Extend" );
-                KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
+            kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
+            kfsetting->_extend = setting.GetString( "Extend" );
+            KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
 
-                auto stragent = setting.GetString( "Reward" );
-                kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
-                _mail_setting.Insert( kfsetting->_config_id, kfsetting );
+            auto stragent = setting.GetString( "Reward" );
+            kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
+            _mail_setting.Insert( kfsetting->_config_id, kfsetting );
 
-                setting.NextNode();
-            }
+            setting.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

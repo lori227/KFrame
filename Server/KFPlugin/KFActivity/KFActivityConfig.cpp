@@ -178,14 +178,6 @@ namespace KFrame
     {
         _activity_setting.Clear();
 
-        try
-        {
-        }
-        catch ( ... )
-        {
-            return false;
-        }
-
         return true;
     }
 }

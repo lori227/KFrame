@@ -55,6 +55,15 @@ namespace KFrame
         }
     }
 
+    void KFBattleCamp::ResetBattleRoomStatus()
+    {
+        for ( auto& iter : _kf_player_list._objects )
+        {
+            auto kfplayer = iter.second;
+            kfplayer->ResetRoomStatus();
+        }
+    }
+
     void KFBattleCamp::SendMessageToCamp( uint32 msgid, google::protobuf::Message* message )
     {
         for ( auto& iter : _kf_player_list._objects )

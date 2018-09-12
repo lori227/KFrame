@@ -31,35 +31,27 @@ namespace KFrame
     bool KFChannelConfig::LoadConfig()
     {
         _kf_channel.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto channels = config.FindNode( "Channels" );
+        auto channel = channels.FindNode( "Channel" );
+        while ( channel.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
+            auto kfchannelsetting = __KF_CREATE__( KFChannelSetting );
 
-            //////////////////////////////////////////////////////////////////
-            auto channels = config.FindNode( "Channels" );
-            auto channel = channels.FindNode( "Channel" );
-            while ( channel.IsValid() )
-            {
-                auto kfchannelsetting = __KF_CREATE__( KFChannelSetting );
+            kfchannelsetting->_channel_id = channel.GetUInt32( "Id" );
+            kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
+            kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
+            kfchannelsetting->_app_id = channel.GetString( "AppId" );
+            kfchannelsetting->_app_key = channel.GetString( "AppKey" );
+            kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
+            kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
+            _kf_channel.Insert( kfchannelsetting->_channel_id, kfchannelsetting );
 
-                kfchannelsetting->_channel_id = channel.GetUInt32( "Id" );
-                kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
-                kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
-                kfchannelsetting->_app_id = channel.GetString( "AppId" );
-                kfchannelsetting->_app_key = channel.GetString( "AppKey" );
-                kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
-                kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
-                _kf_channel.Insert( kfchannelsetting->_channel_id, kfchannelsetting );
-
-                channel.NextNode();
-            }
+            channel.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

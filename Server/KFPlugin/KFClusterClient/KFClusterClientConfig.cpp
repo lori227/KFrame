@@ -16,33 +16,23 @@ namespace KFrame
     bool KFClusterClientConfig::LoadConfig()
     {
         _cluster_setting_list.clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto clusters = config.FindNode( "Clusters" );
+        auto cluster = clusters.FindNode( "Cluster" );
+        while ( cluster.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
+            KFClusterSetting kfsetting;
 
-            //////////////////////////////////////////////////////////////////
-            auto clusters = config.FindNode( "Clusters" );
-            auto cluster = clusters.FindNode( "Cluster" );
-            while ( cluster.IsValid() )
-            {
-                KFClusterSetting kfsetting;
+            kfsetting._name = cluster.GetString( "Name" );
+            kfsetting._type = cluster.GetString( "Type" );
+            kfsetting._key = cluster.GetString( "Key" );
+            _cluster_setting_list[ kfsetting._name ] = kfsetting;
 
-                kfsetting._name = cluster.GetString( "Name" );
-                kfsetting._type = cluster.GetString( "Type" );
-                kfsetting._key = cluster.GetString( "Key" );
-                _cluster_setting_list[ kfsetting._name ] = kfsetting;
-
-                cluster.NextNode();
-            }
-
-            //////////////////////////////////////////////////////////////////
+            cluster.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

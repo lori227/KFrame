@@ -74,40 +74,31 @@ namespace KFrame
     bool KFBusConfig::LoadConfig()
     {
         _bus_connection.clear();
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto busnode = config.FindNode( "Bus" );
+        if ( busnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////
-            auto busnode = config.FindNode( "Bus" );
-            if ( busnode.IsValid() )
+            auto connectionnode = busnode.FindNode( "Connection" );
+            while ( connectionnode.IsValid() )
             {
-                auto connectionnode = busnode.FindNode( "Connection" );
-                while ( connectionnode.IsValid() )
-                {
-                    KFConnection kfconnection;
+                KFConnection kfconnection;
 
-                    kfconnection._app_name = connectionnode.GetString( "AppName" );
-                    kfconnection._app_type = connectionnode.GetString( "AppType" );
-                    kfconnection._app_id = connectionnode.GetString( "AppId" );
+                kfconnection._app_name = connectionnode.GetString( "AppName" );
+                kfconnection._app_type = connectionnode.GetString( "AppType" );
+                kfconnection._app_id = connectionnode.GetString( "AppId" );
 
 
-                    kfconnection._connect_name = connectionnode.GetString( "ConnectName" );
-                    kfconnection._connect_type = connectionnode.GetString( "ConnectType" );
-                    kfconnection._connect_id = connectionnode.GetString( "ConnectId" );
-                    _bus_connection.push_back( kfconnection );
+                kfconnection._connect_name = connectionnode.GetString( "ConnectName" );
+                kfconnection._connect_type = connectionnode.GetString( "ConnectType" );
+                kfconnection._connect_id = connectionnode.GetString( "ConnectId" );
+                _bus_connection.push_back( kfconnection );
 
-                    connectionnode.NextNode();
-                }
+                connectionnode.NextNode();
             }
-            //////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

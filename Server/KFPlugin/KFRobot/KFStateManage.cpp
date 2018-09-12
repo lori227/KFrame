@@ -65,6 +65,7 @@
 #include "KFInviteGuildState.h"
 #include "KFApplyGuildState.h"
 #include "KFReviewGuildState.h"
+#include "KFQueryGuildListState.h"
 
 namespace KFrame
 {
@@ -165,6 +166,7 @@ namespace KFrame
         AddState( RobotStateEnum::InviteGuild, new KFInviteGuildState() );
         AddState( RobotStateEnum::ApplyGuild, new KFApplyGuildState() );
         AddState( RobotStateEnum::AgreeAllJoin, new KFReviewGuildState() );
+        AddState( RobotStateEnum::QueryGuildList, new KFQueryGuildListState() );
     }
 
     void KFStateManage::AddState( uint32 state, KFState* kfstate )

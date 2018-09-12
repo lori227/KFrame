@@ -14,6 +14,7 @@ namespace KFrame
         StatusBattleRoomOpen = 2,		// 通知战斗服务器开启房间
         StatusBattleRoomEnter = 3,		// 玩家进入战场
         StatusBattleRoomPlaying = 4,	// 通知匹配服务器战场正式开始
+        StatusBattleRoomDisconnect = 5,	// 断线状态
     };
 
     // 战斗房间
@@ -52,7 +53,7 @@ namespace KFrame
         void ConfirmOpenMatchRoom();
 
         // 更新游戏房间
-        void UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port );
+        bool UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port );
 
         // 进入游戏房间
         bool ConfirmEnterBattleRoom( uint32 campid, uint32 playerid );
@@ -99,6 +100,9 @@ namespace KFrame
         // 发送消息到玩家
         void SendMessageToRoom( uint32 msgid, google::protobuf::Message* message );
 
+        // 战场断开服务器
+        void DisconnectBattleRoom();
+
     protected:
         // 查找玩家
         KFBattlePlayer* FindBattlePlayer( uint32 playerid );
@@ -124,6 +128,9 @@ namespace KFrame
 
         // 房间正在游戏
         void BattleRoomPlaying();
+
+        // 战场断线
+        void BattleRoomDisconnect();
     public:
         // 匹配模式
         uint32 _match_id;

@@ -17,17 +17,11 @@ namespace KFrame
 
     bool KFDeployUploadConfig::LoadConfig()
     {
-        try
-        {
-            KFXml kfxml( _file );
-            auto root = kfxml.FindNode( "Setting" );
-            _ftp_id = root.GetUInt32( "FtpId" );
-            /////////////////////////////////////////////////////////////////////
-        }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto root = kfxml.FindNode( "Setting" );
+        _ftp_id = root.GetUInt32( "FtpId" );
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

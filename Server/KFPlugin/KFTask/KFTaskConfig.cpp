@@ -6,15 +6,6 @@ namespace KFrame
     {
         _task_setting.Clear();
 
-        try
-        {
-
-        }
-        catch ( ... )
-        {
-            return false;
-        }
-
         return true;
     }
 }

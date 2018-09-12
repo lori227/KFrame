@@ -45,10 +45,12 @@ namespace KFrame
         volatile bool _thread_run;
 
         // 请求的数据队列
-        KFQueue< KFHttpData > _req_http_data;
+        KFMutex _kf_req_mutex;
+        std::list< KFHttpData* > _req_http_data;
 
         // 完成的数据队列
-        KFQueue< KFHttpData > _ack_http_data;
+        KFMutex _kf_ack_mutex;
+        std::list< KFHttpData* > _ack_http_data;
     };
 
 }

@@ -18,57 +18,48 @@ namespace KFrame
         _player_data.clear();
         _kf_rank_data_list.clear();
         _kf_rank_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto playernode = config.FindNode( "PlayerData" );
+        auto datanode = playernode.FindNode( "Data" );
+        while ( datanode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto playernode = config.FindNode( "PlayerData" );
-            auto datanode = playernode.FindNode( "Data" );
-            while ( datanode.IsValid() )
-            {
-                auto dataname = datanode.GetString( "Name" );
-                _player_data.push_back( dataname );
+            auto dataname = datanode.GetString( "Name" );
+            _player_data.push_back( dataname );
 
-                datanode.NextNode();
+            datanode.NextNode();
+        }
+
+        auto ranksnode = config.FindNode( "Ranks" );
+        auto ranknode = ranksnode.FindNode( "Rank" );
+        while ( ranknode.IsValid() )
+        {
+            auto kfsetting = __KF_CREATE__( KFRankSetting );
+
+            kfsetting->_rank_id = ranknode.GetUInt32( "Id" );
+            kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
+            kfsetting->_shard_id = ranknode.GetUInt32( "ShardId" );
+            kfsetting->_parent_data = ranknode.GetString( "ParentData" );
+            kfsetting->_rank_data = ranknode.GetString( "RankData" );
+            kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
+            kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
+            kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
+            kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
+            kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
+
+            auto shownode = ranknode.FindNode( "ShowData" );
+            while ( shownode.IsValid() )
+            {
+                auto dataname = shownode.GetString( "Name" );
+                kfsetting->_show_data.push_back( dataname );
+                shownode.NextNode();
             }
 
-            playernode.NextNode();
-            //////////////////////////////////////////////////////////////////
-            auto ranksnode = config.FindNode( "Ranks" );
-            auto ranknode = ranksnode.FindNode( "Rank" );
-            while ( ranknode.IsValid() )
-            {
-                auto kfsetting = __KF_CREATE__( KFRankSetting );
-
-                kfsetting->_rank_id = ranknode.GetUInt32( "Id" );
-                kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
-                kfsetting->_shard_id = ranknode.GetUInt32( "ShardId" );
-                kfsetting->_parent_data = ranknode.GetString( "ParentData" );
-                kfsetting->_rank_data = ranknode.GetString( "RankData" );
-                kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
-                kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
-                kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
-                kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
-                kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
-
-                auto shownode = ranknode.FindNode( "ShowData" );
-                while ( shownode.IsValid() )
-                {
-                    auto dataname = shownode.GetString( "Name" );
-                    kfsetting->_show_data.push_back( dataname );
-                    shownode.NextNode();
-                }
-
-                AddRankSetting( kfsetting );
-                ranknode.NextNode();
-            }
+            AddRankSetting( kfsetting );
+            ranknode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

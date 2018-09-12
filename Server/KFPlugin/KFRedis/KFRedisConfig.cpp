@@ -47,65 +47,56 @@ namespace KFrame
         _logic_redis_map.clear();
 
         auto kfglobal = KFGlobal::Instance();
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto databasenode = config.FindNode( "Redis" );
+        if ( databasenode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-
-            //////////////////////////////////////////////////////////////////
-            auto databasenode = config.FindNode( "Redis" );
-            if ( databasenode.IsValid() )
+            auto childnode = databasenode.FindNode( "Connection" );
+            while ( childnode.IsValid() )
             {
-                auto childnode = databasenode.FindNode( "Connection" );
-                while ( childnode.IsValid() )
+                auto kfsetting = __KF_CREATE__( KFRedisSetting );
+
+                kfsetting->_id = childnode.GetUInt32( "RedisId" );
+                kfsetting->_ip = childnode.GetString( "IP" );
+                kfsetting->_port = childnode.GetUInt32( "Port" );
+                kfsetting->_password = childnode.GetString( "Password" );
+
+                auto channelnode = childnode.FindNode( "Channel" );
+                while ( channelnode.IsValid() )
                 {
-                    auto kfsetting = __KF_CREATE__( KFRedisSetting );
-
-                    kfsetting->_id = childnode.GetUInt32( "RedisId" );
-                    kfsetting->_ip = childnode.GetString( "IP" );
-                    kfsetting->_port = childnode.GetUInt32( "Port" );
-                    kfsetting->_password = childnode.GetString( "Password" );
-
-                    auto channelnode = childnode.FindNode( "Channel" );
-                    while ( channelnode.IsValid() )
+                    auto channelid = channelnode.GetUInt32( "ChannelId" );
+                    if ( channelid == kfglobal->_app_channel )
                     {
-                        auto channelid = channelnode.GetUInt32( "ChannelId" );
-                        if ( channelid == kfglobal->_app_channel )
-                        {
-                            kfsetting->_ip = channelnode.GetString( "IP" );
-                            kfsetting->_port = channelnode.GetUInt32( "Port" );
-                            kfsetting->_password = channelnode.GetString( "Password" );
-                            break;
-                        }
-
-                        channelnode.NextNode();
+                        kfsetting->_ip = channelnode.GetString( "IP" );
+                        kfsetting->_port = channelnode.GetUInt32( "Port" );
+                        kfsetting->_password = channelnode.GetString( "Password" );
+                        break;
                     }
 
-                    AddRedisSetting( kfsetting );
-
-                    childnode.NextNode();
+                    channelnode.NextNode();
                 }
-            }
 
-            auto redis = config.FindNode( "LogicRedis" );
-            _default_redis_id = redis.GetUInt32( "DefaultRedis" );
+                AddRedisSetting( kfsetting );
 
-            auto logic = redis.FindNode( "Logic" );
-            while ( logic.IsValid() )
-            {
-                auto dataname = logic.GetString( "Filed" );
-                auto logicid = logic.GetUInt32( "LogicId", true, _invalid_int );
-                auto redisid = logic.GetUInt32( "Id" );
-
-                auto key = LogicKey( dataname, logicid );
-                _logic_redis_map[ key ] = redisid;
-
-                logic.NextNode();
+                childnode.NextNode();
             }
         }
-        catch ( ... )
+
+        auto redis = config.FindNode( "LogicRedis" );
+        _default_redis_id = redis.GetUInt32( "DefaultRedis" );
+        auto logic = redis.FindNode( "Logic" );
+        while ( logic.IsValid() )
         {
-            return false;
+            auto dataname = logic.GetString( "Filed" );
+            auto logicid = logic.GetUInt32( "LogicId", true, _invalid_int );
+            auto redisid = logic.GetUInt32( "Id" );
+
+            auto key = LogicKey( dataname, logicid );
+            _logic_redis_map[ key ] = redisid;
+
+            logic.NextNode();
         }
 
         return true;

@@ -20,6 +20,7 @@ namespace KFrame
     void KFRankShardModule::BeforeRun()
     {
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFRankShardModule::OnServerDiscoverClient );
+        __REGISTER_ALLOC_OBJECT_FUNCTION__( &KFRankShardModule::OnAllocRankCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ, &KFRankShardModule::HandleUpdateRankDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ, &KFRankShardModule::HandleQueryRanklistReq );
@@ -32,6 +33,7 @@ namespace KFrame
         __UNREGISTER_TIMER__();
         __UNREGISTER_SCHEDULE_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        __UNREGISTER_ALLOC_OBJECT_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
@@ -42,6 +44,11 @@ namespace KFrame
     void KFRankShardModule::OnceRun()
     {
         _rank_driver = _kf_redis->CreateExecute( __KF_STRING__( rank ) );
+    }
+
+    __KF_ALLOC_OBJECT_FUNCTION__( KFRankShardModule::OnAllocRankCallBack )
+    {
+        __LOG_INFO__( KFLogEnum::Logic, "rank alloc shard finish!" );
 
         // 加载所有排行榜数据
         LoadTotalRankData();
@@ -49,83 +56,35 @@ namespace KFrame
         // 启动刷新排行榜定时器
         StartRefreshRankDataTimer();
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFRankShardModule::OnServerDiscoverClient )
     {
-        std::list< uint64 > ranklist;
-
+        std::set< uint64 > ranklist;
         for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
         {
             auto kfsetting = iter.second;
-            if ( kfsetting->_shard_id == KFGlobal::Instance()->_app_id )
-            {
-                ranklist.push_back( kfsetting->_rank_id );
-            }
+            ranklist.insert( kfsetting->_rank_id );
         }
-
-        _kf_cluster_shard->AddObjectToProxy( handleid, ranklist );
-    }
-
-    void KFRankShardModule::LoadTotalRankData()
-    {
-        auto ranklist = _rank_driver->QueryList( "smembers {}:{}",
-                        __KF_STRING__( ranklist ), KFGlobal::Instance()->_app_id );
-        if ( !ranklist->IsOk() )
-        {
-            return;
-        }
-
-        for ( auto& strrankkey : ranklist->_value )
-        {
-            auto queryrankdata = _rank_driver->QueryMap( "hgetall {}", strrankkey.c_str() );
-            if ( !queryrankdata->IsOk() || queryrankdata->_value.empty()  )
-            {
-                continue;
-            }
-
-            auto rankid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( id ) ] );
-            auto zoneid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( zoneid ) ] );
-
-            auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
-            kfrankdata->_rank_id = rankid;
-            kfrankdata->_zone_id = zoneid;
-            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( queryrankdata->_value[ __KF_STRING__( minrankscore ) ] );
-
-            auto strrankata = queryrankdata->_value[ __KF_STRING__( rankdata ) ];
-            KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
-        }
-    }
-
-    void KFRankShardModule::SaveRankData( KFRankData* kfrankdata )
-    {
-        auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
-
-        MapString rankdata;
-        rankdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
-        rankdata[ __KF_STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
-        rankdata[ __KF_STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
-        rankdata[ __KF_STRING__( rankdata ) ] = strrankdata;
-
-        auto rankkey = __FORMAT__( "{}:{}:{}", __KF_STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
-
-        _rank_driver->Append( rankdata, "hmset {}", rankkey );
-        _rank_driver->Append( "sadd {}:{} {}", __KF_STRING__( ranklist ), KFGlobal::Instance()->_app_id, rankkey );
-        _rank_driver->Pipeline();
+        _kf_cluster_shard->AllocObjectToMaster( ranklist );
     }
 
     void KFRankShardModule::StartRefreshRankDataTimer()
     {
-        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
+        __UNREGISTER_TIMER__();
+        __UNREGISTER_SCHEDULE_FUNCTION__();
+
+        auto ranklist = _kf_cluster_shard->GetAllocObjectList();
+        for ( auto rankid : ranklist )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_shard_id != KFGlobal::Instance()->_app_id )
+            auto kfsetting = _kf_rank_config->FindRankSetting( rankid );
+            if ( kfsetting == nullptr )
             {
                 continue;
             }
 
             StartRefreshRankDataTimer( kfsetting );
+            __LOG_INFO__( KFLogEnum::Logic, "rank[{}] start refresh timer!", kfsetting->_rank_id );
         }
     }
 
@@ -151,6 +110,55 @@ namespace KFrame
         }
 
         __REGISTER_SCHEDULE_FUNCTION__( kfschedulesetting, &KFRankShardModule::OnScheduleRefreshRankData );
+    }
+
+    void KFRankShardModule::LoadTotalRankData()
+    {
+        _kf_rank_data.Clear();
+
+        auto ranklist = _kf_cluster_shard->GetAllocObjectList();
+        for ( auto rankid : ranklist )
+        {
+            // 排行榜的种类列表
+            auto queryzonelist = _rank_driver->QueryList( "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
+            if ( !queryzonelist->IsOk() )
+            {
+                continue;
+            }
+
+            // 排行榜的数据
+            for ( auto& strzoneid : queryzonelist->_value )
+            {
+                auto queryrankdata = _rank_driver->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( rank ), rankid, strzoneid );
+                if ( !queryrankdata->IsOk() || queryrankdata->_value.empty() )
+                {
+                    continue;
+                }
+
+                auto rankid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( id ) ] );
+                auto zoneid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( zoneid ) ] );
+
+                auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
+                kfrankdata->_rank_id = rankid;
+                kfrankdata->_zone_id = zoneid;
+                kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( queryrankdata->_value[ __KF_STRING__( minrankscore ) ] );
+
+                auto strrankata = queryrankdata->_value[ __KF_STRING__( rankdata ) ];
+                KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
+            }
+        }
+    }
+
+    void KFRankShardModule::SaveRankData( KFRankData* kfrankdata )
+    {
+        auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
+
+        MapString rankdata;
+        rankdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
+        rankdata[ __KF_STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
+        rankdata[ __KF_STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
+        rankdata[ __KF_STRING__( rankdata ) ] = strrankdata;
+        _rank_driver->Update( rankdata, "hmset {}:{}:{}", __KF_STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
     }
 
     __KF_TIMER_FUNCTION__( KFRankShardModule::OnTimerRefreshRankData )
@@ -187,8 +195,7 @@ namespace KFrame
 
         // 获得排行榜列表
         auto queryzonelist = _rank_driver->QueryList( "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
-        auto zonelist = queryzonelist->_value;
-        for ( auto& strzoneid : zonelist )
+        for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
 

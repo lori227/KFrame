@@ -131,51 +131,43 @@ namespace KFrame
     {
         _achieve_setting.Clear();
         _object_types.clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            //////////////////////////////////////////////////////////////////
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
+            auto kfsetting = __KF_CREATE__( KFAchieveSetting );
+
+            kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            kfsetting->_level = xmlnode.GetUInt32( "Level" );
+            kfsetting->_trigger_type = xmlnode.GetUInt32( "TriggerType" );
+            kfsetting->_trigger_value = xmlnode.GetUInt32( "TriggerValue" );
+            kfsetting->_use_type = xmlnode.GetUInt32( "UseType" );
+            kfsetting->_use_value = xmlnode.GetUInt32( "UseValue" );
+            kfsetting->_key = xmlnode.GetUInt32( "Key" );
+            kfsetting->_operate = xmlnode.GetUInt32( "Operate" );
+            kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
+            kfsetting->_done_type = xmlnode.GetUInt32( "DoneType" );
+            kfsetting->_parent_name = xmlnode.GetString( "ParentName" );
+            kfsetting->_data_name = xmlnode.GetString( "DataName" );
+
+            auto rewards = xmlnode.GetString( "Rewards" );
+            kfsetting->_rewards.ParseFromString( rewards, __FUNC_LINE__ );
+
+            AddKFAchieveSetting( kfsetting );
+
+            if ( KFAchieveEnum::lobby == xmlnode.GetUInt32( "HandleType" ) )
             {
-                auto kfsetting = __KF_CREATE__( KFAchieveSetting );
-
-                kfsetting->_id = xmlnode.GetUInt32( "Id" );
-                kfsetting->_level = xmlnode.GetUInt32( "Level" );
-                kfsetting->_trigger_type = xmlnode.GetUInt32( "TriggerType" );
-                kfsetting->_trigger_value = xmlnode.GetUInt32( "TriggerValue" );
-                kfsetting->_use_type = xmlnode.GetUInt32( "UseType" );
-                kfsetting->_use_value = xmlnode.GetUInt32( "UseValue" );
-                kfsetting->_key = xmlnode.GetUInt32( "Key" );
-                kfsetting->_operate = xmlnode.GetUInt32( "Operate" );
-                kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
-                kfsetting->_done_type = xmlnode.GetUInt32( "DoneType" );
-                kfsetting->_parent_name = xmlnode.GetString( "ParentName" );
-                kfsetting->_data_name = xmlnode.GetString( "DataName" );
-
-                auto rewards = xmlnode.GetString( "Rewards" );
-                kfsetting->_rewards.ParseFromString( rewards, __FUNC_LINE__ );
-
-                if ( KFAchieveEnum::lobby == xmlnode.GetUInt32( "HandleType" ) )
-                {
-                    AddKFAchieveSetting( kfsetting );
-                }
-
-                else
-                {
-                    _battle_achieve_setting.Insert( kfsetting->_id, kfsetting );
-                }
-
-                xmlnode.NextNode();
             }
+            else
+            {
+                _battle_achieve_setting.Insert( kfsetting->_id, kfsetting );
+            }
+
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

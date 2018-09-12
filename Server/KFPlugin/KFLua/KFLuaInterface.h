@@ -24,6 +24,10 @@ namespace KFrame
             {
                 __LOG_ERROR__( KFLogEnum::Script, "call [{}] [{}] failed=[{}]", _lua_file, function, e.GetErrorMessage() );
             }
+            catch ( ... )
+            {
+                __LOG_ERROR__( KFLogEnum::Script, "call [{}] [{}] failed unknown!", _lua_file, function );
+            }
         }
 
     public:

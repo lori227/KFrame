@@ -121,6 +121,7 @@ namespace KFrame
         virtual void LogoutPlayer( uint32 playerid ) = 0;
 
         // 查找玩家
+        virtual KFEntity* FindPlayer( uint32 playerid ) = 0;
         virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line ) = 0;
 
         // 发送消息
@@ -176,7 +177,7 @@ namespace KFrame
 
 #define __SERVER_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNCTION__, _invalid_int );\
+    auto player = _kf_player->FindPlayer( kfmsg.playerid() );\
     if ( player == nullptr )\
     {\
         return;\
@@ -185,7 +186,7 @@ namespace KFrame
 #define __ROUTE_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
     auto playerid = __KF_DATA_ID__( kfguid ); \
-    auto player = _kf_player->FindPlayer( playerid, __FUNCTION__, _invalid_int );\
+    auto player = _kf_player->FindPlayer( playerid );\
     if ( player == nullptr )\
     {\
         return;\

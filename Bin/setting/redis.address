@@ -11,6 +11,9 @@
 	<Redis>
 		<Connection RedisId="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
 			<!-- 内网测试 -->
+			<Channel ChannelId="100" IP="192.168.10.230" Port="6379" Password="redis@lori227-="/>
+
+			<!-- 内网测试 -->
 			<Channel ChannelId="101" IP="192.168.1.9" Port="6379" Password="redis@lori227-="/>
 
 			<!-- 外网测试 -->

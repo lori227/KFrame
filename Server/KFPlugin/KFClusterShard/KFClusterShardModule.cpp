@@ -3,25 +3,12 @@
 
 namespace KFrame
 {
-    KFClusterShardModule::KFClusterShardModule()
-    {
-
-    }
-
-    KFClusterShardModule::~KFClusterShardModule()
-    {
-    }
-
-    void KFClusterShardModule::InitModule()
-    {
-
-    }
-
     void KFClusterShardModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterShardModule::OnServerLostHandle );
         //////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &KFClusterShardModule::HandleClusterClientListReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK, &KFClusterShardModule::HandleAllocObjectToShardAck );
 
     }
 
@@ -30,6 +17,7 @@ namespace KFrame
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK );
     }
 
     uint32 KFClusterShardModule::FindProxyId( uint32 clientid )
@@ -159,7 +147,7 @@ namespace KFrame
         SendMessageToProxy( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::AddObjectToProxy( uint32 proxyid, const std::list<uint64>& objectlist )
+    void KFClusterShardModule::AddObjectToProxy( uint32 proxyid, const std::set<uint64>& objectlist )
     {
         KFMsg::S2SAddObjectToProxyReq req;
         for ( auto objectid : objectlist )
@@ -176,7 +164,7 @@ namespace KFrame
         SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::RemoveObjectToProxy( const std::list<uint64>& objectlist )
+    void KFClusterShardModule::RemoveObjectToProxy( const std::set<uint64>& objectlist )
     {
         KFMsg::S2SRemoveObjectToProxyReq req;
         for ( auto objectid : objectlist )
@@ -186,15 +174,48 @@ namespace KFrame
         SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::AllocObjectToMaster( const std::list<uint64>& objectlist )
+    void KFClusterShardModule::AllocObjectToMaster( const std::set<uint64>& objectlist )
     {
-        KFMsg::S2SAllocShardReq req;
+        KFMsg::S2SAllocObjectToMasterReq req;
         for ( auto objectid : objectlist )
         {
             req.add_objectid( objectid );
         }
 
         auto kfglobal = KFGlobal::Instance();
-        _kf_tcp_client->SendMessageToServer( kfglobal->_app_name, __KF_STRING__( master ), KFMsg::S2S_ALLOC_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToServer( kfglobal->_app_name, __KF_STRING__( master ), KFMsg::S2S_ALLOC_OBJECT_TO_MASTER_REQ, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleAllocObjectToShardAck )
+    {
+        __PROTO_PARSE__( KFMsg::S2SAllocObjectToShardAck );
+        _object_list.clear();
+
+        for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
+        {
+            _object_list.insert( kfmsg.objectid( i ) );
+        }
+
+        for ( auto& iter : _kf_alloc_object_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( _object_list );
+        }
+    }
+
+    const std::set< uint64 >& KFClusterShardModule::GetAllocObjectList()
+    {
+        return _object_list;
+    }
+
+    void KFClusterShardModule::AddAllocObjectFunction( const std::string& module, KFAllocObjectFunction& function )
+    {
+        auto kffunction = _kf_alloc_object_function.Create( module );
+        kffunction->_function = function;
+    }
+
+    void KFClusterShardModule::RemoveAllocObjectFunction( const std::string& module )
+    {
+        _kf_alloc_object_function.Remove( module );
     }
 }

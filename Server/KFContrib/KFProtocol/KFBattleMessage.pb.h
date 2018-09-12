@@ -77,6 +77,7 @@ class S2SPlayerBattleScoreAck;
 class S2SOnlieQueryBattleScoreReq;
 class S2STellRoomFinishToBattleShardReq;
 class S2STellRoomCloseToMatchShardReq;
+class S2SResetBattleRoomReq;
 
 enum BattleProtocol {
   S2S_REGISTER_BATTLE_SERVER_REQ = 11200,
@@ -122,11 +123,12 @@ enum BattleProtocol {
   S2S_BATTLE_ROOM_SCORE_BALANCE_ACK = 11240,
   S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241,
   S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242,
-  S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243
+  S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243,
+  S2S_RESET_BATTLE_ROOM_REQ = 11244
 };
 LIBPROTOC_EXPORT bool BattleProtocol_IsValid(int value);
 const BattleProtocol BattleProtocol_MIN = S2S_REGISTER_BATTLE_SERVER_REQ;
-const BattleProtocol BattleProtocol_MAX = S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK;
+const BattleProtocol BattleProtocol_MAX = S2S_RESET_BATTLE_ROOM_REQ;
 const int BattleProtocol_ARRAYSIZE = BattleProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* BattleProtocol_descriptor();
@@ -4477,6 +4479,88 @@ class LIBPROTOC_EXPORT S2STellRoomCloseToMatchShardReq : public ::google::protob
   void InitAsDefaultInstance();
   static S2STellRoomCloseToMatchShardReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SResetBattleRoomReq : public ::google::protobuf::Message {
+ public:
+  S2SResetBattleRoomReq();
+  virtual ~S2SResetBattleRoomReq();
+
+  S2SResetBattleRoomReq(const S2SResetBattleRoomReq& from);
+
+  inline S2SResetBattleRoomReq& operator=(const S2SResetBattleRoomReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SResetBattleRoomReq& default_instance();
+
+  void Swap(S2SResetBattleRoomReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SResetBattleRoomReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SResetBattleRoomReq& from);
+  void MergeFrom(const S2SResetBattleRoomReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 roomid = 1;
+  inline bool has_roomid() const;
+  inline void clear_roomid();
+  static const int kRoomidFieldNumber = 1;
+  inline ::google::protobuf::uint64 roomid() const;
+  inline void set_roomid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SResetBattleRoomReq)
+ private:
+  inline void set_has_roomid();
+  inline void clear_has_roomid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 roomid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
+  friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFBattleMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SResetBattleRoomReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -7810,6 +7894,32 @@ inline ::google::protobuf::uint64 S2STellRoomCloseToMatchShardReq::roomid() cons
   return roomid_;
 }
 inline void S2STellRoomCloseToMatchShardReq::set_roomid(::google::protobuf::uint64 value) {
+  set_has_roomid();
+  roomid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SResetBattleRoomReq
+
+// required uint64 roomid = 1;
+inline bool S2SResetBattleRoomReq::has_roomid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SResetBattleRoomReq::set_has_roomid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SResetBattleRoomReq::clear_has_roomid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SResetBattleRoomReq::clear_roomid() {
+  roomid_ = GOOGLE_ULONGLONG(0);
+  clear_has_roomid();
+}
+inline ::google::protobuf::uint64 S2SResetBattleRoomReq::roomid() const {
+  return roomid_;
+}
+inline void S2SResetBattleRoomReq::set_roomid(::google::protobuf::uint64 value) {
   set_has_roomid();
   roomid_ = value;
 }

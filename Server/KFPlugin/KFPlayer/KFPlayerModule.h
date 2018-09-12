@@ -65,6 +65,7 @@ namespace KFrame
         virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
 
         // 查找玩家
+        virtual KFEntity* FindPlayer( uint32 playerid );
         virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line );
 
         // 发送消息

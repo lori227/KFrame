@@ -9,15 +9,6 @@ namespace KFrame
         _kf_basic = nullptr;
     }
 
-    KFPublicClientModule::~KFPublicClientModule()
-    {
-
-    }
-
-    void KFPublicClientModule::InitModule()
-    {
-    }
-
     void KFPublicClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
@@ -58,8 +49,13 @@ namespace KFrame
 
     bool KFPublicClientModule::UpdatePublicData( KFEntity* player, const MapString& values )
     {
+        return UpdatePublicData( player->GetKeyID(), values );
+    }
+
+    bool KFPublicClientModule::UpdatePublicData( uint32 playerid, const MapString& values )
+    {
         KFMsg::S2SUpdatePublicDataReq req;
-        req.set_playerid( player->GetKeyID() );
+        req.set_playerid( playerid );
 
         for ( auto& iter : values )
         {
@@ -91,24 +87,6 @@ namespace KFrame
         MapString values;
         values[ kfdata->GetName() ] = kfdata->ToString();
         UpdatePublicData( player, values );
-
-        // 更新到帮派属性集群
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) )
-        {
-            return;
-        }
-        auto kfobject = player->GetData();
-        auto kfbaisc = kfobject->FindData( __KF_STRING__( basic ) );
-        auto guildid = kfbaisc->GetValue<uint64>( __KF_STRING__( guildid ) );
-        if ( _invalid_int == guildid )
-        {
-            return;
-        }
-
-        MapString guildvalues;
-        guildvalues[ kfdata->GetName() ] = kfdata->ToString();
-        _kf_guild->UpdateMemberBasic( player->GetKeyID(), guildid, guildvalues );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFPublicClientModule::OnUpdateDataCallBack )
@@ -126,7 +104,7 @@ namespace KFrame
         MapString values;
         values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
         values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OnlineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }
@@ -136,7 +114,7 @@ namespace KFrame
         MapString values;
         values[ __KF_STRING__( serverid ) ] = "0";
         values[ __KF_STRING__( groupid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OfflineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }

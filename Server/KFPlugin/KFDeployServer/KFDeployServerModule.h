@@ -17,6 +17,7 @@
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
 {
@@ -83,6 +84,16 @@ namespace KFrame
     protected:
         // 更新Agnet状态
         void UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status );
+
+        // 回发日志消息
+        template<typename... P>
+        void LogDeploy( const std::string& url, const char* myfmt, P&& ... args )
+        {
+            auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return SendLogMessage( url, msg );
+        }
+
+        void SendLogMessage( const std::string& url, const std::string& msg );
 
     private:
         KFMySQLDriver* _mysql_driver;

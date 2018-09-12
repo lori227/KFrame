@@ -77,6 +77,8 @@ namespace KFrame
         // 计划任务
         __KF_SCHEDULE_FUNCTION__( OnScheduleRefreshRankData );
 
+        // 分配排行榜回调
+        __KF_ALLOC_OBJECT_FUNCTION__( OnAllocRankCallBack );
     protected:
         // 更新排行榜
         __KF_MESSAGE_FUNCTION__( HandleUpdateRankDataReq );

@@ -86,7 +86,9 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerRegisterDirUrl );
 
     protected:
+        // 负载均衡计算小区id
         uint32 BalanceAllocZoneId();
+
     private:
         // 小区列表
         KFMap< uint32, uint32, KFDirData > _kf_dir_list;

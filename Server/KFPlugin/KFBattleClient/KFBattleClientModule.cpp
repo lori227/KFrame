@@ -299,7 +299,7 @@ namespace KFrame
 
         if ( newvalue != _invalid_int )
         {
-            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::PlayingStatus );
+            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::PlayingStatus );
         }
     }
 

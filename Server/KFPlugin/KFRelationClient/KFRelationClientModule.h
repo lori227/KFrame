@@ -20,6 +20,7 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMailClient/KFMailClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFPublicClient/KFPublicClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame

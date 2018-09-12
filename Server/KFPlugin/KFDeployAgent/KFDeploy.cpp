@@ -92,9 +92,12 @@ namespace KFrame
             return false;
         }
 
-        if ( zoneid != _zone_id )
+        if ( zoneid != _invalid_int )
         {
-            return false;
+            if ( zoneid != _zone_id )
+            {
+                return false;
+            }
         }
 
         if ( apptype == _globbing_str )

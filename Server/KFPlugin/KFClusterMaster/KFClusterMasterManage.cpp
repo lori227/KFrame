@@ -2,15 +2,6 @@
 
 namespace KFrame
 {
-    KFProxyManage::KFProxyManage()
-    {
-
-    }
-
-    KFProxyManage::~KFProxyManage()
-    {
-
-    }
 
     void KFProxyManage::AddProxyServer( const std::string& type, uint32 handleid, const std::string& name, const std::string& ip, uint32 port )
     {

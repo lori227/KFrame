@@ -76,12 +76,12 @@ namespace KFrame
     {
         if ( servername == KFGlobal::Instance()->_app_name && servertype == __KF_STRING__( master ) )
         {
-            std::list< uint64 > objectlist;
+            std::set< uint64 > objectlist;
 
             for ( auto& iter : _kf_match_config->_kf_match_setting._objects )
             {
                 auto kfsetting = iter.second;
-                objectlist.push_back( kfsetting->_match_id );
+                objectlist.insert( kfsetting->_match_id );
             }
 
             _kf_cluster_shard->AllocObjectToMaster( objectlist );

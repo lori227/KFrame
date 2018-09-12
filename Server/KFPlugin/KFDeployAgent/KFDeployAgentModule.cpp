@@ -1,5 +1,5 @@
 ﻿#include "KFDeployAgentModule.h"
-#include "KFProtocol/KFProtocol.h"
+#include "KFJson.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <windows.h>
@@ -133,9 +133,11 @@ namespace KFrame
         // 连接成功
         if ( servername == __KF_STRING__( deploy ) && servertype == __KF_STRING__( server ) )
         {
-            _deploy_server_id = serverid;
-
             auto kfglobal = KFGlobal::Instance();
+
+            KFAppID kfappid( serverid );
+            kfappid._union._app_data._channel_id = kfglobal->_app_channel;
+            _deploy_server_id = kfappid._union._app_id;
 
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;
@@ -394,8 +396,7 @@ namespace KFrame
 
     uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata )
     {
-        auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'",
-                                          __KF_STRING__( appid ), deploydata->_app_id );
+        auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'", __KF_STRING__( appid ), deploydata->_app_id );
         return KFUtility::ToValue< uint32 >( strprocessid );
     }
 
@@ -538,11 +539,23 @@ namespace KFrame
         }
     }
 
+    void KFDeployAgentModule::SendLogMessage( const std::string& url, const std::string& msg )
+    {
+        __LOG_DEBUG__( KFLogEnum::Logic, "{}", msg );
+
+        if ( !url.empty() )
+        {
+            KFJson response;
+            response[ __KF_STRING__( msg ) ] = __FORMAT__( "agent[{}] {}", KFGlobal::Instance()->_str_app_id, msg );
+            _kf_http_client->StartMTHttpClient( url, response, false );
+        }
+    }
+
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
     {
         __PROTO_PARSE__( KFMsg::S2SDeployCommandToAgentReq );
 
-        auto pbdeploy = &kfmsg.deploycommand();
+        auto pbdeploy = kfmsg.mutable_deploycommand();
 
         // 判断是否agent的进程
         auto ok = IsAgentDeploy( pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
@@ -553,20 +566,21 @@ namespace KFrame
 
         if ( pbdeploy->command() == __KF_STRING__( restart ) )
         {
-            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
-            AddDeployTask( __KF_STRING__( download ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
-            AddDeployTask( __KF_STRING__( startup ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy );
+            AddDeployTask( __KF_STRING__( download ), pbdeploy );
+            AddDeployTask( __KF_STRING__( startup ), pbdeploy );
         }
         else if ( pbdeploy->command() == __KF_STRING__( version ) )
         {
             if ( pbdeploy->value() == _invalid_str )
             {
-                return __LOG_ERROR__( KFLogEnum::Logic, "version value is empty!" );
+                LogDeploy( pbdeploy->logurl(), "version value is empty!" );
+                return;
             }
 
-            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
-            AddDeployTask( __KF_STRING__( wget ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
-            AddDeployTask( __KF_STRING__( startup ), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy );
+            AddDeployTask( __KF_STRING__( wget ), pbdeploy );
+            AddDeployTask( __KF_STRING__( startup ), pbdeploy );
         }
         else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
         {
@@ -581,24 +595,26 @@ namespace KFrame
                 __KF_DESTROY__( KFDeployTask, _kf_task );
                 _kf_task = nullptr;
             }
+
+            LogDeploy( pbdeploy->logurl(), "task cleanup ok!" );
         }
         else
         {
-            AddDeployTask( pbdeploy->command(), pbdeploy->value(), pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+            AddDeployTask( pbdeploy->command(), pbdeploy );
         }
     }
 
-    void KFDeployAgentModule::AddDeployTask( const std::string& command, const std::string& value,
-            uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    void KFDeployAgentModule::AddDeployTask( const std::string& command, KFMsg::PBDeployCommand* pbdeploy )
     {
         auto kftask = __KF_CREATE__( KFDeployTask );
         kftask->_command = command;
-        kftask->_value = value;
-        kftask->_app_name = appname;
-        kftask->_app_type = apptype;
-        kftask->_app_id = appid;
-        kftask->_zone_id = zoneid;
-        kftask->_app_channel = appchannel;
+        kftask->_value = pbdeploy->value();
+        kftask->_app_name = pbdeploy->appname();
+        kftask->_app_type = pbdeploy->apptype();
+        kftask->_app_id = pbdeploy->appid();
+        kftask->_zone_id = pbdeploy->zoneid();
+        kftask->_app_channel = pbdeploy->appchannel();
+        kftask->_log_url = pbdeploy->logurl();
 
         if ( _kf_task == nullptr )
         {
@@ -609,8 +625,10 @@ namespace KFrame
         {
             _deploy_task.push_back( kftask );
 
-            __LOG_INFO__( KFLogEnum::Logic, "add task [{}:{} | {}:{}:{}:{}:{}] tasklist cout[{}]!",
-                          command, value, appchannel, appname, apptype, appid, zoneid, _deploy_task.size() );
+            LogDeploy( pbdeploy->logurl(), "add task [{}:{} | {}:{}:{}:{}:{}] tasklist cout[{}]!",
+                       pbdeploy->command(), pbdeploy->value(),
+                       pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(),
+                       pbdeploy->appid(), pbdeploy->zoneid(), _deploy_task.size() );
         }
     }
 
@@ -621,9 +639,9 @@ namespace KFrame
             auto ok = CheckTaskFinish();
             if ( ok )
             {
-                __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}:{}] task finish!",
-                              _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
-                              _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+                LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}:{}] task finish!",
+                           _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
+                           _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
                 __KF_DESTROY__( KFDeployTask, _kf_task );
                 _kf_task = nullptr;
@@ -690,9 +708,9 @@ namespace KFrame
 
         try
         {
-            __LOG_INFO__( KFLogEnum::Logic, "[{}:{} | {}:{}:{}:{}:{}] task start!",
-                          _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
-                          _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}:{}] task start!",
+                       _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
+                       _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
             if ( _kf_task->_command == __KF_STRING__( startup ) )
             {
@@ -725,11 +743,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "start task exception={}!", exception.what() );
+            LogDeploy( _kf_task->_log_url, "start task exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "start task exception unknown!" );
+            LogDeploy( _kf_task->_log_url, "start task exception unknown!" );
         }
     }
 
@@ -969,7 +987,7 @@ namespace KFrame
             ExecuteShell( "echo {} > {}/version.txt", version, deploypath );
         }
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] update version ok!", _kf_task->_app_name );
+        LogDeploy( _kf_task->_log_url, "[{}] update version ok!", _kf_task->_app_name );
 #endif
 
         // 更新版本号

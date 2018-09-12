@@ -124,6 +124,8 @@ class MsgReviewApplyReq;
 class MsgDissolveGuildReq;
 class MsgModifyGuildMedalReq;
 class MsgQueryGuildListReq;
+class MsgQueryGuildListAck;
+class MsgKickMemberReq;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -213,11 +215,12 @@ enum ClientProtocol {
   MSG_DISSOLVE_GUILD_REQ = 207,
   MSG_MODIFY_GUILD_MEDAL_REQ = 208,
   MSG_QUERY_GUILD_LIST_REQ = 209,
-  MSG_QUERY_GUILD_LIST_ACK = 210
+  MSG_QUERY_GUILD_LIST_ACK = 210,
+  MSG_KICK_MEMBER_REQ = 211
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_QUERY_GUILD_LIST_ACK;
+const ClientProtocol ClientProtocol_MAX = MSG_KICK_MEMBER_REQ;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -8394,6 +8397,173 @@ class LIBPROTOC_EXPORT MsgQueryGuildListReq : public ::google::protobuf::Message
   void InitAsDefaultInstance();
   static MsgQueryGuildListReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryGuildListAck : public ::google::protobuf::Message {
+ public:
+  MsgQueryGuildListAck();
+  virtual ~MsgQueryGuildListAck();
+
+  MsgQueryGuildListAck(const MsgQueryGuildListAck& from);
+
+  inline MsgQueryGuildListAck& operator=(const MsgQueryGuildListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryGuildListAck& default_instance();
+
+  void Swap(MsgQueryGuildListAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryGuildListAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryGuildListAck& from);
+  void MergeFrom(const MsgQueryGuildListAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBStrings guilddatas = 1;
+  inline int guilddatas_size() const;
+  inline void clear_guilddatas();
+  static const int kGuilddatasFieldNumber = 1;
+  inline const ::KFMsg::PBStrings& guilddatas(int index) const;
+  inline ::KFMsg::PBStrings* mutable_guilddatas(int index);
+  inline ::KFMsg::PBStrings* add_guilddatas();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
+      guilddatas() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
+      mutable_guilddatas();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryGuildListAck)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings > guilddatas_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryGuildListAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgKickMemberReq : public ::google::protobuf::Message {
+ public:
+  MsgKickMemberReq();
+  virtual ~MsgKickMemberReq();
+
+  MsgKickMemberReq(const MsgKickMemberReq& from);
+
+  inline MsgKickMemberReq& operator=(const MsgKickMemberReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgKickMemberReq& default_instance();
+
+  void Swap(MsgKickMemberReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgKickMemberReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgKickMemberReq& from);
+  void MergeFrom(const MsgKickMemberReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 toplayerid = 1;
+  inline bool has_toplayerid() const;
+  inline void clear_toplayerid();
+  static const int kToplayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 toplayerid() const;
+  inline void set_toplayerid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgKickMemberReq)
+ private:
+  inline void set_has_toplayerid();
+  inline void clear_has_toplayerid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 toplayerid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgKickMemberReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -14122,6 +14292,61 @@ inline ::google::protobuf::uint32 MsgQueryGuildListReq::cursor() const {
 inline void MsgQueryGuildListReq::set_cursor(::google::protobuf::uint32 value) {
   set_has_cursor();
   cursor_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryGuildListAck
+
+// repeated .KFMsg.PBStrings guilddatas = 1;
+inline int MsgQueryGuildListAck::guilddatas_size() const {
+  return guilddatas_.size();
+}
+inline void MsgQueryGuildListAck::clear_guilddatas() {
+  guilddatas_.Clear();
+}
+inline const ::KFMsg::PBStrings& MsgQueryGuildListAck::guilddatas(int index) const {
+  return guilddatas_.Get(index);
+}
+inline ::KFMsg::PBStrings* MsgQueryGuildListAck::mutable_guilddatas(int index) {
+  return guilddatas_.Mutable(index);
+}
+inline ::KFMsg::PBStrings* MsgQueryGuildListAck::add_guilddatas() {
+  return guilddatas_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >&
+MsgQueryGuildListAck::guilddatas() const {
+  return guilddatas_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBStrings >*
+MsgQueryGuildListAck::mutable_guilddatas() {
+  return &guilddatas_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgKickMemberReq
+
+// required uint32 toplayerid = 1;
+inline bool MsgKickMemberReq::has_toplayerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgKickMemberReq::set_has_toplayerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgKickMemberReq::clear_has_toplayerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgKickMemberReq::clear_toplayerid() {
+  toplayerid_ = 0u;
+  clear_has_toplayerid();
+}
+inline ::google::protobuf::uint32 MsgKickMemberReq::toplayerid() const {
+  return toplayerid_;
+}
+inline void MsgKickMemberReq::set_toplayerid(::google::protobuf::uint32 value) {
+  set_has_toplayerid();
+  toplayerid_ = value;
 }
 
 

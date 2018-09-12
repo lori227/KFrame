@@ -14,7 +14,8 @@ namespace KFrame
         StatusDisconnetRoom = 3,	// 玩家断线状态
         StatusLoginRoom = 4,		// 玩家登陆状态
         StatusPlayingRoom = 5,		// 玩家游戏状态
-        StatusLeaveRoom = 6,		// 玩家离开状态
+        StatusScoreBalance = 6,		// 玩家结算状态
+        StatusLeaveRoom = 7,		// 玩家离开状态
     };
 
     class KFBattleCamp;
@@ -63,6 +64,9 @@ namespace KFrame
 
         // 离开战场
         void FinishLeaveRoom();
+
+        // 重置状态
+        void ResetRoomStatus();
 
         // 发送消息到客户端
         bool SendMessageToClient( uint32 msgid, google::protobuf::Message* message );

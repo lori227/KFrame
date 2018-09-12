@@ -64,7 +64,7 @@ namespace KFrame
 
         for ( auto& iter : _update_rank_list )
         {
-            auto player = _kf_player->FindPlayer( iter.first, __FUNC_LINE__ );
+            auto player = _kf_player->FindPlayer( iter.first );
             if ( player == nullptr )
             {
                 continue;

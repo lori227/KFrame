@@ -5,7 +5,7 @@
 		<Plugin Sort="110" Name="KFDisplay" Config=""/>
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="130" Name="KFGroupShard" Config=""/>
-		<Plugin Sort="140" Name="KFOption" Config="./setting/option.setting"/>	
+		<Plugin Sort="140" Name="KFOption" Config="./config/option.config"/>	
 		<Plugin Sort="150" Name="KFKernel" Config="./config/class.config"/>
 	</Plugins>
 </Setting>

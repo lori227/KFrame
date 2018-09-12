@@ -61,12 +61,12 @@ namespace KFrame
 
     void KFGroupShardModule::OnServerDiscoverGroupProxy( uint32 proxyid )
     {
-        std::list< uint64 > grouplist;
+        std::set< uint64 > grouplist;
 
         auto* kfgroup = _kf_component->FirstEntity();
         while ( kfgroup != nullptr )
         {
-            grouplist.push_back( kfgroup->GetKeyID() );
+            grouplist.insert( kfgroup->GetKeyID() );
             kfgroup = _kf_component->NextEntity();
         }
 
@@ -348,7 +348,7 @@ namespace KFrame
         {
             auto pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( status ) );
-            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::StatusEnum::GroupStatus ) );
+            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::GroupStatus ) );
         }
         SendUpdateMemberToGroup( kfmsg.groupid(), kfmemberrecord, kfquerymember, __KF_STRING__( basic ), pbstrings );
 
@@ -415,7 +415,7 @@ namespace KFrame
 
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( status ) );
-            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::StatusEnum::OfflineStatus ) );
+            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::OfflineStatus ) );
 
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( prepare ) );

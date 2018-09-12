@@ -10,32 +10,26 @@ namespace KFrame
 
     bool KFDirConfig::LoadConfig()
     {
-        try
+        _dir_list_type.clear();
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto dirlisttypes = config.FindNode( "DirListTypes" );
+        _default_dir_list_type = dirlisttypes.GetUInt32( "Default" );
+
+        auto dirlisttype = dirlisttypes.FindNode( "DirListType" );
+        while ( dirlisttype.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
+            KFDirListType kftype;
 
-            //////////////////////////////////////////////////////////////////
-            auto dirlisttypes = config.FindNode( "DirListTypes" );
-            _default_dir_list_type = dirlisttypes.GetUInt32( "Default" );
+            kftype._min_channel = dirlisttype.GetUInt32( "MinChannel" );
+            kftype._max_channel = dirlisttype.GetUInt32( "MaxChannel" );
+            kftype._list_type = dirlisttype.GetUInt32( "Type" );
+            _dir_list_type.push_back( kftype );
 
-            auto dirlisttype = dirlisttypes.FindNode( "DirListType" );
-            while ( dirlisttype.IsValid() )
-            {
-                KFDirListType kftype;
-
-                kftype._min_channel = dirlisttype.GetUInt32( "MinChannel" );
-                kftype._max_channel = dirlisttype.GetUInt32( "MaxChannel" );
-                kftype._list_type = dirlisttype.GetUInt32( "Type" );
-                _dir_list_type.push_back( kftype );
-
-                dirlisttype.NextNode();
-            }
+            dirlisttype.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

@@ -309,7 +309,7 @@ namespace KFrame
         __STRING_DEFINE__( groupinviterefusetime );
         __STRING_DEFINE__( wishordermaxcount );
         __STRING_DEFINE__( matchscore );
-        __STRING_DEFINE__( delnow );
+        __STRING_DEFINE__( mailreceiveremove );
         __STRING_DEFINE__( mailmaxcount );
         __STRING_DEFINE__( wholemailcleartime );
         __STRING_DEFINE__( multipledata );
@@ -328,8 +328,8 @@ namespace KFrame
         __STRING_DEFINE__( recentkeeptime );
         __STRING_DEFINE__( guildrank );
         __STRING_DEFINE__( cleantask );
-
-
+        __STRING_DEFINE__( callback );
+        __STRING_DEFINE__( msg );
 
     }
 }

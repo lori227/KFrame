@@ -5,6 +5,8 @@
 
 namespace KFrame
 {
+    typedef std::function< void( const std::set< uint64 >& objectlist ) > KFAllocObjectFunction;
+
     class KFClusterShardInterface : public KFModule
     {
     public:
@@ -35,20 +37,47 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////
         // 注册对象映射
         virtual void AddObjectToProxy( uint64 objectid ) = 0;
-        virtual void AddObjectToProxy( uint32 proxyid, const std::list< uint64 >& objectlist ) = 0;
+        virtual void AddObjectToProxy( uint32 proxyid, const std::set< uint64 >& objectlist ) = 0;
 
         // 删除对象映射
         virtual void RemoveObjectToProxy( uint64 objectid ) = 0;
-        virtual void RemoveObjectToProxy( const std::list< uint64 >& objectlist ) = 0;
+        virtual void RemoveObjectToProxy( const std::set< uint64 >& objectlist ) = 0;
 
         // 分配Shard
-        virtual void AllocObjectToMaster( const std::list< uint64 >& objectlist ) = 0;
+        virtual void AllocObjectToMaster( const std::set< uint64 >& objectlist ) = 0;
+        virtual const std::set< uint64 >& GetAllocObjectList() = 0;
+
+        template< class T >
+        void RegisterAllocObjectFunction( T* object, void ( T::*handle )( const std::set< uint64 >& objectlist ) )
+        {
+            KFAllocObjectFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddAllocObjectFunction( typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterAllocObjectFunction( T* object )
+        {
+            RemoveAllocObjectFunction( typeid( T ).name() );
+        }
+
+    protected:
+        virtual void AddAllocObjectFunction( const std::string& module, KFAllocObjectFunction& function ) = 0;
+        virtual void RemoveAllocObjectFunction( const std::string& module ) = 0;
     };
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_cluster_shard, KFClusterShardInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __KF_ALLOC_OBJECT_FUNCTION__( function ) \
+    void function( const std::set< uint64 >& objectlist )
+
+#define __REGISTER_ALLOC_OBJECT_FUNCTION__( function ) \
+    _kf_cluster_shard->RegisterAllocObjectFunction( this, function )
+
+#define __UNREGISTER_ALLOC_OBJECT_FUNCTION__() \
+    _kf_cluster_shard->UnRegisterAllocObjectFunction( this )
 }
 
 

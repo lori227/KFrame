@@ -84,7 +84,6 @@ namespace KFrame
     bool KFRelationClientModule::SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
     {
         auto serverid = kfrelation->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-
         if ( serverid == _invalid_int )
         {
             return false;
@@ -116,7 +115,7 @@ namespace KFrame
         // 通知所有好友,我下线了
         MapString values;
         values[ __KF_STRING__( groupid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OfflineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         SendUpdateToFriend( player, values );
     }
@@ -153,7 +152,6 @@ namespace KFrame
     {
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-
         if ( kffriendrecord == nullptr )
         {
             return;
@@ -161,6 +159,7 @@ namespace KFrame
 
         KFMsg::S2SUpdateFriendReq req;
         req.set_friendid( player->GetKeyID() );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
 
         for ( auto iter : values )
         {
@@ -170,7 +169,6 @@ namespace KFrame
         }
 
         auto kffriend = kffriendrecord->FirstData();
-
         while ( kffriend != nullptr )
         {
             SendMessageToRelation( kffriend, KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
@@ -211,20 +209,49 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendReq )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateFriendReq );
+        __PROTO_PARSE__( KFMsg::S2SUpdateFriendReq );
 
-        auto kfobject = player->GetData();
-        auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.friendid(), __KF_STRING__( basic ) );
-
-        if ( kfbasic == nullptr )
+        auto playerid = __KF_DATA_ID__( kfguid );
+        auto player = _kf_player->FindPlayer( playerid );
+        if ( player == nullptr )
         {
-            return;
+            // 信息不同步时候, 设置玩家不在线
+            // 如果game宕机, 不会发送下线消息, 然后该玩家不在上线, 状态会一直显示在线
+            MapString values;
+            values[ __KF_STRING__( serverid ) ] = "0";
+            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
+            values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+            _kf_public->UpdatePublicData( playerid, values );
+
+            // 同步给好友, 避免每次都更新消息过来
+            if ( kfmsg.serverid() != _invalid_int )
+            {
+                KFMsg::S2SUpdateFriendReq req;
+                req.set_friendid( playerid );
+                req.set_serverid( _invalid_int );
+                for ( auto iter : values )
+                {
+                    auto pbdata = req.add_pbdata();
+                    pbdata->set_name( iter.first );
+                    pbdata->set_value( iter.second );
+                }
+                _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.friendid(), KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
+            }
         }
-
-        for ( auto i = 0; i < kfmsg.pbdata_size(); ++i )
+        else
         {
-            auto pbdata = &kfmsg.pbdata( i );
-            player->UpdateData( kfbasic, pbdata->name(), pbdata->value() );
+            auto kfobject = player->GetData();
+            auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.friendid(), __KF_STRING__( basic ) );
+            if ( kfbasic == nullptr )
+            {
+                return;
+            }
+
+            for ( auto i = 0; i < kfmsg.pbdata_size(); ++i )
+            {
+                auto pbdata = &kfmsg.pbdata( i );
+                player->UpdateData( kfbasic, pbdata->name(), pbdata->value() );
+            }
         }
     }
 
@@ -238,9 +265,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbfriend_size(); ++i )
         {
             auto pbfriend = &kfmsg.pbfriend( i );
-
             auto kffriend = _kf_kernel->CreateObject( kffreindrecord->GetDataSetting() );
-
             if ( kffriend == nullptr )
             {
                 continue;
@@ -252,7 +277,7 @@ namespace KFrame
 
         // 通知所有好友,我上线了
         MapString values;
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::StatusEnum::OnlineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
 
@@ -269,9 +294,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbfriend_size(); ++i )
         {
             auto pbfriend = &kfmsg.pbfriend( i );
-
             auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
-
             if ( kfinvite == nullptr )
             {
                 continue;
@@ -332,9 +355,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
-
         auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
-
         if ( kfinvite == nullptr )
         {
             return;
@@ -354,7 +375,6 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
         auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
-
         if ( kffriend == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
@@ -365,7 +385,6 @@ namespace KFrame
         req.set_selfplayerid( playerid );
         req.set_targetplayerid( kfmsg.playerid() );
         auto ok = SendMessageToRelation( KFMsg::S2S_DEL_FRIEND_REQ, &req );
-
         if ( ok )
         {
             auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
@@ -373,7 +392,6 @@ namespace KFrame
 
             player->RemoveData( kffriendrecord, kfmsg.playerid() );
         }
-
         else
         {
             _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
@@ -387,7 +405,6 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
         auto kffriend = kffriendrecord->FindData( kfmsg.targetplayerid() );
-
         if ( kffriend == nullptr )
         {
             return;
@@ -408,7 +425,6 @@ namespace KFrame
         {
             ReplyFriendInvite( player, kfmsg.operate() );
         }
-
         else
         {
             ReplyFriendInvite( player, kfmsg.playerid(), kfmsg.operate() );
@@ -423,7 +439,6 @@ namespace KFrame
         std::vector<uint32> removelist;
 
         auto kfinvite = kfinviterecord->FirstData();
-
         while ( kfinvite != nullptr )
         {
             auto removeid = ReplyFriendInvite( player, kfinvite, operate );

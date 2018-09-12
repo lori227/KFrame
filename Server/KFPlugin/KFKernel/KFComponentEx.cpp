@@ -135,15 +135,17 @@ namespace KFrame
         _entitys.Insert( key, kfentity );
     }
 
+    KFEntity* KFComponentEx::FindEntity( uint64 key )
+    {
+        return _entitys.Find( key );
+    }
+
     KFEntity* KFComponentEx::FindEntity( uint64 key, const char* function, uint32 line )
     {
         auto kfentity = _entitys.Find( key );
         if ( kfentity == nullptr )
         {
-            if ( line != _invalid_int )
-            {
-                __LOG_INFO__( KFLogEnum::Logic, "can't find entity[{}:{}]!", _component_name, key );
-            }
+            __LOG_INFO__( KFLogEnum::Logic, "can't find entity[{}:{}]!", _component_name, key );
         }
 
         return kfentity;

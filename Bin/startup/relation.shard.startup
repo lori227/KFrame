@@ -8,6 +8,6 @@
 		<Plugin Sort="140" Name="KFSchedule" Config=""/>
 		<Plugin Sort="150" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="160" Name="KFRelationShard" Config=""/>		
-		<Plugin Sort="170" Name="KFOption" Config="./setting/option.setting"/>		
+		<Plugin Sort="170" Name="KFOption" Config="./config/option.config"/>		
 	</Plugins>
 </Setting>

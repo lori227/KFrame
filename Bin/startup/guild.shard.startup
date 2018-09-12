@@ -6,7 +6,7 @@
 		<Plugin Sort="110" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="120" Name="KFSchedule" Config=""/>
 		<Plugin Sort="130" Name="KFDisplay" Config=""/>
-		<Plugin Sort="140" Name="KFOption" Config="./setting/option.setting"/>
+		<Plugin Sort="140" Name="KFOption" Config="./config/option.config"/>
 		<Plugin Sort="150" Name="KFRedis" Config="./setting/redis.address"/>
 		<Plugin Sort="160" Name="KFKernel" Config="./config/class.config"/>
 		<Plugin Sort="170" Name="KFGuildShard" Config="./config/guild.config"/>

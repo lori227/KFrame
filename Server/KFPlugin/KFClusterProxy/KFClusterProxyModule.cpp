@@ -4,19 +4,6 @@
 
 namespace KFrame
 {
-    KFClusterProxyModule::KFClusterProxyModule()
-    {
-
-    }
-
-    KFClusterProxyModule::~KFClusterProxyModule()
-    {
-    }
-
-    void KFClusterProxyModule::InitModule()
-    {
-    }
-
     void KFClusterProxyModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +19,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleAddObjectToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleRemoveObjectToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ, &KFClusterProxyModule::HandleSendToObjectReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_ACK, &KFClusterProxyModule::HandleAllocShardAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &KFClusterProxyModule::HandleAllocObjectToProxyAck );
 
     }
 
@@ -56,7 +43,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_SHARD_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK );
     }
 
     void KFClusterProxyModule::Run()
@@ -265,8 +252,7 @@ namespace KFrame
         kftoken->_gate_id = kfmsg.gateid();
         kftoken->_valid_time = KFGlobal::Instance()->_real_time + 60;
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "update client[{}] token[{}]!",
-                       kftoken->_gate_id, kftoken->_token );
+        __LOG_DEBUG__( KFLogEnum::Logic, "update client[{}] token[{}]!", KFAppID::ToString( kftoken->_gate_id ), kftoken->_token );
     }
 
     uint32 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint32 serverid )
@@ -301,13 +287,13 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] cluster verify ok!",
-                           kfmsg.serverid(), kfmsg.token(), serverid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}] cluster verify ok!",
+                           KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "[{}:{}] cluster verify failed!",
-                           kfmsg.serverid(), kfmsg.token(), serverid );
+            __LOG_ERROR__( KFLogEnum::System, "[{}:{}:{}] cluster verify failed!",
+                           KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
     }
 
@@ -321,7 +307,7 @@ namespace KFrame
             shardserverid = SelectClusterShard( handleid, true );
             if ( shardserverid == _invalid_int )
             {
-                __LOG_ERROR__( KFLogEnum::System, "handleid[{}] can not select shard!", handleid );
+                __LOG_ERROR__( KFLogEnum::System, "handleid[{}] can not select shard!", KFAppID::ToString( handleid ) );
                 return false;
             }
         }
@@ -347,16 +333,16 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_object_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, shardid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
 
         // 添加数量
         AddObjectCount( shardid, kfmsg.objectid_size() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleAllocShardAck )
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleAllocObjectToProxyAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SAllocShardAck );
+        __PROTO_PARSE__( KFMsg::S2SAllocObjectToProxyAck );
 
         _kf_object_shard.clear();
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
@@ -365,7 +351,7 @@ namespace KFrame
             auto shardid = kfmsg.shardid( i );
             _kf_object_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, shardid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
     }
 

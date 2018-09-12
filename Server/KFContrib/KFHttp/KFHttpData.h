@@ -16,7 +16,7 @@ namespace KFrame
         void Request();
 
         // 访问结束
-        void Finish();
+        void Response();
     public:
         // 访问地址
         std::string _url;

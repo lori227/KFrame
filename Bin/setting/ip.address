@@ -7,6 +7,9 @@
 	<TcpServer>
 		<!-- 部署服务器 -->
 		<Server AppName="deploy" AppType="server" AppId="0.0.2.1" Ip="127.0.0.1" Type="0" Port="10000">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -19,6 +22,9 @@
 
 		<!-- data服务器 -->
 		<Server AppName="data" AppType="master" AppId="0.0.11.1" Ip="127.0.0.1" Type="0" Port="10001">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -31,6 +37,9 @@
 
 		<!-- public服务器 -->
 		<Server AppName="public" AppType="master" AppId="0.0.21.1" Ip="127.0.0.1" Type="0" Port="10002">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -43,6 +52,9 @@
 
 		<!-- route服务器 -->
 		<Server AppName="route" AppType="master" AppId="0.0.31.1" Ip="127.0.0.1" Type="0" Port="10003">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -55,6 +67,9 @@
 
 		<!-- match服务器 -->
 		<Server AppName="match" AppType="master" AppId="0.0.41.1" Ip="127.0.0.1" Type="0" Port="10004">	
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -67,6 +82,9 @@
 
 		<!-- battle服务器 -->
 		<Server AppName="battle" AppType="master" AppId="0.0.51.1" Ip="127.0.0.1" Type="0" Port="10005">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -79,6 +97,9 @@
 
 		<!-- mail服务器 -->
 		<Server AppName="mail" AppType="master" AppId="0.0.61.1" Ip="127.0.0.1" Type="0" Port="10006">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -91,6 +112,9 @@
 
 		<!-- relation服务器 -->
 		<Server AppName="relation" AppType="master" AppId="0.0.71.1" Ip="127.0.0.1" Type="0" Port="10007">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -103,6 +127,9 @@
 
 		<!-- group服务器 -->
 		<Server AppName="group" AppType="master" AppId="0.0.81.1" Ip="127.0.0.1" Type="0" Port="10008">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -115,6 +142,9 @@
 
 		<!-- rank服务器 -->
 		<Server AppName="rank" AppType="master" AppId="0.0.91.1" Ip="127.0.0.1" Type="0" Port="10009">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -127,8 +157,11 @@
 
 		<!-- guild服务器 -->
 		<Server AppName="guild" AppType="master" AppId="0.0.101.1" Ip="127.0.0.1" Type="0" Port="10010">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.1.57"/>
+
 			<!--内网测试-->
-			<Channel ChannelId="101" Ip="192.168.1.57"/>
+			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
 			<!--外网测试-->
 			<Channel ChannelId="1" Ip="10.105.6.78"/>
@@ -139,6 +172,9 @@
 
 		<!-- log服务器 -->
 		<Server AppName="log" AppType="master" AppId="0.0.111.1" Ip="127.0.0.1" Type="0" Port="10011">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -151,6 +187,9 @@
 
 		<!-- dir服务器 -->
 		<Server AppName="dir" AppType="master" AppId="0.0.121.1" Ip="127.0.0.1" Type="0" Port="10012">
+			<!--内网研发-->
+			<Channel ChannelId="100" Ip="192.168.10.230"/>
+
 			<!--内网测试-->
 			<Channel ChannelId="101" Ip="192.168.1.9"/>
 
@@ -172,7 +211,7 @@
     	<!-- port 起始端口 ps:如果使用域名, port不用填, ""就可以-->
 		
 		<!-- 默认 -->
-		<Channel ChannelId="100" Ip="127.0.0.1" Port="7777"/>
+		<Channel ChannelId="100" Ip="192.168.10.230" Port="7777"/>
 
 		<!-- 内网测试 -->
 		<Channel ChannelId="101" Ip="192.168.1.9" Port="7777"/>

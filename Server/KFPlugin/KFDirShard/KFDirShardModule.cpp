@@ -62,10 +62,6 @@ namespace KFrame
             kfdirdata->_zone_id = kfmsg.zoneid();
             kfdirdata->_zone_channel = kfmsg.zonechannel();
             _kf_dir_list.Insert( kfmsg.zoneid(), kfdirdata );
-
-            // 保存到均衡表
-            auto redisdriver = __DIR_REDIS_DRIVER__;
-            redisdriver->Execute( "zincrby {} 0 {}", __KF_STRING__( zonebalance ), kfmsg.zoneid() );
         }
 
         kfdirdata->_zone_name = kfmsg.zonename();
@@ -76,6 +72,10 @@ namespace KFrame
             kfdirdata->_zone_ip = kfmsg.ip();
             kfdirdata->_zone_port = kfmsg.port();
         }
+
+        // 保存到均衡表
+        auto redisdriver = __DIR_REDIS_DRIVER__;
+        redisdriver->Execute( "zincrby {} 0 {}", __KF_STRING__( zonebalance ), kfmsg.zoneid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDirShardModule::HandleRemoveOnlineToDirReq )
@@ -88,9 +88,9 @@ namespace KFrame
             if ( kfdirdata->_app_id == kfmsg.appid() )
             {
                 kfdirdata->_app_id = _invalid_int;
-                kfdirdata->_online_count = std::numeric_limits<uint32>::max();
                 kfdirdata->_zone_ip = _invalid_str;
                 kfdirdata->_zone_port = _invalid_int;
+                kfdirdata->_online_count = std::numeric_limits<uint32>::max();
             }
         }
     }
@@ -166,7 +166,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        redisdriver->Execute( "zincrby {} 1 {}", __KF_STRING__( zonebalance ), 1 );
+        redisdriver->Execute( "zincrby {} 1 {}", __KF_STRING__( zonebalance ), zoneid );
         return zoneid;
     }
 }

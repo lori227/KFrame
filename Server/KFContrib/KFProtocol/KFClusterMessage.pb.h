@@ -45,8 +45,9 @@ class S2SClusterClientListReq;
 class S2SAddObjectToProxyReq;
 class S2SRemoveObjectToProxyReq;
 class S2SSendToClusterObjectReq;
-class S2SAllocShardReq;
-class S2SAllocShardAck;
+class S2SAllocObjectToMasterReq;
+class S2SAllocObjectToProxyAck;
+class S2SAllocObjectToShardAck;
 
 enum ClusterProtocol {
   S2S_CLUSTER_REGISTER_REQ = 10101,
@@ -60,12 +61,13 @@ enum ClusterProtocol {
   S2S_ADD_OBJECT_TO_PROXY_REQ = 10109,
   S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110,
   S2S_SEND_TO_CLUSTER_OBJECT_REQ = 10111,
-  S2S_ALLOC_SHARD_REQ = 10112,
-  S2S_ALLOC_SHARD_ACK = 10113
+  S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112,
+  S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113,
+  S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114
 };
 LIBPROTOC_EXPORT bool ClusterProtocol_IsValid(int value);
 const ClusterProtocol ClusterProtocol_MIN = S2S_CLUSTER_REGISTER_REQ;
-const ClusterProtocol ClusterProtocol_MAX = S2S_ALLOC_SHARD_ACK;
+const ClusterProtocol ClusterProtocol_MAX = S2S_ALLOC_OBJECT_TO_SHARD_ACK;
 const int ClusterProtocol_ARRAYSIZE = ClusterProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClusterProtocol_descriptor();
@@ -1246,14 +1248,14 @@ class LIBPROTOC_EXPORT S2SSendToClusterObjectReq : public ::google::protobuf::Me
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAllocShardReq : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SAllocObjectToMasterReq : public ::google::protobuf::Message {
  public:
-  S2SAllocShardReq();
-  virtual ~S2SAllocShardReq();
+  S2SAllocObjectToMasterReq();
+  virtual ~S2SAllocObjectToMasterReq();
 
-  S2SAllocShardReq(const S2SAllocShardReq& from);
+  S2SAllocObjectToMasterReq(const S2SAllocObjectToMasterReq& from);
 
-  inline S2SAllocShardReq& operator=(const S2SAllocShardReq& from) {
+  inline S2SAllocObjectToMasterReq& operator=(const S2SAllocObjectToMasterReq& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1267,17 +1269,17 @@ class LIBPROTOC_EXPORT S2SAllocShardReq : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAllocShardReq& default_instance();
+  static const S2SAllocObjectToMasterReq& default_instance();
 
-  void Swap(S2SAllocShardReq* other);
+  void Swap(S2SAllocObjectToMasterReq* other);
 
   // implements Message ----------------------------------------------
 
-  S2SAllocShardReq* New() const;
+  S2SAllocObjectToMasterReq* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SAllocShardReq& from);
-  void MergeFrom(const S2SAllocShardReq& from);
+  void CopyFrom(const S2SAllocObjectToMasterReq& from);
+  void MergeFrom(const S2SAllocObjectToMasterReq& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1312,7 +1314,7 @@ class LIBPROTOC_EXPORT S2SAllocShardReq : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_objectid();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocShardReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToMasterReq)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -1327,18 +1329,18 @@ class LIBPROTOC_EXPORT S2SAllocShardReq : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_KFClusterMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SAllocShardReq* default_instance_;
+  static S2SAllocObjectToMasterReq* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAllocShardAck : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SAllocObjectToProxyAck : public ::google::protobuf::Message {
  public:
-  S2SAllocShardAck();
-  virtual ~S2SAllocShardAck();
+  S2SAllocObjectToProxyAck();
+  virtual ~S2SAllocObjectToProxyAck();
 
-  S2SAllocShardAck(const S2SAllocShardAck& from);
+  S2SAllocObjectToProxyAck(const S2SAllocObjectToProxyAck& from);
 
-  inline S2SAllocShardAck& operator=(const S2SAllocShardAck& from) {
+  inline S2SAllocObjectToProxyAck& operator=(const S2SAllocObjectToProxyAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1352,17 +1354,17 @@ class LIBPROTOC_EXPORT S2SAllocShardAck : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAllocShardAck& default_instance();
+  static const S2SAllocObjectToProxyAck& default_instance();
 
-  void Swap(S2SAllocShardAck* other);
+  void Swap(S2SAllocObjectToProxyAck* other);
 
   // implements Message ----------------------------------------------
 
-  S2SAllocShardAck* New() const;
+  S2SAllocObjectToProxyAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SAllocShardAck& from);
-  void MergeFrom(const S2SAllocShardAck& from);
+  void CopyFrom(const S2SAllocObjectToProxyAck& from);
+  void MergeFrom(const S2SAllocObjectToProxyAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1409,7 +1411,7 @@ class LIBPROTOC_EXPORT S2SAllocShardAck : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
       mutable_shardid();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocShardAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToProxyAck)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -1425,7 +1427,92 @@ class LIBPROTOC_EXPORT S2SAllocShardAck : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_KFClusterMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SAllocShardAck* default_instance_;
+  static S2SAllocObjectToProxyAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SAllocObjectToShardAck : public ::google::protobuf::Message {
+ public:
+  S2SAllocObjectToShardAck();
+  virtual ~S2SAllocObjectToShardAck();
+
+  S2SAllocObjectToShardAck(const S2SAllocObjectToShardAck& from);
+
+  inline S2SAllocObjectToShardAck& operator=(const S2SAllocObjectToShardAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAllocObjectToShardAck& default_instance();
+
+  void Swap(S2SAllocObjectToShardAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SAllocObjectToShardAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SAllocObjectToShardAck& from);
+  void MergeFrom(const S2SAllocObjectToShardAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint64 objectid = 1;
+  inline int objectid_size() const;
+  inline void clear_objectid();
+  static const int kObjectidFieldNumber = 1;
+  inline ::google::protobuf::uint64 objectid(int index) const;
+  inline void set_objectid(int index, ::google::protobuf::uint64 value);
+  inline void add_objectid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+      objectid() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+      mutable_objectid();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToShardAck)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > objectid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClusterMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClusterMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClusterMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAllocObjectToShardAck* default_instance_;
 };
 // ===================================================================
 
@@ -2843,85 +2930,114 @@ inline void S2SSendToClusterObjectReq::set_allocated_msgdata(::std::string* msgd
 
 // -------------------------------------------------------------------
 
-// S2SAllocShardReq
+// S2SAllocObjectToMasterReq
 
 // repeated uint64 objectid = 1;
-inline int S2SAllocShardReq::objectid_size() const {
+inline int S2SAllocObjectToMasterReq::objectid_size() const {
   return objectid_.size();
 }
-inline void S2SAllocShardReq::clear_objectid() {
+inline void S2SAllocObjectToMasterReq::clear_objectid() {
   objectid_.Clear();
 }
-inline ::google::protobuf::uint64 S2SAllocShardReq::objectid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToMasterReq::objectid(int index) const {
   return objectid_.Get(index);
 }
-inline void S2SAllocShardReq::set_objectid(int index, ::google::protobuf::uint64 value) {
+inline void S2SAllocObjectToMasterReq::set_objectid(int index, ::google::protobuf::uint64 value) {
   objectid_.Set(index, value);
 }
-inline void S2SAllocShardReq::add_objectid(::google::protobuf::uint64 value) {
+inline void S2SAllocObjectToMasterReq::add_objectid(::google::protobuf::uint64 value) {
   objectid_.Add(value);
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
-S2SAllocShardReq::objectid() const {
+S2SAllocObjectToMasterReq::objectid() const {
   return objectid_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
-S2SAllocShardReq::mutable_objectid() {
+S2SAllocObjectToMasterReq::mutable_objectid() {
   return &objectid_;
 }
 
 // -------------------------------------------------------------------
 
-// S2SAllocShardAck
+// S2SAllocObjectToProxyAck
 
 // repeated uint64 objectid = 1;
-inline int S2SAllocShardAck::objectid_size() const {
+inline int S2SAllocObjectToProxyAck::objectid_size() const {
   return objectid_.size();
 }
-inline void S2SAllocShardAck::clear_objectid() {
+inline void S2SAllocObjectToProxyAck::clear_objectid() {
   objectid_.Clear();
 }
-inline ::google::protobuf::uint64 S2SAllocShardAck::objectid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToProxyAck::objectid(int index) const {
   return objectid_.Get(index);
 }
-inline void S2SAllocShardAck::set_objectid(int index, ::google::protobuf::uint64 value) {
+inline void S2SAllocObjectToProxyAck::set_objectid(int index, ::google::protobuf::uint64 value) {
   objectid_.Set(index, value);
 }
-inline void S2SAllocShardAck::add_objectid(::google::protobuf::uint64 value) {
+inline void S2SAllocObjectToProxyAck::add_objectid(::google::protobuf::uint64 value) {
   objectid_.Add(value);
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
-S2SAllocShardAck::objectid() const {
+S2SAllocObjectToProxyAck::objectid() const {
   return objectid_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
-S2SAllocShardAck::mutable_objectid() {
+S2SAllocObjectToProxyAck::mutable_objectid() {
   return &objectid_;
 }
 
 // repeated uint32 shardid = 2;
-inline int S2SAllocShardAck::shardid_size() const {
+inline int S2SAllocObjectToProxyAck::shardid_size() const {
   return shardid_.size();
 }
-inline void S2SAllocShardAck::clear_shardid() {
+inline void S2SAllocObjectToProxyAck::clear_shardid() {
   shardid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SAllocShardAck::shardid(int index) const {
+inline ::google::protobuf::uint32 S2SAllocObjectToProxyAck::shardid(int index) const {
   return shardid_.Get(index);
 }
-inline void S2SAllocShardAck::set_shardid(int index, ::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::set_shardid(int index, ::google::protobuf::uint32 value) {
   shardid_.Set(index, value);
 }
-inline void S2SAllocShardAck::add_shardid(::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::add_shardid(::google::protobuf::uint32 value) {
   shardid_.Add(value);
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-S2SAllocShardAck::shardid() const {
+S2SAllocObjectToProxyAck::shardid() const {
   return shardid_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-S2SAllocShardAck::mutable_shardid() {
+S2SAllocObjectToProxyAck::mutable_shardid() {
   return &shardid_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SAllocObjectToShardAck
+
+// repeated uint64 objectid = 1;
+inline int S2SAllocObjectToShardAck::objectid_size() const {
+  return objectid_.size();
+}
+inline void S2SAllocObjectToShardAck::clear_objectid() {
+  objectid_.Clear();
+}
+inline ::google::protobuf::uint64 S2SAllocObjectToShardAck::objectid(int index) const {
+  return objectid_.Get(index);
+}
+inline void S2SAllocObjectToShardAck::set_objectid(int index, ::google::protobuf::uint64 value) {
+  objectid_.Set(index, value);
+}
+inline void S2SAllocObjectToShardAck::add_objectid(::google::protobuf::uint64 value) {
+  objectid_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+S2SAllocObjectToShardAck::objectid() const {
+  return objectid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+S2SAllocObjectToShardAck::mutable_objectid() {
+  return &objectid_;
 }
 
 

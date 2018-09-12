@@ -47,6 +47,7 @@ enum BattleProtocol
 	S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241;		// 战场结算
 	S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242;			// 查询结算
 	S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243;			// 开启战场
+	S2S_RESET_BATTLE_ROOM_REQ = 11244;					// 重置战场房间
  }
 
 enum BattleEnum
@@ -491,6 +492,11 @@ message S2STellRoomCloseToMatchShardReq
 	required uint64 roomid = 2;		// 房间id
 }
 
-
+// 重置战场房间
+// S2S_RESET_BATTLE_ROOM_REQ
+message S2SResetBattleRoomReq
+{
+	required uint64 roomid = 1;		// 房间id
+}
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

@@ -116,11 +116,11 @@ namespace KFrame
 
         if ( newvalue != _invalid_int )
         {
-            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
+            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::GroupStatus );
         }
         else
         {
-            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::OnlineStatus );
+            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::OnlineStatus );
         }
     }
 
@@ -319,7 +319,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SReceiveInviteMatchGroupReq );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.inviterserverid(), kfmsg.inviterplayerid(), KFMsg::GroupPlayerOffline, kfmsg.playername() );
@@ -455,7 +455,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SConsentInviteMatchGroupReq );
 
         auto playerid = __KF_DATA_ID__( kfguid );
-        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupNotExist );
@@ -821,7 +821,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SConsentApplyMatchGroupAck );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid(), __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player == nullptr )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupPlayerOffline, kfmsg.playername() );

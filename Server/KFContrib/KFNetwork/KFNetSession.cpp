@@ -163,9 +163,7 @@ namespace KFrame
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "recv length[{}:{}] error",
-                              _receive_length, length );
-
+            __LOG_CRITICAL__( KFLogEnum::System, "recv length[{}:{}] error", _receive_length, length );
             _receive_length = 0;
         }
 
@@ -228,8 +226,7 @@ namespace KFrame
         auto nethead = reinterpret_cast< KFNetHead* >( _receive_buff + position );
 
         // 收到的消息长度有错误
-        if ( nethead->_msgid == 0 ||
-                nethead->_length > KFNetDefine::MaxMessageLength )
+        if ( nethead->_msgid == 0 || nethead->_length > KFNetDefine::MaxMessageLength )
         {
             _receive_length = 0;
             __LOG_CRITICAL__( KFLogEnum::System, "recv msgid[{}] length[{}] position[{}] error",

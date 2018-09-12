@@ -71,6 +71,7 @@ namespace KFrame
         virtual void AddEntity( uint64 key, KFEntity* kfentity ) = 0;
 
         // 查找实体
+        virtual KFEntity* FindEntity( uint64 key ) = 0;
         virtual KFEntity* FindEntity( uint64 key, const char* function, uint32 line ) = 0;
 
         // 删除实体, 保存数据库

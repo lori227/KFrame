@@ -46,7 +46,7 @@ namespace KFrame
 
         // 打印日志
         template<typename... P>
-        void Log( uint32 level, uint32 category, const char* function, uint32 line, const char* myfmt, P&& ... args )
+        void Log( uint32 level, uint32 category, const char* function, uint32 line, const std::string& myfmt, P&& ... args )
         {
             if ( _logger == nullptr || level < _log_level )
             {

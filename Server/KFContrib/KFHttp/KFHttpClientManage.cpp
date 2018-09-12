@@ -12,15 +12,28 @@ namespace KFrame
 
     KFHttpClientManage::~KFHttpClientManage()
     {
+        {
+            KFLocker locker( _kf_req_mutex );
+            for ( auto httpdata : _req_http_data )
+            {
+                __KF_DESTROY__( KFHttpData, httpdata );
+            }
+            _req_http_data.clear();
+        }
 
+        {
+            KFLocker locker( _kf_ack_mutex );
+            for ( auto httpdata : _ack_http_data )
+            {
+                __KF_DESTROY__( KFHttpData, httpdata );
+            }
+            _ack_http_data.clear();
+        }
     }
 
     void KFHttpClientManage::Initialize()
     {
         KFHttpsClient::Initialize();
-
-        _req_http_data.InitQueue( 5000 );
-        _ack_http_data.InitQueue( 5000 );
     }
 
     void KFHttpClientManage::ShutDown()
@@ -71,34 +84,44 @@ namespace KFrame
             KFThread::CreateThread( this, &KFHttpClientManage::RunHttpRequest, __FUNC_LINE__ );
         }
 
-        _req_http_data.PushObject( httpdata );
-    }
-
-    void KFHttpClientManage::RunUpdate()
-    {
-        auto httpdata = _ack_http_data.PopObject();
-        while ( httpdata != nullptr )
-        {
-            httpdata->Finish();
-            __KF_DESTROY__( KFHttpData, httpdata );
-            httpdata = _ack_http_data.PopObject();
-        }
+        KFLocker locker( _kf_req_mutex );
+        _req_http_data.push_back( httpdata );
     }
 
     void KFHttpClientManage::RunHttpRequest()
     {
-        do
+        while ( _thread_run )
         {
-            auto httpdata = _req_http_data.PopObject();
-            while ( httpdata != nullptr )
+            std::list< KFHttpData* > templist;
+            {
+                KFLocker locker( _kf_req_mutex );
+                templist.swap( _req_http_data );
+            }
+
+            for ( auto httpdata : templist )
             {
                 httpdata->Request();
-                _ack_http_data.PushObject( httpdata );
 
-                httpdata = _req_http_data.PopObject();
+                KFLocker locker( _kf_ack_mutex );
+                _ack_http_data.push_back( httpdata );
             }
 
             KFThread::Sleep( 1 );
-        } while ( _thread_run );
+        }
+    }
+
+    void KFHttpClientManage::RunUpdate()
+    {
+        std::list< KFHttpData* > templist;
+        {
+            KFLocker locker( _kf_ack_mutex );
+            templist.swap( _ack_http_data );
+        }
+
+        for ( auto httpdata : templist )
+        {
+            httpdata->Response();
+            __KF_DESTROY__( KFHttpData, httpdata );
+        }
     }
 }

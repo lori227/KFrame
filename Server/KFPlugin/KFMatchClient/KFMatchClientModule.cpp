@@ -304,18 +304,18 @@ namespace KFrame
 
         if ( newvalue != _invalid_int )
         {
-            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::MatchStatus );
+            player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::MatchStatus );
         }
         else
         {
             auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
             if ( groupid != _invalid_int )
             {
-                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::GroupStatus );
+                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::GroupStatus );
             }
             else
             {
-                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::StatusEnum::OnlineStatus );
+                player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::OnlineStatus );
             }
         }
     }

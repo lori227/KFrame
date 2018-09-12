@@ -11,7 +11,6 @@ namespace KFrame
         KFRankSetting()
         {
             _rank_id = 0;
-            _shard_id = 0;
             _refresh_type = 0;
             _refresh_time = 0;
             _refresh_hour = 0;
@@ -30,9 +29,6 @@ namespace KFrame
 
         // 排行榜属性
         std::string _rank_data;
-
-        // 所在服务器
-        uint32 _shard_id;
 
         // 分区类型 0 全区全服排行榜  1 分区排行榜
         uint32 _zone_type;

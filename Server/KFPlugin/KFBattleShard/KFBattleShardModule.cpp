@@ -143,12 +143,12 @@ namespace KFrame
     __KF_SERVER_DISCOVER_FUNCTION__( KFBattleShardModule::OnServerDiscoverBattleProxy )
     {
         // 把房间的列表同步到proxy服务器
-        std::list< uint64 > roomlist;
+        std::set< uint64 > roomlist;
 
         auto kfroom = _kf_room_list.First();
         while ( kfroom != nullptr )
         {
-            roomlist.push_back( kfroom->_battle_room_id );
+            roomlist.insert( kfroom->_battle_room_id );
             kfroom = _kf_room_list.Next();
         }
 
@@ -185,10 +185,20 @@ namespace KFrame
         if ( kfmsg.roomid() != _invalid_int )
         {
             // roomid不为0 断线重连
+            auto ok = false;
+
             auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
             if ( kfroom != nullptr )
             {
-                kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
+                ok = kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
+            }
+
+            if ( !ok )
+            {
+                // 通知战场服务器重置战场
+                KFMsg::S2SResetBattleRoomReq req;
+                req.set_roomid( kfmsg.roomid() );
+                _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_RESET_BATTLE_ROOM_REQ, &req );
             }
         }
         else
@@ -206,6 +216,7 @@ namespace KFrame
                     kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
                 }
             }
+
         }
 
         __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}|{}:{}] update room[{}] ok!", kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
@@ -237,6 +248,12 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDisconnectServerToBattleShardReq );
 
         _kf_battle_manage->UnRegisterBattleServer( kfmsg.serverid() );
+
+        auto kfroom = FindBattleRoomByServerId( kfmsg.serverid() );
+        if ( kfroom != nullptr )
+        {
+            kfroom->DisconnectBattleRoom();
+        }
 
         __LOG_DEBUG__( KFLogEnum::Logic, "battle[{}] disconnect!", kfmsg.serverid() );
     }

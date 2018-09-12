@@ -11,11 +11,11 @@
 
 #include "KFrame.h"
 #include "KFClusterClient.h"
+#include "KFBus/KFBusInterface.h"
 #include "KFClusterClientInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFBus/KFBusInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 
@@ -24,8 +24,8 @@ namespace KFrame
     class KFClusterClientModule : public KFClusterClientInterface
     {
     public:
-        KFClusterClientModule();
-        ~KFClusterClientModule();
+        KFClusterClientModule() = default;
+        ~KFClusterClientModule() = default;
 
         // 加载配置
         virtual void InitModule();

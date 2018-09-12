@@ -40,11 +40,8 @@ namespace KFrame
     class KFClusterProxyModule : public KFClusterProxyInterface
     {
     public:
-        KFClusterProxyModule();
-        ~KFClusterProxyModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFClusterProxyModule() = default;
+        ~KFClusterProxyModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -101,7 +98,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleSendToObjectReq );
 
         // 分配shard
-        __KF_MESSAGE_FUNCTION__( HandleAllocShardAck );
+        __KF_MESSAGE_FUNCTION__( HandleAllocObjectToProxyAck );
 
     protected:
         // 转发消息到Shard

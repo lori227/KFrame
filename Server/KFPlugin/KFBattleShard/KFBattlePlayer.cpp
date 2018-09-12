@@ -61,6 +61,12 @@ namespace KFrame
         return _kf_cluster_shard->SendMessageToPlayer( _pb_player.serverid(), _pb_player.playerid(), msgid, message );
     }
 
+    void KFBattlePlayer::ResetRoomStatus()
+    {
+        // 设置重新进入战场房间
+        _status = KFPlayerStatus::StatusEnterRoom;
+    }
+
     void KFBattlePlayer::RunEnterRoom( KFBattleRoom* kfroom )
     {
         switch ( _status )
@@ -182,16 +188,13 @@ namespace KFrame
         // 设置游戏服务器id
         _pb_player.set_serverid( serverid );
 
-        // 已经离开了
-        if ( _status != KFPlayerStatus::StatusLeaveRoom )
+        // 已经离开了 已经结算了
+        if ( _status == KFPlayerStatus::StatusLeaveRoom || _status == KFPlayerStatus::StatusScoreBalance )
         {
-            PlayerNoticeBattleRoom( kfroom );
-        }
-        else
-        {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query room status[{}] failed!", _pb_player.playerid(), _status );
+            return false;
         }
 
+        PlayerNoticeBattleRoom( kfroom );
         return true;
     }
 
@@ -226,6 +229,9 @@ namespace KFrame
 
     bool KFBattlePlayer::BattleScoreBalance( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore )
     {
+        // 设置已经结算
+        _status = KFPlayerStatus::StatusScoreBalance;
+
         // 设置matchid
         pbscore->set_matchid( kfroom->_match_id );
         pbscore->set_playercount( kfroom->_total_player_count );

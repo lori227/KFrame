@@ -63,15 +63,21 @@ namespace KFrame
     void KFConfigModule::LoadConfig( KFConfig* config, const std::string& module, const std::string& file )
     {
         __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}]!", module, file );
-
-        bool result = config->LoadConfig( file );
-        if ( result )
+        try
         {
-            __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}] ok!", module, file );
+            auto ok = config->LoadConfig( file );
+            if ( ok )
+            {
+                __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}] ok!", module, file );
+            }
+            else
+            {
+                __LOG_ERROR__( KFLogEnum::Init, "load [{}][{}] failed!", module, file );
+            }
         }
-        else
+        catch ( ... )
         {
-            __LOG_ERROR__( KFLogEnum::Init, "load [{}][{}] failed!", module, file );
+            __LOG_ERROR__( KFLogEnum::Init, "load [{}][{}] exception!", module, file );
         }
     }
 }

@@ -20,7 +20,7 @@ namespace KFrame
         _kf_http_manage->Initialize();
     }
 
-    void KFHttpClientModule::ShutDown()
+    void KFHttpClientModule::BeforeShut()
     {
         _kf_http_manage->ShutDown();
     }

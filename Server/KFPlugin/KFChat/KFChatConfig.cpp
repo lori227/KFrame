@@ -14,30 +14,22 @@ namespace KFrame
     bool KFChatConfig::LoadConfig()
     {
         _kf_chat_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
-            {
-                auto kfsetting = __KF_CREATE__( KFChatSetting );
+            auto kfsetting = __KF_CREATE__( KFChatSetting );
 
-                kfsetting->_chat_type = xmlnode.GetUInt32( "ChatType" );
-                kfsetting->_chat_interval = xmlnode.GetUInt32( "ChatInterval" );
-                kfsetting->_chat_byte_length = xmlnode.GetUInt32( "ChatByteLength" );
-                _kf_chat_setting.Insert( kfsetting->_chat_type, kfsetting );
+            kfsetting->_chat_type = xmlnode.GetUInt32( "ChatType" );
+            kfsetting->_chat_interval = xmlnode.GetUInt32( "ChatInterval" );
+            kfsetting->_chat_byte_length = xmlnode.GetUInt32( "ChatByteLength" );
+            _kf_chat_setting.Insert( kfsetting->_chat_type, kfsetting );
 
-                xmlnode.NextNode();
-            }
-            //////////////////////////////////////////////////////////////////
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

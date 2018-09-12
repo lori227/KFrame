@@ -424,7 +424,7 @@ namespace KFrame
 
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         kfbasic->SetValue< uint32 >( __KF_STRING__( serverid ), kfglobal->_app_id );
-        kfbasic->SetValue< uint32 >( __KF_STRING__( status ), KFMsg::StatusEnum::OnlineStatus );
+        kfbasic->SetValue< uint32 >( __KF_STRING__( status ), KFMsg::OnlineStatus );
         kfbasic->SetValue< uint64 >( __KF_STRING__( statustime ), kfglobal->_real_time );
 
         // 设置名字
@@ -452,6 +452,12 @@ namespace KFrame
     {
         return _kf_component->FindEntity( playerid, function, line );
     }
+
+    KFEntity* KFPlayerModule::FindPlayer( uint32 playerid )
+    {
+        return _kf_component->FindEntity( playerid );
+    }
+
 
     bool KFPlayerModule::SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
@@ -549,7 +555,7 @@ namespace KFrame
     __KF_TRANSMIT_FUNCTION__( KFPlayerModule::TransmitMessageToPlayer )
     {
         auto playerid = __KF_DATA_ID__( kfguid );
-        auto player = FindPlayer( playerid, __FUNCTION__, _invalid_int );
+        auto player = FindPlayer( playerid );
         if ( player == nullptr )
         {
             return true;

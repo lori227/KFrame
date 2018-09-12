@@ -592,7 +592,8 @@ message S2SAddFriendAck
 message S2SUpdateFriendReq
 {
 	required uint32 friendid = 1;
-	repeated PBString pbdata = 2;
+	required uint32 serverid = 2;
+	repeated PBString pbdata = 3;
 }
 
 // 更新好友度

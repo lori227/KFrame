@@ -29,47 +29,40 @@ namespace KFrame
     bool KFClothesConfig::LoadConfig()
     {
         _clothes_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
+            auto kfsetting = __KF_CREATE__( KFClothesSetting );
+
+            kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
+            kfsetting->_mail_id = xmlnode.GetUInt32( "MailId" );
+
+            auto strmodel = xmlnode.GetString( "Model" );
+            while ( !strmodel.empty() )
             {
-                auto kfsetting = __KF_CREATE__( KFClothesSetting );
-
-                kfsetting->_id = xmlnode.GetUInt32( "Id" );
-                kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
-                kfsetting->_mail_id = xmlnode.GetUInt32( "MailId" );
-
-                auto strmodel = xmlnode.GetString( "Model" );
-                while ( !strmodel.empty() )
+                KFUtility::SplitString( strmodel, "[" );
+                auto context = KFUtility::SplitString( strmodel, "]" );
+                while ( !context.empty() )
                 {
-                    KFUtility::SplitString( strmodel, "[" );
-                    auto context = KFUtility::SplitString( strmodel, "]" );
-                    while ( !context.empty() )
+                    auto modelid = KFUtility::SplitValue< uint32 >( context, DEFAULT_SPLIT_STRING );
+                    if ( modelid != _invalid_int )
                     {
-                        auto modelid = KFUtility::SplitValue< uint32 >( context, DEFAULT_SPLIT_STRING );
-                        if ( modelid != _invalid_int )
-                        {
-                            kfsetting->_model_list.insert( modelid );
-                        }
+                        kfsetting->_model_list.insert( modelid );
                     }
                 }
-
-                auto strexchange = xmlnode.GetString( "Exchange" );
-                kfsetting->_exchange.ParseFromString( strexchange, __FUNC_LINE__ );
-
-                AddClothesSetting( kfsetting );
-                xmlnode.NextNode();
             }
+
+            auto strexchange = xmlnode.GetString( "Exchange" );
+            kfsetting->_exchange.ParseFromString( strexchange, __FUNC_LINE__ );
+
+            AddClothesSetting( kfsetting );
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

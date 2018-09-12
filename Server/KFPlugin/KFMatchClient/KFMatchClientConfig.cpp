@@ -21,30 +21,22 @@ namespace KFrame
     bool KFMatchClientConfig::LoadConfig()
     {
         _kf_match_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
-            {
-                auto kfsetting = __KF_CREATE__( KFMatchSetting );
+            auto kfsetting = __KF_CREATE__( KFMatchSetting );
 
-                kfsetting->_match_id = xmlnode.GetUInt32( "MatchId" );
-                kfsetting->_min_group_player_count = xmlnode.GetUInt32( "MinGroupPlayerCount" );
-                kfsetting->_max_group_player_count = xmlnode.GetUInt32( "MaxGroupPlayerCount" );
-                _kf_match_setting.Insert( kfsetting->_match_id, kfsetting );
+            kfsetting->_match_id = xmlnode.GetUInt32( "MatchId" );
+            kfsetting->_min_group_player_count = xmlnode.GetUInt32( "MinGroupPlayerCount" );
+            kfsetting->_max_group_player_count = xmlnode.GetUInt32( "MaxGroupPlayerCount" );
+            _kf_match_setting.Insert( kfsetting->_match_id, kfsetting );
 
-                xmlnode.NextNode();
-            }
-            //////////////////////////////////////////////////////////////////
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

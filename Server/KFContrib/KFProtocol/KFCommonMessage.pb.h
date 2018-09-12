@@ -276,7 +276,7 @@ enum AckEnum {
   GuildHadApply = 10041,
   PlayerNoGuild = 10042,
   GuildMaster = 10043,
-  PlayerNoMaster = 10044,
+  PlayerNoPower = 10044,
   PlayerNoSmallGuild = 10045,
   PlayerNoInApplicanlist = 10046,
   GuildMemberlistTooLong = 10047,

@@ -1,43 +1,26 @@
 ﻿#include "KFOptionConfig.h"
 
-
 namespace KFrame
 {
-    KFOptionConfig::KFOptionConfig()
-    {
-    }
-
-    KFOptionConfig::~KFOptionConfig()
-    {
-    }
-
     bool KFOptionConfig::LoadConfig()
     {
-        try
+        _option_list.clear();
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Option" );
-            while ( xmlnode.IsValid() )
-            {
-                auto name = xmlnode.GetString( "Name" );
-                auto key = xmlnode.GetString( "Key", true );
-                auto value = xmlnode.GetString( "Value" );
+            auto name = xmlnode.GetString( "Name" );
+            auto key = xmlnode.GetString( "Key", true );
+            auto value = xmlnode.GetString( "Value" );
 
-                OptionKey optionkey( name, key );
-                _option_list[ optionkey ] = value;
+            OptionKey optionkey( name, key );
+            _option_list[ optionkey ] = value;
 
-                xmlnode.NextNode();
-            }
-
-            //////////////////////////////////////////////////////////////////
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
-
+        //////////////////////////////////////////////////////////////////
         return true;
     }
 

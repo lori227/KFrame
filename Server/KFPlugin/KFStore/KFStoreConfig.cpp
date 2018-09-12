@@ -17,56 +17,51 @@ namespace KFrame
         _version = 0;
         _store_setting.Clear();
         _client_show.Clear();
+        //////////////////////////////////////////////////////////////////
 
-        try
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
-            {
-                auto kfsetting = __KF_CREATE__( KFStoreSetting );
-                kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            auto kfsetting = __KF_CREATE__( KFStoreSetting );
+            kfsetting->_id = xmlnode.GetUInt32( "Id" );
 
-                kfsetting->_type = xmlnode.GetUInt32( "Type" );
-                kfsetting->_item_type = xmlnode.GetUInt32( "ItemType" );
-                kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
+            kfsetting->_type = xmlnode.GetUInt32( "Type" );
+            kfsetting->_item_type = xmlnode.GetUInt32( "ItemType" );
+            kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
 
-                auto strbuyitem = xmlnode.GetString( "BuyItem" );
-                kfsetting->_buy_item.ParseFromString( strbuyitem, __FUNC_LINE__ );
+            auto strbuyitem = xmlnode.GetString( "BuyItem" );
+            kfsetting->_buy_item.ParseFromString( strbuyitem, __FUNC_LINE__ );
 
-                StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Money" ), "money" );
-                StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Diamond" ), "diamond" );
-                StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountMoney" ), "money" );
-                StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountDiamond" ), "diamond" );
+            StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Money" ), "money" );
+            StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Diamond" ), "diamond" );
+            StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountMoney" ), "money" );
+            StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountDiamond" ), "diamond" );
 
-                kfsetting->_start_discount_time = KFDate::TimeFormate( xmlnode.GetString( "StartDiscountTime" ) );
-                kfsetting->_end_discount_time = KFDate::TimeFormate( xmlnode.GetString( "EndDiscountTime" ) );
-                kfsetting->_start_buy_time = KFDate::TimeFormate( xmlnode.GetString( "StartBuyTime" ) );
-                kfsetting->_end_buy_time = KFDate::TimeFormate( xmlnode.GetString( "EndBuyTime" ) );
-                kfsetting->_limit_type = xmlnode.GetUInt32( "LimitType" );
-                kfsetting->_limit_count = xmlnode.GetUInt32( "LimitCount" );
-                kfsetting->_cost_give = xmlnode.GetString( "CostGive" );
-                kfsetting->_max_owm_ = xmlnode.GetUInt32( "MaxOwn" );
-                kfsetting->_give_mail_id = xmlnode.GetUInt32( "GiveMailid" );
-                kfsetting->_return_mail_id = xmlnode.GetUInt32( "ReturnMailId" );
-                kfsetting->_give_friend_liness = xmlnode.GetUInt32( "GiveFriendLiness" );
+            kfsetting->_start_discount_time = KFDate::TimeFormate( xmlnode.GetString( "StartDiscountTime" ) );
+            kfsetting->_end_discount_time = KFDate::TimeFormate( xmlnode.GetString( "EndDiscountTime" ) );
+            kfsetting->_start_buy_time = KFDate::TimeFormate( xmlnode.GetString( "StartBuyTime" ) );
+            kfsetting->_end_buy_time = KFDate::TimeFormate( xmlnode.GetString( "EndBuyTime" ) );
+            kfsetting->_limit_type = xmlnode.GetUInt32( "LimitType" );
+            kfsetting->_limit_count = xmlnode.GetUInt32( "LimitCount" );
+            kfsetting->_cost_give = xmlnode.GetString( "CostGive" );
+            kfsetting->_max_owm_ = xmlnode.GetUInt32( "MaxOwn" );
+            kfsetting->_give_mail_id = xmlnode.GetUInt32( "GiveMailid" );
+            kfsetting->_return_mail_id = xmlnode.GetUInt32( "ReturnMailId" );
+            kfsetting->_give_friend_liness = xmlnode.GetUInt32( "GiveFriendLiness" );
 
 
-                _version = xmlnode.GetUInt32( "Version" );
-                _store_setting.Insert( kfsetting->_id, kfsetting );
+            _version = xmlnode.GetUInt32( "Version" );
+            _store_setting.Insert( kfsetting->_id, kfsetting );
 
-                // 热更新消息包
-                MakePBStore( xmlnode );
+            // 热更新消息包
+            MakePBStore( xmlnode );
 
-                xmlnode.NextNode();
-            }
-            _client_show.set_version( _version );
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        _client_show.set_version( _version );
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

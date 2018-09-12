@@ -18,20 +18,6 @@ namespace KFrame
     #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendMessageToClient( kfguid, msgid, message )
 #endif
 
-    KFPublicShardModule::KFPublicShardModule()
-    {
-
-    }
-
-    KFPublicShardModule::~KFPublicShardModule()
-    {
-
-    }
-
-    void KFPublicShardModule::InitModule()
-    {
-    }
-
     void KFPublicShardModule::BeforeRun()
     {
         __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ, &KFPublicShardModule::HandleCreateRoleReq );
@@ -143,8 +129,7 @@ namespace KFrame
 
         // 保存访客信息
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Execute( "zadd {}:{} {} {}",
-                              __KF_STRING__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
+        redisdriver->Execute( "zadd {}:{} {} {}", __KF_STRING__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryGuestReq )
@@ -157,8 +142,7 @@ namespace KFrame
         uint64 validtime = KFTimeEnum::OneDaySecond * KFTimeEnum::OneMonthDay;
         if ( querytime > validtime )
         {
-            redisdriver->Execute( "zremrangebyscore {}:{} {} {}",
-                                  __KF_STRING__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
+            redisdriver->Execute( "zremrangebyscore {}:{} {} {}", __KF_STRING__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
         }
 
         // 返回访客信息

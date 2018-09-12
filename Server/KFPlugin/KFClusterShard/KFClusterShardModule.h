@@ -22,11 +22,8 @@ namespace KFrame
     class KFClusterShardModule : public KFClusterShardInterface
     {
     public:
-        KFClusterShardModule();
-        ~KFClusterShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFClusterShardModule() = default;
+        ~KFClusterShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -64,31 +61,48 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 注册对象映射
         virtual void AddObjectToProxy( uint64 objectid );
-        virtual void AddObjectToProxy( uint32 proxyid, const std::list< uint64 >& objectlist );
+        virtual void AddObjectToProxy( uint32 proxyid, const std::set< uint64 >& objectlist );
 
         // 删除对象映射
         virtual void RemoveObjectToProxy( uint64 objectid );
-        virtual void RemoveObjectToProxy( const std::list< uint64 >& objectlist );
+        virtual void RemoveObjectToProxy( const std::set< uint64 >& objectlist );
 
         // 分配Shard
-        virtual void AllocObjectToMaster( const std::list< uint64 >& objectlist );
-
-    protected:
-        // 查找路由信息
-        uint32 FindProxyId( uint32 clientid );
+        virtual void AllocObjectToMaster( const std::set< uint64 >& objectlist );
+        virtual const std::set< uint64 >& GetAllocObjectList();
 
     protected:
         // 注册路由信息
         __KF_MESSAGE_FUNCTION__( HandleClusterClientListReq );
+
+        // 分配object回应
+        __KF_MESSAGE_FUNCTION__( HandleAllocObjectToShardAck );
 
     protected:
         // 丢失连接
         __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );
 
     protected:
+        // 查找路由信息
+        uint32 FindProxyId( uint32 clientid );
+
+        virtual void AddAllocObjectFunction( const std::string& module, KFAllocObjectFunction& function );
+        virtual void RemoveAllocObjectFunction( const std::string& module );
+
+    protected:
         // 客户端路由信息
         std::map< uint32, uint32 > _proxy_client_list;
+
+        // shard分配的object列表
+        std::set < uint64 > _object_list;
+
+        // 绑定函数
+        KFBind< std::string, const std::string&, KFAllocObjectFunction > _kf_alloc_object_function;
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 #endif

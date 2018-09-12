@@ -21,6 +21,8 @@
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -56,9 +58,13 @@ namespace KFrame
         // zoneid
         uint32 _zone_id;
 
+        // logurl
+        std::string _log_url;
+
         // 开始时间
         uint64 _start_time;
     };
+
 
     class KFLaunchSetting;
     class KFDeployAgentModule : public KFDeployAgentInterface
@@ -158,8 +164,7 @@ namespace KFrame
 #endif
     protected:
         // 添加部署任务
-        void AddDeployTask( const std::string& command, const std::string& value,
-                            uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        void AddDeployTask( const std::string& command, KFMsg::PBDeployCommand* pbdeploy );
 
         // 开始任务
         void StartDeployTask();
@@ -185,6 +190,16 @@ namespace KFrame
         // 加载启动信息
         void LoadTotalLaunchData();
 
+    private:
+        // 回发日志消息
+        template<typename... P>
+        void LogDeploy( const std::string& url, const char* myfmt, P&& ... args )
+        {
+            auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
+            SendLogMessage( url, msg );
+        }
+
+        void SendLogMessage( const std::string& url, const std::string& msg );
     private:
         // 部署服务器的
         uint32 _deploy_server_id;

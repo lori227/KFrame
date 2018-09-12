@@ -6,6 +6,6 @@
 		<Plugin Sort="120" Name="KFRedis" Config="./setting/redis.address"/>
 		<Plugin Sort="130" Name="KFChannel" Config="./setting/channel.setting"/>
 		<Plugin Sort="140" Name="KFAuth" Config=""/>
-		<Plugin Sort="150" Name="KFOption" Config="./setting/option.setting"/>	
+		<Plugin Sort="150" Name="KFOption" Config="./config/option.config"/>	
 	</Plugins>
 </Setting>

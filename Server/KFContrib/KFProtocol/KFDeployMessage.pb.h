@@ -566,6 +566,18 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 appchannel() const;
   inline void set_appchannel(::google::protobuf::uint32 value);
 
+  // required string logurl = 8;
+  inline bool has_logurl() const;
+  inline void clear_logurl();
+  static const int kLogurlFieldNumber = 8;
+  inline const ::std::string& logurl() const;
+  inline void set_logurl(const ::std::string& value);
+  inline void set_logurl(const char* value);
+  inline void set_logurl(const char* value, size_t size);
+  inline ::std::string* mutable_logurl();
+  inline ::std::string* release_logurl();
+  inline void set_allocated_logurl(::std::string* logurl);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBDeployCommand)
  private:
   inline void set_has_command();
@@ -582,6 +594,8 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline void clear_has_value();
   inline void set_has_appchannel();
   inline void clear_has_appchannel();
+  inline void set_has_logurl();
+  inline void clear_has_logurl();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -592,9 +606,10 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   ::std::string* value_;
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 appchannel_;
+  ::std::string* logurl_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1940,6 +1955,76 @@ inline ::google::protobuf::uint32 PBDeployCommand::appchannel() const {
 inline void PBDeployCommand::set_appchannel(::google::protobuf::uint32 value) {
   set_has_appchannel();
   appchannel_ = value;
+}
+
+// required string logurl = 8;
+inline bool PBDeployCommand::has_logurl() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void PBDeployCommand::set_has_logurl() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void PBDeployCommand::clear_has_logurl() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void PBDeployCommand::clear_logurl() {
+  if (logurl_ != &::google::protobuf::internal::kEmptyString) {
+    logurl_->clear();
+  }
+  clear_has_logurl();
+}
+inline const ::std::string& PBDeployCommand::logurl() const {
+  return *logurl_;
+}
+inline void PBDeployCommand::set_logurl(const ::std::string& value) {
+  set_has_logurl();
+  if (logurl_ == &::google::protobuf::internal::kEmptyString) {
+    logurl_ = new ::std::string;
+  }
+  logurl_->assign(value);
+}
+inline void PBDeployCommand::set_logurl(const char* value) {
+  set_has_logurl();
+  if (logurl_ == &::google::protobuf::internal::kEmptyString) {
+    logurl_ = new ::std::string;
+  }
+  logurl_->assign(value);
+}
+inline void PBDeployCommand::set_logurl(const char* value, size_t size) {
+  set_has_logurl();
+  if (logurl_ == &::google::protobuf::internal::kEmptyString) {
+    logurl_ = new ::std::string;
+  }
+  logurl_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PBDeployCommand::mutable_logurl() {
+  set_has_logurl();
+  if (logurl_ == &::google::protobuf::internal::kEmptyString) {
+    logurl_ = new ::std::string;
+  }
+  return logurl_;
+}
+inline ::std::string* PBDeployCommand::release_logurl() {
+  clear_has_logurl();
+  if (logurl_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = logurl_;
+    logurl_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PBDeployCommand::set_allocated_logurl(::std::string* logurl) {
+  if (logurl_ != &::google::protobuf::internal::kEmptyString) {
+    delete logurl_;
+  }
+  if (logurl) {
+    set_has_logurl();
+    logurl_ = logurl;
+  } else {
+    clear_has_logurl();
+    logurl_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------

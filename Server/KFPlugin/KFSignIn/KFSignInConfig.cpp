@@ -23,35 +23,28 @@ namespace KFrame
     bool KFSignInConfig::LoadConfig()
     {
         _signin_setting.Clear();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
-            {
-                auto type = xmlnode.GetUInt32( "Type" );
+            auto type = xmlnode.GetUInt32( "Type" );
 
-                auto kfsetting = __KF_CREATE__( KFSignInSetting );
-                kfsetting->_day = xmlnode.GetUInt32( "Day" );
-                kfsetting->_probability = xmlnode.GetUInt32( "Probability" );
+            auto kfsetting = __KF_CREATE__( KFSignInSetting );
+            kfsetting->_day = xmlnode.GetUInt32( "Day" );
+            kfsetting->_probability = xmlnode.GetUInt32( "Probability" );
 
-                auto strreward = xmlnode.GetString( "Reward" );
-                kfsetting->_reward.ParseFromString( strreward, __FUNC_LINE__ );
+            auto strreward = xmlnode.GetString( "Reward" );
+            kfsetting->_reward.ParseFromString( strreward, __FUNC_LINE__ );
 
-                auto strextend = xmlnode.GetString( "ExtendReward" );
-                kfsetting->_extend.ParseFromString( strextend, __FUNC_LINE__ );
+            auto strextend = xmlnode.GetString( "ExtendReward" );
+            kfsetting->_extend.ParseFromString( strextend, __FUNC_LINE__ );
 
-                AddSignInSetting( type, kfsetting->_day, kfsetting );
-                xmlnode.NextNode();
-            }
+            AddSignInSetting( type, kfsetting->_day, kfsetting );
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

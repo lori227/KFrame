@@ -16,3 +16,4 @@ rm -rf ../KFStartup
 rm -rf ../CMakeFiles
 rm -f ../Makefile
 rm -rf ../../_lib/linux/*.a
+rm -rf ../../../Bin/bin/*

@@ -14,27 +14,20 @@ namespace KFrame
 
     bool KFBattleConfig::LoadConfig()
     {
-        try
+        ////////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto xmlnode = config.FindNode( "Setting" );
+        while ( xmlnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
+            auto matchid = xmlnode.GetUInt32( "MatchId" );
+            auto rewardkey = xmlnode.GetUInt32( "RewardKey" );
+            auto rewardvalue = xmlnode.GetString( "RewardValue" );
+            AddBattleReward( matchid, rewardkey, rewardvalue );
 
-            ////////////////////////////////////////////////////////////////////
-            auto xmlnode = config.FindNode( "Setting" );
-            while ( xmlnode.IsValid() )
-            {
-                auto matchid = xmlnode.GetUInt32( "MatchId" );
-                auto rewardkey = xmlnode.GetUInt32( "RewardKey" );
-                auto rewardvalue = xmlnode.GetString( "RewardValue" );
-                AddBattleReward( matchid, rewardkey, rewardvalue );
-
-                xmlnode.NextNode();
-            }
+            xmlnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        ////////////////////////////////////////////////////////////////////
 
         return true;
     }

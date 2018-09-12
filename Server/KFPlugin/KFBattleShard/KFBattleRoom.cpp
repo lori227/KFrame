@@ -183,29 +183,24 @@ namespace KFrame
         switch ( _status )
         {
         case KFRoomStatus::StatusBattleRoomAlloc:
-        {
             // 分配战斗服务器
             AllocBatterServer();
-        }
-        break;
+            break;
         case KFRoomStatus::StatusBattleRoomOpen:
-        {
             // 通知战斗服务器开启战场`
             OpenBattleRoom();
-        }
-        break;
+            break;
         case KFRoomStatus::StatusBattleRoomEnter:
-        {
             // 玩家进入战场
             PlayerEnterBattleRoom();
-        }
-        break;
+            break;
         case KFRoomStatus::StatusBattleRoomPlaying:
-        {
             // 战场正在游戏
             BattleRoomPlaying();
-        }
-        break;
+            break;
+        case KFRoomStatus::StatusBattleRoomDisconnect:
+            BattleRoomDisconnect();
+            break;
         default:
             break;
         }
@@ -432,11 +427,17 @@ namespace KFrame
         return kfplayer->QueryBattleRoom( this, serverid );
     }
 
-    void KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port )
+    bool KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port )
     {
-        // 删除一个战场
         if ( _battle_server.IsValid() )
         {
+            // 已经另外分配战场服务器了
+            if ( serverid != _battle_server._server_id )
+            {
+                return false;
+            }
+
+            // 删除redis记录
             _kf_battle_manage->RemoveBattleServer( serverid, ip );
         }
 
@@ -446,9 +447,40 @@ namespace KFrame
         _battle_server._port = port;
 
         // 如果是进入状态, 重置到开启状态, 让流程循环起来
-        if ( _status == KFRoomStatus::StatusBattleRoomAlloc || _status == KFRoomStatus::StatusBattleRoomEnter )
+        switch ( _status )
         {
+        case KFRoomStatus::StatusBattleRoomAlloc:
+        case KFRoomStatus::StatusBattleRoomEnter:
+        case KFRoomStatus::StatusBattleRoomDisconnect:
             UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 5000 );
+            break;
+        default:
+            break;
+        }
+
+        return true;
+    }
+
+    void KFBattleRoom::DisconnectBattleRoom()
+    {
+        // 如果正在进入状态, 重新分配
+        if ( _status == KFRoomStatus::StatusBattleRoomEnter )
+        {
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomDisconnect, 30000 );
+        }
+    }
+
+    void KFBattleRoom::BattleRoomDisconnect()
+    {
+        // 重新分配
+        UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
+
+        // 玩家状态重置
+        auto kfcamp = _kf_camp_list.First();
+        while ( kfcamp != nullptr )
+        {
+            kfcamp->ResetBattleRoomStatus();
+            kfcamp = _kf_camp_list.Next();
         }
     }
 

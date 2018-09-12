@@ -16,7 +16,6 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
-#include "KFGuildClient/KFGuildClientInterface.h"
 
 namespace KFrame
 {
@@ -24,10 +23,7 @@ namespace KFrame
     {
     public:
         KFPublicClientModule();
-        ~KFPublicClientModule();
-
-        // 初始化
-        virtual void InitModule();
+        ~KFPublicClientModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -38,6 +34,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 更新公共数据
+        virtual bool UpdatePublicData( uint32 playerid, const MapString& values );
         virtual bool UpdatePublicData( KFEntity* player, const MapString& values );
 
         // 发送消息到Public

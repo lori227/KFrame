@@ -16,77 +16,66 @@ namespace KFrame
     {
         _ip_address_list.clear();
         _auth_address.clear();
-
         auto kfglobal = KFGlobal::Instance();
-
-        try
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto tcpnode = config.FindNode( "TcpServer" );
+        if ( tcpnode.IsValid() )
         {
-            KFXml kfxml( _file );
-            auto config = kfxml.RootNode();
-            //////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////
-            auto tcpnode = config.FindNode( "TcpServer" );
-            if ( tcpnode.IsValid() )
+            auto servernode = tcpnode.FindNode( "Server" );
+            while ( servernode.IsValid() )
             {
-                auto servernode = tcpnode.FindNode( "Server" );
-                while ( servernode.IsValid() )
+                KFIpAddress kfaddress;
+                kfaddress._app_name = servernode.GetString( "AppName" );
+                kfaddress._app_type = servernode.GetString( "AppType" );
+                kfaddress._str_app_id = servernode.GetString( "AppId" );
+                kfaddress._ip = servernode.GetString( "Ip" );
+                kfaddress._port_type = servernode.GetUInt32( "Type" );
+                kfaddress._port = servernode.GetUInt32( "Port" );
+
+                auto channelnode = servernode.FindNode( "Channel" );
+                while ( channelnode.IsValid() )
                 {
-                    KFIpAddress kfaddress;
-                    kfaddress._app_name = servernode.GetString( "AppName" );
-                    kfaddress._app_type = servernode.GetString( "AppType" );
-                    kfaddress._str_app_id = servernode.GetString( "AppId" );
-                    kfaddress._ip = servernode.GetString( "Ip" );
-                    kfaddress._port_type = servernode.GetUInt32( "Type" );
-                    kfaddress._port = servernode.GetUInt32( "Port" );
-
-                    auto channelnode = servernode.FindNode( "Channel" );
-                    while ( channelnode.IsValid() )
+                    auto channelid = channelnode.GetUInt32( "ChannelId" );
+                    if ( channelid == kfglobal->_app_channel )
                     {
-                        auto channelid = channelnode.GetUInt32( "ChannelId" );
-                        if ( channelid == kfglobal->_app_channel )
-                        {
-                            kfaddress._ip = channelnode.GetString( "Ip" );
-                            break;
-                        }
-
-                        channelnode.NextNode();
+                        kfaddress._ip = channelnode.GetString( "Ip" );
+                        break;
                     }
 
-                    _ip_address_list.push_back( kfaddress );
-
-                    servernode.NextNode();
-                }
-            }
-            //////////////////////////////////////////////////////////////////
-            auto httpnode = config.FindNode( "HttpServer" );
-            auto channelnode = httpnode.FindNode( "Channel" );
-            while ( channelnode.IsValid() )
-            {
-                auto channelid = channelnode.GetUInt32( "ChannelId" );
-                if ( channelid == kfglobal->_app_channel )
-                {
-                    auto ip = channelnode.GetString( "Ip" );
-                    auto port = channelnode.GetString( "Port" );
-                    if ( port == _invalid_str )
-                    {
-                        _auth_address = __FORMAT__( "http://{}/", ip );
-                    }
-                    else
-                    {
-                        _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
-                    }
-                    break;
+                    channelnode.NextNode();
                 }
 
-                channelnode.NextNode();
+                _ip_address_list.push_back( kfaddress );
+
+                servernode.NextNode();
+            }
+        }
+        //////////////////////////////////////////////////////////////////
+        auto httpnode = config.FindNode( "HttpServer" );
+        auto channelnode = httpnode.FindNode( "Channel" );
+        while ( channelnode.IsValid() )
+        {
+            auto channelid = channelnode.GetUInt32( "ChannelId" );
+            if ( channelid == kfglobal->_app_channel )
+            {
+                auto ip = channelnode.GetString( "Ip" );
+                auto port = channelnode.GetString( "Port" );
+                if ( port == _invalid_str )
+                {
+                    _auth_address = __FORMAT__( "http://{}/", ip );
+                }
+                else
+                {
+                    _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
+                }
+                break;
             }
 
-            //////////////////////////////////////////////////////////////////////////////////////
+            channelnode.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

@@ -90,6 +90,8 @@ namespace KFrame
 
         __KF_MESSAGE_FUNCTION__( HnadleQueryGuildListReq );
 
+        __KF_MESSAGE_FUNCTION__( HnadleKickMemberReq );
+
         // 定时刷新帮派(申请列表)
         __KF_TIMER_FUNCTION__( OnTimerRefreshGuild );
 
@@ -113,6 +115,9 @@ namespace KFrame
 
         // 判断是否是帮派成员
         bool IsGuildMember( uint32 playerid );
+
+        // 判断玩家是否是当前帮派成员
+        bool IsInGuild( uint32 playerid, uint64 guildid );
 
         // 判断当前服务器中是否有该guildid
         bool IsValidGuildId( uint64 guildid );
@@ -151,13 +156,28 @@ namespace KFrame
         void MoveApplicantToGuild( uint64 guildid );
 
         // 清除离线玩家的guildid
-        void  RemovePlayerGuildId( uint32 playerid );
+        void RemovePlayerGuildId( uint32 playerid );
+
+        // 设置离线玩家的guildid
+        void SetPlayerGuildid( uint32 playerid, uint64 guildid );
 
         // 请求帮派列表
-        bool QueryGuildListReq( uint32 cursor );
+        bool QueryGuildListReq( uint32 cursor, KFMsg::MsgQueryGuildListAck* pbguilddatas );
 
-        // 请求指定帮派列表
-        //void QueryGuildListPartReq( KFMsg::PBGuildIdArray& guilds );
+        // 请求单个帮派所有数据
+        bool QuerySingleGuildData( uint64 guildid, MapString& guilddatas );
+
+        // 获取玩家帮派职位
+        uint32 GetTitle( uint64 playerid, uint64 guildid );
+
+        // 比较职位高低 return playerid > toplayerid
+        bool IsGreatTitle( uint32 playerid, uint32 toplayerid, uint64 guildid );
+
+        // 移除帮派中某个玩家
+        bool RemoveGuildMember( uint64 guildid, uint32 playerid, bool bekick = true );
+
+        // 过滤单个帮派信息
+        void SerialGuildData( MapString& guilddata, KFMsg::PBStrings* pbguildata );
 
     private:
         // 玩家申请列表 std::string转换成pb数据格式

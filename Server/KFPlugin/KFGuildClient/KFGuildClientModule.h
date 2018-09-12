@@ -83,7 +83,17 @@ namespace KFrame
         // 请求帮派列表
         __KF_MESSAGE_FUNCTION__( HandleQueryGuildListReq );
 
+        // 请求踢掉玩家
+        __KF_MESSAGE_FUNCTION__( HandleKickMemberReq );
 
+    protected:
+        // 更新属性回调
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
+
+        __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
+    private:
+        // 组件
+        KFComponent* _kf_component;
     };
 }
 

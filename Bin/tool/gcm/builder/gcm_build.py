@@ -137,7 +137,7 @@ def parse_args():
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     if is_linux():
         parser.add_argument('-s', '--svn', type=int, help="svn version")
-        parser.add_argument('-b', '--branch', type=int, default=0, help="version branch, 0(internal)/1(online)/2(grayscale)")
+        parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
     return vars(parser.parse_args())
 
 # start
@@ -156,9 +156,12 @@ if is_linux() and (args['svn'] is not None):
     global_conf = dict()
     branch_name = ''
     if args['branch'] == 0:
+        global_conf = g_global_config.get_develop_config()
+        branch_name = 'develop'
+    elif args['branch'] == 1:
         global_conf = g_global_config.get_internal_config()
         branch_name = 'internal'
-    elif args['branch'] == 1:
+    elif args['branch'] == 2:
         global_conf = g_global_config.get_public_config()
         branch_name = 'online'
     else:
@@ -184,3 +187,7 @@ if is_linux() and (args['svn'] is not None):
     sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
     mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
     gcm_db.insert_mysql_db(mysql_db_info, sql)
+
+    # rm version_name
+    rm_cmd = ('rm -rf %s') % (release_version_name)
+    commands.getoutput(rm_cmd)

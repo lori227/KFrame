@@ -20,7 +20,6 @@ namespace KFrame
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
-        __FIND_MODULE__( _kf_guild, KFGuildClientInterface );
 
     }
 

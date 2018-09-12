@@ -4,7 +4,7 @@
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="110" Name="KFSchedule" Config=""/>
 		<Plugin Sort="120" Name="KFWorker" Config=""/>
-		<Plugin Sort="130" Name="KFOption" Config="./setting/option.setting"/>
+		<Plugin Sort="130" Name="KFOption" Config="./config/option.config"/>
 		<Plugin Sort="140" Name="KFRedis" Config="./setting/redis.address"/>
 		<Plugin Sort="150" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="160" Name="KFMailShard" Config=""/>

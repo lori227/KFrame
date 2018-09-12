@@ -27,6 +27,9 @@ namespace KFrame
         // 结束离开战场
         void FinishLeaveBattleRoom();
 
+        // 重置战场状态
+        void ResetBattleRoomStatus();
+
         // 发送消息到阵营
         void SendMessageToCamp( uint32 msgid, google::protobuf::Message* message );
 

@@ -46,7 +46,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleClusterAuthReq );
 
         // 请求分配shard
-        __KF_MESSAGE_FUNCTION__( HandleAllocShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleAllocObjectToMasterReq );
 
     protected:
         // 连接丢失
@@ -67,6 +67,9 @@ namespace KFrame
 
         // 发送分配shard到proxy
         void SendAllocShardToProxy( uint32 proxyid );
+
+        // 发送分配shard到shard
+        void SendAllocShardToShard();
 
     private:
         // 集群认证秘钥
