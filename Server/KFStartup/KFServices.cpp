@@ -40,11 +40,11 @@ namespace KFrame
             }
             catch ( std::exception& ex )
             {
-                std::cout << ex.what() << std::endl;
+                __LOG_CRITICAL__( KFLogEnum::System, "exception=[{}]!", ex.what() );
             }
             catch ( ... )                                                                                                                            \
             {
-                int a = 0;
+                __LOG_CRITICAL__( KFLogEnum::System, "exception unknown!" );
             }
 #endif
             KFThread::Sleep( 1 );

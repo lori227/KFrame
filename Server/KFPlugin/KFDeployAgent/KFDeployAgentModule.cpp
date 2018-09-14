@@ -34,7 +34,7 @@ namespace KFrame
     void KFDeployAgentModule::BeforeRun()
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
-        __REGISTER_LOOP_TIMER__( 1, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
+        __REGISTER_LOOP_TIMER__( 1, 20000, &KFDeployAgentModule::OnTimerStartupProcess );
         __REGISTER_LOOP_TIMER__( 2, 1000, &KFDeployAgentModule::OnTimerCheckTaskFinish );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
@@ -812,7 +812,7 @@ namespace KFrame
 
     void KFDeployAgentModule::StartStartupServerTask()
     {
-        __REGISTER_LOOP_TIMER__( 1, 10000, &KFDeployAgentModule::OnTimerStartupProcess );
+        __REGISTER_LOOP_TIMER__( 1, 20000, &KFDeployAgentModule::OnTimerStartupProcess );
 
         for ( auto& iter : _deploy_list._objects )
         {
@@ -928,6 +928,7 @@ namespace KFrame
         pbdeploy->set_appid( _kf_task->_app_id );
         pbdeploy->set_zoneid( _kf_task->_zone_id );
         pbdeploy->set_appchannel( _kf_task->_app_channel );
+        pbdeploy->set_logurl( _kf_task->_log_url );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_MASTER_REQ, &req );
     }
 

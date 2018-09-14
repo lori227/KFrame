@@ -20,11 +20,8 @@ namespace KFrame
     class KFRouteShardModule : public KFRouteShardInterface
     {
     public:
-        KFRouteShardModule();
-        ~KFRouteShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFRouteShardModule() = default;
+        ~KFRouteShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();

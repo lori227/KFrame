@@ -4,19 +4,6 @@
 
 namespace KFrame
 {
-    KFRouteShardModule::KFRouteShardModule()
-    {
-    }
-
-    KFRouteShardModule::~KFRouteShardModule()
-    {
-    }
-
-    void KFRouteShardModule::InitModule()
-    {
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFRouteShardModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFRouteShardModule::OnServerLostRouteProxy );
@@ -64,7 +51,8 @@ namespace KFrame
             auto pbdata = &kfmsg.zonedata( i );
 
             _kf_proxy_manage->AddRouteProxy( pbdata->zoneid(), pbdata->serverid(), handleid );
-            __LOG_DEBUG__( KFLogEnum::Logic, "register route server[{}=>{}]!", pbdata->serverid(), handleid );
+            __LOG_DEBUG__( KFLogEnum::Logic, "register route server[{}=>{}]!",
+                           KFAppID::ToString( pbdata->serverid() ), KFAppID::ToString( handleid ) );
         }
     }
 
@@ -77,7 +65,8 @@ namespace KFrame
         auto kfrouteproxy = _kf_proxy_manage->FindRouteProxy( transmitdata->serverid() );
         if ( kfrouteproxy == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "can't route server[{}] !", transmitdata->serverid() );
+            return __LOG_ERROR__( KFLogEnum::System, "can't route server[{}] !",
+                                  KFAppID::ToString( transmitdata->serverid() ) );
         }
 
         KFMsg::S2STransmitRouteProxyMessageAck ack;

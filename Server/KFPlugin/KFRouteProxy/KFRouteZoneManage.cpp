@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFRouteZoneManage::KFRouteZoneManage()
-    {
-
-    }
-
-    KFRouteZoneManage::~KFRouteZoneManage()
-    {
-
-    }
-
     KFRouteZone* KFRouteZoneManage::AddRouteZone( uint32 zoneid, uint32 serverid, uint32 handleid )
     {
         auto routezone = _kf_route_zone.Create( serverid );

@@ -21,6 +21,8 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_player->RegisterEnterFunction( this, &KFMatchClientModule::OnEnterQueryMatchRoom );
+        _kf_player->RegisterLeaveFunction( this, &KFMatchClientModule::OnLeaveCannelMatch );
+
         _kf_component->RegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( matchid ), this, &KFMatchClientModule::OnMatchIdUpdateCallBack );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_START_MATCH_REQ, &KFMatchClientModule::HandleStartMatchReq );
@@ -34,6 +36,7 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         _kf_player->UnRegisterEnterFunction( this );
+        _kf_player->UnRegisterLeaveFunction( this );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( player ), __KF_STRING__( matchid ) );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_START_MATCH_REQ );
@@ -235,6 +238,8 @@ namespace KFrame
             req.set_playerid( playerid );
             SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
         }
+
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] cancel match[{}]!", player->GetKeyID(), matchid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HanldeMatchToClientAck )
@@ -265,6 +270,7 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchStateReq );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] update match[{}]!", player->GetKeyID(), kfmsg.matchid() );
     }
 
     void KFMatchClientModule::OnEnterQueryMatchRoom( KFEntity* player )
@@ -290,11 +296,47 @@ namespace KFrame
         SendMessageToMatch( KFMsg::S2S_QUERY_MATCH_ROOM_REQ, &req );
     }
 
+    void KFMatchClientModule::OnLeaveCannelMatch( KFEntity* player )
+    {
+        auto kfobject = player->GetData();
+
+        // 不在匹配
+        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        if ( matchid == _invalid_int )
+        {
+            return;
+        }
+
+        // 已经在战场中, 不能取消
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        if ( roomid != _invalid_int )
+        {
+            return;
+        }
+
+        // 在队伍中也不能取消
+        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+        if ( groupid != _invalid_int )
+        {
+            return;
+        }
+
+        // 发送取消到匹配集群中
+        KFMsg::S2SCancelMatchToProxyReq req;
+        req.set_matchid( matchid );
+        req.set_playerid( player->GetKeyID() );
+        SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
+
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave cancel match[{}]!", player->GetKeyID(), matchid );
+    }
+
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleQueryMatchRoomAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMatchRoomAck );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query match[{}]!", player->GetKeyID(), kfmsg.matchid() );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFMatchClientModule::OnMatchIdUpdateCallBack )

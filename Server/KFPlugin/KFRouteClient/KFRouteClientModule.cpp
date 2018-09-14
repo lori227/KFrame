@@ -8,15 +8,6 @@ namespace KFrame
         _kf_transmit_function = nullptr;
     }
 
-    KFRouteClientModule::~KFRouteClientModule()
-    {
-    }
-
-    void KFRouteClientModule::InitModule()
-    {
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFRouteClientModule::BeforeRun()
     {
         _kf_cluster->RegisterConnectionFunction( __KF_STRING__( route ), this, &KFRouteClientModule::OnConnectionRouteCluster );

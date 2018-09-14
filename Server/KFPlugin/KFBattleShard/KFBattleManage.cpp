@@ -7,11 +7,6 @@ namespace KFrame
         Reset();
     }
 
-    KFBattleServer::~KFBattleServer()
-    {
-
-    }
-
     void KFBattleServer::Reset()
     {
         _ip.clear();
@@ -167,7 +162,7 @@ namespace KFrame
             return;
         }
 
-        if ( kfresult->_value == 0 )
+        if ( kfresult->_value == _invalid_int )
         {
             _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battlelist ), ip );
         }

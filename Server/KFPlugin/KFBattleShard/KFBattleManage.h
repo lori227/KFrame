@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         KFBattleServer();
-        ~KFBattleServer();
+        ~KFBattleServer() = default;
 
         // 是否有效
         bool IsValid() const;

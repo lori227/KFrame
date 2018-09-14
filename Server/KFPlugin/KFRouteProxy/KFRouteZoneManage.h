@@ -24,8 +24,8 @@ namespace KFrame
     class KFRouteZoneManage : public KFSingleton< KFRouteZoneManage >
     {
     public:
-        KFRouteZoneManage();
-        ~KFRouteZoneManage();
+        KFRouteZoneManage() = default;
+        ~KFRouteZoneManage() = default;
 
         // 添加游戏区
         KFRouteZone* AddRouteZone( uint32 zoneid, uint32 serverid, uint32 handleid );

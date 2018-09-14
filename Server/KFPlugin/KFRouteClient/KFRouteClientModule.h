@@ -22,10 +22,7 @@ namespace KFrame
     {
     public:
         KFRouteClientModule();
-        ~KFRouteClientModule();
-
-        // 加载配置
-        virtual void InitModule();
+        ~KFRouteClientModule() = default;
 
         // 初始化
         virtual void BeforeRun();

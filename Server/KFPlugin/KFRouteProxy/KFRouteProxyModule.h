@@ -21,11 +21,8 @@ namespace KFrame
     class KFRouteProxyModule : public KFRouteProxyInterface
     {
     public:
-        KFRouteProxyModule();
-        ~KFRouteProxyModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFRouteProxyModule() = default;
+        ~KFRouteProxyModule() = default;
 
         // 初始化
         virtual void BeforeRun();

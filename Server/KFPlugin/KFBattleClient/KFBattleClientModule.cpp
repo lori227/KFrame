@@ -81,6 +81,9 @@ namespace KFrame
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
         player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
+
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query battle room[{}:{}]!",
+                       player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleNoticeMatchRoomReq )
@@ -136,6 +139,8 @@ namespace KFrame
         // 取消配置信息
         player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+
+        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave battle room!", player->GetKeyID() );
     }
 
     void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore )

@@ -95,7 +95,7 @@ namespace KFrame
         auto kfsetting = _kf_match_config->FindMatchSetting( kfmsg.matchid() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "can't find matchsetting[{}]!", kfmsg.matchid() );
+            return __LOG_ERROR__( KFLogEnum::System, "can't find match setting[{}]!", kfmsg.matchid() );
         }
 
         auto kfmatchqueue = _kf_match_queue.Find( kfmsg.matchid() );
@@ -106,6 +106,10 @@ namespace KFrame
             kfmatchqueue->_kf_setting = kfsetting;
         }
 
+        // 先取消匹配
+        kfmatchqueue->CancelMatch( kfmsg.playerid() );
+
+        // 开始匹配
         auto pbgroup = &kfmsg.pbgroup();
         kfmatchqueue->StartMatch( pbgroup, kfmsg.allowgroup(), kfmsg.battleserverid() );
 

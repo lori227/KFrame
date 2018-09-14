@@ -114,7 +114,7 @@ namespace KFrame
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
         if ( KickOnline( playerid, __FUNC_LINE__ ) )
         {
-            return SendVerifyFailedToLogin( KFMsg::LoginAlreadyOnline, loginid, gateid, accountid, sessionid );
+            // return SendVerifyFailedToLogin( KFMsg::LoginAlreadyOnline, loginid, gateid, accountid, sessionid );
         }
 
         // 选择Game服务器

@@ -66,9 +66,6 @@ namespace KFrame
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
         virtual void RemoveConnectionFunction( const std::string& name );
 
-        // 开启集群客户端
-        void StartClusterClient();
-
         // 发送消息
         bool SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message );
         bool SendNetMessage( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message );

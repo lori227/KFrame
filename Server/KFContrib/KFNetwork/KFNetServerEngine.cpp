@@ -119,7 +119,7 @@ namespace KFrame
         _trustee_handles.Insert( eventdata->_id, kfhandle );
 
         // 设置托管超时时间
-        kfhandle->SetTrusteeTimeout( _now_time + 60000 );
+        kfhandle->SetTrusteeTimeout( _now_time + 30000 );
     }
 
     void KFNetServerEngine::OnServerShutDown( const KFEventData* eventdata )
