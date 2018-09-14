@@ -53,7 +53,7 @@ namespace KFrame
         if ( ok )
         {
             // 先添加到列表
-            _kf_cluster_proxy->AddObjectShard( kfmsg.groupid(), shardid );
+            _kf_cluster_proxy->AddDynamicShard( kfmsg.groupid(), shardid );
 
             __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] ok!", kfmsg.groupid() );
         }

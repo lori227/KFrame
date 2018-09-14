@@ -57,7 +57,7 @@ namespace KFrame
         std::string MakeAuthToken( const KFGuid& guid );
 
         // 获得 objectid 的数量
-        std::set< uint64 > GetShardObject( uint32 shardid );
+        std::set< uint32 > GetShardObject( uint32 shardid );
 
         // 获得最大数量的shardid
         uint32 GetMaxObjectShard();
@@ -79,13 +79,13 @@ namespace KFrame
         uint32 _cluster_serial;
 
         // 记录shard分配数据
-        std::map< uint64, uint32 > _object_to_shard;
+        std::map< uint32, uint32 > _object_to_shard;
 
         // shard存在的objectid
-        std::map< uint32, std::set< uint64 > > _shard_objects;
+        std::map< uint32, std::set< uint32 > > _shard_objects;
 
         // 所有的objectid列表
-        std::set< uint64 > _total_objects;
+        std::set< uint32 > _total_objects;
     };
 }
 

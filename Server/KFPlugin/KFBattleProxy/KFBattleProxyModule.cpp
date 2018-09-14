@@ -128,7 +128,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToBattleProxyReq );
         __LOG_DEBUG__( KFLogEnum::Logic, "create room[{}] req!", kfmsg.roomid() );
 
-        auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.roomid() );
+        auto shardid = _kf_cluster_proxy->FindDynamicShard( kfmsg.roomid() );
         if ( shardid == _invalid_int )
         {
             shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.roomid(), false );
@@ -138,7 +138,7 @@ namespace KFrame
                 return;
             }
 
-            _kf_cluster_proxy->AddObjectShard( kfmsg.roomid(), shardid );
+            _kf_cluster_proxy->AddDynamicShard( kfmsg.roomid(), shardid );
         }
 
         KFMsg::S2SCreateRoomToBattleShardReq req;
@@ -162,7 +162,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBattleRoomReq );
 
-        auto shardid = _kf_cluster_proxy->FindObjectShard( kfmsg.roomid() );
+        auto shardid = _kf_cluster_proxy->FindDynamicShard( kfmsg.roomid() );
         if ( shardid == _invalid_int )
         {
             KFMsg::S2SQueryBattleRoomAck ack;

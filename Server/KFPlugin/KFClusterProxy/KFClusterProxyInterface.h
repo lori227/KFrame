@@ -32,13 +32,16 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加映射
-        virtual void AddObjectShard( uint64 objectid, uint32 shardid ) = 0;
+        virtual void AddDynamicShard( uint64 objectid, uint32 shardid ) = 0;
 
-        // 查找映射
-        virtual uint32 FindObjectShard( uint64 objectid ) = 0;
+        // 查找动态对象映射
+        virtual uint32 FindDynamicShard( uint64 objectid ) = 0;
 
         // 查找负载最小的逻辑分片id
         virtual uint32 FindMinObjectShard() = 0;
+
+        // 查找静态对象映射
+        virtual uint32 FindStaticShard( uint32 objectid ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,6 +19,9 @@
 
 		<!-- 渠道测试-->
 		<Zone Channel="2" Id="1" LogicId="1" Name="渠道测试服" Ip="10.105.51.22"/>
+
+		<!-- 技术封测-->
+		<Zone Channel="3" Id="1" LogicId="1" Name="技术封测服" Ip="10.105.200.169"/>
 	</Zones>
 </Config>
 

@@ -174,7 +174,7 @@ namespace KFrame
         SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::AllocObjectToMaster( const std::set<uint64>& objectlist )
+    void KFClusterShardModule::AllocObjectToMaster( const std::set<uint32>& objectlist )
     {
         KFMsg::S2SAllocObjectToMasterReq req;
         for ( auto objectid : objectlist )
@@ -203,7 +203,7 @@ namespace KFrame
         }
     }
 
-    const std::set< uint64 >& KFClusterShardModule::GetAllocObjectList()
+    const std::set< uint32 >& KFClusterShardModule::GetAllocObjectList()
     {
         return _object_list;
     }

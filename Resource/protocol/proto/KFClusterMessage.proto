@@ -12,10 +12,11 @@ enum ClusterProtocol
 	S2S_CLUSTER_CLIENT_LIST_REQ = 10108;		// 客户端列表
 	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// 添加对象映射
 	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// 删除对象映射
-	S2S_SEND_TO_CLUSTER_OBJECT_REQ = 10111;		// 发送到集群对象
 	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// 请求分配shard
 	S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113;		// 请求分配shard
 	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// 请求分配shard
+	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// 发送到静态对象
+	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// 发送到动态对象
  }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,27 +107,18 @@ message S2SRemoveObjectToProxyReq
 	repeated uint64 objectid = 2;
 }
 
-// 发送消息到对象
-// S2S_SEND_TO_CLUSTER_OBJECT_REQ
-message S2SSendToClusterObjectReq
-{
-	required uint64 objectid = 1;
-	required uint32 msgid = 2;
-	required string msgdata = 3;
-}
-
 // 请求分派Shard
 // S2S_ALLOC_OBJECT_TO_MASTER_REQ
 message S2SAllocObjectToMasterReq
 {
-	repeated uint64 objectid = 1;
+	repeated uint32 objectid = 1;
 }
 
 // 请求分派Shard
 // S2S_ALLOC_OBJECT_TO_PROXY_ACK
 message S2SAllocObjectToProxyAck
 {
-	repeated uint64 objectid = 1;
+	repeated uint32 objectid = 1;
 	repeated uint32 shardid = 2;
 }
 
@@ -134,7 +126,25 @@ message S2SAllocObjectToProxyAck
 // S2S_ALLOC_OBJECT_TO_SHARD_ACK
 message S2SAllocObjectToShardAck
 {
-	repeated uint64 objectid = 1;
+	repeated uint32 objectid = 1;
+}
+
+// 发送消息到动态对象
+// S2S_SEND_TO_DYNAMIC_OBJECT_REQ
+message S2SSendToDynamicObjectReq
+{
+	required uint64 objectid = 1;
+	required uint32 msgid = 2;
+	required string msgdata = 3;
+}
+
+// 发送消息到静态对象
+// S2S_SEND_TO_STATIC_OBJECT_REQ
+message S2SSendToStaticObjectReq
+{
+	required uint32 objectid = 1;
+	required uint32 msgid = 2;
+	required string msgdata = 3;
 }
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////

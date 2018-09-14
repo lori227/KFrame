@@ -1,5 +1,4 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -shared")
-set(CMAKE_STRIP "/usr/bin/eu-strip")
 
 message("${CMAKE_CXX_FLAGS}")
 macro(LINK_SDK_MACRO project_name)
@@ -34,16 +33,10 @@ macro(BUILD_PLUGIN_MACRO project_name)
         RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
         LIBRARY_OUTPUT_DIRECTORY ${BIN_DIR})
 
-    LINK_SDK_MACRO(${project_name})
-
-    #if(CMAKE_BUILD_TYPE MATCHES "Release")
-    #    set(${project_name}_PLUGIN_NAME "${CMAKE_SHARED_LIBRARY_PREFIX}${project_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
-    #    message("KFContrib name = ${BIN_DIR}/${${project_name}_PLUGIN_NAME}") 
-    #    add_custom_command(TARGET ${project_name} POST_BUILD
-    #        COMMAND ${CMAKE_STRIP} ${BIN_DIR}/${${project_name}_PLUGIN_NAME} -f ${BIN_DIR}/${${project_name}_PLUGIN_NAME}.sym)
-    #endif()
-
+LINK_SDK_MACRO(${project_name})
 endmacro(BUILD_PLUGIN_MACRO project_name)
+
+
 
 add_subdirectory(KFAchieve)
 add_subdirectory(KFActivity)

@@ -74,13 +74,17 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
         // 添加映射
-        virtual void AddObjectShard( uint64 objectid, uint32 shardid );
+        virtual void AddDynamicShard( uint64 objectid, uint32 shardid );
 
         // 查找映射
-        virtual uint32 FindObjectShard( uint64 objectid );
+        virtual uint32 FindDynamicShard( uint64 objectid );
 
         // 查找负载最小的逻辑分片id
         virtual uint32 FindMinObjectShard();
+
+        // 查找映射
+        virtual uint32 FindStaticShard( uint32 objectid );
+
     protected:
         // 处理更新token信息
         __KF_MESSAGE_FUNCTION__( HandleClusterTokenReq );
@@ -94,11 +98,14 @@ namespace KFrame
         // 删除对象映射
         __KF_MESSAGE_FUNCTION__( HandleRemoveObjectToProxyReq );
 
-        // 发送到对象
-        __KF_MESSAGE_FUNCTION__( HandleSendToObjectReq );
-
         // 分配shard
         __KF_MESSAGE_FUNCTION__( HandleAllocObjectToProxyAck );
+
+        // 发送到动态对象
+        __KF_MESSAGE_FUNCTION__( HandleSendToStaticObjectReq );
+
+        // 发送到动态对象
+        __KF_MESSAGE_FUNCTION__( HandleSendToDynamicObjectReq );
 
     protected:
         // 转发消息到Shard
@@ -161,10 +168,13 @@ namespace KFrame
         KFConHash _kf_hash;
 
         // 对象映射列表
-        std::map< uint64, uint32 > _kf_object_shard;
+        std::map< uint64, uint32 > _kf_dynamic_shard;
 
         // 对象数量
         std::map< uint64, uint32 > _kf_object_count;
+
+        // 分配列表
+        std::map< uint32, uint32 > _kf_static_shard;
     };
 }
 #endif

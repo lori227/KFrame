@@ -68,8 +68,8 @@ namespace KFrame
         virtual void RemoveObjectToProxy( const std::set< uint64 >& objectlist );
 
         // 分配Shard
-        virtual void AllocObjectToMaster( const std::set< uint64 >& objectlist );
-        virtual const std::set< uint64 >& GetAllocObjectList();
+        virtual void AllocObjectToMaster( const std::set< uint32 >& objectlist );
+        virtual const std::set< uint32 >& GetAllocObjectList();
 
     protected:
         // 注册路由信息
@@ -94,7 +94,7 @@ namespace KFrame
         std::map< uint32, uint32 > _proxy_client_list;
 
         // shard分配的object列表
-        std::set < uint64 > _object_list;
+        std::set < uint32 > _object_list;
 
         // 绑定函数
         KFBind< std::string, const std::string&, KFAllocObjectFunction > _kf_alloc_object_function;

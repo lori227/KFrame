@@ -18,9 +18,9 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_REQ, &KFClusterProxyModule::HandleClusterVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleAddObjectToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &KFClusterProxyModule::HandleRemoveObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ, &KFClusterProxyModule::HandleSendToObjectReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &KFClusterProxyModule::HandleAllocObjectToProxyAck );
-
+        __REGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_STATIC_OBJECT_REQ, &KFClusterProxyModule::HandleSendToStaticObjectReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_DYNAMIC_OBJECT_REQ, &KFClusterProxyModule::HandleSendToDynamicObjectReq );
     }
 
     void KFClusterProxyModule::BeforeShut()
@@ -42,8 +42,9 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_STATIC_OBJECT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SEND_TO_DYNAMIC_OBJECT_REQ );
     }
 
     void KFClusterProxyModule::Run()
@@ -331,7 +332,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {
             auto objectid = kfmsg.objectid( i );
-            _kf_object_shard[ objectid ] = shardid;
+            _kf_dynamic_shard[ objectid ] = shardid;
 
             __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
@@ -344,14 +345,14 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAllocObjectToProxyAck );
 
-        _kf_object_shard.clear();
+        _kf_static_shard.clear();
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {
             auto objectid = kfmsg.objectid( i );
             auto shardid = kfmsg.shardid( i );
-            _kf_object_shard[ objectid ] = shardid;
+            _kf_static_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
+            __LOG_DEBUG__( KFLogEnum::Logic, "add alloc [{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
     }
 
@@ -362,7 +363,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {
             auto objectid = kfmsg.objectid( i );
-            _kf_object_shard.erase( objectid );
+            _kf_dynamic_shard.erase( objectid );
 
             __LOG_DEBUG__( KFLogEnum::Logic, "remove object[{}] ok!", objectid );
         }
@@ -371,16 +372,16 @@ namespace KFrame
         DecObjectCount( shardid, kfmsg.objectid_size() );
     }
 
-    void KFClusterProxyModule::AddObjectShard( uint64 objectid, uint32 shardid )
+    void KFClusterProxyModule::AddDynamicShard( uint64 objectid, uint32 shardid )
     {
         AddObjectCount( shardid, 1 );
-        _kf_object_shard[ objectid ] = shardid;
+        _kf_dynamic_shard[ objectid ] = shardid;
     }
 
-    uint32 KFClusterProxyModule::FindObjectShard( uint64 objectid )
+    uint32 KFClusterProxyModule::FindDynamicShard( uint64 objectid )
     {
-        auto iter = _kf_object_shard.find( objectid );
-        if ( iter == _kf_object_shard.end() )
+        auto iter = _kf_dynamic_shard.find( objectid );
+        if ( iter == _kf_dynamic_shard.end() )
         {
             return _invalid_int;
         }
@@ -390,7 +391,7 @@ namespace KFrame
 
     void KFClusterProxyModule::RemoveObjectShard( uint32 shardid )
     {
-        for ( auto iter = _kf_object_shard.begin(); iter != _kf_object_shard.end(); )
+        for ( auto iter = _kf_dynamic_shard.begin(); iter != _kf_dynamic_shard.end(); )
         {
             if ( iter->second != shardid )
             {
@@ -398,7 +399,7 @@ namespace KFrame
             }
             else
             {
-                iter = _kf_object_shard.erase( iter );
+                iter = _kf_dynamic_shard.erase( iter );
             }
         }
     }
@@ -419,16 +420,14 @@ namespace KFrame
         iter->second -= __MIN__( iter->second, count );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleSendToObjectReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleSendToDynamicObjectReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SSendToClusterObjectReq );
+        __PROTO_PARSE__( KFMsg::S2SSendToDynamicObjectReq );
 
-        auto shardid = FindObjectShard( kfmsg.objectid() );
+        auto shardid = FindDynamicShard( kfmsg.objectid() );
         if ( shardid == _invalid_int )
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!",
-                           kfmsg.msgid(), kfmsg.objectid() );
-            return;
+            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
         }
 
         auto msgdata = kfmsg.msgdata();
@@ -451,4 +450,30 @@ namespace KFrame
 
         return shardid;
     }
+
+    uint32 KFClusterProxyModule::FindStaticShard( uint32 objectid )
+    {
+        auto iter = _kf_static_shard.find( objectid );
+        if ( iter == _kf_static_shard.end() )
+        {
+            return _invalid_int;
+        }
+
+        return iter->second;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleSendToStaticObjectReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SSendToStaticObjectReq );
+
+        auto shardid = FindStaticShard( kfmsg.objectid() );
+        if ( shardid == _invalid_int )
+        {
+            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
+        }
+
+        auto msgdata = kfmsg.msgdata();
+        SendMessageToShard( shardid, kfmsg.msgid(), msgdata.data(), msgdata.size() );
+    }
+
 }

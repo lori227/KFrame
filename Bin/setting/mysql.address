@@ -21,6 +21,9 @@
 		
 			<!-- 渠道测试 -->
 			<Channel ChannelId="2" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
+		
+			<!-- 渠道测试 -->
+			<Channel ChannelId="3" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 	</MySQL>
 

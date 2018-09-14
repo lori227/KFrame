@@ -163,12 +163,21 @@ namespace KFrame
         return SendNetMessage( name, msgid, message );
     }
 
-    bool KFClusterClientModule::SendMessageToObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToStaticObject( const std::string& name, uint32 objectid, uint32 msgid, google::protobuf::Message* message )
     {
-        KFMsg::S2SSendToClusterObjectReq req;
+        KFMsg::S2SSendToStaticObjectReq req;
         req.set_objectid( objectid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return SendNetMessage( name, KFMsg::S2S_SEND_TO_CLUSTER_OBJECT_REQ, &req );
+        return SendNetMessage( name, KFMsg::S2S_SEND_TO_STATIC_OBJECT_REQ, &req );
+    }
+
+    bool KFClusterClientModule::SendToDynamicObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
+    {
+        KFMsg::S2SSendToDynamicObjectReq req;
+        req.set_objectid( objectid );
+        req.set_msgid( msgid );
+        req.set_msgdata( message->SerializeAsString() );
+        return SendNetMessage( name, KFMsg::S2S_SEND_TO_DYNAMIC_OBJECT_REQ, &req );
     }
 }

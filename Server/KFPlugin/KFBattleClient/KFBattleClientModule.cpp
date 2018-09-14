@@ -49,7 +49,7 @@ namespace KFrame
 
     bool KFBattleClientModule::SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( __KF_STRING__( battle ), roomid, msgid, message );
+        return _kf_cluster->SendToDynamicObject( __KF_STRING__( battle ), roomid, msgid, message );
     }
 
     void KFBattleClientModule::OnEnterQueryBattleRoom( KFEntity* player )

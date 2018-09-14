@@ -21,6 +21,9 @@
 
 			<!-- 渠道测试 -->
 			<Channel ChannelId="2" IP="10.105.51.22" Port="6379" Password="redis@lori227-="/>
+
+			<!-- 渠道测试 -->
+			<Channel ChannelId="3" IP="10.105.200.169" Port="6379" Password="redis@lori227-="/>
 		</Connection>
 	</Redis>
 

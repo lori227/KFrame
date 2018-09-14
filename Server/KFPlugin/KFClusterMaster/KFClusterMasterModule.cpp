@@ -171,9 +171,9 @@ namespace KFrame
         SendAllocShardToProxy( _invalid_int );
     }
 
-    std::set< uint64 > KFClusterMasterModule::GetShardObject( uint32 shardid )
+    std::set< uint32 > KFClusterMasterModule::GetShardObject( uint32 shardid )
     {
-        std::set< uint64 > outvalue;
+        std::set< uint32 > outvalue;
         for ( auto& iter : _object_to_shard )
         {
             if ( iter.second == shardid )

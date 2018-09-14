@@ -44,8 +44,11 @@ namespace KFrame
         virtual bool SendMessageToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message );
         virtual bool SendMessageToShard( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message );
 
-        // 发送到对象所在的分片服务器
-        virtual bool SendMessageToObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message );
+        // 发送到静态对象所在的分片服务器
+        virtual bool SendToStaticObject( const std::string& name, uint32 objectid, uint32 msgid, google::protobuf::Message* message );
+
+        // 发送到动态对象所在的分片服务器
+        virtual bool SendToDynamicObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 认证回馈

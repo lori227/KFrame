@@ -104,7 +104,7 @@ namespace KFrame
 
     bool KFGroupClientModule::SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( __KF_STRING__( group ), groupid, msgid, message );
+        return _kf_cluster->SendToDynamicObject( __KF_STRING__( group ), groupid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFGroupClientModule::OnGroupIdUpdateCallBack )

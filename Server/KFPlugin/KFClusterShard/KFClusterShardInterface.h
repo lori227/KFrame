@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    typedef std::function< void( const std::set< uint64 >& objectlist ) > KFAllocObjectFunction;
+    typedef std::function< void( const std::set< uint32 >& objectlist ) > KFAllocObjectFunction;
 
     class KFClusterShardInterface : public KFModule
     {
@@ -44,11 +44,11 @@ namespace KFrame
         virtual void RemoveObjectToProxy( const std::set< uint64 >& objectlist ) = 0;
 
         // 分配Shard
-        virtual void AllocObjectToMaster( const std::set< uint64 >& objectlist ) = 0;
-        virtual const std::set< uint64 >& GetAllocObjectList() = 0;
+        virtual void AllocObjectToMaster( const std::set< uint32 >& objectlist ) = 0;
+        virtual const std::set< uint32 >& GetAllocObjectList() = 0;
 
         template< class T >
-        void RegisterAllocObjectFunction( T* object, void ( T::*handle )( const std::set< uint64 >& objectlist ) )
+        void RegisterAllocObjectFunction( T* object, void ( T::*handle )( const std::set< uint32 >& objectlist ) )
         {
             KFAllocObjectFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddAllocObjectFunction( typeid( T ).name(), function );
@@ -71,7 +71,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_ALLOC_OBJECT_FUNCTION__( function ) \
-    void function( const std::set< uint64 >& objectlist )
+    void function( const std::set< uint32 >& objectlist )
 
 #define __REGISTER_ALLOC_OBJECT_FUNCTION__( function ) \
     _kf_cluster_shard->RegisterAllocObjectFunction( this, function )

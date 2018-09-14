@@ -48,7 +48,7 @@ namespace KFrame
         }
 
         // 设置标记
-        player->UpdateData( kfsignin, __KF_STRING__( sevenreward ), KFOperateEnum::ABit, flag );
+        player->UpdateData( kfsignin, __KF_STRING__( sevenreward ), KFOperateEnum::ABit, kfmsg.day() );
 
         // 添加奖励
         player->AddAgentData( &kfsetting->_reward, 1.0f, true, __FUNC_LINE__ );

@@ -41,7 +41,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFRankClientModule::SendMessageToRank( uint32 rankid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToObject( __KF_STRING__( rank ), rankid, msgid, message );
+        return _kf_cluster->SendToStaticObject( __KF_STRING__( rank ), rankid, msgid, message );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )

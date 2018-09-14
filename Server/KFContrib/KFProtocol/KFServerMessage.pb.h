@@ -144,7 +144,6 @@ class S2SReviewApplyReq;
 class S2SDissolveGuildReq;
 class S2SModifyMedalReq;
 class S2SQueryGuildListReq;
-class S2SKickMemberReq;
 class S2SGMAddMailReq;
 
 enum ServerProtocol {
@@ -255,7 +254,6 @@ enum ServerProtocol {
   S2S_DISSOLVE_GUILD_REQ = 21209,
   S2S_MODIFY_MEDAL_REQ = 21210,
   S2S_QUERY_GUILD_LIST_REQ = 21211,
-  S2S_KICK_MEMBER_REQ = 21212,
   S2S_GM_ADD_MAIL_REQ = 21300
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
@@ -11926,26 +11924,33 @@ class LIBPROTOC_EXPORT S2SQueryGuildListReq : public ::google::protobuf::Message
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required uint32 serverid = 2;
+  // required uint64 guildid = 2;
+  inline bool has_guildid() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 2;
+  inline ::google::protobuf::uint64 guildid() const;
+  inline void set_guildid(::google::protobuf::uint64 value);
+
+  // required uint32 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
-  static const int kServeridFieldNumber = 2;
+  static const int kServeridFieldNumber = 3;
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // optional .KFMsg.PBGuildIdArray guilds = 3;
+  // optional .KFMsg.PBGuildIdArray guilds = 4;
   inline bool has_guilds() const;
   inline void clear_guilds();
-  static const int kGuildsFieldNumber = 3;
+  static const int kGuildsFieldNumber = 4;
   inline const ::KFMsg::PBGuildIdArray& guilds() const;
   inline ::KFMsg::PBGuildIdArray* mutable_guilds();
   inline ::KFMsg::PBGuildIdArray* release_guilds();
   inline void set_allocated_guilds(::KFMsg::PBGuildIdArray* guilds);
 
-  // required uint32 cursor = 4;
+  // required uint32 cursor = 5;
   inline bool has_cursor() const;
   inline void clear_cursor();
-  static const int kCursorFieldNumber = 4;
+  static const int kCursorFieldNumber = 5;
   inline ::google::protobuf::uint32 cursor() const;
   inline void set_cursor(::google::protobuf::uint32 value);
 
@@ -11953,6 +11958,8 @@ class LIBPROTOC_EXPORT S2SQueryGuildListReq : public ::google::protobuf::Message
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_guildid();
+  inline void clear_has_guildid();
   inline void set_has_serverid();
   inline void clear_has_serverid();
   inline void set_has_guilds();
@@ -11962,13 +11969,14 @@ class LIBPROTOC_EXPORT S2SQueryGuildListReq : public ::google::protobuf::Message
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 guildid_;
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 serverid_;
   ::KFMsg::PBGuildIdArray* guilds_;
   ::google::protobuf::uint32 cursor_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -11976,118 +11984,6 @@ class LIBPROTOC_EXPORT S2SQueryGuildListReq : public ::google::protobuf::Message
 
   void InitAsDefaultInstance();
   static S2SQueryGuildListReq* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SKickMemberReq : public ::google::protobuf::Message {
- public:
-  S2SKickMemberReq();
-  virtual ~S2SKickMemberReq();
-
-  S2SKickMemberReq(const S2SKickMemberReq& from);
-
-  inline S2SKickMemberReq& operator=(const S2SKickMemberReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SKickMemberReq& default_instance();
-
-  void Swap(S2SKickMemberReq* other);
-
-  // implements Message ----------------------------------------------
-
-  S2SKickMemberReq* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SKickMemberReq& from);
-  void MergeFrom(const S2SKickMemberReq& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 playerid = 1;
-  inline bool has_playerid() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
-
-  // required uint32 guildid = 2;
-  inline bool has_guildid() const;
-  inline void clear_guildid();
-  static const int kGuildidFieldNumber = 2;
-  inline ::google::protobuf::uint32 guildid() const;
-  inline void set_guildid(::google::protobuf::uint32 value);
-
-  // required uint32 toplayerid = 3;
-  inline bool has_toplayerid() const;
-  inline void clear_toplayerid();
-  static const int kToplayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 toplayerid() const;
-  inline void set_toplayerid(::google::protobuf::uint32 value);
-
-  // required uint32 serverid = 4;
-  inline bool has_serverid() const;
-  inline void clear_serverid();
-  static const int kServeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SKickMemberReq)
- private:
-  inline void set_has_playerid();
-  inline void clear_has_playerid();
-  inline void set_has_guildid();
-  inline void clear_has_guildid();
-  inline void set_has_toplayerid();
-  inline void clear_has_toplayerid();
-  inline void set_has_serverid();
-  inline void clear_has_serverid();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 guildid_;
-  ::google::protobuf::uint32 toplayerid_;
-  ::google::protobuf::uint32 serverid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
-  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static S2SKickMemberReq* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -22601,15 +22497,37 @@ inline void S2SQueryGuildListReq::set_playerid(::google::protobuf::uint32 value)
   playerid_ = value;
 }
 
-// required uint32 serverid = 2;
-inline bool S2SQueryGuildListReq::has_serverid() const {
+// required uint64 guildid = 2;
+inline bool S2SQueryGuildListReq::has_guildid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SQueryGuildListReq::set_has_serverid() {
+inline void S2SQueryGuildListReq::set_has_guildid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SQueryGuildListReq::clear_has_serverid() {
+inline void S2SQueryGuildListReq::clear_has_guildid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SQueryGuildListReq::clear_guildid() {
+  guildid_ = GOOGLE_ULONGLONG(0);
+  clear_has_guildid();
+}
+inline ::google::protobuf::uint64 S2SQueryGuildListReq::guildid() const {
+  return guildid_;
+}
+inline void S2SQueryGuildListReq::set_guildid(::google::protobuf::uint64 value) {
+  set_has_guildid();
+  guildid_ = value;
+}
+
+// required uint32 serverid = 3;
+inline bool S2SQueryGuildListReq::has_serverid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SQueryGuildListReq::set_has_serverid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SQueryGuildListReq::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SQueryGuildListReq::clear_serverid() {
   serverid_ = 0u;
@@ -22623,15 +22541,15 @@ inline void S2SQueryGuildListReq::set_serverid(::google::protobuf::uint32 value)
   serverid_ = value;
 }
 
-// optional .KFMsg.PBGuildIdArray guilds = 3;
+// optional .KFMsg.PBGuildIdArray guilds = 4;
 inline bool S2SQueryGuildListReq::has_guilds() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SQueryGuildListReq::set_has_guilds() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SQueryGuildListReq::clear_has_guilds() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SQueryGuildListReq::clear_guilds() {
   if (guilds_ != NULL) guilds_->::KFMsg::PBGuildIdArray::Clear();
@@ -22661,15 +22579,15 @@ inline void S2SQueryGuildListReq::set_allocated_guilds(::KFMsg::PBGuildIdArray* 
   }
 }
 
-// required uint32 cursor = 4;
+// required uint32 cursor = 5;
 inline bool S2SQueryGuildListReq::has_cursor() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void S2SQueryGuildListReq::set_has_cursor() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void S2SQueryGuildListReq::clear_has_cursor() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SQueryGuildListReq::clear_cursor() {
   cursor_ = 0u;
@@ -22681,98 +22599,6 @@ inline ::google::protobuf::uint32 S2SQueryGuildListReq::cursor() const {
 inline void S2SQueryGuildListReq::set_cursor(::google::protobuf::uint32 value) {
   set_has_cursor();
   cursor_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// S2SKickMemberReq
-
-// required uint32 playerid = 1;
-inline bool S2SKickMemberReq::has_playerid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void S2SKickMemberReq::set_has_playerid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void S2SKickMemberReq::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void S2SKickMemberReq::clear_playerid() {
-  playerid_ = 0u;
-  clear_has_playerid();
-}
-inline ::google::protobuf::uint32 S2SKickMemberReq::playerid() const {
-  return playerid_;
-}
-inline void S2SKickMemberReq::set_playerid(::google::protobuf::uint32 value) {
-  set_has_playerid();
-  playerid_ = value;
-}
-
-// required uint32 guildid = 2;
-inline bool S2SKickMemberReq::has_guildid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void S2SKickMemberReq::set_has_guildid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void S2SKickMemberReq::clear_has_guildid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SKickMemberReq::clear_guildid() {
-  guildid_ = 0u;
-  clear_has_guildid();
-}
-inline ::google::protobuf::uint32 S2SKickMemberReq::guildid() const {
-  return guildid_;
-}
-inline void S2SKickMemberReq::set_guildid(::google::protobuf::uint32 value) {
-  set_has_guildid();
-  guildid_ = value;
-}
-
-// required uint32 toplayerid = 3;
-inline bool S2SKickMemberReq::has_toplayerid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SKickMemberReq::set_has_toplayerid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void S2SKickMemberReq::clear_has_toplayerid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void S2SKickMemberReq::clear_toplayerid() {
-  toplayerid_ = 0u;
-  clear_has_toplayerid();
-}
-inline ::google::protobuf::uint32 S2SKickMemberReq::toplayerid() const {
-  return toplayerid_;
-}
-inline void S2SKickMemberReq::set_toplayerid(::google::protobuf::uint32 value) {
-  set_has_toplayerid();
-  toplayerid_ = value;
-}
-
-// required uint32 serverid = 4;
-inline bool S2SKickMemberReq::has_serverid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SKickMemberReq::set_has_serverid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SKickMemberReq::clear_has_serverid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SKickMemberReq::clear_serverid() {
-  serverid_ = 0u;
-  clear_has_serverid();
-}
-inline ::google::protobuf::uint32 S2SKickMemberReq::serverid() const {
-  return serverid_;
-}
-inline void S2SKickMemberReq::set_serverid(::google::protobuf::uint32 value) {
-  set_has_serverid();
-  serverid_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -63,16 +63,15 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFGuildClientModule::SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_cluster->SendMessageToObject( __KF_STRING__( guild ), guildid, msgid, message );
-    }
-
     bool KFGuildClientModule::SendMessageToGuild( uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_cluster->SendMessageToShard( __KF_STRING__( guild ), msgid, message );
     }
 
+    bool KFGuildClientModule::SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        return _kf_cluster->SendToDynamicObject( __KF_STRING__( guild ), guildid, msgid, message );
+    }
 
     void KFGuildClientModule::UpdateMemberBasic( uint32 playerid, uint64 guildid, MapString& basics )
     {
