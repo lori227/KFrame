@@ -162,19 +162,19 @@ namespace KFrame
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes id = 0!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] clothes id = 0!", kfagent->_string );
         }
 
         auto kfsetting = _kf_clothes_config->FindClothesSetting( configid );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes setting = null!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] clothes setting = null!", kfagent->_string );
         }
 
         auto kfagengvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
         if ( kfagengvalue == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] clothes count = null!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] clothes count = null!", kfagent->_string );
         }
 
         auto clothescount = _kf_kernel->CalcAgentValue( kfagengvalue, multiple );
@@ -183,7 +183,7 @@ namespace KFrame
         auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
         if ( kfclothesrecord == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] player[{}] clothes record = null!", kfagent->_string, player->GetKeyID() );
+            return __LOG_ERROR__( "[{}] player[{}] clothes record = null!", kfagent->_string, player->GetKeyID() );
         }
 
         auto datasetting = kfclothesrecord->GetDataSetting();

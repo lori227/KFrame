@@ -80,7 +80,7 @@ namespace KFrame
             return _kf_memory->Malloc( mallocsize, batch, function, line );
         }
 
-        __LOG_WARN_FUNCTION__( KFLogEnum::System, function, line, "memory too large[{}]!", size );
+        __LOG_WARN_FUNCTION__( function, line, "memory too large[{}]!", size );
 
         auto memory = new char[ size ];
         _new_memory.insert( memory );
@@ -109,7 +109,7 @@ namespace KFrame
             }
             else
             {
-                __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "memory not find[{}]!", size );
+                __LOG_ERROR_FUNCTION__( function, line, "memory not find[{}]!", size );
             }
         }
     }

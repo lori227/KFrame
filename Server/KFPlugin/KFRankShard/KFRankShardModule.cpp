@@ -48,7 +48,7 @@ namespace KFrame
 
     __KF_ALLOC_OBJECT_FUNCTION__( KFRankShardModule::OnAllocRankCallBack )
     {
-        __LOG_INFO__( KFLogEnum::Logic, "rank alloc shard finish!" );
+        __LOG_INFO__( "rank alloc shard finish!" );
 
         // 加载所有排行榜数据
         LoadTotalRankData();
@@ -84,7 +84,7 @@ namespace KFrame
             }
 
             StartRefreshRankDataTimer( kfsetting );
-            __LOG_INFO__( KFLogEnum::Logic, "rank[{}] start refresh timer!", kfsetting->_rank_id );
+            __LOG_INFO__( "rank[{}] start refresh timer!", kfsetting->_rank_id );
         }
     }
 

@@ -1457,24 +1457,17 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 log_level() const;
   inline void set_log_level(::google::protobuf::int32 value);
 
-  // required int32 log_category = 2;
-  inline bool has_log_category() const;
-  inline void clear_log_category();
-  static const int kLogCategoryFieldNumber = 2;
-  inline ::google::protobuf::int32 log_category() const;
-  inline void set_log_category(::google::protobuf::int32 value);
-
-  // required int32 zone_id = 3;
+  // required int32 zone_id = 2;
   inline bool has_zone_id() const;
   inline void clear_zone_id();
-  static const int kZoneIdFieldNumber = 3;
+  static const int kZoneIdFieldNumber = 2;
   inline ::google::protobuf::int32 zone_id() const;
   inline void set_zone_id(::google::protobuf::int32 value);
 
-  // required string app_name = 4;
+  // required string app_name = 3;
   inline bool has_app_name() const;
   inline void clear_app_name();
-  static const int kAppNameFieldNumber = 4;
+  static const int kAppNameFieldNumber = 3;
   inline const ::std::string& app_name() const;
   inline void set_app_name(const ::std::string& value);
   inline void set_app_name(const char* value);
@@ -1483,10 +1476,10 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::std::string* release_app_name();
   inline void set_allocated_app_name(::std::string* app_name);
 
-  // required string app_type = 5;
+  // required string app_type = 4;
   inline bool has_app_type() const;
   inline void clear_app_type();
-  static const int kAppTypeFieldNumber = 5;
+  static const int kAppTypeFieldNumber = 4;
   inline const ::std::string& app_type() const;
   inline void set_app_type(const ::std::string& value);
   inline void set_app_type(const char* value);
@@ -1495,17 +1488,17 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::std::string* release_app_type();
   inline void set_allocated_app_type(::std::string* app_type);
 
-  // required int32 app_id = 6;
+  // required int32 app_id = 5;
   inline bool has_app_id() const;
   inline void clear_app_id();
-  static const int kAppIdFieldNumber = 6;
+  static const int kAppIdFieldNumber = 5;
   inline ::google::protobuf::int32 app_id() const;
   inline void set_app_id(::google::protobuf::int32 value);
 
-  // required string log_info = 7;
+  // required string log_info = 6;
   inline bool has_log_info() const;
   inline void clear_log_info();
-  static const int kLogInfoFieldNumber = 7;
+  static const int kLogInfoFieldNumber = 6;
   inline const ::std::string& log_info() const;
   inline void set_log_info(const ::std::string& value);
   inline void set_log_info(const char* value);
@@ -1518,8 +1511,6 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
  private:
   inline void set_has_log_level();
   inline void clear_has_log_level();
-  inline void set_has_log_category();
-  inline void clear_has_log_category();
   inline void set_has_zone_id();
   inline void clear_has_zone_id();
   inline void set_has_app_name();
@@ -1534,15 +1525,14 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 log_level_;
-  ::google::protobuf::int32 log_category_;
-  ::std::string* app_name_;
   ::google::protobuf::int32 zone_id_;
-  ::google::protobuf::int32 app_id_;
+  ::std::string* app_name_;
   ::std::string* app_type_;
   ::std::string* log_info_;
+  ::google::protobuf::int32 app_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFFrameMessage_2eproto();
   friend void protobuf_AssignDesc_KFFrameMessage_2eproto();
@@ -3143,37 +3133,15 @@ inline void S2SLogReq::set_log_level(::google::protobuf::int32 value) {
   log_level_ = value;
 }
 
-// required int32 log_category = 2;
-inline bool S2SLogReq::has_log_category() const {
+// required int32 zone_id = 2;
+inline bool S2SLogReq::has_zone_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SLogReq::set_has_log_category() {
+inline void S2SLogReq::set_has_zone_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SLogReq::clear_has_log_category() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void S2SLogReq::clear_log_category() {
-  log_category_ = 0;
-  clear_has_log_category();
-}
-inline ::google::protobuf::int32 S2SLogReq::log_category() const {
-  return log_category_;
-}
-inline void S2SLogReq::set_log_category(::google::protobuf::int32 value) {
-  set_has_log_category();
-  log_category_ = value;
-}
-
-// required int32 zone_id = 3;
-inline bool S2SLogReq::has_zone_id() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void S2SLogReq::set_has_zone_id() {
-  _has_bits_[0] |= 0x00000004u;
-}
 inline void S2SLogReq::clear_has_zone_id() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SLogReq::clear_zone_id() {
   zone_id_ = 0;
@@ -3187,15 +3155,15 @@ inline void S2SLogReq::set_zone_id(::google::protobuf::int32 value) {
   zone_id_ = value;
 }
 
-// required string app_name = 4;
+// required string app_name = 3;
 inline bool S2SLogReq::has_app_name() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void S2SLogReq::set_has_app_name() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void S2SLogReq::clear_has_app_name() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SLogReq::clear_app_name() {
   if (app_name_ != &::google::protobuf::internal::kEmptyString) {
@@ -3257,15 +3225,15 @@ inline void S2SLogReq::set_allocated_app_name(::std::string* app_name) {
   }
 }
 
-// required string app_type = 5;
+// required string app_type = 4;
 inline bool S2SLogReq::has_app_type() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SLogReq::set_has_app_type() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SLogReq::clear_has_app_type() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SLogReq::clear_app_type() {
   if (app_type_ != &::google::protobuf::internal::kEmptyString) {
@@ -3327,15 +3295,15 @@ inline void S2SLogReq::set_allocated_app_type(::std::string* app_type) {
   }
 }
 
-// required int32 app_id = 6;
+// required int32 app_id = 5;
 inline bool S2SLogReq::has_app_id() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void S2SLogReq::set_has_app_id() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void S2SLogReq::clear_has_app_id() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SLogReq::clear_app_id() {
   app_id_ = 0;
@@ -3349,15 +3317,15 @@ inline void S2SLogReq::set_app_id(::google::protobuf::int32 value) {
   app_id_ = value;
 }
 
-// required string log_info = 7;
+// required string log_info = 6;
 inline bool S2SLogReq::has_log_info() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void S2SLogReq::set_has_log_info() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void S2SLogReq::clear_has_log_info() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SLogReq::clear_log_info() {
   if (log_info_ != &::google::protobuf::internal::kEmptyString) {

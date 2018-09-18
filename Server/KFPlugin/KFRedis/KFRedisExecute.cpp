@@ -111,13 +111,13 @@ namespace KFrame
         auto reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
         if ( reply == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "redisreply = nullptr, [{}:{}]!", _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( "redisreply = nullptr, [{}:{}]!", _redis_context->err, _redis_context->errstr );
             return nullptr;
         }
 
         if ( reply->type == REDIS_REPLY_ERROR )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "reply error [{}:{}]!", reply->type, reply->str );
+            __LOG_ERROR__( "reply error [{}:{}]!", reply->type, reply->str );
             __FREE_REPLY__( reply );
             return nullptr;
         }
@@ -139,7 +139,7 @@ namespace KFrame
                 }
                 else
                 {
-                    __LOG_ERROR__( KFLogEnum::Sql, "redis connect [{}:{}] failed!", _ip, _port );
+                    __LOG_ERROR__( "redis connect [{}:{}] failed!", _ip, _port );
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace KFrame
         else
         {
             kfresult->SetResult( KFEnum::Error );
-            __LOG_ERROR__( KFLogEnum::Sql, "redis[{}] execute error=[{}:{}]!", strsql, _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( "redis[{}] execute error=[{}:{}]!", strsql, _redis_context->err, _redis_context->errstr );
         }
 
         return redisreply;

@@ -151,7 +151,7 @@ namespace KFrame
             KFJson kfjson;
             if ( !kfjson.Parse( temp ) )
             {
-                __LOG_ERROR__( KFLogEnum::System, function, line, "[{}] parse agent failed!", agentstring );
+                __LOG_ERROR__( function, line, "[{}] parse agent failed!", agentstring );
                 return false;
             }
 
@@ -196,7 +196,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "[{}] parse agent failed!", agentstring );
+            __LOG_ERROR_FUNCTION__( function, line, "[{}] parse agent failed!", agentstring );
             return false;
         }
 

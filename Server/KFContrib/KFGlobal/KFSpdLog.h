@@ -18,13 +18,13 @@ namespace KFrame
         bool Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid );
 
         // 打印日志
-        void Log( uint32 loglevel, uint32 category, const std::string& content );
+        void Log( uint32 loglevel, const std::string& content );
 
     protected:
-        const spdlogger& GetLogger( uint32 category );
+        const spdlogger& GetLogger();
 
-        const spdlogger& CreateLogger( uint32 category );
-        std::string GetLoggerName( uint32 category );
+        const spdlogger& CreateLogger();
+        std::string GetLoggerName();
 
     private:
         std::string _local_log_path;

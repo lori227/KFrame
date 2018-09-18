@@ -67,7 +67,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ce.code() ) )
                 {
-                    __LOG_ERROR__( KFLogEnum::Sql, "mysql failed [{}]!", ce.displayText() );
+                    __LOG_ERROR__( "mysql failed [{}]!", ce.displayText() );
                     return false;
                 }
 
@@ -77,7 +77,7 @@ namespace KFrame
         } while ( repeatcount < 3 );
 
         // 与mysql断开了
-        __LOG_ERROR__( KFLogEnum::Sql, "mysql disconnected [{}]!", statement.toString() );
+        __LOG_ERROR__( "mysql disconnected [{}]!", statement.toString() );
         return false;
     }
 

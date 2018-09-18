@@ -38,7 +38,7 @@ namespace KFrame
 
         try
         {
-            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start login!", kfsetting->_address, kfsetting->_port );
+            __LOG_INFO__( "ftp[{}:{}] start login!", kfsetting->_address, kfsetting->_port );
 
             nsFTP::CFTPClient ftpclient;
             nsFTP::CLogonInfo logonInfo( kfsetting->_address, kfsetting->_port, kfsetting->_user, kfsetting->_password );
@@ -49,7 +49,7 @@ namespace KFrame
             }
 
             _ftp_result = KFFtpEnum::Process;
-            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start upload!", kfsetting->_address, kfsetting->_port );
+            __LOG_INFO__( "ftp[{}:{}] start upload!", kfsetting->_address, kfsetting->_port );
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
@@ -195,11 +195,11 @@ namespace KFrame
         auto ok = ftpclient->UploadFile( localfile, ftpfile );
         if ( ok )
         {
-            __LOG_INFO__( KFLogEnum::Logic, "upload [{}] ok!", localfile );
+            __LOG_INFO__( "upload [{}] ok!", localfile );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "upload [{}] failed!", localfile );
+            __LOG_ERROR__( "upload [{}] failed!", localfile );
         }
     }
 

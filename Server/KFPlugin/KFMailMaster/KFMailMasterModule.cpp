@@ -52,7 +52,7 @@ namespace KFrame
         auto mailtype = request.GetUInt32( __KF_STRING__( type ) );
         if ( mailtype < KFMsg::MailEnum_MIN || mailtype > KFMsg::MailEnum_MAX )
         {
-            __LOG_INFO__( KFLogEnum::Logic, "add gm mail type[{}] error!", mailtype );
+            __LOG_INFO__( "add gm mail type[{}] error!", mailtype );
             return _invalid_str;
         }
 
@@ -89,11 +89,11 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( serverid, KFMsg::S2S_GM_ADD_MAIL_REQ, &req );
         if ( ok )
         {
-            __LOG_INFO__( KFLogEnum::Logic, "add gm mail server[{}] ok!", serverid );
+            __LOG_INFO__( "add gm mail server[{}] ok!", serverid );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "add gm mail server[{}] failed!", serverid );
+            __LOG_ERROR__( "add gm mail server[{}] failed!", serverid );
         }
 
         return _invalid_str;

@@ -20,9 +20,9 @@ namespace KFrame
         return _spd_log->Initialize( outpath, appname, apptype, appid );
     }
 
-    void KFLocalLogger::Log( uint32 loglevel, uint32 category, const std::string& content )
+    void KFLocalLogger::Log( uint32 loglevel, const std::string& content )
     {
-        _spd_log->Log( loglevel, category, content );
+        _spd_log->Log( loglevel, content );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,18 +51,17 @@ namespace KFrame
     // 最大缓存队列长度
 #define __MAX_LOG_DATA_LIST_COUNT__ 1000u
 
-    void KFRemoteLogger::Log( uint32 loglevel, uint32 category, const std::string& content )
+    void KFRemoteLogger::Log( uint32 loglevel, const std::string& content )
     {
         // 加载程序出错时候, 日志打在本地
         if ( loglevel == spdlog::level::off )
         {
-            _spd_log->Log( spdlog::level::err, category, content );
+            _spd_log->Log( spdlog::level::err, content );
         }
         else
         {
             // 添加到队列
             auto kfdata = __KF_CREATE__( KFLogData );
-            kfdata->_category = category;
             kfdata->_log_level = loglevel;
             kfdata->_content = content;
 
@@ -73,7 +72,7 @@ namespace KFrame
             if ( _log_data_list.size() > __MAX_LOG_DATA_LIST_COUNT__ )
             {
                 auto kfdata = _log_data_list.front();
-                KFLocalLogger::Log( kfdata->_log_level, kfdata->_category, kfdata->_content );
+                KFLocalLogger::Log( kfdata->_log_level, kfdata->_content );
 
                 __KF_DESTROY__( KFLogData, kfdata );
                 _log_data_list.pop_front();
@@ -103,7 +102,7 @@ namespace KFrame
         do
         {
             auto kfdata = templist.front();
-            auto ok = _remote_log_function( kfdata->_log_level, kfdata->_category, kfdata->_content );
+            auto ok = _remote_log_function( kfdata->_log_level, kfdata->_content );
             if ( ok )
             {
                 __KF_DESTROY__( KFLogData, kfdata );

@@ -109,7 +109,7 @@ namespace KFrame
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] verify req!", accountid, playerid );
+        __LOG_DEBUG__( "player[{}:{}] verify req!", accountid, playerid );
 
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
         if ( KickOnline( playerid, __FUNC_LINE__ ) )
@@ -136,11 +136,11 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login to game ok!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( "player[{}:{}] login to game ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login to game failed!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( "player[{}:{}] login to game failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -154,11 +154,11 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( loginid, KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] world verify result[{}] ok!", accountid, result );
+            __LOG_DEBUG__( "player[{}] world verify result[{}] ok!", accountid, result );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "aplayer[{}] world verify result[{}] failed!", accountid, result );
+            __LOG_ERROR__( "aplayer[{}] world verify result[{}] failed!", accountid, result );
         }
     }
 
@@ -241,8 +241,10 @@ namespace KFrame
         }
 
         _kf_http_client->StartMTHttpClient( _url, sendjson, false );
-    }
 
+        // 记录在线玩家数量
+        __LOG_DEBUG__( "online player count=[{}]", _kf_online_list.Size() );
+    }
 
     bool KFWorldModule::KickOnline( uint32 playerid, const char* function, uint32 line )
     {
@@ -252,7 +254,7 @@ namespace KFrame
             return false;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "kick player[{}]!", playerid );
+        __LOG_DEBUG__( "kick player[{}]!", playerid );
 
         // 发送踢出消息
         KFMsg::S2SKickGamePlayerReq req;

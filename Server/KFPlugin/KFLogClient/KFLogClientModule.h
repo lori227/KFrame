@@ -22,7 +22,7 @@ namespace KFrame
         virtual void BeforeShut();
 
         // 远程日志
-        bool LogRemote( uint32 loglevel, uint32 category, const std::string& loginfo );
+        bool LogRemote( uint32 loglevel, const std::string& loginfo );
 
     protected:
         // 连接到LogProxy

@@ -66,7 +66,7 @@ namespace KFrame
             {
                 if ( exceptioncount == 0 )
                 {
-                    __LOG_ERROR__( KFLogEnum::System, "[{}]http request failed, error = {}, code = {}",
+                    __LOG_ERROR__( "[{}]http request failed, error = {}, code = {}",
                                    url.toString(), exception.what(), exception.code() );
                 }
                 ++exceptioncount;

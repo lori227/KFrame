@@ -25,7 +25,7 @@ namespace KFrame
         void RunEnterBattleRoom( KFBattleRoom* kfroom );
 
         // 结束离开战场
-        void FinishLeaveBattleRoom();
+        void FinishLeaveBattleRoom( KFBattleRoom* kfroom );
 
         // 重置战场状态
         void ResetBattleRoomStatus();

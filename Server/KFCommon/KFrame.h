@@ -3,7 +3,6 @@
 
 #include "KFSystem.h"
 #include "KFMacros.h"
-#include "KFLog.h"
 #include "KFMap.h"
 #include "KFEnum.h"
 #include "KFBind.h"

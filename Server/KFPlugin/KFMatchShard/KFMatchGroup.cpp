@@ -46,7 +46,7 @@ namespace KFrame
 
             _player_list[ kfplayer->GetID() ] = kfplayer;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add player[{}]!", _group_id, kfplayer->GetID() );
+            __LOG_DEBUG__( "group[{}] add player[{}]!", _group_id, kfplayer->GetID() );
         }
     }
 

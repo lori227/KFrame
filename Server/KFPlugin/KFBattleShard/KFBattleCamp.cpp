@@ -33,7 +33,7 @@ namespace KFrame
             auto kfplayer = KFBattlePlayer::Create( pbplayer );
             _kf_player_list.Insert( kfplayer->GetID(), kfplayer );
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] add player[{}]!", _camp_id, kfplayer->GetID() );
+            __LOG_DEBUG__( "camp[{}] add player[{}]!", _camp_id, kfplayer->GetID() );
         }
     }
 
@@ -46,12 +46,12 @@ namespace KFrame
         }
     }
 
-    void KFBattleCamp::FinishLeaveBattleRoom()
+    void KFBattleCamp::FinishLeaveBattleRoom( KFBattleRoom* kfroom )
     {
         for ( auto& iter : _kf_player_list._objects )
         {
             auto kfplayer = iter.second;
-            kfplayer->FinishLeaveRoom();
+            kfplayer->FinishLeaveRoom( kfroom );
         }
     }
 

@@ -64,7 +64,7 @@ namespace KFrame
         auto kfmatchqueue = _kf_match_queue.Find( matchid );
         if ( kfmatchqueue == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( KFLogEnum::Logic, function, line, "can't find match queue[{}]!", matchid );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find match queue[{}]!", matchid );
         }
 
         return kfmatchqueue;
@@ -95,7 +95,7 @@ namespace KFrame
         auto kfsetting = _kf_match_config->FindMatchSetting( kfmsg.matchid() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "can't find match setting[{}]!", kfmsg.matchid() );
+            return __LOG_ERROR__( "can't find match setting[{}]!", kfmsg.matchid() );
         }
 
         auto kfmatchqueue = _kf_match_queue.Find( kfmsg.matchid() );
@@ -119,13 +119,13 @@ namespace KFrame
         ack.set_result( KFMsg::MatchRequestSuccess );
         _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] match battleserverid[{}] allowgroup[{}]!", pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0 );
+        __LOG_DEBUG__( "group[{}] match battleserverid[{}] allowgroup[{}]!", pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0 );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleQueryRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRoomToMatchShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query match[{}] req!", kfmsg.playerid(), kfmsg.matchid() );
+        __LOG_DEBUG__( "player[{}] query match[{}] req!", kfmsg.playerid(), kfmsg.matchid() );
 
         auto matchid = _invalid_int;
         auto kfmatchqueue = _kf_match_queue.Find( kfmsg.matchid() );
@@ -144,11 +144,11 @@ namespace KFrame
         auto ok = _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query match[{}] ok!", kfmsg.playerid(), kfmsg.matchid() );
+            __LOG_DEBUG__( "player[{}] query match[{}] ok!", kfmsg.playerid(), kfmsg.matchid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] query match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
+            __LOG_ERROR__( "player[{}] query match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
         }
     }
 
@@ -156,7 +156,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SCancelMatchToShardReq );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] cancel match[{}] req!", kfmsg.playerid(), kfmsg.matchid() );
+        __LOG_DEBUG__( "player[{}] cancel match[{}] req!", kfmsg.playerid(), kfmsg.matchid() );
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
         {
@@ -166,14 +166,14 @@ namespace KFrame
         auto ok = kfmatchqueue->CancelMatch( kfmsg.playerid() );
         if ( !ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] cancel match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
+            __LOG_DEBUG__( "player[{}] cancel match[{}] failed!", kfmsg.playerid(), kfmsg.matchid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleCreateRoomToMatchShardAck )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToMatchShardAck );
-        __LOG_DEBUG__( KFLogEnum::Logic, "create room[{}:{}] ack!", kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( "create room[{}:{}] ack!", kfmsg.matchid(), kfmsg.roomid() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
@@ -184,11 +184,11 @@ namespace KFrame
         auto ok = kfmatchqueue->CreateBattleRoomAck( kfmsg.roomid(), kfmsg.battleshardid() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "create battle room[{}:{}] ok!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "create battle room[{}:{}] ok!", kfmsg.matchid(), kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "create battle room[{}:{}] failed!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_ERROR__( "create battle room[{}:{}] failed!", kfmsg.matchid(), kfmsg.roomid() );
         }
     }
 
@@ -196,7 +196,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddCampToMatchShardAck );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] add camp[{}] result[{}] ack!",
+        __LOG_DEBUG__( "room[{}:{}] add camp[{}] result[{}] ack!",
                        kfmsg.matchid(), kfmsg.roomid(), kfmsg.campid(), ( kfmsg.addok() ? 1 : 0 ) );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
@@ -208,11 +208,11 @@ namespace KFrame
         auto ok = kfmatchqueue->CampEnterBattleRoomAck( kfmsg.roomid(), kfmsg.campid(), kfmsg.addok() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] add camp[{}] ok!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.campid() );
+            __LOG_DEBUG__( "room[{}:{}] add camp[{}] ok!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.campid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "room[{}:{}] add camp[{}] failed!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.campid() );
+            __LOG_ERROR__( "room[{}:{}] add camp[{}] failed!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.campid() );
         }
     }
 
@@ -220,7 +220,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SResetMatchRoomReq );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] reset req!", kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( "room[{}:{}] reset req!", kfmsg.matchid(), kfmsg.roomid() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
@@ -231,18 +231,18 @@ namespace KFrame
         auto ok = kfmatchqueue->ResetMatchRoom( kfmsg.roomid() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] reset ok!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "room[{}:{}] reset ok!", kfmsg.matchid(), kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "room[{}:{}] reset failed!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_ERROR__( "room[{}:{}] reset failed!", kfmsg.matchid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleOpenRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SOpenRoomToMatchShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] open waittime[{}] req!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.waittime() );
+        __LOG_DEBUG__( "room[{}:{}] open waittime[{}] req!", kfmsg.matchid(), kfmsg.roomid(), kfmsg.waittime() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
@@ -253,18 +253,18 @@ namespace KFrame
         auto ok = kfmatchqueue->TellMatchRoomOpen( kfmsg.roomid(), kfmsg.waittime() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}:{}] open ok!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "room[{}:{}] open ok!", kfmsg.matchid(), kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "room[{}:{}] open failed!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_ERROR__( "room[{}:{}] open failed!", kfmsg.matchid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandlePlayerLeaveRoomToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerLeaveRoomToMatchShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] leave room[{}:{}] req!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( "[{}:{}] leave room[{}:{}] req!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
@@ -275,18 +275,18 @@ namespace KFrame
         auto ok = kfmatchqueue->LeaveBattleRoom( kfmsg.roomid(), kfmsg.campid(), kfmsg.groupid(), kfmsg.playerid() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] leave room[{}:{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "[{}:{}] leave room[{}:{}] ok!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
         }
         else
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}] leave room[{}:{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "[{}:{}] leave room[{}:{}] failed!", kfmsg.campid(), kfmsg.playerid(), kfmsg.matchid(), kfmsg.roomid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleTellRoomStartToMatchShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellRoomStartToMatchShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}:{}] req!", kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( "start room[{}:{}] req!", kfmsg.matchid(), kfmsg.roomid() );
 
         auto kfmatchqueue = FindMatchQueue( kfmsg.matchid(), __FUNC_LINE__ );
         if ( kfmatchqueue == nullptr )
@@ -297,11 +297,11 @@ namespace KFrame
         auto ok = kfmatchqueue->TellMatchRoomStart( kfmsg.roomid() );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "start room[{}:{}] ok!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_DEBUG__( "start room[{}:{}] ok!", kfmsg.matchid(), kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "start room[{}:{}] failed!", kfmsg.matchid(), kfmsg.roomid() );
+            __LOG_ERROR__( "start room[{}:{}] failed!", kfmsg.matchid(), kfmsg.roomid() );
         }
     }
 

@@ -245,7 +245,7 @@ namespace KFrame
         auto kfroom = _kf_room_list.Find( roomid );
         if ( kfroom == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "can't find room[{}:{}]", roomid, campid );
+            __LOG_ERROR__( "can't find room[{}:{}]", roomid, campid );
             return false;
         }
 

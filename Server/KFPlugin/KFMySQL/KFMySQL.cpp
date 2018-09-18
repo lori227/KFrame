@@ -27,22 +27,22 @@ namespace KFrame
             auto ok = _session->isConnected();
             if ( ok )
             {
-                __LOG_INFO__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] ok!", id, database, ip, port );
+                __LOG_INFO__( "mysql[{}] connect[ {}|{}:{} ] ok!", id, database, ip, port );
             }
             else
             {
-                __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}] connect[ {}|{}:{} ] failed!", id, database, ip, port );
+                __LOG_ERROR__( "mysql[{}] connect[ {}|{}:{} ] failed!", id, database, ip, port );
             }
 
             return ok;
         }
         catch ( Poco::Exception& ex )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = [{}]!", id, _connect_data, ex.displayText() );
+            __LOG_ERROR__( "mysql[{}:{}] connect failed = [{}]!", id, _connect_data, ex.displayText() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "mysql[{}:{}] connect failed = unknown!", id, _connect_data );
+            __LOG_ERROR__( "mysql[{}:{}] connect failed = unknown!", id, _connect_data );
         }
 
         return false;

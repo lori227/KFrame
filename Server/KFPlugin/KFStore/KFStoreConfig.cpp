@@ -109,7 +109,7 @@ namespace KFrame
         auto kfagents = des.Create( key );
         if ( !kfagents->ParseFromString( src, __FUNC_LINE__ ) )
         {
-            __LOG_ERROR__( KFLogEnum::System, "Parse StoreConfig Error key:{},src:{}", key, src );
+            __LOG_ERROR__( "Parse StoreConfig Error key:{},src:{}", key, src );
             return false;
         }
 

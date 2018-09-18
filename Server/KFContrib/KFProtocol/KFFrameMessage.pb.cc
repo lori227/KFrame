@@ -293,9 +293,8 @@ void protobuf_AssignDesc_KFFrameMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2STransmitRouteProxyMessageAck));
   S2SLogReq_descriptor_ = file->message_type(13);
-  static const int S2SLogReq_offsets_[7] = {
+  static const int S2SLogReq_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SLogReq, log_level_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SLogReq, log_category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SLogReq, zone_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SLogReq, app_name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SLogReq, app_type_),
@@ -468,27 +467,26 @@ void protobuf_AddDesc_KFFrameMessage_2eproto() {
     "\030\001 \002(\0132\035.KFMsg.PBTransmitRouteMessage\"V\n"
     "\037S2STransmitRouteProxyMessageAck\0223\n\014tran"
     "smitdata\030\001 \002(\0132\035.KFMsg.PBTransmitRouteMe"
-    "ssage\"\213\001\n\tS2SLogReq\022\021\n\tlog_level\030\001 \002(\005\022\024"
-    "\n\014log_category\030\002 \002(\005\022\017\n\007zone_id\030\003 \002(\005\022\020\n"
-    "\010app_name\030\004 \002(\t\022\020\n\010app_type\030\005 \002(\t\022\016\n\006app"
-    "_id\030\006 \002(\005\022\020\n\010log_info\030\007 \002(\t\"\216\001\n\027S2SUpdat"
-    "eOnlineToDirReq\022\016\n\006zoneid\030\001 \002(\r\022\020\n\010zonen"
-    "ame\030\002 \002(\t\022\023\n\013zonechannel\030\003 \002(\r\022\r\n\005appid\030"
-    "\004 \002(\r\022\n\n\002ip\030\005 \002(\t\022\014\n\004port\030\006 \002(\r\022\023\n\013onlin"
-    "ecount\030\007 \002(\r\"(\n\027S2SRemoveOnlineToDirReq\022"
-    "\r\n\005appid\030\001 \002(\r*\340\003\n\rFrameProtocol\022\037\n\032S2S_"
-    "REGISTER_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTE"
-    "R_TO_SERVER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_"
-    "TO_SERVER\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM"
-    "_SERVER\020\224N\022 \n\033S2S_REGISTER_ROUTE_ZONE_RE"
-    "Q\020\233N\022!\n\034S2S_REGISTER_ROUTE_PROXY_REQ\020\234N\022"
-    "(\n#S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ\020\235"
-    "N\022(\n#S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK"
-    "\020\236N\022)\n$S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_"
-    "REQ\020\237N\022)\n$S2S_TRANSMIT_ROUTE_PROXY_MESSA"
-    "GE_ACK\020\240N\022\020\n\013S2S_LOG_REQ\020\245N\022!\n\034S2S_UPDAT"
-    "E_ONLINE_TO_DIR_REQ\020\246N\022!\n\034S2S_REMOVE_ONL"
-    "INE_TO_DIR_REQ\020\247N", 1937);
+    "ssage\"u\n\tS2SLogReq\022\021\n\tlog_level\030\001 \002(\005\022\017\n"
+    "\007zone_id\030\002 \002(\005\022\020\n\010app_name\030\003 \002(\t\022\020\n\010app_"
+    "type\030\004 \002(\t\022\016\n\006app_id\030\005 \002(\005\022\020\n\010log_info\030\006"
+    " \002(\t\"\216\001\n\027S2SUpdateOnlineToDirReq\022\016\n\006zone"
+    "id\030\001 \002(\r\022\020\n\010zonename\030\002 \002(\t\022\023\n\013zonechanne"
+    "l\030\003 \002(\r\022\r\n\005appid\030\004 \002(\r\022\n\n\002ip\030\005 \002(\t\022\014\n\004po"
+    "rt\030\006 \002(\r\022\023\n\013onlinecount\030\007 \002(\r\"(\n\027S2SRemo"
+    "veOnlineToDirReq\022\r\n\005appid\030\001 \002(\r*\340\003\n\rFram"
+    "eProtocol\022\037\n\032S2S_REGISTER_TO_SERVER_REQ\020"
+    "\221N\022\037\n\032S2S_REGISTER_TO_SERVER_ACK\020\222N\022 \n\033S"
+    "2S_TELL_REGISTER_TO_SERVER\020\223N\022$\n\037S2S_TEL"
+    "L_UNREGISTER_FROM_SERVER\020\224N\022 \n\033S2S_REGIS"
+    "TER_ROUTE_ZONE_REQ\020\233N\022!\n\034S2S_REGISTER_RO"
+    "UTE_PROXY_REQ\020\234N\022(\n#S2S_TRANSMIT_ROUTE_Z"
+    "ONE_MESSAGE_REQ\020\235N\022(\n#S2S_TRANSMIT_ROUTE"
+    "_ZONE_MESSAGE_ACK\020\236N\022)\n$S2S_TRANSMIT_ROU"
+    "TE_PROXY_MESSAGE_REQ\020\237N\022)\n$S2S_TRANSMIT_"
+    "ROUTE_PROXY_MESSAGE_ACK\020\240N\022\020\n\013S2S_LOG_RE"
+    "Q\020\245N\022!\n\034S2S_UPDATE_ONLINE_TO_DIR_REQ\020\246N\022"
+    "!\n\034S2S_REMOVE_ONLINE_TO_DIR_REQ\020\247N", 1914);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFFrameMessage.proto", &protobuf_RegisterTypes);
   ListenData::default_instance_ = new ListenData();
@@ -4222,7 +4220,6 @@ void S2STransmitRouteProxyMessageAck::Swap(S2STransmitRouteProxyMessageAck* othe
 
 #ifndef _MSC_VER
 const int S2SLogReq::kLogLevelFieldNumber;
-const int S2SLogReq::kLogCategoryFieldNumber;
 const int S2SLogReq::kZoneIdFieldNumber;
 const int S2SLogReq::kAppNameFieldNumber;
 const int S2SLogReq::kAppTypeFieldNumber;
@@ -4247,7 +4244,6 @@ S2SLogReq::S2SLogReq(const S2SLogReq& from)
 void S2SLogReq::SharedCtor() {
   _cached_size_ = 0;
   log_level_ = 0;
-  log_category_ = 0;
   zone_id_ = 0;
   app_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   app_type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -4298,7 +4294,6 @@ S2SLogReq* S2SLogReq::New() const {
 void S2SLogReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     log_level_ = 0;
-    log_category_ = 0;
     zone_id_ = 0;
     if (has_app_name()) {
       if (app_name_ != &::google::protobuf::internal::kEmptyString) {
@@ -4338,28 +4333,12 @@ bool S2SLogReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_log_category;
+        if (input->ExpectTag(16)) goto parse_zone_id;
         break;
       }
 
-      // required int32 log_category = 2;
+      // required int32 zone_id = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_log_category:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &log_category_)));
-          set_has_log_category();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_zone_id;
-        break;
-      }
-
-      // required int32 zone_id = 3;
-      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_zone_id:
@@ -4370,12 +4349,12 @@ bool S2SLogReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_app_name;
+        if (input->ExpectTag(26)) goto parse_app_name;
         break;
       }
 
-      // required string app_name = 4;
-      case 4: {
+      // required string app_name = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_app_name:
@@ -4387,12 +4366,12 @@ bool S2SLogReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(42)) goto parse_app_type;
+        if (input->ExpectTag(34)) goto parse_app_type;
         break;
       }
 
-      // required string app_type = 5;
-      case 5: {
+      // required string app_type = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_app_type:
@@ -4404,12 +4383,12 @@ bool S2SLogReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(48)) goto parse_app_id;
+        if (input->ExpectTag(40)) goto parse_app_id;
         break;
       }
 
-      // required int32 app_id = 6;
-      case 6: {
+      // required int32 app_id = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_app_id:
@@ -4420,12 +4399,12 @@ bool S2SLogReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(58)) goto parse_log_info;
+        if (input->ExpectTag(50)) goto parse_log_info;
         break;
       }
 
-      // required string log_info = 7;
-      case 7: {
+      // required string log_info = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_log_info:
@@ -4464,46 +4443,41 @@ void S2SLogReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->log_level(), output);
   }
 
-  // required int32 log_category = 2;
-  if (has_log_category()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->log_category(), output);
-  }
-
-  // required int32 zone_id = 3;
+  // required int32 zone_id = 2;
   if (has_zone_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->zone_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->zone_id(), output);
   }
 
-  // required string app_name = 4;
+  // required string app_name = 3;
   if (has_app_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->app_name().data(), this->app_name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->app_name(), output);
+      3, this->app_name(), output);
   }
 
-  // required string app_type = 5;
+  // required string app_type = 4;
   if (has_app_type()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->app_type().data(), this->app_type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      5, this->app_type(), output);
+      4, this->app_type(), output);
   }
 
-  // required int32 app_id = 6;
+  // required int32 app_id = 5;
   if (has_app_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->app_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->app_id(), output);
   }
 
-  // required string log_info = 7;
+  // required string log_info = 6;
   if (has_log_info()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->log_info().data(), this->log_info().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      7, this->log_info(), output);
+      6, this->log_info(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4519,49 +4493,44 @@ void S2SLogReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->log_level(), target);
   }
 
-  // required int32 log_category = 2;
-  if (has_log_category()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->log_category(), target);
-  }
-
-  // required int32 zone_id = 3;
+  // required int32 zone_id = 2;
   if (has_zone_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->zone_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->zone_id(), target);
   }
 
-  // required string app_name = 4;
+  // required string app_name = 3;
   if (has_app_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->app_name().data(), this->app_name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->app_name(), target);
+        3, this->app_name(), target);
   }
 
-  // required string app_type = 5;
+  // required string app_type = 4;
   if (has_app_type()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->app_type().data(), this->app_type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->app_type(), target);
+        4, this->app_type(), target);
   }
 
-  // required int32 app_id = 6;
+  // required int32 app_id = 5;
   if (has_app_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->app_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->app_id(), target);
   }
 
-  // required string log_info = 7;
+  // required string log_info = 6;
   if (has_log_info()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->log_info().data(), this->log_info().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->log_info(), target);
+        6, this->log_info(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4582,42 +4551,35 @@ int S2SLogReq::ByteSize() const {
           this->log_level());
     }
 
-    // required int32 log_category = 2;
-    if (has_log_category()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->log_category());
-    }
-
-    // required int32 zone_id = 3;
+    // required int32 zone_id = 2;
     if (has_zone_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->zone_id());
     }
 
-    // required string app_name = 4;
+    // required string app_name = 3;
     if (has_app_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->app_name());
     }
 
-    // required string app_type = 5;
+    // required string app_type = 4;
     if (has_app_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->app_type());
     }
 
-    // required int32 app_id = 6;
+    // required int32 app_id = 5;
     if (has_app_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->app_id());
     }
 
-    // required string log_info = 7;
+    // required string log_info = 6;
     if (has_log_info()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -4654,9 +4616,6 @@ void S2SLogReq::MergeFrom(const S2SLogReq& from) {
     if (from.has_log_level()) {
       set_log_level(from.log_level());
     }
-    if (from.has_log_category()) {
-      set_log_category(from.log_category());
-    }
     if (from.has_zone_id()) {
       set_zone_id(from.zone_id());
     }
@@ -4689,7 +4648,7 @@ void S2SLogReq::CopyFrom(const S2SLogReq& from) {
 }
 
 bool S2SLogReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }
@@ -4697,7 +4656,6 @@ bool S2SLogReq::IsInitialized() const {
 void S2SLogReq::Swap(S2SLogReq* other) {
   if (other != this) {
     std::swap(log_level_, other->log_level_);
-    std::swap(log_category_, other->log_category_);
     std::swap(zone_id_, other->zone_id_);
     std::swap(app_name_, other->app_name_);
     std::swap(app_type_, other->app_type_);

@@ -29,7 +29,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////
 
-    void KFLogShardModule::Log( uint32 level, uint32 category, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& loginfo )
+    void KFLogShardModule::Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& loginfo )
     {
         if ( level < spdlog::level::trace || level >= spdlog::level::off )
         {
@@ -37,7 +37,7 @@ namespace KFrame
             return;
         }
 
-        auto& logger = GetLogger( category, zoneid, appname, apptype, appid );
+        auto& logger = GetLogger( zoneid, appname, apptype, appid );
         if ( logger == nullptr )
         {
             return;
@@ -46,16 +46,18 @@ namespace KFrame
         logger->log( ( spdlog::level::level_enum )level, loginfo.c_str() );
     }
 
-    void KFLogShardModule::CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& category )
+    void KFLogShardModule::CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, uint32 appid )
     {
         std::vector<spdlog::sink_ptr> sinks_vec;
 
         auto strappid = KFAppID::ToString( appid );
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        std::string logname = __FORMAT__( "..\\binlog\\{}\\{}-{}-{}-{}.log", zonename, appname, apptype, strappid, category );
+        std::string logname = __FORMAT__( "..\\binlog\\{}-{}-{}.log", appname, apptype, strappid );
+        //std::string logname = __FORMAT__( "..\\binlog\\{}\\{}-{}-{}.log", zonename, appname, apptype, strappid );
 #else
-        std::string logname = __FORMAT__( "../binlog/{}/{}-{}-{}-{}.log", zonename, appname, apptype, strappid, category );
+        std::string logname = __FORMAT__( "../binlog/{}-{}-{}.log", appname, apptype, strappid );
+        //std::string logname = __FORMAT__( "../binlog/{}/{}-{}-{}.log", zonename, appname, apptype, strappid );
 #endif
 
         auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( logname );
@@ -70,7 +72,7 @@ namespace KFrame
 #endif
         sinks_vec.push_back( date_and_hour_sink );
 
-        std::string name = __FORMAT__( "{}-{}-{}-{}", appname, apptype, appid, category );
+        std::string name = __FORMAT__( "{}-{}-{}", appname, apptype, appid );
         auto remote_logger = std::make_shared<spdlog::async_logger>( name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
@@ -86,15 +88,9 @@ namespace KFrame
         _loggers.insert( std::make_pair( name, remote_logger ) );
     }
 
-    const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( uint32 category, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid )
+    const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid )
     {
         static std::shared_ptr<spdlog::logger> NULLPTR_ = nullptr;
-
-        if ( category <= KFLogEnum::None || category >= KFLogEnum::Max )
-        {
-            assert( 0 );
-            return NULLPTR_;
-        }
 
         std::string zonename = __TO_STRING__( zoneid );
         if ( zoneid == 0 )
@@ -102,11 +98,11 @@ namespace KFrame
             zonename = "cluster";
         }
 
-        std::string logger_unique_name = __FORMAT__( "{}-{}-{}-{}", appname, apptype, appid, _log_category_name[category] );
+        std::string logger_unique_name = __FORMAT__( "{}-{}-{}", appname, apptype, appid );
         auto iter = _loggers.find( logger_unique_name );
         if ( iter == _loggers.end() )
         {
-            CreateLogger( zonename, appname, apptype, appid, _log_category_name[category] );
+            CreateLogger( zonename, appname, apptype, appid );
         }
 
         iter = _loggers.find( logger_unique_name );
@@ -119,6 +115,6 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLogReq );
 
-        Log( kfmsg.log_level(), kfmsg.log_category(), kfmsg.zone_id(), kfmsg.app_name(), kfmsg.app_type(), kfmsg.app_id(), kfmsg.log_info() );
+        Log( kfmsg.log_level(), kfmsg.zone_id(), kfmsg.app_name(), kfmsg.app_type(), kfmsg.app_id(), kfmsg.log_info() );
     }
 }

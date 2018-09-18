@@ -253,7 +253,7 @@ namespace KFrame
         kftoken->_gate_id = kfmsg.gateid();
         kftoken->_valid_time = KFGlobal::Instance()->_real_time + 60;
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "update client[{}] token[{}]!", KFAppID::ToString( kftoken->_gate_id ), kftoken->_token );
+        __LOG_DEBUG__( "update client[{}] token[{}]!", KFAppID::ToString( kftoken->_gate_id ), kftoken->_token );
     }
 
     uint32 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint32 serverid )
@@ -288,12 +288,12 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}] cluster verify ok!",
+            __LOG_DEBUG__( "[{}:{}:{}] cluster verify ok!",
                            KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "[{}:{}:{}] cluster verify failed!",
+            __LOG_ERROR__( "[{}:{}:{}] cluster verify failed!",
                            KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
     }
@@ -308,7 +308,7 @@ namespace KFrame
             shardserverid = SelectClusterShard( handleid, true );
             if ( shardserverid == _invalid_int )
             {
-                __LOG_ERROR__( KFLogEnum::System, "handleid[{}] can not select shard!", KFAppID::ToString( handleid ) );
+                __LOG_ERROR__( "handleid[{}] can not select shard!", KFAppID::ToString( handleid ) );
                 return false;
             }
         }
@@ -334,7 +334,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_dynamic_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
+            __LOG_DEBUG__( "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
 
         // 添加数量
@@ -352,7 +352,7 @@ namespace KFrame
             auto shardid = kfmsg.shardid( i );
             _kf_static_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "add alloc [{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
+            __LOG_DEBUG__( "add alloc [{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
     }
 
@@ -365,7 +365,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_dynamic_shard.erase( objectid );
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "remove object[{}] ok!", objectid );
+            __LOG_DEBUG__( "remove object[{}] ok!", objectid );
         }
 
         auto shardid = __KF_HEAD_ID__( kfguid );
@@ -427,7 +427,7 @@ namespace KFrame
         auto shardid = FindDynamicShard( kfmsg.objectid() );
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
+            return __LOG_ERROR__( "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
         }
 
         auto msgdata = kfmsg.msgdata();
@@ -469,7 +469,7 @@ namespace KFrame
         auto shardid = FindStaticShard( kfmsg.objectid() );
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
+            return __LOG_ERROR__( "msgid[{}] objectid[{}] can't find shard!", kfmsg.msgid(), kfmsg.objectid() );
         }
 
         auto msgdata = kfmsg.msgdata();

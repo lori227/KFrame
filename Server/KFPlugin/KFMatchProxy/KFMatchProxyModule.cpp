@@ -48,7 +48,7 @@ namespace KFrame
             auto matchshard = _match_shard.Create( matchid );
             matchshard->AddHashNode( typeid( KFMatchProxyModule ).name(), shardid, 100 );
 
-            __LOG_INFO__( KFLogEnum::Logic, "register match shard[{}:{}]!", shardid, matchid );
+            __LOG_INFO__( "register match shard[{}:{}]!", shardid, matchid );
         }
     }
 
@@ -61,7 +61,7 @@ namespace KFrame
             auto ok = matchshard->RemoveHashNode( serverid );
             if ( ok )
             {
-                __LOG_INFO__( KFLogEnum::Logic, "remove match shard[{}:{}]!", serverid, iter.first );
+                __LOG_INFO__( "remove match shard[{}:{}]!", serverid, iter.first );
             }
         }
     }
@@ -92,7 +92,7 @@ namespace KFrame
             ack.set_result( KFMsg::MatchCanNotFindServer );
             _kf_cluster_proxy->SendMessageToClient( clientid, KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
-            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
+            return __LOG_ERROR__( "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
         }
 
         // 发送消息
@@ -113,7 +113,7 @@ namespace KFrame
         auto shardid = _kf_cluster_proxy->FindStaticShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
+            __LOG_ERROR__( "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
 
             KFMsg::S2SQueryMatchRoomAck ack;
             ack.set_playerid( kfmsg.playerid() );

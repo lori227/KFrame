@@ -93,9 +93,9 @@ namespace KFrame
         _log_level = level;
     }
 
-    void KFGlobal::Log( uint32 level, uint32 category, const std::string& content )
+    void KFGlobal::Log( uint32 level, const std::string& content )
     {
-        _logger->Log( level, category, content );
+        _logger->Log( level, content );
     }
 
     void KFGlobal::SetRemoteLogFunction( KFLogFunction& function )

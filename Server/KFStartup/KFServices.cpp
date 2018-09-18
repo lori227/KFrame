@@ -40,11 +40,11 @@ namespace KFrame
             }
             catch ( std::exception& ex )
             {
-                __LOG_CRITICAL__( KFLogEnum::System, "exception=[{}]!", ex.what() );
+                __LOG_CRITICAL__( "exception=[{}]!", ex.what() );
             }
             catch ( ... )                                                                                                                            \
             {
-                __LOG_CRITICAL__( KFLogEnum::System, "exception unknown!" );
+                __LOG_CRITICAL__( "exception unknown!" );
             }
 #endif
             KFThread::Sleep( 1 );
@@ -66,7 +66,7 @@ namespace KFrame
         KFMalloc::Initialize( nullptr );
 
 #ifdef __KF_RELEASE__
-        KFMalloc::Instance()->SetLogMemoryOpen( false );
+        // KFMalloc::Instance()->SetLogMemoryOpen( false );
 #endif
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
@@ -109,7 +109,7 @@ namespace KFrame
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        __LOG_INFO__( KFLogEnum::Init, "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        __LOG_INFO__( "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
 
         // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );

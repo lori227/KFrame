@@ -30,7 +30,7 @@ namespace KFrame
         _time_difference = kfsetting->_time_difference;
         try
         {
-            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start login!", kfsetting->_address, kfsetting->_port );
+            __LOG_INFO__( "ftp[{}:{}] start login!", kfsetting->_address, kfsetting->_port );
 
             nsFTP::CFTPClient ftpclient;
             nsFTP::CLogonInfo logonInfo( kfsetting->_address, kfsetting->_port, kfsetting->_user, kfsetting->_password );
@@ -41,7 +41,7 @@ namespace KFrame
             }
 
             _ftp_result = KFFtpEnum::Process;
-            __LOG_INFO__( KFLogEnum::Logic, "ftp[{}:{}] start download!", kfsetting->_address, kfsetting->_port );
+            __LOG_INFO__( "ftp[{}:{}] start download!", kfsetting->_address, kfsetting->_port );
 
             // 更新文件
             std::string ftppath = kfsetting->GetFtpPath( _app_path );
@@ -131,13 +131,13 @@ namespace KFrame
         if ( !ftpclient->DownloadFile( ftpfile, downloadfile ) )
         {
             DeleteLocalFile( downloadfile );
-            __LOG_ERROR__( KFLogEnum::Logic, "download [{}] failed!", localfile );
+            __LOG_ERROR__( "download [{}] failed!", localfile );
         }
         else
         {
             DeleteLocalFile( localfile );
             RenameFile( downloadfile, localfile );
-            __LOG_INFO__( KFLogEnum::Logic, "download [{}] ok!", localfile );
+            __LOG_INFO__( "download [{}] ok!", localfile );
         }
     }
 }

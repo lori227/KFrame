@@ -34,12 +34,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupProxyModule::HandleCreateMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateMatchGroupReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] req!", kfmsg.groupid() );
+        __LOG_DEBUG__( "create group[{}] req!", kfmsg.groupid() );
 
         auto shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.groupid() );
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "group[{}] can't find shard!", kfmsg.groupid() );
+            return __LOG_ERROR__( "group[{}] can't find shard!", kfmsg.groupid() );
         }
 
         // 发送给分片服务器
@@ -55,11 +55,11 @@ namespace KFrame
             // 先添加到列表
             _kf_cluster_proxy->AddDynamicShard( kfmsg.groupid(), shardid );
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] ok!", kfmsg.groupid() );
+            __LOG_DEBUG__( "create group[{}] ok!", kfmsg.groupid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "create group[{}] failed!", kfmsg.groupid() );
+            __LOG_ERROR__( "create group[{}] failed!", kfmsg.groupid() );
         }
     }
 

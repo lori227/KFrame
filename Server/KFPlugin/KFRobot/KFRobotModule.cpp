@@ -147,7 +147,7 @@ namespace KFrame
 
         if ( kfrobot == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "No Find Robot at [{}] robotid:{}",
+            __LOG_ERROR__( "No Find Robot at [{}] robotid:{}",
                            __FUNCTION__, serverid );
             return;
         }
@@ -164,7 +164,7 @@ namespace KFrame
 
         if ( kfrobot == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "No Find Robot at [{}] robotid:{}", __FUNCTION__, serverid );
+            __LOG_ERROR__( "No Find Robot at [{}] robotid:{}", __FUNCTION__, serverid );
             return;
         }
 
@@ -183,7 +183,7 @@ namespace KFrame
         kfrobot->_connect_port = kfmsg.port();
         _net_client->CloseClient( robotid, __FUNCTION__, __LINE__ );
 
-        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] login [{}:{}] verity ok!",
+        __LOG_INFO__( "[{}] robot[{}] login [{}:{}] verity ok!",
                       __FUNCTION__, robotid, kfmsg.ip().c_str(), kfmsg.port() );
     }
 
@@ -225,7 +225,7 @@ namespace KFrame
         }
 
         KFRobotPolicMgr::Instance()->AddRoleInfo( kfrobot->_playerid, player );
-        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] enter game!", __FUNCTION__, robotid );
+        __LOG_INFO__( "[{}] robot[{}] enter game!", __FUNCTION__, robotid );
 
     }
 
@@ -240,7 +240,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgResultDisplay );
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] display result[{}]!", __FUNCTION__, robotid, kfmsg.result() );
+        __LOG_INFO__( "[{}] robot[{}] display result[{}]!", __FUNCTION__, robotid, kfmsg.result() );
 
         switch ( kfmsg.result() )
         {
@@ -280,7 +280,7 @@ namespace KFrame
 
             else
             {
-                __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] start match success! waitting...", __FUNCTION__, robotid );
+                __LOG_INFO__( "[{}] robot[{}] start match success! waitting...", __FUNCTION__, robotid );
             }
         }
         break;
@@ -357,7 +357,7 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSendChatInfo );
 
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] recv chat[{}]!",
+        __LOG_INFO__( "[{}] robot[{}] recv chat[{}]!",
                       __FUNCTION__, robotid, kfmsg.chatinfo().c_str() );
     }
 
@@ -365,7 +365,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgTellBeKick );
 
-        __LOG_INFO__( KFLogEnum::System, "[{}] robot[{}] be kick[{}]!",
+        __LOG_INFO__( "[{}] robot[{}] be kick[{}]!",
                       __FUNCTION__, robotid, kfmsg.type() );
 
         auto ok = _kf_component->RemoveEntity( kfrobot->_playerid );
@@ -386,7 +386,7 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgTellQueryPlayer );
 
-        __LOG_INFO__( KFLogEnum::Logic, "robot[{}] query player ok!", robotid	);
+        __LOG_INFO__( "robot[{}] query player ok!", robotid	);
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleWholeRankDisplay )
@@ -400,14 +400,14 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgQueryGuestAck );
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] query guest ok!", __FUNCTION__, robotid );
+        __LOG_INFO__( "[{}] robot[{}] query guest ok!", __FUNCTION__, robotid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleShowReward )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgShowRewardAgent );
 
-        __LOG_INFO__( KFLogEnum::Logic, "[{}] robot[{}] show reward[{}]!",
+        __LOG_INFO__( "[{}] robot[{}] show reward[{}]!",
                       __FUNCTION__, robotid, kfmsg.reward().c_str() );
     }
 

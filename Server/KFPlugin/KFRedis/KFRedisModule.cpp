@@ -73,11 +73,11 @@ namespace KFrame
         auto result = kfredisexecute->Initialize( ip, port, password );
         if ( result != KFEnum::Ok )
         {
-            __LOG_ERROR__( KFLogEnum::Sql, "redis connect[ id={} ip={}:{} ] failed!", id, ip, port );
+            __LOG_ERROR__( "redis connect[ id={} ip={}:{} ] failed!", id, ip, port );
         }
         else
         {
-            __LOG_INFO__( KFLogEnum::Sql, "redis connect[ id={} ip={}:{} ] ok!", id, ip, port );
+            __LOG_INFO__( "redis connect[ id={} ip={}:{} ] ok!", id, ip, port );
         }
 
         InsertRedisExecute( id, kfredisexecute );

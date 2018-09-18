@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_GOLBAL_H__
 #define __KF_GOLBAL_H__
 
-#include "KFLog.h"
+#include "KFSpdLog.h"
 #include "spdlog/spdlog.h"
 
 namespace KFrame
@@ -38,15 +38,15 @@ namespace KFrame
         void SetLogLevel( uint32 level );
 
         template< class T >
-        void RegisterRemoteLogFunction( T* object, bool ( T::*handle )( uint32, uint32, const std::string& ) )
+        void RegisterRemoteLogFunction( T* object, bool ( T::*handle )( uint32, const std::string& ) )
         {
-            KFLogFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            KFLogFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             SetRemoteLogFunction( function );
         }
 
         // 打印日志
         template<typename... P>
-        void Log( uint32 level, uint32 category, const char* function, uint32 line, const std::string& myfmt, P&& ... args )
+        void Log( uint32 level, const char* function, uint32 line, const std::string& myfmt, P&& ... args )
         {
             if ( _logger == nullptr || level < _log_level )
             {
@@ -57,7 +57,7 @@ namespace KFrame
 
             auto newfmt = _function_line_fmt + myfmt;
             auto content = __FORMAT__( newfmt, function, line, std::forward<P>( args )... );
-            Log( level, category, content );
+            Log( level, content );
         }
 
     protected:
@@ -66,7 +66,7 @@ namespace KFrame
         static KFGlobal* _kf_global;
 
         // 打印日志
-        void Log( uint32 level, uint32 category, const std::string& content );
+        void Log( uint32 level, const std::string& content );
 
         // 设置远程日志函数
         void SetRemoteLogFunction( KFLogFunction& function );
@@ -123,41 +123,41 @@ namespace KFrame
     };
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
-#define __LOG_TRACE__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::trace, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_TRACE_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::trace, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_TRACE__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::trace, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_TRACE_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::trace, function, line, myfmt, ##__VA_ARGS__ )
 
-#define __LOG_DEBUG__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::debug, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_DEBUG_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::debug, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_DEBUG__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::debug, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_DEBUG_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::debug, function, line, myfmt, ##__VA_ARGS__ )
 
-#define __LOG_INFO__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::info, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_INFO_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::info, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_INFO__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::info, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_INFO_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::info, function, line, myfmt, ##__VA_ARGS__ )
 
-#define __LOG_WARN__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::warn, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_WARN_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::warn, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_WARN__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::warn, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_WARN_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::warn, function, line, myfmt, ##__VA_ARGS__ )
 
-#define __LOG_ERROR__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::err, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_ERROR_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::err, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_ERROR__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::err, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_ERROR_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::err, function, line, myfmt, ##__VA_ARGS__ )
 
-#define __LOG_CRITICAL__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::critical, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_CRITICAL_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::critical, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_CRITICAL__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::critical, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_CRITICAL_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::critical, function, line, myfmt, ##__VA_ARGS__ )
 
     // 本地日志
-#define __LOG_LOCAL__( category, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::off, category, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_LOCAL_FUNCTION__( category, function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::off, category, function, line, myfmt, ##__VA_ARGS__ )
+#define __LOG_LOCAL__( myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::off, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_LOCAL_FUNCTION__( function, line, myfmt, ...) \
+    KFGlobal::Instance()->Log( spdlog::level::off, function, line, myfmt, ##__VA_ARGS__ )
 
 }
 

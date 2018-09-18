@@ -62,22 +62,22 @@ namespace KFrame
 
     void KFConfigModule::LoadConfig( KFConfig* config, const std::string& module, const std::string& file )
     {
-        __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}]!", module, file );
+        __LOG_DEBUG__( "load [{}][{}]!", module, file );
         try
         {
             auto ok = config->LoadConfig( file );
             if ( ok )
             {
-                __LOG_DEBUG__( KFLogEnum::Init, "load [{}][{}] ok!", module, file );
+                __LOG_DEBUG__( "load [{}][{}] ok!", module, file );
             }
             else
             {
-                __LOG_ERROR__( KFLogEnum::Init, "load [{}][{}] failed!", module, file );
+                __LOG_ERROR__( "load [{}][{}] failed!", module, file );
             }
         }
         catch ( ... )
         {
-            __LOG_ERROR__( KFLogEnum::Init, "load [{}][{}] exception!", module, file );
+            __LOG_ERROR__( "load [{}][{}] exception!", module, file );
         }
     }
 }

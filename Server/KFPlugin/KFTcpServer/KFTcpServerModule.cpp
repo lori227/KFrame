@@ -72,12 +72,12 @@ namespace KFrame
         auto result = _kf_server_engine->StartEngine( kftcpsetting->_local_ip, kftcpsetting->_port, kftcpsetting->_max_connection, kftcpsetting->_time_out );
         if ( result == 0 )
         {
-            __LOG_INFO__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services ok!",
+            __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok!",
                           kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Init, "[{}:{}|{}:{}] tcp services failed[{}]!",
+            __LOG_ERROR__( "[{}:{}|{}:{}] tcp services failed[{}]!",
                            kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
     }
@@ -216,12 +216,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( kfguid, msgid, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::System, "tcp server transmit msgid[{}] failed!", msgid );
+                __LOG_ERROR__( "tcp server transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find function!", msgid );
+            __LOG_ERROR__( "msgid[{}] can't find function!", msgid );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,7 +267,7 @@ namespace KFrame
 
         CallDiscoverFunction( kfhandle );
 
-        __LOG_INFO__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] register ok!",
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!",
                       name, type, KFAppID::ToString( handlid ), listendata->ip(), listendata->port() );
     }
 
@@ -323,7 +323,7 @@ namespace KFrame
         tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_object_id );
 
-        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] lost connect!",
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost connect!",
                        kfhandle->_app_name, kfhandle->_app_type, KFAppID::ToString( kfhandle->_app_id ),
                        kfhandle->_listen_ip, kfhandle->_listen_port );
     }

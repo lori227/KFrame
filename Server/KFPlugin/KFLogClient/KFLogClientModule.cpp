@@ -21,13 +21,12 @@ namespace KFrame
         kfglobal->RegisterRemoteLogFunction( this, &KFLogClientModule::LogRemote );
     }
 
-    bool KFLogClientModule::LogRemote( uint32 loglevel, uint32 category, const std::string& loginfo )
+    bool KFLogClientModule::LogRemote( uint32 loglevel, const std::string& loginfo )
     {
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SLogReq req;
         req.set_log_level( loglevel );
-        req.set_log_category( category );
         req.set_app_name( kfglobal->_app_name );
         req.set_app_type( kfglobal->_app_type );
         req.set_app_id( kfglobal->_app_id );

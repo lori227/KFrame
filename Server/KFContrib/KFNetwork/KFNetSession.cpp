@@ -163,7 +163,7 @@ namespace KFrame
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "session[{}:{}:{}] recv length[{}:{}] error",
+            __LOG_CRITICAL__( "session[{}:{}:{}] recv length[{}:{}] error",
                               _session_id, _object_id, KFAppID::ToString( _session_id ), _receive_length, length );
             _receive_length = 0;
         }
@@ -230,7 +230,7 @@ namespace KFrame
         if ( nethead->_msgid == 0 || nethead->_length > KFNetDefine::MaxMessageLength )
         {
             _receive_length = 0;
-            __LOG_CRITICAL__( KFLogEnum::System, "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] error",
+            __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] error",
                               _session_id, _object_id, KFAppID::ToString( _session_id ),
                               nethead->_msgid, nethead->_length, position );
             return nullptr;
@@ -293,7 +293,7 @@ namespace KFrame
     void KFNetSession::OnDisconnect( const char* error, int32 code )
     {
         _is_connected = false;
-        __LOG_DEBUG__( KFLogEnum::Net, "session[{}:{}:{}] disconnect[{}:{}]!",
+        __LOG_DEBUG__( "session[{}:{}:{}] disconnect[{}:{}]!",
                        _session_id, _object_id, KFAppID::ToString( _session_id ), error, code );
     }
 
@@ -306,7 +306,7 @@ namespace KFrame
             if ( !_is_send_queue_full )
             {
                 _is_send_queue_full = true;
-                __LOG_CRITICAL__( KFLogEnum::System, "session[{}:{}:{}] send msgid[{}] guid[{}:{}] failed!",
+                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] guid[{}:{}] failed!",
                                   _session_id, _object_id, KFAppID::ToString( _session_id ),
                                   message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
             }
@@ -328,7 +328,7 @@ namespace KFrame
             if ( !_is_recv_queue_full )
             {
                 _is_recv_queue_full = true;
-                __LOG_CRITICAL__( KFLogEnum::System, "session[{}:{}:{}] recv msgid[{}] guid[{}:{}] failed!",
+                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] guid[{}:{}] failed!",
                                   _session_id, _object_id, KFAppID::ToString( _session_id ),
                                   message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
             }

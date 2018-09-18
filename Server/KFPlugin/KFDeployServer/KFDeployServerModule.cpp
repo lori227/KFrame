@@ -158,7 +158,7 @@ namespace KFrame
 
     void KFDeployServerModule::SendLogMessage( const std::string& url, const std::string& msg )
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "{}", msg );
+        __LOG_DEBUG__( "{}", msg );
 
         if ( !url.empty() )
         {

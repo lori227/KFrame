@@ -68,7 +68,7 @@ namespace KFrame
         _battle_redis_driver->Append( "srem {}:{} {}", __KF_STRING__( ip ), kfresult->_value, serverid );
         _battle_redis_driver->Pipeline();
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "unregister battle server[{}|{}]!", serverid, kfresult->_value );
+        __LOG_DEBUG__( "unregister battle server[{}|{}]!", serverid, kfresult->_value );
 
         // 设置数量
         UpdateBattleCount( kfresult->_value );
@@ -83,7 +83,7 @@ namespace KFrame
             auto listresult = _battle_redis_driver->QueryList( "zrevrange {} 0 0", __KF_STRING__( battlelist ) );
             if ( listresult->_value.empty() )
             {
-                return __LOG_ERROR__( KFLogEnum::Logic, "no battle server!" );
+                return __LOG_ERROR__( "no battle server!" );
             }
 
             auto& queryip = listresult->_value.front();
@@ -93,7 +93,7 @@ namespace KFrame
             if ( stringresult->_value.empty() )
             {
                 _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battlelist ), queryip );
-                return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle list empty!", queryip );
+                return __LOG_ERROR__( "[{}] battle list empty!", queryip );
             }
 
             // 数量减1
@@ -106,7 +106,7 @@ namespace KFrame
         auto mapresult = _battle_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( battle ), queryserverid );
         if ( mapresult->_value.empty() )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "[{}] battle data empty!", queryserverid );
+            return __LOG_ERROR__( "[{}] battle data empty!", queryserverid );
         }
 
         auto ip = mapresult->_value[ __KF_STRING__( ip ) ];
@@ -115,7 +115,7 @@ namespace KFrame
         auto proxyid = KFUtility::ToValue< uint32 >( mapresult->_value[ __KF_STRING__( proxyid ) ] );
         if ( ip.empty() || port == _invalid_int || proxyid == _invalid_int || serverid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "battle data [{}:{}:{}] error!", ip, port, proxyid );
+            return __LOG_ERROR__( "battle data [{}:{}:{}] error!", ip, port, proxyid );
         }
 
         // 保存数据./
@@ -141,12 +141,12 @@ namespace KFrame
         // 设置数量
         UpdateBattleCount( ip );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "remove battle server[{}|{}]!", serverid, ip );
+        __LOG_DEBUG__( "remove battle server[{}|{}]!", serverid, ip );
     }
 
     void KFBattleManage::FreeBattleServer( uint32 serverid, const std::string& ip )
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "free battle server[{}|{}!", serverid, ip );
+        __LOG_DEBUG__( "free battle server[{}|{}!", serverid, ip );
 
         _battle_redis_driver->Execute( "sadd {}:{} {}", __KF_STRING__( ip ), ip, serverid );
 
@@ -171,7 +171,7 @@ namespace KFrame
             _battle_redis_driver->Execute( "zadd {} {} {}", __KF_STRING__( battlelist ), kfresult->_value, ip );
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "ip[{}] server count[{}]!", ip, kfresult->_value );
+        __LOG_DEBUG__( "ip[{}] server count[{}]!", ip, kfresult->_value );
     }
 }
 

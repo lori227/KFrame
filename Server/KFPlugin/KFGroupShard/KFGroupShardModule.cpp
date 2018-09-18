@@ -102,7 +102,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleCreateMatchGroupToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateMatchGroupToShardReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] req!", kfmsg.groupid() );
+        __LOG_DEBUG__( "create group[{}] req!", kfmsg.groupid() );
 
         auto kfgroup = _kf_component->CreateEntity( kfmsg.groupid() );
 
@@ -121,13 +121,13 @@ namespace KFrame
 
         // 更新到proxy
         _kf_cluster_shard->AddObjectToProxy( kfmsg.groupid() );
-        __LOG_DEBUG__( KFLogEnum::Logic, "create group[{}] ok!", kfmsg.groupid() );
+        __LOG_DEBUG__( "create group[{}] ok!", kfmsg.groupid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleAddMatchGroupMemberReq )
     {
         __PROTO_PARSE__( KFMsg::S2SAddMatchGroupMemberReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add member req!", kfmsg.groupid() );
+        __LOG_DEBUG__( "group[{}] add member req!", kfmsg.groupid() );
 
         auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
@@ -158,7 +158,7 @@ namespace KFrame
         // 通知新队员队伍信息
         SendGroupDataToMember( kfmemberrecord, kfnewmember, kfgroup, true );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] add member ok!", kfmsg.groupid() );
+        __LOG_DEBUG__( "group[{}] add member ok!", kfmsg.groupid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleApplyMatchGroupReq )
@@ -193,12 +193,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleLeaveMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLeaveMatchGroupReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave group[{}] req!", kfmsg.playerid(), kfmsg.groupid() );
+        __LOG_DEBUG__( "player[{}] leave group[{}] req!", kfmsg.playerid(), kfmsg.groupid() );
 
         auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );
         if ( kfgroup == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "group[{}] can't find!", kfmsg.groupid() );
+            return __LOG_ERROR__( "group[{}] can't find!", kfmsg.groupid() );
         }
 
         auto kfobject = kfgroup->GetData();
@@ -278,13 +278,13 @@ namespace KFrame
         // 通知proxy
         _kf_cluster_shard->RemoveObjectToProxy( groupid );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] disband!", groupid );
+        __LOG_DEBUG__( "group[{}] disband!", groupid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleKickMatchGroupReq )
     {
         __PROTO_PARSE__( KFMsg::S2SKickMatchGroupReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "group[{}] player[{}] kick member[{}] req!",
+        __LOG_DEBUG__( "group[{}] player[{}] kick member[{}] req!",
                        kfmsg.groupid(), kfmsg.captainid(), kfmsg.memberid() );
 
         auto kfgroup = _kf_component->FindEntity( kfmsg.groupid(), __FUNC_LINE__ );

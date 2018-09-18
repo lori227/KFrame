@@ -55,7 +55,7 @@ namespace KFrame
         // 注册到管理器
         _kf_zone_manage->AddRouteZone( zonedata->zoneid(), zonedata->serverid(), handleid );
 
-        __LOG_INFO__( KFLogEnum::Logic, "register route server[{}=>{}]!",
+        __LOG_INFO__( "register route server[{}=>{}]!",
                       KFAppID::ToString( zonedata->serverid() ), KFAppID::ToString(  handleid ) );
 
         // 通知route shard
@@ -74,7 +74,7 @@ namespace KFrame
         uint32 shardserverid = _kf_cluster_proxy->SelectClusterShard( handleid );
         if ( shardserverid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "msgid[{}] can't select route shard!", kfmsg.transmitdata().msgid() );
+            return __LOG_ERROR__( "msgid[{}] can't select route shard!", kfmsg.transmitdata().msgid() );
         }
 
         KFMsg::S2STransmitRouteProxyMessageReq req;
@@ -90,7 +90,7 @@ namespace KFrame
         auto kfroutezone = _kf_zone_manage->FindRouteZone( transmitdata->serverid() );
         if ( kfroutezone == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "msgid[{}] can't route server[{}]!",
+            return __LOG_ERROR__( "msgid[{}] can't route server[{}]!",
                                   transmitdata->msgid(), KFAppID::ToString( transmitdata->serverid() ) );
         }
 

@@ -239,7 +239,7 @@ namespace KFrame
             SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] cancel match[{}]!", player->GetKeyID(), matchid );
+        __LOG_DEBUG__( "player[{}] cancel match[{}]!", player->GetKeyID(), matchid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HanldeMatchToClientAck )
@@ -270,7 +270,7 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchStateReq );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] update match[{}]!", player->GetKeyID(), kfmsg.matchid() );
+        __LOG_DEBUG__( "player[{}] update match[{}]!", player->GetKeyID(), kfmsg.matchid() );
     }
 
     void KFMatchClientModule::OnEnterQueryMatchRoom( KFEntity* player )
@@ -328,7 +328,7 @@ namespace KFrame
         SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave cancel match[{}]!", player->GetKeyID(), matchid );
+        __LOG_DEBUG__( "player[{}] leave cancel match[{}]!", player->GetKeyID(), matchid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleQueryMatchRoomAck )
@@ -336,7 +336,7 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMatchRoomAck );
 
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query match[{}]!", player->GetKeyID(), kfmsg.matchid() );
+        __LOG_DEBUG__( "player[{}] query match[{}]!", player->GetKeyID(), kfmsg.matchid() );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFMatchClientModule::OnMatchIdUpdateCallBack )

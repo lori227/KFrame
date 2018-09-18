@@ -54,7 +54,7 @@ namespace KFrame
         // 修改appid
         _kf_ip_config->SetMasterAppId( kfglobal->_app_channel, kfglobal->_zone_id );
 
-        __LOG_INFO__( KFLogEnum::Init, "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
+        __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

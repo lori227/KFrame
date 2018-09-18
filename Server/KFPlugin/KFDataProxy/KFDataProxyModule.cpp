@@ -39,13 +39,14 @@ namespace KFrame
         auto shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.zoneid(), true );
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find zone[{}] shardid!", kfmsg.msgid(), kfmsg.zoneid() );
+            return __LOG_ERROR__( "msgid[{}] can't find zone[{}] shardid!", kfmsg.msgid(), kfmsg.zoneid() );
         }
 
-        auto ok = _kf_tcp_client->SendNetMessage( shardid, clientid, kfmsg.msgid(), kfmsg.msgdata().data(), kfmsg.msgdata().length() );
+        auto msgdata = &kfmsg.msgdata();
+        auto ok = _kf_tcp_client->SendNetMessage( shardid, clientid, kfmsg.msgid(), msgdata->data(), msgdata->length() );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::System, "zone[{}] shardid[{}] send msgid[{}] failed!", kfmsg.zoneid(), shardid, kfmsg.msgid() );
+            __LOG_ERROR__( "zone[{}] shardid[{}] send msgid[{}] failed!", kfmsg.zoneid(), shardid, kfmsg.msgid() );
         }
     }
 }

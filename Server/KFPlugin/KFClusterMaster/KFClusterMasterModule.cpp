@@ -64,7 +64,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}|{}:{}] lost!",
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost!",
                        kfgate->_name, kfgate->_type, KFAppID::ToString( kfgate->_id ), kfgate->_ip, kfgate->_port );
 
         _kf_proxy_manage->RemoveProxyServer( handleid );
@@ -77,7 +77,7 @@ namespace KFrame
         _kf_proxy_manage->AddProxyServer( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port() );
 
         SendAllocShardToProxy( kfmsg.id() );
-        __LOG_DEBUG__( KFLogEnum::Logic, "[{}:{}:{}|{}:{}] discovered!",
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!",
                        kfmsg.name(), kfmsg.type(), KFAppID::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
     }
 
@@ -93,11 +93,11 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
         uint32 handleid = __KF_HEAD_ID__( kfguid );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid  ) );
+        __LOG_DEBUG__( "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid  ) );
 
         if ( kfmsg.clusterkey() != _cluster_key )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}!={}] cluster[{}] key error!", kfmsg.clusterkey(), _cluster_key, KFAppID::ToString( handleid ) );
+            return __LOG_ERROR__( "[{}!={}] cluster[{}] key error!", kfmsg.clusterkey(), _cluster_key, KFAppID::ToString( handleid ) );
         }
 
         KFMsg::S2SClusterAuthAck ack;
@@ -112,7 +112,7 @@ namespace KFrame
             ack.set_type( "" );
             ack.set_id( 0 );
 
-            __LOG_ERROR__( KFLogEnum::System, "cluster[{}] can't find proxy, handleid[{}]!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "cluster[{}] can't find proxy, handleid[{}]!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
         }
         else
         {
@@ -131,7 +131,7 @@ namespace KFrame
             tokenreq.set_gateid( handleid );
             _kf_tcp_server->SendNetMessage( kfproxy->_id, KFMsg::S2S_CLUSTER_TOKEN_REQ, &tokenreq );
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "[{}] cluster[{}] key ok!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
+            __LOG_DEBUG__( "[{}] cluster[{}] key ok!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
         }
 
         _kf_tcp_server->SendNetMessage( handleid, KFMsg::S2S_CLUSTER_AUTH_ACK, &ack );

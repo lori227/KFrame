@@ -49,7 +49,7 @@ namespace KFrame
         }
         catch ( Poco::Exception& exc )
         {
-            __LOG_ERROR__( KFLogEnum::Init, "init http server[{}:{}] failed[{}:{}]!",
+            __LOG_ERROR__( "init http server[{}:{}] failed[{}:{}]!",
                            ip, port, exc.code(), exc.message() );
         }
     }
@@ -83,7 +83,7 @@ namespace KFrame
             }
             catch ( ... )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "http function failed! data=[{}]", data );
+                __LOG_ERROR__( "http function failed! data=[{}]", data );
             }
 
             return strdata;
@@ -118,7 +118,7 @@ namespace KFrame
             }
             catch ( ... )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "http function failed! data=[{}]", kfdata->_data );
+                __LOG_ERROR__( "http function failed! data=[{}]", kfdata->_data );
             }
 
             __KF_DESTROY__( KFFunctionData, kfdata );

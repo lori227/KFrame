@@ -97,11 +97,11 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}] login verify result[{}] ok!", accountid, result );
+            __LOG_DEBUG__( "player[{}] login verify result[{}] ok!", accountid, result );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}] login verify result[{}] failed!", accountid, result );
+            __LOG_ERROR__( "player[{}] login verify result[{}] failed!", accountid, result );
         }
     }
 
@@ -114,7 +114,7 @@ namespace KFrame
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();
 
-        __LOG_DEBUG__( KFLogEnum::Login, "accountid[{}] login verify", accountid );
+        __LOG_DEBUG__( "accountid[{}] login verify", accountid );
 
         if ( _is_login_close )
         {
@@ -187,7 +187,7 @@ namespace KFrame
         auto ok = SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "query player[{}:{}] ok!", accountid, playerid );
+            __LOG_DEBUG__( "query player[{}:{}] ok!", accountid, playerid );
         }
         else
         {

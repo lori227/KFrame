@@ -30,7 +30,7 @@ namespace KFrame
         _instance = dlopen( _path.c_str(), RTLD_GLOBAL | RTLD_LAZY );
         if ( _instance == nullptr )
         {
-            __LOG_LOCAL__( KFLogEnum::Init, "dlopen - {}", dlerror() );
+            __LOG_LOCAL__( "dlopen - {}", dlerror() );
         }
         return _instance != nullptr;
 #endif

@@ -63,7 +63,7 @@ namespace KFrame
         void OnlineBattleRoom( uint32 serverid );
 
         // 离开战场
-        void FinishLeaveRoom();
+        void FinishLeaveRoom( KFBattleRoom* kfroom );
 
         // 重置状态
         void ResetRoomStatus();
@@ -87,7 +87,7 @@ namespace KFrame
         void PlayerNoticeBattleRoom( KFBattleRoom* kfroom );
 
         // 发送离开消息
-        void SendLeaveRoomToGame();
+        void SendLeaveRoomToGame( KFBattleRoom* kfroom );
     public:
         // 玩家数据
         KFMsg::PBBattlePlayer _pb_player;

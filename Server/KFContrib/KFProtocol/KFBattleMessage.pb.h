@@ -3029,17 +3029,27 @@ class LIBPROTOC_EXPORT S2SLeaveBattleRoomToClientAck : public ::google::protobuf
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
+  // required uint64 roomid = 2;
+  inline bool has_roomid() const;
+  inline void clear_roomid();
+  static const int kRoomidFieldNumber = 2;
+  inline ::google::protobuf::uint64 roomid() const;
+  inline void set_roomid(::google::protobuf::uint64 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLeaveBattleRoomToClientAck)
  private:
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_roomid();
+  inline void clear_has_roomid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -6918,6 +6928,28 @@ inline ::google::protobuf::uint32 S2SLeaveBattleRoomToClientAck::playerid() cons
 inline void S2SLeaveBattleRoomToClientAck::set_playerid(::google::protobuf::uint32 value) {
   set_has_playerid();
   playerid_ = value;
+}
+
+// required uint64 roomid = 2;
+inline bool S2SLeaveBattleRoomToClientAck::has_roomid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SLeaveBattleRoomToClientAck::set_has_roomid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SLeaveBattleRoomToClientAck::clear_has_roomid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SLeaveBattleRoomToClientAck::clear_roomid() {
+  roomid_ = GOOGLE_ULONGLONG(0);
+  clear_has_roomid();
+}
+inline ::google::protobuf::uint64 S2SLeaveBattleRoomToClientAck::roomid() const {
+  return roomid_;
+}
+inline void S2SLeaveBattleRoomToClientAck::set_roomid(::google::protobuf::uint64 value) {
+  set_has_roomid();
+  roomid_ = value;
 }
 
 // -------------------------------------------------------------------

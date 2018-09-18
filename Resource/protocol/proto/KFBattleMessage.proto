@@ -357,6 +357,7 @@ message S2SPlayerLeaveRoomToMatchShardReq
 message S2SLeaveBattleRoomToClientAck
 {
 	required uint32 playerid = 1;	// 玩家id
+	required uint64 roomid = 2;		// 房间id
 }
 
 // 战斗服务器=>战斗服务器集群逻辑分片

@@ -36,7 +36,7 @@ namespace KFrame
         auto shardid = _kf_cluster_proxy->FindMinObjectShard();
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "guildid[{}] can't find shard!", guildid );
+            return __LOG_ERROR__( "guildid[{}] can't find shard!", guildid );
         }
 
         KFMsg::S2SCreateGuildToShardReq req;
@@ -57,11 +57,11 @@ namespace KFrame
             // 先不添加到列表，可能失败
             // _kf_cluster_proxy->AddObjectShard( guildid, shardid );
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "create guild[{}] ok!", guildid );
+            __LOG_DEBUG__( "create guild[{}] ok!", guildid );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "create guild[{}] failed!", guildid );
+            __LOG_ERROR__( "create guild[{}] failed!", guildid );
         }
     }
 
@@ -71,7 +71,7 @@ namespace KFrame
         auto shardid = _kf_cluster_proxy->FindMinObjectShard();
         if ( shardid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "query guildlist can't find shard!" );
+            return __LOG_ERROR__( "query guildlist can't find shard!" );
         }
         auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_GUILD_LIST_REQ, data, length );
     }

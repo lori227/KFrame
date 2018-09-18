@@ -66,7 +66,7 @@ namespace KFrame
             }
         }
 
-        __LOG_ERROR_FUNCTION__( KFLogEnum::Init, file, line, "can't find [{}] module!", name );
+        __LOG_ERROR_FUNCTION__( file, line, "can't find [{}] module!", name );
         return nullptr;
     }
 

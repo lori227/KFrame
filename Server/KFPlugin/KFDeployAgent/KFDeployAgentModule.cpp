@@ -57,7 +57,7 @@ namespace KFrame
         _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
         if ( _mysql_driver == nullptr )
         {
-            return __LOG_CRITICAL__( KFLogEnum::System, "deploy mysql is nullprt" );
+            return __LOG_CRITICAL__( "deploy mysql is nullprt" );
         }
 
         // 加载部署信息
@@ -67,7 +67,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "load launch exception!" );
+            __LOG_CRITICAL__( "load launch exception!" );
         }
 
         // 启动计划任务
@@ -118,7 +118,7 @@ namespace KFrame
                 deploydata->_kf_launch = _launch_list.Find( LaunchKey( deploydata->_app_name, deploydata->_app_type ) );
                 if ( deploydata->_kf_launch == nullptr )
                 {
-                    __LOG_ERROR__( KFLogEnum::Logic, "[{}:{}] can't find launch data!", deploydata->_app_name, deploydata->_app_type );
+                    __LOG_ERROR__( "[{}:{}] can't find launch data!", deploydata->_app_name, deploydata->_app_type );
                 }
 
                 _deploy_list.Insert( deploydata->_app_id, deploydata );
@@ -163,11 +163,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "startup exception={}!", exception.what() );
+            __LOG_CRITICAL__( "startup exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "startup exception unknown!" );
+            __LOG_CRITICAL__( "startup exception unknown!" );
         }
     }
 
@@ -192,7 +192,7 @@ namespace KFrame
             // 保存到文件中
             SaveProcessToFile( deploydata );
 
-            __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}] startup ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+            __LOG_INFO__( "[{}:{}:{}] startup ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
     }
 
@@ -253,11 +253,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "kill exception={}!", exception.what() );
+            __LOG_CRITICAL__( "kill exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "kill exception unknown!" );
+            __LOG_CRITICAL__( "kill exception unknown!" );
         }
     }
 
@@ -293,12 +293,12 @@ namespace KFrame
         deploydata->_process_id = processinfo.dwProcessId;
         if ( deploydata->_process_id != _invalid_int )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "startup [ {}:{}:{} ] ok! process={}",
+            __LOG_DEBUG__( "startup [ {}:{}:{} ] ok! process={}",
                            deploydata->_app_name, deploydata->_app_type, deploydata->_app_id, deploydata->_process_id );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "startup [ {}:{}:{} ] failed!",
+            __LOG_ERROR__( "startup [ {}:{}:{} ] failed!",
                            deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
 
@@ -418,7 +418,7 @@ namespace KFrame
         FILE* fp = popen( command.c_str(), "r" );
         if ( fp == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "[{}] open failed!", command );
+            __LOG_ERROR__( "[{}] open failed!", command );
             return _invalid_str;
         }
 
@@ -541,7 +541,7 @@ namespace KFrame
 
     void KFDeployAgentModule::SendLogMessage( const std::string& url, const std::string& msg )
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "{}", msg );
+        __LOG_DEBUG__( "{}", msg );
 
         if ( !url.empty() )
         {
@@ -657,11 +657,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "check finish exception={}!", exception.what() );
+            __LOG_CRITICAL__( "check finish exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( KFLogEnum::System, "check finish exception unknown!" );
+            __LOG_CRITICAL__( "check finish exception unknown!" );
         }
     }
 
@@ -765,7 +765,7 @@ namespace KFrame
 
                 UpdateDeployToDatabase( deploydata );
 
-                __LOG_INFO__( KFLogEnum::Logic, "[{}:{}:{}:{}] kill ok!",
+                __LOG_INFO__( "[{}:{}:{}:{}] kill ok!",
                               deploydata->_app_channel, deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
             }
         }

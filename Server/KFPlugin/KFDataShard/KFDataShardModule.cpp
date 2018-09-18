@@ -60,7 +60,7 @@ namespace KFrame
         auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] can't find redis!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, id );
             return false;
         }
 
@@ -68,7 +68,7 @@ namespace KFrame
                         __KF_STRING__( player ), id, __KF_STRING__( data ) );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] query failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] query failed!", zoneid, id );
             return false;
         }
 
@@ -77,7 +77,7 @@ namespace KFrame
             auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] parse failed!", zoneid, id );
+                __LOG_ERROR__( "player[{}:{}] parse failed!", zoneid, id );
                 return false;
             }
         }
@@ -90,14 +90,14 @@ namespace KFrame
         auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
         if ( strdata == _invalid_str )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] serialize failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, id );
             return false;
         }
 
         auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] can't find redis!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, id );
             return false;
         }
 
@@ -105,11 +105,11 @@ namespace KFrame
                                               __KF_STRING__( player ), id, __KF_STRING__( data ), strdata );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] save failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] save failed!", zoneid, id );
             return false;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player [{}:{}] save ok!", zoneid, id );
+        __LOG_DEBUG__( "player [{}:{}] save ok!", zoneid, id );
         return true;
     }
 
@@ -148,7 +148,7 @@ namespace KFrame
         redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, id );
         redisdriver->Pipeline();
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] delete ok!", zoneid, id );
+        __LOG_DEBUG__( "player[{}:{}] delete ok!", zoneid, id );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,7 +158,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerReq );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] loaddata!", kfmsg.accountid(), kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}:{}] loaddata!", kfmsg.accountid(), kfmsg.playerid() );
 
         KFMsg::S2SLoginLoadPlayerAck ack;
         ack.set_channel( kfmsg.channel() );

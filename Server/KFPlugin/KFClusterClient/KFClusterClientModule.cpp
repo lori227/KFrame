@@ -134,7 +134,7 @@ namespace KFrame
         auto kfclusterclient = _kf_cluster_client.Find( name );
         if ( kfclusterclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find cluster client[{}]!", msgid, name );
+            __LOG_ERROR__( "msgid[{}] can't find cluster client[{}]!", msgid, name );
             return false;
         }
 
@@ -146,7 +146,7 @@ namespace KFrame
         auto kfclusterclient = _kf_cluster_client.Find( name );
         if ( kfclusterclient == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find cluster client[{}:{}]!", msgid, name, KFAppID::ToString( shardid ) );
+            __LOG_ERROR__( "msgid[{}] can't find cluster client[{}:{}]!", msgid, name, KFAppID::ToString( shardid ) );
             return false;
         }
 

@@ -162,19 +162,19 @@ namespace KFrame
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] item id = 0!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] item id = 0!", kfagent->_string );
         }
 
         auto itemsetting = _kf_item_config->FindItemSetting( configid );
         if ( itemsetting == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] item id = 0!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] item id = 0!", kfagent->_string );
         }
 
         auto kfagentvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
         if ( kfagentvalue == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] item count = null!", kfagent->_string );
+            return __LOG_ERROR__( "[{}] item count = null!", kfagent->_string );
         }
 
         auto itemcount = _kf_kernel->CalcAgentValue( kfagentvalue, multiple );
@@ -183,7 +183,7 @@ namespace KFrame
         auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
         if ( kfitemrecord == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::System, "[{}] player[{}] item record = null!", kfagent->_string, player->GetKeyID() );
+            return __LOG_ERROR__( "[{}] player[{}] item record = null!", kfagent->_string, player->GetKeyID() );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

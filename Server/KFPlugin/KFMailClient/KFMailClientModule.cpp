@@ -317,7 +317,7 @@ namespace KFrame
         if ( !ok )
         {
             auto strmailid = __TO_STRING__( mailid );
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] update mail[{}:{}] flag[{}] failed!",
+            __LOG_ERROR__( "player[{}] update mail[{}:{}] flag[{}] failed!",
                            playerid, mailtype, strmailid, flag );
         }
 
@@ -364,20 +364,20 @@ namespace KFrame
         auto kfmail = kfobject->FindData( __KF_STRING__( mail ), mailid );
         if ( kfmail == nullptr )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] can't find mail[{}]!", player->GetKeyID(), strmailid );
+            return __LOG_ERROR__( "player[{}] can't find mail[{}]!", player->GetKeyID(), strmailid );
         }
 
         auto reward = kfmail->GetValue< std::string >( __KF_STRING__( reward ) );
         if ( reward.empty() )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mail[{}] no reward!", player->GetKeyID(), strmailid );
+            return __LOG_ERROR__( "player[{}] mail[{}] no reward!", player->GetKeyID(), strmailid );
         }
 
         KFAgents kfagents;
         auto ok = kfagents.ParseFromString( reward, __FUNC_LINE__ );
         if ( !ok )
         {
-            return __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mail[{}] reward[{}] error!", player->GetKeyID(), strmailid, reward );
+            return __LOG_ERROR__( "player[{}] mail[{}] reward[{}] error!", player->GetKeyID(), strmailid, reward );
         }
 
         player->UpdateData( kfmail, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );

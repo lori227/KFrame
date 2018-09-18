@@ -109,7 +109,7 @@ namespace KFrame
         case KFMsg::MailEnum::GiftMail:
             return __FORMAT__( "{}:{}", __KF_STRING__( personmailgift ), playerid );
         default:
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] mailtype[{}] error!", playerid, mailtype );
+            __LOG_ERROR__( "player[{}] mailtype[{}] error!", playerid, mailtype );
             break;
         }
 
@@ -231,7 +231,7 @@ namespace KFrame
         if ( !ok )
         {
             auto strmaildata = kfmsg.DebugString();
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] add mail[{}] failed!", kfmsg.playerid(), strmaildata );
+            __LOG_ERROR__( "player[{}] add mail[{}] failed!", kfmsg.playerid(), strmaildata );
         }
     }
 
@@ -334,7 +334,7 @@ namespace KFrame
         auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "reload gm mail[{}] failed!", playerid );
+            __LOG_ERROR__( "reload gm mail[{}] failed!", playerid );
         }
     }
 
@@ -365,7 +365,7 @@ namespace KFrame
                 auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
                 if ( !kfresult->IsOk() )
                 {
-                    __LOG_ERROR__( KFLogEnum::Logic, "mailid[{}:{}] player[{}] flag[{}] failed!", mailtype, mailid, playerid, flag );
+                    __LOG_ERROR__( "mailid[{}:{}] player[{}] flag[{}] failed!", mailtype, mailid, playerid, flag );
                 }
             }
 
@@ -417,7 +417,7 @@ namespace KFrame
         auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), kfmsg.playerid(), __KF_STRING__( gmemaillastid ), strmaxmailid );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "playerid[{}] mail[{}] failed!", kfmsg.playerid(), strmaxmailid );
+            __LOG_ERROR__( "playerid[{}] mail[{}] failed!", kfmsg.playerid(), strmaxmailid );
         }
     }
 
@@ -450,7 +450,7 @@ namespace KFrame
                 if ( !ok )
                 {
                     auto strmaildata = kfmsg.DebugString();
-                    __LOG_ERROR__( KFLogEnum::Logic, "player[{}] add mail[{}] failed!", playerid, strmaildata );
+                    __LOG_ERROR__( "player[{}] add mail[{}] failed!", playerid, strmaildata );
                 }
             }
         }
@@ -460,7 +460,7 @@ namespace KFrame
             if ( !ok )
             {
                 auto strmaildata = kfmsg.DebugString();
-                __LOG_ERROR__( KFLogEnum::Logic, " add mail[{}] failed!", strmaildata );
+                __LOG_ERROR__( " add mail[{}] failed!", strmaildata );
             }
         }
     }

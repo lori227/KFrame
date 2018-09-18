@@ -25,9 +25,9 @@ namespace KFrame
         return true;
     }
 
-    void KFSpdLog::Log( uint32 loglevel, uint32 category, const std::string& content )
+    void KFSpdLog::Log( uint32 loglevel, const std::string& content )
     {
-        auto& logger = GetLogger( category );
+        auto& logger = GetLogger();
         if ( logger == nullptr )
         {
             return;
@@ -36,24 +36,25 @@ namespace KFrame
         logger->log( ( spdlog::level::level_enum )loglevel, content );
     }
 
-    const KFSpdLog::spdlogger& KFSpdLog::GetLogger( uint32 category )
+    const KFSpdLog::spdlogger& KFSpdLog::GetLogger()
     {
-        std::string name = GetLoggerName( category );
+        std::string name = GetLoggerName();
         auto iter = _local_loggers.find( name );
         if ( iter != _local_loggers.end() )
         {
             return iter->second;
         }
 
-        return CreateLogger( category );
+        return CreateLogger();
     }
 
-    const KFSpdLog::spdlogger& KFSpdLog::CreateLogger( uint32 category )
+    const KFSpdLog::spdlogger& KFSpdLog::CreateLogger()
     {
         std::vector<spdlog::sink_ptr> sinks_vec;
-        std::string log_name = __FORMAT__( "{}-{}.log", _local_log_path, _log_category_name[category] );
+        std::string log_name = __FORMAT__( "{}.log", _local_log_path );
 
         auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( log_name );
+
 #if defined(__KF_DEBUG__)
 #if __KF_SYSTEM__ == __KF_WIN__
         auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
@@ -65,7 +66,7 @@ namespace KFrame
 
         sinks_vec.push_back( date_and_hour_sink );
 
-        std::string name = GetLoggerName( category );
+        std::string name = GetLoggerName();
         auto local_logger = std::make_shared<spdlog::async_logger>( name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
@@ -81,10 +82,10 @@ namespace KFrame
         return iter->second;
     }
 
-    std::string KFSpdLog::GetLoggerName( uint32 category )
+    std::string KFSpdLog::GetLoggerName()
     {
-        std::string log_name = __FORMAT__( "{}-{}", _local_log_path, _log_category_name[category] );
         std::string name;
+        std::string log_name = __FORMAT__( "{}", _local_log_path );
         size_t pos = log_name.find_last_of( spdlog::details::os::folder_sep );
         if ( pos == std::string::npos )
         {

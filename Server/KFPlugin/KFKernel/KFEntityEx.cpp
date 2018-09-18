@@ -376,7 +376,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line )
     {
-        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player[{}] add agent[{:0.2f}][{}]", GetKeyID(), multiple, kfagents->_string );
+        __LOG_INFO_FUNCTION__( function, line, "player[{}] add agent[{:0.2f}][{}]", GetKeyID(), multiple, kfagents->_string );
 
         for ( auto& kfagent : kfagents->_agents )
         {
@@ -397,7 +397,7 @@ namespace KFrame
         auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find setting [{}]! ", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]! ", kfagent->_string );
         }
 
         // 如果有注册的特殊处理函数
@@ -413,7 +413,7 @@ namespace KFrame
             case KFDataDefine::Type_String:
             case KFDataDefine::Type_Array:
             case KFDataDefine::Type_Vector3D:
-                __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "error data type[{}]! ", kfagent->_string );
+                __LOG_ERROR_FUNCTION__( function, line, "error data type[{}]! ", kfagent->_string );
                 break;
             case KFDataDefine::Type_Object:
                 AddObjectAgentData( const_cast< KFAgent* >( kfagent ), multiple, function, line );
@@ -446,7 +446,7 @@ namespace KFrame
         auto kfparent = _kf_object->FindData( kfagent->_data_name );
         if ( kfparent == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find data [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data [{}]!", kfagent->_string );
         }
 
         for ( auto& iter : kfagent->_datas._objects )
@@ -461,14 +461,14 @@ namespace KFrame
         auto configid = kfagent->_config_id;
         if ( configid == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find config id [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find config id [{}]!", kfagent->_string );
         }
 
         // kfrecord
         auto kfparent = _kf_object->FindData( kfagent->_data_name );
         if ( kfparent == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find data [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data [{}]!", kfagent->_string );
         }
 
         auto kfdata = kfparent->FindData( configid );
@@ -503,7 +503,7 @@ namespace KFrame
         auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find setting [{}]!", kfagent->_string );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );
             return false;
         }
 
@@ -520,7 +520,7 @@ namespace KFrame
         case KFDataDefine::Type_Array:
         case KFDataDefine::Type_String:
         case KFDataDefine::Type_Vector3D:
-            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "data type error [{}]!", kfagent->_string );
+            __LOG_ERROR_FUNCTION__( function, line, "data type error [{}]!", kfagent->_string );
             break;
         case KFDataDefine::Type_Record:
             return CheckRecordAgentData( const_cast< KFAgent* >( kfagent ) );
@@ -588,7 +588,7 @@ namespace KFrame
         auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find setting [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );
         }
 
         // 如果有注册函数, 执行注册函数
@@ -606,7 +606,7 @@ namespace KFrame
             case KFDataDefine::Type_String:
             case KFDataDefine::Type_Array:
             case KFDataDefine::Type_Vector3D:
-                __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "data type error [{}]!", kfagent->_string );
+                __LOG_ERROR_FUNCTION__( function, line, "data type error [{}]!", kfagent->_string );
                 break;
             case KFDataDefine::Type_Record:
                 RemoveRecordAgentData( const_cast< KFAgent* >( kfagent ), function, line );
@@ -623,7 +623,7 @@ namespace KFrame
         // 记录log
         if ( datasetting->HaveFlagMask( KFDataDefine::Mask_System_Log ) )
         {
-            __LOG_INFO_FUNCTION__( KFLogEnum::Logic, function, line, "[{}] remove data [{}]", GetKeyID(), kfagent->_string );
+            __LOG_INFO_FUNCTION__( function, line, "[{}] remove data [{}]", GetKeyID(), kfagent->_string );
         }
     }
 
@@ -632,7 +632,7 @@ namespace KFrame
         auto kfparent = _kf_object->FindData( kfagent->_data_name, kfagent->_config_id );
         if ( kfparent == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line,  "can't find config id [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line,  "can't find config id [{}]!", kfagent->_string );
         }
 
         for ( auto& iter : kfagent->_datas._objects )
@@ -649,7 +649,7 @@ namespace KFrame
         auto kfparent = _kf_object->FindData( kfagent->_data_name );
         if ( kfparent == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "can't find config id [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find config id [{}]!", kfagent->_string );
         }
 
         for ( auto& iter : kfagent->_datas._objects )

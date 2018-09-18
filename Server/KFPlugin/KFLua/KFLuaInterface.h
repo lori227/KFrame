@@ -22,11 +22,11 @@ namespace KFrame
             }
             catch ( LuaPlus::LuaException& e )
             {
-                __LOG_ERROR__( KFLogEnum::Script, "call [{}] [{}] failed=[{}]", _lua_file, function, e.GetErrorMessage() );
+                __LOG_ERROR__( "call [{}] [{}] failed=[{}]", _lua_file, function, e.GetErrorMessage() );
             }
             catch ( ... )
             {
-                __LOG_ERROR__( KFLogEnum::Script, "call [{}] [{}] failed unknown!", _lua_file, function );
+                __LOG_ERROR__( "call [{}] [{}] failed unknown!", _lua_file, function );
             }
         }
 

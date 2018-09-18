@@ -82,23 +82,20 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, kfmsg.matchid() );
         player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] query battle room[{}:{}]!",
-                       player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid() );
+        __LOG_DEBUG__( "player[{}] query battle room[{}:{}]!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleNoticeMatchRoomReq )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SNoticeMatchRoomReq );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] match[{}] room[{}|{}:{}] req!",
-                       player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
+        __LOG_DEBUG__( "player[{}] match[{}] room[{}|{}:{}] req!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
 
         auto kfobject = player->GetData();
         auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
         if ( matchid == _invalid_int || matchid != kfmsg.matchid() )
         {
-            return __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] match[{}] room[{}|{}:{}] cancel!",
-                                  player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
+            return __LOG_DEBUG__( "player[{}] match[{}] room[{}|{}:{}] cancel!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
         }
 
         player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, kfmsg.roomid() );
@@ -114,8 +111,7 @@ namespace KFrame
             auto ok = _kf_player->SendMessageToClient( player, KFMsg::MSG_MATCH_RESULT_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "player[{}] match[{}] room[{}|{}:{}] failed!",
-                               player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
+                __LOG_ERROR__( "player[{}] match[{}] room[{}|{}:{}] failed!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
             }
         }
 
@@ -128,19 +124,25 @@ namespace KFrame
             SendMessageToBattle( kfmsg.roomid(), KFMsg::S2S_NOTICE_MATCH_ROOM_ACK, &ack );
         }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] match[{}] room[{}|{}:{}] ok!",
-                       player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
+        __LOG_DEBUG__( "player[{}] match[{}] room[{}|{}:{}] ok!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandleLeaveBattleRoomAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SLeaveBattleRoomToClientAck );
 
+        auto kfobject = player->GetData();
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        if ( roomid != kfmsg.roomid() )
+        {
+            return;
+        }
+
         // 取消配置信息
         player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
         player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] leave battle room!", player->GetKeyID() );
+        __LOG_DEBUG__( "player[{}] leave battle room[{}]!", player->GetKeyID(), roomid );
     }
 
     void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore )
@@ -216,19 +218,23 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SPlayerBattleScoreReq );
 
-        auto pbscore = &kfmsg.pbscore();
         auto kfobject = player->GetData();
-        auto scorename = _kf_option->GetValue< std::string >( __KF_STRING__( matchscore ), pbscore->matchid() );
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        if ( roomid == kfmsg.roomid() )
+        {
+            // 离开房间
+            player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
+            player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+        }
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] balance battle[{}] score[{}:{}] req!",
-                       kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
+        auto pbscore = &kfmsg.pbscore();
+        auto scorename = _kf_option->GetValue< std::string >( __KF_STRING__( matchscore ), pbscore->matchid() );
+        __LOG_DEBUG__( "player[{}] room[{}] score[{}:{}] req!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
 
         auto kfscore = kfobject->FindData( scorename );
         if ( kfscore == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] balance battle[{}] score[{}:{}] error!",
-                           kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
-            return;
+            return __LOG_ERROR__( "player[{}] room[{}] score[{}:{}] error!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
         }
 
         // 计算单项数据
@@ -264,13 +270,11 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] balance battle[{}] score[{}:{}] ok!",
-                           kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
+            __LOG_DEBUG__( "player[{}] balance battle[{}] score[{}:{}] ok!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] balance battle[{}] score[{}:{}] failed!",
-                           kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
+            __LOG_ERROR__( "player[{}] balance battle[{}] score[{}:{}] failed!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
         }
     }
 

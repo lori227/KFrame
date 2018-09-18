@@ -35,7 +35,7 @@ namespace KFrame
         auto result = _lua_state->LoadFile( file.c_str() );
         if ( result != 0 )
         {
-            return __LOG_ERROR__( KFLogEnum::Script, "Load [{}] Failed!", file );
+            return __LOG_ERROR__( "Load [{}] Failed!", file );
         }
 
         _lua_file = file;

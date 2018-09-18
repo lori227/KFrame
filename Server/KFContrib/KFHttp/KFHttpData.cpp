@@ -30,7 +30,7 @@ namespace KFrame
             }
             catch ( ... )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "http response exception! result=[{}]", _result );
+                __LOG_ERROR__( "http response exception! result=[{}]", _result );
             }
         }
     }

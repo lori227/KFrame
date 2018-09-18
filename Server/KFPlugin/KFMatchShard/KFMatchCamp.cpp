@@ -44,7 +44,7 @@ namespace KFrame
 
         _player_count += kfgroup->PlayerCount();
         _group_list.Insert( kfgroup->_group_id, kfgroup );
-        __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] add group[{}] playercount[{}]!", _camp_id, kfgroup->_group_id, _player_count );
+        __LOG_DEBUG__( "camp[{}] add group[{}] playercount[{}]!", _camp_id, kfgroup->_group_id, _player_count );
     }
 
     bool KFMatchCamp::RemoveGroup( uint64 groupid )
@@ -101,23 +101,23 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] enter room[{}] req!", _camp_id, kfroom->_room_id );
+            __LOG_DEBUG__( "camp[{}] enter room[{}] req!", _camp_id, kfroom->_room_id );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "camp[{}] enter room[{}] failed!", _camp_id, kfroom->_room_id );
+            __LOG_ERROR__( "camp[{}] enter room[{}] failed!", _camp_id, kfroom->_room_id );
         }
     }
 
     void KFMatchCamp::EnterBattleRoomAck( KFMatchRoom* kfroom )
     {
         _enter_timer.StopTimer();
-        __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] enter room[{}] ok!", _camp_id, kfroom->_room_id );
+        __LOG_DEBUG__( "camp[{}] enter room[{}] ok!", _camp_id, kfroom->_room_id );
     }
 
     void KFMatchCamp::ResetEnterBattleRoom()
     {
         _enter_timer.StartTimer( 1, 5000 );
-        __LOG_DEBUG__( KFLogEnum::Logic, "camp[{}] reset enter room!", _camp_id );
+        __LOG_DEBUG__( "camp[{}] reset enter room!", _camp_id );
     }
 }

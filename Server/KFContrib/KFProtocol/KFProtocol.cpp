@@ -17,7 +17,7 @@ namespace KFrame
         if ( !result )
         {
             std::string name = proto->GetTypeName();
-            __LOG_ERROR__( KFLogEnum::System, "message[{}] parse failed!", name );
+            __LOG_ERROR__( "message[{}] parse failed!", name );
         }
 
         return result;
@@ -71,7 +71,7 @@ namespace KFrame
         if ( !ok )
         {
             std::string name = proto->GetTypeName();
-            __LOG_ERROR__( KFLogEnum::System, "message[{}] parse failed!", name );
+            __LOG_ERROR__( "message[{}] parse failed!", name );
         }
 
         return ok;

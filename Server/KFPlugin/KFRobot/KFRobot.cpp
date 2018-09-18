@@ -1031,7 +1031,7 @@ namespace KFrame
 
                 if ( nullptr == kfparent )
                 {
-                    __LOG_ERROR__( KFLogEnum::Logic, "[{}] robot[{}] parse pb to kfdata Error[{}]!",
+                    __LOG_ERROR__( "[{}] robot[{}] parse pb to kfdata Error[{}]!",
                                    __FUNCTION__, player->GetKeyID(), record->name().c_str() );
                 }
 

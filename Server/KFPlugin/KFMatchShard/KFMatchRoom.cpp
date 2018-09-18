@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFMatchRoom::ResetRoom()
     {
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] reset!", _room_id );
+        __LOG_DEBUG__( "room[{}] reset!", _room_id );
 
         _battle_shard_id = _invalid_int;
         _create_timer.StartTimer( 1, 10000 );
@@ -79,7 +79,7 @@ namespace KFrame
 
         // 玩家数量
         _room_player_count += kfcamp->PlayerCount();
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
+        __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
     }
 
     bool KFMatchRoom::IsWaitMatch( uint32 battleserverid, uint32 playercount )
@@ -130,11 +130,11 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "create battle room[{}] req!", _room_id );
+            __LOG_DEBUG__( "create battle room[{}] req!", _room_id );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "create battle room[{}] failed!", _room_id );
+            __LOG_ERROR__( "create battle room[{}] failed!", _room_id );
         }
     }
 
@@ -143,7 +143,7 @@ namespace KFrame
         _create_timer.StopTimer();
         _battle_shard_id = battleshardid;
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] create battle[{}] ok!", _room_id, _battle_shard_id );
+        __LOG_DEBUG__( "room[{}] create battle[{}] ok!", _room_id, _battle_shard_id );
     }
 
     void KFMatchRoom::EnterBattleRoomReq()
@@ -200,7 +200,7 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "match room[{}] open failed!", _room_id );
+            __LOG_ERROR__( "match room[{}] open failed!", _room_id );
         }
 
         return ok;
@@ -213,7 +213,7 @@ namespace KFrame
         auto ok = SendMessageToBattle( KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "match room[{}] start failed!", _room_id );
+            __LOG_ERROR__( "match room[{}] start failed!", _room_id );
         }
     }
 
@@ -229,7 +229,7 @@ namespace KFrame
         if ( ok )
         {
             _room_player_count -= __MIN__( _room_player_count, 1 );
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
+            __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
 
             if ( kfcamp->PlayerCount() == 0 )
             {
@@ -271,7 +271,7 @@ namespace KFrame
             // 删除阵营
             _camp_list.Remove( campid );
             _room_player_count -= __MIN__( _room_player_count, campplayercount );
-            __LOG_DEBUG__( KFLogEnum::Logic, "room[{}] playercount[{}]", _room_id, _room_player_count );
+            __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
         }
 
         return ok;

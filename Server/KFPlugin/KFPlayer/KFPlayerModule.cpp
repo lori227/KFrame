@@ -270,7 +270,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] save send failed!", zoneid, kfentity->GetKeyID() );
+            __LOG_ERROR__( "player[{}:{}] save send failed!", zoneid, kfentity->GetKeyID() );
         }
     }
 
@@ -308,7 +308,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginTellTokenToGameReq );
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login game req!", kfmsg.accountid(), kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}:{}] login game req!", kfmsg.accountid(), kfmsg.playerid() );
 
         // 踢掉在线玩家
         _kf_player->KickPlayer( kfmsg.playerid(), KFMsg::KickEnum::LoginBeKick, __FUNCTION__, _invalid_int );
@@ -327,11 +327,11 @@ namespace KFrame
         auto ok = _kf_data->SendMessageToData( zoneid, KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] login game ok!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( "player[{}:{}] login game ok!", kfmsg.accountid(), kfmsg.playerid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] login game failed!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( "player[{}:{}] login game failed!", kfmsg.accountid(), kfmsg.playerid() );
         }
     }
 
@@ -348,7 +348,7 @@ namespace KFrame
         auto playerdata = kfmsg.mutable_playerdata();
         auto channeldata = kfmsg.mutable_channeldata();
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] load data ack!", accountid, playerid );
+        __LOG_DEBUG__( "player[{}:{}] load data ack!", accountid, playerid );
         if ( result != KFMsg::Success )
         {
             SendLoginGameMessage( result, accountid, playerid, gateid, sessionid, playerdata );
@@ -376,11 +376,11 @@ namespace KFrame
         auto ok = _kf_game->SendMessageToGate( gateid, KFMsg::S2S_LOGIN_GAME_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Login, "player[{}:{}] load game result[{}] ok!", accountid, playerid, result );
+            __LOG_DEBUG__( "player[{}:{}] load game result[{}] ok!", accountid, playerid, result );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Login, "player[{}:{}] load game result[{}] failed!", accountid, playerid, result );
+            __LOG_ERROR__( "player[{}:{}] load game result[{}] failed!", accountid, playerid, result );
         }
     }
 
@@ -568,7 +568,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerDisconnectionReq );
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] disconnection!", kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}] disconnection!", kfmsg.playerid() );
 
         _kf_component->RemoveEntity( kfmsg.playerid() );
     }
@@ -577,7 +577,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SLoginOutReq );
 
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] logout!", kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}] logout!", kfmsg.playerid() );
 
         for ( auto iter : _player_logout_function._objects )
         {
@@ -615,7 +615,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Login, "kick player[{}] by type[{}]!", playerid, type );
+        __LOG_DEBUG__( "kick player[{}] by type[{}]!", playerid, type );
 
         // 发送消息到proxy
         KFMsg::S2SKickGatePlayerReq req;
@@ -629,7 +629,7 @@ namespace KFrame
 
     void KFPlayerModule::LogoutPlayer( uint32 playerid )
     {
-        __LOG_DEBUG__( KFLogEnum::Login, "player[{}] logout!", playerid );
+        __LOG_DEBUG__( "player[{}] logout!", playerid );
 
         auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
@@ -701,7 +701,7 @@ namespace KFrame
             SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
-        __LOG_INFO_FUNCTION__( KFLogEnum::Player, function, line, "player={} add agent=[{}]!", player->GetKeyID(), reward );
+        __LOG_INFO_FUNCTION__( function, line, "player={} add agent=[{}]!", player->GetKeyID(), reward );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCreateRoleReq )
@@ -737,7 +737,7 @@ namespace KFrame
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_CREATE_ROLE_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}] create role to public failed!", playerid, kfmsg.name() );
+            __LOG_ERROR__( "player[{}:{}] create role to public failed!", playerid, kfmsg.name() );
         }
     }
 
@@ -803,7 +803,7 @@ namespace KFrame
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_SET_PLAYER_NAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}:{}:{}] set name to public failed!", playerid, name, kfmsg.name() );
+            __LOG_ERROR__( "player[{}:{}:{}] set name to public failed!", playerid, name, kfmsg.name() );
         }
     }
 
@@ -906,7 +906,7 @@ namespace KFrame
 
         player->UpdateData( kfmsg.dataname(), kfmsg.key(), __KF_STRING__( count ), KFOperateEnum::Dec, kfmsg.count() );
 
-        __LOG_INFO__( KFLogEnum::Logic, "remove data[{}:{}:{}] ok!", kfmsg.dataname(), kfmsg.key(), kfmsg.count() );
+        __LOG_INFO__( "remove data[{}:{}:{}] ok!", kfmsg.dataname(), kfmsg.key(), kfmsg.count() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleChangeIconBoxReq )

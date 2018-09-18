@@ -60,12 +60,12 @@ namespace KFrame
 
     void KFBattleProxyModule::OnServerLostBattleServer( uint32 serverid )
     {
-        __LOG_INFO__( KFLogEnum::Logic, "battle[{}] lost req!", serverid );
+        __LOG_INFO__( "battle[{}] lost req!", serverid );
 
         auto shardid = _kf_cluster_proxy->SelectClusterShard( serverid, false );
         if ( shardid == _invalid_int )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "battle[{}] can't select shard!", serverid );
+            __LOG_ERROR__( "battle[{}] can't select shard!", serverid );
             return;
         }
 
@@ -74,11 +74,11 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
-            __LOG_INFO__( KFLogEnum::Logic, "battle[{}] lost ok!", serverid );
+            __LOG_INFO__( "battle[{}] lost ok!", serverid );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "battle[{}] lost failed!", serverid );
+            __LOG_ERROR__( "battle[{}] lost failed!", serverid );
         }
     }
 
@@ -88,7 +88,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterBattleServerReq );
 
-        __LOG_DEBUG__( KFLogEnum::Logic, "register battle[{}|{}:{}|{}:{}] req!",
+        __LOG_DEBUG__( "register battle[{}|{}:{}|{}:{}] req!",
                        kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid(), kfmsg.battleshardid() );
 
         auto shardid = kfmsg.battleshardid();
@@ -97,7 +97,7 @@ namespace KFrame
             shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.serverid(), false );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "battle[{}|{}:{}] can't select shard!",
+                __LOG_ERROR__( "battle[{}|{}:{}] can't select shard!",
                                kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
                 return;
             }
@@ -126,7 +126,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleCreateRoomToBattleProxyReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToBattleProxyReq );
-        __LOG_DEBUG__( KFLogEnum::Logic, "create room[{}] req!", kfmsg.roomid() );
+        __LOG_DEBUG__( "create room[{}] req!", kfmsg.roomid() );
 
         auto shardid = _kf_cluster_proxy->FindDynamicShard( kfmsg.roomid() );
         if ( shardid == _invalid_int )
@@ -134,7 +134,7 @@ namespace KFrame
             shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.roomid(), false );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "[{}] can't select shard!", kfmsg.roomid() );
+                __LOG_ERROR__( "[{}] can't select shard!", kfmsg.roomid() );
                 return;
             }
 
@@ -150,11 +150,11 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "create room[{}:{}] ok!", shardid, kfmsg.roomid() );
+            __LOG_DEBUG__( "create room[{}:{}] ok!", shardid, kfmsg.roomid() );
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "create room[{}:{}] failed!", shardid, kfmsg.roomid() );
+            __LOG_ERROR__( "create room[{}:{}] failed!", shardid, kfmsg.roomid() );
         }
     }
 
@@ -193,7 +193,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "open room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "open room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -208,7 +208,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "enter room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "enter room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -222,7 +222,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "start room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "start room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -237,7 +237,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "finish room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "finish room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -252,7 +252,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "login room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "login room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -267,7 +267,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "leave room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "leave room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 
@@ -281,7 +281,7 @@ namespace KFrame
         auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "balance room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
+            __LOG_ERROR__( "balance room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
         }
     }
 

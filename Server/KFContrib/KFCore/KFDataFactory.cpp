@@ -70,7 +70,7 @@ namespace KFrame
         auto datasetting = _kf_data_config->FindDataSetting( classname, dataname );
         if ( datasetting == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "[{}:{}] datasetting can't find!", classname, dataname );
+            __LOG_ERROR__( "[{}:{}] datasetting can't find!", classname, dataname );
             return nullptr;
         }
 
@@ -82,7 +82,7 @@ namespace KFrame
         auto classsetting = _kf_data_config->FindClassSetting( datasetting->_contain_class );
         if ( classsetting == nullptr )
         {
-            __LOG_ERROR__( KFLogEnum::System, "[{}:{}] dataclass can't find!", datasetting->_name, datasetting->_contain_class );
+            __LOG_ERROR__( "[{}:{}] dataclass can't find!", datasetting->_name, datasetting->_contain_class );
             return nullptr;
         }
 
@@ -112,7 +112,7 @@ namespace KFrame
 
             if ( kfchilddata == nullptr )
             {
-                __LOG_ERROR__( KFLogEnum::System, "create data type error[{}:{}]!", childdatasetting->_name, childdatasetting->_type );
+                __LOG_ERROR__( "create data type error[{}:{}]!", childdatasetting->_name, childdatasetting->_type );
                 continue;
             }
 

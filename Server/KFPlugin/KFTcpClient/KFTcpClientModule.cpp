@@ -151,12 +151,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( guid, msgid, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::System, "tcp client transmit msgid[{}] failed!", msgid );
+                __LOG_ERROR__( "tcp client transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find function!", msgid );
+            __LOG_ERROR__( "msgid[{}] can't find function!", msgid );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ namespace KFrame
 
         _kf_client_engine->StartClient( name, type, id, ip, port );
 
-        __LOG_DEBUG__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] start connect!",
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!",
                        name, type, KFAppID::ToString( id ), ip, port );
     }
 
@@ -191,7 +191,7 @@ namespace KFrame
     {
         _kf_client_engine->CloseClient( serverid, function, line );
 
-        __LOG_DEBUG_FUNCTION__( KFLogEnum::Net, function, line, "[{}] connect close!",
+        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!",
                                 KFAppID::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +264,7 @@ namespace KFrame
         {
             auto kfsetting = &kfclient->_net_setting;
 
-            __LOG_INFO__( KFLogEnum::Net, "[{}:{}:{}|{}:{}] service ok!",
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok!",
                           servername, servertype, KFAppID::ToString( serverid ),
                           kfsetting->_ip, kfsetting->_port );
         }

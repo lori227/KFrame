@@ -25,7 +25,7 @@ namespace KFrame
         virtual void RunUpdate() {};
 
         // 打印日志
-        virtual void Log( uint32 loglevel, uint32 category, const std::string& content ) = 0;
+        virtual void Log( uint32 loglevel, const std::string& content ) = 0;
 
         // 初始化
         virtual bool Initialize( const std::string& appname, const std::string& apptype, uint32 appid ) = 0;
@@ -43,7 +43,7 @@ namespace KFrame
         virtual ~KFLocalLogger();
 
         // 打印日志
-        virtual void Log( uint32 loglevel, uint32 category, const std::string& content );
+        virtual void Log( uint32 loglevel, const std::string& content );
 
         // 初始化
         virtual bool Initialize( const std::string& appname, const std::string& apptype, uint32 appid );
@@ -59,15 +59,12 @@ namespace KFrame
     public:
         KFLogData()
         {
-            _category = 0;
             _log_level = 0;
         }
     public:
-        uint32 _category;
         uint32 _log_level;
         std::string _content;
     };
-
 
     class KFRemoteLogger : public KFLocalLogger
     {
@@ -79,7 +76,7 @@ namespace KFrame
         virtual void RunUpdate();
 
         // 打印日志
-        virtual void Log( uint32 loglevel, uint32 category, const std::string& content );
+        virtual void Log( uint32 loglevel, const std::string& content );
 
         // 设置远程log函数
         virtual void SetRemoteLogFunction( KFLogFunction& function );

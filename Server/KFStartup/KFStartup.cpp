@@ -63,7 +63,7 @@ namespace KFrame
         auto library = __KF_CREATE__( KFLibrary );
         if ( !library->Load( _app_config->_plugin_path, file ) )
         {
-            __LOG_LOCAL__( KFLogEnum::Init, "load [{}] failed!", library->_path );
+            __LOG_LOCAL__( "load [{}] failed!", library->_path );
 
             __KF_DESTROY__( KFLibrary, library );
             return false;
@@ -72,7 +72,7 @@ namespace KFrame
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
-            __LOG_LOCAL__( KFLogEnum::Init, "entry [{}] failed!", library->_path );
+            __LOG_LOCAL__( "entry [{}] failed!", library->_path );
 
             __KF_DESTROY__( KFLibrary, library );
             return false;

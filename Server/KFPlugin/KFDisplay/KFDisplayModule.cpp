@@ -52,7 +52,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "_kf_player is nullptr!" );
+            __LOG_ERROR__( "_kf_player is nullptr!" );
         }
     }
 
@@ -71,7 +71,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "_kf_player is nullptr!" );
+            __LOG_ERROR__( "_kf_player is nullptr!" );
         }
     }
 
@@ -90,7 +90,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "_kf_cluster_shard is nullptr!" );
+            __LOG_ERROR__( "_kf_cluster_shard is nullptr!" );
         }
     }
 
@@ -109,7 +109,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "_kf_route is nullptr!" );
+            __LOG_ERROR__( "_kf_route is nullptr!" );
         }
     }
 

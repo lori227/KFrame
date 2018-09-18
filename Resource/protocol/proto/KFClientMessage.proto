@@ -91,8 +91,8 @@ enum ClientProtocol
 	MSG_DISSOLVE_GUILD_REQ = 207;				// 解散帮派
 	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// 修改帮派徽章
 	MSG_QUERY_GUILD_LIST_REQ = 209;				// 请求帮派列表
-	MSG_QUERY_GUILD_LIST_ACK = 210;				// 
-	
+	MSG_QUERY_GUILD_LIST_ACK = 210;				// 帮派列表返回
+	MSG_KICK_MEMBER_REQ = 211;				// 踢掉帮派成员
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -837,4 +837,18 @@ message MsgQueryGuildListReq
 {
 	optional PBGuildIdArray guilds = 1;	// 要查询的帮派id
 	required uint32 cursor = 2;		// 查询的游标（从0开始）
+}
+
+// 帮派列表返回
+// MSG_QUERY_GUILD_LIST_ACK
+message MsgQueryGuildListAck
+{
+	repeated PBStrings guilddatas = 1;	// 帮派信息
+}
+
+// 踢掉帮派成员
+// MSG_KICK_MEMBER_REQ
+message MsgKickMemberReq
+{
+	required uint32 toplayerid = 1;		// 被踢掉的玩家id
 }

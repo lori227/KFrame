@@ -97,7 +97,7 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_ENTER_BATTLE_ROOM_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}] enter battle room[{}] req!",
+            __LOG_DEBUG__( "player[{}:{}] enter battle room[{}] req!",
                            _pb_player.campid(), _pb_player.playerid(), kfroom->_battle_room_id );
         }
     }
@@ -130,7 +130,7 @@ namespace KFrame
                 _status = KFPlayerStatus::StatusDisconnetRoom;
             }
 
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}:{}:{}] notice battle room[{}] req[{}]!",
+            __LOG_DEBUG__( "player[{}:{}:{}] notice battle room[{}] req[{}]!",
                            _pb_player.campid(), KFAppID::ToString( _pb_player.serverid() ), _pb_player.playerid(),
                            kfroom->_battle_room_id, _notice_count );
         }
@@ -153,7 +153,7 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( KFLogEnum::Logic, "player[{}] login battle room[{}] failed!",
+            __LOG_ERROR__( "player[{}] login battle room[{}] failed!",
                            _pb_player.playerid(), kfroom->_battle_room_id );
         }
 
@@ -180,7 +180,7 @@ namespace KFrame
         }
 
         // 发送到游戏服务器
-        SendLeaveRoomToGame();
+        SendLeaveRoomToGame( kfroom );
     }
 
     bool KFBattlePlayer::QueryBattleRoom( KFBattleRoom* kfroom, uint32 serverid )
@@ -205,11 +205,11 @@ namespace KFrame
         {
             _notice_count = 0;
             _status = KFPlayerStatus::StatusNoticeRoom;
-            __LOG_DEBUG__( KFLogEnum::Logic, "player[{}] online ok!", _pb_player.playerid() );
+            __LOG_DEBUG__( "player[{}] online ok!", _pb_player.playerid() );
         }
     }
 
-    void KFBattlePlayer::FinishLeaveRoom()
+    void KFBattlePlayer::FinishLeaveRoom( KFBattleRoom* kfroom )
     {
         if ( _status == KFPlayerStatus::StatusLeaveRoom )
         {
@@ -217,13 +217,14 @@ namespace KFrame
         }
 
         _status = KFPlayerStatus::StatusLeaveRoom;
-        SendLeaveRoomToGame();
+        SendLeaveRoomToGame( kfroom );
     }
 
-    void KFBattlePlayer::SendLeaveRoomToGame()
+    void KFBattlePlayer::SendLeaveRoomToGame( KFBattleRoom* kfroom )
     {
         KFMsg::S2SLeaveBattleRoomToClientAck ack;
         ack.set_playerid( GetID() );
+        ack.set_roomid( kfroom->_battle_room_id );
         SendMessageToClient( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK, &ack );
     }
 
@@ -258,7 +259,7 @@ namespace KFrame
             auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_BATTLE_ROOM_SCORE_BALANCE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::Logic, "player[{}] balance score send failed!", _pb_player.playerid() );
+                __LOG_ERROR__( "player[{}] balance score send failed!", _pb_player.playerid() );
             }
         }
 

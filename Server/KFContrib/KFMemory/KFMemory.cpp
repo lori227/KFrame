@@ -63,7 +63,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "[{}] object malloc failed!", name );
+            __LOG_ERROR_FUNCTION__( function, line, "[{}] object malloc failed!", name );
         }
 
         return object;
@@ -83,7 +83,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR_FUNCTION__( KFLogEnum::System, function, line, "object[{:p}] free failed!", ( void* )object );
+            __LOG_ERROR_FUNCTION__( function, line, "object[{:p}] free failed!", ( void* )object );
         }
     }
 
@@ -130,7 +130,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, function, line, "[char] memory malloc failed!" );
+            __LOG_ERROR__( function, line, "[char] memory malloc failed!" );
         }
 
         return memory;
@@ -150,7 +150,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, function, line, "[char] memory free failed!" );
+            __LOG_ERROR__( function, line, "[char] memory free failed!" );
         }
     }
 
@@ -199,7 +199,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_DEBUG__( KFLogEnum::Memory, "****************print memory start*****************" );
+        __LOG_DEBUG__( "****************print memory start*****************" );
 
         uint64 totalusesize = 0;
         uint64 totalmallocsize = 0;
@@ -222,9 +222,9 @@ namespace KFrame
             totalusesize += logdata->_use_size;
             totalmallocsize += logdata->_total_size;
 
-            __LOG_DEBUG__( KFLogEnum::Memory, "count[{}] use[{}] total[{}] name[{}]", logdata->_count, logdata->_use_size, logdata->_total_size, iter->first );
+            __LOG_DEBUG__( "count[{}] use[{}] total[{}] name[{}]", logdata->_count, logdata->_use_size, logdata->_total_size, iter->first );
         }
 
-        __LOG_DEBUG__( KFLogEnum::Memory, "*********print memory end, use[{}], total[{}]********", totalusesize, totalmallocsize );
+        __LOG_DEBUG__( "*********print memory end, use[{}], total[{}]********", totalusesize, totalmallocsize );
     }
 }

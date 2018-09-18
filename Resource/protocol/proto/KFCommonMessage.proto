@@ -221,7 +221,7 @@ enum AckEnum
 	GuildHadApply				= 10041;	// 已经申请过当前帮派
 	PlayerNoGuild				= 10042;	// 玩家当前没有帮派
 	GuildMaster				= 10043;	// 玩家是帮主无法退出帮派
-	PlayerNoMaster				= 10044;	// 玩家不是帮主
+	PlayerNoPower				= 10044;	// 玩家没有权限
 	PlayerNoSmallGuild			= 10045;	// 玩家不在同一个帮派中
 	PlayerNoInApplicanlist			= 10046;	// 玩家不再申请列表中
 	GuildMemberlistTooLong			= 10047;	// 帮派成员列表过长

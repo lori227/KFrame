@@ -108,12 +108,12 @@ namespace KFrame
             auto ok = _kf_transmit_function( tempguid, msgid, msgdata, msglength );
             if ( !ok )
             {
-                __LOG_ERROR__( KFLogEnum::System, "route transmit msgid[{}] failed!", msgid );
+                __LOG_ERROR__( "route transmit msgid[{}] failed!", msgid );
             }
         }
         else
         {
-            __LOG_ERROR__( KFLogEnum::System, "msgid[{}] can't find handle", msgid );
+            __LOG_ERROR__( "msgid[{}] can't find handle", msgid );
         }
     }
 }

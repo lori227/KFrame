@@ -15,8 +15,12 @@ namespace KFrame
             auto key = xmlnode.GetString( "Key", true );
             auto value = xmlnode.GetString( "Value" );
 
-            OptionKey optionkey( name, key );
-            _option_list[ optionkey ] = value;
+            auto channel = xmlnode.GetUInt32( "Channel" );
+            if ( channel == _invalid_int || channel == KFGlobal::Instance()->_app_channel )
+            {
+                OptionKey optionkey( name, key );
+                _option_list[ optionkey ] = value;
+            }
 
             xmlnode.NextNode();
         }

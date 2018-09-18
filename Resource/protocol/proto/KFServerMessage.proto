@@ -113,6 +113,9 @@ enum ServerProtocol
 	S2S_DISSOLVE_GUILD_REQ = 21209;				// 解散帮派
 	S2S_MODIFY_MEDAL_REQ = 21210;				// 修改帮派徽章
 	S2S_QUERY_GUILD_LIST_REQ = 21211;			// 请求帮派列表
+	S2S_KICK_MEMBER_REQ = 21212;				// 请求踢人
+	S2S_LOGIN_QUERY_GUILD_REQ = 21213;			// 登录请求自身帮派数据
+	S2S_LOGIN_QUERY_GUILD_ACK = 21214;			// 请求帮派数据返回
 
 	S2S_GM_ADD_MAIL_REQ = 21300;				// GM增加邮件
 
@@ -1057,6 +1060,7 @@ message S2SApplyGuildReq
 	required uint64 guildid = 1;			// 申请加入的帮派
 	required uint32 invitor = 2;			// 推荐者id
 	required uint32 playerid = 3;			// 申请者id
+	required uint32 serverid = 4;			// 服务器id
 }
 
 // 申请加入帮派反馈
@@ -1065,6 +1069,7 @@ message S2SApplyGuildAck
 {
 	required uint32 playerid = 1;			// 申请者id
 	required uint64 guildid = 2;			// 申请加入的帮派
+	required uint32 code = 3;			// 标志位
 }
 
 // 玩家帮派状态变化
@@ -1130,10 +1135,37 @@ message S2SModifyMedalReq
 message S2SQueryGuildListReq
 {
 	required uint32 playerid = 1;			// 操作者id
-	required uint64 guildid = 2;			// 帮派id
+	required uint32 serverid = 2;			// 服务器id
+	optional PBGuildIdArray guilds = 3;	// 要查询的帮派id
+	required uint32 cursor = 4;		// 查询的游标（从0开始）
+}
+
+// 请求踢人
+// S2S_KICK_MEMBER_REQ
+message S2SKickMemberReq
+{
+	required uint32 playerid = 1;			// 操作者id
+	required uint32 guildid = 2;			// 帮派id
+	required uint32 toplayerid = 3;			// 被踢人的id
+	required uint32 serverid = 4;			// 服务器id
+}
+
+// 登录请求自身帮派数据
+// S2S_LOGIN_QUERY_GUILD_REQ
+message S2SLoginQueryGuildReq
+{
+	required uint64 guildid = 1;			// 帮派id
+	required uint32 playerid = 2;			// 玩家Id
 	required uint32 serverid = 3;			// 服务器id
-	optional PBGuildIdArray guilds = 4;	// 要查询的帮派id
-	required uint32 cursor = 5;		// 查询的游标（从0开始）
+}
+
+// 请求帮派数据返回
+// S2S_LOGIN_QUERY_GUILD_ACK
+message S2SLoginQueryGuildAck
+{
+	required uint32 playerid = 1;			// 角色id
+	required PBObject guilddata = 2;		// 帮派数据
+	required bool showapplicant = 3;		// 是否展示申请列表
 }
 
 // GM增加邮件
