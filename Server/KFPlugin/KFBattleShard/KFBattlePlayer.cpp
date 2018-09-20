@@ -97,8 +97,7 @@ namespace KFrame
         auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_ENTER_BATTLE_ROOM_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}] enter battle room[{}] req!",
-                           _pb_player.campid(), _pb_player.playerid(), kfroom->_battle_room_id );
+            __LOG_DEBUG__( "player[{}:{}] enter battle room[{}] req!", _pb_player.campid(), _pb_player.playerid(), kfroom->_battle_room_id );
         }
     }
 
@@ -194,6 +193,7 @@ namespace KFrame
             return false;
         }
 
+        _notice_count = 0;
         PlayerNoticeBattleRoom( kfroom );
         return true;
     }

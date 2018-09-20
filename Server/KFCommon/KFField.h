@@ -330,7 +330,7 @@ namespace KFrame
         __STRING_DEFINE__( cleantask );
         __STRING_DEFINE__( callback );
         __STRING_DEFINE__( msg );
-
+        __STRING_DEFINE__( chooseherotime );
     }
 }
 

@@ -29,7 +29,6 @@ namespace KFrame
         // 范围内随机
         uint32 RandInRange( uint32 min, uint32 max, uint32 base );
 
-
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化日志
         void InitLogger( std::string& strtype );

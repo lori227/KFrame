@@ -112,8 +112,17 @@ namespace KFrame
             return KFMsg::MatchCanNotFindMatch;
         }
 
-        // 是否正在匹配中
         auto kfobject = player->GetData();
+
+        // 正在房间中
+        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        if ( roomid != _invalid_int )
+        {
+            _kf_battle->QueryBattleRoom( player->GetKeyID(), roomid );
+            return KFMsg::MatchRequestSuccess;
+        }
+
+        // 是否正在匹配中
         auto waitmatchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
         if ( waitmatchid != _invalid_int )
         {
@@ -224,20 +233,21 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MatchNotInMatch );
         }
 
+        auto roomid = kfobject->GetValue< uint32 >( __KF_STRING__( roomid ) );
+        if ( roomid != _invalid_int )
         {
-            UpdateMatchStateToGroup( player, _invalid_int );
-            _kf_display->SendToGroup( player, KFMsg::MatchCancelSuccess );
-            player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
-            player->UpdateData( __KF_STRING__( roomid ), KFOperateEnum::Set, _invalid_int );
+            return _kf_display->SendToClient( player, KFMsg::MatchCancelInBattle );
         }
 
-        {
-            // 发送取消到匹配集群中
-            KFMsg::S2SCancelMatchToProxyReq req;
-            req.set_matchid( matchid );
-            req.set_playerid( playerid );
-            SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
-        }
+        UpdateMatchStateToGroup( player, _invalid_int );
+        _kf_display->SendToGroup( player, KFMsg::MatchCancelSuccess );
+        player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
+
+        // 发送取消到匹配集群中
+        KFMsg::S2SCancelMatchToProxyReq req;
+        req.set_matchid( matchid );
+        req.set_playerid( playerid );
+        SendMessageToMatch( KFMsg::S2S_CANCEL_MATCH_TO_PROXY_REQ, &req );
 
         __LOG_DEBUG__( "player[{}] cancel match[{}]!", player->GetKeyID(), matchid );
     }

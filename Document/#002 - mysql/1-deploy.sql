@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 外网中控版本
+Source Server         : 点晴中控180.169.238.146
 Source Server Version : 50722
-Source Host           : 118.25.173.109:3306
+Source Host           : 180.169.238.146:13306
 Source Database       : kframe
 
 Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-09-07 17:00:55
+Date: 2018-09-20 10:18:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;

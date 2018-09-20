@@ -136,7 +136,7 @@ def parse_args():
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     if is_linux():
-        parser.add_argument('-s', '--svn', type=int, help="svn version")
+        parser.add_argument('-s', '--svn', type=str, help="svn version")
         parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
     return vars(parser.parse_args())
 
@@ -170,7 +170,7 @@ if is_linux() and (args['svn'] is not None):
 
     print 'start pack RELEASE VERSION'
     now_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
-    release_version_name = 'sgame_%s_svn_%s_%s.tar.gz' % (branch_name, str(args['svn']), now_time)
+    release_version_name = 'sgame_%s_%s_%s.tar.gz' % (branch_name, args['svn'], now_time)
     tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
     print tar_cmd
     commands.getoutput(tar_cmd)

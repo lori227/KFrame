@@ -68,9 +68,14 @@ namespace KFrame
             return;
         }
 
+        QueryBattleRoom( player->GetKeyID(), roomid );
+    }
+
+    void KFBattleClientModule::QueryBattleRoom( uint32 playerid, uint64 roomid )
+    {
         KFMsg::S2SQueryBattleRoomReq req;
         req.set_roomid( roomid );
-        req.set_playerid( player->GetKeyID() );
+        req.set_playerid( playerid );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         SendMessageToBattle( KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
     }

@@ -18,8 +18,9 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
 #include "KFAchieve/KFAchieveInterface.h"
+#include "KFBattleClient/KFBattleClientInterface.h"
+#include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame
 {

@@ -69,8 +69,7 @@ namespace KFrame
                         auto childmessage = _recv_queue.Front();
 
                         // 不是子消息, 直接返回null
-                        if ( childmessage == nullptr ||
-                                childmessage->_msgid != KFNetDefine::CUT_MSGCHILD )
+                        if ( childmessage == nullptr || childmessage->_msgid != KFNetDefine::CUT_MSGCHILD )
                         {
                             return nullptr;
                         }

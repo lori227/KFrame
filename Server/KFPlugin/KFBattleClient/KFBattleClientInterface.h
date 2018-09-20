@@ -13,6 +13,8 @@ namespace KFrame
         virtual bool SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message ) = 0;
         virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
+        // ≤È—Ø’Ω≥°
+        virtual void QueryBattleRoom( uint32 playerid, uint64 roomid ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

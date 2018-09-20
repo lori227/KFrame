@@ -20,6 +20,10 @@ fi
 echo $branch
 
 svnversion=`svn info |awk 'NR==6{print $2}'`
+if [ "$svnversion" = "" ];then
+ svnversion=`git log -1 --pretty=format:"%h"`
+fi
+
 echo $svnversion
 
 # ±‡“Î∞Ê±æ 
@@ -34,6 +38,7 @@ fi
 cd ../../../
 \cp -f ./Resource/config/* ./Bin/config/
 cd Bin/tool/gcm/builder/
+chmod 777 gcm_build
 ./gcm_build -s $svnversion -b $branch -c $1 -m $2
 
 cd ../../../../../../../

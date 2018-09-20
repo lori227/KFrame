@@ -311,7 +311,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}:{}] login game req!", kfmsg.accountid(), kfmsg.playerid() );
 
         // 踢掉在线玩家
-        _kf_player->KickPlayer( kfmsg.playerid(), KFMsg::KickEnum::LoginBeKick, __FUNCTION__, _invalid_int );
+        _kf_player->KickPlayer( kfmsg.playerid(), KFMsg::KickEnum::LoginBeKick, __FUNC_LINE__ );
 
         auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
 
@@ -609,13 +609,13 @@ namespace KFrame
 
     void KFPlayerModule::KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line )
     {
-        auto player = FindPlayer( playerid, function, line );
+        auto player = FindPlayer( playerid );
         if ( player == nullptr )
         {
             return;
         }
 
-        __LOG_DEBUG__( "kick player[{}] by type[{}]!", playerid, type );
+        __LOG_DEBUG_FUNCTION__( function, line, "kick player[{}] by type[{}]!", playerid, type );
 
         // 发送消息到proxy
         KFMsg::S2SKickGatePlayerReq req;
