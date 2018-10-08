@@ -15,8 +15,8 @@ namespace KFrame
     class KFHttp
     {
     public:
-        KFHttp();
-        virtual ~KFHttp();
+        KFHttp() = default;
+        virtual ~KFHttp() = default;
 
         // ÷¥––http∑√Œ 
         virtual std::string RunHttp( const std::string& url, const std::string& data );

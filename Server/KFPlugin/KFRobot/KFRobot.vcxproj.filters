@@ -210,6 +210,30 @@
     <ClCompile Include="KFReviewGuildState.cpp">
       <Filter>FSM\guild</Filter>
     </ClCompile>
+    <ClCompile Include="KFQueryGuildListState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFKickMemberState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQuitGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAppointState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUpgradeGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTransferMasterState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDissolveGuildState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
+    <ClCompile Include="KFQueryGuildLogState.cpp">
+      <Filter>FSM\guild</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRobotInterface.h" />
@@ -425,6 +449,30 @@
       <Filter>FSM\guild</Filter>
     </ClInclude>
     <ClInclude Include="KFReviewGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryGuildListState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFKickMemberState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQuitGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAppointState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUpgradeGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTransferMasterState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDissolveGuildState.h">
+      <Filter>FSM\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="KFQueryGuildLogState.h">
       <Filter>FSM\guild</Filter>
     </ClInclude>
   </ItemGroup>

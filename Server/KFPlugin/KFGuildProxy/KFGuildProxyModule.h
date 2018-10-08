@@ -35,6 +35,8 @@ namespace KFrame
     protected:
         __KF_MESSAGE_FUNCTION__( HandleCreateGuildReq );
         __KF_MESSAGE_FUNCTION__( HandleQueryGuildListReq );
+        __KF_MESSAGE_FUNCTION__( HandleSearchGuildReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildidReq );
     };
 }
 

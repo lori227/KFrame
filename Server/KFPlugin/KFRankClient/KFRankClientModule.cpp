@@ -46,8 +46,13 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )
     {
-        auto& ranksettinglist = _kf_rank_config->FindRankSetting( kfdata->GetParent()->GetName(), kfdata->GetName() );
+        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Rank_Data ) ||
+                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Rank_Data ) )
+        {
+            return;
+        }
 
+        auto& ranksettinglist = _kf_rank_config->FindRankSetting( kfdata->GetParent()->GetName(), kfdata->GetName() );
         for ( auto kfsetting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
@@ -92,25 +97,12 @@ namespace KFrame
 
     void KFRankClientModule::UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting )
     {
-        auto kfobject = player->GetData();
-        auto playerid = player->GetKeyID();
-
-        // 父属性
-        auto kfparent = kfobject;
-        if ( !kfsetting->_parent_data.empty() )
-        {
-            kfparent = kfobject->FindData( kfsetting->_parent_data );
-            if ( kfparent == nullptr )
-            {
-                return;
-            }
-        }
-
         // 计算分区id
+        auto playerid = player->GetKeyID();
         auto zoneid = CalcRankZoneId( playerid, kfsetting );
 
         // 计算排行榜积分
-        auto rankscore = CalcRankDataScore( kfparent, kfsetting );
+        auto rankscore = CalcRankDataScore( player, kfsetting );
 
         // 更新到排行榜
         KFMsg::S2SUpdateRankDataReq req;
@@ -122,56 +114,54 @@ namespace KFrame
         pbrankdata->set_rankindex( 0 );
         pbrankdata->set_playerid( playerid );
         pbrankdata->set_rankscore( rankscore );
+
         // 显示的数据
+        auto kfobject = player->GetData();
         auto pbstrings = pbrankdata->mutable_pbdata();
         for ( auto& showdata : kfsetting->_show_data )
         {
-            auto kfshowdata = kfparent->FindData( showdata );
-            if ( kfshowdata == nullptr )
+            auto kfdata = kfobject->FindData( showdata.first, showdata.second );
+            if ( kfdata != nullptr )
             {
-                continue;
+                auto pbrankdata = pbstrings->add_pbstring();
+                pbrankdata->set_name( showdata.second );
+                pbrankdata->set_value( kfdata->ToString() );
             }
-
-            auto pbrankdata = pbstrings->add_pbstring();
-            pbrankdata->set_name( showdata );
-            pbrankdata->set_value( kfshowdata->ToString() );
         }
 
         // 玩家的基本数据
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         for ( auto& showdata  : _kf_rank_config->_player_data )
         {
-            auto kfdata = kfbasic->FindData( showdata );
-            if ( kfdata == nullptr )
+            auto kfdata = kfobject->FindData( showdata.first, showdata.second );
+            if ( kfdata != nullptr )
             {
-                continue;
+                auto pbrankdata = pbstrings->add_pbstring();
+                pbrankdata->set_name( showdata.second );
+                pbrankdata->set_value( kfdata->ToString() );
             }
-
-            auto pbrankdata = pbstrings->add_pbstring();
-            pbrankdata->set_name( showdata );
-            pbrankdata->set_value( kfdata->ToString() );
         }
 
         SendMessageToRank( kfsetting->_rank_id, KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
-    uint64 KFRankClientModule::CalcRankDataScore( KFData* kfparent, const KFRankSetting* kfsetting )
+    uint64 KFRankClientModule::CalcRankDataScore( KFEntity* player, const KFRankSetting* kfsetting )
     {
-#define __RANK_SCORE_MULTIPLE__ 100000
+        static const auto _rank_score_multiple = 100000;
 
-        uint64 rankscore = 0u;
         auto i = 3u;
-        for ( auto& showdata : kfsetting->_show_data )
+        uint64 rankscore = 0u;
+        auto kfobject = player->GetData();
+        for ( auto& calcdata : kfsetting->_calc_data )
         {
-            if ( i == 0 )
+            if ( i == 0u )
             {
                 break;
             }
 
-            auto kfdata = kfparent->FindData( showdata );
+            auto kfdata = kfobject->FindData( calcdata.first, calcdata.second );
             if ( kfdata != nullptr )
             {
-                auto multiplevalue = pow( __RANK_SCORE_MULTIPLE__, --i );
+                auto multiplevalue = pow( _rank_score_multiple, --i );
                 rankscore += static_cast< uint64 >( kfdata->GetValue< double >() * multiplevalue );
             }
         }

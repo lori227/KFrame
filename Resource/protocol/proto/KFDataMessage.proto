@@ -13,6 +13,7 @@ enum DataProtocol
 	MSG_SYNC_UPDATE_GUILD_DATA = 16;			// 同步更新属性(帮派)
 	MSG_SYNC_ADD_GUILD_DATA = 17;				// 同步增加属性(帮派)
 	MSG_SYNC_REMOVE_GUILD_DATA = 18;			// 同步删除属性(帮派)
+	MSG_TELL_QUERY_GUILD = 19;				// 查询玩家的帮派信息
 
 
  }
@@ -66,17 +67,27 @@ message MsgTellQueryBasic
 // MSG_SYNC_UPDATE_GUILD_DATA
 message MsgSyncUpdateGuildData
 {
-	required PBObject pbdata = 1;	
+	required uint32 playerid = 1;
+	required PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_ADD_GUILD_DATA
 message MsgSyncAddGuildData
 {
-	required PBObject pbdata = 1;	
+	required uint32 playerid = 1;
+	required PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_REMOVE_GUILD_DATA
 message MsgSyncRemoveGuildData
 {
-	required PBObject pbdata = 1;	
+	required uint32 playerid = 1;
+	required PBObject pbdata = 2;	
+}
+
+
+// MSG_TELL_QUERY_GUILD
+message MsgTellQueryGuild
+{
+	required PBObject guild = 1;
 }

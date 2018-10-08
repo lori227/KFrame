@@ -53,6 +53,7 @@ namespace KFrame
         _kf_component = kfcomponent;
         _connect_ing = false;
         ChangeState( RobotStateEnum::AuthState );
+        _query_guild_cursor = 0;
     }
 
     void KFRobot::Run()
@@ -1410,23 +1411,39 @@ namespace KFrame
     {
         auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
         auto kfobject = player->GetData();
-        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+        auto guildid = kfguild->GetKeyID();
+        //auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
         if ( _invalid_int != guildid )
         {
             return;
         }
 
-        KFMsg::MsgApplyGuildReq req;
-        req.set_guildid( 6597698976096460545 );
-        req.set_invitor( 4010009 );
-        SendNetMessage( KFMsg::MSG_APPLY_GUILD_REQ, &req );
+        for ( auto iter : _guild_list._objects )
+        {
+            KFMsg::MsgApplyGuildReq req;
+            req.set_guildid( iter.first );
+            req.set_invitor( _invalid_int );
+            SendNetMessage( KFMsg::MSG_APPLY_GUILD_REQ, &req );
+
+        }
     }
 
     void KFRobot::AgreeGuildJoin()
     {
         auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
         auto kfobject = player->GetData();
-        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+
+        auto guildid = kfguild->GetKeyID();
         if ( _invalid_int == guildid )
         {
             return;
@@ -1437,4 +1454,226 @@ namespace KFrame
 
         SendNetMessage( KFMsg::MSG_REVIEW_APPLY_REQ, &req );
     }
+
+    void KFRobot::QueryGuildList()
+    {
+        KFMsg::MsgQueryGuildListReq req;
+        req.set_cursor( _query_guild_cursor );
+        SendNetMessage( KFMsg::MSG_QUERY_GUILD_LIST_REQ, &req );
+    }
+
+    void KFRobot::QueryGuildAck( const KFMsg::PBObject* pbobject )
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        _kf_kernel->ParseFromProto( kfguild, pbobject );
+        player->AddData( kfobject, kfguild );
+    }
+
+    void KFRobot::KickMember()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+
+        auto guildid = kfguild->GetKeyID();
+        //auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( _playerid != masterid )
+        {
+            return;
+        }
+
+        auto kfguildmembers = kfguild->FindData( __KF_STRING__( guildmember ) );
+        auto kfguildmember = kfguildmembers->FirstData();
+        while ( nullptr != kfguildmember )
+        {
+            auto guildmemberid = kfguildmember->GetKeyID();
+            if ( guildmemberid == _playerid )
+            {
+                kfguildmember = kfguildmembers->NextData();
+                continue;
+            }
+
+            KFMsg::MsgKickMemberReq req;
+            req.set_toplayerid( guildmemberid );
+            SendNetMessage( KFMsg::MSG_KICK_MEMBER_REQ, &req );
+            kfguildmember = kfguildmembers->NextData();
+            // 这边测试移除是否正常
+            return;
+        }
+
+    }
+
+    void KFRobot::QuitGuild()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( masterid == _playerid )
+        {
+            return;
+        }
+        KFMsg::MsgExitGuildReq req;
+        SendNetMessage( KFMsg::MSG_EXIT_GUILD_REQ, &req );
+    }
+
+    void KFRobot::Appoint()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( masterid != _playerid )
+        {
+            return;
+        }
+
+        auto kfmemberrecord = kfguild->FindData( __KF_STRING__( guildmember ) );
+        if ( nullptr == kfmemberrecord )
+        {
+            return;
+        }
+        auto kfmember = kfmemberrecord->FirstData();
+        while ( nullptr != kfmember )
+        {
+
+            auto title = kfmember->GetValue<uint32>( __KF_STRING__( title ) );
+            if ( 1 == title || 2 == title )
+            {
+                kfmember = kfmemberrecord->NextData();
+                continue;
+            }
+            KFMsg::MsgAppointGuildMemberReq req;
+            req.set_toplayerid( kfmember->GetKeyID() );
+            req.set_title( 2 );
+            SendNetMessage( KFMsg::MSG_APPOINT_GUILD_MEMBER_REQ, &req );
+
+
+            kfmember = kfmemberrecord->NextData();
+        }
+    }
+
+    void KFRobot::UpgradeGuild()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( masterid != _playerid )
+        {
+            return;
+        }
+        KFMsg::MsgUpgradeGuildReq req;
+        SendNetMessage( KFMsg::MSG_UPGRADE_GUILD_REQ, &req );
+    }
+
+    void KFRobot::TransferMaster()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( masterid != _playerid )
+        {
+            return;
+        }
+
+        auto kfmemberrecord = kfguild->FindData( __KF_STRING__( guildmember ) );
+        if ( nullptr == kfmemberrecord )
+        {
+            return;
+        }
+        auto kfmember = kfmemberrecord->FirstData();
+        while ( nullptr != kfmember )
+        {
+
+            auto title = kfmember->GetValue<uint32>( __KF_STRING__( title ) );
+            if ( 2 != title )
+            {
+                kfmember = kfmemberrecord->NextData();
+                continue;
+            }
+            KFMsg::MsgTransferMasterReq req;
+            req.set_newmasterid( kfmember->GetKeyID() );
+            SendNetMessage( KFMsg::MSG_TRANSFER_MASTER_REQ, &req );
+            return;
+            kfmember = kfmemberrecord->NextData();
+        }
+
+    }
+
+    void KFRobot::DissolveGuild()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        auto masterid = kfguild->GetValue<uint32>( __KF_STRING__( masterid ) );
+        if ( masterid != _playerid )
+        {
+            return;
+        }
+        KFMsg::MsgDissolveGuildReq req;
+        SendNetMessage( KFMsg::MSG_DISSOLVE_GUILD_REQ, &req );
+
+    }
+
+    void KFRobot::QueryGuildLog()
+    {
+        auto player = _kf_component->FindEntity( _playerid, __FUNC_LINE__ );
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto guildid = kfguild->GetKeyID();
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        KFMsg::MsgQueryGuildLogReq req;
+        req.set_page( 0 );
+        SendNetMessage( KFMsg::MSG_QUERY_GUILD_LOG_REQ, &req );
+    }
+
 }

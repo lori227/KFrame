@@ -109,6 +109,11 @@ namespace KFrame
 
     KFData* KFObject::FindData( const std::string& parentname, const std::string& childname )
     {
+        if ( parentname.empty() )
+        {
+            return FindData( childname );
+        }
+
         auto kfdata = FindData( parentname );
         if ( kfdata == nullptr )
         {

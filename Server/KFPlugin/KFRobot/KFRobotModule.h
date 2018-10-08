@@ -113,6 +113,9 @@ namespace KFrame
         // 所有排行榜
         __KF_MESSAGE_FUNCTION__( HandleWholeRankDisplay );
 
+        // 帮派日志
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildLogAck );
+
         ///////////////////////////// 帮派逻辑/////////////////////////////////////////////
         // 游戏属性更新
         __KF_MESSAGE_FUNCTION__( HandleUpdateGuildData );
@@ -123,6 +126,11 @@ namespace KFrame
         // 游戏属性移除
         __KF_MESSAGE_FUNCTION__( HandleRemoveGuildData );
 
+        // 查询帮派列表反馈
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildListAck );
+
+        // 请求帮派数据返回
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildAck );
 
 
     };

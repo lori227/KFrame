@@ -136,6 +136,7 @@ message S2SSendToDynamicObjectReq
 	required uint64 objectid = 1;
 	required uint32 msgid = 2;
 	required string msgdata = 3;
+	required uint32	serverid = 4;
 }
 
 // 发送消息到静态对象
@@ -145,6 +146,7 @@ message S2SSendToStaticObjectReq
 	required uint32 objectid = 1;
 	required uint32 msgid = 2;
 	required string msgdata = 3;
+	required uint32	serverid = 4;
 }
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////

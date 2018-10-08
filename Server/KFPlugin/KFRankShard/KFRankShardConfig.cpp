@@ -15,20 +15,10 @@ namespace KFrame
 
     bool KFRankShardConfig::LoadConfig()
     {
-        _player_data.clear();
         _kf_rank_setting.Clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
-        auto playernode = config.FindNode( "PlayerData" );
-        auto datanode = playernode.FindNode( "Data" );
-        while ( datanode.IsValid() )
-        {
-            auto dataname = datanode.GetString( "Name" );
-            _player_data.push_back( dataname );
-
-            datanode.NextNode();
-        }
 
         auto ranksnode = config.FindNode( "Ranks" );
         auto ranknode = ranksnode.FindNode( "Rank" );
@@ -46,14 +36,6 @@ namespace KFrame
             kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
             kfsetting->_refresh_minute = ranknode.GetUInt32( "RefreshMinute" );
             kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
-
-            auto shownode = ranknode.FindNode( "ShowData" );
-            while ( shownode.IsValid() )
-            {
-                auto dataname = shownode.GetString( "Name" );
-                kfsetting->_show_data.push_back( dataname );
-                shownode.NextNode();
-            }
 
             AddRankSetting( kfsetting );
             ranknode.NextNode();

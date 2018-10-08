@@ -3,15 +3,6 @@
 
 namespace KFrame
 {
-    KFHttp::KFHttp()
-    {
-    }
-
-    KFHttp::~KFHttp()
-    {
-
-    }
-
     std::string KFHttp::GetURI( const std::string& url, Poco::URI& pocouri )
     {
         auto path = pocouri.getPath();

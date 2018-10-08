@@ -21,6 +21,7 @@
     <ClCompile Include="KFAgreeInviteTeamState.cpp" />
     <ClCompile Include="KFApplyGroupState.cpp" />
     <ClCompile Include="KFApplyGuildState.cpp" />
+    <ClCompile Include="KFAppointState.cpp" />
     <ClCompile Include="KFAuthState.cpp" />
     <ClCompile Include="KFBuyStoreState.cpp" />
     <ClCompile Include="KFCancleMatchState.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="KFDelFriendState.cpp" />
     <ClCompile Include="KFDelMailState.cpp" />
     <ClCompile Include="KFDelWishOrderState.cpp" />
+    <ClCompile Include="KFDissolveGuildState.cpp" />
     <ClCompile Include="KFDoubleMatchGpState.cpp" />
     <ClCompile Include="KFDoubleMatchState.cpp" />
     <ClCompile Include="KFDressClothesState.cpp" />
@@ -46,6 +48,7 @@
     <ClCompile Include="KFInviteGuildState.cpp" />
     <ClCompile Include="KFInviteTeamState.cpp" />
     <ClCompile Include="KFKickGroupState.cpp" />
+    <ClCompile Include="KFKickMemberState.cpp" />
     <ClCompile Include="KFLeaveChatState.cpp" />
     <ClCompile Include="KFLeaveTeamState .cpp" />
     <ClCompile Include="KFLoginGameState.cpp" />
@@ -57,11 +60,14 @@
     <ClCompile Include="KFQueryBasicState.cpp" />
     <ClCompile Include="KFQueryFriendRankState.cpp" />
     <ClCompile Include="KFQueryGuestState.cpp" />
+    <ClCompile Include="KFQueryGuildListState.cpp" />
+    <ClCompile Include="KFQueryGuildLogState.cpp" />
     <ClCompile Include="KFQueryMailNumState.cpp" />
     <ClCompile Include="KFQueryMailState.cpp" />
     <ClCompile Include="KFQueryPlayerState.cpp" />
     <ClCompile Include="KFQueryRecentState.cpp" />
     <ClCompile Include="KFQueryWholeRankState.cpp" />
+    <ClCompile Include="KFQuitGuildState.cpp" />
     <ClCompile Include="KFReciveMailRewardState.cpp" />
     <ClCompile Include="KFRecvAchieveRewardState.cpp" />
     <ClCompile Include="KFRecvActivityRewardState.cpp" />
@@ -85,6 +91,8 @@
     <ClCompile Include="KFStoreInfoState.cpp" />
     <ClCompile Include="KFStoreVersionState.cpp" />
     <ClCompile Include="KFToastState.cpp" />
+    <ClCompile Include="KFTransferMasterState.cpp" />
+    <ClCompile Include="KFUpgradeGuildState.cpp" />
     <ClCompile Include="KFViewMailState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +105,7 @@
     <ClInclude Include="KFAgreeInviteTeamState.h" />
     <ClInclude Include="KFApplyGroupState.h" />
     <ClInclude Include="KFApplyGuildState.h" />
+    <ClInclude Include="KFAppointState.h" />
     <ClInclude Include="KFAuthState.h" />
     <ClInclude Include="KFBuyStoreState.h" />
     <ClInclude Include="KFCancleMatchState.h" />
@@ -112,6 +121,7 @@
     <ClInclude Include="KFDelFriendState.h" />
     <ClInclude Include="KFDelMailState.h" />
     <ClInclude Include="KFDelWishOrderState.h" />
+    <ClInclude Include="KFDissolveGuildState.h" />
     <ClInclude Include="KFDoubleMatchGpState.h" />
     <ClInclude Include="KFDoubleMatchState.h" />
     <ClInclude Include="KFDressClothesState.h" />
@@ -122,6 +132,7 @@
     <ClInclude Include="KFInviteGuildState.h" />
     <ClInclude Include="KFInviteTeamState.h" />
     <ClInclude Include="KFKickGroupState.h" />
+    <ClInclude Include="KFKickMemberState.h" />
     <ClInclude Include="KFLeaveChatState.h" />
     <ClInclude Include="KFLeaveTeamState.h" />
     <ClInclude Include="KFLoginGameState.h" />
@@ -133,11 +144,14 @@
     <ClInclude Include="KFQueryBasicState.h" />
     <ClInclude Include="KFQueryFriendRankState.h" />
     <ClInclude Include="KFQueryGuestState.h" />
+    <ClInclude Include="KFQueryGuildListState.h" />
+    <ClInclude Include="KFQueryGuildLogState.h" />
     <ClInclude Include="KFQueryMailNumState.h" />
     <ClInclude Include="KFQueryMailState.h" />
     <ClInclude Include="KFQueryPlayerState.h" />
     <ClInclude Include="KFQueryRecentState.h" />
     <ClInclude Include="KFQueryWholeRankState.h" />
+    <ClInclude Include="KFQuitGuildState.h" />
     <ClInclude Include="KFReciveMailRewardState.h" />
     <ClInclude Include="KFRecvAchieveRewardState.h" />
     <ClInclude Include="KFRecvActivityRewardState.h" />
@@ -164,6 +178,8 @@
     <ClInclude Include="KFStoreInfoState.h" />
     <ClInclude Include="KFStoreVersionState.h" />
     <ClInclude Include="KFToastState.h" />
+    <ClInclude Include="KFTransferMasterState.h" />
+    <ClInclude Include="KFUpgradeGuildState.h" />
     <ClInclude Include="KFViewMailState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -66,7 +66,7 @@ namespace KFrame
         void UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting );
 
         // 计算排行榜的打榜分值
-        uint64 CalcRankDataScore( KFData* kfparent, const KFRankSetting* kfsetting );
+        uint64 CalcRankDataScore( KFEntity* player, const KFRankSetting* kfsetting );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting );

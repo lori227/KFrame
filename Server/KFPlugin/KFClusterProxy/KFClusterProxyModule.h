@@ -65,6 +65,9 @@ namespace KFrame
         virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message );
         virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length );
 
+        virtual bool SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length );
+
         // 发送消息到客户端
         virtual void SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message );
         virtual void SendMessageToClient( uint32 msgid, const char* data, uint32 length );

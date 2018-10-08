@@ -80,8 +80,14 @@ namespace KFrame
         InviteGuild = 106,		// 邀请加入帮派
         ApplyGuild = 107,		// 申请加入帮派
         AgreeAllJoin = 108,		// 一键同意加入帮派
-
-
+        QueryGuildList = 109,	// 请求帮派列表
+        KickMember = 110,		// 踢掉帮派成员
+        ExitGuild = 111,		// 离开帮派
+        Appoint = 112,			// 任命帮派成员
+        UpGradeGuild = 113,		// 升级帮派
+        TransferMaster = 114,	// 转让帮主
+        DissolveGuild = 115,	// 解散帮派
+        QueryGuildLog = 116,	// 请求帮派日志
 
         GMAddMoney = 1000,		// 加钱
         GMAddDiamond = 1001,	// 加钻石

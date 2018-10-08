@@ -289,10 +289,11 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SAllocObjectToShardAck));
   S2SSendToDynamicObjectReq_descriptor_ = file->message_type(13);
-  static const int S2SSendToDynamicObjectReq_offsets_[3] = {
+  static const int S2SSendToDynamicObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, objectid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, msgid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, msgdata_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, serverid_),
   };
   S2SSendToDynamicObjectReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -306,10 +307,11 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SSendToDynamicObjectReq));
   S2SSendToStaticObjectReq_descriptor_ = file->message_type(14);
-  static const int S2SSendToStaticObjectReq_offsets_[3] = {
+  static const int S2SSendToStaticObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, objectid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, msgid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, msgdata_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, serverid_),
   };
   S2SSendToStaticObjectReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -430,23 +432,24 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
     "\n\010objectid\030\001 \003(\r\"=\n\030S2SAllocObjectToProx"
     "yAck\022\020\n\010objectid\030\001 \003(\r\022\017\n\007shardid\030\002 \003(\r\""
     ",\n\030S2SAllocObjectToShardAck\022\020\n\010objectid\030"
-    "\001 \003(\r\"M\n\031S2SSendToDynamicObjectReq\022\020\n\010ob"
+    "\001 \003(\r\"_\n\031S2SSendToDynamicObjectReq\022\020\n\010ob"
     "jectid\030\001 \002(\004\022\r\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003"
-    " \002(\t\"L\n\030S2SSendToStaticObjectReq\022\020\n\010obje"
-    "ctid\030\001 \002(\r\022\r\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003 \002"
-    "(\t*\370\003\n\017ClusterProtocol\022\035\n\030S2S_CLUSTER_RE"
-    "GISTER_REQ\020\365N\022\033\n\026S2S_CLUSTER_UPDATE_REQ\020"
-    "\366N\022\031\n\024S2S_CLUSTER_AUTH_REQ\020\367N\022\031\n\024S2S_CLU"
-    "STER_AUTH_ACK\020\370N\022\032\n\025S2S_CLUSTER_TOKEN_RE"
-    "Q\020\371N\022\033\n\026S2S_CLUSTER_VERIFY_REQ\020\372N\022\033\n\026S2S"
-    "_CLUSTER_VERIFY_ACK\020\373N\022 \n\033S2S_CLUSTER_CL"
-    "IENT_LIST_REQ\020\374N\022 \n\033S2S_ADD_OBJECT_TO_PR"
-    "OXY_REQ\020\375N\022#\n\036S2S_REMOVE_OBJECT_TO_PROXY"
-    "_REQ\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO_MASTER_RE"
-    "Q\020\200O\022\"\n\035S2S_ALLOC_OBJECT_TO_PROXY_ACK\020\201O"
-    "\022\"\n\035S2S_ALLOC_OBJECT_TO_SHARD_ACK\020\202O\022\"\n\035"
-    "S2S_SEND_TO_STATIC_OBJECT_REQ\020\203O\022#\n\036S2S_"
-    "SEND_TO_DYNAMIC_OBJECT_REQ\020\204O", 1509);
+    " \002(\t\022\020\n\010serverid\030\004 \002(\r\"^\n\030S2SSendToStati"
+    "cObjectReq\022\020\n\010objectid\030\001 \002(\r\022\r\n\005msgid\030\002 "
+    "\002(\r\022\017\n\007msgdata\030\003 \002(\t\022\020\n\010serverid\030\004 \002(\r*\370"
+    "\003\n\017ClusterProtocol\022\035\n\030S2S_CLUSTER_REGIST"
+    "ER_REQ\020\365N\022\033\n\026S2S_CLUSTER_UPDATE_REQ\020\366N\022\031"
+    "\n\024S2S_CLUSTER_AUTH_REQ\020\367N\022\031\n\024S2S_CLUSTER"
+    "_AUTH_ACK\020\370N\022\032\n\025S2S_CLUSTER_TOKEN_REQ\020\371N"
+    "\022\033\n\026S2S_CLUSTER_VERIFY_REQ\020\372N\022\033\n\026S2S_CLU"
+    "STER_VERIFY_ACK\020\373N\022 \n\033S2S_CLUSTER_CLIENT"
+    "_LIST_REQ\020\374N\022 \n\033S2S_ADD_OBJECT_TO_PROXY_"
+    "REQ\020\375N\022#\n\036S2S_REMOVE_OBJECT_TO_PROXY_REQ"
+    "\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO_MASTER_REQ\020\200O"
+    "\022\"\n\035S2S_ALLOC_OBJECT_TO_PROXY_ACK\020\201O\022\"\n\035"
+    "S2S_ALLOC_OBJECT_TO_SHARD_ACK\020\202O\022\"\n\035S2S_"
+    "SEND_TO_STATIC_OBJECT_REQ\020\203O\022#\n\036S2S_SEND"
+    "_TO_DYNAMIC_OBJECT_REQ\020\204O", 1545);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClusterMessage.proto", &protobuf_RegisterTypes);
   S2SClusterRegisterReq::default_instance_ = new S2SClusterRegisterReq();
@@ -4177,6 +4180,7 @@ void S2SAllocObjectToShardAck::Swap(S2SAllocObjectToShardAck* other) {
 const int S2SSendToDynamicObjectReq::kObjectidFieldNumber;
 const int S2SSendToDynamicObjectReq::kMsgidFieldNumber;
 const int S2SSendToDynamicObjectReq::kMsgdataFieldNumber;
+const int S2SSendToDynamicObjectReq::kServeridFieldNumber;
 #endif  // !_MSC_VER
 
 S2SSendToDynamicObjectReq::S2SSendToDynamicObjectReq()
@@ -4198,6 +4202,7 @@ void S2SSendToDynamicObjectReq::SharedCtor() {
   objectid_ = GOOGLE_ULONGLONG(0);
   msgid_ = 0u;
   msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  serverid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4243,6 +4248,7 @@ void S2SSendToDynamicObjectReq::Clear() {
         msgdata_->clear();
       }
     }
+    serverid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4298,6 +4304,22 @@ bool S2SSendToDynamicObjectReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(32)) goto parse_serverid;
+        break;
+      }
+
+      // required uint32 serverid = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_serverid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &serverid_)));
+          set_has_serverid();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4339,6 +4361,11 @@ void S2SSendToDynamicObjectReq::SerializeWithCachedSizes(
       3, this->msgdata(), output);
   }
 
+  // required uint32 serverid = 4;
+  if (has_serverid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4365,6 +4392,11 @@ void S2SSendToDynamicObjectReq::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->msgdata(), target);
+  }
+
+  // required uint32 serverid = 4;
+  if (has_serverid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4397,6 +4429,13 @@ int S2SSendToDynamicObjectReq::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->msgdata());
+    }
+
+    // required uint32 serverid = 4;
+    if (has_serverid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->serverid());
     }
 
   }
@@ -4435,6 +4474,9 @@ void S2SSendToDynamicObjectReq::MergeFrom(const S2SSendToDynamicObjectReq& from)
     if (from.has_msgdata()) {
       set_msgdata(from.msgdata());
     }
+    if (from.has_serverid()) {
+      set_serverid(from.serverid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4452,7 +4494,7 @@ void S2SSendToDynamicObjectReq::CopyFrom(const S2SSendToDynamicObjectReq& from) 
 }
 
 bool S2SSendToDynamicObjectReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -4462,6 +4504,7 @@ void S2SSendToDynamicObjectReq::Swap(S2SSendToDynamicObjectReq* other) {
     std::swap(objectid_, other->objectid_);
     std::swap(msgid_, other->msgid_);
     std::swap(msgdata_, other->msgdata_);
+    std::swap(serverid_, other->serverid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4483,6 +4526,7 @@ void S2SSendToDynamicObjectReq::Swap(S2SSendToDynamicObjectReq* other) {
 const int S2SSendToStaticObjectReq::kObjectidFieldNumber;
 const int S2SSendToStaticObjectReq::kMsgidFieldNumber;
 const int S2SSendToStaticObjectReq::kMsgdataFieldNumber;
+const int S2SSendToStaticObjectReq::kServeridFieldNumber;
 #endif  // !_MSC_VER
 
 S2SSendToStaticObjectReq::S2SSendToStaticObjectReq()
@@ -4504,6 +4548,7 @@ void S2SSendToStaticObjectReq::SharedCtor() {
   objectid_ = 0u;
   msgid_ = 0u;
   msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  serverid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4549,6 +4594,7 @@ void S2SSendToStaticObjectReq::Clear() {
         msgdata_->clear();
       }
     }
+    serverid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4604,6 +4650,22 @@ bool S2SSendToStaticObjectReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(32)) goto parse_serverid;
+        break;
+      }
+
+      // required uint32 serverid = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_serverid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &serverid_)));
+          set_has_serverid();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4645,6 +4707,11 @@ void S2SSendToStaticObjectReq::SerializeWithCachedSizes(
       3, this->msgdata(), output);
   }
 
+  // required uint32 serverid = 4;
+  if (has_serverid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4671,6 +4738,11 @@ void S2SSendToStaticObjectReq::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->msgdata(), target);
+  }
+
+  // required uint32 serverid = 4;
+  if (has_serverid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4703,6 +4775,13 @@ int S2SSendToStaticObjectReq::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->msgdata());
+    }
+
+    // required uint32 serverid = 4;
+    if (has_serverid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->serverid());
     }
 
   }
@@ -4741,6 +4820,9 @@ void S2SSendToStaticObjectReq::MergeFrom(const S2SSendToStaticObjectReq& from) {
     if (from.has_msgdata()) {
       set_msgdata(from.msgdata());
     }
+    if (from.has_serverid()) {
+      set_serverid(from.serverid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4758,7 +4840,7 @@ void S2SSendToStaticObjectReq::CopyFrom(const S2SSendToStaticObjectReq& from) {
 }
 
 bool S2SSendToStaticObjectReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -4768,6 +4850,7 @@ void S2SSendToStaticObjectReq::Swap(S2SSendToStaticObjectReq* other) {
     std::swap(objectid_, other->objectid_);
     std::swap(msgid_, other->msgid_);
     std::swap(msgdata_, other->msgdata_);
+    std::swap(serverid_, other->serverid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

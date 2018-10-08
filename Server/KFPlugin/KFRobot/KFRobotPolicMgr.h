@@ -39,6 +39,29 @@ namespace KFrame
         };
     }
 
+    // 帮派列表
+    typedef struct GuildListData
+    {
+        GuildListData()
+        {
+            guildid = 0u;
+            guildname = _invalid_str;
+            level = _invalid_int;
+            manifesto = _invalid_str;
+            medal = _invalid_int;
+            totalactiveness = 0u;
+            masterid = _invalid_int;
+        }
+
+        uint64			guildid;			// 帮派id
+        std::string		guildname;			// 帮派名字
+        uint32			level;				// 帮派等级
+        std::string		manifesto;			// 帮派宣言
+        uint32			medal;				// 帮派勋章
+        uint64			totalactiveness;	// 帮派总活跃
+        uint32			masterid;			// 帮主id
+    } T_GuildListData, *pGuildListData;
+
 
     class KFRobotPolicMgr : public KFSingleton< KFRobotPolicMgr >
     {

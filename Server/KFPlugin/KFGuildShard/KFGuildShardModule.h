@@ -57,6 +57,7 @@ namespace KFrame
         __KF_ADD_DATA_FUNCTION__( OnAddDataCallBack );
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
+
         // 同步更新属性到客户端
         void SendUpdateDataToClient( KFEntity* guild, const KFMsg::PBObject& pbobect );
 
@@ -92,6 +93,21 @@ namespace KFrame
 
         __KF_MESSAGE_FUNCTION__( HnadleKickMemberReq );
 
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleUpgradeGuildReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleSearchGuildByNameReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleSetGuildSwitchReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleUpdateGuildDataReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleAppointGuildMemberReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleLoginQueryGuildIdReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleQueryGuildLogReq );
         // 定时刷新帮派(申请列表)
         __KF_TIMER_FUNCTION__( OnTimerRefreshGuild );
 
@@ -147,7 +163,7 @@ namespace KFrame
         bool RemoveApplicanlist( uint64 guildid, uint32 playerid );
 
         // 加入帮派
-        bool JoinGuild( uint64 guildid, uint32 playerid, uint32 title = KFGuildShardEnum::GuildMember );
+        uint32 JoinGuild( uint64 guildid, uint32 playerid, uint32 title = KFGuildShardEnum::GuildMember );
 
         // 获取玩家基础信息
         bool GetPlayBasic( uint32 playerid, MapString& values, VectorString& field );
@@ -179,6 +195,16 @@ namespace KFrame
         // 过滤单个帮派信息
         void SerialGuildData( MapString& guilddata, KFMsg::PBStrings* pbguildata );
 
+        // 获取玩家serverid
+        uint32 GetServerid( uint32 playerid );
+
+        // 获取玩家的帮派id
+        uint64 GetGuildIdByPlayerid( uint32 playerid );
+
+        // 帮派日志
+        template<typename... P>
+        void WriteGuildLog( uint64 guildid, uint32 maxlog, uint32 logtype, P&& ... args );
+
     private:
         // 玩家申请列表 std::string转换成pb数据格式
         void GetGuildApplicantlist( uint64 guildid, KFMsg::PBApplicationlists& applylist );
@@ -200,6 +226,11 @@ namespace KFrame
         bool SendMessageToGuildMember( uint32 playerid, uint64 guild, uint32 msgid, ::google::protobuf::Message* message, VectorString& offlineids, bool containself = true );
 
         bool SendPlayerGuildChangeToClient( const KFGuid& kfguid, uint32 playerid, uint64 guildid, uint32 code );
+
+        // 发送给帮派指定职位的成员
+        bool SendMessageToGuildMember( uint64 guild, std::set<uint32>& titles, uint32 msgid, ::google::protobuf::Message* message );
+
+        bool SendMessageAddGuildToClient( uint64 guild );
 
     private:
         // 帮派组件

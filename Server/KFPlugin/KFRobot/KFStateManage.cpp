@@ -66,6 +66,13 @@
 #include "KFApplyGuildState.h"
 #include "KFReviewGuildState.h"
 #include "KFQueryGuildListState.h"
+#include "KFKickMemberState.h"
+#include "KFQuitGuildState.h"
+#include "KFAppointState.h"
+#include "KFUpgradeGuildState.h"
+#include "KFTransferMasterState.h"
+#include "KFDissolveGuildState.h"
+#include "KFQueryGuildLogState.h"
 
 namespace KFrame
 {
@@ -167,6 +174,13 @@ namespace KFrame
         AddState( RobotStateEnum::ApplyGuild, new KFApplyGuildState() );
         AddState( RobotStateEnum::AgreeAllJoin, new KFReviewGuildState() );
         AddState( RobotStateEnum::QueryGuildList, new KFQueryGuildListState() );
+        AddState( RobotStateEnum::KickMember, new KFKickMemberState() );
+        AddState( RobotStateEnum::ExitGuild, new KFQuitGuildState() );
+        AddState( RobotStateEnum::Appoint, new KFAppointState() );
+        AddState( RobotStateEnum::UpGradeGuild, new KFUpgradeGuildState() );
+        AddState( RobotStateEnum::TransferMaster, new KFTransferMasterState() );
+        AddState( RobotStateEnum::DissolveGuild, new KFDissolveGuildState() );
+        AddState( RobotStateEnum::QueryGuildLog, new KFQueryGuildLogState() );
     }
 
     void KFStateManage::AddState( uint32 state, KFState* kfstate )

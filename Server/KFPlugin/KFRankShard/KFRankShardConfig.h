@@ -49,9 +49,6 @@ namespace KFrame
         // 最大数量
         uint32 _max_count;
 
-        // 显示属性
-        VectorString _show_data;
-
         // 是否清除数据
         bool _is_reset_data;
     };
@@ -73,9 +70,6 @@ namespace KFrame
         void AddRankSetting( KFRankSetting* kfsetting );
 
     public:
-
-        // 玩家属性
-        VectorString _player_data;
 
         // 排行榜配置列表
         KFMap< uint32, uint32, KFRankSetting > _kf_rank_setting;

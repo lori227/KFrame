@@ -25,8 +25,9 @@ namespace KFrame
         auto datanode = playernode.FindNode( "Data" );
         while ( datanode.IsValid() )
         {
+            auto parentname = datanode.GetString( "Parent" );
             auto dataname = datanode.GetString( "Name" );
-            _player_data.push_back( dataname );
+            _player_data.push_back( DataType( parentname, dataname ) );
 
             datanode.NextNode();
         }
@@ -39,20 +40,30 @@ namespace KFrame
 
             kfsetting->_rank_id = ranknode.GetUInt32( "Id" );
             kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
-            kfsetting->_shard_id = ranknode.GetUInt32( "ShardId" );
             kfsetting->_parent_data = ranknode.GetString( "ParentData" );
             kfsetting->_rank_data = ranknode.GetString( "RankData" );
-            kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
-            kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
-            kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
-            kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
-            kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
 
-            auto shownode = ranknode.FindNode( "ShowData" );
+            // 计算的数据
+            auto calcnodes = ranknode.FindNode( "CalcData" );
+            auto calcnode = calcnodes.FindNode( "Data" );
+            while ( calcnode.IsValid() )
+            {
+                auto parentname = calcnode.GetString( "Parent" );
+                auto dataname = calcnode.GetString( "Name" );
+
+                kfsetting->_calc_data.push_back( DataType( parentname, dataname ) );
+                calcnode.NextNode();
+            }
+
+            // 显示的属性
+            auto shownodes = ranknode.FindNode( "ShowData" );
+            auto shownode = shownodes.FindNode( "Data" );
             while ( shownode.IsValid() )
             {
+                auto parentname = shownode.GetString( "Parent" );
                 auto dataname = shownode.GetString( "Name" );
-                kfsetting->_show_data.push_back( dataname );
+
+                kfsetting->_show_data.push_back( DataType( parentname, dataname ) );
                 shownode.NextNode();
             }
 

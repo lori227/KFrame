@@ -52,11 +52,14 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_SHOW_REWARD_AGENT, &KFRobotModule::HandleShowReward );
         __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_MATCH_ACK, &KFRobotModule::HandleCancleMatch );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_ACK, &KFRobotModule::HandleWholeRankDisplay );
+        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUILD_LOG_ACK, &KFRobotModule::HandleQueryGuildLogAck );
 
         __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &KFRobotModule::HandleUpdateGuildData );
         __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA, &KFRobotModule::HandleAddGuildData );
         __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &KFRobotModule::HandleRemoveGuildData );
 
+        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUILD_LIST_ACK, &KFRobotModule::HandleQueryGuildListAck );
+        __REGISTER_MESSAGE__( KFMsg::MSG_TELL_QUERY_GUILD, &KFRobotModule::HandleQueryGuildAck );
     }
 
     void KFRobotModule::BeforeShut()
@@ -109,7 +112,7 @@ namespace KFrame
     auto kfrobot = _robot_list.Find( robotid );\
     if ( kfrobot == nullptr )\
     {\
-        __LOG_ERROR__(KFLogEnum::System,"can't find robot[{}]!",\
+        __LOG_ERROR__("can't find robot[{}]!",\
                       robotid);\
     }\
     __PROTO_PARSE__( msgtype );
@@ -134,14 +137,14 @@ namespace KFrame
         }
 
         auto robotid = __KF_HEAD_ID__( guid );
-        __LOG_INFO__( KFLogEnum ::Net, "[{}] robot[{}] recv msgid[{}]!",
+        __LOG_INFO__( "[{}] robot[{}] recv msgid[{}]!",
                       __FUNCTION__, robotid, msgid );
     }
 
     // 连接断开
     __KF_CLIENT_LOST_FUNCTION__( KFRobotModule::OnClientDisconnect )
     {
-        __LOG_ERROR__( KFLogEnum::Net, "[{}] robot[{}] disconect!",
+        __LOG_ERROR__( "[{}] robot[{}] disconect!",
                        __FUNCTION__, serverid );
         auto kfrobot = _robot_list.Find( serverid );
 
@@ -338,7 +341,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleRemoveData )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveData );
-        // std::cout << "HandleRemoveData: " << kfmsg.DebugString() << std::endl;
+        //std::cout << "HandleRemoveData: " << kfmsg.DebugString() << std::endl;
         auto player = _kf_component->FindEntity( kfrobot->_playerid, __FUNCTION__, __LINE__ );
 
         if ( nullptr == player )
@@ -355,8 +358,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleDisplayChatInfo )
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSendChatInfo );
-
-
         __LOG_INFO__( "[{}] robot[{}] recv chat[{}]!",
                       __FUNCTION__, robotid, kfmsg.chatinfo().c_str() );
     }
@@ -394,6 +395,13 @@ namespace KFrame
         //__ROBOT_PROTO_PARSE__( KFMsg::MsgQueryRankListAck );
         __PROTO_PARSE__( KFMsg::MsgQueryRankListAck );
         //	std::cout << "HandleWholeRankDisplay: " << kfmsg.DebugString() << std::endl;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryGuildLogAck )
+    {
+        //__ROBOT_PROTO_PARSE__( KFMsg::MsgQueryRankListAck );
+        __PROTO_PARSE__( KFMsg::MsgQueryGuildLogAck );
+        // std::cout << "HandleQueryGuildLogAck: " << kfmsg.DebugString() << std::endl;
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryGuestAck )
@@ -440,6 +448,39 @@ namespace KFrame
         __ROBOT_PROTO_PARSE__( KFMsg::MsgSyncRemoveGuildData );
         std::cout << "HandleRemoveGuildData:" << kfmsg.DebugString() << std::endl;
     }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryGuildListAck )
+    {
+        __ROBOT_PROTO_PARSE__( KFMsg::MsgQueryGuildListAck );
+        std::cout << "HandleQueryGuildListAck:" << kfmsg.DebugString() << std::endl;
+        //添加帮派列表
+        for ( auto i = 0; i < kfmsg.guilddatas_size(); ++i )
+        {
+            auto pbguilddatas = kfmsg.guilddatas( i );
+            for ( auto j = 0; j < pbguilddatas.pbstring_size(); ++j )
+            {
+                auto pbstring = pbguilddatas.pbstring( j );
+                if ( pbstring.name() == __KF_STRING__( id ) )
+                {
+                    auto guildlistdata = __KF_CREATE__( GuildListData );
+                    auto guildid = KFUtility::ToValue<uint64>( pbstring.value() );
+                    guildlistdata->guildid = guildid;
+                    kfrobot->_guild_list.Insert( guildid, guildlistdata );
+                }
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleQueryGuildAck )
+    {
+        __ROBOT_PROTO_PARSE__( KFMsg::MsgTellQueryGuild );
+        std::cout << "HandleQueryGuildAck:" << kfmsg.DebugString() << std::endl;
+
+        auto guilddata = &kfmsg.guild();
+        kfrobot->QueryGuildAck( guilddata );
+
+    }
+
 }
 
 

@@ -281,11 +281,18 @@ enum AckEnum {
   PlayerNoInApplicanlist = 10046,
   GuildMemberlistTooLong = 10047,
   GuildMedalRepeat = 10048,
-  GMParamError = 20000
+  GuildMaxLevel = 10049,
+  GuildLackActiveness = 10050,
+  GuildMemberOwnTitle = 10051,
+  GuildMaxViceMember = 10052,
+  GuildNameInvalid = 10053,
+  GuildLogOutPage = 10054,
+  GMParamError = 20000,
+  SysError = 30000
 };
 LIBPROTOC_EXPORT bool AckEnum_IsValid(int value);
 const AckEnum AckEnum_MIN = Success;
-const AckEnum AckEnum_MAX = GMParamError;
+const AckEnum AckEnum_MAX = SysError;
 const int AckEnum_ARRAYSIZE = AckEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* AckEnum_descriptor();

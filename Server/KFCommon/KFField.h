@@ -330,7 +330,12 @@ namespace KFrame
         __STRING_DEFINE__( cleantask );
         __STRING_DEFINE__( callback );
         __STRING_DEFINE__( msg );
+        __STRING_DEFINE__( guildapplylist );
         __STRING_DEFINE__( chooseherotime );
+        __STRING_DEFINE__( vicemaster );
+        __STRING_DEFINE__( reqlevel );
+        __STRING_DEFINE__( reviewswitch );
+        __STRING_DEFINE__( guildlog );
     }
 }
 

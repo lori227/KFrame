@@ -806,7 +806,7 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "(\004\022\037\n\005basic\030\003 \002(\0132\020.KFMsg.PBStrings\"B\n\022P"
     "BApplicationlists\022,\n\napplylists\030\001 \003(\0132\030."
     "KFMsg.PBApplicationlist\"!\n\016PBGuildIdArra"
-    "y\022\017\n\007guildid\030\001 \003(\004*\314&\n\007AckEnum\022\013\n\007Succes"
+    "y\022\017\n\007guildid\030\001 \003(\004*\352\'\n\007AckEnum\022\013\n\007Succes"
     "s\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError\020\003\022\023\n\017W"
     "eiXinCodeError\020\004\022\026\n\022WeiXinTokenTimeout\020\005"
     "\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinUserErro"
@@ -929,29 +929,33 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "\013GuildMaster\020\273N\022\022\n\rPlayerNoPower\020\274N\022\027\n\022P"
     "layerNoSmallGuild\020\275N\022\033\n\026PlayerNoInApplic"
     "anlist\020\276N\022\033\n\026GuildMemberlistTooLong\020\277N\022\025"
-    "\n\020GuildMedalRepeat\020\300N\022\022\n\014GMParamError\020\240\234"
-    "\001*\'\n\013ChannelEnum\022\014\n\010Internal\020\001\022\n\n\006WeiXin"
-    "\020\002*+\n\007SexEnum\022\n\n\006Unknow\020\000\022\010\n\004Male\020\001\022\n\n\006F"
-    "emale\020\002*/\n\010KickEnum\022\017\n\013LoginBeKick\020\001\022\022\n\016"
-    "PlatformBeKick\020\002*K\n\010FlagEnum\022\010\n\004Init\020\000\022\010"
-    "\n\004Done\020\001\022\014\n\010Received\020\002\022\n\n\006Remove\020\003\022\021\n\rRe"
-    "ceiveRemove\020\004*7\n\010MailEnum\022\r\n\tWholeMail\020\001"
-    "\022\016\n\nFriendMail\020\002\022\014\n\010GiftMail\020\003*\037\n\016MailCo"
-    "nfigEnum\022\r\n\tToastMail\020\001*f\n\nStatusEnum\022\020\n"
-    "\014OnlineStatus\020\001\022\017\n\013GroupStatus\020\002\022\017\n\013Matc"
-    "hStatus\020\003\022\021\n\rPlayingStatus\020\004\022\021\n\rOfflineS"
-    "tatus\020\005*\027\n\010ChatEnum\022\013\n\007Jianghu\020\001*C\n\nInvi"
-    "teEnum\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delet"
-    "e\020\003\022\020\n\014RefuseMinute\020\004*-\n\rStoreWishEnum\022\007"
-    "\n\003Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modify\020\003*L\n\rWishStat"
-    "eEnum\022\014\n\010AllWatch\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013Fr"
-    "iendWatch\020\002\022\r\n\tTeamWatch\020\003*K\n\014RankListEn"
-    "um\022\016\n\nSingleRank\020\001\022\016\n\nDoubleRank\020\002\022\014\n\010Fo"
-    "urRank\020\003\022\r\n\tTotalRank\020\004*:\n\020FriendLinessE"
-    "num\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022\t\n\005Toast\020\003\022\010\n\004Giv"
-    "e\020\004*)\n\tGuildEnum\022\r\n\tJoinGuild\020\001\022\r\n\tExitG"
-    "uild\020\002*2\n\017GuildReviewEnum\022\016\n\nAgreeApply\020"
-    "\001\022\017\n\013RefuseApply\020\002", 8178);
+    "\n\020GuildMedalRepeat\020\300N\022\022\n\rGuildMaxLevel\020\301"
+    "N\022\030\n\023GuildLackActiveness\020\302N\022\030\n\023GuildMemb"
+    "erOwnTitle\020\303N\022\027\n\022GuildMaxViceMember\020\304N\022\025"
+    "\n\020GuildNameInvalid\020\305N\022\024\n\017GuildLogOutPage"
+    "\020\306N\022\022\n\014GMParamError\020\240\234\001\022\016\n\010SysError\020\260\352\001*"
+    "\'\n\013ChannelEnum\022\014\n\010Internal\020\001\022\n\n\006WeiXin\020\002"
+    "*+\n\007SexEnum\022\n\n\006Unknow\020\000\022\010\n\004Male\020\001\022\n\n\006Fem"
+    "ale\020\002*/\n\010KickEnum\022\017\n\013LoginBeKick\020\001\022\022\n\016Pl"
+    "atformBeKick\020\002*K\n\010FlagEnum\022\010\n\004Init\020\000\022\010\n\004"
+    "Done\020\001\022\014\n\010Received\020\002\022\n\n\006Remove\020\003\022\021\n\rRece"
+    "iveRemove\020\004*7\n\010MailEnum\022\r\n\tWholeMail\020\001\022\016"
+    "\n\nFriendMail\020\002\022\014\n\010GiftMail\020\003*\037\n\016MailConf"
+    "igEnum\022\r\n\tToastMail\020\001*f\n\nStatusEnum\022\020\n\014O"
+    "nlineStatus\020\001\022\017\n\013GroupStatus\020\002\022\017\n\013MatchS"
+    "tatus\020\003\022\021\n\rPlayingStatus\020\004\022\021\n\rOfflineSta"
+    "tus\020\005*\027\n\010ChatEnum\022\013\n\007Jianghu\020\001*C\n\nInvite"
+    "Enum\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020"
+    "\003\022\020\n\014RefuseMinute\020\004*-\n\rStoreWishEnum\022\007\n\003"
+    "Add\020\001\022\007\n\003Del\020\002\022\n\n\006Modify\020\003*L\n\rWishStateE"
+    "num\022\014\n\010AllWatch\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013Frie"
+    "ndWatch\020\002\022\r\n\tTeamWatch\020\003*K\n\014RankListEnum"
+    "\022\016\n\nSingleRank\020\001\022\016\n\nDoubleRank\020\002\022\014\n\010Four"
+    "Rank\020\003\022\r\n\tTotalRank\020\004*:\n\020FriendLinessEnu"
+    "m\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022\t\n\005Toast\020\003\022\010\n\004Give\020"
+    "\004*)\n\tGuildEnum\022\r\n\tJoinGuild\020\001\022\r\n\tExitGui"
+    "ld\020\002*2\n\017GuildReviewEnum\022\016\n\nAgreeApply\020\001\022"
+    "\017\n\013RefuseApply\020\002", 8336);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -1241,7 +1245,14 @@ bool AckEnum_IsValid(int value) {
     case 10046:
     case 10047:
     case 10048:
+    case 10049:
+    case 10050:
+    case 10051:
+    case 10052:
+    case 10053:
+    case 10054:
     case 20000:
+    case 30000:
       return true;
     default:
       return false;

@@ -229,6 +229,17 @@ namespace KFrame
         void InviteGuild();
         void ApplyGuild();
         void AgreeGuildJoin();
+        void QueryGuildList();
+        void QueryGuildAck( const KFMsg::PBObject* pbobject );
+        void KickMember();
+        void QuitGuild();
+        void Appoint();
+        void UpgradeGuild();
+        void TransferMaster();
+        void DissolveGuild();
+        void QueryGuildLog();
+
+        uint32 _query_guild_cursor;
 
     protected:
 
@@ -281,6 +292,12 @@ namespace KFrame
 
     public:
         MapString _mail_num_arr;
+
+    public:
+
+        //存储查询的帮派列表
+        KFMap<uint64, uint64, GuildListData> _guild_list;
+
     };
 }
 

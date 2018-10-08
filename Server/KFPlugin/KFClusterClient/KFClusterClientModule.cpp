@@ -166,6 +166,7 @@ namespace KFrame
     bool KFClusterClientModule::SendToStaticObject( const std::string& name, uint32 objectid, uint32 msgid, google::protobuf::Message* message )
     {
         KFMsg::S2SSendToStaticObjectReq req;
+        req.set_serverid( KFGlobal::Instance()->_app_id );
         req.set_objectid( objectid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
@@ -178,6 +179,7 @@ namespace KFrame
         req.set_objectid( objectid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
+        req.set_serverid( KFGlobal::Instance()->_app_id );
         return SendNetMessage( name, KFMsg::S2S_SEND_TO_DYNAMIC_OBJECT_REQ, &req );
     }
 }

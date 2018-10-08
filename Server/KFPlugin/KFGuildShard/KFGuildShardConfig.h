@@ -23,6 +23,14 @@ namespace KFrame
             Mask_Dismissal_Data = 1 << 4,	// 解雇成员(只能解雇职位比这身低的)
             Mask_Appoint_Data = 1 << 5,		// 任命权力(只能任命职位比这身低的)
             Mask_Modify_Data = 1 << 6,		// 修改帮派徽章等
+            Mask_Upgrade_Data = 1 << 7,		// 升级帮派
+            Mask_Manger_Data = 1 << 8,		// 帮派管理(审批按钮等)
+        };
+
+        enum  EnumGuildLogType
+        {
+            CreateGuild = 1,				// 创建帮派
+            AppointGuild = 2,				// 任命帮派成员
         };
 
     };
@@ -53,6 +61,9 @@ namespace KFrame
         // 最大申请列表长度
         uint32 _max_applylist;
 
+        // 最大副帮主数
+        uint32 _max_vicemaster;
+
     };
 
     class KFGuildShardConfig : public KFConfig, public KFSingleton< KFGuildShardConfig >
@@ -70,8 +81,17 @@ namespace KFrame
             return _max_guildlist_page;
         }
 
+        // 获取拥有某项权力的职位
+        void GetTitleOwnPower( std::set<uint32>& titles, uint32 datamask );
+
         // 是否拥有某项权力
         bool IsOwnPower( uint32 title, uint32 datamask ) const;
+
+        // 职位是否是有效
+        bool IsValidTitle( uint32 title ) const;
+
+        // 获取帮派日志模板
+        std::string GetGuildLogFmt( uint32 logtype );
 
     protected:
         void AddGuildSetting( KFGuildSetting* kfsetting );
@@ -84,6 +104,11 @@ namespace KFrame
 
         // 职位对应的权力表
         std::map<uint32, uint32> _title_power;
+
+        // 日志列表
+        std::map<uint32, std::string> _guild_logs;
+
+        uint32 _max_level;
 
     };
 

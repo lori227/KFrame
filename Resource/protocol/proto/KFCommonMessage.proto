@@ -226,8 +226,15 @@ enum AckEnum
 	PlayerNoInApplicanlist			= 10046;	// 玩家不再申请列表中
 	GuildMemberlistTooLong			= 10047;	// 帮派成员列表过长
 	GuildMedalRepeat			= 10048;	// 帮派徽章重复
-		
+	GuildMaxLevel				= 10049;	// 帮派达到最高等级了
+	GuildLackActiveness			= 10050;	// 帮派活跃度不足
+	GuildMemberOwnTitle			= 10051;	// 玩家已经是该职位
+	GuildMaxViceMember			= 10052;	// 帮派副帮主职位达到最大
+	GuildNameInvalid			= 10053;	// 帮派名字非法
+	GuildLogOutPage				= 10054;	// 请求的帮派日志页数超过最大
+
 	GMParamError				= 20000;	// GM参数错误
+	SysError				= 30000;	// 系统错误
 }
 
 
@@ -331,6 +338,7 @@ enum GuildEnum
 {
 	JoinGuild =1;		// 加入帮派
 	ExitGuild = 2;		// 离开帮派
+	
 }
 
 enum GuildReviewEnum

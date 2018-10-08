@@ -1491,6 +1491,13 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
 
+  // required uint32 serverid = 4;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 4;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSendToDynamicObjectReq)
  private:
   inline void set_has_objectid();
@@ -1499,15 +1506,18 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
   inline void clear_has_msgid();
   inline void set_has_msgdata();
   inline void clear_has_msgdata();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 objectid_;
   ::std::string* msgdata_;
   ::google::protobuf::uint32 msgid_;
+  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClusterMessage_2eproto();
   friend void protobuf_AssignDesc_KFClusterMessage_2eproto();
@@ -1598,6 +1608,13 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
 
+  // required uint32 serverid = 4;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 4;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSendToStaticObjectReq)
  private:
   inline void set_has_objectid();
@@ -1606,15 +1623,18 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
   inline void clear_has_msgid();
   inline void set_has_msgdata();
   inline void clear_has_msgdata();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 objectid_;
   ::google::protobuf::uint32 msgid_;
   ::std::string* msgdata_;
+  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClusterMessage_2eproto();
   friend void protobuf_AssignDesc_KFClusterMessage_2eproto();
@@ -3149,6 +3169,28 @@ inline void S2SSendToDynamicObjectReq::set_allocated_msgdata(::std::string* msgd
   }
 }
 
+// required uint32 serverid = 4;
+inline bool S2SSendToDynamicObjectReq::has_serverid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SSendToDynamicObjectReq::set_has_serverid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SSendToDynamicObjectReq::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SSendToDynamicObjectReq::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 S2SSendToDynamicObjectReq::serverid() const {
+  return serverid_;
+}
+inline void S2SSendToDynamicObjectReq::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SSendToStaticObjectReq
@@ -3265,6 +3307,28 @@ inline void S2SSendToStaticObjectReq::set_allocated_msgdata(::std::string* msgda
     clear_has_msgdata();
     msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// required uint32 serverid = 4;
+inline bool S2SSendToStaticObjectReq::has_serverid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SSendToStaticObjectReq::set_has_serverid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SSendToStaticObjectReq::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SSendToStaticObjectReq::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 S2SSendToStaticObjectReq::serverid() const {
+  return serverid_;
+}
+inline void S2SSendToStaticObjectReq::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
 }
 
 
