@@ -17,4 +17,4 @@ server=deployserver
 fi
 
 cd /data/deploy
-./bin/$server appid=$1.0.2.1 log=1 startup=./startup/deploy.server.startup
+./bin/$server appid=$1.0.2.1 log=1.1 startup=./startup/deploy.server.startup

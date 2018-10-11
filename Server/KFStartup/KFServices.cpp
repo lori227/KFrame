@@ -65,9 +65,6 @@ namespace KFrame
         // 对象池
         KFMalloc::Initialize( nullptr );
 
-#ifdef __KF_RELEASE__
-        // KFMalloc::Instance()->SetLogMemoryOpen( false );
-#endif
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_game_time = KFClock::GetTime();

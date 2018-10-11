@@ -954,7 +954,7 @@ namespace KFrame
         auto querymd5 = _mysql_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
         if ( !querymd5->IsOk() || querymd5->_value.empty() )
         {
-            return false;
+            return true;
         }
 
         auto version = _kf_task->_value;

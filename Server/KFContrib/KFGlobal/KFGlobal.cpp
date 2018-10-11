@@ -84,13 +84,21 @@ namespace KFrame
         if ( _logger != nullptr )
         {
             _logger->Initialize( _app_name, _app_type, _app_id );
-            _log_level = KFUtility::SplitValue< uint32 >( strtype, "." );
+            SetLogLevel( KFUtility::SplitValue< uint32 >( strtype, "." ) );
         }
     }
 
     void KFGlobal::SetLogLevel( uint32 level )
     {
         _log_level = level;
+        if ( _log_level == 0 )
+        {
+            KFMalloc::Instance()->SetLogMemoryOpen( true );
+        }
+        else
+        {
+            KFMalloc::Instance()->SetLogMemoryOpen( false );
+        }
     }
 
     void KFGlobal::Log( uint32 level, const std::string& content )
