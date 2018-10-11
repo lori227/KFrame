@@ -564,6 +564,10 @@ m4trace:configure.ac:52: -1- AC_DEFINE_TRACE_LITERAL([_LARGE_FILES])
 m4trace:configure.ac:52: -1- m4_pattern_allow([^_LARGE_FILES$])
 m4trace:configure.ac:52: -1- AH_OUTPUT([_LARGE_FILES], [/* Define for large files, on AIX-style hosts. */
 @%:@undef _LARGE_FILES])
+m4trace:configure.ac:52: -1- AH_OUTPUT([_DARWIN_USE_64_BIT_INODE], [/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif])
 m4trace:configure.ac:53: -1- AM_CONDITIONAL([AIX], [AS_CASE([$host_os],[aix*],          [true], [false])])
 m4trace:configure.ac:53: -1- AC_SUBST([AIX_TRUE])
 m4trace:configure.ac:53: -1- AC_SUBST_TRACE([AIX_TRUE])

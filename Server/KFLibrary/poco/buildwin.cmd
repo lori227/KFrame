@@ -30,14 +30,14 @@ rem VS_VERSION is required argument. Default is build all.
 rem Change OPENSSL_DIR to match your setup
 set OPENSSL_DIR=..\..\openssl
 set OPENSSL_INCLUDE=%OPENSSL_DIR%\include
-set OPENSSL_LIB=%OPENSSL_DIR%\lib;%OPENSSL_DIR%\lib\VC
+set OPENSSL_LIB=..\..\..\_lib\win64\3rd
 set INCLUDE=%INCLUDE%;%OPENSSL_INCLUDE%
 set LIB=%LIB%;%OPENSSL_LIB%
 
 rem Change MYSQL_DIR to match your setup
-set MYSQL_DIR=..\mysql
+set MYSQL_DIR=..\..\..\mysql
 set MYSQL_INCLUDE=%MYSQL_DIR%\include
-set MYSQL_LIB=%MYSQL_DIR%\lib
+set MYSQL_LIB=..\..\..\_lib\win64\3rd
 set INCLUDE=%INCLUDE%;%MYSQL_INCLUDE%
 set LIB=%LIB%;%MYSQL_LIB%
 

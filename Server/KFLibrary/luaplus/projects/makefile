@@ -54,7 +54,7 @@ before_debug:
 	test -d $(OBJDIR_DEBUG)/__ || mkdir -p $(OBJDIR_DEBUG)/__
 
 after_debug: 
-	\cp -rf bin/Debug/libluaplus53d.a /usr/local/lib/ 
+	\cp -rf bin/Debug/libluaplus53d.a ../../../_lib/linux/3rd/ 
 
 
 debug: before_debug out_debug after_debug
@@ -188,7 +188,7 @@ before_release:
 	test -d $(OBJDIR_RELEASE)/__ || mkdir -p $(OBJDIR_RELEASE)/__
 
 after_release: 
-	\cp -rf bin/Release/libluaplus53.a /usr/local/lib/	
+	\cp -rf bin/Release/libluaplus53.a ../../../_lib/linux/3rd/	
 
 release: before_release out_release after_release
 
