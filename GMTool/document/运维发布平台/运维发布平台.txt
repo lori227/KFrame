@@ -1,0 +1,27 @@
+﻿
+1.加 版本更新页面-
+2.版本列表， 删除物理文件|  加“更新”按钮操作| 加结果接口-进行更新| launch表与deploy表   appname和apptype关联
+
+
+3.机器列表页node表  状态 字段| 提供给 服务器 接口进行更新 把给服务器端提供的接口，返回数据都记录文件日志，他们实时读取
+
+4.左侧菜单展开的时候别合上
+
+
+
+
+
+
+//服务器部署接口
+http://192.168.1.9:9999/deploy
+{
+	"command":"version",//命令
+	"value":"sgame_online_svn_115_201809101435.tar.gz",//命令值
+	"appchannel":2,//1级 deploy表有
+	"appname":"*",//2级 deploy表有
+	"apptype":"*",//2级 deploy表有
+	"appid":"*",//3级 deploy表有
+	"zoneid":"3"//4级 deploy表有
+	"callback":"http://xxxxx/deploylog"
+}
+

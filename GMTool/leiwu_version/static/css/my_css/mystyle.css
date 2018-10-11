@@ -1,0 +1,37 @@
+/*自定义样式统一类文件*/
+body{font:normal 14px/18px '微软雅黑';}
+/*公共样式区*/
+.fl{float:left;}
+.fr{float:right;}
+.wd100{width:100px;}
+.mw200{max-width:200px;word-break: break-all;}
+.mw300{max-width:300px;word-break: break-all;}
+.mw350{max-width:350px;word-break: break-all;}
+.mw400{max-width:400px;word-break: break-all;}
+
+.invalid{color:red;}
+/*树形结构显示样式*/
+.tree{width:500px;}
+.parent_li{display:none;}
+.tree li.parent_li>span {
+    width: 100px;
+}
+.lev1{background:#ccc;width:120px;}
+.lev1 i{margin-top:6px;cursor: pointer;color:#337ab7;}
+.tr1{margin-left:10px;}
+.tr_last li{display:none;}
+.tr_last li span{width:120px;}
+.tr_last li span label{width:100%;}
+.tr2{float:left;position:relative;margin-left:10px;}
+.tr2 input{position:absolute;left:1px;top: -4px;}
+.tr2 em{color: #2d8cf0;}
+.tr_last{width:300px;}
+
+
+/*服务器部署分布引导*/
+.v_step{width:460px;float:right;border:1px dashed #0075b0;padding:10px;}
+.v_step li{float:left;}
+.v_step li.on dt{border:2px solid #0075b0;color:#0075b0;}
+.v_step li.on dd{border:1px solid #0075b0;}
+.v_step dt{border:2px solid #ccc;width:40px;height:40px;border-radius:20px;text-align:center;padding-top:7px;float:left;font-size:18px;color:#ccc;}
+.v_step dd{width:130px;border:1px solid #ccc;float:left;margin-top: 20px;}
