@@ -11,6 +11,7 @@ namespace KFrame
         _result_queue_list.push_back( &_uint64_result_queue );
         _result_queue_list.push_back( &_string_result_queue );
         _result_queue_list.push_back( &_map_result_queue );
+        _result_queue_list.push_back( &_list_result_queue );
         _result_queue_list.push_back( &_list_map_result_queue );
     }
 
@@ -465,6 +466,33 @@ namespace KFrame
                 {
                     kfresult->_value[ names->at( j ) ] = values.at( j ).toString();
                 }
+            }
+        }
+        else
+        {
+            kfresult->SetResult( KFEnum::Error );
+        }
+
+        return kfresult;
+    }
+
+
+    KFResult< ListString >*  KFMySQLExecute::ListExecute( const std::string& strsql )
+    {
+        auto kfresult = _list_result_queue.Alloc();
+
+        Statement statement( *_session );
+        statement << strsql;
+        auto ok = ExecuteSql( statement );
+        if ( ok )
+        {
+            RecordSet recordset( statement );
+            for ( auto i = 0u; i < recordset.rowCount(); ++i )
+            {
+                const auto& row = recordset.row( i );
+                auto& values = row.values();
+
+                kfresult->_value.push_back( values.at( 0 ).toString() );
             }
         }
         else

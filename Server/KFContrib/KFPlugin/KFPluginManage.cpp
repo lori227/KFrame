@@ -55,7 +55,7 @@ namespace KFrame
         return nullptr;
     }
 
-    KFModule* KFPluginManage::FindModule( const std::string& name, const char* file, uint32 line )
+    KFModule* KFPluginManage::FindModule( const std::string& name )
     {
         for ( auto plugin : _plugins )
         {
@@ -66,10 +66,19 @@ namespace KFrame
             }
         }
 
-        __LOG_ERROR_FUNCTION__( file, line, "can't find [{}] module!", name );
         return nullptr;
     }
 
+    KFModule* KFPluginManage::FindModule( const std::string& name, const char* file, uint32 line )
+    {
+        auto kfmodule = FindModule( name );
+        if ( kfmodule == nullptr )
+        {
+            __LOG_ERROR_FUNCTION__( file, line, "can't find [{}] module!", name );
+        }
+
+        return nullptr;
+    }
     ///////////////////////////////////////////////////////////////
     void KFPluginManage::LoadModule()
     {

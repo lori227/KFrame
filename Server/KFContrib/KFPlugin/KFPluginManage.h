@@ -65,6 +65,9 @@
 
 #define __FIND_MODULE__( module, classname ) \
     module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )
+
+#define __FIND_MODULE_NO_LOG__( module, classname ) \
+    module = _kf_plugin_manage->FindModule< classname >()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -151,6 +154,12 @@ namespace KFrame
             return dynamic_cast< InterfaceType*>( FindModule( name, file, line ) );
         }
 
+        template< class InterfaceType >
+        InterfaceType* FindModule()
+        {
+            std::string name = typeid( InterfaceType ).name();
+            return dynamic_cast< InterfaceType* >( FindModule( name ) );
+        }
         /////////////////////////////////////////////////////////////////
         template< class T >
         void RegisterCommandFunction( const std::string& command, T* object, void ( T::*handle )( const VectorString& ) )
@@ -240,6 +249,7 @@ namespace KFrame
 
         // 查找模块
         KFModule* FindModule( const std::string& name, const char* file, uint32 line );
+        KFModule* FindModule( const std::string& name );
 
     protected:
         std::vector< KFPlugin* > _plugins;

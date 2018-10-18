@@ -135,7 +135,10 @@ namespace KFrame
             }
             else if ( tempvalue == __KF_STRING__( lua ) )
             {
-                _kf_lua->LoadScript( value );
+                if ( _kf_lua != nullptr )
+                {
+                    _kf_lua->LoadScript( value );
+                }
             }
         }
         else

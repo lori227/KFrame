@@ -74,6 +74,13 @@ namespace KFrame
         }
 
         template< typename... P >
+        KFResult< ListString >* QueryList( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
+            return ListExecute( strsql );
+        }
+
+        template< typename... P >
         KFResult< MapString >* QueryMap( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
@@ -106,6 +113,7 @@ namespace KFrame
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql ) = 0;
         virtual KFResult< std::string >* StringExecute( const std::string& strsql ) = 0;
         virtual KFResult< MapString >* MapExecute( const std::string& strsql ) = 0;
+        virtual KFResult< ListString >* ListExecute( const std::string& strsql ) = 0;
         virtual KFResult< std::list< MapString > >* ListMapExecute( const std::string& strsql ) = 0;
     };
 

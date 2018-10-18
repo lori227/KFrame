@@ -67,6 +67,7 @@ namespace KFrame
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
         virtual KFResult< std::string >* StringExecute( const std::string& strsql );
         virtual KFResult< MapString >* MapExecute( const std::string& strsql );
+        virtual KFResult< ListString >* ListExecute( const std::string& strsql );
         virtual KFResult< std::list< MapString > >* ListMapExecute( const std::string& strsql );
 
     private:
@@ -75,6 +76,7 @@ namespace KFrame
         KFResultQueue< uint64 > _uint64_result_queue;
         KFResultQueue< std::string > _string_result_queue;
         KFResultQueue< MapString > _map_result_queue;
+        KFResultQueue< ListString > _list_result_queue;
         KFResultQueue< std::list< MapString > > _list_map_result_queue;
 
         std::vector< KFBaseResultQueue* > _result_queue_list;

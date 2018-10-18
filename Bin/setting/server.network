@@ -25,7 +25,7 @@
 		<Server AppName="upload" AppType="upload" Type="0" Port="9998"/>
 	
 		<!-- gmmail 服务器 -->
-		<Server AppName="mail" AppType="master" Type="0" Port="27710"/>	
+		<Server AppName="mail" AppType="master" Type="0" Port="8888"/>	
 	</HttpServer>
 
 
