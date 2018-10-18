@@ -9,6 +9,57 @@ namespace KFrame
         return _medal_list.find( strmedal ) != std::string::npos;
     }
 
+    bool KFGuildActivenessSetting::CheckCanUpdate( uint32 key, uint32 operate ) const
+    {
+        if ( _key != _invalid_int && _key != key )
+        {
+            return false;
+        }
+
+        if ( operate != _operate )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    uint32 KFGuildActivenessSetting::GetAddActivenessValue( uint32 value, uint32 ownactiveness, uint32& usevalue )
+    {
+        auto addactiveness = _invalid_int;
+        //单日限制
+        if ( _day_limit <= ownactiveness )
+        {
+            return addactiveness;
+        }
+        auto restactiveness = _day_limit - ownactiveness;
+        switch ( _trigger_type )
+        {
+
+        case KFGuildEnum::Finish:
+        {
+            if ( value >= _done_value )
+            {
+                usevalue += __MIN__( _done_value, value );
+                addactiveness = __MIN__( restactiveness, _add_activeness_value );
+            }
+
+        }
+        break;
+        case KFGuildEnum::Amass:
+        {
+            auto totalusevalue = usevalue + value;
+            // 计算可以触发增加活跃度的次数
+            auto resttime = totalusevalue / _done_value - usevalue / _done_value;
+            auto incrbyactiveness = resttime * _add_activeness_value;
+            addactiveness = __MIN__( incrbyactiveness, restactiveness );
+            usevalue = totalusevalue;
+        }
+        default:
+            break;
+        }
+        return addactiveness;
+    }
 
     KFGuildConfig::KFGuildConfig()
     {
@@ -16,6 +67,7 @@ namespace KFrame
         _max_level = _invalid_int;
         _keep_time = _invalid_int;
         _max_guild_log_page = _invalid_int;
+        _max_week_activeness = _invalid_int;
     }
 
     KFGuildConfig::~KFGuildConfig()
@@ -53,7 +105,6 @@ namespace KFrame
 
             }
         }
-
         {
             auto xmlnode = config.FindNode( "GuildMmebers" );
             if ( xmlnode.IsValid() )
@@ -110,6 +161,30 @@ namespace KFrame
         }
 
         {
+            auto xmlnode = config.FindNode( "GuildActinesses" );
+            if ( xmlnode.IsValid() )
+            {
+                auto childnode = xmlnode.FindNode( "GuildActiness" );
+                while ( childnode.IsValid() )
+                {
+                    auto kfsetting = __KF_CREATE__( KFGuildActivenessSetting );
+                    kfsetting->_id = childnode.GetUInt32( "Id" );
+                    kfsetting->_add_activeness_value = childnode.GetUInt32( "AddActivenessOnce" );
+                    kfsetting->_parent_name = childnode.GetString( "ParentName" );
+                    kfsetting->_data_name = childnode.GetString( "DataName" );
+                    kfsetting->_key = childnode.GetUInt32( "Key" );
+                    kfsetting->_operate = childnode.GetUInt32( "Operate" );
+                    kfsetting->_day_limit = childnode.GetUInt32( "DayLimit" );
+                    kfsetting->_trigger_type = childnode.GetUInt32( "TriggerType" );
+                    kfsetting->_done_value = childnode.GetUInt32( "DoneValue" );
+                    AddKFActivenessSetting( kfsetting );
+                    childnode.NextNode();
+                }
+
+            }
+        }
+
+        {
             auto optionnode = config.FindNode( "option" );
             if ( optionnode.IsValid() )
             {
@@ -117,6 +192,7 @@ namespace KFrame
                 _review_switch = optionnode.GetString( "ReviewSwitch" );
                 _req_level = optionnode.GetString( "ReqLevel" );
                 _max_guild_log_page = optionnode.GetUInt32( "MaxGuildLogPage" );
+                _max_week_activeness = optionnode.GetUInt32( "MaxWeekActiveness" );
             }
         }
         //////////////////////////////////////////////////////////////////
@@ -157,5 +233,50 @@ namespace KFrame
         return false;
     }
 
+    void KFGuildConfig::AddKFActivenessSetting( KFGuildActivenessSetting* kfsetting )
+    {
+        AddKFTypeActiveness( kfsetting );
+        _guild_activeness_setting.Insert( kfsetting->_id, kfsetting );
+    }
 
+    void KFGuildConfig::AddKFTypeActiveness( KFGuildActivenessSetting* kfsetting )
+    {
+        auto iter = _object_types.find( kfsetting->_parent_name );
+        if ( _object_types.end() == iter )
+        {
+            iter = _object_types.insert( std::make_pair( kfsetting->_parent_name, KFGuildActivenessTypes() ) ).first;
+        }
+        iter->second.AddKFGuildActivenessType( kfsetting );
+    }
+
+    const KFGuildActivenessType* KFGuildConfig::FindTypeActiveness( const std::string& parentname, const std::string& dataname ) const
+    {
+        auto iter = _object_types.find( parentname );
+        if ( _object_types.end() == iter )
+        {
+            return nullptr;
+        }
+        return iter->second.FindKFGuildActivenessType( dataname );
+    }
+
+
+    void KFGuildActivenessTypes::AddKFGuildActivenessType( KFGuildActivenessSetting* setting )
+    {
+        auto iter = _guild_activenesstype.find( setting->_data_name );
+        if ( _guild_activenesstype.end() == iter )
+        {
+            iter = _guild_activenesstype.insert( std::make_pair( setting->_data_name, KFGuildActivenessType() ) ).first;
+        }
+        iter->second.AddKFGuildActivenessType( setting );
+    }
+
+    const KFGuildActivenessType* KFGuildActivenessTypes::FindKFGuildActivenessType( const std::string& dataname ) const
+    {
+        auto iter = _guild_activenesstype.find( dataname );
+        if ( iter == _guild_activenesstype.end() )
+        {
+            return nullptr;
+        }
+        return &iter->second;
+    }
 }

@@ -156,6 +156,7 @@ class S2SSetGuildSwitchReq;
 class S2SLoginQueryGuildidReq;
 class S2SLoginQueryGuildidAck;
 class S2SQueryGuildLogReq;
+class S2SAddGuildActivenessReq;
 class S2SGMAddMailReq;
 
 enum ServerProtocol {
@@ -278,6 +279,7 @@ enum ServerProtocol {
   S2S_LOGIN_QUERY_GUILDID_REQ = 21221,
   S2S_LOGIN_QUERY_GUILDID_ACK = 21222,
   S2S_QUERY_GUILD_LOG_REQ = 21223,
+  S2S_ADD_GUILD_ACTIVENESS_REQ = 21224,
   S2S_GM_ADD_MAIL_REQ = 21300
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
@@ -13310,6 +13312,108 @@ class LIBPROTOC_EXPORT S2SQueryGuildLogReq : public ::google::protobuf::Message 
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT S2SAddGuildActivenessReq : public ::google::protobuf::Message {
+ public:
+  S2SAddGuildActivenessReq();
+  virtual ~S2SAddGuildActivenessReq();
+
+  S2SAddGuildActivenessReq(const S2SAddGuildActivenessReq& from);
+
+  inline S2SAddGuildActivenessReq& operator=(const S2SAddGuildActivenessReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAddGuildActivenessReq& default_instance();
+
+  void Swap(S2SAddGuildActivenessReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SAddGuildActivenessReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SAddGuildActivenessReq& from);
+  void MergeFrom(const S2SAddGuildActivenessReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 guildid = 1;
+  inline bool has_guildid() const;
+  inline void clear_guildid();
+  static const int kGuildidFieldNumber = 1;
+  inline ::google::protobuf::uint64 guildid() const;
+  inline void set_guildid(::google::protobuf::uint64 value);
+
+  // required uint32 playerid = 2;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint32 activeness = 3;
+  inline bool has_activeness() const;
+  inline void clear_activeness();
+  static const int kActivenessFieldNumber = 3;
+  inline ::google::protobuf::uint32 activeness() const;
+  inline void set_activeness(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddGuildActivenessReq)
+ private:
+  inline void set_has_guildid();
+  inline void clear_has_guildid();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_activeness();
+  inline void clear_has_activeness();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 guildid_;
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 activeness_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAddGuildActivenessReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT S2SGMAddMailReq : public ::google::protobuf::Message {
  public:
   S2SGMAddMailReq();
@@ -25009,6 +25113,76 @@ inline ::google::protobuf::uint32 S2SQueryGuildLogReq::page() const {
 inline void S2SQueryGuildLogReq::set_page(::google::protobuf::uint32 value) {
   set_has_page();
   page_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SAddGuildActivenessReq
+
+// required uint64 guildid = 1;
+inline bool S2SAddGuildActivenessReq::has_guildid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SAddGuildActivenessReq::set_has_guildid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SAddGuildActivenessReq::clear_has_guildid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SAddGuildActivenessReq::clear_guildid() {
+  guildid_ = GOOGLE_ULONGLONG(0);
+  clear_has_guildid();
+}
+inline ::google::protobuf::uint64 S2SAddGuildActivenessReq::guildid() const {
+  return guildid_;
+}
+inline void S2SAddGuildActivenessReq::set_guildid(::google::protobuf::uint64 value) {
+  set_has_guildid();
+  guildid_ = value;
+}
+
+// required uint32 playerid = 2;
+inline bool S2SAddGuildActivenessReq::has_playerid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SAddGuildActivenessReq::set_has_playerid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SAddGuildActivenessReq::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SAddGuildActivenessReq::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SAddGuildActivenessReq::playerid() const {
+  return playerid_;
+}
+inline void S2SAddGuildActivenessReq::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint32 activeness = 3;
+inline bool S2SAddGuildActivenessReq::has_activeness() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SAddGuildActivenessReq::set_has_activeness() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SAddGuildActivenessReq::clear_has_activeness() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SAddGuildActivenessReq::clear_activeness() {
+  activeness_ = 0u;
+  clear_has_activeness();
+}
+inline ::google::protobuf::uint32 S2SAddGuildActivenessReq::activeness() const {
+  return activeness_;
+}
+inline void S2SAddGuildActivenessReq::set_activeness(::google::protobuf::uint32 value) {
+  set_has_activeness();
+  activeness_ = value;
 }
 
 // -------------------------------------------------------------------

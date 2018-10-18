@@ -108,6 +108,8 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleLoginQueryGuildIdReq );
 
         __KF_MESSAGE_FUNCTION__( HandleQueryGuildLogReq );
+
+        __KF_MESSAGE_FUNCTION__( HandleAddGuildActivenessReq );
         // 定时刷新帮派(申请列表)
         __KF_TIMER_FUNCTION__( OnTimerRefreshGuild );
 
@@ -159,6 +161,10 @@ namespace KFrame
         // 刷新帮派申请列表
         void RefreshGuildApplicantlist( uint64 guildid );
 
+        // 刷新帮派成员周活跃度
+        void RefreshGuildWeekActiveness( KFEntity* const kfguild );
+        void RefreshGuildMemberWeekActiveness( KFEntity* const kfguild, KFData* kfguildmember );
+
         // 移除申请列表中的某个玩家
         bool RemoveApplicanlist( uint64 guildid, uint32 playerid );
 
@@ -192,6 +198,10 @@ namespace KFrame
         // 移除帮派中某个玩家
         bool RemoveGuildMember( uint64 guildid, uint32 playerid, bool bekick = true );
 
+        // 扣除某个玩家的在帮派的周活跃度
+        void DecGuildMemberWeekActiveness( KFEntity* kfguild, uint32 playerid );
+
+
         // 过滤单个帮派信息
         void SerialGuildData( MapString& guilddata, KFMsg::PBStrings* pbguildata );
 
@@ -201,9 +211,15 @@ namespace KFrame
         // 获取玩家的帮派id
         uint64 GetGuildIdByPlayerid( uint32 playerid );
 
+        // 更新个人帮派活跃度
+        bool UpdateMemberActiveness( uint32 playerid, uint64 guildid, uint32 operate, uint32 value );
+
+        // 更新帮派活跃度
+        bool UpdateGuildActiveness( uint64 guildid, uint32 operate, uint32 value );
+
         // 帮派日志
-        template<typename... P>
-        void WriteGuildLog( uint64 guildid, uint32 maxlog, uint32 logtype, P&& ... args );
+        template<typename... Args>
+        void WriteGuildLog( uint64 guildid, uint32 maxlog, uint32 logtype, Args&& ... args );
 
     private:
         // 玩家申请列表 std::string转换成pb数据格式

@@ -65,6 +65,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_SET_GUILD_SWITCH_REQ, &KFGuildShardModule::HandleSetGuildSwitchReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_QUERY_GUILDID_REQ, &KFGuildShardModule::HandleLoginQueryGuildIdReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUILD_LOG_REQ, &KFGuildShardModule::HandleQueryGuildLogReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_GUILD_ACTIVENESS_REQ, &KFGuildShardModule::HandleAddGuildActivenessReq );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GUILD_DATA_REQ, &KFGuildShardModule::HandleUpdateGuildDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPGRADE_GUILD_REQ, &KFGuildShardModule::HandleUpgradeGuildReq );
@@ -292,13 +293,10 @@ namespace KFrame
                 }
             }
         }
-
-
     }
 
     __KF_ADD_DATA_FUNCTION__( KFGuildShardModule::OnAddDataCallBack )
     {
-        //
         if ( !player->IsInited() )
         {
             return;
@@ -358,7 +356,6 @@ namespace KFrame
                     __LOG_ERROR__( "guild[{}] update data failed! parentname[{}] parentkey[{}] dataname[{}] data[{}]",
                                    player->GetKeyID(), kfdata->GetParent()->GetName(), kfdata->GetParent()->GetKeyID(), kfdata->GetName(), kfdata->GetValue<std::string>() );
                 }
-
             }
             else
             {
@@ -375,6 +372,7 @@ namespace KFrame
 
         }
 
+        // 帮派排行榜
         auto showdata = _kf_guild_shard_config->_show_data;
         if ( !showdata.empty() )
         {
@@ -389,7 +387,6 @@ namespace KFrame
                         __LOG_ERROR__( "guild[{}] update guildrank failed! score[{}] key[{}]",
                                        score, kfdata->GetParent()->GetKeyID() );
                     }
-
                 }
             }
         }
@@ -1119,6 +1116,28 @@ namespace KFrame
 
     }
 
+    __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleAddGuildActivenessReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SAddGuildActivenessReq );
+        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            __LOG_ERROR__( "player[{}] add guild[{}] activeness failed!", kfmsg.playerid(), kfmsg.guildid() );
+            return;
+        }
+        if ( !IsInGuild( kfmsg.playerid(), kfmsg.guildid() ) )
+        {
+            return;
+        }
+        auto kfobject = kfguild->GetData();
+        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), kfmsg.playerid() );
+        // 先主动刷新个人的周活跃
+        RefreshGuildMemberWeekActiveness( kfguild, kfguildmember );
+        UpdateMemberActiveness( kfmsg.playerid(), kfmsg.guildid(), KFOperateEnum::Add, kfmsg.activeness() );
+        UpdateGuildActiveness( kfmsg.guildid(), KFOperateEnum::Add, kfmsg.activeness() );
+
+    }
+
     __KF_TIMER_FUNCTION__( KFGuildShardModule::OnTimerRefreshGuild )
     {
         auto* kfguild = _kf_component->FirstEntity();
@@ -1126,6 +1145,7 @@ namespace KFrame
         {
             auto guildid = kfguild->GetKeyID();
             RefreshGuildApplicantlist( guildid );
+            RefreshGuildWeekActiveness( kfguild );
             kfguild = _kf_component->NextEntity();
         }
 
@@ -1430,7 +1450,7 @@ namespace KFrame
 
         KFMsg::PBApplicationlists applylist;
         GetGuildApplicantlist( guildid, applylist );
-        if ( kfguildsetting->_max_applylist <= applylist.applylists_size() )
+        if ( kfguildsetting->_max_applylist <= static_cast<uint32>( applylist.applylists_size() ) )
         {
             return false;
         }
@@ -1522,8 +1542,7 @@ namespace KFrame
             {
                 continue;
             }
-
-            // TODO:这边是查redis玩家加入其他帮派的话，暂时清除申请列表
+            // TODO:玩家加入其他帮派的话，暂时清除申请列表
             if ( IsGuildMember( playerid ) )
             {
                 continue;
@@ -1544,9 +1563,39 @@ namespace KFrame
         {
             kfguild->UpdateData( __KF_STRING__( applicantlist ), newapplicantlist );
         }
-
     }
 
+    void KFGuildShardModule::RefreshGuildWeekActiveness( KFEntity* const kfguild )
+    {
+        if ( nullptr == kfguild )
+        {
+            return;
+        }
+        auto kfobject = kfguild->GetData();
+        auto kfguildmembers = kfobject->FindData( __KF_STRING__( guildmember ) );
+        auto kfguildmember = kfguildmembers->FirstData();
+        while ( kfguildmember != nullptr )
+        {
+            RefreshGuildMemberWeekActiveness( kfguild, kfguildmember );
+            kfguildmember = kfguildmembers->NextData();
+        }
+    }
+
+    void KFGuildShardModule::RefreshGuildMemberWeekActiveness( KFEntity* const kfguild, KFData* kfguildmember )
+    {
+        if ( nullptr == kfguildmember )
+        {
+            return;
+        }
+        auto lasttime = kfguildmember->GetValue<uint64>( __KF_STRING__( time ) );
+        if ( !KFDate::CheckTime( 3, 0, 0, lasttime, KFGlobal::Instance()->_real_time ) )
+        {
+            return;
+        }
+
+        kfguild->UpdateData( kfguildmember, __KF_STRING__( time ), KFOperateEnum::Set, KFGlobal::Instance()->_real_time );
+        kfguild->UpdateData( kfguildmember, __KF_STRING__( weekactiveness ), KFOperateEnum::Set, _invalid_int );
+    }
 
     bool KFGuildShardModule::RemoveApplicanlist( uint64 guildid, uint32 playerid )
     {
@@ -1826,7 +1875,6 @@ namespace KFrame
 
     bool KFGuildShardModule::RemoveGuildMember( uint64 guildid, uint32 playerid, bool bekick )
     {
-
         auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
         if ( kfguild == nullptr )
         {
@@ -1842,9 +1890,39 @@ namespace KFrame
                            guildid, strmemberlist, playerid );
             return false;
         }
+        // 扣除掉该玩家的周活跃度
+        DecGuildMemberWeekActiveness( kfguild, playerid );
+
         kfguild->UpdateData( __KF_STRING__( memberlist ), newmemberlist );
         kfguild->RemoveData( __KF_STRING__( guildmember ), playerid );
+
         return true;
+    }
+
+    void KFGuildShardModule::DecGuildMemberWeekActiveness( KFEntity* kfguild, uint32 playerid )
+    {
+        auto kfobject = kfguild->GetData();
+        auto totalactiveness = kfobject->GetValue<uint64>( __KF_STRING__( totalactiveness ) );
+        if ( totalactiveness <= _invalid_int )
+        {
+            return;
+        }
+
+        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), playerid );
+        if ( nullptr == kfguildmember )
+        {
+            return;
+        }
+
+        RefreshGuildMemberWeekActiveness( kfguild, kfguildmember );
+        auto weekactiveness = kfguildmember->GetValue<uint64>( __KF_STRING__( weekactiveness ) );
+        if ( _invalid_int >= weekactiveness )
+        {
+            return;
+        }
+        int restactiveness = ( int )totalactiveness - weekactiveness;
+        auto lastvalue = __MAX__( restactiveness, _invalid_int );
+        kfguild->UpdateData( __KF_STRING__( totalactiveness ), KFOperateEnum::Set, lastvalue );
     }
 
 
@@ -1895,7 +1973,6 @@ namespace KFrame
             if ( _invalid_int == memberid )
             {
                 kfguildmember = kfguildmembers->NextData();
-                // log error playerid is empty
                 continue;
             }
             auto serverid = kfguildmember->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
@@ -1952,13 +2029,44 @@ namespace KFrame
         return guildid;
     }
 
-    template<typename... P>
-    void KFGuildShardModule::WriteGuildLog( uint64 guildid, uint32 maxlog, uint32 logtype, P&& ... args )
+    bool KFGuildShardModule::UpdateMemberActiveness( uint32 playerid, uint64 guildid, uint32 operate, uint32 value )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return false;
+        }
+        auto kfobject = kfguild->GetData();
+        auto kfguildmember = kfobject->FindData( __KF_STRING__( guildmember ), playerid );
+        if ( kfguildmember == nullptr )
+        {
+            __LOG_ERROR__( "update player[{}] activeness failed! guild[{}]", playerid, guildid );
+            return false;
+        }
+        kfguild->UpdateData( __KF_STRING__( guildmember ), playerid, __KF_STRING__( weekactiveness ), operate, value );
+
+        return kfguild->UpdateData( __KF_STRING__( guildmember ), playerid, __KF_STRING__( activeness ), operate, value );
+
+    }
+
+    bool KFGuildShardModule::UpdateGuildActiveness( uint64 guildid, uint32 operate, uint32 value )
+    {
+        auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
+        if ( nullptr == kfguild )
+        {
+            return false;
+        }
+
+        return kfguild->UpdateData( __KF_STRING__( totalactiveness ), operate, value );
+
+    }
+    template<typename... Args>
+    void KFGuildShardModule::WriteGuildLog( uint64 guildid, uint32 maxlog, uint32 logtype, Args&& ... args )
     {
         auto fmt =  _kf_guild_shard_config->GetGuildLogFmt( logtype );
         static const std::string _time_fmt = "[{}]";
         auto newfmt = _time_fmt + fmt;
-        auto content = __FORMAT__( newfmt, KFDate::GetTimeString(), std::forward<P>( args )... );
+        auto content = __FORMAT__( newfmt, KFDate::GetTimeString(), std::forward<Args>( args )... );
         KFUtility::ReplaceString( content, " ", "/" );
         auto redisdriver = __GUILD_REDIS_DRIVER__;
         redisdriver->Append( "lpush {}:{} {}", __KF_STRING__( guildlog ), guildid, content );
@@ -2014,7 +2122,6 @@ namespace KFrame
             if ( _invalid_int == memberid )
             {
                 kfguildmember = kfguildmembers->NextData();
-                // log error playerid is empty
                 continue;
             }
             auto title = kfguildmember->GetValue<uint32>( __KF_STRING__( title ) );
@@ -2080,7 +2187,6 @@ namespace KFrame
             if ( _invalid_int == memberid )
             {
                 kfguildmember = kfguildmembers->NextData();
-                // log error playerid is empty
                 continue;
             }
             auto serverid = kfguildmember->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
@@ -2155,7 +2261,6 @@ namespace KFrame
             if ( _invalid_int == memberid )
             {
                 kfguildmember = kfguildmembers->NextData();
-                // log error playerid is empty
                 continue;
             }
             auto serverid = kfguildmember->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );

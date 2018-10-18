@@ -27,6 +27,9 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterUpdateDataModule( this, &KFGuildClientModule::OnUpdateDataCallBack );
         _kf_component->RegisterUpdateStringModule( this, &KFGuildClientModule::OnUpdateStringCallBack );
+        _kf_component->RegisterAddDataModule( this, &KFGuildClientModule::OnAddDataCallBack );
+        _kf_component->RegisterRemoveDataModule( this, &KFGuildClientModule::OnRemoveDataCallBack );
+
         _kf_component->RegisterUpdateStringFunction( __KF_STRING__( guild ), __KF_STRING__( applicantlist ), this, &KFGuildClientModule::OnGuildApplicantUpdateCallBack );
 
         __REGISTER_MESSAGE__( KFMsg::MSG_CREATE_GUILD_REQ, &KFGuildClientModule::HandleCreateGuildReq );
@@ -112,14 +115,17 @@ namespace KFrame
         KFMsg::S2SLoginQueryGuildidReq req;
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
+        auto kfobject = player->GetData();
+        auto kfguildid = kfobject->FindData( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        kfguildid->SetValue<uint64>( _invalid_int );
         SendMessageToGuild( KFMsg::S2S_LOGIN_QUERY_GUILDID_REQ, &req );
 
     }
 
-    void KFGuildClientModule::OnEnterUpdateGuildData( KFEntity* player )
+    void KFGuildClientModule::OnEnterUpdateGuildData( KFEntity* player, uint64 guildid )
     {
         auto kfobject = player->GetData();
-        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        //auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
         if ( guildid == _invalid_int )
         {
             return;
@@ -198,13 +204,6 @@ namespace KFrame
         {
             return;
         }
-
-        // 更新到帮派属性集群
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) )
-        {
-            return;
-        }
         auto kfobject = player->GetData();
         auto kfbaisc = kfobject->FindData( __KF_STRING__( basic ) );
         auto guildid = kfbaisc->GetValue<uint64>( __KF_STRING__( guildid ) );
@@ -212,6 +211,15 @@ namespace KFrame
         {
             return;
         }
+
+        UpdateDataActivenessValue( player, key, kfdata, operate, value, newvalue );
+        // 更新到帮派属性集群
+        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) ||
+                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Guild_Data ) )
+        {
+            return;
+        }
+
 
         MapString guildvalues;
         guildvalues[kfdata->GetName()] = kfdata->ToString();
@@ -779,12 +787,8 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
-        kfguild->SetKeyID( kfmsg.playerid() );
+        kfguild->SetKeyID( kfmsg.guildid() );
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        /*if ( nullptr != kfbasic )
-        {
-            kfbasic->SetValue<uint64>( __KF_STRING__( guildid ), kfmsg.guildid() );
-        }*/
 
         // 格式化数据
         if ( !_kf_kernel->ParseFromProto( kfguild, &kfmsg.guilddata() ) )
@@ -822,6 +826,7 @@ namespace KFrame
             }
         }
 
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( guildid ), KFOperateEnum::Set, kfmsg.guildid() );
         KFMsg::MsgTellQueryGuild sync;
         _kf_kernel->SerializeToClient( kfguild, sync.mutable_guild() );
 
@@ -831,7 +836,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleAddGuildAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::MsgSyncAddGuildData );
-        //std::cout << "HandleAddGuildAck:" << kfmsg.DebugString() << std::endl;
         auto kfobject = player->GetData();
         if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
         {
@@ -850,7 +854,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleUpDateGuildAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::MsgSyncUpdateGuildData );
-        //std::cout << "HandleUpDateGuildAck:" << kfmsg.DebugString() << std::endl;
         auto kfobject = player->GetData();
         if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
         {
@@ -870,7 +873,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleRemoveGuildAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::MsgSyncRemoveGuildData );
-        //std::cout << "HandleRemoveGuildAck:" << kfmsg.DebugString() << std::endl;
         auto kfobject = player->GetData();
         if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
         {
@@ -936,7 +938,7 @@ namespace KFrame
         auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
         if ( _invalid_int != kfmsg.guildid() )
         {
-            OnEnterUpdateGuildData( player );
+            OnEnterUpdateGuildData( player, kfmsg.guildid() );
 
             KFMsg::S2SLoginQueryGuildReq req;
             req.set_guildid( kfmsg.guildid() );
@@ -947,11 +949,7 @@ namespace KFrame
                 __LOG_ERROR__( "player[{}] login query guildid[{}] send message failed!", player->GetKeyID(), guildid );
             }
         }
-        if ( guildid != kfmsg.guildid() )
-        {
-            auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-            player->UpdateData( kfbasic, __KF_STRING__( guildid ), KFUtility::ToString( kfmsg.guildid() ) );
-        }
+
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleQueryGuildLogReq )
@@ -1083,8 +1081,6 @@ namespace KFrame
         return kfguildapplylist;
 
     }
-
-
 
     void KFGuildClientModule::ParseUpdateGuildFromProto( KFEntity* player, KFData* kfparent, const KFMsg::PBObject* proto )
     {
@@ -1374,6 +1370,45 @@ namespace KFrame
         }
     }
 
+    uint32 KFGuildClientModule::AddGuildMemberWeekActiveness( KFEntity* player, uint32 addvalue )
+    {
+        if ( !player || _invalid_int == addvalue )
+        {
+            return _invalid_int;
+        }
+        auto kfobject = player->GetData();
+        auto kfguild = kfobject->FindData( __KF_STRING__( guild ) );
+        auto kfguildmember = kfguild->FindData( __KF_STRING__( guildmember ), player->GetKeyID() );
+        if ( nullptr == kfguildmember )
+        {
+            return _invalid_int;
+        }
+
+        auto lasttime = kfguildmember->GetValue<uint64>( __KF_STRING__( time ) );
+
+        // 超过一周
+        if ( KFDate::CheckTime( 3, 0, 0, lasttime, KFGlobal::Instance()->_real_time ) )
+        {
+            player->UpdateData( kfguildmember, __KF_STRING__( time ), KFOperateEnum::Set, KFGlobal::Instance()->_real_time );
+            player->UpdateData( kfguildmember, __KF_STRING__( weekactiveness ), KFOperateEnum::Set, _invalid_int );
+        }
+
+        auto maxguildweekactiveness = _kf_guild_config->GetMaxWeekActiveness();
+        auto ownweekactiveness = kfguildmember->GetValue<uint64>( __KF_STRING__( weekactiveness ) );
+        int restweekactiveness = ( int )maxguildweekactiveness - ( int )ownweekactiveness;
+        auto addactiveness = __MIN__( restweekactiveness, addvalue );
+        if ( _invalid_int >= addvalue )
+        {
+            return _invalid_int;
+        }
+
+        // 这边先增加周活跃度上限
+        player->UpdateData( kfguildmember, __KF_STRING__( weekactiveness ), KFOperateEnum::Add, addactiveness );
+        return addactiveness;
+
+    }
+
+
     bool KFGuildClientModule::IsValidName( const std::string& name )
     {
         if ( name.empty() )
@@ -1387,5 +1422,109 @@ namespace KFrame
         return true;
     }
 
+    __KF_ADD_DATA_FUNCTION__( KFGuildClientModule::OnAddDataCallBack )
+    {
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+
+        UpdateObjectActivenessValue( player, key, kfdata, KFOperateEnum::Add );
+    }
+
+    __KF_REMOVE_DATA_FUNCTION__( KFGuildClientModule::OnRemoveDataCallBack )
+    {
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return;
+        }
+        UpdateObjectActivenessValue( player, key, kfdata, KFOperateEnum::Dec );
+    }
+
+    void KFGuildClientModule::UpdateObjectActivenessValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
+    {
+        auto child = kfdata->FirstData();
+        while ( child != nullptr )
+        {
+            auto value = child->GetValue();
+            if ( value != 0 )
+            {
+                UpdateDataActivenessValue( player, key, child, operate, value, value );
+            }
+
+            child = kfdata->NextData();
+        }
+    }
+
+    void KFGuildClientModule::UpdateDataActivenessValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    {
+        if ( nowvalue == _invalid_int )
+        {
+            return;
+        }
+
+        auto& parentname = kfdata->GetParent()->GetName();
+        auto& dataname = kfdata->GetName();
+
+        auto kfactivenessseting = _kf_guild_config->FindTypeActiveness( parentname, dataname );
+        if ( nullptr == kfactivenessseting )
+        {
+            return;
+        }
+
+        auto kfobject = player->GetData();
+        auto kfguilddayactiveness = kfobject->FindData( __KF_STRING__( guilddayactiviness ) );
+        if ( kfguilddayactiveness == nullptr )
+        {
+            return;
+        }
+
+        for ( auto achtivenesssetting : kfactivenessseting->_guild_activeness_type )
+        {
+            if ( !achtivenesssetting->CheckCanUpdate( key, operate ) )
+            {
+                continue;
+            }
+            auto kfactiviness = kfguilddayactiveness->FindData( achtivenesssetting->_id );
+
+            auto usevalue = _invalid_int;			// 已经获取的任务数值
+            auto hadactiveness = _invalid_int;		// 已经获取的活跃度值
+            if ( nullptr != kfactiviness )
+            {
+                usevalue = kfactiviness->GetValue<uint32>( __KF_STRING__( usevalue ) );
+                hadactiveness = kfactiviness->GetValue<uint32>( __KF_STRING__( value ) );
+            }
+            auto addvalue = achtivenesssetting->GetAddActivenessValue( value, hadactiveness, usevalue );
+            auto addactiveness = AddGuildMemberWeekActiveness( player, addvalue );
+
+            player->UpdateData( kfguilddayactiveness, achtivenesssetting->_id, __KF_STRING__( usevalue ), KFOperateEnum::Set, usevalue );
+            if ( addactiveness != _invalid_int )
+            {
+                player->UpdateData( kfguilddayactiveness, achtivenesssetting->_id, __KF_STRING__( value ), KFOperateEnum::Add, addactiveness );
+                SendAddGuildActiveness( player, addactiveness );
+            }
+
+        }
+    }
+
+    bool KFGuildClientModule::SendAddGuildActiveness( KFEntity* player, uint32 activeness )
+    {
+        auto kfobject = player->GetData();
+        auto guildid = kfobject->GetValue<uint64>( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
+        if ( _invalid_int == guildid )
+        {
+            return false;
+        }
+        KFMsg::S2SAddGuildActivenessReq req;
+        req.set_guildid( guildid );
+        req.set_playerid( player->GetKeyID() );
+        req.set_activeness( activeness );
+
+        return SendMessageToGuild( guildid, KFMsg::S2S_ADD_GUILD_ACTIVENESS_REQ, &req );
+    }
 
 }

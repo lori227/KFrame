@@ -145,7 +145,10 @@ namespace KFrame
         __STRING_DEFINE__( matchplayer );
         __STRING_DEFINE__( teamid );
         __STRING_DEFINE__( roomid );
+        __STRING_DEFINE__( grade );
+        __STRING_DEFINE__( maxgrade );
         __STRING_DEFINE__( grading );
+        __STRING_DEFINE__( wincount );
         __STRING_DEFINE__( public );
         __STRING_DEFINE__( friend );
         __STRING_DEFINE__( friendliness );
@@ -336,6 +339,16 @@ namespace KFrame
         __STRING_DEFINE__( reqlevel );
         __STRING_DEFINE__( reviewswitch );
         __STRING_DEFINE__( guildlog );
+        __STRING_DEFINE__( guilddayactiviness );
+        __STRING_DEFINE__( usevalue );
+        __STRING_DEFINE__( activeness );
+        __STRING_DEFINE__( weekactiveness );
+        __STRING_DEFINE__( lua );
+        __STRING_DEFINE__( config );
+        __STRING_DEFINE__( downconfig );
+        __STRING_DEFINE__( loadconfig );
+        __STRING_DEFINE__( reloadconfig );
+
     }
 }
 

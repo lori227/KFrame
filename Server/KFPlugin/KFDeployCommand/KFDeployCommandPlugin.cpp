@@ -16,7 +16,9 @@ namespace KFrame
 
     void KFDeployCommandPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_lua, KFLuaInterface );
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
     }
 

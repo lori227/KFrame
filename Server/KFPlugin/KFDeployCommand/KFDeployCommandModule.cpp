@@ -112,6 +112,9 @@ namespace KFrame
             return;
         }
 
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}:{}] deploy command start!",
+                      command, value, appchannel, appname, apptype, appid, zoneid );
+
         if ( command == __KF_STRING__( shutdown ) )
         {
             auto delaytime = KFUtility::ToValue< uint32 >( value );
@@ -121,6 +124,24 @@ namespace KFrame
         {
             auto level = KFUtility::ToValue< uint32 >( value );
             KFGlobal::Instance()->SetLogLevel( level );
+        }
+        else if ( command == __KF_STRING__( loadconfig ) )
+        {
+            auto tempvalue = value;
+            KFUtility::SplitString( tempvalue, "." );
+            if ( tempvalue == __KF_STRING__( config ) )
+            {
+                _kf_config->LoadConfig( value );
+            }
+            else if ( tempvalue == __KF_STRING__( lua ) )
+            {
+                _kf_lua->LoadScript( value );
+            }
+        }
+        else
+        {
+            __LOG_INFO__( "[{}:{} | {}:{}:{}:{}:{}] deploy command no process!",
+                          command, value, appchannel, appname, apptype, appid, zoneid );
         }
     }
 

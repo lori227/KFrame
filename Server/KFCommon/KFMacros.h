@@ -45,10 +45,6 @@
     #define __TO_STRING__( value ) std::to_string( value )
 #endif
 
-#ifndef __TO_CHAR__
-    #define __TO_CHAR__( value ) std::to_string( value ).c_str()
-#endif
-
 #ifndef __FORMAT__
     #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, ##__VA_ARGS__ );
 #endif

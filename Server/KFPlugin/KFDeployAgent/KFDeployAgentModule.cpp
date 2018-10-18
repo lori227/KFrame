@@ -582,6 +582,11 @@ namespace KFrame
             AddDeployTask( __KF_STRING__( wget ), pbdeploy );
             AddDeployTask( __KF_STRING__( startup ), pbdeploy );
         }
+        else if ( pbdeploy->command() == __KF_STRING__( reloadconfig ) )
+        {
+            AddDeployTask( __KF_STRING__( downconfig ), pbdeploy );
+            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+        }
         else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
         {
             for ( auto kftask : _deploy_task )
@@ -698,6 +703,10 @@ namespace KFrame
         {
             ok = CheckWgetVersionTaskFinish();
         }
+        else if ( _kf_task->_command == __KF_STRING__( downconfig ) )
+        {
+            ok = CheckDownConfigTaskFinish();
+        }
 
         return ok;
     }
@@ -735,6 +744,10 @@ namespace KFrame
             else if ( _kf_task->_command == __KF_STRING__( wget ) )
             {
                 StartWgetVersionTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( downconfig ) )
+            {
+                StartDownConfigTask();
             }
             else
             {
@@ -1003,6 +1016,65 @@ namespace KFrame
                                         __KF_STRING__( deploy ), __KF_STRING__( version ), version, __KF_STRING__( appid ), deploydata->_app_id );
             }
         }
+
+        return true;
+    }
+
+    void KFDeployAgentModule::StartDownConfigTask()
+    {
+        // 查询版本路径
+        auto queryurl = _mysql_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
+        if ( !queryurl->IsOk() || queryurl->_value.empty() )
+        {
+            return;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 执行下载命令
+        ExecuteShell( "wget -c -P ./version/ {}", queryurl->_value );
+#endif
+    }
+
+    bool KFDeployAgentModule::CheckDownConfigTaskFinish()
+    {
+        auto querymap = _mysql_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
+        if ( !querymap->IsOk() || querymap->_value.empty() )
+        {
+            return true;
+        }
+
+        auto querymd5 = querymap->_value[ "file_md5" ];
+        auto querypath = querymap->_value[ "file_path" ];
+        if ( querymd5.empty() || querypath.empty() )
+        {
+            return false;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+
+#else
+        // 执行下载命令
+        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value );
+        if ( md5 != querymd5 )
+        {
+            StartDownConfigTask();
+            return false;
+        }
+
+        // 把文件拷贝过去
+        std::set< std::string > deploypathlist;
+        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        for ( auto& deploypath : deploypathlist )
+        {
+            ExecuteShell( "mkdir -p {}", deploypath );
+            ExecuteShell( "cp -rf ./version/{} {}/{}/", _kf_task->_value, deploypath, querypath );
+        }
+
+        LogDeploy( _kf_task->_log_url, "update file {} ok!", _kf_task->_value );
+#endif
 
         return true;
     }

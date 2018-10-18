@@ -14,6 +14,7 @@
 
 
 import os
+import os.path 
 import sys
 import glob
 import datetime
@@ -135,6 +136,8 @@ def parse_args():
     parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
+    parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
+    parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
     if is_linux():
         parser.add_argument('-s', '--svn', type=str, help="svn version")
         parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
@@ -148,46 +151,70 @@ if args['mode'] == 'release':
 g_proc_config = gcm_conf.load_proc_config(os.path.join(input_folder, 'gcm_proc.xml'))
 g_global_config = gcm_global_conf.load_global_config( os.path.join(input_folder, 'global.conf'))
 
-print '\nstart to generate shell'
-gen_shell()
-print 'generate shell finished'
+global_conf = dict()
+branch_name = ''
+if args['branch'] == 0:
+    global_conf = g_global_config.get_develop_config()
+    branch_name = 'develop'
+elif args['branch'] == 1:
+    global_conf = g_global_config.get_internal_config()
+    branch_name = 'internal'
+elif args['branch'] == 2:
+    global_conf = g_global_config.get_public_config()
+    branch_name = 'online'
+else:
+    global_conf = g_global_config.get_public_config()
+    branch_name = 'grayscale'
+        
+if args['type'] == 1:
+    # version
+    print '\nstart to generate shell'
+    gen_shell()
+    print 'generate shell finished'
 
-if is_linux() and (args['svn'] is not None):
-    global_conf = dict()
-    branch_name = ''
-    if args['branch'] == 0:
-        global_conf = g_global_config.get_develop_config()
-        branch_name = 'develop'
-    elif args['branch'] == 1:
-        global_conf = g_global_config.get_internal_config()
-        branch_name = 'internal'
-    elif args['branch'] == 2:
-        global_conf = g_global_config.get_public_config()
-        branch_name = 'online'
-    else:
-        global_conf = g_global_config.get_public_config()
-        branch_name = 'grayscale'
+    if is_linux() and (args['svn'] is not None):
+        print 'start pack RELEASE VERSION'
+        now_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
+        release_version_name = 'sgame_%s_%s_%s.tar.gz' % (branch_name, args['svn'], now_time)
+        tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
+        print tar_cmd
+        commands.getoutput(tar_cmd)
+        print 'pack RELEASE_VERSION finished'
 
-    print 'start pack RELEASE VERSION'
-    now_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
-    release_version_name = 'sgame_%s_%s_%s.tar.gz' % (branch_name, args['svn'], now_time)
-    tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
-    print tar_cmd
-    commands.getoutput(tar_cmd)
-    print 'pack RELEASE_VERSION finished'
+        # Post to web server
+        gcm_http.do_post(global_conf['web_api'], release_version_name)
+
+        # get md5
+        (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
+
+        # insert into db
+        db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
+        mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
+        gcm_db.insert_mysql_db(mysql_db_info, sql)
+
+        # rm version_name
+        rm_cmd = ('rm -rf %s') % (release_version_name)
+        commands.getoutput(rm_cmd)    
+elif args['type'] == 2:
+    # reload
+    print '\nstart to update file'
+
+    update_file = args['file']
+    (update_path, update_name) = os.path.split(update_file)
 
     # Post to web server
-    gcm_http.do_post(global_conf['web_api'], release_version_name)
+    gcm_http.do_post(global_conf['web_api'], base_path + update_file)
 
-    # get md5
-    (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
+    (status, output) = commands.getstatusoutput('md5sum %s' % base_path + update_file)
 
     # insert into db
     db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sql = "INSERT INTO version (version_time, version_name, version_url, version_md5) VALUES ('%s', '%s', '%s', '%s');" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, output[0: output.find(' ')])
+    sql = "INSERT INTO file (file_name, file_path, file_url, file_time, file_md5) VALUES ('%s', '%s', '%s', '%s', '%s');" % (update_name, update_path,  global_conf['web_url'] + update_name, db_time, output[0: output.find(' ')])
     mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
     gcm_db.insert_mysql_db(mysql_db_info, sql)
 
-    # rm version_name
-    rm_cmd = ('rm -rf %s') % (release_version_name)
-    commands.getoutput(rm_cmd)
+    print 'update file finished'
+else:
+    print 'error type!'
+

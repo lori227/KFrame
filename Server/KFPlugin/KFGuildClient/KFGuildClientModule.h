@@ -52,7 +52,7 @@ namespace KFrame
         // 进入游戏查看帮派信息
         void OnEnterQueryGuild( KFEntity* player );
 
-        void OnEnterUpdateGuildData( KFEntity* player );
+        void OnEnterUpdateGuildData( KFEntity* player, uint64 guildid );
         void OnLeaveUpdateGuildData( KFEntity* player );
         bool UpdatePublicData( uint64 guildid, uint32 playerid, const MapString& values );
     protected:
@@ -137,6 +137,10 @@ namespace KFrame
 
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
+        __KF_ADD_DATA_FUNCTION__( OnAddDataCallBack );
+
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataCallBack );
+
         // 帮派申请列表更新
         __KF_UPDATE_STRING_FUNCTION__( OnGuildApplicantUpdateCallBack );
     private:
@@ -166,13 +170,20 @@ namespace KFrame
         // 删除过期邀请列表
         void RemoveVaildInviteList( KFEntity* player );
 
+        // 判断是否是本周，返回应添加的活跃度值
+        uint32 AddGuildMemberWeekActiveness( KFEntity* player, uint32 addactiveness );
+
         // 是否含有空格或者%号
         bool IsValidName( const std::string& name );
 
         // 检测申请列表\邀请列表是否过期
         __KF_TIMER_FUNCTION__( OnTimerCheckApplicantlistValidTime );
 
+    private:
+        void UpdateObjectActivenessValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
+        void UpdateDataActivenessValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
+        bool SendAddGuildActiveness( KFEntity* player, uint32 activeness );
     private:
         // 组件
         KFComponent* _kf_component;

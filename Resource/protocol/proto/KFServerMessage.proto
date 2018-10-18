@@ -125,7 +125,7 @@ enum ServerProtocol
 	S2S_LOGIN_QUERY_GUILDID_REQ = 21221;			// 登录请求guildid
 	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// 登录请求guildid返回
 	S2S_QUERY_GUILD_LOG_REQ = 21223;			// 查询帮派日志
-	
+	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// 增加帮派活跃度
 	S2S_GM_ADD_MAIL_REQ = 21300;				// GM增加邮件
 
  }
@@ -1260,6 +1260,17 @@ message S2SQueryGuildLogReq
 	required uint32 endpos = 5;		// 结束位置
 	required uint32 page = 6;		// 页数
 }
+
+// 增加帮派活跃度
+// S2S_ADD_GUILD_ACTIVENESS_REQ
+message S2SAddGuildActivenessReq
+{
+	required uint64 guildid = 1;		// 帮派id
+	required uint32 playerid = 2;		// 玩家id
+	required uint32 activeness = 3;		// 活跃度
+}
+
+
 
 // GM增加邮件
 // S2S_GM_ADD_MAIL_REQ
