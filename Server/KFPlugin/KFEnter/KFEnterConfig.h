@@ -18,8 +18,8 @@ namespace KFrame
     class KFEnterConfig : public KFConfig, public KFSingleton< KFEnterConfig >
     {
     public:
-        KFEnterConfig();
-        ~KFEnterConfig();
+        KFEnterConfig() = default;
+        ~KFEnterConfig() = default;
 
         bool LoadConfig();
 

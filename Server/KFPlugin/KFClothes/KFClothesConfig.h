@@ -11,22 +11,17 @@ namespace KFrame
     class KFClothesConfig : public KFConfig, public KFSingleton< KFClothesConfig >
     {
     public:
-        KFClothesConfig();
-        ~KFClothesConfig();
-
-        // 查找配置
-        const KFClothesSetting* FindClothesSetting( uint32 id ) const;
+        KFClothesConfig() = default;
+        ~KFClothesConfig() = default;
 
         // 读取配置
         bool LoadConfig();
 
-    protected:
-        // 添加配置
-        void AddClothesSetting( KFClothesSetting* setting );
+        // 查找配置
+        const KFClothesSetting* FindClothesSetting( uint32 id ) const;
 
     private:
-
-        // 成就列表
+        // 皮肤列表
         KFMap< uint32, uint32, KFClothesSetting > _clothes_setting;
     };
 

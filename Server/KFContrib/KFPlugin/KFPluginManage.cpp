@@ -77,7 +77,7 @@ namespace KFrame
             __LOG_ERROR_FUNCTION__( file, line, "can't find [{}] module!", name );
         }
 
-        return nullptr;
+        return kfmodule;
     }
     ///////////////////////////////////////////////////////////////
     void KFPluginManage::LoadModule()

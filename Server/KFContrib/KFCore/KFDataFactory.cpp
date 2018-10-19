@@ -95,9 +95,9 @@ namespace KFrame
     {
         kfdata->Initialize( classsetting, datasetting );
 
-        for ( auto& iter : classsetting->_static_data )
+        for ( auto& iter : classsetting->_static_data._objects )
         {
-            auto childdatasetting = &iter.second;
+            auto childdatasetting = iter.second;
 
             KFData* kfchilddata = nullptr;
             switch ( childdatasetting->_type )

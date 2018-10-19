@@ -47,7 +47,6 @@ namespace KFrame
 
         ObjectType* Create( ParamType key )
         {
-
             auto object = Find( key );
             if ( object != nullptr )
             {

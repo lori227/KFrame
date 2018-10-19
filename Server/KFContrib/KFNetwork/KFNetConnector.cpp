@@ -88,6 +88,8 @@ namespace KFrame
                         _recv_queue.PopRemove();
                     }
                 }
+
+                retmessage->_guid._head_id = _object_id;
             }
             else
             {

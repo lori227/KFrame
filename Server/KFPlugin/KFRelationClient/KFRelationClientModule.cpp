@@ -325,10 +325,10 @@ namespace KFrame
         }
 
         // 判断自己好友数量
-        static auto _max_friend_count = _kf_option->GetValue< uint32 >( __KF_STRING__( freindmaxcount ) );
-        if ( kffriendrecord->Size() >= _max_friend_count )
+        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
+        if ( kffriendrecord->Size() >= _max_friend_count->_uint32_value )
         {
-            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count );
+            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count->_uint32_value );
         }
 
         auto message = kfmsg.message();
@@ -513,15 +513,15 @@ namespace KFrame
 
     void KFRelationClientModule::AddFriend( KFEntity* player, KFData* kfinvite )
     {
-        static auto _max_friend_count = _kf_option->GetValue< uint32 >( __KF_STRING__( freindmaxcount ) );
+        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
 
         // 判断自己的好友数量
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
         auto friendcount = kffriendrecord->Size();
-        if ( friendcount >= _max_friend_count )
+        if ( friendcount >= _max_friend_count->_uint32_value )
         {
-            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count );
+            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count->_uint32_value );
         }
 
         // 发送消息到好友集群
@@ -573,7 +573,7 @@ namespace KFrame
         }
 
         // 获得最大好友度
-        static auto _max_friend_liness = _kf_option->GetValue< uint32 >( __KF_STRING__( freindmaxcount ) );
+        static auto _max_friend_liness_option = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
 
         KFMsg::S2SUpdateFriendLinessReq req;
         req.set_type( type );
@@ -620,8 +620,8 @@ namespace KFrame
         auto toastrecord = kfobject->FindData( __KF_STRING__( toast ) );
 
         //判断每日敬酒次数
-        static auto _daily_send_limit = _kf_option->GetValue< uint32 >( __KF_STRING__( toastsendlimitcount ) );
-        if ( toastrecord->Size() >= _daily_send_limit )
+        static auto _daily_send_limit = _kf_option->FindOption( __KF_STRING__( toastsendlimitcount ) );
+        if ( toastrecord->Size() >= _daily_send_limit->_uint32_value )
         {
             return _kf_display->SendToClient( player, KFMsg::ToastSendCountOver );
         }
@@ -655,12 +655,12 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( toast ), kfmsg.targetplayerid(), __KF_STRING__( id ), KFOperateEnum::Set, kfmsg.targetplayerid() );
 
         // 添加好友度
-        static auto _toast_friend_liness = _kf_option->GetValue< uint32 >( __KF_STRING__( toastfriendliness ) );
-        AddFriendLiness( player, kfmsg.targetplayerid(), KFMsg::Toast, _toast_friend_liness );
+        static auto _toast_friend_liness = _kf_option->FindOption( __KF_STRING__( toastfriendliness ) );
+        AddFriendLiness( player, kfmsg.targetplayerid(), KFMsg::Toast, _toast_friend_liness->_uint32_value );
 
         // 发送敬酒邮件
-        static auto _toast_mail_id = _kf_option->GetValue< uint32 >( __KF_STRING__( toastmailid ) );
-        _kf_mail->SendMail( player, kfmsg.targetserverid(), kfmsg.targetplayerid(), _toast_mail_id, nullptr );
+        static auto _toast_mail_id = _kf_option->FindOption( __KF_STRING__( toastmailid ) );
+        _kf_mail->SendMail( player, kfmsg.targetserverid(), kfmsg.targetplayerid(), _toast_mail_id->_uint32_value, nullptr );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryToastCountReq )
@@ -684,16 +684,16 @@ namespace KFrame
 
     void KFRelationClientModule::BalanceFriendLiness( KFEntity* player, const KFMsg::PBBattleScore* pbscore )
     {
-        static auto _team_friend_liness = _kf_option->GetValue< uint32 >( __KF_STRING__( teamfriendliness ) );
-        static auto _win_friend_liness = _kf_option->GetValue< uint32 >( __KF_STRING__( winfriendliness ) );
+        static auto _team_friend_liness = _kf_option->FindOption( __KF_STRING__( teamfriendliness ) );
+        static auto _win_friend_liness = _kf_option->FindOption( __KF_STRING__( winfriendliness ) );
 
         for ( auto i = 0; i < pbscore->members_size(); ++i )
         {
             auto playerid = pbscore->members( i );
-            _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Team, _team_friend_liness );
+            _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Team, _team_friend_liness->_uint32_value );
             if ( pbscore->ranking() == __TOP_ONE__ )
             {
-                _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Win, _win_friend_liness );
+                _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Win, _win_friend_liness->_uint32_value );
             }
         }
     }

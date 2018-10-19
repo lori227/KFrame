@@ -10,14 +10,10 @@ namespace KFrame
     class KFClassSetting
     {
     public:
-        KFClassSetting();
-        ~KFClassSetting();
+        KFClassSetting() = default;
+        ~KFClassSetting() = default;
 
-        void AddDataSetting( KFDataSetting& setting );
-
-        const KFDataSetting* GetDataSetting( const std::string& name ) const;
-        const KFDataSetting* GetDataSetting( uint32 index ) const;
-
+        const KFDataSetting* FindDataSetting( const std::string& name ) const;
         bool IsChildData( const std::string& name ) const;
 
     public:
@@ -25,8 +21,7 @@ namespace KFrame
         std::string _class;
 
         // 属性列表
-        std::map< std::string, KFDataSetting > _static_data;
-        std::map< uint32, std::string > _indexs;
+        KFMap< std::string, const std::string&, KFDataSetting > _static_data;
     };
 }
 #endif

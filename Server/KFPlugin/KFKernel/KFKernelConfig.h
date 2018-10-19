@@ -9,8 +9,8 @@ namespace KFrame
     class KFKernelConfig : public KFConfig, public KFSingleton< KFKernelConfig >
     {
     public:
-        KFKernelConfig();
-        ~KFKernelConfig();
+        KFKernelConfig() = default;
+        ~KFKernelConfig() = default;
 
         // 加载配置
         bool LoadConfig();

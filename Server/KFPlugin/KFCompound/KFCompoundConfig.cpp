@@ -3,22 +3,6 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFCompoundConfig::KFCompoundConfig()
-    {
-
-    }
-
-    KFCompoundConfig::~KFCompoundConfig()
-    {
-
-    }
-
-    void KFCompoundConfig::AddCompoundSetting( KFCompoundSetting* kfsetting )
-    {
-        auto key = CompoundKey( kfsetting->_data_name, kfsetting->_key );
-        _compound_setting.Insert( key, kfsetting );
-    }
-
     const KFCompoundSetting* KFCompoundConfig::FindCompoundSetting( const std::string& dataname, uint32 id )
     {
         auto key = CompoundKey( dataname, id );
@@ -27,28 +11,23 @@ namespace KFrame
 
     bool KFCompoundConfig::LoadConfig()
     {
-        _compound_setting.Clear();
-        //////////////////////////////////////////////////////////////////
-
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
         auto setting = config.FindNode( "Setting" );
         while ( setting.IsValid() )
         {
-            auto ksetting = __KF_CREATE__( KFCompoundSetting );
+            auto dataname = setting.GetString( "DataName" );
+            auto key = setting.GetUInt32( "Key" );
+            auto ksetting = _compound_setting.Create( CompoundKey( dataname, key ) );
 
-            ksetting->_data_name = setting.GetString( "DataName" );
-            ksetting->_key = setting.GetUInt32( "Key" );
+            ksetting->_data_name = dataname;
+            ksetting->_key = key;
 
             auto strcompounddata = setting.GetString( "CompoundData" );
             ksetting->_compound_data.ParseFromString( strcompounddata, __FUNC_LINE__ );
 
             auto strcostdata = setting.GetString( "CostData" );
-            auto ok = ksetting->_cost_data.ParseFromString( strcostdata, __FUNC_LINE__ );
-            if ( ok )
-            {
-                AddCompoundSetting( ksetting );
-            }
+            ksetting->_cost_data.ParseFromString( strcostdata, __FUNC_LINE__ );
 
             setting.NextNode();
         }

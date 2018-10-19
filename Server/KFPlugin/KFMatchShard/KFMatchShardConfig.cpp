@@ -27,16 +27,15 @@ namespace KFrame
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFMatchSetting );
+            auto matchid = xmlnode.GetUInt32( "MatchId" );
+            auto kfsetting = _kf_match_setting.Create( matchid );
 
-            kfsetting->_match_id = xmlnode.GetUInt32( "MatchId" );
+            kfsetting->_match_id = matchid;
             kfsetting->_min_group_player_count = xmlnode.GetUInt32( "MinGroupPlayerCount" );
             kfsetting->_max_group_player_count = xmlnode.GetUInt32( "MaxGroupPlayerCount" );
             kfsetting->_max_player_count = xmlnode.GetUInt32( "MaxPlayerCount" );
             kfsetting->_max_room_wait_time = xmlnode.GetUInt32( "MaxRoomWaitTime" ) * KFTimeEnum::OneMinuteMicSecond;
             kfsetting->_wait_confirm_time = xmlnode.GetUInt32( "WaitConfirmTime" ) * KFTimeEnum::OneSecondMicSecond;
-
-            _kf_match_setting.Insert( kfsetting->_match_id, kfsetting );
 
             xmlnode.NextNode();
         }

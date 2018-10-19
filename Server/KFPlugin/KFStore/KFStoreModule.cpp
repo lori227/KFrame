@@ -275,8 +275,8 @@ namespace KFrame
         }
 
         // 超过心愿单最大限制
-        static auto _wish_order_size = _kf_option->GetValue<uint32>( __KF_STRING__( wishordermaxcount ) );
-        if ( _wish_order_size <= kfwishorders->Size() )
+        static auto _wish_order_size = _kf_option->FindOption( __KF_STRING__( wishordermaxcount ) );
+        if ( _wish_order_size->_uint32_value <= kfwishorders->Size() )
         {
             return KFMsg::WishOrderMaxSize;
         }

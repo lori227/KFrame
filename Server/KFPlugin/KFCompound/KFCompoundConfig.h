@@ -28,15 +28,13 @@ namespace KFrame
     class KFCompoundConfig : public KFConfig, public KFSingleton< KFCompoundConfig >
     {
     public:
-        KFCompoundConfig();
-        ~KFCompoundConfig();
+        KFCompoundConfig() = default;
+        ~KFCompoundConfig() = default;
 
         bool LoadConfig();
 
+        // 查找配置
         const KFCompoundSetting* FindCompoundSetting( const std::string& dataname, uint32 id );
-
-    protected:
-        void AddCompoundSetting( KFCompoundSetting* kfsetting );
 
     public:
         // 称号列表

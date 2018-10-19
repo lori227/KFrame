@@ -11,8 +11,8 @@ namespace KFrame
     class KFItemConfig : public KFConfig, public KFSingleton< KFItemConfig >
     {
     public:
-        KFItemConfig();
-        ~KFItemConfig();
+        KFItemConfig() = default;
+        ~KFItemConfig() = default;
 
         // 获得成就配置
         const KFItemSetting* FindItemSetting( uint32 itemid ) const;
@@ -20,11 +20,8 @@ namespace KFrame
         // 读取配置
         bool LoadConfig();
 
-    protected:
-        void AddItemSetting( KFItemSetting* kfsetting );
-
     private:
-        // 成就列表
+        // 物品列表
         KFMap< uint32, uint32, KFItemSetting > _item_setting;
     };
 

@@ -30,7 +30,6 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFChannelConfig::LoadConfig()
     {
-        _kf_channel.Clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
@@ -38,16 +37,16 @@ namespace KFrame
         auto channel = channels.FindNode( "Channel" );
         while ( channel.IsValid() )
         {
-            auto kfchannelsetting = __KF_CREATE__( KFChannelSetting );
+            auto channelid = channel.GetUInt32( "Id" );
+            auto kfchannelsetting = _kf_channel.Create( channelid );
 
-            kfchannelsetting->_channel_id = channel.GetUInt32( "Id" );
+            kfchannelsetting->_channel_id = channelid;
             kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
             kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
             kfchannelsetting->_app_id = channel.GetString( "AppId" );
             kfchannelsetting->_app_key = channel.GetString( "AppKey" );
             kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
             kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
-            _kf_channel.Insert( kfchannelsetting->_channel_id, kfchannelsetting );
 
             channel.NextNode();
         }

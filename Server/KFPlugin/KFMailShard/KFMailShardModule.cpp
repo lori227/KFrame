@@ -63,7 +63,7 @@ namespace KFrame
 #endif
 
         // 每天5点 清理过期的全局邮件
-        auto cleartime = _kf_option->GetValue<uint32>( __KF_STRING__( wholemailcleartime ) );
+        auto cleartime = _kf_option->GetUInt32( __KF_STRING__( wholemailcleartime ) );
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, cleartime );
         __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFMailShardModule::OnScheduleClearWholeOverdueMail );
@@ -141,7 +141,7 @@ namespace KFrame
         }
 
         // 最大邮件数量
-        auto maxmailcount = _kf_option->GetValue<uint32>( __KF_STRING__( mailmaxcount ), kfmsg.mailtype() );
+        auto maxmailcount = _kf_option->GetUInt32( __KF_STRING__( mailmaxcount ), kfmsg.mailtype() );
 
         KFMsg::S2SQueryMailAck ack;
         ack.set_playerid( kfmsg.playerid() );

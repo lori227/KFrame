@@ -4,15 +4,6 @@
 
 namespace KFrame
 {
-    KFEnterModule::KFEnterModule()
-    {
-
-    }
-
-    KFEnterModule::~KFEnterModule()
-    {
-    }
-
     void KFEnterModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_enter_config, true );
@@ -41,19 +32,19 @@ namespace KFrame
         auto playerid = player->GetKeyID();
         for ( auto& iter : _kf_enter_config->_kf_enter_setting )
         {
-            auto setting = &iter;
+            auto kfsetting = &iter;
 
-            auto notevalue = kfnoteparent->GetValue( setting->_note_id, __KF_STRING__( value ) );
+            auto notevalue = kfnoteparent->GetValue( kfsetting->_note_id, __KF_STRING__( value ) );
             if ( notevalue != _invalid_int )
             {
                 continue;
             }
 
             // 设置属性
-            player->UpdateData( kfnoteparent, setting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
+            player->UpdateData( kfnoteparent, kfsetting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
 
             // 调用脚本
-            _kf_lua->CallFunction( setting->_lua_file, setting->_lua_function, playerid );
+            _kf_lua->CallFunction( kfsetting->_lua_file, kfsetting->_lua_function, playerid );
         }
     }
 }

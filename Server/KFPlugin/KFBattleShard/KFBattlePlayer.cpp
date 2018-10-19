@@ -285,19 +285,22 @@ namespace KFrame
         for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
         {
             auto pbdata = &pbscore->pbdata( i );
-            auto scoreparam = _kf_option->GetValue< double >( __KF_STRING__( battlescoreparam ), pbdata->name() );
-            battlescore += pbdata->value() * scoreparam;
+
+            auto datacoefficient = _kf_option->GetDouble( __KF_STRING__( battlescoreparam ), pbdata->name() );
+            battlescore += pbdata->value() * datacoefficient;
         }
 
         // 排名分
-        auto rankingparam = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoreparam ), __KF_STRING__( ranking ) );
-        battlescore += rankingparam / pbscore->ranking();
+        {
+            auto datacoefficient = _kf_option->GetUInt32( __KF_STRING__( battlescoreparam ), __KF_STRING__( ranking ) );
+            battlescore += datacoefficient / pbscore->ranking();
+        }
 
         // 吃鸡奖励分
         if ( pbscore->ranking() == __TOP_ONE__ )
         {
-            auto toponeparam = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoreparam ), __KF_STRING__( topone ) );
-            battlescore += toponeparam;
+            auto datacoefficient = _kf_option->GetUInt32( __KF_STRING__( battlescoreparam ), __KF_STRING__( topone ) );
+            battlescore += datacoefficient;
         }
 
         pbscore->set_score( __MAX__( 0.0f, battlescore ) );

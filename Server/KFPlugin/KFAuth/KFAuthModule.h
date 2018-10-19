@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFInterfaces.h"
 #include "KFAuthInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFOption/KFOptionInterface.h"
@@ -25,11 +24,8 @@ namespace KFrame
     class KFAuthModule : public KFAuthInterface
     {
     public:
-        KFAuthModule();
-        ~KFAuthModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFAuthModule() = default;
+        ~KFAuthModule() = default;
 
         // 初始化
         virtual void BeforeRun();

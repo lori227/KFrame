@@ -19,7 +19,7 @@ namespace KFrame
     void KFRelationShardModule::BeforeRun()
     {
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
-        kfsetting->SetDate( KFScheduleEnum::Loop, 0, _kf_option->GetValue< uint32 >( __KF_STRING__( freindlinessresettime ) ) );
+        kfsetting->SetDate( KFScheduleEnum::Loop, 0, _kf_option->GetUInt32( __KF_STRING__( freindlinessresettime ) ) );
         __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFRelationShardModule::OnScheduleClearFriendLiness );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_REQ, &KFRelationShardModule::HandleQueryFriendReq );
@@ -227,9 +227,9 @@ namespace KFrame
         }
 
         // 查找对方的好友数量
-        static auto _max_friend_count = _kf_option->GetValue< uint32 >( __KF_STRING__( freindmaxcount ) );
+        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
         auto queryfriendcount = _relation_redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( friendlist ), kfmsg.targetplayerid() );
-        if ( queryfriendcount->_value >= _max_friend_count )
+        if ( queryfriendcount->_value >= _max_friend_count->_uint32_value )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendTargetLimit, kfmsg.targetname() );
         }
@@ -242,9 +242,9 @@ namespace KFrame
         }
 
         // 查找对方申请列表数量
-        static auto _max_invite_count = _kf_option->GetValue< uint32 >( __KF_STRING__( freindinvitecount ) );
+        static auto _max_invite_count = _kf_option->FindOption( __KF_STRING__( freindinvitecount ) );
         auto queryinvitecount = _relation_redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( invitelist ), kfmsg.targetplayerid() );
-        if ( queryinvitecount->_value >= _max_invite_count )
+        if ( queryinvitecount->_value >= _max_invite_count->_uint32_value )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendInviteLimit, kfmsg.targetname() );
         }
@@ -257,11 +257,11 @@ namespace KFrame
         }
 
         // 加入到申请列表
-        static auto _invite_keep_time = _kf_option->GetValue< uint32 >( __KF_STRING__( freindinvitekeeptime ) );
+        static auto _invite_keep_time = _kf_option->FindOption( __KF_STRING__( freindinvitekeeptime ) );
         _relation_redis_driver->Append( "sadd {}:{} {}", __KF_STRING__( invitelist ), kfmsg.targetplayerid(), kfmsg.selfplayerid() );
         _relation_redis_driver->Append( "hset {}:{}:{} {} {}", __KF_STRING__( invite ), kfmsg.targetplayerid(), kfmsg.selfplayerid(), __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
         _relation_redis_driver->Append( "hset {}:{}:{} {} {}", __KF_STRING__( invite ), kfmsg.targetplayerid(), kfmsg.selfplayerid(), __KF_STRING__( message ), kfmsg.message() );
-        _relation_redis_driver->Append( "expire {}:{}:{} {}", __KF_STRING__( invite ), kfmsg.targetplayerid(), kfmsg.selfplayerid(), _invite_keep_time );
+        _relation_redis_driver->Append( "expire {}:{}:{} {}", __KF_STRING__( invite ), kfmsg.targetplayerid(), kfmsg.selfplayerid(), _invite_keep_time->_uint32_value );
         _relation_redis_driver->Pipeline();
 
         _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendInviteOK );
@@ -298,17 +298,17 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddFriendReq );
 
-        static auto _max_friend_count = _kf_option->GetValue< uint32 >( __KF_STRING__( freindmaxcount ) );
+        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
 
         // 判断好友的数量
         auto selffriendcount = _relation_redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( friendlist ), kfmsg.selfplayerid() );
-        if ( selffriendcount->_value >= _max_friend_count )
+        if ( selffriendcount->_value >= _max_friend_count->_uint32_value )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendSelfLimit, _max_friend_count );
+            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendSelfLimit, _max_friend_count->_uint32_value );
         }
 
         auto targetfriendcount = _relation_redis_driver->QueryUInt64( "scard {}:{}", __KF_STRING__( friendlist ), kfmsg.targetplayerid() );
-        if ( targetfriendcount->_value >= _max_friend_count )
+        if ( targetfriendcount->_value >= _max_friend_count->_uint32_value )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendTargetLimit, kfmsg.targetname() );
         }
@@ -392,13 +392,13 @@ namespace KFrame
 
     void KFRelationShardModule::UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 type, uint32 addvalue )
     {
-        static auto _max_friend_liness = _kf_option->GetValue< uint32 >( __KF_STRING__( freindlinessmax ) );
+        static auto _max_friend_liness = _kf_option->FindOption( __KF_STRING__( freindlinessmax ) );
 
         // 计算总好友度
         auto friendkey = FormatFriendKey( __KF_STRING__( friend ), selfplayerid, targetplayerid );
         auto querycurfriendliness = _relation_redis_driver->QueryUInt32( "hget {} {}", friendkey, __KF_STRING__( friendliness ) );
         auto nowfriendliness = querycurfriendliness->_value;
-        if ( nowfriendliness >= _max_friend_liness )
+        if ( nowfriendliness >= _max_friend_liness->_uint32_value )
         {
             return;
         }
@@ -406,7 +406,7 @@ namespace KFrame
         //计算当天剩余好感度
         auto friendlinesslimitkey = FormatFriendLimitKey( selfplayerid, targetplayerid, type );
         auto queryfriendliness = _relation_redis_driver->QueryUInt32( "hget {} {}", __KF_STRING__( friendlinesslimit ), friendlinesslimitkey );
-        auto maxfriendliness = _kf_option->GetValue< uint32 >( __KF_STRING__( freindlinessdailymax ), type );
+        auto maxfriendliness = _kf_option->GetUInt32( __KF_STRING__( freindlinessdailymax ), type );
         if ( queryfriendliness->_value >= maxfriendliness )
         {
             return;
@@ -415,7 +415,7 @@ namespace KFrame
         // 计算剩余总的好感度
         auto leftfriendliness = maxfriendliness - addvalue;
         auto addfriendliness = __MIN__( leftfriendliness, addvalue );
-        auto restfriendliness = _max_friend_liness - nowfriendliness;
+        auto restfriendliness = _max_friend_liness->_uint32_value - nowfriendliness;
         addfriendliness = __MIN__( addfriendliness, restfriendliness );
 
         if ( addfriendliness > _invalid_int )
@@ -449,15 +449,15 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddRecentPlayerDataReq );
 
-        static auto _recent_keep_time = _kf_option->GetValue< uint32 >( __KF_STRING__( recentkeeptime ) );
-        static auto _recent_max_count = _kf_option->GetValue< uint32 >( __KF_STRING__( recentmaxcount ) );
+        static auto _recent_keep_time = _kf_option->FindOption( __KF_STRING__( recentkeeptime ) );
+        static auto _recent_max_count = _kf_option->FindOption( __KF_STRING__( recentmaxcount ) );
 
         auto strbattlerecored = __FORMAT__( "{}:{}:{}", __KF_STRING__( battlerecored ), kfmsg.playerid(), kfmsg.roomid() );
 
         // 先保存战斗数据, 设置有效时间默认7天
         auto& strdata = KFProto::Serialize( &kfmsg.pbdata(), KFCompressEnum::Convert );
         _relation_redis_driver->Append( "set {} {}", strbattlerecored, strdata );
-        _relation_redis_driver->Append( "expire {} {}", strbattlerecored, _recent_keep_time );
+        _relation_redis_driver->Append( "expire {} {}", strbattlerecored, _recent_keep_time->_uint32_value );
         _relation_redis_driver->Pipeline();
 
         // 添加到玩家列表
@@ -469,7 +469,7 @@ namespace KFrame
             // 判断数量, 超过限制数量, 删除最久远的记录
             // 战场id是按时间生成的, 所以最新的都是最大的
             auto querycount = _relation_redis_driver->QueryUInt64( "zcard {}", strrecentplayer );
-            if ( querycount->_value > _recent_max_count )
+            if ( querycount->_value > _recent_max_count->_uint32_value )
             {
                 _relation_redis_driver->Execute( "zremrangebyrank {} 0 0", strrecentplayer );
             }
@@ -531,11 +531,12 @@ namespace KFrame
         ack.set_targetserverid( queryserverid->_value );
 
         // 判断被敬酒次数是否用完
-        static auto _toast_recv_limit_count = _kf_option->GetValue< uint32 >( __KF_STRING__( toastrecvlimitcount ) );
+        static auto _toast_recv_limit_count = _kf_option->FindOption( __KF_STRING__( toastrecvlimitcount ) );
+
         auto querytoastcount = _relation_redis_driver->QueryUInt32( "hget {} {}", __KF_STRING__( dailytoast ), kfmsg.targetplayerid() );
         if ( querytoastcount->IsOk() )
         {
-            if ( querytoastcount->_value < _toast_recv_limit_count )
+            if ( querytoastcount->_value < _toast_recv_limit_count->_uint32_value )
             {
                 ack.set_result( KFMsg::ToastOK );
 

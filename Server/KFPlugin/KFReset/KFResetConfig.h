@@ -50,7 +50,7 @@ namespace KFrame
         void AddResetData( uint32 noteid, uint32 resettype, uint32 resettime, uint32 timehour, const KFResetData& resetdata );
 
     public:
-        // 称号列表
+        // 重置列表
         KFMap< uint32, uint32, KFResetSetting > _reset_setting;
     };
 

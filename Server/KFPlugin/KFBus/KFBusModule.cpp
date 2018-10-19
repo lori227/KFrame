@@ -4,18 +4,9 @@
 
 namespace KFrame
 {
-    KFBusModule::KFBusModule()
-    {
-    }
-
-    KFBusModule::~KFBusModule()
-    {
-
-    }
-
     void KFBusModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_bus_config, true );
+        __KF_ADD_CONFIG__( _kf_bus_config, false );
     }
 
     void KFBusModule::BeforeRun()

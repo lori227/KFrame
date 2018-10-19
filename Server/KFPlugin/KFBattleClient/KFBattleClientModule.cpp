@@ -233,7 +233,8 @@ namespace KFrame
         }
 
         auto pbscore = &kfmsg.pbscore();
-        auto scorename = _kf_option->GetValue< std::string >( __KF_STRING__( matchscore ), pbscore->matchid() );
+        auto scorename = _kf_option->GetString( __KF_STRING__( matchscore ), pbscore->matchid() );
+
         __LOG_DEBUG__( "player[{}] room[{}] score[{}:{}] req!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );
 
         auto kfscore = kfobject->FindData( scorename );

@@ -3,15 +3,6 @@
 
 namespace KFrame
 {
-    KFKernelConfig::KFKernelConfig()
-    {
-    }
-
-    KFKernelConfig::~KFKernelConfig()
-    {
-
-    }
-
     bool KFKernelConfig::LoadConfig()
     {
         return _kf_data_config->LoadDataConfig( _file );

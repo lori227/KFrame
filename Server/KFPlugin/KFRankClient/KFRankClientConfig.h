@@ -40,8 +40,8 @@ namespace KFrame
     class KFRankClientConfig : public KFConfig, public KFSingleton< KFRankClientConfig >
     {
     public:
-        KFRankClientConfig();
-        ~KFRankClientConfig();
+        KFRankClientConfig() = default;
+        ~KFRankClientConfig() = default;
 
         // 加载配置
         bool LoadConfig();

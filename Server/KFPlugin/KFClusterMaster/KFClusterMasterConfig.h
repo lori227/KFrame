@@ -40,7 +40,7 @@ namespace KFrame
 
     public:
         // 集群客服端配置列表
-        std::map< std::string, KFClusterSetting > _cluster_setting_list;
+        KFMap< std::string, const std::string&, KFClusterSetting > _cluster_setting_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

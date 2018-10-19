@@ -3,16 +3,6 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRankClientConfig::KFRankClientConfig()
-    {
-
-    }
-
-    KFRankClientConfig::~KFRankClientConfig()
-    {
-
-    }
-
     bool KFRankClientConfig::LoadConfig()
     {
         _player_data.clear();

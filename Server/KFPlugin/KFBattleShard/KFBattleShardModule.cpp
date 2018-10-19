@@ -607,9 +607,6 @@ namespace KFrame
         auto ok = kfroom->BattleScoreBalance( pbscore );
         if ( ok )
         {
-            // 战场记录保存时间
-            static auto _battle_score_save_time = _kf_option->GetValue< uint32 >( __KF_STRING__( battlescoresavetime ) );
-
             // 保存到数据库
             auto strdata = KFProto::Serialize( pbscore, KFCompressEnum::Compress );
             _battle_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( battlescore ), pbscore->playerid(), kfmsg.roomid(), strdata );

@@ -3,17 +3,6 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFEnterConfig::KFEnterConfig()
-    {
-
-    }
-
-    KFEnterConfig::~KFEnterConfig()
-    {
-
-    }
-
-
     bool KFEnterConfig::LoadConfig()
     {
         _kf_enter_setting.clear();

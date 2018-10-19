@@ -7,19 +7,6 @@ namespace KFrame
 #define __DIR_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( dir ) )
 #define __ACCOUNT_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( account ) )
 
-    KFAuthModule::KFAuthModule()
-    {
-    }
-
-    KFAuthModule::~KFAuthModule()
-    {
-
-    }
-
-    void KFAuthModule::InitModule()
-    {
-    }
-
     void KFAuthModule::BeforeRun()
     {
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
@@ -69,15 +56,15 @@ namespace KFrame
         }
 
         // 判断是否需要激活
-        static auto _open_activation = _kf_option->GetValue< uint32 >( __KF_STRING__( openactivation ) );
-        if ( _open_activation == 1 )
+        static auto _open_activation_option = _kf_option->FindOption( __KF_STRING__( openactivation ) );
+        if ( _open_activation_option->_uint32_value == 1 )
         {
             auto activation = accountdata[ __KF_STRING__( activation ) ];
             if ( activation.empty() )
             {
                 KFJson response;
                 response.SetValue( __KF_STRING__( accountid ), accountid );
-                response.SetValue< uint32 >( __KF_STRING__( retcode ), KFMsg::ActivationAccount );
+                response.SetValue<uint32>( __KF_STRING__( retcode ), KFMsg::ActivationAccount );
                 return _kf_http_server->SendResponse( response );
             }
         }
@@ -165,7 +152,7 @@ namespace KFrame
 
     std::string KFAuthModule::CreateLoginToken( uint32 accountid, MapString& accountdata )
     {
-        static auto _token_expire_time = _kf_option->GetValue< uint32 >( __KF_STRING__( tokenexpiretime ) );
+        static auto _token_expire_time_option = _kf_option->FindOption( __KF_STRING__( tokenexpiretime ) );
 
         // 创建token
         auto md5temp = __FORMAT__( "{}-{}", accountid, KFGlobal::Instance()->_game_time );
@@ -176,7 +163,7 @@ namespace KFrame
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Append( "hmset {} {} {} {} {}", tokenkey, __KF_STRING__( accountid ), accountid, __KF_STRING__( channel ), channel );
-        redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time );
+        redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time_option->_str_value );
         redisdriver->Pipeline();
 
         return token;

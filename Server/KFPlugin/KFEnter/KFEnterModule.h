@@ -21,8 +21,8 @@ namespace KFrame
     class KFEnterModule : public KFEnterInterface
     {
     public:
-        KFEnterModule();
-        ~KFEnterModule();
+        KFEnterModule() = default;
+        ~KFEnterModule() = default;
 
         // 加载配置
         virtual void InitModule();

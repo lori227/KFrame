@@ -4,39 +4,25 @@ namespace KFrame
 {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    KFItemConfig::KFItemConfig()
-    {
-
-    }
-
-    KFItemConfig::~KFItemConfig()
-    {
-    }
-
     const KFItemSetting* KFItemConfig::FindItemSetting( uint32 itemid ) const
     {
         return _item_setting.Find( itemid );
-    }
-
-    void KFItemConfig::AddItemSetting( KFItemSetting* kfsetting )
-    {
-        _item_setting.Insert( kfsetting->_id, kfsetting );
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     bool KFItemConfig::LoadConfig()
     {
-        _item_setting.Clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFItemSetting );
+            auto id = xmlnode.GetUInt32( "Id" );
+            auto kfsetting = _item_setting.Create( id );
 
-            kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            kfsetting->_id = id;
             kfsetting->_type = xmlnode.GetUInt32( "Type" );
             kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
             kfsetting->_use_count = xmlnode.GetUInt32( "UseCount" );
@@ -69,7 +55,6 @@ namespace KFrame
                 kfsetting->_function[ KFItemEnum::RemoveFunction ] = removefunction;
             }
 
-            AddItemSetting( kfsetting );
             xmlnode.NextNode();
         }
         //////////////////////////////////////////////////////////////////

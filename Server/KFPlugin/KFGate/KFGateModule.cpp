@@ -20,13 +20,9 @@ namespace KFrame
 
     void KFGateModule::BeforeRun()
     {
-        //todo
-        //__REGISTER_LOOP_TIMER__( 0, 60000, &KFGateModule::OnTimerUpdateClientToLogin );
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostLogin );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionLogin );
-
         __REGISTER_SERVER_LOST_FUNCTION__( &KFGateModule::OnPlayerDisconnection );
-
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +37,6 @@ namespace KFrame
 
     void KFGateModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();

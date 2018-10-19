@@ -73,10 +73,10 @@ namespace KFrame
 
     void KFEntityEx::InitData( KFComponentEx* kfcomponent, const std::string& dataname )
     {
-        static auto _global_class_name = _kf_option->GetValue< std::string >( __KF_STRING__( globalclassname ) );
+        static auto _global_class_name_option = _kf_option->FindOption( __KF_STRING__( globalclassname ) );
 
         _kf_component = kfcomponent;
-        _kf_object = KFDataFactory::CreateData( _global_class_name, dataname );
+        _kf_object = KFDataFactory::CreateData( _global_class_name_option->_str_value, dataname );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
@@ -394,7 +394,7 @@ namespace KFrame
     // 添加元数据
     void KFEntityEx::AddAgentData( const KFAgent* kfagent, float multiple, const char* function, uint32 line )
     {
-        auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
+        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]! ", kfagent->_string );
@@ -500,7 +500,7 @@ namespace KFrame
 
     bool KFEntityEx::CheckAgentData( const KFAgent* kfagent, const char* function, uint32 line )
     {
-        auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
+        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );
@@ -585,7 +585,7 @@ namespace KFrame
     // 删除元数据
     void KFEntityEx::RemoveAgentData( const KFAgent* kfagent, const char* function, uint32 line )
     {
-        auto datasetting = _kf_object->_class_setting->GetDataSetting( kfagent->_data_name );
+        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
         if ( datasetting == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );

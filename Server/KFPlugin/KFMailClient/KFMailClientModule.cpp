@@ -291,8 +291,7 @@ namespace KFrame
         }
 
         auto mailtype = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
-
-        auto deltype = _kf_option->GetValue< uint32 >( __KF_STRING__( mailreceiveremove ), mailtype );
+        auto deltype = _kf_option->GetUInt32( __KF_STRING__( mailreceiveremove ), mailtype );
         if ( deltype == 1 )
         {
             UpdateFlagToMail( playerid, kfmail, KFMsg::FlagEnum::ReceiveRemove );

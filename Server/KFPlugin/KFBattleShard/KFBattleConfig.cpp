@@ -2,18 +2,10 @@
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFBattleConfig::KFBattleConfig()
-    {
-    }
-
-    KFBattleConfig::~KFBattleConfig()
-    {
-
-    }
-
     bool KFBattleConfig::LoadConfig()
     {
+        _battle_reward_list.clear();
+
         ////////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();

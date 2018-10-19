@@ -4,22 +4,23 @@ namespace KFrame
 {
     bool KFOptionConfig::LoadConfig()
     {
-        _option_list.clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
-            auto name = xmlnode.GetString( "Name" );
-            auto key = xmlnode.GetString( "Key", true );
-            auto value = xmlnode.GetString( "Value" );
-
             auto channel = xmlnode.GetUInt32( "Channel" );
             if ( channel == _invalid_int || channel == KFGlobal::Instance()->_app_channel )
             {
-                OptionKey optionkey( name, key );
-                _option_list[ optionkey ] = value;
+                auto name = xmlnode.GetString( "Name" );
+                auto key = xmlnode.GetString( "Key", true );
+                auto value = xmlnode.GetString( "Value" );
+
+                auto kfoption = _option_list.Create( OptionKey( name, key ) );
+                kfoption->_str_value = value;
+                kfoption->_uint32_value = KFUtility::ToValue<uint32>( value );
+                kfoption->_double_value = KFUtility::ToValue<double>( value );
             }
 
             xmlnode.NextNode();
@@ -28,15 +29,15 @@ namespace KFrame
         return true;
     }
 
-    const std::string& KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
+    const KFOption* KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
     {
-        OptionKey optionkey( name, key );
-        auto iter = _option_list.find( optionkey );
-        if ( iter == _option_list.end() )
+        auto kfoption = _option_list.Find( OptionKey( name, key ) );
+        if ( kfoption == nullptr )
         {
-            return _invalid_str;
+            static KFOption _option;
+            kfoption = &_option;
         }
 
-        return iter->second;
+        return kfoption;
     }
 }

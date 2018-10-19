@@ -2,45 +2,29 @@
 
 namespace KFrame
 {
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    KFClothesConfig::KFClothesConfig()
-    {
-
-    }
-
-    KFClothesConfig::~KFClothesConfig()
-    {
-
-    }
-
     const KFClothesSetting* KFClothesConfig::FindClothesSetting( uint32 id ) const
     {
         return _clothes_setting.Find( id );
-    }
-
-    void KFClothesConfig::AddClothesSetting( KFClothesSetting* kfsetting )
-    {
-        _clothes_setting.Insert( kfsetting->_id, kfsetting );
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     bool KFClothesConfig::LoadConfig()
     {
-        _clothes_setting.Clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFClothesSetting );
+            auto id = xmlnode.GetUInt32( "Id" );
+            auto kfsetting = _clothes_setting.Create( id );
 
-            kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            kfsetting->_id = id;
             kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
             kfsetting->_mail_id = xmlnode.GetUInt32( "MailId" );
 
+            kfsetting->_model_list.clear();
             auto strmodel = xmlnode.GetString( "Model" );
             while ( !strmodel.empty() )
             {
@@ -59,7 +43,6 @@ namespace KFrame
             auto strexchange = xmlnode.GetString( "Exchange" );
             kfsetting->_exchange.ParseFromString( strexchange, __FUNC_LINE__ );
 
-            AddClothesSetting( kfsetting );
             xmlnode.NextNode();
         }
         //////////////////////////////////////////////////////////////////

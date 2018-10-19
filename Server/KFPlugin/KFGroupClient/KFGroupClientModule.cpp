@@ -381,8 +381,9 @@ namespace KFrame
             // 拒绝
             if ( kfmsg.operate() == KFMsg::InviteEnum::RefuseMinute )
             {
-                static auto _refuse_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviterefusetime ) );
-                auto refusetime = KFGlobal::Instance()->_real_time + _refuse_time;
+                static auto _refuse_time_option = _kf_option->FindOption( __KF_STRING__( groupinviterefusetime ) );
+
+                auto refusetime = KFGlobal::Instance()->_real_time + _refuse_time_option->_uint32_value;
                 kfobject->SetValue< uint64 >( __KF_STRING__( refusegroupinvite ), refusetime );
             }
 
@@ -416,10 +417,10 @@ namespace KFrame
             }
 
             // 判断邀请时间
-            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviteapplyvalidtime ) );
+            static auto _invite_valid_time_option = _kf_option->FindOption( __KF_STRING__( groupinviteapplyvalidtime ) );
 
             auto invitetime = kfinvite->GetValue< uint64 >( __KF_STRING__( time ) );
-            if ( KFGlobal::Instance()->_real_time > invitetime + _invite_valid_time )
+            if ( KFGlobal::Instance()->_real_time > invitetime + _invite_valid_time_option->_uint32_value )
             {
                 // 超时
                 _kf_display->SendToClient( player, KFMsg::GroupInviteTimeOut );
@@ -778,11 +779,11 @@ namespace KFrame
         }
         else if ( kfmsg.operate() == KFMsg::InviteEnum::Consent )
         {
-            static auto _invite_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( groupinviteapplyvalidtime ) );
+            static auto _invite_valid_time_option = _kf_option->FindOption( __KF_STRING__( groupinviteapplyvalidtime ) );
 
             // 申请时间超时了
             auto applytime = kfgroupapply->GetValue< uint64 >( __KF_STRING__( time ) );
-            if ( KFGlobal::Instance()->_real_time > ( applytime + _invite_valid_time ) )
+            if ( KFGlobal::Instance()->_real_time > ( applytime + _invite_valid_time_option->_uint32_value ) )
             {
                 _kf_display->SendToClient( player, KFMsg::GroupApplyTimeOut );
             }

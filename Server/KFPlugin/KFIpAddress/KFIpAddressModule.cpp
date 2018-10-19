@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFIpAddressModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_ip_config, true );
+        __KF_ADD_CONFIG__( _kf_ip_config, false );
     }
 
     void KFIpAddressModule::ShutDown()

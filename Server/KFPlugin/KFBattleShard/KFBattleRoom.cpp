@@ -115,8 +115,8 @@ namespace KFrame
 
     bool KFBattleRoom::CheckCanOpenBattleRoom()
     {
-        static auto _min_open_room_camp_count = _kf_option->GetValue< uint32 >( __KF_STRING__( minopenroomcount ), _match_id );
-        return _kf_camp_list.Size() >= _min_open_room_camp_count;
+        static auto _min_open_room_camp_count_option = _kf_option->FindOption( __KF_STRING__( minopenroomcount ), _match_id );
+        return _kf_camp_list.Size() >= _min_open_room_camp_count_option->_uint32_value;
     }
 
     void KFBattleRoom::AddPlayerCount( uint32 playercount )
@@ -133,8 +133,7 @@ namespace KFrame
         if ( _battle_server.IsValid() )
         {
             // 切掉换到开启战场状态
-            if ( _status == KFRoomStatus::StatusBattleRoomIdle ||
-                    _status == KFRoomStatus::StatusBattleRoomAlloc )
+            if ( _status == KFRoomStatus::StatusBattleRoomIdle || _status == KFRoomStatus::StatusBattleRoomAlloc )
             {
                 UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 6000 );
             }
@@ -158,8 +157,8 @@ namespace KFrame
 
     void KFBattleRoom::SetValidTime()
     {
-        static auto _room_valid_time = _kf_option->GetValue< uint32 >( __KF_STRING__( roomvalidtime ) );
-        _battle_valid_time = KFGlobal::Instance()->_game_time + _room_valid_time;
+        static auto _room_valid_time_option = _kf_option->FindOption( __KF_STRING__( roomvalidtime ) );
+        _battle_valid_time = KFGlobal::Instance()->_game_time + _room_valid_time_option->_uint32_value;
     }
 
     bool KFBattleRoom::CheckValid()

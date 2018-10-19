@@ -18,8 +18,8 @@ namespace KFrame
     class KFOptionModule : public KFOptionInterface
     {
     public:
-        KFOptionModule();
-        ~KFOptionModule();
+        KFOptionModule() = default;
+        ~KFOptionModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -28,10 +28,28 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 获得配置属性
+        virtual const KFOption* FindOption( const std::string& name );
+        virtual const KFOption* FindOption( const std::string& name, uint32 key );
+        virtual const KFOption* FindOption( const std::string& name, const std::string& key );
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-    protected:
-        // 获得string配置
+        // uint32配置
+        virtual uint32 GetUInt32( const std::string& name );
+        virtual uint32 GetUInt32( const std::string& name, uint32 key );
+        virtual uint32 GetUInt32( const std::string& name, const std::string& key );
+
+        // double配置
+        virtual double GetDouble( const std::string& name );
+        virtual double GetDouble( const std::string& name, uint32 key );
+        virtual double GetDouble( const std::string& name, const std::string& key );
+
+        // string配置
+        virtual const std::string& GetString( const std::string& name );
+        virtual const std::string& GetString( const std::string& name, uint32 key );
         virtual const std::string& GetString( const std::string& name, const std::string& key );
+
     };
 }
 

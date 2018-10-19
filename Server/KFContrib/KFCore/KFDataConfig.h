@@ -11,8 +11,8 @@ namespace KFrame
     class KFDataConfig : public KFSingleton< KFDataConfig >
     {
     public:
-        KFDataConfig();
-        ~KFDataConfig();
+        KFDataConfig() = default;
+        ~KFDataConfig() = default;
 
         // 获得静态类配置
         const KFClassSetting* FindClassSetting( const std::string& classname ) const;
@@ -22,11 +22,6 @@ namespace KFrame
 
         // 加载
         bool LoadDataConfig( const std::string& file );
-
-    protected:
-
-        // 添加
-        void AddDataSetting( const std::string& classname, KFDataSetting& kfdatasetting );
 
     public:
         // 静态类列表

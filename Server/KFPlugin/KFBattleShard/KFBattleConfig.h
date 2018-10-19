@@ -33,8 +33,8 @@ namespace KFrame
     class KFBattleConfig : public KFConfig, public KFSingleton< KFBattleConfig >
     {
     public:
-        KFBattleConfig();
-        ~KFBattleConfig();
+        KFBattleConfig() = default;
+        ~KFBattleConfig() = default;
 
         // 加载配置
         bool LoadConfig();

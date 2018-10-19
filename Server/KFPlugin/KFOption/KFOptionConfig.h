@@ -2,6 +2,7 @@
 #define __KF_OPTION_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFOptionInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -18,12 +19,12 @@ namespace KFrame
         bool LoadConfig();
 
         // 查找配置选项
-        const std::string& FindOption( const std::string& name, const std::string& key ) const;
+        const KFOption* FindOption( const std::string& name, const std::string& key ) const;
 
     public:
         // 选项配置列表
         typedef std::pair< std::string, std::string > OptionKey;
-        std::map< OptionKey, std::string > _option_list;
+        KFMap< OptionKey, const OptionKey&, KFOption > _option_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

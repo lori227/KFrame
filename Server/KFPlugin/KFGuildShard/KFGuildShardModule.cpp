@@ -1931,9 +1931,9 @@ namespace KFrame
         VectorString fields;
         auto kfguildclass = _kf_kernel->FindClassSetting( __KF_STRING__( guild ) );
         // 过滤需要查看的字段
-        for ( auto& iter : kfguildclass->_static_data )
+        for ( auto& iter : kfguildclass->_static_data._objects )
         {
-            if ( iter.second.HaveFlagMask( KFDataDefine::Mask_Sync_View ) )
+            if ( iter.second->HaveFlagMask( KFDataDefine::Mask_Sync_View ) )
             {
                 fields.push_back( iter.first );
             }

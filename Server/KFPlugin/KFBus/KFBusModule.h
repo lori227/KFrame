@@ -20,8 +20,8 @@ namespace KFrame
     class KFBusModule : public KFBusInterface
     {
     public:
-        KFBusModule();
-        ~KFBusModule();
+        KFBusModule() = default;
+        ~KFBusModule() = default;
 
         // 初始化
         virtual void InitModule();
