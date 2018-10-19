@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFKernelModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_kernel_config, false );
+        __KF_ADD_CONFIG__( _kf_kernel_config, this );
     }
 
     void KFKernelModule::AfterLoad()

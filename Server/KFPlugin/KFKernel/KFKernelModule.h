@@ -21,8 +21,8 @@ namespace KFrame
     class KFKernelModule : public KFKernelInterface
     {
     public:
-        KFKernelModule();
-        ~KFKernelModule();
+        KFKernelModule() = default;
+        ~KFKernelModule() = default;
 
         virtual void InitModule();
         virtual void AfterLoad();
