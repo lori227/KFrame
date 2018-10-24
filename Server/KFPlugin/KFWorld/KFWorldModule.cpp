@@ -39,7 +39,6 @@ namespace KFrame
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_UPDATE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_MESSAGE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ );
@@ -103,44 +102,34 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginWorldVerifyReq );
         auto loginid = __KF_HEAD_ID__( kfguid );
-        auto& token = kfmsg.token();
-        auto gateid = kfmsg.gateid();
-        auto playerid = kfmsg.playerid();
-        auto accountid = kfmsg.accountid();
-        auto sessionid = kfmsg.sessionid();
 
-        __LOG_DEBUG__( "player[{}:{}] verify req!", accountid, playerid );
+        auto pblogin = &kfmsg.pblogin();
+        __LOG_DEBUG__( "player[{}:{}:{}] login world req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
-        if ( KickOnline( playerid, __FUNC_LINE__ ) )
+        if ( KickOnline( pblogin->playerid(), __FUNC_LINE__ ) )
         {
             // return SendVerifyFailedToLogin( KFMsg::LoginAlreadyOnline, loginid, gateid, accountid, sessionid );
         }
 
         // 选择Game服务器
-        auto gameid = _kf_game_conhash.FindHashNode( playerid );
+        auto gameid = _kf_game_conhash.FindHashNode( pblogin->playerid() );
         if ( gameid == _invalid_int )
         {
-            return SendVerifyFailedToLogin( KFMsg::CanNotFindGame, loginid, gateid, accountid, sessionid );
+            return SendVerifyFailedToLogin( KFMsg::CanNotFindGame, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
         }
 
         // 通知游戏服务器 保存验证信息
         KFMsg::S2SLoginTellTokenToGameReq req;
-        req.set_gateid( gateid );
-        req.set_token( kfmsg.token() );
-        req.set_channel( kfmsg.channel() );
-        req.set_accountid( accountid );
-        req.set_sessionid( sessionid );
-        req.set_playerid( kfmsg.playerid() );
-        req.mutable_channeldata()->CopyFrom( kfmsg.channeldata() );
+        req.mutable_pblogin()->CopyFrom( *pblogin );
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}] login to game ok!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( "player[{}:{}:{}] login game req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}] login to game failed!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( "player[{}:{}:{}] login game failed!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
         }
     }
 

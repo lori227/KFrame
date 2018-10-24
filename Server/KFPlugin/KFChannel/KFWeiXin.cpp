@@ -6,15 +6,6 @@
 
 namespace KFrame
 {
-    KFWeiXin::KFWeiXin( uint32 channel ) : KFChannel( channel )
-    {
-
-    }
-
-    KFWeiXin::~KFWeiXin()
-    {
-
-    }
 #define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( login ) )
 #define __Execute_Redis__( query ) \
     if ( !query ) \
@@ -76,8 +67,7 @@ namespace KFrame
             // 机器码获得账号的access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
-            auto weixindata = redisdriver->QueryMap( "hgetall {}:{}",
-                              __KF_STRING__( accesstoken ), machinecode );
+            auto weixindata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accesstoken ), machinecode );
             if ( !weixindata->IsOk() )
             {
                 return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
@@ -131,9 +121,7 @@ namespace KFrame
         }
 
         // 获取用户资料
-        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}",
-                                   kfsetting->_login_url, accesstoken, openid );
-
+        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", kfsetting->_login_url, accesstoken, openid );
         auto userdata = _kf_http_client->StartSTHttpsClient( urldata, _invalid_str );
         if ( userdata.empty() )
         {
@@ -147,9 +135,7 @@ namespace KFrame
         }
 
         KFJson response;
-        response.SetValue( __KF_STRING__( channel ), _channel );
-        response.SetValue( __KF_STRING__( appid ), kfsetting->_app_id );
-        response.SetValue( __KF_STRING__( appkey ), kfsetting->_app_key );
+        response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
         response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( unionid ) ) );
         response.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );
         response.SetValue( __KF_STRING__( sex ), userjson.GetInt32( __KF_STRING__( sex ) ) );
@@ -157,7 +143,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFWeiXin::RequestPay( KFJson& json, const KFChannelSetting* kfchannelsetting )
+    std::string KFWeiXin::RequestPay( KFJson& json, const KFChannelSetting* kfsetting )
     {
         return _invalid_str;
     }

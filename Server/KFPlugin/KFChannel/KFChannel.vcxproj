@@ -12,11 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFChannel.cpp" />
     <ClCompile Include="KFChannelConfig.cpp" />
     <ClCompile Include="KFChannelModule.cpp" />
     <ClCompile Include="KFChannelPlugin.cpp" />
     <ClCompile Include="KFInternal.cpp" />
+    <ClCompile Include="KFSteam.cpp" />
     <ClCompile Include="KFWeiXin.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +26,7 @@
     <ClInclude Include="KFChannelModule.h" />
     <ClInclude Include="KFChannelPlugin.h" />
     <ClInclude Include="KFInternal.h" />
+    <ClInclude Include="KFSteam.h" />
     <ClInclude Include="KFWeiXin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

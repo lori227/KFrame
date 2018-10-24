@@ -28,9 +28,6 @@ namespace KFrame
         KFLoginModule();
         ~KFLoginModule();
 
-        // 初始化
-        virtual void InitModule();
-
         // 刷新
         virtual void BeforeRun();
 

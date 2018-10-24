@@ -21,13 +21,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
-        __FIND_MODULE__( _kf_deploy_command, KFDeployCommandInterface );
-
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != __KF_STRING__( auth ) &&
-                kfglobal->_app_name != __KF_STRING__( platform ) )
-        {
-            __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
-        }
+        __FIND_MODULE__( _kf_command, KFDeployCommandInterface );
+        __FIND_MODULE_NO_LOG__( _kf_tcp_server, KFTcpServerInterface );
     }
 }

@@ -6,6 +6,9 @@
 
 		<!-- н╒пе -->
 		<Channel Id="2" LoginUrl="https://api.weixin.qq.com" PayUrl="" AppId="wx57cc5c7e2011e235" AppKey="eb7cbc31779a41b0e3ffee6aaf5bfca4" Release="1" Debug="1"/>
+	
+		<!-- steam -->
+		<Channel Id="3" LoginUrl="https://api.steampowered.com/ISteamUserAuth/AuthenticateUserTicket/v1/" PayUrl="" AppId="965080" AppKey="A9A9AD18A647444DB16CB8CB1F497216" Release="1" Debug="1"/>
 	</Channels>
 </Config>
 

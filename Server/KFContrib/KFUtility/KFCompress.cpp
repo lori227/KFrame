@@ -13,14 +13,16 @@ namespace KFrame
             return 0;
         }
 
-        auto zipbuffer = __KF_UINT8__( KFBufferEnum::Buff_20M );
+
+        uLongf ziplength = KFBufferEnum::Buff_20M;
+        auto zipbuffer = __KF_UINT8__( ziplength );
 
         // 压缩数据
-        uLongf compresslength = 0;
-        auto recode = compress( zipbuffer, &compresslength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
+        // uLongf compresslength = 0;
+        auto recode = compress( zipbuffer, &ziplength, reinterpret_cast< const uint8* >( value.data() ), static_cast< uLong >( value.size() ) );
         if ( recode == Z_OK )
         {
-            result.assign( reinterpret_cast< int8* >( zipbuffer ), compresslength );
+            result.assign( reinterpret_cast< int8* >( zipbuffer ), ziplength );
         }
 
         return recode;

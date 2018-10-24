@@ -16,5 +16,6 @@ namespace KFrame
 
     void KFConfigPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_command, KFDeployCommandInterface );
     }
 }

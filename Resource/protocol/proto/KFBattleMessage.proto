@@ -48,6 +48,8 @@ enum BattleProtocol
 	S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242;			// 查询结算
 	S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243;			// 开启战场
 	S2S_RESET_BATTLE_ROOM_REQ = 11244;					// 重置战场房间
+	S2S_BATTLE_PING_REQ = 11245;						// 战场ping
+	S2S_BATTLE_PING_ACK = 11246;						// 战场ping
  }
 
 enum BattleEnum

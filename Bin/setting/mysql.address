@@ -11,19 +11,7 @@
 		<!-- 部署数据库 -->
 		<Connection MySqlId="1" IP="127.0.0.1" Port="3306" Database="kframe" User="root" Password="mysql@lori227-=">
 			<!-- 内网研发 -->
-			<Channel ChannelId="100" IP="192.168.10.230" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
-			
-			<!-- 内网测试 -->
-			<Channel ChannelId="101" IP="192.168.1.9" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
-			
-			<!-- 外网测试 -->
-			<Channel ChannelId="1" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
-		
-			<!-- 渠道测试 -->
-			<Channel ChannelId="2" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
-		
-			<!-- 渠道测试 -->
-			<Channel ChannelId="3" IP="10.105.217.149" Port="3306" Database="kframe" User="root" Password="mysql@lori227-="/>
+			<Channel ChannelId="100" IP="192.168.10.230" Port="3306" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 	</MySQL>
 

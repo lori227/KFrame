@@ -16,8 +16,7 @@ namespace KFrame
         bool result = proto->ParseFromArray( data, length );
         if ( !result )
         {
-            std::string name = proto->GetTypeName();
-            __LOG_ERROR__( "message[{}] parse failed!", name );
+            __LOG_ERROR__( "message[{}] parse failed!", proto->GetTypeName() );
         }
 
         return result;
@@ -70,8 +69,7 @@ namespace KFrame
         auto ok = proto->ParseFromString( result );
         if ( !ok )
         {
-            std::string name = proto->GetTypeName();
-            __LOG_ERROR__( "message[{}] parse failed!", name );
+            __LOG_ERROR__( "message[{}] parse failed!", proto->GetTypeName() );
         }
 
         return ok;

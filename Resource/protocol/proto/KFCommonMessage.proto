@@ -174,6 +174,9 @@ enum AckEnum
 	MailServerBusy				= 170;		// 邮件服务器繁忙
 	RelationDatabaseBusy		= 171;		// 关系数据库繁忙
 	NameInvalid					= 172;		// 名字含有非法字符
+	SteamError				 	= 173;		// Steam登录访问错误
+	SteamDataError				= 174;		// Steam返回数据错误
+	SteamAuthError				= 175;		// Steam验证错误
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
@@ -242,6 +245,7 @@ enum ChannelEnum
 {
 	Internal = 1;		// 内部测试
 	WeiXin = 2;			// 微信
+	Steam = 3;			// steam
 }
 
 enum SexEnum

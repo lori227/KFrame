@@ -3,21 +3,6 @@
 
 namespace KFrame
 {
-    KFGateModule::KFGateModule()
-    {
-
-    }
-
-    KFGateModule::~KFGateModule()
-    {
-
-    }
-
-    void KFGateModule::InitModule()
-    {
-
-    }
-
     void KFGateModule::BeforeRun()
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostLogin );
@@ -25,6 +10,7 @@ namespace KFrame
         __REGISTER_SERVER_LOST_FUNCTION__( &KFGateModule::OnPlayerDisconnection );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToClient );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFGateModule::OnCommandMarquee );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ, &KFGateModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &KFGateModule::HandleLoginVerifyAck );
@@ -42,6 +28,7 @@ namespace KFrame
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_GATE_PLAYER_REQ );
@@ -249,33 +236,31 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginGameAck );
         auto result = kfmsg.result();
-        auto playerid = kfmsg.playerid();
-        auto sessionid = kfmsg.sessionid();
-        auto accountid = kfmsg.accountid();
+        auto pblogin = &kfmsg.pblogin();
 
         if ( result != KFMsg::Success )
         {
-            __LOG_ERROR__( "player[{}:{}] login failed result[{}]!", accountid, playerid, result );
+            __LOG_ERROR__( "player[{}:{}] login failed[{}]!", pblogin->accountid(), pblogin->playerid(), result );
 
             // 发送错误消息
-            _kf_display->SendToClient( playerid, result );
+            _kf_display->SendToClient( pblogin->playerid(), result );
 
             // 断开连接, 客户端重新走登录流程
-            _kf_tcp_server->CloseNetHandle( sessionid, 1000, __FUNC_LINE__ );
+            _kf_tcp_server->CloseNetHandle( pblogin->sessionid(), 1000, __FUNC_LINE__ );
         }
         else
         {
             // 绑定角色id
-            if ( !_kf_tcp_server->BindObjectId( sessionid, playerid ) )
+            if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->playerid() ) )
             {
-                return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", accountid, playerid, sessionid );
+                return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
             }
 
             // 创建角色
-            auto kfrole = CreateRole( playerid );
+            auto kfrole = CreateRole( pblogin->playerid() );
             kfrole->_game_id = __KF_HEAD_ID__( kfguid );
-            kfrole->_role_id = playerid;
-            kfrole->_session_id = sessionid;
+            kfrole->_role_id = pblogin->playerid();
+            kfrole->_session_id = pblogin->sessionid();
 
             // 通知进入游戏
             KFMsg::MsgEnterGame enter;
@@ -284,11 +269,11 @@ namespace KFrame
             auto ok = kfrole->SendMessageToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
             if ( ok )
             {
-                __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", accountid, playerid, sessionid );
+                __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
             }
             else
             {
-                __LOG_ERROR__( "player[{}:{}] session[{}] enter game failed!", accountid, playerid, sessionid );
+                __LOG_ERROR__( "player[{}:{}] session[{}] enter game failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
             }
         }
     }
@@ -313,5 +298,12 @@ namespace KFrame
 
         // 删除玩家
         RemoveRole( playerid );
+    }
+
+    __KF_COMMAND_FUNCTION__( KFGateModule::OnCommandMarquee )
+    {
+        KFMsg::MsgTellMarquee tell;
+        tell.set_content( param );
+        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_MARQUEE, &tell );
     }
 }

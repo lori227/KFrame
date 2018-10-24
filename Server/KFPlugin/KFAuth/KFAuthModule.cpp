@@ -159,10 +159,14 @@ namespace KFrame
         auto token = KFCrypto::Md5Encode( md5temp );
 
         auto channel = accountdata[ __KF_STRING__( channel ) ];
+        auto account = accountdata[ __KF_STRING__( account ) ];
         auto tokenkey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "hmset {} {} {} {} {}", tokenkey, __KF_STRING__( accountid ), accountid, __KF_STRING__( channel ), channel );
+        redisdriver->Append( "hmset {} {} {} {} {} {} {}", tokenkey,
+                             __KF_STRING__( account ), account,
+                             __KF_STRING__( accountid ), accountid,
+                             __KF_STRING__( channel ), channel );
         redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time_option->_str_value );
         redisdriver->Pipeline();
 
@@ -299,7 +303,9 @@ namespace KFrame
 
         // 获得账号和渠道
         auto queryaccountid = KFUtility::ToValue< uint32 >( querytoken->_value[ __KF_STRING__( accountid ) ] );
+        auto account = querytoken->_value[ __KF_STRING__( account ) ];
         auto channel = KFUtility::ToValue< uint32 >( querytoken->_value[ __KF_STRING__( channel ) ] );
+
         if ( queryaccountid == _invalid_int || channel == _invalid_int || queryaccountid != accountid )
         {
             return _kf_http_server->SendResponseCode( KFMsg::LoginTokenError );
@@ -316,6 +322,7 @@ namespace KFrame
         response.SetValue( __KF_STRING__( token ), token );
         response.SetValue( __KF_STRING__( channel ), channel );
         response.SetValue( __KF_STRING__( playerid ), playerid );
+        response.SetValue( __KF_STRING__( account ), account );
         response.SetValue( __KF_STRING__( accountid ), accountid );
 
         // 加载渠道数据

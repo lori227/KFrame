@@ -15,13 +15,27 @@ namespace KFrame
 
     void KFZoneModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_zone_config, true );
+        __KF_ADD_CONFIG__( _kf_zone_config, false );
     }
 
     void KFZoneModule::AfterLoad()
     {
         auto kfglobal = KFGlobal::Instance();
         _kf_zone = _kf_zone_config->FindZone( kfglobal->_app_channel, kfglobal->_zone_id );
+        if ( _kf_zone->_id == 0 )
+        {
+            _kf_zone->_id = kfglobal->_zone_id;
+            _kf_zone->_channel = kfglobal->_app_channel;
+
+            // 逻辑id
+            if ( _kf_zone->_logic_id == 0 )
+            {
+                _kf_zone->_logic_id = _kf_zone->_id;
+            }
+
+            // 名字
+            _kf_zone->_name = __FORMAT__( _kf_zone->_name, _kf_zone->_id );
+        }
 
         // 修改服务器ip
         if ( !_kf_zone->_ip.empty() )

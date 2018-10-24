@@ -15,16 +15,11 @@ namespace KFrame
 
     }
 
-    void KFLoginModule::InitModule()
-    {
-
-    }
-
     void KFLoginModule::BeforeRun()
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLoginModule::OnClientConnectionWorld );
-        __REGISTER_SHUTDOWN_FUNCTION__( &KFLoginModule::OnDeployShutDownServer );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFLoginModule::OnDeployShutDownServer );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &KFLoginModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK, &KFLoginModule::HandleLoginFailedAck );
@@ -34,7 +29,7 @@ namespace KFrame
     {
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_SHUTDOWN_FUNCTION__();
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         //////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK );
@@ -155,6 +150,7 @@ namespace KFrame
         }
 
         auto token = recvjson.GetString( __KF_STRING__( token ) );
+        auto account = recvjson.GetString( __KF_STRING__( account ) );
         auto channel = recvjson.GetUInt32( __KF_STRING__( channel ) );
         auto playerid = recvjson.GetUInt32( __KF_STRING__( playerid ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
@@ -164,15 +160,18 @@ namespace KFrame
 
         // 通知worldserver
         KFMsg::S2SLoginWorldVerifyReq req;
-        req.set_token( token );
-        req.set_gateid( gateid );
-        req.set_channel( channel );
-        req.set_playerid( playerid );
-        req.set_accountid( accountid );
-        req.set_sessionid( sessionid );
+        auto pblogin = req.mutable_pblogin();
+
+        pblogin->set_token( token );
+        pblogin->set_gateid( gateid );
+        pblogin->set_channel( channel );
+        pblogin->set_account( account );
+        pblogin->set_playerid( playerid );
+        pblogin->set_accountid( accountid );
+        pblogin->set_sessionid( sessionid );
 
         // 渠道数据
-        auto pbchanneldata = req.mutable_channeldata();
+        auto pbchanneldata = pblogin->mutable_channeldata();
         if ( recvjson.isMember( __KF_STRING__( channeldata ) ) )
         {
             auto channeldata = recvjson[ __KF_STRING__( channeldata ) ];
@@ -187,7 +186,7 @@ namespace KFrame
         auto ok = SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( "query player[{}:{}] ok!", accountid, playerid );
+            __LOG_DEBUG__( "player[{}:{}:{}] auth token ok!", account, accountid, playerid );
         }
         else
         {

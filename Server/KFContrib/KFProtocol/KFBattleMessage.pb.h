@@ -124,11 +124,13 @@ enum BattleProtocol {
   S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241,
   S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242,
   S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243,
-  S2S_RESET_BATTLE_ROOM_REQ = 11244
+  S2S_RESET_BATTLE_ROOM_REQ = 11244,
+  S2S_BATTLE_PING_REQ = 11245,
+  S2S_BATTLE_PING_ACK = 11246
 };
 LIBPROTOC_EXPORT bool BattleProtocol_IsValid(int value);
 const BattleProtocol BattleProtocol_MIN = S2S_REGISTER_BATTLE_SERVER_REQ;
-const BattleProtocol BattleProtocol_MAX = S2S_RESET_BATTLE_ROOM_REQ;
+const BattleProtocol BattleProtocol_MAX = S2S_BATTLE_PING_ACK;
 const int BattleProtocol_ARRAYSIZE = BattleProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* BattleProtocol_descriptor();

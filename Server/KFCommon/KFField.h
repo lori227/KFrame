@@ -345,9 +345,23 @@ namespace KFrame
         __STRING_DEFINE__( weekactiveness );
         __STRING_DEFINE__( lua );
         __STRING_DEFINE__( config );
-        __STRING_DEFINE__( downconfig );
+        __STRING_DEFINE__( downfile );
         __STRING_DEFINE__( loadconfig );
         __STRING_DEFINE__( reloadconfig );
+        __STRING_DEFINE__( reloadscript );
+        __STRING_DEFINE__( loadscript );
+        __STRING_DEFINE__( marquee );
+        __STRING_DEFINE__( response );
+        __STRING_DEFINE__( error );
+        __STRING_DEFINE__( errorcode );
+        __STRING_DEFINE__( errordesc );
+        __STRING_DEFINE__( steamid );
+        __STRING_DEFINE__( onlinetime );
+        __STRING_DEFINE__( lastofflinetime );
+        __STRING_DEFINE__( totalonlinetime );
+        __STRING_DEFINE__( luafile );
+        __STRING_DEFINE__( luafunction );
+        __STRING_DEFINE__( params );
 
     }
 }

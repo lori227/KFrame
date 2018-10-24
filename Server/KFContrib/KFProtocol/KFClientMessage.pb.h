@@ -132,6 +132,7 @@ class MsgSearchGuildByNameReq;
 class MsgSetGuildSwitchReq;
 class MsgQueryGuildLogReq;
 class MsgQueryGuildLogAck;
+class MsgTellMarquee;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -228,11 +229,12 @@ enum ClientProtocol {
   MSG_SEARCH_GUILD_BY_NAME_REQ = 214,
   MSG_SET_GUILD_SWITCH_REQ = 215,
   MSG_QUERY_GUILD_LOG_REQ = 216,
-  MSG_QUERY_GUILD_LOG_ACK = 217
+  MSG_QUERY_GUILD_LOG_ACK = 217,
+  MSG_TELL_MARQUEE = 300
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_QUERY_GUILD_LOG_ACK;
+const ClientProtocol ClientProtocol_MAX = MSG_TELL_MARQUEE;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -9105,6 +9107,93 @@ class LIBPROTOC_EXPORT MsgQueryGuildLogAck : public ::google::protobuf::Message 
   void InitAsDefaultInstance();
   static MsgQueryGuildLogAck* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTellMarquee : public ::google::protobuf::Message {
+ public:
+  MsgTellMarquee();
+  virtual ~MsgTellMarquee();
+
+  MsgTellMarquee(const MsgTellMarquee& from);
+
+  inline MsgTellMarquee& operator=(const MsgTellMarquee& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellMarquee& default_instance();
+
+  void Swap(MsgTellMarquee* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTellMarquee* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTellMarquee& from);
+  void MergeFrom(const MsgTellMarquee& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string content = 1;
+  inline bool has_content() const;
+  inline void clear_content();
+  static const int kContentFieldNumber = 1;
+  inline const ::std::string& content() const;
+  inline void set_content(const ::std::string& value);
+  inline void set_content(const char* value);
+  inline void set_content(const char* value, size_t size);
+  inline ::std::string* mutable_content();
+  inline ::std::string* release_content();
+  inline void set_allocated_content(::std::string* content);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellMarquee)
+ private:
+  inline void set_has_content();
+  inline void clear_has_content();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* content_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTellMarquee* default_instance_;
+};
 // ===================================================================
 
 
@@ -15206,6 +15295,80 @@ MsgQueryGuildLogAck::guildlog() const {
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 MsgQueryGuildLogAck::mutable_guildlog() {
   return &guildlog_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgTellMarquee
+
+// required string content = 1;
+inline bool MsgTellMarquee::has_content() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTellMarquee::set_has_content() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTellMarquee::clear_has_content() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTellMarquee::clear_content() {
+  if (content_ != &::google::protobuf::internal::kEmptyString) {
+    content_->clear();
+  }
+  clear_has_content();
+}
+inline const ::std::string& MsgTellMarquee::content() const {
+  return *content_;
+}
+inline void MsgTellMarquee::set_content(const ::std::string& value) {
+  set_has_content();
+  if (content_ == &::google::protobuf::internal::kEmptyString) {
+    content_ = new ::std::string;
+  }
+  content_->assign(value);
+}
+inline void MsgTellMarquee::set_content(const char* value) {
+  set_has_content();
+  if (content_ == &::google::protobuf::internal::kEmptyString) {
+    content_ = new ::std::string;
+  }
+  content_->assign(value);
+}
+inline void MsgTellMarquee::set_content(const char* value, size_t size) {
+  set_has_content();
+  if (content_ == &::google::protobuf::internal::kEmptyString) {
+    content_ = new ::std::string;
+  }
+  content_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgTellMarquee::mutable_content() {
+  set_has_content();
+  if (content_ == &::google::protobuf::internal::kEmptyString) {
+    content_ = new ::std::string;
+  }
+  return content_;
+}
+inline ::std::string* MsgTellMarquee::release_content() {
+  clear_has_content();
+  if (content_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = content_;
+    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgTellMarquee::set_allocated_content(::std::string* content) {
+  if (content_ != &::google::protobuf::internal::kEmptyString) {
+    delete content_;
+  }
+  if (content) {
+    set_has_content();
+    content_ = content;
+  } else {
+    clear_has_content();
+    content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 

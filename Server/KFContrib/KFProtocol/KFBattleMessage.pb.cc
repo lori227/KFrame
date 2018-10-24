@@ -1184,7 +1184,7 @@ void protobuf_AddDesc_KFBattleMessage_2eproto() {
     "d\030\002 \002(\r\022\n\n\002ip\030\003 \002(\t\"B\n\037S2STellRoomCloseT"
     "oMatchShardReq\022\017\n\007matchid\030\001 \002(\004\022\016\n\006roomi"
     "d\030\002 \002(\004\"\'\n\025S2SResetBattleRoomReq\022\016\n\006room"
-    "id\030\001 \002(\004*\247\016\n\016BattleProtocol\022#\n\036S2S_REGIS"
+    "id\030\001 \002(\004*\333\016\n\016BattleProtocol\022#\n\036S2S_REGIS"
     "TER_BATTLE_SERVER_REQ\020\300W\022#\n\036S2S_REGISTER"
     "_BATTLE_SERVER_ACK\020\301W\022.\n)S2S_DISCONNECT_"
     "SERVER_TO_BATTLE_SHARD_REQ\020\302W\022,\n\'S2S_REG"
@@ -1230,8 +1230,9 @@ void protobuf_AddDesc_KFBattleMessage_2eproto() {
     "ARD_REQ\020\351W\022&\n!S2S_ONLINE_QUERY_BATTLE_SC"
     "ORE_REQ\020\352W\022&\n!S2S_OPEN_BATTLE_ROOM_TO_SH"
     "ARD_ACK\020\353W\022\036\n\031S2S_RESET_BATTLE_ROOM_REQ\020"
-    "\354W*-\n\nBattleEnum\022\017\n\013OpenSuccess\020\001\022\016\n\nOpe"
-    "nFailed\020\002", 5609);
+    "\354W\022\030\n\023S2S_BATTLE_PING_REQ\020\355W\022\030\n\023S2S_BATT"
+    "LE_PING_ACK\020\356W*-\n\nBattleEnum\022\017\n\013OpenSucc"
+    "ess\020\001\022\016\n\nOpenFailed\020\002", 5661);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFBattleMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterBattleServerReq::default_instance_ = new S2SRegisterBattleServerReq();
@@ -1380,6 +1381,8 @@ bool BattleProtocol_IsValid(int value) {
     case 11242:
     case 11243:
     case 11244:
+    case 11245:
+    case 11246:
       return true;
     default:
       return false;

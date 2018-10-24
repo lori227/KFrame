@@ -9,8 +9,8 @@ namespace KFrame
     class KFEnterSetting
     {
     public:
-        uint32 _note_id;	// 服务器noteid
-        std::string _lua_file;	// lua脚本
+        uint32 _note_id{ 0 };		// 服务器noteid
+        std::string _lua_file;		// lua脚本
         std::string _lua_function;	// lua函数
     };
     ////////////////////////////////////////////////////////////////////////////////////

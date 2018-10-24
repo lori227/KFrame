@@ -138,9 +138,10 @@ def parse_args():
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
+    parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
+
     if is_linux():
         parser.add_argument('-s', '--svn', type=str, help="svn version")
-        parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
     return vars(parser.parse_args())
 
 # start
@@ -150,7 +151,6 @@ if args['mode'] == 'release':
 
 g_proc_config = gcm_conf.load_proc_config(os.path.join(input_folder, 'gcm_proc.xml'))
 g_global_config = gcm_global_conf.load_global_config( os.path.join(input_folder, 'global.conf'))
-
 global_conf = dict()
 branch_name = ''
 if args['branch'] == 0:

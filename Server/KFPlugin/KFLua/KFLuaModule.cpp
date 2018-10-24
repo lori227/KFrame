@@ -1,16 +1,28 @@
 ﻿#include "KFLuaModule.h"
+#include "KFJson.h"
 
 namespace KFrame
 {
-    KFLuaModule::KFLuaModule()
+    void KFLuaModule::BeforeRun()
     {
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( loadscript ), &KFLuaModule::LoadScript );
     }
 
-    KFLuaModule::~KFLuaModule()
+    void KFLuaModule::ShutDown()
     {
-
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( loadscript ) );
     }
 
+    __KF_COMMAND_FUNCTION__( KFLuaModule::LoadScript )
+    {
+        auto kfluascript = _lua_script.Find( param );
+        if ( kfluascript == nullptr )
+        {
+            return;
+        }
+
+        kfluascript->LoadScript( param );
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFScript* KFLuaModule::FindLuaScript( const std::string& luafile )
@@ -28,19 +40,7 @@ namespace KFrame
         return kfluascript;
     }
 
-    void KFLuaModule::LoadScript( const std::string& luafile )
-    {
-        auto kfluascript = _lua_script.Find( luafile );
-        if ( kfluascript == nullptr )
-        {
-            return;
-        }
-
-        kfluascript->LoadScript( luafile );
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     void KFLuaModule::RegisterLuaFunction( KFLuaScript* kfscript )
     {
         auto metatableobject = kfscript->_lua_state->GetGlobals().CreateTable( "MultiObjectMetaTable" );
@@ -59,6 +59,8 @@ namespace KFrame
         metatableobject.RegisterObjectDirect( "AddData", this, &KFLuaModule::LuaAddData );
         metatableobject.RegisterObjectDirect( "SetData", this, &KFLuaModule::LuaSetData );
         metatableobject.RegisterObjectDirect( "DecData", this, &KFLuaModule::LuaDecData );
+        metatableobject.RegisterObjectDirect( "STHttpClient", this, &KFLuaModule::LuaSTHttpClient );
+        metatableobject.RegisterObjectDirect( "MTHttpClient", this, &KFLuaModule::LuaMTHttpClient );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );
@@ -210,5 +212,32 @@ namespace KFrame
         {
             kfentity->RemoveAgentData( &kfagents, __FUNC_LINE__ );
         }
+    }
+
+    const char* KFLuaModule::LuaSTHttpClient( const char* url, const char* data )
+    {
+        static std::string _result = "";
+        _result = _kf_http_client->StartSTHttpClient( url, data );
+        return _result.c_str();
+    }
+
+    void KFLuaModule::LuaMTHttpClient( const char* url, const char* data )
+    {
+        _kf_http_client->StartMTHttpClient( url, data, this, &KFLuaModule::OnLuaHttpCallBack );
+    }
+
+    void KFLuaModule::OnLuaHttpCallBack( std::string& senddata, std::string& recvdata )
+    {
+        KFJson kfjson( senddata );
+
+        auto objectid = kfjson.GetUInt32( __KF_STRING__( playerid ) );
+        auto luafile = kfjson.GetString( __KF_STRING__( luafile ) );
+        auto luafunction = kfjson.GetString( __KF_STRING__( luafunction ) );
+        if ( luafile.empty() || !luafunction.empty() )
+        {
+            return;
+        }
+
+        CallFunction( luafile, luafunction, objectid, senddata.c_str(), recvdata.c_str() );
     }
 }

@@ -9,22 +9,14 @@ namespace KFrame
     class KFZone
     {
     public:
-        KFZone()
-        {
-            _id = 0;
-            _channel = 0;
-            _logic_id = 0;
-        }
-
-    public:
         // 游戏分区id
-        uint32 _id;
+        uint32 _id{ 0 };
 
         // 逻辑id
-        uint32 _logic_id;
+        uint32 _logic_id{ 0 };
 
         // 游戏服类型
-        uint32 _channel;
+        uint32 _channel{ 0 };
 
         // 游戏服名字
         std::string _name;

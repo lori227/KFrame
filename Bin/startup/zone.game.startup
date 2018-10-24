@@ -20,6 +20,7 @@
 		<Plugin Sort="200" Name="KFChat" Config="./config/chat.config"/>
 		<Plugin Sort="210" Name="KFLua" Config=""/>
 		<Plugin Sort="220" Name="KFEnter" Config="./config/enter.config"/>
+		<Plugin Sort="221" Name="KFLeave" Config="./config/leave.config"/>
 		<Plugin Sort="230" Name="KFReset" Config="./config/reset.config"/>
 		<Plugin Sort="240" Name="KFItem" Config="./config/item.config"/>
 		<Plugin Sort="250" Name="KFDebug" Config=""/>

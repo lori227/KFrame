@@ -72,7 +72,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\lua\lua53\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\lua\lua53\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -102,7 +102,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\lua\lua53\;..\..\KFLibrary\json\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>

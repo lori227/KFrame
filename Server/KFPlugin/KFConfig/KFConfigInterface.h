@@ -33,12 +33,6 @@ namespace KFrame
 
         // 删除配置
         virtual void RemoveConfig( const std::string& module ) = 0;
-
-        // 重载载某一个配置
-        virtual void LoadConfig( const std::string& file ) = 0;
-
-        // 加载配置
-        virtual void LoadConfig( KFConfig* config, const std::string& module, const std::string& file ) = 0;
     };
 
 

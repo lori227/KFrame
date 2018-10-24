@@ -10,12 +10,14 @@ namespace KFrame
     class KFChannel
     {
     public:
-        KFChannel( uint32 channel );
-        virtual ~KFChannel();
+        KFChannel() = default;
+        virtual ~KFChannel() = default;
 
-    public:
-        // 渠道编号
-        uint32 _channel;
+        // 登录请求
+        virtual std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting ) = 0;
+
+        // 充值请求
+        virtual std::string RequestPay( KFJson& json, const KFChannelSetting* kfsetting ) = 0;
     };
 }
 

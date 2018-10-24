@@ -5,19 +5,6 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////
-    KFDeployCommandModule::KFDeployCommandModule()
-    {
-
-    }
-
-    KFDeployCommandModule::~KFDeployCommandModule()
-    {
-    }
-
-    void KFDeployCommandModule::InitModule()
-    {
-    }
-
     void KFDeployCommandModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_SERVER_REQ, &KFDeployCommandModule::HandleDeployCommandToServerReq );
@@ -31,15 +18,17 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    void KFDeployCommandModule::AddShutDownFunction( const std::string& module, KFCommandFunction& function )
+    void KFDeployCommandModule::AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function )
     {
-        auto kffunciton = _shutdown_function.Create( module );
-        kffunciton->_function = function;
+        auto kfcommand = _command_data.Create( command );
+        auto kffunction = kfcommand->_command_function.Create( module );
+        kffunction->_function = function;
     }
 
-    void KFDeployCommandModule::RemoveShutDownFunction( const std::string& module )
+    void KFDeployCommandModule::RemoveComandFunction( const std::string& command, const std::string& module )
     {
-        _shutdown_function.Remove( module );
+        auto kfcommand = _command_data.Create( command );
+        kfcommand->_command_function.Remove( module );
     }
 
     bool KFDeployCommandModule::IsSelfServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
@@ -118,33 +107,27 @@ namespace KFrame
         if ( command == __KF_STRING__( shutdown ) )
         {
             auto delaytime = KFUtility::ToValue< uint32 >( value );
-            ShutDownServer( appname, apptype, appid, zoneid, delaytime );
+            return ShutDownServer( appname, apptype, appid, zoneid, delaytime );
         }
         else if ( command == __KF_STRING__( log ) )
         {
             auto level = KFUtility::ToValue< uint32 >( value );
-            KFGlobal::Instance()->SetLogLevel( level );
+            return KFGlobal::Instance()->SetLogLevel( level );
         }
-        else if ( command == __KF_STRING__( loadconfig ) )
+
+        auto kfcommand = _command_data.Find( command );
+        if ( kfcommand == nullptr )
         {
-            auto tempvalue = value;
-            KFUtility::SplitString( tempvalue, "." );
-            if ( tempvalue == __KF_STRING__( config ) )
-            {
-                _kf_config->LoadConfig( value );
-            }
-            else if ( tempvalue == __KF_STRING__( lua ) )
-            {
-                if ( _kf_lua != nullptr )
-                {
-                    _kf_lua->LoadScript( value );
-                }
-            }
+            return;
         }
-        else
+
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}:{}] deploy command process!",
+                      command, value, appchannel, appname, apptype, appid, zoneid );
+
+        for ( auto& iter : kfcommand->_command_function._objects )
         {
-            __LOG_INFO__( "[{}:{} | {}:{}:{}:{}:{}] deploy command no process!",
-                          command, value, appchannel, appname, apptype, appid, zoneid );
+            auto kffunction = iter.second;
+            kffunction->_function( value );
         }
     }
 
@@ -174,11 +157,14 @@ namespace KFrame
                       kfglobal->_app_name, kfglobal->_app_type,
                       kfglobal->_str_app_id, kfglobal->_zone_id );
 
-        // 回调关闭回调
-        for ( auto& iter : _shutdown_function._objects )
+        auto kfcommand = _command_data.Find( __KF_STRING__( shutdown ) );
+        if ( kfcommand != nullptr )
         {
-            auto kffunction = iter.second;
-            kffunction->_function();
+            for ( auto& iter : kfcommand->_command_function._objects )
+            {
+                auto kffunction = iter.second;
+                kffunction->_function( _invalid_str );
+            }
         }
     }
 

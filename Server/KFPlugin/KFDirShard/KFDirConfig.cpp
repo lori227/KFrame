@@ -20,12 +20,9 @@ namespace KFrame
         auto dirlisttype = dirlisttypes.FindNode( "DirListType" );
         while ( dirlisttype.IsValid() )
         {
-            KFDirListType kftype;
-
-            kftype._min_channel = dirlisttype.GetUInt32( "MinChannel" );
-            kftype._max_channel = dirlisttype.GetUInt32( "MaxChannel" );
-            kftype._list_type = dirlisttype.GetUInt32( "Type" );
-            _dir_list_type.push_back( kftype );
+            auto channel = dirlisttype.GetUInt32( "Channel" );
+            auto type = dirlisttype.GetUInt32( "Type" );
+            _dir_list_type[ channel ] = type;
 
             dirlisttype.NextNode();
         }
@@ -34,16 +31,14 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFDirConfig::GetDirListType( uint32 appflag )
+    uint32 KFDirConfig::GetDirListType( uint32 appchannel )
     {
-        for ( auto& kftype : _dir_list_type )
+        auto iter = _dir_list_type.find( appchannel );
+        if ( iter == _dir_list_type.end() )
         {
-            if ( appflag >= kftype._min_channel && appflag <= kftype._max_channel )
-            {
-                return kftype._list_type;
-            }
+            return _default_dir_list_type;
         }
 
-        return _default_dir_list_type;
+        return iter->second;
     }
 }

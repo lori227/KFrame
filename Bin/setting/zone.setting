@@ -1,27 +1,20 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
+
+	<!--默认-->
+	<Default LogicId="1" Name="测试服{}区"/>
+
+	<!--Zone-->
+	<!--Id 游戏区id, 与appid不同 -->
+	<!--LogicId 逻辑区id, 与appid不同 -->
+	<!--Channel 游戏服类型 100 内网研发  101 内网测试 1外网测试 2外网体验  3外网正式 -->
+	<!--Name 游戏服名字, 最好是一个id映射到客户端的字串-->
+	<!--Ip Master服务器ip-->
 	<Zones>
-		<!--Zone -->
-		<!--Id 游戏区id, 与appid不同 -->
-		<!--LogicId 逻辑区id, 与appid不同 -->
-		<!--Channel 游戏服类型 100 内网研发  101 内网测试 1外网测试 2外网体验  3外网正式 -->
-		<!--Name 游戏服名字, 最好是一个id映射到客户端的字串-->
-		<!--Ip Master服务器ip-->
-		<!-- 内网研发 -->
-		<Zone Channel="100" Id="1" LogicId="1" Name="小兵研发服" Ip="192.168.10.230"/>
-		<Zone Channel="100" Id="4" LogicId="1" Name="昭展研发服" Ip="192.168.1.57"/>
-
 		<!-- 内网测试-->
-		<Zone Channel="101" Id="1" LogicId="1" Name="内网测试服" Ip="192.168.1.9"/>
-
-		<!-- 外网测试-->
-		<Zone Channel="1" Id="1" LogicId="1" Name="外网测试服" Ip="10.105.6.78"/>
-
-		<!-- 渠道测试-->
-		<Zone Channel="2" Id="1" LogicId="1" Name="渠道测试服" Ip="10.105.51.22"/>
-
-		<!-- 技术封测-->
-		<Zone Channel="3" Id="1" LogicId="1" Name="技术封测服" Ip="10.105.200.169"/>
+		<!--
+			<Zone Channel="100" Id="1" LogicId="1" Name="技术封测服" Ip="10.105.200.169"/>
+		-->
 	</Zones>
 </Config>
 

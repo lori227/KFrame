@@ -1,6 +1,5 @@
 ﻿#include "KFEnterModule.h"
 #include "KFEnterConfig.h"
-#include "KFKernel/KFKernelInterface.h"
 
 namespace KFrame
 {
@@ -22,7 +21,10 @@ namespace KFrame
 
     void KFEnterModule::EnterGameWorld( KFEntity* player )
     {
+        // 上线时间
         auto kfobject = player->GetData();
+        kfobject->SetValue<uint64>( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
+        ////////////////////////////////////////////////////////////////////////////////
         auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
         if ( kfnoteparent == nullptr )
         {
@@ -33,15 +35,17 @@ namespace KFrame
         for ( auto& iter : _kf_enter_config->_kf_enter_setting )
         {
             auto kfsetting = &iter;
-
-            auto notevalue = kfnoteparent->GetValue( kfsetting->_note_id, __KF_STRING__( value ) );
-            if ( notevalue != _invalid_int )
+            if ( kfsetting->_note_id != _invalid_int )
             {
-                continue;
-            }
+                auto notevalue = kfnoteparent->GetValue( kfsetting->_note_id, __KF_STRING__( value ) );
+                if ( notevalue != _invalid_int )
+                {
+                    continue;
+                }
 
-            // 设置属性
-            player->UpdateData( kfnoteparent, kfsetting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
+                // 设置属性
+                player->UpdateData( kfnoteparent, kfsetting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
+            }
 
             // 调用脚本
             _kf_lua->CallFunction( kfsetting->_lua_file, kfsetting->_lua_function, playerid );

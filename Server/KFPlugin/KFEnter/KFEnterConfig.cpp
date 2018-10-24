@@ -12,12 +12,17 @@ namespace KFrame
         auto node = config.FindNode( "Setting" );
         while ( node.IsValid() )
         {
-            KFEnterSetting setting;
-            setting._note_id = node.GetUInt32( "NoteId" );
-            setting._lua_file = node.GetString( "LuaFile" );
-            setting._lua_function = node.GetString( "LuaFunction" );
+            auto channelid = node.GetUInt32( "ChannelId" );
+            if ( channelid == 0 || channelid == KFGlobal::Instance()->_app_channel )
+            {
+                KFEnterSetting setting;
+                setting._note_id = node.GetUInt32( "NoteId" );
+                setting._lua_file = node.GetString( "LuaFile" );
+                setting._lua_function = node.GetString( "LuaFunction" );
 
-            _kf_enter_setting.push_back( setting );
+                _kf_enter_setting.push_back( setting );
+            }
+
             node.NextNode();
         }
         //////////////////////////////////////////////////////////////////

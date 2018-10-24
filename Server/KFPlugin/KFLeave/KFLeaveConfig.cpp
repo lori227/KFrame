@@ -1,47 +1,31 @@
-﻿#include "KFEnterConfig.h"
+﻿#include "KFLeaveConfig.h"
 
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFEnterConfig::KFEnterConfig()
+    bool KFLeaveConfig::LoadConfig()
     {
-
-    }
-
-    KFEnterConfig::~KFEnterConfig()
-    {
-
-    }
-
-
-    bool KFEnterConfig::LoadConfig( const char* file )
-    {
-        try
+        _kf_leave_setting.clear();
+        //////////////////////////////////////////////////////////////////
+        KFXml kfxml( _file );
+        auto config = kfxml.RootNode();
+        auto node = config.FindNode( "Setting" );
+        while ( node.IsValid() )
         {
-            //KFXml kfxml( file );
-            //auto config = kfxml.RootNode();
-            ////////////////////////////////////////////////////////////////////
-            //auto setting = config.FindNode( "Setting" );
-            //while ( setting.IsValid() )
-            //{
-            //	auto noteid = setting.GetUInt32( "NoteId" );
-            //	auto timetype = setting.GetUInt32( "TimeType" );
-            //	auto timevalue = setting.GetUInt32( "TimeValue" );
+            auto channelid = node.GetUInt32( "ChannelId" );
+            if ( channelid == 0 || channelid == KFGlobal::Instance()->_app_channel )
+            {
+                KFLeaveSetting setting;
+                setting._note_id = node.GetUInt32( "NoteId" );
+                setting._lua_file = node.GetString( "LuaFile" );
+                setting._lua_function = node.GetString( "LuaFunction" );
 
-            //	KFResetData data;
-            //	data._parent_name = setting.GetString( "ParentName" );
-            //	data._key = setting.GetUInt32( "Key" );
-            //	data._data_name = setting.GetString( "DataName" );
-            //	data._value = setting.GetUInt32( "Value" );
+                _kf_leave_setting.push_back( setting );
+            }
 
-            //	AddResetData( noteid, timetype, timevalue, data );
-            //	setting.NextNode();
-            //}
+            node.NextNode();
         }
-        catch ( ... )
-        {
-            return false;
-        }
+        //////////////////////////////////////////////////////////////////
 
         return true;
     }

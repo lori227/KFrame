@@ -232,6 +232,9 @@ enum AckEnum {
   MailServerBusy = 170,
   RelationDatabaseBusy = 171,
   NameInvalid = 172,
+  SteamError = 173,
+  SteamDataError = 174,
+  SteamAuthError = 175,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,
@@ -307,11 +310,12 @@ inline bool AckEnum_Parse(
 }
 enum ChannelEnum {
   Internal = 1,
-  WeiXin = 2
+  WeiXin = 2,
+  Steam = 3
 };
 LIBPROTOC_EXPORT bool ChannelEnum_IsValid(int value);
 const ChannelEnum ChannelEnum_MIN = Internal;
-const ChannelEnum ChannelEnum_MAX = WeiXin;
+const ChannelEnum ChannelEnum_MAX = Steam;
 const int ChannelEnum_ARRAYSIZE = ChannelEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ChannelEnum_descriptor();

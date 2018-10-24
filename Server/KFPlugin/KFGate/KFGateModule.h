@@ -19,17 +19,15 @@
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
     class KFGateModule : public KFGateInterface
     {
     public:
-        KFGateModule();
-        ~KFGateModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFGateModule() = default;
+        ~KFGateModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -58,6 +56,9 @@ namespace KFrame
 
         // 玩家掉线
         __KF_SERVER_LOST_FUNCTION__( OnPlayerDisconnection );
+
+        // 走马灯
+        __KF_COMMAND_FUNCTION__( OnCommandMarquee );
 
     protected:
         // 发送消息到客户端

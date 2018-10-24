@@ -584,8 +584,13 @@ namespace KFrame
         }
         else if ( pbdeploy->command() == __KF_STRING__( reloadconfig ) )
         {
-            AddDeployTask( __KF_STRING__( downconfig ), pbdeploy );
+            AddDeployTask( __KF_STRING__( downfile ), pbdeploy );
             AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+        }
+        else if ( pbdeploy->command() == __KF_STRING__( reloadscript ) )
+        {
+            AddDeployTask( __KF_STRING__( downfile ), pbdeploy );
+            AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
         }
         else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
         {
@@ -703,9 +708,9 @@ namespace KFrame
         {
             ok = CheckWgetVersionTaskFinish();
         }
-        else if ( _kf_task->_command == __KF_STRING__( downconfig ) )
+        else if ( _kf_task->_command == __KF_STRING__( downfile ) )
         {
-            ok = CheckDownConfigTaskFinish();
+            ok = CheckDownFileTaskFinish();
         }
 
         return ok;
@@ -745,9 +750,9 @@ namespace KFrame
             {
                 StartWgetVersionTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( downconfig ) )
+            else if ( _kf_task->_command == __KF_STRING__( downfile ) )
             {
-                StartDownConfigTask();
+                StartDownFileTask();
             }
             else
             {
@@ -1020,7 +1025,7 @@ namespace KFrame
         return true;
     }
 
-    void KFDeployAgentModule::StartDownConfigTask()
+    void KFDeployAgentModule::StartDownFileTask()
     {
         // 查询版本路径
         auto queryurl = _mysql_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
@@ -1037,7 +1042,7 @@ namespace KFrame
 #endif
     }
 
-    bool KFDeployAgentModule::CheckDownConfigTaskFinish()
+    bool KFDeployAgentModule::CheckDownFileTaskFinish()
     {
         auto querymap = _mysql_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
         if ( !querymap->IsOk() || querymap->_value.empty() )
@@ -1060,7 +1065,7 @@ namespace KFrame
         auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value );
         if ( md5 != querymd5 )
         {
-            StartDownConfigTask();
+            StartDownFileTask();
             return false;
         }
 

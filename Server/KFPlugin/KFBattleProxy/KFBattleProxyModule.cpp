@@ -3,19 +3,6 @@
 
 namespace KFrame
 {
-    KFBattleProxyModule::KFBattleProxyModule()
-    {
-    }
-
-    KFBattleProxyModule::~KFBattleProxyModule()
-    {
-    }
-
-    void KFBattleProxyModule::InitModule()
-    {
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFBattleProxyModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFBattleProxyModule::OnServerLostHandle );
@@ -30,6 +17,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ, &KFBattleProxyModule::HandlePlayerLoginBattleRoomReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_BATTLE_ROOM_SCORE_BALANCE_REQ, &KFBattleProxyModule::HandleBattleRoomScoreBalanceReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_OPEN_BATTLE_ROOM_ACK, &KFBattleProxyModule::HandleOpenBattleRoomAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_BATTLE_PING_REQ, &KFBattleProxyModule::HandleBattlePingReq );
     }
 
     void KFBattleProxyModule::BeforeShut()
@@ -46,6 +34,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BATTLE_ROOM_SCORE_BALANCE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_OPEN_BATTLE_ROOM_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_BATTLE_PING_REQ );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +54,7 @@ namespace KFrame
         auto shardid = _kf_cluster_proxy->SelectClusterShard( serverid, false );
         if ( shardid == _invalid_int )
         {
-            __LOG_ERROR__( "battle[{}] can't select shard!", serverid );
-            return;
+            return __LOG_ERROR__( "battle[{}] can't select shard!", serverid );
         }
 
         KFMsg::S2SDisconnectServerToBattleShardReq req;
@@ -84,6 +72,11 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleBattlePingReq )
+    {
+        _kf_cluster_proxy->SendMessageToClient( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_BATTLE_PING_ACK, nullptr, 0 );
+    }
+
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleRegisterBattleServerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterBattleServerReq );
@@ -97,9 +90,8 @@ namespace KFrame
             shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.serverid(), false );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( "battle[{}|{}:{}] can't select shard!",
-                               kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
-                return;
+                return __LOG_ERROR__( "battle[{}|{}:{}] can't select shard!",
+                                      kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
             }
         }
 
@@ -134,8 +126,7 @@ namespace KFrame
             shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.roomid(), false );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( "[{}] can't select shard!", kfmsg.roomid() );
-                return;
+                return __LOG_ERROR__( "[{}] can't select shard!", kfmsg.roomid() );
             }
 
             _kf_cluster_proxy->AddDynamicShard( kfmsg.roomid(), shardid );

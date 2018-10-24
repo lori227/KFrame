@@ -6,23 +6,22 @@
 namespace KFrame
 {
     // ÃüÁî»Øµ÷º¯Êý
-    typedef std::function<void()> KFCommandFunction;
+    typedef std::function<void( const std::string& param )> KFCommandFunction;
 
     class KFDeployCommandInterface : public KFModule
     {
     public:
-
         template< class T >
-        void RegisterShutDownFunction( T* object, void( T::*handle )( ) )
+        void RegisterCommandFunction( const std::string& command, T* object, void( T::*handle )( const std::string& param ) )
         {
-            KFCommandFunction function = std::bind( handle, object );
-            AddShutDownFunction( typeid( T ).name(), function );
+            KFCommandFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddCommandFunction( command, typeid( T ).name(), function );
         }
 
         template< class T >
-        void UnRegisterShutDownFunction( T* object )
+        void UnRegisterCommandFunction( const std::string& command, T* object )
         {
-            RemoveShutDownFunction( typeid( T ).name() );
+            RemoveComandFunction( command, typeid( T ).name() );
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,22 +30,21 @@ namespace KFrame
                                     const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid ) = 0;
 
     protected:
-        virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function ) = 0;
-        virtual void RemoveShutDownFunction( const std::string& module ) = 0;
+        virtual void AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function ) = 0;
+        virtual void RemoveComandFunction( const std::string& command, const std::string& module ) = 0;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_INTERFACE__( _kf_deploy_command, KFDeployCommandInterface );
+    __KF_INTERFACE__( _kf_command, KFDeployCommandInterface );
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
 #define __KF_COMMAND_FUNCTION__( function ) \
-    void function( )
+    void function( const std::string& param )
 
-#define __REGISTER_SHUTDOWN_FUNCTION__( function ) \
-    _kf_deploy_command->RegisterShutDownFunction( this, function )
+#define __REGISTER_COMMAND_FUNCTION__( command, function ) \
+    _kf_command->RegisterCommandFunction( command, this, function )
 
-#define __UNREGISTER_SHUTDOWN_FUNCTION__( ) \
-    _kf_deploy_command->UnRegisterShutDownFunction( this )
+#define __UNREGISTER_COMMAND_FUNCTION__( command ) \
+    _kf_command->UnRegisterCommandFunction( command, this )
 
 }
 

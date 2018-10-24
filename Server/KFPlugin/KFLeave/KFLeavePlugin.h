@@ -1,11 +1,10 @@
-﻿#ifndef __KF_ENTER_PLUGIN_H__
-#define __KF_ENTER_PLUGIN_H__
-
-#include "KFPlugin/KFPlugin.h"
+﻿#ifndef __KF_LEAVE_PLUGIN_H__
+#define __KF_LEAVE_PLUGIN_H__
+#include "KFrame.h"
 
 namespace KFrame
 {
-    class KFEnterPlugin : public KFPlugin
+    class KFLeavePlugin : public KFPlugin
     {
     public:
         // 注册

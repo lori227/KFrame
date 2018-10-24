@@ -1,4 +1,4 @@
-#ifndef __KF_ENTER_MODULE_H__
+﻿#ifndef __KF_ENTER_MODULE_H__
 #define __KF_ENTER_MODULE_H__
 
 /************************************************************************

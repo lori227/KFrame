@@ -12,6 +12,7 @@
 
 #include "KFrame.h"
 #include "KFConfigInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -34,8 +35,11 @@ namespace KFrame
     class KFConfigModule : public KFConfigInterface
     {
     public:
-        KFConfigModule();
-        ~KFConfigModule();
+        KFConfigModule() = default;
+        ~KFConfigModule() = default;
+
+        // 初始化
+        virtual void BeforeRun();
 
         // 关闭
         virtual void ShutDown();
@@ -49,13 +53,14 @@ namespace KFrame
         // 删除配置
         virtual void RemoveConfig( const std::string& module );
 
-        // 重载载某一个配置
-        virtual void LoadConfig( const std::string& file );
-
         // 加载配置
-        virtual void LoadConfig( KFConfig* config, const std::string& module, const std::string& file );
+        void LoadConfig( KFConfig* config, const std::string& module, const std::string& file );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+
+    protected:
+        // 重新加载配置
+        __KF_COMMAND_FUNCTION__( LoadConfig );
 
     private:
         // 配置列表

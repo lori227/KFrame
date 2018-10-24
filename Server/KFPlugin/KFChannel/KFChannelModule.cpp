@@ -3,12 +3,14 @@
 #include "KFJson.h"
 #include "KFInternal.h"
 #include "KFWeiXin.h"
+#include "KFSteam.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     KFChannelModule::KFChannelModule()
     {
+
     }
 
     KFChannelModule::~KFChannelModule()
@@ -28,9 +30,9 @@ namespace KFrame
     void KFChannelModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////
-        RegisterChannel( new KFInternal( KFMsg::Internal ) );
-        RegisterChannel( new KFWeiXin( KFMsg::WeiXin ) );
-
+        RegisterChannel( KFMsg::Internal, new KFInternal() );
+        RegisterChannel( KFMsg::WeiXin, new KFWeiXin( ) );
+        RegisterChannel( KFMsg::Steam, new KFSteam() );
     }
 
     void KFChannelModule::BeforeShut()

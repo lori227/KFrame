@@ -37,9 +37,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterChannel( T* object )
+        void RegisterChannel( uint32 channel, T* object )
         {
-            auto channel = object->_channel;
             _kf_channel_list.insert( std::make_pair( channel, object ) );
 
             {

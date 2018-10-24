@@ -6,9 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KFChannel.cpp">
-      <Filter>Channel</Filter>
-    </ClCompile>
     <ClCompile Include="KFInternal.cpp">
       <Filter>Channel</Filter>
     </ClCompile>
@@ -17,6 +14,9 @@
     <ClCompile Include="KFChannelModule.cpp" />
     <ClCompile Include="KFChannelPlugin.cpp" />
     <ClCompile Include="KFWeiXin.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="KFSteam.cpp">
       <Filter>Channel</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,6 +32,9 @@
     <ClInclude Include="KFChannelModule.h" />
     <ClInclude Include="KFChannelPlugin.h" />
     <ClInclude Include="KFWeiXin.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSteam.h">
       <Filter>Channel</Filter>
     </ClInclude>
   </ItemGroup>

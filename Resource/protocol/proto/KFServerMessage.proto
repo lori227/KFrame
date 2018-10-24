@@ -12,24 +12,17 @@ enum ServerProtocol
 	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// 更新zone信息到proxy
 	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// 转发消息到数据库
 	
-	S2S_LOGIN_TELL_TOKEN_TO_WORLD_ACK = 21097;		// 通知登录token
-	S2S_LOGIN_TELL_TOKEN_TO_GAME_ACK = 21098;		// 通知登录token
-	S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ = 21099;		// 通知登录token
-	S2S_LOGIN_PROXY_REMOVE_REQ = 21100;				// 删除登录连接
 	S2S_KICK_GAME_PLAYER_REQ = 21101;				// 踢掉在线玩家
 	S2S_KICK_GATE_PLAYER_REQ = 21102;				// 踢掉在线玩家
 	S2S_LOGIN_LOGIN_VERIFY_REQ = 21104;				// 登录验证请求	
 	S2S_LOGIN_LOGIN_VERIFY_ACK = 21105;				// 登录验证结果
 	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106;		// 通知登录Token信息
-	S2S_LOGIN_GAME_UPDATE_REQ = 21107;				// 更新登录连接数量
 	S2S_LOGIN_WORLD_VERIFY_REQ = 21108;				// 登录验证请求
 	S2S_LOGIN_FAILED_TO_LOGIN_ACK = 21109;			// 登录失败结果
 	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// 同步在线人家
-	S2S_LOGIN_GAME_REQ = 21114;						// 请求登录游戏服务器
 	S2S_LOGIN_GAME_ACK = 21115;						// 请求登录游戏服务器
 	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// 请求加载玩家数据
 	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// 加载玩家数据回馈
-	S2S_LOGIN_CREATE_PLAYER_REQ = 21118;			// 创建玩家
 	S2S_LOGIN_OUT_REQ = 21119;						// 登出游戏
 	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// 游戏玩家进入游戏
 	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// 游戏玩家离开游戏
@@ -206,21 +199,6 @@ message S2SKickGatePlayerReq
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 更新登录连接数量
-// S2S_LOGIN_PROXY_REMOVE_REQ
-message S2SLoginProxyRemoveReq
-{
-	required uint32 proxyid = 1;
-}
-
-// 更新游戏服务器角色数量
-// S2S_LOGIN_GAME_UPDATE_REQ
-message S2SLoginGameUpdateReq
-{
-	required uint32 gameid = 1;
-	required uint32 count = 2;
-}
-
 // 登录验证请求
 // S2S_LOGIN_LOGIN_VERIFY_REQ
 message S2SLoginLoginVerifyReq
@@ -240,18 +218,23 @@ message S2SLoginLoginVerifyAck
 	required uint32 sessionid = 3;	// sessionid
 }
 
+message PBLoginData
+{
+	required string token = 1;		// token
+	required uint32 gateid = 2;		// 服务器id
+	required uint32 sessionid = 3;	// sessionid
+	required uint32 channel = 4;	// 渠道id
+	required string account = 5;	// 账号
+	required uint32 accountid = 6;	// 账号id
+	required uint32 playerid = 7;	// 角色id
+	required PBStrings channeldata = 8;	// 渠道数据	
+}
 
 // 世界服务器验证
 // S2S_LOGIN_WORLD_VERIFY_REQ
 message S2SLoginWorldVerifyReq
 {
-	required uint32 accountid = 1;	// 账号id
-	required string token = 2;	// token
-	required uint32 gateid = 3;	// 服务器id
-	required uint32 playerid = 4;	// 角色id
-	required uint32 sessionid = 5;	// sessionid
-	required uint32 channel = 6;	// 渠道id
-	required PBStrings channeldata = 7;	// 渠道数据	
+	required PBLoginData pblogin = 1;
 }
 
 // 登录失败
@@ -268,104 +251,32 @@ message S2SLoginFailedToLoginAck
 // S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ
 message S2SLoginTellTokenToGameReq
 {
-	required string token = 1;		// token
-	required uint32 playerid = 2;	// 角色id
-	required uint32 accountid = 3;	// 账号id
-	required uint32 gateid = 4;		// gateid
-	required uint32 sessionid = 5;	// 登录proxyid
-	required uint32 channel = 6;	// 渠道id
-	required PBStrings channeldata = 7;	// 渠道数据	
-}
-
-// 通知登录节点Token信息
-// S2S_LOGIN_TELL_TOKEN_TO_GAME_ACK
-message S2SLoginTellTokenToGameAck
-{
-	required uint32 playerid = 1;	// 角色id
-	required string token = 2;		// token
-	required uint32 accountid = 3;	// 账号id
-	required uint32 loginid = 4;	// loginid
-	required uint32 gateid = 5;		// gateid
-	required string ip = 6;			// ip
-	required uint32 port = 7;		// port
-}
-
-// 通知登录节点Token信息
-// S2S_LOGIN_TELL_TOKEN_TO_PROXY_REQ
-message S2SLoginTellTokenToProxyReq
-{
-	required uint32 playerid = 1;	// 角色id
-	required string token = 2;		// token
-	required uint32 accountid = 3;	// 账号id
-	required uint32 loginid = 4;	// loginid
-	required uint32 gateid = 5;		// gateid
-}
-
-// 通知登录节点Token信息
-// S2S_LOGIN_TELL_TOKEN_TO_WORLD_ACK
-message S2SLoginTellTokenToWorldAck
-{
-	required uint32 playerid = 1;	// 角色id
-	required string token = 2;		// token
-	required uint32 accountid = 3;	// 账号id
-	required uint32 loginid = 4;	// loginid
-	required uint32 gateid = 5;		// gateid
-	required string ip = 6;			// ip
-	required uint32 port = 7;		// port
-}
-
-// 登录游戏服务器
-// S2S_LOGIN_GAME_REQ
-message S2SLoginGameReq
-{
-	required uint32 playerid = 1; 
-	required uint32 accountid = 2;
-	required string ip = 3;
+	required PBLoginData pblogin = 1;
 }
 
 // S2S_LOGIN_GAME_ACK
 message S2SLoginGameAck
 {
-	required uint32 result = 1;
-	required uint32 playerid = 2; 
-	required uint32 sessionid = 3;
+	required PBLoginData pblogin = 1;
+	required uint32 result = 2;
+	required uint64 servertime = 3;
 	required PBObject playerdata = 4;
-	required uint64 servertime = 5;
-	required uint32 accountid = 6;
 }
 
 // 加载游戏数据
 // S2S_LOGIN_LOAD_PLAYER_REQ
 message S2SLoginLoadPlayerReq
 {
-	required uint32 gateid = 1;	
+	required PBLoginData pblogin = 1;	
 	required uint32 zoneid = 2;
-	required uint32 playerid = 3; 	
-	required uint32 accountid = 4; 	
-	required uint32 sessionid = 5; 	
-	required uint32 channel = 6;
-	required PBStrings channeldata = 7;			
 }
 
 // S2S_LOGIN_LOAD_PLAYER_ACK
 message S2SLoginLoadPlayerAck
 {
-	required uint32 result = 1;
-	required uint32 playerid = 2; 
-	required uint32 gateid = 3;	
-	required uint32 channel = 4;
-	required uint32 sessionid = 5;
-	required uint32 accountid = 6; 	
-	required PBObject playerdata = 7;
-	required PBStrings channeldata = 8;			
-}
-
-// S2S_LOGIN_CREATE_PLAYER_REQ
-message S2SLoginCreatePlayerReq
-{
-	required uint32 playerid = 1; 
-	required uint32 accountid = 2;
-	required uint32 channel = 3;
+	required PBLoginData pblogin = 1;
+	required uint32 result = 2;
+	required PBObject playerdata = 3;	
 }
 
 // S2S_LOGIN_OUT_REQ

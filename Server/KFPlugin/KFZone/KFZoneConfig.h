@@ -18,9 +18,12 @@ namespace KFrame
         bool LoadConfig();
 
         // 获得zoneid
-        const KFZone* FindZone( uint32 appflag, uint32 zoneid );
+        KFZone* FindZone( uint32 appflag, uint32 zoneid );
 
     public:
+        // 默认的分区属性
+        KFZone* _default_zone;
+
         // 分区列表
         typedef std::pair< uint32, uint32 > ZoneKey;
         KFMap < ZoneKey, const ZoneKey&, KFZone > _zone_list;

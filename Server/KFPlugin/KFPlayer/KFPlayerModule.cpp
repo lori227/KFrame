@@ -1,5 +1,4 @@
 ﻿#include "KFPlayerModule.h"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -23,7 +22,7 @@ namespace KFrame
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFPlayerModule::OnClientConnectionWorld );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFPlayerModule::TransmitMessageToPlayer );
-        __REGISTER_SHUTDOWN_FUNCTION__( &KFPlayerModule::OnDeployShutDownServer );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFPlayerModule::OnDeployShutDownServer );
         _kf_route->RegisterTransmitFunction( this, &KFPlayerModule::TransmitMessageToPlayer );
 
         // 注册逻辑函数
@@ -79,7 +78,7 @@ namespace KFrame
     {
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
-        __UNREGISTER_SHUTDOWN_FUNCTION__();
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
 
         _kf_kernel->ReleaseObject( _kf_player_data );
         _kf_route->UnRegisterTransmitFunction();
@@ -308,30 +307,26 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginTellTokenToGameReq );
 
-        __LOG_DEBUG__( "player[{}:{}] login game req!", kfmsg.accountid(), kfmsg.playerid() );
+        auto pblogin = &kfmsg.pblogin();
+        __LOG_DEBUG__( "player[{}:{}:{}] login game req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         // 踢掉在线玩家
-        _kf_player->KickPlayer( kfmsg.playerid(), KFMsg::KickEnum::LoginBeKick, __FUNC_LINE__ );
+        _kf_player->KickPlayer( pblogin->playerid(), KFMsg::KickEnum::LoginBeKick, __FUNC_LINE__ );
 
-        auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
+        auto zoneid = KFUtility::CalcZoneId( pblogin->playerid() );
 
         // 加载玩家数据
         KFMsg::S2SLoginLoadPlayerReq req;
         req.set_zoneid( zoneid );
-        req.set_gateid( kfmsg.gateid() );
-        req.set_channel( kfmsg.channel() );
-        req.set_playerid( kfmsg.playerid() );
-        req.set_accountid( kfmsg.accountid() );
-        req.set_sessionid( kfmsg.sessionid() );
-        req.mutable_channeldata()->CopyFrom( kfmsg.channeldata() );
+        req.mutable_pblogin()->CopyFrom( *pblogin );
         auto ok = _kf_data->SendMessageToData( zoneid, KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &req );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}] login game ok!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_DEBUG__( "player[{}:{}:{}] login game ok!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}] login game failed!", kfmsg.accountid(), kfmsg.playerid() );
+            __LOG_ERROR__( "player[{}:{}:{}] login game failed!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
         }
     }
 
@@ -340,70 +335,57 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerAck );
 
         auto result = kfmsg.result();
-        auto gateid = kfmsg.gateid();
-        auto channel = kfmsg.channel();
-        auto playerid = kfmsg.playerid();
-        auto sessionid = kfmsg.sessionid();
-        auto accountid = kfmsg.accountid();
-        auto playerdata = kfmsg.mutable_playerdata();
-        auto channeldata = kfmsg.mutable_channeldata();
+        auto pblogin = &kfmsg.pblogin();
+        auto pbplayerdata = kfmsg.mutable_playerdata();
 
-        __LOG_DEBUG__( "player[{}:{}] load data ack!", accountid, playerid );
-        if ( result != KFMsg::Success )
-        {
-            SendLoginGameMessage( result, accountid, playerid, gateid, sessionid, playerdata );
-        }
-        else
+        __LOG_DEBUG__( "player[{}:{}:{}] load data ack!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
+
+        if ( result == KFMsg::Success )
         {
             // 创建玩家
-            auto player = CreatePlayer( gateid, channel, accountid, playerid, playerdata, channeldata );
+            auto player = CreatePlayer( pblogin, pbplayerdata );
 
             // 同步给客户端
-            _kf_kernel->SerializeToOnline( player->GetData(), playerdata );
-            SendLoginGameMessage( result, accountid, playerid, gateid, sessionid, playerdata );
+            _kf_kernel->SerializeToOnline( player->GetData(), pbplayerdata );
         }
-    }
 
-    void KFPlayerModule::SendLoginGameMessage( uint32 result, uint32 accountid, uint32 playerid, uint32 gateid, uint32 sessionid, const KFMsg::PBObject* playerdata )
-    {
         KFMsg::S2SLoginGameAck ack;
         ack.set_result( result );
-        ack.set_playerid( playerid );
-        ack.set_sessionid( sessionid );
-        ack.set_accountid( accountid );
-        ack.mutable_playerdata()->CopyFrom( *playerdata );
+        ack.mutable_pblogin()->CopyFrom( *pblogin );
+        ack.mutable_playerdata()->CopyFrom( *pbplayerdata );
         ack.set_servertime( KFGlobal::Instance()->_real_time );
-        auto ok = _kf_game->SendMessageToGate( gateid, KFMsg::S2S_LOGIN_GAME_ACK, &ack );
+        auto ok = _kf_game->SendMessageToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_GAME_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}] load game result[{}] ok!", accountid, playerid, result );
+            __LOG_DEBUG__( "player[{}:{}] load game ok!", pblogin->accountid(), pblogin->playerid() );
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}] load game result[{}] failed!", accountid, playerid, result );
+            __LOG_ERROR__( "player[{}:{}] load game[{}] failed!", pblogin->accountid(), pblogin->playerid(), result );
         }
     }
 
-
-    KFEntity* KFPlayerModule::CreatePlayer( uint32 gateid, uint32 channel, uint32 accountid, uint32 playerid, const KFMsg::PBObject* playerdata, const KFMsg::PBStrings* channeldata )
+    KFEntity* KFPlayerModule::CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
-        auto player = _kf_component->CreateEntity( playerid, playerdata );
+        auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
 
         auto kfobject = player->GetData();
-        kfobject->SetValue( __KF_STRING__( gateid ), gateid );
-        kfobject->SetValue( __KF_STRING__( channel ), channel );
-        kfobject->SetValue( __KF_STRING__( accountid ), accountid );
+        kfobject->SetValue( __KF_STRING__( gateid ), pblogin->gateid() );
+        kfobject->SetValue( __KF_STRING__( channel ), pblogin->channel() );
+        kfobject->SetValue( __KF_STRING__( account ), pblogin->account() );
+        kfobject->SetValue( __KF_STRING__( accountid ), pblogin->accountid() );
 
         // 渠道数据
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        for ( auto i = 0; i < channeldata->pbstring_size(); ++i )
+        auto pbchanneldata = &pblogin->channeldata();
+        for ( auto i = 0; i < pbchanneldata->pbstring_size(); ++i )
         {
-            auto pbdata = &channeldata->pbstring( i );
+            auto pbdata = &pbchanneldata->pbstring( i );
             kfbasic->SetValue< std::string >( pbdata->name(), pbdata->value() );
         }
 
         // 创建玩家
-        OnEnterCreatePlayer( player, playerid );
+        OnEnterCreatePlayer( player, pblogin->playerid() );
 
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto iter : _player_enter_function._objects )

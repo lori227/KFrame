@@ -39,7 +39,7 @@ namespace KFrame
         virtual bool IsPlayerSameZone( uint32 playerid );
 
     private:
-        const KFZone* _kf_zone;
+        KFZone* _kf_zone;
     };
 }
 

@@ -21,11 +21,8 @@ namespace KFrame
     class KFBattleProxyModule : public KFBattleProxyInterface
     {
     public:
-        KFBattleProxyModule();
-        ~KFBattleProxyModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFBattleProxyModule() = default;
+        ~KFBattleProxyModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -64,6 +61,9 @@ namespace KFrame
 
         // 战场创建
         __KF_MESSAGE_FUNCTION__( HandleOpenBattleRoomAck );
+
+        // 处理战场ping
+        __KF_MESSAGE_FUNCTION__( HandleBattlePingReq );
 
     protected:
         // 服务器断开连接

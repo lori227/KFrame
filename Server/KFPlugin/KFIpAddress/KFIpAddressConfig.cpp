@@ -54,26 +54,30 @@ namespace KFrame
         }
         //////////////////////////////////////////////////////////////////
         auto httpnode = config.FindNode( "HttpServer" );
+        auto ip = httpnode.GetString( "Ip" );
+        auto port = httpnode.GetString( "Port" );
+
         auto channelnode = httpnode.FindNode( "Channel" );
         while ( channelnode.IsValid() )
         {
             auto channelid = channelnode.GetUInt32( "ChannelId" );
             if ( channelid == kfglobal->_app_channel )
             {
-                auto ip = channelnode.GetString( "Ip" );
-                auto port = channelnode.GetString( "Port" );
-                if ( port == _invalid_str )
-                {
-                    _auth_address = __FORMAT__( "http://{}/", ip );
-                }
-                else
-                {
-                    _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
-                }
+                ip = channelnode.GetString( "Ip" );
+                port = channelnode.GetString( "Port" );
                 break;
             }
 
             channelnode.NextNode();
+        }
+
+        if ( port == _invalid_str )
+        {
+            _auth_address = __FORMAT__( "http://{}/", ip );
+        }
+        else
+        {
+            _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
         }
         //////////////////////////////////////////////////////////////////
 

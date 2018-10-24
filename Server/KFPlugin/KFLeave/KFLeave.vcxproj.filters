@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFEnterConfig.cpp" />
-    <ClCompile Include="KFEnterModule.cpp" />
-    <ClCompile Include="KFEnterPlugin.cpp" />
+    <ClCompile Include="KFLeaveConfig.cpp" />
+    <ClCompile Include="KFLeaveModule.cpp" />
+    <ClCompile Include="KFLeavePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFEnterConfig.h" />
-    <ClInclude Include="KFEnterInterface.h" />
-    <ClInclude Include="KFEnterModule.h" />
-    <ClInclude Include="KFEnterPlugin.h" />
+    <ClInclude Include="KFLeaveConfig.h" />
+    <ClInclude Include="KFLeaveInterface.h" />
+    <ClInclude Include="KFLeaveModule.h" />
+    <ClInclude Include="KFLeavePlugin.h" />
   </ItemGroup>
 </Project>

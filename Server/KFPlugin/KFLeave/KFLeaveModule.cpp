@@ -1,40 +1,61 @@
-﻿#include "KFEnterModule.h"
-#include "KFEnterConfig.h"
-#include "KFKernel/KFKernelInterface.h"
+﻿#include "KFLeaveModule.h"
+#include "KFLeaveConfig.h"
 
 namespace KFrame
 {
-    KFEnterModule::KFEnterModule()
+    void KFLeaveModule::InitModule()
     {
-
+        __KF_ADD_CONFIG__( _kf_leave_config, true );
     }
 
-    KFEnterModule::~KFEnterModule()
+    void KFLeaveModule::BeforeRun()
     {
+        _kf_player->RegisterLeaveFunction( this, &KFLeaveModule::LeaveGameWorld );
     }
 
-    void KFEnterModule::InitModule()
+    void KFLeaveModule::BeforeShut()
     {
-        ///////////////////////////////////////////////////////////////////////////////
-        _kf_config->AddConfig( _kf_enter_config, _kf_plugin->_plugin_name, _kf_plugin->_config, true );
+        __KF_REMOVE_CONFIG__();
+        _kf_player->UnRegisterLeaveFunction( this );
     }
 
-    void KFEnterModule::BeforeRun()
+    void KFLeaveModule::LeaveGameWorld( KFEntity* player )
     {
-        _kf_player->RegisterEnterFunction( typeid( KFEnterModule ).name(), this, &KFEnterModule::EnterGameWorld );
-    }
+        // 最后下线时间 和 总在线时间
+        auto kfglobal = KFGlobal::Instance();
+        player->UpdateData( __KF_STRING__( lastofflinetime ), KFOperateEnum::Set, kfglobal->_real_time );
 
+        auto kfobject = player->GetData();
+        auto onlinetime = kfobject->GetValue<uint64>( __KF_STRING__( onlinetime ) );
+        if ( onlinetime != _invalid_int && kfglobal->_real_time > onlinetime )
+        {
+            player->UpdateData( __KF_STRING__( totalonlinetime ), KFOperateEnum::Add, kfglobal->_real_time - onlinetime );
+        }
+        //////////////////////////////////////////////////////////////////////////
+        auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
+        if ( kfnoteparent == nullptr )
+        {
+            return;
+        }
 
-    void KFEnterModule::BeforeShut()
-    {
-        _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
+        auto playerid = player->GetKeyID();
+        for ( auto& iter : _kf_leave_config->_kf_leave_setting )
+        {
+            auto kfsetting = &iter;
+            if ( kfsetting->_note_id != _invalid_int )
+            {
+                auto notevalue = kfnoteparent->GetValue( kfsetting->_note_id, __KF_STRING__( value ) );
+                if ( notevalue != _invalid_int )
+                {
+                    continue;
+                }
 
-        _kf_player->UnRegisterEnterFunction( typeid( KFEnterModule ).name() );
-    }
+                // 设置属性
+                player->UpdateData( kfnoteparent, kfsetting->_note_id, __KF_STRING__( value ), KFOperateEnum::Set, 1 );
+            }
 
-    void KFEnterModule::EnterGameWorld( KFEntity* player )
-    {
-
-
+            // 调用脚本
+            _kf_lua->CallFunction( kfsetting->_lua_file, kfsetting->_lua_function, static_cast<uint32>( playerid ) );
+        }
     }
 }

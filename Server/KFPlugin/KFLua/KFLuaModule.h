@@ -13,20 +13,25 @@
 #include "KFLuaScript.h"
 #include "KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFProtocol/KFProtocol.h"
-#include "KFRelationClient/KFRelationClientInterface.h"
+#include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
     class KFLuaModule : public KFLuaInterface
     {
     public:
-        KFLuaModule();
-        ~KFLuaModule();
+        KFLuaModule() = default;
+        ~KFLuaModule() = default;
 
-        // 加载脚本文件
-        virtual void LoadScript( const std::string& luafile );
+        // 初始化
+        virtual void BeforeRun();
+
+        // 关闭
+        virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
+        // 重新加载脚本文件
+        __KF_COMMAND_FUNCTION__( LoadScript );
         ////////////////////////////////////////////////////////////////////////////////
 
         // 获得基础属性
@@ -67,6 +72,11 @@ namespace KFrame
 
         // 减少数据
         void LuaDecData( const char* module, uint32 objectid, const char* stragent );
+
+        // http访问
+        const char* LuaSTHttpClient( const char* url, const char* data );
+        void LuaMTHttpClient( const char* url, const char* data );
+
     protected:
         ////////////////////////////////////////////////////////////////////////////////
         // 查找lua脚本
@@ -75,6 +85,8 @@ namespace KFrame
         // 注册lua导出函数
         void RegisterLuaFunction( KFLuaScript* luascript );
 
+        // lua http回调函数
+        void OnLuaHttpCallBack( std::string& senddata, std::string& recvdata );
     private:
         // lua 脚本
         KFMap< std::string, const std::string&, KFLuaScript > _lua_script;

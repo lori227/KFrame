@@ -42,12 +42,6 @@ namespace KFrame
     class KFLuaInterface : public KFModule
     {
     public:
-
-        // 重新加载lua文件
-        virtual void LoadScript( const std::string& luafile ) = 0;
-        ///////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////
-
         template< class ... T >
         void CallFunction( const std::string& luafile, const std::string& function, uint32 objectid, T&& ...params )
         {

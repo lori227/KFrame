@@ -974,14 +974,17 @@ namespace KFrame
             return;
         }
 
+        if ( _kf_guild_config->_max_guild_log_page <= _invalid_int )
+        {
+            return;
+        }
+
         uint32 beginpos = kfmsg.page() * _kf_guild_config->_max_guild_log_page;
         if ( beginpos >= kfsetting->_max_log )
         {
             return _kf_display->SendToClient( player, KFMsg::GuildLogOutPage );
         }
-
-        // 显示声明
-        int endpos = beginpos + _kf_guild_config->_max_guild_log_page - 1;
+        auto endpos = beginpos + _kf_guild_config->_max_guild_log_page - 1;
         if ( endpos < _invalid_int || endpos < beginpos )
         {
             return;
@@ -1395,7 +1398,12 @@ namespace KFrame
 
         auto maxguildweekactiveness = _kf_guild_config->GetMaxWeekActiveness();
         auto ownweekactiveness = kfguildmember->GetValue<uint64>( __KF_STRING__( weekactiveness ) );
-        int restweekactiveness = ( int )maxguildweekactiveness - ( int )ownweekactiveness;
+        if ( maxguildweekactiveness >= ownweekactiveness )
+        {
+            return _invalid_int;
+        }
+
+        auto restweekactiveness = maxguildweekactiveness - ownweekactiveness;
         auto addactiveness = __MIN__( restweekactiveness, addvalue );
         if ( _invalid_int >= addvalue )
         {

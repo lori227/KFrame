@@ -38,8 +38,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加注册回调函数
         template< class T >
-        void RegisterConnectionFunction( T* object,
-                                         void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
+        void RegisterConnectionFunction( T* object, void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
         {
             KFClientConnectionFunction function = std::bind( handle, object,
                                                   std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -55,8 +54,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 断线函数回调
         template< class T >
-        void RegisterLostFunction( T* object,
-                                   void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
+        void RegisterLostFunction( T* object, void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
         {
             KFClientLostFunction function = std::bind( handle, object,
                                             std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -73,8 +71,7 @@ namespace KFrame
 
         // 注册转发
         template< class T >
-        void RegisterTransmitFunction( T* object,
-                                       bool ( T::*handle )( const KFGuid& guid, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTransmitFunction( T* object, bool ( T::*handle )( const KFGuid& guid, uint32 msgid, const char* data, uint32 length ) )
         {
             KFTransmitFunction function = std::bind( handle, object,
                                           std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );

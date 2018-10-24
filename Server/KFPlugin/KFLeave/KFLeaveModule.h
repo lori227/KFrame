@@ -1,8 +1,8 @@
-﻿#ifndef __KF_ENTER_MODULE_H__
-#define __KF_ENTER_MODULE_H__
+﻿#ifndef __KF_LEAVE_MODULE_H__
+#define __KF_LEAVE_MODULE_H__
 
 /************************************************************************
-//    @Moudle			:    角色进入游戏模块
+//    @Moudle			:    角色离开游戏模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
@@ -10,19 +10,19 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFEnterInterface.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLeaveInterface.h"
 #include "KFLua/KFLuaInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 
 namespace KFrame
 {
     class KFEntity;
-    class KFEnterModule : public KFEnterInterface
+    class KFLeaveModule : public KFLeaveInterface
     {
     public:
-        KFEnterModule();
-        ~KFEnterModule();
+        KFLeaveModule() = default;
+        ~KFLeaveModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -33,8 +33,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
 
-        // 进入游戏世界
-        void EnterGameWorld( KFEntity* player );
+        // 离开游戏世界
+        void LeaveGameWorld( KFEntity* player );
     };
 }
 

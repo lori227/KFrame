@@ -1,24 +1,24 @@
-﻿#include "KFEnterPlugin.h"
-#include "KFEnterModule.h"
+﻿#include "KFLeavePlugin.h"
+#include "KFLeaveModule.h"
 
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFEnterPlugin::Install()
+    void KFLeavePlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFEnterPlugin, KFEnterInterface >( new KFEnterModule() );
+        __REGISTER_MODULE__( KFLeave );
     }
 
-    void KFEnterPlugin::UnInstall()
+    void KFLeavePlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFEnterPlugin, KFEnterInterface >();
+        __UNREGISTER_MODULE__( KFLeave );
     }
 
-    void KFEnterPlugin::LoadModule()
+    void KFLeavePlugin::LoadModule()
     {
-        _kf_lua = _kf_plugin_manage->FindModule< KFLuaInterface >();
-        _kf_config = _kf_plugin_manage->FindModule< KFConfigInterface >();
-        _kf_player = _kf_plugin_manage->FindModule< KFPlayerInterface >();
+        __FIND_MODULE__( _kf_lua, KFLuaInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
     }
 }

@@ -7,19 +7,9 @@
 
 namespace KFrame
 {
-    KFKernelModule::KFKernelModule()
-    {
-
-    }
-
-    KFKernelModule::~KFKernelModule()
-    {
-        _kf_component.Clear();
-    }
-
     void KFKernelModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_kernel_config, this );
+        __KF_ADD_CONFIG__( _kf_kernel_config, true );
     }
 
     void KFKernelModule::AfterLoad()

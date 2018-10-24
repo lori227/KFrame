@@ -60,3 +60,5 @@ cp -f $respath/bin/KFSchedule.so $deploypath/bin/
 cp -f $respath/bin/KFScheduled.so $deploypath/bin/
 cp -f $respath/bin/KFFtp.so $deploypath/bin/
 cp -f $respath/bin/KFFtpd.so $deploypath/bin/
+cp -f $respath/bin/KFDeployCommand.so $deploypath/bin/
+cp -f $respath/bin/KFDeployCommandd.so $deploypath/bin/

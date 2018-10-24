@@ -2,17 +2,35 @@
 
 namespace KFrame
 {
-    KFConfigModule::KFConfigModule()
+    void KFConfigModule::BeforeRun()
     {
-    }
-
-    KFConfigModule::~KFConfigModule()
-    {
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( loadconfig ), &KFConfigModule::LoadConfig );
     }
 
     void KFConfigModule::ShutDown()
     {
         _kf_config_data.Clear();
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( loadconfig ) );
+    }
+
+    __KF_COMMAND_FUNCTION__( KFConfigModule::LoadConfig )
+    {
+        for ( auto& iter : _kf_config_data._objects )
+        {
+            auto kfdata = iter.second;
+            if ( !kfdata->_can_reload )
+            {
+                continue;
+            }
+
+            auto pos = kfdata->_file.find( param );
+            if ( pos == std::string::npos )
+            {
+                continue;
+            }
+
+            LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
+        }
     }
 
     void KFConfigModule::AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload )
@@ -35,26 +53,6 @@ namespace KFrame
         for ( auto& iter : _kf_config_data._objects )
         {
             auto kfdata = iter.second;
-
-            LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
-        }
-    }
-
-    void KFConfigModule::LoadConfig( const std::string& file )
-    {
-        for ( auto& iter : _kf_config_data._objects )
-        {
-            auto kfdata = iter.second;
-            if ( !kfdata->_can_reload )
-            {
-                continue;
-            }
-
-            auto pos = kfdata->_file.find( file );
-            if ( pos == std::string::npos )
-            {
-                continue;
-            }
 
             LoadConfig( kfdata->_config, kfdata->_module, kfdata->_file );
         }

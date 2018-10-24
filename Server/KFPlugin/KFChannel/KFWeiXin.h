@@ -8,14 +8,14 @@ namespace KFrame
     class KFWeiXin : public KFChannel
     {
     public:
-        KFWeiXin( uint32 channel );
-        virtual ~KFWeiXin();
+        KFWeiXin() = default;
+        virtual ~KFWeiXin() = default;
 
         // 登录请求
-        std::string RequestLogin( KFJson& json, const KFChannelSetting* kfchannelsetting );
+        std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting );
 
         // 充值请求
-        std::string RequestPay( KFJson& json, const KFChannelSetting* kfchannelsetting );
+        std::string RequestPay( KFJson& json, const KFChannelSetting* kfsetting );
     };
 }
 

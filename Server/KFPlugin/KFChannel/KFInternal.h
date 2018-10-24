@@ -8,14 +8,14 @@ namespace KFrame
     class KFInternal : public KFChannel
     {
     public:
-        KFInternal( uint32 channel );
-        virtual ~KFInternal();
+        KFInternal() = default;
+        virtual ~KFInternal() = default;
 
         // 登录请求
-        std::string RequestLogin( KFJson& json, const KFChannelSetting* kfchannelsetting );
+        std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting );
 
         // 充值请求
-        std::string RequestPay( KFJson& json, const KFChannelSetting* kfchannelsetting );
+        std::string RequestPay( KFJson& json, const KFChannelSetting* kfsetting );
     };
 }
 

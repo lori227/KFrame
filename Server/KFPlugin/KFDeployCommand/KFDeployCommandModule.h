@@ -13,19 +13,21 @@
 #include "KFDeployCommandInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFConfig/KFConfigInterface.h"
-#include "KFLua/KFLuaInterface.h"
 
 namespace KFrame
 {
+    // 命令数目
+    class KFCommand
+    {
+    public:
+        KFBind< std::string, const std::string&, KFCommandFunction > _command_function;
+    };
+
     class KFDeployCommandModule : public KFDeployCommandInterface
     {
     public:
-        KFDeployCommandModule();
-        ~KFDeployCommandModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFDeployCommandModule() = default;
+        ~KFDeployCommandModule() = default;
 
         // 开始执行
         virtual void BeforeRun();
@@ -39,9 +41,8 @@ namespace KFrame
                                     const std::string& appname, const std::string& apptype, const std::string&  appid, uint32 zoneid );
 
     protected:
-        virtual void AddShutDownFunction( const std::string& module, KFCommandFunction& function );
-        virtual void RemoveShutDownFunction( const std::string& module );
-
+        virtual void AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function );
+        virtual void RemoveComandFunction( const std::string& command, const std::string& module );
 
         // 判断是不是自己
         bool IsSelfServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
@@ -60,8 +61,8 @@ namespace KFrame
         // 关闭服务器
         __KF_TIMER_FUNCTION__( OnTimerShutDownServer );
     private:
-        // 关闭服务器回调函数
-        KFBind< std::string, const std::string&, KFCommandFunction > _shutdown_function;
+        // 命令回调函数
+        KFMap< std::string, const std::string&, KFCommand > _command_data;
 
     };
 }

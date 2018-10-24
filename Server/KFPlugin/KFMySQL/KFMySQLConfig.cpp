@@ -46,9 +46,9 @@ namespace KFrame
                 kfsetting->_id = childnode.GetUInt32( "MySqlId" );
                 kfsetting->_ip = childnode.GetString( "IP" );
                 kfsetting->_port = childnode.GetUInt32( "Port" );
-                kfsetting->_password = childnode.GetString( "Password" );
                 kfsetting->_database = childnode.GetString( "Database" );
                 kfsetting->_user = childnode.GetString( "User" );
+                kfsetting->_password = childnode.GetString( "Password" );
 
                 auto channelnode = childnode.FindNode( "Channel" );
                 while ( channelnode.IsValid() )
@@ -58,9 +58,8 @@ namespace KFrame
                     {
                         kfsetting->_ip = channelnode.GetString( "IP" );
                         kfsetting->_port = channelnode.GetUInt32( "Port" );
-                        kfsetting->_password = channelnode.GetString( "Password" );
-                        kfsetting->_database = channelnode.GetString( "Database" );
                         kfsetting->_user = channelnode.GetString( "User" );
+                        kfsetting->_password = channelnode.GetString( "Password" );
                         break;
                     }
 

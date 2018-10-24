@@ -173,7 +173,7 @@ namespace KFrame
         void StartStartupServerTask();
         void StartUpdateServerTask();
         void StartWgetVersionTask();
-        void StartDownConfigTask();
+        void StartDownFileTask();
 
         // 检查任务完成
         bool CheckTaskFinish();
@@ -181,7 +181,7 @@ namespace KFrame
         bool CheckStartupServerTaskFinish();
         bool CheckUpdateServerTaskFinish();
         bool CheckWgetVersionTaskFinish();
-        bool CheckDownConfigTaskFinish();
+        bool CheckDownFileTaskFinish();
 
         // ftp下载回调
         void OnFtpDownLoadCallBack( uint32 objectid, const std::string& apppath, bool ftpok );
