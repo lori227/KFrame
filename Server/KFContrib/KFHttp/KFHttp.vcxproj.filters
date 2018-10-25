@@ -30,9 +30,6 @@
     <ClCompile Include="KFHttp.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="KFHttpClientManage.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="KFHttpCommon.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -42,9 +39,6 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="KFHttp.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpClientManage.h">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="KFHttpCommon.h">

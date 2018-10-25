@@ -6,53 +6,58 @@
 namespace KFrame
 {
     class KFJson;
+    typedef std::function<void( std::string& data, std::string& result, std::string& callback )> KFHttpClientFunction;
+
     class KFHttpClientInterface : public KFModule
     {
     public:
         // 单线程
         virtual std::string StartSTHttpClient( const std::string& url, const std::string& data ) = 0;
-        virtual std::string StartSTHttpsClient( const std::string& url, const std::string& data ) = 0;
+        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json ) = 0;
 
-        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json, bool sign ) = 0;
-        virtual std::string StartSTHttpsClient( const std::string& url, KFJson& json, bool sign ) = 0;
+        virtual std::string StartSTHttpsClient( const std::string& url, const std::string& data ) = 0;
+        virtual std::string StartSTHttpsClient( const std::string& url, KFJson& json ) = 0;
 
         // 多线程
         virtual void StartMTHttpClient( const std::string& url, const std::string& data ) = 0;
-        virtual void StartMTHttpsClient( const std::string& url, const std::string& data ) = 0;
+        virtual void StartMTHttpClient( const std::string& url, KFJson& json ) = 0;
 
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json, bool sign ) = 0;
-        virtual void StartMTHttpsClient( const std::string& url, KFJson& json, bool sign ) = 0;
+        virtual void StartMTHttpsClient( const std::string& url, const std::string& data ) = 0;
+        virtual void StartMTHttpsClient( const std::string& url, KFJson& json ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void StartMTHttpClient( const std::string& url, const std::string& data, T* object, void ( T::*handle )( std::string&, std::string& ) )
+        void StartMTHttpClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                                const std::string& url, const std::string& data, const std::string& callback = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            StartMTHttpClient( url, data, function );
+            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            StartMTHttpClient( function, url, data,  callback );
         }
 
         template< class T >
-        void StartMTHttpsClient( const std::string& url, const std::string& data, T* object, void ( T::*handle )( std::string&, std::string& ) )
+        void StartMTHttpClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                                const std::string& url, KFJson& json, const std::string& callback = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            StartMTHttpsClient( url, data, function );
+            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            StartMTHttpClient( function, url, json, callback );
         }
 
         template< class T >
-        void StartMTHttpClient( const std::string& url, KFJson& json, bool sign,  T* object, void ( T::*handle )( std::string&, std::string& ) )
+        void StartMTHttpsClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                                 const std::string& url, const std::string& data, const std::string& callback = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            StartMTHttpClient( url, json, function, sign );
+            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            StartMTHttpsClient( function, url, data, callback );
         }
 
         template< class T >
-        void StartMTHttpsClient( const std::string& url, KFJson& json, bool sign, T* object, void ( T::*handle )( std::string&, std::string& ) )
+        void StartMTHttpsClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                                 const std::string& url, KFJson& json, const std::string& callback = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            StartMTHttpsClient( url, json, function, sign );
+            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            StartMTHttpsClient( function, url, json, callback );
         }
 
         /////////////////////////////////////////////////////////////////////////
-
         // 返回错误
         virtual std::string SendResponseCode( uint32 code ) = 0;
 
@@ -62,26 +67,23 @@ namespace KFrame
         // 发送json
         virtual std::string SendResponse( KFJson& json ) = 0;
 
-        // 创建签名
-        virtual void MakeSignature( KFJson& json ) = 0;
-
-        // 验证签名
-        virtual bool VerifySignature( KFJson& json ) = 0;
-
     protected:
-
         // http
-        virtual void StartMTHttpClient( const std::string& url, const std::string& data, KFHttpClientFunction& function ) = 0;
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign ) = 0;
+        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback ) = 0;
+        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback ) = 0;
 
         // https
-        virtual void StartMTHttpsClient( const std::string& url, const std::string& data, KFHttpClientFunction& function ) = 0;
-        virtual void StartMTHttpsClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign ) = 0;
+        virtual void StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback ) = 0;
+        virtual void StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_http_client, KFHttpClientInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __KF_HTTP_CALL_BACK_FUNCTION__( function )\
+    void function( std::string& senddata, std::string& recvdata, std::string& callback )
+
 }
 
 

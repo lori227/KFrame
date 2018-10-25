@@ -229,7 +229,7 @@ namespace KFrame
             sendjson.SetValue( __KF_STRING__( online ), 0 );
         }
 
-        _kf_http_client->StartMTHttpClient( _url, sendjson, false );
+        _kf_http_client->StartMTHttpClient( _url, sendjson );
 
         // 记录在线玩家数量
         __LOG_DEBUG__( "online player count=[{}]", _kf_online_list.Size() );

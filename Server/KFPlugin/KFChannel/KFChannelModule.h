@@ -11,8 +11,8 @@
 
 #include "KFrame.h"
 #include "KFChannelInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 

@@ -129,10 +129,10 @@ namespace KFrame
         sendjson.SetValue( __KF_STRING__( token ), kfmsg.token() );
 
         auto url = _kf_ip_address->FindAuthAddress() + __KF_STRING__( verify );
-        _kf_http_client->StartMTHttpClient( url, sendjson, false, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
+        _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, url, sendjson );
     }
 
-    void KFLoginModule::OnHttpAuthLoginVerifyCallBack( std::string& senddata, std::string& recvdata )
+    __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )
     {
         // 处理验证结果
         KFJson sendjson( senddata );

@@ -26,7 +26,7 @@ namespace KFrame
         {
             try
             {
-                _function( _data, _result );
+                _function( _data, _result, _callback );
             }
             catch ( ... )
             {

@@ -50,12 +50,6 @@ namespace KFrame
         // 发送json
         virtual std::string SendResponse( KFJson& json );
         virtual std::string SendResponse( KFJson& json, uint32 code );
-
-        // 创建签名
-        virtual void MakeSignature( KFJson& json );
-
-        // 验证签名
-        virtual bool VerifySignature( KFJson& json );
     private:
 
         // 注册httphandle

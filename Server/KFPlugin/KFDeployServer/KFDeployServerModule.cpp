@@ -164,7 +164,7 @@ namespace KFrame
         {
             KFJson response;
             response[ __KF_STRING__( msg ) ] = msg;
-            _kf_http_client->StartMTHttpClient( url, response, false );
+            _kf_http_client->StartMTHttpClient( url, response );
         }
     }
 }

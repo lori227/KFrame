@@ -64,7 +64,7 @@ namespace KFrame
 
     protected:
         // 平台验证回调
-        void OnHttpAuthLoginVerifyCallBack( std::string& senddata, std::string& recvdata );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
 
         // 发送登录验证结果消息
         void SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid );

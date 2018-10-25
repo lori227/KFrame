@@ -89,14 +89,4 @@ namespace KFrame
     {
         return KFHttpCommon::SendResponse( json, code );
     }
-
-    void KFHttpServerModule::MakeSignature( KFJson& json )
-    {
-        KFHttpCommon::MakeSignature( json );
-    }
-
-    bool KFHttpServerModule::VerifySignature( KFJson& json )
-    {
-        return KFHttpCommon::VerifySignature( json );
-    }
 }

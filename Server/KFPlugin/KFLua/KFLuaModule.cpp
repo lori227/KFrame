@@ -5,6 +5,7 @@ namespace KFrame
 {
     void KFLuaModule::BeforeRun()
     {
+        _kf_player = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( loadscript ), &KFLuaModule::LoadScript );
     }
 
@@ -39,13 +40,18 @@ namespace KFrame
 
         return kfluascript;
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFLuaModule::RegisterLuaFunction( KFLuaScript* kfscript )
     {
         auto metatableobject = kfscript->_lua_state->GetGlobals().CreateTable( "MultiObjectMetaTable" );
         metatableobject.SetObject( "__index", metatableobject );
 
+        metatableobject.RegisterObjectDirect( "LogDebug", this, &KFLuaModule::LuaLogDebug );
+        metatableobject.RegisterObjectDirect( "LogInfo", this, &KFLuaModule::LuaLogInfo );
+        metatableobject.RegisterObjectDirect( "LogWarn", this, &KFLuaModule::LuaLogWarn );
+        metatableobject.RegisterObjectDirect( "LogError", this, &KFLuaModule::LuaLogError );
+        metatableobject.RegisterObjectDirect( "LogCritical", this, &KFLuaModule::LuaLogCritical );
+        metatableobject.RegisterObjectDirect( "Md5Encode", this, &KFLuaModule::LuaMd5Encode );
         metatableobject.RegisterObjectDirect( "GetValue", this, &KFLuaModule::LuaGetValue );
         metatableobject.RegisterObjectDirect( "OperateValue", this, &KFLuaModule::LuaOperateValue );
         metatableobject.RegisterObjectDirect( "GetObjectValue", this, &KFLuaModule::LuaGetObjectValue );
@@ -69,9 +75,42 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint64 KFLuaModule::LuaGetValue( const char* module, uint32 objectid, const char* dataname )
+
+    void KFLuaModule::LuaLogDebug( const char* data )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        __LOG_DEBUG__( data );
+    }
+
+    void KFLuaModule::LuaLogInfo( const char* data )
+    {
+        __LOG_INFO__( data );
+    }
+
+    void KFLuaModule::LuaLogWarn( const char* data )
+    {
+        __LOG_WARN__( data );
+    }
+
+    void KFLuaModule::LuaLogError( const char* data )
+    {
+        __LOG_ERROR__( data );
+    }
+
+    void KFLuaModule::LuaLogCritical( const char* data )
+    {
+        __LOG_CRITICAL__( data );
+    }
+
+    const char* KFLuaModule::LuaMd5Encode( const char* data )
+    {
+        static std::string _result;
+        _result = KFCrypto::Md5Encode( data );
+        return _result.c_str();
+    }
+
+    uint64 KFLuaModule::LuaGetValue( uint32 objectid, const char* dataname )
+    {
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -81,9 +120,9 @@ namespace KFrame
         return kfobject->GetValue( dataname );
     }
 
-    uint64 KFLuaModule::LuaOperateValue( const char* module, uint32 objectid, const char* dataname, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateValue( uint32 objectid, const char* dataname, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -92,9 +131,9 @@ namespace KFrame
         return kfentity->UpdateData( dataname, operate, value );
     }
 
-    uint64 KFLuaModule::LuaGetObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname )
+    uint64 KFLuaModule::LuaGetObjectValue( uint32 objectid, const char* parentname, const char* dataname )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -104,9 +143,9 @@ namespace KFrame
         return kfobject->GetValue( parentname, dataname );
     }
 
-    uint64 KFLuaModule::LuaOperateObjectValue( const char* module, uint32 objectid, const char* parentname, const char* dataname, const char* operate, const char* value )
+    uint64 KFLuaModule::LuaOperateObjectValue( uint32 objectid, const char* parentname, const char* dataname, const char* operate, const char* value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -117,9 +156,9 @@ namespace KFrame
         return kfentity->UpdateData( parentname, dataname, uoperate, uvalue );
     }
 
-    uint64 KFLuaModule::LuaGetRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname )
+    uint64 KFLuaModule::LuaGetRecordValue( uint32 objectid, const char* parentname, uint64 key, const char* dataname )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -129,9 +168,9 @@ namespace KFrame
         return kfobject->GetValue( parentname, key, dataname );
     }
 
-    uint64 KFLuaModule::LuaOperateRecordValue( const char* module, uint32 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateRecordValue( uint32 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return _invalid_int;
@@ -165,9 +204,9 @@ namespace KFrame
         return KFGlobal::Instance()->_real_time;
     }
 
-    void KFLuaModule::LuaAddData( const char* module, uint32 objectid, const char* stragent, bool showclient )
+    void KFLuaModule::LuaAddData( uint32 objectid, const char* stragent, bool showclient )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return;
@@ -181,9 +220,9 @@ namespace KFrame
         }
     }
 
-    void KFLuaModule::LuaSetData( const char* module, uint32 objectid, const char* stragent, bool showclient )
+    void KFLuaModule::LuaSetData( uint32 objectid, const char* stragent, bool showclient )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return;
@@ -198,9 +237,9 @@ namespace KFrame
         }
     }
 
-    void KFLuaModule::LuaDecData( const char* module, uint32 objectid, const char* stragent )
+    void KFLuaModule::LuaDecData( uint32 objectid, const char* stragent )
     {
-        auto kfentity = _kf_kernel->FindEntity( module, objectid, __FUNC_LINE__ );
+        auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
         {
             return;
@@ -221,14 +260,14 @@ namespace KFrame
         return _result.c_str();
     }
 
-    void KFLuaModule::LuaMTHttpClient( const char* url, const char* data )
+    void KFLuaModule::LuaMTHttpClient( const char* url, const char* data, const char* callback )
     {
-        _kf_http_client->StartMTHttpClient( url, data, this, &KFLuaModule::OnLuaHttpCallBack );
+        _kf_http_client->StartMTHttpClient( this, &KFLuaModule::OnLuaHttpCallBack, url, data, callback );
     }
 
-    void KFLuaModule::OnLuaHttpCallBack( std::string& senddata, std::string& recvdata )
+    __KF_HTTP_CALL_BACK_FUNCTION__( KFLuaModule::OnLuaHttpCallBack )
     {
-        KFJson kfjson( senddata );
+        KFJson kfjson( callback );
 
         auto objectid = kfjson.GetUInt32( __KF_STRING__( playerid ) );
         auto luafile = kfjson.GetString( __KF_STRING__( luafile ) );

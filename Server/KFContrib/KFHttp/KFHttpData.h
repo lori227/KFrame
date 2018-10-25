@@ -24,6 +24,9 @@ namespace KFrame
         // 发送数据
         std::string _data;
 
+        // 回传数据
+        std::string _callback;
+
         // 接受数据
         std::string _result;
 

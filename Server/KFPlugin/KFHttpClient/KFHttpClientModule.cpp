@@ -1,36 +1,106 @@
 ﻿#include "KFHttpClientModule.h"
-#include "KFHttp/KFHttpClientManage.h"
 #include "KFHttp/KFHttpCommon.h"
+
 #include "KFJson.h"
 
 namespace KFrame
 {
     KFHttpClientModule::KFHttpClientModule()
     {
-        _kf_http_manage = new KFHttpClientManage();
+        _thread_run = false;
     }
 
     KFHttpClientModule::~KFHttpClientModule()
     {
-        delete _kf_http_manage;
+        {
+            KFLocker locker( _kf_req_mutex );
+            for ( auto httpdata : _req_http_data )
+            {
+                __KF_DESTROY__( KFHttpData, httpdata );
+            }
+            _req_http_data.clear();
+        }
+
+        {
+            KFLocker locker( _kf_ack_mutex );
+            for ( auto httpdata : _ack_http_data )
+            {
+                __KF_DESTROY__( KFHttpData, httpdata );
+            }
+            _ack_http_data.clear();
+        }
     }
 
     void KFHttpClientModule::BeforeRun()
     {
-        _kf_http_manage->Initialize();
+        KFHttpsClient::Initialize();
     }
 
     void KFHttpClientModule::BeforeShut()
     {
-        _kf_http_manage->ShutDown();
+        _thread_run = false;
     }
 
     void KFHttpClientModule::Run()
     {
-        _kf_http_manage->RunUpdate();
+        std::list< KFHttpData* > templist;
+        {
+            KFLocker locker( _kf_ack_mutex );
+            templist.swap( _ack_http_data );
+        }
+
+        for ( auto httpdata : templist )
+        {
+            httpdata->Response();
+            __KF_DESTROY__( KFHttpData, httpdata );
+        }
     }
 
+    void KFHttpClientModule::RunHttpRequest()
+    {
+        while ( _thread_run )
+        {
+            std::list< KFHttpData* > templist;
+            {
+                KFLocker locker( _kf_req_mutex );
+                templist.swap( _req_http_data );
+            }
+
+            for ( auto httpdata : templist )
+            {
+                httpdata->Request();
+
+                KFLocker locker( _kf_ack_mutex );
+                _ack_http_data.push_back( httpdata );
+            }
+
+            KFThread::Sleep( 1 );
+        }
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, const std::string& data )
+    {
+        KFHttpClient httpclient;
+        return httpclient.RunHttp( url, data );
+    }
+
+    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, KFJson& json )
+    {
+        auto temp = json.Serialize();
+        return StartSTHttpClient( url, temp );
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, const std::string& data )
+    {
+        KFHttpsClient httpclient;
+        return httpclient.RunHttp( url, data );
+    }
+
+    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, KFJson& json )
+    {
+        auto temp = json.Serialize();
+        return StartSTHttpsClient( url, temp );
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::SendResponseCode( uint32 code )
     {
@@ -46,119 +116,76 @@ namespace KFrame
     {
         return KFHttpCommon::SendResponse( json );
     }
-
-    void KFHttpClientModule::MakeSignature( KFJson& json )
-    {
-        KFHttpCommon::MakeSignature( json );
-    }
-
-    bool KFHttpClientModule::VerifySignature( KFJson& json )
-    {
-        return KFHttpCommon::VerifySignature( json );
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     void KFHttpClientModule::StartMTHttpClient( const std::string& url, const std::string& data )
     {
         static KFHttpClientFunction _null_function = nullptr;
-        _kf_http_manage->SendMTHttp( url, data, _null_function );
+        StartMTHttpClient( _null_function, url, data, _invalid_str );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( const std::string& url, KFJson& json, bool sign )
+    void KFHttpClientModule::StartMTHttpClient( const std::string& url, KFJson& json )
     {
-        if ( sign )
-        {
-            MakeSignature( json );
-        }
+        static KFHttpClientFunction _null_function = nullptr;
+        StartMTHttpClient( _null_function, url, json, _invalid_str );
+    }
 
+    void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
+    {
         auto data = json.Serialize();
-        StartMTHttpClient( url, data );
+        StartMTHttpClient( function, url, data, callback );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( const std::string& url, const std::string& data, KFHttpClientFunction& function )
+    void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
     {
-        _kf_http_manage->SendMTHttp( url, data, function );
+        auto httpdata = __KF_CREATE__( KFHttpData );
+        httpdata->_url = url;
+        httpdata->_data = data;
+        httpdata->_callback = callback;
+        httpdata->_function = function;
+        httpdata->_http = __KF_CREATE__( KFHttpClient );
+        AddHttpData( httpdata );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign )
+    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, KFJson& json )
     {
-        if ( sign )
-        {
-            MakeSignature( json );
-        }
-
-        auto data = json.Serialize();
-        _kf_http_manage->SendMTHttp( url, data, function );
-    }
-
-    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, KFJson& json, bool sign )
-    {
-        if ( sign )
-        {
-            MakeSignature( json );
-        }
-
-        auto data = json.Serialize();
-        StartMTHttpsClient( url, data );
+        static KFHttpClientFunction _null_function = nullptr;
+        StartMTHttpsClient( _null_function, url, json, _invalid_str );
     }
 
     void KFHttpClientModule::StartMTHttpsClient( const std::string& url, const std::string& data )
     {
         static KFHttpClientFunction _null_function = nullptr;
-        _kf_http_manage->SendMTHttps( url, data, _null_function );
+        StartMTHttpsClient( _null_function, url, data,  _invalid_str );
     }
 
-    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, const std::string& data, KFHttpClientFunction& function )
+    void KFHttpClientModule::StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
     {
-        _kf_http_manage->SendMTHttps( url, data, function );
-    }
-
-    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign )
-    {
-        if ( sign )
-        {
-            MakeSignature( json );
-        }
-
         auto data = json.Serialize();
-        _kf_http_manage->SendMTHttps( url, data, function );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, const std::string& data )
-    {
-        return _kf_http_manage->SendSTHttps( url, data );
+        StartMTHttpsClient( function, url, data, callback );
     }
 
-    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, KFJson& json, bool sign )
+    void KFHttpClientModule::StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
     {
-        if ( sign )
+        auto httpdata = __KF_CREATE__( KFHttpData );
+        httpdata->_url = url;
+        httpdata->_data = data;
+        httpdata->_callback = callback;
+        httpdata->_function = function;
+        httpdata->_http = __KF_CREATE__( KFHttpsClient );
+        AddHttpData( httpdata );
+    }
+
+    void KFHttpClientModule::AddHttpData( KFHttpData* httpdata )
+    {
+        if ( !_thread_run )
         {
-            MakeSignature( json );
+            _thread_run = true;
+            KFThread::CreateThread( this, &KFHttpClientModule::RunHttpRequest, __FUNC_LINE__ );
         }
 
-        auto temp = json.Serialize();
-        return StartSTHttpsClient( url, temp );
+        KFLocker locker( _kf_req_mutex );
+        _req_http_data.push_back( httpdata );
     }
-
-    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, const std::string& data )
-    {
-        return _kf_http_manage->SendSTHttp( url, data );
-    }
-
-    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, KFJson& json, bool sign )
-    {
-        if ( sign )
-        {
-            MakeSignature( json );
-        }
-
-        auto temp = json.Serialize();
-        return StartSTHttpClient( url, temp );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

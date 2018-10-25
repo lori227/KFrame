@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="KFHttp.cpp" />
     <ClCompile Include="KFHttpClient.cpp" />
-    <ClCompile Include="KFHttpClientManage.cpp" />
     <ClCompile Include="KFHttpCommon.cpp" />
     <ClCompile Include="KFHttpData.cpp" />
     <ClCompile Include="KFHttpFactory.cpp" />
@@ -24,7 +23,6 @@
   <ItemGroup>
     <ClInclude Include="KFHttp.h" />
     <ClInclude Include="KFHttpClient.h" />
-    <ClInclude Include="KFHttpClientManage.h" />
     <ClInclude Include="KFHttpCommon.h" />
     <ClInclude Include="KFHttpData.h" />
     <ClInclude Include="KFHttpFactory.h" />

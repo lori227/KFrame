@@ -11,10 +11,12 @@
 
 #include "KFrame.h"
 #include "KFHttpClientInterface.h"
+#include "KFHttp/KFHttpData.h"
+#include "KFHttp/KFHttpClient.h"
+#include "KFHttp/KFHttpsClient.h"
 
 namespace KFrame
 {
-    class KFHttpClientManage;
     class KFHttpClientModule : public KFHttpClientInterface
     {
     public:
@@ -32,14 +34,14 @@ namespace KFrame
         virtual std::string StartSTHttpClient( const std::string& url, const std::string& data );
         virtual std::string StartSTHttpsClient( const std::string& url, const std::string& data );
 
-        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json, bool sign );
-        virtual std::string StartSTHttpsClient( const std::string& url, KFJson& json, bool sign );
+        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json );
+        virtual std::string StartSTHttpsClient( const std::string& url, KFJson& json );
 
         virtual void StartMTHttpClient( const std::string& url, const std::string& data );
         virtual void StartMTHttpsClient( const std::string& url, const std::string& data );
 
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json, bool sign );
-        virtual void StartMTHttpsClient( const std::string& url, KFJson& json, bool sign );
+        virtual void StartMTHttpClient( const std::string& url, KFJson& json );
+        virtual void StartMTHttpsClient( const std::string& url, KFJson& json );
 
         /////////////////////////////////////////////////////////////////////
         // 返回错误
@@ -51,23 +53,33 @@ namespace KFrame
         // 发送json
         virtual std::string SendResponse( KFJson& json );
 
-        // 创建签名
-        virtual void MakeSignature( KFJson& json );
-
-        // 验证签名
-        virtual bool VerifySignature( KFJson& json );
     protected:
         // http
-        virtual void StartMTHttpClient( const std::string& url, const std::string& data, KFHttpClientFunction& function );
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign );
+        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback );
+        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback );
 
         // https
-        virtual void StartMTHttpsClient( const std::string& url, const std::string& data, KFHttpClientFunction& function );
-        virtual void StartMTHttpsClient( const std::string& url, KFJson& json, KFHttpClientFunction& function, bool sign );
+        virtual void StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback );
+        virtual void StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback );
 
     private:
-        // 客户端管理
-        KFHttpClientManage* _kf_http_manage;
+        // 添加异步请求
+        void AddHttpData( KFHttpData* httpdata );
+
+        // http请求
+        void RunHttpRequest();
+
+    private:
+
+        volatile bool _thread_run;
+
+        // 请求的数据队列
+        KFMutex _kf_req_mutex;
+        std::list< KFHttpData* > _req_http_data;
+
+        // 完成的数据队列
+        KFMutex _kf_ack_mutex;
+        std::list< KFHttpData* > _ack_http_data;
     };
 }
 

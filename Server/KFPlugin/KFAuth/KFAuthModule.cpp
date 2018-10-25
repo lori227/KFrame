@@ -191,7 +191,7 @@ namespace KFrame
 
         KFJson kfjson;
         kfjson.SetValue( __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
-        auto kickresult = _kf_http_client->StartSTHttpClient( kickurl, kfjson, false );
+        auto kickresult = _kf_http_client->StartSTHttpClient( kickurl, kfjson );
 
         KFJson kfresponse( kickresult );
         auto retcode = _kf_http_server->GetResponseCode( kfresponse );
@@ -215,7 +215,7 @@ namespace KFrame
         KFJson dirrequest;
         dirrequest.SetValue( __KF_STRING__( zoneid ), zoneid );
         dirrequest.SetValue( __KF_STRING__( accountid ), accountid );
-        auto urlresponse = _kf_http_client->StartSTHttpClient( dirurl, dirrequest, false );
+        auto urlresponse = _kf_http_client->StartSTHttpClient( dirurl, dirrequest );
 
         KFJson kfdirjson( urlresponse );
         auto dirretcode = _kf_http_server->GetResponseCode( kfdirjson );
