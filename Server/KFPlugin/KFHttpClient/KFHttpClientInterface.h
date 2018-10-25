@@ -6,7 +6,6 @@
 namespace KFrame
 {
     class KFJson;
-    typedef std::function<void( std::string& data, std::string& result, std::string& callback )> KFHttpClientFunction;
 
     class KFHttpClientInterface : public KFModule
     {

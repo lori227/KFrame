@@ -64,6 +64,8 @@ namespace KFrame
     typedef std::function< void( uint32 id, const std::string& name, const std::string& type ) > KFServerLostFunction;
     typedef std::function< void( uint32 id, const std::string& name, const std::string& type, const std::string& ip, uint32 port ) > KFServerDiscoverFunction;
     ////////////////////////////////////////////////////////////////////////
+    // http client 回调函数
+    typedef std::function<void( std::string& data, std::string& result, std::string& callback )> KFHttpClientFunction;
 
     // httphandle 函数
     typedef std::function< std::string ( const std::string& ip, const std::string& data )> KFHttpMethodFunction;
