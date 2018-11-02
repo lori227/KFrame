@@ -1,23 +1,18 @@
 
 if [ ! -n "$1" ]; then
-    	echo "please input app channel : 101"
+    	echo "please input app channel : 1"
     	exit 0
 fi
 
 if  [ ! -n "$2" ] ;then
-	echo "please input build type : debug/release"
+	echo "please input branch : develop/online/steam"
 	exit 0
 fi
 
-
-if [ "$1" = "100" ];then
-	branch=0
-elif [ "$1" = "101" ];then
-	branch=1
-else
-	branch=2
+if  [ ! -n "$3" ] ;then
+	echo "please input build type : debug/release"
+	exit 0
 fi
-echo $branch
 
 svnversion=`svn info |awk 'NR==6{print $2}'`
 if [ "$svnversion" = "" ];then
@@ -28,7 +23,7 @@ echo $svnversion
 
 # ±‡“Î∞Ê±æ 
 sh build_clean.sh
-if [ "$2" = "debug" ];then
+if [ "$3" = "debug" ];then
 	sh build_debug.sh
 else
 	sh build_release.sh
@@ -39,6 +34,6 @@ cd ../../../
 \cp -f ./Resource/config/* ./Bin/config/
 cd Bin/tool/gcm/builder/
 chmod 777 gcm_build
-./gcm_build -s $svnversion -b $branch -c $1 -m $2
+./gcm_build -s $svnversion -b $2 -c $1 -m $3
 
 cd ../../../../../../../

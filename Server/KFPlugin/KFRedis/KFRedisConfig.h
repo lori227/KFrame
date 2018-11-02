@@ -23,34 +23,39 @@ namespace KFrame
         std::string _password;
     };
 
+    class KFRedisList
+    {
+    public:
+        // 清空
+        void Reset();
+
+        const KFRedisSetting* FindSetting();
+        void AddSetting( KFRedisSetting& kfsetting );
+
+    private:
+        // 索引
+        uint32 _index{ 0 };
+
+        std::vector< KFRedisSetting > _redis_list;
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+
     class KFRedisConfig : public KFConfig, public KFSingleton< KFRedisConfig >
     {
     public:
-        KFRedisConfig();
-        ~KFRedisConfig();
+        KFRedisConfig() = default;
+        ~KFRedisConfig() = default;
 
         bool LoadConfig();
 
         // 查找redis配置
-        const KFRedisSetting* FindRedisSetting( uint32 id ) const;
-        const KFRedisSetting* FindRedisSetting( const std::string& field, uint32 logicid ) const;
-
-    protected:
-        // 添加redis配置
-        void AddRedisSetting( KFRedisSetting* kfsetting );
-
-        // 查找redis
-        uint32 FindLogicRedisId( const std::string& filed, uint32 logicid ) const;
+        const KFRedisSetting* FindRedisSetting( const std::string& module, uint32 logicid );
     public:
-        // 连接列表
-        KFMap< uint32, uint32, KFRedisSetting > _redis_setting;
-
-        // 默认数据库
-        uint32 _default_redis_id;
-
         // 逻辑数据库映射
-        typedef std::pair< std::string, uint32 > LogicKey;
-        std::map< LogicKey, uint32 > _logic_redis_map;
+        typedef std::pair< std::string, uint32 > ModuleKey;
+        KFMap< ModuleKey, const ModuleKey&, KFRedisList > _redis_setting;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

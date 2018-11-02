@@ -65,6 +65,9 @@ namespace KFrame
 
         // 创建小区的玩家id
         uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
+
+        //验证激活码
+        std::string VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode );
     };
 }
 

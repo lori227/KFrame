@@ -1,4 +1,4 @@
-#ifndef __KF_HTTP_H__
+ï»¿#ifndef __KF_HTTP_H__
 #define __KF_HTTP_H__
 
 #include "KFrame.h"
@@ -18,17 +18,17 @@ namespace KFrame
         KFHttp() = default;
         virtual ~KFHttp() = default;
 
-        // Ö´ÐÐhttp·ÃÎÊ
+        // æ‰§è¡Œhttpè®¿é—®
         virtual std::string RunHttp( const std::string& url, const std::string& data );
 
     protected:
-        // »ñµÃ·ÃÎÊÂ·¾¶
+        // èŽ·å¾—è®¿é—®è·¯å¾„
         virtual std::string GetURI( const std::string& url, Poco::URI& pocouri );
 
-        // ÇëÇó·ÃÎÊ
+        // è¯·æ±‚è®¿é—®
         virtual std::string HttpRequest( Poco::Net::HTTPRequest& request, Poco::URI& url, const std::string& data );
 
-        // »ñµÃclientsession
+        // èŽ·å¾—clientsession
         virtual Poco::Net::HTTPClientSession* GetHttpSession() = 0;
         //////////////////////////////////////////////////////////////////////////////////////
     };

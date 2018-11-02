@@ -53,7 +53,6 @@ namespace KFrame
         // 处理查询访客请求
         __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
 
-
     private:
         // 设置玩家名字
         uint32 ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname );

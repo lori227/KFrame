@@ -2,26 +2,26 @@ package KFMsg;
 
 enum ClusterProtocol
 {
-	S2S_CLUSTER_REGISTER_REQ = 10101;			// ×¢²áµ½·şÎñÆ÷¼¯Èº
-	S2S_CLUSTER_UPDATE_REQ = 10102;				// ¸üĞÂ¼¯ÈºÁ¬½ÓÆ÷Á¬½ÓÊıÁ¿
-	S2S_CLUSTER_AUTH_REQ = 10103;				// ¼¯ÈºµÇÂ¼ÈÏÖ¤
-	S2S_CLUSTER_AUTH_ACK = 10104;				// ¼¯ÈºµÇÂ¼ÈÏÖ¤
-	S2S_CLUSTER_TOKEN_REQ = 10105;				// ¼¯ÈºToken
-	S2S_CLUSTER_VERIFY_REQ = 10106;				// ÑéÖ¤tokenÇëÇó
-	S2S_CLUSTER_VERIFY_ACK = 10107;				// ÑéÖ¤token»ØÀ¡
-	S2S_CLUSTER_CLIENT_LIST_REQ = 10108;		// ¿Í»§¶ËÁĞ±í
-	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// Ìí¼Ó¶ÔÏóÓ³Éä
-	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// É¾³ı¶ÔÏóÓ³Éä
-	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// ÇëÇó·ÖÅäshard
-	S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113;		// ÇëÇó·ÖÅäshard
-	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// ÇëÇó·ÖÅäshard
-	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// ·¢ËÍµ½¾²Ì¬¶ÔÏó
-	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// ·¢ËÍµ½¶¯Ì¬¶ÔÏó
+	S2S_CLUSTER_REGISTER_REQ = 10101;			// æ³¨å†Œåˆ°æœåŠ¡å™¨é›†ç¾¤
+	S2S_CLUSTER_UPDATE_REQ = 10102;				// æ›´æ–°é›†ç¾¤è¿æ¥å™¨è¿æ¥æ•°é‡
+	S2S_CLUSTER_AUTH_REQ = 10103;				// é›†ç¾¤ç™»å½•è®¤è¯
+	S2S_CLUSTER_AUTH_ACK = 10104;				// é›†ç¾¤ç™»å½•è®¤è¯
+	S2S_CLUSTER_TOKEN_REQ = 10105;				// é›†ç¾¤Token
+	S2S_CLUSTER_VERIFY_REQ = 10106;				// éªŒè¯tokenè¯·æ±‚
+	S2S_CLUSTER_VERIFY_ACK = 10107;				// éªŒè¯tokenå›é¦ˆ
+	S2S_CLUSTER_CLIENT_LIST_REQ = 10108;		// å®¢æˆ·ç«¯åˆ—è¡¨
+	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// æ·»åŠ å¯¹è±¡æ˜ å°„
+	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// åˆ é™¤å¯¹è±¡æ˜ å°„
+	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// è¯·æ±‚åˆ†é…shard
+	S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113;		// è¯·æ±‚åˆ†é…shard
+	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// è¯·æ±‚åˆ†é…shard
+	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// å‘é€åˆ°é™æ€å¯¹è±¡
+	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// å‘é€åˆ°åŠ¨æ€å¯¹è±¡
  }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ¼¯Èº×¢²á
+// é›†ç¾¤æ³¨å†Œ
 // S2S_CLUSTER_REGISTER_REQ
 message S2SClusterRegisterReq
 {
@@ -32,7 +32,7 @@ message S2SClusterRegisterReq
 	required uint32 port = 5;
 }
 
-// ¸üĞÂ¼¯ÈºÁ¬½ÓÆ÷Á¬½ÓÊıÁ¿
+// æ›´æ–°é›†ç¾¤è¿æ¥å™¨è¿æ¥æ•°é‡
 // S2S_CLUSTER_UPDATE_REQ
 message S2SClusterUpdateReq
 {
@@ -40,7 +40,7 @@ message S2SClusterUpdateReq
 	required uint32 count = 2;
 }
 
-// ¼¯ÈºµÇÂ¼ÈÏÖ¤
+// é›†ç¾¤ç™»å½•è®¤è¯
 // S2S_CLUSTER_AUTH_REQ
 message S2SClusterAuthReq
 {
@@ -48,7 +48,7 @@ message S2SClusterAuthReq
 	required string clusterkey = 2;
 }
 
-// ¼¯ÈºµÇÂ¼ÈÏÖ¤»ØÀ¡
+// é›†ç¾¤ç™»å½•è®¤è¯å›é¦ˆ
 // S2S_CLUSTER_AUTH_ACK
 message S2SClusterAuthAck
 {
@@ -61,7 +61,7 @@ message S2SClusterAuthAck
 	required uint32 port = 7;	
 }
 
-// ¸üĞÂtokenĞÅÏ¢
+// æ›´æ–°tokenä¿¡æ¯
 // S2S_CLUSTER_TOKEN_REQ
 message S2SClusterTokenReq
 {
@@ -69,7 +69,7 @@ message S2SClusterTokenReq
 	required uint32 gateid = 2;
 }
 
-// ÑéÖ¤token
+// éªŒè¯token
 // S2S_CLUSTER_VERIFY_REQ
 message S2SClusterVerifyReq
 {
@@ -78,43 +78,43 @@ message S2SClusterVerifyReq
 	required uint32 serverid = 3;
 }
 
-// ÈÏÖ¤»ØÀ¡
+// è®¤è¯å›é¦ˆ
 // S2S_CLUSTER_VERIFY_ACK
 message S2SClusterVerifyAck
 {
-	required string clustertype = 1;	// ¼¯ÈºÀàĞÍ
-	required uint32 serverid = 2;		// =0 ÈÏÖ¤²»³É¹¦, ÖØĞÂÁ¬½Ó¼¯ÈºmasterµØÖ·
+	required string clustertype = 1;	// é›†ç¾¤ç±»å‹
+	required uint32 serverid = 2;		// =0 è®¤è¯ä¸æˆåŠŸ, é‡æ–°è¿æ¥é›†ç¾¤masteråœ°å€
 }
 
-// ¿Í»§¶ËÁĞ±í
+// å®¢æˆ·ç«¯åˆ—è¡¨
 // S2S_CLUSTER_CLIENT_LIST_REQ
 message S2SClusterClientListReq
 {
-	repeated uint32 clientid = 1;	// ¿Í»§¶ËÁĞ±í
+	repeated uint32 clientid = 1;	// å®¢æˆ·ç«¯åˆ—è¡¨
 }
 
-// ×¢²á¶ÔÏóÓ³Éä
+// æ³¨å†Œå¯¹è±¡æ˜ å°„
 // S2S_ADD_OBJECT_TO_PROXY_REQ
 message S2SAddObjectToProxyReq
 {
 	repeated uint64 objectid = 1;
 }
 
-// É¾³ı¶ÔÏóÓ³Éä
+// åˆ é™¤å¯¹è±¡æ˜ å°„
 // S2S_REMOVE_OBJECT_TO_PROXY_REQ
 message S2SRemoveObjectToProxyReq
 {
 	repeated uint64 objectid = 2;
 }
 
-// ÇëÇó·ÖÅÉShard
+// è¯·æ±‚åˆ†æ´¾Shard
 // S2S_ALLOC_OBJECT_TO_MASTER_REQ
 message S2SAllocObjectToMasterReq
 {
 	repeated uint32 objectid = 1;
 }
 
-// ÇëÇó·ÖÅÉShard
+// è¯·æ±‚åˆ†æ´¾Shard
 // S2S_ALLOC_OBJECT_TO_PROXY_ACK
 message S2SAllocObjectToProxyAck
 {
@@ -122,14 +122,14 @@ message S2SAllocObjectToProxyAck
 	repeated uint32 shardid = 2;
 }
 
-// ÇëÇó·ÖÅÉShard
+// è¯·æ±‚åˆ†æ´¾Shard
 // S2S_ALLOC_OBJECT_TO_SHARD_ACK
 message S2SAllocObjectToShardAck
 {
 	repeated uint32 objectid = 1;
 }
 
-// ·¢ËÍÏûÏ¢µ½¶¯Ì¬¶ÔÏó
+// å‘é€æ¶ˆæ¯åˆ°åŠ¨æ€å¯¹è±¡
 // S2S_SEND_TO_DYNAMIC_OBJECT_REQ
 message S2SSendToDynamicObjectReq
 {
@@ -139,7 +139,7 @@ message S2SSendToDynamicObjectReq
 	required uint32	serverid = 4;
 }
 
-// ·¢ËÍÏûÏ¢µ½¾²Ì¬¶ÔÏó
+// å‘é€æ¶ˆæ¯åˆ°é™æ€å¯¹è±¡
 // S2S_SEND_TO_STATIC_OBJECT_REQ
 message S2SSendToStaticObjectReq
 {

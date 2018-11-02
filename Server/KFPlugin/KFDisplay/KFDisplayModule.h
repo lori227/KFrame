@@ -20,17 +20,8 @@ namespace KFrame
     class KFDisplayModule : public KFDisplayInterface
     {
     public:
-        KFDisplayModule();
-        ~KFDisplayModule();
-
-        // 初始化
-        virtual void InitModule();
-
-        // 初始化
-        virtual void BeforeRun();
-
-        // 关闭
-        virtual void BeforeShut();
+        KFDisplayModule() = default;
+        ~KFDisplayModule() = default;
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////

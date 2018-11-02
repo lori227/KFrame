@@ -2,16 +2,16 @@ package KFMsg;
 
 enum DeployProtocol
 {
-	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// ×¢²áAgentµ½Services
-	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// ÇëÇó·ÖÅäAgentÁ¬½ÓµØÖ·
-	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// ÇëÇó·ÖÅäAgentÁ¬½ÓµØÖ·
-	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10305;	// ²¿ÊğÃüÁî
-	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10306;	// ²¿ÊğÃüÁî
-	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10307;	// ²¿ÊğÃüÁî
+	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// æ³¨å†ŒAgentåˆ°Services
+	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// è¯·æ±‚åˆ†é…Agentè¿æ¥åœ°å€
+	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// è¯·æ±‚åˆ†é…Agentè¿æ¥åœ°å€
+	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10305;	// éƒ¨ç½²å‘½ä»¤
+	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10306;	// éƒ¨ç½²å‘½ä»¤
+	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10307;	// éƒ¨ç½²å‘½ä»¤
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ×¢²áAgentµ½Services
+// æ³¨å†ŒAgentåˆ°Services
 // S2S_REGISTER_AGENT_TO_SERVER_REQ
 message S2SRegisterAgentToServerReq
 {
@@ -22,14 +22,14 @@ message S2SRegisterAgentToServerReq
 	required uint32 port = 5;
 }
 
-// ÇëÇó·ÖÅäAgentÁ¬½ÓµØÖ·
+// è¯·æ±‚åˆ†é…Agentè¿æ¥åœ°å€
 // S2S_GET_AGENT_IP_ADDRESS_REQ
 message S2SGetAgentIpAddressReq
 {
 	required string localip = 1;
 }
 
-// ·ÖÅäAgentÁ¬½ÓµØÖ·»ØÓ¦
+// åˆ†é…Agentè¿æ¥åœ°å€å›åº”
 // S2S_GET_AGENT_IP_ADDRESS_ACK
 message S2SGetAgentIpAddressAck
 {
@@ -46,13 +46,12 @@ message PBDeployCommand
 	required string appname = 2;	// appname
 	required string apptype = 3;	// apptype
 	required string appid = 4;		// appid
-	required uint32 zoneid = 5;		// ·ÖÇø
-	required string value = 6;		// ÊıÖµ
-	required uint32 appchannel = 7; // appchannel
-	required string logurl = 8; 	// ÈÕÖ¾¼ÇÂ¼url
+	required uint32 zoneid = 5;		// åˆ†åŒº
+	required string value = 6;		// æ•°å€¼
+	required string logurl = 7; 	// æ—¥å¿—è®°å½•url
 }
 
-// ²¿ÊğÃüÁî
+// éƒ¨ç½²å‘½ä»¤
 // S2S_DEPLOY_COMMAND_TO_AGENT_REQ
 message S2SDeployCommandToAgentReq
 {

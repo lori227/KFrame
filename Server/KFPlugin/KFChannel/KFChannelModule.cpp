@@ -46,6 +46,10 @@ namespace KFrame
         KFJson request( data );
 
         auto channel = request.GetUInt32( __KF_STRING__( channel ) );
+        if ( KFGlobal::Instance()->_app_channel != KFMsg::Internal && KFGlobal::Instance()->_app_channel != channel )
+        {
+            return _kf_http_server->SendResponseCode( KFMsg::ChannelNotSupport );
+        }
 
         // 渠道是否开启
         auto kfsetting = _kf_channel_config->FindChannelSetting( channel );

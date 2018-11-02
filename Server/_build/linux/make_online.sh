@@ -1,1 +1,1 @@
-sh make_version.sh 1 release
+sh make_version.sh 1 online release

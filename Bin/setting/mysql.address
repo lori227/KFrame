@@ -9,20 +9,33 @@
 	<!--Password 登录密码 -->
 	<MySQL>
 		<!-- 部署数据库 -->
-		<Connection MySqlId="1" IP="127.0.0.1" Port="3306" Database="kframe" User="root" Password="mysql@lori227-=">
+		<Connection Module="deploy" LogicId="0" IP="127.0.0.1" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-=">
+			<!-- 内网 研发 -->
+			<Channel ChannelId="1" Service="1" IP="192.168.10.230" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+
+			<!-- 内网 调试 -->
+			<Channel ChannelId="1" Service="2" IP="192.168.10.230" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+
+			<!-- 外网 测试 -->
+			<Channel ChannelId="1" Service="3" IP="118.25.173.109" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+
+			<!-- 外网 审核 -->
+			<Channel ChannelId="1" Service="4" IP="118.25.173.109" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+
+			<!-- Steam -->
+			<Channel ChannelId="3" Service="8" IP="172.16.0.60" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+		</Connection>	
+
+		<!-- 版本数据库 -->
+		<Connection Module="version" LogicId="0" IP="118.25.173.109" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-=">
 			<!-- 内网研发 -->
-			<Channel ChannelId="100" IP="192.168.10.230" Port="3306" User="root" Password="mysql@lori227-="/>
+			<Channel ChannelId="1" Service="1" IP="192.168.10.230" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
+
+			<!-- 调试 -->
+			<Channel ChannelId="1" Service="2" IP="192.168.10.230" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
+
+			<!-- Steam -->
+			<Channel ChannelId="3" Service="8" IP="172.16.0.60" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 	</MySQL>
-
-	<!--逻辑功能对应redis映射-->
-	<!--DefaultRedis 默认数据库-->
-	<!--Filed 逻辑模块-->
-	<!--Id redis数据库id-->
-	<!--LogicId 逻辑id-->
-
-	<LogicMySQL DefaultRedis="1">
-		<!--部署数据库映射-->
-		<Logic Filed="deploy" LogicId="0" Id="1"/>
-	</LogicMySQL>
 </Config>

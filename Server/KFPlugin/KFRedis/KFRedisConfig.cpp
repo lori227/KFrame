@@ -2,101 +2,95 @@
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRedisConfig::KFRedisConfig()
+    void KFRedisList::Reset()
     {
-        _default_redis_id = 1;
+        _index = 0;
+        _redis_list.clear();
     }
 
-    KFRedisConfig::~KFRedisConfig()
+    void KFRedisList::AddSetting( KFRedisSetting& kfsetting )
     {
+        _redis_list.push_back( kfsetting );
 
-    }
-
-    void KFRedisConfig::AddRedisSetting( KFRedisSetting* kfsetting )
-    {
-        _redis_setting.Insert( kfsetting->_id, kfsetting );
-    }
-
-    const KFRedisSetting* KFRedisConfig::FindRedisSetting( uint32 id ) const
-    {
-        return _redis_setting.Find( id );
-    }
-
-    const KFRedisSetting* KFRedisConfig::FindRedisSetting( const std::string& field, uint32 logicid ) const
-    {
-        auto redisid = FindLogicRedisId( field, logicid );
-        return FindRedisSetting( redisid );
-    }
-
-    uint32 KFRedisConfig::FindLogicRedisId( const std::string& filed, uint32 logicid ) const
-    {
-        auto key = LogicKey( filed, logicid );
-        auto iter = _logic_redis_map.find( key );
-        if ( iter == _logic_redis_map.end() )
+        KFAppID kfappid( KFGlobal::Instance()->_app_id );
+        if ( _redis_list.size() >= kfappid._union._app_data._instance_id )
         {
-            return _invalid_int;
+            _index = kfappid._union._app_data._instance_id - 1;
+        }
+        else
+        {
+            _index = kfappid._union._app_data._instance_id % _redis_list.size();
+        }
+    }
+
+    const KFRedisSetting* KFRedisList::FindSetting()
+    {
+        if ( _index >= _redis_list.size() )
+        {
+            _index = 0;
         }
 
-        return iter->second;
+        return &_redis_list[ _index++ ];
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    const KFRedisSetting* KFRedisConfig::FindRedisSetting( const std::string& module, uint32 logicid )
+    {
+        auto key = ModuleKey( module, logicid );
+        auto kfredislist = _redis_setting.Find( key );
+        return kfredislist->FindSetting();
     }
 
     bool KFRedisConfig::LoadConfig()
     {
+        auto _redis_id = 0u;
         _redis_setting.Clear();
-        _logic_redis_map.clear();
-
-        auto kfglobal = KFGlobal::Instance();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
-        auto databasenode = config.FindNode( "Redis" );
-        if ( databasenode.IsValid() )
+        auto redisnode = config.FindNode( "Redis" );
+
+        auto modulenode = redisnode.FindNode( "Connection" );
+        while ( modulenode.IsValid() )
         {
-            auto childnode = databasenode.FindNode( "Connection" );
-            while ( childnode.IsValid() )
+            auto modulename = modulenode.GetString( "Module" );
+            auto logicid = modulenode.GetUInt32( "LogicId", true, _invalid_int );
+            auto kfredislist = _redis_setting.Create( ModuleKey( modulename, logicid ) );
+
+            KFRedisSetting kfsetting;
+            kfsetting._id = ++_redis_id;
+            kfsetting._ip = modulenode.GetString( "IP" );
+            kfsetting._port = modulenode.GetUInt32( "Port" );
+            kfsetting._password = modulenode.GetString( "Password" );
+            kfredislist->AddSetting( kfsetting );
+
+            auto channelnode = modulenode.FindNode( "Channel" );
+            while ( channelnode.IsValid() )
             {
-                auto kfsetting = __KF_CREATE__( KFRedisSetting );
-
-                kfsetting->_id = childnode.GetUInt32( "RedisId" );
-                kfsetting->_ip = childnode.GetString( "IP" );
-                kfsetting->_port = childnode.GetUInt32( "Port" );
-                kfsetting->_password = childnode.GetString( "Password" );
-
-                auto channelnode = childnode.FindNode( "Channel" );
-                while ( channelnode.IsValid() )
+                auto channelid = channelnode.GetUInt32( "ChannelId" );
+                auto service = channelnode.GetUInt32( "Service" );
+                if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
                 {
-                    auto channelid = channelnode.GetUInt32( "ChannelId" );
-                    if ( channelid == kfglobal->_app_channel )
-                    {
-                        kfsetting->_ip = channelnode.GetString( "IP" );
-                        kfsetting->_port = channelnode.GetUInt32( "Port" );
-                        kfsetting->_password = channelnode.GetString( "Password" );
-                        break;
-                    }
+                    kfredislist->Reset();
 
-                    channelnode.NextNode();
+                    auto datanode = channelnode.FindNode( "Data" );
+                    while ( datanode.IsValid() )
+                    {
+                        KFRedisSetting kfsetting;
+                        kfsetting._id = ++_redis_id;
+                        kfsetting._ip = datanode.GetString( "IP" );
+                        kfsetting._port = datanode.GetUInt32( "Port" );
+                        kfsetting._password = datanode.GetString( "Password" );
+                        kfredislist->AddSetting( kfsetting );
+
+                        datanode.NextNode();
+                    }
+                    break;
                 }
 
-                AddRedisSetting( kfsetting );
-
-                childnode.NextNode();
+                channelnode.NextNode();
             }
-        }
 
-        auto redis = config.FindNode( "LogicRedis" );
-        _default_redis_id = redis.GetUInt32( "DefaultRedis" );
-        auto logic = redis.FindNode( "Logic" );
-        while ( logic.IsValid() )
-        {
-            auto dataname = logic.GetString( "Filed" );
-            auto logicid = logic.GetUInt32( "LogicId", true, _invalid_int );
-            auto redisid = logic.GetUInt32( "Id" );
-
-            auto key = LogicKey( dataname, logicid );
-            _logic_redis_map[ key ] = redisid;
-
-            logic.NextNode();
+            modulenode.NextNode();
         }
 
         return true;

@@ -48,7 +48,7 @@ namespace KFrame
     void KFGuildShardModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( guild ) );
-        LoadGuildData();
+
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_GUILD_TO_SHARD_REQ, &KFGuildShardModule::HandleCreateGuildToShard );
         __REGISTER_MESSAGE__( KFMsg::S2S_INVITE_GUILD_REQ, &KFGuildShardModule::HandleInviteGuildReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_APPLY_GUILD_REQ, &KFGuildShardModule::HandleApplyGuildReq );
@@ -125,6 +125,8 @@ namespace KFrame
 
     void KFGuildShardModule::OnceRun()
     {
+        LoadGuildData();
+
         __REGISTER_LOOP_TIMER__( KFGlobal::Instance()->_app_id, KFTimeEnum::OneMinuteMicSecond * 10, &KFGuildShardModule::OnTimerRefreshGuild );
     }
 

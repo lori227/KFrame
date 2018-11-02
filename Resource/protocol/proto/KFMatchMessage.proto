@@ -4,38 +4,38 @@ package KFMsg;
 
 enum MatchProtocol
 {	
-	S2S_REGISTER_MATCH_REQ = 11101;					// ×¢²áÆ¥Åä
-	S2S_MATCH_TO_PROXY_REQ = 11102;					// ÇëÇóÆ¥Åä
-	S2S_MATCH_TO_SHARD_REQ = 11103;					// ÇëÇóÆ¥Åä
-	S2S_MATCH_TO_CLIENT_ACK = 11104;				// Æ¥Åä»ØÀ¡
-	S2S_CANCEL_MATCH_TO_PROXY_REQ = 11107;			// È¡ÏûÆ¥Åä
-	S2S_CANCEL_MATCH_TO_SHARD_REQ = 11108;			// È¡ÏûÆ¥Åä
-	S2S_NOTICE_MATCH_ROOM_REQ = 11109;				// Æ¥Åä½á¹û
-	S2S_NOTICE_MATCH_ROOM_ACK = 11110;				// Æ¥Åä½á¹û
-	S2S_QUERY_MATCH_ROOM_REQ = 11111;				// ²éÑ¯Æ¥Åä
-	S2S_QUERY_MATCH_ROOM_ACK = 11112;				// ²éÑ¯Æ¥Åä	
-	S2S_QUERY_BATTLE_ROOM_REQ = 11113;				// ²éÑ¯Æ¥Åä
-	S2S_QUERY_BATTLE_ROOM_ACK = 11114;				// ²éÑ¯Æ¥Åä
-	S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ = 11115;		// ²éÑ¯Æ¥Åä
-	S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ = 11116;		// ²éÑ¯Æ¥Åä
-	S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118; 	// È¡ÏûÆ¥Åä
-	S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120;	// Íæ¼ÒÉÏÏß
-	S2S_NOTICE_MATCH_STATE_REQ = 11121;				// Æ¥Åä×´Ì¬
-	S2S_RESET_MATCH_ROOM_REQ = 11122;				// ÖØÖÃ·¿¼ä
+	S2S_REGISTER_MATCH_REQ = 11101;					// æ³¨å†ŒåŒ¹é…
+	S2S_MATCH_TO_PROXY_REQ = 11102;					// è¯·æ±‚åŒ¹é…
+	S2S_MATCH_TO_SHARD_REQ = 11103;					// è¯·æ±‚åŒ¹é…
+	S2S_MATCH_TO_CLIENT_ACK = 11104;				// åŒ¹é…å›é¦ˆ
+	S2S_CANCEL_MATCH_TO_PROXY_REQ = 11107;			// å–æ¶ˆåŒ¹é…
+	S2S_CANCEL_MATCH_TO_SHARD_REQ = 11108;			// å–æ¶ˆåŒ¹é…
+	S2S_NOTICE_MATCH_ROOM_REQ = 11109;				// åŒ¹é…ç»“æœ
+	S2S_NOTICE_MATCH_ROOM_ACK = 11110;				// åŒ¹é…ç»“æœ
+	S2S_QUERY_MATCH_ROOM_REQ = 11111;				// æŸ¥è¯¢åŒ¹é…
+	S2S_QUERY_MATCH_ROOM_ACK = 11112;				// æŸ¥è¯¢åŒ¹é…	
+	S2S_QUERY_BATTLE_ROOM_REQ = 11113;				// æŸ¥è¯¢åŒ¹é…
+	S2S_QUERY_BATTLE_ROOM_ACK = 11114;				// æŸ¥è¯¢åŒ¹é…
+	S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ = 11115;		// æŸ¥è¯¢åŒ¹é…
+	S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ = 11116;		// æŸ¥è¯¢åŒ¹é…
+	S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ = 11118; 	// å–æ¶ˆåŒ¹é…
+	S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120;	// ç©å®¶ä¸Šçº¿
+	S2S_NOTICE_MATCH_STATE_REQ = 11121;				// åŒ¹é…çŠ¶æ€
+	S2S_RESET_MATCH_ROOM_REQ = 11122;				// é‡ç½®æˆ¿é—´
 
  }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-// ×¢²áÆ¥ÅäĞÅÏ¢
+// æ³¨å†ŒåŒ¹é…ä¿¡æ¯
 // S2S_REGISTER_MATCH_REQ
 message S2SRegisterMatchReq
 {
 	repeated uint32 matchid = 1; 
 }
 
-// ÇëÇóÆ¥Åä
+// è¯·æ±‚åŒ¹é…
 // S2S_MATCH_TO_PROXY_REQ
 message S2SMatchToProxyReq
 {
@@ -66,23 +66,23 @@ message S2SMatchToShardReq
 	required uint32 battleserverid = 6;
 }
 
-// È¡ÏûÆ¥Åä
+// å–æ¶ˆåŒ¹é…
 // S2S_CANCEL_MATCH_TO_PROXY_REQ
 message S2SCancelMatchToProxyReq
 {
-	required uint32 matchid = 1;	// Æ¥ÅäÄ£Ê½	
-	required uint32 playerid = 2;	// Íæ¼Òid	
+	required uint32 matchid = 1;	// åŒ¹é…æ¨¡å¼	
+	required uint32 playerid = 2;	// ç©å®¶id	
 }
 
-// È¡ÏûÆ¥Åä
+// å–æ¶ˆåŒ¹é…
 // S2S_CANCEL_MATCH_TO_SHARD_REQ
 message S2SCancelMatchToShardReq
 {
-	required uint32 matchid = 1;	// Æ¥ÅäÄ£Ê½	
-	required uint32 playerid = 2;	// Íæ¼Òid		
+	required uint32 matchid = 1;	// åŒ¹é…æ¨¡å¼	
+	required uint32 playerid = 2;	// ç©å®¶id		
 }
 
-// È¡ÏûÆ¥Åä
+// å–æ¶ˆåŒ¹é…
 // S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ
 message S2SCancelMatchToBattleShardReq
 {
@@ -91,7 +91,7 @@ message S2SCancelMatchToBattleShardReq
 	required uint64 groupid = 3;
 }
 
-// Æ¥Åä½á¹û
+// åŒ¹é…ç»“æœ
 // S2S_NOTICE_MATCH_ROOM_REQ
 message S2SNoticeMatchRoomReq
 {
@@ -106,7 +106,7 @@ message S2SNoticeMatchRoomReq
 	required string token = 9;
 }
 
-// Æ¥Åä½á¹û
+// åŒ¹é…ç»“æœ
 // S2S_NOTICE_MATCH_ROOM_ACK
 message S2SNoticeMatchRoomAck
 {
@@ -115,7 +115,7 @@ message S2SNoticeMatchRoomAck
 	required uint32 playerid = 3;
 }
 
-// ²éÑ¯Æ¥ÅäĞÅÏ¢
+// æŸ¥è¯¢åŒ¹é…ä¿¡æ¯
 // S2S_QUERY_MATCH_ROOM_REQ
 message S2SQueryMatchRoomReq
 {
@@ -124,7 +124,7 @@ message S2SQueryMatchRoomReq
 	required uint32 serverid = 3;
 }
 
-// ²éÑ¯Æ¥ÅäĞÅÏ¢
+// æŸ¥è¯¢åŒ¹é…ä¿¡æ¯
 // S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ
 message S2SQueryRoomToMatchShardReq
 {
@@ -133,7 +133,7 @@ message S2SQueryRoomToMatchShardReq
 	required uint32 serverid = 3;	
 }
 
-// ²éÑ¯Æ¥ÅäĞÅÏ¢
+// æŸ¥è¯¢åŒ¹é…ä¿¡æ¯
 // S2S_QUERY_MATCH_ROOM_ACK
 message S2SQueryMatchRoomAck
 {
@@ -141,7 +141,7 @@ message S2SQueryMatchRoomAck
 	required uint32 playerid = 2;
 }
 
-// ²éÑ¯Æ¥ÅäĞÅÏ¢
+// æŸ¥è¯¢åŒ¹é…ä¿¡æ¯
 // S2S_QUERY_BATTLE_ROOM_REQ
 message S2SQueryBattleRoomReq
 {
@@ -158,7 +158,7 @@ message S2SQueryBattleRoomAck
 	required uint32 matchid = 3;
 }
 
-// ²éÑ¯Æ¥ÅäĞÅÏ¢
+// æŸ¥è¯¢åŒ¹é…ä¿¡æ¯
 // S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ
 message S2SQueryRoomToBattleShardReq
 {
@@ -167,7 +167,7 @@ message S2SQueryRoomToBattleShardReq
 	required uint32 serverid = 3;		
 }
 
-// Í¨ÖªÕ½¶··şÎñÆ÷Íæ¼ÒÉÏÏß
+// é€šçŸ¥æˆ˜æ–—æœåŠ¡å™¨ç©å®¶ä¸Šçº¿
 // S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ
 message S2SPlayerOnlineToBattleShardReq
 {	
@@ -177,7 +177,7 @@ message S2SPlayerOnlineToBattleShardReq
 	required uint32 serverid = 4;	
 }
 
-// Í¨ÖªÍæ¼Ò´¦ÓÚÆ¥Åä×´Ì¬
+// é€šçŸ¥ç©å®¶å¤„äºåŒ¹é…çŠ¶æ€
 // S2S_NOTICE_MATCH_STATE_REQ
 message S2SNoticeMatchStateReq
 {
@@ -185,7 +185,7 @@ message S2SNoticeMatchStateReq
 	required uint32 matchid = 2;
 }
 
-// ÖØÖÃÆ¥Åä·¿¼ä
+// é‡ç½®åŒ¹é…æˆ¿é—´
 // S2S_RESET_MATCH_ROOM_REQ
 message S2SResetMatchRoomReq
 {

@@ -29,7 +29,7 @@ namespace KFrame
         _uv_tcp = reinterpret_cast< uv_tcp_t* >( uvtcp );
         _uv_tcp->data = this;
         uv_tcp_nodelay( _uv_tcp, 1 );
-        uv_tcp_keepalive( _uv_tcp, 1, 30 );
+        uv_tcp_keepalive( _uv_tcp, 1, 20 );
 
         {
             struct sockaddr peername;

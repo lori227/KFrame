@@ -3,14 +3,6 @@
 
 namespace KFrame
 {
-    KFRedisModule::KFRedisModule()
-    {
-    }
-
-    KFRedisModule::~KFRedisModule()
-    {
-    }
-
     void KFRedisModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_redis_config, false );
@@ -38,21 +30,11 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 创建RedisExecute
-    KFRedisDriver* KFRedisModule::CreateExecute( uint32 id )
+    KFRedisDriver* KFRedisModule::CreateExecute( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfsetting = _kf_redis_config->FindRedisSetting( id );
-        if ( kfsetting == nullptr )
-        {
-            return nullptr;
-        }
+        KFLocker lock( _mt_mutex );
 
-        return CreateExecute( id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
-    }
-
-    KFRedisDriver* KFRedisModule::CreateExecute( const std::string& field, uint32 logicid /* = 0 */ )
-    {
-        auto kfsetting = _kf_redis_config->FindRedisSetting( field, logicid );
+        auto kfsetting = _kf_redis_config->FindRedisSetting( module, logicid );
         if ( kfsetting == nullptr )
         {
             return nullptr;
@@ -75,10 +57,6 @@ namespace KFrame
         {
             __LOG_ERROR__( "redis connect[ id={} ip={}:{} ] failed!", id, ip, port );
         }
-        else
-        {
-            __LOG_INFO__( "redis connect[ id={} ip={}:{} ] ok!", id, ip, port );
-        }
 
         InsertRedisExecute( id, kfredisexecute );
         return kfredisexecute;
@@ -88,8 +66,6 @@ namespace KFrame
     {
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
-
-        KFLocker lock( _mt_mutex );
         return _redis_execute.Find( key );
     }
 
@@ -97,8 +73,6 @@ namespace KFrame
     {
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
-
-        KFLocker lock( _mt_mutex );
         _redis_execute.Insert( key, kfredisexecute );
     }
 }

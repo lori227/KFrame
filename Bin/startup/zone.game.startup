@@ -28,5 +28,6 @@
 		<Plugin Sort="270" Name="KFStore" Config="./config/store.config"/>
 		<Plugin Sort="280" Name="KFClothes" Config="./config/clothes.config"/>
 		<Plugin Sort="290" Name="KFSignIn" Config="./config/signin.config"/>
+		<Plugin Sort="291" Name="KFFilter" Config="./setting/filter.setting"/>
 	</Plugins>
 </Setting>

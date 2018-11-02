@@ -11,8 +11,8 @@ namespace KFrame
     class KFIpAddressConfig : public KFConfig, public KFSingleton< KFIpAddressConfig >
     {
     public:
-        KFIpAddressConfig();
-        ~KFIpAddressConfig();
+        KFIpAddressConfig() = default;
+        ~KFIpAddressConfig() = default;
 
         bool LoadConfig();
 
@@ -29,9 +29,6 @@ namespace KFrame
     public:
         // 配置的连接地址
         std::vector< KFIpAddress > _ip_address_list;
-
-        // 平台地址
-        std::string _auth_address;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

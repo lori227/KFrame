@@ -36,7 +36,7 @@ namespace KFrame
         KFMsg::S2SUpdateOnlineToDirReq req;
         req.set_zoneid( kfzone->_id );
         req.set_zonename( kfzone->_name );
-        req.set_zonechannel( kfzone->_channel );
+        req.set_zonechannel( kfglobal->_app_channel );
         req.set_appid( kfglobal->_app_id );
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );

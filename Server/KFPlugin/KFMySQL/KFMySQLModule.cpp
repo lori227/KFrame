@@ -4,16 +4,6 @@
 
 namespace KFrame
 {
-    KFMySQLModule::KFMySQLModule()
-    {
-
-    }
-
-    KFMySQLModule::~KFMySQLModule()
-    {
-
-    }
-
     void KFMySQLModule::InitModule()
     {
         MySQL::Connector::registerConnector();
@@ -56,20 +46,9 @@ namespace KFrame
         _mysql_execute_map.Insert( key, kfexecute );
     }
 
-    KFMySQLDriver* KFMySQLModule::CreateExecute( uint32 id )
+    KFMySQLDriver* KFMySQLModule::CreateExecute( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfsetting = _kf_mysql_config->FindSetting( id );
-        if ( kfsetting == nullptr )
-        {
-            return nullptr;
-        }
-
-        return CreateExecute( kfsetting->_id, kfsetting->_user, kfsetting->_password, kfsetting->_database, kfsetting->_ip, kfsetting->_port );
-    }
-
-    KFMySQLDriver* KFMySQLModule::CreateExecute( const std::string& filed, uint32 logicid /* = 0 */ )
-    {
-        auto kfsetting = _kf_mysql_config->FindSetting( filed, logicid );
+        auto kfsetting = _kf_mysql_config->FindSetting( module, logicid );
         if ( kfsetting == nullptr )
         {
             return nullptr;

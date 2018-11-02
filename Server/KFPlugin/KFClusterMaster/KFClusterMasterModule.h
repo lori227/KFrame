@@ -59,11 +59,14 @@ namespace KFrame
         // 获得 objectid 的数量
         std::set< uint32 > GetShardObject( uint32 shardid );
 
-        // 获得最大数量的shardid
-        uint32 GetMaxObjectShard();
-
         // 分配shard
         void BalanceAllocShard( uint32 shardid );
+
+        // 判断是否拥有objectid
+        bool HaveObject( uint32 shardid, uint32 objectid );
+
+        // 查找拥有object的shard
+        uint32 FindShard( uint32 objectid );
 
         // 发送分配shard到proxy
         void SendAllocShardToProxy( uint32 proxyid );

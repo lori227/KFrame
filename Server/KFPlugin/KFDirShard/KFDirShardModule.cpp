@@ -1,21 +1,14 @@
 ﻿#include "KFDirShardModule.h"
 #include "KFJson.h"
-#include "KFDirConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
 #define __DIR_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( dir ) )
 
-    void KFDirShardModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( _kf_dir_config, true );
-    }
-
     void KFDirShardModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 0, 60000, &KFDirShardModule::OnTimerRegisterDirUrl );
-        _dir_list_type = _kf_dir_config->GetDirListType( KFGlobal::Instance()->_app_channel );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &KFDirShardModule::HandleUpdateOnlineToDirReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_ONLINE_TO_DIR_REQ, &KFDirShardModule::HandleRemoveOnlineToDirReq );
@@ -26,7 +19,6 @@ namespace KFrame
 
     void KFDirShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
         __UNREGISTER_TIMER__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ );
@@ -97,12 +89,14 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryDirList )
     {
-        KFJson response;
-        response.SetValue( __KF_STRING__( serverlisttype ), _dir_list_type );
+        static auto kfdiroption = _kf_option->FindOption( __KF_STRING__( dirtype ) );
 
-        switch ( _dir_list_type )
+        KFJson response;
+        response.SetValue( __KF_STRING__( serverlisttype ), kfdiroption->_uint32_value );
+
+        switch ( kfdiroption->_uint32_value )
         {
-        case __SELECT_SERVER_DATA__:
+        case KFServerEnum::SelectServerData:
         {
             KFJson request( data );
             auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
@@ -112,20 +106,22 @@ namespace KFrame
             }
 
             auto kfdirdata = _kf_dir_list.Find( zoneid );
-            if ( kfdirdata != nullptr )
+            if ( kfdirdata == nullptr )
             {
-                response.SetValue( __KF_STRING__( ip ), kfdirdata->_zone_ip );
-                response.SetValue( __KF_STRING__( port ), kfdirdata->_zone_port );
+                return _kf_http_server->SendResponseCode( KFMsg::CanNotFindLoginNode );
             }
-            else
-            {
-                response.SetValue( __KF_STRING__( ip ), _invalid_str );
-                response.SetValue( __KF_STRING__( port ), _invalid_int );
-            }
+
+            response.SetValue( __KF_STRING__( ip ), kfdirdata->_zone_ip );
+            response.SetValue( __KF_STRING__( port ), kfdirdata->_zone_port );
         }
         break;
         default:
         {
+            if ( _kf_dir_list._objects.empty() )
+            {
+                return _kf_http_server->SendResponseCode( KFMsg::CanNotFindLoginNode );
+            }
+
             // todo: 存在多线程问题, 需要优化
             KFJson kfdirlistjson;
             for ( auto& iter : _kf_dir_list._objects )
@@ -154,19 +150,23 @@ namespace KFrame
     {
         // 选择一个最小人数的分区
         auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto zonelist = redisdriver->QueryList( "zrevrange {} 0 0", __KF_STRING__( zonebalance ) );
+        auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonebalance ) );
         if ( zonelist->_value.empty() )
         {
             return _invalid_int;
         }
 
-        auto zoneid = KFUtility::ToValue< uint32 >( zonelist->_value.front() );
-        if ( zoneid == _invalid_int )
+        for ( auto& strzoneid : zonelist->_value )
         {
-            return _invalid_int;
+            auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
+            auto kfdirdata = _kf_dir_list.Find( zoneid );
+            if ( kfdirdata != nullptr )
+            {
+                redisdriver->Execute( "zincrby {} 1 {}", __KF_STRING__( zonebalance ), zoneid );
+                return zoneid;
+            }
         }
 
-        redisdriver->Execute( "zincrby {} 1 {}", __KF_STRING__( zonebalance ), zoneid );
-        return zoneid;
+        return _invalid_int;
     }
 }

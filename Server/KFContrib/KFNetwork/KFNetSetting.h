@@ -8,7 +8,7 @@ namespace KFrame
     class KFNetSetting
     {
     public:
-        KFNetSetting() : _id( 0 ), _port( 0 ), _timeout( 10000 ), _max_connect( 20000 ), _connect_time( 1000 )
+        KFNetSetting() : _id( 0 ), _port( 0 ), _timeout( 20 ), _max_connect( 20000 ), _connect_time( 1000 )
         {
 
         }

@@ -74,7 +74,7 @@ namespace KFrame
         auto kfclothesrecord = kfobject->FindData( __KF_STRING__( clothes ) );
 
         // 检查所有衣服, 找到时间最少的一个衣服
-        uint32 _min_valid_time = 0xFFFFFFFF;
+        uint32 _min_valid_time = std::numeric_limits<uint32>::max();
 
         auto kfclothes = kfclothesrecord->FirstData();
         while ( kfclothes != nullptr )
@@ -88,7 +88,7 @@ namespace KFrame
             kfclothes = kfclothesrecord->NextData();
         }
 
-        if ( _min_valid_time == 0xFFFFFFFF )
+        if ( _min_valid_time == std::numeric_limits<uint32>::max() )
         {
             return;
         }

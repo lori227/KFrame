@@ -19,8 +19,8 @@ namespace KFrame
     class KFZoneModule : public KFZoneInterface
     {
     public:
-        KFZoneModule();
-        ~KFZoneModule();
+        KFZoneModule() = default;
+        ~KFZoneModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -37,9 +37,6 @@ namespace KFrame
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint32 serverid );
         virtual bool IsPlayerSameZone( uint32 playerid );
-
-    private:
-        KFZone* _kf_zone;
     };
 }
 

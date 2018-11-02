@@ -1,1 +1,0 @@
-sh make_version.sh 101 debug

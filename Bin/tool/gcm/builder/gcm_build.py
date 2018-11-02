@@ -71,6 +71,7 @@ def write_file(run_file, kill_file, node):
     channel_id = args['channel']
     zone_id = args['zone']
     log_type = args['log']
+    service_type = args['service']
     if func_name in g_proc_config.cluster_procs:
         zone_id = 0
 
@@ -78,14 +79,14 @@ def write_file(run_file, kill_file, node):
     run_file.write('echo Starting [%s] server\n' % func_name)
     kill_file.write('echo Killing  [%s] server\n' % func_name)
     if is_linux():
-        run_file.write('./bin/%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
-                       (execute_file, channel_id, zone_id, int(func_id), 1,log_type, func_name))
+        run_file.write('./bin/%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
+                       (execute_file, channel_id, zone_id, int(func_id), 1,log_type, service_type, func_name))
 
         kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
                         (execute_file, channel_id, zone_id, int(func_id), 1))
     else:
-        run_file.write('start "%s" bin\\%s appid=%d.%d.%d.%d log=%s startup=./startup/%s.startup\n\n' %
-                       (func_name, execute_file, channel_id, zone_id, int(func_id), 1, log_type, func_name))
+        run_file.write('start "%s" bin\\%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
+                       (func_name, execute_file, channel_id, zone_id, int(func_id), 1, log_type, service_type,func_name))
 
         kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % func_name)
 
@@ -121,8 +122,10 @@ def gen_shell():
 
     run_file = open(run_file_name, 'a+')
     kill_file = open(kill_file_name, 'a+')
-    for key in g_proc_config.cluster_procs:
-        write_file(run_file, kill_file, g_proc_config.cluster_procs[key])
+
+    if args["onlyzone"]:
+        for key in g_proc_config.cluster_procs:
+            write_file(run_file, kill_file, g_proc_config.cluster_procs[key])
 
     for key in g_proc_config.zone_procs:
         write_file(run_file, kill_file, g_proc_config.zone_procs[key])
@@ -135,10 +138,12 @@ def parse_args():
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
     parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
-    parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
+    parser.add_argument('-l', '--log', type=str, default='1.1', help="log type")
+    parser.add_argument('-n', '--service', type=str, default='1.1', help="service type")
     parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
-    parser.add_argument('-b', '--branch', type=int, default=1, help="version branch, 0(develop)/1(internal)/2(online)/3(grayscale)")
+    parser.add_argument('-b', '--branch', type=str, default='develop', help="develop/online/steam")
+    parser.add_argument('-o', '--onlyzone', help="only zone servers", action="store_false")
 
     if is_linux():
         parser.add_argument('-s', '--svn', type=str, help="svn version")
@@ -152,20 +157,9 @@ if args['mode'] == 'release':
 g_proc_config = gcm_conf.load_proc_config(os.path.join(input_folder, 'gcm_proc.xml'))
 g_global_config = gcm_global_conf.load_global_config( os.path.join(input_folder, 'global.conf'))
 global_conf = dict()
-branch_name = ''
-if args['branch'] == 0:
-    global_conf = g_global_config.get_develop_config()
-    branch_name = 'develop'
-elif args['branch'] == 1:
-    global_conf = g_global_config.get_internal_config()
-    branch_name = 'internal'
-elif args['branch'] == 2:
-    global_conf = g_global_config.get_public_config()
-    branch_name = 'online'
-else:
-    global_conf = g_global_config.get_public_config()
-    branch_name = 'grayscale'
-        
+branch_name = args['branch']
+global_conf = g_global_config.get_config( args['branch'] )
+
 if args['type'] == 1:
     # version
     print '\nstart to generate shell'

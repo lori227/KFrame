@@ -49,7 +49,7 @@ namespace KFrame
     public:
         KFDeployData();
 
-        bool IsAppServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
         void CopyFrom( MapString& values );
         void SaveTo( MapString& values );
 
@@ -63,14 +63,14 @@ namespace KFrame
         // 程序id
         std::string _app_id;
 
-        // 渠道id
-        uint32 _app_channel;
-
         // 小区id
         uint32 _zone_id;
 
         // 日志类型
         std::string _log_type;
+
+        // 服务类型
+        std::string _service_type;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
         // 部署agentid

@@ -9,12 +9,9 @@ function TestFunction( playerid )
     t["luafile"] = "./script/test.lua"
     t["luafunction"]="CallBackFunction"
     local data1 = json.encode( t )
-    print( data )
-
     --local data1= "{\"account\":\"lori227\",\"channel\":1}"
-    local result = KFrame:MTHttpClient( "http://192.168.10.230:7777/auth", data1 )
+    local result = KFrame:STHttpClient( "http://192.168.10.230:7777/auth", data1 )
     print(result)
-
 end
 
 function CallBackFunction( playerid, senddata, recvdata )

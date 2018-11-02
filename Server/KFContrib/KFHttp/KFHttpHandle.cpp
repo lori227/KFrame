@@ -24,6 +24,8 @@ namespace KFrame
         auto ip = address.host().toString();
         auto resultdata = _http_server->ProcessHttpRequest( url, ip, data );
 
+        __LOG_DEBUG__( "response=[{}]", resultdata );
+
         // 发回给客户端
         auto& send = response.send();
         send << resultdata;

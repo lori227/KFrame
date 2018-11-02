@@ -138,7 +138,9 @@ namespace KFrame
         __STRING_DEFINE__( mailidcreater );
         __STRING_DEFINE__( maillist );
         __STRING_DEFINE__( battle );
+        __STRING_DEFINE__( battleid );
         __STRING_DEFINE__( battlelist );
+        __STRING_DEFINE__( battleidcreater );
         __STRING_DEFINE__( handleid );
         __STRING_DEFINE__( clientid );
         __STRING_DEFINE__( proxyid );
@@ -351,6 +353,7 @@ namespace KFrame
         __STRING_DEFINE__( reloadscript );
         __STRING_DEFINE__( loadscript );
         __STRING_DEFINE__( marquee );
+        __STRING_DEFINE__( notice );
         __STRING_DEFINE__( response );
         __STRING_DEFINE__( error );
         __STRING_DEFINE__( errorcode );
@@ -362,7 +365,11 @@ namespace KFrame
         __STRING_DEFINE__( luafile );
         __STRING_DEFINE__( luafunction );
         __STRING_DEFINE__( params );
-
+        __STRING_DEFINE__( dirtype );
+        __STRING_DEFINE__( authurl );
+        __STRING_DEFINE__( verifyactivationcode );
+        __STRING_DEFINE__( platappid );
+        __STRING_DEFINE__( platappkey );
     }
 }
 

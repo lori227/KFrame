@@ -159,7 +159,10 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterServerToBattleShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] req!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        auto strserverid = KFAppID::ToString( kfmsg.serverid() );
+
+        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] req!",
+                       strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
         {
@@ -173,14 +176,17 @@ namespace KFrame
         ack.set_result( KFMsg::Success );
         _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] ok!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] ok!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellBattleRegisterToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellBattleRegisterToShardReq );
         auto proxyid = __KF_HEAD_ID__( kfguid );
-        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] req!", kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+
+        auto strserverid = KFAppID::ToString( kfmsg.serverid() );
+        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] req!",
+                       strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.roomid() != _invalid_int )
         {
@@ -219,7 +225,8 @@ namespace KFrame
 
         }
 
-        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] ok!", kfmsg.serverid(), kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] ok!",
+                       strserverid, kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
     }
 
     KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint32 serverid )
@@ -255,7 +262,7 @@ namespace KFrame
             kfroom->DisconnectBattleRoom();
         }
 
-        __LOG_DEBUG__( "battle[{}] disconnect!", kfmsg.serverid() );
+        __LOG_DEBUG__( "battle[{}:{}] disconnect!", kfmsg.serverid(), KFAppID::ToString( kfmsg.serverid() ) );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleCreateRoomToBattleShardReq )

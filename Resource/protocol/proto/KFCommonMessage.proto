@@ -5,350 +5,353 @@ package KFMsg;
 
 enum AckEnum
 {
-	Success 					= 1;		// ³É¹¦
-	SignError					= 2;		// Ç©Ãû´íÎó
-	WeiXinError 				= 3;		// ·ÃÎÊÎ¢ĞÅ´íÎó
-	WeiXinCodeError 			= 4;		// Î¢ĞÅcode´íÎó
-	WeiXinTokenTimeout 			= 5;		// Î¢ĞÅToken¹ıÆÚ
-	WeiXinTokenError 			= 6;		// Î¢ĞÅToken´íÎó
-	WeiXinUserError 			= 7;		// Î¢ĞÅ¶ÁÈ¡ÓÃ»§Êı¾İ´íÎó
-	ChannelError				= 8;		// ´íÎóµÄÇşµÀĞÅÏ¢
-	ChannelNotOpen				= 9;		// ÇşµÀÃ»ÓĞ¿ª·Å
-	WorldSystemBusy 			= 10;		// ÊÀ½ç·şÎñÆ÷³ö´íÁË
-	LoginSystemBusy 			= 11;		// µÇÂ¼·şÎñÆ÷³ö´íÁË
-	CanNotFindProxy 			= 12;		// Ã»ÓĞ¿ÉµÇÂ¼µÄ½Úµã
-	AuthServerBusy 				= 13;		// ÈÏÖ¤·şÎñÆ÷³ö´íÁË
-	AuthDatabaseBusy			= 14;		// Æ½Ì¨Êı¾İ¿â³ö´íÁË 
-	CanNotFindGame 				= 15;		// Ã»ÓĞ¿ÉµÇÂ¼µÄÓÎÏ··şÎñÆ÷
-	LoginTokenError 			= 16;		// µÇÂ¼token´íÎó
-	LoadDataFailed 				= 17;		// ¼ÓÔØÊ§°Ü
-	HttpDataError 				= 18;		// httpÄÚ²¿Êı¾İ´íÎó
-	LoginDatabaseError 			= 19;		// µÇÂ¼Êı¾İ¿â´íÎó
-	CreatePlayerError 			= 20;		// ´´½¨½ÇÉ«Ê§°Ü
-	SexSetOK					= 21;		// ÉèÖÃĞÔ±ğ³É¹¦
-	NameAlreadySet				= 22;		// ²»ÄÜÖØ¸´ÉèÖÃÃû×Ö
-	NameAlreadyExist			= 23;		// <Text>%s</Text>Ãû×ÖÒÑ¾­´æÔÚ
-	PublicDatabaseError			= 24;		// ¹«¹²Êı¾İ¿â´íÎó
-	NameSetOK					= 25;		// Ãû×ÖÉèÖÃ³É¹¦
-	AccountIsEmpty         		= 26;		// ÕËºÅ²»ÄÜÎª¿Õ
-	CreateRoleAlready			= 27;		// ²»ÄÜÖØ¸´´´½¨½ÇÉ«
-	CreateRoleOK				= 28;		// ´´½¨½ÇÉ«³É¹¦
-	LoginAlreadyOnline      	= 29;		// ÒÑ¾­ÔÚÏß
-	ChangeIconOK            	= 30;		// ĞŞ¸ÄÍ·Ïñ³É¹¦
-	NameEmpty 					= 31;		// Ãû×Ö²»ÄÜÎª¿Õ
-	ChangeMottoOK				= 32;		// ĞŞ¸Ä¸öĞÔÇ©Ãû³É¹¦
-	ModuleIdNotFind				= 33;		// ÄãÎ´»ñµÃ¸ÃÄ£ĞÍ
-	SetModelClothesOK			= 34;		// Ä£ĞÍµÄÄ¬ÈÏÊ±×°ÉèÖÃ³É¹¦
-	ChangeIconBoxOK				= 35;		// ĞŞ¸ÄÍ·Ïñ¿ò³É¹¦
-	DataSystemBusy				= 36;		// Êı¾İ·şÎñÆ÷³ö´í, ÇëÉÔºóµÇÂ¼
-	ActivationAccount 			= 37;		// ÇëÏÈ¼¤»îÕËºÅ
-	ActivationCodeError			= 38;		// ¼¤»îÂë´íÎó
-	LoginCanNotFindGate 		= 39;		// ÕÒ²»µ½¿ÉµÇÂ¼µÄ·şÎñÆ÷
-	TaskIdCanNotFind 			= 40;		// ÈÎÎñ<Text>%s</Text>ÅäÖÃ´íÎó
-	TaskNotInValidTime 			= 41;		// ÈÎÎñ²»ÔÚÓĞĞ§Ê±¼ä·¶Î§ÄÚ
-	CanNotFindPlayer 			= 42;		// Íæ¼ÒÊı¾İ´íÎó, ÇëÖØĞÂµÇÂ¼
-	CanNotFindTaskData 			= 43;		// Äã»¹Ã»ÓĞÍê³É¸ÃÈÎÎñ
-	TaskNotDone 				= 44;		// ÇëÏÈÍê³ÉÈÎÎñ
-	TaskAlreadyReceived 		= 45;		// ÄãÒÑ¾­ÁìÈ¡ÈÎÎñ½±Àø
-	TaskReceiveRewardOK 		= 46;		// ÁìÈ¡ÈÎÎñ½±Àø³É¹¦
-	CanNotInquireSelf			= 47;		// ²»ÄÜ²éÑ¯×Ô¼ºµÄÊı¾İ
-	ActivityIdCanNotFind 		= 48;		// »î¶¯ÅäÖÃ´íÎó
-	CanNotFindActivityType 		= 49;		// »¹Ã»ÓĞÍê³É»î¶¯
-	ActivityAlreadyReceived 	= 50;		// ÄãÒÑ¾­ÁìÈ¡»î¶¯½±Àø
-	ActivityNotDone 			= 51;		// ÇëÏÈÍê³É»î¶¯ÄÚÈİ
-	ActivityReceiveRewardOK 	= 52;		// ÁìÈ¡»î¶¯½±Àø³É¹¦
-	AchieveIdCanNotFind 		= 53;		// ³É¾Í<Text>%s</Text>ÅäÖÃ´íÎó
-	CanNotFindAchieveData 		= 54;		// Äã»¹Ã»ÓĞÍê³É³É¾Í
-	AchieveAlreadyReceived 		= 55;		// ÄãÒÑ¾­ÁìÈ¡³É¾Í½±Àø
-	AchieveNotDone 				= 56;		// ÇëÏÈÍê³É³É¾Í
-	AchieveReceiveRewardOK 		= 57;		// ÁìÈ¡³É¾Í½±Àø³É¹¦
-	ReceiveGiftOK 				= 58;		// ÁìÈ¡Àñ°ü³É¹¦
-	ReceiveGiftFailed 			= 59;		// ÁìÈ¡Àñ°üÊ§°Ü	
-	MailNotExist				= 60;		// ÓÊ¼ş²»´æÔÚ
-	MailAlreadyReceived			= 61;		// ÓÊ¼ş½±ÀøÒÑ¾­ÁìÈ¡
-	MailNotHaveReward			= 62;		// ÓÊ¼şÃ»ÓĞ½±Àø
-	MailDeleteFailed			= 63;		// »¹ÓĞ½±ÀøÃ»ÓĞÁìÈ¡, É¾³ıÓÊ¼şÊ§°Ü
-	MailTimeOut					= 64;		// ÓÊ¼şÒÑ¾­¹ıÆÚ
-	ToastSendCountOver			= 65;		// Ã¿ÈÕ¾´¾Æ´ÎÊıÒÑÓÃÍê
-	ToastCanNotRepeat			= 66;		// ²»ÄÜÖØ¸´¾´¾Æ
-	ToastGetCountOver			= 67;		// Ã¿ÈÕ±»¾´¾Æ´ÎÊıÒÑÓÃÍê
-	ToastFailed					= 68;		// ¾´¾ÆÊ§°Ü
-	ToastOK						= 69;		// ¾´¾Æ³É¹¦
-	MatchAlreadyWait       		= 70;		// ÕıÔÚµÈ´ıÆ¥ÅäÖĞ, ²»ÄÜÖØ¸´ÉêÇë
-	MatchClusterBusy			= 71;		// ÉêÇëÆ¥ÅäÊ§°Ü, ÇëÖØÊÔ
-	MatchCanNotFindServer  		= 72;		// ÕÒ²»µ½¿ÉÒÔÆ¥ÅäµÄ·şÎñÆ÷
-	MatchCanNotFindMatch		= 73;		// Æ¥ÅäÄ£Ê½´íÎó
-	MatchGroupPlayerLimit 		= 74;		// ³¬¹ı×é¶Ó×î´óÈËÊı
-	MatchRequestSuccess 		= 75;		// ÉêÇëÆ¥Åä³É¹¦,ÇëµÈ´ı
-	MatchCancelSuccess 			= 76;		// È¡ÏûÆ¥Åä³É¹¦
-	FriendInviteOK				= 77;		// Ïò<Text>%s</Text>·¢ËÍºÃÓÑÉêÇë³É¹¦
-	FriendRefuseInvite			= 78;		// <Text>%s</Text>ÉèÖÃ¾Ü¾øÌí¼ÓºÃÓÑ
-	FriendTargetLimit			= 79;		// <Text>%s</Text>µÄºÃÓÑÊıÁ¿ÒÑ¾­³¬¹ı×î´óÏŞÖÆ
-	FriendSelfLimit				= 80;		// ÄãµÄºÃÓÑÊıÁ¿ÒÑ¾­´ïµ½<Text>%s</Text>¸ö
-	FriendAlready				= 81;		// Óë<Text>%s</Text>ÒÑ¾­ÊÇºÃÓÑ¹ØÏµ
-	FriendNotExist				= 82;		// ¶Ô·½²»ÊÇÄãµÄºÃÓÑ
-	FriendDelOK					= 83;		// ÄãÓë<Player id=%s>%s</Player>²»ÔÙÊÇºÃÓÑÁË
-	FriendInviteLimit			= 84;		// <Text>%s</Text>µÄºÃÓÑÉêÇëÁĞ±íÂúÁË
-	FriendInviteNotExist    	= 85;		// ºÃÓÑÑûÇëĞÅÏ¢²»´æÔÚ
-	MatchNotInMatch				= 86;		// ÄãÒÑ¾­²»ÔÚÆ¥Åä
-	FriendInviteAlready			= 87;		// ÒÑ¾­Ïò<Text>%s</Text>ÉêÇëÌí¼ÓºÃÓÑÁË
-	MatchMustPrepare			= 88;		// ¶ÓÔ±È«²¿×¼±¸²ÅÄÜ¿ªÊ¼Æ¥Åä
-	StoreParamError				= 89;		// ÉÌÆ·<Text>%s</Text>ÅäÖÃ´íÎó
-	StoreLackCost				= 90;		// ÉÌ³Ç¹ºÂòÏûºÄÆ·»¨·Ñ²»×ã
-	StoreOutOfLimits			= 91;		// ÒÑ¾­³¬¹ıÉÌÆ·ÏŞ¹º´ÎÊı
-	StoreOutOfLimitOwm			= 92;		// ÒÑ¾­ÓµÓĞÎïÆ·, ²»ÄÜ¹ºÂò
-	StoreOutOfLimitDate			= 93;		// ÉÌÆ·ÏŞ¹º²»ÔÚÖ¸¶¨ÈÕÆÚÄÚ
-	WishOrderEmpty				= 94;		// ĞÄÔ¸µ¥Îª¿Õ
-	WishOrderNoExist			= 95;		// ĞÄÔ¸µ¥ÖĞ²»´æÔÚ¸ÃÎïÆ·
-	WishOrderNoStoreId			= 96;		// Ìí¼ÓĞÄÔ¸µ¥Ê§°Ü£¬Î´ÕÒµ½¸ÃÉÌÆ·
-	WishOrderHadStoreId			= 97;		// ĞÄÔ¸µ¥ÖĞÒÑ¾­´æÔÚ¸ÃÉÌÆ·	
-	WishOrderMaxSize			= 98;		// ĞÄÔ¸µ¥ÒÑÂú
-	WishOrderStateRepeatSet		= 99;		// ĞÄÔ¸µ¥×´Ì¬ÖØ¸´ÉèÖÃ
-	GiveLackCost				= 100;		// ÔùËÍÏûºÄÆ·»¨·Ñ²»×ã
-	ClothesNotExist 			= 101;		// Ê±×°²»´æÔÚ
-	ClothesDataError			= 102;		// Ê±×°<Text>%s</Text>ÅäÖÃ´íÎó
-	ClothesModleNotMatch    	= 103;		// Ê±×°ºÍÄ£ĞÍ²»Æ¥Åä
-	ClothesDressOK				= 104;		// Ê±×°´©´÷³É¹¦
-	ModelNotExist				= 105;		// Ä£ĞÍ²»´æÔÚ
-	ModelChangeOK				= 106;		// Ä£ĞÍĞŞ¸Ä³É¹¦
-	ChatByteTooLong				= 107;		// ÁÄÌìÄÚÈİ³¬³¤
-	ChatNotFindPlayer			= 108;		// Äã²»ÔÚÁÄÌìÊÒÖĞ
-	ChatIntervalError			= 109;		// Çë²»ÒªÆµ·±·¢ÑÔ
-	ChatFriendIdError			= 110;		// ºÃÓÑÁÄÌìºÃÓÑid´íÎó
-	InviteMatchGroupOK 			= 111;		// ÒÑ¾­Ïò<Text>%s</Text>·¢ËÍ×é¶ÓÑûÇë
-	GroupLeaveOK				= 112;		// ÄãÒÑ¾­Àë¿ª¶ÓÎé
-	GroupMemberIsFull      		= 113;		// ¶ÓÎé³ÉÔ±ÂúÁË
-	GroupServerBusy				= 114;		// ¶ÓÎé·şÎñÆ÷´íÎó, ÇëÉÔºóÖØÊÔ
-	GroupInviteNotExist 		= 115;		// ÑûÇë²»´æÔÚ
-	GroupCanNotKickSelf			= 116;		// ²»ÄÜÌß×Ô¼º
-	GroupInGroup				= 117;		// ÄãÒÑ¾­ÔÚ¶ÓÎéÖĞ
-	GroupApplyNotExist     	    = 118;		// ×é¶ÓÉêÇë²»´æÔÚ
-	GroupNotInGroup				= 119;		// Äã²»ÔÚ¶ÓÎéÖĞ
-	ItemNotExist				= 120;		// ÄãÃ»ÓĞ¸ÃµÀ¾ß
-	ItemDataError				= 121;		// µÀ¾ß<Text>%s</Text>ÅäÖÃ´íÎó
-	ItemCanNotUse				= 122;		// µÀ¾ß²»ÄÜÊ¹ÓÃ
-	GroupNotExist				= 123;		// ¶ÓÎéÒÑ¾­½âÉ¢
-	StoreBuyOK					= 124;		// ¹ºÂòÉÌÆ·³É¹¦
-	GiveBuyOK					= 125;		// ÔùËÍÉÌÆ·³É¹¦
-	GroupPlayerOffline			= 126;		// <Text>%s</Text>ÒÑ¾­ÀëÏß
-	GroupAlreadyInGroup			= 127;		// <Text>%s</Text>ÒÑ¾­ÔÚ¶ÓÎéÖĞ
-	GroupRefuseInvite			= 128;		// <Text>%s</Text>ÉèÖÃ¾Ü¾ø×é¶ÓÑûÇë
-	GroupRefuseYourInvite		= 129;		// <Text>%s</Text>¾Ü¾øÄãµÄ×é¶ÓÑûÇë!
-	GroupMemberLeave			= 130;		// <Text>%s</Text>Àë¿ªÁË¶ÓÎé
-	GroupRefuseApply			= 131;		// <Text>%s</Text>¾Ü¾øÄãµÄ×é¶ÓÉêÇë!
-	GroupCaptainOffline			= 132;		// ¶Ó³¤²»ÔÚÏß
-	GroupNoCaption				= 133;		// Ã»ÓĞ¶Ó³¤Êı¾İ
-	GroupNotCaption				= 134;		// Äã²»ÊÇ¶Ó³¤
-	FriendServerBusy			= 135;		// ºÃÓÑ·şÎñÆ÷·±Ã¦, ÇëÉÔºóÔÙÊÔ
-	FriendRefuseYourInvite		= 136;		// <Text>%s</Text>¾Ü¾øÁËÄãµÄºÃÓÑÇëÇó
-	FriendAddOK					= 137;		// Óë<Text>%s</Text>ÒÑÎªÖª½»
-	FriendInviteReq				= 138;		// <Text>%s</Text>ÏòÄã·¢ËÍÁËºÃÓÑÉêÇë
-	GroupJoinOK					= 139;		// ÒÑ¾­¼ÓÈë¶ÓÎé
-	GroupMemberJoin				= 140;		// <Text>%s</Text>¼ÓÈëÁË¶ÓÎé
-	GroupIsNewCaption			= 141;		// ÄãÒÑ¾­³ÉÎª¶Ó³¤
-	FriendLinessAdd				= 142;		// Óë<Text>%s</Text>ÇéÒåĞ¡ÕÇ<Text>%s</Text>
-	FriendLinessAddLimit		= 143;		// ½ñÈÕÓë<Text>%s</Text>ÇéÒåÒÑÂú
-	FriendLinessAddByWinGame	= 144;		// °ÎµÃÍ·³ï£¬Óë<Text>%s</Text>ÇéÒåÁíÕÇ<Text>%s</Text>
-	FriendLinessMaxLimit		= 145;		// Óë<Text>%s</Text>ÒÑÊÇØØ¾±Ö®½»
-	WishPanelAddSuccessed		= 146;		// Ìí¼ÓĞÄÔ¸µ¥³É¹¦
-	GroupInviteInMatch			= 147;		// ÒÑ¾­ÔÚÆ¥ÅäÖĞ²»ÄÜÑûÇëÈë¶Ó
-	GroupApplyInMatch			= 148;		// ÒÑ¾­ÔÚÆ¥ÅäÖĞ²»ÄÜÉêÇëÈë¶Ó
-	GroupInviteTimeOut			= 149;		// ÑûÇëÒÑ¾­³¬Ê±, ÎŞ·¨¼ÓÈë¶ÓÎé
-	GroupInviteMatchError		= 150;		// ¸ÃÄ£Ê½ÏÂ²»ÄÜ×é¶Ó
-	GroupApplyTimeOut			= 151;		// ÉêÇëÒÑ¾­³¬Ê±, ÎŞ·¨¼ÓÈë¶ÓÎé
-	OperateFrequently			= 152;		// ²Ù×÷Ì«Æµ·±, ÉÔºóÔÙÊÔ
-	DataNotEnough				= 153;		// Ã»ÓĞ×ã¹»µÄÊı¾İ
-	CompoundNotExist			= 154;		// ºÏ³ÉÅäÖÃ²»´æÔÚ
-	LoginIsClose				= 155;		// µÇÂ¼ÒÑ¾­¹Ø±Õ
-	RankNotExist				= 156;		// ÅÅĞĞ°ñ²»´æÔÚ
-	RankServerBusy				= 157;		// ÅÅĞĞ°ñ·şÎñÆ÷Ã¦
-	SignInNotDay				= 161;		// »¹Ã»ÓĞÇ©µ½
-	SignInDataError				= 162;		// Ç©µ½ÅäÖÃ´íÎó
-	SignInRewardAlready			= 163;		// ÒÑ¾­ÁìÈ¡Ç©µ½½±Àø
-	DirServerBusy				= 164;		// Ä¿Â¼·şÎñÆ÷Ã¦
-	GroupTargetInMatch			= 165;		// <Text>%s</Text>ÕıÔÚÆ¥ÅäÖĞ!
-	GroupInMatch				= 166;		// ÒÑ¾­ÔÚÆ¥ÅäÖĞ²»ÄÜ¼ÓÈë¶ÓÎé!
-	GroupKickInMatch			= 167;		// ÒÑ¾­ÔÚÆ¥ÅäÖĞ²»ÄÜÌßÈË
-	GroupLeaveInMatch			= 168;		// ÒÑ¾­ÔÚÆ¥ÅäÖĞ²»ÄÜÀë¿ª¶ÓÎé
-	MatchCancelInBattle			= 169;		// ÒÑ¾­Õ½¶·ÖĞ²»ÄÜÈ¡ÏûÆ¥Åä
-	MailServerBusy				= 170;		// ÓÊ¼ş·şÎñÆ÷·±Ã¦
-	RelationDatabaseBusy		= 171;		// ¹ØÏµÊı¾İ¿â·±Ã¦
-	NameInvalid					= 172;		// Ãû×Öº¬ÓĞ·Ç·¨×Ö·û
-	SteamError				 	= 173;		// SteamµÇÂ¼·ÃÎÊ´íÎó
-	SteamDataError				= 174;		// Steam·µ»ØÊı¾İ´íÎó
-	SteamAuthError				= 175;		// SteamÑéÖ¤´íÎó
+	Success 					= 1;		// æˆåŠŸ
+	SignError					= 2;		// ç­¾åé”™è¯¯
+	WeiXinError 				= 3;		// è®¿é—®å¾®ä¿¡é”™è¯¯
+	WeiXinCodeError 			= 4;		// å¾®ä¿¡codeé”™è¯¯
+	WeiXinTokenTimeout 			= 5;		// å¾®ä¿¡Tokenè¿‡æœŸ
+	WeiXinTokenError 			= 6;		// å¾®ä¿¡Tokené”™è¯¯
+	WeiXinUserError 			= 7;		// å¾®ä¿¡è¯»å–ç”¨æˆ·æ•°æ®é”™è¯¯
+	ChannelError				= 8;		// é”™è¯¯çš„æ¸ é“ä¿¡æ¯
+	ChannelNotOpen				= 9;		// æ¸ é“æ²¡æœ‰å¼€æ”¾
+	WorldSystemBusy 			= 10;		// ä¸–ç•ŒæœåŠ¡å™¨å‡ºé”™äº†
+	LoginSystemBusy 			= 11;		// ç™»å½•æœåŠ¡å™¨å‡ºé”™äº†
+	CanNotFindProxy 			= 12;		// æ²¡æœ‰å¯ç™»å½•çš„èŠ‚ç‚¹
+	AuthServerBusy 				= 13;		// è®¤è¯æœåŠ¡å™¨å‡ºé”™äº†
+	AuthDatabaseBusy			= 14;		// å¹³å°æ•°æ®åº“å‡ºé”™äº† 
+	CanNotFindGame 				= 15;		// æ²¡æœ‰å¯ç™»å½•çš„æ¸¸æˆæœåŠ¡å™¨
+	LoginTokenError 			= 16;		// ç™»å½•tokené”™è¯¯
+	LoadDataFailed 				= 17;		// åŠ è½½å¤±è´¥
+	HttpDataError 				= 18;		// httpå†…éƒ¨æ•°æ®é”™è¯¯
+	LoginDatabaseError 			= 19;		// ç™»å½•æ•°æ®åº“é”™è¯¯
+	CreatePlayerError 			= 20;		// åˆ›å»ºè§’è‰²å¤±è´¥
+	SexSetOK					= 21;		// è®¾ç½®æ€§åˆ«æˆåŠŸ
+	NameAlreadySet				= 22;		// ä¸èƒ½é‡å¤è®¾ç½®åå­—
+	NameAlreadyExist			= 23;		// <Text>%s</Text>åå­—å·²ç»å­˜åœ¨
+	PublicDatabaseError			= 24;		// å…¬å…±æ•°æ®åº“é”™è¯¯
+	NameSetOK					= 25;		// åå­—è®¾ç½®æˆåŠŸ
+	AccountIsEmpty         		= 26;		// è´¦å·ä¸èƒ½ä¸ºç©º
+	CreateRoleAlready			= 27;		// ä¸èƒ½é‡å¤åˆ›å»ºè§’è‰²
+	CreateRoleOK				= 28;		// åˆ›å»ºè§’è‰²æˆåŠŸ
+	LoginAlreadyOnline      	= 29;		// å·²ç»åœ¨çº¿
+	ChangeIconOK            	= 30;		// ä¿®æ”¹å¤´åƒæˆåŠŸ
+	NameEmpty 					= 31;		// åå­—ä¸èƒ½ä¸ºç©º
+	ChangeMottoOK				= 32;		// ä¿®æ”¹ä¸ªæ€§ç­¾åæˆåŠŸ
+	ModuleIdNotFind				= 33;		// ä½ æœªè·å¾—è¯¥æ¨¡å‹
+	SetModelClothesOK			= 34;		// æ¨¡å‹çš„é»˜è®¤æ—¶è£…è®¾ç½®æˆåŠŸ
+	ChangeIconBoxOK				= 35;		// ä¿®æ”¹å¤´åƒæ¡†æˆåŠŸ
+	DataSystemBusy				= 36;		// æ•°æ®æœåŠ¡å™¨å‡ºé”™, è¯·ç¨åç™»å½•
+	ActivationAccount 			= 37;		// è¯·å…ˆæ¿€æ´»è´¦å·
+	ActivationCodeError			= 38;		// æ¿€æ´»ç é”™è¯¯
+	LoginCanNotFindGate 		= 39;		// æ‰¾ä¸åˆ°å¯ç™»å½•çš„æœåŠ¡å™¨
+	TaskIdCanNotFind 			= 40;		// ä»»åŠ¡<Text>%s</Text>é…ç½®é”™è¯¯
+	TaskNotInValidTime 			= 41;		// ä»»åŠ¡ä¸åœ¨æœ‰æ•ˆæ—¶é—´èŒƒå›´å†…
+	CanNotFindPlayer 			= 42;		// ç©å®¶æ•°æ®é”™è¯¯, è¯·é‡æ–°ç™»å½•
+	CanNotFindTaskData 			= 43;		// ä½ è¿˜æ²¡æœ‰å®Œæˆè¯¥ä»»åŠ¡
+	TaskNotDone 				= 44;		// è¯·å…ˆå®Œæˆä»»åŠ¡
+	TaskAlreadyReceived 		= 45;		// ä½ å·²ç»é¢†å–ä»»åŠ¡å¥–åŠ±
+	TaskReceiveRewardOK 		= 46;		// é¢†å–ä»»åŠ¡å¥–åŠ±æˆåŠŸ
+	CanNotInquireSelf			= 47;		// ä¸èƒ½æŸ¥è¯¢è‡ªå·±çš„æ•°æ®
+	ActivityIdCanNotFind 		= 48;		// æ´»åŠ¨é…ç½®é”™è¯¯
+	CanNotFindActivityType 		= 49;		// è¿˜æ²¡æœ‰å®Œæˆæ´»åŠ¨
+	ActivityAlreadyReceived 	= 50;		// ä½ å·²ç»é¢†å–æ´»åŠ¨å¥–åŠ±
+	ActivityNotDone 			= 51;		// è¯·å…ˆå®Œæˆæ´»åŠ¨å†…å®¹
+	ActivityReceiveRewardOK 	= 52;		// é¢†å–æ´»åŠ¨å¥–åŠ±æˆåŠŸ
+	AchieveIdCanNotFind 		= 53;		// æˆå°±<Text>%s</Text>é…ç½®é”™è¯¯
+	CanNotFindAchieveData 		= 54;		// ä½ è¿˜æ²¡æœ‰å®Œæˆæˆå°±
+	AchieveAlreadyReceived 		= 55;		// ä½ å·²ç»é¢†å–æˆå°±å¥–åŠ±
+	AchieveNotDone 				= 56;		// è¯·å…ˆå®Œæˆæˆå°±
+	AchieveReceiveRewardOK 		= 57;		// é¢†å–æˆå°±å¥–åŠ±æˆåŠŸ
+	ReceiveGiftOK 				= 58;		// é¢†å–ç¤¼åŒ…æˆåŠŸ
+	ReceiveGiftFailed 			= 59;		// é¢†å–ç¤¼åŒ…å¤±è´¥	
+	MailNotExist				= 60;		// é‚®ä»¶ä¸å­˜åœ¨
+	MailAlreadyReceived			= 61;		// é‚®ä»¶å¥–åŠ±å·²ç»é¢†å–
+	MailNotHaveReward			= 62;		// é‚®ä»¶æ²¡æœ‰å¥–åŠ±
+	MailDeleteFailed			= 63;		// è¿˜æœ‰å¥–åŠ±æ²¡æœ‰é¢†å–, åˆ é™¤é‚®ä»¶å¤±è´¥
+	MailTimeOut					= 64;		// é‚®ä»¶å·²ç»è¿‡æœŸ
+	ToastSendCountOver			= 65;		// æ¯æ—¥æ•¬é…’æ¬¡æ•°å·²ç”¨å®Œ
+	ToastCanNotRepeat			= 66;		// ä¸èƒ½é‡å¤æ•¬é…’
+	ToastGetCountOver			= 67;		// æ¯æ—¥è¢«æ•¬é…’æ¬¡æ•°å·²ç”¨å®Œ
+	ToastFailed					= 68;		// æ•¬é…’å¤±è´¥
+	ToastOK						= 69;		// æ•¬é…’æˆåŠŸ
+	MatchAlreadyWait       		= 70;		// æ­£åœ¨ç­‰å¾…åŒ¹é…ä¸­, ä¸èƒ½é‡å¤ç”³è¯·
+	MatchClusterBusy			= 71;		// ç”³è¯·åŒ¹é…å¤±è´¥, è¯·é‡è¯•
+	MatchCanNotFindServer  		= 72;		// æ‰¾ä¸åˆ°å¯ä»¥åŒ¹é…çš„æœåŠ¡å™¨
+	MatchCanNotFindMatch		= 73;		// åŒ¹é…æ¨¡å¼é”™è¯¯
+	MatchGroupPlayerLimit 		= 74;		// è¶…è¿‡ç»„é˜Ÿæœ€å¤§äººæ•°
+	MatchRequestSuccess 		= 75;		// ç”³è¯·åŒ¹é…æˆåŠŸ,è¯·ç­‰å¾…
+	MatchCancelSuccess 			= 76;		// å–æ¶ˆåŒ¹é…æˆåŠŸ
+	FriendInviteOK				= 77;		// å‘<Text>%s</Text>å‘é€å¥½å‹ç”³è¯·æˆåŠŸ
+	FriendRefuseInvite			= 78;		// <Text>%s</Text>è®¾ç½®æ‹’ç»æ·»åŠ å¥½å‹
+	FriendTargetLimit			= 79;		// <Text>%s</Text>çš„å¥½å‹æ•°é‡å·²ç»è¶…è¿‡æœ€å¤§é™åˆ¶
+	FriendSelfLimit				= 80;		// ä½ çš„å¥½å‹æ•°é‡å·²ç»è¾¾åˆ°<Text>%s</Text>ä¸ª
+	FriendAlready				= 81;		// ä¸<Text>%s</Text>å·²ç»æ˜¯å¥½å‹å…³ç³»
+	FriendNotExist				= 82;		// å¯¹æ–¹ä¸æ˜¯ä½ çš„å¥½å‹
+	FriendDelOK					= 83;		// ä½ ä¸<Player id=%s>%s</Player>ä¸å†æ˜¯å¥½å‹äº†
+	FriendInviteLimit			= 84;		// <Text>%s</Text>çš„å¥½å‹ç”³è¯·åˆ—è¡¨æ»¡äº†
+	FriendInviteNotExist    	= 85;		// å¥½å‹é‚€è¯·ä¿¡æ¯ä¸å­˜åœ¨
+	MatchNotInMatch				= 86;		// ä½ å·²ç»ä¸åœ¨åŒ¹é…
+	FriendInviteAlready			= 87;		// å·²ç»å‘<Text>%s</Text>ç”³è¯·æ·»åŠ å¥½å‹äº†
+	MatchMustPrepare			= 88;		// é˜Ÿå‘˜å…¨éƒ¨å‡†å¤‡æ‰èƒ½å¼€å§‹åŒ¹é…
+	StoreParamError				= 89;		// å•†å“<Text>%s</Text>é…ç½®é”™è¯¯
+	StoreLackCost				= 90;		// å•†åŸè´­ä¹°æ¶ˆè€—å“èŠ±è´¹ä¸è¶³
+	StoreOutOfLimits			= 91;		// å·²ç»è¶…è¿‡å•†å“é™è´­æ¬¡æ•°
+	StoreOutOfLimitOwm			= 92;		// å·²ç»æ‹¥æœ‰ç‰©å“, ä¸èƒ½è´­ä¹°
+	StoreOutOfLimitDate			= 93;		// å•†å“é™è´­ä¸åœ¨æŒ‡å®šæ—¥æœŸå†…
+	WishOrderEmpty				= 94;		// å¿ƒæ„¿å•ä¸ºç©º
+	WishOrderNoExist			= 95;		// å¿ƒæ„¿å•ä¸­ä¸å­˜åœ¨è¯¥ç‰©å“
+	WishOrderNoStoreId			= 96;		// æ·»åŠ å¿ƒæ„¿å•å¤±è´¥ï¼Œæœªæ‰¾åˆ°è¯¥å•†å“
+	WishOrderHadStoreId			= 97;		// å¿ƒæ„¿å•ä¸­å·²ç»å­˜åœ¨è¯¥å•†å“	
+	WishOrderMaxSize			= 98;		// å¿ƒæ„¿å•å·²æ»¡
+	WishOrderStateRepeatSet		= 99;		// å¿ƒæ„¿å•çŠ¶æ€é‡å¤è®¾ç½®
+	GiveLackCost				= 100;		// èµ é€æ¶ˆè€—å“èŠ±è´¹ä¸è¶³
+	ClothesNotExist 			= 101;		// æ—¶è£…ä¸å­˜åœ¨
+	ClothesDataError			= 102;		// æ—¶è£…<Text>%s</Text>é…ç½®é”™è¯¯
+	ClothesModleNotMatch    	= 103;		// æ—¶è£…å’Œæ¨¡å‹ä¸åŒ¹é…
+	ClothesDressOK				= 104;		// æ—¶è£…ç©¿æˆ´æˆåŠŸ
+	ModelNotExist				= 105;		// æ¨¡å‹ä¸å­˜åœ¨
+	ModelChangeOK				= 106;		// æ¨¡å‹ä¿®æ”¹æˆåŠŸ
+	ChatByteTooLong				= 107;		// èŠå¤©å†…å®¹è¶…é•¿
+	ChatNotFindPlayer			= 108;		// ä½ ä¸åœ¨èŠå¤©å®¤ä¸­
+	ChatIntervalError			= 109;		// è¯·ä¸è¦é¢‘ç¹å‘è¨€
+	ChatFriendIdError			= 110;		// å¥½å‹èŠå¤©å¥½å‹idé”™è¯¯
+	InviteMatchGroupOK 			= 111;		// å·²ç»å‘<Text>%s</Text>å‘é€ç»„é˜Ÿé‚€è¯·
+	GroupLeaveOK				= 112;		// ä½ å·²ç»ç¦»å¼€é˜Ÿä¼
+	GroupMemberIsFull      		= 113;		// é˜Ÿä¼æˆå‘˜æ»¡äº†
+	GroupServerBusy				= 114;		// é˜Ÿä¼æœåŠ¡å™¨é”™è¯¯, è¯·ç¨åé‡è¯•
+	GroupInviteNotExist 		= 115;		// é‚€è¯·ä¸å­˜åœ¨
+	GroupCanNotKickSelf			= 116;		// ä¸èƒ½è¸¢è‡ªå·±
+	GroupInGroup				= 117;		// ä½ å·²ç»åœ¨é˜Ÿä¼ä¸­
+	GroupApplyNotExist     	    = 118;		// ç»„é˜Ÿç”³è¯·ä¸å­˜åœ¨
+	GroupNotInGroup				= 119;		// ä½ ä¸åœ¨é˜Ÿä¼ä¸­
+	ItemNotExist				= 120;		// ä½ æ²¡æœ‰è¯¥é“å…·
+	ItemDataError				= 121;		// é“å…·<Text>%s</Text>é…ç½®é”™è¯¯
+	ItemCanNotUse				= 122;		// é“å…·ä¸èƒ½ä½¿ç”¨
+	GroupNotExist				= 123;		// é˜Ÿä¼å·²ç»è§£æ•£
+	StoreBuyOK					= 124;		// è´­ä¹°å•†å“æˆåŠŸ
+	GiveBuyOK					= 125;		// èµ é€å•†å“æˆåŠŸ
+	GroupPlayerOffline			= 126;		// <Text>%s</Text>å·²ç»ç¦»çº¿
+	GroupAlreadyInGroup			= 127;		// <Text>%s</Text>å·²ç»åœ¨é˜Ÿä¼ä¸­
+	GroupRefuseInvite			= 128;		// <Text>%s</Text>è®¾ç½®æ‹’ç»ç»„é˜Ÿé‚€è¯·
+	GroupRefuseYourInvite		= 129;		// <Text>%s</Text>æ‹’ç»ä½ çš„ç»„é˜Ÿé‚€è¯·!
+	GroupMemberLeave			= 130;		// <Text>%s</Text>ç¦»å¼€äº†é˜Ÿä¼
+	GroupRefuseApply			= 131;		// <Text>%s</Text>æ‹’ç»ä½ çš„ç»„é˜Ÿç”³è¯·!
+	GroupCaptainOffline			= 132;		// é˜Ÿé•¿ä¸åœ¨çº¿
+	GroupNoCaption				= 133;		// æ²¡æœ‰é˜Ÿé•¿æ•°æ®
+	GroupNotCaption				= 134;		// ä½ ä¸æ˜¯é˜Ÿé•¿
+	FriendServerBusy			= 135;		// å¥½å‹æœåŠ¡å™¨ç¹å¿™, è¯·ç¨åå†è¯•
+	FriendRefuseYourInvite		= 136;		// <Text>%s</Text>æ‹’ç»äº†ä½ çš„å¥½å‹è¯·æ±‚
+	FriendAddOK					= 137;		// ä¸<Text>%s</Text>å·²ä¸ºçŸ¥äº¤
+	FriendInviteReq				= 138;		// <Text>%s</Text>å‘ä½ å‘é€äº†å¥½å‹ç”³è¯·
+	GroupJoinOK					= 139;		// å·²ç»åŠ å…¥é˜Ÿä¼
+	GroupMemberJoin				= 140;		// <Text>%s</Text>åŠ å…¥äº†é˜Ÿä¼
+	GroupIsNewCaption			= 141;		// ä½ å·²ç»æˆä¸ºé˜Ÿé•¿
+	FriendLinessAdd				= 142;		// ä¸<Text>%s</Text>æƒ…ä¹‰å°æ¶¨<Text>%s</Text>
+	FriendLinessAddLimit		= 143;		// ä»Šæ—¥ä¸<Text>%s</Text>æƒ…ä¹‰å·²æ»¡
+	FriendLinessAddByWinGame	= 144;		// æ‹”å¾—å¤´ç­¹ï¼Œä¸<Text>%s</Text>æƒ…ä¹‰å¦æ¶¨<Text>%s</Text>
+	FriendLinessMaxLimit		= 145;		// ä¸<Text>%s</Text>å·²æ˜¯åˆé¢ˆä¹‹äº¤
+	WishPanelAddSuccessed		= 146;		// æ·»åŠ å¿ƒæ„¿å•æˆåŠŸ
+	GroupInviteInMatch			= 147;		// å·²ç»åœ¨åŒ¹é…ä¸­ä¸èƒ½é‚€è¯·å…¥é˜Ÿ
+	GroupApplyInMatch			= 148;		// å·²ç»åœ¨åŒ¹é…ä¸­ä¸èƒ½ç”³è¯·å…¥é˜Ÿ
+	GroupInviteTimeOut			= 149;		// é‚€è¯·å·²ç»è¶…æ—¶, æ— æ³•åŠ å…¥é˜Ÿä¼
+	GroupInviteMatchError		= 150;		// è¯¥æ¨¡å¼ä¸‹ä¸èƒ½ç»„é˜Ÿ
+	GroupApplyTimeOut			= 151;		// ç”³è¯·å·²ç»è¶…æ—¶, æ— æ³•åŠ å…¥é˜Ÿä¼
+	OperateFrequently			= 152;		// æ“ä½œå¤ªé¢‘ç¹, ç¨åå†è¯•
+	DataNotEnough				= 153;		// æ²¡æœ‰è¶³å¤Ÿçš„æ•°æ®
+	CompoundNotExist			= 154;		// åˆæˆé…ç½®ä¸å­˜åœ¨
+	LoginIsClose				= 155;		// ç™»å½•å·²ç»å…³é—­
+	RankNotExist				= 156;		// æ’è¡Œæ¦œä¸å­˜åœ¨
+	RankServerBusy				= 157;		// æ’è¡Œæ¦œæœåŠ¡å™¨å¿™
+	SignInNotDay				= 161;		// è¿˜æ²¡æœ‰ç­¾åˆ°
+	SignInDataError				= 162;		// ç­¾åˆ°é…ç½®é”™è¯¯
+	SignInRewardAlready			= 163;		// å·²ç»é¢†å–ç­¾åˆ°å¥–åŠ±
+	DirServerBusy				= 164;		// ç›®å½•æœåŠ¡å™¨å¿™
+	GroupTargetInMatch			= 165;		// <Text>%s</Text>æ­£åœ¨åŒ¹é…ä¸­!
+	GroupInMatch				= 166;		// å·²ç»åœ¨åŒ¹é…ä¸­ä¸èƒ½åŠ å…¥é˜Ÿä¼!
+	GroupKickInMatch			= 167;		// å·²ç»åœ¨åŒ¹é…ä¸­ä¸èƒ½è¸¢äºº
+	GroupLeaveInMatch			= 168;		// å·²ç»åœ¨åŒ¹é…ä¸­ä¸èƒ½ç¦»å¼€é˜Ÿä¼
+	MatchCancelInBattle			= 169;		// å·²ç»æˆ˜æ–—ä¸­ä¸èƒ½å–æ¶ˆåŒ¹é…
+	MailServerBusy				= 170;		// é‚®ä»¶æœåŠ¡å™¨ç¹å¿™
+	RelationDatabaseBusy		= 171;		// å…³ç³»æ•°æ®åº“ç¹å¿™
+	InvalidFilter				= 172;		// å«æœ‰éæ³•å­—ç¬¦
+	SteamError				 	= 173;		// Steamç™»å½•è®¿é—®é”™è¯¯
+	SteamDataError				= 174;		// Steamè¿”å›æ•°æ®é”™è¯¯
+	SteamAuthError				= 175;		// SteaméªŒè¯é”™è¯¯
+	InvalidActivationCode		= 176;		// éæ³•æ¿€æ´»ç 
+	CanNotFindLoginNode			= 177;		// æ²¡æœ‰å¯ç™»å½•çš„èŠ‚ç‚¹
+	ChannelNotSupport			= 178;		// ä¸æ”¯æŒçš„æ¸ é“
 
 
-	FriendFriendCountOver		= 10000;	// ºÃÓÑÁĞ±íÒÑÂú  (³¬¹ı10000µÄÊÇ¿Í»§¶Ë×Ô¼ºµÄÏûÏ¢ÌáÊ¾£¬·şÎñÆ÷²»ĞèÒª´¦Àí)
-	FriendApplyCountOver		= 10001;	// ÉêÇëÁĞ±íÒÑÂú
-	FriendSearchEmpty			= 10002;	// ÇëÊäÈëÍæ¼ÒµÄÃû×Ö
-	FriendAddFriendSuccessed	= 10003;	// Ìí¼ÓºÃÓÑ³É¹¦
-	EquipDeleteTipContent		= 10004;	// ¼´½«Ïú»Ù´ËµÀ¾ß£¬ÊÇ·ñÍ¬Òâ
-	ClothesDeleteTipContent		= 10005;	// ¼´½«Ïú»Ù´ËÊ±×°£¬ÊÇ·ñÍ¬Òâ
-	NoCanSettingDefault			= 10006;	// Î´´©´÷Ê±×°Ê±ÎŞ·¨ÉèÎªÄ¬ÈÏ
-	ClothesNotFit				= 10007;	// ¸ÃÌ××°²»ÊÊºÏÄã
-	KickLoginBeKick				= 10008;	// ±»µÇÂ¼ÌßÏÂÏß
-	KickPlatformBeKick			= 10009;	// ±»Æ½Ì¨ÌßÏÂÏß
-	AutographCharOverLength 	= 10010;	// ×Ö·û³¬¹ıÁË30 ¸ö×Ö·û
-	ContainIIleagalChar			= 10011;	// °üº¬·Ç·¨×Ö·û
-	ClothesNotMatchModel		= 10012;	// ´ËÊ±×°²»ÊÊºÏµ±Ç°ÈËÎï
-	MoneyIsLack					= 10013;	// ÄúµÄÍ­Ç®²»×ã£¬¿ÉÍ¨¹ı±ÈÈü¶ÔÕ½µÈÍ¾¾¶»ñµÃ
-	DiamondIsLack				= 10014;	// ÄúµÄÒøÁ½²»×ã£¬¿É³äÖµ»ñµÃ
-	MoneyGet					= 10015;	// »ñµÃÍ­Ç®
-	DiamondGet					= 10016;	// »ñµÃÒøÁ½
-	WishOverCount				= 10017;	// ÄãÌí¼ÓµÄĞÄÔ¸ÒÑ´ïÉÏÏŞ£¨6¸ö£©£¬ÇëÒÆ³ıÄ³¸öĞÄÔ¸ºóÔÙ¼ÌĞøÌí¼Ó
-	PleaseLogin					= 10018;	//ÇëÏÈµÇÂ¼
-	CreateRoleNameIllegal		= 10019; 	//´´½¨½ÇÉ«-Ãû×Ö²»·ûºÏ¹æÔò
-	PleaseClickRole				= 10020;	//´´½¨½ÇÉ«-Î´Ñ¡Ôñ½ÇÉ«µã»÷Ëæ»úÃû,´´½¨½ÇÉ«-Î´Ñ¡Ôñ½ÇÉ«µã»÷½øÈë
-	ChatCharIllegal				= 10021;	//ÁÄÌì-ÊäÈëÎ¥½û×Ö
-	ChatUnCheckInNearbyChanel	= 10022;	//ÁÄÌì-×î½üÆµµÀÎ´Ñ¡ÔñÍæ¼Òµã»÷·¢ËÍ
-	ChatUnJoinWarTeam			= 10023;	//ÁÄÌì-Õ½¶ÓÆµµÀÎ´¼ÓÈëÕ½¶Óµã»÷·¢ËÍ
-	ChatUnJoinTeam				= 10024;	//ÁÄÌì-¶ÓÎéÆµµÀÎ´¼ÓÈë¶ÓÎéµã»÷·¢ËÍ
-	MatchRepeatInviteToCode		= 10025;	//×é¶Ó-10ÃëÄÚÔÙ´Îµã»÷ÑûÇëÈë¶Ó
-	CopySuccessed				= 10026;	//ÏµÍ³|¸öÈËĞÅÏ¢£º¸´ÖÆ³É¹¦
-	GiveFaildForLimitsGoods		= 10027;	//ÉÌ³Ç£ºÏŞÁ¿ÉÌÆ·ÎŞ·¨ÔùËÍ
-	MatchHasPrepared			= 10028;	//Æ¥Åä: ÒÑ×¼±¸¾ÍĞ÷
-	MatchHasCanceled			= 10029;	//Æ¥Åä: ÒÑÈ¡Ïû×¼±¸
+	FriendFriendCountOver		= 10000;	// å¥½å‹åˆ—è¡¨å·²æ»¡  (è¶…è¿‡10000çš„æ˜¯å®¢æˆ·ç«¯è‡ªå·±çš„æ¶ˆæ¯æç¤ºï¼ŒæœåŠ¡å™¨ä¸éœ€è¦å¤„ç†)
+	FriendApplyCountOver		= 10001;	// ç”³è¯·åˆ—è¡¨å·²æ»¡
+	FriendSearchEmpty			= 10002;	// è¯·è¾“å…¥ç©å®¶çš„åå­—
+	FriendAddFriendSuccessed	= 10003;	// æ·»åŠ å¥½å‹æˆåŠŸ
+	EquipDeleteTipContent		= 10004;	// å³å°†é”€æ¯æ­¤é“å…·ï¼Œæ˜¯å¦åŒæ„
+	ClothesDeleteTipContent		= 10005;	// å³å°†é”€æ¯æ­¤æ—¶è£…ï¼Œæ˜¯å¦åŒæ„
+	NoCanSettingDefault			= 10006;	// æœªç©¿æˆ´æ—¶è£…æ—¶æ— æ³•è®¾ä¸ºé»˜è®¤
+	ClothesNotFit				= 10007;	// è¯¥å¥—è£…ä¸é€‚åˆä½ 
+	KickLoginBeKick				= 10008;	// è¢«ç™»å½•è¸¢ä¸‹çº¿
+	KickPlatformBeKick			= 10009;	// è¢«å¹³å°è¸¢ä¸‹çº¿
+	AutographCharOverLength 	= 10010;	// å­—ç¬¦è¶…è¿‡äº†30 ä¸ªå­—ç¬¦
+	ContainIIleagalChar			= 10011;	// åŒ…å«éæ³•å­—ç¬¦
+	ClothesNotMatchModel		= 10012;	// æ­¤æ—¶è£…ä¸é€‚åˆå½“å‰äººç‰©
+	MoneyIsLack					= 10013;	// æ‚¨çš„é“œé’±ä¸è¶³ï¼Œå¯é€šè¿‡æ¯”èµ›å¯¹æˆ˜ç­‰é€”å¾„è·å¾—
+	DiamondIsLack				= 10014;	// æ‚¨çš„é“¶ä¸¤ä¸è¶³ï¼Œå¯å……å€¼è·å¾—
+	MoneyGet					= 10015;	// è·å¾—é“œé’±
+	DiamondGet					= 10016;	// è·å¾—é“¶ä¸¤
+	WishOverCount				= 10017;	// ä½ æ·»åŠ çš„å¿ƒæ„¿å·²è¾¾ä¸Šé™ï¼ˆ6ä¸ªï¼‰ï¼Œè¯·ç§»é™¤æŸä¸ªå¿ƒæ„¿åå†ç»§ç»­æ·»åŠ 
+	PleaseLogin					= 10018;	//è¯·å…ˆç™»å½•
+	CreateRoleNameIllegal		= 10019; 	//åˆ›å»ºè§’è‰²-åå­—ä¸ç¬¦åˆè§„åˆ™
+	PleaseClickRole				= 10020;	//åˆ›å»ºè§’è‰²-æœªé€‰æ‹©è§’è‰²ç‚¹å‡»éšæœºå,åˆ›å»ºè§’è‰²-æœªé€‰æ‹©è§’è‰²ç‚¹å‡»è¿›å…¥
+	ChatCharIllegal				= 10021;	//èŠå¤©-è¾“å…¥è¿ç¦å­—
+	ChatUnCheckInNearbyChanel	= 10022;	//èŠå¤©-æœ€è¿‘é¢‘é“æœªé€‰æ‹©ç©å®¶ç‚¹å‡»å‘é€
+	ChatUnJoinWarTeam			= 10023;	//èŠå¤©-æˆ˜é˜Ÿé¢‘é“æœªåŠ å…¥æˆ˜é˜Ÿç‚¹å‡»å‘é€
+	ChatUnJoinTeam				= 10024;	//èŠå¤©-é˜Ÿä¼é¢‘é“æœªåŠ å…¥é˜Ÿä¼ç‚¹å‡»å‘é€
+	MatchRepeatInviteToCode		= 10025;	//ç»„é˜Ÿ-10ç§’å†…å†æ¬¡ç‚¹å‡»é‚€è¯·å…¥é˜Ÿ
+	CopySuccessed				= 10026;	//ç³»ç»Ÿ|ä¸ªäººä¿¡æ¯ï¼šå¤åˆ¶æˆåŠŸ
+	GiveFaildForLimitsGoods		= 10027;	//å•†åŸï¼šé™é‡å•†å“æ— æ³•èµ é€
+	MatchHasPrepared			= 10028;	//åŒ¹é…: å·²å‡†å¤‡å°±ç»ª
+	MatchHasCanceled			= 10029;	//åŒ¹é…: å·²å–æ¶ˆå‡†å¤‡
 	
-	GuildHadExist				= 10030;	// °ïÅÉÒÑ¾­´æÔÚ
-	GuildCreateIllegal			= 10031;	// ´´½¨°ïÅÉĞÅÏ¢²»ÍêÕû
-	GuildNameTooLong			= 10032;	// °ïÅÉÃû×Ö¹ı³¤
-	GuildManifestoTooLong			= 10033;	// °ïÅÉĞûÑÔ¹ı³¤
-	GuildNameRepeat				= 10034;	// °ïÅÉÃû×ÖÖØ¸´
-	GuildHadBuild				= 10035;	// ÒÑ¾­´´½¨°ïÅÉÁË
-	GuildNotExist				= 10036;	// Ã»ÓĞ°ïÅÉ
-	GuildHadInvite				= 10037;	// ÒÑ¾­ÑûÇë¹ı¸ÃÍæ¼Ò
-	Playerisguildmember			= 10038;	// Íæ¼ÒÒÑ¾­ÊÇ°ïÅÉ³ÉÔ±
-	GuildApplyListTooLong			= 10039;	// °ïÅÉÉêÇëÁĞ±í¹ı³¤
-	PlayerInApplicanlist			= 10040;	// Íæ¼ÒÒÑ¾­ÔÚÉêÇëÁĞ±íÖĞ
-	GuildHadApply				= 10041;	// ÒÑ¾­ÉêÇë¹ıµ±Ç°°ïÅÉ
-	PlayerNoGuild				= 10042;	// Íæ¼Òµ±Ç°Ã»ÓĞ°ïÅÉ
-	GuildMaster				= 10043;	// Íæ¼ÒÊÇ°ïÖ÷ÎŞ·¨ÍË³ö°ïÅÉ
-	PlayerNoPower				= 10044;	// Íæ¼ÒÃ»ÓĞÈ¨ÏŞ
-	PlayerNoSmallGuild			= 10045;	// Íæ¼Ò²»ÔÚÍ¬Ò»¸ö°ïÅÉÖĞ
-	PlayerNoInApplicanlist			= 10046;	// Íæ¼Ò²»ÔÙÉêÇëÁĞ±íÖĞ
-	GuildMemberlistTooLong			= 10047;	// °ïÅÉ³ÉÔ±ÁĞ±í¹ı³¤
-	GuildMedalRepeat			= 10048;	// °ïÅÉ»ÕÕÂÖØ¸´
-	GuildMaxLevel				= 10049;	// °ïÅÉ´ïµ½×î¸ßµÈ¼¶ÁË
-	GuildLackActiveness			= 10050;	// °ïÅÉ»îÔ¾¶È²»×ã
-	GuildMemberOwnTitle			= 10051;	// Íæ¼ÒÒÑ¾­ÊÇ¸ÃÖ°Î»
-	GuildMaxViceMember			= 10052;	// °ïÅÉ¸±°ïÖ÷Ö°Î»´ïµ½×î´ó
-	GuildNameInvalid			= 10053;	// °ïÅÉÃû×Ö·Ç·¨
-	GuildLogOutPage				= 10054;	// ÇëÇóµÄ°ïÅÉÈÕÖ¾Ò³Êı³¬¹ı×î´ó
+	GuildHadExist				= 10030;	// å¸®æ´¾å·²ç»å­˜åœ¨
+	GuildCreateIllegal			= 10031;	// åˆ›å»ºå¸®æ´¾ä¿¡æ¯ä¸å®Œæ•´
+	GuildNameTooLong			= 10032;	// å¸®æ´¾åå­—è¿‡é•¿
+	GuildManifestoTooLong			= 10033;	// å¸®æ´¾å®£è¨€è¿‡é•¿
+	GuildNameRepeat				= 10034;	// å¸®æ´¾åå­—é‡å¤
+	GuildHadBuild				= 10035;	// å·²ç»åˆ›å»ºå¸®æ´¾äº†
+	GuildNotExist				= 10036;	// æ²¡æœ‰å¸®æ´¾
+	GuildHadInvite				= 10037;	// å·²ç»é‚€è¯·è¿‡è¯¥ç©å®¶
+	Playerisguildmember			= 10038;	// ç©å®¶å·²ç»æ˜¯å¸®æ´¾æˆå‘˜
+	GuildApplyListTooLong			= 10039;	// å¸®æ´¾ç”³è¯·åˆ—è¡¨è¿‡é•¿
+	PlayerInApplicanlist			= 10040;	// ç©å®¶å·²ç»åœ¨ç”³è¯·åˆ—è¡¨ä¸­
+	GuildHadApply				= 10041;	// å·²ç»ç”³è¯·è¿‡å½“å‰å¸®æ´¾
+	PlayerNoGuild				= 10042;	// ç©å®¶å½“å‰æ²¡æœ‰å¸®æ´¾
+	GuildMaster				= 10043;	// ç©å®¶æ˜¯å¸®ä¸»æ— æ³•é€€å‡ºå¸®æ´¾
+	PlayerNoPower				= 10044;	// ç©å®¶æ²¡æœ‰æƒé™
+	PlayerNoSmallGuild			= 10045;	// ç©å®¶ä¸åœ¨åŒä¸€ä¸ªå¸®æ´¾ä¸­
+	PlayerNoInApplicanlist			= 10046;	// ç©å®¶ä¸å†ç”³è¯·åˆ—è¡¨ä¸­
+	GuildMemberlistTooLong			= 10047;	// å¸®æ´¾æˆå‘˜åˆ—è¡¨è¿‡é•¿
+	GuildMedalRepeat			= 10048;	// å¸®æ´¾å¾½ç« é‡å¤
+	GuildMaxLevel				= 10049;	// å¸®æ´¾è¾¾åˆ°æœ€é«˜ç­‰çº§äº†
+	GuildLackActiveness			= 10050;	// å¸®æ´¾æ´»è·ƒåº¦ä¸è¶³
+	GuildMemberOwnTitle			= 10051;	// ç©å®¶å·²ç»æ˜¯è¯¥èŒä½
+	GuildMaxViceMember			= 10052;	// å¸®æ´¾å‰¯å¸®ä¸»èŒä½è¾¾åˆ°æœ€å¤§
+	GuildNameInvalid			= 10053;	// å¸®æ´¾åå­—éæ³•
+	GuildLogOutPage				= 10054;	// è¯·æ±‚çš„å¸®æ´¾æ—¥å¿—é¡µæ•°è¶…è¿‡æœ€å¤§
 
-	GMParamError				= 20000;	// GM²ÎÊı´íÎó
-	SysError				= 30000;	// ÏµÍ³´íÎó
+	GMParamError				= 20000;	// GMå‚æ•°é”™è¯¯
+	SysError				= 30000;	// ç³»ç»Ÿé”™è¯¯
 }
 
 
 enum ChannelEnum
 {
-	Internal = 1;		// ÄÚ²¿²âÊÔ
-	WeiXin = 2;			// Î¢ĞÅ
+	Internal = 1;		// å†…éƒ¨æµ‹è¯•
+	WeiXin = 2;			// å¾®ä¿¡
 	Steam = 3;			// steam
 }
 
 enum SexEnum
 {
-	Unknow = 0;			// ÎŞĞ§
-	Male = 1;			// ÄĞĞÔ
-	Female = 2;			// Å®ĞÔ
+	Unknow = 0;			// æ— æ•ˆ
+	Male = 1;			// ç”·æ€§
+	Female = 2;			// å¥³æ€§
 }
 
 enum KickEnum
 {
-	LoginBeKick = 1;		// ±»µÇÂ¼ÌßÏÂÏß
-	PlatformBeKick = 2;		// ±»Æ½Ì¨ÌßÏÂÏß
+	LoginBeKick = 1;		// è¢«ç™»å½•è¸¢ä¸‹çº¿
+	PlatformBeKick = 2;		// è¢«å¹³å°è¸¢ä¸‹çº¿
 }
 
 enum FlagEnum
 {
-	Init 			= 0;		// ³õÊ¼×´Ì¬
-	Done 			= 1;		// ÒÑ¾­Íê³É
-	Received		= 2;		// ÒÑ¾­ÁìÈ¡½±Àø
-	Remove			= 3;		// É¾³ı	
-	ReceiveRemove 	= 4;		// ÁìÈ¡²¢É¾³ı
+	Init 			= 0;		// åˆå§‹çŠ¶æ€
+	Done 			= 1;		// å·²ç»å®Œæˆ
+	Received		= 2;		// å·²ç»é¢†å–å¥–åŠ±
+	Remove			= 3;		// åˆ é™¤	
+	ReceiveRemove 	= 4;		// é¢†å–å¹¶åˆ é™¤
 }
 
 enum MailEnum
 {
-	WholeMail = 1;			// ÏµÍ³È«ÌåÓÊ¼ş
-	FriendMail = 2;			// ºÃÓÑÓÊ¼ş
-	GiftMail = 3;			// ÀñÎïÓÊ¼ş		
+	WholeMail = 1;			// ç³»ç»Ÿå…¨ä½“é‚®ä»¶
+	FriendMail = 2;			// å¥½å‹é‚®ä»¶
+	GiftMail = 3;			// ç¤¼ç‰©é‚®ä»¶		
 }
 
 enum MailConfigEnum
 {
-	ToastMail = 1;			// ¾´¾ÆÓÊ¼şÅäÖÃID
+	ToastMail = 1;			// æ•¬é…’é‚®ä»¶é…ç½®ID
 }
 
 enum StatusEnum
 {
-	OnlineStatus = 1;		// ÔÚÏß×´Ì¬
-	GroupStatus = 2;		// ×é¶Ó×´Ì¬
-	MatchStatus = 3;		// Æ¥Åä×´Ì¬
-	PlayingStatus = 4;		// ÓÎÏ·ÖĞ
-	OfflineStatus = 5;		// ÀëÏß
+	OnlineStatus = 1;		// åœ¨çº¿çŠ¶æ€
+	GroupStatus = 2;		// ç»„é˜ŸçŠ¶æ€
+	MatchStatus = 3;		// åŒ¹é…çŠ¶æ€
+	PlayingStatus = 4;		// æ¸¸æˆä¸­
+	OfflineStatus = 5;		// ç¦»çº¿
 }
 
 enum ChatEnum
 {
-	Jianghu = 1;		// ½­ºşÆµµÀ
+	Jianghu = 1;		// æ±Ÿæ¹–é¢‘é“
 }
 
 enum InviteEnum
 {
-	Consent = 1;		// Í¬ÒâÑûÇë
-	Refuse = 2;			// ¾Ü¾øÑûÇë
-	Delete = 3;			// Ö±½ÓÉ¾³ı
-	RefuseMinute = 4;	// 5·ÖÄÚ¾Ü¾ø
+	Consent = 1;		// åŒæ„é‚€è¯·
+	Refuse = 2;			// æ‹’ç»é‚€è¯·
+	Delete = 3;			// ç›´æ¥åˆ é™¤
+	RefuseMinute = 4;	// 5åˆ†å†…æ‹’ç»
 }
 
 
 enum StoreWishEnum
 {
-	Add = 1;		// Ôö¼ÓĞÄÔ¸µ¥ÎïÆ·²Ù×÷
-	Del = 2;		// É¾³ıĞÄÔ¸µ¥ÎïÆ·²Ù×÷
-	Modify = 3;		// ĞŞ¸ÄĞÄÔ¸µ¥¿É¼û×´Ì¬
+	Add = 1;		// å¢åŠ å¿ƒæ„¿å•ç‰©å“æ“ä½œ
+	Del = 2;		// åˆ é™¤å¿ƒæ„¿å•ç‰©å“æ“ä½œ
+	Modify = 3;		// ä¿®æ”¹å¿ƒæ„¿å•å¯è§çŠ¶æ€
 	
 }
 
 enum WishStateEnum
 {
-	AllWatch = 0;		// ĞÄÔ¸µ¥ËùÓĞÈË¿É¼û
-	NoneWatch = 1;		// ĞÄÔ¸µ¥½ö×Ô¼º¿É¼û
-	FriendWatch = 2;	// ĞÄÔ¸µ¥½öºÃÓÑ¿É¼û
-	TeamWatch = 3;		// ĞÄÔ¸µ¥½öÕ½¶Ó³ÉÔ±¿É¼û
+	AllWatch = 0;		// å¿ƒæ„¿å•æ‰€æœ‰äººå¯è§
+	NoneWatch = 1;		// å¿ƒæ„¿å•ä»…è‡ªå·±å¯è§
+	FriendWatch = 2;	// å¿ƒæ„¿å•ä»…å¥½å‹å¯è§
+	TeamWatch = 3;		// å¿ƒæ„¿å•ä»…æˆ˜é˜Ÿæˆå‘˜å¯è§
 }
 
 enum RankListEnum
 {
-	SingleRank = 1;		// µ¥ÈË°ñµ¥
-	DoubleRank = 2;		// Ë«ÈË°ñµ¥
-	FourRank = 3;		// ËÄÈË°ñµ¥
-	TotalRank = 4;		// ×Ü°ñµ¥
+	SingleRank = 1;		// å•äººæ¦œå•
+	DoubleRank = 2;		// åŒäººæ¦œå•
+	FourRank = 3;		// å››äººæ¦œå•
+	TotalRank = 4;		// æ€»æ¦œå•
 }
 
 
 enum FriendLinessEnum
 {
-	Team = 1;		// ×é¶Ó
-	Win = 2;		// Ê¤Àû
-	Toast = 3;		// ¾´¾Æ
-	Give = 4;		// ËÍÀñ
+	Team = 1;		// ç»„é˜Ÿ
+	Win = 2;		// èƒœåˆ©
+	Toast = 3;		// æ•¬é…’
+	Give = 4;		// é€ç¤¼
 }
 
 enum GuildEnum
 {
-	JoinGuild =1;		// ¼ÓÈë°ïÅÉ
-	ExitGuild = 2;		// Àë¿ª°ïÅÉ
+	JoinGuild =1;		// åŠ å…¥å¸®æ´¾
+	ExitGuild = 2;		// ç¦»å¼€å¸®æ´¾
 	
 }
 
 enum GuildReviewEnum
 {
-	AgreeApply = 1;		// Í¬Òâ¼ÓÈë°ïÅÉ
-	RefuseApply = 2;	// ¾Ü¾ø¼ÓÈë°ïÅÉ
+	AgreeApply = 1;		// åŒæ„åŠ å…¥å¸®æ´¾
+	RefuseApply = 2;	// æ‹’ç»åŠ å…¥å¸®æ´¾
 }
 
 
@@ -431,8 +434,8 @@ message PBArray
 
 message PBObject
 {
-	optional string name = 1;		// ÊôĞÔÃû×Ö
-	optional uint64 key = 2;		// ¶ÔÏóµÄkeyÖµ, Âß¼­Ê¹ÓÃ( Ã»ÓĞÊÇ0 )
+	optional string name = 1;		// å±æ€§åå­—
+	optional uint64 key = 2;		// å¯¹è±¡çš„keyå€¼, é€»è¾‘ä½¿ç”¨( æ²¡æœ‰æ˜¯0 )
 	repeated PBInt32 pbint32 = 3;		
 	repeated PBUInt32 pbuint32 = 4;
 	repeated PBInt64 pbint64 = 5;
@@ -441,72 +444,72 @@ message PBObject
 	repeated PBString pbstring = 8;
 	repeated PBVector3D pbvector3d = 9;
 	repeated PBArray pbarray = 10;
-	repeated PBObject pbobject = 11;		// ËùÓĞ¶ÔÏó
-	repeated PBRecord pbrecord = 12;		// ËùÓĞµÄÊı×é¶ÔÏó
+	repeated PBObject pbobject = 11;		// æ‰€æœ‰å¯¹è±¡
+	repeated PBRecord pbrecord = 12;		// æ‰€æœ‰çš„æ•°ç»„å¯¹è±¡
 }
 
 message PBRecord
 {
-	optional string name = 1;			// ÊôĞÔÃû×Ö
- 	repeated PBObject pbobject = 2;		// ¶ÔÏóÁĞ±í
+	optional string name = 1;			// å±æ€§åå­—
+ 	repeated PBObject pbobject = 2;		// å¯¹è±¡åˆ—è¡¨
 }
 
 message PBRankData
 {
-	optional uint32 rankindex = 1;		// ´Ó1¿ªÊ¼
-	optional uint32 playerid = 2;		// Íæ¼Òid
-	optional uint64 rankscore = 3;		// ÅÅĞĞµÄÊı¾İ( ¿Í»§¶ËºÃÓÑÅÅĞĞ¸ù¾İÕâ¸öÅÅĞò )
-	optional PBStrings pbdata = 4;		// ÅÅĞĞ°ñÊı¾İ
+	optional uint32 rankindex = 1;		// ä»1å¼€å§‹
+	optional uint32 playerid = 2;		// ç©å®¶id
+	optional uint64 rankscore = 3;		// æ’è¡Œçš„æ•°æ®( å®¢æˆ·ç«¯å¥½å‹æ’è¡Œæ ¹æ®è¿™ä¸ªæ’åº )
+	optional PBStrings pbdata = 4;		// æ’è¡Œæ¦œæ•°æ®
 }
 
 message PBRankDatas
 {
-	repeated PBRankData rankdata = 3;		// ÅÅĞĞ°ñÊı¾İ
+	repeated PBRankData rankdata = 3;		// æ’è¡Œæ¦œæ•°æ®
 }
 
 message PBTaskData
 {
 	optional uint32 id = 1;			// id
-	optional uint32 value = 2;		// Íê³ÉÊıÖµ
+	optional uint32 value = 2;		// å®Œæˆæ•°å€¼
 }
 
 
 message PBTaskDatas
 {
-	repeated PBTaskData taskdata = 1;	//ÈÎÎñÊı¾İ
+	repeated PBTaskData taskdata = 1;	//ä»»åŠ¡æ•°æ®
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ½øÈë·¿¼äµÄ·¿¼äĞÅÏ¢
+// è¿›å…¥æˆ¿é—´çš„æˆ¿é—´ä¿¡æ¯
 message PBBattlePlayer
 {
-	optional uint32 zoneid = 1;			// ÓÎÏ··ÖÇøid
-	optional uint32 serverid = 2;		// ÓÎÏ·ÄÚ·şÎñÆ÷id
-	optional uint32 playerid = 3;		// Íæ¼Òid
-	optional string name = 4;			// Íæ¼ÒÃû×Ö
-	optional uint32 sex = 5;			// Íæ¼ÒĞÔ±ğ
-	optional string icon = 6;			// Íæ¼Òicon
-	optional string iconbox = 7;		// Íæ¼ÒÍ·Ïñ¿ò
-	optional uint32 grading = 8;		// ¶ÎÎ»
-	optional uint32 modelid = 9;		// Ä£ĞÍid
-	optional uint32 clothesid = 10;		// Ê±×°id
-	optional uint64 groupid = 11;		// ¶ÓÎéid
-	optional uint32 campid = 12;		// ÕóÓªid( ¸ù¾İ´ËidÀ´ÅĞ¶ÏÊÇ·ñµĞ¶Ô )
-	optional PBTaskDatas achieve = 13;	// ³É¾ÍÊı¾İ
+	optional uint32 zoneid = 1;			// æ¸¸æˆåˆ†åŒºid
+	optional uint32 serverid = 2;		// æ¸¸æˆå†…æœåŠ¡å™¨id
+	optional uint32 playerid = 3;		// ç©å®¶id
+	optional string name = 4;			// ç©å®¶åå­—
+	optional uint32 sex = 5;			// ç©å®¶æ€§åˆ«
+	optional string icon = 6;			// ç©å®¶icon
+	optional string iconbox = 7;		// ç©å®¶å¤´åƒæ¡†
+	optional uint32 grading = 8;		// æ®µä½
+	optional uint32 modelid = 9;		// æ¨¡å‹id
+	optional uint32 clothesid = 10;		// æ—¶è£…id
+	optional uint64 groupid = 11;		// é˜Ÿä¼id
+	optional uint32 campid = 12;		// é˜µè¥id( æ ¹æ®æ­¤idæ¥åˆ¤æ–­æ˜¯å¦æ•Œå¯¹ )
+	optional PBTaskDatas achieve = 13;	// æˆå°±æ•°æ®
 
 }
 
-// Õ½³¡ÕóÓª
+// æˆ˜åœºé˜µè¥
 message PBBattleCamp
 {
-	required uint32 campid = 1;			// ÕóÓªid
-	repeated PBBattlePlayer pbplayer = 2;	// Íæ¼ÒÁĞ±í
+	required uint32 campid = 1;			// é˜µè¥id
+	repeated PBBattlePlayer pbplayer = 2;	// ç©å®¶åˆ—è¡¨
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Æ¥ÅäĞ¡¶Ó
+// åŒ¹é…å°é˜Ÿ
 message PBMatchGroup
 {
 	required uint64 groupid = 1;
@@ -515,65 +518,65 @@ message PBMatchGroup
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ·Ã¿ÍĞÅÏ¢
+// è®¿å®¢ä¿¡æ¯
 message PBGuestData
 {
-	required uint32 guestid = 1;		// ·Ã¿Íid
-	required string guesticon = 2;		// ·Ã¿ÍÍ·Ïñ
-	required string guesticonbox = 3;	// ·Ã¿ÍÍ·Ïñ¿ò
+	required uint32 guestid = 1;		// è®¿å®¢id
+	required string guesticon = 2;		// è®¿å®¢å¤´åƒ
+	required string guesticonbox = 3;	// è®¿å®¢å¤´åƒæ¡†
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Õ½¼¨
+// æˆ˜ç»©
 message PBBattleScore
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 ranking = 2;		// ÅÅÃû( ´Ó1¿ªÊ¼ )
-	repeated PBUInt32 pbdata = 3;		// ¸÷ÏîÊı¾İ
-	optional uint32 score = 4;			// ÆÀ·Ö
-	optional uint32 matchid = 5;		// ÊôĞÔ×Ö¶Î( ·şÎñÆ÷Ê¹ÓÃ )
-	optional string reward = 6;			// ½±Àø×Ö´®( ·şÎñÆ÷Ê¹ÓÃ )
-	optional PBTaskDatas achieve = 7;	// ³É¾ÍÊı¾İ	
-	repeated uint32 members = 8;		// Í¬ÕóÓªµÄÍæ¼Ò
-	optional uint32 playercount = 9;	// Õ½³¡×ÜÈËÊı
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 ranking = 2;		// æ’å( ä»1å¼€å§‹ )
+	repeated PBUInt32 pbdata = 3;		// å„é¡¹æ•°æ®
+	optional uint32 score = 4;			// è¯„åˆ†
+	optional uint32 matchid = 5;		// å±æ€§å­—æ®µ( æœåŠ¡å™¨ä½¿ç”¨ )
+	optional string reward = 6;			// å¥–åŠ±å­—ä¸²( æœåŠ¡å™¨ä½¿ç”¨ )
+	optional PBTaskDatas achieve = 7;	// æˆå°±æ•°æ®	
+	repeated uint32 members = 8;		// åŒé˜µè¥çš„ç©å®¶
+	optional uint32 playercount = 9;	// æˆ˜åœºæ€»äººæ•°
 }
 
-// ×î½üÍæ¼Ò
+// æœ€è¿‘ç©å®¶
 message PBRecentData
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required uint32 ranking = 2;	// ÅÅÃû
-	required uint32 totalnum =3;	// µ¥¾ÖÓÎÏ·ÈËÊı
-	optional uint32 kill  = 4;	// µ¥¾Ö»÷É±ÈËÊı
-	optional uint32 score = 5;	// ÆÀ·Ö
-	optional uint32 bekillid = 6;	// ÌÔÌ­Õß
-	optional uint32 relationtype = 7; // ¹ØÏµÀàĞÍ 0:ºÃÓÑ 1:±»ÌÔÌ­Õß
+	required uint32 playerid = 1;	// ç©å®¶id
+	required uint32 ranking = 2;	// æ’å
+	required uint32 totalnum =3;	// å•å±€æ¸¸æˆäººæ•°
+	optional uint32 kill  = 4;	// å•å±€å‡»æ€äººæ•°
+	optional uint32 score = 5;	// è¯„åˆ†
+	optional uint32 bekillid = 6;	// æ·˜æ±°è€…
+	optional uint32 relationtype = 7; // å…³ç³»ç±»å‹ 0:å¥½å‹ 1:è¢«æ·˜æ±°è€…
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Íæ¼Òid
+// ç©å®¶id
 message PBPlayerIds
 {
-	repeated uint32 playerid = 1;	// Íæ¼Òid
+	repeated uint32 playerid = 1;	// ç©å®¶id
 }
 
-// °ïÅÉÉêÇëÁĞ±íÊı¾İ½á¹¹
+// å¸®æ´¾ç”³è¯·åˆ—è¡¨æ•°æ®ç»“æ„
 message PBApplicationlist
 {
-	required uint32 playerid = 1;	// ÉêÇëÕßÍæ¼Òid
-	required uint64 time = 2;	// ÉêÇëÊ±¼ä
-	required PBStrings basic = 3;	// ÉêÇëÕß»ù´¡ĞÅÏ¢
+	required uint32 playerid = 1;	// ç”³è¯·è€…ç©å®¶id
+	required uint64 time = 2;	// ç”³è¯·æ—¶é—´
+	required PBStrings basic = 3;	// ç”³è¯·è€…åŸºç¡€ä¿¡æ¯
 }
 
-// °ïÅÉÉêÇëÁĞ±í
+// å¸®æ´¾ç”³è¯·åˆ—è¡¨
 message PBApplicationlists
 {
-	repeated PBApplicationlist applylists = 1;	// Íæ¼Òid
+	repeated PBApplicationlist applylists = 1;	// ç©å®¶id
 }
 
-// °ïÅÉidÊı×é
+// å¸®æ´¾idæ•°ç»„
 message PBGuildIdArray
 {
-	repeated uint64 guildid = 1;		// °ïÅÉid
+	repeated uint64 guildid = 1;		// å¸®æ´¾id
 }

@@ -708,7 +708,7 @@ namespace KFrame
         // 检查名字的有效性
         if ( !CheckNameValid( kfmsg.name() ) )
         {
-            return _kf_display->SendToClient( player, KFMsg::NameInvalid );
+            return _kf_display->SendToClient( player, KFMsg::InvalidFilter );
         }
 
         KFMsg::S2SCreateRoleReq req;
@@ -775,7 +775,7 @@ namespace KFrame
         // 检查名字的有效性
         if ( !CheckNameValid( kfmsg.name() ) )
         {
-            return _kf_display->SendToClient( player, KFMsg::NameInvalid );
+            return _kf_display->SendToClient( player, KFMsg::InvalidFilter );
         }
 
         KFMsg::S2SSetPlayerNameReq req;
@@ -803,7 +803,7 @@ namespace KFrame
             return false;
         }
 
-        return true;
+        return !_kf_filter->CheckFilter( name );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSetPlayerNameAck )
@@ -830,6 +830,12 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleChangeMottoReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgChangeMottoReq );
+
+        auto filter = _kf_filter->CheckFilter( kfmsg.motto() );
+        if ( filter )
+        {
+            return _kf_display->SendToClient( player, KFMsg::InvalidFilter );
+        }
 
         _kf_display->SendToClient( player, KFMsg::ChangeMottoOK );
         player->UpdateData( __KF_STRING__( motto ), kfmsg.motto() );

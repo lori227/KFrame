@@ -3,20 +3,9 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFIpAddressConfig::KFIpAddressConfig()
-    {
-    }
-
-    KFIpAddressConfig::~KFIpAddressConfig()
-    {
-
-    }
-
     bool KFIpAddressConfig::LoadConfig()
     {
         _ip_address_list.clear();
-        _auth_address.clear();
-        auto kfglobal = KFGlobal::Instance();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
@@ -38,7 +27,8 @@ namespace KFrame
                 while ( channelnode.IsValid() )
                 {
                     auto channelid = channelnode.GetUInt32( "ChannelId" );
-                    if ( channelid == kfglobal->_app_channel )
+                    auto service = channelnode.GetUInt32( "Service" );
+                    if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
                     {
                         kfaddress._ip = channelnode.GetString( "Ip" );
                         break;
@@ -48,38 +38,9 @@ namespace KFrame
                 }
 
                 _ip_address_list.push_back( kfaddress );
-
                 servernode.NextNode();
             }
         }
-        //////////////////////////////////////////////////////////////////
-        auto httpnode = config.FindNode( "HttpServer" );
-        auto ip = httpnode.GetString( "Ip" );
-        auto port = httpnode.GetString( "Port" );
-
-        auto channelnode = httpnode.FindNode( "Channel" );
-        while ( channelnode.IsValid() )
-        {
-            auto channelid = channelnode.GetUInt32( "ChannelId" );
-            if ( channelid == kfglobal->_app_channel )
-            {
-                ip = channelnode.GetString( "Ip" );
-                port = channelnode.GetString( "Port" );
-                break;
-            }
-
-            channelnode.NextNode();
-        }
-
-        if ( port == _invalid_str )
-        {
-            _auth_address = __FORMAT__( "http://{}/", ip );
-        }
-        else
-        {
-            _auth_address = __FORMAT__( "http://{}:{}/", ip, port );
-        }
-        //////////////////////////////////////////////////////////////////
 
         return true;
     }

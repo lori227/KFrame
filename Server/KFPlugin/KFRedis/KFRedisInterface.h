@@ -144,9 +144,7 @@ namespace KFrame
     {
     public:
         // 创建RedisExecute
-        virtual KFRedisDriver* CreateExecute( uint32 id ) = 0;
-        virtual KFRedisDriver* CreateExecute( const std::string& field, uint32 logicid = 0 ) = 0;
-        virtual KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& passwrod ) = 0;
+        virtual KFRedisDriver* CreateExecute( const std::string& module, uint32 logicid = 0 ) = 0;
     };
 
 

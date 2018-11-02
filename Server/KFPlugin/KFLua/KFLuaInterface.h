@@ -2,56 +2,56 @@
 #define __KF_LUA_INTERFACE_H__
 
 #include "KFrame.h"
-#include "luaplus/LuaPlus.h"
 
 namespace KFrame
 {
-    class KFScript
-    {
-    public:
-        template< class ... T >
-        void CallFunction( const char* function, uint32 objectid, T&& ...params )
-        {
-            try
-            {
-                LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function );
-                if ( luaobject.IsFunction() )
-                {
-                    ( ( LuaPlus::LuaFunction< int32 > )luaobject )( objectid, std::forward<T>( params )... );
-                }
-            }
-            catch ( LuaPlus::LuaException& e )
-            {
-                __LOG_ERROR__( "call [{}] [{}] failed=[{}]", _lua_file, function, e.GetErrorMessage() );
-            }
-            catch ( ... )
-            {
-                __LOG_ERROR__( "call [{}] [{}] failed unknown!", _lua_file, function );
-            }
-        }
-
-    public:
-        // 创建Lua解释器
-        LuaPlus::LuaStateOwner _lua_state;
-
-    protected:
-        // 脚本文件
-        std::string _lua_file;
-    };
-
     class KFLuaInterface : public KFModule
     {
     public:
-        template< class ... T >
-        void CallFunction( const std::string& luafile, const std::string& function, uint32 objectid, T&& ...params )
-        {
-            auto kfscript = FindLuaScript( luafile );
-            kfscript->CallFunction( function.c_str(), objectid, std::forward<T>( params )... );
-        }
+        // 调用lua函数, uint64参数
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid ) = 0;
 
-    protected:
-        // 查找lua脚本
-        virtual KFScript* FindLuaScript( const std::string& luafile ) = 0;
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1, uint64 param2 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1, uint64 param2, uint64 param3 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1, uint64 param2, uint64 param3, uint64 param4 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 ) = 0;
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 调用lua函数, string参数
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1, const std::string& param2 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1, const std::string& param2, const std::string& param3 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1, const std::string& param2, const std::string& param3,
+                           const std::string& param4 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1, const std::string& param2, const std::string& param3,
+                           const std::string& param4, const std::string& param5 ) = 0;
+
+        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                           const std::string& param1, const std::string& param2, const std::string& param3,
+                           const std::string& param4, const std::string& param5, const std::string& param6 ) = 0;
     };
 
 

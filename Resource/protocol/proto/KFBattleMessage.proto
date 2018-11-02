@@ -3,164 +3,181 @@ package KFMsg;
 
 enum BattleProtocol
 {	
-	S2S_REGISTER_BATTLE_SERVER_REQ = 11200;				// ×¢²áÕ½¶··şÎñÆ÷
-	S2S_REGISTER_BATTLE_SERVER_ACK = 11201;				// ×¢²áÕ½¶··şÎñÆ÷
-	S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ = 11202;	// Õ½ºó·şÎñÆ÷¶Ï¿ªÁ¬½Ó
-	S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ = 11203;	// ×¢²áÕ½¶··şÎñÆ÷
-	S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ = 11204;		// ÇëÇó´´½¨Õ½¶··¿¼ä
-	S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ = 11205;		// ÇëÇó´´½¨Õ½¶··¿¼ä
-	S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK = 11206;			// ÇëÇó´´½¨Õ½¶··¿¼ä
-	S2S_OPEN_BATTLE_ROOM_REQ = 11207;					// ÇëÇó¿ªÆô·¿¼ä
-	S2S_OPEN_BATTLE_ROOM_ACK = 11208;					// ¿ªÆôÕ½³¡½á¹û
-	S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK = 11209;			// ¿ªÆôÕ½³¡½á¹û
-	S2S_PLAYER_ENTER_BATTLE_ROOM_REQ = 11210;			// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡
-	S2S_PLAYER_ENTER_BATTLE_ROOM_ACK = 11211;			// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡
-	S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK = 11212;	// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡
-	S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ = 11213;			// Íæ¼ÒÖ÷¶¯Àë¿ªÁË·¿¼ä(·Ç¶ÏÏßÖØÁ¬)(´Ó½øÈë·¿¼äµ½Õ½¶·½áÊøÖ®Ç°)
-	S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ = 11214;	// Íæ¼ÒÀë¿ªÁË·¿¼ä
-	S2S_TELL_BATTLE_ROOM_START_REQ = 11215;				// Í¨Öª·şÎñÆ÷Õ½³¡¿ªÆô
-	S2S_TELL_BATTLE_ROOM_START_ACK = 11216;				// Í¨Öª·şÎñÆ÷Õ½³¡¿ªÆô
-	S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ = 11217;		// Í¨Öª·şÎñÆ÷Õ½³¡¿ªÆô
-	S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ = 11218;			// Í¨Öª·şÎñÆ÷Õ½³¡¿ªÆô
-	S2S_TELL_BATTLE_ROOM_FINISH_REQ = 11219;			// Í¨Öª·şÎñÆ÷Õ½³¡¹Ø±Õ
-	S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK = 11220;		// Íæ¼ÒÀë¿ªÕ½³¡
-	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ = 11221;	// Õ½³¡¿ªÊ¼
-	S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ = 11222;	// Õ½³¡³¡½áÊø
-	S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ = 11223;			// Ìí¼ÓÆ¥ÅäÕóÓª
-	S2S_ADD_CAMP_TO_MATCH_SHARD_ACK = 11224;			// Ìí¼ÓÆ¥ÅäÕóÓª
-	S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ = 11225;		// É¾³ıÕóÓª
-	S2S_PLAYER_CANCEL_MATCH_REQ = 11226;				// Íæ¼ÒÈ¡ÏûÆ¥Åä
-	S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK = 11227;			// Íæ¼ÒÀë¿ª·¿¼ä
-	S2S_PLAYER_CANCEL_MATCH_ACK = 11228;				// Íæ¼ÒÈ¡ÏûÆ¥Åä
-	S2S_TELL_BATTLE_ROOM_FINISH_ACK = 11229;			// Õ½³¡½áÊø
-	S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ = 11230;	// Àë¿ªÕ½³¡
-	S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ = 11231;			// Íæ¼ÒµÇÂ½Õ½³¡·şÎñÆ÷
-	S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK = 11232;			// Íæ¼ÒµÇÂ½Õ½³¡·şÎñÆ÷
-	S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ = 11233; 	// Íæ¼ÒµÇÂ½Õ½³¡·şÎñÆ÷
-	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK = 11234;	// Õ½³¡¿ªÊ¼ 
-	S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ = 11235;		// Í¨Öª×¢²á
-	S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ = 11236;		// Í¨ÖªÕ½³¡¹Ø±Õ
-	S2S_PLAYER_BATTLE_SCORE_REQ = 11237;				// Íæ¼ÒÕ½¼¨
-	S2S_PLAYER_BATTLE_SCORE_ACK = 11238;				// Íæ¼ÒÕ½¼¨
-	S2S_BATTLE_ROOM_SCORE_BALANCE_REQ = 11239;			// Íæ¼ÒÕ½¼¨
-	S2S_BATTLE_ROOM_SCORE_BALANCE_ACK = 11240;			// Íæ¼ÒÕ½¼¨
-	S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241;		// Õ½³¡½áËã
-	S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242;			// ²éÑ¯½áËã
-	S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243;			// ¿ªÆôÕ½³¡
-	S2S_RESET_BATTLE_ROOM_REQ = 11244;					// ÖØÖÃÕ½³¡·¿¼ä
-	S2S_BATTLE_PING_REQ = 11245;						// Õ½³¡ping
-	S2S_BATTLE_PING_ACK = 11246;						// Õ½³¡ping
+	S2S_REGISTER_BATTLE_SERVER_REQ = 11200;				// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
+	S2S_REGISTER_BATTLE_SERVER_ACK = 11201;				// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
+	S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ = 11202;	// æˆ˜åæœåŠ¡å™¨æ–­å¼€è¿æ¥
+	S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ = 11203;	// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
+	S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ = 11204;		// è¯·æ±‚åˆ›å»ºæˆ˜æ–—æˆ¿é—´
+	S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ = 11205;		// è¯·æ±‚åˆ›å»ºæˆ˜æ–—æˆ¿é—´
+	S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK = 11206;			// è¯·æ±‚åˆ›å»ºæˆ˜æ–—æˆ¿é—´
+	S2S_OPEN_BATTLE_ROOM_REQ = 11207;					// è¯·æ±‚å¼€å¯æˆ¿é—´
+	S2S_OPEN_BATTLE_ROOM_ACK = 11208;					// å¼€å¯æˆ˜åœºç»“æœ
+	S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK = 11209;			// å¼€å¯æˆ˜åœºç»“æœ
+	S2S_PLAYER_ENTER_BATTLE_ROOM_REQ = 11210;			// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœº
+	S2S_PLAYER_ENTER_BATTLE_ROOM_ACK = 11211;			// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœº
+	S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK = 11212;	// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœº
+	S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ = 11213;			// ç©å®¶ä¸»åŠ¨ç¦»å¼€äº†æˆ¿é—´(éæ–­çº¿é‡è¿)(ä»è¿›å…¥æˆ¿é—´åˆ°æˆ˜æ–—ç»“æŸä¹‹å‰)
+	S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ = 11214;	// ç©å®¶ç¦»å¼€äº†æˆ¿é—´
+	S2S_TELL_BATTLE_ROOM_START_REQ = 11215;				// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºå¼€å¯
+	S2S_TELL_BATTLE_ROOM_START_ACK = 11216;				// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºå¼€å¯
+	S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ = 11217;		// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºå¼€å¯
+	S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ = 11218;			// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºå¼€å¯
+	S2S_TELL_BATTLE_ROOM_FINISH_REQ = 11219;			// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºå…³é—­
+	S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK = 11220;		// ç©å®¶ç¦»å¼€æˆ˜åœº
+	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ = 11221;	// æˆ˜åœºå¼€å§‹
+	S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ = 11222;	// æˆ˜åœºåœºç»“æŸ
+	S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ = 11223;			// æ·»åŠ åŒ¹é…é˜µè¥
+	S2S_ADD_CAMP_TO_MATCH_SHARD_ACK = 11224;			// æ·»åŠ åŒ¹é…é˜µè¥
+	S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ = 11225;		// åˆ é™¤é˜µè¥
+	S2S_PLAYER_CANCEL_MATCH_REQ = 11226;				// ç©å®¶å–æ¶ˆåŒ¹é…
+	S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK = 11227;			// ç©å®¶ç¦»å¼€æˆ¿é—´
+	S2S_PLAYER_CANCEL_MATCH_ACK = 11228;				// ç©å®¶å–æ¶ˆåŒ¹é…
+	S2S_TELL_BATTLE_ROOM_FINISH_ACK = 11229;			// æˆ˜åœºç»“æŸ
+	S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ = 11230;	// ç¦»å¼€æˆ˜åœº
+	S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ = 11231;			// ç©å®¶ç™»é™†æˆ˜åœºæœåŠ¡å™¨
+	S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK = 11232;			// ç©å®¶ç™»é™†æˆ˜åœºæœåŠ¡å™¨
+	S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ = 11233; 	// ç©å®¶ç™»é™†æˆ˜åœºæœåŠ¡å™¨
+	S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK = 11234;	// æˆ˜åœºå¼€å§‹ 
+	S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ = 11235;		// é€šçŸ¥æ³¨å†Œ
+	S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ = 11236;		// é€šçŸ¥æˆ˜åœºå…³é—­
+	S2S_PLAYER_BATTLE_SCORE_REQ = 11237;				// ç©å®¶æˆ˜ç»©
+	S2S_PLAYER_BATTLE_SCORE_ACK = 11238;				// ç©å®¶æˆ˜ç»©
+	S2S_BATTLE_ROOM_SCORE_BALANCE_REQ = 11239;			// ç©å®¶æˆ˜ç»©
+	S2S_BATTLE_ROOM_SCORE_BALANCE_ACK = 11240;			// ç©å®¶æˆ˜ç»©
+	S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ = 11241;		// æˆ˜åœºç»“ç®—
+	S2S_ONLINE_QUERY_BATTLE_SCORE_REQ = 11242;			// æŸ¥è¯¢ç»“ç®—
+	S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243;			// å¼€å¯æˆ˜åœº
+	S2S_RESET_BATTLE_ROOM_REQ = 11244;					// é‡ç½®æˆ˜åœºæˆ¿é—´
+	S2S_BATTLE_PING_REQ = 11245;						// æˆ˜åœºping
+	S2S_BATTLE_PING_ACK = 11246;						// æˆ˜åœºping
+	S2S_ALLOC_BATTLE_ID_REQ = 11247;					// ç”³è¯·åˆ†é…æˆ˜åœºid
+	S2S_ALLOC_BATTLE_ID_ACK = 11248;					// ç”³è¯·åˆ†é…æˆ˜åœºid
  }
 
 enum BattleEnum
 {
-	OpenSuccess = 1;	// ¿ªÆô³É¹¦
-	OpenFailed = 2;		// ¿ªÆôÊ§°Ü
+	OpenSuccess = 1;	// å¼€å¯æˆåŠŸ
+	OpenFailed = 2;		// å¼€å¯å¤±è´¥
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯Èº
-// ×¢²áÕ½¶··şÎñÆ÷
+// åˆ†é…æˆ˜åœºid
+// S2S_ALLOC_BATTLE_ID_REQ
+message S2SAllocBattleIdReq
+{
+	required string ip = 1;
+	required uint32 port = 2;
+}
+
+// åˆ†é…æˆ˜åœºid
+// S2S_ALLOC_BATTLE_ID_ACK
+message S2SAllocBattleIdAck
+{
+	required uint32 id = 1;
+}
+
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤
+// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
 // S2S_REGISTER_BATTLE_SERVER_REQ
 message S2SRegisterBattleServerReq
 {
-	required uint32 serverid = 1;		// ·şÎñÆ÷id
+	required uint32 serverid = 1;		// æœåŠ¡å™¨id
 	required string ip = 2;				// ip
 	required uint32 port = 3;			// port
-	required uint64 roomid = 4;			// Èç¹ûÒÑ¾­¿ªÆô·¿¼ä Ã»ÓĞ = 0
-	required uint32 battleshardid = 5;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id		
+	required uint64 roomid = 4;			// å¦‚æœå·²ç»å¼€å¯æˆ¿é—´ æ²¡æœ‰ = 0
+	required uint32 battleshardid = 5;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id		
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº=>Õ½¶··şÎñÆ÷
-// ×¢²áÕ½¶··şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤=>æˆ˜æ–—æœåŠ¡å™¨
+// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
 // S2S_REGISTER_BATTLE_SERVER_ACK
 message S2SRegisterBattleServerAck
 {
-	required uint32 serverid = 1;		// ·şÎñÆ÷id
-	required uint32 result = 2;			// ×¢²á½á¹û 
+	required uint32 serverid = 1;		// æœåŠ¡å™¨id
+	required uint32 result = 2;			// æ³¨å†Œç»“æœ 
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ×¢²áÕ½¶··şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// æ³¨å†Œæˆ˜æ–—æœåŠ¡å™¨
 // S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ
 message S2SRegisterServerToBattleShardReq
 {
-	required uint32 serverid = 1;		// ·şÎñÆ÷id
+	required uint32 serverid = 1;		// æœåŠ¡å™¨id
 	required string ip = 2;				// ip
 	required uint32 port = 3;			// port
-	required uint64 roomid = 4;			// Èç¹ûÒÑ¾­¿ªÆô·¿¼ä Ã»ÓĞ = 0
+	required uint64 roomid = 4;			// å¦‚æœå·²ç»å¼€å¯æˆ¿é—´ æ²¡æœ‰ = 0
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ¹ã²¥¸øËùÓĞ·şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// å¹¿æ’­ç»™æ‰€æœ‰æœåŠ¡å™¨
 // S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ
 message S2STellBattleRegisterToShardReq
 {
-	required uint32 serverid = 1;		// ·şÎñÆ÷id
-	required uint64 roomid = 2;			// ·¿¼äid
+	required uint32 serverid = 1;		// æœåŠ¡å™¨id
+	required uint64 roomid = 2;			// æˆ¿é—´id
 	required string ip = 3;				// ip
 	required uint32 port = 4;			// port
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Õ½¶··şÎñÆ÷¶Ï¿ªÁ¬½Ó
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// æˆ˜æ–—æœåŠ¡å™¨æ–­å¼€è¿æ¥
 // S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ
 message S2SDisconnectServerToBattleShardReq
 {
-	required uint32 serverid = 1;		// ·şÎñÆ÷id
+	required uint32 serverid = 1;		// æœåŠ¡å™¨id
 }
 
-// Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷¼¯Èº´úÀí
-// ÇëÇó´´½¨·¿¼ä
+// åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†
+// è¯·æ±‚åˆ›å»ºæˆ¿é—´
 // S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ
 message S2SCreateRoomToBattleProxyReq
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 maxplayercount = 3;	// Õâ¸ö·¿¼äµÄ×î´óÈËÊı
-	required uint32 battleserverid = 4;		// Ö¸¶¨µÄ·¿¼äid
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 maxplayercount = 3;	// è¿™ä¸ªæˆ¿é—´çš„æœ€å¤§äººæ•°
+	required uint32 battleserverid = 4;		// æŒ‡å®šçš„æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ÇëÇó¿ªÆôÕ½¶··¿¼ä
-// Õ½³¡·şÎñÆ÷ÊÕµ½ÏûÏ¢,
-// Èç¹ûÕ½³¡Ã»ÓĞ¿ªÆô, Ö±½Ó¿ªÆô, ·µ»Ø³É¹¦
-// Èç¹ûÕ½³¡ÒÑ¾­¿ªÆô ÅĞ¶Ïmatchid ºÍroomidÊÇ·ñÏàÍ¬, Èç¹ûÏàÍ¬·µ»Ø³É¹¦, ·ñÔò·µ»ØÊ§°Ü
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// è¯·æ±‚å¼€å¯æˆ˜æ–—æˆ¿é—´
+// æˆ˜åœºæœåŠ¡å™¨æ”¶åˆ°æ¶ˆæ¯,
+// å¦‚æœæˆ˜åœºæ²¡æœ‰å¼€å¯, ç›´æ¥å¼€å¯, è¿”å›æˆåŠŸ
+// å¦‚æœæˆ˜åœºå·²ç»å¼€å¯ åˆ¤æ–­matchid å’Œroomidæ˜¯å¦ç›¸åŒ, å¦‚æœç›¸åŒè¿”å›æˆåŠŸ, å¦åˆ™è¿”å›å¤±è´¥
 // S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ
 message S2SCreateRoomToBattleShardReq
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 matchshardid = 3;	// Æ¥Åäshardid
-	required uint32 maxplayercount = 4;	// Õâ¸ö·¿¼äµÄ×î´óÈËÊı
-	required uint32 battleserverid = 5;		// Ö¸¶¨µÄ·¿¼äid
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 matchshardid = 3;	// åŒ¹é…shardid
+	required uint32 maxplayercount = 4;	// è¿™ä¸ªæˆ¿é—´çš„æœ€å¤§äººæ•°
+	required uint32 battleserverid = 5;		// æŒ‡å®šçš„æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ÇëÇó´´½¨·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// è¯·æ±‚åˆ›å»ºæˆ¿é—´
 // S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK
 message S2SCreateRoomToMatchShardAck
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 battleshardid = 3;	// Õ½³¡·şÎñÆ÷shardid
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 battleshardid = 3;	// æˆ˜åœºæœåŠ¡å™¨shardid
 }
 
-// Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼Ò¼ÓÈëÕ½³¡
+// åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶åŠ å…¥æˆ˜åœº
 // S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ
 message S2SAddCampToBattleShardReq
 {
 	required uint64 roomid = 1;
-	required PBBattleCamp pbcamp = 2;	// ÕóÓªĞÅÏ¢
+	required PBBattleCamp pbcamp = 2;	// é˜µè¥ä¿¡æ¯
 	required uint32 matchid = 3;
 	required uint32 matchshardid = 4;
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼Ò¼ÓÈëÕ½³¡
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶åŠ å…¥æˆ˜åœº
 // S2S_ADD_CAMP_TO_MATCH_SHARD_ACK
 message S2SAddCampToMatchShardAck
 {
@@ -170,8 +187,8 @@ message S2SAddCampToMatchShardAck
 	required bool addok = 4;
 }
 
-// Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÀë¿ªÕ½³¡
+// åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç¦»å¼€æˆ˜åœº
 // S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ
 //message S2SRemoveCampToBattleShardReq
 //{
@@ -179,327 +196,327 @@ message S2SAddCampToMatchShardAck
 //	required uint32 campid = 2;
 //}
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷
-// ÇëÇó¿ªÆôÕ½¶··¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨
+// è¯·æ±‚å¼€å¯æˆ˜æ–—æˆ¿é—´
 // S2S_OPEN_BATTLE_ROOM_REQ
 message S2SOpenBattleRoomReq
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 battleshardid = 3;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id
-	required uint32 maxplayercount = 4;	// Õâ¸ö·¿¼äµÄ×î´óÈËÊı
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 battleshardid = 3;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id
+	required uint32 maxplayercount = 4;	// è¿™ä¸ªæˆ¿é—´çš„æœ€å¤§äººæ•°
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ¿ªÆôÕ½³¡½á¹û»ØÀ¡
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// å¼€å¯æˆ˜åœºç»“æœå›é¦ˆ
 // S2S_OPEN_BATTLE_ROOM_ACK
 message S2SOpenBattleRoomAck
 {
-	required uint32 battleshardid = 1;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id
-	required uint32 matchid = 2;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 3;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 result = 4;			// ¿ªÆô½á¹û ( ¶ÔÓ¦BattleEnum, Ä¿Ç°Ö»ÓĞ³É¹¦Ê§°Ü, ÒÔºóÆäËûÔ­ÒòÔÙÏ¸·Ö)
-	required uint32 waittime = 5;		// µÈ´ıÊ±¼ä( µ¥Î»: Ãë )
+	required uint32 battleshardid = 1;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id
+	required uint32 matchid = 2;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 3;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 result = 4;			// å¼€å¯ç»“æœ ( å¯¹åº”BattleEnum, ç›®å‰åªæœ‰æˆåŠŸå¤±è´¥, ä»¥åå…¶ä»–åŸå› å†ç»†åˆ†)
+	required uint32 waittime = 5;		// ç­‰å¾…æ—¶é—´( å•ä½: ç§’ )
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ¿ªÆôÕ½³¡½á¹û»ØÀ¡
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// å¼€å¯æˆ˜åœºç»“æœå›é¦ˆ
 // S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK
 message S2SOpenBattleRoomToShardAck
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 result = 3;			// ¿ªÆô½á¹û ( ¶ÔÓ¦BattleEnum, Ä¿Ç°Ö»ÓĞ³É¹¦Ê§°Ü, ÒÔºóÆäËûÔ­ÒòÔÙÏ¸·Ö)
-	required uint32 waittime = 4;		// µÈ´ıÊ±¼ä( µ¥Î»: Ãë )
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 result = 3;			// å¼€å¯ç»“æœ ( å¯¹åº”BattleEnum, ç›®å‰åªæœ‰æˆåŠŸå¤±è´¥, ä»¥åå…¶ä»–åŸå› å†ç»†åˆ†)
+	required uint32 waittime = 4;		// ç­‰å¾…æ—¶é—´( å•ä½: ç§’ )
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ¿ªÆôÕ½³¡½á¹û»ØÀ¡
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// å¼€å¯æˆ˜åœºç»“æœå›é¦ˆ
 // S2S_OPEN_ROOM_TO_MATCH_SHARD_REQ
 message S2SOpenRoomToMatchShardReq
 {
-	required uint32 matchid = 1;		// Æ¥ÅäÄ£Ê½id, Èç¹û²»ĞèÒª¾Í²»ÓÃ¹Ü, ÏÈÔ¤Áô³öÀ´
-	required uint64 roomid = 2;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
-	required uint32 waittime = 3;		// ·¿¼äµÈ´ıÊ±¼ä
+	required uint32 matchid = 1;		// åŒ¹é…æ¨¡å¼id, å¦‚æœä¸éœ€è¦å°±ä¸ç”¨ç®¡, å…ˆé¢„ç•™å‡ºæ¥
+	required uint64 roomid = 2;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
+	required uint32 waittime = 3;		// æˆ¿é—´ç­‰å¾…æ—¶é—´
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// ¿ªÆôÕ½³¡½á¹û»ØÀ¡
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// å¼€å¯æˆ˜åœºç»“æœå›é¦ˆ
 // S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK
 message S2SOpenRoomToBattleShardAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid( Èç¹ûÒ»¸ö½ø³Ì¶à¸ö·¿¼ä, ĞèÒªÓÃidÀ´Çø·ÖËûÃÇ )
+	required uint64 roomid = 1;			// æˆ¿é—´id( å¦‚æœä¸€ä¸ªè¿›ç¨‹å¤šä¸ªæˆ¿é—´, éœ€è¦ç”¨idæ¥åŒºåˆ†ä»–ä»¬ )
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷
-// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨
+// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœºæˆ¿é—´
 // S2S_PLAYER_ENTER_BATTLE_ROOM_REQ
 message S2SPlayerEnterBattleRoomReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid	
-	required PBBattlePlayer player = 2;	// Íæ¼Ò
+	required uint64 roomid = 1;			// æˆ¿é—´id	
+	required PBBattlePlayer player = 2;	// ç©å®¶
 	required string token = 3;			// token
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡½á¹û
-// ÊÕµ½S2SPlayerEnterBattleRoomReq ÒÔºó, 
-// Õ½³¡·şÎñÆ÷°ÑÍæ¼ÒÊı¾İ¼ÓÈëÁĞ±íÒÔºó»ØÕâ¸öÏûÏ¢, Èç¹ûÒÑ¾­ÔÚÁĞ±íÖĞÒ²ĞèÒª»Ø¸´
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœºç»“æœ
+// æ”¶åˆ°S2SPlayerEnterBattleRoomReq ä»¥å, 
+// æˆ˜åœºæœåŠ¡å™¨æŠŠç©å®¶æ•°æ®åŠ å…¥åˆ—è¡¨ä»¥åå›è¿™ä¸ªæ¶ˆæ¯, å¦‚æœå·²ç»åœ¨åˆ—è¡¨ä¸­ä¹Ÿéœ€è¦å›å¤
 // S2S_PLAYER_ENTER_BATTLE_ROOM_ACK
 message S2SPlayerEnterBattleRoomAck
 {
-	required uint32 battleshardid = 1;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id	
-	required uint64 roomid = 2;			// ·¿¼äid
-	required uint32 campid = 3;			// ÕóÓªid
-	required uint32 playerid = 4;		// Íæ¼Òid
+	required uint32 battleshardid = 1;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id	
+	required uint64 roomid = 2;			// æˆ¿é—´id
+	required uint32 campid = 3;			// é˜µè¥id
+	required uint32 playerid = 4;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÆ¥Åä½øÈëÕ½³¡½á¹û
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶åŒ¹é…è¿›å…¥æˆ˜åœºç»“æœ
 // S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK
 message S2SPlayerEnterRoomToBattleShardAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 campid = 2;			// ÕóÓªid
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 campid = 2;			// é˜µè¥id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒµÇÂ½µ½·şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç™»é™†åˆ°æœåŠ¡å™¨
 // S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ
 message S2SPlayerLoginBattleRoomReq
 {
-	required uint32 battleshardid = 1;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id		
-	required uint64 roomid = 2;			// ·¿¼äid
-	required uint32 campid = 3;			// ÕóÓªid
-	required uint32 playerid = 4;		// Íæ¼Òid
+	required uint32 battleshardid = 1;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id		
+	required uint64 roomid = 2;			// æˆ¿é—´id
+	required uint32 campid = 3;			// é˜µè¥id
+	required uint32 playerid = 4;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒµÇÂ½µ½·şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç™»é™†åˆ°æœåŠ¡å™¨
 // S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK
 message S2SPlayerLoginBattleRoomAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 campid = 2;			// ÕóÓªid
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 campid = 2;			// é˜µè¥id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒµÇÂ½µ½·şÎñÆ÷
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç™»é™†åˆ°æœåŠ¡å™¨
 // S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ
 message S2SPlayerLoginRoomToBattleShardReq
 {
-	required uint64 roomid = 2;			// ·¿¼äid
-	required uint32 campid = 3;			// ÕóÓªid
-	required uint32 playerid = 4;		// Íæ¼Òid
+	required uint64 roomid = 2;			// æˆ¿é—´id
+	required uint32 campid = 3;			// é˜µè¥id
+	required uint32 playerid = 4;		// ç©å®¶id
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷
-// Íæ¼ÒÈ¡ÏûÆ¥Åä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨
+// ç©å®¶å–æ¶ˆåŒ¹é…
 // S2S_PLAYER_CANCEL_MATCH_REQ
 message S2SPlayerCancelMatchReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 campid = 2;			// ÕóÓªid
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 campid = 2;			// é˜µè¥id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÀë¿ªÁË·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç¦»å¼€äº†æˆ¿é—´
 // S2S_PLAYER_LEAVE_BATTLE_ROOM_REQ
 message S2SPlayerLeaveBattleRoomReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 battleshardid = 2;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id	
-	required uint32 campid = 3;			// Íæ¼ÒÕóÓªid
-	required uint32 playerid = 4;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 battleshardid = 2;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id	
+	required uint32 campid = 3;			// ç©å®¶é˜µè¥id
+	required uint32 playerid = 4;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷
-// Íæ¼ÒÀë¿ªÁË·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨
+// ç©å®¶ç¦»å¼€äº†æˆ¿é—´
 // S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK
 message S2SPlayerLeaveBattleRoomAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 campid = 2;			// Íæ¼ÒÕóÓªid
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 campid = 2;			// ç©å®¶é˜µè¥id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÀë¿ªÁË·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç¦»å¼€äº†æˆ¿é—´
 // S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ
 message S2SPlayerLeaveRoomToBattleShardReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 campid = 2;			// Íæ¼ÒÕóÓªid
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 campid = 2;			// ç©å®¶é˜µè¥id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Íæ¼ÒÀë¿ªÁË·¿¼ä
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// ç©å®¶ç¦»å¼€äº†æˆ¿é—´
 // S2S_PLAYER_LEAVE_ROOM_TO_MATCH_SHARD_REQ
 message S2SPlayerLeaveRoomToMatchShardReq
 {
-	required uint64 matchid = 1;	// Æ¥ÅäÄ£Ê½
-	required uint64 roomid = 2;		// ·¿¼äid
-	required uint32 campid = 3;		// Íæ¼ÒÕóÓªid
-	required uint64 groupid = 4;	// ¶ÓÎéid
-	required uint32 playerid = 5;	// Íæ¼Òid
+	required uint64 matchid = 1;	// åŒ¹é…æ¨¡å¼
+	required uint64 roomid = 2;		// æˆ¿é—´id
+	required uint32 campid = 3;		// ç©å®¶é˜µè¥id
+	required uint64 groupid = 4;	// é˜Ÿä¼id
+	required uint32 playerid = 5;	// ç©å®¶id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>´óÌü·şÎñÆ÷
-// Íæ¼ÒÀë¿ªÕ½³¡
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>å¤§å…æœåŠ¡å™¨
+// ç©å®¶ç¦»å¼€æˆ˜åœº
 // S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK
 message S2SLeaveBattleRoomToClientAck
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required uint64 roomid = 2;		// ·¿¼äid
+	required uint32 playerid = 1;	// ç©å®¶id
+	required uint64 roomid = 2;		// æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Í¨Öª·şÎñÆ÷Õ½³¡ÕıÊ½¿ªÊ¼
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºæ­£å¼å¼€å§‹
 // S2S_TELL_BATTLE_ROOM_START_REQ
 message S2STellBattleRoomStartReq
 {
-	required uint32 battleshardid = 1;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id	
-	required uint64 roomid = 2;			// ·¿¼äid
-	required uint32 maxtime = 3;		// Õâ´ÎÕ½¶·×î³¤µÄÊ±¼ä µ¥Î»:Ãë
+	required uint32 battleshardid = 1;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id	
+	required uint64 roomid = 2;			// æˆ¿é—´id
+	required uint32 maxtime = 3;		// è¿™æ¬¡æˆ˜æ–—æœ€é•¿çš„æ—¶é—´ å•ä½:ç§’
 }
 
-// Õ½¶··şÎñÆ÷¼¯Èº´úÀí=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Í¨Öª·şÎñÆ÷Õ½³¡ÕıÊ½¿ªÊ¼
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤ä»£ç†=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºæ­£å¼å¼€å§‹
 // S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ
 message S2STellRoomStartToBattleShardReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required uint32 maxtime = 2;		// Õâ´ÎÕ½¶·×î³¤µÄÊ±¼ä µ¥Î»:Ãë
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required uint32 maxtime = 2;		// è¿™æ¬¡æˆ˜æ–—æœ€é•¿çš„æ—¶é—´ å•ä½:ç§’
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷
-// Í¨Öª·şÎñÆ÷Õ½³¡ÕıÊ½¿ªÊ¼
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨
+// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºæ­£å¼å¼€å§‹
 // S2S_TELL_BATTLE_ROOM_START_ACK
 message S2STellBattleRoomStartAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid
+	required uint64 roomid = 1;			// æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Í¨Öª·şÎñÆ÷Õ½³¡ÕıÊ½¿ªÊ¼
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºæ­£å¼å¼€å§‹
 // S2S_TELL_ROOM_START_TO_MATCH_SHARD_REQ
 message S2STellRoomStartToMatchShardReq
 {
-	required uint32 matchid = 1;	// Æ¥ÅäÄ£Ê½	
-	required uint64 roomid = 2;		// ·¿¼äid
+	required uint32 matchid = 1;	// åŒ¹é…æ¨¡å¼	
+	required uint64 roomid = 2;		// æˆ¿é—´id
 }
 
-// Æ¥Åä·şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Í¨Öª·şÎñÆ÷Õ½³¡ÕıÊ½¿ªÊ¼
+// åŒ¹é…æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// é€šçŸ¥æœåŠ¡å™¨æˆ˜åœºæ­£å¼å¼€å§‹
 // S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK
 message S2STellRoomStartToMatchShardAck
 {
-	required uint64 roomid = 1;		// ·¿¼äid
+	required uint64 roomid = 1;		// æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬
-// Í¨ÖªÕ½³¡½áÊø
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡
+// é€šçŸ¥æˆ˜åœºç»“æŸ
 // S2S_TELL_BATTLE_ROOM_FINISH_REQ
 message S2STellBattleRoomFinishReq
 {
-	required uint32 battleshardid = 1;	// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·ÖÆ¬id
-	required uint64 roomid = 2;			// ·¿¼äid
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
+	required uint32 battleshardid = 1;	// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†ç‰‡id
+	required uint64 roomid = 2;			// æˆ¿é—´id
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
 	required string ip = 4;				// ip
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·Ö
-// Í¨ÖªÕ½³¡½áÊø
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†
+// é€šçŸ¥æˆ˜åœºç»“æŸ
 // S2S_TELL_BATTLE_ROOM_FINISH_ACK
 message S2STellBattleRoomFinishAck
 {
-	required uint64 roomid = 1;			// ·¿¼äid
+	required uint64 roomid = 1;			// æˆ¿é—´id
 }
 
-// Õ½¶··şÎñÆ÷=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­
-// Õ½³¡Êı¾İ½áËã 
+// æˆ˜æ–—æœåŠ¡å™¨=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘
+// æˆ˜åœºæ•°æ®ç»“ç®— 
 // S2S_BATTLE_ROOM_SCORE_BALANCE_REQ
 message S2SBattleRoomScoreBalanceReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
+	required uint64 roomid = 1;			// æˆ¿é—´id
 	required uint32 battleshardid = 2;	// battleshardid
-	required PBBattleScore pbscore = 3;	// Õ½¼¨ÁĞ±í
+	required PBBattleScore pbscore = 3;	// æˆ˜ç»©åˆ—è¡¨
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­·Ö=>Õ½¶··şÎñÆ÷
-// Õ½³¡Êı¾İ½áËã
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘åˆ†=>æˆ˜æ–—æœåŠ¡å™¨
+// æˆ˜åœºæ•°æ®ç»“ç®—
 // S2S_BATTLE_ROOM_SCORE_BALANCE_ACK
 message S2SBattleRoomScoreBalanceAck
 {
-	required uint64 roomid = 1;		// ·¿¼äid
-	required uint32 playerid = 2;	// Íæ¼ÒÁĞ±í
-	required string reward = 3;		// ½±Àø×Ö´®( ĞèÒª½âÎö )
+	required uint64 roomid = 1;		// æˆ¿é—´id
+	required uint32 playerid = 2;	// ç©å®¶åˆ—è¡¨
+	required string reward = 3;		// å¥–åŠ±å­—ä¸²( éœ€è¦è§£æ )
 }
 
-// Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­=>Õ½¶··şÎñÆ÷¼¯ÈºÂß¼­
-// Õ½³¡Êı¾İ½áËã
+// æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘=>æˆ˜æ–—æœåŠ¡å™¨é›†ç¾¤é€»è¾‘
+// æˆ˜åœºæ•°æ®ç»“ç®—
 // S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ
 message S2SBattleScoreBalanceToShardReq
 {
-	required uint64 roomid = 1;			// ·¿¼äid
-	required PBBattleScore pbscore = 2;	// Õ½¼¨ÁĞ±í
+	required uint64 roomid = 1;			// æˆ¿é—´id
+	required PBBattleScore pbscore = 2;	// æˆ˜ç»©åˆ—è¡¨
 }
 
-// Íæ¼ÒÕ½³¡Êı¾İ
+// ç©å®¶æˆ˜åœºæ•°æ®
 // S2S_PLAYER_BATTLE_SCORE_REQ
 message S2SPlayerBattleScoreReq
 {
-	required uint32 playerid = 1;	// Íæ¼ÒÁĞ±í
-	required uint64 roomid = 2;		// ·¿¼äid
-	required PBBattleScore pbscore = 3;	// Õ½¼¨ÁĞ±í
+	required uint32 playerid = 1;	// ç©å®¶åˆ—è¡¨
+	required uint64 roomid = 2;		// æˆ¿é—´id
+	required PBBattleScore pbscore = 3;	// æˆ˜ç»©åˆ—è¡¨
 }
 
-// Íæ¼ÒÕ½³¡Êı¾İ
+// ç©å®¶æˆ˜åœºæ•°æ®
 // S2S_PLAYER_BATTLE_SCORE_ACK
 message S2SPlayerBattleScoreAck
 {
-	required uint32 playerid = 1;	// Íæ¼ÒÁĞ±í
-	required uint64 roomid = 2;		// ·¿¼äid
+	required uint32 playerid = 1;	// ç©å®¶åˆ—è¡¨
+	required uint64 roomid = 2;		// æˆ¿é—´id
 }
 
-// ÉÏÏß²éÑ¯½áËã
+// ä¸Šçº¿æŸ¥è¯¢ç»“ç®—
 // S2S_ONLINE_QUERY_BATTLE_SCORE_REQ
 message S2SOnlieQueryBattleScoreReq
 {
-	required uint32 playerid = 1;	// Íæ¼ÒÁĞ±í
+	required uint32 playerid = 1;	// ç©å®¶åˆ—è¡¨
 }
 
-// Í¨ÖªÕ½³¡½áÊø
+// é€šçŸ¥æˆ˜åœºç»“æŸ
 // S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ
 message S2STellRoomFinishToBattleShardReq
 {
-	required uint64 roomid = 1;		// ·¿¼äid
-	required uint32 serverid = 2;	// ·şÎñÆ÷id
+	required uint64 roomid = 1;		// æˆ¿é—´id
+	required uint32 serverid = 2;	// æœåŠ¡å™¨id
 	required string ip = 3;			// ip
 }
 
-// Í¨ÖªÕ½³¡¹Ø±Õ
+// é€šçŸ¥æˆ˜åœºå…³é—­
 // S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_REQ
 message S2STellRoomCloseToMatchShardReq
 {
-	required uint64 matchid = 1;	// Æ¥ÅäÄ£Ê½
-	required uint64 roomid = 2;		// ·¿¼äid
+	required uint64 matchid = 1;	// åŒ¹é…æ¨¡å¼
+	required uint64 roomid = 2;		// æˆ¿é—´id
 }
 
-// ÖØÖÃÕ½³¡·¿¼ä
+// é‡ç½®æˆ˜åœºæˆ¿é—´
 // S2S_RESET_BATTLE_ROOM_REQ
 message S2SResetBattleRoomReq
 {
-	required uint64 roomid = 1;		// ·¿¼äid
+	required uint64 roomid = 1;		// æˆ¿é—´id
 }
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

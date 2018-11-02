@@ -33,7 +33,6 @@ namespace KFrame
         {
             _zone_id = _invalid_int;
             _start_time = _invalid_int;
-            _app_channel = _invalid_int;
         }
 
     public:
@@ -51,9 +50,6 @@ namespace KFrame
 
         // appid
         std::string _app_id;
-
-        // appchannel
-        uint32 _app_channel;
 
         // zoneid
         uint32 _zone_id;
@@ -102,7 +98,7 @@ namespace KFrame
     protected:
 
         // 判断是否agent进程
-        bool IsAgentDeploy( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 更新数据到部署服务
         void UpdateDeployToDatabase( KFDeployData* deploydata );
@@ -207,7 +203,8 @@ namespace KFrame
         uint32 _deploy_server_id;
 
         // mysql
-        KFMySQLDriver* _mysql_driver;
+        KFMySQLDriver* _deploy_driver;
+        KFMySQLDriver* _version_driver;
 
         // deploy列表
         KFMap< std::string, const std::string&, KFDeployData > _deploy_list;

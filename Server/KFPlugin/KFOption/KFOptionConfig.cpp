@@ -11,7 +11,8 @@ namespace KFrame
         while ( xmlnode.IsValid() )
         {
             auto channel = xmlnode.GetUInt32( "Channel" );
-            if ( channel == _invalid_int || channel == KFGlobal::Instance()->_app_channel )
+            auto service = xmlnode.GetUInt32( "Service" );
+            if ( KFGlobal::Instance()->CheckChannelService( channel, service ) )
             {
                 auto name = xmlnode.GetString( "Name" );
                 auto key = xmlnode.GetString( "Key", true );

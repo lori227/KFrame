@@ -93,7 +93,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
         uint32 handleid = __KF_HEAD_ID__( kfguid );
 
-        __LOG_DEBUG__( "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid  ) );
+        __LOG_DEBUG__( "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
 
         if ( kfmsg.clusterkey() != _cluster_key )
         {
@@ -185,60 +185,54 @@ namespace KFrame
         return outvalue;
     }
 
-    uint32 KFClusterMasterModule::GetMaxObjectShard()
-    {
-        auto maxcount = _invalid_int;
-        auto shardid = _invalid_int;
-
-        for ( auto& iter : _shard_objects )
-        {
-            auto objectlist = GetShardObject( iter.first );
-            if ( objectlist.size() >= maxcount )
-            {
-                maxcount = objectlist.size();
-                shardid = iter.first;
-            }
-        }
-
-        return shardid;
-    }
-
     void KFClusterMasterModule::BalanceAllocShard( uint32 shardid )
     {
+        _object_to_shard.clear();
+
+        std::vector< uint32 > shardlist;
+        for ( auto iter : _shard_objects )
         {
-            // 已经分配, 断线重连过来的请求
-            auto objectlist = GetShardObject( shardid );
-            if ( objectlist.size() >= 1 )
-            {
-                return;
-            }
+            shardlist.push_back( iter.first );
         }
 
-        // 先分配
+        auto allocindex = 0u;
         for ( auto objectid : _total_objects )
         {
-            auto allocshardid = _object_to_shard[ objectid ];
-            if ( allocshardid != _invalid_int )
+            if ( allocindex >= shardlist.size() )
             {
-                continue;
+                allocindex = 0u;
+            }
+
+            auto shardid = shardlist[ allocindex ];
+            if ( !HaveObject( shardid, objectid ) )
+            {
+                shardid = FindShard( objectid );
+            }
+            else
+            {
+                allocindex++;
             }
 
             _object_to_shard[ objectid ] = shardid;
         }
+    }
 
-        // 找到负载最大
-        auto maxshardid = GetMaxObjectShard();
-        auto objectlist = GetShardObject( maxshardid );
-        if ( objectlist.size() <= 1 )
+    bool KFClusterMasterModule::HaveObject( uint32 shardid, uint32 objectid )
+    {
+        return _shard_objects[ shardid ].count( objectid ) > 0;
+    }
+
+    uint32 KFClusterMasterModule::FindShard( uint32 objectid )
+    {
+        for ( auto iter : _shard_objects )
         {
-            return;
+            if ( iter.second.count( objectid ) > 0 )
+            {
+                return iter.first;
+            }
         }
 
-        auto iter = objectlist.begin();
-        std::advance( iter, 1 );
-        auto objectid = *iter;
-
-        _object_to_shard[ objectid ] = shardid;
+        return _invalid_int;
     }
 
     void KFClusterMasterModule::SendAllocShardToProxy( uint32 proxyid )

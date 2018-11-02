@@ -25,13 +25,8 @@ namespace KFrame
         auto kfobject = player->GetData();
         kfobject->SetValue<uint64>( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
         ////////////////////////////////////////////////////////////////////////////////
-        auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
-        if ( kfnoteparent == nullptr )
-        {
-            return;
-        }
-
         auto playerid = player->GetKeyID();
+        auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
         for ( auto& iter : _kf_enter_config->_kf_enter_setting )
         {
             auto kfsetting = &iter;
@@ -48,7 +43,7 @@ namespace KFrame
             }
 
             // 调用脚本
-            _kf_lua->CallFunction( kfsetting->_lua_file, kfsetting->_lua_function, playerid );
+            _kf_lua->Call( kfsetting->_lua_file, kfsetting->_lua_function, playerid );
         }
     }
 }

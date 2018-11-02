@@ -12,7 +12,7 @@ namespace KFrame
 
         auto urldata = __FORMAT__( "{}?key={}&appid={}&ticket={}", kfsetting->_login_url, kfsetting->_app_key, kfsetting->_app_id, token );
 
-        auto resultdata = _kf_http_client->StartSTHttpsClient( urldata, _invalid_str );
+        auto resultdata = _kf_http_client->StartSTHttpClient( urldata, _invalid_str );
         if ( resultdata.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamError );

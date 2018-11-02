@@ -19,6 +19,7 @@
     <ClCompile Include="KFHttpHandle.cpp" />
     <ClCompile Include="KFHttpsClient.cpp" />
     <ClCompile Include="KFHttpServer.cpp" />
+    <ClCompile Include="KFHttpURL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttp.h" />
@@ -29,6 +30,8 @@
     <ClInclude Include="KFHttpHandle.h" />
     <ClInclude Include="KFHttpsClient.h" />
     <ClInclude Include="KFHttpServer.h" />
+    <ClInclude Include="KFHttpURL.h" />
+    <ClInclude Include="KFURLCharacter.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F2393635-A025-481D-9286-A6C58BE0EECF}</ProjectGuid>

@@ -60,6 +60,9 @@ namespace KFrame
         // 走马灯
         __KF_COMMAND_FUNCTION__( OnCommandMarquee );
 
+        // 系统公告
+        __KF_COMMAND_FUNCTION__( OnCommandNotice );
+
     protected:
         // 发送消息到客户端
         __KF_TRANSMIT_FUNCTION__( SendMessageToClient );

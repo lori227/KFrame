@@ -35,6 +35,8 @@ void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
 void protobuf_AssignDesc_KFBattleMessage_2eproto();
 void protobuf_ShutdownFile_KFBattleMessage_2eproto();
 
+class S2SAllocBattleIdReq;
+class S2SAllocBattleIdAck;
 class S2SRegisterBattleServerReq;
 class S2SRegisterBattleServerAck;
 class S2SRegisterServerToBattleShardReq;
@@ -126,11 +128,13 @@ enum BattleProtocol {
   S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK = 11243,
   S2S_RESET_BATTLE_ROOM_REQ = 11244,
   S2S_BATTLE_PING_REQ = 11245,
-  S2S_BATTLE_PING_ACK = 11246
+  S2S_BATTLE_PING_ACK = 11246,
+  S2S_ALLOC_BATTLE_ID_REQ = 11247,
+  S2S_ALLOC_BATTLE_ID_ACK = 11248
 };
 LIBPROTOC_EXPORT bool BattleProtocol_IsValid(int value);
 const BattleProtocol BattleProtocol_MIN = S2S_REGISTER_BATTLE_SERVER_REQ;
-const BattleProtocol BattleProtocol_MAX = S2S_BATTLE_PING_ACK;
+const BattleProtocol BattleProtocol_MAX = S2S_ALLOC_BATTLE_ID_ACK;
 const int BattleProtocol_ARRAYSIZE = BattleProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* BattleProtocol_descriptor();
@@ -163,6 +167,185 @@ inline bool BattleEnum_Parse(
     BattleEnum_descriptor(), name, value);
 }
 // ===================================================================
+
+class LIBPROTOC_EXPORT S2SAllocBattleIdReq : public ::google::protobuf::Message {
+ public:
+  S2SAllocBattleIdReq();
+  virtual ~S2SAllocBattleIdReq();
+
+  S2SAllocBattleIdReq(const S2SAllocBattleIdReq& from);
+
+  inline S2SAllocBattleIdReq& operator=(const S2SAllocBattleIdReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAllocBattleIdReq& default_instance();
+
+  void Swap(S2SAllocBattleIdReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SAllocBattleIdReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SAllocBattleIdReq& from);
+  void MergeFrom(const S2SAllocBattleIdReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string ip = 1;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 1;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
+  // required uint32 port = 2;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 2;
+  inline ::google::protobuf::uint32 port() const;
+  inline void set_port(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocBattleIdReq)
+ private:
+  inline void set_has_ip();
+  inline void clear_has_ip();
+  inline void set_has_port();
+  inline void clear_has_port();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
+  friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFBattleMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAllocBattleIdReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SAllocBattleIdAck : public ::google::protobuf::Message {
+ public:
+  S2SAllocBattleIdAck();
+  virtual ~S2SAllocBattleIdAck();
+
+  S2SAllocBattleIdAck(const S2SAllocBattleIdAck& from);
+
+  inline S2SAllocBattleIdAck& operator=(const S2SAllocBattleIdAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAllocBattleIdAck& default_instance();
+
+  void Swap(S2SAllocBattleIdAck* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SAllocBattleIdAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SAllocBattleIdAck& from);
+  void MergeFrom(const S2SAllocBattleIdAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocBattleIdAck)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
+  friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFBattleMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SAllocBattleIdAck* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::Message {
  public:
@@ -4577,6 +4760,128 @@ class LIBPROTOC_EXPORT S2SResetBattleRoomReq : public ::google::protobuf::Messag
 
 
 // ===================================================================
+
+// S2SAllocBattleIdReq
+
+// required string ip = 1;
+inline bool S2SAllocBattleIdReq::has_ip() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SAllocBattleIdReq::set_has_ip() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SAllocBattleIdReq::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SAllocBattleIdReq::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& S2SAllocBattleIdReq::ip() const {
+  return *ip_;
+}
+inline void S2SAllocBattleIdReq::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SAllocBattleIdReq::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SAllocBattleIdReq::set_ip(const char* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SAllocBattleIdReq::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* S2SAllocBattleIdReq::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SAllocBattleIdReq::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 port = 2;
+inline bool S2SAllocBattleIdReq::has_port() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SAllocBattleIdReq::set_has_port() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SAllocBattleIdReq::clear_has_port() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SAllocBattleIdReq::clear_port() {
+  port_ = 0u;
+  clear_has_port();
+}
+inline ::google::protobuf::uint32 S2SAllocBattleIdReq::port() const {
+  return port_;
+}
+inline void S2SAllocBattleIdReq::set_port(::google::protobuf::uint32 value) {
+  set_has_port();
+  port_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// S2SAllocBattleIdAck
+
+// required uint32 id = 1;
+inline bool S2SAllocBattleIdAck::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SAllocBattleIdAck::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SAllocBattleIdAck::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SAllocBattleIdAck::clear_id() {
+  id_ = 0u;
+  clear_has_id();
+}
+inline ::google::protobuf::uint32 S2SAllocBattleIdAck::id() const {
+  return id_;
+}
+inline void S2SAllocBattleIdAck::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
 
 // S2SRegisterBattleServerReq
 

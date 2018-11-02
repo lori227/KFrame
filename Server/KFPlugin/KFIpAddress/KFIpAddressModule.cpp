@@ -15,18 +15,8 @@
     #include <sys/socket.h>
 #endif
 
-
 namespace KFrame
 {
-    KFIpAddressModule::KFIpAddressModule()
-    {
-    }
-
-    KFIpAddressModule::~KFIpAddressModule()
-    {
-
-    }
-
     void KFIpAddressModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_ip_config, false );
@@ -42,13 +32,13 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         kfglobal->_local_ip = GetLocalIp();
-        if ( kfglobal->_app_channel >= KFServerEnum::LocalDevelop )
+        if ( kfglobal->_net_type == KFServerEnum::Internet )
         {
-            kfglobal->_interanet_ip = kfglobal->_local_ip;
+            kfglobal->_interanet_ip = GetInteranetIp();
         }
         else
         {
-            kfglobal->_interanet_ip = GetInteranetIp();
+            kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
 
         // 修改appid
@@ -65,12 +55,6 @@ namespace KFrame
     {
         return _net_port.CalcListenPort( type, port, appid );
     }
-
-    const std::string& KFIpAddressModule::FindAuthAddress( )
-    {
-        return _kf_ip_config->_auth_address;
-    }
-
     const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
         return _kf_ip_config->FindIpAddress( appname, apptype, appid );

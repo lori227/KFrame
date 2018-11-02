@@ -4,122 +4,122 @@ package KFMsg;
 
 enum ServerProtocol
 {	
-	S2S_TRANSMIT_MESSAGE_REQ = 21001;				// ×ª·¢ÏûÏ¢
-	S2S_BROADCAST_MESSAGE_REQ = 21002;				// ¹ã²¥ÏûÏ¢
-	S2S_SAVE_PLAYER_REQ = 21003;					// ±£´æÊı¾İ
-	S2S_DELETE_PLAYER_REQ = 21004;					// É¾³ıÊı¾İ
-	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// ¸üĞÂ¹«¹²Êı¾İ
-	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// ¸üĞÂzoneĞÅÏ¢µ½proxy
-	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// ×ª·¢ÏûÏ¢µ½Êı¾İ¿â
+	S2S_TRANSMIT_MESSAGE_REQ = 21001;				// è½¬å‘æ¶ˆæ¯
+	S2S_BROADCAST_MESSAGE_REQ = 21002;				// å¹¿æ’­æ¶ˆæ¯
+	S2S_SAVE_PLAYER_REQ = 21003;					// ä¿å­˜æ•°æ®
+	S2S_DELETE_PLAYER_REQ = 21004;					// åˆ é™¤æ•°æ®
+	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// æ›´æ–°å…¬å…±æ•°æ®
+	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// æ›´æ–°zoneä¿¡æ¯åˆ°proxy
+	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// è½¬å‘æ¶ˆæ¯åˆ°æ•°æ®åº“
 	
-	S2S_KICK_GAME_PLAYER_REQ = 21101;				// ÌßµôÔÚÏßÍæ¼Ò
-	S2S_KICK_GATE_PLAYER_REQ = 21102;				// ÌßµôÔÚÏßÍæ¼Ò
-	S2S_LOGIN_LOGIN_VERIFY_REQ = 21104;				// µÇÂ¼ÑéÖ¤ÇëÇó	
-	S2S_LOGIN_LOGIN_VERIFY_ACK = 21105;				// µÇÂ¼ÑéÖ¤½á¹û
-	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106;		// Í¨ÖªµÇÂ¼TokenĞÅÏ¢
-	S2S_LOGIN_WORLD_VERIFY_REQ = 21108;				// µÇÂ¼ÑéÖ¤ÇëÇó
-	S2S_LOGIN_FAILED_TO_LOGIN_ACK = 21109;			// µÇÂ¼Ê§°Ü½á¹û
-	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// Í¬²½ÔÚÏßÈË¼Ò
-	S2S_LOGIN_GAME_ACK = 21115;						// ÇëÇóµÇÂ¼ÓÎÏ··şÎñÆ÷
-	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// ÇëÇó¼ÓÔØÍæ¼ÒÊı¾İ
-	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// ¼ÓÔØÍæ¼ÒÊı¾İ»ØÀ¡
-	S2S_LOGIN_OUT_REQ = 21119;						// µÇ³öÓÎÏ·
-	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// ÓÎÏ·Íæ¼Ò½øÈëÓÎÏ·
-	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// ÓÎÏ·Íæ¼ÒÀë¿ªÓÎÏ·
-	S2S_SET_PLAYER_NAME_REQ = 21124;				// ÉèÖÃÃû×ÖÇëÇó
-	S2S_SET_PLAYER_NAME_ACK = 21125;				// ÉèÖÃÃû×Ö»ØÓ¦
-	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// Íæ¼ÒµôÏß
-	S2S_QUERY_MAIL_REQ = 21127;						// ²éÑ¯ÓÊ¼ş
-	S2S_QUERY_MAIL_ACK = 21128;						// ²éÑ¯ÓÊ¼ş
-	S2S_DELETE_MAIL_REQ = 21129;					// É¾³ıÓÊ¼ş
-	S2S_QUERY_FRIEND_REQ = 21130;					// ²éÑ¯ºÃÓÑĞÅÏ¢
-	S2S_ADD_FRIEND_INVITE_REQ = 21131;				// Ìí¼ÓºÃÓÑÇëÇó
-	S2S_DEL_FRIEND_REQ = 21132;						// É¾³ıºÃÓÑÇëÇó
-	S2S_QUERY_FRIEND_ACK = 21133;					// ²éÑ¯ºÃÓÑĞÅÏ¢
-	S2S_QUERY_FRIEND_INVITE_ACK = 21134;			// ²éÑ¯ºÃÓÑÉêÇëĞÅÏ¢
-	S2S_ADD_FRIEND_INVITE_ACK = 21135;				// Ìí¼ÓºÃÓÑÇëÇó
-	S2S_DEL_FRIEND_INVITE_REQ = 21136;				// É¾³ıºÃÓÑÑûÇë
-	S2S_ADD_FRIEND_REQ = 21137;						// Ìí¼ÓºÃÓÑ
-	S2S_DEL_FRIEND_ACK = 21138;						// É¾³ıºÃÓÑ
-	S2S_ADD_FRIEND_ACK = 21139;						// Ìí¼ÓºÃÓÑ
-	S2S_UPDATE_FRIEND_REQ = 21140;					// ¸üĞÂºÃÓÑ
-	S2S_ADD_MAIL_REQ = 21141;						// Ìí¼ÓÓÊ¼ş
-	S2S_NOTICE_NEW_MAIL_REQ = 21142;				// Í¨ÖªĞÂÓÊ¼ş
-	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// ¸üĞÂºÃÓÑ¶È
-	S2S_QUERY_BASIC_REQ = 21144;					// ²éÑ¯ºÃÓÑ»ù´¡Êı¾İ
-	S2S_QUERY_PLAYER_REQ = 21145;					// ²éÑ¯ºÃÓÑÊı¾İ
-	S2S_QUERY_BASIC_ACK = 21146;					// ²éÑ¯ºÃÓÑ»ù´¡Êı¾İ
-	S2S_QUERY_PLAYER_ACK = 21147;					// ²éÑ¯ºÃÓÑÊı¾İ
-	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// ²éÑ¯ºÃÓÑÉêÇëĞÅÏ¢
-	S2S_CREATE_ROLE_REQ = 21150;					// ´´½¨½ÇÉ«
-	S2S_CREATE_ROLE_ACK = 21151;					// ´´½¨½ÇÉ«
-	S2S_UPDATE_MAIL_FLAG_REQ = 21152;				// ÉèÖÃÓÊ¼ş×´Ì¬ÇëÇó
-	S2S_UPDATE_MAIL_FLAG_ACK = 21153;				// ÉèÖÃÓÊ¼ş×´Ì¬ÏìÓ¦
-	S2S_PLAYER_TOAST_REQ = 21156;					// Íæ¼Ò¾´¾ÆÇëÇó
-	S2S_PLAYER_TOAST_ACK = 21157;					// Íæ¼Ò¾´¾Æ»ØÀ¡
-	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// ¸üĞÂºÃÓÑ¶È·´À¡
-	S2S_CREATE_MATCH_GROUP_REQ = 21159;				// ´´½¨Æ¥Åä¶ÓÎé
-	S2S_RECEIVE_INVITE_MATCH_GROUP_REQ = 21160;		// ½ÓÊÕµ½×é¶ÓÑûÇë
-	S2S_CONSENT_INVITE_MATCH_GROUP_REQ = 21161;		// »Ø¸´ÑûÇë²Ù×÷
-	S2S_ADD_MATCH_GROUP_MEMBER_REQ = 21162;			// Ìí¼Ó¶ÓÔ±
- 	S2S_REMOVE_MATCH_GROUP_MEMBER_ACK = 21163;		// É¾³ı¶ÓÔ±
-	S2S_LEAVE_MATCH_GROUP_REQ = 21164;				// Àë¿ª¶ÓÎéÇëÇó
-	S2S_KICK_MATCH_GROUP_REQ = 21165;				// Ìß³ö¶ÓÔ±
-	S2S_APPLY_MATCH_GROUP_REQ = 21166;				// ¶ÓÔ±ĞÅÏ¢
-	S2S_LEAVE_MATCH_GROUP_ACK = 21167;				// Àë¿ª¶ÓÎé
-	S2S_CONSENT_APPLY_MATCH_GROUP_ACK = 21168;		// Í¬Òâ¼ÓÈë¶ÓÎé
-	S2S_ONLINE_QUERY_MATCH_GROUP_REQ = 21169;		// ÉÏÏß²éÑ¯¶ÓÎéĞÅÏ¢
-	S2S_ADD_MATCH_GROUP_MEMBER_ACK = 21170;			// Ìí¼Ó¶ÓÔ±
-	S2S_UPDATE_GROUP_MEMBER_ACK = 21171;			// ¸üĞÂÍæ¼Ò»ù´¡ĞÅÏ¢
-	S2S_UPDATE_GROUP_MEMBER_REQ = 21172;			// ¸üĞÂÍæ¼Ò»ù´¡ĞÅÏ¢
-	S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ = 21173;		// ÀëÏß¸üĞÂ¶ÓÎéĞÅÏ¢
-	S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ = 21174;	// ´´½¨¶ÓÎé
-	S2S_UPDATE_GUEST_LIST_REQ = 21175;				// ¸üĞÂ·Ã¿ÍÁĞ±í
-	S2S_QUERY_GUEST_REQ = 21176;					// ²éÑ¯·Ã¿ÍĞÅÏ¢ÇëÇó
-	S2S_QUERY_GUEST_ACK = 21177;					// ²éÑ¯·Ã¿ÍĞÅÏ¢»ØÀ¡
-	S2S_UPDATE_GROUP_DATA_ACK = 21178;				// ¸üĞÂ¶ÓÎéÊôĞÔ
-	S2S_APPLY_MATCH_GROUP_ACK = 21179;				// ÉêÇë¼ÓÈë¶ÓÎé
-	S2S_QUERY_TOAST_COUNT_REQ = 21180;				// ²éÑ¯×ÜµÄ¾´¾Æ´ÎÊıÇëÇó
-	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// ²éÑ¯×ÜµÄ¾´¾Æ´ÎÊı»ØÀ¡
-	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// ¸üĞÂ¶ÓÎéÆ¥ÅäÄ£Ê½
-	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// ĞÂÍæ¼ÒµÇÂ½ÓÊ¼ş·şÎñ
-	S2S_QUERY_RANK_LIST_REQ = 21187;				// ²éÑ¯È«·şÅÅĞĞ°ñ
-	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ
-	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// Í¨Öª¶ÓÎéÊı¾İ
-	S2S_UPDATE_RANK_DATA_REQ = 21193;				// ¸üĞÂÅÅĞĞ°ñÊı¾İ
-	S2S_ADD_RECENT_PLAYER_DATA_REQ = 21194;			// ½áËã×î½üµÄÈËÏà¹ØÊı¾İ
-	S2S_QUERY_RECENT_LIST_REQ = 21195;				// ÇëÇó×î½üÓÎÏ·ÁĞ±í
-	S2S_QUERY_RECENT_LIST_ACK = 21196;				// Í¨Öª´¦Àí×î½üÓÎÏ·ÁĞ±í	
+	S2S_KICK_GAME_PLAYER_REQ = 21101;				// è¸¢æ‰åœ¨çº¿ç©å®¶
+	S2S_KICK_GATE_PLAYER_REQ = 21102;				// è¸¢æ‰åœ¨çº¿ç©å®¶
+	S2S_LOGIN_LOGIN_VERIFY_REQ = 21104;				// ç™»å½•éªŒè¯è¯·æ±‚	
+	S2S_LOGIN_LOGIN_VERIFY_ACK = 21105;				// ç™»å½•éªŒè¯ç»“æœ
+	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106;		// é€šçŸ¥ç™»å½•Tokenä¿¡æ¯
+	S2S_LOGIN_WORLD_VERIFY_REQ = 21108;				// ç™»å½•éªŒè¯è¯·æ±‚
+	S2S_LOGIN_FAILED_TO_LOGIN_ACK = 21109;			// ç™»å½•å¤±è´¥ç»“æœ
+	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// åŒæ­¥åœ¨çº¿äººå®¶
+	S2S_LOGIN_GAME_ACK = 21115;						// è¯·æ±‚ç™»å½•æ¸¸æˆæœåŠ¡å™¨
+	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// è¯·æ±‚åŠ è½½ç©å®¶æ•°æ®
+	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// åŠ è½½ç©å®¶æ•°æ®å›é¦ˆ
+	S2S_LOGIN_OUT_REQ = 21119;						// ç™»å‡ºæ¸¸æˆ
+	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// æ¸¸æˆç©å®¶è¿›å…¥æ¸¸æˆ
+	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// æ¸¸æˆç©å®¶ç¦»å¼€æ¸¸æˆ
+	S2S_SET_PLAYER_NAME_REQ = 21124;				// è®¾ç½®åå­—è¯·æ±‚
+	S2S_SET_PLAYER_NAME_ACK = 21125;				// è®¾ç½®åå­—å›åº”
+	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// ç©å®¶æ‰çº¿
+	S2S_QUERY_MAIL_REQ = 21127;						// æŸ¥è¯¢é‚®ä»¶
+	S2S_QUERY_MAIL_ACK = 21128;						// æŸ¥è¯¢é‚®ä»¶
+	S2S_DELETE_MAIL_REQ = 21129;					// åˆ é™¤é‚®ä»¶
+	S2S_QUERY_FRIEND_REQ = 21130;					// æŸ¥è¯¢å¥½å‹ä¿¡æ¯
+	S2S_ADD_FRIEND_INVITE_REQ = 21131;				// æ·»åŠ å¥½å‹è¯·æ±‚
+	S2S_DEL_FRIEND_REQ = 21132;						// åˆ é™¤å¥½å‹è¯·æ±‚
+	S2S_QUERY_FRIEND_ACK = 21133;					// æŸ¥è¯¢å¥½å‹ä¿¡æ¯
+	S2S_QUERY_FRIEND_INVITE_ACK = 21134;			// æŸ¥è¯¢å¥½å‹ç”³è¯·ä¿¡æ¯
+	S2S_ADD_FRIEND_INVITE_ACK = 21135;				// æ·»åŠ å¥½å‹è¯·æ±‚
+	S2S_DEL_FRIEND_INVITE_REQ = 21136;				// åˆ é™¤å¥½å‹é‚€è¯·
+	S2S_ADD_FRIEND_REQ = 21137;						// æ·»åŠ å¥½å‹
+	S2S_DEL_FRIEND_ACK = 21138;						// åˆ é™¤å¥½å‹
+	S2S_ADD_FRIEND_ACK = 21139;						// æ·»åŠ å¥½å‹
+	S2S_UPDATE_FRIEND_REQ = 21140;					// æ›´æ–°å¥½å‹
+	S2S_ADD_MAIL_REQ = 21141;						// æ·»åŠ é‚®ä»¶
+	S2S_NOTICE_NEW_MAIL_REQ = 21142;				// é€šçŸ¥æ–°é‚®ä»¶
+	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// æ›´æ–°å¥½å‹åº¦
+	S2S_QUERY_BASIC_REQ = 21144;					// æŸ¥è¯¢å¥½å‹åŸºç¡€æ•°æ®
+	S2S_QUERY_PLAYER_REQ = 21145;					// æŸ¥è¯¢å¥½å‹æ•°æ®
+	S2S_QUERY_BASIC_ACK = 21146;					// æŸ¥è¯¢å¥½å‹åŸºç¡€æ•°æ®
+	S2S_QUERY_PLAYER_ACK = 21147;					// æŸ¥è¯¢å¥½å‹æ•°æ®
+	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// æŸ¥è¯¢å¥½å‹ç”³è¯·ä¿¡æ¯
+	S2S_CREATE_ROLE_REQ = 21150;					// åˆ›å»ºè§’è‰²
+	S2S_CREATE_ROLE_ACK = 21151;					// åˆ›å»ºè§’è‰²
+	S2S_UPDATE_MAIL_FLAG_REQ = 21152;				// è®¾ç½®é‚®ä»¶çŠ¶æ€è¯·æ±‚
+	S2S_UPDATE_MAIL_FLAG_ACK = 21153;				// è®¾ç½®é‚®ä»¶çŠ¶æ€å“åº”
+	S2S_PLAYER_TOAST_REQ = 21156;					// ç©å®¶æ•¬é…’è¯·æ±‚
+	S2S_PLAYER_TOAST_ACK = 21157;					// ç©å®¶æ•¬é…’å›é¦ˆ
+	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// æ›´æ–°å¥½å‹åº¦åé¦ˆ
+	S2S_CREATE_MATCH_GROUP_REQ = 21159;				// åˆ›å»ºåŒ¹é…é˜Ÿä¼
+	S2S_RECEIVE_INVITE_MATCH_GROUP_REQ = 21160;		// æ¥æ”¶åˆ°ç»„é˜Ÿé‚€è¯·
+	S2S_CONSENT_INVITE_MATCH_GROUP_REQ = 21161;		// å›å¤é‚€è¯·æ“ä½œ
+	S2S_ADD_MATCH_GROUP_MEMBER_REQ = 21162;			// æ·»åŠ é˜Ÿå‘˜
+ 	S2S_REMOVE_MATCH_GROUP_MEMBER_ACK = 21163;		// åˆ é™¤é˜Ÿå‘˜
+	S2S_LEAVE_MATCH_GROUP_REQ = 21164;				// ç¦»å¼€é˜Ÿä¼è¯·æ±‚
+	S2S_KICK_MATCH_GROUP_REQ = 21165;				// è¸¢å‡ºé˜Ÿå‘˜
+	S2S_APPLY_MATCH_GROUP_REQ = 21166;				// é˜Ÿå‘˜ä¿¡æ¯
+	S2S_LEAVE_MATCH_GROUP_ACK = 21167;				// ç¦»å¼€é˜Ÿä¼
+	S2S_CONSENT_APPLY_MATCH_GROUP_ACK = 21168;		// åŒæ„åŠ å…¥é˜Ÿä¼
+	S2S_ONLINE_QUERY_MATCH_GROUP_REQ = 21169;		// ä¸Šçº¿æŸ¥è¯¢é˜Ÿä¼ä¿¡æ¯
+	S2S_ADD_MATCH_GROUP_MEMBER_ACK = 21170;			// æ·»åŠ é˜Ÿå‘˜
+	S2S_UPDATE_GROUP_MEMBER_ACK = 21171;			// æ›´æ–°ç©å®¶åŸºç¡€ä¿¡æ¯
+	S2S_UPDATE_GROUP_MEMBER_REQ = 21172;			// æ›´æ–°ç©å®¶åŸºç¡€ä¿¡æ¯
+	S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ = 21173;		// ç¦»çº¿æ›´æ–°é˜Ÿä¼ä¿¡æ¯
+	S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ = 21174;	// åˆ›å»ºé˜Ÿä¼
+	S2S_UPDATE_GUEST_LIST_REQ = 21175;				// æ›´æ–°è®¿å®¢åˆ—è¡¨
+	S2S_QUERY_GUEST_REQ = 21176;					// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯è¯·æ±‚
+	S2S_QUERY_GUEST_ACK = 21177;					// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯å›é¦ˆ
+	S2S_UPDATE_GROUP_DATA_ACK = 21178;				// æ›´æ–°é˜Ÿä¼å±æ€§
+	S2S_APPLY_MATCH_GROUP_ACK = 21179;				// ç”³è¯·åŠ å…¥é˜Ÿä¼
+	S2S_QUERY_TOAST_COUNT_REQ = 21180;				// æŸ¥è¯¢æ€»çš„æ•¬é…’æ¬¡æ•°è¯·æ±‚
+	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// æŸ¥è¯¢æ€»çš„æ•¬é…’æ¬¡æ•°å›é¦ˆ
+	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// æ›´æ–°é˜Ÿä¼åŒ¹é…æ¨¡å¼
+	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// æ–°ç©å®¶ç™»é™†é‚®ä»¶æœåŠ¡
+	S2S_QUERY_RANK_LIST_REQ = 21187;				// æŸ¥è¯¢å…¨æœæ’è¡Œæ¦œ
+	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œ
+	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// é€šçŸ¥é˜Ÿä¼æ•°æ®
+	S2S_UPDATE_RANK_DATA_REQ = 21193;				// æ›´æ–°æ’è¡Œæ¦œæ•°æ®
+	S2S_ADD_RECENT_PLAYER_DATA_REQ = 21194;			// ç»“ç®—æœ€è¿‘çš„äººç›¸å…³æ•°æ®
+	S2S_QUERY_RECENT_LIST_REQ = 21195;				// è¯·æ±‚æœ€è¿‘æ¸¸æˆåˆ—è¡¨
+	S2S_QUERY_RECENT_LIST_ACK = 21196;				// é€šçŸ¥å¤„ç†æœ€è¿‘æ¸¸æˆåˆ—è¡¨	
 
-	S2S_CREATE_GUILD_REQ = 21197;				// ´´½¨°ïÅÉÇëÇó
-	S2S_CREATE_GUILD_TO_SHARD_REQ = 21198;			// ´´½¨°ïÅÉÇëÇó·¢ËÍµ½shard
-	S2S_CREATE_GUILD_ACK = 21199;				// ´´½¨°ïÅÉ·µ»Ø
-	S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200;		// ¸üĞÂ°ïÅÉ³ÉÔ±»ù´¡ĞÅÏ¢
-	S2S_INVITE_GUILD_REQ = 21201;				// ÑûÇëºÃÓÑ¼ÓÈë°ïÅÉÇëÇó
-	S2S_INVITE_GUILD_ACK = 21202;				// ÑûÇëºÃÓÑ¼ÓÈë°ïÅÉ·´À¡
-	S2S_APPLY_GUILD_REQ = 21203;				// ÉêÇë¼ÓÈë°ïÅÉÇëÇó
-	S2S_APPLY_GUILD_ACK = 21204;				// ÉêÇë¼ÓÈë°ïÅÉ·´À¡
-	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// Íæ¼Ò°ïÅÉ×´Ì¬±ä»¯guild->zone	
-	S2S_EXIT_GUILD_REQ = 21206;				// Íæ¼ÒÍË³ö°ïÅÉ
-	S2S_TRANSFER_MASTER_REQ = 21207;			// ×ªÈÃ°ïÅÉÇëÇó
-	S2S_REVIEW_APPLY_REQ = 21208;				// ÉóºË°ïÅÉ³ÉÔ±¼ÓÈë	
-	S2S_DISSOLVE_GUILD_REQ = 21209;				// ½âÉ¢°ïÅÉ
-	S2S_MODIFY_MEDAL_REQ = 21210;				// ĞŞ¸Ä°ïÅÉ»ÕÕÂ
-	S2S_QUERY_GUILD_LIST_REQ = 21211;			// ÇëÇó°ïÅÉÁĞ±í
-	S2S_KICK_MEMBER_REQ = 21212;				// ÇëÇóÌßÈË
-	S2S_LOGIN_QUERY_GUILD_REQ = 21213;			// µÇÂ¼ÇëÇó×ÔÉí°ïÅÉÊı¾İ
-	S2S_LOGIN_QUERY_GUILD_ACK = 21214;			// ÇëÇó°ïÅÉÊı¾İ·µ»Ø
-	S2S_UPDATE_GUILD_DATA_REQ = 21215;			// ¸üĞÂ°ïÅÉ³ÉÔ±Êı¾İ
-	S2S_UPGRADE_GUILD_REQ = 21216;				// °ïÅÉÉı¼¶
-	S2S_UPGRADE_GUILD_ACK = 21217;				// °ïÅÉÉı¼¶·´À¡
-	S2S_APPOINT_GUILD_MEMBER_REQ = 21218;			// ÈÎÃü°ïÅÉ³ÉÔ±ÇëÇó
-	S2S_SEARCH_GUILD_BY_NAME_REQ = 21219;			// ¸ù¾İ°ïÅÉÃû×ÖËÑË÷°ïÅÉĞÅÏ¢
-	S2S_SET_GUILD_SWITCH_REQ = 21220;			// ÉèÖÃ°ïÅÉ¹ÜÀí¿ª¹Ø
-	S2S_LOGIN_QUERY_GUILDID_REQ = 21221;			// µÇÂ¼ÇëÇóguildid
-	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// µÇÂ¼ÇëÇóguildid·µ»Ø
-	S2S_QUERY_GUILD_LOG_REQ = 21223;			// ²éÑ¯°ïÅÉÈÕÖ¾
-	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// Ôö¼Ó°ïÅÉ»îÔ¾¶È
-	S2S_GM_ADD_MAIL_REQ = 21300;				// GMÔö¼ÓÓÊ¼ş
+	S2S_CREATE_GUILD_REQ = 21197;				// åˆ›å»ºå¸®æ´¾è¯·æ±‚
+	S2S_CREATE_GUILD_TO_SHARD_REQ = 21198;			// åˆ›å»ºå¸®æ´¾è¯·æ±‚å‘é€åˆ°shard
+	S2S_CREATE_GUILD_ACK = 21199;				// åˆ›å»ºå¸®æ´¾è¿”å›
+	S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200;		// æ›´æ–°å¸®æ´¾æˆå‘˜åŸºç¡€ä¿¡æ¯
+	S2S_INVITE_GUILD_REQ = 21201;				// é‚€è¯·å¥½å‹åŠ å…¥å¸®æ´¾è¯·æ±‚
+	S2S_INVITE_GUILD_ACK = 21202;				// é‚€è¯·å¥½å‹åŠ å…¥å¸®æ´¾åé¦ˆ
+	S2S_APPLY_GUILD_REQ = 21203;				// ç”³è¯·åŠ å…¥å¸®æ´¾è¯·æ±‚
+	S2S_APPLY_GUILD_ACK = 21204;				// ç”³è¯·åŠ å…¥å¸®æ´¾åé¦ˆ
+	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// ç©å®¶å¸®æ´¾çŠ¶æ€å˜åŒ–guild->zone	
+	S2S_EXIT_GUILD_REQ = 21206;				// ç©å®¶é€€å‡ºå¸®æ´¾
+	S2S_TRANSFER_MASTER_REQ = 21207;			// è½¬è®©å¸®æ´¾è¯·æ±‚
+	S2S_REVIEW_APPLY_REQ = 21208;				// å®¡æ ¸å¸®æ´¾æˆå‘˜åŠ å…¥	
+	S2S_DISSOLVE_GUILD_REQ = 21209;				// è§£æ•£å¸®æ´¾
+	S2S_MODIFY_MEDAL_REQ = 21210;				// ä¿®æ”¹å¸®æ´¾å¾½ç« 
+	S2S_QUERY_GUILD_LIST_REQ = 21211;			// è¯·æ±‚å¸®æ´¾åˆ—è¡¨
+	S2S_KICK_MEMBER_REQ = 21212;				// è¯·æ±‚è¸¢äºº
+	S2S_LOGIN_QUERY_GUILD_REQ = 21213;			// ç™»å½•è¯·æ±‚è‡ªèº«å¸®æ´¾æ•°æ®
+	S2S_LOGIN_QUERY_GUILD_ACK = 21214;			// è¯·æ±‚å¸®æ´¾æ•°æ®è¿”å›
+	S2S_UPDATE_GUILD_DATA_REQ = 21215;			// æ›´æ–°å¸®æ´¾æˆå‘˜æ•°æ®
+	S2S_UPGRADE_GUILD_REQ = 21216;				// å¸®æ´¾å‡çº§
+	S2S_UPGRADE_GUILD_ACK = 21217;				// å¸®æ´¾å‡çº§åé¦ˆ
+	S2S_APPOINT_GUILD_MEMBER_REQ = 21218;			// ä»»å‘½å¸®æ´¾æˆå‘˜è¯·æ±‚
+	S2S_SEARCH_GUILD_BY_NAME_REQ = 21219;			// æ ¹æ®å¸®æ´¾åå­—æœç´¢å¸®æ´¾ä¿¡æ¯
+	S2S_SET_GUILD_SWITCH_REQ = 21220;			// è®¾ç½®å¸®æ´¾ç®¡ç†å¼€å…³
+	S2S_LOGIN_QUERY_GUILDID_REQ = 21221;			// ç™»å½•è¯·æ±‚guildid
+	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// ç™»å½•è¯·æ±‚guildidè¿”å›
+	S2S_QUERY_GUILD_LOG_REQ = 21223;			// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—
+	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// å¢åŠ å¸®æ´¾æ´»è·ƒåº¦
+	S2S_GM_ADD_MAIL_REQ = 21300;				// GMå¢åŠ é‚®ä»¶
 
  }
 
@@ -137,8 +137,8 @@ message S2STransmitMessageReq
 // S2S_BROADCAST_MESSAGE_REQ
 message S2SBroadcastMessageReq
 {
-	required uint32 msgid = 1;			// ÏûÏ¢id
-	required string msgdata = 2;		// ÏûÏ¢ÄÚÈİ
+	required uint32 msgid = 1;			// æ¶ˆæ¯id
+	required string msgdata = 2;		// æ¶ˆæ¯å†…å®¹
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,12 +172,12 @@ message S2SDeletePlayerReq
 	required uint32 id = 2;
 }
 
-// ¸üĞÂ¹«¹²Êı¾İ
+// æ›´æ–°å…¬å…±æ•°æ®
 // S2S_UPDATE_PUBLIC_DATA_REQ
 message S2SUpdatePublicDataReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	repeated PBString pbdata = 4;		// ÊôĞÔ
+	required uint32 playerid = 1;		// ç©å®¶id
+	repeated PBString pbdata = 4;		// å±æ€§
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,69 +185,69 @@ message S2SUpdatePublicDataReq
 // S2S_KICK_GAME_PLAYER_REQ
 message S2SKickGamePlayerReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
+	required uint32 playerid = 1;		// è§’è‰²id
 	required uint32 type = 2;
 }
 
 // S2S_KICK_GATE_PLAYER_REQ
 message S2SKickGatePlayerReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
+	required uint32 playerid = 1;		// è§’è‰²id
 	required uint32 type = 2;
 
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µÇÂ¼ÑéÖ¤ÇëÇó
+// ç™»å½•éªŒè¯è¯·æ±‚
 // S2S_LOGIN_LOGIN_VERIFY_REQ
 message S2SLoginLoginVerifyReq
 {
-	required uint32 accountid = 1;	// ÕËºÅid
+	required uint32 accountid = 1;	// è´¦å·id
 	required string token = 2;		// token
 	required string ip = 3;			// ip
 	required uint32 sessionid = 4;	// sessionid
 }
 
-// µÇÂ¼ÑéÖ¤ÇëÇó
+// ç™»å½•éªŒè¯è¯·æ±‚
 // S2S_LOGIN_LOGIN_VERIFY_ACK
 message S2SLoginLoginVerifyAck
 {
-	required uint32 result = 1;		// ½á¹û
-	required uint32 accountid = 2;	// ÕËºÅid
+	required uint32 result = 1;		// ç»“æœ
+	required uint32 accountid = 2;	// è´¦å·id
 	required uint32 sessionid = 3;	// sessionid
 }
 
 message PBLoginData
 {
 	required string token = 1;		// token
-	required uint32 gateid = 2;		// ·şÎñÆ÷id
+	required uint32 gateid = 2;		// æœåŠ¡å™¨id
 	required uint32 sessionid = 3;	// sessionid
-	required uint32 channel = 4;	// ÇşµÀid
-	required string account = 5;	// ÕËºÅ
-	required uint32 accountid = 6;	// ÕËºÅid
-	required uint32 playerid = 7;	// ½ÇÉ«id
-	required PBStrings channeldata = 8;	// ÇşµÀÊı¾İ	
+	required uint32 channel = 4;	// æ¸ é“id
+	required string account = 5;	// è´¦å·
+	required uint32 accountid = 6;	// è´¦å·id
+	required uint32 playerid = 7;	// è§’è‰²id
+	required PBStrings channeldata = 8;	// æ¸ é“æ•°æ®	
 }
 
-// ÊÀ½ç·şÎñÆ÷ÑéÖ¤
+// ä¸–ç•ŒæœåŠ¡å™¨éªŒè¯
 // S2S_LOGIN_WORLD_VERIFY_REQ
 message S2SLoginWorldVerifyReq
 {
 	required PBLoginData pblogin = 1;
 }
 
-// µÇÂ¼Ê§°Ü
+// ç™»å½•å¤±è´¥
 // S2S_LOGIN_FAILED_TO_LOGIN_ACK
 message S2SLoginFailedToLoginAck
 {
-	required uint32 gateid = 1;	// ·şÎñÆ÷id
-	required uint32 result = 2;	// ½á¹û
-	required uint32 accountid = 3;	// ÕËºÅid
+	required uint32 gateid = 1;	// æœåŠ¡å™¨id
+	required uint32 result = 2;	// ç»“æœ
+	required uint32 accountid = 3;	// è´¦å·id
 	required uint32 sessionid = 4;	// sessionid
 }
 
-// Í¨ÖªµÇÂ¼½ÚµãTokenĞÅÏ¢
+// é€šçŸ¥ç™»å½•èŠ‚ç‚¹Tokenä¿¡æ¯
 // S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ
 message S2SLoginTellTokenToGameReq
 {
@@ -263,7 +263,7 @@ message S2SLoginGameAck
 	required PBObject playerdata = 4;
 }
 
-// ¼ÓÔØÓÎÏ·Êı¾İ
+// åŠ è½½æ¸¸æˆæ•°æ®
 // S2S_LOGIN_LOAD_PLAYER_REQ
 message S2SLoginLoadPlayerReq
 {
@@ -308,7 +308,7 @@ message S2SSetPlayerNameAck
 	required uint32 result = 4;
 }
 
-// ´´½¨½ÇÉ«
+// åˆ›å»ºè§’è‰²
 // S2S_CREATE_ROLE_REQ
 message S2SCreateRoleReq
 {
@@ -318,7 +318,7 @@ message S2SCreateRoleReq
 	required uint32 sex = 4;
 }
 
-// ´´½¨½ÇÉ«
+// åˆ›å»ºè§’è‰²
 // S2S_CREATE_ROLE_ACK
 message S2SCreateRoleAck
 {
@@ -330,22 +330,22 @@ message S2SCreateRoleAck
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
-// ²éÑ¯½ÇÉ«idÇëÇó
+// æŸ¥è¯¢è§’è‰²idè¯·æ±‚
 // S2S_PLAYER_ENTER_WORLD_REQ
 message S2SPlayerEnterWorldReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id	
-	required uint32 accountid = 2;		// ÕËºÅid
+	required uint32 playerid = 1;		// è§’è‰²id	
+	required uint32 accountid = 2;		// è´¦å·id
 }
 
 // S2S_PLAYER_LEAVE_WORLD_REQ
 message S2SPlayerLeaveWorldReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
-	required uint32 accountid = 2;		// ÕËºÅid
+	required uint32 playerid = 1;		// è§’è‰²id
+	required uint32 accountid = 2;		// è´¦å·id
 }
 
-// Í¬²½ÔÚÏßÍæ¼Ò
+// åŒæ­¥åœ¨çº¿ç©å®¶
 // S2S_GAME_SYNC_ONLINE_REQ
 message S2SGameSyncOnlineReq
 {
@@ -353,16 +353,16 @@ message S2SGameSyncOnlineReq
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-// ²éÑ¯ÓÊ¼şÇëÇó
+// æŸ¥è¯¢é‚®ä»¶è¯·æ±‚
 // S2S_QUERY_MAIL_REQ
 message S2SQueryMailReq
 {
-	required uint32 playerid = 1;		//  ½ÇÉ«id
-	required uint32 mailtype = 2;		//  ÓÊ¼şÀàĞÍ
-	required uint64 maxmailid = 3;			// ×î´óµÄÓÊ¼şid
+	required uint32 playerid = 1;		//  è§’è‰²id
+	required uint32 mailtype = 2;		//  é‚®ä»¶ç±»å‹
+	required uint64 maxmailid = 3;			// æœ€å¤§çš„é‚®ä»¶id
 }
 
-// ÓÊ¼şĞÅÏ¢
+// é‚®ä»¶ä¿¡æ¯
 message PBMail
 {
 	repeated PBString data = 1;
@@ -370,42 +370,42 @@ message PBMail
 
 message PBMails
 {
-	repeated PBMail mail = 1;	// ÓÊ¼şĞÅÏ¢
+	repeated PBMail mail = 1;	// é‚®ä»¶ä¿¡æ¯
 }
 
-// ²éÑ¯ÓÊ¼şÇëÇó
+// æŸ¥è¯¢é‚®ä»¶è¯·æ±‚
 // S2S_QUERY_MAIL_ACK
 message S2SQueryMailAck
 {
-	required uint32 playerid = 1;	//  ½ÇÉ«id
-	required PBMails mails = 2;	// ÓÊ¼şĞÅÏ¢
-	required uint32 mailtype = 3;	// ÓÊ¼şÀàĞÍ
+	required uint32 playerid = 1;	//  è§’è‰²id
+	required PBMails mails = 2;	// é‚®ä»¶ä¿¡æ¯
+	required uint32 mailtype = 3;	// é‚®ä»¶ç±»å‹
 }
 
-// É¾³ıÓÊ¼ş
+// åˆ é™¤é‚®ä»¶
 // S2S_DELETE_MAIL_REQ
 message S2SDeleteMailReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
-	required uint64 mailid = 2;			// ÓÊ¼şid
-	required uint32 mailtype = 3;		// ÓÊ¼şÀàĞÍ
+	required uint32 playerid = 1;		// è§’è‰²id
+	required uint64 mailid = 2;			// é‚®ä»¶id
+	required uint32 mailtype = 3;		// é‚®ä»¶ç±»å‹
 }
 
-// Ìí¼ÓÓÊ¼ş
+// æ·»åŠ é‚®ä»¶
 // S2S_ADD_MAIL_REQ
 message S2SAddMailReq
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
-	required uint32 mailtype = 3;		// ÓÊ¼şÀàĞÍ
-	required PBMail pbmail = 5;			// ÓÊ¼şĞÅÏ¢
+	required uint32 playerid = 1;		// è§’è‰²id
+	required uint32 mailtype = 3;		// é‚®ä»¶ç±»å‹
+	required PBMail pbmail = 5;			// é‚®ä»¶ä¿¡æ¯
 }
 
-// Í¨ÖªÓĞĞÂÓÊ¼ş
+// é€šçŸ¥æœ‰æ–°é‚®ä»¶
 // S2S_NOTICE_NEW_MAIL_REQ
 message S2SNoticeNewMailReq
 {
-	required uint32 playerid = 1;	// ½ÇÉ«id	
-	required uint32 mailtype = 2;	// ÓÊ¼şÀàĞÍ	
+	required uint32 playerid = 1;	// è§’è‰²id	
+	required uint32 mailtype = 2;	// é‚®ä»¶ç±»å‹	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -417,100 +417,100 @@ message PBRelation
 	required PBStrings relationdata = 3;
 }
 
-// ²éÑ¯ºÃÓÑĞÅÏ¢
+// æŸ¥è¯¢å¥½å‹ä¿¡æ¯
 // S2S_QUERY_FRIEND_REQ
 message S2SQueryFriendReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
+	required uint32 playerid = 1;	// ç©å®¶id
 	required uint32 serverid = 2;
 }
 
-// ²éÑ¯ºÃÓÑÉêÇëĞÅÏ¢
+// æŸ¥è¯¢å¥½å‹ç”³è¯·ä¿¡æ¯
 // S2S_QUERY_FRIEND_INVITE_REQ
 message S2SQueryFriendInviteReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
+	required uint32 playerid = 1;	// ç©å®¶id
 	required uint32 serverid = 2;
 }
 
-// ²éÑ¯ºÃÓÑĞÅÏ¢
+// æŸ¥è¯¢å¥½å‹ä¿¡æ¯
 // S2S_QUERY_FRIEND_ACK
 message S2SQueryFriendAck
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	repeated PBRelation pbfriend = 2;	// ºÃÓÑÊı¾İ	
+	required uint32 playerid = 1;	// ç©å®¶id
+	repeated PBRelation pbfriend = 2;	// å¥½å‹æ•°æ®	
 }
 
-// ²éÑ¯ºÃÓÑĞÅÏ¢
+// æŸ¥è¯¢å¥½å‹ä¿¡æ¯
 // S2S_QUERY_FRIEND_INVITE_ACK
 message S2SQueryFriendInviteAck
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	repeated PBRelation pbfriend = 2;	// ºÃÓÑÊı¾İ	
+	required uint32 playerid = 1;	// ç©å®¶id
+	repeated PBRelation pbfriend = 2;	// å¥½å‹æ•°æ®	
 }
 
-// Ìí¼ÓºÃÓÑÇëÇó
+// æ·»åŠ å¥½å‹è¯·æ±‚
 // S2S_ADD_FRIEND_INVITE_REQ
 message S2SAddFriendInviteReq
 {
-	required uint32 selfplayerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
-	required string message = 3;		// ÁôÑÔ	
+	required uint32 selfplayerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
+	required string message = 3;		// ç•™è¨€	
 	required uint32 serverid = 4;
-	required string targetname = 5;		// ¶Ô·½Ãû×Ö
+	required string targetname = 5;		// å¯¹æ–¹åå­—
 }
 
-// Ìí¼ÓºÃÓÑÉêÇë
+// æ·»åŠ å¥½å‹ç”³è¯·
 // S2S_ADD_FRIEND_INVITE_ACK
 message S2SAddFriendInviteAck
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required PBRelation pbfriend = 2;	// ºÃÓÑÊı¾İ	
+	required uint32 playerid = 1;	// ç©å®¶id
+	required PBRelation pbfriend = 2;	// å¥½å‹æ•°æ®	
 }
 
-// É¾³ıºÃÓÑÇëÇó
+// åˆ é™¤å¥½å‹è¯·æ±‚
 // S2S_DEL_FRIEND_REQ
 message S2SDelFriendReq
 {
-	required uint32 selfplayerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
+	required uint32 selfplayerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
 }
 
-// É¾³ıºÃÓÑ
+// åˆ é™¤å¥½å‹
 // S2S_DEL_FRIEND_ACK
 message S2SDelFriendAck
 {
-	required uint32 playerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
+	required uint32 playerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
 }
 
-// É¾³ıºÃÓÑÇëÇó
+// åˆ é™¤å¥½å‹è¯·æ±‚
 // S2S_DEL_FRIEND_INVITE_REQ
 message S2SDelFriendInviteReq
 {
-	required uint32 selfplayerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
+	required uint32 selfplayerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
 }
 
-// Ìí¼ÓºÃÓÑ
+// æ·»åŠ å¥½å‹
 // S2S_ADD_FRIEND_REQ
 message S2SAddFriendReq
 {
-	required uint32 selfplayerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
+	required uint32 selfplayerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
 	required uint32 serverid = 3;
-	required string targetname = 4;		// ¶Ô·½Ãû×Ö
+	required string targetname = 4;		// å¯¹æ–¹åå­—
 }
 
-// Ìí¼ÓºÃÓÑ
+// æ·»åŠ å¥½å‹
 // S2S_ADD_FRIEND_ACK
 message S2SAddFriendAck
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required PBRelation pbfriend = 2;		// ºÃÓÑĞÅÏ¢
+	required uint32 playerid = 1;		// ç©å®¶id
+	required PBRelation pbfriend = 2;		// å¥½å‹ä¿¡æ¯
 }
 
-// ¸üĞÂºÃÓÑÊôĞÔ
+// æ›´æ–°å¥½å‹å±æ€§
 // S2S_UPDATE_FRIEND_REQ
 message S2SUpdateFriendReq
 {
@@ -519,19 +519,19 @@ message S2SUpdateFriendReq
 	repeated PBString pbdata = 3;
 }
 
-// ¸üĞÂºÃÓÑ¶È
+// æ›´æ–°å¥½å‹åº¦
 // S2S_UPDATE_FRIEND_LINESS_REQ
 message S2SUpdateFriendLinessReq
 {
-	required uint32 selfplayerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
-	required uint32 friendliness = 3;	// ºÃÓÑ¶È
-	required uint32 type = 4;			// ÀàĞÍ
-	//optional uint32 serverid = 5;		// ÉêÇë·şÎñÆ÷id
-	//optional string targetname = 6;		// ¶Ô·½Ãû×Ö
+	required uint32 selfplayerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
+	required uint32 friendliness = 3;	// å¥½å‹åº¦
+	required uint32 type = 4;			// ç±»å‹
+	//optional uint32 serverid = 5;		// ç”³è¯·æœåŠ¡å™¨id
+	//optional string targetname = 6;		// å¯¹æ–¹åå­—
 }
 
-// ²éÑ¯»ù´¡Êı¾İ
+// æŸ¥è¯¢åŸºç¡€æ•°æ®
 // S2S_QUERY_BASIC_REQ
 message S2SQueryBasicReq
 {
@@ -539,7 +539,7 @@ message S2SQueryBasicReq
 	required string name = 2;
 }
 
-// ²éÑ¯»ù´¡Êı¾İ
+// æŸ¥è¯¢åŸºç¡€æ•°æ®
 // S2S_QUERY_BASIC_ACK
 message S2SQueryBasicAck
 {
@@ -547,7 +547,7 @@ message S2SQueryBasicAck
 	required PBObject pbobject = 2;
 }
 
-// ²éÑ¯ÊôĞÔ
+// æŸ¥è¯¢å±æ€§
 // S2S_QUERY_PLAYER_REQ
 message S2SQueryPlayerReq
 {
@@ -556,7 +556,7 @@ message S2SQueryPlayerReq
 	required uint32 queryid = 3;
 }
 
-// ²éÑ¯ÊôĞÔ
+// æŸ¥è¯¢å±æ€§
 // S2S_QUERY_PLAYER_ACK
 message S2SQueryPlayerAck
 {
@@ -564,7 +564,7 @@ message S2SQueryPlayerAck
 	required PBObject pbobject = 2;
 }
 
-// ÉèÖÃÓÊ¼ş×´Ì¬ÇëÇó
+// è®¾ç½®é‚®ä»¶çŠ¶æ€è¯·æ±‚
 // S2S_UPDATE_MAIL_FLAG_REQ
 message S2SUpdateMailFlagReq
 {
@@ -574,7 +574,7 @@ message S2SUpdateMailFlagReq
 	required uint32 flag = 4;
 }
 
-// ÉèÖÃÓÊ¼ş×´Ì¬ÏìÓ¦
+// è®¾ç½®é‚®ä»¶çŠ¶æ€å“åº”
 // S2S_UPDATE_MAIL_FLAG_ACK
 message S2SUpdateMailFlagAck
 {
@@ -587,26 +587,26 @@ message S2SUpdateMailFlagAck
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-// Íæ¼Ò¾´¾ÆÇëÇó
+// ç©å®¶æ•¬é…’è¯·æ±‚
 //S2S_PLAYER_TOAST_REQ
 message S2SPlayerToastReq
 {
-	required uint32 selfplayerid = 1;			// ¾´¾ÆÈË
-	required uint32 targetplayerid = 2;         // ±»¾´¾ÆÈË
-	required uint32 serverid = 3;         		// ·şÎñÆ÷id
+	required uint32 selfplayerid = 1;			// æ•¬é…’äºº
+	required uint32 targetplayerid = 2;         // è¢«æ•¬é…’äºº
+	required uint32 serverid = 3;         		// æœåŠ¡å™¨id
 }
 
-//Íæ¼Ò¾´¾Æ»ØÀ¡
+//ç©å®¶æ•¬é…’å›é¦ˆ
 //S2S_PLAYER_TOAST_ACK
 message S2SPlayerToastAck
 {
-	required uint32 result = 1;					// ¾´¾Æ½á¹û
-	required uint32 playerid = 2;				// ¾´¾ÆÈË
-	required uint32 targetplayerid = 3;			// ±»¾´¾ÆÈË
-	required uint32 targetserverid = 4;			// ±»¾´¾ÆÈËserverid
+	required uint32 result = 1;					// æ•¬é…’ç»“æœ
+	required uint32 playerid = 2;				// æ•¬é…’äºº
+	required uint32 targetplayerid = 3;			// è¢«æ•¬é…’äºº
+	required uint32 targetserverid = 4;			// è¢«æ•¬é…’äººserverid
 }
 
-// ²éÑ¯×ÜµÄ¾´¾Æ´ÎÊıÇëÇó
+// æŸ¥è¯¢æ€»çš„æ•¬é…’æ¬¡æ•°è¯·æ±‚
 //S2S_QUERY_TOAST_COUNT_REQ
 message S2SQueryToastCountReq
 {
@@ -617,16 +617,16 @@ message S2SQueryToastCountReq
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-// ¸üĞÂºÃÓÑ¶È·´À¡
+// æ›´æ–°å¥½å‹åº¦åé¦ˆ
 // S2S_UPDATE_FRIENDLINESS_ACK
 message S2SUpdateFriendLinessAck
 {
-	required uint32 playerid = 1;	// ÉêÇëid
-	required uint32 targetplayerid = 2;	// ¶Ô·½id
-	required uint32 friendliness = 3;	// ºÃÓÑ¶È
+	required uint32 playerid = 1;	// ç”³è¯·id
+	required uint32 targetplayerid = 2;	// å¯¹æ–¹id
+	required uint32 friendliness = 3;	// å¥½å‹åº¦
 }
 
-// ´´½¨Æ¥ÅäĞ¡×é
+// åˆ›å»ºåŒ¹é…å°ç»„
 // S2S_CREATE_MATCH_GROUP_REQ
 message S2SCreateMatchGroupReq
 {
@@ -637,7 +637,7 @@ message S2SCreateMatchGroupReq
 	required uint32 playerid = 5;
 }
 
-// ¸üĞÂ¶ÓÎéĞÅÏ¢
+// æ›´æ–°é˜Ÿä¼ä¿¡æ¯
 // S2S_UPDATE_GROUP_MATCH_REQ
 message S2SUpdateGroupMatchReq
 {
@@ -647,7 +647,7 @@ message S2SUpdateGroupMatchReq
 	required uint32 playerid = 4;
 }
 
-// ´´½¨Æ¥ÅäĞ¡×é
+// åˆ›å»ºåŒ¹é…å°ç»„
 // S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ
 message S2SCreateMatchGroupToShardReq
 {
@@ -658,48 +658,48 @@ message S2SCreateMatchGroupToShardReq
 	required uint32 playerid = 5;
 }
 
-// ½ÓÊÕµ½×é¶ÓÇëÇó
+// æ¥æ”¶åˆ°ç»„é˜Ÿè¯·æ±‚
 // S2S_RECEIVE_INVITE_MATCH_GROUP_REQ
 message S2SReceiveInviteMatchGroupReq
 {
-	required uint32 playerid = 1;		 // Íæ¼Òid
-	required uint64 groupid = 2;		 // ¶ÓÎéid
-	required PBObject inviter = 3;		 // ÑûÇëÕß(BasicPlayer)
-	required string source = 4;			 // ´ÓÄÄÀï·¢ÆğÑûÇë
-	required uint32 matchid = 5;		 // Æ¥ÅäÄ£Ê½
-	required uint32 inviterplayerid = 6; // ÑûÇëÕßid
-	required uint32 inviterserverid = 7; // ·şÎñÆ÷id
-	required string playername = 8;		 // ±»ÑûÇëÍæ¼ÒÃû×Ö
+	required uint32 playerid = 1;		 // ç©å®¶id
+	required uint64 groupid = 2;		 // é˜Ÿä¼id
+	required PBObject inviter = 3;		 // é‚€è¯·è€…(BasicPlayer)
+	required string source = 4;			 // ä»å“ªé‡Œå‘èµ·é‚€è¯·
+	required uint32 matchid = 5;		 // åŒ¹é…æ¨¡å¼
+	required uint32 inviterplayerid = 6; // é‚€è¯·è€…id
+	required uint32 inviterserverid = 7; // æœåŠ¡å™¨id
+	required string playername = 8;		 // è¢«é‚€è¯·ç©å®¶åå­—
 }
 
-// Í¬ÒâÍæ¼ÒÑûÇëÇëÇó
+// åŒæ„ç©å®¶é‚€è¯·è¯·æ±‚
 // S2S_CONSENT_INVITE_MATCH_GROUP_REQ
 message S2SConsentInviteMatchGroupReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
-	optional PBObject pbmember = 4;		// ¶ÓÔ±ĞÅÏ¢
+	required uint64 groupid = 1;		// é˜Ÿä¼id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
+	optional PBObject pbmember = 4;		// é˜Ÿå‘˜ä¿¡æ¯
 }
 
-// Í¬ÒâÍæ¼ÒÑûÇëÇëÇó
+// åŒæ„ç©å®¶é‚€è¯·è¯·æ±‚
 // S2S_ADD_MATCH_GROUP_MEMBER_REQ
 message S2SAddMatchGroupMemberReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
-	optional PBObject pbmember = 4;		// ¶ÓÔ±ĞÅÏ¢
+	required uint64 groupid = 1;		// é˜Ÿä¼id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
+	optional PBObject pbmember = 4;		// é˜Ÿå‘˜ä¿¡æ¯
 }
 
-// Ìí¼ÓÆ¥Åä¶ÓÔ±
+// æ·»åŠ åŒ¹é…é˜Ÿå‘˜
 // S2S_ADD_MATCH_GROUP_MEMBER_ACK
 message S2SAddMatchGroupMemberAck
 {
 	required PBObject pbmember = 1;
 }
 
-// Í¨Öª¶ÓÎéĞÅÏ¢
+// é€šçŸ¥é˜Ÿä¼ä¿¡æ¯
 // S2S_TELL_MATCH_GROUP_DATA_ACK
 message S2STellMatchGroupDataAck
 {
@@ -708,17 +708,17 @@ message S2STellMatchGroupDataAck
 	optional uint32 captainid = 3;
 	optional uint32 maxcount = 4;
 	optional uint32 matchid = 5;
-	optional bool newadd = 6;		// ÊÇ·ñĞÂ¼ÓÈë¶ÓÎé
+	optional bool newadd = 6;		// æ˜¯å¦æ–°åŠ å…¥é˜Ÿä¼
 }
 
-// Ìí¼ÓÆ¥Åä¶ÓÔ±
+// æ·»åŠ åŒ¹é…é˜Ÿå‘˜
 // S2S_REMOVE_MATCH_GROUP_MEMBER_ACK
 message S2SRemoveMatchGroupMemberAck
 {
 	required uint32 memberid = 1;
 }
 
-// Àë¿ª¶ÓÎéÇëÇó
+// ç¦»å¼€é˜Ÿä¼è¯·æ±‚
 // S2S_LEAVE_MATCH_GROUP_REQ
 message S2SLeaveMatchGroupReq
 {
@@ -726,7 +726,7 @@ message S2SLeaveMatchGroupReq
 	required uint32 playerid = 2;	
 }
 
-// Ìß³ö¶ÓÔ±
+// è¸¢å‡ºé˜Ÿå‘˜
 // S2S_KICK_MATCH_GROUP_REQ
 message S2SKickMatchGroupReq
 {
@@ -736,154 +736,154 @@ message S2SKickMatchGroupReq
 	required uint32 memberid = 4;	
 }
 
-// Àë¿ª¶ÓÎé
+// ç¦»å¼€é˜Ÿä¼
 // S2S_LEAVE_MATCH_GROUP_ACK
 message S2SLeaveMatchGroupAck
 {
 	required uint32 playerid = 1;	
 }
 
-// ÉêÇë¼ÓÈë¶ÓÎé
+// ç”³è¯·åŠ å…¥é˜Ÿä¼
 // S2S_APPLY_MATCH_GROUP_REQ
 message S2SApplyMatchGroupReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
-	required PBObject pbmember = 4;		// ¶ÓÔ±ĞÅÏ¢
+	required uint64 groupid = 1;		// é˜Ÿä¼id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
+	required PBObject pbmember = 4;		// é˜Ÿå‘˜ä¿¡æ¯
 }
 
-// ÉêÇë¼ÓÈë¶ÓÎé
+// ç”³è¯·åŠ å…¥é˜Ÿä¼
 // S2S_APPLY_MATCH_GROUP_ACK
 message S2SApplyMatchGroupAck
 {
 	required uint32 playerid = 1;
-	required PBObject pbmember = 2;		// ¶ÓÔ±ĞÅÏ¢
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
+	required PBObject pbmember = 2;		// é˜Ÿå‘˜ä¿¡æ¯
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
 }
 
 
-// »Ø¸´ÉêÇë¼ÓÈë¶ÓÎé
+// å›å¤ç”³è¯·åŠ å…¥é˜Ÿä¼
 // S2S_CONSENT_APPLY_MATCH_GROUP_ACK
 message S2SConsentApplyMatchGroupAck
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
-	required uint32 playerid = 2;		// ÉêÇëÈËid
-	required uint32 captainid = 3;		// ¶Ó³¤id
-	required uint32 serverid = 4;		// ·şÎñÆ÷id
-	required string playername = 5;		// Íæ¼ÒÃû×Ö
+	required uint64 groupid = 1;		// é˜Ÿä¼id
+	required uint32 playerid = 2;		// ç”³è¯·äººid
+	required uint32 captainid = 3;		// é˜Ÿé•¿id
+	required uint32 serverid = 4;		// æœåŠ¡å™¨id
+	required string playername = 5;		// ç©å®¶åå­—
 }
 
-// ÉÏÏß²éÑ¯¶ÓÎéĞÅÏ¢
+// ä¸Šçº¿æŸ¥è¯¢é˜Ÿä¼ä¿¡æ¯
 // S2S_ONLINE_QUERY_MATCH_GROUP_REQ
 message S2SOnLineQueryMatchGroupReq
 {
-	required uint64 groupid = 1;	// ¶ÓÎéid
-	required uint32 playerid = 2;	// Íæ¼Òid
-	required uint32 serverid = 3;	// ·şÎñÆ÷id
+	required uint64 groupid = 1;	// é˜Ÿä¼id
+	required uint32 playerid = 2;	// ç©å®¶id
+	required uint32 serverid = 3;	// æœåŠ¡å™¨id
 }
 
-// ÀëÏß¸üĞÂ¶ÓÎéĞÅÏ¢
+// ç¦»çº¿æ›´æ–°é˜Ÿä¼ä¿¡æ¯
 // S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ
 message S2SOffLineUpdateMatchGroupReq
 {
-	required uint64 groupid = 1;	// ¶ÓÎéid
-	required uint32 playerid = 2;	// Íæ¼Òid
+	required uint64 groupid = 1;	// é˜Ÿä¼id
+	required uint32 playerid = 2;	// ç©å®¶id
 }
 
-// ¸üĞÂ¶ÓÔ±µÄ»ù´¡ĞÅÏ¢
+// æ›´æ–°é˜Ÿå‘˜çš„åŸºç¡€ä¿¡æ¯
 // S2S_UPDATE_GROUP_MEMBER_REQ
 message S2SUpdateGroupMemberReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎé
-	required uint32 memberid = 2;		// ¶ÓÔ±id
-	required string dataname = 3;		// ÊôĞÔÃû³Æ
-	required PBStrings pbstrings = 4;	// ¸üĞÂÊıÖµ
+	required uint64 groupid = 1;		// é˜Ÿä¼
+	required uint32 memberid = 2;		// é˜Ÿå‘˜id
+	required string dataname = 3;		// å±æ€§åç§°
+	required PBStrings pbstrings = 4;	// æ›´æ–°æ•°å€¼
 }
 
-// ¸üĞÂ¶ÓÔ±µÄ»ù´¡ĞÅÏ¢
+// æ›´æ–°é˜Ÿå‘˜çš„åŸºç¡€ä¿¡æ¯
 // S2S_UPDATE_GROUP_MEMBER_ACK
 message S2SUpdateGroupMemberAck
 {
-	required uint32 memberid = 1;		// ¶ÓÔ±id
-	required string dataname = 2;		// ÊôĞÔÃû³Æ
-	required PBStrings pbstrings = 3;	// ¸üĞÂÊıÖµ
+	required uint32 memberid = 1;		// é˜Ÿå‘˜id
+	required string dataname = 2;		// å±æ€§åç§°
+	required PBStrings pbstrings = 3;	// æ›´æ–°æ•°å€¼
 }
 
-// ±ä¸üÎª¶Ó³¤
+// å˜æ›´ä¸ºé˜Ÿé•¿
 // S2S_UPDATE_GROUP_DATA_ACK
 message S2SUpdateGroupDataAck
 {
-	repeated PBString pbstring = 1;	// ¸üĞÂÊıÖµ
+	repeated PBString pbstring = 1;	// æ›´æ–°æ•°å€¼
 }
 
 
-// ¸üĞÂ·Ã¿ÍÁĞ±í
+// æ›´æ–°è®¿å®¢åˆ—è¡¨
 // S2S_UPDATE_GUEST_LIST_REQ
 message S2SUpdateGuestListReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 guestid = 2;		// ·Ã¿Íid
-	required uint64 guesttime = 3;		// °İ·ÃÊ±¼ä´Á
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 guestid = 2;		// è®¿å®¢id
+	required uint64 guesttime = 3;		// æ‹œè®¿æ—¶é—´æˆ³
 }
 
-// ²éÑ¯·Ã¿ÍĞÅÏ¢ÇëÇó
+// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯è¯·æ±‚
 // S2S_QUERY_GUEST_REQ
 message S2SQueryGuestReq
 {
-	required uint32 playerid = 1;		// ·¢ÆğÇëÇóµÄÍæ¼Òid
-	required uint32 queryid = 2;		// ±»²éÑ¯µÄÍæ¼Òid
-	required uint64 querytime = 3;		// ÇëÇóÊ±¼ä´Á
+	required uint32 playerid = 1;		// å‘èµ·è¯·æ±‚çš„ç©å®¶id
+	required uint32 queryid = 2;		// è¢«æŸ¥è¯¢çš„ç©å®¶id
+	required uint64 querytime = 3;		// è¯·æ±‚æ—¶é—´æˆ³
 }
 
-// ²éÑ¯·Ã¿ÍĞÅÏ¢»ØÀ¡
+// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯å›é¦ˆ
 // S2S_QUERY_GUEST_ACK
 message S2SQueryGuestAck
 {
-	required uint32 playerid = 1;		// ·¢ÆğÇëÇóµÄÍæ¼Òid
-	required uint32 queryid = 2;		// ±»²éÑ¯µÄÍæ¼Òid
-	required uint32 guestcount = 3;		// ±¾ÔÂ·Ã¿ÍÊıÁ¿
-	repeated PBGuestData guestdata = 4;	// ×î½ü·Ã¿ÍĞÅÏ¢
+	required uint32 playerid = 1;		// å‘èµ·è¯·æ±‚çš„ç©å®¶id
+	required uint32 queryid = 2;		// è¢«æŸ¥è¯¢çš„ç©å®¶id
+	required uint32 guestcount = 3;		// æœ¬æœˆè®¿å®¢æ•°é‡
+	repeated PBGuestData guestdata = 4;	// æœ€è¿‘è®¿å®¢ä¿¡æ¯
 }
 
-// ĞÂÍæ¼ÒµÇÂ½ÓÊ¼ş·şÎñ
+// æ–°ç©å®¶ç™»é™†é‚®ä»¶æœåŠ¡
 // S2S_NEW_PLAYER_LOGIN_MAIL_REQ
 message S2SNewPlayerLoginMailReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
+	required uint32 playerid = 1;		// ç©å®¶id
 }
 
-// ¸üĞÂÅÅĞĞ°ñÊı¾İ
+// æ›´æ–°æ’è¡Œæ¦œæ•°æ®
 // S2S_UPDATE_RANK_DATA_REQ
 message S2SUpdateRankDataReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 rankid = 2;		// °ñµ¥id
-	required uint32 zoneid = 3;		// Ğ¡Çøid
-	required PBRankData pbrankdata = 4;	// ÅÅĞĞ°ñÊı¾İ
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 rankid = 2;		// æ¦œå•id
+	required uint32 zoneid = 3;		// å°åŒºid
+	required PBRankData pbrankdata = 4;	// æ’è¡Œæ¦œæ•°æ®
 }
 
-// ²éÑ¯È«·şÅÅĞĞ°ñ
+// æŸ¥è¯¢å…¨æœæ’è¡Œæ¦œ
 // S2S_QUERY_RANK_LIST_REQ
 message S2SQueryRankListReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 serverid = 2;		// ·şÎñÆ÷id
-	required uint32 rankid = 3;			// ÅÅĞĞ°ñid
-	required uint32 zoneid = 4;			// Ğ¡Çøid
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 serverid = 2;		// æœåŠ¡å™¨id
+	required uint32 rankid = 3;			// æ’è¡Œæ¦œid
+	required uint32 zoneid = 4;			// å°åŒºid
 }
 
-// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ
+// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œ
 // S2S_QUERY_FRIEND_RANK_LIST_REQ
 message S2SQueryFriendRankListReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 serverid = 2;		// ·şÎñÆ÷id
-	required uint32 rankid = 3;			// °ñµ¥ÀàĞÍ
-	repeated uint32 friendid = 4;		// ´ı²éÑ¯µÄÍæ¼ÒºÃÓÑid
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 serverid = 2;		// æœåŠ¡å™¨id
+	required uint32 rankid = 3;			// æ¦œå•ç±»å‹
+	repeated uint32 friendid = 4;		// å¾…æŸ¥è¯¢çš„ç©å®¶å¥½å‹id
 }
 
-// Ìí¼Ó×î½üµÄÈËÓÎÏ·Êı¾İ
+// æ·»åŠ æœ€è¿‘çš„äººæ¸¸æˆæ•°æ®
 // S2S_ADD_RECENT_PLAYER_DATA_REQ
 message S2SAddRecentPlayerDataReq
 {
@@ -893,301 +893,301 @@ message S2SAddRecentPlayerDataReq
 	required PBStrings pbdata = 4;
 }
 
-// ÇëÇó×î½üÓÎÏ·ÁĞ±í
+// è¯·æ±‚æœ€è¿‘æ¸¸æˆåˆ—è¡¨
 // S2S_QUERY_RECENT_LIST_REQ
 message S2SQueryRecentListReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
+	required uint32 playerid = 1;		// ç©å®¶id
 }
 
-// Í¨Öª´¦Àí×î½üÓÎÏ·ÁĞ±í	
+// é€šçŸ¥å¤„ç†æœ€è¿‘æ¸¸æˆåˆ—è¡¨	
 // S2S_QUERY_RECENT_LIST_ACK
 message S2SQueryRecentListAck
 {
-	required uint32 playerid = 1;		// ½ÇÉ«id
-	repeated PBRelation pbrelation = 2;	// ×î½üÍæ¼ÒÊı¾İ	
+	required uint32 playerid = 1;		// è§’è‰²id
+	repeated PBRelation pbrelation = 2;	// æœ€è¿‘ç©å®¶æ•°æ®	
 }
 
-// ´´½¨°ïÅÉÇëÇó
+// åˆ›å»ºå¸®æ´¾è¯·æ±‚
 // S2S_CREATE_GUILD_REQ
 message S2SCreateGuidReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required uint32 serverid = 2;	//·şÎñÆ÷id
-	required string name = 3;	// Íæ¼ÒÃû×Ö
-	required string guildname = 4;	// °ïÅÉÃû×Ö
-	required uint32 medal = 5;	// °ïÅÉÑ«ÕÂ
-	optional string manifesto = 6;	// °ïÅÉĞûÑÔ 
+	required uint32 playerid = 1;	// ç©å®¶id
+	required uint32 serverid = 2;	//æœåŠ¡å™¨id
+	required string name = 3;	// ç©å®¶åå­—
+	required string guildname = 4;	// å¸®æ´¾åå­—
+	required uint32 medal = 5;	// å¸®æ´¾å‹‹ç« 
+	optional string manifesto = 6;	// å¸®æ´¾å®£è¨€ 
 }
 
-// ´´½¨°ïÅÉÇëÇó·¢ËÍµ½shard
+// åˆ›å»ºå¸®æ´¾è¯·æ±‚å‘é€åˆ°shard
 // S2S_CREATE_GUILD_TO_SHARD_REQ
 message S2SCreateGuildToShardReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required uint32 serverid = 2;	//·şÎñÆ÷id
-	required string name = 3;	// Íæ¼ÒÃû×Ö
-	required string guildname = 4;	// °ïÅÉÃû×Ö
-	required uint32 medal = 5;	// °ïÅÉÑ«ÕÂ
-	optional string manifesto = 6;	// °ïÅÉĞûÑÔ
-	required uint64 guildid = 7;	// °ïÅÉid
+	required uint32 playerid = 1;	// ç©å®¶id
+	required uint32 serverid = 2;	//æœåŠ¡å™¨id
+	required string name = 3;	// ç©å®¶åå­—
+	required string guildname = 4;	// å¸®æ´¾åå­—
+	required uint32 medal = 5;	// å¸®æ´¾å‹‹ç« 
+	optional string manifesto = 6;	// å¸®æ´¾å®£è¨€
+	required uint64 guildid = 7;	// å¸®æ´¾id
 }
 
-// ´´½¨°ïÅÉ·µ»Ø
+// åˆ›å»ºå¸®æ´¾è¿”å›
 // S2S_CREATE_GUILD_ACK
 message S2SCreateGuildAck
 {
-	required uint32 code = 1;	// ´¦Àí½á¹û
-	required uint32 playerid = 2;	//Íæ¼Òid
-	required uint64 guildid = 3;	// °ïÅÉid
-	required uint32 medal = 4;	// °ïÅÉÑ«ÕÂ
-	optional string manifesto = 5;	// °ïÅÉĞûÑÔ	
+	required uint32 code = 1;	// å¤„ç†ç»“æœ
+	required uint32 playerid = 2;	//ç©å®¶id
+	required uint64 guildid = 3;	// å¸®æ´¾id
+	required uint32 medal = 4;	// å¸®æ´¾å‹‹ç« 
+	optional string manifesto = 5;	// å¸®æ´¾å®£è¨€	
 }
 
-// ¸üĞÂ°ïÅÉ³ÉÔ±»ù´¡ĞÅÏ¢
+// æ›´æ–°å¸®æ´¾æˆå‘˜åŸºç¡€ä¿¡æ¯
 // S2S_UPDATE_MEMBER_BASIC_DATA_REQ
 message S2SUpdateMemberBasicDataReq
 {
-	required uint32 playerid = 1;	// ½ÇÉ«id
-	required uint64 guildid = 2;	// °ïÅÉid
-	repeated PBString pbdata = 3;   // ½ÇÉ«»ù´¡ĞÅÏ¢
+	required uint32 playerid = 1;	// è§’è‰²id
+	required uint64 guildid = 2;	// å¸®æ´¾id
+	repeated PBString pbdata = 3;   // è§’è‰²åŸºç¡€ä¿¡æ¯
 }
 
 
-// ÑûÇëºÃÓÑ¼ÓÈë°ïÅÉ
+// é‚€è¯·å¥½å‹åŠ å…¥å¸®æ´¾
 // S2S_INVITE_GUILD_REQ
 message S2SInviteGuildReq
 {
-	required uint64 guildid = 1;	// ÑûÇë¼ÓÈëµÄ°ïÅÉid
-	required uint32 invitor = 2;	// ÑûÇëÕßid
-	required uint32 invitedid = 3;	// ±»ÑûÇëÕßµÄid
-	required uint32 serverid = 4;	// ÑûÇëÕß·şÎñId
+	required uint64 guildid = 1;	// é‚€è¯·åŠ å…¥çš„å¸®æ´¾id
+	required uint32 invitor = 2;	// é‚€è¯·è€…id
+	required uint32 invitedid = 3;	// è¢«é‚€è¯·è€…çš„id
+	required uint32 serverid = 4;	// é‚€è¯·è€…æœåŠ¡Id
 }
 
-// ÑûÇëºÃÓÑ¼ÓÈë°ïÅÉ·´À¡
+// é‚€è¯·å¥½å‹åŠ å…¥å¸®æ´¾åé¦ˆ
 // S2S_INVITE_GUILD_ACK
 message S2SInviteGuildAck
 {
-	required uint64 guildid = 1;	// ÑûÇë¼ÓÈëµÄ°ïÅÉid
-	required uint32 playerid = 2;	// ÑûÇëÕßid
-	required uint32 invitedid = 3;	// ±»ÑûÇëÕßµÄid
+	required uint64 guildid = 1;	// é‚€è¯·åŠ å…¥çš„å¸®æ´¾id
+	required uint32 playerid = 2;	// é‚€è¯·è€…id
+	required uint32 invitedid = 3;	// è¢«é‚€è¯·è€…çš„id
 }
 
-// ÉêÇë¼ÓÈë°ïÅÉÇëÇó
+// ç”³è¯·åŠ å…¥å¸®æ´¾è¯·æ±‚
 // S2S_APPLY_GUILD_REQ
 message S2SApplyGuildReq
 {
-	required uint64 guildid = 1;			// ÉêÇë¼ÓÈëµÄ°ïÅÉ
-	required uint32 invitor = 2;			// ÍÆ¼öÕßid
-	required uint32 playerid = 3;			// ÉêÇëÕßid
+	required uint64 guildid = 1;			// ç”³è¯·åŠ å…¥çš„å¸®æ´¾
+	required uint32 invitor = 2;			// æ¨èè€…id
+	required uint32 playerid = 3;			// ç”³è¯·è€…id
 }
 
-// ÉêÇë¼ÓÈë°ïÅÉ·´À¡
+// ç”³è¯·åŠ å…¥å¸®æ´¾åé¦ˆ
 // S2S_APPLY_GUILD_ACK
 message S2SApplyGuildAck
 {
-	required uint32 playerid = 1;			// ÉêÇëÕßid
-	required uint64 guildid = 2;			// ÉêÇë¼ÓÈëµÄ°ïÅÉ
-	required uint32 code = 3;			// ±êÖ¾Î»
+	required uint32 playerid = 1;			// ç”³è¯·è€…id
+	required uint64 guildid = 2;			// ç”³è¯·åŠ å…¥çš„å¸®æ´¾
+	required uint32 code = 3;			// æ ‡å¿—ä½
 }
 
-// Íæ¼Ò°ïÅÉ×´Ì¬±ä»¯
+// ç©å®¶å¸®æ´¾çŠ¶æ€å˜åŒ–
 // S2S_PLAYER_GUILD_CHANGE_REQ
 message S2SPlayerGuildChangeReq
 {
-	required uint32 playerid = 1;			// Íæ¼Òid
-	required uint64 guildid = 2;			// °ïÅÉid
-	required uint32 code = 3;			// ×´Ì¬Âë//¼ÓÈë°ïÅÉ//ÍË³ö°ïÅÉµÈ
+	required uint32 playerid = 1;			// ç©å®¶id
+	required uint64 guildid = 2;			// å¸®æ´¾id
+	required uint32 code = 3;			// çŠ¶æ€ç //åŠ å…¥å¸®æ´¾//é€€å‡ºå¸®æ´¾ç­‰
 }
 
-// Íæ¼ÒÍË³ö°ïÅÉ
+// ç©å®¶é€€å‡ºå¸®æ´¾
 // S2S_EXIT_GUILD_REQ
 message S2SExitGuildReq
 {
-	required uint64 guildid = 1;			// °ïÅÉid
-	required uint32 playerid = 2;			// Íæ¼Òid
-	required uint32 serverid = 3;			// ·şÎñÆ÷id
+	required uint64 guildid = 1;			// å¸®æ´¾id
+	required uint32 playerid = 2;			// ç©å®¶id
+	required uint32 serverid = 3;			// æœåŠ¡å™¨id
 }
 
-// ×ªÈÃ°ïÅÉÇëÇó
+// è½¬è®©å¸®æ´¾è¯·æ±‚
 // S2S_TRANSFER_MASTER_REQ
 message S2STransferMasterReq
 {
-	required uint64 guildid = 1;			// °ïÅÉid
-	required uint32 playerid = 2;			// ÏÖÈÎ°ïÖ÷id
-	required uint32 newmasterid = 3;		// ĞÂµÄ°ïÖ÷id
-	required uint32 serverid = 4;			// ·şÎñÆ÷id
+	required uint64 guildid = 1;			// å¸®æ´¾id
+	required uint32 playerid = 2;			// ç°ä»»å¸®ä¸»id
+	required uint32 newmasterid = 3;		// æ–°çš„å¸®ä¸»id
+	required uint32 serverid = 4;			// æœåŠ¡å™¨id
 }
 
-// ÉóºË°ïÅÉ³ÉÔ±¼ÓÈë
+// å®¡æ ¸å¸®æ´¾æˆå‘˜åŠ å…¥
 // S2S_REVIEW_APPLY_REQ
 message S2SReviewApplyReq
 {
-	required uint32 playerid = 1;			// ²Ù×÷Õßid
-	optional uint32 dealplayerid = 2;		// ±»²Ù×÷ÈËid
-	required uint32 operatortype = 3;		// ²Ù×÷ÀàĞÍ
-	required uint64 guildid= 4;			// °ïÅÉid
-	required uint32 serverid = 5;			// ·şÎñÆ÷id
+	required uint32 playerid = 1;			// æ“ä½œè€…id
+	optional uint32 dealplayerid = 2;		// è¢«æ“ä½œäººid
+	required uint32 operatortype = 3;		// æ“ä½œç±»å‹
+	required uint64 guildid= 4;			// å¸®æ´¾id
+	required uint32 serverid = 5;			// æœåŠ¡å™¨id
 }
 
-// ½âÉ¢°ïÅÉ
+// è§£æ•£å¸®æ´¾
 // S2S_DISSOLVE_GUILD_REQ
 message S2SDissolveGuildReq
 {
-	required uint32 playerid =1;			// ²Ù×÷Õßid
-	required uint64 guildid = 2;			// °ïÅÉid
-	required uint32 serverid = 3;			// ·şÎñÆ÷id
+	required uint32 playerid =1;			// æ“ä½œè€…id
+	required uint64 guildid = 2;			// å¸®æ´¾id
+	required uint32 serverid = 3;			// æœåŠ¡å™¨id
 }
 
-// ĞŞ¸Ä°ïÅÉ»ÕÕÂ
+// ä¿®æ”¹å¸®æ´¾å¾½ç« 
 // S2S_MODIFY_MEDAL_REQ
 message S2SModifyMedalReq
 {
-	required uint32 playerid = 1;			// ²Ù×÷Õßid
-	required uint64 guildid = 2;			// °ïÅÉid
-	required uint32 serverid =3;			// ·şÎñÆ÷id
-	required uint32 newmedal = 4;		// ĞÂµÄ»ÕÕÂid
+	required uint32 playerid = 1;			// æ“ä½œè€…id
+	required uint64 guildid = 2;			// å¸®æ´¾id
+	required uint32 serverid =3;			// æœåŠ¡å™¨id
+	required uint32 newmedal = 4;		// æ–°çš„å¾½ç« id
 }
 
-// ÇëÇó°ïÅÉÁĞ±í
+// è¯·æ±‚å¸®æ´¾åˆ—è¡¨
 // S2S_QUERY_GUILD_LIST_REQ
 message S2SQueryGuildListReq
 {
-	required uint32 playerid = 1;			// ²Ù×÷Õßid
-	required uint32 serverid = 2;			// ·şÎñÆ÷id
-	optional PBGuildIdArray guilds = 3;	// Òª²éÑ¯µÄ°ïÅÉid
-	required uint32 cursor = 4;		// ²éÑ¯µÄÓÎ±ê£¨´Ó0¿ªÊ¼£©
+	required uint32 playerid = 1;			// æ“ä½œè€…id
+	required uint32 serverid = 2;			// æœåŠ¡å™¨id
+	optional PBGuildIdArray guilds = 3;	// è¦æŸ¥è¯¢çš„å¸®æ´¾id
+	required uint32 cursor = 4;		// æŸ¥è¯¢çš„æ¸¸æ ‡ï¼ˆä»0å¼€å§‹ï¼‰
 }
 
-// ÇëÇóÌßÈË
+// è¯·æ±‚è¸¢äºº
 // S2S_KICK_MEMBER_REQ
 message S2SKickMemberReq
 {
-	required uint32 playerid = 1;			// ²Ù×÷Õßid
-	required uint64 guildid = 2;			// °ïÅÉid
-	required uint32 toplayerid = 3;			// ±»ÌßÈËµÄid
-	required uint32 serverid = 4;			// ·şÎñÆ÷id
+	required uint32 playerid = 1;			// æ“ä½œè€…id
+	required uint64 guildid = 2;			// å¸®æ´¾id
+	required uint32 toplayerid = 3;			// è¢«è¸¢äººçš„id
+	required uint32 serverid = 4;			// æœåŠ¡å™¨id
 }
 
-// µÇÂ¼ÇëÇó×ÔÉí°ïÅÉÊı¾İ
+// ç™»å½•è¯·æ±‚è‡ªèº«å¸®æ´¾æ•°æ®
 // S2S_LOGIN_QUERY_GUILD_REQ
 message S2SLoginQueryGuildReq
 {
-	required uint64 guildid = 1;			// °ïÅÉid
-	required uint32 playerid = 2;			// Íæ¼ÒId
-	required uint32 serverid = 3;			// ·şÎñÆ÷id
+	required uint64 guildid = 1;			// å¸®æ´¾id
+	required uint32 playerid = 2;			// ç©å®¶Id
+	required uint32 serverid = 3;			// æœåŠ¡å™¨id
 }
 
-// ÇëÇó°ïÅÉÊı¾İ·µ»Ø
+// è¯·æ±‚å¸®æ´¾æ•°æ®è¿”å›
 // S2S_LOGIN_QUERY_GUILD_ACK
 message S2SLoginQueryGuildAck
 {
-	required uint32 playerid = 1;			// ½ÇÉ«id
-	required PBObject guilddata = 2;		// °ïÅÉÊı¾İ
-	required bool showapplicant = 3;		// ÊÇ·ñÕ¹Ê¾ÉêÇëÁĞ±í
-	required uint64 guildid = 4;			// °ïÅÉid
+	required uint32 playerid = 1;			// è§’è‰²id
+	required PBObject guilddata = 2;		// å¸®æ´¾æ•°æ®
+	required bool showapplicant = 3;		// æ˜¯å¦å±•ç¤ºç”³è¯·åˆ—è¡¨
+	required uint64 guildid = 4;			// å¸®æ´¾id
 }
 
-// ¸üĞÂ°ïÅÉ³ÉÔ±Êı¾İ
+// æ›´æ–°å¸®æ´¾æˆå‘˜æ•°æ®
 // S2S_UPDATE_GUILD_DATA_REQ
 message S2SUpdateGuildDataReq
 {
 	required uint64 guildid = 1;
-	required uint32 playerid = 2;		// Íæ¼Òid
-	repeated PBString pbdata = 3;		// ÊôĞÔ
+	required uint32 playerid = 2;		// ç©å®¶id
+	repeated PBString pbdata = 3;		// å±æ€§
 }
 
-// °ïÅÉÉı¼¶
+// å¸®æ´¾å‡çº§
 // S2S_UPGRADE_GUILD_REQ
 message S2SUpgradeGuildReq
 {
-	required uint64 guildid = 1;		// °ïÅÉid
-	required uint32 playerid = 2;		// Íæ¼Òid
+	required uint64 guildid = 1;		// å¸®æ´¾id
+	required uint32 playerid = 2;		// ç©å®¶id
 }
 
-// °ïÅÉÉı¼¶·´À¡
+// å¸®æ´¾å‡çº§åé¦ˆ
 // S2S_UPGRADE_GUILD_ACK
 message S2SUpgradeGuildAck
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 level = 2;		// °ïÅÉµÈ¼¶
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 level = 2;		// å¸®æ´¾ç­‰çº§
 	required uint32 code = 3;		// retcode
 }
 
-// ÈÎÃü°ïÅÉ³ÉÔ±ÇëÇó
+// ä»»å‘½å¸®æ´¾æˆå‘˜è¯·æ±‚
 // S2S_APPOINT_GUILD_MEMBER_REQ
 message S2SAppointGuildMemberReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required uint64 guildid = 2;	// °ïÅÉid
-	required uint32 toplayerid = 3;	// ÈÎÃüÍæ¼ÒµÄid
-	required uint32 title = 4;		// ÈÎÃüµÄÖ°Î»
-	required uint32 serverid = 5;	// ·şÎñÆ÷id
+	required uint32 playerid = 1;	// ç©å®¶id
+	required uint64 guildid = 2;	// å¸®æ´¾id
+	required uint32 toplayerid = 3;	// ä»»å‘½ç©å®¶çš„id
+	required uint32 title = 4;		// ä»»å‘½çš„èŒä½
+	required uint32 serverid = 5;	// æœåŠ¡å™¨id
 }
 
-// ¸ù¾İ°ïÅÉÃû×ÖËÑË÷°ïÅÉĞÅÏ¢
+// æ ¹æ®å¸®æ´¾åå­—æœç´¢å¸®æ´¾ä¿¡æ¯
 // S2S_SEARCH_GUILD_BY_NAME_REQ
 message S2SSearchGuildByNameReq
 {
-	required string guildname = 1;		// °ïÅÉÃû×Ö
-	required uint32 serverid = 2;		// ·şÎñÆ÷id
-	required uint32 playerid = 3;		// Íæ¼Òid
+	required string guildname = 1;		// å¸®æ´¾åå­—
+	required uint32 serverid = 2;		// æœåŠ¡å™¨id
+	required uint32 playerid = 3;		// ç©å®¶id
 }
 
-// ÉèÖÃ°ïÅÉ¹ÜÀí¿ª¹Ø
+// è®¾ç½®å¸®æ´¾ç®¡ç†å¼€å…³
 // S2S_SET_GUILD_SWITCH_REQ
 message S2SSetGuildSwitchReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint64 guildid = 2;		// °ïÅÉid
-	required string type = 3;		// °ïÅÉ¹ÜÀíÀà±ğ
-	required uint32 flag = 4;		// ÉèÖÃµÄÖµ
-	required uint32 serverid = 5;		// ·şÎñÆ÷id
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint64 guildid = 2;		// å¸®æ´¾id
+	required string type = 3;		// å¸®æ´¾ç®¡ç†ç±»åˆ«
+	required uint32 flag = 4;		// è®¾ç½®çš„å€¼
+	required uint32 serverid = 5;		// æœåŠ¡å™¨id
 }
 
-// µÇÂ¼ÇëÇóguildid
+// ç™»å½•è¯·æ±‚guildid
 // S2S_LOGIN_QUERY_GUILDID_REQ
 message S2SLoginQueryGuildidReq
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint32 serverid = 2;		// ·şÎñÆ÷id
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint32 serverid = 2;		// æœåŠ¡å™¨id
 }
 
 // S2S_LOGIN_QUERY_GUILDID_ACK
 message S2SLoginQueryGuildidAck
 {
-	required uint32 playerid = 1;		// Íæ¼Òid
-	required uint64 guildid = 2;		// °ïÅÉid
+	required uint32 playerid = 1;		// ç©å®¶id
+	required uint64 guildid = 2;		// å¸®æ´¾id
 }
 
-// ²éÑ¯°ïÅÉÈÕÖ¾
+// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—
 // S2S_QUERY_GUILD_LOG_REQ
 message S2SQueryGuildLogReq
 {
-	required uint64 guildid= 1;		// °ïÅÉid
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required uint32 serverid = 3;		// ·şÎñÆ÷id
-	required uint32 beginpos = 4;		// ¿ªÊ¼Î»ÖÃ
-	required uint32 endpos = 5;		// ½áÊøÎ»ÖÃ
-	required uint32 page = 6;		// Ò³Êı
+	required uint64 guildid= 1;		// å¸®æ´¾id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required uint32 serverid = 3;		// æœåŠ¡å™¨id
+	required uint32 beginpos = 4;		// å¼€å§‹ä½ç½®
+	required uint32 endpos = 5;		// ç»“æŸä½ç½®
+	required uint32 page = 6;		// é¡µæ•°
 }
 
-// Ôö¼Ó°ïÅÉ»îÔ¾¶È
+// å¢åŠ å¸®æ´¾æ´»è·ƒåº¦
 // S2S_ADD_GUILD_ACTIVENESS_REQ
 message S2SAddGuildActivenessReq
 {
-	required uint64 guildid = 1;		// °ïÅÉid
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required uint32 activeness = 3;		// »îÔ¾¶È
+	required uint64 guildid = 1;		// å¸®æ´¾id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required uint32 activeness = 3;		// æ´»è·ƒåº¦
 }
 
 
 
-// GMÔö¼ÓÓÊ¼ş
+// GMå¢åŠ é‚®ä»¶
 // S2S_GM_ADD_MAIL_REQ
 message S2SGMAddMailReq
 {
-	optional PBPlayerIds playerids = 1;		// ½ÇÉ«id
-	required uint32 mailtype = 2;			// ÓÊ¼şÀàĞÍ
-	required PBMail pbmail = 3;			// ÓÊ¼şĞÅÏ¢
+	optional PBPlayerIds playerids = 1;		// è§’è‰²id
+	required uint32 mailtype = 2;			// é‚®ä»¶ç±»å‹
+	required PBMail pbmail = 3;			// é‚®ä»¶ä¿¡æ¯
 }

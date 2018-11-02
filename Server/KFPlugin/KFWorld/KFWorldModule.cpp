@@ -211,8 +211,8 @@ namespace KFrame
 
     void KFWorldModule::UpdateOnlineToAuth( uint32 accountid, uint32 playerid, bool online )
     {
-        static auto _url = _kf_ip_address->FindAuthAddress() + __KF_STRING__( onlinezone );
         static auto _world_url = _kf_http_server->GetHttpUrl();
+        static auto _update_url = _kf_option->GetString( __KF_STRING__( authurl ) ) + __KF_STRING__( onlinezone );
 
         // 在线服务器
         KFJson sendjson;
@@ -229,7 +229,7 @@ namespace KFrame
             sendjson.SetValue( __KF_STRING__( online ), 0 );
         }
 
-        _kf_http_client->StartMTHttpClient( _url, sendjson );
+        _kf_http_client->StartMTHttpClient( _update_url, sendjson );
 
         // 记录在线玩家数量
         __LOG_DEBUG__( "online player count=[{}]", _kf_online_list.Size() );

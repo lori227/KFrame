@@ -70,7 +70,7 @@ namespace KFrame
 
         // 测试服务器指定战场ip
         auto battleserverid = _invalid_int;
-        if ( KFGlobal::Instance()->_app_channel == KFServerEnum::LocalTest )
+        if ( KFGlobal::Instance()->_app_channel == KFMsg::Internal )
         {
             if ( kfmsg.has_battleserverid() )
             {

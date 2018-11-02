@@ -1,63 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Include">
-      <UniqueIdentifier>{ce94fc9a-c2dc-40f5-8e94-f213dd32d535}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{fea5ea44-2646-4e0e-a699-dbe20aba98ce}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="KFHttp.cpp" />
+    <ClCompile Include="KFHttpClient.cpp" />
+    <ClCompile Include="KFHttpCommon.cpp" />
+    <ClCompile Include="KFHttpData.cpp" />
+    <ClCompile Include="KFHttpFactory.cpp" />
+    <ClCompile Include="KFHttpHandle.cpp" />
+    <ClCompile Include="KFHttpsClient.cpp" />
+    <ClCompile Include="KFHttpServer.cpp" />
+    <ClCompile Include="KFHttpURL.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KFHttpFactory.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpHandle.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpServer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpClient.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpData.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpsClient.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttp.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="KFHttpCommon.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="KFHttpClient.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttp.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpCommon.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpData.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpFactory.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpHandle.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpsClient.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="KFHttpServer.h">
-      <Filter>Include</Filter>
-    </ClInclude>
+    <ClInclude Include="KFHttp.h" />
+    <ClInclude Include="KFHttpClient.h" />
+    <ClInclude Include="KFHttpCommon.h" />
+    <ClInclude Include="KFHttpData.h" />
+    <ClInclude Include="KFHttpFactory.h" />
+    <ClInclude Include="KFHttpHandle.h" />
+    <ClInclude Include="KFHttpsClient.h" />
+    <ClInclude Include="KFHttpServer.h" />
+    <ClInclude Include="KFURLCharacter.hpp" />
+    <ClInclude Include="KFHttpURL.h" />
   </ItemGroup>
 </Project>

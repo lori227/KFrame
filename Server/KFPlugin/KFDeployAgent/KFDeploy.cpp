@@ -64,7 +64,6 @@ namespace KFrame
 
     KFDeployData::KFDeployData()
     {
-        _app_channel = 0;
         _process_id = 0;
         _startup_time = 0;
         _zone_id = 0;
@@ -75,11 +74,14 @@ namespace KFrame
         _kf_launch = nullptr;
     }
 
-    bool KFDeployData::IsAppServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
-        if ( appchannel != _app_channel )
+        if ( zoneid != _invalid_int )
         {
-            return false;
+            if ( zoneid != _zone_id )
+            {
+                return false;
+            }
         }
 
         if ( appname == _globbing_str )
@@ -90,14 +92,6 @@ namespace KFrame
         if ( appname != _app_name )
         {
             return false;
-        }
-
-        if ( zoneid != _invalid_int )
-        {
-            if ( zoneid != _zone_id )
-            {
-                return false;
-            }
         }
 
         if ( apptype == _globbing_str )
@@ -132,7 +126,6 @@ namespace KFrame
 
         _app_name = values[ __KF_STRING__( appname ) ];
         _app_type = values[ __KF_STRING__( apptype ) ];
-        _app_channel = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( appchannel ) ] );
         _is_startup = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( startup ) ] );
         _is_debug = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( debug ) ] );
         _is_shutdown = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( shutdown ) ] );
@@ -141,6 +134,7 @@ namespace KFrame
         _agent_id = values[ __KF_STRING__( agentid ) ];
         _local_ip = values[ __KF_STRING__( localip ) ];
         _log_type = values[ __KF_STRING__( logtype ) ];
+        _service_type = values[ __KF_STRING__( service ) ];
     }
 
     void KFDeployData::SaveTo( MapString& values )
@@ -148,7 +142,6 @@ namespace KFrame
         values[ __KF_STRING__( appid ) ] = _app_id;
         values[ __KF_STRING__( appname ) ] = _app_name;
         values[ __KF_STRING__( apptype ) ] = _app_type;
-        values[ __KF_STRING__( appchannel ) ] = __TO_STRING__( _app_channel );
         values[ __KF_STRING__( shutdown ) ] = __TO_STRING__( _is_shutdown ? 1 : 0 );
         values[ __KF_STRING__( startup ) ] = __TO_STRING__( _is_startup ? 1 : 0 );
         values[ __KF_STRING__( debug ) ] = __TO_STRING__( _is_startup ? 1 : 0 );
@@ -157,6 +150,7 @@ namespace KFrame
         values[ __KF_STRING__( agentid ) ] = _agent_id;
         values[ __KF_STRING__( localip ) ] = _local_ip;
         values[ __KF_STRING__( logtype ) ] = _log_type;
+        values[ __KF_STRING__( service ) ] = _service_type;
     }
 
 }

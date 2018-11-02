@@ -17,11 +17,19 @@ namespace KFrame
     {
         enum MyEnum
         {
-            InternetTest = 1,			// 0 外网测试
-            InternetExperience = 2,		// 1 外网体验
+            TotalServerList = 1,	// 所有服务器列表
+            SelectServerData = 2,	// 选择服务器登录
+            ///////////////////////////////////////////
 
-            LocalDevelop = 100,			// 100 内网开发
-            LocalTest = 101,			// 101 内网测试
+            Local = 1,			// 内网
+            Internet = 2,		// 外网
+            ///////////////////////////////////////////
+
+            Debug = 1,			// 调试
+            Develop = 2,		// 研发
+            Beta = 3,			// 测试
+            Audit = 4,			// 审核
+            Online = 8,			// 正式
             ///////////////////////////////////////////
             ///////////////////////////////////////////
             DeployUpload = 1,			// 部署upload
@@ -77,6 +85,8 @@ namespace KFrame
             DirMaster = 121,			// 目录服务器master
             DirProxy = 122,				// 目录服务器proxy
             DirShard = 123,				// 目录服务器shard
+
+            BattleServer = 131,         // 战斗服务器( gs )
 
             ZoneMaster = 241,			// 小区服务器master
             ZoneWorld = 242,			// 小区服务器world

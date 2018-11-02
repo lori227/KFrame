@@ -1,1 +1,1 @@
-sh make_version.sh 100 debug
+sh make_version.sh 1 develop debug

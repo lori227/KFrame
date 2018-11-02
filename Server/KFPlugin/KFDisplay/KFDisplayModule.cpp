@@ -3,26 +3,6 @@
 
 namespace KFrame
 {
-    KFDisplayModule::KFDisplayModule()
-    {
-    }
-
-    KFDisplayModule::~KFDisplayModule()
-    {
-
-    }
-    void KFDisplayModule::InitModule()
-    {
-    }
-
-    void KFDisplayModule::BeforeRun()
-    {
-    }
-
-    void KFDisplayModule::BeforeShut()
-    {
-    }
-
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
     void KFDisplayModule::SendToClient( uint32 playerid, uint32 result, ListString& params )

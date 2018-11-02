@@ -11,10 +11,10 @@
 	<!--Name 游戏服名字, 最好是一个id映射到客户端的字串-->
 	<!--Ip Master服务器ip-->
 	<Zones>
-		<!-- 内网测试-->
-		<!--
-			<Zone Channel="100" Id="1" LogicId="1" Name="技术封测服" Ip="10.105.200.169"/>
-		-->
+		<!-- 内部调试 -->
+		<Zone Channel="1" Service="1" Id="2" LogicId="1" Name="鹏博封测服" Ip="192.168.1.44"/>
+		<Zone Channel="1" Service="1" Id="3" LogicId="1" Name="小兵封测服" Ip="192.168.1.58"/>
+		<Zone Channel="1" Service="1" Id="4" LogicId="1" Name="昭展封测服" Ip="192.168.1.57"/>
 	</Zones>
 </Config>
 

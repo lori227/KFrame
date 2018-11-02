@@ -13,7 +13,8 @@ namespace KFrame
         while ( node.IsValid() )
         {
             auto channelid = node.GetUInt32( "ChannelId" );
-            if ( channelid == 0 || channelid == KFGlobal::Instance()->_app_channel )
+            auto service = node.GetUInt32( "Service" );
+            if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
             {
                 KFEnterSetting setting;
                 setting._note_id = node.GetUInt32( "NoteId" );

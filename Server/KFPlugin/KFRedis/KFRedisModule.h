@@ -18,8 +18,8 @@ namespace KFrame
     class KFRedisModule : public KFRedisInterface
     {
     public:
-        KFRedisModule();
-        ~KFRedisModule();
+        KFRedisModule() = default;
+        ~KFRedisModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -31,11 +31,12 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建RedisExecute
-        virtual KFRedisDriver* CreateExecute( uint32 id );
-        virtual KFRedisDriver* CreateExecute( const std::string& field, uint32 logicid = 0 );
-        virtual KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
+        virtual KFRedisDriver* CreateExecute( const std::string& module, uint32 logicid = 0 );
 
     protected:
+        // 创建redis
+        KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
+
         // 查找
         KFRedisExecute* FindRedisExecute( uint32 id );
 

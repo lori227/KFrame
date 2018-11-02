@@ -20,8 +20,8 @@ namespace KFrame
     class KFIpAddressModule : public KFIpAddressInterface
     {
     public:
-        KFIpAddressModule();
-        ~KFIpAddressModule();
+        KFIpAddressModule() = default;
+        ~KFIpAddressModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -47,9 +47,6 @@ namespace KFrame
 
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip );
-
-        // 平台访问地址
-        virtual const std::string& FindAuthAddress();
 
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__

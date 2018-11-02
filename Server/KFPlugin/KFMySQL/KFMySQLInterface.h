@@ -122,9 +122,7 @@ namespace KFrame
     {
     public:
         // ´´½¨Execute
-        virtual KFMySQLDriver* CreateExecute( uint32 id ) = 0;
-        virtual KFMySQLDriver* CreateExecute( const std::string& filed, uint32 logicid = 0 ) = 0;
-        virtual KFMySQLDriver* CreateExecute( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port ) = 0;
+        virtual KFMySQLDriver* CreateExecute( const std::string& module, uint32 logicid = 0 ) = 0;
 
     };
 

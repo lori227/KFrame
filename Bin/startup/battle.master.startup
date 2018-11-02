@@ -4,5 +4,7 @@
 		<Plugin Sort="100" Name="KFDeployClient" Config=""/>
 		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="120" Name="KFClusterMaster" Config="./setting/cluster.setting"/>
+		<Plugin Sort="130" Name="KFBattleMaster" Config=""/>
+		<Plugin Sort="140" Name="KFRedis" Config="./setting/redis.address"/>
 	</Plugins>
 </Setting>

@@ -25,19 +25,13 @@ namespace KFrame
         // 加载配置文件
         bool LoadConfig();
 
-        const KFMySQLSetting* FindSetting( uint32 id ) const;
-        const KFMySQLSetting* FindSetting( const std::string& field, uint32 logicid ) const;
-
-    protected:
-        uint32 FindLogicMySQLId( const std::string& filed, uint32 logicid ) const;
+        // 查找配置
+        const KFMySQLSetting* FindSetting( const std::string& module, uint32 logicid ) const;
 
     public:
-        // 数据库连接
-        KFMap< uint32, uint32, KFMySQLSetting > _mysql_setting;
-
         // 逻辑数据库映射
-        typedef std::pair< std::string, uint32 > LogicKey;
-        std::map< LogicKey, uint32 > _logic_mysql_map;
+        typedef std::pair< std::string, uint32 > ModuleKey;
+        KFMap< ModuleKey, const ModuleKey&, KFMySQLSetting > _mysql_setting;
     };
 }
 

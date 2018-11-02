@@ -227,7 +227,7 @@ namespace KFrame
         auto nethead = reinterpret_cast< KFNetHead* >( _receive_buff + position );
 
         // 收到的消息长度有错误
-        if ( nethead->_msgid == 0 || nethead->_length > KFNetDefine::MaxMessageLength )
+        if ( nethead->_length > KFNetDefine::MaxMessageLength )
         {
             _receive_length = 0;
             __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] error",

@@ -66,6 +66,37 @@ namespace KFrame
         return min + index;
     }
 
+    void KFGlobal::InitNetService( std::string& strtype )
+    {
+        _net_type = KFUtility::SplitValue< uint32 >( strtype, "." );
+        if ( _net_type == 0 )
+        {
+            _net_type = KFServerEnum::Local;
+        }
+
+        _service_type = KFUtility::SplitValue< uint32 >( strtype, "." );
+        if ( _service_type == 0 )
+        {
+            _service_type = KFServerEnum::Debug;
+        }
+    }
+
+    // 判断渠道和服务类型
+    bool KFGlobal::CheckChannelService( uint32 channel, uint32 service )
+    {
+        if ( channel != 0 && channel != _app_channel )
+        {
+            return false;
+        }
+
+        if ( service != 0 && service != _service_type )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     void KFGlobal::InitLogger( std::string& strtype )
     {
         auto logtype = KFUtility::SplitValue< uint32 >( strtype, "." );

@@ -62,6 +62,9 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSendChatReq );
 
+        auto chatinfo = kfmsg.chatinfo();
+        // _kf_filter->CensorFilter( chatinfo );
+
         auto chatplayer = _chat_player_list.Find( playerid );
         if ( chatplayer == nullptr )
         {
@@ -75,7 +78,6 @@ namespace KFrame
         }
 
         //判断聊天内容字节数
-        auto chatinfo = kfmsg.chatinfo();
         auto chatsize = chatinfo.size();
         if ( chatsize > chatsetting->_chat_byte_length )
         {
@@ -105,7 +107,7 @@ namespace KFrame
         auto playerserverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
 
         KFMsg::MsgSendChatInfo info;
-        info.set_chatinfo( kfmsg.chatinfo() );
+        info.set_chatinfo( chatinfo );
         info.set_isvoice( kfmsg.isvoice() );
         info.set_playername( playername );
         info.set_playerid( playerid );

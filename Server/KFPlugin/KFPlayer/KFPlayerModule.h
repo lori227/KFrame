@@ -19,6 +19,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFFilter/KFFilterInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"

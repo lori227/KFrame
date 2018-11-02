@@ -1,6 +1,7 @@
 ﻿#include "KFAuthModule.h"
 #include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
+#include "KFHttp/KFHttpURL.h"
 
 namespace KFrame
 {
@@ -21,6 +22,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( onlinezone ) );
         ///////////////////////////////////////////////////////////////////////////
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +48,8 @@ namespace KFrame
         {
             return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
         }
+
+        __LOG_DEBUG__( "account[{}] channel[{}] auth login!", account, channel );
 
         // 查询创建账号
         auto accountdata = QueryCreateAccount( account, channel );
@@ -108,6 +112,7 @@ namespace KFrame
         auto queryaccountid = redisdriver->QueryUInt32( "hget {}:{}:{} {}", __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ) );
         if ( !queryaccountid->IsOk() )
         {
+            __LOG_DEBUG__( "account[{}] channel[{}] query accountid failed!", account, channel );
             return accountdata;
         }
 
@@ -125,6 +130,7 @@ namespace KFrame
             auto newid = redisdriver->QueryUInt64( "incr {}", __KF_STRING__( accountmake ) );
             if ( newid->_value == _invalid_int )
             {
+                __LOG_DEBUG__( "account[{}] channel[{}] incr newid failed!", account, channel );
                 return accountdata;
             }
 
@@ -145,6 +151,7 @@ namespace KFrame
         {
             // 失败清空数据
             accountdata.clear();
+            __LOG_DEBUG__( "account[{}] channel[{}] save account failed!", account, channel );
         }
 
         return accountdata;
@@ -222,7 +229,11 @@ namespace KFrame
         if ( dirretcode != KFMsg::Success )
         {
             // 失败删除
-            loginredis->Execute( "srem {} {}", __KF_STRING__( dirurl ), dirurl );
+            if ( dirretcode == 0 )
+            {
+                loginredis->Execute( "srem {} {}", __KF_STRING__( dirurl ), dirurl );
+            }
+
             return _kf_http_server->SendResponseCode( dirretcode );
         }
 
@@ -252,25 +263,61 @@ namespace KFrame
         auto activation = accountdata->_value[ __KF_STRING__( activation ) ];
         if ( activation.empty() )
         {
-            // 保存激活码
-            auto code = request.GetString( __KF_STRING__( code ) );
-
-            // 判断激活码是否存在
-            auto isexist = redisdriver->QueryUInt64( "sismember {} {}", __KF_STRING__( activationcode ), code );
-            if ( !isexist->IsOk() )
-            {
-                return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
-            }
-
-            if ( isexist->_value == _invalid_int )
-            {
-                return _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
-            }
-
-            redisdriver->Append( "srem {} {}", __KF_STRING__( activationcode ), code );
-            redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( accountid ), accountid, __KF_STRING__( activation ), code );
-            redisdriver->Pipeline();
+            return _kf_http_server->SendResponseCode( KFMsg::InvalidActivationCode );
         }
+
+        // 保存激活码
+        auto code = request.GetString( __KF_STRING__( code ) );
+
+        //// 判断激活码是否存在
+        //auto isexist = redisdriver->QueryUInt64( "sismember {} {}", __KF_STRING__( activationcode ), code );
+        //if ( !isexist->IsOk() )
+        //{
+        //    return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+        //}
+
+        //if ( isexist->_value == _invalid_int )
+        //{
+        //    return _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+        //}
+
+        //redisdriver->Append( "srem {} {}", __KF_STRING__( activationcode ), code );
+
+        return VerifyActivationCode( accountdata, accountid, code );
+    }
+
+    std::string KFAuthModule::VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode )
+    {
+        static std::string api = _kf_option->GetString( __KF_STRING__( verifyactivationcode ) );
+
+        std::map<std::string, std::string> params;
+        params["appid"] = KFUtility::ToString( _kf_option->GetUInt32( __KF_STRING__( platappid ) ) );
+        params["appkey"] = _kf_option->GetString( __KF_STRING__( platappkey ) );;
+        params["timestamp"] = KFUtility::ToString( KFGlobal::Instance()->_real_time );
+
+        api += KFHttpURL::EncodeParams( params );
+
+        auto account = accountdata->_value[__KF_STRING__( account )];
+
+        KFJson postjson;
+        postjson.SetValue( "accountid", accountid );
+        postjson.SetValue( "activationCode", activationcode );
+        postjson.SetValue( "channel", KFGlobal::Instance()->_app_channel );
+        postjson.SetValue( "openid", account );
+
+        //去平台通过激活码激活
+        auto result = _kf_http_client->StartSTHttpClient( api, postjson );
+        KFJson resp( result );
+        if ( resp["code"] != 0 )
+        {
+            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+            __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
+            return _invalid_str;
+        }
+
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( accountid ), accountid, __KF_STRING__( activation ), activationcode );
+        redisdriver->Pipeline();
 
         // 创建登录token
         auto token = CreateLoginToken( accountid, accountdata->_value );

@@ -273,7 +273,16 @@ namespace KFrame
             auto message = kfhandle->PopNetMessage();
             while ( message != nullptr )
             {
-                _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                if ( message->_msgid == 0 )
+                {
+                    // ping
+                    kfhandle->SendNetMessage( 0, nullptr, 0 );
+                }
+                else
+                {
+                    // 处理回调函数
+                    _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                }
 
                 // 每次处理200个消息
                 ++messagecount;
@@ -299,7 +308,16 @@ namespace KFrame
             auto message = kfhandle->PopNetMessage();
             while ( message != nullptr )
             {
-                _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                if ( message->_msgid == 0 )
+                {
+                    // ping
+                    kfhandle->SendNetMessage( 0, nullptr, 0 );
+                }
+                else
+                {
+                    // 处理回调函数
+                    _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                }
 
                 // 每次处理200个消息
                 ++messagecount;

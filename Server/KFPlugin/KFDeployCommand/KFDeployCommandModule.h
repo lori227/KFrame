@@ -37,15 +37,14 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // 部署命令
-        virtual void DeployCommand( const std::string& command, const std::string& value, uint32 appchannel,
-                                    const std::string& appname, const std::string& apptype, const std::string&  appid, uint32 zoneid );
+        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string&  appid, uint32 zoneid );
 
     protected:
         virtual void AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function );
         virtual void RemoveComandFunction( const std::string& command, const std::string& module );
 
         // 判断是不是自己
-        bool IsSelfServer( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 关闭服务器
         void ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime );

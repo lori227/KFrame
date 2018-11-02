@@ -4,107 +4,108 @@ package KFMsg;
 
 enum ClientProtocol
  {
-	MSG_TELL_BE_KICK = 100;						// ±»ÌßÏÂÏßÁË
-	MSG_LOGIN_VERIFY_REQ = 101;					// ¿Í»§¶ËµÇÂ¼ÑéÖ¤ÇëÇó
-	MSG_LOGIN_VERIFY_ACK = 102;					// ¿Í»§¶ËµÇÂ¼ÑéÖ¤½á¹û
-	MSG_LOGIN_GAME_REQ = 103;					// ¿Í»§¶ËµÇÂ¼ÓÎÏ·ÇëÇó
-	MSG_LOGIN_OUT_REQ = 105;					// ¿Í»§¶ËÇëÇóµÇ³öÓÎÏ·
-	MSG_RESULT_DISPLAY = 106;					// ½á¹ûÌáÊ¾»ØÀ¡
-	MSG_CREATE_ROLE_REQ = 107;					// ´´½¨½ÇÉ«
-	MSG_CHANGE_NAME_REQ = 108;					// ĞŞ¸ÄÃû×Ö
-	MSG_CHANGE_SEX_REQ = 109;					// ĞŞ¸ÄĞÔ±ğ
-	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// ÁìÈ¡»î¶¯½±Àø
-	MSG_RECEIVE_TASK_REWARD_REQ = 111;			// ÁìÈ¡ÈÎÎñ½±Àø
-	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// ÁìÈ¡³É¾Í½±Àø
-	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// ÁìÈ¡Àñ°ü½±Àø
-	MSG_RECEIVE_MAIL_REWARD_REQ = 114;			// ÁìÈ¡ÓÊ¼ş½±Àø
-	MSG_VIEW_MAIL_REQ = 115;					// ²é¿´ÓÊ¼ş
-	MSG_DELETE_MAIL_REQ = 116;					// É¾³ıÓÊ¼ş
-	MSG_QUERY_MAIL_REQ = 117;					// ÇëÇó²éÑ¯ÓÊ¼ş
-	MSG_START_MATCH_REQ = 118;					// ÇëÇó¸öÈËÆ¥Åä
-	MSG_START_MATCH_ACK = 119;					// Æ¥Åä»ØÀ¡
-	MSG_CANCEL_MATCH_REQ = 120;					// È¡ÏûÆ¥Åä
-	MSG_MATCH_RESULT_ACK = 121;					// Æ¥Åä½á¹û
-	MSG_ADD_FRIEND_INVITE_REQ = 122;			// ÉêÇëÌí¼ÓºÃÓÑ
-	MSG_REPLY_FRIEND_INVITE_REQ = 123;			// »Ø¸´ºÃÓÑÉêÇë
-	MSG_DEL_FRIEND_REQ = 124;					// É¾³ıºÃÓÑ
-	MSG_ENTER_CHAT_REQ = 126;					// ¿Í»§¶Ë¼ÓÈë½­ºşÁÄÌìÊÒÇëÇó
-	MSG_SEND_CHAT_REQ = 127;					// ¿Í»§¶Ë·¢ËÍ½­ºşÁÄÌìÏûÏ¢ÇëÇó
-	MSG_SEND_CHAT_INFO = 128;					// ·şÎñÆ÷Í¨Öª½­ºşÁÄÌìÏûÏ¢
-	MSG_LEAVE_CHAT_REQ = 129;					// ¿Í»§¶ËÀë¿ª½­ºşÁÄÌìÊÒÇëÇó
-	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// ÉèÖÃ¾Ü¾øÌí¼ÓºÃÓÑ
-	MSG_QUERY_BASIC_REQ = 131;					// ²éÑ¯Íæ¼Ò»ù±¾Êı¾İ
-	MSG_QUERY_PLAYER_REQ = 132;					// ²éÑ¯Íæ¼ÒËùÓĞÊı¾İ
-	MSG_BUY_STORE_REQ = 133;					// ¿Í»§¶Ë¹ºÂòÉÌÆ·ÇëÇó
-	MSG_GIVE_STORE_REQ = 134;					// ¿Í»§¶ËÔùËÍÇëÇó
-	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// ¿Í»§¶Ë·¢ËÍÒ»¶ÔÒ»ÁÄÌìÇëÇó
-	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// ·şÎñÆ÷Í¨ÖªÒ»¶ÔÒ»ÁÄÌìĞÅÏ¢
-	MSG_CHANGE_ICON_REQ = 137;					// ĞŞ¸ÄÍ·ÏñÇëÇó
-	MSG_DEBUG_COMMAND_REQ = 143;				// ¿Í»§¶Ë·¢ËÍGMÖ¸ÁîÇëÇó
-	MSG_CHANGE_MOTTO_REQ = 144;					// ¿Í»§¶ËĞŞ¸Ä¸öĞÔÇ©ÃûÇëÇó
-	MSG_SET_MODEL_DEFAULT_CLOTHES_REQ = 145;	// ÉèÖÃÄ£ĞÍµÄÄ¬ÈÏÊ±×°id
-	MSG_PLAYER_TOAST_REQ =	146;				// ¿Í»§¶Ë¾´¾ÆÇëÇó
-	MSG_REMOVE_DATA_REQ = 147;					// ÇëÇóÉ¾³ıÊôĞÔ
-	MSG_DRESS_CLOTHES_REQ = 148;				// ´©´÷Ê±×°
-	MSG_CHANGE_MODEL_REQ = 149;					// ĞŞ¸ÄÄ£ĞÍ
-	MSG_SHOW_REWARD_AGENT = 150;				// ÏÔÊ¾½±Àø
-	MSG_INVITE_MATCH_GROUP_REQ = 151;			// ÑûÇë¼ÓÈë¶ÓÎé
-	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// »Ø¸´ÑûÇë×é¶Ó
-	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// Àë¿ª¶ÓÎé
-	MSG_KICK_MATCH_GROUP_REQ = 155;				// Ìß³ö³ÉÔ±
-	MSG_APPLY_MATCH_GROUP_REQ = 156;			// ÉêÇë¼ÓÈë¶ÓÎé
-	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// »ØÓ¦ÉêÇë¶ÓÎé
-	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// ÇëÇó×¼±¸
-	MSG_CHANGE_ICON_BOX_REQ = 161;				// ĞŞ¸ÄÍ·Ïñ¿òÇëÇó
-	MSG_QUERY_GUEST_REQ = 162;					// ²éÑ¯·Ã¿ÍĞÅÏ¢ÇëÇó
-	MSG_QUERY_GUEST_ACK = 163;					// ²éÑ¯·Ã¿ÍĞÅÏ¢»ØÀ¡
-	MSG_CANCEL_MATCH_ACK = 164;					// È¡ÏûÆ¥Åä»ØÓ¦
-	MSG_USE_ITEM_REQ = 165;						// Ê¹ÓÃµÀ¾ß
-	MSG_QUERY_TOAST_COUNT_REQ = 166;			// ²éÑ¯×ÜµÄ±»¾´¾Æ´ÎÊıÇëÇó
-	MSG_QUERY_TOAST_COUNT_ACK = 167;			// ²éÑ¯×ÜµÄ±»¾´¾Æ´ÎÊı»ØÀ¡
-	MSG_QUERY_STORE_INFO_REQ = 170;				// ÇëÇóÉÌ³ÇĞÅÏ¢
-	MSG_QUERY_STORE_INFO_ACK = 171;				// ÇëÇóÉÌ³ÇĞÅÏ¢·´À¡
-	MSG_BUY_STORE_ACK= 173;						// ¹ºÂòÉÌÆ··´À¡
-	MSG_UPDATE_GROUP_MATCH_REQ = 174;			// ĞŞ¸ÄÆ¥ÅäÄ£Ê½ÇëÇó
-	MSG_SEND_GROUPCHAT_REQ = 175;				// ¿Í»§¶Ë·¢ËÍ´óÌü×é¶ÓÁÄÌìÏûÏ¢ÇëÇó
-	MSG_SEND_GROUPCHAT_INFO = 176;				// ·şÎñÆ÷Í¨Öª´óÌü×é¶ÓÁÄÌìÏûÏ¢
-	MSG_SET_WISH_ORDER_REQ = 177;				// ²Ù×÷ĞÄÔ¸µ¥ÇëÇó
-	MSG_QUERY_SETTING_REQ = 178;				// ²éÑ¯ÉèÖÃÇëÇó
-	MSG_QUERY_SETTING_ACK = 179;				// ²éÑ¯ÉèÖÃ»ØÀ¡
-	MSG_UPDATE_SETTING_REQ = 180;				// ¸üĞÂÉèÖÃÇëÇó
-	MSG_QUERY_RECENT_LIST_REQ = 181;			// ²éÑ¯×î½üÁĞ±íÉêÇë
-	MSG_QUERY_RECENT_LIST_ACK = 182;			// ²éÑ¯×î½üÁĞ±í»ØÀ¡
-	MSG_QUERY_RANK_LIST_REQ = 183;				// ²éÑ¯È«·şÅÅĞĞ°ñ
-	MSG_QUERY_RANK_LIST_ACK	 = 184;				// ²éÑ¯ÅÅĞĞ°ñ·´À¡
-	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ
-	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ
-	MSG_COMPOUND_DATA_REQ = 187;				// ºÏ³ÉÊôĞÔ
-	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// ÁìÈ¡7ÌìÇ©µ½½±Àø
-	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// ¹ã²¥¶îÍâµÄ½±Àø
-	MSG_CREATE_GUILD_REQ = 200;				// ´´½¨°ïÅÉ
-	MSG_INVITE_GUILD_REQ = 201;				// ÑûÇë¼ÓÈë°ïÅÉ
-	MSG_APPLY_GUILD_REQ = 202;				// ÉêÇë¼ÓÈë°ïÅÉ
-	MSG_TELL_MATCH_WAIT_TIME = 203;				// Í¨ÖªÆ¥ÅäÔ¤¼ÆµÈ´ıÊ±¼ä
-	MSG_EXIT_GUILD_REQ = 204;				// Àë¿ª°ïÅÉ
-	MSG_TRANSFER_MASTER_REQ = 205;				// ×ªÈÃ°ïÖ÷
-	MSG_REVIEW_APPLY_REQ = 206;				// ÉóÅúÉêÇëÁĞ±í
-	MSG_DISSOLVE_GUILD_REQ = 207;				// ½âÉ¢°ïÅÉ
-	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// ĞŞ¸Ä°ïÅÉ»ÕÕÂ
-	MSG_QUERY_GUILD_LIST_REQ = 209;				// ÇëÇó°ïÅÉÁĞ±í
-	MSG_QUERY_GUILD_LIST_ACK = 210;				// °ïÅÉÁĞ±í·µ»Ø
-	MSG_KICK_MEMBER_REQ = 211;				// Ìßµô°ïÅÉ³ÉÔ±
-	MSG_UPGRADE_GUILD_REQ = 212;				// Éı¼¶°ïÅÉ
-	MSG_APPOINT_GUILD_MEMBER_REQ = 213;			// ÈÎÃü°ïÅÉ³ÉÔ±
-	MSG_SEARCH_GUILD_BY_NAME_REQ = 214;			// ¸ù¾İÃû×ÖËÑË÷°ïÅÉĞÅÏ¢
-	MSG_SET_GUILD_SWITCH_REQ = 215;				// ÉèÖÃ°ïÅÉ¹ÜÀí¿ª¹Ø
-	MSG_QUERY_GUILD_LOG_REQ = 216;				// ²éÑ¯°ïÅÉÈÕÖ¾
-	MSG_QUERY_GUILD_LOG_ACK = 217;				// ²éÑ¯°ïÅÉÈÕÖ¾·µ»Ø
-	MSG_TELL_MARQUEE = 300;						// ×ßÂíµÆÏûÏ¢
+	MSG_TELL_BE_KICK = 100;						// è¢«è¸¢ä¸‹çº¿äº†
+	MSG_LOGIN_VERIFY_REQ = 101;					// å®¢æˆ·ç«¯ç™»å½•éªŒè¯è¯·æ±‚
+	MSG_LOGIN_VERIFY_ACK = 102;					// å®¢æˆ·ç«¯ç™»å½•éªŒè¯ç»“æœ
+	MSG_LOGIN_GAME_REQ = 103;					// å®¢æˆ·ç«¯ç™»å½•æ¸¸æˆè¯·æ±‚
+	MSG_LOGIN_OUT_REQ = 105;					// å®¢æˆ·ç«¯è¯·æ±‚ç™»å‡ºæ¸¸æˆ
+	MSG_RESULT_DISPLAY = 106;					// ç»“æœæç¤ºå›é¦ˆ
+	MSG_CREATE_ROLE_REQ = 107;					// åˆ›å»ºè§’è‰²
+	MSG_CHANGE_NAME_REQ = 108;					// ä¿®æ”¹åå­—
+	MSG_CHANGE_SEX_REQ = 109;					// ä¿®æ”¹æ€§åˆ«
+	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// é¢†å–æ´»åŠ¨å¥–åŠ±
+	MSG_RECEIVE_TASK_REWARD_REQ = 111;			// é¢†å–ä»»åŠ¡å¥–åŠ±
+	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// é¢†å–æˆå°±å¥–åŠ±
+	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// é¢†å–ç¤¼åŒ…å¥–åŠ±
+	MSG_RECEIVE_MAIL_REWARD_REQ = 114;			// é¢†å–é‚®ä»¶å¥–åŠ±
+	MSG_VIEW_MAIL_REQ = 115;					// æŸ¥çœ‹é‚®ä»¶
+	MSG_DELETE_MAIL_REQ = 116;					// åˆ é™¤é‚®ä»¶
+	MSG_QUERY_MAIL_REQ = 117;					// è¯·æ±‚æŸ¥è¯¢é‚®ä»¶
+	MSG_START_MATCH_REQ = 118;					// è¯·æ±‚ä¸ªäººåŒ¹é…
+	MSG_START_MATCH_ACK = 119;					// åŒ¹é…å›é¦ˆ
+	MSG_CANCEL_MATCH_REQ = 120;					// å–æ¶ˆåŒ¹é…
+	MSG_MATCH_RESULT_ACK = 121;					// åŒ¹é…ç»“æœ
+	MSG_ADD_FRIEND_INVITE_REQ = 122;			// ç”³è¯·æ·»åŠ å¥½å‹
+	MSG_REPLY_FRIEND_INVITE_REQ = 123;			// å›å¤å¥½å‹ç”³è¯·
+	MSG_DEL_FRIEND_REQ = 124;					// åˆ é™¤å¥½å‹
+	MSG_ENTER_CHAT_REQ = 126;					// å®¢æˆ·ç«¯åŠ å…¥æ±Ÿæ¹–èŠå¤©å®¤è¯·æ±‚
+	MSG_SEND_CHAT_REQ = 127;					// å®¢æˆ·ç«¯å‘é€æ±Ÿæ¹–èŠå¤©æ¶ˆæ¯è¯·æ±‚
+	MSG_SEND_CHAT_INFO = 128;					// æœåŠ¡å™¨é€šçŸ¥æ±Ÿæ¹–èŠå¤©æ¶ˆæ¯
+	MSG_LEAVE_CHAT_REQ = 129;					// å®¢æˆ·ç«¯ç¦»å¼€æ±Ÿæ¹–èŠå¤©å®¤è¯·æ±‚
+	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// è®¾ç½®æ‹’ç»æ·»åŠ å¥½å‹
+	MSG_QUERY_BASIC_REQ = 131;					// æŸ¥è¯¢ç©å®¶åŸºæœ¬æ•°æ®
+	MSG_QUERY_PLAYER_REQ = 132;					// æŸ¥è¯¢ç©å®¶æ‰€æœ‰æ•°æ®
+	MSG_BUY_STORE_REQ = 133;					// å®¢æˆ·ç«¯è´­ä¹°å•†å“è¯·æ±‚
+	MSG_GIVE_STORE_REQ = 134;					// å®¢æˆ·ç«¯èµ é€è¯·æ±‚
+	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// å®¢æˆ·ç«¯å‘é€ä¸€å¯¹ä¸€èŠå¤©è¯·æ±‚
+	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// æœåŠ¡å™¨é€šçŸ¥ä¸€å¯¹ä¸€èŠå¤©ä¿¡æ¯
+	MSG_CHANGE_ICON_REQ = 137;					// ä¿®æ”¹å¤´åƒè¯·æ±‚
+	MSG_DEBUG_COMMAND_REQ = 143;				// å®¢æˆ·ç«¯å‘é€GMæŒ‡ä»¤è¯·æ±‚
+	MSG_CHANGE_MOTTO_REQ = 144;					// å®¢æˆ·ç«¯ä¿®æ”¹ä¸ªæ€§ç­¾åè¯·æ±‚
+	MSG_SET_MODEL_DEFAULT_CLOTHES_REQ = 145;	// è®¾ç½®æ¨¡å‹çš„é»˜è®¤æ—¶è£…id
+	MSG_PLAYER_TOAST_REQ =	146;				// å®¢æˆ·ç«¯æ•¬é…’è¯·æ±‚
+	MSG_REMOVE_DATA_REQ = 147;					// è¯·æ±‚åˆ é™¤å±æ€§
+	MSG_DRESS_CLOTHES_REQ = 148;				// ç©¿æˆ´æ—¶è£…
+	MSG_CHANGE_MODEL_REQ = 149;					// ä¿®æ”¹æ¨¡å‹
+	MSG_SHOW_REWARD_AGENT = 150;				// æ˜¾ç¤ºå¥–åŠ±
+	MSG_INVITE_MATCH_GROUP_REQ = 151;			// é‚€è¯·åŠ å…¥é˜Ÿä¼
+	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// å›å¤é‚€è¯·ç»„é˜Ÿ
+	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// ç¦»å¼€é˜Ÿä¼
+	MSG_KICK_MATCH_GROUP_REQ = 155;				// è¸¢å‡ºæˆå‘˜
+	MSG_APPLY_MATCH_GROUP_REQ = 156;			// ç”³è¯·åŠ å…¥é˜Ÿä¼
+	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// å›åº”ç”³è¯·é˜Ÿä¼
+	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// è¯·æ±‚å‡†å¤‡
+	MSG_CHANGE_ICON_BOX_REQ = 161;				// ä¿®æ”¹å¤´åƒæ¡†è¯·æ±‚
+	MSG_QUERY_GUEST_REQ = 162;					// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯è¯·æ±‚
+	MSG_QUERY_GUEST_ACK = 163;					// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯å›é¦ˆ
+	MSG_CANCEL_MATCH_ACK = 164;					// å–æ¶ˆåŒ¹é…å›åº”
+	MSG_USE_ITEM_REQ = 165;						// ä½¿ç”¨é“å…·
+	MSG_QUERY_TOAST_COUNT_REQ = 166;			// æŸ¥è¯¢æ€»çš„è¢«æ•¬é…’æ¬¡æ•°è¯·æ±‚
+	MSG_QUERY_TOAST_COUNT_ACK = 167;			// æŸ¥è¯¢æ€»çš„è¢«æ•¬é…’æ¬¡æ•°å›é¦ˆ
+	MSG_QUERY_STORE_INFO_REQ = 170;				// è¯·æ±‚å•†åŸä¿¡æ¯
+	MSG_QUERY_STORE_INFO_ACK = 171;				// è¯·æ±‚å•†åŸä¿¡æ¯åé¦ˆ
+	MSG_BUY_STORE_ACK= 173;						// è´­ä¹°å•†å“åé¦ˆ
+	MSG_UPDATE_GROUP_MATCH_REQ = 174;			// ä¿®æ”¹åŒ¹é…æ¨¡å¼è¯·æ±‚
+	MSG_SEND_GROUPCHAT_REQ = 175;				// å®¢æˆ·ç«¯å‘é€å¤§å…ç»„é˜ŸèŠå¤©æ¶ˆæ¯è¯·æ±‚
+	MSG_SEND_GROUPCHAT_INFO = 176;				// æœåŠ¡å™¨é€šçŸ¥å¤§å…ç»„é˜ŸèŠå¤©æ¶ˆæ¯
+	MSG_SET_WISH_ORDER_REQ = 177;				// æ“ä½œå¿ƒæ„¿å•è¯·æ±‚
+	MSG_QUERY_SETTING_REQ = 178;				// æŸ¥è¯¢è®¾ç½®è¯·æ±‚
+	MSG_QUERY_SETTING_ACK = 179;				// æŸ¥è¯¢è®¾ç½®å›é¦ˆ
+	MSG_UPDATE_SETTING_REQ = 180;				// æ›´æ–°è®¾ç½®è¯·æ±‚
+	MSG_QUERY_RECENT_LIST_REQ = 181;			// æŸ¥è¯¢æœ€è¿‘åˆ—è¡¨ç”³è¯·
+	MSG_QUERY_RECENT_LIST_ACK = 182;			// æŸ¥è¯¢æœ€è¿‘åˆ—è¡¨å›é¦ˆ
+	MSG_QUERY_RANK_LIST_REQ = 183;				// æŸ¥è¯¢å…¨æœæ’è¡Œæ¦œ
+	MSG_QUERY_RANK_LIST_ACK	 = 184;				// æŸ¥è¯¢æ’è¡Œæ¦œåé¦ˆ
+	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œ
+	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œ
+	MSG_COMPOUND_DATA_REQ = 187;				// åˆæˆå±æ€§
+	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// é¢†å–7å¤©ç­¾åˆ°å¥–åŠ±
+	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// å¹¿æ’­é¢å¤–çš„å¥–åŠ±
+	MSG_CREATE_GUILD_REQ = 200;				// åˆ›å»ºå¸®æ´¾
+	MSG_INVITE_GUILD_REQ = 201;				// é‚€è¯·åŠ å…¥å¸®æ´¾
+	MSG_APPLY_GUILD_REQ = 202;				// ç”³è¯·åŠ å…¥å¸®æ´¾
+	MSG_TELL_MATCH_WAIT_TIME = 203;				// é€šçŸ¥åŒ¹é…é¢„è®¡ç­‰å¾…æ—¶é—´
+	MSG_EXIT_GUILD_REQ = 204;				// ç¦»å¼€å¸®æ´¾
+	MSG_TRANSFER_MASTER_REQ = 205;				// è½¬è®©å¸®ä¸»
+	MSG_REVIEW_APPLY_REQ = 206;				// å®¡æ‰¹ç”³è¯·åˆ—è¡¨
+	MSG_DISSOLVE_GUILD_REQ = 207;				// è§£æ•£å¸®æ´¾
+	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// ä¿®æ”¹å¸®æ´¾å¾½ç« 
+	MSG_QUERY_GUILD_LIST_REQ = 209;				// è¯·æ±‚å¸®æ´¾åˆ—è¡¨
+	MSG_QUERY_GUILD_LIST_ACK = 210;				// å¸®æ´¾åˆ—è¡¨è¿”å›
+	MSG_KICK_MEMBER_REQ = 211;				// è¸¢æ‰å¸®æ´¾æˆå‘˜
+	MSG_UPGRADE_GUILD_REQ = 212;				// å‡çº§å¸®æ´¾
+	MSG_APPOINT_GUILD_MEMBER_REQ = 213;			// ä»»å‘½å¸®æ´¾æˆå‘˜
+	MSG_SEARCH_GUILD_BY_NAME_REQ = 214;			// æ ¹æ®åå­—æœç´¢å¸®æ´¾ä¿¡æ¯
+	MSG_SET_GUILD_SWITCH_REQ = 215;				// è®¾ç½®å¸®æ´¾ç®¡ç†å¼€å…³
+	MSG_QUERY_GUILD_LOG_REQ = 216;				// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—
+	MSG_QUERY_GUILD_LOG_ACK = 217;				// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—è¿”å›
+	MSG_TELL_MARQUEE = 300;					// èµ°é©¬ç¯æ¶ˆæ¯
+	MSG_TELL_SYS_NOTICE = 301;				// ç³»ç»Ÿå…¬å‘Š
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ½á¹ûÌáÊ¾
+// ç»“æœæç¤º
 // MSG_RESULT_DISPLAY
 message MsgResultDisplay
 {
@@ -115,22 +116,22 @@ message MsgResultDisplay
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Í¨Öª±»ÌßÏÂÏß
+// é€šçŸ¥è¢«è¸¢ä¸‹çº¿
 // MSG_TELL_BE_KICK
 message MsgTellBeKick
 {
 	required uint32 type = 1;
 }
 
-// µÇÂ¼ÑéÖ¤ÇëÇó
+// ç™»å½•éªŒè¯è¯·æ±‚
 // MSG_LOGIN_VERIFY_REQ
 message MsgLoginVerifyReq
 {
-	required uint32 accountid = 1;	// ÕËºÅid
+	required uint32 accountid = 1;	// è´¦å·id
 	required string token = 2;		// token
 }
 
-// µÇÂ¼ÑéÖ¤½á¹û
+// ç™»å½•éªŒè¯ç»“æœ
 // MSG_LOGIN_VERIFY_ACK
 message MsgLoginVerifyAck
 {
@@ -140,7 +141,7 @@ message MsgLoginVerifyAck
 	required uint32 port = 4;
 }
 
-// µÇÂ¼ÓÎÏ·ÇëÇó
+// ç™»å½•æ¸¸æˆè¯·æ±‚
 // MSG_LOGIN_GAME_REQ
 message MsgLoginGameReq
 {
@@ -148,65 +149,65 @@ message MsgLoginGameReq
 	required string token = 2;
 }
 
-// µÇ³öÓÎÏ·
+// ç™»å‡ºæ¸¸æˆ
 // MSG_LOGIN_OUT_REQ
 message MsgLoginOutReq
 {
 
 }
 
-// ´´½¨½ÇÉ«
+// åˆ›å»ºè§’è‰²
 // MSG_CREATE_ROLE_REQ
 message MsgCreateRoleReq
 {
-	required string name = 1;		// Ãû×Ö
-	required uint32 sex = 2;		// ĞÔ±ğ
-	required uint32 model = 3;		// Ä£ĞÍid
+	required string name = 1;		// åå­—
+	required uint32 sex = 2;		// æ€§åˆ«
+	required uint32 model = 3;		// æ¨¡å‹id
 }
 
-// ĞŞ¸ÄÃû×Ö
+// ä¿®æ”¹åå­—
 // MSG_CHANGE_NAME_REQ
 message MsgChangeNameReq
 {
 	required string name = 1;
 }
 
-// ÉèÖÃĞÔ±ğ
+// è®¾ç½®æ€§åˆ«
 // MSG_CHANGE_SEX_REQ
 message MsgChangeSexReq
 {
 	required uint32 sex = 1;
 }
 
-// ĞŞ¸ÄÍ·Ïñ
+// ä¿®æ”¹å¤´åƒ
 // MSG_CHANGE_ICON_REQ
 message MsgChangeIconReq
 {
-	required string icon = 1;	// Í·ÏñÂ·¾¶
+	required string icon = 1;	// å¤´åƒè·¯å¾„
 }
 
-// ĞŞ¸ÄÍ·Ïñ¿òÇëÇó
+// ä¿®æ”¹å¤´åƒæ¡†è¯·æ±‚
 //MSG_CHANGE_ICON_BOX_REQ
 message MsgChangeIconBoxReq
 {
 	required string iconbox = 1;
 }
 
-// ¿Í»§¶ËĞŞ¸Ä¸öĞÔÇ©ÃûÇëÇó
+// å®¢æˆ·ç«¯ä¿®æ”¹ä¸ªæ€§ç­¾åè¯·æ±‚
 //MSG_CHANGE_MOTTO_REQ
 message MsgChangeMottoReq
 {
-	required string motto = 1;	//¸öĞÔÇ©Ãû
+	required string motto = 1;	//ä¸ªæ€§ç­¾å
 }
 
-// ²éÑ¯Íæ¼Ò
+// æŸ¥è¯¢ç©å®¶
 // MSG_QUERY_BASIC_REQ
 message MsgQueryBasicReq
 {
 	required string name = 1;
 }
 
-// ²éÑ¯ÆäËûÍæ¼ÒÊı¾İ£¬²»ÄÜ²éÑ¯×Ô¼ºµÄÊı¾İ
+// æŸ¥è¯¢å…¶ä»–ç©å®¶æ•°æ®ï¼Œä¸èƒ½æŸ¥è¯¢è‡ªå·±çš„æ•°æ®
 // MSG_QUERY_PLAYER_REQ
 message MsgQueryPlayerReq
 {
@@ -216,7 +217,7 @@ message MsgQueryPlayerReq
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÁìÈ¡ÈÎÎñ½±Àø
+// é¢†å–ä»»åŠ¡å¥–åŠ±
 // MSG_RECEIVE_TASK_REWARD_REQ
 message MsgReceiveTaskRewardReq
 {
@@ -225,18 +226,18 @@ message MsgReceiveTaskRewardReq
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÁìÈ¡»î¶¯½±Àø
+// é¢†å–æ´»åŠ¨å¥–åŠ±
 // MSG_RECEIVE_ACTIVITY_REWARD_REQ
 message MsgReceiveActivityRewardReq
 {
-	required uint32 type = 1;	// »î¶¯ÀàĞÍ
-	required uint32 id = 2;		// »î¶¯×Óid
+	required uint32 type = 1;	// æ´»åŠ¨ç±»å‹
+	required uint32 id = 2;		// æ´»åŠ¨å­id
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÁìÈ¡³É¾Í½±Àø
+// é¢†å–æˆå°±å¥–åŠ±
 // MSG_RECEIVE_ACHIEVE_REWARD_REQ
 message MsgReceiveAchieveRewardReq
 {
@@ -245,7 +246,7 @@ message MsgReceiveAchieveRewardReq
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÁìÈ¡Àñ°ü½±Àø
+// é¢†å–ç¤¼åŒ…å¥–åŠ±
 // MSG_RECEIVE_GIFT_REWARD_REQ
 message MsgReceiveGiftRewardReq
 {
@@ -256,69 +257,69 @@ message MsgReceiveGiftRewardReq
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ÁìÈ¡ÓÊ¼ş½±Àø
+// é¢†å–é‚®ä»¶å¥–åŠ±
 // MSG_RECEIVE_MAIL_REWARD_REQ
 message MsgReceiveMailRewardReq
 {
 	required uint64 mailid = 1;
 }
 
-// ²é¿´ÓÊ¼ş
+// æŸ¥çœ‹é‚®ä»¶
 // MSG_VIEW_MAIL_REQ
 message MsgViewMailReq
 {
 	required uint64 mailid = 1;
 }
 
-// É¾³ıÓÊ¼ş
+// åˆ é™¤é‚®ä»¶
 // MSG_DELETE_MAIL_REQ
 message MsgDeleteMailReq
 {
-	required uint64 mailid =1;	// ÓÊ¼şid
+	required uint64 mailid =1;	// é‚®ä»¶id
 }
 
-// ²éÑ¯ÓÊ¼ş
+// æŸ¥è¯¢é‚®ä»¶
 // MSG_QUERY_MAIL_REQ
 message MsgQueryMailReq
 {
-	required uint32 mailtype = 1;	//ÓÊ¼şÀàĞÍ 0´ú±í²éÑ¯ËùÓĞÓÊ¼ş
+	required uint32 mailtype = 1;	//é‚®ä»¶ç±»å‹ 0ä»£è¡¨æŸ¥è¯¢æ‰€æœ‰é‚®ä»¶
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ¿ªÊ¼Æ¥ÅäÆ¥Åä
+// å¼€å§‹åŒ¹é…åŒ¹é…
 // MSG_START_MATCH_REQ
 message MsgStartMatchReq
 {
 	required uint32 matchid = 1;
-	optional bool allowgroup = 2;		// ÊÇ·ñÔÊĞí×é¶Ó
-	optional uint32 battleserverid = 3;		// ²âÊÔĞèÒªÆ¥ÅäµÄbattleid
+	optional bool allowgroup = 2;		// æ˜¯å¦å…è®¸ç»„é˜Ÿ
+	optional uint32 battleserverid = 3;		// æµ‹è¯•éœ€è¦åŒ¹é…çš„battleid
 }
 
-// ¿ªÊ¼Æ¥Åä»ØÓ¦
+// å¼€å§‹åŒ¹é…å›åº”
 // MSG_START_MATCH_ACK
 message MsgStartMatchAck
 {
 	required uint32 matchid = 1;
 }
 
-// È¡ÏûÆ¥Åä
+// å–æ¶ˆåŒ¹é…
 // MSG_CANCEL_MATCH_REQ
 message MsgCancelMatchReq
 {
 
 }
 
-// È¡ÏûÆ¥Åä
+// å–æ¶ˆåŒ¹é…
 // MSG_CANCEL_MATCH_ACK
 message MsgCancelMatchAck
 {
 	required uint32 matchid = 1;
 }
 
-// Æ¥ÅäµÄ½á¹û
+// åŒ¹é…çš„ç»“æœ
 // MSG_MATCH_RESULT_ACK
 message MsgMatchResultAck
 {
@@ -330,81 +331,81 @@ message MsgMatchResultAck
 	required string token = 6;
 }
 
-// Í¨ÖªÆ¥ÅäÔ¤¼ÆµÈ´ıÊ±¼ä( ÔÚÃ»ÓĞÕ½¶··şÇé¿öÏÂ )
+// é€šçŸ¥åŒ¹é…é¢„è®¡ç­‰å¾…æ—¶é—´( åœ¨æ²¡æœ‰æˆ˜æ–—æœæƒ…å†µä¸‹ )
 // MSG_TELL_MATCH_WAIT_TIME
 message MsgTellMatchWaitTime
 {
-	required uint32 waittime = 1;	// µÈ´ıÊ±¼ä( Ãë )
+	required uint32 waittime = 1;	// ç­‰å¾…æ—¶é—´( ç§’ )
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÉêÇëÌí¼ÓºÃÓÑ
+// ç”³è¯·æ·»åŠ å¥½å‹
 // MSG_ADD_FRIEND_INVITE_REQ
 message MsgAddFriendInviteReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
-	required string message = 2;	// ÁôÑÔ
-	required string name = 3;		// Íæ¼ÒÃû×Ö
+	required uint32 playerid = 1;	// ç©å®¶id
+	required string message = 2;	// ç•™è¨€
+	required string name = 3;		// ç©å®¶åå­—
 }
 
-// »Ø¸´Ìí¼ÓºÃÓÑÇëÇó
+// å›å¤æ·»åŠ å¥½å‹è¯·æ±‚
 // MSG_REPLY_FRIEND_INVITE_REQ
 message MsgReplyFriendInviteReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid 0 ±íÊ¾ËùÓĞ
-	required uint32 operate = 2;	// 1=Í¬Òâ 2=¾Ü¾ø 3=Ö±½ÓÉ¾³ıÇëÇó 
+	required uint32 playerid = 1;	// ç©å®¶id 0 è¡¨ç¤ºæ‰€æœ‰
+	required uint32 operate = 2;	// 1=åŒæ„ 2=æ‹’ç» 3=ç›´æ¥åˆ é™¤è¯·æ±‚ 
 }
 
-// É¾³ıºÃÓÑ
+// åˆ é™¤å¥½å‹
 // MSG_DEL_FRIEND_REQ
 message MsgDelFriendReq
 {
-	required uint32 playerid = 1;	// Íæ¼Òid
+	required uint32 playerid = 1;	// ç©å®¶id
 }
 
-// ÉèÖÃ¾Ü¾øÌí¼ÓºÃÓÑ
+// è®¾ç½®æ‹’ç»æ·»åŠ å¥½å‹
 // MSG_SET_REFUSE_FRIEND_INVITE_REQ
 message MsgSetRefuseFriendInviteReq
 {
-	required uint32 refuse = 1;	 // 1=¾Ü¾øÉêÇë 0=Í¬Òâ½ÓÊÜ
+	required uint32 refuse = 1;	 // 1=æ‹’ç»ç”³è¯· 0=åŒæ„æ¥å—
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//¿Í»§¶Ë¼ÓÈë½­ºşÁÄÌìÊÒÇëÇó
+//å®¢æˆ·ç«¯åŠ å…¥æ±Ÿæ¹–èŠå¤©å®¤è¯·æ±‚
 //	MSG_ENTER_CHAT_REQ
 message MsgEnterChatReq
 {
 
 }
 
-//¿Í»§¶Ë·¢ËÍ½­ºşÁÄÌìÏûÏ¢ÇëÇó
+//å®¢æˆ·ç«¯å‘é€æ±Ÿæ¹–èŠå¤©æ¶ˆæ¯è¯·æ±‚
 //	MSG_SEND_CHAT_REQ
 message MsgSendChatReq
 {
-	required string chatinfo = 1;	//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;	//ÊÇ·ñÊÇÓïÒôÏûÏ¢
+	required string chatinfo = 1;	//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;	//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
 }
 
-//·şÎñÆ÷Í¨Öª¿Í»§¶Ë½­ºşÁÄÌìÏûÏ¢			
+//æœåŠ¡å™¨é€šçŸ¥å®¢æˆ·ç«¯æ±Ÿæ¹–èŠå¤©æ¶ˆæ¯			
 //	MSG_SEND_CHAT_INFO
 message MsgSendChatInfo
 {
-	required string chatinfo = 1;		//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;		//ÊÇ·ñÊÇÓïÒôÏûÏ¢
-	required string playername = 3;		//·¢ËÍÁÄÌìµÄÍæ¼ÒÃû×Ö
-	required uint32 playerid = 4;		//·¢ËÍÁÄÌìµÄÍæ¼Òid
-	required string playericon = 5;		//·¢ËÍÁÄÌìµÄÍæ¼ÒÍ·Ïñ
-	required uint32 playergrading = 6;	//·¢ËÍÁÄÌìµÄÍæ¼ÒÆÀ·ÖµÈ¼¶
-	required uint32 playersex = 7;		//·¢ËÍÁÄÌìµÄÍæ¼ÒĞÔ±ğ
-	required string playericonbox = 8;	//·¢ËÍÁÄÌìµÄÍæ¼ÒÍ·Ïñ¿ò
-	required uint32 playerserverid = 9;	//·¢ËÍÁÄÌìµÄÍæ¼Ò·şÎñÆ÷id
+	required string chatinfo = 1;		//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;		//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
+	required string playername = 3;		//å‘é€èŠå¤©çš„ç©å®¶åå­—
+	required uint32 playerid = 4;		//å‘é€èŠå¤©çš„ç©å®¶id
+	required string playericon = 5;		//å‘é€èŠå¤©çš„ç©å®¶å¤´åƒ
+	required uint32 playergrading = 6;	//å‘é€èŠå¤©çš„ç©å®¶è¯„åˆ†ç­‰çº§
+	required uint32 playersex = 7;		//å‘é€èŠå¤©çš„ç©å®¶æ€§åˆ«
+	required string playericonbox = 8;	//å‘é€èŠå¤©çš„ç©å®¶å¤´åƒæ¡†
+	required uint32 playerserverid = 9;	//å‘é€èŠå¤©çš„ç©å®¶æœåŠ¡å™¨id
 }
 
-//¿Í»§¶ËÀë¿ª½­ºşÁÄÌìÊÒÇëÇó
+//å®¢æˆ·ç«¯ç¦»å¼€æ±Ÿæ¹–èŠå¤©å®¤è¯·æ±‚
 //	MSG_LEAVE_CHAT_REQ
 message MsgLeaveChatReq
 {
@@ -413,100 +414,100 @@ message MsgLeaveChatReq
 
 
 
-//¿Í»§¶Ë·¢ËÍÒ»¶ÔÒ»ÁÄÌìÇëÇó
+//å®¢æˆ·ç«¯å‘é€ä¸€å¯¹ä¸€èŠå¤©è¯·æ±‚
 //MSG_SEND_ONEBYONE_CHAT_REQ
 message MsgSendOneByOneChatReq
 {
-	required string chatinfo = 1;		//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;		//ÊÇ·ñÊÇÓïÒôÏûÏ¢
-	required uint32 playerid = 3;		//Íæ¼Òid
+	required string chatinfo = 1;		//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;		//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
+	required uint32 playerid = 3;		//ç©å®¶id
 	required string chattype = 4;
-	required string selfinfo = 5;		//±¾ÈËĞÅÏ¢
+	required string selfinfo = 5;		//æœ¬äººä¿¡æ¯
 	required uint32 serverid = 6;
 }
 
-//·şÎñÆ÷Í¨ÖªÒ»¶ÔÒ»ÁÄÌìĞÅÏ¢
+//æœåŠ¡å™¨é€šçŸ¥ä¸€å¯¹ä¸€èŠå¤©ä¿¡æ¯
 //MSG_SEND_ONEBYONE_CHAT_INFO
 message MsgSendOneByOneChatInfo
 {
-	required string chatinfo = 1;		//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;		//ÊÇ·ñÊÇÓïÒôÏûÏ¢
-	required uint32 playerid = 3;		//·¢ËÍÁÄÌìµÄÍæ¼Òid
+	required string chatinfo = 1;		//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;		//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
+	required uint32 playerid = 3;		//å‘é€èŠå¤©çš„ç©å®¶id
 	required string chattype = 4;
-	required string playerinfo = 5;		//·¢ËÍÁÄÌìµÄÍæ¼ÒĞÅÏ¢
+	required string playerinfo = 5;		//å‘é€èŠå¤©çš„ç©å®¶ä¿¡æ¯
 	required uint32 serverid = 6;
 }
 
-// ¿Í»§¶Ë·¢ËÍGMÖ¸ÁîÇëÇó
+// å®¢æˆ·ç«¯å‘é€GMæŒ‡ä»¤è¯·æ±‚
 // MSG_DEBUG_COMMAND_REQ
 message MsgDebugCommandReq
 {
-	required string command = 1;	// ÃüÁî
-	repeated string params = 2;		// ²ÎÊıÁĞ±í
+	required string command = 1;	// å‘½ä»¤
+	repeated string params = 2;		// å‚æ•°åˆ—è¡¨
 }
 
-// ÏÔÊ¾½±ÀøµÄÎïÆ·
+// æ˜¾ç¤ºå¥–åŠ±çš„ç‰©å“
 // MSG_SHOW_REWARD_AGENT
 message MsgShowRewardAgent
 {
-	required string reward = 1;	// ½±Àø×Ö´®( ¿Í»§¶ËĞèÒª½âÎö )
+	required string reward = 1;	// å¥–åŠ±å­—ä¸²( å®¢æˆ·ç«¯éœ€è¦è§£æ )
 }
 
-// ¿Í»§¶Ë·¢ËÍ´óÌü×é¶ÓÁÄÌìÏûÏ¢ÇëÇó
+// å®¢æˆ·ç«¯å‘é€å¤§å…ç»„é˜ŸèŠå¤©æ¶ˆæ¯è¯·æ±‚
 // MSG_SEND_GROUPCHAT_REQ
 message MsgSendGroupChatReq
 {
-	required string chatinfo = 1;		//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;		//ÊÇ·ñÊÇÓïÒôÏûÏ¢
+	required string chatinfo = 1;		//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;		//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
 }
 
-// ·şÎñÆ÷Í¨Öª´óÌü×é¶ÓÁÄÌìÏûÏ¢
+// æœåŠ¡å™¨é€šçŸ¥å¤§å…ç»„é˜ŸèŠå¤©æ¶ˆæ¯
 // MSG_SEND_GROUPCHAT_INFO
 message MsgSendGroupChatInfo
 {
-	required string chatinfo = 1;		//ÁÄÌìÄÚÈİ
-	required uint32 isvoice = 2;		//ÊÇ·ñÊÇÓïÒôÏûÏ¢
-	required uint32 playerid = 3;		//·¢ËÍÁÄÌìµÄÍæ¼Òid
+	required string chatinfo = 1;		//èŠå¤©å†…å®¹
+	required uint32 isvoice = 2;		//æ˜¯å¦æ˜¯è¯­éŸ³æ¶ˆæ¯
+	required uint32 playerid = 3;		//å‘é€èŠå¤©çš„ç©å®¶id
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//¿Í»§¶ËÇëÇó¹ºÂòÎïÆ·
+//å®¢æˆ·ç«¯è¯·æ±‚è´­ä¹°ç‰©å“
 //	MSG_BUY_STORE_REQ = 1350;
 message MsgBuyStoreReq
 {
-	required string buytype = 1;	//¹ºÂòÀàĞÍ
-	required uint32 shopid = 2;		//ÉÌ³ÇµÀ¾ßid
-	required uint32 num = 3;		//µÀ¾ßÊıÁ¿
+	required string buytype = 1;	//è´­ä¹°ç±»å‹
+	required uint32 shopid = 2;		//å•†åŸé“å…·id
+	required uint32 num = 3;		//é“å…·æ•°é‡
 }
 
-//¿Í»§¶ËÇëÇóÔùËÍÎïÆ·
+//å®¢æˆ·ç«¯è¯·æ±‚èµ é€ç‰©å“
 //MSG_GIVE_STORE_REQ = 1351
 message MsgGiveStoreReq
 {
-	required uint32 toplayerid = 1;	//ÔùÓèÍæ¼ÒµÄid	
-	required uint32 shopid = 2;		//ÉÌ³Çid
+	required uint32 toplayerid = 1;	//èµ äºˆç©å®¶çš„id	
+	required uint32 shopid = 2;		//å•†åŸid
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ¿Í»§¶Ë¾´¾ÆÇëÇó
+// å®¢æˆ·ç«¯æ•¬é…’è¯·æ±‚
 //MSG_PLAYER_TOAST_REQ
 message MsgPlayerToastReq
 {
 	required uint32 playerid = 1;
 }
 
-// ²éÑ¯×ÜµÄ±»¾´¾Æ´ÎÊıÇëÇó
+// æŸ¥è¯¢æ€»çš„è¢«æ•¬é…’æ¬¡æ•°è¯·æ±‚
 //MSG_QUERY_TOAST_COUNT_REQ
 message MsgQueryToastCountReq
 {
 	required uint32 playerid = 1;
 }
 
-// ²éÑ¯×ÜµÄ±»¾´¾Æ´ÎÊı»ØÀ¡
+// æŸ¥è¯¢æ€»çš„è¢«æ•¬é…’æ¬¡æ•°å›é¦ˆ
 //MSG_QUERY_TOAST_COUNT_ACK
 message MsgQueryToastCountAck
 {
@@ -517,24 +518,24 @@ message MsgQueryToastCountAck
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// É¾³ıÊôĞÔ
+// åˆ é™¤å±æ€§
 // MSG_REMOVE_DATA_REQ
 message MsgRemoveDataReq
 {
-	required string dataname = 1;	// ÊôĞÔÃû³Æ
+	required string dataname = 1;	// å±æ€§åç§°
 	required uint64 key = 2;		// id
-	required uint32 count = 3;		// ÊıÁ¿
+	required uint32 count = 3;		// æ•°é‡
 }
 
 
-// ÉèÖÃ½ÇÉ«µÄµ±Ç°Ä£ĞÍºÍÊ±×°
+// è®¾ç½®è§’è‰²çš„å½“å‰æ¨¡å‹å’Œæ—¶è£…
 // MSG_CHANGE_MODEL_REQ
 message MsgChangeModelReq
 {
-	required uint32 modelid = 1;        // Ä£ĞÍid
+	required uint32 modelid = 1;        // æ¨¡å‹id
 }
 
-// ÉèÖÃÄ£ĞÍµÄÄ¬ÈÏÊ±×°id
+// è®¾ç½®æ¨¡å‹çš„é»˜è®¤æ—¶è£…id
 // MSG_SET_MODEL_DEFAULT_CLOTHES_REQ
 message MsgSetModelDefaultClothesReq
 {
@@ -542,99 +543,99 @@ message MsgSetModelDefaultClothesReq
 	required uint32 clothesid = 2;
 }
 
-// ´©´÷Ê±×°
+// ç©¿æˆ´æ—¶è£…
 // MSG_DRESS_CLOTHES_REQ
 message MsgDressClothesReq
 {
-	required uint32 clothesid = 1;	// Ê±×°id
+	required uint32 clothesid = 1;	// æ—¶è£…id
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-// ÑûÇëÍæ¼Ò¼ÓÈë¶ÓÎé
+// é‚€è¯·ç©å®¶åŠ å…¥é˜Ÿä¼
 // MSG_INVITE_MATCH_GROUP_REQ
 message MsgInviteMatchGroupReq
 {
-	required uint32 serverid = 1;		// ÓÎÏ·ÄÚ·şÎñÆ÷id
-	required uint32 playerid = 2;		// Íæ¼Òid
-	required string source = 3;			// ´ÓÄÄÀïÑûÇë
-	required uint32 matchid = 4;		// Æ¥ÅäÄ£Ê½
-	required string playername = 5;		// ±»ÑûÇëÍæ¼ÒÃû×Ö
+	required uint32 serverid = 1;		// æ¸¸æˆå†…æœåŠ¡å™¨id
+	required uint32 playerid = 2;		// ç©å®¶id
+	required string source = 3;			// ä»å“ªé‡Œé‚€è¯·
+	required uint32 matchid = 4;		// åŒ¹é…æ¨¡å¼
+	required string playername = 5;		// è¢«é‚€è¯·ç©å®¶åå­—
 }
 
-// Í¬Òâ/¾Ü¾øÍæ¼ÒÑûÇë
+// åŒæ„/æ‹’ç»ç©å®¶é‚€è¯·
 // MSG_REPLY_INVITE_MATCH_GROUP_REQ
 message MsgReplyInviteMatchGroupReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
-	required uint32 inviterid = 2;		// ÑûÇëÕßid
-	required uint32 operate = 3;		// ²Ù×÷	¶ÔÓ¦InviteEnum
+	required uint64 groupid = 1;		// é˜Ÿä¼id
+	required uint32 inviterid = 2;		// é‚€è¯·è€…id
+	required uint32 operate = 3;		// æ“ä½œ	å¯¹åº”InviteEnum
 }
 
-// Àë¿ª¶ÓÎé
+// ç¦»å¼€é˜Ÿä¼
 // MSG_LEAVE_MATCH_GROUP_REQ
 message MsgLeaveMatchGroupReq
 {
 
 }
 
-// Ìß³ö¶ÓÔ±
+// è¸¢å‡ºé˜Ÿå‘˜
 // MSG_KICK_MATCH_GROUP_REQ
 message MsgKickMatchGroupReq
 {
 	required uint32 memberid = 1;
 }
 
-// ÉêÇë¼ÓÈë¶ÓÎé
+// ç”³è¯·åŠ å…¥é˜Ÿä¼
 // MSG_APPLY_MATCH_GROUP_REQ
 message MsgApplyMatchGroupReq
 {
-	required uint64 groupid = 1;		// ¶ÓÎéid
+	required uint64 groupid = 1;		// é˜Ÿä¼id
 }
 
-// »Ø¸´ÉêÇë×é¶Ó
+// å›å¤ç”³è¯·ç»„é˜Ÿ
 // MSG_REPLY_APPLY_MATCH_GROUP_REQ
 message MsgReplyApplyMatchGroupReq
 {
-	required uint32 applyid = 1;		// ÉêÇëÈËid
-	required uint32 operate = 3;		// ²Ù×÷	¶ÔÓ¦InviteEnum
+	required uint32 applyid = 1;		// ç”³è¯·äººid
+	required uint32 operate = 3;		// æ“ä½œ	å¯¹åº”InviteEnum
 }
 
-// ¶ÓÔ±×¼±¸
+// é˜Ÿå‘˜å‡†å¤‡
 // MSG_MATCH_GROUP_PREPARE_REQ
 message MsgMatchGroupPrepareReq
 {
-	required uint32 prepare = 1;		// ×¼±¸  1 ×¼±¸   0 È¡Ïû×¼±¸
+	required uint32 prepare = 1;		// å‡†å¤‡  1 å‡†å¤‡   0 å–æ¶ˆå‡†å¤‡
 }
 
 
-// ¸ü¸ÄÆ¥ÅäÄ£Ê½
+// æ›´æ”¹åŒ¹é…æ¨¡å¼
 // MSG_UPDATE_GROUP_MATCH_REQ
 message MsgUpdateGroupMatchReq
 {
-	required uint32 matchid = 1;	// Ä£Ê½id
+	required uint32 matchid = 1;	// æ¨¡å¼id
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-// ²éÑ¯·Ã¿ÍĞÅÏ¢ÇëÇó
+// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯è¯·æ±‚
 // MSG_QUERY_GUEST_REQ
 message MsgQueryGuestReq
 {
 	required uint32 playerid = 1;
 }
 
-// ²éÑ¯·Ã¿ÍĞÅÏ¢»ØÀ¡
+// æŸ¥è¯¢è®¿å®¢ä¿¡æ¯å›é¦ˆ
 // MSG_QUERY_GUEST_ACK
 message MsgQueryGuestAck
 {
 	required uint32 playerid = 1;
-	required uint32 guestcount = 2;		//±¾ÔÂ·Ã¿ÍÊıÁ¿
-	repeated PBGuestData guestdata = 3;	//×î½ü·Ã¿ÍĞÅÏ¢
+	required uint32 guestcount = 2;		//æœ¬æœˆè®¿å®¢æ•°é‡
+	repeated PBGuestData guestdata = 3;	//æœ€è¿‘è®¿å®¢ä¿¡æ¯
 }
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-// Ê¹ÓÃµÀ¾ß
+// ä½¿ç”¨é“å…·
 // MSG_USE_ITEM_REQ
 message MsgUseItemReq
 {
@@ -642,7 +643,7 @@ message MsgUseItemReq
 }
 
 
-//ÉÌ³ÇĞÅÏ¢
+//å•†åŸä¿¡æ¯
 message PBStore
 {
 	repeated PBString data = 1;
@@ -650,58 +651,58 @@ message PBStore
 
 message PBStores
 {
-	repeated PBStore store = 1;	//ÉÌ³ÇĞÅÏ¢
+	repeated PBStore store = 1;	//å•†åŸä¿¡æ¯
 }
 
-// ÇëÇóÉÌ³ÇĞÅÏ¢
+// è¯·æ±‚å•†åŸä¿¡æ¯
 // MSG_QUERY_STORE_INFO_REQ
 message MsgQueryStoreInfoReq
 {
-	required uint32 version = 1;		// °æ±¾ºÅ
+	required uint32 version = 1;		// ç‰ˆæœ¬å·
 }
 
 
-// ÇëÇóÉÌ³ÇĞÅÏ¢·´À¡
+// è¯·æ±‚å•†åŸä¿¡æ¯åé¦ˆ
 // MSG_QUERY_STORE_INFO_ACK
 message MsgQueryStoreInfoAck
 {
-	required uint32 version = 1;		// °æ±¾ºÅ
+	required uint32 version = 1;		// ç‰ˆæœ¬å·
 	optional PBStores stores = 2;		
 }
 
-// ¹ºÂòÉÌÆ··´À¡
+// è´­ä¹°å•†å“åé¦ˆ
 // MSG_BUY_STORE_ACK
 message MsgBuyStoreAck
 {
 	required uint32 storeid = 1;
-	required uint32 code = 2; // ³É¹¦·µ»Ø:1
+	required uint32 code = 2; // æˆåŠŸè¿”å›:1
 }
 
-// ²Ù×÷ĞÄÔ¸µ¥ÇëÇó
+// æ“ä½œå¿ƒæ„¿å•è¯·æ±‚
 // MSG_SET_WISH_ORDER_REQ
 message MsgSetWishOrderReq
 {
-	required uint32 type = 1;		// ²Ù×÷ÀàĞÍ 1:Ôö¼Ó 2£ºÉ¾³ı 3£ºĞŞ¸Ä
-	required uint32 storeid = 2;		// ÉÌÆ·id
-	optional uint32 status = 3;		// ÉèÖÃĞÄÔ¸µ¥¿É¼û×´Ì¬
+	required uint32 type = 1;		// æ“ä½œç±»å‹ 1:å¢åŠ  2ï¼šåˆ é™¤ 3ï¼šä¿®æ”¹
+	required uint32 storeid = 2;		// å•†å“id
+	optional uint32 status = 3;		// è®¾ç½®å¿ƒæ„¿å•å¯è§çŠ¶æ€
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-// ²éÑ¯ÉèÖÃÇëÇó
+// æŸ¥è¯¢è®¾ç½®è¯·æ±‚
 // MSG_QUERY_SETTING_REQ
 message MsgQuerySettingReq
 {
 }
 
-// ²éÑ¯ÉèÖÃ»ØÀ¡
+// æŸ¥è¯¢è®¾ç½®å›é¦ˆ
 // MSG_QUERY_SETTING_ACK
 message MsgQuerySettingAck
 {
 	required PBObject pbsetting = 1; 
 }
 
-// ¸üĞÂÉèÖÃÇëÇó
+// æ›´æ–°è®¾ç½®è¯·æ±‚
 // MSG_UPDATE_SETTING_REQ
 message MsgUpdateSettingReq
 {
@@ -712,202 +713,210 @@ message MsgUpdateSettingReq
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
-// ²éÑ¯×î½üÁĞ±íÉêÇë
+// æŸ¥è¯¢æœ€è¿‘åˆ—è¡¨ç”³è¯·
 // MSG_QUERY_RECENT_LIST_REQ
 message MsgQueryRecentListReq
 {
 }
 
-// ²éÑ¯×î½üÁĞ±í»ØÀ¡
+// æŸ¥è¯¢æœ€è¿‘åˆ—è¡¨å›é¦ˆ
 // MSG_QUERY_RECENT_LIST_ACK
 message MsgQueryRecentListAck
 {
 	required PBRecord recentlist = 1;
 }
 
-// ºÏ³ÉÊôĞÔ
+// åˆæˆå±æ€§
 // MSG_COMPOUND_DATA_REQ
 message MsgCompoundDataReq
 {
-	required string dataname = 1;	// ÊôĞÔÃû³Æ( ÔÚclassÖĞ )
-	required uint32 key = 2;		// ÊôĞÔid
+	required string dataname = 1;	// å±æ€§åç§°( åœ¨classä¸­ )
+	required uint32 key = 2;		// å±æ€§id
 }
 
-// ²éÑ¯È«·şÅÅĞĞ°ñ
+// æŸ¥è¯¢å…¨æœæ’è¡Œæ¦œ
 // MSG_QUERY_RANK_LIST_REQ	
 message MsgQueryRankListReq
 {
 	required uint32 rankid = 1;
 }
 
-// ²éÑ¯ÅÅĞĞ°ñ·´À¡
+// æŸ¥è¯¢æ’è¡Œæ¦œåé¦ˆ
 // MSG_QUERY_RANK_LIST_ACK
 message MsgQueryRankListAck
 {
-	required uint32 rankid = 1;			// ÅÅĞĞ°ñid
-	required PBRankDatas rankdatas = 2;	// °ñµ¥Êı¾İ
+	required uint32 rankid = 1;			// æ’è¡Œæ¦œid
+	required PBRankDatas rankdatas = 2;	// æ¦œå•æ•°æ®
 }
 
-// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ
+// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œ
 // MSG_QUERY_FRIEND_RANK_LIST_REQ
 message MsgQueryFriendRankListReq
 {
 	required uint32 rankid = 1;
 }
 
-// ²éÑ¯ºÃÓÑÅÅĞĞ°ñ·´À¡
+// æŸ¥è¯¢å¥½å‹æ’è¡Œæ¦œåé¦ˆ
 // MSG_QUERY_FRIEND_RANK_LIST_ACK
 message MsgQueryFriendRankListAck
 {
-	required uint32 rankid = 1;			// ÅÅĞĞ°ñid
-	required PBRankDatas rankdatas = 2;	// °ñµ¥Êı¾İ
+	required uint32 rankid = 1;			// æ’è¡Œæ¦œid
+	required PBRankDatas rankdatas = 2;	// æ¦œå•æ•°æ®
 }
 
-// ÁìÈ¡7ÌìÇ©µ½½±Àø
+// é¢†å–7å¤©ç­¾åˆ°å¥–åŠ±
 // MSG_SEVEN_SIGNIN_REWARD_REQ
 message MsgSevenSignInRewardReq
 {
-	required uint32 day = 1;		// µÚ¼¸ÌìµÄ½±Àø( ¸ù¾İ½ÇÉ«ÊôĞÔsinginµÄsevendayµÄÌìÊı, ºÍsevenreward½±Àø±ê¼ÇÀ´ÅĞ¶Ï )
+	required uint32 day = 1;		// ç¬¬å‡ å¤©çš„å¥–åŠ±( æ ¹æ®è§’è‰²å±æ€§singinçš„sevendayçš„å¤©æ•°, å’Œsevenrewardå¥–åŠ±æ ‡è®°æ¥åˆ¤æ–­ )
 }
 
-// ¹ã²¥»ñµÃ¶îÍâ½±Àø
+// å¹¿æ’­è·å¾—é¢å¤–å¥–åŠ±
 // MSG_TELL_SEVEN_EXTEND_REWARD
 message MsgTellSevenExtendReward
 {
-	required string playername = 1;		// Íæ¼ÒÃû×Ö
-	required string reward = 2;		// ½±ÀøÄÚÈİ
+	required string playername = 1;		// ç©å®¶åå­—
+	required string reward = 2;		// å¥–åŠ±å†…å®¹
 }
 
-// ´´½¨°ïÅÉ
+// åˆ›å»ºå¸®æ´¾
 // MSG_CREATE_GUILD_REQ
 message MsgCreateGuildReq
 {
-	required string guildname = 1;		// °ïÅÉÃû×Ö
-	required uint32 medal = 2;		// °ïÅÉÑ«ÕÂ
-	optional string manifesto = 3;		// °ïÅÉĞûÑÔ 
+	required string guildname = 1;		// å¸®æ´¾åå­—
+	required uint32 medal = 2;		// å¸®æ´¾å‹‹ç« 
+	optional string manifesto = 3;		// å¸®æ´¾å®£è¨€ 
 }
 
-// ÑûÇë¼ÓÈë°ïÅÉ
+// é‚€è¯·åŠ å…¥å¸®æ´¾
 // MSG_INVITE_GUILD_REQ
 message MsgInviteGuildReq
 {
-	required uint32 inviterid = 1;		// ±»ÑûÇëÈËid
+	required uint32 inviterid = 1;		// è¢«é‚€è¯·äººid
 	
 }
 
-// ÉêÇë¼ÓÈë°ïÅÉ
+// ç”³è¯·åŠ å…¥å¸®æ´¾
 // MSG_APPLY_GUILD_REQ
 message MsgApplyGuildReq
 {
-	required uint64 guildid = 1;		// °ïÅÉid
-	required uint64 invitor = 2;		// ÑûÇëid
+	required uint64 guildid = 1;		// å¸®æ´¾id
+	required uint64 invitor = 2;		// é‚€è¯·id
 }
 
-// Àë¿ª°ïÅÉ
+// ç¦»å¼€å¸®æ´¾
 // MSG_EXIT_GUILD_REQ
 message MsgExitGuildReq
 {
 }
 
-// ×ªÈÃ°ïÖ÷
+// è½¬è®©å¸®ä¸»
 // MSG_TRANSFER_MASTER_REQ
 message MsgTransferMasterReq
 {
-	required uint32 newmasterid = 1;	// ½ÓÊÜÕßid
+	required uint32 newmasterid = 1;	// æ¥å—è€…id
 }
 
-// ÉóÅúÉêÇëÁĞ±í
+// å®¡æ‰¹ç”³è¯·åˆ—è¡¨
 // MSG_REVIEW_APPLY_REQ
 message MsgReviewApplyReq
 {
-	optional uint32 playerid = 1;		// ±»ÉóºËÍæ¼Ò(Ò»¼ü²Ù×÷²»Ìî)
-	required uint32 operatortype =2;	// ²Ù×÷ÀàĞÍ (1:Í¬Òâ,2:¾Ü¾ø)
+	optional uint32 playerid = 1;		// è¢«å®¡æ ¸ç©å®¶(ä¸€é”®æ“ä½œä¸å¡«)
+	required uint32 operatortype =2;	// æ“ä½œç±»å‹ (1:åŒæ„,2:æ‹’ç»)
 	
 }
 
-// ½âÉ¢°ïÅÉ
+// è§£æ•£å¸®æ´¾
 // MSG_DISSOLVE_GUILD_REQ
 message MsgDissolveGuildReq
 {
 }
 
-// ĞŞ¸Ä°ïÅÉ»ÕÕÂ
+// ä¿®æ”¹å¸®æ´¾å¾½ç« 
 // MSG_MODIFY_GUILD_MEDAL_REQ
 message MsgModifyGuildMedalReq
 {
-	required uint32 newmedal = 1;		// ĞÂµÄ»ÕÕÂid
+	required uint32 newmedal = 1;		// æ–°çš„å¾½ç« id
 }
 
-// ÇëÇó°ïÅÉÁĞ±í
+// è¯·æ±‚å¸®æ´¾åˆ—è¡¨
 // MSG_QUERY_GUILD_LIST_REQ
 message MsgQueryGuildListReq
 {
-	optional PBGuildIdArray guilds = 1;	// Òª²éÑ¯µÄ°ïÅÉid
-	required uint32 cursor = 2;		// ²éÑ¯µÄÓÎ±ê£¨´Ó0¿ªÊ¼£©
+	optional PBGuildIdArray guilds = 1;	// è¦æŸ¥è¯¢çš„å¸®æ´¾id
+	required uint32 cursor = 2;		// æŸ¥è¯¢çš„æ¸¸æ ‡ï¼ˆä»0å¼€å§‹ï¼‰
 }
 
-// °ïÅÉÁĞ±í·µ»Ø
+// å¸®æ´¾åˆ—è¡¨è¿”å›
 // MSG_QUERY_GUILD_LIST_ACK
 message MsgQueryGuildListAck
 {
-	repeated PBStrings guilddatas = 1;	// °ïÅÉĞÅÏ¢
+	repeated PBStrings guilddatas = 1;	// å¸®æ´¾ä¿¡æ¯
 }
 
-// Ìßµô°ïÅÉ³ÉÔ±
+// è¸¢æ‰å¸®æ´¾æˆå‘˜
 // MSG_KICK_MEMBER_REQ
 message MsgKickMemberReq
 {
-	required uint32 toplayerid = 1;		// ±»ÌßµôµÄÍæ¼Òid
+	required uint32 toplayerid = 1;		// è¢«è¸¢æ‰çš„ç©å®¶id
 }
 
-// Éı¼¶°ïÅÉ
+// å‡çº§å¸®æ´¾
 // MSG_UPGRADE_GUILD_REQ
 message MsgUpgradeGuildReq
 {
 }
 
-// ÈÎÃü°ïÅÉ³ÉÔ±
+// ä»»å‘½å¸®æ´¾æˆå‘˜
 // MSG_APPOINT_GUILD_MEMBER_REQ
 message MsgAppointGuildMemberReq
 {
-	required uint32 toplayerid = 1;		// ±»ÈÎÃüÈËµÄid
-	required uint32 title = 2;		// ÈÎÃüµÄÖ°Î»
+	required uint32 toplayerid = 1;		// è¢«ä»»å‘½äººçš„id
+	required uint32 title = 2;		// ä»»å‘½çš„èŒä½
 }
 
-// ¸ù¾İÃû×ÖËÑË÷°ïÅÉĞÅÏ¢
+// æ ¹æ®åå­—æœç´¢å¸®æ´¾ä¿¡æ¯
 // MSG_SEARCH_GUILD_BY_NAME_REQ
 message MsgSearchGuildByNameReq
 {
-	required string guildname = 1;		// °ïÅÉÃû×Ö
+	required string guildname = 1;		// å¸®æ´¾åå­—
 }
 
 
-// ÉèÖÃ°ïÅÉ¹ÜÀí¿ª¹Ø
+// è®¾ç½®å¸®æ´¾ç®¡ç†å¼€å…³
 // MSG_SET_GUILD_SWITCH_REQ
 message MsgSetGuildSwitchReq
 {
-	required string type = 1;		// ÉèÖÃÀàĞÍ
-	required uint32 flag = 2;		// ÉèÖÃÊıÖµ	
+	required string type = 1;		// è®¾ç½®ç±»å‹
+	required uint32 flag = 2;		// è®¾ç½®æ•°å€¼	
 }
 
-// ²éÑ¯°ïÅÉÈÕÖ¾
+// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—
 // MSG_QUERY_GUILD_LOG_REQ
 message MsgQueryGuildLogReq
 {
-	required uint32 page = 1;		// Ò³Êı(0´ú±íµÚÒ»Ò³)
+	required uint32 page = 1;		// é¡µæ•°(0ä»£è¡¨ç¬¬ä¸€é¡µ)
 }
 
-// ²éÑ¯°ïÅÉÈÕÖ¾·µ»Ø
+// æŸ¥è¯¢å¸®æ´¾æ—¥å¿—è¿”å›
 // MSG_QUERY_GUILD_LOG_ACK
 message MsgQueryGuildLogAck
 {
-	required uint32 page = 1;		// Ò³Êı
-	repeated string guildlog = 2;		// °ïÅÉÈÕÖ¾
+	required uint32 page = 1;		// é¡µæ•°
+	repeated string guildlog = 2;		// å¸®æ´¾æ—¥å¿—
 }
 
-// ×ßÂíµÆÏûÏ¢
+// èµ°é©¬ç¯æ¶ˆæ¯
 // MSG_TELL_MARQUEE
 message MsgTellMarquee
 {
-	required string content = 1;	// ÏÔÊ¾ÄÚÈİ
+	required string content = 1;	// æ˜¾ç¤ºå†…å®¹
+}
+
+// ç³»ç»Ÿå…¬å‘Š
+// MSG_TELL_SYS_NOTICE
+message MsgTellSysNotcie
+{
+	required string content = 1;	// æ˜¾ç¤ºå†…å®¹
+
 }

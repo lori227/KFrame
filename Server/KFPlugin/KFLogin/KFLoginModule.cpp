@@ -128,7 +128,7 @@ namespace KFrame
         sendjson.SetValue( __KF_STRING__( logiczoneid ), kfzone->_logic_id );
         sendjson.SetValue( __KF_STRING__( token ), kfmsg.token() );
 
-        auto url = _kf_ip_address->FindAuthAddress() + __KF_STRING__( verify );
+        static auto url = _kf_option->GetString( __KF_STRING__( authurl ) ) + __KF_STRING__( verify );
         _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, url, sendjson );
     }
 

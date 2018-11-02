@@ -40,9 +40,9 @@ namespace KFrame
         ShutDown();
 
         _redis_context = redisConnect( _ip.c_str(), _port );
-        if ( _redis_context->err != REDIS_OK )
+        if ( _redis_context == nullptr || _redis_context->err != REDIS_OK )
         {
-            return _redis_context->err;
+            return KFEnum::Error;
         }
 
         redisEnableKeepAlive( _redis_context );
@@ -59,12 +59,15 @@ namespace KFrame
             __FREE_REPLY__( reply );
         }
 
+        __LOG_INFO__( "redis connect [{}:{}] ok!", _ip, _port );
         return KFEnum::Ok;
     }
 
     bool KFRedisExecute::IsDisconnected()
     {
-        if ( _redis_context->err == REDIS_ERR_EOF || _redis_context->err == REDIS_ERR_IO )
+        if ( _redis_context == nullptr ||
+                _redis_context->err == REDIS_ERR_EOF ||
+                _redis_context->err == REDIS_ERR_IO )
         {
             return true;
         }
@@ -108,16 +111,22 @@ namespace KFrame
 
     redisReply* KFRedisExecute::Execute( const std::string& strsql )
     {
+        if ( _redis_context == nullptr )
+        {
+            __LOG_ERROR__( "_redis_context = nullptr, sql=[{}]!", strsql );
+            return nullptr;
+        }
+
         auto reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
         if ( reply == nullptr )
         {
-            __LOG_ERROR__( "redisreply = nullptr, [{}:{}]!", _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]!", _redis_context->err, _redis_context->errstr, strsql );
             return nullptr;
         }
 
         if ( reply->type == REDIS_REPLY_ERROR )
         {
-            __LOG_ERROR__( "reply error [{}:{}]!", reply->type, reply->str );
+            __LOG_ERROR__( "reply error [{}:{}] sql=[{}]!", reply->type, reply->str, strsql );
             __FREE_REPLY__( reply );
             return nullptr;
         }
@@ -279,6 +288,12 @@ namespace KFrame
     KFResult< voidptr >* KFRedisExecute::Pipeline()
     {
         auto kfresult = _void_result_queue.Alloc();
+        if ( _redis_context == nullptr )
+        {
+            kfresult->SetResult( KFEnum::Error );
+            return kfresult;
+        }
+
         for ( auto& command : _commands )
         {
             auto result = redisAppendCommand( _redis_context, command.c_str() );
@@ -318,6 +333,12 @@ namespace KFrame
     KFResult< ListString >* KFRedisExecute::ListPipelineExecute()
     {
         auto kfresult = _list_result_queue.Alloc();
+        if ( _redis_context == nullptr )
+        {
+            kfresult->SetResult( KFEnum::Error );
+            return kfresult;
+        }
+
         for ( auto& command : _commands )
         {
             auto result = redisAppendCommand( _redis_context, command.c_str() );
@@ -358,6 +379,11 @@ namespace KFrame
     KFResult< std::list< MapString > >* KFRedisExecute::ListMapPipelineExecute()
     {
         auto kfresult = _list_map_result_queue.Alloc();
+        if ( _redis_context == nullptr )
+        {
+            kfresult->SetResult( KFEnum::Error );
+            return kfresult;
+        }
 
         for ( auto& command : _commands )
         {

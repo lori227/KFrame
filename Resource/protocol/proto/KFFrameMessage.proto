@@ -2,21 +2,21 @@ package KFMsg;
 
 enum FrameProtocol
 {
-	S2S_REGISTER_TO_SERVER_REQ = 10001;					// ÇëÇó×¢²á
-	S2S_REGISTER_TO_SERVER_ACK = 10002;					// »ØÀ¡×¢²á
-	S2S_TELL_REGISTER_TO_SERVER = 10003;				// Í¨Öª×¢²á
-	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// Í¨ÖªÈ¡Ïû×¢²á
+	S2S_REGISTER_TO_SERVER_REQ = 10001;					// è¯·æ±‚æ³¨å†Œ
+	S2S_REGISTER_TO_SERVER_ACK = 10002;					// å›é¦ˆæ³¨å†Œ
+	S2S_TELL_REGISTER_TO_SERVER = 10003;				// é€šçŸ¥æ³¨å†Œ
+	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// é€šçŸ¥å–æ¶ˆæ³¨å†Œ
 
-	S2S_REGISTER_ROUTE_ZONE_REQ = 10011;				// ×¢²áÇøĞÅÏ¢
-	S2S_REGISTER_ROUTE_PROXY_REQ = 10012;				// ×¢²áÇøĞÅÏ¢
-	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ = 10013;		// ÏûÏ¢×ª·¢µ½RouteProxy
-	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK = 10014;		// ÏûÏ¢×ª·¢µ½RouteProxy
-	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ = 10015;		// ÏûÏ¢×ª·¢µ½RouteShard
-	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK = 10016;		// ÏûÏ¢×ª·¢µ½RouteShard
+	S2S_REGISTER_ROUTE_ZONE_REQ = 10011;				// æ³¨å†ŒåŒºä¿¡æ¯
+	S2S_REGISTER_ROUTE_PROXY_REQ = 10012;				// æ³¨å†ŒåŒºä¿¡æ¯
+	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ = 10013;		// æ¶ˆæ¯è½¬å‘åˆ°RouteProxy
+	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK = 10014;		// æ¶ˆæ¯è½¬å‘åˆ°RouteProxy
+	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ = 10015;		// æ¶ˆæ¯è½¬å‘åˆ°RouteShard
+	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK = 10016;		// æ¶ˆæ¯è½¬å‘åˆ°RouteShard
 
-	S2S_LOG_REQ = 10021;								// ¼ÇÂ¼ÈÕÖ¾µ½ÈÕÖ¾·şÎñÆ÷
-	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// ¸üĞÂµÇÂ¼ÊıÁ¿µ½Ä¿Â¼·şÎñÆ÷
-	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// É¾³ıµÇÂ¼Êı¾İ
+	S2S_LOG_REQ = 10021;								// è®°å½•æ—¥å¿—åˆ°æ—¥å¿—æœåŠ¡å™¨
+	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// æ›´æ–°ç™»å½•æ•°é‡åˆ°ç›®å½•æœåŠ¡å™¨
+	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// åˆ é™¤ç™»å½•æ•°æ®
  }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,14 +31,14 @@ message ListenData
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ×¢²áµ½·şÎñÆ÷ÇëÇó
+// æ³¨å†Œåˆ°æœåŠ¡å™¨è¯·æ±‚
 // S2S_REGISTER_TO_SERVER_REQ
 message RegisterToServerReq
 {
 	required ListenData listen = 1;
 }
 
-// ×¢²áµ½·şÎñÆ÷·µ»Ø
+// æ³¨å†Œåˆ°æœåŠ¡å™¨è¿”å›
 // S2S_REGISTER_TO_SERVER_ACK
 message RegisterToServerAck
 {
@@ -134,17 +134,17 @@ message S2SLogReq
 // S2S_UPDATE_ONLINE_TO_DIR_REQ
 message S2SUpdateOnlineToDirReq
 {
-	required uint32 zoneid = 1;			// Ğ¡Çøid
-	required string zonename = 2;		// Ğ¡ÇøÃû×Ö
-	required uint32 zonechannel = 3;	// Ğ¡ÇøÀàĞÍ
-	required uint32 appid = 4;			// ·şÎñÆ÷id
+	required uint32 zoneid = 1;			// å°åŒºid
+	required string zonename = 2;		// å°åŒºåå­—
+	required uint32 zonechannel = 3;	// å°åŒºç±»å‹
+	required uint32 appid = 4;			// æœåŠ¡å™¨id
 	required string ip = 5;				// ip
 	required uint32 port = 6;			// port
-	required uint32 onlinecount = 7;	// µ±Ç°ÔÚÏßÈËÊı
+	required uint32 onlinecount = 7;	// å½“å‰åœ¨çº¿äººæ•°
 }
 
 // S2S_REMOVE_ONLINE_TO_DIR_REQ
 message S2SRemoveOnlineToDirReq
 {
-	required uint32 appid = 1;			// ·şÎñÆ÷id
+	required uint32 appid = 1;			// æœåŠ¡å™¨id
 }

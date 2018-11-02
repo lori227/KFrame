@@ -73,7 +73,7 @@ namespace KFrame
         auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
 
         // 检查所有衣服, 找到时间最少的一个衣服
-        uint32 _min_valid_time = 0xFFFFFFFF;
+        auto _min_valid_time = std::numeric_limits<uint32>::max();
 
         auto kfitem = kfitemrecord->FirstData();
         while ( kfitem != nullptr )
@@ -87,7 +87,7 @@ namespace KFrame
             kfitem = kfitemrecord->NextData();
         }
 
-        if ( _min_valid_time == 0xFFFFFFFF )
+        if ( _min_valid_time == std::numeric_limits<uint32>::max() )
         {
             return;
         }
@@ -407,7 +407,7 @@ namespace KFrame
         }
 
         auto playerid = static_cast<uint32>( player->GetKeyID() );
-        _kf_lua->CallFunction( itemsetting->_lua_file, luafunction, playerid, itemsetting->_id );
+        _kf_lua->Call( itemsetting->_lua_file, luafunction, playerid, itemsetting->_id );
     }
 
     __KF_CHECK_AGENT_FUNCTION__( KFItemModule::CheckItemAgentData )

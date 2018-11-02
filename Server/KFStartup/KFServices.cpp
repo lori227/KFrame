@@ -85,10 +85,13 @@ namespace KFrame
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
 #endif
 
+        // 初始化服务类型
+        auto strservicetype = params[ __KF_STRING__( service ) ];
+        kfglobal->InitNetService( strservicetype );
+
         // 初始化log
         auto strlogtype = params[ __KF_STRING__( log ) ];
         kfglobal->InitLogger( strlogtype );
-
 
         // 加载插件
         if ( !_kf_startup->LoadPlugin() )

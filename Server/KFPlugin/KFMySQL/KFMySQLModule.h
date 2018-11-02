@@ -19,8 +19,8 @@ namespace KFrame
     class KFMySQLModule : public KFMySQLInterface
     {
     public:
-        KFMySQLModule();
-        ~KFMySQLModule();
+        KFMySQLModule() = default;
+        ~KFMySQLModule() = default;
 
         // º”‘ÿ≈‰÷√
         virtual void InitModule();
@@ -33,8 +33,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // ¥¥Ω®Execute
-        virtual KFMySQLDriver* CreateExecute( uint32 id );
-        virtual KFMySQLDriver* CreateExecute( const std::string& filed, uint32 logicid = 0 );
+        virtual KFMySQLDriver* CreateExecute( const std::string& module, uint32 logicid = 0 );
         virtual KFMySQLDriver* CreateExecute( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port );
 
     protected:

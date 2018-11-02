@@ -806,7 +806,7 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "(\004\022\037\n\005basic\030\003 \002(\0132\020.KFMsg.PBStrings\"B\n\022P"
     "BApplicationlists\022,\n\napplylists\030\001 \003(\0132\030."
     "KFMsg.PBApplicationlist\"!\n\016PBGuildIdArra"
-    "y\022\017\n\007guildid\030\001 \003(\004*\245(\n\007AckEnum\022\013\n\007Succes"
+    "y\022\017\n\007guildid\030\001 \003(\004*\365(\n\007AckEnum\022\013\n\007Succes"
     "s\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError\020\003\022\023\n\017W"
     "eiXinCodeError\020\004\022\026\n\022WeiXinTokenTimeout\020\005"
     "\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinUserErro"
@@ -899,9 +899,11 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "etInMatch\020\245\001\022\021\n\014GroupInMatch\020\246\001\022\025\n\020Group"
     "KickInMatch\020\247\001\022\026\n\021GroupLeaveInMatch\020\250\001\022\030"
     "\n\023MatchCancelInBattle\020\251\001\022\023\n\016MailServerBu"
-    "sy\020\252\001\022\031\n\024RelationDatabaseBusy\020\253\001\022\020\n\013Name"
-    "Invalid\020\254\001\022\017\n\nSteamError\020\255\001\022\023\n\016SteamData"
-    "Error\020\256\001\022\023\n\016SteamAuthError\020\257\001\022\032\n\025FriendF"
+    "sy\020\252\001\022\031\n\024RelationDatabaseBusy\020\253\001\022\022\n\rInva"
+    "lidFilter\020\254\001\022\017\n\nSteamError\020\255\001\022\023\n\016SteamDa"
+    "taError\020\256\001\022\023\n\016SteamAuthError\020\257\001\022\032\n\025Inval"
+    "idActivationCode\020\260\001\022\030\n\023CanNotFindLoginNo"
+    "de\020\261\001\022\026\n\021ChannelNotSupport\020\262\001\022\032\n\025FriendF"
     "riendCountOver\020\220N\022\031\n\024FriendApplyCountOve"
     "r\020\221N\022\026\n\021FriendSearchEmpty\020\222N\022\035\n\030FriendAd"
     "dFriendSuccessed\020\223N\022\032\n\025EquipDeleteTipCon"
@@ -957,7 +959,7 @@ void protobuf_AddDesc_KFCommonMessage_2eproto() {
     "\001\022\007\n\003Win\020\002\022\t\n\005Toast\020\003\022\010\n\004Give\020\004*)\n\tGuild"
     "Enum\022\r\n\tJoinGuild\020\001\022\r\n\tExitGuild\020\002*2\n\017Gu"
     "ildReviewEnum\022\016\n\nAgreeApply\020\001\022\017\n\013RefuseA"
-    "pply\020\002", 8406);
+    "pply\020\002", 8486);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFCommonMessage.proto", &protobuf_RegisterTypes);
   Vector3D::default_instance_ = new Vector3D();
@@ -1201,6 +1203,9 @@ bool AckEnum_IsValid(int value) {
     case 173:
     case 174:
     case 175:
+    case 176:
+    case 177:
+    case 178:
     case 10000:
     case 10001:
     case 10002:

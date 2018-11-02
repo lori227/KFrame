@@ -12,7 +12,7 @@ namespace KFrame
     public:
         KFBaseResult()
         {
-            _result = 0;
+            _result = KFEnum::Ok;
         }
 
         inline bool IsOk() const
@@ -53,10 +53,8 @@ namespace KFrame
 
         inline void Reset()
         {
-            static auto _default = T();
-
+            _value = T();
             _result = KFEnum::Ok;
-            _value = _default;
         }
 
     public:
@@ -110,7 +108,6 @@ namespace KFrame
                 _idle_list.pop_front();
             }
 
-            kfresult->Reset();
             _use_list.push_back( kfresult );
             return kfresult;
         }
@@ -121,6 +118,11 @@ namespace KFrame
             KFLocker locker( _kf_mutex );
             if ( !_use_list.empty() )
             {
+                for ( auto kfresult : _use_list )
+                {
+                    kfresult->Reset();
+                }
+
                 _idle_list.splice( _idle_list.end(), _use_list );
             }
         }

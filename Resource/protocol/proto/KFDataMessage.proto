@@ -4,23 +4,23 @@ package KFMsg;
 
 enum DataProtocol
  {
-	MSG_LOGIN_ENTER_GAME = 10;				// Í¨Öª½øÈëÓÎÏ·
- 	MSG_SYNC_UPDATE_DATA = 11;				// Í¬²½¸üÐÂÊôÐÔ
-	MSG_SYNC_ADD_DATA = 12;					// Í¬²½Ôö¼ÓÊôÐÔ
-	MSG_SYNC_REMOVE_DATA = 13;				// Í¬²½É¾³ýÊôÐÔ
-	MSG_TELL_QUERY_PLAYER = 14;				// ²éÑ¯Íæ¼ÒÊý¾Ý
-	MSG_TELL_QUERY_BASIC = 15;				// ²éÑ¯»ù´¡Êý¾Ý
-	MSG_SYNC_UPDATE_GUILD_DATA = 16;			// Í¬²½¸üÐÂÊôÐÔ(°ïÅÉ)
-	MSG_SYNC_ADD_GUILD_DATA = 17;				// Í¬²½Ôö¼ÓÊôÐÔ(°ïÅÉ)
-	MSG_SYNC_REMOVE_GUILD_DATA = 18;			// Í¬²½É¾³ýÊôÐÔ(°ïÅÉ)
-	MSG_TELL_QUERY_GUILD = 19;				// ²éÑ¯Íæ¼ÒµÄ°ïÅÉÐÅÏ¢
+	MSG_LOGIN_ENTER_GAME = 10;				// é€šçŸ¥è¿›å…¥æ¸¸æˆ
+ 	MSG_SYNC_UPDATE_DATA = 11;				// åŒæ­¥æ›´æ–°å±žæ€§
+	MSG_SYNC_ADD_DATA = 12;					// åŒæ­¥å¢žåŠ å±žæ€§
+	MSG_SYNC_REMOVE_DATA = 13;				// åŒæ­¥åˆ é™¤å±žæ€§
+	MSG_TELL_QUERY_PLAYER = 14;				// æŸ¥è¯¢çŽ©å®¶æ•°æ®
+	MSG_TELL_QUERY_BASIC = 15;				// æŸ¥è¯¢åŸºç¡€æ•°æ®
+	MSG_SYNC_UPDATE_GUILD_DATA = 16;			// åŒæ­¥æ›´æ–°å±žæ€§(å¸®æ´¾)
+	MSG_SYNC_ADD_GUILD_DATA = 17;				// åŒæ­¥å¢žåŠ å±žæ€§(å¸®æ´¾)
+	MSG_SYNC_REMOVE_GUILD_DATA = 18;			// åŒæ­¥åˆ é™¤å±žæ€§(å¸®æ´¾)
+	MSG_TELL_QUERY_GUILD = 19;				// æŸ¥è¯¢çŽ©å®¶çš„å¸®æ´¾ä¿¡æ¯
 
 
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Í¨Öª½øÈëÓÎÏ·ÊÀ½ç
+// é€šçŸ¥è¿›å…¥æ¸¸æˆä¸–ç•Œ
 // MSG_LOGIN_ENTER_GAME
 message MsgEnterGame
 {
@@ -28,7 +28,7 @@ message MsgEnterGame
 	required uint64 servertime = 2;
 }
 
-// ËùÓÐµÄÓÎÏ·ÊôÐÔÍ¬Í¨¹ýÕâ3¸öÏûÏ¢À´Íê³ÉÍ¬²½
+// æ‰€æœ‰çš„æ¸¸æˆå±žæ€§åŒé€šè¿‡è¿™3ä¸ªæ¶ˆæ¯æ¥å®ŒæˆåŒæ­¥
 // MSG_SYNC_UPDATE_DATA
 message MsgSyncUpdateData
 {
@@ -47,15 +47,15 @@ message MsgSyncRemoveData
 	required PBObject pbdata = 1;	
 }
 
-// ²éÑ¯Íæ¼ÒÐÅÏ¢
-// Èç¹ûkeyÎª0, ËµÃ÷Ã»ÓÐ²éÑ¯½ÇÉ«
+// æŸ¥è¯¢çŽ©å®¶ä¿¡æ¯
+// å¦‚æžœkeyä¸º0, è¯´æ˜Žæ²¡æœ‰æŸ¥è¯¢è§’è‰²
 // MSG_TELL_QUERY_PLAYER
 message MsgTellQueryPlayer
 {
 	required PBObject player = 1;
 }
 
-// Íæ¼Ò»ù´¡ÐÅÏ¢
+// çŽ©å®¶åŸºç¡€ä¿¡æ¯
 // MSG_TELL_QUERY_BASIC
 message MsgTellQueryBasic
 {
@@ -63,7 +63,7 @@ message MsgTellQueryBasic
 }
 
 
-// ËùÓÐµÄÓÎÏ·°ïÅÉÊôÐÔÍ¬Í¨¹ýÕâ3¸öÏûÏ¢À´Íê³ÉÍ¬²½
+// æ‰€æœ‰çš„æ¸¸æˆå¸®æ´¾å±žæ€§åŒé€šè¿‡è¿™3ä¸ªæ¶ˆæ¯æ¥å®ŒæˆåŒæ­¥
 // MSG_SYNC_UPDATE_GUILD_DATA
 message MsgSyncUpdateGuildData
 {

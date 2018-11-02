@@ -77,9 +77,20 @@ namespace KFrame
             KFThread::Sleep( 1 );
         }
     }
+
+    bool KFHttpClientModule::IsHttpsClient( const std::string& url )
+    {
+        return url.compare( 0, 5, "https" ) == 0;
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, const std::string& data )
     {
+        if ( IsHttpsClient( url ) )
+        {
+            KFHttpsClient httpclient;
+            return httpclient.RunHttp( url, data );
+        }
+
         KFHttpClient httpclient;
         return httpclient.RunHttp( url, data );
     }
@@ -88,18 +99,6 @@ namespace KFrame
     {
         auto temp = json.Serialize();
         return StartSTHttpClient( url, temp );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, const std::string& data )
-    {
-        KFHttpsClient httpclient;
-        return httpclient.RunHttp( url, data );
-    }
-
-    std::string KFHttpClientModule::StartSTHttpsClient( const std::string& url, KFJson& json )
-    {
-        auto temp = json.Serialize();
-        return StartSTHttpsClient( url, temp );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::SendResponseCode( uint32 code )
@@ -144,36 +143,16 @@ namespace KFrame
         httpdata->_data = data;
         httpdata->_callback = callback;
         httpdata->_function = function;
-        httpdata->_http = __KF_CREATE__( KFHttpClient );
-        AddHttpData( httpdata );
-    }
 
-    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, KFJson& json )
-    {
-        static KFHttpClientFunction _null_function = nullptr;
-        StartMTHttpsClient( _null_function, url, json, _invalid_str );
-    }
+        if ( IsHttpsClient( url ) )
+        {
+            httpdata->_http = __KF_CREATE__( KFHttpsClient );
+        }
+        else
+        {
+            httpdata->_http = __KF_CREATE__( KFHttpClient );
+        }
 
-    void KFHttpClientModule::StartMTHttpsClient( const std::string& url, const std::string& data )
-    {
-        static KFHttpClientFunction _null_function = nullptr;
-        StartMTHttpsClient( _null_function, url, data,  _invalid_str );
-    }
-
-    void KFHttpClientModule::StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
-    {
-        auto data = json.Serialize();
-        StartMTHttpsClient( function, url, data, callback );
-    }
-
-    void KFHttpClientModule::StartMTHttpsClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
-    {
-        auto httpdata = __KF_CREATE__( KFHttpData );
-        httpdata->_url = url;
-        httpdata->_data = data;
-        httpdata->_callback = callback;
-        httpdata->_function = function;
-        httpdata->_http = __KF_CREATE__( KFHttpsClient );
         AddHttpData( httpdata );
     }
 

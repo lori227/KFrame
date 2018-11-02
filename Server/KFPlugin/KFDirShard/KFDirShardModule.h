@@ -12,7 +12,7 @@
 #include "KFrame.h"
 #include "KFDirShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
@@ -60,8 +60,6 @@ namespace KFrame
         KFDirShardModule() = default;
         ~KFDirShardModule() = default;
 
-        virtual void InitModule();
-
         // 初始化
         virtual void BeforeRun();
 
@@ -92,9 +90,6 @@ namespace KFrame
     private:
         // 小区列表
         KFMap< uint32, uint32, KFDirData > _kf_dir_list;
-
-        // 服务器列表类型
-        uint32 _dir_list_type;
     };
 }
 

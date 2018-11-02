@@ -559,17 +559,10 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline ::std::string* release_value();
   inline void set_allocated_value(::std::string* value);
 
-  // required uint32 appchannel = 7;
-  inline bool has_appchannel() const;
-  inline void clear_appchannel();
-  static const int kAppchannelFieldNumber = 7;
-  inline ::google::protobuf::uint32 appchannel() const;
-  inline void set_appchannel(::google::protobuf::uint32 value);
-
-  // required string logurl = 8;
+  // required string logurl = 7;
   inline bool has_logurl() const;
   inline void clear_logurl();
-  static const int kLogurlFieldNumber = 8;
+  static const int kLogurlFieldNumber = 7;
   inline const ::std::string& logurl() const;
   inline void set_logurl(const ::std::string& value);
   inline void set_logurl(const char* value);
@@ -592,8 +585,6 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline void clear_has_zoneid();
   inline void set_has_value();
   inline void clear_has_value();
-  inline void set_has_appchannel();
-  inline void clear_has_appchannel();
   inline void set_has_logurl();
   inline void clear_has_logurl();
 
@@ -604,12 +595,11 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   ::std::string* apptype_;
   ::std::string* appid_;
   ::std::string* value_;
-  ::google::protobuf::uint32 zoneid_;
-  ::google::protobuf::uint32 appchannel_;
   ::std::string* logurl_;
+  ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFDeployMessage_2eproto();
   friend void protobuf_AssignDesc_KFDeployMessage_2eproto();
@@ -1935,37 +1925,15 @@ inline void PBDeployCommand::set_allocated_value(::std::string* value) {
   }
 }
 
-// required uint32 appchannel = 7;
-inline bool PBDeployCommand::has_appchannel() const {
+// required string logurl = 7;
+inline bool PBDeployCommand::has_logurl() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void PBDeployCommand::set_has_appchannel() {
+inline void PBDeployCommand::set_has_logurl() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void PBDeployCommand::clear_has_appchannel() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void PBDeployCommand::clear_appchannel() {
-  appchannel_ = 0u;
-  clear_has_appchannel();
-}
-inline ::google::protobuf::uint32 PBDeployCommand::appchannel() const {
-  return appchannel_;
-}
-inline void PBDeployCommand::set_appchannel(::google::protobuf::uint32 value) {
-  set_has_appchannel();
-  appchannel_ = value;
-}
-
-// required string logurl = 8;
-inline bool PBDeployCommand::has_logurl() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void PBDeployCommand::set_has_logurl() {
-  _has_bits_[0] |= 0x00000080u;
-}
 inline void PBDeployCommand::clear_has_logurl() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void PBDeployCommand::clear_logurl() {
   if (logurl_ != &::google::protobuf::internal::kEmptyString) {

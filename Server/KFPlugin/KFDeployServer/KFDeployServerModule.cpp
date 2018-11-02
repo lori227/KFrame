@@ -148,7 +148,6 @@ namespace KFrame
         pbdeploy->set_apptype( request.GetString( __KF_STRING__( apptype ) ) );
         pbdeploy->set_appid( request.GetString( __KF_STRING__( appid ) ) );
         pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
-        pbdeploy->set_appchannel( request.GetUInt32( __KF_STRING__( appchannel ) ) );
         pbdeploy->set_logurl( request.GetString( __KF_STRING__( callback ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 

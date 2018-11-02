@@ -12,6 +12,7 @@
 #include "KFrame.h"
 #include "KFWorldInterface.h"
 #include "KFZone/KFZoneInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"

@@ -9,43 +9,131 @@
 	<!--Password 登录密码 -->
 	<!--ChannelId 渠道id -->
 	<Redis>
-		<Connection RedisId="1" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
-			<!-- 内网测试 -->
-			<Channel ChannelId="100" IP="192.168.10.230" Port="6379" Password="redis@lori227-="/>
-		</Connection>
-	</Redis>
-
-	<!--逻辑功能对应redis映射-->
-	<!--DefaultRedis 默认数据库-->
-	<!--Filed 逻辑模块-->
-	<!--Id redis数据库id-->
-	<!--LogicId 逻辑id-->
-
-	<LogicRedis DefaultRedis="1">
 		<!--保存服务器列表信息-->
-		<Logic Filed="dir" Id="1"/>
+		<Connection Module="dir" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>	
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>			 
+		</Connection>
 
 		<!--保存账号信息-->
-		<Logic Filed="account" Id="1"/>
+		<Connection Module="account" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
 
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9221" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+		
 		<!--公共数据信息-->
-		<Logic Filed="public" Id="1"/>
+		<Connection Module="public" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+
+		<!--战场数据-->
+		<Connection Module="battle" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
 
 		<!--关系数据信息-->
-		<Logic Filed="relation" Id="1"/>
+		<Connection Module="relation" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
 
 		<!--保存邮件信息-->
-		<Logic Filed="mail" Id="1"/>
+		<Connection Module="mail" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
 
-		<!--保存战斗服务器信息-->
-		<Logic Filed="battle" Id="1"/>
-		
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+
 		<!--保存排行榜信息-->
-		<Logic Filed="rank" Id="1"/>
-		
-		<!--保存小区玩家数据信息-->
-		<Logic Filed="zone" Id="1"/>
-	</LogicRedis>
+		<Connection Module="rank" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
 
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+
+		<!--帮派信息-->
+		<Connection Module="guild" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+
+		<!--保存小区玩家数据信息-->
+		<Connection Module="zone" LogicId="0" IP="127.0.0.1" Port="6379" Password="redis@lori227-=">
+			<!-- 内网调试 -->
+			<Channel ChannelId="1" Service="1">
+				<Data IP="127.0.0.1" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+
+			<!-- steam 正式 -->
+			<Channel ChannelId="3" Service="8">
+				<Data IP="172.16.0.58" Port="9221" Password="redis@lori227-="/>
+				<Data IP="172.16.0.61" Port="9221" Password="redis@lori227-="/>
+			</Channel>
+		</Connection>
+	</Redis>
 </Config>
 

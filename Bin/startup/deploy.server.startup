@@ -5,7 +5,8 @@
 		<Plugin Sort="2" Name="KFSchedule" Config=""/>	
 		<Plugin Sort="3" Name="KFDeployCommand" Config=""/>	
 		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip.address"/>	
-		<Plugin Sort="20" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="5" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="20" Name="KFTimer" Config=""/>
 		<Plugin Sort="30" Name="KFHttpServer" Config="./setting/server.network"/>
 		<Plugin Sort="40" Name="KFMessage" Config=""/>
 		<Plugin Sort="50" Name="KFTcpServer" Config="./setting/server.network"/>

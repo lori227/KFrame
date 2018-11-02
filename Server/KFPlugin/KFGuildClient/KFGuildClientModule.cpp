@@ -1257,7 +1257,7 @@ namespace KFrame
         }
         auto kfguildapplyrecord = kfobject->FindData( __KF_STRING__( guildapply ) );
         auto kfguildapply = kfguildapplyrecord->FirstData();
-        uint32 _min_valid_time = 0xFFFFFFFF;
+        uint32 _min_valid_time = std::numeric_limits<uint32>::max();
         auto keeptime = _kf_guild_config->GetKeepTime();
         while ( kfguildapply != nullptr )
         {
@@ -1283,7 +1283,7 @@ namespace KFrame
             kfguildinvite = kfguildinviterecord->NextData();
         }
 
-        if ( _min_valid_time == 0xFFFFFFFF )
+        if ( _min_valid_time == std::numeric_limits<uint32>::max() )
         {
             return;
         }

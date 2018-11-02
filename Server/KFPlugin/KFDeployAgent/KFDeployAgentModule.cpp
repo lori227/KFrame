@@ -54,8 +54,9 @@ namespace KFrame
     void KFDeployAgentModule::OnceRun()
     {
         __MKDIR__( _pid_path );
-        _mysql_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
-        if ( _mysql_driver == nullptr )
+        _deploy_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
+        _version_driver = _kf_mysql->CreateExecute( __KF_STRING__( version ) );
+        if ( _deploy_driver == nullptr || _version_driver == nullptr )
         {
             return __LOG_CRITICAL__( "deploy mysql is nullprt" );
         }
@@ -95,7 +96,7 @@ namespace KFrame
 
         // 加载launch设定
         {
-            auto querylaunchdata = _mysql_driver->Select( __KF_STRING__( launch ) );
+            auto querylaunchdata = _deploy_driver->Select( __KF_STRING__( launch ) );
             for ( auto& values : querylaunchdata->_value )
             {
                 auto kfsetting = __KF_CREATE__( KFLaunchSetting );
@@ -110,7 +111,7 @@ namespace KFrame
         {
             MapString keyvalue;
             keyvalue[ __KF_STRING__( localip ) ] = KFGlobal::Instance()->_local_ip;
-            auto querydeploydata = _mysql_driver->Select( __KF_STRING__( deploy ), keyvalue );
+            auto querydeploydata = _deploy_driver->Select( __KF_STRING__( deploy ), keyvalue );
             for ( auto& values : querydeploydata->_value )
             {
                 auto deploydata = __KF_CREATE__( KFDeployData );
@@ -280,9 +281,10 @@ namespace KFrame
         uint32 createflag = CREATE_NO_WINDOW;
         auto apppath = kflaunch->GetAppPath();
         auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
-        auto param = __FORMAT__( " {}={} {}={} {}={}",
+        auto param = __FORMAT__( " {}={} {}={} {}={} {}={}",
                                  __KF_STRING__( appid ), deploydata->_app_id,
                                  __KF_STRING__( log ), deploydata->_log_type,
+                                 __KF_STRING__( service ), deploydata->_service_type,
                                  __KF_STRING__( startup ), kflaunch->_app_config );
 
         // 启动进程
@@ -350,11 +352,14 @@ namespace KFrame
         auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
 
-        auto strpause = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
-        args.push_back( const_cast< char* >( strpause.c_str() ) );
-
-        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
+        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
         args.push_back( const_cast< char* >( strappid.c_str() ) );
+
+        auto strlogtype = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
+        args.push_back( const_cast< char* >( strlogtype.c_str() ) );
+
+        auto strservice = __FORMAT__( "{}={}", __KF_STRING__( service ), deploydata->_service_type );
+        args.push_back( const_cast< char* >( strservice.c_str() ) );
 
         auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );
         args.push_back( const_cast< char* >( strfile.c_str() ) );
@@ -447,7 +452,7 @@ namespace KFrame
 
         MapString keyvalues;
         keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
-        _mysql_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
+        _deploy_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
     }
 
     std::string KFDeployAgentModule::FormatPidFileName( KFDeployData* deploydata )
@@ -496,13 +501,13 @@ namespace KFrame
         deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
     }
 
-    bool KFDeployAgentModule::IsAgentDeploy( uint32 appchannel, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployAgentModule::IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( appchannel, appname, apptype, appid, zoneid );
+            auto isserver = deploydata->IsAppServer( appname, apptype, appid, zoneid );
             if ( isserver )
             {
                 return true;
@@ -558,7 +563,7 @@ namespace KFrame
         auto pbdeploy = kfmsg.mutable_deploycommand();
 
         // 判断是否agent的进程
-        auto ok = IsAgentDeploy( pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        auto ok = IsAgentDeploy( pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
         if ( !ok )
         {
             return;
@@ -623,7 +628,6 @@ namespace KFrame
         kftask->_app_type = pbdeploy->apptype();
         kftask->_app_id = pbdeploy->appid();
         kftask->_zone_id = pbdeploy->zoneid();
-        kftask->_app_channel = pbdeploy->appchannel();
         kftask->_log_url = pbdeploy->logurl();
 
         if ( _kf_task == nullptr )
@@ -635,9 +639,9 @@ namespace KFrame
         {
             _deploy_task.push_back( kftask );
 
-            LogDeploy( pbdeploy->logurl(), "add task [{}:{} | {}:{}:{}:{}:{}] tasklist cout[{}]!",
+            LogDeploy( pbdeploy->logurl(), "add task [{}:{} | {}:{}:{}:{}] tasklist cout[{}]!",
                        pbdeploy->command(), pbdeploy->value(),
-                       pbdeploy->appchannel(), pbdeploy->appname(), pbdeploy->apptype(),
+                       pbdeploy->appname(), pbdeploy->apptype(),
                        pbdeploy->appid(), pbdeploy->zoneid(), _deploy_task.size() );
         }
     }
@@ -649,8 +653,8 @@ namespace KFrame
             auto ok = CheckTaskFinish();
             if ( ok )
             {
-                LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}:{}] task finish!",
-                           _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
+                LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}] task finish!",
+                           _kf_task->_command, _kf_task->_value,
                            _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
                 __KF_DESTROY__( KFDeployTask, _kf_task );
@@ -722,8 +726,8 @@ namespace KFrame
 
         try
         {
-            LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}:{}] task start!",
-                       _kf_task->_command, _kf_task->_value, _kf_task->_app_channel,
+            LogDeploy( _kf_task->_log_url, "[{}:{} | {}:{}:{}:{}] task start!",
+                       _kf_task->_command, _kf_task->_value,
                        _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
             if ( _kf_task->_command == __KF_STRING__( startup ) )
@@ -775,7 +779,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 deploydata->_is_shutdown = true;
@@ -783,8 +787,8 @@ namespace KFrame
 
                 UpdateDeployToDatabase( deploydata );
 
-                __LOG_INFO__( "[{}:{}:{}:{}] kill ok!",
-                              deploydata->_app_channel, deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+                __LOG_INFO__( "[{}:{}:{}] kill ok!",
+                              deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
             }
         }
     }
@@ -797,7 +801,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 deploydata->_is_shutdown = true;
@@ -815,7 +819,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( deploydata->_process_id != _invalid_int )
@@ -836,7 +840,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 deploydata->_is_shutdown = false;
@@ -851,7 +855,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( deploydata->_process_id == _invalid_int )
@@ -875,7 +879,7 @@ namespace KFrame
                 continue;
             }
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 deploydata->_is_download = true;
@@ -890,7 +894,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( deploydata->_is_download )
@@ -915,7 +919,7 @@ namespace KFrame
                 continue;
             }
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
                 if ( kflaunch->_app_path == apppath )
@@ -945,7 +949,6 @@ namespace KFrame
         pbdeploy->set_apptype( _kf_task->_app_type );
         pbdeploy->set_appid( _kf_task->_app_id );
         pbdeploy->set_zoneid( _kf_task->_zone_id );
-        pbdeploy->set_appchannel( _kf_task->_app_channel );
         pbdeploy->set_logurl( _kf_task->_log_url );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_MASTER_REQ, &req );
     }
@@ -953,7 +956,7 @@ namespace KFrame
     void KFDeployAgentModule::StartWgetVersionTask()
     {
         // 查询版本路径
-        auto queryurl = _mysql_driver->QueryString( "select `version_url` from version where `version_name`='{}';", _kf_task->_value );
+        auto queryurl = _version_driver->QueryString( "select `version_url` from version where `version_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
             return;
@@ -969,7 +972,7 @@ namespace KFrame
 
     bool KFDeployAgentModule::CheckWgetVersionTaskFinish()
     {
-        auto querymd5 = _mysql_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
+        auto querymd5 = _version_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
         if ( !querymd5->IsOk() || querymd5->_value.empty() )
         {
             return true;
@@ -1014,11 +1017,11 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_channel, _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
+            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                _mysql_driver->Execute( "update `{}` set `{}`='{}' where `{}`='{}';",
-                                        __KF_STRING__( deploy ), __KF_STRING__( version ), version, __KF_STRING__( appid ), deploydata->_app_id );
+                _deploy_driver->Execute( "update `{}` set `{}`='{}' where `{}`='{}';",
+                                         __KF_STRING__( deploy ), __KF_STRING__( version ), version, __KF_STRING__( appid ), deploydata->_app_id );
             }
         }
 
@@ -1028,7 +1031,7 @@ namespace KFrame
     void KFDeployAgentModule::StartDownFileTask()
     {
         // 查询版本路径
-        auto queryurl = _mysql_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
+        auto queryurl = _version_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
             return;
@@ -1044,7 +1047,7 @@ namespace KFrame
 
     bool KFDeployAgentModule::CheckDownFileTaskFinish()
     {
-        auto querymap = _mysql_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
+        auto querymap = _version_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
         if ( !querymap->IsOk() || querymap->_value.empty() )
         {
             return true;

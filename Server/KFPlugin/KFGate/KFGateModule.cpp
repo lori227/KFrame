@@ -11,6 +11,7 @@ namespace KFrame
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToClient );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFGateModule::OnCommandMarquee );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFGateModule::OnCommandNotice );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ, &KFGateModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &KFGateModule::HandleLoginVerifyAck );
@@ -306,4 +307,12 @@ namespace KFrame
         tell.set_content( param );
         _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_MARQUEE, &tell );
     }
+
+    __KF_COMMAND_FUNCTION__( KFGateModule::OnCommandNotice )
+    {
+        KFMsg::MsgTellSysNotcie tell;
+        tell.set_content( param );
+        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
+    }
+
 }

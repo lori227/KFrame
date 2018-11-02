@@ -33,6 +33,12 @@ namespace KFrame
         // 初始化日志
         void InitLogger( std::string& strtype );
 
+        // 初始化类型
+        void InitNetService( std::string& strtype );
+
+        // 判断渠道和服务类型
+        bool CheckChannelService( uint32 channel, uint32 service );
+
         // 设置日志登录
         void SetLogLevel( uint32 level );
 
@@ -89,6 +95,12 @@ namespace KFrame
 
         // 名字
         std::string _app_name;
+
+        // 网络类型( 内外网)
+        uint32 _net_type;
+
+        // 运行类型( 正式 测试 )
+        uint32 _service_type;
 
         // 分区id
         uint32 _zone_id;

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
 	<Channels>
-		<!-- 内部渠道 -->
+		<!-- 鍐呴儴娓犻亾 -->
 		<Channel Id="1" LoginUrl="" PayUrl="" AppId="1" AppKey="abc" Release="1" Debug="1"/>
 
-		<!-- 微信 -->
+		<!-- 寰俊 -->
 		<Channel Id="2" LoginUrl="https://api.weixin.qq.com" PayUrl="" AppId="wx57cc5c7e2011e235" AppKey="eb7cbc31779a41b0e3ffee6aaf5bfca4" Release="1" Debug="1"/>
 	
 		<!-- steam -->

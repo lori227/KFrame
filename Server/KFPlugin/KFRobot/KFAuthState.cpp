@@ -35,7 +35,7 @@ namespace KFrame
         sendjson.SetValue( __KF_STRING__( channel ), _kf_robot_config->_verify_channel );
         sendjson.SetValue( __KF_STRING__( account ),  kfrobot->_account );
         auto url = _kf_robot_config->_auth_server_ip + __KF_STRING__( auth );
-        auto authdata = _kf_http_client->StartSTHttpClient( url, sendjson, true );
+        auto authdata = _kf_http_client->StartSTHttpClient( url, sendjson );
 
         KFJson authjson( authdata );
         uint32 recode = authjson.GetUInt32( __KF_STRING__( retcode ) );
