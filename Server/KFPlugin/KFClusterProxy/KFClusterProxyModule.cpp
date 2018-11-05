@@ -1,7 +1,6 @@
 ﻿#include "KFClusterProxyModule.h"
 #include "KFProtocol/KFProtocol.h"
 
-
 namespace KFrame
 {
     void KFClusterProxyModule::BeforeRun()
@@ -10,7 +9,6 @@ namespace KFrame
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterProxyModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterProxyModule::OnClientConnectionServer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToClient );
-
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFClusterProxyModule::OnServerDiscoverClient );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,13 +24,9 @@ namespace KFrame
     void KFClusterProxyModule::BeforeShut()
     {
         __UNREGISTER_TIMER__();
-
-        _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
-
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
-
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,13 +297,11 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
-            __LOG_DEBUG__( "[{}:{}:{}] cluster verify ok!",
-                           KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
+            __LOG_DEBUG__( "[{}:{}:{}] cluster verify ok!", KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
         else
         {
-            __LOG_ERROR__( "[{}:{}:{}] cluster verify failed!",
-                           KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
+            __LOG_ERROR__( "[{}:{}:{}] cluster verify failed!", KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
     }
 

@@ -3,14 +3,12 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFChatConfig.cpp" />
-    <ClCompile Include="KFChatPlayerEX.cpp" />
     <ClCompile Include="KFChatPlugin.cpp" />
     <ClCompile Include="KFChatModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFChatConfig.h" />
     <ClInclude Include="KFChatInterface.h" />
-    <ClInclude Include="KFChatPlayerEX.h" />
     <ClInclude Include="KFChatPlugin.h" />
     <ClInclude Include="KFChatModule.h" />
   </ItemGroup>

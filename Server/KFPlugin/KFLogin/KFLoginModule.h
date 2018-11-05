@@ -40,10 +40,10 @@ namespace KFrame
         virtual bool IsWorldConnected();
 
         // 发送消息到世界服务器
-        virtual bool SendMessageToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        virtual bool SendMessageToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
 
     protected:
         // 连接成功

@@ -3400,12 +3400,12 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::std::string* release_playericon();
   inline void set_allocated_playericon(::std::string* playericon);
 
-  // required uint32 playergrading = 6;
-  inline bool has_playergrading() const;
-  inline void clear_playergrading();
-  static const int kPlayergradingFieldNumber = 6;
-  inline ::google::protobuf::uint32 playergrading() const;
-  inline void set_playergrading(::google::protobuf::uint32 value);
+  // required uint32 playergrade = 6;
+  inline bool has_playergrade() const;
+  inline void clear_playergrade();
+  static const int kPlayergradeFieldNumber = 6;
+  inline ::google::protobuf::uint32 playergrade() const;
+  inline void set_playergrade(::google::protobuf::uint32 value);
 
   // required uint32 playersex = 7;
   inline bool has_playersex() const;
@@ -3445,8 +3445,8 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline void clear_has_playerid();
   inline void set_has_playericon();
   inline void clear_has_playericon();
-  inline void set_has_playergrading();
-  inline void clear_has_playergrading();
+  inline void set_has_playergrade();
+  inline void clear_has_playergrade();
   inline void set_has_playersex();
   inline void clear_has_playersex();
   inline void set_has_playericonbox();
@@ -3461,7 +3461,7 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   ::google::protobuf::uint32 isvoice_;
   ::google::protobuf::uint32 playerid_;
   ::std::string* playericon_;
-  ::google::protobuf::uint32 playergrading_;
+  ::google::protobuf::uint32 playergrade_;
   ::google::protobuf::uint32 playersex_;
   ::std::string* playericonbox_;
   ::google::protobuf::uint32 playerserverid_;
@@ -11592,26 +11592,26 @@ inline void MsgSendChatInfo::set_allocated_playericon(::std::string* playericon)
   }
 }
 
-// required uint32 playergrading = 6;
-inline bool MsgSendChatInfo::has_playergrading() const {
+// required uint32 playergrade = 6;
+inline bool MsgSendChatInfo::has_playergrade() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void MsgSendChatInfo::set_has_playergrading() {
+inline void MsgSendChatInfo::set_has_playergrade() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void MsgSendChatInfo::clear_has_playergrading() {
+inline void MsgSendChatInfo::clear_has_playergrade() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void MsgSendChatInfo::clear_playergrading() {
-  playergrading_ = 0u;
-  clear_has_playergrading();
+inline void MsgSendChatInfo::clear_playergrade() {
+  playergrade_ = 0u;
+  clear_has_playergrade();
 }
-inline ::google::protobuf::uint32 MsgSendChatInfo::playergrading() const {
-  return playergrading_;
+inline ::google::protobuf::uint32 MsgSendChatInfo::playergrade() const {
+  return playergrade_;
 }
-inline void MsgSendChatInfo::set_playergrading(::google::protobuf::uint32 value) {
-  set_has_playergrading();
-  playergrading_ = value;
+inline void MsgSendChatInfo::set_playergrade(::google::protobuf::uint32 value) {
+  set_has_playergrade();
+  playergrade_ = value;
 }
 
 // required uint32 playersex = 7;

@@ -37,6 +37,11 @@ void protobuf_ShutdownFile_KFServerMessage_2eproto();
 
 class S2STransmitMessageReq;
 class S2SBroadcastMessageReq;
+class S2SBroadcastToWord;
+class S2SBroadcastToGame;
+class S2SBroadcastToGate;
+class S2STransmitToPlayer;
+class S2STransmitToServer;
 class S2SUpdateZoneToProxyReq;
 class S2STransmitToDataShardReq;
 class S2SSavePlayerReq;
@@ -152,6 +157,7 @@ class S2SLoginQueryGuildidAck;
 class S2SQueryGuildLogReq;
 class S2SAddGuildActivenessReq;
 class S2SGMAddMailReq;
+class S2SSendChatToServer;
 
 enum ServerProtocol {
   S2S_TRANSMIT_MESSAGE_REQ = 21001,
@@ -161,6 +167,11 @@ enum ServerProtocol {
   S2S_UPDATE_PUBLIC_DATA_REQ = 21005,
   S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006,
   S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007,
+  S2S_BROADCAST_TO_WORLD = 21008,
+  S2S_BROADCAST_TO_GAME = 21009,
+  S2S_BROADCAST_TO_GATE = 21010,
+  S2S_TRANSMIT_TO_PLAYER = 21011,
+  S2S_TRANSMIT_TO_SERVER = 21012,
   S2S_KICK_GAME_PLAYER_REQ = 21101,
   S2S_KICK_GATE_PLAYER_REQ = 21102,
   S2S_LOGIN_LOGIN_VERIFY_REQ = 21104,
@@ -267,11 +278,12 @@ enum ServerProtocol {
   S2S_LOGIN_QUERY_GUILDID_ACK = 21222,
   S2S_QUERY_GUILD_LOG_REQ = 21223,
   S2S_ADD_GUILD_ACTIVENESS_REQ = 21224,
-  S2S_GM_ADD_MAIL_REQ = 21300
+  S2S_GM_ADD_MAIL_REQ = 21300,
+  S2S_SEND_CHAT_TO_SERVER = 21301
 };
 LIBPROTOC_EXPORT bool ServerProtocol_IsValid(int value);
 const ServerProtocol ServerProtocol_MIN = S2S_TRANSMIT_MESSAGE_REQ;
-const ServerProtocol ServerProtocol_MAX = S2S_GM_ADD_MAIL_REQ;
+const ServerProtocol ServerProtocol_MAX = S2S_SEND_CHAT_TO_SERVER;
 const int ServerProtocol_ARRAYSIZE = ServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerProtocol_descriptor();
@@ -487,6 +499,501 @@ class LIBPROTOC_EXPORT S2SBroadcastMessageReq : public ::google::protobuf::Messa
 
   void InitAsDefaultInstance();
   static S2SBroadcastMessageReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SBroadcastToWord : public ::google::protobuf::Message {
+ public:
+  S2SBroadcastToWord();
+  virtual ~S2SBroadcastToWord();
+
+  S2SBroadcastToWord(const S2SBroadcastToWord& from);
+
+  inline S2SBroadcastToWord& operator=(const S2SBroadcastToWord& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SBroadcastToWord& default_instance();
+
+  void Swap(S2SBroadcastToWord* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SBroadcastToWord* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SBroadcastToWord& from);
+  void MergeFrom(const S2SBroadcastToWord& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 msgid = 1;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 1;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 2;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 2;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SBroadcastToWord)
+ private:
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msgdata_;
+  ::google::protobuf::uint32 msgid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SBroadcastToWord* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SBroadcastToGame : public ::google::protobuf::Message {
+ public:
+  S2SBroadcastToGame();
+  virtual ~S2SBroadcastToGame();
+
+  S2SBroadcastToGame(const S2SBroadcastToGame& from);
+
+  inline S2SBroadcastToGame& operator=(const S2SBroadcastToGame& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SBroadcastToGame& default_instance();
+
+  void Swap(S2SBroadcastToGame* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SBroadcastToGame* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SBroadcastToGame& from);
+  void MergeFrom(const S2SBroadcastToGame& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 msgid = 1;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 1;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 2;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 2;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SBroadcastToGame)
+ private:
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msgdata_;
+  ::google::protobuf::uint32 msgid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SBroadcastToGame* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SBroadcastToGate : public ::google::protobuf::Message {
+ public:
+  S2SBroadcastToGate();
+  virtual ~S2SBroadcastToGate();
+
+  S2SBroadcastToGate(const S2SBroadcastToGate& from);
+
+  inline S2SBroadcastToGate& operator=(const S2SBroadcastToGate& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SBroadcastToGate& default_instance();
+
+  void Swap(S2SBroadcastToGate* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SBroadcastToGate* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SBroadcastToGate& from);
+  void MergeFrom(const S2SBroadcastToGate& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 msgid = 1;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 1;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 2;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 2;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SBroadcastToGate)
+ private:
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msgdata_;
+  ::google::protobuf::uint32 msgid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SBroadcastToGate* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STransmitToPlayer : public ::google::protobuf::Message {
+ public:
+  S2STransmitToPlayer();
+  virtual ~S2STransmitToPlayer();
+
+  S2STransmitToPlayer(const S2STransmitToPlayer& from);
+
+  inline S2STransmitToPlayer& operator=(const S2STransmitToPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STransmitToPlayer& default_instance();
+
+  void Swap(S2STransmitToPlayer* other);
+
+  // implements Message ----------------------------------------------
+
+  S2STransmitToPlayer* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2STransmitToPlayer& from);
+  void MergeFrom(const S2STransmitToPlayer& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 playerid = 1;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required uint32 msgid = 2;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 2;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 3;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 3;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STransmitToPlayer)
+ private:
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint32 msgid_;
+  ::std::string* msgdata_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2STransmitToPlayer* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STransmitToServer : public ::google::protobuf::Message {
+ public:
+  S2STransmitToServer();
+  virtual ~S2STransmitToServer();
+
+  S2STransmitToServer(const S2STransmitToServer& from);
+
+  inline S2STransmitToServer& operator=(const S2STransmitToServer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STransmitToServer& default_instance();
+
+  void Swap(S2STransmitToServer* other);
+
+  // implements Message ----------------------------------------------
+
+  S2STransmitToServer* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2STransmitToServer& from);
+  void MergeFrom(const S2STransmitToServer& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 msgid = 2;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgidFieldNumber = 2;
+  inline ::google::protobuf::uint32 msgid() const;
+  inline void set_msgid(::google::protobuf::uint32 value);
+
+  // required string msgdata = 3;
+  inline bool has_msgdata() const;
+  inline void clear_msgdata();
+  static const int kMsgdataFieldNumber = 3;
+  inline const ::std::string& msgdata() const;
+  inline void set_msgdata(const ::std::string& value);
+  inline void set_msgdata(const char* value);
+  inline void set_msgdata(const char* value, size_t size);
+  inline ::std::string* mutable_msgdata();
+  inline ::std::string* release_msgdata();
+  inline void set_allocated_msgdata(::std::string* msgdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STransmitToServer)
+ private:
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_msgdata();
+  inline void clear_has_msgdata();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* msgdata_;
+  ::google::protobuf::uint32 msgid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2STransmitToServer* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12607,6 +13114,188 @@ class LIBPROTOC_EXPORT S2SGMAddMailReq : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static S2SGMAddMailReq* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SSendChatToServer : public ::google::protobuf::Message {
+ public:
+  S2SSendChatToServer();
+  virtual ~S2SSendChatToServer();
+
+  S2SSendChatToServer(const S2SSendChatToServer& from);
+
+  inline S2SSendChatToServer& operator=(const S2SSendChatToServer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SSendChatToServer& default_instance();
+
+  void Swap(S2SSendChatToServer* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SSendChatToServer* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SSendChatToServer& from);
+  void MergeFrom(const S2SSendChatToServer& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string chatinfo = 1;
+  inline bool has_chatinfo() const;
+  inline void clear_chatinfo();
+  static const int kChatinfoFieldNumber = 1;
+  inline const ::std::string& chatinfo() const;
+  inline void set_chatinfo(const ::std::string& value);
+  inline void set_chatinfo(const char* value);
+  inline void set_chatinfo(const char* value, size_t size);
+  inline ::std::string* mutable_chatinfo();
+  inline ::std::string* release_chatinfo();
+  inline void set_allocated_chatinfo(::std::string* chatinfo);
+
+  // required uint32 isvoice = 2;
+  inline bool has_isvoice() const;
+  inline void clear_isvoice();
+  static const int kIsvoiceFieldNumber = 2;
+  inline ::google::protobuf::uint32 isvoice() const;
+  inline void set_isvoice(::google::protobuf::uint32 value);
+
+  // required string playername = 3;
+  inline bool has_playername() const;
+  inline void clear_playername();
+  static const int kPlayernameFieldNumber = 3;
+  inline const ::std::string& playername() const;
+  inline void set_playername(const ::std::string& value);
+  inline void set_playername(const char* value);
+  inline void set_playername(const char* value, size_t size);
+  inline ::std::string* mutable_playername();
+  inline ::std::string* release_playername();
+  inline void set_allocated_playername(::std::string* playername);
+
+  // required uint32 playerid = 4;
+  inline bool has_playerid() const;
+  inline void clear_playerid();
+  static const int kPlayeridFieldNumber = 4;
+  inline ::google::protobuf::uint32 playerid() const;
+  inline void set_playerid(::google::protobuf::uint32 value);
+
+  // required string playericon = 5;
+  inline bool has_playericon() const;
+  inline void clear_playericon();
+  static const int kPlayericonFieldNumber = 5;
+  inline const ::std::string& playericon() const;
+  inline void set_playericon(const ::std::string& value);
+  inline void set_playericon(const char* value);
+  inline void set_playericon(const char* value, size_t size);
+  inline ::std::string* mutable_playericon();
+  inline ::std::string* release_playericon();
+  inline void set_allocated_playericon(::std::string* playericon);
+
+  // required uint32 playergrade = 6;
+  inline bool has_playergrade() const;
+  inline void clear_playergrade();
+  static const int kPlayergradeFieldNumber = 6;
+  inline ::google::protobuf::uint32 playergrade() const;
+  inline void set_playergrade(::google::protobuf::uint32 value);
+
+  // required uint32 playersex = 7;
+  inline bool has_playersex() const;
+  inline void clear_playersex();
+  static const int kPlayersexFieldNumber = 7;
+  inline ::google::protobuf::uint32 playersex() const;
+  inline void set_playersex(::google::protobuf::uint32 value);
+
+  // required string playericonbox = 8;
+  inline bool has_playericonbox() const;
+  inline void clear_playericonbox();
+  static const int kPlayericonboxFieldNumber = 8;
+  inline const ::std::string& playericonbox() const;
+  inline void set_playericonbox(const ::std::string& value);
+  inline void set_playericonbox(const char* value);
+  inline void set_playericonbox(const char* value, size_t size);
+  inline ::std::string* mutable_playericonbox();
+  inline ::std::string* release_playericonbox();
+  inline void set_allocated_playericonbox(::std::string* playericonbox);
+
+  // required uint32 playerserverid = 9;
+  inline bool has_playerserverid() const;
+  inline void clear_playerserverid();
+  static const int kPlayerserveridFieldNumber = 9;
+  inline ::google::protobuf::uint32 playerserverid() const;
+  inline void set_playerserverid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SSendChatToServer)
+ private:
+  inline void set_has_chatinfo();
+  inline void clear_has_chatinfo();
+  inline void set_has_isvoice();
+  inline void clear_has_isvoice();
+  inline void set_has_playername();
+  inline void clear_has_playername();
+  inline void set_has_playerid();
+  inline void clear_has_playerid();
+  inline void set_has_playericon();
+  inline void clear_has_playericon();
+  inline void set_has_playergrade();
+  inline void clear_has_playergrade();
+  inline void set_has_playersex();
+  inline void clear_has_playersex();
+  inline void set_has_playericonbox();
+  inline void clear_has_playericonbox();
+  inline void set_has_playerserverid();
+  inline void clear_has_playerserverid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* chatinfo_;
+  ::std::string* playername_;
+  ::google::protobuf::uint32 isvoice_;
+  ::google::protobuf::uint32 playerid_;
+  ::std::string* playericon_;
+  ::google::protobuf::uint32 playergrade_;
+  ::google::protobuf::uint32 playersex_;
+  ::std::string* playericonbox_;
+  ::google::protobuf::uint32 playerserverid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
+  friend void protobuf_AssignDesc_KFServerMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFServerMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SSendChatToServer* default_instance_;
+};
 // ===================================================================
 
 
@@ -12812,6 +13501,508 @@ inline ::std::string* S2SBroadcastMessageReq::release_msgdata() {
   }
 }
 inline void S2SBroadcastMessageReq::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2SBroadcastToWord
+
+// required uint32 msgid = 1;
+inline bool S2SBroadcastToWord::has_msgid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SBroadcastToWord::set_has_msgid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SBroadcastToWord::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SBroadcastToWord::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2SBroadcastToWord::msgid() const {
+  return msgid_;
+}
+inline void S2SBroadcastToWord::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 2;
+inline bool S2SBroadcastToWord::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SBroadcastToWord::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SBroadcastToWord::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SBroadcastToWord::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2SBroadcastToWord::msgdata() const {
+  return *msgdata_;
+}
+inline void S2SBroadcastToWord::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToWord::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToWord::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SBroadcastToWord::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2SBroadcastToWord::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SBroadcastToWord::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2SBroadcastToGame
+
+// required uint32 msgid = 1;
+inline bool S2SBroadcastToGame::has_msgid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SBroadcastToGame::set_has_msgid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SBroadcastToGame::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SBroadcastToGame::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2SBroadcastToGame::msgid() const {
+  return msgid_;
+}
+inline void S2SBroadcastToGame::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 2;
+inline bool S2SBroadcastToGame::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SBroadcastToGame::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SBroadcastToGame::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SBroadcastToGame::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2SBroadcastToGame::msgdata() const {
+  return *msgdata_;
+}
+inline void S2SBroadcastToGame::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToGame::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToGame::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SBroadcastToGame::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2SBroadcastToGame::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SBroadcastToGame::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2SBroadcastToGate
+
+// required uint32 msgid = 1;
+inline bool S2SBroadcastToGate::has_msgid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SBroadcastToGate::set_has_msgid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SBroadcastToGate::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SBroadcastToGate::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2SBroadcastToGate::msgid() const {
+  return msgid_;
+}
+inline void S2SBroadcastToGate::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 2;
+inline bool S2SBroadcastToGate::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SBroadcastToGate::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SBroadcastToGate::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SBroadcastToGate::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2SBroadcastToGate::msgdata() const {
+  return *msgdata_;
+}
+inline void S2SBroadcastToGate::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToGate::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2SBroadcastToGate::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SBroadcastToGate::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2SBroadcastToGate::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SBroadcastToGate::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2STransmitToPlayer
+
+// required uint32 playerid = 1;
+inline bool S2STransmitToPlayer::has_playerid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2STransmitToPlayer::set_has_playerid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2STransmitToPlayer::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2STransmitToPlayer::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2STransmitToPlayer::playerid() const {
+  return playerid_;
+}
+inline void S2STransmitToPlayer::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required uint32 msgid = 2;
+inline bool S2STransmitToPlayer::has_msgid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2STransmitToPlayer::set_has_msgid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2STransmitToPlayer::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2STransmitToPlayer::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2STransmitToPlayer::msgid() const {
+  return msgid_;
+}
+inline void S2STransmitToPlayer::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 3;
+inline bool S2STransmitToPlayer::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2STransmitToPlayer::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2STransmitToPlayer::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2STransmitToPlayer::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2STransmitToPlayer::msgdata() const {
+  return *msgdata_;
+}
+inline void S2STransmitToPlayer::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToPlayer::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToPlayer::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2STransmitToPlayer::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2STransmitToPlayer::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2STransmitToPlayer::set_allocated_msgdata(::std::string* msgdata) {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete msgdata_;
+  }
+  if (msgdata) {
+    set_has_msgdata();
+    msgdata_ = msgdata;
+  } else {
+    clear_has_msgdata();
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2STransmitToServer
+
+// required uint32 msgid = 2;
+inline bool S2STransmitToServer::has_msgid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2STransmitToServer::set_has_msgid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2STransmitToServer::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2STransmitToServer::clear_msgid() {
+  msgid_ = 0u;
+  clear_has_msgid();
+}
+inline ::google::protobuf::uint32 S2STransmitToServer::msgid() const {
+  return msgid_;
+}
+inline void S2STransmitToServer::set_msgid(::google::protobuf::uint32 value) {
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// required string msgdata = 3;
+inline bool S2STransmitToServer::has_msgdata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2STransmitToServer::set_has_msgdata() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2STransmitToServer::clear_has_msgdata() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2STransmitToServer::clear_msgdata() {
+  if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
+    msgdata_->clear();
+  }
+  clear_has_msgdata();
+}
+inline const ::std::string& S2STransmitToServer::msgdata() const {
+  return *msgdata_;
+}
+inline void S2STransmitToServer::set_msgdata(const ::std::string& value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToServer::set_msgdata(const char* value) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(value);
+}
+inline void S2STransmitToServer::set_msgdata(const char* value, size_t size) {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  msgdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2STransmitToServer::mutable_msgdata() {
+  set_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    msgdata_ = new ::std::string;
+  }
+  return msgdata_;
+}
+inline ::std::string* S2STransmitToServer::release_msgdata() {
+  clear_has_msgdata();
+  if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msgdata_;
+    msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2STransmitToServer::set_allocated_msgdata(::std::string* msgdata) {
   if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
     delete msgdata_;
   }
@@ -23126,6 +24317,400 @@ inline void S2SGMAddMailReq::set_allocated_pbmail(::KFMsg::PBMail* pbmail) {
   } else {
     clear_has_pbmail();
   }
+}
+
+// -------------------------------------------------------------------
+
+// S2SSendChatToServer
+
+// required string chatinfo = 1;
+inline bool S2SSendChatToServer::has_chatinfo() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2SSendChatToServer::set_has_chatinfo() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2SSendChatToServer::clear_has_chatinfo() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2SSendChatToServer::clear_chatinfo() {
+  if (chatinfo_ != &::google::protobuf::internal::kEmptyString) {
+    chatinfo_->clear();
+  }
+  clear_has_chatinfo();
+}
+inline const ::std::string& S2SSendChatToServer::chatinfo() const {
+  return *chatinfo_;
+}
+inline void S2SSendChatToServer::set_chatinfo(const ::std::string& value) {
+  set_has_chatinfo();
+  if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
+    chatinfo_ = new ::std::string;
+  }
+  chatinfo_->assign(value);
+}
+inline void S2SSendChatToServer::set_chatinfo(const char* value) {
+  set_has_chatinfo();
+  if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
+    chatinfo_ = new ::std::string;
+  }
+  chatinfo_->assign(value);
+}
+inline void S2SSendChatToServer::set_chatinfo(const char* value, size_t size) {
+  set_has_chatinfo();
+  if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
+    chatinfo_ = new ::std::string;
+  }
+  chatinfo_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SSendChatToServer::mutable_chatinfo() {
+  set_has_chatinfo();
+  if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
+    chatinfo_ = new ::std::string;
+  }
+  return chatinfo_;
+}
+inline ::std::string* S2SSendChatToServer::release_chatinfo() {
+  clear_has_chatinfo();
+  if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = chatinfo_;
+    chatinfo_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SSendChatToServer::set_allocated_chatinfo(::std::string* chatinfo) {
+  if (chatinfo_ != &::google::protobuf::internal::kEmptyString) {
+    delete chatinfo_;
+  }
+  if (chatinfo) {
+    set_has_chatinfo();
+    chatinfo_ = chatinfo;
+  } else {
+    clear_has_chatinfo();
+    chatinfo_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 isvoice = 2;
+inline bool S2SSendChatToServer::has_isvoice() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2SSendChatToServer::set_has_isvoice() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2SSendChatToServer::clear_has_isvoice() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SSendChatToServer::clear_isvoice() {
+  isvoice_ = 0u;
+  clear_has_isvoice();
+}
+inline ::google::protobuf::uint32 S2SSendChatToServer::isvoice() const {
+  return isvoice_;
+}
+inline void S2SSendChatToServer::set_isvoice(::google::protobuf::uint32 value) {
+  set_has_isvoice();
+  isvoice_ = value;
+}
+
+// required string playername = 3;
+inline bool S2SSendChatToServer::has_playername() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playername() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SSendChatToServer::clear_has_playername() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SSendChatToServer::clear_playername() {
+  if (playername_ != &::google::protobuf::internal::kEmptyString) {
+    playername_->clear();
+  }
+  clear_has_playername();
+}
+inline const ::std::string& S2SSendChatToServer::playername() const {
+  return *playername_;
+}
+inline void S2SSendChatToServer::set_playername(const ::std::string& value) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(value);
+}
+inline void S2SSendChatToServer::set_playername(const char* value) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(value);
+}
+inline void S2SSendChatToServer::set_playername(const char* value, size_t size) {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  playername_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SSendChatToServer::mutable_playername() {
+  set_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    playername_ = new ::std::string;
+  }
+  return playername_;
+}
+inline ::std::string* S2SSendChatToServer::release_playername() {
+  clear_has_playername();
+  if (playername_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = playername_;
+    playername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SSendChatToServer::set_allocated_playername(::std::string* playername) {
+  if (playername_ != &::google::protobuf::internal::kEmptyString) {
+    delete playername_;
+  }
+  if (playername) {
+    set_has_playername();
+    playername_ = playername;
+  } else {
+    clear_has_playername();
+    playername_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 playerid = 4;
+inline bool S2SSendChatToServer::has_playerid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playerid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SSendChatToServer::clear_has_playerid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SSendChatToServer::clear_playerid() {
+  playerid_ = 0u;
+  clear_has_playerid();
+}
+inline ::google::protobuf::uint32 S2SSendChatToServer::playerid() const {
+  return playerid_;
+}
+inline void S2SSendChatToServer::set_playerid(::google::protobuf::uint32 value) {
+  set_has_playerid();
+  playerid_ = value;
+}
+
+// required string playericon = 5;
+inline bool S2SSendChatToServer::has_playericon() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playericon() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SSendChatToServer::clear_has_playericon() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SSendChatToServer::clear_playericon() {
+  if (playericon_ != &::google::protobuf::internal::kEmptyString) {
+    playericon_->clear();
+  }
+  clear_has_playericon();
+}
+inline const ::std::string& S2SSendChatToServer::playericon() const {
+  return *playericon_;
+}
+inline void S2SSendChatToServer::set_playericon(const ::std::string& value) {
+  set_has_playericon();
+  if (playericon_ == &::google::protobuf::internal::kEmptyString) {
+    playericon_ = new ::std::string;
+  }
+  playericon_->assign(value);
+}
+inline void S2SSendChatToServer::set_playericon(const char* value) {
+  set_has_playericon();
+  if (playericon_ == &::google::protobuf::internal::kEmptyString) {
+    playericon_ = new ::std::string;
+  }
+  playericon_->assign(value);
+}
+inline void S2SSendChatToServer::set_playericon(const char* value, size_t size) {
+  set_has_playericon();
+  if (playericon_ == &::google::protobuf::internal::kEmptyString) {
+    playericon_ = new ::std::string;
+  }
+  playericon_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SSendChatToServer::mutable_playericon() {
+  set_has_playericon();
+  if (playericon_ == &::google::protobuf::internal::kEmptyString) {
+    playericon_ = new ::std::string;
+  }
+  return playericon_;
+}
+inline ::std::string* S2SSendChatToServer::release_playericon() {
+  clear_has_playericon();
+  if (playericon_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = playericon_;
+    playericon_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SSendChatToServer::set_allocated_playericon(::std::string* playericon) {
+  if (playericon_ != &::google::protobuf::internal::kEmptyString) {
+    delete playericon_;
+  }
+  if (playericon) {
+    set_has_playericon();
+    playericon_ = playericon;
+  } else {
+    clear_has_playericon();
+    playericon_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 playergrade = 6;
+inline bool S2SSendChatToServer::has_playergrade() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playergrade() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SSendChatToServer::clear_has_playergrade() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SSendChatToServer::clear_playergrade() {
+  playergrade_ = 0u;
+  clear_has_playergrade();
+}
+inline ::google::protobuf::uint32 S2SSendChatToServer::playergrade() const {
+  return playergrade_;
+}
+inline void S2SSendChatToServer::set_playergrade(::google::protobuf::uint32 value) {
+  set_has_playergrade();
+  playergrade_ = value;
+}
+
+// required uint32 playersex = 7;
+inline bool S2SSendChatToServer::has_playersex() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playersex() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void S2SSendChatToServer::clear_has_playersex() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void S2SSendChatToServer::clear_playersex() {
+  playersex_ = 0u;
+  clear_has_playersex();
+}
+inline ::google::protobuf::uint32 S2SSendChatToServer::playersex() const {
+  return playersex_;
+}
+inline void S2SSendChatToServer::set_playersex(::google::protobuf::uint32 value) {
+  set_has_playersex();
+  playersex_ = value;
+}
+
+// required string playericonbox = 8;
+inline bool S2SSendChatToServer::has_playericonbox() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playericonbox() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void S2SSendChatToServer::clear_has_playericonbox() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void S2SSendChatToServer::clear_playericonbox() {
+  if (playericonbox_ != &::google::protobuf::internal::kEmptyString) {
+    playericonbox_->clear();
+  }
+  clear_has_playericonbox();
+}
+inline const ::std::string& S2SSendChatToServer::playericonbox() const {
+  return *playericonbox_;
+}
+inline void S2SSendChatToServer::set_playericonbox(const ::std::string& value) {
+  set_has_playericonbox();
+  if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
+    playericonbox_ = new ::std::string;
+  }
+  playericonbox_->assign(value);
+}
+inline void S2SSendChatToServer::set_playericonbox(const char* value) {
+  set_has_playericonbox();
+  if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
+    playericonbox_ = new ::std::string;
+  }
+  playericonbox_->assign(value);
+}
+inline void S2SSendChatToServer::set_playericonbox(const char* value, size_t size) {
+  set_has_playericonbox();
+  if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
+    playericonbox_ = new ::std::string;
+  }
+  playericonbox_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SSendChatToServer::mutable_playericonbox() {
+  set_has_playericonbox();
+  if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
+    playericonbox_ = new ::std::string;
+  }
+  return playericonbox_;
+}
+inline ::std::string* S2SSendChatToServer::release_playericonbox() {
+  clear_has_playericonbox();
+  if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = playericonbox_;
+    playericonbox_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SSendChatToServer::set_allocated_playericonbox(::std::string* playericonbox) {
+  if (playericonbox_ != &::google::protobuf::internal::kEmptyString) {
+    delete playericonbox_;
+  }
+  if (playericonbox) {
+    set_has_playericonbox();
+    playericonbox_ = playericonbox;
+  } else {
+    clear_has_playericonbox();
+    playericonbox_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 playerserverid = 9;
+inline bool S2SSendChatToServer::has_playerserverid() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void S2SSendChatToServer::set_has_playerserverid() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void S2SSendChatToServer::clear_has_playerserverid() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void S2SSendChatToServer::clear_playerserverid() {
+  playerserverid_ = 0u;
+  clear_has_playerserverid();
+}
+inline ::google::protobuf::uint32 S2SSendChatToServer::playerserverid() const {
+  return playerserverid_;
+}
+inline void S2SSendChatToServer::set_playerserverid(::google::protobuf::uint32 value) {
+  set_has_playerserverid();
+  playerserverid_ = value;
 }
 
 

@@ -414,6 +414,7 @@ namespace KFrame
         uint64 newuserid = uint64result->_value + 10000;
         auto playerid = KFUtility::CalcPlayerid( static_cast< uint32 >( newuserid ), zoneid );
 
+        redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ), accountid );
         auto voidresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, logiczoneid, playerid );
         if ( !voidresult->IsOk() )
         {

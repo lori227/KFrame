@@ -62,7 +62,7 @@ namespace KFrame
         bool ok = false;
         if ( _kf_zone->IsServerSameZone( serverid ) )
         {
-            ok = _kf_game->SendMessageToTransmit( playerid, msgid, message );
+            ok = _kf_game->TransmitToPlayer( playerid, msgid, message );
         }
         else
         {

@@ -11,6 +11,11 @@ enum ServerProtocol
 	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// 更新公共数据
 	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// 更新zone信息到proxy
 	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// 转发消息到数据库
+	S2S_BROADCAST_TO_WORLD = 21008;					// 广播消息
+	S2S_BROADCAST_TO_GAME = 21009;					// 广播消息
+	S2S_BROADCAST_TO_GATE = 21010;					// 广播消息
+	S2S_TRANSMIT_TO_PLAYER = 21011;					// 转发消息
+	S2S_TRANSMIT_TO_SERVER = 21012;					// 转发消息
 	
 	S2S_KICK_GAME_PLAYER_REQ = 21101;				// 踢掉在线玩家
 	S2S_KICK_GATE_PLAYER_REQ = 21102;				// 踢掉在线玩家
@@ -91,35 +96,36 @@ enum ServerProtocol
 	S2S_QUERY_RECENT_LIST_REQ = 21195;				// 请求最近游戏列表
 	S2S_QUERY_RECENT_LIST_ACK = 21196;				// 通知处理最近游戏列表	
 
-	S2S_CREATE_GUILD_REQ = 21197;				// 创建帮派请求
+	S2S_CREATE_GUILD_REQ = 21197;					// 创建帮派请求
 	S2S_CREATE_GUILD_TO_SHARD_REQ = 21198;			// 创建帮派请求发送到shard
-	S2S_CREATE_GUILD_ACK = 21199;				// 创建帮派返回
+	S2S_CREATE_GUILD_ACK = 21199;					// 创建帮派返回
 	S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200;		// 更新帮派成员基础信息
-	S2S_INVITE_GUILD_REQ = 21201;				// 邀请好友加入帮派请求
-	S2S_INVITE_GUILD_ACK = 21202;				// 邀请好友加入帮派反馈
-	S2S_APPLY_GUILD_REQ = 21203;				// 申请加入帮派请求
-	S2S_APPLY_GUILD_ACK = 21204;				// 申请加入帮派反馈
+	S2S_INVITE_GUILD_REQ = 21201;					// 邀请好友加入帮派请求
+	S2S_INVITE_GUILD_ACK = 21202;					// 邀请好友加入帮派反馈
+	S2S_APPLY_GUILD_REQ = 21203;					// 申请加入帮派请求
+	S2S_APPLY_GUILD_ACK = 21204;					// 申请加入帮派反馈
 	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// 玩家帮派状态变化guild->zone	
-	S2S_EXIT_GUILD_REQ = 21206;				// 玩家退出帮派
-	S2S_TRANSFER_MASTER_REQ = 21207;			// 转让帮派请求
-	S2S_REVIEW_APPLY_REQ = 21208;				// 审核帮派成员加入	
-	S2S_DISSOLVE_GUILD_REQ = 21209;				// 解散帮派
-	S2S_MODIFY_MEDAL_REQ = 21210;				// 修改帮派徽章
-	S2S_QUERY_GUILD_LIST_REQ = 21211;			// 请求帮派列表
-	S2S_KICK_MEMBER_REQ = 21212;				// 请求踢人
-	S2S_LOGIN_QUERY_GUILD_REQ = 21213;			// 登录请求自身帮派数据
-	S2S_LOGIN_QUERY_GUILD_ACK = 21214;			// 请求帮派数据返回
-	S2S_UPDATE_GUILD_DATA_REQ = 21215;			// 更新帮派成员数据
-	S2S_UPGRADE_GUILD_REQ = 21216;				// 帮派升级
-	S2S_UPGRADE_GUILD_ACK = 21217;				// 帮派升级反馈
+	S2S_EXIT_GUILD_REQ = 21206;						// 玩家退出帮派
+	S2S_TRANSFER_MASTER_REQ = 21207;				// 转让帮派请求
+	S2S_REVIEW_APPLY_REQ = 21208;					// 审核帮派成员加入	
+	S2S_DISSOLVE_GUILD_REQ = 21209;					// 解散帮派
+	S2S_MODIFY_MEDAL_REQ = 21210;					// 修改帮派徽章
+	S2S_QUERY_GUILD_LIST_REQ = 21211;				// 请求帮派列表
+	S2S_KICK_MEMBER_REQ = 21212;					// 请求踢人
+	S2S_LOGIN_QUERY_GUILD_REQ = 21213;				// 登录请求自身帮派数据
+	S2S_LOGIN_QUERY_GUILD_ACK = 21214;				// 请求帮派数据返回
+	S2S_UPDATE_GUILD_DATA_REQ = 21215;				// 更新帮派成员数据
+	S2S_UPGRADE_GUILD_REQ = 21216;					// 帮派升级
+	S2S_UPGRADE_GUILD_ACK = 21217;					// 帮派升级反馈
 	S2S_APPOINT_GUILD_MEMBER_REQ = 21218;			// 任命帮派成员请求
 	S2S_SEARCH_GUILD_BY_NAME_REQ = 21219;			// 根据帮派名字搜索帮派信息
-	S2S_SET_GUILD_SWITCH_REQ = 21220;			// 设置帮派管理开关
+	S2S_SET_GUILD_SWITCH_REQ = 21220;				// 设置帮派管理开关
 	S2S_LOGIN_QUERY_GUILDID_REQ = 21221;			// 登录请求guildid
 	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// 登录请求guildid返回
-	S2S_QUERY_GUILD_LOG_REQ = 21223;			// 查询帮派日志
+	S2S_QUERY_GUILD_LOG_REQ = 21223;				// 查询帮派日志
 	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// 增加帮派活跃度
-	S2S_GM_ADD_MAIL_REQ = 21300;				// GM增加邮件
+	S2S_GM_ADD_MAIL_REQ = 21300;					// GM增加邮件
+	S2S_SEND_CHAT_TO_SERVER = 21301;				// 发送聊天内容
 
  }
 
@@ -140,6 +146,43 @@ message S2SBroadcastMessageReq
 	required uint32 msgid = 1;			// 消息id
 	required string msgdata = 2;		// 消息内容
 }
+
+// S2S_BROADCAST_TO_WORLD
+message S2SBroadcastToWord
+{
+	required uint32 msgid = 1;			// 消息id
+	required string msgdata = 2;		// 消息内容
+}
+
+// S2S_BROADCAST_TO_GAME
+message S2SBroadcastToGame
+{
+	required uint32 msgid = 1;			// 消息id
+	required string msgdata = 2;		// 消息内容
+}
+
+// S2S_BROADCAST_TO_GATE
+message S2SBroadcastToGate
+{
+	required uint32 msgid = 1;			// 消息id
+	required string msgdata = 2;		// 消息内容
+}
+
+// S2S_TRANSMIT_TO_PLAYER
+message S2STransmitToPlayer
+{
+	required uint32 playerid = 1;		// 玩家id
+	required uint32 msgid = 2;			// 消息id
+	required string msgdata = 3;		// 消息内容
+}
+
+// S2S_TRANSMIT_TO_SERVER
+message S2STransmitToServer
+{
+	required uint32 msgid = 2;			// 消息id
+	required string msgdata = 3;		// 消息内容
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1181,8 +1224,6 @@ message S2SAddGuildActivenessReq
 	required uint32 activeness = 3;		// 活跃度
 }
 
-
-
 // GM增加邮件
 // S2S_GM_ADD_MAIL_REQ
 message S2SGMAddMailReq
@@ -1190,4 +1231,19 @@ message S2SGMAddMailReq
 	optional PBPlayerIds playerids = 1;		// 角色id
 	required uint32 mailtype = 2;			// 邮件类型
 	required PBMail pbmail = 3;			// 邮件信息
+}
+
+// 聊天消息
+// S2S_SEND_CHAT_TO_SERVER
+message S2SSendChatToServer
+{
+	required string chatinfo = 1;		//聊天内容
+	required uint32 isvoice = 2;		//是否是语音消息
+	required string playername = 3;		//发送聊天的玩家名字
+	required uint32 playerid = 4;		//发送聊天的玩家id
+	required string playericon = 5;		//发送聊天的玩家头像
+	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
+	required uint32 playersex = 7;		//发送聊天的玩家性别
+	required string playericonbox = 8;	//发送聊天的玩家头像框
+	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
 }

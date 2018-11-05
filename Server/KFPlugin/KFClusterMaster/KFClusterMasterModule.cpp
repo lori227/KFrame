@@ -64,8 +64,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost!",
-                       kfgate->_name, kfgate->_type, KFAppID::ToString( kfgate->_id ), kfgate->_ip, kfgate->_port );
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost!", kfgate->_name, kfgate->_type, KFAppID::ToString( kfgate->_id ), kfgate->_ip, kfgate->_port );
 
         _kf_proxy_manage->RemoveProxyServer( handleid );
     }

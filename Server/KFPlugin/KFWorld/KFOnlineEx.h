@@ -14,8 +14,8 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到Game
-        virtual void SendMessageToOnline( uint32 msgid, const char* data, uint32 length );
-        virtual void SendMessageToOnline( uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToOnline( uint32 msgid, const char* data, uint32 length );
+        virtual void SendToOnline( uint32 msgid, ::google::protobuf::Message* message );
     };
 }
 

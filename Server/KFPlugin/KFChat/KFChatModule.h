@@ -11,10 +11,9 @@
 
 #include "KFrame.h"
 #include "KFChatInterface.h"
-#include "KFChatPlayerEX.h"
 #include "KFGame/KFGameInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFFilter/KFFilterInterface.h"
@@ -23,11 +22,25 @@
 
 namespace KFrame
 {
+    // 聊天室玩家
+    class KFChatPlayer
+    {
+    public:
+        // playerid
+        uint32 _player_id{ 0 };
+
+        // gateid
+        uint32 _gate_id{ 0 };
+
+        // 上次发言时间
+        uint64 _last_chat_time{ 0 };
+    };
+
     class KFChatModule : public KFChatInterface
     {
     public:
-        KFChatModule();
-        ~KFChatModule();
+        KFChatModule() = default;
+        ~KFChatModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -39,8 +52,6 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
-
     protected:
         //处理加入江湖聊天室请求
         __KF_MESSAGE_FUNCTION__( HandleEnterChatReq );
@@ -50,6 +61,9 @@ namespace KFrame
 
         //处理离开江湖聊天室请求
         __KF_MESSAGE_FUNCTION__( HandleLeaveChatReq );
+
+        // 聊天信息
+        __KF_MESSAGE_FUNCTION__( HandleSendChatToServerReq );
         //////////////////////////////////////////////////////////////////////
 
         //处理客户端发送一对一聊天请求
@@ -66,10 +80,9 @@ namespace KFrame
         //玩家离线回调
         void OnLeaveLeaveChat( KFEntity* player );
 
-
     private:
-        //江湖聊天室
-        KFMap < uint32, uint32, KFChatPlayerEX > _chat_player_list;
+        // 江湖聊天室
+        KFMap < uint32, uint32, KFChatPlayer > _chat_player_list;
     };
 }
 

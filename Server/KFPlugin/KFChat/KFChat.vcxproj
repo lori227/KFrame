@@ -14,14 +14,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFChatConfig.cpp" />
     <ClCompile Include="KFChatModule.cpp" />
-    <ClCompile Include="KFChatPlayerEX.cpp" />
     <ClCompile Include="KFChatPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFChatConfig.h" />
     <ClInclude Include="KFChatInterface.h" />
     <ClInclude Include="KFChatModule.h" />
-    <ClInclude Include="KFChatPlayerEX.h" />
     <ClInclude Include="KFChatPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

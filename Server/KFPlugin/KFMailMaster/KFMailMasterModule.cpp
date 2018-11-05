@@ -97,8 +97,6 @@ namespace KFrame
         {
             __LOG_ERROR__( "add gm mail server[{}] failed!", serverid );
         }
-
-        return;
     }
 
 }

@@ -281,7 +281,7 @@ namespace KFrame
             KFMsg::S2SPlayerEnterWorldReq req;
             req.set_playerid( player->GetKeyID() );
             req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
-            _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
+            _kf_game->SendToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
         }
     }
 
@@ -294,7 +294,7 @@ namespace KFrame
             KFMsg::S2SPlayerLeaveWorldReq req;
             req.set_playerid( player->GetKeyID() );
             req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
-            _kf_game->SendMessageToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
+            _kf_game->SendToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
         }
     }
 
@@ -354,7 +354,7 @@ namespace KFrame
         ack.mutable_pblogin()->CopyFrom( *pblogin );
         ack.mutable_playerdata()->CopyFrom( *pbplayerdata );
         ack.set_servertime( KFGlobal::Instance()->_real_time );
-        auto ok = _kf_game->SendMessageToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_GAME_ACK, &ack );
+        auto ok = _kf_game->SendToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_GAME_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}:{}] load game ok!", pblogin->accountid(), pblogin->playerid() );
@@ -469,7 +469,7 @@ namespace KFrame
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
         auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
 
-        return _kf_game->SendMessageToClient( gateid, playerid, msgid, message );
+        return _kf_game->SendToClient( gateid, playerid, msgid, message );
     }
 
     bool KFPlayerModule::SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length )
@@ -478,7 +478,7 @@ namespace KFrame
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
         auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
 
-        return _kf_game->SendMessageToClient( gateid, playerid, msgid, data, length );
+        return _kf_game->SendToClient( gateid, playerid, msgid, data, length );
     }
 
     bool KFPlayerModule::SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
@@ -531,7 +531,7 @@ namespace KFrame
             kfentity = _kf_component->NextEntity();
         }
 
-        _kf_game->SendMessageToWorld( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &req );
+        _kf_game->SendToWorld( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &req );
     }
 
     __KF_TRANSMIT_FUNCTION__( KFPlayerModule::TransmitMessageToPlayer )

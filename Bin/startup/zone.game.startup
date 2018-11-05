@@ -17,7 +17,7 @@
 		<Plugin Sort="169" Name="KFRankClient" Config="./config/rank.config"/>
 		<Plugin Sort="180" Name="KFKernel" Config="./config/class.config"/>
 		<Plugin Sort="190" Name="KFPlayer" Config=""/>
-		<Plugin Sort="200" Name="KFChat" Config="./config/chat.config"/>
+		<Plugin Sort="200" Name="KFChat" Config=""/>
 		<Plugin Sort="210" Name="KFLua" Config=""/>
 		<Plugin Sort="220" Name="KFEnter" Config="./config/enter.config"/>
 		<Plugin Sort="221" Name="KFLeave" Config="./config/leave.config"/>

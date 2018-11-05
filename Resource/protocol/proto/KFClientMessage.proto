@@ -398,8 +398,8 @@ message MsgSendChatInfo
 	required uint32 isvoice = 2;		//是否是语音消息
 	required string playername = 3;		//发送聊天的玩家名字
 	required uint32 playerid = 4;		//发送聊天的玩家id
-	required string playericon = 5;		//发送聊天的玩家头像
-	required uint32 playergrading = 6;	//发送聊天的玩家评分等级
+	required uint32 playericon = 5;		//发送聊天的玩家头像
+	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
 	required string playericonbox = 8;	//发送聊天的玩家头像框
 	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
@@ -411,8 +411,6 @@ message MsgLeaveChatReq
 {
 
 }
-
-
 
 //客户端发送一对一聊天请求
 //MSG_SEND_ONEBYONE_CHAT_REQ

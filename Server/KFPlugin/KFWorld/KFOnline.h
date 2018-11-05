@@ -18,8 +18,8 @@ namespace KFrame
         virtual ~KFOnline() = default;
 
         // 发送消息到Game
-        virtual void SendMessageToOnline( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual void SendMessageToOnline( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual void SendToOnline( uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendToOnline( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
     public:
         // playerid

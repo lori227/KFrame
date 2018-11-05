@@ -34,22 +34,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 发送消息到世界服务器
-        virtual bool SendMessageToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        virtual void SendMessageToGate( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToGate( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到客户端
-        virtual bool SendMessageToClient( uint32 gateid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToClient( uint32 gateid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
 
         // 广播消息到客户端
-        virtual bool BroadcastMessageToClient( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool BroadcastMessageToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 消息转发
-        virtual bool SendMessageToTransmit( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool TransmitToPlayer( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+
+        // 转发服务器
+        virtual bool TransmitToServer( uint32 msgid, ::google::protobuf::Message* message );
 
     protected:
         // 处理消息广播

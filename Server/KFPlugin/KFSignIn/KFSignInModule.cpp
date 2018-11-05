@@ -67,6 +67,6 @@ namespace KFrame
         KFMsg::MsgTellSevenExtendReward tell;
         tell.set_playername( player->GetName() );
         tell.set_reward( kfsetting->_reward.FormatRewardAgent( 1.0f ) );
-        _kf_game->BroadcastMessageToWorld( KFMsg::MSG_TELL_SEVEN_EXTEND_REWARD, &tell );
+        _kf_game->BroadcastToWorld( KFMsg::MSG_TELL_SEVEN_EXTEND_REWARD, &tell );
     }
 }

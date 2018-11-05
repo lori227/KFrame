@@ -24,11 +24,12 @@ namespace KFrame
         // 踢掉在线玩家
         virtual bool KickOnline( uint32 playerid, const char* function, uint32 line ) = 0;
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到玩家
-        virtual bool SendMessageToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到游戏服务器
-        virtual bool SendMessageToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };

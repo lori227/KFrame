@@ -249,6 +249,7 @@ namespace KFrame
         if ( kfsetting != nullptr )
         {
             reward = kfsetting->_reward;
+            pbscore->set_reward( reward );
         }
 
         {

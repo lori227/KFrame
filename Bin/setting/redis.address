@@ -19,7 +19,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>			 
 		</Connection>
 
@@ -33,7 +32,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9221" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9221" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 		
@@ -47,7 +45,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -61,7 +58,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -75,7 +71,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -89,7 +84,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -103,7 +97,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -117,7 +110,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9222" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9222" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 
@@ -131,7 +123,6 @@
 			<!-- steam 正式 -->
 			<Channel ChannelId="3" Service="8">
 				<Data IP="172.16.0.58" Port="9221" Password="redis@lori227-="/>
-				<Data IP="172.16.0.61" Port="9221" Password="redis@lori227-="/>
 			</Channel>
 		</Connection>
 	</Redis>

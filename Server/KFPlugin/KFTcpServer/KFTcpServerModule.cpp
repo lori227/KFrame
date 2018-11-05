@@ -386,4 +386,9 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
         _kf_server_engine->SendMessageToType( type, msgid, strdata.data(), strdata.size() );
     }
+
+    void KFTcpServerModule::SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length )
+    {
+        _kf_server_engine->SendMessageToType( type, msgid, data, length );
+    }
 }

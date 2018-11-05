@@ -26,8 +26,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &KFWorldModule::HandleLoginWorldVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &KFWorldModule::HandleGameSyncOnlineReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_MESSAGE_REQ, &KFWorldModule::HandleTransmitMessageReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ, &KFWorldModule::HandleBroadcastMessageReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_PLAYER, &KFWorldModule::HandleTransmitToPlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_SERVER, &KFWorldModule::HandleTransmitToServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD, &KFWorldModule::HandleBroadcastMessageReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &KFWorldModule::HandlePlayerEnterWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &KFWorldModule::HandlePlayerLeaveWorldReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,8 +41,9 @@ namespace KFrame
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_MESSAGE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_MESSAGE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_PLAYER );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_SERVER );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +72,7 @@ namespace KFrame
         return _kf_online_list.Size();
     }
 
-    bool KFWorldModule::SendMessageToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFWorldModule::SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfonline = FindOnline( playerid );
         if ( kfonline == nullptr )
@@ -78,7 +80,7 @@ namespace KFrame
             return false;
         }
 
-        kfonline->SendMessageToOnline( msgid, message );
+        kfonline->SendToOnline( msgid, message );
         return true;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,9 +167,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitMessageReq )
+    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToPlayerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STransmitMessageReq );
+        __PROTO_PARSE__( KFMsg::S2STransmitToPlayer );
 
         auto kfonline = FindOnline( kfmsg.playerid() );
         if ( kfonline == nullptr )
@@ -176,14 +178,25 @@ namespace KFrame
         }
 
         auto& msgdata = kfmsg.msgdata();
-        kfonline->SendMessageToOnline( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
+        kfonline->SendToOnline( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransmitToServer );
+
+        auto& msgdata = kfmsg.msgdata();
+        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastMessageReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastMessageReq );
+        __PROTO_PARSE__( KFMsg::S2SBroadcastToWord );
 
-        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_MESSAGE_REQ, &kfmsg );
+        KFMsg::S2SBroadcastToGame req;
+        req.set_msgid( kfmsg.msgid() );
+        req.set_msgdata( kfmsg.msgdata() );
+        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerEnterWorldReq )
@@ -258,7 +271,7 @@ namespace KFrame
         return ok;
     }
 
-    bool KFWorldModule::SendMessageToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFWorldModule::SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
     }

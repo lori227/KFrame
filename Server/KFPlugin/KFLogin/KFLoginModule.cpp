@@ -61,7 +61,7 @@ namespace KFrame
         _world_server_id = _invalid_int;
     }
 
-    bool KFLoginModule::SendMessageToWorld( uint32 msgid, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToWorld( uint32 msgid, ::google::protobuf::Message* message )
     {
         if ( _world_server_id == _invalid_int )
         {
@@ -72,7 +72,7 @@ namespace KFrame
     }
 
     // 发送消息到Gate服务器
-    bool KFLoginModule::SendMessageToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
     }
@@ -183,7 +183,7 @@ namespace KFrame
             }
         }
 
-        auto ok = SendMessageToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
+        auto ok = SendToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}:{}:{}] auth token ok!", account, accountid, playerid );

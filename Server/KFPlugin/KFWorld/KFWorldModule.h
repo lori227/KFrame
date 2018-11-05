@@ -54,12 +54,13 @@ namespace KFrame
 
         // 在线玩家的总人数
         virtual uint32 GetOnlineCount();
+        /////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息到玩家
-        bool SendMessageToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到游戏服务器
-        virtual bool SendMessageToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////
     protected:
         // 断开Game
@@ -76,7 +77,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleGameSyncOnlineReq );
 
         // 处理消息转发
-        __KF_MESSAGE_FUNCTION__( HandleTransmitMessageReq );
+        __KF_MESSAGE_FUNCTION__( HandleTransmitToPlayerReq );
+
+        // 处理消息转发
+        __KF_MESSAGE_FUNCTION__( HandleTransmitToServerReq );
 
         // 处理广播消息
         __KF_MESSAGE_FUNCTION__( HandleBroadcastMessageReq );

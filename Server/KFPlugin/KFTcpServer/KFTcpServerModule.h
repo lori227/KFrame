@@ -54,6 +54,7 @@ namespace KFrame
         // 给指定类型发送消息
         virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message );
         virtual void SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器

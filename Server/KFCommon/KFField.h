@@ -370,6 +370,8 @@ namespace KFrame
         __STRING_DEFINE__( verifyactivationcode );
         __STRING_DEFINE__( platappid );
         __STRING_DEFINE__( platappkey );
+        __STRING_DEFINE__( chatinterval );
+        __STRING_DEFINE__( chatmaxlength );
     }
 }
 
