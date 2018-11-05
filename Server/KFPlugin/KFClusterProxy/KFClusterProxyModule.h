@@ -133,13 +133,13 @@ namespace KFrame
 
     private:
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterServer( const std::string& servername, uint32 serverid );
+        void OnClientConnectionClusterMaster( const std::string& servername, uint32 serverid );
 
         // 连接Cluster Server 成功
         void OnClientConnectionClusterShard( const std::string& servername, uint32 serverid );
 
         // 断开连接
-        void OnClientLostClusterServer( const std::string& servername, uint32 serverid );
+        void OnClientLostClusterMaster( const std::string& servername, uint32 serverid );
         void OnClientLostClusterShard( const std::string& servername, uint32 serverid );
 
         // 检查token有效时间
@@ -161,6 +161,9 @@ namespace KFrame
         void DecObjectCount( uint32 shardid, uint32 count );
 
     private:
+        // masterid
+        uint32 _master_server_id{ 0 };
+
         // 认证的token列表
         KFMap< std::string, const std::string&, KFClusterToken > _kf_token_list;
 

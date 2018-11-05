@@ -96,8 +96,12 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SClusterRegisterReq));
   S2SClusterUpdateReq_descriptor_ = file->message_type(1);
-  static const int S2SClusterUpdateReq_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, gateid_),
+  static const int S2SClusterUpdateReq_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, ip_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, port_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterUpdateReq, count_),
   };
   S2SClusterUpdateReq_reflection_ =
@@ -414,42 +418,43 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
     "\n\026KFClusterMessage.proto\022\005KFMsg\"Y\n\025S2SCl"
     "usterRegisterReq\022\014\n\004type\030\001 \002(\t\022\n\n\002id\030\002 \002"
     "(\r\022\014\n\004name\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 \002"
-    "(\r\"4\n\023S2SClusterUpdateReq\022\016\n\006gateid\030\001 \002("
-    "\r\022\r\n\005count\030\002 \002(\r\"<\n\021S2SClusterAuthReq\022\023\n"
-    "\013clustertype\030\001 \002(\t\022\022\n\nclusterkey\030\002 \002(\t\"y"
-    "\n\021S2SClusterAuthAck\022\023\n\013clustertype\030\001 \002(\t"
-    "\022\r\n\005token\030\002 \002(\t\022\014\n\004type\030\003 \002(\t\022\n\n\002id\030\004 \002("
-    "\r\022\014\n\004name\030\005 \002(\t\022\n\n\002ip\030\006 \002(\t\022\014\n\004port\030\007 \002("
-    "\r\"3\n\022S2SClusterTokenReq\022\r\n\005token\030\001 \002(\t\022\016"
-    "\n\006gateid\030\002 \002(\r\"K\n\023S2SClusterVerifyReq\022\023\n"
-    "\013clustertype\030\001 \002(\t\022\r\n\005token\030\002 \002(\t\022\020\n\010ser"
-    "verid\030\003 \002(\r\"<\n\023S2SClusterVerifyAck\022\023\n\013cl"
-    "ustertype\030\001 \002(\t\022\020\n\010serverid\030\002 \002(\r\"+\n\027S2S"
-    "ClusterClientListReq\022\020\n\010clientid\030\001 \003(\r\"*"
-    "\n\026S2SAddObjectToProxyReq\022\020\n\010objectid\030\001 \003"
-    "(\004\"-\n\031S2SRemoveObjectToProxyReq\022\020\n\010objec"
-    "tid\030\002 \003(\004\"-\n\031S2SAllocObjectToMasterReq\022\020"
-    "\n\010objectid\030\001 \003(\r\"=\n\030S2SAllocObjectToProx"
-    "yAck\022\020\n\010objectid\030\001 \003(\r\022\017\n\007shardid\030\002 \003(\r\""
-    ",\n\030S2SAllocObjectToShardAck\022\020\n\010objectid\030"
-    "\001 \003(\r\"_\n\031S2SSendToDynamicObjectReq\022\020\n\010ob"
-    "jectid\030\001 \002(\004\022\r\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003"
-    " \002(\t\022\020\n\010serverid\030\004 \002(\r\"^\n\030S2SSendToStati"
-    "cObjectReq\022\020\n\010objectid\030\001 \002(\r\022\r\n\005msgid\030\002 "
-    "\002(\r\022\017\n\007msgdata\030\003 \002(\t\022\020\n\010serverid\030\004 \002(\r*\370"
-    "\003\n\017ClusterProtocol\022\035\n\030S2S_CLUSTER_REGIST"
-    "ER_REQ\020\365N\022\033\n\026S2S_CLUSTER_UPDATE_REQ\020\366N\022\031"
-    "\n\024S2S_CLUSTER_AUTH_REQ\020\367N\022\031\n\024S2S_CLUSTER"
-    "_AUTH_ACK\020\370N\022\032\n\025S2S_CLUSTER_TOKEN_REQ\020\371N"
-    "\022\033\n\026S2S_CLUSTER_VERIFY_REQ\020\372N\022\033\n\026S2S_CLU"
-    "STER_VERIFY_ACK\020\373N\022 \n\033S2S_CLUSTER_CLIENT"
-    "_LIST_REQ\020\374N\022 \n\033S2S_ADD_OBJECT_TO_PROXY_"
-    "REQ\020\375N\022#\n\036S2S_REMOVE_OBJECT_TO_PROXY_REQ"
-    "\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO_MASTER_REQ\020\200O"
-    "\022\"\n\035S2S_ALLOC_OBJECT_TO_PROXY_ACK\020\201O\022\"\n\035"
-    "S2S_ALLOC_OBJECT_TO_SHARD_ACK\020\202O\022\"\n\035S2S_"
-    "SEND_TO_STATIC_OBJECT_REQ\020\203O\022#\n\036S2S_SEND"
-    "_TO_DYNAMIC_OBJECT_REQ\020\204O", 1545);
+    "(\r\"f\n\023S2SClusterUpdateReq\022\014\n\004type\030\001 \002(\t\022"
+    "\n\n\002id\030\002 \002(\r\022\014\n\004name\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n"
+    "\004port\030\005 \002(\r\022\r\n\005count\030\006 \002(\r\"<\n\021S2SCluster"
+    "AuthReq\022\023\n\013clustertype\030\001 \002(\t\022\022\n\nclusterk"
+    "ey\030\002 \002(\t\"y\n\021S2SClusterAuthAck\022\023\n\013cluster"
+    "type\030\001 \002(\t\022\r\n\005token\030\002 \002(\t\022\014\n\004type\030\003 \002(\t\022"
+    "\n\n\002id\030\004 \002(\r\022\014\n\004name\030\005 \002(\t\022\n\n\002ip\030\006 \002(\t\022\014\n"
+    "\004port\030\007 \002(\r\"3\n\022S2SClusterTokenReq\022\r\n\005tok"
+    "en\030\001 \002(\t\022\016\n\006gateid\030\002 \002(\r\"K\n\023S2SClusterVe"
+    "rifyReq\022\023\n\013clustertype\030\001 \002(\t\022\r\n\005token\030\002 "
+    "\002(\t\022\020\n\010serverid\030\003 \002(\r\"<\n\023S2SClusterVerif"
+    "yAck\022\023\n\013clustertype\030\001 \002(\t\022\020\n\010serverid\030\002 "
+    "\002(\r\"+\n\027S2SClusterClientListReq\022\020\n\010client"
+    "id\030\001 \003(\r\"*\n\026S2SAddObjectToProxyReq\022\020\n\010ob"
+    "jectid\030\001 \003(\004\"-\n\031S2SRemoveObjectToProxyRe"
+    "q\022\020\n\010objectid\030\002 \003(\004\"-\n\031S2SAllocObjectToM"
+    "asterReq\022\020\n\010objectid\030\001 \003(\r\"=\n\030S2SAllocOb"
+    "jectToProxyAck\022\020\n\010objectid\030\001 \003(\r\022\017\n\007shar"
+    "did\030\002 \003(\r\",\n\030S2SAllocObjectToShardAck\022\020\n"
+    "\010objectid\030\001 \003(\r\"_\n\031S2SSendToDynamicObjec"
+    "tReq\022\020\n\010objectid\030\001 \002(\004\022\r\n\005msgid\030\002 \002(\r\022\017\n"
+    "\007msgdata\030\003 \002(\t\022\020\n\010serverid\030\004 \002(\r\"^\n\030S2SS"
+    "endToStaticObjectReq\022\020\n\010objectid\030\001 \002(\r\022\r"
+    "\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\t\022\020\n\010server"
+    "id\030\004 \002(\r*\370\003\n\017ClusterProtocol\022\035\n\030S2S_CLUS"
+    "TER_REGISTER_REQ\020\365N\022\033\n\026S2S_CLUSTER_UPDAT"
+    "E_REQ\020\366N\022\031\n\024S2S_CLUSTER_AUTH_REQ\020\367N\022\031\n\024S"
+    "2S_CLUSTER_AUTH_ACK\020\370N\022\032\n\025S2S_CLUSTER_TO"
+    "KEN_REQ\020\371N\022\033\n\026S2S_CLUSTER_VERIFY_REQ\020\372N\022"
+    "\033\n\026S2S_CLUSTER_VERIFY_ACK\020\373N\022 \n\033S2S_CLUS"
+    "TER_CLIENT_LIST_REQ\020\374N\022 \n\033S2S_ADD_OBJECT"
+    "_TO_PROXY_REQ\020\375N\022#\n\036S2S_REMOVE_OBJECT_TO"
+    "_PROXY_REQ\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO_MAS"
+    "TER_REQ\020\200O\022\"\n\035S2S_ALLOC_OBJECT_TO_PROXY_"
+    "ACK\020\201O\022\"\n\035S2S_ALLOC_OBJECT_TO_SHARD_ACK\020"
+    "\202O\022\"\n\035S2S_SEND_TO_STATIC_OBJECT_REQ\020\203O\022#"
+    "\n\036S2S_SEND_TO_DYNAMIC_OBJECT_REQ\020\204O", 1595);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClusterMessage.proto", &protobuf_RegisterTypes);
   S2SClusterRegisterReq::default_instance_ = new S2SClusterRegisterReq();
@@ -942,7 +947,11 @@ void S2SClusterRegisterReq::Swap(S2SClusterRegisterReq* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SClusterUpdateReq::kGateidFieldNumber;
+const int S2SClusterUpdateReq::kTypeFieldNumber;
+const int S2SClusterUpdateReq::kIdFieldNumber;
+const int S2SClusterUpdateReq::kNameFieldNumber;
+const int S2SClusterUpdateReq::kIpFieldNumber;
+const int S2SClusterUpdateReq::kPortFieldNumber;
 const int S2SClusterUpdateReq::kCountFieldNumber;
 #endif  // !_MSC_VER
 
@@ -962,7 +971,11 @@ S2SClusterUpdateReq::S2SClusterUpdateReq(const S2SClusterUpdateReq& from)
 
 void S2SClusterUpdateReq::SharedCtor() {
   _cached_size_ = 0;
-  gateid_ = 0u;
+  type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  id_ = 0u;
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  port_ = 0u;
   count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -972,6 +985,15 @@ S2SClusterUpdateReq::~S2SClusterUpdateReq() {
 }
 
 void S2SClusterUpdateReq::SharedDtor() {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    delete type_;
+  }
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -999,7 +1021,23 @@ S2SClusterUpdateReq* S2SClusterUpdateReq::New() const {
 
 void S2SClusterUpdateReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    gateid_ = 0u;
+    if (has_type()) {
+      if (type_ != &::google::protobuf::internal::kEmptyString) {
+        type_->clear();
+      }
+    }
+    id_ = 0u;
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::kEmptyString) {
+        name_->clear();
+      }
+    }
+    if (has_ip()) {
+      if (ip_ != &::google::protobuf::internal::kEmptyString) {
+        ip_->clear();
+      }
+    }
+    port_ = 0u;
     count_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1012,23 +1050,90 @@ bool S2SClusterUpdateReq::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 gateid = 1;
+      // required string type = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &gateid_)));
-          set_has_gateid();
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_type()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->type().data(), this->type().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_count;
+        if (input->ExpectTag(16)) goto parse_id;
         break;
       }
 
-      // required uint32 count = 2;
+      // required uint32 id = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &id_)));
+          set_has_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_name;
+        break;
+      }
+
+      // required string name = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_ip;
+        break;
+      }
+
+      // required string ip = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_ip:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ip()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->ip().data(), this->ip().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(40)) goto parse_port;
+        break;
+      }
+
+      // required uint32 port = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_port:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &port_)));
+          set_has_port();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_count;
+        break;
+      }
+
+      // required uint32 count = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_count:
@@ -1061,14 +1166,46 @@ bool S2SClusterUpdateReq::MergePartialFromCodedStream(
 
 void S2SClusterUpdateReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 gateid = 1;
-  if (has_gateid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->gateid(), output);
+  // required string type = 1;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->type().data(), this->type().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->type(), output);
   }
 
-  // required uint32 count = 2;
+  // required uint32 id = 2;
+  if (has_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->id(), output);
+  }
+
+  // required string name = 3;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->name(), output);
+  }
+
+  // required string ip = 4;
+  if (has_ip()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->ip().data(), this->ip().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      4, this->ip(), output);
+  }
+
+  // required uint32 port = 5;
+  if (has_port()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->port(), output);
+  }
+
+  // required uint32 count = 6;
   if (has_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->count(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->count(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1079,14 +1216,49 @@ void S2SClusterUpdateReq::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SClusterUpdateReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 gateid = 1;
-  if (has_gateid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->gateid(), target);
+  // required string type = 1;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->type().data(), this->type().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->type(), target);
   }
 
-  // required uint32 count = 2;
+  // required uint32 id = 2;
+  if (has_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->id(), target);
+  }
+
+  // required string name = 3;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->name(), target);
+  }
+
+  // required string ip = 4;
+  if (has_ip()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->ip().data(), this->ip().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->ip(), target);
+  }
+
+  // required uint32 port = 5;
+  if (has_port()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->port(), target);
+  }
+
+  // required uint32 count = 6;
   if (has_count()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->count(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->count(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1100,14 +1272,42 @@ int S2SClusterUpdateReq::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 gateid = 1;
-    if (has_gateid()) {
+    // required string type = 1;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->gateid());
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->type());
     }
 
-    // required uint32 count = 2;
+    // required uint32 id = 2;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->id());
+    }
+
+    // required string name = 3;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+
+    // required string ip = 4;
+    if (has_ip()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->ip());
+    }
+
+    // required uint32 port = 5;
+    if (has_port()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->port());
+    }
+
+    // required uint32 count = 6;
     if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -1141,8 +1341,20 @@ void S2SClusterUpdateReq::MergeFrom(const ::google::protobuf::Message& from) {
 void S2SClusterUpdateReq::MergeFrom(const S2SClusterUpdateReq& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_gateid()) {
-      set_gateid(from.gateid());
+    if (from.has_type()) {
+      set_type(from.type());
+    }
+    if (from.has_id()) {
+      set_id(from.id());
+    }
+    if (from.has_name()) {
+      set_name(from.name());
+    }
+    if (from.has_ip()) {
+      set_ip(from.ip());
+    }
+    if (from.has_port()) {
+      set_port(from.port());
     }
     if (from.has_count()) {
       set_count(from.count());
@@ -1164,14 +1376,18 @@ void S2SClusterUpdateReq::CopyFrom(const S2SClusterUpdateReq& from) {
 }
 
 bool S2SClusterUpdateReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }
 
 void S2SClusterUpdateReq::Swap(S2SClusterUpdateReq* other) {
   if (other != this) {
-    std::swap(gateid_, other->gateid_);
+    std::swap(type_, other->type_);
+    std::swap(id_, other->id_);
+    std::swap(name_, other->name_);
+    std::swap(ip_, other->ip_);
+    std::swap(port_, other->port_);
     std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

@@ -19,13 +19,7 @@
 		<Server AppName="zone" AppType="world" Type="1" Port="9000"/>	
 
 		<!-- deploy 服务器 -->
-		<Server AppName="deploy" AppType="server" Type="0" Port="9999"/>	
-
-		<!-- upload 服务器 -->
-		<Server AppName="upload" AppType="upload" Type="0" Port="9998"/>
-	
-		<!-- gmmail 服务器 -->
-		<Server AppName="mail" AppType="master" Type="0" Port="8888"/>	
+		<Server AppName="deploy" AppType="server" Type="0" Port="9999"/>
 	</HttpServer>
 
 

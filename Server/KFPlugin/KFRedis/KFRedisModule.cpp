@@ -32,14 +32,13 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFRedisDriver* KFRedisModule::CreateExecute( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        KFLocker lock( _mt_mutex );
-
         auto kfsetting = _kf_redis_config->FindRedisSetting( module, logicid );
         if ( kfsetting == nullptr )
         {
             return nullptr;
         }
 
+        KFLocker lock( _mt_mutex );
         return CreateExecute( kfsetting->_id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
     }
 

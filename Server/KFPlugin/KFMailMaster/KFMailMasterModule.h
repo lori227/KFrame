@@ -12,8 +12,8 @@
 #include "KFrame.h"
 #include "KFMailMasterInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -32,9 +32,6 @@ namespace KFrame
         virtual void BeforeShut ();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-    protected:
-        // 请求http列表
-        __KF_HTTP_FUNCTION__( HandleAddMail );
 
     protected:
         // 发现连接
@@ -42,6 +39,8 @@ namespace KFrame
 
         // 连接断开
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
+
+        __KF_COMMAND_FUNCTION__( OnCommandAddMail );
     private:
         // hash一致性列表
         KFConHash _kf_hash;

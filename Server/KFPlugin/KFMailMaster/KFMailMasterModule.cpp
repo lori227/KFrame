@@ -13,7 +13,8 @@ namespace KFrame
         __REGISTER_SERVER_LOST_FUNCTION__( &KFMailMasterModule::OnServerLostClient );
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFMailMasterModule::OnServerDiscoverClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailMasterModule::HandleAddMail );
+        //__REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailMasterModule::HandleAddMail );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ), &KFMailMasterModule::OnCommandAddMail );
     }
 
     void KFMailMasterModule::BeforeShut()
@@ -21,7 +22,8 @@ namespace KFrame
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
+        //__UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ) );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFMailMasterModule::OnServerDiscoverClient )
@@ -46,14 +48,14 @@ namespace KFrame
         _kf_hash.RemoveHashNode( handleid );
     }
 
-    __KF_HTTP_FUNCTION__( KFMailMasterModule::HandleAddMail )
+    __KF_COMMAND_FUNCTION__( KFMailMasterModule::OnCommandAddMail )
     {
-        KFJson request( data );
+        KFJson request( param );
         auto mailtype = request.GetUInt32( __KF_STRING__( type ) );
         if ( mailtype < KFMsg::MailEnum_MIN || mailtype > KFMsg::MailEnum_MAX )
         {
             __LOG_INFO__( "add gm mail type[{}] error!", mailtype );
-            return _invalid_str;
+            return ;
         }
 
         KFMsg::S2SGMAddMailReq req;
@@ -85,7 +87,7 @@ namespace KFrame
             pbdata->set_value( strdata );
         }
 
-        auto serverid = _kf_hash.FindHashNode( data );
+        auto serverid = _kf_hash.FindHashNode( param );
         auto ok = _kf_tcp_server->SendNetMessage( serverid, KFMsg::S2S_GM_ADD_MAIL_REQ, &req );
         if ( ok )
         {
@@ -96,6 +98,7 @@ namespace KFrame
             __LOG_ERROR__( "add gm mail server[{}] failed!", serverid );
         }
 
-        return _invalid_str;
+        return;
     }
+
 }

@@ -82,6 +82,22 @@ namespace KFrame
     {
         return url.compare( 0, 5, "https" ) == 0;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::string KFHttpClientModule::SendResponseCode( uint32 code )
+    {
+        return KFHttpCommon::SendResponseCode( code );
+    }
+
+    uint32 KFHttpClientModule::GetResponseCode( KFJson& json )
+    {
+        return KFHttpCommon::GetResponseCode( json );
+    }
+
+    std::string KFHttpClientModule::SendResponse( KFJson& json )
+    {
+        return KFHttpCommon::SendResponse( json );
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, const std::string& data )
     {
@@ -100,23 +116,6 @@ namespace KFrame
         auto temp = json.Serialize();
         return StartSTHttpClient( url, temp );
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFHttpClientModule::SendResponseCode( uint32 code )
-    {
-        return KFHttpCommon::SendResponseCode( code );
-    }
-
-    uint32 KFHttpClientModule::GetResponseCode( KFJson& json )
-    {
-        return KFHttpCommon::GetResponseCode( json );
-    }
-
-    std::string KFHttpClientModule::SendResponse( KFJson& json )
-    {
-        return KFHttpCommon::SendResponse( json );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpClientModule::StartMTHttpClient( const std::string& url, const std::string& data )
     {

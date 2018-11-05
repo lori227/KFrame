@@ -36,8 +36,12 @@ message S2SClusterRegisterReq
 // S2S_CLUSTER_UPDATE_REQ
 message S2SClusterUpdateReq
 {
-	required uint32 gateid = 1;
-	required uint32 count = 2;
+	required string type = 1;
+	required uint32 id = 2;
+	required string name = 3;
+	required string ip = 4;
+	required uint32 port = 5;
+	required uint32 count = 6;
 }
 
 // 集群登录认证

@@ -40,7 +40,7 @@ namespace KFrame
         ~KFProxyManage() = default;
 
         // 添加GateServer
-        void AddProxyServer( const std::string& type, uint32 handleid, const std::string& name, const std::string& ip, uint32 port );
+        void AddProxyServer( const std::string& type, uint32 handleid, const std::string& name, const std::string& ip, uint32 port, uint32 clientcount );
 
         // 删除GateServer
         void RemoveProxyServer( uint32 handleid );

@@ -275,34 +275,89 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required uint32 gateid = 1;
-  inline bool has_gateid() const;
-  inline void clear_gateid();
-  static const int kGateidFieldNumber = 1;
-  inline ::google::protobuf::uint32 gateid() const;
-  inline void set_gateid(::google::protobuf::uint32 value);
+  // required string type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline const ::std::string& type() const;
+  inline void set_type(const ::std::string& value);
+  inline void set_type(const char* value);
+  inline void set_type(const char* value, size_t size);
+  inline ::std::string* mutable_type();
+  inline ::std::string* release_type();
+  inline void set_allocated_type(::std::string* type);
 
-  // required uint32 count = 2;
+  // required uint32 id = 2;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+
+  // required string name = 3;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 3;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string ip = 4;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 4;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
+  // required uint32 port = 5;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 5;
+  inline ::google::protobuf::uint32 port() const;
+  inline void set_port(::google::protobuf::uint32 value);
+
+  // required uint32 count = 6;
   inline bool has_count() const;
   inline void clear_count();
-  static const int kCountFieldNumber = 2;
+  static const int kCountFieldNumber = 6;
   inline ::google::protobuf::uint32 count() const;
   inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterUpdateReq)
  private:
-  inline void set_has_gateid();
-  inline void clear_has_gateid();
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_ip();
+  inline void clear_has_ip();
+  inline void set_has_port();
+  inline void clear_has_port();
   inline void set_has_count();
   inline void clear_has_count();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 gateid_;
+  ::std::string* type_;
+  ::std::string* name_;
+  ::google::protobuf::uint32 id_;
+  ::google::protobuf::uint32 port_;
+  ::std::string* ip_;
   ::google::protobuf::uint32 count_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClusterMessage_2eproto();
   friend void protobuf_AssignDesc_KFClusterMessage_2eproto();
@@ -1908,37 +1963,269 @@ inline void S2SClusterRegisterReq::set_port(::google::protobuf::uint32 value) {
 
 // S2SClusterUpdateReq
 
-// required uint32 gateid = 1;
-inline bool S2SClusterUpdateReq::has_gateid() const {
+// required string type = 1;
+inline bool S2SClusterUpdateReq::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void S2SClusterUpdateReq::set_has_gateid() {
+inline void S2SClusterUpdateReq::set_has_type() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void S2SClusterUpdateReq::clear_has_gateid() {
+inline void S2SClusterUpdateReq::clear_has_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void S2SClusterUpdateReq::clear_gateid() {
-  gateid_ = 0u;
-  clear_has_gateid();
+inline void S2SClusterUpdateReq::clear_type() {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    type_->clear();
+  }
+  clear_has_type();
 }
-inline ::google::protobuf::uint32 S2SClusterUpdateReq::gateid() const {
-  return gateid_;
+inline const ::std::string& S2SClusterUpdateReq::type() const {
+  return *type_;
 }
-inline void S2SClusterUpdateReq::set_gateid(::google::protobuf::uint32 value) {
-  set_has_gateid();
-  gateid_ = value;
+inline void S2SClusterUpdateReq::set_type(const ::std::string& value) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_type(const char* value) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_type(const char* value, size_t size) {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  type_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SClusterUpdateReq::mutable_type() {
+  set_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    type_ = new ::std::string;
+  }
+  return type_;
+}
+inline ::std::string* S2SClusterUpdateReq::release_type() {
+  clear_has_type();
+  if (type_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = type_;
+    type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SClusterUpdateReq::set_allocated_type(::std::string* type) {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    delete type_;
+  }
+  if (type) {
+    set_has_type();
+    type_ = type;
+  } else {
+    clear_has_type();
+    type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
-// required uint32 count = 2;
-inline bool S2SClusterUpdateReq::has_count() const {
+// required uint32 id = 2;
+inline bool S2SClusterUpdateReq::has_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SClusterUpdateReq::set_has_count() {
+inline void S2SClusterUpdateReq::set_has_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SClusterUpdateReq::clear_has_count() {
+inline void S2SClusterUpdateReq::clear_has_id() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SClusterUpdateReq::clear_id() {
+  id_ = 0u;
+  clear_has_id();
+}
+inline ::google::protobuf::uint32 S2SClusterUpdateReq::id() const {
+  return id_;
+}
+inline void S2SClusterUpdateReq::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required string name = 3;
+inline bool S2SClusterUpdateReq::has_name() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SClusterUpdateReq::set_has_name() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SClusterUpdateReq::clear_has_name() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void S2SClusterUpdateReq::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& S2SClusterUpdateReq::name() const {
+  return *name_;
+}
+inline void S2SClusterUpdateReq::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SClusterUpdateReq::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* S2SClusterUpdateReq::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SClusterUpdateReq::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string ip = 4;
+inline bool S2SClusterUpdateReq::has_ip() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SClusterUpdateReq::set_has_ip() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SClusterUpdateReq::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SClusterUpdateReq::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& S2SClusterUpdateReq::ip() const {
+  return *ip_;
+}
+inline void S2SClusterUpdateReq::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void S2SClusterUpdateReq::set_ip(const char* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SClusterUpdateReq::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* S2SClusterUpdateReq::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SClusterUpdateReq::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 port = 5;
+inline bool S2SClusterUpdateReq::has_port() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SClusterUpdateReq::set_has_port() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SClusterUpdateReq::clear_has_port() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SClusterUpdateReq::clear_port() {
+  port_ = 0u;
+  clear_has_port();
+}
+inline ::google::protobuf::uint32 S2SClusterUpdateReq::port() const {
+  return port_;
+}
+inline void S2SClusterUpdateReq::set_port(::google::protobuf::uint32 value) {
+  set_has_port();
+  port_ = value;
+}
+
+// required uint32 count = 6;
+inline bool S2SClusterUpdateReq::has_count() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SClusterUpdateReq::set_has_count() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SClusterUpdateReq::clear_has_count() {
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SClusterUpdateReq::clear_count() {
   count_ = 0u;

@@ -4,39 +4,30 @@ namespace KFrame
 {
     void KFRedisList::Reset()
     {
-        _index = 0;
         _redis_list.clear();
+        _redis_hash.ClearHashNode();
+        _kfseting = nullptr;
     }
 
     void KFRedisList::AddSetting( KFRedisSetting& kfsetting )
     {
         _redis_list.push_back( kfsetting );
+        _redis_hash.AddHashNode( "redis", static_cast< uint32 >( _redis_list.size() - 1 ), 100 );
 
-        KFAppID kfappid( KFGlobal::Instance()->_app_id );
-        if ( _redis_list.size() >= kfappid._union._app_data._instance_id )
-        {
-            _index = kfappid._union._app_data._instance_id - 1;
-        }
-        else
-        {
-            _index = kfappid._union._app_data._instance_id % _redis_list.size();
-        }
+        auto index = _redis_hash.FindHashNode( KFGlobal::Instance()->_app_id );
+        _kfseting = &_redis_list[ index ];
     }
 
     const KFRedisSetting* KFRedisList::FindSetting()
     {
-        if ( _index >= _redis_list.size() )
-        {
-            _index = 0;
-        }
-
-        return &_redis_list[ _index++ ];
+        return _kfseting;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     const KFRedisSetting* KFRedisConfig::FindRedisSetting( const std::string& module, uint32 logicid )
     {
         auto key = ModuleKey( module, logicid );
         auto kfredislist = _redis_setting.Find( key );
+
         return kfredislist->FindSetting();
     }
 

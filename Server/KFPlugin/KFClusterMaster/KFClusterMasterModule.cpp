@@ -74,18 +74,15 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterRegisterReq );
 
-        _kf_proxy_manage->AddProxyServer( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port() );
-
         SendAllocShardToProxy( kfmsg.id() );
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!",
-                       kfmsg.name(), kfmsg.type(), KFAppID::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!", kfmsg.name(), kfmsg.type(), KFAppID::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterUpdateReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterUpdateReq );
 
-        _kf_proxy_manage->UpdateProxyServer( kfmsg.gateid(), kfmsg.count() );
+        _kf_proxy_manage->AddProxyServer( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port(), kfmsg.count() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthReq )

@@ -4,7 +4,6 @@
 		<Plugin Sort="100" Name="KFDeployClient" Config=""/>
 		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="120" Name="KFClusterMaster" Config="./setting/cluster.setting"/>
-		<Plugin Sort="130" Name="KFHttpServer" Config="./setting/server.network"/>
 		<Plugin Sort="140" Name="KFMailMaster" Config=""/>
 	</Plugins>
 </Setting>

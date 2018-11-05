@@ -29,8 +29,6 @@ namespace KFrame
 
         _kf_config->RemoveConfig( _kf_plugin->_plugin_name );
 
-        _kf_tcp_client->UnRegisterLostFunction( this );
-        _kf_tcp_client->UnRegisterConnectionFunction( this );
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
@@ -164,7 +162,7 @@ namespace KFrame
 
         if ( servertype == __KF_STRING__( master ) )
         {
-            OnClientConnectionClusterServer( servername, serverid );
+            OnClientConnectionClusterMaster( servername, serverid );
         }
         else if ( servertype == __KF_STRING__( shard ) )
         {
@@ -172,8 +170,9 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterServer( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint32 serverid )
     {
+        _master_server_id = serverid;
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SClusterRegisterReq req;
@@ -183,8 +182,6 @@ namespace KFrame
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_REGISTER_REQ, &req );
-
-        __REGISTER_LOOP_TIMER__( serverid, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint32 serverid )
@@ -203,6 +200,9 @@ namespace KFrame
         }
 
         SendMessageToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
+
+        // 注册定时器
+        __REGISTER_LOOP_TIMER__( _master_server_id, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
@@ -222,7 +222,7 @@ namespace KFrame
 
         if ( servertype == __KF_STRING__( master ) )
         {
-            OnClientLostClusterServer( servername, serverid );
+            OnClientLostClusterMaster( servername, serverid );
         }
         else if ( servertype == __KF_STRING__( shard ) )
         {
@@ -230,8 +230,9 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientLostClusterServer( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint32 serverid )
     {
+        _master_server_id = 0u;
         __UNREGISTER_OBJECT_TIMER__( serverid );
     }
 
@@ -246,9 +247,14 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterUpdateMessage )
     {
-        KFMsg::S2SClusterUpdateReq req;
+        auto kfglobal = KFGlobal::Instance();
 
-        req.set_gateid( KFGlobal::Instance()->_app_id );
+        KFMsg::S2SClusterUpdateReq req;
+        req.set_type( kfglobal->_app_type );
+        req.set_id( kfglobal->_app_id );
+        req.set_name( kfglobal->_app_name );
+        req.set_ip( kfglobal->_interanet_ip );
+        req.set_port( kfglobal->_listen_port );
         req.set_count( _kf_tcp_server->GetHandleCount() );
         _kf_tcp_client->SendNetMessage( static_cast< uint32 >( objectid ), KFMsg::S2S_CLUSTER_UPDATE_REQ, &req );
     }
@@ -343,7 +349,7 @@ namespace KFrame
             auto objectid = kfmsg.objectid( i );
             _kf_dynamic_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( "add object[{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
+            __LOG_DEBUG__( "add object[{}==>{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
 
         // 添加数量
@@ -361,7 +367,7 @@ namespace KFrame
             auto shardid = kfmsg.shardid( i );
             _kf_static_shard[ objectid ] = shardid;
 
-            __LOG_DEBUG__( "add alloc [{}:{}] ok!", objectid, KFAppID::ToString( shardid ) );
+            __LOG_DEBUG__( "add alloc [{}==>{}] ok!", objectid, KFAppID::ToString( shardid ) );
         }
     }
 
