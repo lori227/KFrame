@@ -247,10 +247,7 @@ namespace KFrame
         }
         else
         {
-            for ( auto iter : _kf_proxy_manage->_kf_proxy_list._objects )
-            {
-                _kf_tcp_server->SendNetMessage( iter.first, KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &ack );
-            }
+            _kf_tcp_server->SendMessageToType( __KF_STRING__( proxy ), KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &ack );
         }
     }
 
