@@ -21,8 +21,8 @@ namespace KFrame
     class KFCompoundModule : public KFCompoundInterface
     {
     public:
-        KFCompoundModule();
-        ~KFCompoundModule();
+        KFCompoundModule() = default;
+        ~KFCompoundModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -36,10 +36,7 @@ namespace KFrame
     protected:
         // 请求合成
         __KF_MESSAGE_FUNCTION__( HandleCompoundDataReq );
-
     };
 }
-
-
 
 #endif

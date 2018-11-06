@@ -22,6 +22,9 @@ namespace KFrame
     void KFTaskModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component->RegisterAddDataModule( this, &KFTaskModule::OnAddDataCallBack );
+        _kf_component->RegisterRemoveDataModule( this, &KFTaskModule::OnRemoveDataCallBack );
+        _kf_component->RegisterUpdateDataModule( this, &KFTaskModule::OnUpdateDataCallBack );
         _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ), this, &KFTaskModule::OnUpdateTaskValueCallBack );
         _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ), this, &KFTaskModule::OnUpdateTaskFlagCallBack );
 
@@ -33,6 +36,9 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        _kf_component->UnRegisterAddDataModule( this );
+        _kf_component->UnRegisterRemoveDataModule( this );
+        _kf_component->UnRegisterUpdateDataModule( this );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( value ) );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( flag ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,23 +64,6 @@ namespace KFrame
             return KFMsg::TaskIdCanNotFind;
         }
 
-        // 判断是否在时间范围内
-        if ( tasksetting->_start_hour != 0 )
-        {
-            if ( !KFDate::CheckPassTime( 0, 0, 0, tasksetting->_start_hour, tasksetting->_start_minute ) )
-            {
-                return KFMsg::TaskNotInValidTime;
-            }
-        }
-
-        if ( tasksetting->_end_hour != 0 )
-        {
-            if ( KFDate::CheckPassTime( 0, 0, 0, tasksetting->_end_hour, tasksetting->_end_minute ) )
-            {
-                return KFMsg::TaskNotInValidTime;
-            }
-        }
-
         // 获得任务属性
         auto kfobject = player->GetData();
         auto kftask = kfobject->FindData( __KF_STRING__( task ), tasksetting->_id );
@@ -96,12 +85,86 @@ namespace KFrame
         }
 
         // 更新标记
-        player->UpdateData( __KF_STRING__( task ), tasksetting->_id, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( kftask, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
 
         // 添加奖励
         player->AddAgentData( &tasksetting->_rewards, 1.0f, true, __FUNC_LINE__ );
-
         return KFMsg::TaskReceiveRewardOK;
+    }
+
+
+    __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateDataCallBack )
+    {
+        if ( value == 0 )
+        {
+            return;
+        }
+
+        UpdateDataTaskValue( player, key, kfdata, operate, value, newvalue );
+    }
+
+    __KF_ADD_DATA_FUNCTION__( KFTaskModule::OnAddDataCallBack )
+    {
+        UpdateObjectTaskValue( player, key, kfdata, KFOperateEnum::Add );
+    }
+
+    __KF_REMOVE_DATA_FUNCTION__( KFTaskModule::OnRemoveDataCallBack )
+    {
+        UpdateObjectTaskValue( player, key, kfdata, KFOperateEnum::Dec );
+    }
+
+    void KFTaskModule::UpdateObjectTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
+    {
+        auto kfchild = kfdata->FirstData();
+        while ( kfchild != nullptr )
+        {
+            auto value = kfchild->GetValue();
+            if ( value != 0 )
+            {
+                UpdateDataTaskValue( player, key, kfchild, operate, value, value );
+            }
+
+            kfchild = kfdata->NextData();
+        }
+    }
+
+    void KFTaskModule::UpdateDataTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    {
+        auto kftasktypelist = _kf_task_config->FindTypeTaskList( kfdata->GetParent()->GetName(), kfdata->GetName() );
+        if ( kftasktypelist == nullptr )
+        {
+            return;
+        }
+
+        auto kfobject = player->GetData();
+        auto kftaskrecord = kfobject->FindData( __KF_STRING__( task ) );
+        auto level = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( level ) );
+
+        for ( auto kfsetting : kftasktypelist->_task_type )
+        {
+            if ( !kfsetting->CheckCanUpdate( key, level, operate ) )
+            {
+                continue;
+            }
+
+            // 判断触发值
+            auto operatevalue = kfsetting->CheckTriggerValue( value, nowvalue );
+            if ( operatevalue == 0 )
+            {
+                continue;
+            }
+
+            // 已经完成
+            auto taskflag = kftaskrecord->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( flag ) );
+            if ( taskflag != KFMsg::FlagEnum::Init )
+            {
+                continue;
+            }
+
+            // 获得使用的数值, 更新任务数值
+            auto usevalue = kfsetting->CalcUseValue( operatevalue );
+            player->UpdateData( kftaskrecord, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, usevalue );
+        }
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
@@ -113,19 +176,9 @@ namespace KFrame
         }
 
         // 判断是否满足完成条件
-        auto nowvalue = static_cast< uint32 >( newvalue );
-        if ( nowvalue < tasksetting->_done_value )
+        if ( newvalue < tasksetting->_done_value )
         {
             return;
-        }
-
-        // 没有下一个任务 或者是不继承数值
-        if ( tasksetting->_next_id == 0 || tasksetting->_next_value == 0 )
-        {
-            if ( nowvalue > tasksetting->_done_value )
-            {
-                kfdata->OperateValue< uint64 >( KFOperateEnum::Set, tasksetting->_done_value );
-            }
         }
 
         auto kfparent = kfdata->GetParent();
@@ -141,40 +194,26 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskFlagCallBack )
     {
-        auto tasksetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
-        if ( tasksetting == nullptr )
+        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
+        if ( kfsetting == nullptr )
         {
             return;
         }
 
-        switch ( newvalue )
-        {
-        case KFMsg::FlagEnum::Init:	// 初始化
-        {
-            auto initvalue = tasksetting->_init_value;
-            if ( tasksetting->_done_type == __KF_STRING__( item ) )
-            {
-
-            }
-
-            //// 更新数值
-            //OperateUInt32( parent, id, FieldDefine::_value, OperateEnum::Set, initvalue );
-            break;
-        }
-        case KFMsg::FlagEnum::Received:	// 已领取
+        if ( newvalue == KFMsg::FlagEnum::Received )
         {
             // 更新下一个任务
-            if ( tasksetting->_next_value != 0 && tasksetting->_next_id != 0 )
+            if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
             {
-                auto kfparent = kfdata->GetParent();
-                player->UpdateData( kfparent->GetName(), tasksetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, newvalue );
+                auto taskvalue = kfdata->GetParent()->GetValue< uint32 >( __KF_STRING__( value ) );
+                player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, taskvalue );
             }
-            break;
         }
-        default:
-            break;
+        else if ( newvalue == KFMsg::FlagEnum::Init )
+        {
+            // 更新数值
+            player->UpdateData( __KF_STRING__( task ), key, __KF_STRING__( value ), KFOperateEnum::Set, 0 );
         }
     }
-
 
 }

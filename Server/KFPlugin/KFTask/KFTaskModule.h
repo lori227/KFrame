@@ -42,14 +42,21 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     private:
-        // 领取任务奖励
-        uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
-
-        // 任务数值更新回调
-        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskValueCallBack );
+        // 属性回调
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
+        __KF_ADD_DATA_FUNCTION__( OnAddDataCallBack );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataCallBack );
 
         // 任务标记更新回调
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskValueCallBack );
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskFlagCallBack );
+
+        // 更新任务
+        void UpdateDataTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        void UpdateObjectTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
+
+        // 领取任务奖励
+        uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
     private:
         KFComponent* _kf_component;
     };

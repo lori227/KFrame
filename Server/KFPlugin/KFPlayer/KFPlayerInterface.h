@@ -117,9 +117,6 @@ namespace KFrame
         // 踢掉角色
         virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line ) = 0;
 
-        // 玩家登出
-        virtual void LogoutPlayer( uint32 playerid ) = 0;
-
         // 查找玩家
         virtual KFEntity* FindPlayer( uint32 playerid ) = 0;
         virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line ) = 0;

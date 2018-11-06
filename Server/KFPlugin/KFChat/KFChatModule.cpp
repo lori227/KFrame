@@ -150,15 +150,13 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ChatFriendIdError );
         }
 
-        auto kfobject = player->GetData();
-
         KFMsg::MsgSendOneByOneChatInfo info;
         info.set_playerid( playerid );
         info.set_chatinfo( kfmsg.chatinfo() );
         info.set_isvoice( kfmsg.isvoice() );
         info.set_chattype( kfmsg.chattype() );
         info.set_playerinfo( kfmsg.selfinfo() );
-        info.set_serverid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) ) );
+        info.set_serverid( KFGlobal::Instance()->_app_id );
         _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
     }
 

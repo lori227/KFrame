@@ -59,10 +59,6 @@ namespace KFrame
         // 玩家数量
         virtual uint32 GetPlayerCount();
 
-
-        // 登出游戏
-        virtual void LogoutPlayer( uint32 playerid );
-
         // 踢掉角色
         virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
 

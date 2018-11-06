@@ -23,7 +23,7 @@ namespace KFrame
     {
         // 上线时间
         auto kfobject = player->GetData();
-        kfobject->SetValue<uint64>( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
+        player->UpdateData( __KF_STRING__( onlinetime ), KFOperateEnum::Set, KFGlobal::Instance()->_real_time );
         ////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );

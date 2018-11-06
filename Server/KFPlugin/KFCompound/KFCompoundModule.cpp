@@ -4,14 +4,6 @@
 
 namespace KFrame
 {
-    KFCompoundModule::KFCompoundModule()
-    {
-    }
-
-    KFCompoundModule::~KFCompoundModule()
-    {
-    }
-
     void KFCompoundModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_compound_config, true );
@@ -26,10 +18,8 @@ namespace KFrame
     void KFCompoundModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-
         __UNREGISTER_MESSAGE__( KFMsg::MSG_COMPOUND_DATA_REQ );
     }
-
 
     __KF_MESSAGE_FUNCTION__( KFCompoundModule::HandleCompoundDataReq )
     {

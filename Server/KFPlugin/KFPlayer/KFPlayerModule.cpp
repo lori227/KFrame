@@ -609,26 +609,6 @@ namespace KFrame
         _kf_component->RemoveEntity( playerid );
     }
 
-    void KFPlayerModule::LogoutPlayer( uint32 playerid )
-    {
-        __LOG_DEBUG__( "player[{}] logout!", playerid );
-
-        auto player = FindPlayer( playerid, __FUNC_LINE__ );
-        if ( player == nullptr )
-        {
-            return;
-        }
-
-        for ( auto iter : _player_logout_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-
-        // 删除玩家
-        _kf_component->RemoveEntity( playerid );
-    }
-
     void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
 #ifdef __KF_DEBUG__
