@@ -102,7 +102,7 @@ namespace KFrame
     {
         switch ( _use_type )
         {
-        case KFAchieveEnum::UseFinal:
+        case KFEnum::UseFinal:
             operatevalue = nowvalue;
             break;
         default:
@@ -157,7 +157,7 @@ namespace KFrame
 
             AddKFAchieveSetting( kfsetting );
 
-            if ( KFAchieveEnum::lobby == xmlnode.GetUInt32( "HandleType" ) )
+            if ( KFEnum::Lobby == xmlnode.GetUInt32( "HandleType" ) )
             {
             }
             else

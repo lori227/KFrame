@@ -7,22 +7,6 @@
 
 namespace KFrame
 {
-    namespace KFAchieveEnum
-    {
-        enum EConstDefine
-        {
-            UseOperate = 1,
-            UseFinal = 2,
-        };
-
-        enum EAchieveTypeEnum
-        {
-            lobby = 1,		// 平台成就
-            battle = 2,		// 战服成就
-        };
-
-    }
-
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
