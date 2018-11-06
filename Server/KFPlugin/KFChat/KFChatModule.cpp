@@ -42,6 +42,30 @@ namespace KFrame
         OnEnterEnterChat( player );
     }
 
+    //处理离开江湖聊天室请求
+    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleLeaveChatReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgLeaveChatReq );
+
+        OnLeaveLeaveChat( player );
+    }
+
+    void KFChatModule::OnEnterEnterChat( KFEntity* player )
+    {
+        auto kfobject = player->GetData();
+
+        // 创建江湖聊天室玩家
+        auto chatplayer = _chat_player_list.Create( player->GetKeyID() );
+        chatplayer->_player_id = player->GetKeyID();
+        chatplayer->_gate_id = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
+    }
+
+    //离开回调
+    void KFChatModule::OnLeaveLeaveChat( KFEntity* player )
+    {
+        _chat_player_list.Remove( player->GetKeyID() );
+    }
+
     //处理发送江湖聊天消息请求
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleSendChatReq )
     {
@@ -86,12 +110,12 @@ namespace KFrame
         req.set_chatinfo( chatinfo );
         req.set_playerid( playerid );
         req.set_isvoice( kfmsg.isvoice() );
+        req.set_playerserverid( KFGlobal::Instance()->_app_id );
         req.set_playername( kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) );
         req.set_playericon( kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) );
         req.set_playergrade( kfbasic->GetValue< uint32 >( __KF_STRING__( grade ) ) );
         req.set_playersex( kfbasic->GetValue< uint32 >( __KF_STRING__( sex ) ) );
         req.set_playericonbox( kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) ) );
-        req.set_playerserverid( KFGlobal::Instance()->_app_id );
         _kf_game->TransmitToServer( KFMsg::S2S_SEND_CHAT_TO_SERVER, &req );
     }
 
@@ -116,14 +140,6 @@ namespace KFrame
         }
     }
 
-    //处理离开江湖聊天室请求
-    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleLeaveChatReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgLeaveChatReq );
-
-        OnLeaveLeaveChat( player );
-    }
-
     //处理客户端发送一对一聊天请求
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleSendOneByOneChatReq )
     {
@@ -137,13 +153,12 @@ namespace KFrame
         auto kfobject = player->GetData();
 
         KFMsg::MsgSendOneByOneChatInfo info;
+        info.set_playerid( playerid );
         info.set_chatinfo( kfmsg.chatinfo() );
         info.set_isvoice( kfmsg.isvoice() );
-        info.set_playerid( playerid );
         info.set_chattype( kfmsg.chattype() );
         info.set_playerinfo( kfmsg.selfinfo() );
         info.set_serverid( kfobject->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) ) );
-
         _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
     }
 
@@ -152,25 +167,10 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSendGroupChatReq );
 
         KFMsg::MsgSendGroupChatInfo info;
+        info.set_playerid( playerid );
         info.set_chatinfo( kfmsg.chatinfo() );
         info.set_isvoice( kfmsg.isvoice() );
-        info.set_playerid( playerid );
         _kf_player->SendMessageToGroup( player, KFMsg::MSG_SEND_GROUPCHAT_INFO, &info );
     }
 
-    void KFChatModule::OnEnterEnterChat( KFEntity* player )
-    {
-        auto kfobject = player->GetData();
-
-        // 创建江湖聊天室玩家
-        auto chatplayer = _chat_player_list.Create( player->GetKeyID() );
-        chatplayer->_player_id = player->GetKeyID();
-        chatplayer->_gate_id = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
-    }
-
-    //离开回调
-    void KFChatModule::OnLeaveLeaveChat( KFEntity* player )
-    {
-        _chat_player_list.Remove( player->GetKeyID() );
-    }
 }
