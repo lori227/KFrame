@@ -276,7 +276,7 @@ namespace KFrame
         auto gateid = kftoken->_gate_id;
         _kf_token_list.Remove( token );
 
-        if ( kftoken->_gate_id != serverid )
+        if ( gateid != serverid )
         {
             return _invalid_int;
         }
