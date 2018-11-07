@@ -20,20 +20,20 @@ namespace KFrame
 
     void KFResetModule::BeforeRun()
     {
-        _kf_player->RegisterEnterFunction( this, &KFResetModule::ResetPlayerData );
-        _kf_player->RegisterRunDataFunction( this, &KFResetModule::RunResetPlayerData );
-
         CalcNextResetTime();
+
+        _kf_player->RegisterResetFunction( this, &KFResetModule::ResetPlayerData );
+        _kf_player->RegisterRunDataFunction( this, &KFResetModule::RunResetPlayerData );
     }
 
     void KFResetModule::ShutDown()
     {
         __KF_REMOVE_CONFIG__();
-        _kf_player->UnRegisterEnterFunction( this );
+        _kf_player->UnRegisterResetFunction( this );
         _kf_player->UnRegisterRunDataFunction( this );
     }
 
-    void KFResetModule::Run()
+    void KFResetModule::AfterRun()
     {
         _need_to_reset = CheckResetPlayerDataTime();
     }
@@ -48,8 +48,7 @@ namespace KFrame
 
     bool KFResetModule::CheckResetPlayerDataTime()
     {
-        auto nowtime = KFGlobal::Instance()->_real_time;
-        if ( nowtime < _next_reset_data_time )
+        if ( KFGlobal::Instance()->_real_time < _next_reset_data_time )
         {
             return false;
         }

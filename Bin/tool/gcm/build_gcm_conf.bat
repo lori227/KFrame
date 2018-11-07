@@ -1,5 +1,6 @@
 echo "generate version..."
 
+md ..\..\lib
 xcopy /y /e ..\..\..\Resource\config ..\..\config\
 
 cd builder

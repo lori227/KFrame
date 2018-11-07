@@ -27,7 +27,7 @@ namespace KFrame
         virtual void InitModule();
 
         virtual void BeforeRun();
-        virtual void Run();
+        virtual void AfterRun();
 
         virtual void ShutDown();
 

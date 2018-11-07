@@ -16,6 +16,8 @@
 #include "KFZone/KFZoneInterface.h"
 #include "KFDebug/KFDebugInterface.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFLua/KFLuaInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -86,6 +88,9 @@ namespace KFrame
 
         virtual void AddRunDataFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveRunDataFunction( const std::string& moudle );
+
+        virtual void AddResetFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveResetFunction( const std::string& moudle );
 
         virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveEnterFunction( const std::string& moudle );
@@ -223,6 +228,9 @@ namespace KFrame
 
         // 卸载函数
         KFBind< std::string, const std::string&, KFEntityFunction > _player_uninit_function;
+
+        // 重置函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_reset_function;
 
         // 登录函数
         KFBind< std::string, const std::string&, KFEntityFunction > _player_enter_function;

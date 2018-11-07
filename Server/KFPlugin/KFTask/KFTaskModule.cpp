@@ -169,27 +169,34 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
     {
-        auto tasksetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
-        if ( tasksetting == nullptr )
+        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
+        if ( kfsetting == nullptr )
         {
             return;
         }
 
         // 判断是否满足完成条件
-        if ( newvalue < tasksetting->_done_value )
+        if ( newvalue < kfsetting->_done_value )
         {
             return;
         }
 
         auto kfparent = kfdata->GetParent();
-        auto flag = kfparent->GetValue<uint32>( __KF_STRING__( flag ) );
-        if ( flag != KFMsg::FlagEnum::Init )
+        auto taskflag = kfparent->GetValue<uint32>( __KF_STRING__( flag ) );
+        if ( taskflag != KFMsg::FlagEnum::Init )
         {
             return;
         }
 
         // 设置任务完成
-        player->UpdateData( kfparent->GetName(), key, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+        player->UpdateData( kfparent, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+
+        // 更新下一个任务
+        if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
+        {
+            auto taskvalue = kfparent->GetValue< uint32 >( __KF_STRING__( value ) );
+            player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, taskvalue );
+        }
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskFlagCallBack )
@@ -200,16 +207,7 @@ namespace KFrame
             return;
         }
 
-        if ( newvalue == KFMsg::FlagEnum::Received )
-        {
-            // 更新下一个任务
-            if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
-            {
-                auto taskvalue = kfdata->GetParent()->GetValue< uint32 >( __KF_STRING__( value ) );
-                player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, taskvalue );
-            }
-        }
-        else if ( newvalue == KFMsg::FlagEnum::Init )
+        if ( newvalue == KFMsg::FlagEnum::Init )
         {
             // 更新数值
             player->UpdateData( __KF_STRING__( task ), key, __KF_STRING__( value ), KFOperateEnum::Set, 0 );

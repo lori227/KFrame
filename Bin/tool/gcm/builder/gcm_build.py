@@ -82,8 +82,8 @@ def write_file(run_file, kill_file, node):
         run_file.write('./bin/%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
                        (execute_file, channel_id, zone_id, int(func_id), 1,log_type, service_type, func_name))
 
-        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d.%d" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
-                        (execute_file, channel_id, zone_id, int(func_id), 1))
+        kill_file.write('ps -ef|grep "%s appid=%d.%d.%d" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
+                        (execute_file, channel_id, zone_id, int(func_id)))
     else:
         run_file.write('start "%s" bin\\%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
                        (func_name, execute_file, channel_id, zone_id, int(func_id), 1, log_type, service_type,func_name))

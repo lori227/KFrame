@@ -145,12 +145,12 @@ namespace KFrame
         __LOG_ERROR__( "[{}:{}:{}|{}:{}] connect failed!", kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ), kfsetting->_ip, kfsetting->_port );
     }
 
-    void KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
+    bool KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
     {
         auto kfclient = _kf_clients.Find( id );
         if ( kfclient != nullptr )
         {
-            return;
+            return false;
         }
 
         KFNetSetting kfsetting;
@@ -160,6 +160,8 @@ namespace KFrame
         kfsetting._ip = ip;
         kfsetting._port = port;
         _wait_clients[ id ] = kfsetting;
+
+        return true;
     }
 
     void KFNetClientEngine::RunWaitClient()

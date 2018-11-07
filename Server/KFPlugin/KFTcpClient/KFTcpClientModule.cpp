@@ -168,10 +168,11 @@ namespace KFrame
             return;
         }
 
-        _kf_client_engine->StartClient( name, type, id, ip, port );
-
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!",
-                       name, type, KFAppID::ToString( id ), ip, port );
+        auto ok = _kf_client_engine->StartClient( name, type, id, ip, port );
+        if ( ok )
+        {
+            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!", name, type, KFAppID::ToString( id ), ip, port );
+        }
     }
 
     bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint32 id )

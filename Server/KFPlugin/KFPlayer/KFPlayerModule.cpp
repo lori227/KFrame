@@ -161,6 +161,17 @@ namespace KFrame
         _player_run_function.Remove( moudle );
     }
 
+    void KFPlayerModule::AddResetFunction( const std::string& moudle, KFEntityFunction& function )
+    {
+        auto kffunction = _player_reset_function.Create( moudle );
+        kffunction->_function = function;
+    }
+
+    void KFPlayerModule::RemoveResetFunction( const std::string& moudle )
+    {
+        _player_reset_function.Remove( moudle );
+    }
+
     void KFPlayerModule::AddEnterFunction( const std::string& moudle, KFEntityFunction& function )
     {
         auto kffunction = _player_enter_function.Create( moudle );
@@ -386,6 +397,13 @@ namespace KFrame
 
         // 创建玩家
         OnEnterCreatePlayer( player, pblogin->playerid() );
+
+        // 调用重置函数
+        for ( auto iter : _player_reset_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( player );
+        }
 
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto iter : _player_enter_function._objects )
@@ -722,6 +740,13 @@ namespace KFrame
 
             // 保存玩家
             SavePlayer( player );
+
+            // 调用lua回调
+            static auto* kfoption = _kf_option->FindOption( __KF_STRING__( createrolelua ) );
+            if ( !kfoption->_str_value.empty() )
+            {
+                _kf_lua->Call( kfoption->_str_value, "CreateRoleFunction", player->GetKeyID() );
+            }
         }
 
         _kf_display->SendToClient( player, kfmsg.result(), kfmsg.newname() );

@@ -51,6 +51,19 @@ namespace KFrame
             RemoveRunDataFunction( typeid( T ).name() );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 重置函数
+        template< class T >
+        void RegisterResetFunction( T* object, void ( T::*handle )( KFEntity* player ) )
+        {
+            KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddResetFunction( typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterResetFunction( T* object )
+        {
+            RemoveResetFunction( typeid( T ).name() );
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 登录函数
         template< class T >
@@ -144,6 +157,9 @@ namespace KFrame
 
         virtual void AddRunDataFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveRunDataFunction( const std::string& moudle ) = 0;
+
+        virtual void AddResetFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
+        virtual void RemoveResetFunction( const std::string& moudle ) = 0;
 
         virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveEnterFunction( const std::string& moudle ) = 0;

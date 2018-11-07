@@ -176,6 +176,9 @@ namespace KFrame
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_REGISTER_REQ, &req );
+
+        // 注册定时器
+        __REGISTER_LOOP_TIMER__( _master_server_id, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint32 serverid )
@@ -194,9 +197,6 @@ namespace KFrame
         }
 
         SendMessageToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
-
-        // 注册定时器
-        __REGISTER_LOOP_TIMER__( _master_server_id, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
