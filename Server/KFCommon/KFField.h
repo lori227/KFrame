@@ -373,6 +373,7 @@ namespace KFrame
         __STRING_DEFINE__( chatinterval );
         __STRING_DEFINE__( chatmaxlength );
         __STRING_DEFINE__( createrolelua );
+        __STRING_DEFINE__( inviterid );
     }
 }
 

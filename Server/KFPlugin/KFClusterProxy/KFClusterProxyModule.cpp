@@ -183,6 +183,7 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint32 serverid )
     {
+        _in_service = true;
         _kf_hash.AddHashNode( servername, serverid, 100 );
 
         // 自己所有的连接注册到Cluster中
@@ -241,6 +242,11 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterUpdateMessage )
     {
+        if ( !_in_service )
+        {
+            return;
+        }
+
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SClusterUpdateReq req;

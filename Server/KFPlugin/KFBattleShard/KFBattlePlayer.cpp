@@ -211,13 +211,8 @@ namespace KFrame
 
     void KFBattlePlayer::FinishLeaveRoom( KFBattleRoom* kfroom )
     {
-        if ( _status == KFPlayerStatus::StatusLeaveRoom )
-        {
-            return;
-        }
-
-        _status = KFPlayerStatus::StatusLeaveRoom;
         SendLeaveRoomToGame( kfroom );
+        _status = KFPlayerStatus::StatusLeaveRoom;
     }
 
     void KFBattlePlayer::SendLeaveRoomToGame( KFBattleRoom* kfroom )
@@ -238,18 +233,21 @@ namespace KFrame
         pbscore->set_playercount( kfroom->_total_player_count );
 
         // 计算评分
-        ScoreBalance( pbscore );
+        //ScoreBalance( pbscore );
 
         // 获得同阵营玩家
         GetSaveCampPlayer( kfroom, pbscore );
 
         // 获得奖励
         std::string reward = _invalid_str;
-        auto kfsetting = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
-        if ( kfsetting != nullptr )
+        if ( pbscore->has_score() )
         {
-            reward = kfsetting->_reward;
-            pbscore->set_reward( reward );
+            auto kfsetting = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
+            if ( kfsetting != nullptr )
+            {
+                reward = kfsetting->_reward;
+                pbscore->set_reward( reward );
+            }
         }
 
         {

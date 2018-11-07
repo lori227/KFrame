@@ -163,6 +163,7 @@ message MsgCreateRoleReq
 	required string name = 1;		// 名字
 	required uint32 sex = 2;		// 性别
 	required uint32 model = 3;		// 模型id
+	optional uint32 inviterid = 4[default=0];	// 邀请人
 }
 
 // 修改名字
@@ -398,7 +399,7 @@ message MsgSendChatInfo
 	required uint32 isvoice = 2;		//是否是语音消息
 	required string playername = 3;		//发送聊天的玩家名字
 	required uint32 playerid = 4;		//发送聊天的玩家id
-	required uint32 playericon = 5;		//发送聊天的玩家头像
+	required string playericon = 5;		//发送聊天的玩家头像
 	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
 	required string playericonbox = 8;	//发送聊天的玩家头像框

@@ -359,6 +359,7 @@ message S2SCreateRoleReq
 	required string newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
+	required uint32 inviterid = 5;
 }
 
 // 创建角色
@@ -369,7 +370,8 @@ message S2SCreateRoleAck
 	required string newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
-	required uint32 result = 5;	
+	required uint32 inviterid = 5;
+	required uint32 result = 6;	
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////

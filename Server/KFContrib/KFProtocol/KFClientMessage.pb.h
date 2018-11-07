@@ -900,6 +900,13 @@ class LIBPROTOC_EXPORT MsgCreateRoleReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 model() const;
   inline void set_model(::google::protobuf::uint32 value);
 
+  // optional uint32 inviterid = 4 [default = 0];
+  inline bool has_inviterid() const;
+  inline void clear_inviterid();
+  static const int kInviteridFieldNumber = 4;
+  inline ::google::protobuf::uint32 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgCreateRoleReq)
  private:
   inline void set_has_name();
@@ -908,15 +915,18 @@ class LIBPROTOC_EXPORT MsgCreateRoleReq : public ::google::protobuf::Message {
   inline void clear_has_sex();
   inline void set_has_model();
   inline void clear_has_model();
+  inline void set_has_inviterid();
+  inline void clear_has_inviterid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* name_;
   ::google::protobuf::uint32 sex_;
   ::google::protobuf::uint32 model_;
+  ::google::protobuf::uint32 inviterid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -9882,6 +9892,28 @@ inline ::google::protobuf::uint32 MsgCreateRoleReq::model() const {
 inline void MsgCreateRoleReq::set_model(::google::protobuf::uint32 value) {
   set_has_model();
   model_ = value;
+}
+
+// optional uint32 inviterid = 4 [default = 0];
+inline bool MsgCreateRoleReq::has_inviterid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void MsgCreateRoleReq::set_has_inviterid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void MsgCreateRoleReq::clear_has_inviterid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void MsgCreateRoleReq::clear_inviterid() {
+  inviterid_ = 0u;
+  clear_has_inviterid();
+}
+inline ::google::protobuf::uint32 MsgCreateRoleReq::inviterid() const {
+  return inviterid_;
+}
+inline void MsgCreateRoleReq::set_inviterid(::google::protobuf::uint32 value) {
+  set_has_inviterid();
+  inviterid_ = value;
 }
 
 // -------------------------------------------------------------------

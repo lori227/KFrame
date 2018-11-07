@@ -225,8 +225,7 @@ namespace KFrame
 
         }
 
-        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] ok!",
-                       strserverid, kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] ok!", strserverid, kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
     }
 
     KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint32 serverid )

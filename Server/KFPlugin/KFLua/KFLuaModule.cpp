@@ -299,7 +299,7 @@ namespace KFrame
 
     uint32 KFLuaModule::LuaGetRealTime()
     {
-        return KFGlobal::Instance()->_real_time;
+        return static_cast< uint32 >( KFGlobal::Instance()->_real_time );
     }
 
     void KFLuaModule::LuaAddData( uint32 objectid, const char* stragent, bool showclient )

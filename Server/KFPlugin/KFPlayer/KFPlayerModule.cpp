@@ -714,6 +714,7 @@ namespace KFrame
         req.set_newname( kfmsg.name() );
         req.set_modleid( kfmsg.model() );
         req.set_sex( kfmsg.sex() );
+        req.set_inviterid( kfmsg.inviterid() );
         auto ok = _kf_public->SendMessageToPublic( KFMsg::S2S_CREATE_ROLE_REQ, &req );
         if ( !ok )
         {
@@ -737,16 +738,11 @@ namespace KFrame
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );
             // 性别
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( sex ), KFOperateEnum::Set, kfmsg.sex() );
+            // 保存邀请人
+            player->UpdateData( __KF_STRING__( inviterid ), KFOperateEnum::Set, kfmsg.inviterid() );
 
             // 保存玩家
             SavePlayer( player );
-
-            // 调用lua回调
-            static auto* kfoption = _kf_option->FindOption( __KF_STRING__( createrolelua ) );
-            if ( !kfoption->_str_value.empty() )
-            {
-                _kf_lua->Call( kfoption->_str_value, "CreateRoleFunction", player->GetKeyID() );
-            }
         }
 
         _kf_display->SendToClient( player, kfmsg.result(), kfmsg.newname() );

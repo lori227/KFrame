@@ -164,6 +164,9 @@ namespace KFrame
         // masterid
         uint32 _master_server_id{ 0 };
 
+        // 是否在服务中
+        bool _in_service{ false };
+
         // 认证的token列表
         KFMap< std::string, const std::string&, KFClusterToken > _kf_token_list;
 

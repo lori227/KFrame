@@ -36,7 +36,7 @@ namespace KFrame
         kfsetting._match_id = matchid;
         kfsetting._score = rewardkey;
         kfsetting._reward = rewardvalue;
-        _battle_reward_list[ matchid ]._reward_list.insert( std::make_pair( rewardkey, kfsetting ) );
+        iter->second._reward_list.insert( std::make_pair( rewardkey, kfsetting ) );
     }
 
     const KFRewardSetting* KFBattleConfig::FindBattleReward( uint32 matchid, uint32 score )
@@ -47,7 +47,7 @@ namespace KFrame
             return nullptr;
         }
 
-        auto scorereward = matchiter->second;
+        auto& scorereward = matchiter->second;
         auto scoreiter = scorereward._reward_list.lower_bound( score );
         if ( scoreiter == scorereward._reward_list.end() )
         {

@@ -452,6 +452,7 @@ namespace KFrame
 
         MapString keyvalues;
         keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
+        keyvalues[ __KF_STRING__( service ) ] = deploydata->_service_type;
         _deploy_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
     }
 
@@ -1020,8 +1021,13 @@ namespace KFrame
             auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                _deploy_driver->Execute( "update `{}` set `{}`='{}' where `{}`='{}';",
-                                         __KF_STRING__( deploy ), __KF_STRING__( version ), version, __KF_STRING__( appid ), deploydata->_app_id );
+                MapString updatevalues;
+                updatevalues[ __KF_STRING__( version ) ] = version;
+
+                MapString keyvalues;
+                keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
+                keyvalues[ __KF_STRING__( service ) ] = deploydata->_service_type;
+                _deploy_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
             }
         }
 

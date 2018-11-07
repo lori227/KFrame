@@ -424,10 +424,11 @@ void protobuf_AssignDesc_KFClientMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLoginOutReq));
   MsgCreateRoleReq_descriptor_ = file->message_type(6);
-  static const int MsgCreateRoleReq_offsets_[3] = {
+  static const int MsgCreateRoleReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCreateRoleReq, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCreateRoleReq, sex_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCreateRoleReq, model_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCreateRoleReq, inviterid_),
   };
   MsgCreateRoleReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -2310,202 +2311,203 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
     "inVerifyAck\022\020\n\010playerid\030\001 \002(\r\022\r\n\005token\030\002"
     " \002(\t\022\n\n\002ip\030\003 \002(\t\022\014\n\004port\030\004 \002(\r\"2\n\017MsgLog"
     "inGameReq\022\020\n\010playerid\030\001 \002(\r\022\r\n\005token\030\002 \002"
-    "(\t\"\020\n\016MsgLoginOutReq\"<\n\020MsgCreateRoleReq"
+    "(\t\"\020\n\016MsgLoginOutReq\"R\n\020MsgCreateRoleReq"
     "\022\014\n\004name\030\001 \002(\t\022\013\n\003sex\030\002 \002(\r\022\r\n\005model\030\003 \002"
-    "(\r\" \n\020MsgChangeNameReq\022\014\n\004name\030\001 \002(\t\"\036\n\017"
-    "MsgChangeSexReq\022\013\n\003sex\030\001 \002(\r\" \n\020MsgChang"
-    "eIconReq\022\014\n\004icon\030\001 \002(\t\"&\n\023MsgChangeIconB"
-    "oxReq\022\017\n\007iconbox\030\001 \002(\t\"\"\n\021MsgChangeMotto"
-    "Req\022\r\n\005motto\030\001 \002(\t\" \n\020MsgQueryBasicReq\022\014"
-    "\n\004name\030\001 \002(\t\"%\n\021MsgQueryPlayerReq\022\020\n\010pla"
-    "yerid\030\001 \002(\r\")\n\027MsgReceiveTaskRewardReq\022\016"
-    "\n\006taskid\030\001 \002(\r\"7\n\033MsgReceiveActivityRewa"
-    "rdReq\022\014\n\004type\030\001 \002(\r\022\n\n\002id\030\002 \002(\r\"/\n\032MsgRe"
-    "ceiveAchieveRewardReq\022\021\n\tachieveid\030\001 \002(\r"
-    "\"*\n\027MsgReceiveGiftRewardReq\022\017\n\007giftkey\030\001"
-    " \002(\t\")\n\027MsgReceiveMailRewardReq\022\016\n\006maili"
-    "d\030\001 \002(\004\" \n\016MsgViewMailReq\022\016\n\006mailid\030\001 \002("
-    "\004\"\"\n\020MsgDeleteMailReq\022\016\n\006mailid\030\001 \002(\004\"#\n"
-    "\017MsgQueryMailReq\022\020\n\010mailtype\030\001 \002(\r\"O\n\020Ms"
-    "gStartMatchReq\022\017\n\007matchid\030\001 \002(\r\022\022\n\nallow"
-    "group\030\002 \001(\010\022\026\n\016battleserverid\030\003 \001(\r\"#\n\020M"
-    "sgStartMatchAck\022\017\n\007matchid\030\001 \002(\r\"\023\n\021MsgC"
-    "ancelMatchReq\"$\n\021MsgCancelMatchAck\022\017\n\007ma"
-    "tchid\030\001 \002(\r\"o\n\021MsgMatchResultAck\022\017\n\007matc"
-    "hid\030\001 \002(\r\022\016\n\006roomid\030\002 \002(\004\022\020\n\010serverid\030\003 "
-    "\002(\r\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 \002(\r\022\r\n\005token\030\006"
-    " \002(\t\"(\n\024MsgTellMatchWaitTime\022\020\n\010waittime"
-    "\030\001 \002(\r\"H\n\025MsgAddFriendInviteReq\022\020\n\010playe"
-    "rid\030\001 \002(\r\022\017\n\007message\030\002 \002(\t\022\014\n\004name\030\003 \002(\t"
-    "\"<\n\027MsgReplyFriendInviteReq\022\020\n\010playerid\030"
-    "\001 \002(\r\022\017\n\007operate\030\002 \002(\r\"#\n\017MsgDelFriendRe"
-    "q\022\020\n\010playerid\030\001 \002(\r\"-\n\033MsgSetRefuseFrien"
-    "dInviteReq\022\016\n\006refuse\030\001 \002(\r\"\021\n\017MsgEnterCh"
-    "atReq\"3\n\016MsgSendChatReq\022\020\n\010chatinfo\030\001 \002("
-    "\t\022\017\n\007isvoice\030\002 \002(\r\"\305\001\n\017MsgSendChatInfo\022\020"
-    "\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002(\r\022\022\n\npla"
-    "yername\030\003 \002(\t\022\020\n\010playerid\030\004 \002(\r\022\022\n\nplaye"
-    "ricon\030\005 \002(\t\022\023\n\013playergrade\030\006 \002(\r\022\021\n\tplay"
-    "ersex\030\007 \002(\r\022\025\n\rplayericonbox\030\010 \002(\t\022\026\n\016pl"
-    "ayerserverid\030\t \002(\r\"\021\n\017MsgLeaveChatReq\"\203\001"
-    "\n\026MsgSendOneByOneChatReq\022\020\n\010chatinfo\030\001 \002"
-    "(\t\022\017\n\007isvoice\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\022\020\n"
-    "\010chattype\030\004 \002(\t\022\020\n\010selfinfo\030\005 \002(\t\022\020\n\010ser"
-    "verid\030\006 \002(\r\"\206\001\n\027MsgSendOneByOneChatInfo\022"
-    "\020\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002(\r\022\020\n\010pl"
-    "ayerid\030\003 \002(\r\022\020\n\010chattype\030\004 \002(\t\022\022\n\nplayer"
-    "info\030\005 \002(\t\022\020\n\010serverid\030\006 \002(\r\"5\n\022MsgDebug"
-    "CommandReq\022\017\n\007command\030\001 \002(\t\022\016\n\006params\030\002 "
-    "\003(\t\"$\n\022MsgShowRewardAgent\022\016\n\006reward\030\001 \002("
-    "\t\"8\n\023MsgSendGroupChatReq\022\020\n\010chatinfo\030\001 \002"
-    "(\t\022\017\n\007isvoice\030\002 \002(\r\"K\n\024MsgSendGroupChatI"
-    "nfo\022\020\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002(\r\022\020"
-    "\n\010playerid\030\003 \002(\r\">\n\016MsgBuyStoreReq\022\017\n\007bu"
-    "ytype\030\001 \002(\t\022\016\n\006shopid\030\002 \002(\r\022\013\n\003num\030\003 \002(\r"
-    "\"5\n\017MsgGiveStoreReq\022\022\n\ntoplayerid\030\001 \002(\r\022"
-    "\016\n\006shopid\030\002 \002(\r\"%\n\021MsgPlayerToastReq\022\020\n\010"
-    "playerid\030\001 \002(\r\")\n\025MsgQueryToastCountReq\022"
-    "\020\n\010playerid\030\001 \002(\r\"=\n\025MsgQueryToastCountA"
-    "ck\022\020\n\010playerid\030\001 \002(\r\022\022\n\ntoastcount\030\002 \002(\r"
-    "\"@\n\020MsgRemoveDataReq\022\020\n\010dataname\030\001 \002(\t\022\013"
-    "\n\003key\030\002 \002(\004\022\r\n\005count\030\003 \002(\r\"$\n\021MsgChangeM"
-    "odelReq\022\017\n\007modelid\030\001 \002(\r\"B\n\034MsgSetModelD"
-    "efaultClothesReq\022\017\n\007modelid\030\001 \002(\r\022\021\n\tclo"
-    "thesid\030\002 \002(\r\"\'\n\022MsgDressClothesReq\022\021\n\tcl"
-    "othesid\030\001 \002(\r\"q\n\026MsgInviteMatchGroupReq\022"
-    "\020\n\010serverid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\022\016\n\006s"
-    "ource\030\003 \002(\t\022\017\n\007matchid\030\004 \002(\r\022\022\n\nplayerna"
-    "me\030\005 \002(\t\"R\n\033MsgReplyInviteMatchGroupReq\022"
-    "\017\n\007groupid\030\001 \002(\004\022\021\n\tinviterid\030\002 \002(\r\022\017\n\007o"
-    "perate\030\003 \002(\r\"\027\n\025MsgLeaveMatchGroupReq\"(\n"
-    "\024MsgKickMatchGroupReq\022\020\n\010memberid\030\001 \002(\r\""
-    "(\n\025MsgApplyMatchGroupReq\022\017\n\007groupid\030\001 \002("
-    "\004\">\n\032MsgReplyApplyMatchGroupReq\022\017\n\007apply"
-    "id\030\001 \002(\r\022\017\n\007operate\030\003 \002(\r\"*\n\027MsgMatchGro"
-    "upPrepareReq\022\017\n\007prepare\030\001 \002(\r\")\n\026MsgUpda"
-    "teGroupMatchReq\022\017\n\007matchid\030\001 \002(\r\"$\n\020MsgQ"
-    "ueryGuestReq\022\020\n\010playerid\030\001 \002(\r\"_\n\020MsgQue"
-    "ryGuestAck\022\020\n\010playerid\030\001 \002(\r\022\022\n\nguestcou"
-    "nt\030\002 \002(\r\022%\n\tguestdata\030\003 \003(\0132\022.KFMsg.PBGu"
-    "estData\"!\n\rMsgUseItemReq\022\020\n\010itemguid\030\001 \002"
-    "(\004\"(\n\007PBStore\022\035\n\004data\030\001 \003(\0132\017.KFMsg.PBSt"
-    "ring\")\n\010PBStores\022\035\n\005store\030\001 \003(\0132\016.KFMsg."
-    "PBStore\"\'\n\024MsgQueryStoreInfoReq\022\017\n\007versi"
-    "on\030\001 \002(\r\"H\n\024MsgQueryStoreInfoAck\022\017\n\007vers"
-    "ion\030\001 \002(\r\022\037\n\006stores\030\002 \001(\0132\017.KFMsg.PBStor"
-    "es\"/\n\016MsgBuyStoreAck\022\017\n\007storeid\030\001 \002(\r\022\014\n"
-    "\004code\030\002 \002(\r\"C\n\022MsgSetWishOrderReq\022\014\n\004typ"
-    "e\030\001 \002(\r\022\017\n\007storeid\030\002 \002(\r\022\016\n\006status\030\003 \001(\r"
-    "\"\024\n\022MsgQuerySettingReq\"8\n\022MsgQuerySettin"
-    "gAck\022\"\n\tpbsetting\030\001 \002(\0132\017.KFMsg.PBObject"
-    "\"_\n\023MsgUpdateSettingReq\022#\n\nstrsetting\030\001 "
-    "\003(\0132\017.KFMsg.PBString\022#\n\nintsetting\030\002 \003(\013"
-    "2\017.KFMsg.PBUInt32\"\027\n\025MsgQueryRecentListR"
-    "eq\"<\n\025MsgQueryRecentListAck\022#\n\nrecentlis"
-    "t\030\001 \002(\0132\017.KFMsg.PBRecord\"3\n\022MsgCompoundD"
-    "ataReq\022\020\n\010dataname\030\001 \002(\t\022\013\n\003key\030\002 \002(\r\"%\n"
-    "\023MsgQueryRankListReq\022\016\n\006rankid\030\001 \002(\r\"L\n\023"
-    "MsgQueryRankListAck\022\016\n\006rankid\030\001 \002(\r\022%\n\tr"
-    "ankdatas\030\002 \002(\0132\022.KFMsg.PBRankDatas\"+\n\031Ms"
-    "gQueryFriendRankListReq\022\016\n\006rankid\030\001 \002(\r\""
-    "R\n\031MsgQueryFriendRankListAck\022\016\n\006rankid\030\001"
-    " \002(\r\022%\n\trankdatas\030\002 \002(\0132\022.KFMsg.PBRankDa"
-    "tas\"&\n\027MsgSevenSignInRewardReq\022\013\n\003day\030\001 "
-    "\002(\r\">\n\030MsgTellSevenExtendReward\022\022\n\nplaye"
-    "rname\030\001 \002(\t\022\016\n\006reward\030\002 \002(\t\"H\n\021MsgCreate"
-    "GuildReq\022\021\n\tguildname\030\001 \002(\t\022\r\n\005medal\030\002 \002"
-    "(\r\022\021\n\tmanifesto\030\003 \001(\t\"&\n\021MsgInviteGuildR"
-    "eq\022\021\n\tinviterid\030\001 \002(\r\"4\n\020MsgApplyGuildRe"
-    "q\022\017\n\007guildid\030\001 \002(\004\022\017\n\007invitor\030\002 \002(\004\"\021\n\017M"
-    "sgExitGuildReq\"+\n\024MsgTransferMasterReq\022\023"
-    "\n\013newmasterid\030\001 \002(\r\";\n\021MsgReviewApplyReq"
-    "\022\020\n\010playerid\030\001 \001(\r\022\024\n\014operatortype\030\002 \002(\r"
-    "\"\025\n\023MsgDissolveGuildReq\"*\n\026MsgModifyGuil"
-    "dMedalReq\022\020\n\010newmedal\030\001 \002(\r\"M\n\024MsgQueryG"
-    "uildListReq\022%\n\006guilds\030\001 \001(\0132\025.KFMsg.PBGu"
-    "ildIdArray\022\016\n\006cursor\030\002 \002(\r\"<\n\024MsgQueryGu"
-    "ildListAck\022$\n\nguilddatas\030\001 \003(\0132\020.KFMsg.P"
-    "BStrings\"&\n\020MsgKickMemberReq\022\022\n\ntoplayer"
-    "id\030\001 \002(\r\"\024\n\022MsgUpgradeGuildReq\"=\n\030MsgApp"
-    "ointGuildMemberReq\022\022\n\ntoplayerid\030\001 \002(\r\022\r"
-    "\n\005title\030\002 \002(\r\",\n\027MsgSearchGuildByNameReq"
-    "\022\021\n\tguildname\030\001 \002(\t\"2\n\024MsgSetGuildSwitch"
-    "Req\022\014\n\004type\030\001 \002(\t\022\014\n\004flag\030\002 \002(\r\"#\n\023MsgQu"
-    "eryGuildLogReq\022\014\n\004page\030\001 \002(\r\"5\n\023MsgQuery"
-    "GuildLogAck\022\014\n\004page\030\001 \002(\r\022\020\n\010guildlog\030\002 "
-    "\003(\t\"!\n\016MsgTellMarquee\022\017\n\007content\030\001 \002(\t\"#"
-    "\n\020MsgTellSysNotcie\022\017\n\007content\030\001 \002(\t*\222\026\n\016"
-    "ClientProtocol\022\024\n\020MSG_TELL_BE_KICK\020d\022\030\n\024"
-    "MSG_LOGIN_VERIFY_REQ\020e\022\030\n\024MSG_LOGIN_VERI"
-    "FY_ACK\020f\022\026\n\022MSG_LOGIN_GAME_REQ\020g\022\025\n\021MSG_"
-    "LOGIN_OUT_REQ\020i\022\026\n\022MSG_RESULT_DISPLAY\020j\022"
-    "\027\n\023MSG_CREATE_ROLE_REQ\020k\022\027\n\023MSG_CHANGE_N"
-    "AME_REQ\020l\022\026\n\022MSG_CHANGE_SEX_REQ\020m\022#\n\037MSG"
-    "_RECEIVE_ACTIVITY_REWARD_REQ\020n\022\037\n\033MSG_RE"
-    "CEIVE_TASK_REWARD_REQ\020o\022\"\n\036MSG_RECEIVE_A"
-    "CHIEVE_REWARD_REQ\020p\022\037\n\033MSG_RECEIVE_GIFT_"
-    "REWARD_REQ\020q\022\037\n\033MSG_RECEIVE_MAIL_REWARD_"
-    "REQ\020r\022\025\n\021MSG_VIEW_MAIL_REQ\020s\022\027\n\023MSG_DELE"
-    "TE_MAIL_REQ\020t\022\026\n\022MSG_QUERY_MAIL_REQ\020u\022\027\n"
-    "\023MSG_START_MATCH_REQ\020v\022\027\n\023MSG_START_MATC"
-    "H_ACK\020w\022\030\n\024MSG_CANCEL_MATCH_REQ\020x\022\030\n\024MSG"
-    "_MATCH_RESULT_ACK\020y\022\035\n\031MSG_ADD_FRIEND_IN"
-    "VITE_REQ\020z\022\037\n\033MSG_REPLY_FRIEND_INVITE_RE"
-    "Q\020{\022\026\n\022MSG_DEL_FRIEND_REQ\020|\022\026\n\022MSG_ENTER"
-    "_CHAT_REQ\020~\022\025\n\021MSG_SEND_CHAT_REQ\020\177\022\027\n\022MS"
-    "G_SEND_CHAT_INFO\020\200\001\022\027\n\022MSG_LEAVE_CHAT_RE"
-    "Q\020\201\001\022%\n MSG_SET_REFUSE_FRIEND_INVITE_REQ"
-    "\020\202\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\203\001\022\031\n\024MSG_QUE"
-    "RY_PLAYER_REQ\020\204\001\022\026\n\021MSG_BUY_STORE_REQ\020\205\001"
-    "\022\027\n\022MSG_GIVE_STORE_REQ\020\206\001\022\037\n\032MSG_SEND_ON"
-    "EBYONE_CHAT_REQ\020\207\001\022 \n\033MSG_SEND_ONEBYONE_"
-    "CHAT_INFO\020\210\001\022\030\n\023MSG_CHANGE_ICON_REQ\020\211\001\022\032"
-    "\n\025MSG_DEBUG_COMMAND_REQ\020\217\001\022\031\n\024MSG_CHANGE"
-    "_MOTTO_REQ\020\220\001\022&\n!MSG_SET_MODEL_DEFAULT_C"
-    "LOTHES_REQ\020\221\001\022\031\n\024MSG_PLAYER_TOAST_REQ\020\222\001"
-    "\022\030\n\023MSG_REMOVE_DATA_REQ\020\223\001\022\032\n\025MSG_DRESS_"
-    "CLOTHES_REQ\020\224\001\022\031\n\024MSG_CHANGE_MODEL_REQ\020\225"
-    "\001\022\032\n\025MSG_SHOW_REWARD_AGENT\020\226\001\022\037\n\032MSG_INV"
-    "ITE_MATCH_GROUP_REQ\020\227\001\022%\n MSG_REPLY_INVI"
-    "TE_MATCH_GROUP_REQ\020\231\001\022\036\n\031MSG_LEAVE_MATCH"
-    "_GROUP_REQ\020\232\001\022\035\n\030MSG_KICK_MATCH_GROUP_RE"
-    "Q\020\233\001\022\036\n\031MSG_APPLY_MATCH_GROUP_REQ\020\234\001\022$\n\037"
-    "MSG_REPLY_APPLY_MATCH_GROUP_REQ\020\235\001\022 \n\033MS"
-    "G_MATCH_GROUP_PREPARE_REQ\020\240\001\022\034\n\027MSG_CHAN"
-    "GE_ICON_BOX_REQ\020\241\001\022\030\n\023MSG_QUERY_GUEST_RE"
-    "Q\020\242\001\022\030\n\023MSG_QUERY_GUEST_ACK\020\243\001\022\031\n\024MSG_CA"
-    "NCEL_MATCH_ACK\020\244\001\022\025\n\020MSG_USE_ITEM_REQ\020\245\001"
-    "\022\036\n\031MSG_QUERY_TOAST_COUNT_REQ\020\246\001\022\036\n\031MSG_"
-    "QUERY_TOAST_COUNT_ACK\020\247\001\022\035\n\030MSG_QUERY_ST"
-    "ORE_INFO_REQ\020\252\001\022\035\n\030MSG_QUERY_STORE_INFO_"
-    "ACK\020\253\001\022\026\n\021MSG_BUY_STORE_ACK\020\255\001\022\037\n\032MSG_UP"
-    "DATE_GROUP_MATCH_REQ\020\256\001\022\033\n\026MSG_SEND_GROU"
-    "PCHAT_REQ\020\257\001\022\034\n\027MSG_SEND_GROUPCHAT_INFO\020"
-    "\260\001\022\033\n\026MSG_SET_WISH_ORDER_REQ\020\261\001\022\032\n\025MSG_Q"
-    "UERY_SETTING_REQ\020\262\001\022\032\n\025MSG_QUERY_SETTING"
-    "_ACK\020\263\001\022\033\n\026MSG_UPDATE_SETTING_REQ\020\264\001\022\036\n\031"
-    "MSG_QUERY_RECENT_LIST_REQ\020\265\001\022\036\n\031MSG_QUER"
-    "Y_RECENT_LIST_ACK\020\266\001\022\034\n\027MSG_QUERY_RANK_L"
-    "IST_REQ\020\267\001\022\034\n\027MSG_QUERY_RANK_LIST_ACK\020\270\001"
-    "\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_REQ\020\271\001\022#\n"
-    "\036MSG_QUERY_FRIEND_RANK_LIST_ACK\020\272\001\022\032\n\025MS"
-    "G_COMPOUND_DATA_REQ\020\273\001\022 \n\033MSG_SEVEN_SIGN"
-    "IN_REWARD_REQ\020\306\001\022!\n\034MSG_TELL_SEVEN_EXTEN"
-    "D_REWARD\020\307\001\022\031\n\024MSG_CREATE_GUILD_REQ\020\310\001\022\031"
-    "\n\024MSG_INVITE_GUILD_REQ\020\311\001\022\030\n\023MSG_APPLY_G"
-    "UILD_REQ\020\312\001\022\035\n\030MSG_TELL_MATCH_WAIT_TIME\020"
-    "\313\001\022\027\n\022MSG_EXIT_GUILD_REQ\020\314\001\022\034\n\027MSG_TRANS"
-    "FER_MASTER_REQ\020\315\001\022\031\n\024MSG_REVIEW_APPLY_RE"
-    "Q\020\316\001\022\033\n\026MSG_DISSOLVE_GUILD_REQ\020\317\001\022\037\n\032MSG"
-    "_MODIFY_GUILD_MEDAL_REQ\020\320\001\022\035\n\030MSG_QUERY_"
-    "GUILD_LIST_REQ\020\321\001\022\035\n\030MSG_QUERY_GUILD_LIS"
-    "T_ACK\020\322\001\022\030\n\023MSG_KICK_MEMBER_REQ\020\323\001\022\032\n\025MS"
-    "G_UPGRADE_GUILD_REQ\020\324\001\022!\n\034MSG_APPOINT_GU"
-    "ILD_MEMBER_REQ\020\325\001\022!\n\034MSG_SEARCH_GUILD_BY"
-    "_NAME_REQ\020\326\001\022\035\n\030MSG_SET_GUILD_SWITCH_REQ"
-    "\020\327\001\022\034\n\027MSG_QUERY_GUILD_LOG_REQ\020\330\001\022\034\n\027MSG"
-    "_QUERY_GUILD_LOG_ACK\020\331\001\022\025\n\020MSG_TELL_MARQ"
-    "UEE\020\254\002\022\030\n\023MSG_TELL_SYS_NOTICE\020\255\002", 8152);
+    "(\r\022\024\n\tinviterid\030\004 \001(\r:\0010\" \n\020MsgChangeNam"
+    "eReq\022\014\n\004name\030\001 \002(\t\"\036\n\017MsgChangeSexReq\022\013\n"
+    "\003sex\030\001 \002(\r\" \n\020MsgChangeIconReq\022\014\n\004icon\030\001"
+    " \002(\t\"&\n\023MsgChangeIconBoxReq\022\017\n\007iconbox\030\001"
+    " \002(\t\"\"\n\021MsgChangeMottoReq\022\r\n\005motto\030\001 \002(\t"
+    "\" \n\020MsgQueryBasicReq\022\014\n\004name\030\001 \002(\t\"%\n\021Ms"
+    "gQueryPlayerReq\022\020\n\010playerid\030\001 \002(\r\")\n\027Msg"
+    "ReceiveTaskRewardReq\022\016\n\006taskid\030\001 \002(\r\"7\n\033"
+    "MsgReceiveActivityRewardReq\022\014\n\004type\030\001 \002("
+    "\r\022\n\n\002id\030\002 \002(\r\"/\n\032MsgReceiveAchieveReward"
+    "Req\022\021\n\tachieveid\030\001 \002(\r\"*\n\027MsgReceiveGift"
+    "RewardReq\022\017\n\007giftkey\030\001 \002(\t\")\n\027MsgReceive"
+    "MailRewardReq\022\016\n\006mailid\030\001 \002(\004\" \n\016MsgView"
+    "MailReq\022\016\n\006mailid\030\001 \002(\004\"\"\n\020MsgDeleteMail"
+    "Req\022\016\n\006mailid\030\001 \002(\004\"#\n\017MsgQueryMailReq\022\020"
+    "\n\010mailtype\030\001 \002(\r\"O\n\020MsgStartMatchReq\022\017\n\007"
+    "matchid\030\001 \002(\r\022\022\n\nallowgroup\030\002 \001(\010\022\026\n\016bat"
+    "tleserverid\030\003 \001(\r\"#\n\020MsgStartMatchAck\022\017\n"
+    "\007matchid\030\001 \002(\r\"\023\n\021MsgCancelMatchReq\"$\n\021M"
+    "sgCancelMatchAck\022\017\n\007matchid\030\001 \002(\r\"o\n\021Msg"
+    "MatchResultAck\022\017\n\007matchid\030\001 \002(\r\022\016\n\006roomi"
+    "d\030\002 \002(\004\022\020\n\010serverid\030\003 \002(\r\022\n\n\002ip\030\004 \002(\t\022\014\n"
+    "\004port\030\005 \002(\r\022\r\n\005token\030\006 \002(\t\"(\n\024MsgTellMat"
+    "chWaitTime\022\020\n\010waittime\030\001 \002(\r\"H\n\025MsgAddFr"
+    "iendInviteReq\022\020\n\010playerid\030\001 \002(\r\022\017\n\007messa"
+    "ge\030\002 \002(\t\022\014\n\004name\030\003 \002(\t\"<\n\027MsgReplyFriend"
+    "InviteReq\022\020\n\010playerid\030\001 \002(\r\022\017\n\007operate\030\002"
+    " \002(\r\"#\n\017MsgDelFriendReq\022\020\n\010playerid\030\001 \002("
+    "\r\"-\n\033MsgSetRefuseFriendInviteReq\022\016\n\006refu"
+    "se\030\001 \002(\r\"\021\n\017MsgEnterChatReq\"3\n\016MsgSendCh"
+    "atReq\022\020\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002(\r"
+    "\"\305\001\n\017MsgSendChatInfo\022\020\n\010chatinfo\030\001 \002(\t\022\017"
+    "\n\007isvoice\030\002 \002(\r\022\022\n\nplayername\030\003 \002(\t\022\020\n\010p"
+    "layerid\030\004 \002(\r\022\022\n\nplayericon\030\005 \002(\t\022\023\n\013pla"
+    "yergrade\030\006 \002(\r\022\021\n\tplayersex\030\007 \002(\r\022\025\n\rpla"
+    "yericonbox\030\010 \002(\t\022\026\n\016playerserverid\030\t \002(\r"
+    "\"\021\n\017MsgLeaveChatReq\"\203\001\n\026MsgSendOneByOneC"
+    "hatReq\022\020\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002("
+    "\r\022\020\n\010playerid\030\003 \002(\r\022\020\n\010chattype\030\004 \002(\t\022\020\n"
+    "\010selfinfo\030\005 \002(\t\022\020\n\010serverid\030\006 \002(\r\"\206\001\n\027Ms"
+    "gSendOneByOneChatInfo\022\020\n\010chatinfo\030\001 \002(\t\022"
+    "\017\n\007isvoice\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\022\020\n\010ch"
+    "attype\030\004 \002(\t\022\022\n\nplayerinfo\030\005 \002(\t\022\020\n\010serv"
+    "erid\030\006 \002(\r\"5\n\022MsgDebugCommandReq\022\017\n\007comm"
+    "and\030\001 \002(\t\022\016\n\006params\030\002 \003(\t\"$\n\022MsgShowRewa"
+    "rdAgent\022\016\n\006reward\030\001 \002(\t\"8\n\023MsgSendGroupC"
+    "hatReq\022\020\n\010chatinfo\030\001 \002(\t\022\017\n\007isvoice\030\002 \002("
+    "\r\"K\n\024MsgSendGroupChatInfo\022\020\n\010chatinfo\030\001 "
+    "\002(\t\022\017\n\007isvoice\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\">"
+    "\n\016MsgBuyStoreReq\022\017\n\007buytype\030\001 \002(\t\022\016\n\006sho"
+    "pid\030\002 \002(\r\022\013\n\003num\030\003 \002(\r\"5\n\017MsgGiveStoreRe"
+    "q\022\022\n\ntoplayerid\030\001 \002(\r\022\016\n\006shopid\030\002 \002(\r\"%\n"
+    "\021MsgPlayerToastReq\022\020\n\010playerid\030\001 \002(\r\")\n\025"
+    "MsgQueryToastCountReq\022\020\n\010playerid\030\001 \002(\r\""
+    "=\n\025MsgQueryToastCountAck\022\020\n\010playerid\030\001 \002"
+    "(\r\022\022\n\ntoastcount\030\002 \002(\r\"@\n\020MsgRemoveDataR"
+    "eq\022\020\n\010dataname\030\001 \002(\t\022\013\n\003key\030\002 \002(\004\022\r\n\005cou"
+    "nt\030\003 \002(\r\"$\n\021MsgChangeModelReq\022\017\n\007modelid"
+    "\030\001 \002(\r\"B\n\034MsgSetModelDefaultClothesReq\022\017"
+    "\n\007modelid\030\001 \002(\r\022\021\n\tclothesid\030\002 \002(\r\"\'\n\022Ms"
+    "gDressClothesReq\022\021\n\tclothesid\030\001 \002(\r\"q\n\026M"
+    "sgInviteMatchGroupReq\022\020\n\010serverid\030\001 \002(\r\022"
+    "\020\n\010playerid\030\002 \002(\r\022\016\n\006source\030\003 \002(\t\022\017\n\007mat"
+    "chid\030\004 \002(\r\022\022\n\nplayername\030\005 \002(\t\"R\n\033MsgRep"
+    "lyInviteMatchGroupReq\022\017\n\007groupid\030\001 \002(\004\022\021"
+    "\n\tinviterid\030\002 \002(\r\022\017\n\007operate\030\003 \002(\r\"\027\n\025Ms"
+    "gLeaveMatchGroupReq\"(\n\024MsgKickMatchGroup"
+    "Req\022\020\n\010memberid\030\001 \002(\r\"(\n\025MsgApplyMatchGr"
+    "oupReq\022\017\n\007groupid\030\001 \002(\004\">\n\032MsgReplyApply"
+    "MatchGroupReq\022\017\n\007applyid\030\001 \002(\r\022\017\n\007operat"
+    "e\030\003 \002(\r\"*\n\027MsgMatchGroupPrepareReq\022\017\n\007pr"
+    "epare\030\001 \002(\r\")\n\026MsgUpdateGroupMatchReq\022\017\n"
+    "\007matchid\030\001 \002(\r\"$\n\020MsgQueryGuestReq\022\020\n\010pl"
+    "ayerid\030\001 \002(\r\"_\n\020MsgQueryGuestAck\022\020\n\010play"
+    "erid\030\001 \002(\r\022\022\n\nguestcount\030\002 \002(\r\022%\n\tguestd"
+    "ata\030\003 \003(\0132\022.KFMsg.PBGuestData\"!\n\rMsgUseI"
+    "temReq\022\020\n\010itemguid\030\001 \002(\004\"(\n\007PBStore\022\035\n\004d"
+    "ata\030\001 \003(\0132\017.KFMsg.PBString\")\n\010PBStores\022\035"
+    "\n\005store\030\001 \003(\0132\016.KFMsg.PBStore\"\'\n\024MsgQuer"
+    "yStoreInfoReq\022\017\n\007version\030\001 \002(\r\"H\n\024MsgQue"
+    "ryStoreInfoAck\022\017\n\007version\030\001 \002(\r\022\037\n\006store"
+    "s\030\002 \001(\0132\017.KFMsg.PBStores\"/\n\016MsgBuyStoreA"
+    "ck\022\017\n\007storeid\030\001 \002(\r\022\014\n\004code\030\002 \002(\r\"C\n\022Msg"
+    "SetWishOrderReq\022\014\n\004type\030\001 \002(\r\022\017\n\007storeid"
+    "\030\002 \002(\r\022\016\n\006status\030\003 \001(\r\"\024\n\022MsgQuerySettin"
+    "gReq\"8\n\022MsgQuerySettingAck\022\"\n\tpbsetting\030"
+    "\001 \002(\0132\017.KFMsg.PBObject\"_\n\023MsgUpdateSetti"
+    "ngReq\022#\n\nstrsetting\030\001 \003(\0132\017.KFMsg.PBStri"
+    "ng\022#\n\nintsetting\030\002 \003(\0132\017.KFMsg.PBUInt32\""
+    "\027\n\025MsgQueryRecentListReq\"<\n\025MsgQueryRece"
+    "ntListAck\022#\n\nrecentlist\030\001 \002(\0132\017.KFMsg.PB"
+    "Record\"3\n\022MsgCompoundDataReq\022\020\n\010dataname"
+    "\030\001 \002(\t\022\013\n\003key\030\002 \002(\r\"%\n\023MsgQueryRankListR"
+    "eq\022\016\n\006rankid\030\001 \002(\r\"L\n\023MsgQueryRankListAc"
+    "k\022\016\n\006rankid\030\001 \002(\r\022%\n\trankdatas\030\002 \002(\0132\022.K"
+    "FMsg.PBRankDatas\"+\n\031MsgQueryFriendRankLi"
+    "stReq\022\016\n\006rankid\030\001 \002(\r\"R\n\031MsgQueryFriendR"
+    "ankListAck\022\016\n\006rankid\030\001 \002(\r\022%\n\trankdatas\030"
+    "\002 \002(\0132\022.KFMsg.PBRankDatas\"&\n\027MsgSevenSig"
+    "nInRewardReq\022\013\n\003day\030\001 \002(\r\">\n\030MsgTellSeve"
+    "nExtendReward\022\022\n\nplayername\030\001 \002(\t\022\016\n\006rew"
+    "ard\030\002 \002(\t\"H\n\021MsgCreateGuildReq\022\021\n\tguildn"
+    "ame\030\001 \002(\t\022\r\n\005medal\030\002 \002(\r\022\021\n\tmanifesto\030\003 "
+    "\001(\t\"&\n\021MsgInviteGuildReq\022\021\n\tinviterid\030\001 "
+    "\002(\r\"4\n\020MsgApplyGuildReq\022\017\n\007guildid\030\001 \002(\004"
+    "\022\017\n\007invitor\030\002 \002(\004\"\021\n\017MsgExitGuildReq\"+\n\024"
+    "MsgTransferMasterReq\022\023\n\013newmasterid\030\001 \002("
+    "\r\";\n\021MsgReviewApplyReq\022\020\n\010playerid\030\001 \001(\r"
+    "\022\024\n\014operatortype\030\002 \002(\r\"\025\n\023MsgDissolveGui"
+    "ldReq\"*\n\026MsgModifyGuildMedalReq\022\020\n\010newme"
+    "dal\030\001 \002(\r\"M\n\024MsgQueryGuildListReq\022%\n\006gui"
+    "lds\030\001 \001(\0132\025.KFMsg.PBGuildIdArray\022\016\n\006curs"
+    "or\030\002 \002(\r\"<\n\024MsgQueryGuildListAck\022$\n\nguil"
+    "ddatas\030\001 \003(\0132\020.KFMsg.PBStrings\"&\n\020MsgKic"
+    "kMemberReq\022\022\n\ntoplayerid\030\001 \002(\r\"\024\n\022MsgUpg"
+    "radeGuildReq\"=\n\030MsgAppointGuildMemberReq"
+    "\022\022\n\ntoplayerid\030\001 \002(\r\022\r\n\005title\030\002 \002(\r\",\n\027M"
+    "sgSearchGuildByNameReq\022\021\n\tguildname\030\001 \002("
+    "\t\"2\n\024MsgSetGuildSwitchReq\022\014\n\004type\030\001 \002(\t\022"
+    "\014\n\004flag\030\002 \002(\r\"#\n\023MsgQueryGuildLogReq\022\014\n\004"
+    "page\030\001 \002(\r\"5\n\023MsgQueryGuildLogAck\022\014\n\004pag"
+    "e\030\001 \002(\r\022\020\n\010guildlog\030\002 \003(\t\"!\n\016MsgTellMarq"
+    "uee\022\017\n\007content\030\001 \002(\t\"#\n\020MsgTellSysNotcie"
+    "\022\017\n\007content\030\001 \002(\t*\222\026\n\016ClientProtocol\022\024\n\020"
+    "MSG_TELL_BE_KICK\020d\022\030\n\024MSG_LOGIN_VERIFY_R"
+    "EQ\020e\022\030\n\024MSG_LOGIN_VERIFY_ACK\020f\022\026\n\022MSG_LO"
+    "GIN_GAME_REQ\020g\022\025\n\021MSG_LOGIN_OUT_REQ\020i\022\026\n"
+    "\022MSG_RESULT_DISPLAY\020j\022\027\n\023MSG_CREATE_ROLE"
+    "_REQ\020k\022\027\n\023MSG_CHANGE_NAME_REQ\020l\022\026\n\022MSG_C"
+    "HANGE_SEX_REQ\020m\022#\n\037MSG_RECEIVE_ACTIVITY_"
+    "REWARD_REQ\020n\022\037\n\033MSG_RECEIVE_TASK_REWARD_"
+    "REQ\020o\022\"\n\036MSG_RECEIVE_ACHIEVE_REWARD_REQ\020"
+    "p\022\037\n\033MSG_RECEIVE_GIFT_REWARD_REQ\020q\022\037\n\033MS"
+    "G_RECEIVE_MAIL_REWARD_REQ\020r\022\025\n\021MSG_VIEW_"
+    "MAIL_REQ\020s\022\027\n\023MSG_DELETE_MAIL_REQ\020t\022\026\n\022M"
+    "SG_QUERY_MAIL_REQ\020u\022\027\n\023MSG_START_MATCH_R"
+    "EQ\020v\022\027\n\023MSG_START_MATCH_ACK\020w\022\030\n\024MSG_CAN"
+    "CEL_MATCH_REQ\020x\022\030\n\024MSG_MATCH_RESULT_ACK\020"
+    "y\022\035\n\031MSG_ADD_FRIEND_INVITE_REQ\020z\022\037\n\033MSG_"
+    "REPLY_FRIEND_INVITE_REQ\020{\022\026\n\022MSG_DEL_FRI"
+    "END_REQ\020|\022\026\n\022MSG_ENTER_CHAT_REQ\020~\022\025\n\021MSG"
+    "_SEND_CHAT_REQ\020\177\022\027\n\022MSG_SEND_CHAT_INFO\020\200"
+    "\001\022\027\n\022MSG_LEAVE_CHAT_REQ\020\201\001\022%\n MSG_SET_RE"
+    "FUSE_FRIEND_INVITE_REQ\020\202\001\022\030\n\023MSG_QUERY_B"
+    "ASIC_REQ\020\203\001\022\031\n\024MSG_QUERY_PLAYER_REQ\020\204\001\022\026"
+    "\n\021MSG_BUY_STORE_REQ\020\205\001\022\027\n\022MSG_GIVE_STORE"
+    "_REQ\020\206\001\022\037\n\032MSG_SEND_ONEBYONE_CHAT_REQ\020\207\001"
+    "\022 \n\033MSG_SEND_ONEBYONE_CHAT_INFO\020\210\001\022\030\n\023MS"
+    "G_CHANGE_ICON_REQ\020\211\001\022\032\n\025MSG_DEBUG_COMMAN"
+    "D_REQ\020\217\001\022\031\n\024MSG_CHANGE_MOTTO_REQ\020\220\001\022&\n!M"
+    "SG_SET_MODEL_DEFAULT_CLOTHES_REQ\020\221\001\022\031\n\024M"
+    "SG_PLAYER_TOAST_REQ\020\222\001\022\030\n\023MSG_REMOVE_DAT"
+    "A_REQ\020\223\001\022\032\n\025MSG_DRESS_CLOTHES_REQ\020\224\001\022\031\n\024"
+    "MSG_CHANGE_MODEL_REQ\020\225\001\022\032\n\025MSG_SHOW_REWA"
+    "RD_AGENT\020\226\001\022\037\n\032MSG_INVITE_MATCH_GROUP_RE"
+    "Q\020\227\001\022%\n MSG_REPLY_INVITE_MATCH_GROUP_REQ"
+    "\020\231\001\022\036\n\031MSG_LEAVE_MATCH_GROUP_REQ\020\232\001\022\035\n\030M"
+    "SG_KICK_MATCH_GROUP_REQ\020\233\001\022\036\n\031MSG_APPLY_"
+    "MATCH_GROUP_REQ\020\234\001\022$\n\037MSG_REPLY_APPLY_MA"
+    "TCH_GROUP_REQ\020\235\001\022 \n\033MSG_MATCH_GROUP_PREP"
+    "ARE_REQ\020\240\001\022\034\n\027MSG_CHANGE_ICON_BOX_REQ\020\241\001"
+    "\022\030\n\023MSG_QUERY_GUEST_REQ\020\242\001\022\030\n\023MSG_QUERY_"
+    "GUEST_ACK\020\243\001\022\031\n\024MSG_CANCEL_MATCH_ACK\020\244\001\022"
+    "\025\n\020MSG_USE_ITEM_REQ\020\245\001\022\036\n\031MSG_QUERY_TOAS"
+    "T_COUNT_REQ\020\246\001\022\036\n\031MSG_QUERY_TOAST_COUNT_"
+    "ACK\020\247\001\022\035\n\030MSG_QUERY_STORE_INFO_REQ\020\252\001\022\035\n"
+    "\030MSG_QUERY_STORE_INFO_ACK\020\253\001\022\026\n\021MSG_BUY_"
+    "STORE_ACK\020\255\001\022\037\n\032MSG_UPDATE_GROUP_MATCH_R"
+    "EQ\020\256\001\022\033\n\026MSG_SEND_GROUPCHAT_REQ\020\257\001\022\034\n\027MS"
+    "G_SEND_GROUPCHAT_INFO\020\260\001\022\033\n\026MSG_SET_WISH"
+    "_ORDER_REQ\020\261\001\022\032\n\025MSG_QUERY_SETTING_REQ\020\262"
+    "\001\022\032\n\025MSG_QUERY_SETTING_ACK\020\263\001\022\033\n\026MSG_UPD"
+    "ATE_SETTING_REQ\020\264\001\022\036\n\031MSG_QUERY_RECENT_L"
+    "IST_REQ\020\265\001\022\036\n\031MSG_QUERY_RECENT_LIST_ACK\020"
+    "\266\001\022\034\n\027MSG_QUERY_RANK_LIST_REQ\020\267\001\022\034\n\027MSG_"
+    "QUERY_RANK_LIST_ACK\020\270\001\022#\n\036MSG_QUERY_FRIE"
+    "ND_RANK_LIST_REQ\020\271\001\022#\n\036MSG_QUERY_FRIEND_"
+    "RANK_LIST_ACK\020\272\001\022\032\n\025MSG_COMPOUND_DATA_RE"
+    "Q\020\273\001\022 \n\033MSG_SEVEN_SIGNIN_REWARD_REQ\020\306\001\022!"
+    "\n\034MSG_TELL_SEVEN_EXTEND_REWARD\020\307\001\022\031\n\024MSG"
+    "_CREATE_GUILD_REQ\020\310\001\022\031\n\024MSG_INVITE_GUILD"
+    "_REQ\020\311\001\022\030\n\023MSG_APPLY_GUILD_REQ\020\312\001\022\035\n\030MSG"
+    "_TELL_MATCH_WAIT_TIME\020\313\001\022\027\n\022MSG_EXIT_GUI"
+    "LD_REQ\020\314\001\022\034\n\027MSG_TRANSFER_MASTER_REQ\020\315\001\022"
+    "\031\n\024MSG_REVIEW_APPLY_REQ\020\316\001\022\033\n\026MSG_DISSOL"
+    "VE_GUILD_REQ\020\317\001\022\037\n\032MSG_MODIFY_GUILD_MEDA"
+    "L_REQ\020\320\001\022\035\n\030MSG_QUERY_GUILD_LIST_REQ\020\321\001\022"
+    "\035\n\030MSG_QUERY_GUILD_LIST_ACK\020\322\001\022\030\n\023MSG_KI"
+    "CK_MEMBER_REQ\020\323\001\022\032\n\025MSG_UPGRADE_GUILD_RE"
+    "Q\020\324\001\022!\n\034MSG_APPOINT_GUILD_MEMBER_REQ\020\325\001\022"
+    "!\n\034MSG_SEARCH_GUILD_BY_NAME_REQ\020\326\001\022\035\n\030MS"
+    "G_SET_GUILD_SWITCH_REQ\020\327\001\022\034\n\027MSG_QUERY_G"
+    "UILD_LOG_REQ\020\330\001\022\034\n\027MSG_QUERY_GUILD_LOG_A"
+    "CK\020\331\001\022\025\n\020MSG_TELL_MARQUEE\020\254\002\022\030\n\023MSG_TELL"
+    "_SYS_NOTICE\020\255\002", 8174);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClientMessage.proto", &protobuf_RegisterTypes);
   MsgResultDisplay::default_instance_ = new MsgResultDisplay();
@@ -4348,6 +4350,7 @@ void MsgLoginOutReq::Swap(MsgLoginOutReq* other) {
 const int MsgCreateRoleReq::kNameFieldNumber;
 const int MsgCreateRoleReq::kSexFieldNumber;
 const int MsgCreateRoleReq::kModelFieldNumber;
+const int MsgCreateRoleReq::kInviteridFieldNumber;
 #endif  // !_MSC_VER
 
 MsgCreateRoleReq::MsgCreateRoleReq()
@@ -4369,6 +4372,7 @@ void MsgCreateRoleReq::SharedCtor() {
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   sex_ = 0u;
   model_ = 0u;
+  inviterid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4414,6 +4418,7 @@ void MsgCreateRoleReq::Clear() {
     }
     sex_ = 0u;
     model_ = 0u;
+    inviterid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4469,6 +4474,22 @@ bool MsgCreateRoleReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(32)) goto parse_inviterid;
+        break;
+      }
+
+      // optional uint32 inviterid = 4 [default = 0];
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_inviterid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &inviterid_)));
+          set_has_inviterid();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4510,6 +4531,11 @@ void MsgCreateRoleReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->model(), output);
   }
 
+  // optional uint32 inviterid = 4 [default = 0];
+  if (has_inviterid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->inviterid(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4536,6 +4562,11 @@ void MsgCreateRoleReq::SerializeWithCachedSizes(
   // required uint32 model = 3;
   if (has_model()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->model(), target);
+  }
+
+  // optional uint32 inviterid = 4 [default = 0];
+  if (has_inviterid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->inviterid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4568,6 +4599,13 @@ int MsgCreateRoleReq::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->model());
+    }
+
+    // optional uint32 inviterid = 4 [default = 0];
+    if (has_inviterid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->inviterid());
     }
 
   }
@@ -4606,6 +4644,9 @@ void MsgCreateRoleReq::MergeFrom(const MsgCreateRoleReq& from) {
     if (from.has_model()) {
       set_model(from.model());
     }
+    if (from.has_inviterid()) {
+      set_inviterid(from.inviterid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4633,6 +4674,7 @@ void MsgCreateRoleReq::Swap(MsgCreateRoleReq* other) {
     std::swap(name_, other->name_);
     std::swap(sex_, other->sex_);
     std::swap(model_, other->model_);
+    std::swap(inviterid_, other->inviterid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -67,7 +67,7 @@ namespace KFrame
         void OnEnterQueryBattleRoom( KFEntity* player );
 
         // 结算战绩
-        void BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore );
+        void BalanceBattleScore( KFEntity* player, KFData* kfscore, KFMsg::PBBattleScore* pbscore );
 
         // 计算总评分
         uint32 CalcTotalScore( KFEntity* player );

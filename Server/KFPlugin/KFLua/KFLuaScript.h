@@ -19,7 +19,7 @@ namespace KFrame
         void ReleaseScript();
 
         template< class ... T >
-        void CallFunction( const std::string& function, uint32 objectid, T&& ...params )
+        void CallFunction( const std::string& function, uint64 objectid, T&& ...params )
         {
             try
             {

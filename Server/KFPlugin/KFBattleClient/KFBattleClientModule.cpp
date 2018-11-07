@@ -150,7 +150,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}] leave battle room[{}]!", player->GetKeyID(), roomid );
     }
 
-    void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, const KFMsg::PBBattleScore* pbscore )
+    void KFBattleClientModule::BalanceBattleScore( KFEntity* player, KFData* kfscore, KFMsg::PBBattleScore* pbscore )
     {
         // 游戏场数
         auto kfobject = player->GetData();
@@ -161,11 +161,11 @@ namespace KFrame
         {
             player->UpdateData( kfscore, __KF_STRING__( victory ), KFOperateEnum::Add, 1 );
         }
-        else if ( pbscore->ranking() <= __TOP_FIVE__ )
+        if ( pbscore->ranking() <= __TOP_FIVE__ )
         {
             player->UpdateData( kfscore, __KF_STRING__( topfive ), KFOperateEnum::Add, 1 );
         }
-        else if ( pbscore->ranking() <= __TOP_TEN__ )
+        if ( pbscore->ranking() <= __TOP_TEN__ )
         {
             player->UpdateData( kfscore, __KF_STRING__( topten ), KFOperateEnum::Add, 1 );
         }
@@ -182,6 +182,12 @@ namespace KFrame
             std::string maxname = "max" + pbdata->name();
             player->UpdateData( kfscore, maxname, KFOperateEnum::Greater, pbdata->value() );
         }
+
+        if ( pbscore->has_score() )
+        {
+            player->UpdateData( kfscore, __KF_STRING__( score ), KFOperateEnum::Add, pbscore->score() );
+        }
+
 
         // 胜率
         auto victorycount = kfscore->GetValue< uint32 >( __KF_STRING__( victory ) );
@@ -204,6 +210,7 @@ namespace KFrame
             KFAgents kfagents;
             kfagents.ParseFromString( pbscore->reward(), __FUNC_LINE__ );
             player->AddAgentData( &kfagents, 1.0f, false, __FUNC_LINE__ );
+            pbscore->clear_reward();
         }
 
         // 成就
@@ -215,6 +222,7 @@ namespace KFrame
             {
                 auto pbachieve = &pbachieves->taskdata( i );
                 player->UpdateData( kfachieves, pbachieve->id(), __KF_STRING__( value ), KFOperateEnum::Set, pbachieve->value() );
+                pbscore->clear_achieve();
             }
         }
     }
@@ -232,7 +240,7 @@ namespace KFrame
             player->UpdateData( __KF_STRING__( matchid ), KFOperateEnum::Set, _invalid_int );
         }
 
-        auto pbscore = &kfmsg.pbscore();
+        auto pbscore = kfmsg.mutable_pbscore();
         auto scorename = _kf_option->GetString( __KF_STRING__( matchscore ), pbscore->matchid() );
 
         __LOG_DEBUG__( "player[{}] room[{}] score[{}:{}] req!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );

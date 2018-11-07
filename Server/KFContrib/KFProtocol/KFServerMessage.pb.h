@@ -3133,6 +3133,13 @@ class LIBPROTOC_EXPORT S2SCreateRoleReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 sex() const;
   inline void set_sex(::google::protobuf::uint32 value);
 
+  // required uint32 inviterid = 5;
+  inline bool has_inviterid() const;
+  inline void clear_inviterid();
+  static const int kInviteridFieldNumber = 5;
+  inline ::google::protobuf::uint32 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateRoleReq)
  private:
   inline void set_has_playerid();
@@ -3143,6 +3150,8 @@ class LIBPROTOC_EXPORT S2SCreateRoleReq : public ::google::protobuf::Message {
   inline void clear_has_modleid();
   inline void set_has_sex();
   inline void clear_has_sex();
+  inline void set_has_inviterid();
+  inline void clear_has_inviterid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -3150,9 +3159,10 @@ class LIBPROTOC_EXPORT S2SCreateRoleReq : public ::google::protobuf::Message {
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 modleid_;
   ::google::protobuf::uint32 sex_;
+  ::google::protobuf::uint32 inviterid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -3250,10 +3260,17 @@ class LIBPROTOC_EXPORT S2SCreateRoleAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 sex() const;
   inline void set_sex(::google::protobuf::uint32 value);
 
-  // required uint32 result = 5;
+  // required uint32 inviterid = 5;
+  inline bool has_inviterid() const;
+  inline void clear_inviterid();
+  static const int kInviteridFieldNumber = 5;
+  inline ::google::protobuf::uint32 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint32 value);
+
+  // required uint32 result = 6;
   inline bool has_result() const;
   inline void clear_result();
-  static const int kResultFieldNumber = 5;
+  static const int kResultFieldNumber = 6;
   inline ::google::protobuf::uint32 result() const;
   inline void set_result(::google::protobuf::uint32 value);
 
@@ -3267,6 +3284,8 @@ class LIBPROTOC_EXPORT S2SCreateRoleAck : public ::google::protobuf::Message {
   inline void clear_has_modleid();
   inline void set_has_sex();
   inline void clear_has_sex();
+  inline void set_has_inviterid();
+  inline void clear_has_inviterid();
   inline void set_has_result();
   inline void clear_has_result();
 
@@ -3276,10 +3295,11 @@ class LIBPROTOC_EXPORT S2SCreateRoleAck : public ::google::protobuf::Message {
   ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 modleid_;
   ::google::protobuf::uint32 sex_;
+  ::google::protobuf::uint32 inviterid_;
   ::google::protobuf::uint32 result_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -16005,6 +16025,28 @@ inline void S2SCreateRoleReq::set_sex(::google::protobuf::uint32 value) {
   sex_ = value;
 }
 
+// required uint32 inviterid = 5;
+inline bool S2SCreateRoleReq::has_inviterid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SCreateRoleReq::set_has_inviterid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SCreateRoleReq::clear_has_inviterid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateRoleReq::clear_inviterid() {
+  inviterid_ = 0u;
+  clear_has_inviterid();
+}
+inline ::google::protobuf::uint32 S2SCreateRoleReq::inviterid() const {
+  return inviterid_;
+}
+inline void S2SCreateRoleReq::set_inviterid(::google::protobuf::uint32 value) {
+  set_has_inviterid();
+  inviterid_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // S2SCreateRoleAck
@@ -16145,15 +16187,37 @@ inline void S2SCreateRoleAck::set_sex(::google::protobuf::uint32 value) {
   sex_ = value;
 }
 
-// required uint32 result = 5;
-inline bool S2SCreateRoleAck::has_result() const {
+// required uint32 inviterid = 5;
+inline bool S2SCreateRoleAck::has_inviterid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void S2SCreateRoleAck::set_has_result() {
+inline void S2SCreateRoleAck::set_has_inviterid() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void S2SCreateRoleAck::clear_has_result() {
+inline void S2SCreateRoleAck::clear_has_inviterid() {
   _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateRoleAck::clear_inviterid() {
+  inviterid_ = 0u;
+  clear_has_inviterid();
+}
+inline ::google::protobuf::uint32 S2SCreateRoleAck::inviterid() const {
+  return inviterid_;
+}
+inline void S2SCreateRoleAck::set_inviterid(::google::protobuf::uint32 value) {
+  set_has_inviterid();
+  inviterid_ = value;
+}
+
+// required uint32 result = 6;
+inline bool S2SCreateRoleAck::has_result() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SCreateRoleAck::set_has_result() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SCreateRoleAck::clear_has_result() {
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SCreateRoleAck::clear_result() {
   result_ = 0u;
