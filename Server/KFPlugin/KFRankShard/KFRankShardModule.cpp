@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFRankShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_rank_config );
         __UNREGISTER_TIMER__();
         __UNREGISTER_SCHEDULE_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();

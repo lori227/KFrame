@@ -90,7 +90,7 @@ namespace KFrame
 
     void KFTcpServerModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_server_config );
         _kf_server_engine->ShutEngine();
     }
 

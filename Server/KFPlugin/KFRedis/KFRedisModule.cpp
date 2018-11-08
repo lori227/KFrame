@@ -10,7 +10,8 @@ namespace KFrame
 
     void KFRedisModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_redis_config );
+
         KFLocker lock( _mt_mutex );
         for ( auto& iter : _redis_execute._objects )
         {

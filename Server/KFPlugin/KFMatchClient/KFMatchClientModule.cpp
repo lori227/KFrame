@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFMatchClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_match_config );
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( player ), __KF_STRING__( matchid ) );

@@ -48,7 +48,7 @@ namespace KFrame
     void KFHttpServerModule::ShutDown()
     {
         _http_server->ShutDown();
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_http_server_config );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

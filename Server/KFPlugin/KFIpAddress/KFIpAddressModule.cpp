@@ -24,7 +24,7 @@ namespace KFrame
 
     void KFIpAddressModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_ip_config );
     }
 
     void KFIpAddressModule::AfterLoad()

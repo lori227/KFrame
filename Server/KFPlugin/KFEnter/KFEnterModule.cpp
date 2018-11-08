@@ -15,7 +15,7 @@ namespace KFrame
 
     void KFEnterModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_enter_config );
         _kf_player->UnRegisterEnterFunction( this );
     }
 

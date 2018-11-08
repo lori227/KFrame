@@ -35,7 +35,6 @@ namespace KFrame
 
     void KFGroupShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ );

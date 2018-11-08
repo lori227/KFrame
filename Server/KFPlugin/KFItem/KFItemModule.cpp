@@ -40,7 +40,7 @@ namespace KFrame
 
     void KFItemModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_item_config );
 
         _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( item ) );
         _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( item ) );

@@ -15,7 +15,7 @@ namespace KFrame
 
     void KFLeaveModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_leave_config );
         _kf_player->UnRegisterLeaveFunction( this );
     }
 

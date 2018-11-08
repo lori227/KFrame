@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFTaskModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_task_config );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_component->UnRegisterAddDataModule( this );
         _kf_component->UnRegisterRemoveDataModule( this );

@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFRankClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_rank_config );
         _kf_component->UnRegisterUpdateDataModule( this );
         ///////////////////////////////////////////////////////////////////////////////////////////
 

@@ -16,7 +16,7 @@ namespace KFrame
 
     void KFSignInModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_signin_config );
 
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SEVEN_SIGNIN_REWARD_REQ );
     }

@@ -28,7 +28,7 @@ namespace KFrame
 
     void KFResetModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_reset_config );
         _kf_player->UnRegisterResetFunction( this );
         _kf_player->UnRegisterRunDataFunction( this );
     }

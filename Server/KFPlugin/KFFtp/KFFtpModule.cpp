@@ -53,7 +53,7 @@ namespace KFrame
 
     void KFFtpModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_ftp_config );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

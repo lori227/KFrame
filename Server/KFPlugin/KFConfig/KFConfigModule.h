@@ -27,7 +27,6 @@ namespace KFrame
 
     public:
         KFConfig* _config;
-        std::string _module;
         std::string _file;
         bool _can_reload;
     };
@@ -48,13 +47,13 @@ namespace KFrame
         virtual void LoadConfig();
 
         // 加载一个配置
-        virtual void AddConfig( KFConfig* config, const std::string& module, const std::string& file, bool canreload );
+        virtual void AddConfig( KFConfig* config, const std::string& file, bool canreload );
 
         // 删除配置
-        virtual void RemoveConfig( const std::string& module );
+        virtual void RemoveConfig( KFConfig* config );
 
         // 加载配置
-        void LoadConfig( KFConfig* config, const std::string& module, const std::string& file );
+        void LoadConfig( KFConfig* config, const std::string& file );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +63,7 @@ namespace KFrame
 
     private:
         // 配置列表
-        KFMap< std::string, const std::string&, KFConfigData > _kf_config_data;
+        KFMap< uint64, uint64, KFConfigData > _kf_config_data;
     };
 }
 

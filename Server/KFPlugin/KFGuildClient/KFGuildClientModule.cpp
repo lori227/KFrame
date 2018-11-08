@@ -63,7 +63,7 @@ namespace KFrame
 
     void KFGuildClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_guild_config );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CREATE_GUILD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_GUILD_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_INVITE_GUILD_REQ );

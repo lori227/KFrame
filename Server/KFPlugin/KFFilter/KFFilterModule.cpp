@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFFilterModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_filter_config );
     }
 
     bool KFFilterModule::CheckFilter( const std::string& source )

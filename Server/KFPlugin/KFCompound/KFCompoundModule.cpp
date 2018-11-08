@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFCompoundModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_compound_config );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_COMPOUND_DATA_REQ );
     }
 

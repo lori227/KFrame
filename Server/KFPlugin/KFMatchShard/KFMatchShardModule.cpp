@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFMatchShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_match_config );
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ );

@@ -40,7 +40,7 @@ namespace KFrame
 
     void KFClothesModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_clothes_config );
 
         _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( clothes ) );
         _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( clothes ) );

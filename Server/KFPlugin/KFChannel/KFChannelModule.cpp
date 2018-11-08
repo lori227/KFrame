@@ -37,7 +37,7 @@ namespace KFrame
 
     void KFChannelModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_channel_config );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ namespace KFrame
         KFJson request( data );
 
         auto channel = request.GetUInt32( __KF_STRING__( channel ) );
-        if ( KFGlobal::Instance()->_app_channel != KFMsg::Internal && KFGlobal::Instance()->_app_channel != channel )
+        if ( KFGlobal::Instance()->_app_channel != KFMsg::Internal && channel == KFMsg::Internal )
         {
             return _kf_http_server->SendResponseCode( KFMsg::ChannelNotSupport );
         }

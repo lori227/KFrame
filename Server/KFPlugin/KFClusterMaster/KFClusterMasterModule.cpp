@@ -33,7 +33,7 @@ namespace KFrame
 
     void KFClusterMasterModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_cluster_config );
         __UNREGISTER_SERVER_LOST_FUNCTION__();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

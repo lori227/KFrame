@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFOptionModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_option_config );
     }
 
     ////////////////////////////////////////////////////////////////
