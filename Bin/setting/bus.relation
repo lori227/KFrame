@@ -64,6 +64,7 @@
 
 		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="dir" AppType="proxy" AppId="*" ConnectName="dir" ConnectType="shard" ConnectId="*"/>
+		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>

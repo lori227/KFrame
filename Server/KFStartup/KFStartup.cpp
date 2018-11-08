@@ -54,8 +54,6 @@ namespace KFrame
     }
 
     typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc );
-
-    //static const std::string _plugin_path = "./plugin/";
     bool KFStartup::LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting )
     {
         auto kfglobal = KFGlobal::Instance();

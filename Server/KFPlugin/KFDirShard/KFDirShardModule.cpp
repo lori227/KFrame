@@ -54,6 +54,8 @@ namespace KFrame
             kfdirdata->_zone_id = kfmsg.zoneid();
             kfdirdata->_zone_channel = kfmsg.zonechannel();
             _kf_dir_list.Insert( kfmsg.zoneid(), kfdirdata );
+
+            __LOG_INFO__( "login gate [{}][{}:{}] register!", KFAppID::ToString( kfmsg.appid() ), kfmsg.ip(), kfmsg.port() );
         }
 
         kfdirdata->_zone_name = kfmsg.zonename();
