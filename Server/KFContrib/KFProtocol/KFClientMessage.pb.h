@@ -6818,23 +6818,26 @@ class LIBPROTOC_EXPORT MsgUpdateSettingReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required .KFMsg.PBStrings settings = 1;
-  inline bool has_settings() const;
-  inline void clear_settings();
-  static const int kSettingsFieldNumber = 1;
-  inline const ::KFMsg::PBStrings& settings() const;
-  inline ::KFMsg::PBStrings* mutable_settings();
-  inline ::KFMsg::PBStrings* release_settings();
-  inline void set_allocated_settings(::KFMsg::PBStrings* settings);
+  // required string settingdata = 1;
+  inline bool has_settingdata() const;
+  inline void clear_settingdata();
+  static const int kSettingdataFieldNumber = 1;
+  inline const ::std::string& settingdata() const;
+  inline void set_settingdata(const ::std::string& value);
+  inline void set_settingdata(const char* value);
+  inline void set_settingdata(const char* value, size_t size);
+  inline ::std::string* mutable_settingdata();
+  inline ::std::string* release_settingdata();
+  inline void set_allocated_settingdata(::std::string* settingdata);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgUpdateSettingReq)
  private:
-  inline void set_has_settings();
-  inline void clear_has_settings();
+  inline void set_has_settingdata();
+  inline void clear_has_settingdata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::KFMsg::PBStrings* settings_;
+  ::std::string* settingdata_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -14339,41 +14342,73 @@ inline void MsgQuerySettingAck::set_allocated_pbsetting(::KFMsg::PBObject* pbset
 
 // MsgUpdateSettingReq
 
-// required .KFMsg.PBStrings settings = 1;
-inline bool MsgUpdateSettingReq::has_settings() const {
+// required string settingdata = 1;
+inline bool MsgUpdateSettingReq::has_settingdata() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MsgUpdateSettingReq::set_has_settings() {
+inline void MsgUpdateSettingReq::set_has_settingdata() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MsgUpdateSettingReq::clear_has_settings() {
+inline void MsgUpdateSettingReq::clear_has_settingdata() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MsgUpdateSettingReq::clear_settings() {
-  if (settings_ != NULL) settings_->::KFMsg::PBStrings::Clear();
-  clear_has_settings();
+inline void MsgUpdateSettingReq::clear_settingdata() {
+  if (settingdata_ != &::google::protobuf::internal::kEmptyString) {
+    settingdata_->clear();
+  }
+  clear_has_settingdata();
 }
-inline const ::KFMsg::PBStrings& MsgUpdateSettingReq::settings() const {
-  return settings_ != NULL ? *settings_ : *default_instance_->settings_;
+inline const ::std::string& MsgUpdateSettingReq::settingdata() const {
+  return *settingdata_;
 }
-inline ::KFMsg::PBStrings* MsgUpdateSettingReq::mutable_settings() {
-  set_has_settings();
-  if (settings_ == NULL) settings_ = new ::KFMsg::PBStrings;
-  return settings_;
+inline void MsgUpdateSettingReq::set_settingdata(const ::std::string& value) {
+  set_has_settingdata();
+  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+    settingdata_ = new ::std::string;
+  }
+  settingdata_->assign(value);
 }
-inline ::KFMsg::PBStrings* MsgUpdateSettingReq::release_settings() {
-  clear_has_settings();
-  ::KFMsg::PBStrings* temp = settings_;
-  settings_ = NULL;
-  return temp;
+inline void MsgUpdateSettingReq::set_settingdata(const char* value) {
+  set_has_settingdata();
+  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+    settingdata_ = new ::std::string;
+  }
+  settingdata_->assign(value);
 }
-inline void MsgUpdateSettingReq::set_allocated_settings(::KFMsg::PBStrings* settings) {
-  delete settings_;
-  settings_ = settings;
-  if (settings) {
-    set_has_settings();
+inline void MsgUpdateSettingReq::set_settingdata(const char* value, size_t size) {
+  set_has_settingdata();
+  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+    settingdata_ = new ::std::string;
+  }
+  settingdata_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgUpdateSettingReq::mutable_settingdata() {
+  set_has_settingdata();
+  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+    settingdata_ = new ::std::string;
+  }
+  return settingdata_;
+}
+inline ::std::string* MsgUpdateSettingReq::release_settingdata() {
+  clear_has_settingdata();
+  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
   } else {
-    clear_has_settings();
+    ::std::string* temp = settingdata_;
+    settingdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgUpdateSettingReq::set_allocated_settingdata(::std::string* settingdata) {
+  if (settingdata_ != &::google::protobuf::internal::kEmptyString) {
+    delete settingdata_;
+  }
+  if (settingdata) {
+    set_has_settingdata();
+    settingdata_ = settingdata;
+  } else {
+    clear_has_settingdata();
+    settingdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

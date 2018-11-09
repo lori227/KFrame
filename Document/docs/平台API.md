@@ -130,15 +130,15 @@ Content-Length: 100
 ### 邀请码上报
 
 - 接口名: invitationCode
-- 接口说明: 获取游戏激活码
+- 接口说明: 邀请码积分返利
 - URL格式: http://192.168.1.9:8080/v1/server/invitationCode?sig=dsafatewr&appid=10001&timestamp=1578745715
 - 入参说明:
 
 | 参数名称 | 类型 | 描述 |
 | - | - | - |
 | accountid | uint32 | 游戏内角色id |
-| channel | int | 渠道id |
 | inviterid | uint32 | 邀请人游戏内id |
+| channel | int | 渠道id |
 
 - 返回说明: 返回结果格式为json, 字段名说明为
 
@@ -159,10 +159,88 @@ Content-Length: 100
 
 {
     "accountid": 11111,
-    "channel": 1,
+	"channel": 3,
     "inviterid": 22222
 }
 
 //返回结果:
 {"code":0,"msg":"I have already added","data":""}
+```
+
+### 邀请码信息
+
+- 接口名: getIntegralInfo
+- 接口说明: 获取游戏激活码信息
+- URL格式: http://192.168.1.9:8080/v1/server/getIntegralInfo?sig=dsafatewr&appid=10001&timestamp=1578745715
+- 入参说明:
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| accountid | uint32 | 游戏内角色id |
+| channel | int | 渠道id |
+
+- 返回说明: 返回结果格式为json, 字段名说明为
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| code | int | 返回码, 0:正确 其他:失败 |
+| msg | string | code非0，则表示"错误码, 错误提示", 详细注释参见错误码描述 |
+| data | json | 返回的数据（val:积分值，alipay:支付宝账户） |
+
+- 示例:
+
+```html
+POST v1/server/getIntegralInfo?sig=dsafatewr&appid=10001&timestamp=1578745715
+HTTP/1.0
+Host:192.168.1.9:8080
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+{
+    "accountid": 11111,
+	"channel": 3,
+}
+
+//返回结果:
+{"code":0,"msg":"Integral value success","data":"{"val":"XX","alipay":"XXX"}"}
+```
+
+### 绑定支付宝
+
+- 接口名: bindAlipay
+- 接口说明: 绑定邀请码信息，用于积分转成钱提现（PC版的，steam版本）
+- URL格式: http://192.168.1.9:8080/v1/server/bindAlipay?sig=dsafatewr&appid=10001&timestamp=1578745715
+- 入参说明:
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| accountid | uint32 | 游戏内角色id |
+| channel | int | 渠道id |
+| alipay | uint32 | 支付宝账号 |
+
+- 返回说明: 返回结果格式为json, 字段名说明为
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| code | int | 返回码, 0:正确 其他:失败 |
+| msg | string | code非0，则表示"错误码, 错误提示", 详细注释参见错误码描述 |
+| data | json | 返回的数据 |
+
+- 示例:
+
+```html
+POST v1/server/bindAlipay?sig=dsafatewr&appid=10001&timestamp=1578745715
+HTTP/1.0
+Host:192.168.1.9:8080
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+{
+    "accountid": 11111,
+	"channel": 3,
+	"alipay": "xf_9007",
+}
+
+//返回结果:
+{"code":0,"msg":"Bind success","data":""}
 ```

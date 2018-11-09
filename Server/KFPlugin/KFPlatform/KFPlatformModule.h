@@ -6,10 +6,9 @@
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
-//    @Date             :    2017-1-19
+//    @Date             :    2017-11-9
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFPlatformInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"

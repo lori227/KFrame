@@ -375,6 +375,7 @@ namespace KFrame
         __STRING_DEFINE__( chatmaxlength );
         __STRING_DEFINE__( createrolelua );
         __STRING_DEFINE__( inviterid );
+		__STRING_DEFINE__( taskcount );
         __STRING_DEFINE__( alipay );
 
     }
