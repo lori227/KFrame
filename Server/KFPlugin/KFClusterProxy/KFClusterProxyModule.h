@@ -59,21 +59,21 @@ namespace KFrame
         virtual uint32 SelectClusterShard( const char* data, uint32 objectid, bool cache = false );
 
         // 发送消息到Shard
-        virtual void SendMessageToShard( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendMessageToShard( uint32 msgid, const char* data, uint32 length );
+        virtual void SendToShard( uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToShard( uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length );
 
         // 发送消息到客户端
-        virtual void SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendMessageToClient( uint32 msgid, const char* data, uint32 length );
+        virtual void SendToClient( uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToClient( uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length );
 
         ////////////////////////////////////////////////////////////////////////////////
         // 添加映射

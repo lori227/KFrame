@@ -44,7 +44,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFPublicClientModule::SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( public ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( public ), msgid, message );
     }
 
     bool KFPublicClientModule::UpdatePublicData( KFEntity* player, const MapString& values )
@@ -162,6 +162,6 @@ namespace KFrame
             _kf_kernel->SerializeToView( _kf_basic, pbbasic );
         }
 
-        _kf_player->SendMessageToClient( player, KFMsg::MSG_TELL_QUERY_BASIC, &ack );
+        _kf_player->SendToClient( player, KFMsg::MSG_TELL_QUERY_BASIC, &ack );
     }
 }

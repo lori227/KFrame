@@ -18,13 +18,14 @@ function GetSteamActivationCode( playerid )
     end
 
     -- 获取url
-    local url = data.GetOptionString("getactivationcode")
+    local url = data.GetOptionString("platapiurl").."getactivationcode"
+    local nowtime = time.Now()
 
     -- param
     local url_param = {}
-    url_param["timestamp"] = time.Now()
+    url_param["timestamp"] = nowtime
     url_param["appid"] = data.GetOptionInt("platappid")
-    url_param["sig"] = http.CommonSig(data.GetOptionString("platappkey"), url_param["timestamp"])
+    url_param["sig"] = http.CommonSig(nowtime)
 
     -- post data
     local http_body = {}

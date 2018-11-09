@@ -73,12 +73,12 @@ namespace KFrame
 
     bool KFBattleRoom::SendMessageToMatch( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendMessageToClient( _match_proxy_id, _match_shard_id, msgid, message );
+        return _kf_cluster_shard->SendToClient( _match_proxy_id, _match_shard_id, msgid, message );
     }
 
     bool KFBattleRoom::SendMessageToBattle( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendMessageToClient( _battle_server._proxy_id, _battle_server._server_id, msgid, message );
+        return _kf_cluster_shard->SendToClient( _battle_server._proxy_id, _battle_server._server_id, msgid, message );
     }
 
     void KFBattleRoom::SendMessageToRoom( uint32 msgid, google::protobuf::Message* message )

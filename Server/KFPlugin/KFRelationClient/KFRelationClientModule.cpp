@@ -78,7 +78,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFRelationClientModule::SendMessageToRelation( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( relation ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( relation ), msgid, message );
     }
 
     bool KFRelationClientModule::SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )

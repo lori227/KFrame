@@ -459,7 +459,7 @@ namespace KFrame
     }
 
 
-    bool KFPlayerModule::SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFPlayerModule::SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
@@ -467,10 +467,10 @@ namespace KFrame
             return false;
         }
 
-        return SendMessageToClient( player, msgid, message );
+        return SendToClient( player, msgid, message );
     }
 
-    bool KFPlayerModule::SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length )
+    bool KFPlayerModule::SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length )
     {
         auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
@@ -478,10 +478,10 @@ namespace KFrame
             return false;
         }
 
-        return SendMessageToClient( player, msgid, data, length );
+        return SendToClient( player, msgid, data, length );
     }
 
-    bool KFPlayerModule::SendMessageToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfobject = player->GetData();
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
@@ -490,7 +490,7 @@ namespace KFrame
         return _kf_game->SendToClient( gateid, playerid, msgid, message );
     }
 
-    bool KFPlayerModule::SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length )
+    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length )
     {
         auto kfobject = player->GetData();
         auto playerid = static_cast< uint32 >( player->GetKeyID() );
@@ -499,7 +499,7 @@ namespace KFrame
         return _kf_game->SendToClient( gateid, playerid, msgid, data, length );
     }
 
-    bool KFPlayerModule::SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFPlayerModule::SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
         auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
@@ -507,12 +507,12 @@ namespace KFrame
         return _kf_route->SendMessageToRoute( serverid, playerid, msgid, message );
     }
 
-    void KFPlayerModule::SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself )
+    void KFPlayerModule::SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself )
     {
         // 先发送给自己
         if ( sendself )
         {
-            SendMessageToClient( player, msgid, message );
+            SendToClient( player, msgid, message );
         }
 
         auto kfobject = player->GetData();
@@ -524,7 +524,7 @@ namespace KFrame
             if ( kfmember->GetKeyID() != player->GetKeyID() )
             {
                 auto kfbasic = kfmember->FindData( __KF_STRING__( basic ) );
-                SendMessageToClient( kfbasic, msgid, message );
+                SendToClient( kfbasic, msgid, message );
             }
 
             kfmember = kfmemberrecord->NextData();
@@ -561,7 +561,7 @@ namespace KFrame
             return true;
         }
 
-        return SendMessageToClient( player, msgid, data, length );
+        return SendToClient( player, msgid, data, length );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandlePlayerDisconnectionReq )
@@ -621,7 +621,7 @@ namespace KFrame
         KFMsg::S2SKickGatePlayerReq req;
         req.set_playerid( playerid );
         req.set_type( type );
-        SendMessageToClient( player, KFMsg::S2S_KICK_GATE_PLAYER_REQ, &req );
+        SendToClient( player, KFMsg::S2S_KICK_GATE_PLAYER_REQ, &req );
 
         // 删除玩家
         _kf_component->RemoveEntity( playerid );
@@ -639,7 +639,7 @@ namespace KFrame
 
         KFMsg::MsgSyncUpdateData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendMessageToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
     void KFPlayerModule::SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -654,7 +654,7 @@ namespace KFrame
 
         KFMsg::MsgSyncAddData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendMessageToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
     void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -669,7 +669,7 @@ namespace KFrame
 
         KFMsg::MsgSyncRemoveData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendMessageToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
     void KFPlayerModule::SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line )
@@ -678,7 +678,7 @@ namespace KFrame
         {
             KFMsg::MsgShowRewardAgent show;
             show.set_reward( reward );
-            SendMessageToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
+            SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
         }
 
         __LOG_INFO_FUNCTION__( function, line, "player={} add agent=[{}]!", player->GetKeyID(), reward );
@@ -886,7 +886,7 @@ namespace KFrame
             _kf_public->SendMessageToPublic( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &req );
         }
 
-        SendMessageToClient( player, KFMsg::MSG_TELL_QUERY_PLAYER, &ack );
+        SendToClient( player, KFMsg::MSG_TELL_QUERY_PLAYER, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRemoveDataReq )
@@ -926,7 +926,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.queryid() );
         ack.set_guestcount( kfmsg.guestcount() );
         ack.mutable_guestdata()->CopyFrom( kfmsg.guestdata() );
-        SendMessageToClient( player, KFMsg::MSG_QUERY_GUEST_ACK, &ack );
+        SendToClient( player, KFMsg::MSG_QUERY_GUEST_ACK, &ack );
     }
 
 
@@ -939,7 +939,7 @@ namespace KFrame
 
         KFMsg::MsgQuerySettingAck ack;
         _kf_kernel->SerializeToData( kfsetting, ack.mutable_pbsetting() );
-        SendMessageToClient( player, KFMsg::MSG_QUERY_SETTING_ACK, &ack );
+        SendToClient( player, KFMsg::MSG_QUERY_SETTING_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateSettingReq )
@@ -949,6 +949,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
 
+        /*
         for ( auto i = 0; i < kfmsg.strsetting_size(); ++i )
         {
             auto setting = kfmsg.strsetting( i );
@@ -959,7 +960,7 @@ namespace KFrame
         {
             auto setting = kfmsg.intsetting( i );
             player->UpdateData( kfsetting, setting.name(), KFOperateEnum::Set, setting.value() );
-        }
+        }*/
     }
 
     __KF_DEBUG_FUNCTION__( KFPlayerModule::DebugAddData )

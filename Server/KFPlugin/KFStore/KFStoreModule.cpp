@@ -45,7 +45,7 @@ namespace KFrame
             KFMsg::MsgBuyStoreAck ack;
             ack.set_storeid( kfmsg.shopid() );
             ack.set_code( result );
-            _kf_player->SendMessageToClient( playerid, KFMsg::MSG_BUY_STORE_ACK, &ack );
+            _kf_player->SendToClient( playerid, KFMsg::MSG_BUY_STORE_ACK, &ack );
         }
         else
         {
@@ -226,7 +226,7 @@ namespace KFrame
             ack.CopyFrom( *( _kf_store_config->GetStoreClientShowInfo() ) );
         }
 
-        _kf_player->SendMessageToClient( player, KFMsg::MSG_QUERY_STORE_INFO_ACK, &ack );
+        _kf_player->SendToClient( player, KFMsg::MSG_QUERY_STORE_INFO_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleSetWishOrderReq )

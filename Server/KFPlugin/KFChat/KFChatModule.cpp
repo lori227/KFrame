@@ -168,7 +168,7 @@ namespace KFrame
         info.set_playerid( playerid );
         info.set_chatinfo( kfmsg.chatinfo() );
         info.set_isvoice( kfmsg.isvoice() );
-        _kf_player->SendMessageToGroup( player, KFMsg::MSG_SEND_GROUPCHAT_INFO, &info );
+        _kf_player->SendToGroup( player, KFMsg::MSG_SEND_GROUPCHAT_INFO, &info );
     }
 
 }

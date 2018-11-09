@@ -135,16 +135,16 @@ namespace KFrame
         virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line ) = 0;
 
         // 发送消息
-        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
 
-        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length ) = 0;
 
-        virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到队伍客户端
-        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true ) = 0;
+        virtual void SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 

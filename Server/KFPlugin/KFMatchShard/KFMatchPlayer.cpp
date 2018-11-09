@@ -66,6 +66,6 @@ namespace KFrame
 
     bool KFMatchPlayer::SendMessageToGame( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendMessageToClient( _pb_player.serverid(), msgid, message );
+        return _kf_cluster_shard->SendToClient( _pb_player.serverid(), msgid, message );
     }
 }

@@ -49,7 +49,7 @@ namespace KFrame
         auto zonedata = req.mutable_zonedata();
         zonedata->set_serverid( kfglobal->_app_id );
         zonedata->set_zoneid( _kf_zone->GetZone()->_id );
-        _kf_cluster->SendMessageToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &req );
+        _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &req );
     }
 
     bool KFRouteClientModule::SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
@@ -81,7 +81,7 @@ namespace KFrame
         transmitdata->set_playerid( playerid );
         transmitdata->set_msgid( msgid );
         transmitdata->set_msgdata( data, length );
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( route ), KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ, &req );
+        return _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleTransmitRouteZoneMessageAck )

@@ -156,7 +156,7 @@ namespace KFrame
             MapStringToPBRelation( frienddata->_value, pbfriend, false );
         }
 
-        _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_FRIEND_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_FRIEND_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryFriendInviteReq )
@@ -199,7 +199,7 @@ namespace KFrame
             MapStringToPBRelation( queryinvitedata->_value, pbfriend, false );
         }
 
-        _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_FRIEND_INVITE_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_FRIEND_INVITE_ACK, &ack );
 
         // 删除已经过期的邀请信息
         for ( auto id : removes )
@@ -282,7 +282,7 @@ namespace KFrame
         MapString friendvaluse;
         friendvaluse[ __KF_STRING__( message ) ] = kfmsg.message();
         MapStringToPBRelation( friendvaluse, pbfriend, true );
-        _kf_cluster_shard->SendMessageToClient( serverid, KFMsg::S2S_ADD_FRIEND_INVITE_ACK, &ack );
+        _kf_cluster_shard->SendToClient( serverid, KFMsg::S2S_ADD_FRIEND_INVITE_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelInviteReq )
@@ -358,7 +358,7 @@ namespace KFrame
 
         MapString friendvalues;
         MapStringToPBRelation( friendvalues, pbfriend, true );
-        _kf_cluster_shard->SendMessageToClient( serverid, KFMsg::S2S_ADD_FRIEND_ACK, &ack );
+        _kf_cluster_shard->SendToClient( serverid, KFMsg::S2S_ADD_FRIEND_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelFriendReq )
@@ -379,7 +379,7 @@ namespace KFrame
             KFMsg::S2SDelFriendAck ack;
             ack.set_playerid( kfmsg.targetplayerid() );
             ack.set_targetplayerid( kfmsg.selfplayerid() );
-            _kf_cluster_shard->SendMessageToClient( queryserverid->_value, KFMsg::S2S_DEL_FRIEND_ACK, &ack );
+            _kf_cluster_shard->SendToClient( queryserverid->_value, KFMsg::S2S_DEL_FRIEND_ACK, &ack );
         }
     }
 
@@ -442,7 +442,7 @@ namespace KFrame
         ack.set_playerid( selfid );
         ack.set_targetplayerid( targetid );
         ack.set_friendliness( friendliness );
-        _kf_cluster_shard->SendMessageToClient( queryserverid->_value, KFMsg::S2S_UPDATE_FRIENDLINESS_ACK, &ack );
+        _kf_cluster_shard->SendToClient( queryserverid->_value, KFMsg::S2S_UPDATE_FRIENDLINESS_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleAddRecentPlayerDataReq )
@@ -516,7 +516,7 @@ namespace KFrame
             MapStringToPBPlayer( queryplayerdata->_value, playerid, pbrelation );
         }
 
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_QUERY_RECENT_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_QUERY_RECENT_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandlePlayerToastReq )
@@ -555,7 +555,7 @@ namespace KFrame
             ack.set_result( KFMsg::RelationDatabaseBusy );
         }
 
-        _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_PLAYER_TOAST_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_PLAYER_TOAST_ACK, &ack );
     }
 
 
@@ -568,6 +568,6 @@ namespace KFrame
         KFMsg::MsgQueryToastCountAck ack;
         ack.set_playerid( kfmsg.targetplayerid() );
         ack.set_toastcount( querytoastcount->_value );
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &ack );
     }
 }

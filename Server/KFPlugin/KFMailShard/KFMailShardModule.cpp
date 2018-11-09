@@ -8,13 +8,13 @@ namespace KFrame
     #define __REGISTER_MAIL_MESSAGE__ __REGISTER_WORKER_MESSAGE__
     #define __UNREGISTER_MAIL_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
     #define __MAIL_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( mail ) )
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendMessageToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfguid, msgid, message )
 #else
     #define __REGISTER_MAIL_MESSAGE__ __REGISTER_MESSAGE__
     #define __UNREGISTER_MAIL_MESSAGE__ __UNREGISTER_MESSAGE__
     static KFRedisDriver* _mail_redis_driver = nullptr;
     #define __MAIL_REDIS_DRIVER__ _mail_redis_driver
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendMessageToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
 #endif
 
     KFMailShardModule::KFMailShardModule()

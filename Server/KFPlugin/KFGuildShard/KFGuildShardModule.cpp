@@ -10,11 +10,11 @@ namespace KFrame
 #ifdef __USE_WORKER__
     #define __REGISTER_GUILD_MESSAGE__ __REGISTER_WORKER_MESSAGE__
     #define __UNREGISTER_GUILD_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendMessageToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfguid, msgid, message )
 #else
     #define __REGISTER_GUILD_MESSAGE__ __REGISTER_MESSAGE__
     #define __UNREGISTER_GUILD_MESSAGE__ __UNREGISTER_MESSAGE__
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendMessageToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
 #endif
 
 #define __REDIS_PIPE_LIMIT_BEGIN__  auto cursor = _invalid_int
@@ -412,7 +412,7 @@ namespace KFrame
         if ( IsGuildMember( kfmsg.playerid() ) )
         {
             ack.set_code( KFMsg::GuildHadBuild );
-            _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
             return;
         }
 
@@ -420,7 +420,7 @@ namespace KFrame
         {
             // 名字重复
             ack.set_code( KFMsg::GuildNameRepeat );
-            _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
             return;
         }
 
@@ -468,7 +468,7 @@ namespace KFrame
         if ( KFMsg::Success != retcode )
         {
             ack.set_code( retcode );
-            _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
         }
         redisdriver->Pipeline();
 
@@ -479,14 +479,14 @@ namespace KFrame
 
         // 通知client 创建军团成功
         ack.set_code( KFMsg::Success );
-        _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+        _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
         // 通知client
         KFMsg::S2SLoginQueryGuildAck guilddataack;
         guilddataack.set_showapplicant( true );
         _kf_kernel->SerializeToOnline( kfguild->GetData(), guilddataack.mutable_guilddata() );
         guilddataack.set_playerid( kfmsg.playerid() );
         guilddataack.set_guildid( kfmsg.guildid() );
-        _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_LOGIN_QUERY_GUILD_ACK, &guilddataack );
+        _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_LOGIN_QUERY_GUILD_ACK, &guilddataack );
 
         // 写日志
         auto kfguildsetting = _kf_guild_shard_config->FindGuildSetting( 1 );
@@ -547,7 +547,7 @@ namespace KFrame
         ack.set_guildid( kfmsg.guildid() );
         ack.set_playerid( kfmsg.invitor() );
         ack.set_invitedid( kfmsg.invitedid() );
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_INVITE_GUILD_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_INVITE_GUILD_ACK, &ack );
     }
 
 
@@ -597,8 +597,8 @@ namespace KFrame
         {
             ack.set_code( KFMsg::Success );
         }
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
-        //_kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
+        //_kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleExitGuildReq )
@@ -830,7 +830,7 @@ namespace KFrame
                 SerialGuildData( guilddatas, ack.add_guilddatas() );
             }
         }
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HnadleKickMemberReq )
@@ -889,7 +889,7 @@ namespace KFrame
         ack.set_guildid( kfmsg.guildid() );
         _kf_kernel->SerializeToOnline( kfguild->GetData(), ack.mutable_guilddata() );
         ack.set_playerid( kfmsg.playerid() );
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_LOGIN_QUERY_GUILD_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_LOGIN_QUERY_GUILD_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleSearchGuildByNameReq )
@@ -908,7 +908,7 @@ namespace KFrame
             return;
         }
         SerialGuildData( guilddatas, ack.add_guilddatas() );
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleSetGuildSwitchReq )
@@ -997,7 +997,7 @@ namespace KFrame
         kfguild->UpdateData( __KF_STRING__( level ), KFOperateEnum::Set, level );
         __LOG_INFO__( "player[{}] upgrade guild[{}] level[{}] success!", kfmsg.guildid(), kfmsg.guildid(), level );
         ack.set_code( KFMsg::Success );
-        _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_UPGRADE_GUILD_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_UPGRADE_GUILD_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleAppointGuildMemberReq )
@@ -1088,7 +1088,7 @@ namespace KFrame
         KFMsg::S2SLoginQueryGuildidAck ack;
         ack.set_guildid( guildid );
         ack.set_playerid( kfmsg.playerid() );
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::S2S_LOGIN_QUERY_GUILDID_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::S2S_LOGIN_QUERY_GUILDID_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleQueryGuildLogReq )
@@ -1114,7 +1114,7 @@ namespace KFrame
             ack.add_guildlog( iter );
         }
 
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LOG_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_GUILD_LOG_ACK, &ack );
 
     }
 
@@ -1990,7 +1990,7 @@ namespace KFrame
                 continue;
             }
 
-            _kf_cluster_shard->SendMessageToPlayer( serverid, memberid, msgid, message );
+            _kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
 
             kfguildmember = kfguildmembers->NextData();
         }
@@ -2087,7 +2087,7 @@ namespace KFrame
         req.set_guildid( guildid );
         req.set_playerid( playerid );
         req.set_code( code );
-        return _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_PLAYER_GUILD_CHANGE_REQ, &req );
+        return _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_PLAYER_GUILD_CHANGE_REQ, &req );
     }
 
     void KFGuildShardModule::GetGuildApplicantlist( uint64 guildid, KFMsg::PBApplicationlists& applylist )
@@ -2130,7 +2130,7 @@ namespace KFrame
             auto serverid = kfguildmember->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
             if ( titles.end() != titles.find( title ) && _invalid_int != serverid )
             {
-                _kf_cluster_shard->SendMessageToPlayer( serverid, memberid, msgid, message );
+                _kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
                 kfguildmember = kfguildmembers->NextData();
             }
 
@@ -2200,7 +2200,7 @@ namespace KFrame
             KFMsg::MsgSyncUpdateGuildData sync;
             sync.set_playerid( memberid );
             sync.mutable_pbdata()->CopyFrom( pbobect );
-            _kf_cluster_shard->SendMessageToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &sync );
+            _kf_cluster_shard->SendToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &sync );
             kfguildmember = kfguildmembers->NextData();
         }
 
@@ -2237,8 +2237,8 @@ namespace KFrame
             KFMsg::MsgSyncAddGuildData sync;
             sync.set_playerid( memberid );
             sync.mutable_pbdata()->CopyFrom( pbobect );
-            //_kf_cluster_shard->SendMessageToPlayer( serverid, memberid, msgid, message );
-            _kf_cluster_shard->SendMessageToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_ADD_GUILD_DATA, &sync );
+            //_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
+            _kf_cluster_shard->SendToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_ADD_GUILD_DATA, &sync );
             kfguildmember = kfguildmembers->NextData();
         }
         return;
@@ -2274,8 +2274,8 @@ namespace KFrame
             KFMsg::MsgSyncRemoveGuildData sync;
             sync.set_playerid( memberid );
             sync.mutable_pbdata()->CopyFrom( pbobect );
-            //_kf_cluster_shard->SendMessageToPlayer( serverid, memberid, msgid, message );
-            _kf_cluster_shard->SendMessageToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &sync );
+            //_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
+            _kf_cluster_shard->SendToClient( KFGuid( _invalid_int, serverid ), KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &sync );
             kfguildmember = kfguildmembers->NextData();
         }
         return;

@@ -41,6 +41,6 @@ namespace KFrame
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         req.set_onlinecount( _kf_gate->GetRoleCount() );
-        _kf_cluster->SendMessageToShard( __KF_STRING__( dir ), KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &req );
+        _kf_cluster->SendToShard( __KF_STRING__( dir ), KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &req );
     }
 }

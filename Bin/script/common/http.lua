@@ -29,8 +29,8 @@ _http.StartHttpClient = function (url, param, body, args)
     KFrame:MTHttpClient(new_url, body_str, args_str)
 end
 
-_http.CommonSig = function (appkey, timestamp)
-    return md5.MD5(tostring(appkey) .. tostring(timestamp))
+_http.CommonSig = function (timestamp)
+    return KFrame:MakePlatformSign(timestamp)
 end
 
 return _http

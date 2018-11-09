@@ -174,7 +174,7 @@ namespace KFrame
         KFMsg::S2SRegisterBattleServerAck ack;
         ack.set_serverid( kfmsg.serverid() );
         ack.set_result( KFMsg::Success );
-        _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
+        _kf_cluster_shard->SendToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
         __LOG_DEBUG__( "register battle[{}|{}:{}|{}] ok!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
     }
@@ -204,7 +204,7 @@ namespace KFrame
                 // 通知战场服务器重置战场
                 KFMsg::S2SResetBattleRoomReq req;
                 req.set_roomid( kfmsg.roomid() );
-                _kf_cluster_shard->SendMessageToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_RESET_BATTLE_ROOM_REQ, &req );
+                _kf_cluster_shard->SendToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_RESET_BATTLE_ROOM_REQ, &req );
             }
         }
         else
@@ -346,7 +346,7 @@ namespace KFrame
             KFMsg::S2SResetMatchRoomReq req;
             req.set_matchid( kfmsg.matchid() );
             req.set_roomid( kfmsg.roomid() );
-            _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.matchshardid(), KFMsg::S2S_RESET_MATCH_ROOM_REQ, &req );
+            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.matchshardid(), KFMsg::S2S_RESET_MATCH_ROOM_REQ, &req );
             return;
         }
 
@@ -511,7 +511,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_roomid( _invalid_int );
         ack.set_matchid( _invalid_int );
-        _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
+        _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
         __LOG_DEBUG__( "player[{}] not in room[{}]!", kfmsg.playerid(), kfmsg.roomid() );
     }
 
@@ -565,7 +565,7 @@ namespace KFrame
 
         KFMsg::S2STellBattleRoomFinishAck ack;
         ack.set_roomid( kfmsg.roomid() );
-        auto ok = _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
+        auto ok = _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "room[{}] serverid[{}] ip[{}] finish ok!", kfmsg.roomid(), kfmsg.serverid(), kfmsg.ip() );
@@ -636,7 +636,7 @@ namespace KFrame
             req.set_playerid( kfmsg.playerid() );
             req.set_roomid( KFUtility::ToValue< uint64 >( iter.first ) );
             KFProto::Parse( req.mutable_pbscore(), iter.second, KFCompressEnum::Compress );
-            _kf_cluster_shard->SendMessageToClient( kfguid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
+            _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
     }
 

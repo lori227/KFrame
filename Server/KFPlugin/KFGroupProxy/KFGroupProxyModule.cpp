@@ -49,7 +49,7 @@ namespace KFrame
         req.set_matchid( kfmsg.matchid() );
         req.set_playerid( kfmsg.playerid() );
         req.mutable_pbmember()->CopyFrom( kfmsg.pbmember() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ, &req );
         if ( ok )
         {
             // 先添加到列表

@@ -60,7 +60,7 @@ namespace KFrame
 
         KFMsg::S2SDisconnectServerToBattleShardReq req;
         req.set_serverid( serverid );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
             __LOG_INFO__( "battle[{}:{}] lost ok!", serverid, strserverid );
@@ -75,7 +75,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleBattlePingReq )
     {
-        _kf_cluster_proxy->SendMessageToClient( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_BATTLE_PING_ACK, nullptr, 0 );
+        _kf_cluster_proxy->SendToClient( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_BATTLE_PING_ACK, nullptr, 0 );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleRegisterBattleServerReq )
@@ -102,7 +102,7 @@ namespace KFrame
             req.set_port( kfmsg.port() );
             req.set_roomid( kfmsg.roomid() );
             req.set_serverid( kfmsg.serverid() );
-            _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ, &req );
+            _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ, &req );
         }
 
         {
@@ -112,7 +112,7 @@ namespace KFrame
             req.set_roomid( kfmsg.roomid() );
             req.set_ip( kfmsg.ip() );
             req.set_port( kfmsg.port() );
-            _kf_cluster_proxy->SendMessageToShard( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ, &req );
+            _kf_cluster_proxy->SendToShard( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ, &req );
         }
     }
 
@@ -139,7 +139,7 @@ namespace KFrame
         req.set_battleserverid( kfmsg.battleserverid() );
         req.set_matchshardid( __KF_HEAD_ID__( kfguid ) );
         req.set_maxplayercount( kfmsg.maxplayercount() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
             __LOG_DEBUG__( "create room[{}:{}] ok!", shardid, kfmsg.roomid() );
@@ -161,7 +161,7 @@ namespace KFrame
             ack.set_roomid( _invalid_int );
             ack.set_matchid( _invalid_int );
             ack.set_playerid( kfmsg.playerid() );
-            _kf_cluster_proxy->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
+            _kf_cluster_proxy->SendToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
         }
         else
         {
@@ -169,7 +169,7 @@ namespace KFrame
             req.set_roomid( kfmsg.roomid() );
             req.set_playerid( kfmsg.playerid() );
             req.set_serverid( kfmsg.serverid() );
-            _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ, &req );
+            _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ, &req );
         }
     }
 
@@ -182,7 +182,7 @@ namespace KFrame
         ack.set_matchid( kfmsg.matchid() );
         ack.set_result( kfmsg.result() );
         ack.set_waittime( kfmsg.waittime() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK, &ack );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "open room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -197,7 +197,7 @@ namespace KFrame
         ack.set_roomid( kfmsg.roomid() );
         ack.set_campid( kfmsg.campid() );
         ack.set_playerid( kfmsg.playerid() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK, &ack );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_ENTER_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "enter room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -211,7 +211,7 @@ namespace KFrame
         KFMsg::S2STellRoomStartToBattleShardReq req;
         req.set_roomid( kfmsg.roomid() );
         req.set_maxtime( kfmsg.maxtime() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "start room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -226,7 +226,7 @@ namespace KFrame
         req.set_roomid( kfmsg.roomid() );
         req.set_serverid( kfmsg.serverid() );
         req.set_ip( kfmsg.ip() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "finish room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -241,7 +241,7 @@ namespace KFrame
         req.set_roomid( kfmsg.roomid() );
         req.set_campid( kfmsg.campid() );
         req.set_playerid( kfmsg.playerid() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "login room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -256,7 +256,7 @@ namespace KFrame
         req.set_roomid( kfmsg.roomid() );
         req.set_campid( kfmsg.campid() );
         req.set_playerid( kfmsg.playerid() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_PLAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "leave room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );
@@ -270,7 +270,7 @@ namespace KFrame
         KFMsg::S2SBattleScoreBalanceToShardReq req;
         req.set_roomid( kfmsg.roomid() );
         req.mutable_pbscore()->CopyFrom( kfmsg.pbscore() );
-        auto ok = _kf_cluster_proxy->SendMessageToShard( kfmsg.battleshardid(), KFMsg::S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( kfmsg.battleshardid(), KFMsg::S2S_BATTLE_SCORE_BALANCE_TO_SHARD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "balance room[{}:{}] failed!", kfmsg.battleshardid(), kfmsg.roomid() );

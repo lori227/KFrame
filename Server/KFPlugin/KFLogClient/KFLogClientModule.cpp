@@ -33,7 +33,7 @@ namespace KFrame
         req.set_zone_id( kfglobal->_zone_id );
         req.set_log_info( loginfo );
 
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( log ), KFMsg::S2S_LOG_REQ, &req );
+        return _kf_cluster->SendToShard( __KF_STRING__( log ), KFMsg::S2S_LOG_REQ, &req );
     }
 
 }

@@ -94,52 +94,52 @@ namespace KFrame
         return _kf_hash.FindHashNode( data, objectid, cache );
     }
 
-    void KFClusterProxyModule::SendMessageToShard( uint32 msgid, const char* data, uint32 length )
+    void KFClusterProxyModule::SendToShard( uint32 msgid, const char* data, uint32 length )
     {
         _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), msgid, data, length );
     }
 
-    void KFClusterProxyModule::SendMessageToShard( uint32 msgid, ::google::protobuf::Message* message )
+    void KFClusterProxyModule::SendToShard( uint32 msgid, ::google::protobuf::Message* message )
     {
         _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), msgid, message );
     }
 
-    bool KFClusterProxyModule::SendMessageToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_client->SendNetMessage( shardid, msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendMessageToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_client->SendNetMessage( shardid, msgid, message );
     }
 
-    bool KFClusterProxyModule::SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendMessageToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFClusterProxyModule::SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message )
+    void KFClusterProxyModule::SendToClient( uint32 msgid, ::google::protobuf::Message* message )
     {
         _kf_tcp_server->SendNetMessage( msgid, message );
     }
 
-    void KFClusterProxyModule::SendMessageToClient( uint32 msgid, const char* data, uint32 length )
+    void KFClusterProxyModule::SendToClient( uint32 msgid, const char* data, uint32 length )
     {
         _kf_tcp_server->SendNetMessage( msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendMessageToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( clientid, msgid, message );
     }
 
-    bool KFClusterProxyModule::SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );
     }
@@ -197,14 +197,14 @@ namespace KFrame
             req.add_clientid( clientid );
         }
 
-        SendMessageToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
+        SendToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
     {
         KFMsg::S2SClusterClientListReq req;
         req.add_clientid( handleid );
-        SendMessageToShard( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
+        SendToShard( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFClusterProxyModule::OnClientLostServer )
@@ -444,7 +444,7 @@ namespace KFrame
         }
 
         auto msgdata = kfmsg.msgdata();
-        SendMessageToShard( shardid, kfmsg.serverid(), kfmsg.msgid(), msgdata.data(), msgdata.size() );
+        SendToShard( shardid, kfmsg.serverid(), kfmsg.msgid(), msgdata.data(), msgdata.size() );
     }
 
     uint32 KFClusterProxyModule::FindMinObjectShard()
@@ -486,7 +486,7 @@ namespace KFrame
         }
 
         auto msgdata = kfmsg.msgdata();
-        SendMessageToShard( shardid, kfmsg.msgid(), msgdata.data(), msgdata.size() );
+        SendToShard( shardid, kfmsg.msgid(), msgdata.data(), msgdata.size() );
     }
 
 }

@@ -97,12 +97,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFGroupClientModule::SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGroupClientModule::SendToGroup( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( group ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( group ), msgid, message );
     }
 
-    bool KFGroupClientModule::SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGroupClientModule::SendToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_cluster->SendToDynamicObject( __KF_STRING__( group ), groupid, msgid, message );
     }
@@ -210,7 +210,7 @@ namespace KFrame
         req.set_maxcount( maxcount );
         req.set_playerid( player->GetKeyID() );
         FormatMatchGroupMember( player, req.mutable_pbmember() );
-        return SendMessageToGroup( KFMsg::S2S_CREATE_MATCH_GROUP_REQ, &req );
+        return SendToGroup( KFMsg::S2S_CREATE_MATCH_GROUP_REQ, &req );
     }
 
     void KFGroupClientModule::FormatMatchGroupMember( KFEntity* player, KFMsg::PBObject* pbobject )
@@ -266,7 +266,7 @@ namespace KFrame
         req.set_matchid( matchid );
         req.set_maxcount( maxcount );
         req.set_playerid( player->GetKeyID() );
-        SendMessageToGroup( groupid, KFMsg::S2S_UPDATE_GROUP_MATCH_REQ, &req );
+        SendToGroup( groupid, KFMsg::S2S_UPDATE_GROUP_MATCH_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleInviteMatchGroupReq )
@@ -435,7 +435,7 @@ namespace KFrame
                 FormatMatchGroupMember( player, req.mutable_pbmember() );
 
                 auto kfbasic = kfinvite->FindData( __KF_STRING__( basic ) );
-                auto ok = _kf_player->SendMessageToClient( kfbasic, KFMsg::S2S_CONSENT_INVITE_MATCH_GROUP_REQ, &req );
+                auto ok = _kf_player->SendToClient( kfbasic, KFMsg::S2S_CONSENT_INVITE_MATCH_GROUP_REQ, &req );
                 if ( ok )
                 {
                     kfobject->SetValue< uint64 >( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time );
@@ -506,7 +506,7 @@ namespace KFrame
         req.set_playerid( kfmsg.playerid() );
         req.set_serverid( kfmsg.serverid() );
         req.mutable_pbmember()->CopyFrom( kfmsg.pbmember() );
-        auto ok = SendMessageToGroup( groupid, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
+        auto ok = SendToGroup( groupid, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
         if ( !ok )
         {
             return _kf_display->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GroupServerBusy );
@@ -604,7 +604,7 @@ namespace KFrame
         KFMsg::S2SLeaveMatchGroupReq req;
         req.set_groupid( groupid );
         req.set_playerid( playerid );
-        auto ok = SendMessageToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
+        auto ok = SendToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
@@ -667,7 +667,7 @@ namespace KFrame
         req.set_captainid( playerid );
         req.set_memberid( kfmsg.memberid() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
-        auto ok = SendMessageToGroup( groupid, KFMsg::S2S_KICK_MATCH_GROUP_REQ, &req );
+        auto ok = SendToGroup( groupid, KFMsg::S2S_KICK_MATCH_GROUP_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
@@ -701,7 +701,7 @@ namespace KFrame
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         _kf_kernel->SerializeToClient( kfbasic, req.mutable_pbmember() );
 
-        auto ok = SendMessageToGroup( kfmsg.groupid(), KFMsg::S2S_APPLY_MATCH_GROUP_REQ, &req );
+        auto ok = SendToGroup( kfmsg.groupid(), KFMsg::S2S_APPLY_MATCH_GROUP_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
@@ -805,7 +805,7 @@ namespace KFrame
                     ack.set_playerid( kfmsg.applyid() );
                     ack.set_serverid( KFGlobal::Instance()->_app_id );
                     ack.set_playername( kfapplyer->GetValue< std::string >( __KF_STRING__( name ) ) );
-                    auto ok = _kf_player->SendMessageToClient( kfapplyer, KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &ack );
+                    auto ok = _kf_player->SendToClient( kfapplyer, KFMsg::S2S_CONSENT_APPLY_MATCH_GROUP_ACK, &ack );
                     if ( ok )
                     {
                         return _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
@@ -842,7 +842,7 @@ namespace KFrame
         req.set_playerid( kfmsg.playerid() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         FormatMatchGroupMember( player, req.mutable_pbmember() );
-        auto ok = SendMessageToGroup( kfmsg.groupid(), KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
+        auto ok = SendToGroup( kfmsg.groupid(), KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToPlayer( kfmsg.playerid(), kfmsg.captainid(), KFMsg::GroupServerBusy );
@@ -867,7 +867,7 @@ namespace KFrame
         req.set_groupid( groupid );
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
-        SendMessageToGroup( groupid, KFMsg::S2S_ONLINE_QUERY_MATCH_GROUP_REQ, &req );
+        SendToGroup( groupid, KFMsg::S2S_ONLINE_QUERY_MATCH_GROUP_REQ, &req );
     }
 
     void KFGroupClientModule::OnLeaveUpdateMatchGroup( KFEntity* player )
@@ -886,7 +886,7 @@ namespace KFrame
         KFMsg::S2SOffLineUpdateMatchGroupReq req;
         req.set_groupid( groupid );
         req.set_playerid( player->GetKeyID() );
-        SendMessageToGroup( groupid, KFMsg::S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ, &req );
+        SendToGroup( groupid, KFMsg::S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ, &req );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFGroupClientModule::OnUpdateDataCallBack )
@@ -956,7 +956,7 @@ namespace KFrame
         req.set_memberid( playerid );
         req.set_dataname( dataname );
         req.mutable_pbstrings()->CopyFrom( pbstrings );
-        return SendMessageToGroup( groupid, KFMsg::S2S_UPDATE_GROUP_MEMBER_REQ, &req );
+        return SendToGroup( groupid, KFMsg::S2S_UPDATE_GROUP_MEMBER_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupClientModule::HandleMatchGroupPrepareReq )
@@ -1017,7 +1017,7 @@ namespace KFrame
         KFMsg::S2SLeaveMatchGroupReq req;
         req.set_groupid( groupid );
         req.set_playerid( playerid );
-        SendMessageToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
+        SendToGroup( groupid, KFMsg::S2S_LEAVE_MATCH_GROUP_REQ, &req );
     }
 
     uint32 KFGroupClientModule::GroupMemberCount( KFEntity* player )

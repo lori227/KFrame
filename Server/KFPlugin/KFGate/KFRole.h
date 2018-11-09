@@ -19,8 +19,8 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到Client
-        virtual bool SendMessageToClient( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendMessageToClient( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到Game
         virtual bool SendMessageToGame( uint32 msgid, const char* data, uint32 length ) = 0;

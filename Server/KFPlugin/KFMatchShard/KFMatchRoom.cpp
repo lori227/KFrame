@@ -58,7 +58,7 @@ namespace KFrame
 
     bool KFMatchRoom::SendMessageToBattle( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
     }
 
     void KFMatchRoom::AddCamp( KFMatchCamp* kfcamp )

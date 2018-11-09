@@ -90,7 +90,7 @@ namespace KFrame
             ack.set_matchid( kfmsg.matchid() );
             ack.set_playerid( kfmsg.playerid() );
             ack.set_result( KFMsg::MatchCanNotFindServer );
-            _kf_cluster_proxy->SendMessageToClient( clientid, KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
+            _kf_cluster_proxy->SendToClient( clientid, KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
             return __LOG_ERROR__( "player[{}] can't find match[{}] shardid!", kfmsg.playerid(), kfmsg.matchid() );
         }
@@ -103,7 +103,7 @@ namespace KFrame
         req.set_allowgroup( kfmsg.allowgroup() );
         req.set_battleserverid( kfmsg.battleserverid() );
         req.mutable_pbgroup()->CopyFrom( kfmsg.pbgroup() );
-        _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_MATCH_TO_SHARD_REQ, &req );
+        _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_MATCH_TO_SHARD_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchProxyModule::HandleQueryMatchRoomReq )
@@ -118,7 +118,7 @@ namespace KFrame
             KFMsg::S2SQueryMatchRoomAck ack;
             ack.set_playerid( kfmsg.playerid() );
             ack.set_matchid( _invalid_int );
-            _kf_cluster_proxy->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
+            _kf_cluster_proxy->SendToClient( kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
         }
         else
         {
@@ -126,7 +126,7 @@ namespace KFrame
             req.set_matchid( kfmsg.matchid() );
             req.set_playerid( kfmsg.playerid() );
             req.set_serverid( kfmsg.serverid() );
-            _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ, &req );
+            _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ, &req );
         }
     }
 
@@ -143,6 +143,6 @@ namespace KFrame
         KFMsg::S2SCancelMatchToShardReq req;
         req.set_matchid( kfmsg.matchid() );
         req.set_playerid( kfmsg.playerid() );
-        _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CANCEL_MATCH_TO_SHARD_REQ, &req );
+        _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CANCEL_MATCH_TO_SHARD_REQ, &req );
     }
 }

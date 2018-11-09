@@ -69,7 +69,7 @@ namespace KFrame
         for ( auto& iter : _kf_player_list._objects )
         {
             auto kfplayer = iter.second;
-            kfplayer->SendMessageToClient( msgid, message );
+            kfplayer->SendToClient( msgid, message );
         }
     }
 }

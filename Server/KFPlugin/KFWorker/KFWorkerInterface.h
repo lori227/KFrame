@@ -26,8 +26,8 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
-        virtual void SendMessageToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
     protected:
 

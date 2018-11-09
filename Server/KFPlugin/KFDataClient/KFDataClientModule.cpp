@@ -31,6 +31,6 @@ namespace KFrame
         req.set_zoneid( zoneid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( data ), KFMsg::S2S_TRANSMIT_TO_DATA_SHARD_REQ, &req );
+        return _kf_cluster->SendToShard( __KF_STRING__( data ), KFMsg::S2S_TRANSMIT_TO_DATA_SHARD_REQ, &req );
     }
 }

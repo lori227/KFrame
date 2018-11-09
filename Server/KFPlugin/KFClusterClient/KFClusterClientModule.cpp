@@ -153,12 +153,12 @@ namespace KFrame
         return kfclusterclient->SendNetMessage( shardid, msgid, message );
     }
 
-    bool KFClusterClientModule::SendMessageToShard( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToShard( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message )
     {
         return SendNetMessage( name, shardid, msgid, message );
     }
 
-    bool KFClusterClientModule::SendMessageToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message )
     {
         return SendNetMessage( name, msgid, message );
     }

@@ -238,6 +238,7 @@ enum AckEnum {
   InvalidActivationCode = 176,
   CanNotFindLoginNode = 177,
   ChannelNotSupport = 178,
+  QueryInviteScoreError = 179,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,

@@ -56,7 +56,7 @@ namespace KFrame
             req.set_manifesto( kfmsg.manifesto() );
         }
 
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_CREATE_GUILD_TO_SHARD_REQ, &req );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_GUILD_TO_SHARD_REQ, &req );
         if ( ok )
         {
             // 先不添加到列表，可能失败
@@ -78,7 +78,7 @@ namespace KFrame
         {
             return __LOG_ERROR__( "query guildlist can't find shard!" );
         }
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_QUERY_GUILD_LIST_REQ, data, length );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_QUERY_GUILD_LIST_REQ, data, length );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildProxyModule::HandleSearchGuildReq )
@@ -89,7 +89,7 @@ namespace KFrame
         {
             return __LOG_ERROR__( "search guild can't find shard!" );
         }
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_SEARCH_GUILD_BY_NAME_REQ, data, length );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_SEARCH_GUILD_BY_NAME_REQ, data, length );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildProxyModule::HandleQueryGuildidReq )
@@ -100,6 +100,6 @@ namespace KFrame
         {
             return __LOG_ERROR__( "query guild id can't find shard!" );
         }
-        auto ok = _kf_cluster_proxy->SendMessageToShard( shardid, KFMsg::S2S_LOGIN_QUERY_GUILDID_REQ, data, length );
+        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_LOGIN_QUERY_GUILDID_REQ, data, length );
     }
 }

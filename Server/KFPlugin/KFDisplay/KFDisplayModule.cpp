@@ -28,7 +28,7 @@ namespace KFrame
 
         if ( _kf_player != nullptr )
         {
-            _kf_player->SendMessageToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display );
+            _kf_player->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display );
         }
         else
         {
@@ -47,7 +47,7 @@ namespace KFrame
 
         if ( _kf_player != nullptr )
         {
-            _kf_player->SendMessageToGroup( player, KFMsg::MSG_RESULT_DISPLAY, &display );
+            _kf_player->SendToGroup( player, KFMsg::MSG_RESULT_DISPLAY, &display );
         }
         else
         {
@@ -66,7 +66,7 @@ namespace KFrame
 
         if ( _kf_cluster_shard != nullptr )
         {
-            _kf_cluster_shard->SendMessageToPlayer( serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
+            _kf_cluster_shard->SendToPlayer( serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
         }
         else
         {

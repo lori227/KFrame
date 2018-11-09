@@ -74,7 +74,7 @@ namespace KFrame
     protected:
         // 发送消息给队员
         bool SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message );
-        void SendMessageToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid = 0 );
+        void SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid = 0 );
 
         // 队伍选择新队长
         KFData* ChooseNewGroupCaptain( KFData* kfmemberrecord );

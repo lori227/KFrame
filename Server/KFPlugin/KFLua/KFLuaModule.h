@@ -14,6 +14,7 @@
 #include "KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFOption/KFOptionInterface.h"
+#include "KFPlatform/KFPlatformInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
 
@@ -126,6 +127,12 @@ namespace KFrame
         // 获得配置变量
         const char* LuaGetOptionString( const char* name, const char* logicid );
         uint32 LuaGetOptionUint32( const char* name, const char* logicid );
+
+        // 获得平台api地址
+        const char* LuaGetPlatformApiUrl();
+
+        // 创建api签名
+        const char* LuaMakePlatformSign( uint32 nowtime );
 
     protected:
         // 重新加载脚本文件

@@ -134,6 +134,9 @@ class MsgQueryGuildLogReq;
 class MsgQueryGuildLogAck;
 class MsgTellMarquee;
 class MsgTellSysNotcie;
+class MsgBindAlipayReq;
+class MsgQueryInviteScoreReq;
+class MsgQueryInviteScoreAck;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -232,11 +235,14 @@ enum ClientProtocol {
   MSG_QUERY_GUILD_LOG_REQ = 216,
   MSG_QUERY_GUILD_LOG_ACK = 217,
   MSG_TELL_MARQUEE = 300,
-  MSG_TELL_SYS_NOTICE = 301
+  MSG_TELL_SYS_NOTICE = 301,
+  MSG_BIND_ALIPAY_REQ = 302,
+  MSG_QUERY_INVITE_SCORE_REQ = 303,
+  MSG_QUERY_INVITE_SCORE_ACK = 304
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_TELL_SYS_NOTICE;
+const ClientProtocol ClientProtocol_MAX = MSG_QUERY_INVITE_SCORE_ACK;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -6812,40 +6818,26 @@ class LIBPROTOC_EXPORT MsgUpdateSettingReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBString strsetting = 1;
-  inline int strsetting_size() const;
-  inline void clear_strsetting();
-  static const int kStrsettingFieldNumber = 1;
-  inline const ::KFMsg::PBString& strsetting(int index) const;
-  inline ::KFMsg::PBString* mutable_strsetting(int index);
-  inline ::KFMsg::PBString* add_strsetting();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-      strsetting() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-      mutable_strsetting();
-
-  // repeated .KFMsg.PBUInt32 intsetting = 2;
-  inline int intsetting_size() const;
-  inline void clear_intsetting();
-  static const int kIntsettingFieldNumber = 2;
-  inline const ::KFMsg::PBUInt32& intsetting(int index) const;
-  inline ::KFMsg::PBUInt32* mutable_intsetting(int index);
-  inline ::KFMsg::PBUInt32* add_intsetting();
-  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 >&
-      intsetting() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 >*
-      mutable_intsetting();
+  // required .KFMsg.PBStrings settings = 1;
+  inline bool has_settings() const;
+  inline void clear_settings();
+  static const int kSettingsFieldNumber = 1;
+  inline const ::KFMsg::PBStrings& settings() const;
+  inline ::KFMsg::PBStrings* mutable_settings();
+  inline ::KFMsg::PBStrings* release_settings();
+  inline void set_allocated_settings(::KFMsg::PBStrings* settings);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgUpdateSettingReq)
  private:
+  inline void set_has_settings();
+  inline void clear_has_settings();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString > strsetting_;
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 > intsetting_;
+  ::KFMsg::PBStrings* settings_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -9292,6 +9284,247 @@ class LIBPROTOC_EXPORT MsgTellSysNotcie : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static MsgTellSysNotcie* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgBindAlipayReq : public ::google::protobuf::Message {
+ public:
+  MsgBindAlipayReq();
+  virtual ~MsgBindAlipayReq();
+
+  MsgBindAlipayReq(const MsgBindAlipayReq& from);
+
+  inline MsgBindAlipayReq& operator=(const MsgBindAlipayReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgBindAlipayReq& default_instance();
+
+  void Swap(MsgBindAlipayReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgBindAlipayReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgBindAlipayReq& from);
+  void MergeFrom(const MsgBindAlipayReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string alipay = 1;
+  inline bool has_alipay() const;
+  inline void clear_alipay();
+  static const int kAlipayFieldNumber = 1;
+  inline const ::std::string& alipay() const;
+  inline void set_alipay(const ::std::string& value);
+  inline void set_alipay(const char* value);
+  inline void set_alipay(const char* value, size_t size);
+  inline ::std::string* mutable_alipay();
+  inline ::std::string* release_alipay();
+  inline void set_allocated_alipay(::std::string* alipay);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgBindAlipayReq)
+ private:
+  inline void set_has_alipay();
+  inline void clear_has_alipay();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* alipay_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgBindAlipayReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryInviteScoreReq : public ::google::protobuf::Message {
+ public:
+  MsgQueryInviteScoreReq();
+  virtual ~MsgQueryInviteScoreReq();
+
+  MsgQueryInviteScoreReq(const MsgQueryInviteScoreReq& from);
+
+  inline MsgQueryInviteScoreReq& operator=(const MsgQueryInviteScoreReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryInviteScoreReq& default_instance();
+
+  void Swap(MsgQueryInviteScoreReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryInviteScoreReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryInviteScoreReq& from);
+  void MergeFrom(const MsgQueryInviteScoreReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryInviteScoreReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryInviteScoreReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryInviteScoreAck : public ::google::protobuf::Message {
+ public:
+  MsgQueryInviteScoreAck();
+  virtual ~MsgQueryInviteScoreAck();
+
+  MsgQueryInviteScoreAck(const MsgQueryInviteScoreAck& from);
+
+  inline MsgQueryInviteScoreAck& operator=(const MsgQueryInviteScoreAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryInviteScoreAck& default_instance();
+
+  void Swap(MsgQueryInviteScoreAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgQueryInviteScoreAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgQueryInviteScoreAck& from);
+  void MergeFrom(const MsgQueryInviteScoreAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 score = 1;
+  inline bool has_score() const;
+  inline void clear_score();
+  static const int kScoreFieldNumber = 1;
+  inline ::google::protobuf::uint32 score() const;
+  inline void set_score(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryInviteScoreAck)
+ private:
+  inline void set_has_score();
+  inline void clear_has_score();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 score_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryInviteScoreAck* default_instance_;
 };
 // ===================================================================
 
@@ -14091,54 +14324,42 @@ inline void MsgQuerySettingAck::set_allocated_pbsetting(::KFMsg::PBObject* pbset
 
 // MsgUpdateSettingReq
 
-// repeated .KFMsg.PBString strsetting = 1;
-inline int MsgUpdateSettingReq::strsetting_size() const {
-  return strsetting_.size();
+// required .KFMsg.PBStrings settings = 1;
+inline bool MsgUpdateSettingReq::has_settings() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MsgUpdateSettingReq::clear_strsetting() {
-  strsetting_.Clear();
+inline void MsgUpdateSettingReq::set_has_settings() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline const ::KFMsg::PBString& MsgUpdateSettingReq::strsetting(int index) const {
-  return strsetting_.Get(index);
+inline void MsgUpdateSettingReq::clear_has_settings() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::KFMsg::PBString* MsgUpdateSettingReq::mutable_strsetting(int index) {
-  return strsetting_.Mutable(index);
+inline void MsgUpdateSettingReq::clear_settings() {
+  if (settings_ != NULL) settings_->::KFMsg::PBStrings::Clear();
+  clear_has_settings();
 }
-inline ::KFMsg::PBString* MsgUpdateSettingReq::add_strsetting() {
-  return strsetting_.Add();
+inline const ::KFMsg::PBStrings& MsgUpdateSettingReq::settings() const {
+  return settings_ != NULL ? *settings_ : *default_instance_->settings_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >&
-MsgUpdateSettingReq::strsetting() const {
-  return strsetting_;
+inline ::KFMsg::PBStrings* MsgUpdateSettingReq::mutable_settings() {
+  set_has_settings();
+  if (settings_ == NULL) settings_ = new ::KFMsg::PBStrings;
+  return settings_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBString >*
-MsgUpdateSettingReq::mutable_strsetting() {
-  return &strsetting_;
+inline ::KFMsg::PBStrings* MsgUpdateSettingReq::release_settings() {
+  clear_has_settings();
+  ::KFMsg::PBStrings* temp = settings_;
+  settings_ = NULL;
+  return temp;
 }
-
-// repeated .KFMsg.PBUInt32 intsetting = 2;
-inline int MsgUpdateSettingReq::intsetting_size() const {
-  return intsetting_.size();
-}
-inline void MsgUpdateSettingReq::clear_intsetting() {
-  intsetting_.Clear();
-}
-inline const ::KFMsg::PBUInt32& MsgUpdateSettingReq::intsetting(int index) const {
-  return intsetting_.Get(index);
-}
-inline ::KFMsg::PBUInt32* MsgUpdateSettingReq::mutable_intsetting(int index) {
-  return intsetting_.Mutable(index);
-}
-inline ::KFMsg::PBUInt32* MsgUpdateSettingReq::add_intsetting() {
-  return intsetting_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 >&
-MsgUpdateSettingReq::intsetting() const {
-  return intsetting_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 >*
-MsgUpdateSettingReq::mutable_intsetting() {
-  return &intsetting_;
+inline void MsgUpdateSettingReq::set_allocated_settings(::KFMsg::PBStrings* settings) {
+  delete settings_;
+  settings_ = settings;
+  if (settings) {
+    set_has_settings();
+  } else {
+    clear_has_settings();
+  }
 }
 
 // -------------------------------------------------------------------
@@ -15564,6 +15785,110 @@ inline void MsgTellSysNotcie::set_allocated_content(::std::string* content) {
     clear_has_content();
     content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// MsgBindAlipayReq
+
+// required string alipay = 1;
+inline bool MsgBindAlipayReq::has_alipay() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgBindAlipayReq::set_has_alipay() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgBindAlipayReq::clear_has_alipay() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgBindAlipayReq::clear_alipay() {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    alipay_->clear();
+  }
+  clear_has_alipay();
+}
+inline const ::std::string& MsgBindAlipayReq::alipay() const {
+  return *alipay_;
+}
+inline void MsgBindAlipayReq::set_alipay(const ::std::string& value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void MsgBindAlipayReq::set_alipay(const char* value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void MsgBindAlipayReq::set_alipay(const char* value, size_t size) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgBindAlipayReq::mutable_alipay() {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  return alipay_;
+}
+inline ::std::string* MsgBindAlipayReq::release_alipay() {
+  clear_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = alipay_;
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgBindAlipayReq::set_allocated_alipay(::std::string* alipay) {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    delete alipay_;
+  }
+  if (alipay) {
+    set_has_alipay();
+    alipay_ = alipay;
+  } else {
+    clear_has_alipay();
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryInviteScoreReq
+
+// -------------------------------------------------------------------
+
+// MsgQueryInviteScoreAck
+
+// required uint32 score = 1;
+inline bool MsgQueryInviteScoreAck::has_score() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryInviteScoreAck::set_has_score() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryInviteScoreAck::clear_has_score() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryInviteScoreAck::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+inline ::google::protobuf::uint32 MsgQueryInviteScoreAck::score() const {
+  return score_;
+}
+inline void MsgQueryInviteScoreAck::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
 }
 
 

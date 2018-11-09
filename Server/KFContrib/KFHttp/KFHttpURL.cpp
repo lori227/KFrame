@@ -6,7 +6,7 @@ namespace KFrame
 
     std::string KFHttpURL::EncodeParams( const std::map<std::string, std::string>& params )
     {
-        std::string source;
+        std::string source = "?";
         for ( auto it = params.begin(); it != params.end(); ++it )
         {
             if ( it != params.begin() )

@@ -69,7 +69,7 @@ namespace KFrame
         void ResetRoomStatus();
 
         // 发送消息到客户端
-        bool SendMessageToClient( uint32 msgid, google::protobuf::Message* message );
+        bool SendToClient( uint32 msgid, google::protobuf::Message* message );
 
         // 结算
         bool BattleScoreBalance( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore );

@@ -10,8 +10,8 @@ namespace KFrame
     {
     public:
         // 发送消息到Group
-        virtual bool SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGroup( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 判断是否是队员
         virtual bool IsGroupMember( KFEntity* player, uint32 playerid ) = 0;

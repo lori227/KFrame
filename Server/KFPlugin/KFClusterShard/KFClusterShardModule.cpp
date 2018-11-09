@@ -63,27 +63,27 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFClusterShardModule::SendMessageToProxy( uint32 msgid, const char* data, uint32 length )
+    void KFClusterShardModule::SendToProxy( uint32 msgid, const char* data, uint32 length )
     {
         _kf_tcp_server->SendNetMessage( msgid, data, length );
     }
 
-    void KFClusterShardModule::SendMessageToProxy( uint32 msgid, google::protobuf::Message* message )
+    void KFClusterShardModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
     {
         _kf_tcp_server->SendNetMessage( msgid, message );
     }
 
-    bool KFClusterShardModule::SendMessageToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendMessageToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( handleid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
     {
         auto proxyid = __KF_HEAD_ID__( kfguid );
         auto clientid = __KF_DATA_ID__( kfguid );
@@ -95,7 +95,7 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message )
     {
         auto proxyid = __KF_HEAD_ID__( kfguid );
         auto clientid = __KF_DATA_ID__( kfguid );
@@ -107,29 +107,29 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
     {
         auto proxyid = FindProxyId( clientid );
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         auto proxyid = FindProxyId( clientid );
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendMessageToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendMessageToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message )
     {
         KFMsg::S2STransmitRouteZoneMessageAck ack;
         auto transmitdata = ack.mutable_transmitdata();
@@ -137,14 +137,14 @@ namespace KFrame
         transmitdata->set_playerid( playerid );
         transmitdata->set_msgid( msgid );
         transmitdata->set_msgdata( message->SerializeAsString() );
-        return SendMessageToClient( clientid, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
+        return SendToClient( clientid, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
     }
 
     void KFClusterShardModule::AddObjectToProxy( uint64 objectid )
     {
         KFMsg::S2SAddObjectToProxyReq req;
         req.add_objectid( objectid );
-        SendMessageToProxy( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
+        SendToProxy( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
     }
 
     void KFClusterShardModule::AddObjectToProxy( uint32 proxyid, const std::set<uint64>& objectlist )
@@ -154,14 +154,14 @@ namespace KFrame
         {
             req.add_objectid( objectid );
         }
-        SendMessageToProxy( proxyid, KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
+        SendToProxy( proxyid, KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
     }
 
     void KFClusterShardModule::RemoveObjectToProxy( uint64 objectid )
     {
         KFMsg::S2SRemoveObjectToProxyReq req;
         req.add_objectid( objectid );
-        SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
+        SendToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
     void KFClusterShardModule::RemoveObjectToProxy( const std::set<uint64>& objectlist )
@@ -171,7 +171,7 @@ namespace KFrame
         {
             req.add_objectid( objectid );
         }
-        SendMessageToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
+        SendToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
     void KFClusterShardModule::AllocObjectToMaster( const std::set<uint32>& objectlist )

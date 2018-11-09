@@ -288,14 +288,13 @@ namespace KFrame
 
     std::string KFAuthModule::VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode )
     {
-        static std::string api = _kf_option->GetString( __KF_STRING__( verifyactivationcode ) );
+        static std::string api = _kf_platform->GetPlatformApiUrl() + __KF_STRING__( verifyactivationcode );
 
         std::map<std::string, std::string> params;
         params["appid"] = KFUtility::ToString( _kf_option->GetUInt32( __KF_STRING__( platappid ) ) );
-        params["appkey"] = _kf_option->GetString( __KF_STRING__( platappkey ) );;
         params["timestamp"] = KFUtility::ToString( KFGlobal::Instance()->_real_time );
-
-        api += KFHttpURL::EncodeParams( params );
+        params[ "sig" ] = _kf_platform->MakePlatformSign( KFGlobal::Instance()->_real_time );
+        auto apiurl = api + KFHttpURL::EncodeParams( params );
 
         auto account = accountdata->_value[__KF_STRING__( account )];
 
@@ -306,7 +305,7 @@ namespace KFrame
         postjson.SetValue( "openid", account );
 
         //去平台通过激活码激活
-        auto result = _kf_http_client->StartSTHttpClient( api, postjson );
+        auto result = _kf_http_client->StartSTHttpClient( apiurl, postjson );
         KFJson resp( result );
         if ( resp["code"] != 0 )
         {

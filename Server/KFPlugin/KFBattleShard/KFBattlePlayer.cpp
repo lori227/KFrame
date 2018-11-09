@@ -56,9 +56,9 @@ namespace KFrame
         pbplayer->CopyFrom( _pb_player );
     }
 
-    bool KFBattlePlayer::SendMessageToClient( uint32 msgid, google::protobuf::Message* message )
+    bool KFBattlePlayer::SendToClient( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendMessageToPlayer( _pb_player.serverid(), _pb_player.playerid(), msgid, message );
+        return _kf_cluster_shard->SendToPlayer( _pb_player.serverid(), _pb_player.playerid(), msgid, message );
     }
 
     void KFBattlePlayer::ResetRoomStatus()
@@ -120,7 +120,7 @@ namespace KFrame
         req.set_port( kfroom->_battle_server._port );
         req.set_roomid( kfroom->_battle_room_id );
         req.set_token( _token );
-        auto ok = SendMessageToClient( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ, &req );
+        auto ok = SendToClient( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ, &req );
         if ( ok )
         {
             ++_notice_count;
@@ -220,7 +220,7 @@ namespace KFrame
         KFMsg::S2SLeaveBattleRoomToClientAck ack;
         ack.set_playerid( GetID() );
         ack.set_roomid( kfroom->_battle_room_id );
-        SendMessageToClient( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK, &ack );
+        SendToClient( KFMsg::S2S_LEAVE_BATTLE_ROOM_TO_CLIENT_ACK, &ack );
     }
 
     bool KFBattlePlayer::BattleScoreBalance( KFBattleRoom* kfroom, KFMsg::PBBattleScore* pbscore )
@@ -271,7 +271,7 @@ namespace KFrame
             req.set_playerid( _pb_player.playerid() );
             req.set_roomid( kfroom->_battle_room_id );
             req.mutable_pbscore()->CopyFrom( *pbscore );
-            SendMessageToClient( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
+            SendToClient( KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
 
         return true;

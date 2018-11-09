@@ -42,7 +42,7 @@ namespace KFrame
             pbzonedata->set_zoneid( zonedata->_zone_id );
             pbzonedata->set_serverid( zonedata->_server_id );
         }
-        _kf_cluster_proxy->SendMessageToShard( serverid, KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
+        _kf_cluster_proxy->SendToShard( serverid, KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRegisterZoneReq )
@@ -62,7 +62,7 @@ namespace KFrame
         KFMsg::S2SRegisterRouteProxyReq req;
         auto addzonedata = req.add_zonedata();
         addzonedata->CopyFrom( *zonedata );
-        _kf_cluster_proxy->SendMessageToShard( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
+        _kf_cluster_proxy->SendToShard( KFMsg::S2S_REGISTER_ROUTE_PROXY_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteZoneMessageReq )
@@ -79,7 +79,7 @@ namespace KFrame
 
         KFMsg::S2STransmitRouteProxyMessageReq req;
         req.mutable_transmitdata()->CopyFrom( kfmsg.transmitdata() );
-        _kf_cluster_proxy->SendMessageToShard( shardserverid, KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ, &req );
+        _kf_cluster_proxy->SendToShard( shardserverid, KFMsg::S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleTransmitRouteProxyMessageAck )
@@ -96,6 +96,6 @@ namespace KFrame
 
         KFMsg::S2STransmitRouteZoneMessageAck ack;
         ack.mutable_transmitdata()->CopyFrom( *transmitdata );
-        _kf_cluster_proxy->SendMessageToClient( kfroutezone->_handle_id, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
+        _kf_cluster_proxy->SendToClient( kfroutezone->_handle_id, KFMsg::S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK, &ack );
     }
 }

@@ -7,7 +7,7 @@ namespace KFrame
 
 #define __REGISTER_DATA_MESSAGE__ __REGISTER_MESSAGE__
 #define __UNREGISTER_DATA_MESSAGE__ __UNREGISTER_MESSAGE__
-#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendMessageToClient( kfguid, msgid, message )
+#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
 
     KFDataShardModule::KFDataShardModule()
     {

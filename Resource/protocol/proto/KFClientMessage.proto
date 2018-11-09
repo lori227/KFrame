@@ -81,26 +81,29 @@ enum ClientProtocol
 	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
-	MSG_CREATE_GUILD_REQ = 200;				// 创建帮派
-	MSG_INVITE_GUILD_REQ = 201;				// 邀请加入帮派
-	MSG_APPLY_GUILD_REQ = 202;				// 申请加入帮派
+	MSG_CREATE_GUILD_REQ = 200;					// 创建帮派
+	MSG_INVITE_GUILD_REQ = 201;					// 邀请加入帮派
+	MSG_APPLY_GUILD_REQ = 202;					// 申请加入帮派
 	MSG_TELL_MATCH_WAIT_TIME = 203;				// 通知匹配预计等待时间
-	MSG_EXIT_GUILD_REQ = 204;				// 离开帮派
+	MSG_EXIT_GUILD_REQ = 204;					// 离开帮派
 	MSG_TRANSFER_MASTER_REQ = 205;				// 转让帮主
-	MSG_REVIEW_APPLY_REQ = 206;				// 审批申请列表
+	MSG_REVIEW_APPLY_REQ = 206;					// 审批申请列表
 	MSG_DISSOLVE_GUILD_REQ = 207;				// 解散帮派
 	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// 修改帮派徽章
 	MSG_QUERY_GUILD_LIST_REQ = 209;				// 请求帮派列表
 	MSG_QUERY_GUILD_LIST_ACK = 210;				// 帮派列表返回
-	MSG_KICK_MEMBER_REQ = 211;				// 踢掉帮派成员
+	MSG_KICK_MEMBER_REQ = 211;					// 踢掉帮派成员
 	MSG_UPGRADE_GUILD_REQ = 212;				// 升级帮派
 	MSG_APPOINT_GUILD_MEMBER_REQ = 213;			// 任命帮派成员
 	MSG_SEARCH_GUILD_BY_NAME_REQ = 214;			// 根据名字搜索帮派信息
 	MSG_SET_GUILD_SWITCH_REQ = 215;				// 设置帮派管理开关
 	MSG_QUERY_GUILD_LOG_REQ = 216;				// 查询帮派日志
 	MSG_QUERY_GUILD_LOG_ACK = 217;				// 查询帮派日志返回
-	MSG_TELL_MARQUEE = 300;					// 走马灯消息
-	MSG_TELL_SYS_NOTICE = 301;				// 系统公告
+	MSG_TELL_MARQUEE = 300;						// 走马灯消息
+	MSG_TELL_SYS_NOTICE = 301;					// 系统公告
+	MSG_BIND_ALIPAY_REQ = 302;					// 绑定支付宝
+	MSG_QUERY_INVITE_SCORE_REQ = 303;			// 查询邀请码积分
+	MSG_QUERY_INVITE_SCORE_ACK = 304;			// 查询邀请码积分
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -705,8 +708,7 @@ message MsgQuerySettingAck
 // MSG_UPDATE_SETTING_REQ
 message MsgUpdateSettingReq
 {
-	repeated PBString strsetting = 1;
-	repeated PBUInt32 intsetting = 2;
+	required PBStrings settings = 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -917,5 +919,25 @@ message MsgTellMarquee
 message MsgTellSysNotcie
 {
 	required string content = 1;	// 显示内容
+}
 
+// 绑定支付宝
+// MSG_BIND_ALIPAY_REQ
+message MsgBindAlipayReq
+{
+	required string alipay = 1;		// 支付宝账号
+}
+
+// 查询邀请积分
+// MSG_QUERY_INVITE_SCORE_REQ
+message MsgQueryInviteScoreReq
+{
+
+}
+
+// 查询邀请积分
+// MSG_QUERY_INVITE_SCORE_ACK
+message MsgQueryInviteScoreAck
+{
+	required uint32 score = 1;		// 积分
 }

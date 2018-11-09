@@ -104,7 +104,7 @@ namespace KFrame
         return true;
     }
 
-    void KFWorkerModule::SendMessageToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kftemp = const_cast< KFGuid* >( &kfguid );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );
@@ -113,7 +113,7 @@ namespace KFrame
         kfactor->PushAckMessage( kfguid, msgid, message );
     }
 
-    void KFWorkerModule::SendMessageToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message )
     {
         auto kftemp = const_cast< KFGuid* >( &kfguid );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );

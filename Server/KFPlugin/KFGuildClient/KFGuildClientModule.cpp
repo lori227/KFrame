@@ -102,7 +102,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFGuildClientModule::SendMessageToGuild( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( guild ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( guild ), msgid, message );
     }
 
     bool KFGuildClientModule::SendMessageToGuild( uint64 guildid, uint32 msgid, ::google::protobuf::Message* message )
@@ -830,7 +830,7 @@ namespace KFrame
         KFMsg::MsgTellQueryGuild sync;
         _kf_kernel->SerializeToClient( kfguild, sync.mutable_guild() );
 
-        _kf_player->SendMessageToClient( kfmsg.playerid(), KFMsg::MSG_TELL_QUERY_GUILD, &sync );
+        _kf_player->SendToClient( kfmsg.playerid(), KFMsg::MSG_TELL_QUERY_GUILD, &sync );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleAddGuildAck )

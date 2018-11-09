@@ -1,0 +1,23 @@
+#ifndef __KF_PLATFORM_INTERFACE_H__
+#define __KF_PLATFORM_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFPlatformInterface : public KFModule
+    {
+    public:
+        // 获得api地址
+        virtual const std::string& GetPlatformApiUrl() = 0;
+
+        // 创建签名
+        virtual const std::string& MakePlatformSign( uint32 nowtime ) = 0;
+    };
+
+    /////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_platform, KFPlatformInterface );
+    /////////////////////////////////////////////////////////////////////////
+}
+
+#endif

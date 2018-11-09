@@ -49,7 +49,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMatchClientModule::SendMessageToMatch( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( match ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( match ), msgid, message );
     }
 
     uint32 KFMatchClientModule::GetMatchMaxCount( uint32 matchid )
@@ -272,7 +272,7 @@ namespace KFrame
     {
         KFMsg::S2SNoticeMatchStateReq req;
         req.set_matchid( matchid );
-        _kf_player->SendMessageToGroup( player, KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &req, false );
+        _kf_player->SendToGroup( player, KFMsg::S2S_NOTICE_MATCH_STATE_REQ, &req, false );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchClientModule::HandleNoticeMatchStateAck )

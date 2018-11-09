@@ -65,7 +65,7 @@ namespace KFrame
 
     protected:
         // 发送消息到客户端
-        __KF_TRANSMIT_FUNCTION__( SendMessageToClient );
+        __KF_TRANSMIT_FUNCTION__( SendToClient );
 
         // 发送消息到游戏服务器
         __KF_TRANSMIT_FUNCTION__( SendMessageToGame );

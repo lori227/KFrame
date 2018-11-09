@@ -73,8 +73,8 @@ namespace KFrame
         virtual bool IsInGroup( KFEntity* player );
 
         // 发送消息到Group
-        virtual bool SendMessageToGroup( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGroup( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message );
 
     protected:
         // 处理邀请玩家匹配

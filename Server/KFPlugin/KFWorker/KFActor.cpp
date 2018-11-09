@@ -50,7 +50,7 @@ namespace KFrame
                 break;
             }
 
-            _kf_cluster_shard->SendMessageToClient( message->_kfguid, message->_msgid, message->_data, message->_length );
+            _kf_cluster_shard->SendToClient( message->_kfguid, message->_msgid, message->_data, message->_length );
             __KF_DESTROY__( KFWorkerMessage, message );
         } while ( ++count < _max_message_count );
     }

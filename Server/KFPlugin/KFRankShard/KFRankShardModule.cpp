@@ -327,7 +327,7 @@ namespace KFrame
             pbrankdatas->CopyFrom( kfrankdata->_rank_datas );
         }
 
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryFriendRanklistReq )
@@ -362,7 +362,7 @@ namespace KFrame
             }
         }
 
-        _kf_cluster_shard->SendMessageToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_FRIEND_RANK_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_FRIEND_RANK_LIST_ACK, &ack );
     }
 
     uint32 KFRankShardModule::CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting )

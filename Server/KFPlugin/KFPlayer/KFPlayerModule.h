@@ -69,15 +69,15 @@ namespace KFrame
         virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line );
 
         // 发送消息
-        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendMessageToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendMessageToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message );
 
-        virtual void SendMessageToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true );
+        virtual void SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true );
 
     protected:
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
@@ -177,7 +177,6 @@ namespace KFrame
 
         // 查询访客信息回馈
         __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
-
 
         // 查询玩家设置请求
         __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );

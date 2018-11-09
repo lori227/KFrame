@@ -53,7 +53,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMessageToMail( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( mail ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( mail ), msgid, message );
     }
 
     void KFMailClientModule::OnEnterQueryMail( KFEntity* player )

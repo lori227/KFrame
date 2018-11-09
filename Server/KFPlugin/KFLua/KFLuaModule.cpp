@@ -165,6 +165,8 @@ namespace KFrame
         metatableobject.RegisterObjectDirect( "MTHttpClient", this, &KFLuaModule::LuaMTHttpClient );
         metatableobject.RegisterObjectDirect( "GetOptionString", this, &KFLuaModule::LuaGetOptionString );
         metatableobject.RegisterObjectDirect( "GetOptionUint32", this, &KFLuaModule::LuaGetOptionUint32 );
+        metatableobject.RegisterObjectDirect( "GetPlatformApiUrl", this, &KFLuaModule::LuaGetPlatformApiUrl );
+        metatableobject.RegisterObjectDirect( "MakePlatformSign", this, &KFLuaModule::LuaMakePlatformSign );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );
@@ -172,8 +174,6 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     void KFLuaModule::LuaLogDebug( const char* data )
     {
         __LOG_DEBUG__( "{}", data );
@@ -387,5 +387,17 @@ namespace KFrame
     uint32 KFLuaModule::LuaGetOptionUint32( const char* name, const char* logicid )
     {
         return _kf_option->GetUInt32( name, logicid );
+    }
+
+    const char* KFLuaModule::LuaGetPlatformApiUrl()
+    {
+        auto& strurl = _kf_platform->GetPlatformApiUrl();
+        return strurl.c_str();
+    }
+
+    const char* KFLuaModule::LuaMakePlatformSign( uint32 nowtime )
+    {
+        auto& strsign = _kf_platform->MakePlatformSign( nowtime );
+        return strsign.c_str();
     }
 }

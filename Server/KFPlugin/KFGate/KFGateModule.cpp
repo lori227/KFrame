@@ -9,7 +9,7 @@ namespace KFrame
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionLogin );
         __REGISTER_SERVER_LOST_FUNCTION__( &KFGateModule::OnPlayerDisconnection );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
-        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToClient );
+        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendToClient );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFGateModule::OnCommandMarquee );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFGateModule::OnCommandNotice );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
-    __KF_TRANSMIT_FUNCTION__( KFGateModule::SendMessageToClient )
+    __KF_TRANSMIT_FUNCTION__( KFGateModule::SendToClient )
     {
         auto playerid = __KF_DATA_ID__( kfguid );
         if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
@@ -172,7 +172,7 @@ namespace KFrame
         auto kfrole = FindRole( playerid );
         if ( kfrole != nullptr )
         {
-            kfrole->SendMessageToClient( msgid, data, length );
+            kfrole->SendToClient( msgid, data, length );
         }
 
         return true;
@@ -206,7 +206,7 @@ namespace KFrame
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfproxy = iter.second;
-            kfproxy->SendMessageToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            kfproxy->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
         }
     }
 
@@ -224,7 +224,7 @@ namespace KFrame
         // 通知客户端你被踢了
         KFMsg::MsgTellBeKick kick;
         kick.set_type( kfmsg.type() );
-        kfrole->SendMessageToClient( KFMsg::MSG_TELL_BE_KICK, &kick );
+        kfrole->SendToClient( KFMsg::MSG_TELL_BE_KICK, &kick );
 
         // 删除连接关系
         _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );
@@ -267,7 +267,7 @@ namespace KFrame
             KFMsg::MsgEnterGame enter;
             enter.set_servertime( kfmsg.servertime() );
             enter.mutable_playerdata()->CopyFrom( kfmsg.playerdata() );
-            auto ok = kfrole->SendMessageToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
+            auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
             if ( ok )
             {
                 __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );

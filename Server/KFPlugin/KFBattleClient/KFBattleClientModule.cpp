@@ -44,7 +44,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFBattleClientModule::SendMessageToBattle( uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendMessageToShard( __KF_STRING__( battle ), msgid, message );
+        return _kf_cluster->SendToShard( __KF_STRING__( battle ), msgid, message );
     }
 
     bool KFBattleClientModule::SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message )
@@ -113,7 +113,7 @@ namespace KFrame
             ack.set_ip( kfmsg.ip() );
             ack.set_port( kfmsg.port() );
             ack.set_token( kfmsg.token() );
-            auto ok = _kf_player->SendMessageToClient( player, KFMsg::MSG_MATCH_RESULT_ACK, &ack );
+            auto ok = _kf_player->SendToClient( player, KFMsg::MSG_MATCH_RESULT_ACK, &ack );
             if ( !ok )
             {
                 __LOG_ERROR__( "player[{}] match[{}] room[{}|{}:{}] failed!", player->GetKeyID(), kfmsg.matchid(), kfmsg.roomid(), kfmsg.ip(), kfmsg.port() );
@@ -161,6 +161,11 @@ namespace KFrame
         {
             player->UpdateData( kfscore, __KF_STRING__( victory ), KFOperateEnum::Add, 1 );
         }
+        else
+        {
+            player->UpdateData( kfscore, __KF_STRING__( die ), KFOperateEnum::Add, 1 );
+        }
+
         if ( pbscore->ranking() <= __TOP_FIVE__ )
         {
             player->UpdateData( kfscore, __KF_STRING__( topfive ), KFOperateEnum::Add, 1 );
@@ -182,12 +187,6 @@ namespace KFrame
             std::string maxname = "max" + pbdata->name();
             player->UpdateData( kfscore, maxname, KFOperateEnum::Greater, pbdata->value() );
         }
-
-        if ( pbscore->has_score() )
-        {
-            player->UpdateData( kfscore, __KF_STRING__( score ), KFOperateEnum::Add, pbscore->score() );
-        }
-
 
         // 胜率
         auto victorycount = kfscore->GetValue< uint32 >( __KF_STRING__( victory ) );

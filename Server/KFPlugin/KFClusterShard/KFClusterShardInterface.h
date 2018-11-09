@@ -11,27 +11,27 @@ namespace KFrame
     {
     public:
         // 发型消息到代理服务器
-        virtual void SendMessageToProxy( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual void SendMessageToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToProxy( uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发型消息到代理服务器
-        virtual bool SendMessageToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendMessageToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发型消息到代理服务器
-        virtual bool SendMessageToClient( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendMessageToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发型消息到代理服务器
-        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendMessageToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发型消息到代理服务器
-        virtual bool SendMessageToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendMessageToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发送消息到玩家
-        virtual bool SendMessageToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////

@@ -82,10 +82,10 @@ namespace KFrame
         }
 
         auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
-        return _kf_cluster_shard->SendMessageToPlayer( serverid, playerid, msgid, message );
+        return _kf_cluster_shard->SendToPlayer( serverid, playerid, msgid, message );
     }
 
-    void KFGroupShardModule::SendMessageToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid /* = 0 */ )
+    void KFGroupShardModule::SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid /* = 0 */ )
     {
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
@@ -152,7 +152,7 @@ namespace KFrame
         // 通知新队员加入
         KFMsg::S2SAddMatchGroupMemberAck ack;
         ack.mutable_pbmember()->CopyFrom( kfmsg.pbmember() );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_ACK, &ack, kfnewmember->GetKeyID() );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_ADD_MATCH_GROUP_MEMBER_ACK, &ack, kfnewmember->GetKeyID() );
 
         // 通知新队员队伍信息
         SendGroupDataToMember( kfmemberrecord, kfnewmember, kfgroup, true );
@@ -207,7 +207,7 @@ namespace KFrame
         // 发送消息
         KFMsg::S2SRemoveMatchGroupMemberAck req;
         req.set_memberid( kfmsg.playerid() );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
 
         // 判断队员数量
         if ( kfmemberrecord->Size() == 0 )
@@ -264,7 +264,7 @@ namespace KFrame
         auto pbstring = ack.add_pbstring();
         pbstring->set_name( __KF_STRING__( captainid ) );
         pbstring->set_value( __TO_STRING__( kfmember->GetKeyID() ) );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
 
         return true;
     }
@@ -316,7 +316,7 @@ namespace KFrame
         // 通知队员, 有队员离开
         KFMsg::S2SRemoveMatchGroupMemberAck req;
         req.set_memberid( kfmsg.memberid() );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_REMOVE_MATCH_GROUP_MEMBER_ACK, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleOnLineQueryGroupReq )
@@ -468,7 +468,7 @@ namespace KFrame
         ack.set_memberid( kfmember->GetKeyID() );
         ack.set_dataname( dataname );
         ack.mutable_pbstrings()->CopyFrom( pbstrings );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK, &ack );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_MEMBER_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGroupShardModule::HandleUpdateGroupMatchReq )
@@ -500,6 +500,6 @@ namespace KFrame
         }
 
         auto kfmemberrecord = kfobject->FindData( __KF_STRING__( groupmember ) );
-        SendMessageToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
+        SendToGroup( kfmemberrecord, KFMsg::S2S_UPDATE_GROUP_DATA_ACK, &ack );
     }
 }

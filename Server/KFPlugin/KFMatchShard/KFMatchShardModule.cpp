@@ -117,7 +117,7 @@ namespace KFrame
         ack.set_matchid( kfmsg.matchid() );
         ack.set_playerid( kfmsg.playerid() );
         ack.set_result( KFMsg::MatchRequestSuccess );
-        _kf_cluster_shard->SendMessageToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
         __LOG_DEBUG__( "group[{}] match battleserverid[{}] allowgroup[{}]!", pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0 );
     }
@@ -141,7 +141,7 @@ namespace KFrame
         KFMsg::S2SQueryMatchRoomAck ack;
         ack.set_matchid( matchid );
         ack.set_playerid( kfmsg.playerid() );
-        auto ok = _kf_cluster_shard->SendMessageToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
+        auto ok = _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}] query match[{}] ok!", kfmsg.playerid(), kfmsg.matchid() );
