@@ -36,6 +36,10 @@ namespace KFrame
 
         // 创建签名
         virtual const std::string& MakePlatformSign( uint32 nowtime );
+
+        // 创建平台连接
+        virtual const std::string& MakePlatformUrl( const std::string& path );
+
     protected:
         // 绑定支付宝
         __KF_MESSAGE_FUNCTION__( HandleBindAlipayReq );

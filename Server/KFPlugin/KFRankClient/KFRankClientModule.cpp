@@ -56,7 +56,7 @@ namespace KFrame
         for ( auto kfsetting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
-            _update_rank_list[ player->GetKeyID() ].push_back( kfsetting );
+            _update_rank_list[ player->GetKeyID() ].insert( kfsetting );
         }
     }
 

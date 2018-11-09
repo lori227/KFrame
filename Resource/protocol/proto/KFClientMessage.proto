@@ -708,7 +708,7 @@ message MsgQuerySettingAck
 // MSG_UPDATE_SETTING_REQ
 message MsgUpdateSettingReq
 {
-	required PBStrings settings = 1;
+	required string settingdata = 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -940,4 +940,5 @@ message MsgQueryInviteScoreReq
 message MsgQueryInviteScoreAck
 {
 	required uint32 score = 1;		// 积分
+	required string alipay = 2;		// 支付宝账号
 }

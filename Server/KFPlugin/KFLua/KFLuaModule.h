@@ -128,11 +128,11 @@ namespace KFrame
         const char* LuaGetOptionString( const char* name, const char* logicid );
         uint32 LuaGetOptionUint32( const char* name, const char* logicid );
 
-        // 获得平台api地址
-        const char* LuaGetPlatformApiUrl();
-
         // 创建api签名
         const char* LuaMakePlatformSign( uint32 nowtime );
+
+        // 创建平台地址
+        const char* LuaMakePlatformUrl( const char* path );
 
     protected:
         // 重新加载脚本文件
@@ -146,6 +146,7 @@ namespace KFrame
 
         // lua http回调函数
         __KF_HTTP_CALL_BACK_FUNCTION__( OnLuaHttpCallBack );
+
     private:
         // lua 脚本
         KFMap< std::string, const std::string&, KFLuaScript > _lua_script;

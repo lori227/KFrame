@@ -13,6 +13,9 @@ namespace KFrame
 
         // 创建签名
         virtual const std::string& MakePlatformSign( uint32 nowtime ) = 0;
+
+        // 创建平台连接
+        virtual const std::string& MakePlatformUrl( const std::string& path ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////

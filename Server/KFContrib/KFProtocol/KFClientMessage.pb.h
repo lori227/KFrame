@@ -9507,17 +9507,32 @@ class LIBPROTOC_EXPORT MsgQueryInviteScoreAck : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 score() const;
   inline void set_score(::google::protobuf::uint32 value);
 
+  // required string alipay = 2;
+  inline bool has_alipay() const;
+  inline void clear_alipay();
+  static const int kAlipayFieldNumber = 2;
+  inline const ::std::string& alipay() const;
+  inline void set_alipay(const ::std::string& value);
+  inline void set_alipay(const char* value);
+  inline void set_alipay(const char* value, size_t size);
+  inline ::std::string* mutable_alipay();
+  inline ::std::string* release_alipay();
+  inline void set_allocated_alipay(::std::string* alipay);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryInviteScoreAck)
  private:
   inline void set_has_score();
   inline void clear_has_score();
+  inline void set_has_alipay();
+  inline void clear_has_alipay();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* alipay_;
   ::google::protobuf::uint32 score_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -15889,6 +15904,76 @@ inline ::google::protobuf::uint32 MsgQueryInviteScoreAck::score() const {
 inline void MsgQueryInviteScoreAck::set_score(::google::protobuf::uint32 value) {
   set_has_score();
   score_ = value;
+}
+
+// required string alipay = 2;
+inline bool MsgQueryInviteScoreAck::has_alipay() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgQueryInviteScoreAck::set_has_alipay() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgQueryInviteScoreAck::clear_has_alipay() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgQueryInviteScoreAck::clear_alipay() {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    alipay_->clear();
+  }
+  clear_has_alipay();
+}
+inline const ::std::string& MsgQueryInviteScoreAck::alipay() const {
+  return *alipay_;
+}
+inline void MsgQueryInviteScoreAck::set_alipay(const ::std::string& value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void MsgQueryInviteScoreAck::set_alipay(const char* value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void MsgQueryInviteScoreAck::set_alipay(const char* value, size_t size) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgQueryInviteScoreAck::mutable_alipay() {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  return alipay_;
+}
+inline ::std::string* MsgQueryInviteScoreAck::release_alipay() {
+  clear_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = alipay_;
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgQueryInviteScoreAck::set_allocated_alipay(::std::string* alipay) {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    delete alipay_;
+  }
+  if (alipay) {
+    set_has_alipay();
+    alipay_ = alipay;
+  } else {
+    clear_has_alipay();
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 

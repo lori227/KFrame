@@ -1917,8 +1917,9 @@ void protobuf_AssignDesc_KFClientMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgQueryInviteScoreReq));
   MsgQueryInviteScoreAck_descriptor_ = file->message_type(101);
-  static const int MsgQueryInviteScoreAck_offsets_[1] = {
+  static const int MsgQueryInviteScoreAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgQueryInviteScoreAck, score_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgQueryInviteScoreAck, alipay_),
   };
   MsgQueryInviteScoreAck_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -2501,81 +2502,81 @@ void protobuf_AddDesc_KFClientMessage_2eproto() {
     "rquee\022\017\n\007content\030\001 \002(\t\"#\n\020MsgTellSysNotc"
     "ie\022\017\n\007content\030\001 \002(\t\"\"\n\020MsgBindAlipayReq\022"
     "\016\n\006alipay\030\001 \002(\t\"\030\n\026MsgQueryInviteScoreRe"
-    "q\"\'\n\026MsgQueryInviteScoreAck\022\r\n\005score\030\001 \002"
-    "(\r*\356\026\n\016ClientProtocol\022\024\n\020MSG_TELL_BE_KIC"
-    "K\020d\022\030\n\024MSG_LOGIN_VERIFY_REQ\020e\022\030\n\024MSG_LOG"
-    "IN_VERIFY_ACK\020f\022\026\n\022MSG_LOGIN_GAME_REQ\020g\022"
-    "\025\n\021MSG_LOGIN_OUT_REQ\020i\022\026\n\022MSG_RESULT_DIS"
-    "PLAY\020j\022\027\n\023MSG_CREATE_ROLE_REQ\020k\022\027\n\023MSG_C"
-    "HANGE_NAME_REQ\020l\022\026\n\022MSG_CHANGE_SEX_REQ\020m"
-    "\022#\n\037MSG_RECEIVE_ACTIVITY_REWARD_REQ\020n\022\037\n"
-    "\033MSG_RECEIVE_TASK_REWARD_REQ\020o\022\"\n\036MSG_RE"
-    "CEIVE_ACHIEVE_REWARD_REQ\020p\022\037\n\033MSG_RECEIV"
-    "E_GIFT_REWARD_REQ\020q\022\037\n\033MSG_RECEIVE_MAIL_"
-    "REWARD_REQ\020r\022\025\n\021MSG_VIEW_MAIL_REQ\020s\022\027\n\023M"
-    "SG_DELETE_MAIL_REQ\020t\022\026\n\022MSG_QUERY_MAIL_R"
-    "EQ\020u\022\027\n\023MSG_START_MATCH_REQ\020v\022\027\n\023MSG_STA"
-    "RT_MATCH_ACK\020w\022\030\n\024MSG_CANCEL_MATCH_REQ\020x"
-    "\022\030\n\024MSG_MATCH_RESULT_ACK\020y\022\035\n\031MSG_ADD_FR"
-    "IEND_INVITE_REQ\020z\022\037\n\033MSG_REPLY_FRIEND_IN"
-    "VITE_REQ\020{\022\026\n\022MSG_DEL_FRIEND_REQ\020|\022\026\n\022MS"
-    "G_ENTER_CHAT_REQ\020~\022\025\n\021MSG_SEND_CHAT_REQ\020"
-    "\177\022\027\n\022MSG_SEND_CHAT_INFO\020\200\001\022\027\n\022MSG_LEAVE_"
-    "CHAT_REQ\020\201\001\022%\n MSG_SET_REFUSE_FRIEND_INV"
-    "ITE_REQ\020\202\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\203\001\022\031\n\024"
-    "MSG_QUERY_PLAYER_REQ\020\204\001\022\026\n\021MSG_BUY_STORE"
-    "_REQ\020\205\001\022\027\n\022MSG_GIVE_STORE_REQ\020\206\001\022\037\n\032MSG_"
-    "SEND_ONEBYONE_CHAT_REQ\020\207\001\022 \n\033MSG_SEND_ON"
-    "EBYONE_CHAT_INFO\020\210\001\022\030\n\023MSG_CHANGE_ICON_R"
-    "EQ\020\211\001\022\032\n\025MSG_DEBUG_COMMAND_REQ\020\217\001\022\031\n\024MSG"
-    "_CHANGE_MOTTO_REQ\020\220\001\022&\n!MSG_SET_MODEL_DE"
-    "FAULT_CLOTHES_REQ\020\221\001\022\031\n\024MSG_PLAYER_TOAST"
-    "_REQ\020\222\001\022\030\n\023MSG_REMOVE_DATA_REQ\020\223\001\022\032\n\025MSG"
-    "_DRESS_CLOTHES_REQ\020\224\001\022\031\n\024MSG_CHANGE_MODE"
-    "L_REQ\020\225\001\022\032\n\025MSG_SHOW_REWARD_AGENT\020\226\001\022\037\n\032"
-    "MSG_INVITE_MATCH_GROUP_REQ\020\227\001\022%\n MSG_REP"
-    "LY_INVITE_MATCH_GROUP_REQ\020\231\001\022\036\n\031MSG_LEAV"
-    "E_MATCH_GROUP_REQ\020\232\001\022\035\n\030MSG_KICK_MATCH_G"
-    "ROUP_REQ\020\233\001\022\036\n\031MSG_APPLY_MATCH_GROUP_REQ"
-    "\020\234\001\022$\n\037MSG_REPLY_APPLY_MATCH_GROUP_REQ\020\235"
-    "\001\022 \n\033MSG_MATCH_GROUP_PREPARE_REQ\020\240\001\022\034\n\027M"
-    "SG_CHANGE_ICON_BOX_REQ\020\241\001\022\030\n\023MSG_QUERY_G"
-    "UEST_REQ\020\242\001\022\030\n\023MSG_QUERY_GUEST_ACK\020\243\001\022\031\n"
-    "\024MSG_CANCEL_MATCH_ACK\020\244\001\022\025\n\020MSG_USE_ITEM"
-    "_REQ\020\245\001\022\036\n\031MSG_QUERY_TOAST_COUNT_REQ\020\246\001\022"
-    "\036\n\031MSG_QUERY_TOAST_COUNT_ACK\020\247\001\022\035\n\030MSG_Q"
-    "UERY_STORE_INFO_REQ\020\252\001\022\035\n\030MSG_QUERY_STOR"
-    "E_INFO_ACK\020\253\001\022\026\n\021MSG_BUY_STORE_ACK\020\255\001\022\037\n"
-    "\032MSG_UPDATE_GROUP_MATCH_REQ\020\256\001\022\033\n\026MSG_SE"
-    "ND_GROUPCHAT_REQ\020\257\001\022\034\n\027MSG_SEND_GROUPCHA"
-    "T_INFO\020\260\001\022\033\n\026MSG_SET_WISH_ORDER_REQ\020\261\001\022\032"
-    "\n\025MSG_QUERY_SETTING_REQ\020\262\001\022\032\n\025MSG_QUERY_"
-    "SETTING_ACK\020\263\001\022\033\n\026MSG_UPDATE_SETTING_REQ"
-    "\020\264\001\022\036\n\031MSG_QUERY_RECENT_LIST_REQ\020\265\001\022\036\n\031M"
-    "SG_QUERY_RECENT_LIST_ACK\020\266\001\022\034\n\027MSG_QUERY"
-    "_RANK_LIST_REQ\020\267\001\022\034\n\027MSG_QUERY_RANK_LIST"
-    "_ACK\020\270\001\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_RE"
-    "Q\020\271\001\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_ACK\020\272"
-    "\001\022\032\n\025MSG_COMPOUND_DATA_REQ\020\273\001\022 \n\033MSG_SEV"
-    "EN_SIGNIN_REWARD_REQ\020\306\001\022!\n\034MSG_TELL_SEVE"
-    "N_EXTEND_REWARD\020\307\001\022\031\n\024MSG_CREATE_GUILD_R"
-    "EQ\020\310\001\022\031\n\024MSG_INVITE_GUILD_REQ\020\311\001\022\030\n\023MSG_"
-    "APPLY_GUILD_REQ\020\312\001\022\035\n\030MSG_TELL_MATCH_WAI"
-    "T_TIME\020\313\001\022\027\n\022MSG_EXIT_GUILD_REQ\020\314\001\022\034\n\027MS"
-    "G_TRANSFER_MASTER_REQ\020\315\001\022\031\n\024MSG_REVIEW_A"
-    "PPLY_REQ\020\316\001\022\033\n\026MSG_DISSOLVE_GUILD_REQ\020\317\001"
-    "\022\037\n\032MSG_MODIFY_GUILD_MEDAL_REQ\020\320\001\022\035\n\030MSG"
-    "_QUERY_GUILD_LIST_REQ\020\321\001\022\035\n\030MSG_QUERY_GU"
-    "ILD_LIST_ACK\020\322\001\022\030\n\023MSG_KICK_MEMBER_REQ\020\323"
-    "\001\022\032\n\025MSG_UPGRADE_GUILD_REQ\020\324\001\022!\n\034MSG_APP"
-    "OINT_GUILD_MEMBER_REQ\020\325\001\022!\n\034MSG_SEARCH_G"
-    "UILD_BY_NAME_REQ\020\326\001\022\035\n\030MSG_SET_GUILD_SWI"
-    "TCH_REQ\020\327\001\022\034\n\027MSG_QUERY_GUILD_LOG_REQ\020\330\001"
-    "\022\034\n\027MSG_QUERY_GUILD_LOG_ACK\020\331\001\022\025\n\020MSG_TE"
-    "LL_MARQUEE\020\254\002\022\030\n\023MSG_TELL_SYS_NOTICE\020\255\002\022"
-    "\030\n\023MSG_BIND_ALIPAY_REQ\020\256\002\022\037\n\032MSG_QUERY_I"
-    "NVITE_SCORE_REQ\020\257\002\022\037\n\032MSG_QUERY_INVITE_S"
-    "CORE_ACK\020\260\002", 8331);
+    "q\"7\n\026MsgQueryInviteScoreAck\022\r\n\005score\030\001 \002"
+    "(\r\022\016\n\006alipay\030\002 \002(\t*\356\026\n\016ClientProtocol\022\024\n"
+    "\020MSG_TELL_BE_KICK\020d\022\030\n\024MSG_LOGIN_VERIFY_"
+    "REQ\020e\022\030\n\024MSG_LOGIN_VERIFY_ACK\020f\022\026\n\022MSG_L"
+    "OGIN_GAME_REQ\020g\022\025\n\021MSG_LOGIN_OUT_REQ\020i\022\026"
+    "\n\022MSG_RESULT_DISPLAY\020j\022\027\n\023MSG_CREATE_ROL"
+    "E_REQ\020k\022\027\n\023MSG_CHANGE_NAME_REQ\020l\022\026\n\022MSG_"
+    "CHANGE_SEX_REQ\020m\022#\n\037MSG_RECEIVE_ACTIVITY"
+    "_REWARD_REQ\020n\022\037\n\033MSG_RECEIVE_TASK_REWARD"
+    "_REQ\020o\022\"\n\036MSG_RECEIVE_ACHIEVE_REWARD_REQ"
+    "\020p\022\037\n\033MSG_RECEIVE_GIFT_REWARD_REQ\020q\022\037\n\033M"
+    "SG_RECEIVE_MAIL_REWARD_REQ\020r\022\025\n\021MSG_VIEW"
+    "_MAIL_REQ\020s\022\027\n\023MSG_DELETE_MAIL_REQ\020t\022\026\n\022"
+    "MSG_QUERY_MAIL_REQ\020u\022\027\n\023MSG_START_MATCH_"
+    "REQ\020v\022\027\n\023MSG_START_MATCH_ACK\020w\022\030\n\024MSG_CA"
+    "NCEL_MATCH_REQ\020x\022\030\n\024MSG_MATCH_RESULT_ACK"
+    "\020y\022\035\n\031MSG_ADD_FRIEND_INVITE_REQ\020z\022\037\n\033MSG"
+    "_REPLY_FRIEND_INVITE_REQ\020{\022\026\n\022MSG_DEL_FR"
+    "IEND_REQ\020|\022\026\n\022MSG_ENTER_CHAT_REQ\020~\022\025\n\021MS"
+    "G_SEND_CHAT_REQ\020\177\022\027\n\022MSG_SEND_CHAT_INFO\020"
+    "\200\001\022\027\n\022MSG_LEAVE_CHAT_REQ\020\201\001\022%\n MSG_SET_R"
+    "EFUSE_FRIEND_INVITE_REQ\020\202\001\022\030\n\023MSG_QUERY_"
+    "BASIC_REQ\020\203\001\022\031\n\024MSG_QUERY_PLAYER_REQ\020\204\001\022"
+    "\026\n\021MSG_BUY_STORE_REQ\020\205\001\022\027\n\022MSG_GIVE_STOR"
+    "E_REQ\020\206\001\022\037\n\032MSG_SEND_ONEBYONE_CHAT_REQ\020\207"
+    "\001\022 \n\033MSG_SEND_ONEBYONE_CHAT_INFO\020\210\001\022\030\n\023M"
+    "SG_CHANGE_ICON_REQ\020\211\001\022\032\n\025MSG_DEBUG_COMMA"
+    "ND_REQ\020\217\001\022\031\n\024MSG_CHANGE_MOTTO_REQ\020\220\001\022&\n!"
+    "MSG_SET_MODEL_DEFAULT_CLOTHES_REQ\020\221\001\022\031\n\024"
+    "MSG_PLAYER_TOAST_REQ\020\222\001\022\030\n\023MSG_REMOVE_DA"
+    "TA_REQ\020\223\001\022\032\n\025MSG_DRESS_CLOTHES_REQ\020\224\001\022\031\n"
+    "\024MSG_CHANGE_MODEL_REQ\020\225\001\022\032\n\025MSG_SHOW_REW"
+    "ARD_AGENT\020\226\001\022\037\n\032MSG_INVITE_MATCH_GROUP_R"
+    "EQ\020\227\001\022%\n MSG_REPLY_INVITE_MATCH_GROUP_RE"
+    "Q\020\231\001\022\036\n\031MSG_LEAVE_MATCH_GROUP_REQ\020\232\001\022\035\n\030"
+    "MSG_KICK_MATCH_GROUP_REQ\020\233\001\022\036\n\031MSG_APPLY"
+    "_MATCH_GROUP_REQ\020\234\001\022$\n\037MSG_REPLY_APPLY_M"
+    "ATCH_GROUP_REQ\020\235\001\022 \n\033MSG_MATCH_GROUP_PRE"
+    "PARE_REQ\020\240\001\022\034\n\027MSG_CHANGE_ICON_BOX_REQ\020\241"
+    "\001\022\030\n\023MSG_QUERY_GUEST_REQ\020\242\001\022\030\n\023MSG_QUERY"
+    "_GUEST_ACK\020\243\001\022\031\n\024MSG_CANCEL_MATCH_ACK\020\244\001"
+    "\022\025\n\020MSG_USE_ITEM_REQ\020\245\001\022\036\n\031MSG_QUERY_TOA"
+    "ST_COUNT_REQ\020\246\001\022\036\n\031MSG_QUERY_TOAST_COUNT"
+    "_ACK\020\247\001\022\035\n\030MSG_QUERY_STORE_INFO_REQ\020\252\001\022\035"
+    "\n\030MSG_QUERY_STORE_INFO_ACK\020\253\001\022\026\n\021MSG_BUY"
+    "_STORE_ACK\020\255\001\022\037\n\032MSG_UPDATE_GROUP_MATCH_"
+    "REQ\020\256\001\022\033\n\026MSG_SEND_GROUPCHAT_REQ\020\257\001\022\034\n\027M"
+    "SG_SEND_GROUPCHAT_INFO\020\260\001\022\033\n\026MSG_SET_WIS"
+    "H_ORDER_REQ\020\261\001\022\032\n\025MSG_QUERY_SETTING_REQ\020"
+    "\262\001\022\032\n\025MSG_QUERY_SETTING_ACK\020\263\001\022\033\n\026MSG_UP"
+    "DATE_SETTING_REQ\020\264\001\022\036\n\031MSG_QUERY_RECENT_"
+    "LIST_REQ\020\265\001\022\036\n\031MSG_QUERY_RECENT_LIST_ACK"
+    "\020\266\001\022\034\n\027MSG_QUERY_RANK_LIST_REQ\020\267\001\022\034\n\027MSG"
+    "_QUERY_RANK_LIST_ACK\020\270\001\022#\n\036MSG_QUERY_FRI"
+    "END_RANK_LIST_REQ\020\271\001\022#\n\036MSG_QUERY_FRIEND"
+    "_RANK_LIST_ACK\020\272\001\022\032\n\025MSG_COMPOUND_DATA_R"
+    "EQ\020\273\001\022 \n\033MSG_SEVEN_SIGNIN_REWARD_REQ\020\306\001\022"
+    "!\n\034MSG_TELL_SEVEN_EXTEND_REWARD\020\307\001\022\031\n\024MS"
+    "G_CREATE_GUILD_REQ\020\310\001\022\031\n\024MSG_INVITE_GUIL"
+    "D_REQ\020\311\001\022\030\n\023MSG_APPLY_GUILD_REQ\020\312\001\022\035\n\030MS"
+    "G_TELL_MATCH_WAIT_TIME\020\313\001\022\027\n\022MSG_EXIT_GU"
+    "ILD_REQ\020\314\001\022\034\n\027MSG_TRANSFER_MASTER_REQ\020\315\001"
+    "\022\031\n\024MSG_REVIEW_APPLY_REQ\020\316\001\022\033\n\026MSG_DISSO"
+    "LVE_GUILD_REQ\020\317\001\022\037\n\032MSG_MODIFY_GUILD_MED"
+    "AL_REQ\020\320\001\022\035\n\030MSG_QUERY_GUILD_LIST_REQ\020\321\001"
+    "\022\035\n\030MSG_QUERY_GUILD_LIST_ACK\020\322\001\022\030\n\023MSG_K"
+    "ICK_MEMBER_REQ\020\323\001\022\032\n\025MSG_UPGRADE_GUILD_R"
+    "EQ\020\324\001\022!\n\034MSG_APPOINT_GUILD_MEMBER_REQ\020\325\001"
+    "\022!\n\034MSG_SEARCH_GUILD_BY_NAME_REQ\020\326\001\022\035\n\030M"
+    "SG_SET_GUILD_SWITCH_REQ\020\327\001\022\034\n\027MSG_QUERY_"
+    "GUILD_LOG_REQ\020\330\001\022\034\n\027MSG_QUERY_GUILD_LOG_"
+    "ACK\020\331\001\022\025\n\020MSG_TELL_MARQUEE\020\254\002\022\030\n\023MSG_TEL"
+    "L_SYS_NOTICE\020\255\002\022\030\n\023MSG_BIND_ALIPAY_REQ\020\256"
+    "\002\022\037\n\032MSG_QUERY_INVITE_SCORE_REQ\020\257\002\022\037\n\032MS"
+    "G_QUERY_INVITE_SCORE_ACK\020\260\002", 8347);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClientMessage.proto", &protobuf_RegisterTypes);
   MsgResultDisplay::default_instance_ = new MsgResultDisplay();
@@ -27230,6 +27231,7 @@ void MsgQueryInviteScoreReq::Swap(MsgQueryInviteScoreReq* other) {
 
 #ifndef _MSC_VER
 const int MsgQueryInviteScoreAck::kScoreFieldNumber;
+const int MsgQueryInviteScoreAck::kAlipayFieldNumber;
 #endif  // !_MSC_VER
 
 MsgQueryInviteScoreAck::MsgQueryInviteScoreAck()
@@ -27249,6 +27251,7 @@ MsgQueryInviteScoreAck::MsgQueryInviteScoreAck(const MsgQueryInviteScoreAck& fro
 void MsgQueryInviteScoreAck::SharedCtor() {
   _cached_size_ = 0;
   score_ = 0u;
+  alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -27257,6 +27260,9 @@ MsgQueryInviteScoreAck::~MsgQueryInviteScoreAck() {
 }
 
 void MsgQueryInviteScoreAck::SharedDtor() {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    delete alipay_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -27285,6 +27291,11 @@ MsgQueryInviteScoreAck* MsgQueryInviteScoreAck::New() const {
 void MsgQueryInviteScoreAck::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     score_ = 0u;
+    if (has_alipay()) {
+      if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+        alipay_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -27304,6 +27315,23 @@ bool MsgQueryInviteScoreAck::MergePartialFromCodedStream(
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &score_)));
           set_has_score();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_alipay;
+        break;
+      }
+
+      // required string alipay = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_alipay:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_alipay()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->alipay().data(), this->alipay().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -27334,6 +27362,15 @@ void MsgQueryInviteScoreAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->score(), output);
   }
 
+  // required string alipay = 2;
+  if (has_alipay()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->alipay().data(), this->alipay().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->alipay(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -27345,6 +27382,16 @@ void MsgQueryInviteScoreAck::SerializeWithCachedSizes(
   // required uint32 score = 1;
   if (has_score()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->score(), target);
+  }
+
+  // required string alipay = 2;
+  if (has_alipay()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->alipay().data(), this->alipay().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->alipay(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -27363,6 +27410,13 @@ int MsgQueryInviteScoreAck::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->score());
+    }
+
+    // required string alipay = 2;
+    if (has_alipay()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->alipay());
     }
 
   }
@@ -27395,6 +27449,9 @@ void MsgQueryInviteScoreAck::MergeFrom(const MsgQueryInviteScoreAck& from) {
     if (from.has_score()) {
       set_score(from.score());
     }
+    if (from.has_alipay()) {
+      set_alipay(from.alipay());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -27412,7 +27469,7 @@ void MsgQueryInviteScoreAck::CopyFrom(const MsgQueryInviteScoreAck& from) {
 }
 
 bool MsgQueryInviteScoreAck::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -27420,6 +27477,7 @@ bool MsgQueryInviteScoreAck::IsInitialized() const {
 void MsgQueryInviteScoreAck::Swap(MsgQueryInviteScoreAck* other) {
   if (other != this) {
     std::swap(score_, other->score_);
+    std::swap(alipay_, other->alipay_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

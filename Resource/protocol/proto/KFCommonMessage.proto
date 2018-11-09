@@ -180,7 +180,10 @@ enum AckEnum
 	InvalidActivationCode		= 176;		// 非法激活码
 	CanNotFindLoginNode			= 177;		// 没有可登录的节点
 	ChannelNotSupport			= 178;		// 不支持的渠道
-	QueryInviteScoreError		= 179;		// 查询邀请码积分出错了
+	QueryInviteScoreError		= 179;		// 查询邀请码积分出错, 错误码<Text>%s</Text>
+	PlatformServerBusy			= 180;		// 平台服务器繁忙
+	BindAlipayOk				= 181;		// 绑定支付宝成功
+	BindAlipayFailed			= 182;		// 绑定支付宝失败, 错误码<Text>%s</Text>
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

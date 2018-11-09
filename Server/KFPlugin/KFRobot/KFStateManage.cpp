@@ -73,6 +73,7 @@
 #include "KFTransferMasterState.h"
 #include "KFDissolveGuildState.h"
 #include "KFQueryGuildLogState.h"
+#include "KFTestRobotState.h"
 
 namespace KFrame
 {
@@ -181,6 +182,10 @@ namespace KFrame
         AddState( RobotStateEnum::TransferMaster, new KFTransferMasterState() );
         AddState( RobotStateEnum::DissolveGuild, new KFDissolveGuildState() );
         AddState( RobotStateEnum::QueryGuildLog, new KFQueryGuildLogState() );
+
+
+        AddState( RobotStateEnum::TestRobot, new KFTestRobotState() );
+
     }
 
     void KFStateManage::AddState( uint32 state, KFState* kfstate )

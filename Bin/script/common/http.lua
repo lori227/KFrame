@@ -19,18 +19,24 @@ _http.EncodeUrlParam = function (param)
     return string.sub(param_str, 1, string.len(param_str) - 1)
 end
 
-
-_http.StartHttpClient = function (url, param, body, args)
-    local param_str = _http.EncodeUrlParam(param)
+_http.StartHttpClient = function (url, body, args)
     local body_str = json.JsonEncode(body)
-    local args_str = json.JsonEncode(args)
-    local new_url = url .. param_str
-    log.LogInfo("url=" .. new_url .. " body=" .. body_str .. " args=" .. args_str)
-    KFrame:MTHttpClient(new_url, body_str, args_str)
+
+    local args_str = ""
+    if args ~= nil then
+        args_str = json.JsonEncode(args)
+    end
+
+    log.LogInfo("url=" .. url .. " body=" .. body_str .. " args=" .. args_str)
+    KFrame:MTHttpClient(url, body_str, args_str)
 end
 
 _http.CommonSig = function (timestamp)
     return KFrame:MakePlatformSign(timestamp)
+end
+
+_http.PlatformUrl = function( path )
+    return KFrame:MakePlatformUrl(path)
 end
 
 return _http

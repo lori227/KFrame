@@ -42,7 +42,6 @@ namespace KFrame
                 }
             }
         }
-
         // 计算端口
         if ( kftcpsetting->_port == _invalid_int )
         {

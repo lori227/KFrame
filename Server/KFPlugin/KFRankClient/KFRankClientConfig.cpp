@@ -41,6 +41,7 @@ namespace KFrame
                 auto parentname = calcnode.GetString( "Parent" );
                 auto dataname = calcnode.GetString( "Name" );
 
+                AddUpdateSetting( parentname, dataname, kfsetting );
                 kfsetting->_calc_data.push_back( DataType( parentname, dataname ) );
                 calcnode.NextNode();
             }
@@ -68,10 +69,17 @@ namespace KFrame
     void KFRankClientConfig::AddRankSetting( KFRankSetting* kfsetting )
     {
         _kf_rank_setting.Insert( kfsetting->_rank_id, kfsetting );
-
         RankDataType key( kfsetting->_parent_data, kfsetting->_rank_data );
         _kf_rank_data_list[ key ].push_back( kfsetting );
     }
+
+    void KFRankClientConfig::AddUpdateSetting( const std::string& parentname, const std::string& dataname, KFRankSetting* kfsetting )
+    {
+        RankDataType key( parentname, dataname );
+        _kf_rank_update_list[ key ].push_back( kfsetting );
+
+    }
+
 
     const KFRankSetting* KFRankClientConfig::FindRankSetting( uint32 rankid ) const
     {
@@ -82,8 +90,8 @@ namespace KFrame
     {
         RankDataType key( parentdata, rankdata );
 
-        auto iter = _kf_rank_data_list.find( key );
-        if ( iter == _kf_rank_data_list.end() )
+        auto iter = _kf_rank_update_list.find( key );
+        if ( iter == _kf_rank_update_list.end() )
         {
             static std::vector< KFRankSetting* > _empty_list;
             return _empty_list;
@@ -91,4 +99,6 @@ namespace KFrame
 
         return iter->second;
     }
+
+
 }

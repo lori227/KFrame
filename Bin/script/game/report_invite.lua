@@ -28,16 +28,6 @@ function ReportInvite( playerid )
         return
     end
 
-    -- 获取url
-    local url = data.GetOptionString("platapiurl") .. "invitationcode"
-    local nowtime = time.Now()
-
-    -- param
-    local url_param = {}
-    url_param["timestamp"] = nowtime
-    url_param["appid"] = data.GetOptionInt("platappid")
-    url_param["sig"] = http.CommonSig(nowtime)
-
     -- post data
     local http_body = {}
     http_body["accountid"] = playerid
@@ -50,7 +40,9 @@ function ReportInvite( playerid )
     arg["luafile"] = "./script/game/report_invite.lua"
     arg["luafunction"]="HttpCallBackFunction"
 
-    http.StartHttpClient( url, url_param, http_body, arg )
+    -- 获取url
+    local platformurl = http.MakePlatformUrl("invitationcode")
+    http.StartHttpClient( platformurl, http_body, arg )
 end
 
 function HttpCallBackFunction( playerid, senddata, recvdata )

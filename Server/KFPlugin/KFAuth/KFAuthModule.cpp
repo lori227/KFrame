@@ -1,7 +1,6 @@
 ﻿#include "KFAuthModule.h"
 #include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFHttp/KFHttpURL.h"
 
 namespace KFrame
 {
@@ -288,13 +287,7 @@ namespace KFrame
 
     std::string KFAuthModule::VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode )
     {
-        static std::string api = _kf_platform->GetPlatformApiUrl() + __KF_STRING__( verifyactivationcode );
-
-        std::map<std::string, std::string> params;
-        params["appid"] = KFUtility::ToString( _kf_option->GetUInt32( __KF_STRING__( platappid ) ) );
-        params["timestamp"] = KFUtility::ToString( KFGlobal::Instance()->_real_time );
-        params[ "sig" ] = _kf_platform->MakePlatformSign( KFGlobal::Instance()->_real_time );
-        auto apiurl = api + KFHttpURL::EncodeParams( params );
+        auto apiurl = _kf_platform->MakePlatformUrl( __KF_STRING__( verifyactivationcode ) );
 
         auto account = accountdata->_value[__KF_STRING__( account )];
 
