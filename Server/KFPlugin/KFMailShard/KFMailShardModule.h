@@ -25,11 +25,8 @@ namespace KFrame
     class KFMailShardModule : public KFMailShardInterface
     {
     public:
-        KFMailShardModule ();
-        ~KFMailShardModule ();
-
-        // 加载配置
-        virtual void InitModule ();
+        KFMailShardModule() = default;
+        ~KFMailShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -80,8 +77,14 @@ namespace KFrame
         bool RemoveMail( uint32 playerid, uint32 mailtype, uint64 mailid );
 
         // 添加邮件 当maillistkey == ""发送系统邮件
-        bool AddMail( const std::string& maillistkey, MapString& maildata );
+        bool AddMail( uint32 playerid, uint32 mailtype, MapString& maildata );
 
+        // 通知有新邮件
+        void NoticePlayerNewMail( uint32 playerid, uint32 mailtype );
+
+    private:
+        KFRedisDriver* _mail_redis_driver{ nullptr };
+        KFRedisDriver* _public_redis_driver{ nullptr };
     };
 }
 

@@ -120,7 +120,10 @@ namespace KFrame
         auto reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
         if ( reply == nullptr )
         {
-            __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]!", _redis_context->err, _redis_context->errstr, strsql );
+            if ( !IsDisconnected() )
+            {
+                __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]!", _redis_context->err, _redis_context->errstr, strsql );
+            }
             return nullptr;
         }
 

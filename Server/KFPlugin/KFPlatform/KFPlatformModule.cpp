@@ -41,7 +41,7 @@ namespace KFrame
         static auto _api_url = GetPlatformApiUrl();
         static auto _app_id = _kf_option->GetString( __KF_STRING__( platappid ) );
 
-        std::map<std::string, std::string> params;
+        MapString params;
         params[ "appid" ] = _app_id;
         params[ "timestamp" ] = KFUtility::ToString( KFGlobal::Instance()->_real_time );
         params[ "sig" ] = MakePlatformSign( KFGlobal::Instance()->_real_time );

@@ -52,7 +52,7 @@ namespace KFrame
         _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &req );
     }
 
-    bool KFRouteClientModule::SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         if ( serverid == _invalid_int || playerid == _invalid_int )
         {
@@ -67,13 +67,13 @@ namespace KFrame
         else
         {
             auto data = message->SerializeAsString();
-            ok = SendMessageToRoute( serverid, playerid, msgid, data.data(), static_cast< uint32 >( data.length() ) );
+            ok = SendToRoute( serverid, playerid, msgid, data.data(), static_cast< uint32 >( data.length() ) );
         }
 
         return ok;
     }
 
-    bool KFRouteClientModule::SendMessageToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length )
+    bool KFRouteClientModule::SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length )
     {
         KFMsg::S2STransmitRouteZoneMessageReq req;
         auto transmitdata = req.mutable_transmitdata();

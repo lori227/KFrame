@@ -90,7 +90,7 @@ namespace KFrame
         }
 
         auto playerid = kfrelation->GetKeyID();
-        return _kf_route->SendMessageToRoute( serverid, playerid, msgid, message );
+        return _kf_route->SendToRoute( serverid, playerid, msgid, message );
     }
 
     void KFRelationClientModule::OnEnterQueryFriend( KFEntity* player )
@@ -235,7 +235,7 @@ namespace KFrame
                     pbdata->set_name( iter.first );
                     pbdata->set_value( iter.second );
                 }
-                _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.friendid(), KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
+                _kf_route->SendToRoute( kfmsg.serverid(), kfmsg.friendid(), KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
             }
         }
         else

@@ -20,5 +20,6 @@ namespace KFrame
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
         __FIND_MODULE__( _kf_command, KFDeployCommandInterface );
+        __FIND_MODULE__( _kf_platform, KFPlatformInterface );
     }
 }

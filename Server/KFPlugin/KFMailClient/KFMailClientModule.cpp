@@ -480,16 +480,7 @@ namespace KFrame
             pbdata->set_value( iter.second );
         }
 
-        auto ok = SendMessageToMail( KFMsg::S2S_ADD_MAIL_REQ, &req );
-        if ( ok )
-        {
-            KFMsg::S2SNoticeNewMailReq notice;
-            notice.set_playerid( playerid );
-            notice.set_mailtype( mailtype );
-            _kf_route->SendMessageToRoute( serverid, playerid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
-        }
-
-        return ok;
+        return SendMessageToMail( KFMsg::S2S_ADD_MAIL_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleNoticeNewMailReq )

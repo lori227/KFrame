@@ -504,7 +504,7 @@ namespace KFrame
         auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
         auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
 
-        return _kf_route->SendMessageToRoute( serverid, playerid, msgid, message );
+        return _kf_route->SendToRoute( serverid, playerid, msgid, message );
     }
 
     void KFPlayerModule::SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself )

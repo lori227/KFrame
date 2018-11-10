@@ -35,7 +35,7 @@ _http.CommonSig = function (timestamp)
     return KFrame:MakePlatformSign(timestamp)
 end
 
-_http.PlatformUrl = function( path )
+_http.MakePlatformUrl = function( path )
     return KFrame:MakePlatformUrl(path)
 end
 

@@ -157,7 +157,7 @@ namespace KFrame
         info.set_chattype( kfmsg.chattype() );
         info.set_playerinfo( kfmsg.selfinfo() );
         info.set_serverid( KFGlobal::Instance()->_app_id );
-        _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
+        _kf_route->SendToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
     }
 
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleSendGroupChatReq )

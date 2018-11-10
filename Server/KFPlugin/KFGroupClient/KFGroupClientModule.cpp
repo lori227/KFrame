@@ -308,7 +308,7 @@ namespace KFrame
         req.set_inviterserverid( KFGlobal::Instance()->_app_id );
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         _kf_kernel->SerializeToClient( kfbasic, req.mutable_inviter() );
-        auto ok = _kf_route->SendMessageToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ, &req );
+        auto ok = _kf_route->SendToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::S2S_RECEIVE_INVITE_MATCH_GROUP_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::GroupServerBusy );

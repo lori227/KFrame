@@ -2,44 +2,16 @@
 
 namespace KFrame
 {
-    //#define __USE_WORKER__
-
-#ifdef __USE_WORKER__
-    #define __REGISTER_MAIL_MESSAGE__ __REGISTER_WORKER_MESSAGE__
-    #define __UNREGISTER_MAIL_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __MAIL_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( mail ) )
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfguid, msgid, message )
-#else
-    #define __REGISTER_MAIL_MESSAGE__ __REGISTER_MESSAGE__
-    #define __UNREGISTER_MAIL_MESSAGE__ __UNREGISTER_MESSAGE__
-    static KFRedisDriver* _mail_redis_driver = nullptr;
-    #define __MAIL_REDIS_DRIVER__ _mail_redis_driver
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
-#endif
-
-    KFMailShardModule::KFMailShardModule()
-    {
-
-    }
-
-    KFMailShardModule::~KFMailShardModule()
-    {
-
-    }
-
-    void KFMailShardModule::InitModule()
-    {
-
-    }
+#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
 
     void KFMailShardModule::BeforeRun()
     {
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ, &KFMailShardModule::HandleAddMailReq );
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ, &KFMailShardModule::HandleDeleteMailReq );
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ, &KFMailShardModule::HandleUpdateMailFlagReq );
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ, &KFMailShardModule::HandleNewPlayerLoginMailReq );
-        __REGISTER_MAIL_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ, &KFMailShardModule::HandleGMAddMailReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ, &KFMailShardModule::HandleAddMailReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ, &KFMailShardModule::HandleDeleteMailReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ, &KFMailShardModule::HandleUpdateMailFlagReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ, &KFMailShardModule::HandleNewPlayerLoginMailReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ, &KFMailShardModule::HandleGMAddMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -47,20 +19,19 @@ namespace KFrame
     {
         __UNREGISTER_SCHEDULE_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ );
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ );
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ );
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ );
-        __UNREGISTER_MAIL_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_NEW_PLAYER_LOGIN_MAIL_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_GM_ADD_MAIL_REQ );
     }
 
     void KFMailShardModule::OnceRun()
     {
-#ifndef __USE_WORKER__
         // 初始化redis
         _mail_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( mail ) );
-#endif
+        _public_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
 
         // 每天5点 清理过期的全局邮件
         auto cleartime = _kf_option->GetUInt32( __KF_STRING__( wholemailcleartime ) );
@@ -74,9 +45,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SCHEDULE_FUNCTION__( KFMailShardModule::OnScheduleClearWholeOverdueMail )
     {
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-
-        auto kfresult = redisdriver->QueryList( "zrangebyscore {} -inf +inf", __KF_STRING__( wholemail ) );
+        auto kfresult = _mail_redis_driver->QueryList( "zrangebyscore {} -inf +inf", __KF_STRING__( wholemail ) );
         if ( kfresult->_value.empty() )
         {
             return;
@@ -85,7 +54,7 @@ namespace KFrame
         ListString overduelist;
         for ( auto& strmailid : kfresult->_value )
         {
-            auto stringresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
+            auto stringresult = _mail_redis_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
             if ( stringresult->IsOk() && stringresult->_value == _invalid_str )
             {
                 overduelist.push_back( strmailid );
@@ -94,7 +63,7 @@ namespace KFrame
 
         if ( !overduelist.empty() )
         {
-            redisdriver->Update( overduelist, "zrem {}", __KF_STRING__( wholemail ) );
+            _mail_redis_driver->Update( overduelist, "zrem {}", __KF_STRING__( wholemail ) );
         }
     }
 
@@ -133,8 +102,7 @@ namespace KFrame
             return;
         }
 
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-        auto mailkeylist = redisdriver->QueryMap( "hgetall {}", maillistkey );
+        auto mailkeylist = _mail_redis_driver->QueryMap( "hgetall {}", maillistkey );
         if ( mailkeylist->_value.empty() )
         {
             return;
@@ -160,7 +128,7 @@ namespace KFrame
                 continue;
             }
 
-            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( mail ), strmailid );
+            auto kfresult = _mail_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( mail ), strmailid );
             if ( !kfresult->IsOk() )
             {
                 continue;
@@ -204,19 +172,13 @@ namespace KFrame
         // 删除过期邮件
         if ( !overduelist.empty() )
         {
-            redisdriver->Update( overduelist, "zrem {}", maillistkey );
+            _mail_redis_driver->Update( overduelist, "zrem {}", maillistkey );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleAddMailReq )
     {
         __PROTO_PARSE__( KFMsg::S2SAddMailReq );
-
-        auto maillistkey = FormatMailKeyName( kfmsg.playerid(), kfmsg.mailtype(), __FUNC_LINE__ );
-        if ( maillistkey.empty() )
-        {
-            return;
-        }
 
         MapString maildata;
         auto pbmail = &kfmsg.pbmail();
@@ -227,7 +189,7 @@ namespace KFrame
         }
 
         // 添加邮件
-        auto ok = AddMail( maillistkey, maildata );
+        auto ok = AddMail( kfmsg.playerid(), kfmsg.mailtype(), maildata );
         if ( !ok )
         {
             auto strmaildata = kfmsg.DebugString();
@@ -235,12 +197,10 @@ namespace KFrame
         }
     }
 
-    bool KFMailShardModule::AddMail( const std::string& maillistkey, MapString& maildata )
+    bool KFMailShardModule::AddMail( uint32 playerid, uint32 mailtype, MapString& maildata )
     {
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-
         // 创建一个邮件id
-        auto uint64result = redisdriver->QueryUInt64( "incr {}", __KF_STRING__( mailidcreater ) );
+        auto uint64result = _mail_redis_driver->QueryUInt64( "incr {}", __KF_STRING__( mailidcreater ) );
         if ( uint64result->_value == _invalid_int )
         {
             return false;
@@ -251,26 +211,35 @@ namespace KFrame
         maildata[ __KF_STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         // 添加邮件
-        redisdriver->Append( maildata, "hmset {}:{}", __KF_STRING__( mail ), uint64result->_value );
+        _mail_redis_driver->Append( maildata, "hmset {}:{}", __KF_STRING__( mail ), uint64result->_value );
 
         auto validtime = KFUtility::ToValue< uint32 >( maildata[ __KF_STRING__( validtime ) ] );
         if ( validtime != _invalid_int )
         {
-            redisdriver->Append( "expire {}:{} {}", __KF_STRING__( mail ), uint64result->_value, validtime );
+            _mail_redis_driver->Append( "expire {}:{} {}", __KF_STRING__( mail ), uint64result->_value, validtime );
         }
 
-        if ( maillistkey == _invalid_str )
+        if ( playerid == _invalid_int )
         {
             // 系统邮件
-            redisdriver->Append( "zadd {} {} {}", __KF_STRING__( wholemail ), uint64result->_value, uint64result->_value );
+            _mail_redis_driver->Append( "zadd {} {} {}", __KF_STRING__( wholemail ), uint64result->_value, uint64result->_value );
         }
         else
         {
             // 非系统邮件
-            redisdriver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+            auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
+            if ( !maillistkey.empty() )
+            {
+                _mail_redis_driver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+            }
         }
 
-        auto kfresult = redisdriver->Pipeline();
+        auto kfresult = _mail_redis_driver->Pipeline();
+        if ( kfresult->IsOk() )
+        {
+            NoticePlayerNewMail( playerid, mailtype );
+        }
+
         return kfresult->IsOk();
     }
 
@@ -289,11 +258,10 @@ namespace KFrame
             return false;
         }
 
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-        redisdriver->Execute( "hdel {} {}", maillistkey, mailid );
+        _mail_redis_driver->Execute( "hdel {} {}", maillistkey, mailid );
         if ( mailtype != KFMsg::MailEnum::WholeMail )
         {
-            redisdriver->Execute( "del {}:{}", __KF_STRING__( mail ), mailid );
+            _mail_redis_driver->Execute( "del {}:{}", __KF_STRING__( mail ), mailid );
         }
 
         return true;
@@ -301,10 +269,8 @@ namespace KFrame
 
     void KFMailShardModule::LoadWholeMailToPerson( uint32 playerid )
     {
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-
         // 获取玩家已经加载的最近一封GM邮件id
-        auto stringresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
+        auto stringresult = _mail_redis_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
         if ( !stringresult->IsOk() )
         {
             return;
@@ -317,7 +283,7 @@ namespace KFrame
         }
 
         // 从全局GM邮件列表中取出玩家未获取的
-        auto listresult = redisdriver->QueryList( "zrangebyscore {} ({} +inf", __KF_STRING__( wholemail ), maxmailid );
+        auto listresult = _mail_redis_driver->QueryList( "zrangebyscore {} ({} +inf", __KF_STRING__( wholemail ), maxmailid );
         if ( listresult->_value.empty() )
         {
             return;
@@ -326,12 +292,12 @@ namespace KFrame
         auto maillistkey = FormatMailKeyName( playerid, KFMsg::MailEnum::WholeMail, __FUNC_LINE__ );
         for ( auto& strmailid : listresult->_value )
         {
-            redisdriver->Append( "hset {} {} {}", maillistkey, strmailid, KFMsg::FlagEnum::Init );
+            _mail_redis_driver->Append( "hset {} {} {}", maillistkey, strmailid, KFMsg::FlagEnum::Init );
         }
 
         auto& newmaxmailid = listresult->_value.back();
-        redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ), newmaxmailid );
-        auto kfresult = redisdriver->Pipeline();
+        _mail_redis_driver->Append( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ), newmaxmailid );
+        auto kfresult = _mail_redis_driver->Pipeline();
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "reload gm mail[{}] failed!", playerid );
@@ -340,9 +306,7 @@ namespace KFrame
 
     bool KFMailShardModule::UpdateMailFlag( uint32 playerid, uint64 mailid, uint32 mailtype, uint32 flag )
     {
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
-
-        auto uint32result = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
+        auto uint32result = _mail_redis_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ) );
         if ( !uint32result->IsOk() || uint32result->_value == _invalid_str )
         {
             return false;
@@ -362,7 +326,7 @@ namespace KFrame
         {
             if ( mailtype != KFMsg::MailEnum::WholeMail )
             {
-                auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
+                auto kfresult = _mail_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( mail ), mailid, __KF_STRING__( flag ), flag );
                 if ( !kfresult->IsOk() )
                 {
                     __LOG_ERROR__( "mailid[{}:{}] player[{}] flag[{}] failed!", mailtype, mailid, playerid, flag );
@@ -372,7 +336,7 @@ namespace KFrame
             auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
             if ( !maillistkey.empty() )
             {
-                ok = redisdriver->Execute( "hset {} {} {}", maillistkey, mailid, flag );
+                ok = _mail_redis_driver->Execute( "hset {} {} {}", maillistkey, mailid, flag );
             }
         }
         break;
@@ -404,17 +368,16 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerLoginMailReq )
     {
         __PROTO_PARSE__( KFMsg::S2SNewPlayerLoginMailReq );
-        auto redisdriver = __MAIL_REDIS_DRIVER__;
 
         // 最大邮件id
-        auto listresult = redisdriver->QueryList( "zrevrange {} 0 0", __KF_STRING__( wholemail ) );
+        auto listresult = _mail_redis_driver->QueryList( "zrevrange {} 0 0", __KF_STRING__( wholemail ) );
         if ( listresult->_value.empty() )
         {
             return;
         }
 
         auto& strmaxmailid = listresult->_value.front();
-        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), kfmsg.playerid(), __KF_STRING__( gmemaillastid ), strmaxmailid );
+        auto kfresult = _mail_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), kfmsg.playerid(), __KF_STRING__( gmemaillastid ), strmaxmailid );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "playerid[{}] mail[{}] failed!", kfmsg.playerid(), strmaxmailid );
@@ -440,13 +403,7 @@ namespace KFrame
             for ( auto i = 0; i < pbplayerids->playerid_size(); ++i )
             {
                 auto playerid = pbplayerids->playerid( i );
-                auto maillistkey = FormatMailKeyName( playerid, kfmsg.mailtype(), __FUNC_LINE__ );
-                if ( maillistkey.empty() )
-                {
-                    continue;
-                }
-
-                auto ok = AddMail( maillistkey, maildata );
+                auto ok = AddMail( playerid, kfmsg.mailtype(), maildata );
                 if ( !ok )
                 {
                     auto strmaildata = kfmsg.DebugString();
@@ -456,12 +413,31 @@ namespace KFrame
         }
         else
         {
-            auto ok = AddMail( _invalid_str, maildata );
+            auto ok = AddMail( _invalid_int, _invalid_int, maildata );
             if ( !ok )
             {
                 auto strmaildata = kfmsg.DebugString();
                 __LOG_ERROR__( " add mail[{}] failed!", strmaildata );
             }
         }
+    }
+
+    void KFMailShardModule::NoticePlayerNewMail( uint32 playerid, uint32 mailtype )
+    {
+        if ( playerid == _invalid_int )
+        {
+            return;
+        }
+
+        auto kfresult = _public_redis_driver->QueryUInt32( "hget {}:{} {}", __KF_STRING__( public ), playerid, __KF_STRING__( serverid ) );
+        if ( !kfresult->IsOk() || kfresult->_value == _invalid_int )
+        {
+            return;
+        }
+
+        KFMsg::S2SNoticeNewMailReq notice;
+        notice.set_playerid( playerid );
+        notice.set_mailtype( mailtype );
+        _kf_cluster_shard->SendToPlayer( kfresult->_value, playerid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
     }
 }

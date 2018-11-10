@@ -708,7 +708,8 @@ message MsgQuerySettingAck
 // MSG_UPDATE_SETTING_REQ
 message MsgUpdateSettingReq
 {
-	required string settingdata = 1;
+	required string settingkey = 1;
+	required string settingvalue = 2;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

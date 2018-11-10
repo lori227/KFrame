@@ -85,7 +85,7 @@ namespace KFrame
 
         if ( _kf_route != nullptr )
         {
-            _kf_route->SendMessageToRoute( serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
+            _kf_route->SendToRoute( serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
         }
         else
         {

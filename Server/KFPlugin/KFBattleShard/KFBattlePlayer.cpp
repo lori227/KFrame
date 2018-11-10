@@ -139,6 +139,7 @@ namespace KFrame
     {
         // 确认客户端已经收到战场信息
         _status = KFPlayerStatus::StatusLoginRoom;
+
     }
 
     bool KFBattlePlayer::LoginBattleRoomReq( KFBattleRoom* kfroom )
