@@ -9,9 +9,8 @@
 //    @Date             :    2017-8-17
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFClusterMasterInterface.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 
@@ -20,15 +19,11 @@ namespace KFrame
     class KFClusterMasterModule : public KFClusterMasterInterface
     {
     public:
-        KFClusterMasterModule();
-        ~KFClusterMasterModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFClusterMasterModule() = default;
+        ~KFClusterMasterModule() = default;
 
         // 初始化
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -75,11 +70,8 @@ namespace KFrame
         void SendAllocShardToShard();
 
     private:
-        // 集群认证秘钥
-        std::string _cluster_key;
-
         // 序列号
-        uint32 _cluster_serial;
+        uint32 _cluster_serial{0};
 
         // 记录shard分配数据
         std::map< uint32, uint32 > _object_to_shard;

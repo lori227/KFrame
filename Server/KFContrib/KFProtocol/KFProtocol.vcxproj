@@ -20,6 +20,7 @@
     <ClCompile Include="KFFrameMessage.pb.cc" />
     <ClCompile Include="KFMatchMessage.pb.cc" />
     <ClCompile Include="KFProtocol.cpp" />
+    <ClCompile Include="KFProtoFactory.cpp" />
     <ClCompile Include="KFServerMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +33,7 @@
     <ClInclude Include="KFFrameMessage.pb.h" />
     <ClInclude Include="KFMatchMessage.pb.h" />
     <ClInclude Include="KFProtocol.h" />
+    <ClInclude Include="KFProtoFactory.h" />
     <ClInclude Include="KFServerMessage.pb.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

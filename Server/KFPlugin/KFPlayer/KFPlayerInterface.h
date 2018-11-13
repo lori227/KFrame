@@ -147,6 +147,8 @@ namespace KFrame
         virtual void SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
+        // 判断操作频率
+        virtual bool CheckOperateFrequently( KFEntity* player, uint32 time ) = 0;
 
     protected:
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function ) = 0;

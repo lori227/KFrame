@@ -202,28 +202,6 @@ namespace KFrame
         // 场均击杀
         auto averagekill = static_cast< double >( killcount ) / static_cast< double >( totalcount );
         player->UpdateData( kfscore, __KF_STRING__( averagekill ), KFOperateEnum::Set, averagekill * KFRatioEnum::Ratio );
-
-        // 奖励
-        if ( pbscore->has_reward() )
-        {
-            KFAgents kfagents;
-            kfagents.ParseFromString( pbscore->reward(), __FUNC_LINE__ );
-            player->AddAgentData( &kfagents, 1.0f, false, __FUNC_LINE__ );
-            pbscore->clear_reward();
-        }
-
-        // 成就
-        if ( pbscore->has_achieve() )
-        {
-            auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
-            auto pbachieves = &pbscore->achieve();
-            for ( auto i = 0; i < pbachieves->taskdata_size(); ++i )
-            {
-                auto pbachieve = &pbachieves->taskdata( i );
-                player->UpdateData( kfachieves, pbachieve->id(), __KF_STRING__( value ), KFOperateEnum::Set, pbachieve->value() );
-                pbscore->clear_achieve();
-            }
-        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleClientModule::HandlePlayerBattleScoreReq )
@@ -276,11 +254,34 @@ namespace KFrame
         // 结算关系属性
         _kf_relation->BalanceBattleRelation( player, kfmsg.roomid(), pbscore );
 
+        // 奖励
+        if ( pbscore->has_reward() && !pbscore->reward().empty() )
+        {
+            KFAgents kfagents;
+            auto ok = kfagents.ParseFromString( pbscore->reward(), __FUNC_LINE__ );
+            if ( ok )
+            {
+                player->AddAgentData( &kfagents, 1.0f, false, __FUNC_LINE__ );
+            }
+        }
+
+        // 成就
+        if ( pbscore->has_achieve() )
+        {
+            auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
+            auto pbachieves = &pbscore->achieve();
+            for ( auto i = 0; i < pbachieves->taskdata_size(); ++i )
+            {
+                auto pbachieve = &pbachieves->taskdata( i );
+                player->UpdateData( kfachieves, pbachieve->id(), __KF_STRING__( value ), KFOperateEnum::Set, pbachieve->value() );
+            }
+        }
+
         // 回复消息
         KFMsg::S2SPlayerBattleScoreAck ack;
         ack.set_roomid( kfmsg.roomid() );
         ack.set_playerid( kfmsg.playerid() );
-        auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
+        auto ok = SendMessageToBattle( kfmsg.roomid(), KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}] balance battle[{}] score[{}:{}] ok!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );

@@ -31,10 +31,6 @@ _http.StartHttpClient = function (url, body, args)
     KFrame:MTHttpClient(url, body_str, args_str)
 end
 
-_http.CommonSig = function (timestamp)
-    return KFrame:MakePlatformSign(timestamp)
-end
-
 _http.MakePlatformUrl = function( path )
     return KFrame:MakePlatformUrl(path)
 end

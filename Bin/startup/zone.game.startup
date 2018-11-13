@@ -3,7 +3,6 @@
 	<Plugins AppName="zone" AppType="game" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="110" Name="KFDisplay" Config=""/>	
-		<Plugin Sort="120" Name="KFOption" Config="./config/option.config"/>	
 		<Plugin Sort="130" Name="KFZone" Config="./setting/zone.setting"/>
 		<Plugin Sort="140" Name="KFGame" Config=""/>
 		<Plugin Sort="161" Name="KFRouteClient" Config=""/>

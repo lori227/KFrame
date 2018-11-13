@@ -122,10 +122,17 @@ namespace KFrame
     KFEntity* KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* proto )
     {
         auto kfentity = CreateEntity( key );
-        _kf_kernel_module->ParseFromProto( kfentity->GetData(), proto );
-        kfentity->SetKeyID( key );
+        auto ok = _kf_kernel_module->ParseFromProto( kfentity->GetData(), proto );
+        if ( ok )
+        {
+            kfentity->SetKeyID( key );
+            InitEntity( kfentity );
+        }
+        else
+        {
+            __LOG_ERROR__( "[{}:{}] create error!", _component_name, key );
+        }
 
-        InitEntity( kfentity );
         return kfentity;
     }
 
@@ -173,8 +180,7 @@ namespace KFrame
         UnInitEntity( kfentity );
         DeleteSaveEntity( kfentity );
 
-        auto key = kfentity->GetKeyID();
-        return _entitys.Remove( key );
+        return _entitys.Remove( kfentity->GetKeyID() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindAddAgentFunction( const std::string& dataname, KFAddAgentFunction& function )
@@ -607,8 +613,6 @@ namespace KFrame
     {
         if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __NEED_TO_SAVE__ ) )
         {
-            // 删除定时器
-            __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
             SaveEntity( kfentity, __FUNC_LINE__ );
         }
         else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_SAVE__ ) )
@@ -619,6 +623,9 @@ namespace KFrame
         {
             DeleteEntity( kfentity );
         }
+
+        // 删除定时器
+        __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
     }
 
     void KFComponentEx::SaveEntity( KFEntity* kfentity, const char* function, uint32 line )

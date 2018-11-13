@@ -11,6 +11,7 @@
     <ClCompile Include="KFClusterMessage.pb.cc" />
     <ClCompile Include="KFFrameMessage.pb.cc" />
     <ClCompile Include="KFDeployMessage.pb.cc" />
+    <ClCompile Include="KFProtoFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClientMessage.pb.h" />
@@ -23,5 +24,6 @@
     <ClInclude Include="KFClusterMessage.pb.h" />
     <ClInclude Include="KFFrameMessage.pb.h" />
     <ClInclude Include="KFDeployMessage.pb.h" />
+    <ClInclude Include="KFProtoFactory.h" />
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@ namespace KFrame
         StatusBattleRoomEnter = 3,		// 玩家进入战场
         StatusBattleRoomPlaying = 4,	// 通知匹配服务器战场正式开始
         StatusBattleRoomDisconnect = 5,	// 断线状态
+        StatusBattleRoomFinish = 6,	// 断线状态
     };
 
     // 战斗房间
@@ -152,6 +153,8 @@ namespace KFrame
 
         // 状态
         uint32 _status;
+        uint32 _last_status;
+        uint32 _last_interval_time;
 
         // 总人数
         uint32 _total_player_count;

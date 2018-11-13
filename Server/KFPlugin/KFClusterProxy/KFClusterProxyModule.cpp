@@ -8,8 +8,10 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterProxyModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterProxyModule::OnClientConnectionServer );
-        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToClient );
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFClusterProxyModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterProxyModule::OnServerLostClient );
+
+        __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToClient );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFClusterProxyModule::TransmitMessageToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_REQ, &KFClusterProxyModule::HandleClusterTokenReq );
@@ -28,6 +30,7 @@ namespace KFrame
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_REQ );
@@ -187,7 +190,7 @@ namespace KFrame
         _kf_hash.AddHashNode( servername, serverid, 100 );
 
         // 自己所有的连接注册到Cluster中
-        KFMsg::S2SClusterClientListReq req;
+        KFMsg::S2SClusterClientDiscoverReq req;
 
         // 所得所有的连接列表
         std::list< uint32 > clientlist;
@@ -197,14 +200,21 @@ namespace KFrame
             req.add_clientid( clientid );
         }
 
-        SendToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
+        SendToShard( serverid, KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &req );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
     {
-        KFMsg::S2SClusterClientListReq req;
+        KFMsg::S2SClusterClientDiscoverReq req;
         req.add_clientid( handleid );
-        SendToShard( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &req );
+        SendToShard( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &req );
+    }
+
+    __KF_SERVER_LOST_FUNCTION__( KFClusterProxyModule::OnServerLostClient )
+    {
+        KFMsg::S2SClusterClientLostReq req;
+        req.add_clientid( handleid );
+        SendToShard( KFMsg::S2S_CLUSTER_CLIENT_LOST_REQ, &req );
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFClusterProxyModule::OnClientLostServer )

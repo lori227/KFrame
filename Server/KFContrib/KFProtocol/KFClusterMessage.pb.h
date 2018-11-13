@@ -41,7 +41,8 @@ class S2SClusterAuthAck;
 class S2SClusterTokenReq;
 class S2SClusterVerifyReq;
 class S2SClusterVerifyAck;
-class S2SClusterClientListReq;
+class S2SClusterClientDiscoverReq;
+class S2SClusterClientLostReq;
 class S2SAddObjectToProxyReq;
 class S2SRemoveObjectToProxyReq;
 class S2SAllocObjectToMasterReq;
@@ -58,18 +59,19 @@ enum ClusterProtocol {
   S2S_CLUSTER_TOKEN_REQ = 10105,
   S2S_CLUSTER_VERIFY_REQ = 10106,
   S2S_CLUSTER_VERIFY_ACK = 10107,
-  S2S_CLUSTER_CLIENT_LIST_REQ = 10108,
+  S2S_CLUSTER_CLIENT_DISCOVER_REQ = 10108,
   S2S_ADD_OBJECT_TO_PROXY_REQ = 10109,
   S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110,
   S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112,
   S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113,
   S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114,
   S2S_SEND_TO_STATIC_OBJECT_REQ = 10115,
-  S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116
+  S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116,
+  S2S_CLUSTER_CLIENT_LOST_REQ = 10117
 };
 LIBPROTOC_EXPORT bool ClusterProtocol_IsValid(int value);
 const ClusterProtocol ClusterProtocol_MIN = S2S_CLUSTER_REGISTER_REQ;
-const ClusterProtocol ClusterProtocol_MAX = S2S_SEND_TO_DYNAMIC_OBJECT_REQ;
+const ClusterProtocol ClusterProtocol_MAX = S2S_CLUSTER_CLIENT_LOST_REQ;
 const int ClusterProtocol_ARRAYSIZE = ClusterProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClusterProtocol_descriptor();
@@ -943,14 +945,14 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterClientListReq : public ::google::protobuf::Message {
+class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::Message {
  public:
-  S2SClusterClientListReq();
-  virtual ~S2SClusterClientListReq();
+  S2SClusterClientDiscoverReq();
+  virtual ~S2SClusterClientDiscoverReq();
 
-  S2SClusterClientListReq(const S2SClusterClientListReq& from);
+  S2SClusterClientDiscoverReq(const S2SClusterClientDiscoverReq& from);
 
-  inline S2SClusterClientListReq& operator=(const S2SClusterClientListReq& from) {
+  inline S2SClusterClientDiscoverReq& operator=(const S2SClusterClientDiscoverReq& from) {
     CopyFrom(from);
     return *this;
   }
@@ -964,17 +966,17 @@ class LIBPROTOC_EXPORT S2SClusterClientListReq : public ::google::protobuf::Mess
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterClientListReq& default_instance();
+  static const S2SClusterClientDiscoverReq& default_instance();
 
-  void Swap(S2SClusterClientListReq* other);
+  void Swap(S2SClusterClientDiscoverReq* other);
 
   // implements Message ----------------------------------------------
 
-  S2SClusterClientListReq* New() const;
+  S2SClusterClientDiscoverReq* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const S2SClusterClientListReq& from);
-  void MergeFrom(const S2SClusterClientListReq& from);
+  void CopyFrom(const S2SClusterClientDiscoverReq& from);
+  void MergeFrom(const S2SClusterClientDiscoverReq& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1009,7 +1011,7 @@ class LIBPROTOC_EXPORT S2SClusterClientListReq : public ::google::protobuf::Mess
   inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
       mutable_clientid();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientListReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientDiscoverReq)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -1024,7 +1026,92 @@ class LIBPROTOC_EXPORT S2SClusterClientListReq : public ::google::protobuf::Mess
   friend void protobuf_ShutdownFile_KFClusterMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static S2SClusterClientListReq* default_instance_;
+  static S2SClusterClientDiscoverReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Message {
+ public:
+  S2SClusterClientLostReq();
+  virtual ~S2SClusterClientLostReq();
+
+  S2SClusterClientLostReq(const S2SClusterClientLostReq& from);
+
+  inline S2SClusterClientLostReq& operator=(const S2SClusterClientLostReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SClusterClientLostReq& default_instance();
+
+  void Swap(S2SClusterClientLostReq* other);
+
+  // implements Message ----------------------------------------------
+
+  S2SClusterClientLostReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2SClusterClientLostReq& from);
+  void MergeFrom(const S2SClusterClientLostReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 clientid = 1;
+  inline int clientid_size() const;
+  inline void clear_clientid();
+  static const int kClientidFieldNumber = 1;
+  inline ::google::protobuf::uint32 clientid(int index) const;
+  inline void set_clientid(int index, ::google::protobuf::uint32 value);
+  inline void add_clientid(::google::protobuf::uint32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      clientid() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_clientid();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientLostReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > clientid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClusterMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClusterMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClusterMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static S2SClusterClientLostReq* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3141,30 +3228,59 @@ inline void S2SClusterVerifyAck::set_serverid(::google::protobuf::uint32 value) 
 
 // -------------------------------------------------------------------
 
-// S2SClusterClientListReq
+// S2SClusterClientDiscoverReq
 
 // repeated uint32 clientid = 1;
-inline int S2SClusterClientListReq::clientid_size() const {
+inline int S2SClusterClientDiscoverReq::clientid_size() const {
   return clientid_.size();
 }
-inline void S2SClusterClientListReq::clear_clientid() {
+inline void S2SClusterClientDiscoverReq::clear_clientid() {
   clientid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SClusterClientListReq::clientid(int index) const {
+inline ::google::protobuf::uint32 S2SClusterClientDiscoverReq::clientid(int index) const {
   return clientid_.Get(index);
 }
-inline void S2SClusterClientListReq::set_clientid(int index, ::google::protobuf::uint32 value) {
+inline void S2SClusterClientDiscoverReq::set_clientid(int index, ::google::protobuf::uint32 value) {
   clientid_.Set(index, value);
 }
-inline void S2SClusterClientListReq::add_clientid(::google::protobuf::uint32 value) {
+inline void S2SClusterClientDiscoverReq::add_clientid(::google::protobuf::uint32 value) {
   clientid_.Add(value);
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-S2SClusterClientListReq::clientid() const {
+S2SClusterClientDiscoverReq::clientid() const {
   return clientid_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-S2SClusterClientListReq::mutable_clientid() {
+S2SClusterClientDiscoverReq::mutable_clientid() {
+  return &clientid_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SClusterClientLostReq
+
+// repeated uint32 clientid = 1;
+inline int S2SClusterClientLostReq::clientid_size() const {
+  return clientid_.size();
+}
+inline void S2SClusterClientLostReq::clear_clientid() {
+  clientid_.Clear();
+}
+inline ::google::protobuf::uint32 S2SClusterClientLostReq::clientid(int index) const {
+  return clientid_.Get(index);
+}
+inline void S2SClusterClientLostReq::set_clientid(int index, ::google::protobuf::uint32 value) {
+  clientid_.Set(index, value);
+}
+inline void S2SClusterClientLostReq::add_clientid(::google::protobuf::uint32 value) {
+  clientid_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+S2SClusterClientLostReq::clientid() const {
+  return clientid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+S2SClusterClientLostReq::mutable_clientid() {
   return &clientid_;
 }
 

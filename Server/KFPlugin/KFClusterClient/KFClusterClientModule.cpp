@@ -1,14 +1,8 @@
 ﻿#include "KFClusterClientModule.h"
-#include "KFClusterClientConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
-    void KFClusterClientModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( _kf_cluster_config, false );
-    }
-
     void KFClusterClientModule::BeforeRun()
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterClientModule::OnClientLostServer );
@@ -22,8 +16,6 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_cluster_config );
-
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,17 +61,10 @@ namespace KFrame
         auto kfclusterclient = _kf_cluster_client.Find( servername );
         if ( kfclusterclient == nullptr )
         {
-            // 判断配置是否存在
-            auto kfsetting = _kf_cluster_config->FindClusterSetting( servername );
-            if ( kfsetting == nullptr )
-            {
-                return;
-            }
-
             // 添加进列表
             kfclusterclient = _kf_cluster_client.Create( servername );
-            kfclusterclient->_cluster_setting = *kfsetting;
             kfclusterclient->_cluster_client_module = this;
+            kfclusterclient->_cluster_master_name = servername;
         }
 
         kfclusterclient->OnConnectionClusterServer( servername, servertype, serverid );

@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFScheduleData.cpp" />
-    <ClCompile Include="KFScheduleManage.cpp" />
     <ClCompile Include="KFScheduleModule.cpp" />
     <ClCompile Include="KFSchedulePlugin.cpp" />
     <ClCompile Include="KFScheduleTime.cpp" />
@@ -21,7 +20,6 @@
   <ItemGroup>
     <ClInclude Include="KFScheduleData.h" />
     <ClInclude Include="KFScheduleInterface.h" />
-    <ClInclude Include="KFScheduleManage.h" />
     <ClInclude Include="KFScheduleModule.h" />
     <ClInclude Include="KFSchedulePlugin.h" />
     <ClInclude Include="KFScheduleTime.h" />

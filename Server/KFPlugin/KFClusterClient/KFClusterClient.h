@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFClusterClientConfig.h"
 
 namespace KFrame
 {
@@ -11,8 +10,8 @@ namespace KFrame
     class KFClusterClient
     {
     public:
-        KFClusterClient();
-        ~KFClusterClient();
+        KFClusterClient() = default;
+        ~KFClusterClient() = default;
 
         // 开启集群客户端
         void StartClusterMasterClient();
@@ -48,22 +47,19 @@ namespace KFrame
         KFClusterClientModule* _cluster_client_module;
 
         // 集群设置
-        KFClusterSetting _cluster_setting;
+        std::string _cluster_master_name;
+        uint32 _cluster_master_id{ 0 };
+        std::string _str_master_id;
 
     private:
-
         // 是否可以服务
-        bool _cluster_in_services;
+        bool _cluster_in_services{ false };
 
         // token
         std::string _auth_token;
 
         // proxy id
-        uint32 _cluster_proxy_id;
-
-        // proxy type
-        std::string _cluster_proxy_type;
-
+        uint32 _cluster_proxy_id{ 0 };
     };
 }
 

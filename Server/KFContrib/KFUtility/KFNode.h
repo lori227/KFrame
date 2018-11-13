@@ -21,7 +21,7 @@ namespace KFrame
         uint32 GetUInt32( const char* key, bool optional = false, uint32 defaultvalue = 0 );
 
         // 读取string
-        std::string GetString( const char* key, bool optional = false, const std::string& defaultvalue = "" );
+        std::string GetString( const char* key, bool optional = false );
 
         // 读取double
         double GetDouble( const char* key, bool optional = false, double defaultvalue = 0.0f );

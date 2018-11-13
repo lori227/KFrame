@@ -6,6 +6,5 @@
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="130" Name="KFDirShard" Config=""/>
 		<Plugin Sort="140" Name="KFRedis" Config="./setting/redis.address"/>
-		<Plugin Sort="150" Name="KFOption" Config="./config/option.config"/>
 	</Plugins>
 </Setting>

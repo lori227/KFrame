@@ -135,8 +135,13 @@ class MsgQueryGuildLogAck;
 class MsgTellMarquee;
 class MsgTellSysNotcie;
 class MsgBindAlipayReq;
+class MsgExChangeInviteScoreReq;
+class MsgExChangeInviteScoreAck;
 class MsgQueryInviteScoreReq;
 class MsgQueryInviteScoreAck;
+class MsgExChangeInviteRecordReq;
+class PBExChangeInviteRecord;
+class MsgExChangeInviteRecordAck;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -238,11 +243,15 @@ enum ClientProtocol {
   MSG_TELL_SYS_NOTICE = 301,
   MSG_BIND_ALIPAY_REQ = 302,
   MSG_QUERY_INVITE_SCORE_REQ = 303,
-  MSG_QUERY_INVITE_SCORE_ACK = 304
+  MSG_QUERY_INVITE_SCORE_ACK = 304,
+  MSG_EXCHANGE_INVITE_SCORE_REQ = 305,
+  MSG_EXCHANGE_INVITE_SCORE_ACK = 306,
+  MSG_EXCHANGE_INVITE_RECORD_REQ = 307,
+  MSG_EXCHANGE_INVITE_RECORD_ACK = 308
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_QUERY_INVITE_SCORE_ACK;
+const ClientProtocol ClientProtocol_MAX = MSG_EXCHANGE_INVITE_RECORD_ACK;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -6818,29 +6827,44 @@ class LIBPROTOC_EXPORT MsgUpdateSettingReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string settingdata = 1;
-  inline bool has_settingdata() const;
-  inline void clear_settingdata();
-  static const int kSettingdataFieldNumber = 1;
-  inline const ::std::string& settingdata() const;
-  inline void set_settingdata(const ::std::string& value);
-  inline void set_settingdata(const char* value);
-  inline void set_settingdata(const char* value, size_t size);
-  inline ::std::string* mutable_settingdata();
-  inline ::std::string* release_settingdata();
-  inline void set_allocated_settingdata(::std::string* settingdata);
+  // required string settingkey = 1;
+  inline bool has_settingkey() const;
+  inline void clear_settingkey();
+  static const int kSettingkeyFieldNumber = 1;
+  inline const ::std::string& settingkey() const;
+  inline void set_settingkey(const ::std::string& value);
+  inline void set_settingkey(const char* value);
+  inline void set_settingkey(const char* value, size_t size);
+  inline ::std::string* mutable_settingkey();
+  inline ::std::string* release_settingkey();
+  inline void set_allocated_settingkey(::std::string* settingkey);
+
+  // required string settingvalue = 2;
+  inline bool has_settingvalue() const;
+  inline void clear_settingvalue();
+  static const int kSettingvalueFieldNumber = 2;
+  inline const ::std::string& settingvalue() const;
+  inline void set_settingvalue(const ::std::string& value);
+  inline void set_settingvalue(const char* value);
+  inline void set_settingvalue(const char* value, size_t size);
+  inline ::std::string* mutable_settingvalue();
+  inline ::std::string* release_settingvalue();
+  inline void set_allocated_settingvalue(::std::string* settingvalue);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgUpdateSettingReq)
  private:
-  inline void set_has_settingdata();
-  inline void clear_has_settingdata();
+  inline void set_has_settingkey();
+  inline void clear_has_settingkey();
+  inline void set_has_settingvalue();
+  inline void clear_has_settingvalue();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* settingdata_;
+  ::std::string* settingkey_;
+  ::std::string* settingvalue_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -9344,10 +9368,22 @@ class LIBPROTOC_EXPORT MsgBindAlipayReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string alipay = 1;
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string alipay = 2;
   inline bool has_alipay() const;
   inline void clear_alipay();
-  static const int kAlipayFieldNumber = 1;
+  static const int kAlipayFieldNumber = 2;
   inline const ::std::string& alipay() const;
   inline void set_alipay(const ::std::string& value);
   inline void set_alipay(const char* value);
@@ -9358,15 +9394,18 @@ class LIBPROTOC_EXPORT MsgBindAlipayReq : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgBindAlipayReq)
  private:
+  inline void set_has_name();
+  inline void clear_has_name();
   inline void set_has_alipay();
   inline void clear_has_alipay();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* name_;
   ::std::string* alipay_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -9374,6 +9413,200 @@ class LIBPROTOC_EXPORT MsgBindAlipayReq : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static MsgBindAlipayReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgExChangeInviteScoreReq : public ::google::protobuf::Message {
+ public:
+  MsgExChangeInviteScoreReq();
+  virtual ~MsgExChangeInviteScoreReq();
+
+  MsgExChangeInviteScoreReq(const MsgExChangeInviteScoreReq& from);
+
+  inline MsgExChangeInviteScoreReq& operator=(const MsgExChangeInviteScoreReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExChangeInviteScoreReq& default_instance();
+
+  void Swap(MsgExChangeInviteScoreReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgExChangeInviteScoreReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExChangeInviteScoreReq& from);
+  void MergeFrom(const MsgExChangeInviteScoreReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string alipay = 2;
+  inline bool has_alipay() const;
+  inline void clear_alipay();
+  static const int kAlipayFieldNumber = 2;
+  inline const ::std::string& alipay() const;
+  inline void set_alipay(const ::std::string& value);
+  inline void set_alipay(const char* value);
+  inline void set_alipay(const char* value, size_t size);
+  inline ::std::string* mutable_alipay();
+  inline ::std::string* release_alipay();
+  inline void set_allocated_alipay(::std::string* alipay);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgExChangeInviteScoreReq)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_alipay();
+  inline void clear_has_alipay();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* name_;
+  ::std::string* alipay_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgExChangeInviteScoreReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgExChangeInviteScoreAck : public ::google::protobuf::Message {
+ public:
+  MsgExChangeInviteScoreAck();
+  virtual ~MsgExChangeInviteScoreAck();
+
+  MsgExChangeInviteScoreAck(const MsgExChangeInviteScoreAck& from);
+
+  inline MsgExChangeInviteScoreAck& operator=(const MsgExChangeInviteScoreAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExChangeInviteScoreAck& default_instance();
+
+  void Swap(MsgExChangeInviteScoreAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgExChangeInviteScoreAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExChangeInviteScoreAck& from);
+  void MergeFrom(const MsgExChangeInviteScoreAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 exchangescore = 1;
+  inline bool has_exchangescore() const;
+  inline void clear_exchangescore();
+  static const int kExchangescoreFieldNumber = 1;
+  inline ::google::protobuf::uint32 exchangescore() const;
+  inline void set_exchangescore(::google::protobuf::uint32 value);
+
+  // required uint32 leftscore = 2;
+  inline bool has_leftscore() const;
+  inline void clear_leftscore();
+  static const int kLeftscoreFieldNumber = 2;
+  inline ::google::protobuf::uint32 leftscore() const;
+  inline void set_leftscore(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgExChangeInviteScoreAck)
+ private:
+  inline void set_has_exchangescore();
+  inline void clear_has_exchangescore();
+  inline void set_has_leftscore();
+  inline void clear_has_leftscore();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 exchangescore_;
+  ::google::protobuf::uint32 leftscore_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgExChangeInviteScoreAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -9503,12 +9736,181 @@ class LIBPROTOC_EXPORT MsgQueryInviteScoreAck : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 score = 1;
-  inline bool has_score() const;
-  inline void clear_score();
-  static const int kScoreFieldNumber = 1;
-  inline ::google::protobuf::uint32 score() const;
-  inline void set_score(::google::protobuf::uint32 value);
+  // required uint32 exchangescore = 1;
+  inline bool has_exchangescore() const;
+  inline void clear_exchangescore();
+  static const int kExchangescoreFieldNumber = 1;
+  inline ::google::protobuf::uint32 exchangescore() const;
+  inline void set_exchangescore(::google::protobuf::uint32 value);
+
+  // required uint32 leftscore = 2;
+  inline bool has_leftscore() const;
+  inline void clear_leftscore();
+  static const int kLeftscoreFieldNumber = 2;
+  inline ::google::protobuf::uint32 leftscore() const;
+  inline void set_leftscore(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryInviteScoreAck)
+ private:
+  inline void set_has_exchangescore();
+  inline void clear_has_exchangescore();
+  inline void set_has_leftscore();
+  inline void clear_has_leftscore();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 exchangescore_;
+  ::google::protobuf::uint32 leftscore_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgQueryInviteScoreAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgExChangeInviteRecordReq : public ::google::protobuf::Message {
+ public:
+  MsgExChangeInviteRecordReq();
+  virtual ~MsgExChangeInviteRecordReq();
+
+  MsgExChangeInviteRecordReq(const MsgExChangeInviteRecordReq& from);
+
+  inline MsgExChangeInviteRecordReq& operator=(const MsgExChangeInviteRecordReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExChangeInviteRecordReq& default_instance();
+
+  void Swap(MsgExChangeInviteRecordReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgExChangeInviteRecordReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExChangeInviteRecordReq& from);
+  void MergeFrom(const MsgExChangeInviteRecordReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgExChangeInviteRecordReq)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgExChangeInviteRecordReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBExChangeInviteRecord : public ::google::protobuf::Message {
+ public:
+  PBExChangeInviteRecord();
+  virtual ~PBExChangeInviteRecord();
+
+  PBExChangeInviteRecord(const PBExChangeInviteRecord& from);
+
+  inline PBExChangeInviteRecord& operator=(const PBExChangeInviteRecord& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBExChangeInviteRecord& default_instance();
+
+  void Swap(PBExChangeInviteRecord* other);
+
+  // implements Message ----------------------------------------------
+
+  PBExChangeInviteRecord* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBExChangeInviteRecord& from);
+  void MergeFrom(const PBExChangeInviteRecord& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
 
   // required string alipay = 2;
   inline bool has_alipay() const;
@@ -9522,27 +9924,132 @@ class LIBPROTOC_EXPORT MsgQueryInviteScoreAck : public ::google::protobuf::Messa
   inline ::std::string* release_alipay();
   inline void set_allocated_alipay(::std::string* alipay);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryInviteScoreAck)
+  // required uint32 score = 3;
+  inline bool has_score() const;
+  inline void clear_score();
+  static const int kScoreFieldNumber = 3;
+  inline ::google::protobuf::uint32 score() const;
+  inline void set_score(::google::protobuf::uint32 value);
+
+  // required uint64 time = 4;
+  inline bool has_time() const;
+  inline void clear_time();
+  static const int kTimeFieldNumber = 4;
+  inline ::google::protobuf::uint64 time() const;
+  inline void set_time(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBExChangeInviteRecord)
  private:
-  inline void set_has_score();
-  inline void clear_has_score();
+  inline void set_has_name();
+  inline void clear_has_name();
   inline void set_has_alipay();
   inline void clear_has_alipay();
+  inline void set_has_score();
+  inline void clear_has_score();
+  inline void set_has_time();
+  inline void clear_has_time();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* name_;
   ::std::string* alipay_;
+  ::google::protobuf::uint64 time_;
   ::google::protobuf::uint32 score_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
   friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgQueryInviteScoreAck* default_instance_;
+  static PBExChangeInviteRecord* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgExChangeInviteRecordAck : public ::google::protobuf::Message {
+ public:
+  MsgExChangeInviteRecordAck();
+  virtual ~MsgExChangeInviteRecordAck();
+
+  MsgExChangeInviteRecordAck(const MsgExChangeInviteRecordAck& from);
+
+  inline MsgExChangeInviteRecordAck& operator=(const MsgExChangeInviteRecordAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExChangeInviteRecordAck& default_instance();
+
+  void Swap(MsgExChangeInviteRecordAck* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgExChangeInviteRecordAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExChangeInviteRecordAck& from);
+  void MergeFrom(const MsgExChangeInviteRecordAck& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBExChangeInviteRecord record = 1;
+  inline int record_size() const;
+  inline void clear_record();
+  static const int kRecordFieldNumber = 1;
+  inline const ::KFMsg::PBExChangeInviteRecord& record(int index) const;
+  inline ::KFMsg::PBExChangeInviteRecord* mutable_record(int index);
+  inline ::KFMsg::PBExChangeInviteRecord* add_record();
+  inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord >&
+      record() const;
+  inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord >*
+      mutable_record();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgExChangeInviteRecordAck)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord > record_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgExChangeInviteRecordAck* default_instance_;
 };
 // ===================================================================
 
@@ -14342,73 +14849,143 @@ inline void MsgQuerySettingAck::set_allocated_pbsetting(::KFMsg::PBObject* pbset
 
 // MsgUpdateSettingReq
 
-// required string settingdata = 1;
-inline bool MsgUpdateSettingReq::has_settingdata() const {
+// required string settingkey = 1;
+inline bool MsgUpdateSettingReq::has_settingkey() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MsgUpdateSettingReq::set_has_settingdata() {
+inline void MsgUpdateSettingReq::set_has_settingkey() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MsgUpdateSettingReq::clear_has_settingdata() {
+inline void MsgUpdateSettingReq::clear_has_settingkey() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MsgUpdateSettingReq::clear_settingdata() {
-  if (settingdata_ != &::google::protobuf::internal::kEmptyString) {
-    settingdata_->clear();
+inline void MsgUpdateSettingReq::clear_settingkey() {
+  if (settingkey_ != &::google::protobuf::internal::kEmptyString) {
+    settingkey_->clear();
   }
-  clear_has_settingdata();
+  clear_has_settingkey();
 }
-inline const ::std::string& MsgUpdateSettingReq::settingdata() const {
-  return *settingdata_;
+inline const ::std::string& MsgUpdateSettingReq::settingkey() const {
+  return *settingkey_;
 }
-inline void MsgUpdateSettingReq::set_settingdata(const ::std::string& value) {
-  set_has_settingdata();
-  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
-    settingdata_ = new ::std::string;
+inline void MsgUpdateSettingReq::set_settingkey(const ::std::string& value) {
+  set_has_settingkey();
+  if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
+    settingkey_ = new ::std::string;
   }
-  settingdata_->assign(value);
+  settingkey_->assign(value);
 }
-inline void MsgUpdateSettingReq::set_settingdata(const char* value) {
-  set_has_settingdata();
-  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
-    settingdata_ = new ::std::string;
+inline void MsgUpdateSettingReq::set_settingkey(const char* value) {
+  set_has_settingkey();
+  if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
+    settingkey_ = new ::std::string;
   }
-  settingdata_->assign(value);
+  settingkey_->assign(value);
 }
-inline void MsgUpdateSettingReq::set_settingdata(const char* value, size_t size) {
-  set_has_settingdata();
-  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
-    settingdata_ = new ::std::string;
+inline void MsgUpdateSettingReq::set_settingkey(const char* value, size_t size) {
+  set_has_settingkey();
+  if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
+    settingkey_ = new ::std::string;
   }
-  settingdata_->assign(reinterpret_cast<const char*>(value), size);
+  settingkey_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgUpdateSettingReq::mutable_settingdata() {
-  set_has_settingdata();
-  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
-    settingdata_ = new ::std::string;
+inline ::std::string* MsgUpdateSettingReq::mutable_settingkey() {
+  set_has_settingkey();
+  if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
+    settingkey_ = new ::std::string;
   }
-  return settingdata_;
+  return settingkey_;
 }
-inline ::std::string* MsgUpdateSettingReq::release_settingdata() {
-  clear_has_settingdata();
-  if (settingdata_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* MsgUpdateSettingReq::release_settingkey() {
+  clear_has_settingkey();
+  if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = settingdata_;
-    settingdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = settingkey_;
+    settingkey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void MsgUpdateSettingReq::set_allocated_settingdata(::std::string* settingdata) {
-  if (settingdata_ != &::google::protobuf::internal::kEmptyString) {
-    delete settingdata_;
+inline void MsgUpdateSettingReq::set_allocated_settingkey(::std::string* settingkey) {
+  if (settingkey_ != &::google::protobuf::internal::kEmptyString) {
+    delete settingkey_;
   }
-  if (settingdata) {
-    set_has_settingdata();
-    settingdata_ = settingdata;
+  if (settingkey) {
+    set_has_settingkey();
+    settingkey_ = settingkey;
   } else {
-    clear_has_settingdata();
-    settingdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_settingkey();
+    settingkey_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string settingvalue = 2;
+inline bool MsgUpdateSettingReq::has_settingvalue() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgUpdateSettingReq::set_has_settingvalue() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgUpdateSettingReq::clear_has_settingvalue() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgUpdateSettingReq::clear_settingvalue() {
+  if (settingvalue_ != &::google::protobuf::internal::kEmptyString) {
+    settingvalue_->clear();
+  }
+  clear_has_settingvalue();
+}
+inline const ::std::string& MsgUpdateSettingReq::settingvalue() const {
+  return *settingvalue_;
+}
+inline void MsgUpdateSettingReq::set_settingvalue(const ::std::string& value) {
+  set_has_settingvalue();
+  if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
+    settingvalue_ = new ::std::string;
+  }
+  settingvalue_->assign(value);
+}
+inline void MsgUpdateSettingReq::set_settingvalue(const char* value) {
+  set_has_settingvalue();
+  if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
+    settingvalue_ = new ::std::string;
+  }
+  settingvalue_->assign(value);
+}
+inline void MsgUpdateSettingReq::set_settingvalue(const char* value, size_t size) {
+  set_has_settingvalue();
+  if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
+    settingvalue_ = new ::std::string;
+  }
+  settingvalue_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgUpdateSettingReq::mutable_settingvalue() {
+  set_has_settingvalue();
+  if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
+    settingvalue_ = new ::std::string;
+  }
+  return settingvalue_;
+}
+inline ::std::string* MsgUpdateSettingReq::release_settingvalue() {
+  clear_has_settingvalue();
+  if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = settingvalue_;
+    settingvalue_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgUpdateSettingReq::set_allocated_settingvalue(::std::string* settingvalue) {
+  if (settingvalue_ != &::google::protobuf::internal::kEmptyString) {
+    delete settingvalue_;
+  }
+  if (settingvalue) {
+    set_has_settingvalue();
+    settingvalue_ = settingvalue;
+  } else {
+    clear_has_settingvalue();
+    settingvalue_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -15841,15 +16418,85 @@ inline void MsgTellSysNotcie::set_allocated_content(::std::string* content) {
 
 // MsgBindAlipayReq
 
-// required string alipay = 1;
-inline bool MsgBindAlipayReq::has_alipay() const {
+// required string name = 1;
+inline bool MsgBindAlipayReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MsgBindAlipayReq::set_has_alipay() {
+inline void MsgBindAlipayReq::set_has_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MsgBindAlipayReq::clear_has_alipay() {
+inline void MsgBindAlipayReq::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgBindAlipayReq::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& MsgBindAlipayReq::name() const {
+  return *name_;
+}
+inline void MsgBindAlipayReq::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgBindAlipayReq::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgBindAlipayReq::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgBindAlipayReq::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* MsgBindAlipayReq::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgBindAlipayReq::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string alipay = 2;
+inline bool MsgBindAlipayReq::has_alipay() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgBindAlipayReq::set_has_alipay() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgBindAlipayReq::clear_has_alipay() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void MsgBindAlipayReq::clear_alipay() {
   if (alipay_ != &::google::protobuf::internal::kEmptyString) {
@@ -15913,82 +16560,126 @@ inline void MsgBindAlipayReq::set_allocated_alipay(::std::string* alipay) {
 
 // -------------------------------------------------------------------
 
-// MsgQueryInviteScoreReq
+// MsgExChangeInviteScoreReq
 
-// -------------------------------------------------------------------
-
-// MsgQueryInviteScoreAck
-
-// required uint32 score = 1;
-inline bool MsgQueryInviteScoreAck::has_score() const {
+// required string name = 1;
+inline bool MsgExChangeInviteScoreReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MsgQueryInviteScoreAck::set_has_score() {
+inline void MsgExChangeInviteScoreReq::set_has_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MsgQueryInviteScoreAck::clear_has_score() {
+inline void MsgExChangeInviteScoreReq::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MsgQueryInviteScoreAck::clear_score() {
-  score_ = 0u;
-  clear_has_score();
+inline void MsgExChangeInviteScoreReq::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
 }
-inline ::google::protobuf::uint32 MsgQueryInviteScoreAck::score() const {
-  return score_;
+inline const ::std::string& MsgExChangeInviteScoreReq::name() const {
+  return *name_;
 }
-inline void MsgQueryInviteScoreAck::set_score(::google::protobuf::uint32 value) {
-  set_has_score();
-  score_ = value;
+inline void MsgExChangeInviteScoreReq::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgExChangeInviteScoreReq::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgExChangeInviteScoreReq::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgExChangeInviteScoreReq::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* MsgExChangeInviteScoreReq::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgExChangeInviteScoreReq::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // required string alipay = 2;
-inline bool MsgQueryInviteScoreAck::has_alipay() const {
+inline bool MsgExChangeInviteScoreReq::has_alipay() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void MsgQueryInviteScoreAck::set_has_alipay() {
+inline void MsgExChangeInviteScoreReq::set_has_alipay() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void MsgQueryInviteScoreAck::clear_has_alipay() {
+inline void MsgExChangeInviteScoreReq::clear_has_alipay() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void MsgQueryInviteScoreAck::clear_alipay() {
+inline void MsgExChangeInviteScoreReq::clear_alipay() {
   if (alipay_ != &::google::protobuf::internal::kEmptyString) {
     alipay_->clear();
   }
   clear_has_alipay();
 }
-inline const ::std::string& MsgQueryInviteScoreAck::alipay() const {
+inline const ::std::string& MsgExChangeInviteScoreReq::alipay() const {
   return *alipay_;
 }
-inline void MsgQueryInviteScoreAck::set_alipay(const ::std::string& value) {
+inline void MsgExChangeInviteScoreReq::set_alipay(const ::std::string& value) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
   }
   alipay_->assign(value);
 }
-inline void MsgQueryInviteScoreAck::set_alipay(const char* value) {
+inline void MsgExChangeInviteScoreReq::set_alipay(const char* value) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
   }
   alipay_->assign(value);
 }
-inline void MsgQueryInviteScoreAck::set_alipay(const char* value, size_t size) {
+inline void MsgExChangeInviteScoreReq::set_alipay(const char* value, size_t size) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
   }
   alipay_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgQueryInviteScoreAck::mutable_alipay() {
+inline ::std::string* MsgExChangeInviteScoreReq::mutable_alipay() {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
   }
   return alipay_;
 }
-inline ::std::string* MsgQueryInviteScoreAck::release_alipay() {
+inline ::std::string* MsgExChangeInviteScoreReq::release_alipay() {
   clear_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -15998,7 +16689,7 @@ inline ::std::string* MsgQueryInviteScoreAck::release_alipay() {
     return temp;
   }
 }
-inline void MsgQueryInviteScoreAck::set_allocated_alipay(::std::string* alipay) {
+inline void MsgExChangeInviteScoreReq::set_allocated_alipay(::std::string* alipay) {
   if (alipay_ != &::google::protobuf::internal::kEmptyString) {
     delete alipay_;
   }
@@ -16009,6 +16700,327 @@ inline void MsgQueryInviteScoreAck::set_allocated_alipay(::std::string* alipay) 
     clear_has_alipay();
     alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// MsgExChangeInviteScoreAck
+
+// required uint32 exchangescore = 1;
+inline bool MsgExChangeInviteScoreAck::has_exchangescore() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgExChangeInviteScoreAck::set_has_exchangescore() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgExChangeInviteScoreAck::clear_has_exchangescore() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgExChangeInviteScoreAck::clear_exchangescore() {
+  exchangescore_ = 0u;
+  clear_has_exchangescore();
+}
+inline ::google::protobuf::uint32 MsgExChangeInviteScoreAck::exchangescore() const {
+  return exchangescore_;
+}
+inline void MsgExChangeInviteScoreAck::set_exchangescore(::google::protobuf::uint32 value) {
+  set_has_exchangescore();
+  exchangescore_ = value;
+}
+
+// required uint32 leftscore = 2;
+inline bool MsgExChangeInviteScoreAck::has_leftscore() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgExChangeInviteScoreAck::set_has_leftscore() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgExChangeInviteScoreAck::clear_has_leftscore() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgExChangeInviteScoreAck::clear_leftscore() {
+  leftscore_ = 0u;
+  clear_has_leftscore();
+}
+inline ::google::protobuf::uint32 MsgExChangeInviteScoreAck::leftscore() const {
+  return leftscore_;
+}
+inline void MsgExChangeInviteScoreAck::set_leftscore(::google::protobuf::uint32 value) {
+  set_has_leftscore();
+  leftscore_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryInviteScoreReq
+
+// -------------------------------------------------------------------
+
+// MsgQueryInviteScoreAck
+
+// required uint32 exchangescore = 1;
+inline bool MsgQueryInviteScoreAck::has_exchangescore() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgQueryInviteScoreAck::set_has_exchangescore() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgQueryInviteScoreAck::clear_has_exchangescore() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgQueryInviteScoreAck::clear_exchangescore() {
+  exchangescore_ = 0u;
+  clear_has_exchangescore();
+}
+inline ::google::protobuf::uint32 MsgQueryInviteScoreAck::exchangescore() const {
+  return exchangescore_;
+}
+inline void MsgQueryInviteScoreAck::set_exchangescore(::google::protobuf::uint32 value) {
+  set_has_exchangescore();
+  exchangescore_ = value;
+}
+
+// required uint32 leftscore = 2;
+inline bool MsgQueryInviteScoreAck::has_leftscore() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MsgQueryInviteScoreAck::set_has_leftscore() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void MsgQueryInviteScoreAck::clear_has_leftscore() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void MsgQueryInviteScoreAck::clear_leftscore() {
+  leftscore_ = 0u;
+  clear_has_leftscore();
+}
+inline ::google::protobuf::uint32 MsgQueryInviteScoreAck::leftscore() const {
+  return leftscore_;
+}
+inline void MsgQueryInviteScoreAck::set_leftscore(::google::protobuf::uint32 value) {
+  set_has_leftscore();
+  leftscore_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgExChangeInviteRecordReq
+
+// -------------------------------------------------------------------
+
+// PBExChangeInviteRecord
+
+// required string name = 1;
+inline bool PBExChangeInviteRecord::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PBExChangeInviteRecord::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PBExChangeInviteRecord::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PBExChangeInviteRecord::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& PBExChangeInviteRecord::name() const {
+  return *name_;
+}
+inline void PBExChangeInviteRecord::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void PBExChangeInviteRecord::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void PBExChangeInviteRecord::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PBExChangeInviteRecord::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* PBExChangeInviteRecord::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PBExChangeInviteRecord::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string alipay = 2;
+inline bool PBExChangeInviteRecord::has_alipay() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PBExChangeInviteRecord::set_has_alipay() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PBExChangeInviteRecord::clear_has_alipay() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PBExChangeInviteRecord::clear_alipay() {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    alipay_->clear();
+  }
+  clear_has_alipay();
+}
+inline const ::std::string& PBExChangeInviteRecord::alipay() const {
+  return *alipay_;
+}
+inline void PBExChangeInviteRecord::set_alipay(const ::std::string& value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void PBExChangeInviteRecord::set_alipay(const char* value) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(value);
+}
+inline void PBExChangeInviteRecord::set_alipay(const char* value, size_t size) {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  alipay_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PBExChangeInviteRecord::mutable_alipay() {
+  set_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    alipay_ = new ::std::string;
+  }
+  return alipay_;
+}
+inline ::std::string* PBExChangeInviteRecord::release_alipay() {
+  clear_has_alipay();
+  if (alipay_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = alipay_;
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PBExChangeInviteRecord::set_allocated_alipay(::std::string* alipay) {
+  if (alipay_ != &::google::protobuf::internal::kEmptyString) {
+    delete alipay_;
+  }
+  if (alipay) {
+    set_has_alipay();
+    alipay_ = alipay;
+  } else {
+    clear_has_alipay();
+    alipay_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint32 score = 3;
+inline bool PBExChangeInviteRecord::has_score() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PBExChangeInviteRecord::set_has_score() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PBExChangeInviteRecord::clear_has_score() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PBExChangeInviteRecord::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+inline ::google::protobuf::uint32 PBExChangeInviteRecord::score() const {
+  return score_;
+}
+inline void PBExChangeInviteRecord::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
+}
+
+// required uint64 time = 4;
+inline bool PBExChangeInviteRecord::has_time() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PBExChangeInviteRecord::set_has_time() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PBExChangeInviteRecord::clear_has_time() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PBExChangeInviteRecord::clear_time() {
+  time_ = GOOGLE_ULONGLONG(0);
+  clear_has_time();
+}
+inline ::google::protobuf::uint64 PBExChangeInviteRecord::time() const {
+  return time_;
+}
+inline void PBExChangeInviteRecord::set_time(::google::protobuf::uint64 value) {
+  set_has_time();
+  time_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgExChangeInviteRecordAck
+
+// repeated .KFMsg.PBExChangeInviteRecord record = 1;
+inline int MsgExChangeInviteRecordAck::record_size() const {
+  return record_.size();
+}
+inline void MsgExChangeInviteRecordAck::clear_record() {
+  record_.Clear();
+}
+inline const ::KFMsg::PBExChangeInviteRecord& MsgExChangeInviteRecordAck::record(int index) const {
+  return record_.Get(index);
+}
+inline ::KFMsg::PBExChangeInviteRecord* MsgExChangeInviteRecordAck::mutable_record(int index) {
+  return record_.Mutable(index);
+}
+inline ::KFMsg::PBExChangeInviteRecord* MsgExChangeInviteRecordAck::add_record() {
+  return record_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord >&
+MsgExChangeInviteRecordAck::record() const {
+  return record_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord >*
+MsgExChangeInviteRecordAck::mutable_record() {
+  return &record_;
 }
 
 

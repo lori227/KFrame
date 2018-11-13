@@ -376,8 +376,6 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line )
     {
-        __LOG_INFO_FUNCTION__( function, line, "player[{}] add agent[{:0.2f}][{}]", GetKeyID(), multiple, kfagents->_string );
-
         for ( auto& kfagent : kfagents->_agents )
         {
             AddAgentData( kfagent, multiple, function, line );

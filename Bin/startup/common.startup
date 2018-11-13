@@ -11,5 +11,6 @@
 		<Plugin Sort="8" Name="KFTcpClient" Config=""/>
 		<Plugin Sort="9" Name="KFClusterClient" Config="./setting/cluster.setting"/>
 		<Plugin Sort="10" Name="KFLogClient" Config=""/>
+		<Plugin Sort="11" Name="KFOption" Config="./config/option.config"/>	
 	</Plugins>
 </Setting>

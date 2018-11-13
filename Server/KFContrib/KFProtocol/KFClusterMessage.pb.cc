@@ -41,9 +41,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* S2SClusterVerifyAck_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   S2SClusterVerifyAck_reflection_ = NULL;
-const ::google::protobuf::Descriptor* S2SClusterClientListReq_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* S2SClusterClientDiscoverReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  S2SClusterClientListReq_reflection_ = NULL;
+  S2SClusterClientDiscoverReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* S2SClusterClientLostReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  S2SClusterClientLostReq_reflection_ = NULL;
 const ::google::protobuf::Descriptor* S2SAddObjectToProxyReq_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   S2SAddObjectToProxyReq_reflection_ = NULL;
@@ -201,22 +204,37 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SClusterVerifyAck));
-  S2SClusterClientListReq_descriptor_ = file->message_type(7);
-  static const int S2SClusterClientListReq_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientListReq, clientid_),
+  S2SClusterClientDiscoverReq_descriptor_ = file->message_type(7);
+  static const int S2SClusterClientDiscoverReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientDiscoverReq, clientid_),
   };
-  S2SClusterClientListReq_reflection_ =
+  S2SClusterClientDiscoverReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      S2SClusterClientListReq_descriptor_,
-      S2SClusterClientListReq::default_instance_,
-      S2SClusterClientListReq_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientListReq, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientListReq, _unknown_fields_),
+      S2SClusterClientDiscoverReq_descriptor_,
+      S2SClusterClientDiscoverReq::default_instance_,
+      S2SClusterClientDiscoverReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientDiscoverReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientDiscoverReq, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(S2SClusterClientListReq));
-  S2SAddObjectToProxyReq_descriptor_ = file->message_type(8);
+      sizeof(S2SClusterClientDiscoverReq));
+  S2SClusterClientLostReq_descriptor_ = file->message_type(8);
+  static const int S2SClusterClientLostReq_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientLostReq, clientid_),
+  };
+  S2SClusterClientLostReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      S2SClusterClientLostReq_descriptor_,
+      S2SClusterClientLostReq::default_instance_,
+      S2SClusterClientLostReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientLostReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SClusterClientLostReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(S2SClusterClientLostReq));
+  S2SAddObjectToProxyReq_descriptor_ = file->message_type(9);
   static const int S2SAddObjectToProxyReq_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SAddObjectToProxyReq, objectid_),
   };
@@ -231,7 +249,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SAddObjectToProxyReq));
-  S2SRemoveObjectToProxyReq_descriptor_ = file->message_type(9);
+  S2SRemoveObjectToProxyReq_descriptor_ = file->message_type(10);
   static const int S2SRemoveObjectToProxyReq_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SRemoveObjectToProxyReq, objectid_),
   };
@@ -246,7 +264,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SRemoveObjectToProxyReq));
-  S2SAllocObjectToMasterReq_descriptor_ = file->message_type(10);
+  S2SAllocObjectToMasterReq_descriptor_ = file->message_type(11);
   static const int S2SAllocObjectToMasterReq_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SAllocObjectToMasterReq, objectid_),
   };
@@ -261,7 +279,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SAllocObjectToMasterReq));
-  S2SAllocObjectToProxyAck_descriptor_ = file->message_type(11);
+  S2SAllocObjectToProxyAck_descriptor_ = file->message_type(12);
   static const int S2SAllocObjectToProxyAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SAllocObjectToProxyAck, objectid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SAllocObjectToProxyAck, shardid_),
@@ -277,7 +295,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SAllocObjectToProxyAck));
-  S2SAllocObjectToShardAck_descriptor_ = file->message_type(12);
+  S2SAllocObjectToShardAck_descriptor_ = file->message_type(13);
   static const int S2SAllocObjectToShardAck_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SAllocObjectToShardAck, objectid_),
   };
@@ -292,7 +310,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SAllocObjectToShardAck));
-  S2SSendToDynamicObjectReq_descriptor_ = file->message_type(13);
+  S2SSendToDynamicObjectReq_descriptor_ = file->message_type(14);
   static const int S2SSendToDynamicObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, objectid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, msgid_),
@@ -310,7 +328,7 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SSendToDynamicObjectReq));
-  S2SSendToStaticObjectReq_descriptor_ = file->message_type(14);
+  S2SSendToStaticObjectReq_descriptor_ = file->message_type(15);
   static const int S2SSendToStaticObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, objectid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, msgid_),
@@ -356,7 +374,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     S2SClusterVerifyAck_descriptor_, &S2SClusterVerifyAck::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    S2SClusterClientListReq_descriptor_, &S2SClusterClientListReq::default_instance());
+    S2SClusterClientDiscoverReq_descriptor_, &S2SClusterClientDiscoverReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    S2SClusterClientLostReq_descriptor_, &S2SClusterClientLostReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     S2SAddObjectToProxyReq_descriptor_, &S2SAddObjectToProxyReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -390,8 +410,10 @@ void protobuf_ShutdownFile_KFClusterMessage_2eproto() {
   delete S2SClusterVerifyReq_reflection_;
   delete S2SClusterVerifyAck::default_instance_;
   delete S2SClusterVerifyAck_reflection_;
-  delete S2SClusterClientListReq::default_instance_;
-  delete S2SClusterClientListReq_reflection_;
+  delete S2SClusterClientDiscoverReq::default_instance_;
+  delete S2SClusterClientDiscoverReq_reflection_;
+  delete S2SClusterClientLostReq::default_instance_;
+  delete S2SClusterClientLostReq_reflection_;
   delete S2SAddObjectToProxyReq::default_instance_;
   delete S2SAddObjectToProxyReq_reflection_;
   delete S2SRemoveObjectToProxyReq::default_instance_;
@@ -430,31 +452,34 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
     "rifyReq\022\023\n\013clustertype\030\001 \002(\t\022\r\n\005token\030\002 "
     "\002(\t\022\020\n\010serverid\030\003 \002(\r\"<\n\023S2SClusterVerif"
     "yAck\022\023\n\013clustertype\030\001 \002(\t\022\020\n\010serverid\030\002 "
-    "\002(\r\"+\n\027S2SClusterClientListReq\022\020\n\010client"
-    "id\030\001 \003(\r\"*\n\026S2SAddObjectToProxyReq\022\020\n\010ob"
-    "jectid\030\001 \003(\004\"-\n\031S2SRemoveObjectToProxyRe"
-    "q\022\020\n\010objectid\030\002 \003(\004\"-\n\031S2SAllocObjectToM"
-    "asterReq\022\020\n\010objectid\030\001 \003(\r\"=\n\030S2SAllocOb"
-    "jectToProxyAck\022\020\n\010objectid\030\001 \003(\r\022\017\n\007shar"
-    "did\030\002 \003(\r\",\n\030S2SAllocObjectToShardAck\022\020\n"
-    "\010objectid\030\001 \003(\r\"_\n\031S2SSendToDynamicObjec"
-    "tReq\022\020\n\010objectid\030\001 \002(\004\022\r\n\005msgid\030\002 \002(\r\022\017\n"
-    "\007msgdata\030\003 \002(\t\022\020\n\010serverid\030\004 \002(\r\"^\n\030S2SS"
-    "endToStaticObjectReq\022\020\n\010objectid\030\001 \002(\r\022\r"
-    "\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\t\022\020\n\010server"
-    "id\030\004 \002(\r*\370\003\n\017ClusterProtocol\022\035\n\030S2S_CLUS"
-    "TER_REGISTER_REQ\020\365N\022\033\n\026S2S_CLUSTER_UPDAT"
-    "E_REQ\020\366N\022\031\n\024S2S_CLUSTER_AUTH_REQ\020\367N\022\031\n\024S"
-    "2S_CLUSTER_AUTH_ACK\020\370N\022\032\n\025S2S_CLUSTER_TO"
-    "KEN_REQ\020\371N\022\033\n\026S2S_CLUSTER_VERIFY_REQ\020\372N\022"
-    "\033\n\026S2S_CLUSTER_VERIFY_ACK\020\373N\022 \n\033S2S_CLUS"
-    "TER_CLIENT_LIST_REQ\020\374N\022 \n\033S2S_ADD_OBJECT"
-    "_TO_PROXY_REQ\020\375N\022#\n\036S2S_REMOVE_OBJECT_TO"
-    "_PROXY_REQ\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO_MAS"
-    "TER_REQ\020\200O\022\"\n\035S2S_ALLOC_OBJECT_TO_PROXY_"
-    "ACK\020\201O\022\"\n\035S2S_ALLOC_OBJECT_TO_SHARD_ACK\020"
-    "\202O\022\"\n\035S2S_SEND_TO_STATIC_OBJECT_REQ\020\203O\022#"
-    "\n\036S2S_SEND_TO_DYNAMIC_OBJECT_REQ\020\204O", 1595);
+    "\002(\r\"/\n\033S2SClusterClientDiscoverReq\022\020\n\010cl"
+    "ientid\030\001 \003(\r\"+\n\027S2SClusterClientLostReq\022"
+    "\020\n\010clientid\030\001 \003(\r\"*\n\026S2SAddObjectToProxy"
+    "Req\022\020\n\010objectid\030\001 \003(\004\"-\n\031S2SRemoveObject"
+    "ToProxyReq\022\020\n\010objectid\030\002 \003(\004\"-\n\031S2SAlloc"
+    "ObjectToMasterReq\022\020\n\010objectid\030\001 \003(\r\"=\n\030S"
+    "2SAllocObjectToProxyAck\022\020\n\010objectid\030\001 \003("
+    "\r\022\017\n\007shardid\030\002 \003(\r\",\n\030S2SAllocObjectToSh"
+    "ardAck\022\020\n\010objectid\030\001 \003(\r\"_\n\031S2SSendToDyn"
+    "amicObjectReq\022\020\n\010objectid\030\001 \002(\004\022\r\n\005msgid"
+    "\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\t\022\020\n\010serverid\030\004 \002("
+    "\r\"^\n\030S2SSendToStaticObjectReq\022\020\n\010objecti"
+    "d\030\001 \002(\r\022\r\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\t\022"
+    "\020\n\010serverid\030\004 \002(\r*\236\004\n\017ClusterProtocol\022\035\n"
+    "\030S2S_CLUSTER_REGISTER_REQ\020\365N\022\033\n\026S2S_CLUS"
+    "TER_UPDATE_REQ\020\366N\022\031\n\024S2S_CLUSTER_AUTH_RE"
+    "Q\020\367N\022\031\n\024S2S_CLUSTER_AUTH_ACK\020\370N\022\032\n\025S2S_C"
+    "LUSTER_TOKEN_REQ\020\371N\022\033\n\026S2S_CLUSTER_VERIF"
+    "Y_REQ\020\372N\022\033\n\026S2S_CLUSTER_VERIFY_ACK\020\373N\022$\n"
+    "\037S2S_CLUSTER_CLIENT_DISCOVER_REQ\020\374N\022 \n\033S"
+    "2S_ADD_OBJECT_TO_PROXY_REQ\020\375N\022#\n\036S2S_REM"
+    "OVE_OBJECT_TO_PROXY_REQ\020\376N\022#\n\036S2S_ALLOC_"
+    "OBJECT_TO_MASTER_REQ\020\200O\022\"\n\035S2S_ALLOC_OBJ"
+    "ECT_TO_PROXY_ACK\020\201O\022\"\n\035S2S_ALLOC_OBJECT_"
+    "TO_SHARD_ACK\020\202O\022\"\n\035S2S_SEND_TO_STATIC_OB"
+    "JECT_REQ\020\203O\022#\n\036S2S_SEND_TO_DYNAMIC_OBJEC"
+    "T_REQ\020\204O\022 \n\033S2S_CLUSTER_CLIENT_LOST_REQ\020"
+    "\205O", 1682);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFClusterMessage.proto", &protobuf_RegisterTypes);
   S2SClusterRegisterReq::default_instance_ = new S2SClusterRegisterReq();
@@ -464,7 +489,8 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
   S2SClusterTokenReq::default_instance_ = new S2SClusterTokenReq();
   S2SClusterVerifyReq::default_instance_ = new S2SClusterVerifyReq();
   S2SClusterVerifyAck::default_instance_ = new S2SClusterVerifyAck();
-  S2SClusterClientListReq::default_instance_ = new S2SClusterClientListReq();
+  S2SClusterClientDiscoverReq::default_instance_ = new S2SClusterClientDiscoverReq();
+  S2SClusterClientLostReq::default_instance_ = new S2SClusterClientLostReq();
   S2SAddObjectToProxyReq::default_instance_ = new S2SAddObjectToProxyReq();
   S2SRemoveObjectToProxyReq::default_instance_ = new S2SRemoveObjectToProxyReq();
   S2SAllocObjectToMasterReq::default_instance_ = new S2SAllocObjectToMasterReq();
@@ -479,7 +505,8 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
   S2SClusterTokenReq::default_instance_->InitAsDefaultInstance();
   S2SClusterVerifyReq::default_instance_->InitAsDefaultInstance();
   S2SClusterVerifyAck::default_instance_->InitAsDefaultInstance();
-  S2SClusterClientListReq::default_instance_->InitAsDefaultInstance();
+  S2SClusterClientDiscoverReq::default_instance_->InitAsDefaultInstance();
+  S2SClusterClientLostReq::default_instance_->InitAsDefaultInstance();
   S2SAddObjectToProxyReq::default_instance_->InitAsDefaultInstance();
   S2SRemoveObjectToProxyReq::default_instance_->InitAsDefaultInstance();
   S2SAllocObjectToMasterReq::default_instance_->InitAsDefaultInstance();
@@ -517,6 +544,7 @@ bool ClusterProtocol_IsValid(int value) {
     case 10114:
     case 10115:
     case 10116:
+    case 10117:
       return true;
     default:
       return false;
@@ -3079,65 +3107,65 @@ void S2SClusterVerifyAck::Swap(S2SClusterVerifyAck* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int S2SClusterClientListReq::kClientidFieldNumber;
+const int S2SClusterClientDiscoverReq::kClientidFieldNumber;
 #endif  // !_MSC_VER
 
-S2SClusterClientListReq::S2SClusterClientListReq()
+S2SClusterClientDiscoverReq::S2SClusterClientDiscoverReq()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void S2SClusterClientListReq::InitAsDefaultInstance() {
+void S2SClusterClientDiscoverReq::InitAsDefaultInstance() {
 }
 
-S2SClusterClientListReq::S2SClusterClientListReq(const S2SClusterClientListReq& from)
+S2SClusterClientDiscoverReq::S2SClusterClientDiscoverReq(const S2SClusterClientDiscoverReq& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void S2SClusterClientListReq::SharedCtor() {
+void S2SClusterClientDiscoverReq::SharedCtor() {
   _cached_size_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-S2SClusterClientListReq::~S2SClusterClientListReq() {
+S2SClusterClientDiscoverReq::~S2SClusterClientDiscoverReq() {
   SharedDtor();
 }
 
-void S2SClusterClientListReq::SharedDtor() {
+void S2SClusterClientDiscoverReq::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void S2SClusterClientListReq::SetCachedSize(int size) const {
+void S2SClusterClientDiscoverReq::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* S2SClusterClientListReq::descriptor() {
+const ::google::protobuf::Descriptor* S2SClusterClientDiscoverReq::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return S2SClusterClientListReq_descriptor_;
+  return S2SClusterClientDiscoverReq_descriptor_;
 }
 
-const S2SClusterClientListReq& S2SClusterClientListReq::default_instance() {
+const S2SClusterClientDiscoverReq& S2SClusterClientDiscoverReq::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_KFClusterMessage_2eproto();
   return *default_instance_;
 }
 
-S2SClusterClientListReq* S2SClusterClientListReq::default_instance_ = NULL;
+S2SClusterClientDiscoverReq* S2SClusterClientDiscoverReq::default_instance_ = NULL;
 
-S2SClusterClientListReq* S2SClusterClientListReq::New() const {
-  return new S2SClusterClientListReq;
+S2SClusterClientDiscoverReq* S2SClusterClientDiscoverReq::New() const {
+  return new S2SClusterClientDiscoverReq;
 }
 
-void S2SClusterClientListReq::Clear() {
+void S2SClusterClientDiscoverReq::Clear() {
   clientid_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool S2SClusterClientListReq::MergePartialFromCodedStream(
+bool S2SClusterClientDiscoverReq::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -3181,7 +3209,7 @@ bool S2SClusterClientListReq::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void S2SClusterClientListReq::SerializeWithCachedSizes(
+void S2SClusterClientDiscoverReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // repeated uint32 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
@@ -3195,7 +3223,7 @@ void S2SClusterClientListReq::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* S2SClusterClientListReq::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SClusterClientDiscoverReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // repeated uint32 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
@@ -3210,7 +3238,7 @@ void S2SClusterClientListReq::SerializeWithCachedSizes(
   return target;
 }
 
-int S2SClusterClientListReq::ByteSize() const {
+int S2SClusterClientDiscoverReq::ByteSize() const {
   int total_size = 0;
 
   // repeated uint32 clientid = 1;
@@ -3234,10 +3262,10 @@ int S2SClusterClientListReq::ByteSize() const {
   return total_size;
 }
 
-void S2SClusterClientListReq::MergeFrom(const ::google::protobuf::Message& from) {
+void S2SClusterClientDiscoverReq::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const S2SClusterClientListReq* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const S2SClusterClientListReq*>(
+  const S2SClusterClientDiscoverReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SClusterClientDiscoverReq*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -3246,30 +3274,30 @@ void S2SClusterClientListReq::MergeFrom(const ::google::protobuf::Message& from)
   }
 }
 
-void S2SClusterClientListReq::MergeFrom(const S2SClusterClientListReq& from) {
+void S2SClusterClientDiscoverReq::MergeFrom(const S2SClusterClientDiscoverReq& from) {
   GOOGLE_CHECK_NE(&from, this);
   clientid_.MergeFrom(from.clientid_);
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void S2SClusterClientListReq::CopyFrom(const ::google::protobuf::Message& from) {
+void S2SClusterClientDiscoverReq::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SClusterClientListReq::CopyFrom(const S2SClusterClientListReq& from) {
+void S2SClusterClientDiscoverReq::CopyFrom(const S2SClusterClientDiscoverReq& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SClusterClientListReq::IsInitialized() const {
+bool S2SClusterClientDiscoverReq::IsInitialized() const {
 
   return true;
 }
 
-void S2SClusterClientListReq::Swap(S2SClusterClientListReq* other) {
+void S2SClusterClientDiscoverReq::Swap(S2SClusterClientDiscoverReq* other) {
   if (other != this) {
     clientid_.Swap(&other->clientid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3278,11 +3306,222 @@ void S2SClusterClientListReq::Swap(S2SClusterClientListReq* other) {
   }
 }
 
-::google::protobuf::Metadata S2SClusterClientListReq::GetMetadata() const {
+::google::protobuf::Metadata S2SClusterClientDiscoverReq::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = S2SClusterClientListReq_descriptor_;
-  metadata.reflection = S2SClusterClientListReq_reflection_;
+  metadata.descriptor = S2SClusterClientDiscoverReq_descriptor_;
+  metadata.reflection = S2SClusterClientDiscoverReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int S2SClusterClientLostReq::kClientidFieldNumber;
+#endif  // !_MSC_VER
+
+S2SClusterClientLostReq::S2SClusterClientLostReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void S2SClusterClientLostReq::InitAsDefaultInstance() {
+}
+
+S2SClusterClientLostReq::S2SClusterClientLostReq(const S2SClusterClientLostReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void S2SClusterClientLostReq::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+S2SClusterClientLostReq::~S2SClusterClientLostReq() {
+  SharedDtor();
+}
+
+void S2SClusterClientLostReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void S2SClusterClientLostReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* S2SClusterClientLostReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return S2SClusterClientLostReq_descriptor_;
+}
+
+const S2SClusterClientLostReq& S2SClusterClientLostReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_KFClusterMessage_2eproto();
+  return *default_instance_;
+}
+
+S2SClusterClientLostReq* S2SClusterClientLostReq::default_instance_ = NULL;
+
+S2SClusterClientLostReq* S2SClusterClientLostReq::New() const {
+  return new S2SClusterClientLostReq;
+}
+
+void S2SClusterClientLostReq::Clear() {
+  clientid_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool S2SClusterClientLostReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated uint32 clientid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_clientid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 8, input, this->mutable_clientid())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_clientid())));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(8)) goto parse_clientid;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void S2SClusterClientLostReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // repeated uint32 clientid = 1;
+  for (int i = 0; i < this->clientid_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+      1, this->clientid(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* S2SClusterClientLostReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated uint32 clientid = 1;
+  for (int i = 0; i < this->clientid_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32ToArray(1, this->clientid(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int S2SClusterClientLostReq::ByteSize() const {
+  int total_size = 0;
+
+  // repeated uint32 clientid = 1;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->clientid_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->clientid(i));
+    }
+    total_size += 1 * this->clientid_size() + data_size;
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void S2SClusterClientLostReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const S2SClusterClientLostReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const S2SClusterClientLostReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void S2SClusterClientLostReq::MergeFrom(const S2SClusterClientLostReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  clientid_.MergeFrom(from.clientid_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void S2SClusterClientLostReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void S2SClusterClientLostReq::CopyFrom(const S2SClusterClientLostReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S2SClusterClientLostReq::IsInitialized() const {
+
+  return true;
+}
+
+void S2SClusterClientLostReq::Swap(S2SClusterClientLostReq* other) {
+  if (other != this) {
+    clientid_.Swap(&other->clientid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata S2SClusterClientLostReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = S2SClusterClientLostReq_descriptor_;
+  metadata.reflection = S2SClusterClientLostReq_reflection_;
   return metadata;
 }
 

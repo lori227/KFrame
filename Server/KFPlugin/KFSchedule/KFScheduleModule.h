@@ -10,7 +10,8 @@
 //    @Date             :    2017-3-13
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFScheduleData.h"
+#include "KFScheduleTime.h"
 #include "KFScheduleInterface.h"
 
 namespace KFrame
@@ -34,6 +35,31 @@ namespace KFrame
 
         // 删除计划任务
         void RemoveSchedule( const std::string& module );
+
+    protected:
+        // 添加计划任务
+        void AddSchedule( KFScheduleData* kfdata );
+
+        // 删除计划任务
+        void AddRemoveSchedule( const std::string& module, uint32 objectid );
+        void RemoveSchedule( const std::string& module, uint32 objectid );
+
+        void RunScheduleUpdate();
+        void RunScheduleRegister();
+        void RunScheduleRemove();
+
+    private:
+        // 需要注册的计划任务
+        std::list< KFScheduleData* > _kf_schedule_register;
+
+        // 计划任务
+        std::map< std::string, std::map< uint32, KFScheduleData* > > _kf_schedule_data;
+
+        // 需要删除的任务
+        std::map< std::string, uint32 > _kf_schedule_remove;
+
+        // 更新定时器
+        KFClockTimer _update_timer;
     };
 }
 

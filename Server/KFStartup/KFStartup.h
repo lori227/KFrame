@@ -12,8 +12,8 @@ namespace KFrame
     class KFStartup : public KFSingleton< KFStartup >
     {
     public:
-        KFStartup();
-        ~KFStartup();
+        KFStartup() = default;
+        ~KFStartup() = default;
 
         // 初始化
         bool InitStartup( const std::string& file );

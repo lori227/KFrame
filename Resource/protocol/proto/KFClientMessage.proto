@@ -104,6 +104,10 @@ enum ClientProtocol
 	MSG_BIND_ALIPAY_REQ = 302;					// 绑定支付宝
 	MSG_QUERY_INVITE_SCORE_REQ = 303;			// 查询邀请码积分
 	MSG_QUERY_INVITE_SCORE_ACK = 304;			// 查询邀请码积分
+	MSG_EXCHANGE_INVITE_SCORE_REQ = 305;		// 兑换邀请码积分
+	MSG_EXCHANGE_INVITE_SCORE_ACK = 306;		// 兑换邀请码积分
+	MSG_EXCHANGE_INVITE_RECORD_REQ = 307;		// 兑换记录
+	MSG_EXCHANGE_INVITE_RECORD_ACK = 308;		// 兑换记录
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -926,7 +930,24 @@ message MsgTellSysNotcie
 // MSG_BIND_ALIPAY_REQ
 message MsgBindAlipayReq
 {
-	required string alipay = 1;		// 支付宝账号
+	required string name = 1;		// 支付宝姓名
+	required string alipay = 2;		// 支付宝账号
+}
+
+// 申请提现
+// MSG_EXCHANGE_INVITE_SCORE_REQ
+message MsgExChangeInviteScoreReq
+{
+	required string name = 1;		// 支付宝姓名
+	required string alipay = 2;		// 支付宝账号
+}
+
+// 申请提现
+// MSG_EXCHANGE_INVITE_SCORE_ACK
+message MsgExChangeInviteScoreAck
+{
+	required uint32 exchangescore = 1;	// 兑换积分
+	required uint32 leftscore = 2;		// 剩余积分
 }
 
 // 查询邀请积分
@@ -940,6 +961,28 @@ message MsgQueryInviteScoreReq
 // MSG_QUERY_INVITE_SCORE_ACK
 message MsgQueryInviteScoreAck
 {
-	required uint32 score = 1;		// 积分
+	required uint32 exchangescore = 1;	// 已兑换积分
+	required uint32 leftscore = 2;		// 剩余积分
+}
+
+// 查询兑换记录
+// MSG_EXCHANGE_INVITE_RECORD_REQ
+message MsgExChangeInviteRecordReq
+{
+
+}
+
+message PBExChangeInviteRecord
+{
+	required string name = 1;		// 支付宝姓名
 	required string alipay = 2;		// 支付宝账号
+	required uint32 score = 3;		// 积分
+	required uint64 time = 4;		// 时间
+}
+
+// 查询兑换记录
+// MSG_EXCHANGE_INVITE_RECORD_ACK
+message MsgExChangeInviteRecordAck
+{
+	repeated PBExChangeInviteRecord record = 1;
 }

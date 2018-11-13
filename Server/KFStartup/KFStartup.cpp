@@ -4,15 +4,6 @@
 
 namespace KFrame
 {
-    KFStartup::KFStartup()
-    {
-    }
-
-    KFStartup::~KFStartup()
-    {
-
-    }
-
     bool KFStartup::InitStartup( const std::string& file )
     {
         // 加载配置

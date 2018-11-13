@@ -11,16 +11,20 @@ function GetSteamActivationCode( playerid )
     if grant_value == 1 then
         return
     end
+
     -- 获取在线时长
     local total_online_time = data.GetValue(playerid, "totalonlinetime")
     if total_online_time < 3 * time.HourSec then -- 3小时
         return
     end
 
+    -- 获取渠道
+    local channel = data.GetValue(playerid, "channel")
+
     -- post data
     local http_body = {}
     http_body["accountid"] = playerid
-    http_body["channel"] = platform.LW_CHANNEL --发的激活码为通用渠道可用
+    http_body["channel"] = channel
     
     -- callback args
     local arg = {}

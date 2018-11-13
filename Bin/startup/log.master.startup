@@ -12,5 +12,7 @@
 		<Plugin Sort="30" Name="KFTcpClient" Config=""/>
 		<Plugin Sort="40" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="50" Name="KFClusterMaster" Config="./setting/cluster.setting"/>
+		<Plugin Sort="60" Name="KFOption" Config="./config/option.config"/>	
+
 	</Plugins>
 </Setting>

@@ -1,143 +1,85 @@
 ﻿#ifndef __KF_PROTO_FACTORY_H__
 #define __KF_PROTO_FACTORY_H__
 
-#include "KFDefine.h"
-#include "google/protobuf/compiler/importer.h"
-#include "google/protobuf/dynamic_message.h"
+#include "KFrame.h"
+
 
 namespace KFrame
 {
-    class KFProtoFactory
+#define __GET_VALUE_DECLARATION__( outtype, gettype )\
+    outtype Get##gettype( google::protobuf::Message* message, const std::string& name );
+#define __SET_VALUE_DECLARATION__( intype, settype )\
+    void Set##settype( google::protobuf::Message* message, const std::string& name, intype value );
+#define __GET_REPEATED_DECLARATION__( outtype, gettype )\
+    outtype GetRepeated##gettype( const google::protobuf::Message* message, const std::string& name, int32 index );
+#define __ADD_REPEATED_DECLARATION__( intype, settype )\
+    void AddRepeated##settype( google::protobuf::Message* message, const std::string& name, intype value );
+
+    class KFProtoFactory : public KFSingleton< KFProtoFactory >
     {
     public:
-        ~KFProtoFactory();
-
-        // 单间接口
-        static KFProtoFactory* Instance();
-
-        // 加载Proto文件
-        void ImportPath( const std::string& path );
-        bool LoadFile( const std::string& file );
-
-
         // 创建消息
         google::protobuf::Message* CreateMessage( const std::string& name );
 
+        // 销毁消息
+        void DestroyMessage( google::protobuf::Message* );
+
         // 解析消息
-        google::protobuf::Message* ParserMessage( const std::string& name, const char* data, uint32 length );
+        //google::protobuf::Message* ParserMessage( const std::string& name, const char* data, uint32 length );
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 设置和获取数值
+        __GET_VALUE_DECLARATION__( int32, Int32 );
+        __SET_VALUE_DECLARATION__( int32, Int32 );
 
-        // 获得值
-        template< class T >
-        T GetValue( google::protobuf::Message* message, const std::string& name )
-        {
-            auto filed = message->GetDescriptor()->FindFieldByName( name );
-            if ( filed == nullptr )
-            {
-                return ReturnValue< T >();
-            }
+        __GET_VALUE_DECLARATION__( uint32, UInt32 );
+        __SET_VALUE_DECLARATION__( uint32, UInt32 );
 
-            return GetValue< T >( message, filed );
-        }
+        __GET_VALUE_DECLARATION__( int64, Int64 );
+        __SET_VALUE_DECLARATION__( int64, Int64 );
 
-        // 设置值
-        template< class T >
-        void SetValue( google::protobuf::Message* message, const std::string& name, T value )
-        {
-            auto filed = message->GetDescriptor()->FindFieldByName( name );
-            if ( filed == nullptr )
-            {
-                return;
-            }
+        __GET_VALUE_DECLARATION__( uint64, UInt64 );
+        __SET_VALUE_DECLARATION__( uint64, UInt64 );
 
-            SetValue< T >( message, filed, value );
-        }
+        __GET_VALUE_DECLARATION__( float, Float );
+        __SET_VALUE_DECLARATION__( float, Float );
 
+        __GET_VALUE_DECLARATION__( double, Double );
+        __SET_VALUE_DECLARATION__( double, Double );
+
+        __GET_VALUE_DECLARATION__( std::string, String );
+        __SET_VALUE_DECLARATION__( const std::string&, String );
+
+        __GET_VALUE_DECLARATION__( const google::protobuf::Message*, Message );
+        __SET_VALUE_DECLARATION__( const google::protobuf::Message*, Message );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 获得Repeated字段数量
         int32 GetRepeatedCount( google::protobuf::Message* message, const std::string& name );
 
-        // 获得Repeated数值
-        template< class T >
-        T GetRepeatedValue( google::protobuf::Message* message, const std::string& name, int32 index )
-        {
-            auto filed = message->GetDescriptor()->FindFieldByName( name );
-            if ( filed == nullptr )
-            {
-                return ReturnValue< T >();
-            }
+        __GET_REPEATED_DECLARATION__( int32, Int32 );
+        __ADD_REPEATED_DECLARATION__( int32, Int32 );
 
-            return GetRepeatedValue< T >( message, filed, index );
-        }
+        __GET_REPEATED_DECLARATION__( uint32, UInt32 );
+        __ADD_REPEATED_DECLARATION__( uint32, UInt32 );
 
-        // 添加Repeated数值
-        template< class T >
-        void AddRepeatedValue( google::protobuf::Message* message, const std::string& name, T value )
-        {
-            auto filed = message->GetDescriptor()->FindFieldByName( name );
-            if ( filed == nullptr )
-            {
-                return;
-            }
+        __GET_REPEATED_DECLARATION__( int64, Int64 );
+        __ADD_REPEATED_DECLARATION__( int64, Int64 );
 
-            return AddRepeatedValue< T >( message, filed, value );
-        }
+        __GET_REPEATED_DECLARATION__( uint64, UInt64 );
+        __ADD_REPEATED_DECLARATION__( uint64, UInt64 );
 
-        // 设置Repeared数值
-        template< class T >
-        void SetRepeatedValue( google::protobuf::Message* message, const std::string& name, int32 index, T value )
-        {
-            auto filed = message->GetDescriptor()->FindFieldByName( name );
-            if ( filed == nullptr )
-            {
-                return;
-            }
+        __GET_REPEATED_DECLARATION__( float, Float );
+        __ADD_REPEATED_DECLARATION__( float, Float );
 
-            return SetRepeatedValue< T >( message, filed, index, value );
-        }
+        __GET_REPEATED_DECLARATION__( double, Double );
+        __ADD_REPEATED_DECLARATION__( double, Double );
 
-        template< class T >
-        T ReturnValue()
-        {
-            static T _t;
-            return _t;
-        }
+        __GET_REPEATED_DECLARATION__( std::string, String );
+        __ADD_REPEATED_DECLARATION__( const std::string&, String );
 
-    protected:
-        KFProtoFactory();
-
-        // 获得值
-        template< class T >
-        T GetValue( google::protobuf::Message* message, const google::protobuf::FieldDescriptor* filed );
-
-        // 设置值
-        template< class T >
-        void SetValue( google::protobuf::Message* message, const google::protobuf::FieldDescriptor* filed, T value );
-
-        // 获得Repreaed数值
-        template< class T >
-        T GetRepeatedValue( google::protobuf::Message* message, const google::protobuf::FieldDescriptor* filed, int32 index );
-
-        // 添加Repreaed数值
-        template< class T >
-        void AddRepeatedValue( google::protobuf::Message* message, const google::protobuf::FieldDescriptor* filed, T value );
-
-        // 设置Repreaed数值
-        template< class T >
-        void SetRepeatedValue( google::protobuf::Message* message, const google::protobuf::FieldDescriptor* filed, int32 index, T value );
-
-    private:
-        // 动态编译器
-        google::protobuf::compiler::Importer* _importer;
-        google::protobuf::DynamicMessageFactory* _factory;
+        __GET_REPEATED_DECLARATION__( const google::protobuf::Message*, Message );
+        __ADD_REPEATED_DECLARATION__( google::protobuf::Message*, Message );
     };
-
-    template<>
-    inline const std::string& KFProtoFactory::ReturnValue<>()
-    {
-        static std::string _default = "";
-        return _default;
-    }
 }
 
 

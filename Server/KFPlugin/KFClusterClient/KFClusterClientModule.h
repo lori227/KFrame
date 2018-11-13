@@ -9,12 +9,11 @@
 //    @Date             :    2017-8-17
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFClusterClient.h"
 #include "KFBus/KFBusInterface.h"
 #include "KFClusterClientInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -26,9 +25,6 @@ namespace KFrame
     public:
         KFClusterClientModule() = default;
         ~KFClusterClientModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

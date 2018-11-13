@@ -16,8 +16,13 @@ namespace KFrame
         return path + "?" + query;
     }
 
+#define MAX_EXCEPTION 3
+
     std::string KFHttp::RunHttp( const std::string& url, const std::string& data )
     {
+        __LOG_DEBUG__( "http url={}", url );
+        __LOG_DEBUG__( "http data={}", data );
+
         Poco::Net::HTTPRequest request;
         request.setContentType( "application/json" );
         request.setVersion( Poco::Net::HTTPRequest::HTTP_1_1 );
@@ -25,19 +30,14 @@ namespace KFrame
 
         Poco::URI verifyuri( url );
         request.setURI( GetURI( url, verifyuri ) );
-        return HttpRequest( request, verifyuri, data );
-    }
-
-#define MAX_EXCEPTION 3
-    std::string KFHttp::HttpRequest( Poco::Net::HTTPRequest& request, Poco::URI& url, const std::string& data )
-    {
-        uint32 exceptioncount = 0;
 
         Poco::Net::HTTPClientSession* psession = GetHttpSession();
-        psession->setHost( url.getHost() );
-        psession->setPort( url.getPort() );
+        psession->setHost( verifyuri.getHost() );
+        psession->setPort( verifyuri.getPort() );
 
         std::string result;
+        uint32 exceptioncount = 0;
+
         do
         {
             try
@@ -51,20 +51,23 @@ namespace KFrame
                 std::ostringstream os;
                 recvstream >> os.rdbuf();
                 result = os.str();
+
                 break;
             }
             catch ( Poco::Exception& exception )
             {
                 if ( exceptioncount == 0 )
                 {
-                    __LOG_ERROR__( "[{}]http request failed, error = {}, code = {}",
-                                   url.toString(), exception.what(), exception.code() );
+                    __LOG_ERROR__( "[{}]http failed, error = {}, code = {}", verifyuri.toString(), exception.what(), exception.code() );
                 }
                 ++exceptioncount;
             }
         } while ( exceptioncount < MAX_EXCEPTION );
 
         psession->reset();
+        __LOG_DEBUG__( "http result={}", result );
+
         return result;
     }
+
 }

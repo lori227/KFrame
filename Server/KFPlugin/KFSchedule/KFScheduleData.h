@@ -31,9 +31,4 @@ namespace KFrame
     };
 }
 
-
-
-
-
-
 #endif

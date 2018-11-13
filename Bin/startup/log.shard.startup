@@ -12,5 +12,6 @@
 		<Plugin Sort="70" Name="KFTcpServer" Config="./setting/server.network"/>
 		<Plugin Sort="80" Name="KFTcpClient" Config=""/>
 		<Plugin Sort="90" Name="KFLogShard" Config=""/>
+		<Plugin Sort="100" Name="KFOption" Config="./config/option.config"/>	
 	</Plugins>
 </Setting>

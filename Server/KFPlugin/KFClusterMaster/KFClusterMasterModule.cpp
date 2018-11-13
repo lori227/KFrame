@@ -1,25 +1,9 @@
 ﻿#include "KFClusterMasterModule.h"
 #include "KFClusterMasterManage.h"
-#include "KFClusterMasterConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
-    KFClusterMasterModule::KFClusterMasterModule()
-    {
-        _cluster_serial = 0;
-    }
-
-    KFClusterMasterModule::~KFClusterMasterModule()
-    {
-    }
-
-    void KFClusterMasterModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( _kf_cluster_config, false );
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFClusterMasterModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterMasterModule::OnServerLostClusterProxy );
@@ -33,7 +17,6 @@ namespace KFrame
 
     void KFClusterMasterModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_cluster_config );
         __UNREGISTER_SERVER_LOST_FUNCTION__();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,19 +24,8 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_MASTER_REQ );
-
     }
 
-    void KFClusterMasterModule::OnceRun()
-    {
-        auto kfsetting = _kf_cluster_config->FindClusterSetting( KFGlobal::Instance()->_app_name );
-        if ( kfsetting == nullptr )
-        {
-            return;
-        }
-
-        _cluster_key = kfsetting->_key;
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_LOST_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
@@ -91,6 +63,7 @@ namespace KFrame
 
         __LOG_DEBUG__( "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
 
+        static auto _cluster_key = _kf_option->GetString( __KF_STRING__( clusterkey ), KFGlobal::Instance()->_app_name );
         if ( kfmsg.clusterkey() != _cluster_key )
         {
             return __LOG_ERROR__( "[{}!={}] cluster[{}] key error!", kfmsg.clusterkey(), _cluster_key, KFAppID::ToString( handleid ) );

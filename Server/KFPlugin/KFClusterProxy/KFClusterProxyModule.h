@@ -131,6 +131,9 @@ namespace KFrame
         // 发现连接
         __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
+        // 丢失连接
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
+
     private:
         // 连接Cluster Server 成功
         void OnClientConnectionClusterMaster( const std::string& servername, uint32 serverid );

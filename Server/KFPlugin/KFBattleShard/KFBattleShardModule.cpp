@@ -161,8 +161,7 @@ namespace KFrame
         auto proxyid = __KF_HEAD_ID__( kfguid );
         auto strserverid = KFAppID::ToString( kfmsg.serverid() );
 
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] req!",
-                       strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] req!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
         if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
         {
@@ -568,11 +567,11 @@ namespace KFrame
         auto ok = _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_TELL_BATTLE_ROOM_FINISH_ACK, &ack );
         if ( ok )
         {
-            __LOG_DEBUG__( "room[{}] serverid[{}] ip[{}] finish ok!", kfmsg.roomid(), kfmsg.serverid(), kfmsg.ip() );
+            __LOG_DEBUG__( "room[{}] serverid[{}] ip[{}] finish ok!", kfmsg.roomid(), KFAppID::ToString( kfmsg.serverid() ), kfmsg.ip() );
         }
         else
         {
-            __LOG_ERROR__( "room[{}] serverid[{}] ip[{}] finish failed!", kfmsg.roomid(), kfmsg.serverid(), kfmsg.ip() );
+            __LOG_ERROR__( "room[{}] serverid[{}] ip[{}] finish failed!", kfmsg.roomid(), KFAppID::ToString( kfmsg.serverid() ), kfmsg.ip() );
         }
     }
 

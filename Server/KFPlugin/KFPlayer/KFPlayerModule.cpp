@@ -262,23 +262,21 @@ namespace KFrame
 
     void KFPlayerModule::SavePlayer( KFEntity* kfentity )
     {
-        auto kfdata = kfentity->GetData();
-        auto zoneid = KFUtility::CalcZoneId( kfdata->GetKeyID() );
-        if ( !kfentity->IsInited() || !kfentity->IsNeedToSave() )
+        kfentity->SetNeetToSave( false );
+
+        auto kfobject = kfentity->GetData();
+        auto zoneid = KFUtility::CalcZoneId( kfobject->GetKeyID() );
+        if ( !kfentity->IsInited() )
         {
-            return;
+            return __LOG_ERROR__( "player[{}:{}] uninit!", zoneid, kfentity->GetKeyID() );
         }
 
         KFMsg::S2SSavePlayerReq req;
         req.set_zoneid( zoneid );
-        req.set_id( kfdata->GetKeyID() );
-        _kf_kernel->SerializeToData( kfdata, req.mutable_data() );
+        req.set_id( kfobject->GetKeyID() );
+        _kf_kernel->SerializeToData( kfobject, req.mutable_data() );
         auto ok = _kf_data->SendMessageToData( zoneid, KFMsg::S2S_SAVE_PLAYER_REQ, &req );
-        if ( ok )
-        {
-            kfentity->SetNeetToSave( false );
-        }
-        else
+        if ( !ok )
         {
             __LOG_ERROR__( "player[{}:{}] save send failed!", zoneid, kfentity->GetKeyID() );
         }
@@ -932,7 +930,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleQuerySettingReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryBasicReq );
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgQuerySettingReq );
 
         auto kfobject = player->GetData();
         auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
@@ -946,21 +944,15 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateSettingReq );
 
-        auto kfobject = player->GetData();
-        auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
-
-        /*
-        for ( auto i = 0; i < kfmsg.strsetting_size(); ++i )
+        if ( kfmsg.settingvalue().size() >= KFBufferEnum::Buff_1M )
         {
-            auto setting = kfmsg.strsetting( i );
-            player->UpdateData( kfsetting, setting.name(), setting.value() );
+            return;
         }
 
-        for ( auto i = 0; i < kfmsg.intsetting_size(); ++i )
-        {
-            auto setting = kfmsg.intsetting( i );
-            player->UpdateData( kfsetting, setting.name(), KFOperateEnum::Set, setting.value() );
-        }*/
+        auto kfobject = player->GetData();
+        auto kfsetting = kfobject->FindData( __KF_STRING__( setting ) );
+        player->UpdateData( kfsetting, kfmsg.settingkey(), kfmsg.settingvalue() );
+
     }
 
     __KF_DEBUG_FUNCTION__( KFPlayerModule::DebugAddData )
@@ -1013,5 +1005,20 @@ namespace KFrame
         {
             player->RemoveAgentData( &kfagents, __FUNC_LINE__ );
         }
+    }
+
+    // 判断操作频率
+    bool KFPlayerModule::CheckOperateFrequently( KFEntity* player, uint32 time )
+    {
+        auto kfobject = player->GetData();
+        auto operatetime = kfobject->GetValue< uint64 >( __KF_STRING__( operatetime ) );
+        if ( KFGlobal::Instance()->_game_time < operatetime )
+        {
+            _kf_display->SendToClient( player, KFMsg::OperateFrequently );
+            return true;
+        }
+
+        kfobject->SetValue< uint64 >( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time + time );
+        return false;
     }
 }

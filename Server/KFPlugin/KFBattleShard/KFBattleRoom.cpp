@@ -16,12 +16,14 @@ namespace KFrame
         _total_player_count = 0;
         _max_player_count = 0;
         _status = 0;
+        _last_status = 0;
         _req_count = 0;
         _battle_server_id = 0;
         _battle_valid_time = _invalid_int;
         _battle_redis_driver = nullptr;
         _is_match_room_open = false;
         _battle_wait_time = 0;
+        _last_interval_time = 0;
     }
 
     KFBattleRoom::~KFBattleRoom()
@@ -47,7 +49,9 @@ namespace KFrame
     void KFBattleRoom::UpdateRoomStatus( uint32 status, uint32 intervaltime )
     {
         _req_count = 0;
+        _last_status = _status;
         _status = status;
+        _last_interval_time = intervaltime;
         _status_timer.StopTimer();
         if ( intervaltime != 0 )
         {
@@ -163,6 +167,11 @@ namespace KFrame
 
     bool KFBattleRoom::CheckValid()
     {
+        if ( _status == KFRoomStatus::StatusBattleRoomFinish )
+        {
+            return false;
+        }
+
         return KFGlobal::Instance()->_game_time < _battle_valid_time;
     }
 
@@ -446,14 +455,13 @@ namespace KFrame
         _battle_server._port = port;
 
         // 如果是进入状态, 重置到开启状态, 让流程循环起来
-        switch ( _status )
+        switch ( _last_status )
         {
         case KFRoomStatus::StatusBattleRoomAlloc:
-        case KFRoomStatus::StatusBattleRoomEnter:
-        case KFRoomStatus::StatusBattleRoomDisconnect:
             UpdateRoomStatus( KFRoomStatus::StatusBattleRoomOpen, 5000 );
             break;
         default:
+            UpdateRoomStatus( _last_status, _last_interval_time );
             break;
         }
 
@@ -463,24 +471,29 @@ namespace KFrame
     void KFBattleRoom::DisconnectBattleRoom()
     {
         // 如果正在进入状态, 重新分配
-        if ( _status == KFRoomStatus::StatusBattleRoomEnter )
+        switch ( _status )
         {
-            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomDisconnect, 30000 );
+        case KFRoomStatus::StatusBattleRoomIdle:
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
+            break;
+        case KFRoomStatus::StatusBattleRoomEnter:
+        case KFRoomStatus::StatusBattleRoomPlaying:
+            UpdateRoomStatus( KFRoomStatus::StatusBattleRoomDisconnect, 60000 );
+            break;
+        default:
+            break;
         }
     }
 
     void KFBattleRoom::BattleRoomDisconnect()
     {
-        // 重新分配
-        UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
+        __LOG_ERROR__( "room[{}] [{}] [{}:{}] disconnect finish!", _battle_room_id, KFAppID::ToString( _battle_server._server_id ), _battle_server._ip, _battle_server._port );
 
-        // 玩家状态重置
-        auto kfcamp = _kf_camp_list.First();
-        while ( kfcamp != nullptr )
-        {
-            kfcamp->ResetBattleRoomStatus();
-            kfcamp = _kf_camp_list.Next();
-        }
+        // 结束房间
+        FinishBattleRoom();
+
+        // 更新到结束
+        UpdateRoomStatus( KFRoomStatus::StatusBattleRoomFinish, 0 );
     }
 
     void KFBattleRoom::StartBattleRoom( uint32 maxtime )
@@ -531,8 +544,7 @@ namespace KFrame
 
     void KFBattleRoom::FreeInValidRoom()
     {
-        __LOG_ERROR__( "room[{}] battle[{}:{}] invalid!", _battle_room_id,
-                       _battle_server._server_id, _battle_server._ip );
+        __LOG_ERROR__( "room[{}] [{}] battle[{}:{}] invalid!", _battle_room_id, KFAppID::ToString( _battle_server._server_id ), _battle_server._ip, _battle_server._port );
 
         // 删除时间
         _battle_redis_driver->Execute( "zrem {} {}", __KF_STRING__( battletime ), _battle_room_id );

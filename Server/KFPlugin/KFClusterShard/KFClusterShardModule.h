@@ -73,7 +73,10 @@ namespace KFrame
 
     protected:
         // 注册路由信息
-        __KF_MESSAGE_FUNCTION__( HandleClusterClientListReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientDiscoverReq );
+
+        // 客户端丢失
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientLostReq );
 
         // 分配object回应
         __KF_MESSAGE_FUNCTION__( HandleAllocObjectToShardAck );

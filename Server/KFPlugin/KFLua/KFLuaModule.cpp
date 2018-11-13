@@ -166,7 +166,6 @@ namespace KFrame
         metatableobject.RegisterObjectDirect( "GetOptionString", this, &KFLuaModule::LuaGetOptionString );
         metatableobject.RegisterObjectDirect( "GetOptionUint32", this, &KFLuaModule::LuaGetOptionUint32 );
         metatableobject.RegisterObjectDirect( "MakePlatformUrl", this, &KFLuaModule::LuaMakePlatformUrl );
-        metatableobject.RegisterObjectDirect( "MakePlatformSign", this, &KFLuaModule::LuaMakePlatformSign );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );

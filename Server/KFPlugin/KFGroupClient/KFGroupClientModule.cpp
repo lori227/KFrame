@@ -410,10 +410,9 @@ namespace KFrame
             }
 
             // 防止操作太快, 加入两个队伍
-            auto operatetime = kfobject->GetValue< uint64 >( __KF_STRING__( operatetime ) );
-            if ( KFGlobal::Instance()->_game_time < operatetime + 2000 )
+            if ( _kf_player->CheckOperateFrequently( player, 2000 ) )
             {
-                return _kf_display->SendToClient( player, KFMsg::OperateFrequently );
+                return;
             }
 
             // 判断邀请时间
@@ -436,11 +435,7 @@ namespace KFrame
 
                 auto kfbasic = kfinvite->FindData( __KF_STRING__( basic ) );
                 auto ok = _kf_player->SendToClient( kfbasic, KFMsg::S2S_CONSENT_INVITE_MATCH_GROUP_REQ, &req );
-                if ( ok )
-                {
-                    kfobject->SetValue< uint64 >( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time );
-                }
-                else
+                if ( !ok )
                 {
                     _kf_display->SendToClient( player, KFMsg::GroupServerBusy );
                 }

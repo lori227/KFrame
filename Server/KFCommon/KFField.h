@@ -133,6 +133,7 @@ namespace KFrame
         __STRING_DEFINE__( wholemail );
         __STRING_DEFINE__( wholemailtime );
         __STRING_DEFINE__( personmail );
+        __STRING_DEFINE__( unknownmail );
         __STRING_DEFINE__( personmailtime );
         __STRING_DEFINE__( mail );
         __STRING_DEFINE__( mailidcreater );
@@ -375,9 +376,12 @@ namespace KFrame
         __STRING_DEFINE__( chatmaxlength );
         __STRING_DEFINE__( createrolelua );
         __STRING_DEFINE__( inviterid );
-		__STRING_DEFINE__( taskcount );
+        __STRING_DEFINE__( taskcount );
         __STRING_DEFINE__( alipay );
-
+        __STRING_DEFINE__( exchangescore );
+        __STRING_DEFINE__( leftscore );
+        __STRING_DEFINE__( money );
+        __STRING_DEFINE__( clusterkey );
     }
 }
 

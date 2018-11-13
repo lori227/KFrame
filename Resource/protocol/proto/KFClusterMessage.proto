@@ -9,7 +9,7 @@ enum ClusterProtocol
 	S2S_CLUSTER_TOKEN_REQ = 10105;				// 集群Token
 	S2S_CLUSTER_VERIFY_REQ = 10106;				// 验证token请求
 	S2S_CLUSTER_VERIFY_ACK = 10107;				// 验证token回馈
-	S2S_CLUSTER_CLIENT_LIST_REQ = 10108;		// 客户端列表
+	S2S_CLUSTER_CLIENT_DISCOVER_REQ = 10108;	// 发现客户端列表
 	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// 添加对象映射
 	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// 删除对象映射
 	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// 请求分配shard
@@ -17,6 +17,7 @@ enum ClusterProtocol
 	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// 请求分配shard
 	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// 发送到静态对象
 	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// 发送到动态对象
+	S2S_CLUSTER_CLIENT_LOST_REQ = 10117;		// 丢失客户端列表
  }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,9 +91,16 @@ message S2SClusterVerifyAck
 	required uint32 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
 }
 
-// 客户端列表
-// S2S_CLUSTER_CLIENT_LIST_REQ
-message S2SClusterClientListReq
+// 发现客户端列表
+// S2S_CLUSTER_CLIENT_DISCOVER_REQ
+message S2SClusterClientDiscoverReq
+{
+	repeated uint32 clientid = 1;	// 客户端列表
+}
+
+// 丢失客户端列表
+// S2S_CLUSTER_CLIENT_LOST_REQ
+message S2SClusterClientLostReq
 {
 	repeated uint32 clientid = 1;	// 客户端列表
 }

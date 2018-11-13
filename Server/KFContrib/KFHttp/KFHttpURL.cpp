@@ -15,10 +15,8 @@ namespace KFrame
             }
             source.append( it->first );
             source.append( "=" );
-            source.append( it->second );
+            source.append( KFURLCharacter::encodeURIValue( it->second ) );
         }
-
-        source = KFURLCharacter::encodeURIValue( source );
 
         return source;
     }

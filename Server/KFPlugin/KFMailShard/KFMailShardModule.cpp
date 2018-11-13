@@ -78,11 +78,10 @@ namespace KFrame
         case KFMsg::MailEnum::GiftMail:
             return __FORMAT__( "{}:{}", __KF_STRING__( personmailgift ), playerid );
         default:
-            __LOG_ERROR__( "player[{}] mailtype[{}] error!", playerid, mailtype );
             break;
         }
 
-        return _invalid_str;
+        return __FORMAT__( "{}:{}", __KF_STRING__( unknownmail ), playerid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq )
@@ -97,11 +96,6 @@ namespace KFrame
 
         // 查询邮件列表
         auto maillistkey = FormatMailKeyName( kfmsg.playerid(), kfmsg.mailtype(), __FUNC_LINE__ );
-        if ( maillistkey.empty() )
-        {
-            return;
-        }
-
         auto mailkeylist = _mail_redis_driver->QueryMap( "hgetall {}", maillistkey );
         if ( mailkeylist->_value.empty() )
         {
@@ -228,10 +222,8 @@ namespace KFrame
         {
             // 非系统邮件
             auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
-            if ( !maillistkey.empty() )
-            {
-                _mail_redis_driver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
-            }
+            _mail_redis_driver->Append( "hset {} {} {}", maillistkey, uint64result->_value, KFMsg::FlagEnum::Init );
+
         }
 
         auto kfresult = _mail_redis_driver->Pipeline();
@@ -334,10 +326,7 @@ namespace KFrame
             }
 
             auto maillistkey = FormatMailKeyName( playerid, mailtype, __FUNC_LINE__ );
-            if ( !maillistkey.empty() )
-            {
-                ok = _mail_redis_driver->Execute( "hset {} {} {}", maillistkey, mailid, flag );
-            }
+            ok = _mail_redis_driver->Execute( "hset {} {} {}", maillistkey, mailid, flag );
         }
         break;
         default:

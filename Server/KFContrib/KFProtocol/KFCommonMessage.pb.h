@@ -243,6 +243,8 @@ enum AckEnum {
   PlatformServerBusy = 181,
   BindAlipayOk = 182,
   BindAlipayFailed = 183,
+  ExchangeInviteScoreError = 184,
+  ExchangeInviteRecordError = 185,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,

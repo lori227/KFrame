@@ -75,7 +75,7 @@ namespace KFrame
         return KFUtility::ToValue<uint32>( attribute->value() );
     }
 
-    std::string KFNode::GetString( const char* key, bool optional /* = false */, const std::string& defaultvalue /* = "" */ )
+    std::string KFNode::GetString( const char* key, bool optional /* = false */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
@@ -86,7 +86,8 @@ namespace KFrame
             {
                 __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
             }
-            return defaultvalue;
+
+            return "";
         }
 
         return attribute->value();

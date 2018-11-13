@@ -10,30 +10,27 @@ namespace KFrame
     class KFTimerInterface : public KFModule
     {
     public:
+        // 注册循环定时器
         template< class T >
-        void RegisterLoopTimer( uint64 objectid, uint32 intervaltime, T* object,
-                                void ( T::*handle )( const std::string&, uint64 ) )
+        void RegisterLoopTimer( uint64 objectid, uint32 intervaltime, T* object, void ( T::*handle )( const std::string&, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object,
-                                                  std::placeholders::_1, std::placeholders::_2 );
+            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             AddLoopTimer( typeid( T ).name(), objectid, intervaltime, function );
         }
 
+        // 注册指定次数定时器
         template< class T >
-        void RegisterLimitTimer( uint64 objectid, uint32 intervaltime, uint32 count, T* object,
-                                 void ( T::*handle )( const std::string&, uint64 ) )
+        void RegisterLimitTimer( uint64 objectid, uint32 intervaltime, uint32 count, T* object, void ( T::*handle )( const std::string&, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object,
-                                                  std::placeholders::_1, std::placeholders::_2 );
+            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             AddLimitTimer( typeid( T ).name(), objectid, intervaltime, count, function );
         }
 
+        // 注册延迟定时器( 一定时间内只执行一次 )
         template< class T >
-        void RegisterDelayTimer( uint64 objectid, uint32 intervaltime, T* object,
-                                 void ( T::*handle )( const std::string&, uint64 ) )
+        void RegisterDelayTimer( uint64 objectid, uint32 intervaltime, T* object, void ( T::*handle )( const std::string&, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object,
-                                                  std::placeholders::_1, std::placeholders::_2 );
+            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             AddDelayTimer( typeid( T ).name(), objectid, intervaltime, function );
         }
 

@@ -7,7 +7,8 @@ namespace KFrame
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterShardModule::OnServerLostHandle );
         //////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ, &KFClusterShardModule::HandleClusterClientListReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &KFClusterShardModule::HandleClusterClientDiscoverReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_REQ, &KFClusterShardModule::HandleClusterClientLostReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK, &KFClusterShardModule::HandleAllocObjectToShardAck );
 
     }
@@ -16,7 +17,8 @@ namespace KFrame
     {
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK );
     }
 
@@ -31,15 +33,27 @@ namespace KFrame
         return iter->second;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientListReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientDiscoverReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterClientListReq );
+        __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverReq );
 
         auto proxyid = __KF_HEAD_ID__( kfguid );
         for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
         {
             auto clientid = kfmsg.clientid( i );
             _proxy_client_list[ clientid ] = proxyid;
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientLostReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SClusterClientLostReq );
+
+        auto proxyid = __KF_HEAD_ID__( kfguid );
+        for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
+        {
+            auto clientid = kfmsg.clientid( i );
+            _proxy_client_list.erase( clientid );
         }
     }
 

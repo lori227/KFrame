@@ -13,14 +13,12 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFTimerData.cpp" />
-    <ClCompile Include="KFTimerManage.cpp" />
     <ClCompile Include="KFTimerModule.cpp" />
     <ClCompile Include="KFTimerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTimerData.h" />
     <ClInclude Include="KFTimerInterface.h" />
-    <ClInclude Include="KFTimerManage.h" />
     <ClInclude Include="KFTimerModule.h" />
     <ClInclude Include="KFTimerPlugin.h" />
   </ItemGroup>

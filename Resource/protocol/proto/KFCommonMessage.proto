@@ -185,6 +185,8 @@ enum AckEnum
 	PlatformServerBusy			= 181;		// 平台服务器繁忙
 	BindAlipayOk				= 182;		// 绑定支付宝成功
 	BindAlipayFailed			= 183;		// 绑定支付宝失败, 错误码<Text>%s</Text>
+	ExchangeInviteScoreError 	= 184;		// 兑换邀请码积分出错, 错误码<Text>%s</Text>
+	ExchangeInviteRecordError 	= 185;		// 查询邀请码兑换记录出错, 错误码<Text>%s</Text>
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)
