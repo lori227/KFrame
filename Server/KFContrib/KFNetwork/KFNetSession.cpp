@@ -229,10 +229,10 @@ namespace KFrame
         // 收到的消息长度有错误
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
         {
-            _receive_length = 0;
-            __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] error",
+            __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] totallength[{}] error",
                               _session_id, _object_id, KFAppID::ToString( _session_id ),
-                              nethead->_msgid, nethead->_length, position );
+                              nethead->_msgid, nethead->_length, position, _receive_length );
+            _receive_length = 0;
             return nullptr;
         }
 

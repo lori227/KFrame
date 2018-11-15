@@ -98,7 +98,7 @@ namespace KFrame
         req.set_matchid( kfroom->_match_id );
         req.set_roomid( kfroom->_room_id );
         req.set_matchshardid( KFGlobal::Instance()->_app_id );
-        auto ok = kfroom->SendMessageToBattle( KFMsg::S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ, &req );
+        auto ok = kfroom->SendToBattle( KFMsg::S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {
             __LOG_DEBUG__( "camp[{}] enter room[{}] req!", _camp_id, kfroom->_room_id );

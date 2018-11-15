@@ -52,8 +52,13 @@ namespace KFrame
         void ResetRoom();
 
         // 发送消息到战场集群服务器
-        bool SendMessageToBattle( uint32 msgid, google::protobuf::Message* message );
+        bool SendToBattle( uint32 msgid, google::protobuf::Message* message );
 
+        // 发送给所有匹配玩家
+        void SendToRoom( uint32 msgid, google::protobuf::Message* message );
+
+        // 计算房间人数
+        void CalcRoomPlayerCount( uint32 operate, uint32 count, const char* function, uint32 line );
     public:
         // 匹配队列
         KFMatchQueue* _kf_match_queue;

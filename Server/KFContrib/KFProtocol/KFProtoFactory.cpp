@@ -122,21 +122,31 @@ namespace KFrame
         case google::protobuf::FieldDescriptor::TYPE_INT32:
         case google::protobuf::FieldDescriptor::TYPE_SINT32:
             return reflection->GetRepeatedField< google::protobuf::int32 >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_UINT32:
             return reflection->GetRepeatedField< google::protobuf::uint32 >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_INT64:
         case google::protobuf::FieldDescriptor::TYPE_SINT64:
             return reflection->GetRepeatedField< google::protobuf::int64 >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_UINT64:
             return reflection->GetRepeatedField< google::protobuf::uint64 >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_FLOAT:
             return reflection->GetRepeatedField< float >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_DOUBLE:
             return reflection->GetRepeatedField< double >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_STRING:
             return reflection->GetRepeatedPtrField< std::string >( *message, filed ).size();
+            break;
         case google::protobuf::FieldDescriptor::TYPE_MESSAGE:
             return reflection->GetRepeatedPtrField< google::protobuf::Message >( *message, filed ).size();
+            break;
+        default:
+            break;
         }
 
         return 0;

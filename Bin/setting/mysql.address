@@ -22,7 +22,10 @@
 			<!-- 外网 审核 -->
 			<Channel ChannelId="1" Service="4" IP="118.25.173.109" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
 
-			<!-- Steam -->
+			<!-- Steam 测试-->
+			<Channel ChannelId="3" Service="3" IP="172.16.0.60" Port="3306" Database="kftestdeploy" User="root" Password="mysql@lori227-="/>
+			
+			<!-- Steam 正式-->
 			<Channel ChannelId="3" Service="8" IP="172.16.0.60" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 

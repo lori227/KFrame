@@ -56,9 +56,26 @@ namespace KFrame
         EnterBattleRoomReq();
     }
 
-    bool KFMatchRoom::SendMessageToBattle( uint32 msgid, google::protobuf::Message* message )
+    bool KFMatchRoom::SendToBattle( uint32 msgid, google::protobuf::Message* message )
     {
         return _kf_cluster->SendToShard( __KF_STRING__( battle ), _battle_shard_id, msgid, message );
+    }
+
+    void KFMatchRoom::SendToRoom( uint32 msgid, google::protobuf::Message* message )
+    {
+        for ( auto& campiter : _camp_list._objects )
+        {
+            auto kfcamp = campiter.second;
+            for ( auto& groupiter : kfcamp->_group_list._objects )
+            {
+                auto kfgroup = groupiter.second;
+                for ( auto& playeriter : kfgroup->_player_list )
+                {
+                    auto kfplayer = playeriter.second;
+                    kfplayer->SendToGame( msgid, message );
+                }
+            }
+        }
     }
 
     void KFMatchRoom::AddCamp( KFMatchCamp* kfcamp )
@@ -78,8 +95,7 @@ namespace KFrame
         _camp_list.Insert( kfcamp->_camp_id, kfcamp );
 
         // 玩家数量
-        _room_player_count += kfcamp->PlayerCount();
-        __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
+        CalcRoomPlayerCount( KFOperateEnum::Add, kfcamp->PlayerCount(), __FUNC_LINE__ );
     }
 
     bool KFMatchRoom::IsWaitMatch( uint32 battleserverid, uint32 playercount )
@@ -127,7 +143,7 @@ namespace KFrame
         req.set_battleserverid( _battle_server_id );
         req.set_matchid( _kf_match_queue->_match_id );
         req.set_maxplayercount( _kf_match_queue->_kf_setting->_max_player_count );
-        auto ok = SendMessageToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
+        auto ok = SendToBattle( KFMsg::S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ, &req );
         if ( ok )
         {
             __LOG_DEBUG__( "create battle room[{}] req!", _room_id );
@@ -197,7 +213,7 @@ namespace KFrame
         // 回复消息
         KFMsg::S2SOpenRoomToBattleShardAck ack;
         ack.set_roomid( _room_id );
-        auto ok = SendMessageToBattle( KFMsg::S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK, &ack );
+        auto ok = SendToBattle( KFMsg::S2S_OPEN_ROOM_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "match room[{}] open failed!", _room_id );
@@ -210,7 +226,7 @@ namespace KFrame
     {
         KFMsg::S2STellRoomStartToMatchShardAck ack;
         ack.set_roomid( _room_id );
-        auto ok = SendMessageToBattle( KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK, &ack );
+        auto ok = SendToBattle( KFMsg::S2S_TELL_ROOM_START_TO_BATTLE_SHARD_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "match room[{}] start failed!", _room_id );
@@ -228,13 +244,12 @@ namespace KFrame
         auto ok = kfcamp->RemovePlayer( groupid, playerid );
         if ( ok )
         {
-            _room_player_count -= __MIN__( _room_player_count, 1 );
-            __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
-
             if ( kfcamp->PlayerCount() == 0 )
             {
                 _camp_list.Remove( campid );
             }
+
+            CalcRoomPlayerCount( KFOperateEnum::Dec, 1, __FUNC_LINE__ );
         }
 
         return ok;
@@ -248,7 +263,7 @@ namespace KFrame
             req.set_roomid( _room_id );
             req.set_campid( campid );
             req.set_groupid( groupid );
-            SendMessageToBattle( KFMsg::S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ, &req );
+            SendToBattle( KFMsg::S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ, &req );
         }
 
         auto kfcamp = _camp_list.Find( campid );
@@ -270,10 +285,23 @@ namespace KFrame
 
             // 删除阵营
             _camp_list.Remove( campid );
-            _room_player_count -= __MIN__( _room_player_count, campplayercount );
-            __LOG_DEBUG__( "room[{}] playercount[{}]", _room_id, _room_player_count );
+            CalcRoomPlayerCount( KFOperateEnum::Dec, campplayercount, __FUNC_LINE__ );
         }
 
         return ok;
+    }
+
+    void KFMatchRoom::CalcRoomPlayerCount( uint32 operate, uint32 count, const char* function, uint32 line )
+    {
+        _room_player_count = KFUtility::Operate( operate, _room_player_count, count );
+        __LOG_DEBUG_FUNCTION__( function, line, "room[{}] playercount[{}]", _room_id, _room_player_count );
+
+        // 房间还没有开启, 通知客户端
+        if ( _battle_start_time == _invalid_int )
+        {
+            KFMsg::MsgTellMatchPlayerCount tell;
+            tell.set_count( _room_player_count );
+            SendToRoom( KFMsg::MSG_TELL_MATCH_PLAYER_COUNT, &tell );
+        }
     }
 }

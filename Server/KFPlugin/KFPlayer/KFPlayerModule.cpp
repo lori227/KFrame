@@ -385,12 +385,21 @@ namespace KFrame
         kfobject->SetValue( __KF_STRING__( accountid ), pblogin->accountid() );
 
         // 渠道数据
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
         auto pbchanneldata = &pblogin->channeldata();
         for ( auto i = 0; i < pbchanneldata->pbstring_size(); ++i )
         {
             auto pbdata = &pbchanneldata->pbstring( i );
-            kfbasic->SetValue< std::string >( pbdata->name(), pbdata->value() );
+            auto kfdata = kfobject->FindData( __KF_STRING__( basic ), pbdata->name() );
+            if ( kfdata == nullptr )
+            {
+                kfdata = kfobject->FindData( pbdata->name() );
+                if ( kfdata == nullptr )
+                {
+                    continue;
+                }
+            }
+
+            kfdata->SetValue< std::string >( pbdata->value() );
         }
 
         // 创建玩家

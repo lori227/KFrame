@@ -5,20 +5,6 @@
 
 namespace KFrame
 {
-    KFWorldModule::KFWorldModule()
-    {
-    }
-
-    KFWorldModule::~KFWorldModule()
-    {
-
-    }
-
-    void KFWorldModule::InitModule()
-    {
-
-    }
-
     void KFWorldModule::BeforeRun()
     {
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFWorldModule::OnServerDisCoverGame );
@@ -82,6 +68,11 @@ namespace KFrame
 
         kfonline->SendToOnline( msgid, message );
         return true;
+    }
+
+    bool KFWorldModule::SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFWorldModule::OnServerDisCoverGame )
@@ -271,11 +262,6 @@ namespace KFrame
         return ok;
     }
 
-    bool KFWorldModule::SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
-    }
-
     __KF_HTTP_FUNCTION__( KFWorldModule::HandleHttpKickOnline )
     {
         KFJson kfjson( data );
@@ -284,5 +270,4 @@ namespace KFrame
         KickOnline( playerid, __FUNC_LINE__ );
         return _invalid_str;
     }
-
 }

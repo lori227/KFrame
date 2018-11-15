@@ -64,8 +64,8 @@ namespace KFrame
         _pb_player.set_serverid( serverid );
     }
 
-    bool KFMatchPlayer::SendMessageToGame( uint32 msgid, google::protobuf::Message* message )
+    bool KFMatchPlayer::SendToGame( uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_cluster_shard->SendToClient( _pb_player.serverid(), msgid, message );
+        return _kf_cluster_shard->SendToPlayer( _pb_player.serverid(), _pb_player.playerid(), msgid, message );
     }
 }

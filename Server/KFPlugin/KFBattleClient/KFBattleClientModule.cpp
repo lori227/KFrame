@@ -281,7 +281,7 @@ namespace KFrame
         KFMsg::S2SPlayerBattleScoreAck ack;
         ack.set_roomid( kfmsg.roomid() );
         ack.set_playerid( kfmsg.playerid() );
-        auto ok = SendMessageToBattle( kfmsg.roomid(), KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
+        auto ok = SendMessageToBattle( KFMsg::S2S_PLAYER_BATTLE_SCORE_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}] balance battle[{}] score[{}:{}] ok!", kfmsg.playerid(), kfmsg.roomid(), pbscore->matchid(), scorename );

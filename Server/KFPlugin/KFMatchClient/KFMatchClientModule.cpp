@@ -118,6 +118,7 @@ namespace KFrame
         auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
+            __LOG_ERROR__( "player[{}] match already in battle[{}]", player->GetKeyID(), roomid );
             _kf_battle->QueryBattleRoom( player->GetKeyID(), roomid );
             return KFMsg::MatchRequestSuccess;
         }

@@ -26,11 +26,8 @@ namespace KFrame
     class KFWorldModule : public KFWorldInterface
     {
     public:
-        KFWorldModule();
-        ~KFWorldModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFWorldModule() = default;
+        ~KFWorldModule() = default;
 
         // 刷新
         virtual void BeforeRun();

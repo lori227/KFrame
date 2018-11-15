@@ -943,11 +943,11 @@ namespace KFrame
         // 同步更新
         SyncUpdateDataToClient();
 
-        // 同步添加
-        SyncAddDataToClient();
-
         // 同步删除
         SyncRemoveDataToClient();
+
+        // 同步添加
+        SyncAddDataToClient();
     }
 
     void KFEntityEx::SyncAddDataToClient()

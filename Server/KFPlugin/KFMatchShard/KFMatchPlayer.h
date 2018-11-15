@@ -43,7 +43,7 @@ namespace KFrame
         void SetServerID( uint32 serverid );
 
         // 发送消息
-        bool SendMessageToGame( uint32 msgid, google::protobuf::Message* message );
+        bool SendToGame( uint32 msgid, google::protobuf::Message* message );
 
     private:
         // 所在房间

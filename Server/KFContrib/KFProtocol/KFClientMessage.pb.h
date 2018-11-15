@@ -63,6 +63,7 @@ class MsgCancelMatchReq;
 class MsgCancelMatchAck;
 class MsgMatchResultAck;
 class MsgTellMatchWaitTime;
+class MsgTellMatchPlayerCount;
 class MsgAddFriendInviteReq;
 class MsgReplyFriendInviteReq;
 class MsgDelFriendReq;
@@ -247,11 +248,12 @@ enum ClientProtocol {
   MSG_EXCHANGE_INVITE_SCORE_REQ = 305,
   MSG_EXCHANGE_INVITE_SCORE_ACK = 306,
   MSG_EXCHANGE_INVITE_RECORD_REQ = 307,
-  MSG_EXCHANGE_INVITE_RECORD_ACK = 308
+  MSG_EXCHANGE_INVITE_RECORD_ACK = 308,
+  MSG_TELL_MATCH_PLAYER_COUNT = 309
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_EXCHANGE_INVITE_RECORD_ACK;
+const ClientProtocol ClientProtocol_MAX = MSG_TELL_MATCH_PLAYER_COUNT;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -2781,6 +2783,88 @@ class LIBPROTOC_EXPORT MsgTellMatchWaitTime : public ::google::protobuf::Message
 
   void InitAsDefaultInstance();
   static MsgTellMatchWaitTime* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTellMatchPlayerCount : public ::google::protobuf::Message {
+ public:
+  MsgTellMatchPlayerCount();
+  virtual ~MsgTellMatchPlayerCount();
+
+  MsgTellMatchPlayerCount(const MsgTellMatchPlayerCount& from);
+
+  inline MsgTellMatchPlayerCount& operator=(const MsgTellMatchPlayerCount& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellMatchPlayerCount& default_instance();
+
+  void Swap(MsgTellMatchPlayerCount* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTellMatchPlayerCount* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTellMatchPlayerCount& from);
+  void MergeFrom(const MsgTellMatchPlayerCount& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 count = 1;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 1;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellMatchPlayerCount)
+ private:
+  inline void set_has_count();
+  inline void clear_has_count();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 count_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTellMatchPlayerCount* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -11756,6 +11840,32 @@ inline ::google::protobuf::uint32 MsgTellMatchWaitTime::waittime() const {
 inline void MsgTellMatchWaitTime::set_waittime(::google::protobuf::uint32 value) {
   set_has_waittime();
   waittime_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgTellMatchPlayerCount
+
+// required uint32 count = 1;
+inline bool MsgTellMatchPlayerCount::has_count() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTellMatchPlayerCount::set_has_count() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTellMatchPlayerCount::clear_has_count() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTellMatchPlayerCount::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 MsgTellMatchPlayerCount::count() const {
+  return count_;
+}
+inline void MsgTellMatchPlayerCount::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
 }
 
 // -------------------------------------------------------------------

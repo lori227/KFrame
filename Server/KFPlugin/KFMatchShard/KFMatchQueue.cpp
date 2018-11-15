@@ -349,7 +349,7 @@ namespace KFrame
             req.set_serverid( serverid );
             req.set_roomid( kfroom->_room_id );
             req.set_campid( kfplayer->GetCampID() );
-            kfroom->SendMessageToBattle( KFMsg::S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ, &req );
+            kfroom->SendToBattle( KFMsg::S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ, &req );
         }
 
         return true;

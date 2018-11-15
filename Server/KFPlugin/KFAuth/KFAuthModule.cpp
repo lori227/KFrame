@@ -80,7 +80,7 @@ namespace KFrame
         }
 
         // 保存渠道的数据
-        // UpdateChannelData( accountid, channel, authjson );
+        UpdateChannelData( accountid, channel, authjson );
 
         // 保存token
         auto token = CreateLoginToken( accountid, accountdata );
@@ -93,10 +93,17 @@ namespace KFrame
 
     void KFAuthModule::UpdateChannelData( uint32 accountid, uint32 channel, KFJson& kfjson )
     {
+        if ( !kfjson.isMember( __KF_STRING__( extend ) ) )
+        {
+            return;
+        }
+
         MapString values;
-        values[ __KF_STRING__( name ) ] = kfjson.GetString( __KF_STRING__( name ) );
-        values[ __KF_STRING__( sex ) ] = kfjson.GetString( __KF_STRING__( sex ) );
-        values[ __KF_STRING__( icon ) ] = kfjson.GetString( __KF_STRING__( icon ) );
+        KFJson kfextend = kfjson[ __KF_STRING__( extend ) ];
+        for ( auto iter = kfextend.begin(); iter != kfextend.end(); ++iter )
+        {
+            values[ iter.name() ] = iter->asString();
+        }
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( extend ), accountid );
@@ -365,15 +372,15 @@ namespace KFrame
         response.SetValue( __KF_STRING__( accountid ), accountid );
 
         // 加载渠道数据
-        //{
-        //    KFJson kfchanneljson;
-        //    auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( extend ), accountid );
-        //    for ( auto& iter : kfresult->_value )
-        //    {
-        //        kfchanneljson.SetValue( iter.first, iter.second );
-        //    }
-        //    response.SetValue( __KF_STRING__( channeldata ), kfchanneljson );
-        //}
+        {
+            KFJson kfchanneljson;
+            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( extend ), accountid );
+            for ( auto& iter : kfresult->_value )
+            {
+                kfchanneljson.SetValue( iter.first, iter.second );
+            }
+            response.SetValue( __KF_STRING__( channeldata ), kfchanneljson );
+        }
 
         return _kf_http_server->SendResponse( response );
     }
