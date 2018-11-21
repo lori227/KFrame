@@ -1861,6 +1861,13 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyAck : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 sessionid() const;
   inline void set_sessionid(::google::protobuf::uint32 value);
 
+  // required uint32 bantime = 4;
+  inline bool has_bantime() const;
+  inline void clear_bantime();
+  static const int kBantimeFieldNumber = 4;
+  inline ::google::protobuf::uint32 bantime() const;
+  inline void set_bantime(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoginVerifyAck)
  private:
   inline void set_has_result();
@@ -1869,15 +1876,18 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyAck : public ::google::protobuf::Messa
   inline void clear_has_accountid();
   inline void set_has_sessionid();
   inline void clear_has_sessionid();
+  inline void set_has_bantime();
+  inline void clear_has_bantime();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 sessionid_;
+  ::google::protobuf::uint32 bantime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFServerMessage_2eproto();
   friend void protobuf_AssignDesc_KFServerMessage_2eproto();
@@ -14719,6 +14729,28 @@ inline ::google::protobuf::uint32 S2SLoginLoginVerifyAck::sessionid() const {
 inline void S2SLoginLoginVerifyAck::set_sessionid(::google::protobuf::uint32 value) {
   set_has_sessionid();
   sessionid_ = value;
+}
+
+// required uint32 bantime = 4;
+inline bool S2SLoginLoginVerifyAck::has_bantime() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void S2SLoginLoginVerifyAck::set_has_bantime() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void S2SLoginLoginVerifyAck::clear_has_bantime() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void S2SLoginLoginVerifyAck::clear_bantime() {
+  bantime_ = 0u;
+  clear_has_bantime();
+}
+inline ::google::protobuf::uint32 S2SLoginLoginVerifyAck::bantime() const {
+  return bantime_;
+}
+inline void S2SLoginLoginVerifyAck::set_bantime(::google::protobuf::uint32 value) {
+  set_has_bantime();
+  bantime_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -187,6 +187,11 @@ enum AckEnum
 	BindAlipayFailed			= 183;		// 绑定支付宝失败, 错误码<Text>%s</Text>
 	ExchangeInviteScoreError 	= 184;		// 兑换邀请码积分出错, 错误码<Text>%s</Text>
 	ExchangeInviteRecordError 	= 185;		// 查询邀请码兑换记录出错, 错误码<Text>%s</Text>
+	VersionNotCompatibility 	= 186;		// 版本不兼容, 请升级客户端
+	BattleNotCompatibility 		= 187;		// 战斗服版本不兼容, 请升级客户端
+	BattleNotPrepare			= 188;		// 战斗服还没有准备好
+	BanForbidLogin				= 189;		// 你被禁止游戏到<Text>%s</Text>时间.
+
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

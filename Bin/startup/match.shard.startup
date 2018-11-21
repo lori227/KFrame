@@ -5,5 +5,6 @@
 		<Plugin Sort="110" Name="KFClusterClient" Config="./setting/cluster.setting"/>
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="130" Name="KFMatchShard" Config="./config/match.config"/>
+		<Plugin Sort="140" Name="KFRedis" Config="./setting/redis.address"/>
 	</Plugins>
 </Setting>

@@ -13,10 +13,10 @@ namespace KFrame
         ~KFMatchRoom();
 
         // 初始化
-        void Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid );
+        void Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid, const std::string& version );
 
         // 是否正在等待匹配
-        bool IsWaitMatch( uint32 battleserverid, uint32 playercount );
+        bool IsWaitMatch( uint32 battleserverid, uint32 playercount, const std::string& version );
 
         // 添加阵营
         void AddCamp( KFMatchCamp* kfcamp );
@@ -68,6 +68,9 @@ namespace KFrame
 
         // 房间id
         uint64 _room_id;
+
+        // 战场版本
+        std::string _battle_version;
 
         // 阵营列表
         KFMap< uint32, uint32, KFMatchCamp > _camp_list;

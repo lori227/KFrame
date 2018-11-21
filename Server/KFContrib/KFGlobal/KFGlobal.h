@@ -3,6 +3,7 @@
 
 #include "KFSpdLog.h"
 #include "spdlog/spdlog.h"
+#include "KFVersion.h"
 
 namespace KFrame
 {
@@ -20,8 +21,19 @@ namespace KFrame
         // 接口
         static KFGlobal* Instance();
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 全局更新
         void RunUpdate();
+
+        // 加载版本
+        bool LoadVersion( const std::string& file );
+
+        // 判断版本
+        bool CheckVersionCompatibility( const std::string& version );
+
+        // 版本号
+        const std::string& GetVersion();
 
         // 随机数
         uint32 RandRatio( uint32 ratio );
@@ -121,8 +133,10 @@ namespace KFrame
         std::string _title_text;
 
         /////////////////////////////////////////////////////////////////////////////////
-
     private:
+        // 版本
+        KFVersion* _version;
+
         // log 指针
         KFLogger* _logger;
 
@@ -131,6 +145,7 @@ namespace KFrame
 
         // 单线程随机类
         KFRand* _rand;
+
     };
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////

@@ -98,6 +98,16 @@ namespace KFrame
             return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, handleid );
         }
 
+        // 判断版本号
+        if ( kfmsg.has_version() )
+        {
+            auto ok = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
+            if ( !ok )
+            {
+                return _kf_display->SendToClient( handleid, KFMsg::VersionNotCompatibility );
+            }
+        }
+
         // 没有可用的login
         auto loginserverid = _kf_login_conhash.FindHashNode( accountid );
         if ( loginserverid == _invalid_int )
@@ -134,7 +144,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}] login verify result[{}]!", kfmsg.accountid(), kfmsg.result() );
 
         // 消息到这里的都是错误结果
-        _kf_display->SendToClient( kfmsg.sessionid(), kfmsg.result() );
+        _kf_display->SendToClient( kfmsg.sessionid(), kfmsg.result(), kfmsg.bantime() );
 
         // 2秒后主动断开游戏
         _kf_tcp_server->CloseNetHandle( kfmsg.sessionid(), 2000, __FUNC_LINE__ );

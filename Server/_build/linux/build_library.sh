@@ -110,7 +110,7 @@ blue "end building libuv"
 blue "start building luaplus"
 
 cd luaplus/projects
-make -j 4
+make
 cp -R -f bin/Debug/*.a ../../../$libpath
 cp -R -f bin/Release/*.a ../../../$libpath
 cd ../../

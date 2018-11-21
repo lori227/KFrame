@@ -13,13 +13,13 @@ namespace KFrame
 
     bool KFChannelConfig::IsChannelOpen( uint32 channel )
     {
-        auto kfchannelsetting = _kf_channel.Find( channel );
-        if ( kfchannelsetting == nullptr )
+        if ( _open_channel_list.empty() )
         {
-            return false;
+            return true;
         }
 
-        return kfchannelsetting->IsOpen();
+        auto iter = _open_channel_list.find( channel );
+        return iter != _open_channel_list.end();
     }
 
     const KFChannelSetting* KFChannelConfig::FindChannelSetting( uint32 channel )
@@ -30,9 +30,11 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFChannelConfig::LoadConfig()
     {
+        _open_channel_list.clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
+
         auto channels = config.FindNode( "Channels" );
         auto channel = channels.FindNode( "Channel" );
         while ( channel.IsValid() )
@@ -49,6 +51,26 @@ namespace KFrame
             kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
 
             channel.NextNode();
+        }
+
+        auto opens = config.FindNode( "Opens" );
+        auto opennode = opens.FindNode( "Open" );
+        while ( opennode.IsValid() )
+        {
+            auto channelid = opennode.GetUInt32( "ChannelId" );
+            auto service = opennode.GetUInt32( "Service" );
+            if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
+            {
+                auto strlist = opennode.GetString( "List" );
+                while ( !strlist.empty() )
+                {
+                    _open_channel_list.insert( KFUtility::SplitValue< uint32 >( strlist, "," ) );
+                }
+
+                break;
+            }
+
+            opennode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
 

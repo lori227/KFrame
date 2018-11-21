@@ -112,7 +112,7 @@ namespace KFrame
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
 
         // 转换时间戳
-        static uint64 TimeFormate( const std::string& ymd, const std::string& split = "-" );
+        static uint64 FromString( const std::string& ymd );
 
     protected:
         // 转换时间

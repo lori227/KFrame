@@ -109,5 +109,4 @@ namespace KFrame
 
         return atof( attribute->value() );
     }
-
 }

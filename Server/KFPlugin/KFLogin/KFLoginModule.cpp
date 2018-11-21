@@ -83,12 +83,13 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFLoginModule::SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid )
+    void KFLoginModule::SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid, uint32 bantime )
     {
         KFMsg::S2SLoginLoginVerifyAck ack;
         ack.set_result( result );
         ack.set_accountid( accountid );
         ack.set_sessionid( sessionid );
+        ack.set_bantime( bantime );
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
         if ( ok )
         {
@@ -113,7 +114,7 @@ namespace KFrame
 
         if ( _is_login_close )
         {
-            return SendLoginVerifyMessage( KFMsg::LoginIsClose, gateid, sessionid, accountid );
+            return SendLoginVerifyMessage( KFMsg::LoginIsClose, gateid, sessionid, accountid, _invalid_int );
         }
 
         auto kfzone = _kf_zone->GetZone();
@@ -146,7 +147,8 @@ namespace KFrame
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
         if ( retcode != KFMsg::Success )
         {
-            return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid );
+            auto bantime = recvjson.GetUInt32( __KF_STRING__( bantime ) );
+            return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid, bantime );
         }
 
         auto token = recvjson.GetString( __KF_STRING__( token ) );
@@ -155,7 +157,7 @@ namespace KFrame
         auto playerid = recvjson.GetUInt32( __KF_STRING__( playerid ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
         {
-            return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid );
+            return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );
         }
 
         // 通知worldserver
@@ -190,7 +192,7 @@ namespace KFrame
         }
         else
         {
-            SendLoginVerifyMessage( KFMsg::WorldSystemBusy, gateid, sessionid, accountid );
+            SendLoginVerifyMessage( KFMsg::WorldSystemBusy, gateid, sessionid, accountid, _invalid_int );
         }
     }
 
@@ -199,7 +201,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoginFailedToLoginAck );
 
         // 通知客户端
-        SendLoginVerifyMessage( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid() );
+        SendLoginVerifyMessage( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );
     }
 
 }

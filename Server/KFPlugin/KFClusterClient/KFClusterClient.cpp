@@ -46,10 +46,10 @@ namespace KFrame
         _cluster_proxy_id = 0;
         _cluster_in_services = false;
 
-        auto* kfaddress = _kf_ip_address->FindIpAddress( KFGlobal::Instance()->_app_name, __KF_STRING__( master ), _str_master_id );
+        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_master_name, __KF_STRING__( master ), _str_master_id );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't find cluster[{}:{}:{}:{}] address!", KFGlobal::Instance()->_app_name, __KF_STRING__( master ), _cluster_master_id, _str_master_id );
+            return __LOG_ERROR__( "can't find cluster[{}:{}:{}:{}] address!", _cluster_master_name, __KF_STRING__( master ), _cluster_master_id, _str_master_id );
         }
 
         _kf_tcp_client->StartClient( kfaddress->_app_name, kfaddress->_app_type, kfaddress->_app_id, kfaddress->_ip, kfaddress->_port );

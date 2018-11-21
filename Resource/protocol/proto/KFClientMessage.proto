@@ -137,6 +137,7 @@ message MsgLoginVerifyReq
 {
 	required uint32 accountid = 1;	// 账号id
 	required string token = 2;		// token
+	optional string version = 3;	// 客户端版本号
 }
 
 // 登录验证结果
@@ -302,9 +303,10 @@ message MsgQueryMailReq
 // MSG_START_MATCH_REQ
 message MsgStartMatchReq
 {
-	required uint32 matchid = 1;
-	optional bool allowgroup = 2;		// 是否允许组队
+	required uint32 matchid = 1;			// matchid
+	optional bool allowgroup = 2;			// 是否允许组队
 	optional uint32 battleserverid = 3;		// 测试需要匹配的battleid
+	required string version = 4;			// 客户端版本
 }
 
 // 开始匹配回应

@@ -49,26 +49,12 @@ namespace KFrame
 
     void KFBattleProxyModule::OnServerLostBattleServer( uint32 serverid )
     {
-        auto strserverid = KFAppID::ToString( serverid );
-        __LOG_INFO__( "battle[{}:{}] lost req!", serverid, strserverid );
-
-        auto shardid = _kf_cluster_proxy->SelectClusterShard( serverid, false );
-        if ( shardid == _invalid_int )
-        {
-            return __LOG_ERROR__( "battle[{}] can't select shard!", serverid );
-        }
-
         KFMsg::S2SDisconnectServerToBattleShardReq req;
         req.set_serverid( serverid );
-        auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ, &req );
-        if ( ok )
-        {
-            __LOG_INFO__( "battle[{}:{}] lost ok!", serverid, strserverid );
-        }
-        else
-        {
-            __LOG_ERROR__( "battle[{}:{}] lost failed!", serverid, strserverid );
-        }
+        _kf_cluster_proxy->SendToShard( KFMsg::S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ, &req );
+
+        auto strserverid = KFAppID::ToString( serverid );
+        __LOG_INFO__( "battle[{}:{}] lost!", serverid, strserverid );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,8 +69,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SRegisterBattleServerReq );
 
         auto strserverid = KFAppID::ToString( kfmsg.serverid() );
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}:{}] req!",
-                       strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid(), kfmsg.battleshardid() );
+        __LOG_DEBUG__( "register battle[{}|{}:{}|{}:{}] req!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid(), kfmsg.battleshardid() );
 
         auto shardid = kfmsg.battleshardid();
         if ( shardid == _invalid_int )
@@ -102,6 +87,7 @@ namespace KFrame
             req.set_port( kfmsg.port() );
             req.set_roomid( kfmsg.roomid() );
             req.set_serverid( kfmsg.serverid() );
+            req.set_version( kfmsg.version() );
             _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ, &req );
         }
 
@@ -112,6 +98,7 @@ namespace KFrame
             req.set_roomid( kfmsg.roomid() );
             req.set_ip( kfmsg.ip() );
             req.set_port( kfmsg.port() );
+            req.set_version( kfmsg.version() );
             _kf_cluster_proxy->SendToShard( KFMsg::S2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ, &req );
         }
     }
@@ -139,6 +126,7 @@ namespace KFrame
         req.set_battleserverid( kfmsg.battleserverid() );
         req.set_matchshardid( __KF_HEAD_ID__( kfguid ) );
         req.set_maxplayercount( kfmsg.maxplayercount() );
+        req.set_version( kfmsg.version() );
         auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {

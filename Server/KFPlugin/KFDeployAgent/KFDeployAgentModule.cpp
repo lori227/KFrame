@@ -641,9 +641,9 @@ namespace KFrame
             _deploy_task.push_back( kftask );
 
             LogDeploy( pbdeploy->logurl(), "add task [{}:{} | {}:{}:{}:{}] tasklist cout[{}]!",
-                       pbdeploy->command(), pbdeploy->value(),
-                       pbdeploy->appname(), pbdeploy->apptype(),
-                       pbdeploy->appid(), pbdeploy->zoneid(), _deploy_task.size() );
+                       kftask->_command, kftask->_value,
+                       kftask->_app_name, kftask->_app_type,
+                       kftask->_app_id, kftask->_zone_id, _deploy_task.size() );
         }
     }
 
@@ -979,9 +979,6 @@ namespace KFrame
             return true;
         }
 
-        auto version = _kf_task->_value;
-        version = KFUtility::SplitString( version, "." );
-
 #if __KF_SYSTEM__ == __KF_WIN__
         // todo win64暂时没有实现
 
@@ -1007,7 +1004,7 @@ namespace KFrame
             ExecuteShell( "rm {}/* -rf", deploypath );
             ExecuteShell( "cp -rf ./version/conf_output/* {}", deploypath );
             ExecuteShell( "chmod 777 -R {}", deploypath );
-            ExecuteShell( "echo {} > {}/version.txt", version, deploypath );
+            ExecuteShell( "echo {} > {}/package.txt", _kf_task->_value, deploypath );
         }
 
         LogDeploy( _kf_task->_log_url, "[{}] update version ok!", _kf_task->_app_name );
@@ -1022,7 +1019,7 @@ namespace KFrame
             if ( isserver )
             {
                 MapString updatevalues;
-                updatevalues[ __KF_STRING__( version ) ] = version;
+                updatevalues[ __KF_STRING__( version ) ] = _kf_task->_value;
 
                 MapString keyvalues;
                 keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;

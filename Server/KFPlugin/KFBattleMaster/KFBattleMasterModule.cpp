@@ -12,6 +12,14 @@ namespace KFrame
     void KFBattleMasterModule::OnceRun()
     {
         _kf_battle_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+
+        auto kflist = _kf_battle_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
+        for ( auto& strversion : kflist->_value )
+        {
+            _kf_battle_driver->Execute( "del {}:{}", __KF_STRING__( battleversion ), strversion );
+        }
+
+        _kf_battle_driver->Execute( "del {}", __KF_STRING__( battleversionlist ) );
     }
 
     void KFBattleMasterModule::BeforeShut()

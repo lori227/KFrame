@@ -67,7 +67,7 @@ namespace KFrame
 
     private:
         // 处理开始匹配
-        uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid );
+        uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid, const std::string& version );
 
         // 判断所有队员准备
         bool IsAllGroupMemberPrepare( KFData* kfmemberrecord );

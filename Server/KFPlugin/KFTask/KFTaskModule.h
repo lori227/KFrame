@@ -27,7 +27,7 @@ namespace KFrame
         ~KFTaskModule();
 
         // 加载配置
-        virtual void InitMoudle();
+        virtual void InitModule();
 
         // 逻辑
         virtual void BeforeRun();

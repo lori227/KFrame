@@ -10,5 +10,11 @@
 		<!-- steam -->
 		<Channel Id="3" LoginUrl="https://api.steampowered.com/ISteamUserAuth/AuthenticateUserTicket/v1/" PayUrl="" AppId="965080" AppKey="A9A9AD18A647444DB16CB8CB1F497216" Release="1" Debug="1"/>
 	</Channels>
+
+	<!-- 渠道支持的列表 -->
+	<Opens>
+		<Open ChannelId="3" Service="8" List="3"/>
+		<Open ChannelId="3" Service="3" List="1,3"/>
+	</Opens>
 </Config>
 

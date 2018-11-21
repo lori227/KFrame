@@ -2,14 +2,6 @@
 
 namespace KFrame
 {
-    KFMatchShardModule::KFMatchShardModule()
-    {
-    }
-
-    KFMatchShardModule::~KFMatchShardModule()
-    {
-    }
-
     void KFMatchShardModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_match_config, false );
@@ -18,7 +10,6 @@ namespace KFrame
     void KFMatchShardModule::BeforeRun()
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFMatchShardModule::OnClientConnectMatchMaster );
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_MATCH_TO_SHARD_REQ, &KFMatchShardModule::HandleMatchToShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CANCEL_MATCH_TO_SHARD_REQ, &KFMatchShardModule::HandleCancelMatchToShardReq );
@@ -32,8 +23,15 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_RESET_MATCH_ROOM_REQ, &KFMatchShardModule::HandleResetMatchRoomReq );
     }
 
+    void KFMatchShardModule::OnceRun()
+    {
+        _kf_battle_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        __REGISTER_LOOP_TIMER__( 0, 10000, &KFMatchShardModule::OnTimerQueryBattleVersion );
+    }
+
     void KFMatchShardModule::BeforeShut()
     {
+        __UNREGISTER_TIMER__();
         __KF_REMOVE_CONFIG__( _kf_match_config );
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,8 +68,6 @@ namespace KFrame
         return kfmatchqueue;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFMatchShardModule::OnClientConnectMatchMaster )
     {
         if ( servername == KFGlobal::Instance()->_app_name && servertype == __KF_STRING__( master ) )
@@ -88,6 +84,23 @@ namespace KFrame
         }
     }
 
+    __KF_TIMER_FUNCTION__( KFMatchShardModule::OnTimerQueryBattleVersion )
+    {
+        // 查询战斗服版本号
+        auto kflist = _kf_battle_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
+        if ( !kflist->IsOk() )
+        {
+            return;
+        }
+
+        _battle_version_list.clear();
+        for ( auto& strversion : kflist->_value )
+        {
+            _battle_version_list.insert( strversion );
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleMatchToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SMatchToShardReq );
@@ -107,19 +120,36 @@ namespace KFrame
         }
 
         // 先取消匹配
+        auto pbgroup = &kfmsg.pbgroup();
         kfmatchqueue->CancelMatch( kfmsg.playerid() );
 
-        // 开始匹配
-        auto pbgroup = &kfmsg.pbgroup();
-        kfmatchqueue->StartMatch( pbgroup, kfmsg.allowgroup(), kfmsg.battleserverid() );
+        auto result = KFMsg::MatchRequestSuccess;
+        if ( _battle_version_list.empty() )
+        {
+            result = KFMsg::BattleNotPrepare;
+        }
+        else
+        {
+            KFVersion kfverson( kfmsg.version() );
+            if ( _battle_version_list.count( kfverson._battle_version ) == 0u )
+            {
+                result = KFMsg::BattleNotCompatibility;
+            }
+            else
+            {
+                // 开始匹配
+                kfmatchqueue->StartMatch( pbgroup, kfmsg.allowgroup(), kfmsg.battleserverid(), kfverson._battle_version );
+            }
+        }
 
         KFMsg::S2SMatchToClientAck ack;
         ack.set_matchid( kfmsg.matchid() );
         ack.set_playerid( kfmsg.playerid() );
-        ack.set_result( KFMsg::MatchRequestSuccess );
+        ack.set_result( result );
         _kf_cluster_shard->SendToClient( kfmsg.serverid(), KFMsg::S2S_MATCH_TO_CLIENT_ACK, &ack );
 
-        __LOG_DEBUG__( "group[{}] match battleserverid[{}] allowgroup[{}]!", pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0 );
+        __LOG_DEBUG__( "group[{}] match battleserverid[{}] allowgroup[{}] version[{}] result[{}]!",
+                       pbgroup->groupid(), kfmsg.battleserverid(), kfmsg.allowgroup() ? 1 : 0, kfmsg.version(), result );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMatchShardModule::HandleQueryRoomToMatchShardReq )

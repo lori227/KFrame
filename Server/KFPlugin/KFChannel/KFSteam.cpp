@@ -49,6 +49,20 @@ namespace KFrame
         KFJson response;
         response.SetValue( __KF_STRING__( account ), steamid );
         response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
+
+        //设置渠道额外数据
+        KFJson kfextend;
+        if ( !json.isMember( __KF_STRING__( steamfreeweekend ) ) )
+        {
+            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), _invalid_int );
+        }
+        else
+        {
+            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), json.GetInt32( __KF_STRING__( steamfreeweekend ) ) );
+        }
+
+        response.SetValue( __KF_STRING__( extend ), kfextend );
+
         return _kf_http_server->SendResponse( response );
     }
 

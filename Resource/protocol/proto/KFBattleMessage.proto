@@ -88,6 +88,7 @@ message S2SRegisterBattleServerReq
 	required uint32 port = 3;			// port
 	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
 	required uint32 battleshardid = 5;	// 战斗服务器集群逻辑分片id		
+	required string version = 6;		// 版本号
 }
 
 // 战斗服务器集群=>战斗服务器
@@ -108,6 +109,7 @@ message S2SRegisterServerToBattleShardReq
 	required string ip = 2;				// ip
 	required uint32 port = 3;			// port
 	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
+	required string version = 5;		// 版本号
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -119,6 +121,7 @@ message S2STellBattleRegisterToShardReq
 	required uint64 roomid = 2;			// 房间id
 	required string ip = 3;				// ip
 	required uint32 port = 4;			// port
+	required string version = 5;		// 版本号
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -134,10 +137,12 @@ message S2SDisconnectServerToBattleShardReq
 // S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ
 message S2SCreateRoomToBattleProxyReq
 {
-	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
-	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
-	required uint32 maxplayercount = 3;	// 这个房间的最大人数
+	required uint32 matchid = 1;			// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;				// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 maxplayercount = 3;		// 这个房间的最大人数
 	required uint32 battleserverid = 4;		// 指定的房间id
+	required string version = 5;			// 版本号
+
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -148,11 +153,12 @@ message S2SCreateRoomToBattleProxyReq
 // S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ
 message S2SCreateRoomToBattleShardReq
 {
-	required uint32 matchid = 1;		// 匹配模式id, 如果不需要就不用管, 先预留出来
-	required uint64 roomid = 2;			// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
-	required uint32 matchshardid = 3;	// 匹配shardid
-	required uint32 maxplayercount = 4;	// 这个房间的最大人数
+	required uint32 matchid = 1;			// 匹配模式id, 如果不需要就不用管, 先预留出来
+	required uint64 roomid = 2;				// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
+	required uint32 matchshardid = 3;		// 匹配shardid
+	required uint32 maxplayercount = 4;		// 这个房间的最大人数
 	required uint32 battleserverid = 5;		// 指定的房间id
+	required string version = 6;			// 版本号
 }
 
 // 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
@@ -186,15 +192,6 @@ message S2SAddCampToMatchShardAck
 	required uint32 campid = 3;
 	required bool addok = 4;
 }
-
-// 匹配服务器集群逻辑分片=>战斗服务器集群逻辑分片
-// 玩家离开战场
-// S2S_REMOVE_CAMP_TO_BATTLE_SHARD_REQ
-//message S2SRemoveCampToBattleShardReq
-//{
-//	required uint64 roomid = 1;
-//	required uint32 campid = 2;
-//}
 
 // 战斗服务器集群逻辑分片=>战斗服务器
 // 请求开启战斗房间

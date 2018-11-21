@@ -9,7 +9,7 @@
 //    @Date             :    2017-12-20
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFMatchQueue.h"
 #include "KFMatchShardInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -17,21 +17,23 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
-#include "KFMatchQueue.h"
+#include "KFTimer/KFTimerInterface.h"
+#include "KFRedis/KFRedisInterface.h"
 
 namespace KFrame
 {
     class KFMatchShardModule : public KFMatchShardInterface
     {
     public:
-        KFMatchShardModule();
-        ~KFMatchShardModule();
+        KFMatchShardModule() = default;
+        ~KFMatchShardModule() = default;
 
         // 加载配置
         virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();
+        virtual void OnceRun();
         virtual void Run();
 
         // 关闭
@@ -68,16 +70,26 @@ namespace KFrame
         // 重置匹配房间
         __KF_MESSAGE_FUNCTION__( HandleResetMatchRoomReq );
 
+        // 查询房间版本号
+        __KF_MESSAGE_FUNCTION__( HandleQueryBattleVersionReq );
     protected:
         // Match Master连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectMatchMaster );
 
+        // 定时器查询版本信息
+        __KF_TIMER_FUNCTION__( OnTimerQueryBattleVersion );
     protected:
         KFMatchQueue* FindMatchQueue( uint32 matchid, const char* function, uint32 line );
 
     private:
+        KFRedisDriver* _kf_battle_driver;
+
         // 匹配模式列表
         KFMap< uint32, uint32, KFMatchQueue > _kf_match_queue;
+
+        // 战斗服的版本号列表
+        std::set< std::string > _battle_version_list;
+
     };
 }
 

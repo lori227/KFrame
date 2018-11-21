@@ -259,6 +259,7 @@ message S2SLoginLoginVerifyAck
 	required uint32 result = 1;		// 结果
 	required uint32 accountid = 2;	// 账号id
 	required uint32 sessionid = 3;	// sessionid
+	required uint32 bantime = 4;	// 禁止游戏的时间
 }
 
 message PBLoginData

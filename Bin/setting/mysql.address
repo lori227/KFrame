@@ -38,7 +38,7 @@
 			<Channel ChannelId="1" Service="2" IP="192.168.10.230" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
 
 			<!-- Steam -->
-			<Channel ChannelId="3" Service="8" IP="172.16.0.60" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
+			<Channel ChannelId="3" Service="0" IP="172.16.0.60" Port="3306" Database="kfversion" User="root" Password="mysql@lori227-="/>
 		</Connection>	
 	</MySQL>
 </Config>

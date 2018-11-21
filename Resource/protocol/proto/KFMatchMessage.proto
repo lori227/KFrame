@@ -22,7 +22,6 @@ enum MatchProtocol
 	S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ = 11120;	// 玩家上线
 	S2S_NOTICE_MATCH_STATE_REQ = 11121;				// 匹配状态
 	S2S_RESET_MATCH_ROOM_REQ = 11122;				// 重置房间
-
  }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,6 +44,7 @@ message S2SMatchToProxyReq
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
 	required uint32 battleserverid = 6;
+	required string version = 7;			// 客户端版本
 }
 
 // S2S_MATCH_TO_CLIENT_ACK
@@ -64,6 +64,7 @@ message S2SMatchToShardReq
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
 	required uint32 battleserverid = 6;
+	required string version = 7;			// 客户端版本
 }
 
 // 取消匹配

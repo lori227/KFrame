@@ -47,6 +47,7 @@
 			<Channel ChannelId="1" Service="1" Ip="192.168.10.230"/>
 
 			<!--steam正式-->
+			<Channel ChannelId="3" Service="3" Ip="172.16.0.54"/>
 			<Channel ChannelId="3" Service="8" Ip="172.16.0.54"/>
 		</Server>
 
@@ -56,6 +57,7 @@
 			<Channel ChannelId="1" Service="1" Ip="192.168.10.230"/>
 
 			<!--steam正式-->
+			<Channel ChannelId="3" Service="3" Ip="172.16.0.54"/>
 			<Channel ChannelId="3" Service="8" Ip="172.16.0.54"/>
 		</Server>
 

@@ -32,6 +32,8 @@ import gcm_http
 input_folder = '../conf_input'
 output_folder = '../conf_output'
 
+version_file_name = 'version'
+
 base_path = os.path.join('../../../')
 bin_path = 'bin'
 setting_path = 'setting'
@@ -147,7 +149,13 @@ def parse_args():
 
     if is_linux():
         parser.add_argument('-s', '--svn', type=str, help="svn version")
+        parser.add_argument('-v', '--version', type=str, help="build version")
     return vars(parser.parse_args())
+
+def make_version_file(version_name):
+    version_file = open(os.path.join(output_folder, version_file_name), 'a+')
+    version_file.write("version:" + version_name + "\n")
+    version_file.write("svn:" + args['svn'])
 
 # start
 args = parse_args()
@@ -166,10 +174,12 @@ if args['type'] == 1:
     gen_shell()
     print 'generate shell finished'
 
-    if is_linux() and (args['svn'] is not None):
+    if is_linux() and (args['svn'] is not None) and (args['version'] is not None):
         print 'start pack RELEASE VERSION'
-        now_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
-        release_version_name = 'sgame_%s_%s_%s.tar.gz' % (branch_name, args['svn'], now_time)
+        release_version_name = 'sgserver_%s_%s.tar.gz' % (branch_name, args['version'])
+
+        make_version_file(args['version'])
+
         tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
         print tar_cmd
         commands.getoutput(tar_cmd)

@@ -106,13 +106,16 @@ namespace KFrame
         auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
-            KFAppSetting setting;
+            auto channel = node.GetUInt32( "Channel", true, _invalid_int );
+            if ( KFGlobal::Instance()->CheckChannelService( channel, _invalid_int ) )
+            {
+                KFAppSetting setting;
+                setting._sort = node.GetUInt32( "Sort" );
+                setting._name = node.GetString( "Name" );
+                setting._config_file = node.GetString( "Config" );
+                AddStartupSetting( setting );
+            }
 
-            setting._sort = node.GetUInt32( "Sort" );
-            setting._name = node.GetString( "Name" );
-            setting._config_file = node.GetString( "Config" );
-
-            AddStartupSetting( setting );
             node.NextNode();
         }
     }

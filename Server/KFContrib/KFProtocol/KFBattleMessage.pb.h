@@ -441,6 +441,18 @@ class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 battleshardid() const;
   inline void set_battleshardid(::google::protobuf::uint32 value);
 
+  // required string version = 6;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 6;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterBattleServerReq)
  private:
   inline void set_has_serverid();
@@ -453,6 +465,8 @@ class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::M
   inline void clear_has_roomid();
   inline void set_has_battleshardid();
   inline void clear_has_battleshardid();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -460,10 +474,11 @@ class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::M
   ::google::protobuf::uint32 serverid_;
   ::google::protobuf::uint32 port_;
   ::google::protobuf::uint64 roomid_;
+  ::std::string* version_;
   ::google::protobuf::uint32 battleshardid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -653,6 +668,18 @@ class LIBPROTOC_EXPORT S2SRegisterServerToBattleShardReq : public ::google::prot
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
+  // required string version = 5;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 5;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterServerToBattleShardReq)
  private:
   inline void set_has_serverid();
@@ -663,6 +690,8 @@ class LIBPROTOC_EXPORT S2SRegisterServerToBattleShardReq : public ::google::prot
   inline void clear_has_port();
   inline void set_has_roomid();
   inline void clear_has_roomid();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -670,9 +699,10 @@ class LIBPROTOC_EXPORT S2SRegisterServerToBattleShardReq : public ::google::prot
   ::google::protobuf::uint32 serverid_;
   ::google::protobuf::uint32 port_;
   ::google::protobuf::uint64 roomid_;
+  ::std::string* version_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -770,6 +800,18 @@ class LIBPROTOC_EXPORT S2STellBattleRegisterToShardReq : public ::google::protob
   inline ::google::protobuf::uint32 port() const;
   inline void set_port(::google::protobuf::uint32 value);
 
+  // required string version = 5;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 5;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2STellBattleRegisterToShardReq)
  private:
   inline void set_has_serverid();
@@ -780,6 +822,8 @@ class LIBPROTOC_EXPORT S2STellBattleRegisterToShardReq : public ::google::protob
   inline void clear_has_ip();
   inline void set_has_port();
   inline void clear_has_port();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -787,9 +831,10 @@ class LIBPROTOC_EXPORT S2STellBattleRegisterToShardReq : public ::google::protob
   ::google::protobuf::uint32 serverid_;
   ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::std::string* version_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -964,6 +1009,18 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleProxyReq : public ::google::protobuf
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
+  // required string version = 5;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 5;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateRoomToBattleProxyReq)
  private:
   inline void set_has_matchid();
@@ -974,16 +1031,19 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleProxyReq : public ::google::protobuf
   inline void clear_has_maxplayercount();
   inline void set_has_battleserverid();
   inline void clear_has_battleserverid();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
   ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint32 maxplayercount_;
+  ::std::string* version_;
   ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -1083,6 +1143,18 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
+  // required string version = 6;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 6;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCreateRoomToBattleShardReq)
  private:
   inline void set_has_matchid();
@@ -1095,6 +1167,8 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   inline void clear_has_maxplayercount();
   inline void set_has_battleserverid();
   inline void clear_has_battleserverid();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1103,9 +1177,10 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   ::google::protobuf::uint32 matchshardid_;
   ::google::protobuf::uint32 maxplayercount_;
   ::google::protobuf::uint32 battleserverid_;
+  ::std::string* version_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFBattleMessage_2eproto();
   friend void protobuf_AssignDesc_KFBattleMessage_2eproto();
@@ -5043,6 +5118,76 @@ inline void S2SRegisterBattleServerReq::set_battleshardid(::google::protobuf::ui
   battleshardid_ = value;
 }
 
+// required string version = 6;
+inline bool S2SRegisterBattleServerReq::has_version() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SRegisterBattleServerReq::set_has_version() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SRegisterBattleServerReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SRegisterBattleServerReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& S2SRegisterBattleServerReq::version() const {
+  return *version_;
+}
+inline void S2SRegisterBattleServerReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SRegisterBattleServerReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SRegisterBattleServerReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRegisterBattleServerReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* S2SRegisterBattleServerReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRegisterBattleServerReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // S2SRegisterBattleServerAck
@@ -5231,6 +5376,76 @@ inline void S2SRegisterServerToBattleShardReq::set_roomid(::google::protobuf::ui
   roomid_ = value;
 }
 
+// required string version = 5;
+inline bool S2SRegisterServerToBattleShardReq::has_version() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SRegisterServerToBattleShardReq::set_has_version() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SRegisterServerToBattleShardReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SRegisterServerToBattleShardReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& S2SRegisterServerToBattleShardReq::version() const {
+  return *version_;
+}
+inline void S2SRegisterServerToBattleShardReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SRegisterServerToBattleShardReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SRegisterServerToBattleShardReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SRegisterServerToBattleShardReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* S2SRegisterServerToBattleShardReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SRegisterServerToBattleShardReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // S2STellBattleRegisterToShardReq
@@ -5371,6 +5586,76 @@ inline void S2STellBattleRegisterToShardReq::set_port(::google::protobuf::uint32
   port_ = value;
 }
 
+// required string version = 5;
+inline bool S2STellBattleRegisterToShardReq::has_version() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2STellBattleRegisterToShardReq::set_has_version() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2STellBattleRegisterToShardReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2STellBattleRegisterToShardReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& S2STellBattleRegisterToShardReq::version() const {
+  return *version_;
+}
+inline void S2STellBattleRegisterToShardReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2STellBattleRegisterToShardReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2STellBattleRegisterToShardReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2STellBattleRegisterToShardReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* S2STellBattleRegisterToShardReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2STellBattleRegisterToShardReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // S2SDisconnectServerToBattleShardReq
@@ -5489,6 +5774,76 @@ inline void S2SCreateRoomToBattleProxyReq::set_battleserverid(::google::protobuf
   battleserverid_ = value;
 }
 
+// required string version = 5;
+inline bool S2SCreateRoomToBattleProxyReq::has_version() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void S2SCreateRoomToBattleProxyReq::set_has_version() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void S2SCreateRoomToBattleProxyReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void S2SCreateRoomToBattleProxyReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& S2SCreateRoomToBattleProxyReq::version() const {
+  return *version_;
+}
+inline void S2SCreateRoomToBattleProxyReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SCreateRoomToBattleProxyReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SCreateRoomToBattleProxyReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SCreateRoomToBattleProxyReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* S2SCreateRoomToBattleProxyReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SCreateRoomToBattleProxyReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // S2SCreateRoomToBattleShardReq
@@ -5601,6 +5956,76 @@ inline ::google::protobuf::uint32 S2SCreateRoomToBattleShardReq::battleserverid(
 inline void S2SCreateRoomToBattleShardReq::set_battleserverid(::google::protobuf::uint32 value) {
   set_has_battleserverid();
   battleserverid_ = value;
+}
+
+// required string version = 6;
+inline bool S2SCreateRoomToBattleShardReq::has_version() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void S2SCreateRoomToBattleShardReq::set_has_version() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void S2SCreateRoomToBattleShardReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void S2SCreateRoomToBattleShardReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& S2SCreateRoomToBattleShardReq::version() const {
+  return *version_;
+}
+inline void S2SCreateRoomToBattleShardReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SCreateRoomToBattleShardReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void S2SCreateRoomToBattleShardReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2SCreateRoomToBattleShardReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* S2SCreateRoomToBattleShardReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void S2SCreateRoomToBattleShardReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------

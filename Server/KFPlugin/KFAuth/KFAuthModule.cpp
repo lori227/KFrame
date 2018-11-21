@@ -6,6 +6,7 @@ namespace KFrame
 {
 #define __DIR_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( dir ) )
 #define __ACCOUNT_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( account ) )
+#define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( public ) )
 
     void KFAuthModule::BeforeRun()
     {
@@ -13,6 +14,10 @@ namespace KFrame
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ), false, &KFAuthModule::HandleAuthActivation );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( onlinezone ), false, &KFAuthModule::HandleUpdateOnline );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( ban ), false, &KFAuthModule::HandleBanLogin );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( unban ), false, &KFAuthModule::HandleUnBanLogin );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( queryban ), false, &KFAuthModule::HandleQueryBanLogin );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( queryaccount ), false, &KFAuthModule::HandleQueryAccountData );
         /////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -22,6 +27,10 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( onlinezone ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( ban ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( unban ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( queryban ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( queryaccount ) );
         ///////////////////////////////////////////////////////////////////////////
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,6 +169,8 @@ namespace KFrame
             __LOG_DEBUG__( "account[{}] channel[{}] save account failed!", account, channel );
         }
 
+        __LOG_DEBUG__( "create account successfully, account[{}] accountid[{}] channel[{}] ", account, accountid, channel );
+
         return accountdata;
     }
 
@@ -289,14 +300,14 @@ namespace KFrame
 
         //redisdriver->Append( "srem {} {}", __KF_STRING__( activationcode ), code );
 
-        return VerifyActivationCode( accountdata, accountid, code );
+        return VerifyActivationCode( accountdata->_value, accountid, code );
     }
 
-    std::string KFAuthModule::VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode )
+    std::string KFAuthModule::VerifyActivationCode( MapString& accountdata, const uint32 accountid, const std::string& activationcode )
     {
         auto apiurl = _kf_platform->MakePlatformUrl( __KF_STRING__( verifyactivationcode ) );
 
-        auto account = accountdata->_value[__KF_STRING__( account )];
+        auto account = accountdata[ __KF_STRING__( account ) ];
 
         KFJson postjson;
         postjson.SetValue( "accountid", accountid );
@@ -307,7 +318,7 @@ namespace KFrame
         //去平台通过激活码激活
         auto result = _kf_http_client->StartSTHttpClient( apiurl, postjson );
         KFJson resp( result );
-        if ( resp["code"] != 0 )
+        if ( resp[ "code" ] != 0 )
         {
             _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
             __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
@@ -319,17 +330,15 @@ namespace KFrame
         redisdriver->Pipeline();
 
         // 创建登录token
-        auto token = CreateLoginToken( accountid, accountdata->_value );
-        return QueryDirList( accountid, token, accountdata->_value );
+        auto token = CreateLoginToken( accountid, accountdata );
+        return QueryDirList( accountid, token, accountdata );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleVerifyToken )
     {
-        // 判断ip黑名单
-
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-
         KFJson request( data );
+
+        auto loginip = request.GetString( __KF_STRING__( ip ) );
         auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
         auto logiczoneid = request.GetUInt32( __KF_STRING__( logiczoneid ) );
         auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
@@ -339,6 +348,7 @@ namespace KFrame
         }
 
         // 判断token是否正确
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         auto token = request.GetString( __KF_STRING__( token ) );
         auto loginkey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
         auto querytoken = redisdriver->QueryMap( "hgetall {}", loginkey );
@@ -363,6 +373,18 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
         }
 
+        // 判断黑名单
+        uint32 bantime = CheckLoginBlackList( loginip, accountid, playerid );
+        if ( bantime != _invalid_int )
+        {
+            KFJson response;
+            response.SetValue( __KF_STRING__( bantime ), bantime );
+            return _kf_http_server->SendResponse( response, KFMsg::BanForbidLogin );
+        }
+
+        // 保存玩家登陆ip
+        redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( accountid ), queryaccountid, __KF_STRING__( ip ), loginip );
+
         // 返回结果
         KFJson response;
         response.SetValue( __KF_STRING__( token ), token );
@@ -384,7 +406,6 @@ namespace KFrame
 
         return _kf_http_server->SendResponse( response );
     }
-
 
     uint32 KFAuthModule::QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid )
     {
@@ -440,5 +461,193 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
         return _kf_http_server->SendResponseCode( KFMsg::Success );
+    }
+
+    uint32 KFAuthModule::CheckLoginBlackList( const std::string& ip, uint32 accountid, uint32 playerid )
+    {
+        // 数据保存在自己的数据库, 没有后台也可以直接操作数据库
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        // ip
+        auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banip ), ip );
+        if ( kfquery->IsOk() && !kfquery->_value.empty() )
+        {
+            auto bantime = KFUtility::ToValue< uint64 >( kfquery->_value );
+            if ( bantime > KFGlobal::Instance()->_real_time )
+            {
+                return bantime;
+            }
+
+            redisdriver->Execute( "hdel {} {}", __KF_STRING__( banip ), ip );
+        }
+
+        // accountid
+        kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banaccountid ), accountid );
+        if ( kfquery->IsOk() && !kfquery->_value.empty() )
+        {
+            auto bantime = KFUtility::ToValue< uint64 >( kfquery->_value );
+            if ( bantime > KFGlobal::Instance()->_real_time )
+            {
+                return bantime;
+            }
+
+            redisdriver->Execute( "hdel {} {}", __KF_STRING__( banaccountid ), accountid );
+        }
+
+        // playerid
+        kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banplayerid ), playerid );
+        if ( kfquery->IsOk() && !kfquery->_value.empty() )
+        {
+            auto bantime = KFUtility::ToValue< uint32 >( kfquery->_value );
+            if ( bantime > KFGlobal::Instance()->_real_time )
+            {
+                return bantime;
+            }
+
+            redisdriver->Execute( "hdel {} {}", __KF_STRING__( banplayerid ), playerid );
+        }
+
+        return _invalid_int;
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleBanLogin )
+    {
+        KFJson request( data );
+
+        auto accountdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto bantime = request.GetUInt32( __KF_STRING__( bantime ) );
+
+        auto kickaccountid = _invalid_int;
+
+        // 账号
+        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        {
+            auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
+            accountdriver->Execute( "hset {} {} {}", __KF_STRING__( banaccountid ), accountid, bantime );
+
+            kickaccountid = accountid;
+        }
+
+        // 角色
+        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        {
+            auto playerid = request.GetUInt32( __KF_STRING__( playerid ) );
+            accountdriver->Execute( "hset {} {} {}", __KF_STRING__( banplayerid ), playerid, bantime );
+
+            if ( kickaccountid != _invalid_int )
+            {
+                auto kfquery = accountdriver->QueryUInt32( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ) );
+                kickaccountid = kfquery->_value;
+            }
+        }
+
+        // ip
+        if ( request.isMember( __KF_STRING__( ip ) ) )
+        {
+            auto banip = request.GetString( __KF_STRING__( ip ) );
+            accountdriver->Execute( "hset {} {} {}", __KF_STRING__( banip ), banip, bantime );
+        }
+
+        // 踢人
+        if ( kickaccountid != _invalid_int )
+        {
+            auto accountdata = accountdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), kickaccountid );
+            KickAccountOffline( accountdata->_value );
+        }
+
+        return _kf_http_server->SendResponseCode( KFMsg::Success );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleUnBanLogin )
+    {
+        KFJson request( data );
+
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        // 账号
+        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        {
+            auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
+            redisdriver->Execute( "hset {} {}", __KF_STRING__( banaccountid ), accountid );
+        }
+
+        // 角色
+        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        {
+            auto playerid = request.GetUInt32( __KF_STRING__( playerid ) );
+            redisdriver->Execute( "hdel {} {}", __KF_STRING__( banplayerid ), playerid );
+        }
+
+        // ip
+        if ( request.isMember( __KF_STRING__( ip ) ) )
+        {
+            auto banip = request.GetString( __KF_STRING__( ip ) );
+            redisdriver->Execute( "hset {} {}", __KF_STRING__( banip ), banip );
+        }
+
+        return _kf_http_server->SendResponseCode( KFMsg::Success );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryBanLogin )
+    {
+        KFJson request( data );
+
+        KFJson response;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        // 角色
+        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        {
+            auto playerid = request.GetUInt32( __KF_STRING__( playerid ) );
+            auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banplayerid ), playerid );
+            response.SetValue( __KF_STRING__( banplayerid ), kfquery->_value );
+        }
+
+        // 账号
+        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        {
+            auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
+            auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banaccountid ), accountid );
+            response.SetValue( __KF_STRING__( banaccountid ), kfquery->_value );
+        }
+
+        // ip
+        if ( request.isMember( __KF_STRING__( ip ) ) )
+        {
+            auto banip = request.GetString( __KF_STRING__( ip ) );
+            auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banip ), banip );
+            response.SetValue( __KF_STRING__( banip ), kfquery->_value );
+        }
+
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryAccountData )
+    {
+        KFJson request( data );
+        KFJson response;
+        auto accountdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        auto accountid = request.GetUInt32( __KF_STRING__( accountid ) );
+        if ( accountid == _invalid_int )
+        {
+            auto playerid = request.GetUInt32( __KF_STRING__( playerid ) );
+            if ( playerid == _invalid_int )
+            {
+                auto playername = request.GetString( __KF_STRING__( name ) );
+
+                auto publicdriver = __PUBLIC_REDIS_DRIVER__;
+                auto kfquery = publicdriver->QueryUInt32( "get {}:{}", __KF_STRING__( name ), playername );
+                playerid = kfquery->_value;
+            }
+
+            auto kfquery = accountdriver->QueryUInt32( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ) );
+            accountid = kfquery->_value;
+        }
+
+        auto kfquery = accountdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
+        response.Parse( kfquery->_value );
+
+        return _kf_http_server->SendResponse( response );
     }
 }

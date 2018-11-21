@@ -141,6 +141,8 @@ namespace KFrame
         __STRING_DEFINE__( battle );
         __STRING_DEFINE__( battleid );
         __STRING_DEFINE__( battlelist );
+        __STRING_DEFINE__( battleversion );
+        __STRING_DEFINE__( battleversionlist );
         __STRING_DEFINE__( battleidcreater );
         __STRING_DEFINE__( handleid );
         __STRING_DEFINE__( clientid );
@@ -382,6 +384,18 @@ namespace KFrame
         __STRING_DEFINE__( leftscore );
         __STRING_DEFINE__( money );
         __STRING_DEFINE__( clusterkey );
+        __STRING_DEFINE__( steamfreeweekend );
+        __STRING_DEFINE__( steamfreeweekendstopday );
+        __STRING_DEFINE__( steamfreeweekendstophour );
+        __STRING_DEFINE__( ban );
+        __STRING_DEFINE__( unban );
+        __STRING_DEFINE__( queryban );
+        __STRING_DEFINE__( bantime );
+        __STRING_DEFINE__( banip );
+        __STRING_DEFINE__( banaccountid );
+        __STRING_DEFINE__( banplayerid );
+        __STRING_DEFINE__( queryaccount );
+
     }
 }
 

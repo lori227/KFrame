@@ -21,15 +21,16 @@ namespace KFrame
 
     bool KFStartup::LoadPlugin()
     {
-        for ( auto iter = _app_config->_startups.begin(); iter != _app_config->_startups.end(); ++iter )
-        {
-            auto startupsetting = &iter->second;
+        auto kfglobal = KFGlobal::Instance();
 
-            auto loadplguin = startupsetting->_name;
+        for ( auto& iter : _app_config->_startups )
+        {
+            auto kfsetting = &iter.second;
+            auto loadplguin = kfsetting->_name;
 #ifdef __KF_DEBUG__
             loadplguin += "d";
 #endif
-            bool result = LoadPluginLibrary( loadplguin, startupsetting );
+            bool result = LoadPluginLibrary( loadplguin, kfsetting );
             if ( !result )
             {
                 return false;

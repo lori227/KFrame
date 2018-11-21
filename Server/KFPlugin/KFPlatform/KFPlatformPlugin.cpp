@@ -17,10 +17,10 @@ namespace KFrame
     void KFPlatformPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_message, KFMessageInterface );
-        __FIND_MODULE__( _kf_player, KFPlayerInterface );
-        __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+        __FIND_MODULE_NO_LOG__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE_NO_LOG__( _kf_display, KFDisplayInterface );
     }
 
 }

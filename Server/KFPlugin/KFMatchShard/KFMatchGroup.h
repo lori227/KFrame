@@ -36,6 +36,9 @@ namespace KFrame
         // 指定的战场id
         uint32 _battle_server_id;
 
+        // 战场版本
+        std::string _battle_version;
+
         // 匹配队列
         KFMatchQueue* _kf_match_queue;
 

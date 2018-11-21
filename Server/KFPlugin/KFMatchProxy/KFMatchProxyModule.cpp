@@ -102,6 +102,7 @@ namespace KFrame
         req.set_serverid( kfmsg.serverid() );
         req.set_allowgroup( kfmsg.allowgroup() );
         req.set_battleserverid( kfmsg.battleserverid() );
+        req.set_version( kfmsg.version() );
         req.mutable_pbgroup()->CopyFrom( kfmsg.pbgroup() );
         _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_MATCH_TO_SHARD_REQ, &req );
     }

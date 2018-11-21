@@ -18,12 +18,14 @@ namespace KFrame
         _log_level = 0;
         _rand = new KFRand();
         _logger = nullptr;
+        _version = new KFVersion();
     }
 
     KFGlobal::~KFGlobal()
     {
         __DELETE_OBJECT__( _rand );
         __DELETE_OBJECT__( _logger );
+        __DELETE_OBJECT__( _version );
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -47,6 +49,39 @@ namespace KFrame
         {
             _logger->RunUpdate();
         }
+    }
+
+    bool KFGlobal::LoadVersion( const std::string& file )
+    {
+        std::ifstream versionfile( file );
+        if ( !versionfile )
+        {
+            return false;
+        }
+
+        std::string strdata;
+
+        versionfile >> strdata;
+        KFUtility::SplitString( strdata, ":" );
+        _version->FromString( strdata );
+
+        strdata.clear();
+        versionfile >> strdata;
+        KFUtility::SplitString( strdata, ":" );
+        _version->_repository_version = strdata;
+
+        return true;
+    }
+
+    const std::string& KFGlobal::GetVersion()
+    {
+        return _version->_str_version;
+    }
+
+    bool KFGlobal::CheckVersionCompatibility( const std::string& version )
+    {
+        auto strversion = version;
+        return _version->CheckCompatibility( strversion );
     }
 
     uint32 KFGlobal::RandRatio( uint32 ratio )

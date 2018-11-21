@@ -48,6 +48,18 @@ namespace KFrame
         // 更新在线信息
         __KF_HTTP_FUNCTION__( HandleUpdateOnline );
 
+        // ban人禁止游戏
+        __KF_HTTP_FUNCTION__( HandleBanLogin );
+
+        // 取消ban人
+        __KF_HTTP_FUNCTION__( HandleUnBanLogin );
+
+        // 查询ban人
+        __KF_HTTP_FUNCTION__( HandleQueryBanLogin );
+
+        // 查询玩家基本信息
+        __KF_HTTP_FUNCTION__( HandleQueryAccountData );
+
     protected:
         // 查询创建账号
         MapString QueryCreateAccount( const std::string& account, uint32 channel );
@@ -68,7 +80,10 @@ namespace KFrame
         uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
 
         //验证激活码
-        std::string VerifyActivationCode( KFResult<MapString>* accountdata, const uint32 accountid, const std::string& activationcode );
+        std::string VerifyActivationCode( MapString& accountdata, const uint32 accountid, const std::string& activationcode );
+
+        // 判断登陆黑名单
+        uint32 CheckLoginBlackList( const std::string& ip, uint32 accountid, uint32 playerid );
     };
 }
 

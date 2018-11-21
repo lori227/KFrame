@@ -14,13 +14,6 @@ if  [ ! -n "$3" ] ;then
 	exit 0
 fi
 
-svnversion=`svn info |awk 'NR==6{print $2}'`
-if [ "$svnversion" = "" ];then
- svnversion=`git log -1 --pretty=format:"%h"`
-fi
-
-echo $svnversion
-
 # ±àÒë°æ±¾ 
 sh build_clean.sh
 if [ "$3" = "debug" ];then
@@ -29,11 +22,23 @@ else
 	sh build_release.sh
 fi
 
-# ¿½±´´ò°ü£¬´æµµ°æ±¾
+# make version
+svnversion=`svn info |awk 'NR==6{print $2}'`
+if [ "$svnversion" = "" ];then
+ svnversion=`git log -1 --pretty=format:"%h"`
+fi
+
+# resource
 cd ../../../
+days=$(((($(date +%s ) - $(date +%s -d '20181101'))/86400) + 1));
+clientversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 1`
+battleversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 2`
+version=$clientversion.$battleversion.$days.$svnversion
+echo $version
+
 \cp -f ./Resource/config/* ./Bin/config/
 cd Bin/tool/gcm/builder/
 chmod 777 gcm_build
-./gcm_build -s $svnversion -b $2 -c $1 -m $3
+./gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
 
 cd ../../../../../../../

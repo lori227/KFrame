@@ -39,10 +39,10 @@ namespace KFrame
             StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountMoney" ), "money" );
             StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountDiamond" ), "diamond" );
 
-            kfsetting->_start_discount_time = KFDate::TimeFormate( xmlnode.GetString( "StartDiscountTime" ) );
-            kfsetting->_end_discount_time = KFDate::TimeFormate( xmlnode.GetString( "EndDiscountTime" ) );
-            kfsetting->_start_buy_time = KFDate::TimeFormate( xmlnode.GetString( "StartBuyTime" ) );
-            kfsetting->_end_buy_time = KFDate::TimeFormate( xmlnode.GetString( "EndBuyTime" ) );
+            kfsetting->_start_discount_time = KFDate::FromString( xmlnode.GetString( "StartDiscountTime" ) );
+            kfsetting->_end_discount_time = KFDate::FromString( xmlnode.GetString( "EndDiscountTime" ) );
+            kfsetting->_start_buy_time = KFDate::FromString( xmlnode.GetString( "StartBuyTime" ) );
+            kfsetting->_end_buy_time = KFDate::FromString( xmlnode.GetString( "EndBuyTime" ) );
             kfsetting->_limit_type = xmlnode.GetUInt32( "LimitType" );
             kfsetting->_limit_count = xmlnode.GetUInt32( "LimitCount" );
             kfsetting->_cost_give = xmlnode.GetString( "CostGive" );

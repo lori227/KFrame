@@ -522,20 +522,35 @@ class LIBPROTOC_EXPORT MsgLoginVerifyReq : public ::google::protobuf::Message {
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
+  // optional string version = 3;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 3;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginVerifyReq)
  private:
   inline void set_has_accountid();
   inline void clear_has_accountid();
   inline void set_has_token();
   inline void clear_has_token();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* token_;
+  ::std::string* version_;
   ::google::protobuf::uint32 accountid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -2299,6 +2314,18 @@ class LIBPROTOC_EXPORT MsgStartMatchReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
+  // required string version = 4;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 4;
+  inline const ::std::string& version() const;
+  inline void set_version(const ::std::string& value);
+  inline void set_version(const char* value);
+  inline void set_version(const char* value, size_t size);
+  inline ::std::string* mutable_version();
+  inline ::std::string* release_version();
+  inline void set_allocated_version(::std::string* version);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgStartMatchReq)
  private:
   inline void set_has_matchid();
@@ -2307,15 +2334,18 @@ class LIBPROTOC_EXPORT MsgStartMatchReq : public ::google::protobuf::Message {
   inline void clear_has_allowgroup();
   inline void set_has_battleserverid();
   inline void clear_has_battleserverid();
+  inline void set_has_version();
+  inline void clear_has_version();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 matchid_;
   bool allowgroup_;
+  ::std::string* version_;
   ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
   friend void protobuf_AssignDesc_KFClientMessage_2eproto();
@@ -10330,6 +10360,76 @@ inline void MsgLoginVerifyReq::set_allocated_token(::std::string* token) {
   }
 }
 
+// optional string version = 3;
+inline bool MsgLoginVerifyReq::has_version() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void MsgLoginVerifyReq::set_has_version() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void MsgLoginVerifyReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void MsgLoginVerifyReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& MsgLoginVerifyReq::version() const {
+  return *version_;
+}
+inline void MsgLoginVerifyReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void MsgLoginVerifyReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void MsgLoginVerifyReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgLoginVerifyReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* MsgLoginVerifyReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgLoginVerifyReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // MsgLoginVerifyAck
@@ -11526,6 +11626,76 @@ inline ::google::protobuf::uint32 MsgStartMatchReq::battleserverid() const {
 inline void MsgStartMatchReq::set_battleserverid(::google::protobuf::uint32 value) {
   set_has_battleserverid();
   battleserverid_ = value;
+}
+
+// required string version = 4;
+inline bool MsgStartMatchReq::has_version() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void MsgStartMatchReq::set_has_version() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void MsgStartMatchReq::clear_has_version() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void MsgStartMatchReq::clear_version() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    version_->clear();
+  }
+  clear_has_version();
+}
+inline const ::std::string& MsgStartMatchReq::version() const {
+  return *version_;
+}
+inline void MsgStartMatchReq::set_version(const ::std::string& value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void MsgStartMatchReq::set_version(const char* value) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(value);
+}
+inline void MsgStartMatchReq::set_version(const char* value, size_t size) {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  version_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgStartMatchReq::mutable_version() {
+  set_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    version_ = new ::std::string;
+  }
+  return version_;
+}
+inline ::std::string* MsgStartMatchReq::release_version() {
+  clear_has_version();
+  if (version_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = version_;
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void MsgStartMatchReq::set_allocated_version(::std::string* version) {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
+  if (version) {
+    set_has_version();
+    version_ = version;
+  } else {
+    clear_has_version();
+    version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------

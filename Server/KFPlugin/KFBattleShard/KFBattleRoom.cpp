@@ -218,7 +218,7 @@ namespace KFrame
     {
         // 分配战场
         _battle_server.Reset();
-        _kf_battle_manage->AllocBattleServer( _battle_server_id, &_battle_server );
+        _kf_battle_manage->AllocBattleServer( _battle_server_id, _battle_version, & _battle_server );
         if ( !_battle_server.IsValid() )
         {
             __LOG_ERROR__( "room[{}] alloc battle server failed!", _battle_room_id );
@@ -435,7 +435,7 @@ namespace KFrame
         return kfplayer->QueryBattleRoom( this, serverid );
     }
 
-    bool KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port )
+    bool KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port, const std::string& version )
     {
         if ( _battle_server.IsValid() )
         {
@@ -446,13 +446,14 @@ namespace KFrame
             }
 
             // 删除redis记录
-            _kf_battle_manage->RemoveBattleServer( serverid, ip );
+            _kf_battle_manage->RemoveBattleServer( serverid, version );
         }
 
         _battle_server._proxy_id = proxyid;
         _battle_server._server_id = serverid;
         _battle_server._ip = ip;
         _battle_server._port = port;
+        _battle_server._version = version;
 
         // 如果是进入状态, 重置到开启状态, 让流程循环起来
         switch ( _last_status )
@@ -551,7 +552,7 @@ namespace KFrame
 
         if ( _battle_server.IsValid() )
         {
-            _kf_battle_manage->FreeBattleServer( _battle_server._server_id, _battle_server._ip );
+            _kf_battle_manage->FreeBattleServer( _battle_server._server_id, _battle_server._version );
             _battle_server.Reset();
         }
 

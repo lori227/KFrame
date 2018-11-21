@@ -14,7 +14,7 @@ namespace KFrame
 
     }
 
-    void KFTaskModule::InitMoudle()
+    void KFTaskModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_task_config, true );
     }

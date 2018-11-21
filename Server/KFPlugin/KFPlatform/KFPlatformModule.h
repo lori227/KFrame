@@ -42,15 +42,19 @@ namespace KFrame
     protected:
         // 绑定支付宝
         __KF_MESSAGE_FUNCTION__( HandleBindAlipayReq );
-
-        // 绑定支付宝回调
         __KF_HTTP_CALL_BACK_FUNCTION__( OnBindAlipayCallBack );
 
         // 查询邀请积分
         __KF_MESSAGE_FUNCTION__( HandleQueryInviteScoreReq );
-
-        // 查询邀请积分回调
         __KF_HTTP_CALL_BACK_FUNCTION__( OnQueryInviteScoreCallBack );
+
+        // 兑换邀请积分
+        __KF_MESSAGE_FUNCTION__( HandleExchangeInviteScoreReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnExchangeInviteScoreCallBack );
+
+        // 查询兑换记录
+        __KF_MESSAGE_FUNCTION__( HandleExChangeInviteRecordReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnExChangeInviteRecordCallBack );
         ////////////////////////////////////////////////////////////////////////////////
     };
 }

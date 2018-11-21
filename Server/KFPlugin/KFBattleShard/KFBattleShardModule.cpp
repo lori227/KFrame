@@ -161,21 +161,22 @@ namespace KFrame
         auto proxyid = __KF_HEAD_ID__( kfguid );
         auto strserverid = KFAppID::ToString( kfmsg.serverid() );
 
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] req!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "register version[{}] battle[{}|{}:{}|{}] req!", kfmsg.version(), strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
 
-        if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int )
+        if ( kfmsg.serverid() == _invalid_int || kfmsg.ip().empty() || kfmsg.port() == _invalid_int || kfmsg.version().empty() )
         {
             return;
         }
 
-        _kf_battle_manage->RegisterBattleServer( kfmsg.serverid(), proxyid, kfmsg.ip(), kfmsg.port() );
+        KFVersion kfversion( kfmsg.version() );
+        _kf_battle_manage->RegisterBattleServer( kfmsg.serverid(), proxyid, kfmsg.ip(), kfmsg.port(), kfversion._battle_version );
 
         KFMsg::S2SRegisterBattleServerAck ack;
         ack.set_serverid( kfmsg.serverid() );
         ack.set_result( KFMsg::Success );
         _kf_cluster_shard->SendToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
-        __LOG_DEBUG__( "register battle[{}|{}:{}|{}] ok!", strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
+        __LOG_DEBUG__( "register version[{}] battle[{}|{}:{}|{}] ok!", kfmsg.version(), strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellBattleRegisterToShardReq )
@@ -195,7 +196,7 @@ namespace KFrame
             auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
             if ( kfroom != nullptr )
             {
-                ok = kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
+                ok = kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.version() );
             }
 
             if ( !ok )
@@ -218,7 +219,7 @@ namespace KFrame
                 }
                 else
                 {
-                    kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port() );
+                    kfroom->UpdateBattleRoom( proxyid, kfmsg.serverid(), kfmsg.ip(), kfmsg.port(), kfmsg.version() );
                 }
             }
 

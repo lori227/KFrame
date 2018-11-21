@@ -2,6 +2,7 @@
 #define __KF_JSON_H__
 
 #include "KFDefine.h"
+#include "KFMacros.h"
 #include "json/json.h"
 #include "KFUtility/KFUtility.h"
 
@@ -58,6 +59,30 @@ namespace KFrame
             }
 
             return true;
+        }
+
+        inline void Serialize( MapString& values )
+        {
+            for ( auto iter = this->begin(); iter != this->end(); ++iter )
+            {
+                if ( iter->isString() )
+                {
+                    values[ iter.name() ] = iter->asString();
+                }
+                else if ( iter->isUInt() )
+                {
+                    values[ iter.name() ] = __TO_STRING__( iter->asUInt() );
+                }
+                else if ( iter->isInt() )
+                {
+                    values[ iter.name() ] = __TO_STRING__( iter->asInt() );
+
+                }
+                else if ( iter->isDouble() )
+                {
+                    values[ iter.name() ] = __TO_STRING__( iter->asDouble() );
+                }
+            }
         }
 
         // 系列化
@@ -130,17 +155,21 @@ namespace KFrame
         {
             auto& value = this->operator[]( key );
 
-            if ( value.isUInt() )
+            if ( value.isString() )
             {
-                return KFUtility::ToString< uint32 >( value.asUInt() );
+                return value.asString();
+            }
+            else if ( value.isUInt() )
+            {
+                return __TO_STRING__( value.asUInt() );
             }
             else if ( value.isInt() )
             {
-                return KFUtility::ToString< int32 >( value.asInt() );
+                return __TO_STRING__( value.asInt() );
             }
-            else if ( value.isString() )
+            else if ( value.isDouble() )
             {
-                return value.asString();
+                return __TO_STRING__( value.asDouble() );
             }
             return _invalid_str;
         }
@@ -175,12 +204,12 @@ namespace KFrame
                 auto& elem = values.operator[]( iter );
                 if ( elem.isInt() )
                 {
-                    auto strelem = KFUtility::ToString< uint32 >( elem.asUInt() );
+                    auto strelem = __TO_STRING__( elem.asUInt() );
                     des.insert( std::make_pair( mapkey, strelem ) );
                 }
                 else if ( elem.isUInt() )
                 {
-                    auto strelem = KFUtility::ToString< int32 >( value.asInt() );
+                    auto strelem = __TO_STRING__( value.asInt() );
                     des.insert( std::make_pair( mapkey, strelem ) );
 
                 }

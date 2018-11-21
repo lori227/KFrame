@@ -64,7 +64,7 @@ namespace KFrame
 
     void KFRobotModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__();
+        __KF_REMOVE_CONFIG__( _kf_robot_config );
         __UNREGISTER_TIMER__();
         //__UNREGISTER_RUN_FUNCTION__();
     }

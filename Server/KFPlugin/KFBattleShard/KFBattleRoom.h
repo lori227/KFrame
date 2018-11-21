@@ -54,7 +54,7 @@ namespace KFrame
         void ConfirmOpenMatchRoom();
 
         // 更新游戏房间
-        bool UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port );
+        bool UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port, const std::string& version );
 
         // 进入游戏房间
         bool ConfirmEnterBattleRoom( uint32 campid, uint32 playerid );
@@ -147,6 +147,9 @@ namespace KFrame
 
         // 指定的战场id
         uint32 _battle_server_id;
+
+        // 版本号
+        std::string _battle_version;
 
         // 战场服务器
         KFBattleServer _battle_server;

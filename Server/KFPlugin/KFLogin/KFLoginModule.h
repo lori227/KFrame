@@ -68,7 +68,7 @@ namespace KFrame
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
 
         // 发送登录验证结果消息
-        void SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid );
+        void SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid, uint32 bantime );
 
     private:
 

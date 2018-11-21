@@ -101,13 +101,14 @@ void protobuf_AssignDesc_KFMatchMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SRegisterMatchReq));
   S2SMatchToProxyReq_descriptor_ = file->message_type(1);
-  static const int S2SMatchToProxyReq_offsets_[6] = {
+  static const int S2SMatchToProxyReq_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, pbgroup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, allowgroup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, playerid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, battleserverid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToProxyReq, version_),
   };
   S2SMatchToProxyReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -138,13 +139,14 @@ void protobuf_AssignDesc_KFMatchMessage_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(S2SMatchToClientAck));
   S2SMatchToShardReq_descriptor_ = file->message_type(3);
-  static const int S2SMatchToShardReq_offsets_[6] = {
+  static const int S2SMatchToShardReq_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, pbgroup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, matchid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, allowgroup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, playerid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, battleserverid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SMatchToShardReq, version_),
   };
   S2SMatchToShardReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -499,61 +501,62 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\024KFMatchMessage.proto\022\005KFMsg\032\025KFCommonM"
     "essage.proto\"&\n\023S2SRegisterMatchReq\022\017\n\007m"
-    "atchid\030\001 \003(\r\"\233\001\n\022S2SMatchToProxyReq\022$\n\007p"
+    "atchid\030\001 \003(\r\"\254\001\n\022S2SMatchToProxyReq\022$\n\007p"
     "bgroup\030\001 \002(\0132\023.KFMsg.PBMatchGroup\022\017\n\007mat"
     "chid\030\002 \002(\r\022\022\n\nallowgroup\030\003 \002(\010\022\020\n\010player"
     "id\030\004 \002(\r\022\020\n\010serverid\030\005 \002(\r\022\026\n\016battleserv"
-    "erid\030\006 \002(\r\"H\n\023S2SMatchToClientAck\022\016\n\006res"
-    "ult\030\001 \002(\r\022\017\n\007matchid\030\002 \002(\r\022\020\n\010playerid\030\003"
-    " \002(\r\"\233\001\n\022S2SMatchToShardReq\022$\n\007pbgroup\030\001"
-    " \002(\0132\023.KFMsg.PBMatchGroup\022\017\n\007matchid\030\002 \002"
-    "(\r\022\022\n\nallowgroup\030\003 \002(\010\022\020\n\010playerid\030\004 \002(\r"
-    "\022\020\n\010serverid\030\005 \002(\r\022\026\n\016battleserverid\030\006 \002"
-    "(\r\"=\n\030S2SCancelMatchToProxyReq\022\017\n\007matchi"
-    "d\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\"=\n\030S2SCancelMa"
-    "tchToShardReq\022\017\n\007matchid\030\001 \002(\r\022\020\n\010player"
-    "id\030\002 \002(\r\"Q\n\036S2SCancelMatchToBattleShardR"
-    "eq\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\017\n\007gr"
-    "oupid\030\003 \002(\004\"\254\001\n\025S2SNoticeMatchRoomReq\022\017\n"
-    "\007matchid\030\001 \002(\r\022\025\n\rbattleshardid\030\002 \002(\r\022\016\n"
-    "\006campid\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\022\020\n\010serve"
-    "rid\030\005 \002(\r\022\016\n\006roomid\030\006 \002(\004\022\n\n\002ip\030\007 \002(\t\022\014\n"
-    "\004port\030\010 \002(\r\022\r\n\005token\030\t \002(\t\"I\n\025S2SNoticeM"
-    "atchRoomAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 "
-    "\002(\r\022\020\n\010playerid\030\003 \002(\r\"K\n\024S2SQueryMatchRo"
-    "omReq\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r"
-    "\022\020\n\010serverid\030\003 \002(\r\"R\n\033S2SQueryRoomToMatc"
-    "hShardReq\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002"
-    " \002(\r\022\020\n\010serverid\030\003 \002(\r\"9\n\024S2SQueryMatchR"
-    "oomAck\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002("
-    "\r\"K\n\025S2SQueryBattleRoomReq\022\016\n\006roomid\030\001 \002"
-    "(\004\022\020\n\010playerid\030\002 \002(\r\022\020\n\010serverid\030\003 \002(\r\"J"
-    "\n\025S2SQueryBattleRoomAck\022\020\n\010playerid\030\001 \002("
-    "\r\022\016\n\006roomid\030\002 \002(\004\022\017\n\007matchid\030\003 \002(\r\"R\n\034S2"
-    "SQueryRoomToBattleShardReq\022\016\n\006roomid\030\001 \002"
-    "(\004\022\020\n\010playerid\030\002 \002(\r\022\020\n\010serverid\030\003 \002(\r\"e"
-    "\n\037S2SPlayerOnlineToBattleShardReq\022\016\n\006roo"
-    "mid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 "
-    "\002(\r\022\020\n\010serverid\030\004 \002(\r\";\n\026S2SNoticeMatchS"
-    "tateReq\022\020\n\010playerid\030\001 \002(\r\022\017\n\007matchid\030\002 \002"
-    "(\r\"7\n\024S2SResetMatchRoomReq\022\017\n\007matchid\030\001 "
-    "\002(\r\022\016\n\006roomid\030\002 \002(\004*\362\004\n\rMatchProtocol\022\033\n"
-    "\026S2S_REGISTER_MATCH_REQ\020\335V\022\033\n\026S2S_MATCH_"
-    "TO_PROXY_REQ\020\336V\022\033\n\026S2S_MATCH_TO_SHARD_RE"
-    "Q\020\337V\022\034\n\027S2S_MATCH_TO_CLIENT_ACK\020\340V\022\"\n\035S2"
-    "S_CANCEL_MATCH_TO_PROXY_REQ\020\343V\022\"\n\035S2S_CA"
-    "NCEL_MATCH_TO_SHARD_REQ\020\344V\022\036\n\031S2S_NOTICE"
-    "_MATCH_ROOM_REQ\020\345V\022\036\n\031S2S_NOTICE_MATCH_R"
-    "OOM_ACK\020\346V\022\035\n\030S2S_QUERY_MATCH_ROOM_REQ\020\347"
-    "V\022\035\n\030S2S_QUERY_MATCH_ROOM_ACK\020\350V\022\036\n\031S2S_"
-    "QUERY_BATTLE_ROOM_REQ\020\351V\022\036\n\031S2S_QUERY_BA"
-    "TTLE_ROOM_ACK\020\352V\022&\n!S2S_QUERY_ROOM_TO_MA"
-    "TCH_SHARD_REQ\020\353V\022\'\n\"S2S_QUERY_ROOM_TO_BA"
-    "TTLE_SHARD_REQ\020\354V\022)\n$S2S_CANCEL_MATCH_TO"
-    "_BATTLE_SHARD_REQ\020\356V\022*\n%S2S_PLAYER_ONLIN"
-    "E_TO_BATTLE_SHARD_REQ\020\360V\022\037\n\032S2S_NOTICE_M"
-    "ATCH_STATE_REQ\020\361V\022\035\n\030S2S_RESET_MATCH_ROO"
-    "M_REQ\020\362V", 2248);
+    "erid\030\006 \002(\r\022\017\n\007version\030\007 \002(\t\"H\n\023S2SMatchT"
+    "oClientAck\022\016\n\006result\030\001 \002(\r\022\017\n\007matchid\030\002 "
+    "\002(\r\022\020\n\010playerid\030\003 \002(\r\"\254\001\n\022S2SMatchToShar"
+    "dReq\022$\n\007pbgroup\030\001 \002(\0132\023.KFMsg.PBMatchGro"
+    "up\022\017\n\007matchid\030\002 \002(\r\022\022\n\nallowgroup\030\003 \002(\010\022"
+    "\020\n\010playerid\030\004 \002(\r\022\020\n\010serverid\030\005 \002(\r\022\026\n\016b"
+    "attleserverid\030\006 \002(\r\022\017\n\007version\030\007 \002(\t\"=\n\030"
+    "S2SCancelMatchToProxyReq\022\017\n\007matchid\030\001 \002("
+    "\r\022\020\n\010playerid\030\002 \002(\r\"=\n\030S2SCancelMatchToS"
+    "hardReq\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002"
+    "(\r\"Q\n\036S2SCancelMatchToBattleShardReq\022\016\n\006"
+    "roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\017\n\007groupid\030"
+    "\003 \002(\004\"\254\001\n\025S2SNoticeMatchRoomReq\022\017\n\007match"
+    "id\030\001 \002(\r\022\025\n\rbattleshardid\030\002 \002(\r\022\016\n\006campi"
+    "d\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\022\020\n\010serverid\030\005 "
+    "\002(\r\022\016\n\006roomid\030\006 \002(\004\022\n\n\002ip\030\007 \002(\t\022\014\n\004port\030"
+    "\010 \002(\r\022\r\n\005token\030\t \002(\t\"I\n\025S2SNoticeMatchRo"
+    "omAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n"
+    "\010playerid\030\003 \002(\r\"K\n\024S2SQueryMatchRoomReq\022"
+    "\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\022\020\n\010se"
+    "rverid\030\003 \002(\r\"R\n\033S2SQueryRoomToMatchShard"
+    "Req\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\022\020"
+    "\n\010serverid\030\003 \002(\r\"9\n\024S2SQueryMatchRoomAck"
+    "\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\"K\n\025S"
+    "2SQueryBattleRoomReq\022\016\n\006roomid\030\001 \002(\004\022\020\n\010"
+    "playerid\030\002 \002(\r\022\020\n\010serverid\030\003 \002(\r\"J\n\025S2SQ"
+    "ueryBattleRoomAck\022\020\n\010playerid\030\001 \002(\r\022\016\n\006r"
+    "oomid\030\002 \002(\004\022\017\n\007matchid\030\003 \002(\r\"R\n\034S2SQuery"
+    "RoomToBattleShardReq\022\016\n\006roomid\030\001 \002(\004\022\020\n\010"
+    "playerid\030\002 \002(\r\022\020\n\010serverid\030\003 \002(\r\"e\n\037S2SP"
+    "layerOnlineToBattleShardReq\022\016\n\006roomid\030\001 "
+    "\002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\022\020\n"
+    "\010serverid\030\004 \002(\r\";\n\026S2SNoticeMatchStateRe"
+    "q\022\020\n\010playerid\030\001 \002(\r\022\017\n\007matchid\030\002 \002(\r\"7\n\024"
+    "S2SResetMatchRoomReq\022\017\n\007matchid\030\001 \002(\r\022\016\n"
+    "\006roomid\030\002 \002(\004*\362\004\n\rMatchProtocol\022\033\n\026S2S_R"
+    "EGISTER_MATCH_REQ\020\335V\022\033\n\026S2S_MATCH_TO_PRO"
+    "XY_REQ\020\336V\022\033\n\026S2S_MATCH_TO_SHARD_REQ\020\337V\022\034"
+    "\n\027S2S_MATCH_TO_CLIENT_ACK\020\340V\022\"\n\035S2S_CANC"
+    "EL_MATCH_TO_PROXY_REQ\020\343V\022\"\n\035S2S_CANCEL_M"
+    "ATCH_TO_SHARD_REQ\020\344V\022\036\n\031S2S_NOTICE_MATCH"
+    "_ROOM_REQ\020\345V\022\036\n\031S2S_NOTICE_MATCH_ROOM_AC"
+    "K\020\346V\022\035\n\030S2S_QUERY_MATCH_ROOM_REQ\020\347V\022\035\n\030S"
+    "2S_QUERY_MATCH_ROOM_ACK\020\350V\022\036\n\031S2S_QUERY_"
+    "BATTLE_ROOM_REQ\020\351V\022\036\n\031S2S_QUERY_BATTLE_R"
+    "OOM_ACK\020\352V\022&\n!S2S_QUERY_ROOM_TO_MATCH_SH"
+    "ARD_REQ\020\353V\022\'\n\"S2S_QUERY_ROOM_TO_BATTLE_S"
+    "HARD_REQ\020\354V\022)\n$S2S_CANCEL_MATCH_TO_BATTL"
+    "E_SHARD_REQ\020\356V\022*\n%S2S_PLAYER_ONLINE_TO_B"
+    "ATTLE_SHARD_REQ\020\360V\022\037\n\032S2S_NOTICE_MATCH_S"
+    "TATE_REQ\020\361V\022\035\n\030S2S_RESET_MATCH_ROOM_REQ\020"
+    "\362V", 2282);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMatchMessage.proto", &protobuf_RegisterTypes);
   S2SRegisterMatchReq::default_instance_ = new S2SRegisterMatchReq();
@@ -852,6 +855,7 @@ const int S2SMatchToProxyReq::kAllowgroupFieldNumber;
 const int S2SMatchToProxyReq::kPlayeridFieldNumber;
 const int S2SMatchToProxyReq::kServeridFieldNumber;
 const int S2SMatchToProxyReq::kBattleserveridFieldNumber;
+const int S2SMatchToProxyReq::kVersionFieldNumber;
 #endif  // !_MSC_VER
 
 S2SMatchToProxyReq::S2SMatchToProxyReq()
@@ -877,6 +881,7 @@ void S2SMatchToProxyReq::SharedCtor() {
   playerid_ = 0u;
   serverid_ = 0u;
   battleserverid_ = 0u;
+  version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -885,6 +890,9 @@ S2SMatchToProxyReq::~S2SMatchToProxyReq() {
 }
 
 void S2SMatchToProxyReq::SharedDtor() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
   if (this != default_instance_) {
     delete pbgroup_;
   }
@@ -921,6 +929,11 @@ void S2SMatchToProxyReq::Clear() {
     playerid_ = 0u;
     serverid_ = 0u;
     battleserverid_ = 0u;
+    if (has_version()) {
+      if (version_ != &::google::protobuf::internal::kEmptyString) {
+        version_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1021,6 +1034,23 @@ bool S2SMatchToProxyReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(58)) goto parse_version;
+        break;
+      }
+
+      // required string version = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_version:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_version()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->version().data(), this->version().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1074,6 +1104,15 @@ void S2SMatchToProxyReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->battleserverid(), output);
   }
 
+  // required string version = 7;
+  if (has_version()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->version().data(), this->version().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      7, this->version(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1112,6 +1151,16 @@ void S2SMatchToProxyReq::SerializeWithCachedSizes(
   // required uint32 battleserverid = 6;
   if (has_battleserverid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->battleserverid(), target);
+  }
+
+  // required string version = 7;
+  if (has_version()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->version().data(), this->version().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        7, this->version(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1165,6 +1214,13 @@ int S2SMatchToProxyReq::ByteSize() const {
           this->battleserverid());
     }
 
+    // required string version = 7;
+    if (has_version()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->version());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1210,6 +1266,9 @@ void S2SMatchToProxyReq::MergeFrom(const S2SMatchToProxyReq& from) {
     if (from.has_battleserverid()) {
       set_battleserverid(from.battleserverid());
     }
+    if (from.has_version()) {
+      set_version(from.version());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1227,7 +1286,7 @@ void S2SMatchToProxyReq::CopyFrom(const S2SMatchToProxyReq& from) {
 }
 
 bool S2SMatchToProxyReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
+  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
 
   if (has_pbgroup()) {
     if (!this->pbgroup().IsInitialized()) return false;
@@ -1243,6 +1302,7 @@ void S2SMatchToProxyReq::Swap(S2SMatchToProxyReq* other) {
     std::swap(playerid_, other->playerid_);
     std::swap(serverid_, other->serverid_);
     std::swap(battleserverid_, other->battleserverid_);
+    std::swap(version_, other->version_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1556,6 +1616,7 @@ const int S2SMatchToShardReq::kAllowgroupFieldNumber;
 const int S2SMatchToShardReq::kPlayeridFieldNumber;
 const int S2SMatchToShardReq::kServeridFieldNumber;
 const int S2SMatchToShardReq::kBattleserveridFieldNumber;
+const int S2SMatchToShardReq::kVersionFieldNumber;
 #endif  // !_MSC_VER
 
 S2SMatchToShardReq::S2SMatchToShardReq()
@@ -1581,6 +1642,7 @@ void S2SMatchToShardReq::SharedCtor() {
   playerid_ = 0u;
   serverid_ = 0u;
   battleserverid_ = 0u;
+  version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1589,6 +1651,9 @@ S2SMatchToShardReq::~S2SMatchToShardReq() {
 }
 
 void S2SMatchToShardReq::SharedDtor() {
+  if (version_ != &::google::protobuf::internal::kEmptyString) {
+    delete version_;
+  }
   if (this != default_instance_) {
     delete pbgroup_;
   }
@@ -1625,6 +1690,11 @@ void S2SMatchToShardReq::Clear() {
     playerid_ = 0u;
     serverid_ = 0u;
     battleserverid_ = 0u;
+    if (has_version()) {
+      if (version_ != &::google::protobuf::internal::kEmptyString) {
+        version_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1725,6 +1795,23 @@ bool S2SMatchToShardReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(58)) goto parse_version;
+        break;
+      }
+
+      // required string version = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_version:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_version()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->version().data(), this->version().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1778,6 +1865,15 @@ void S2SMatchToShardReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->battleserverid(), output);
   }
 
+  // required string version = 7;
+  if (has_version()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->version().data(), this->version().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      7, this->version(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1816,6 +1912,16 @@ void S2SMatchToShardReq::SerializeWithCachedSizes(
   // required uint32 battleserverid = 6;
   if (has_battleserverid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->battleserverid(), target);
+  }
+
+  // required string version = 7;
+  if (has_version()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->version().data(), this->version().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        7, this->version(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1869,6 +1975,13 @@ int S2SMatchToShardReq::ByteSize() const {
           this->battleserverid());
     }
 
+    // required string version = 7;
+    if (has_version()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->version());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1914,6 +2027,9 @@ void S2SMatchToShardReq::MergeFrom(const S2SMatchToShardReq& from) {
     if (from.has_battleserverid()) {
       set_battleserverid(from.battleserverid());
     }
+    if (from.has_version()) {
+      set_version(from.version());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1931,7 +2047,7 @@ void S2SMatchToShardReq::CopyFrom(const S2SMatchToShardReq& from) {
 }
 
 bool S2SMatchToShardReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
+  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
 
   if (has_pbgroup()) {
     if (!this->pbgroup().IsInitialized()) return false;
@@ -1947,6 +2063,7 @@ void S2SMatchToShardReq::Swap(S2SMatchToShardReq* other) {
     std::swap(playerid_, other->playerid_);
     std::swap(serverid_, other->serverid_);
     std::swap(battleserverid_, other->battleserverid_);
+    std::swap(version_, other->version_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

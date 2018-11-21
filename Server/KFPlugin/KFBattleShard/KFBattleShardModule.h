@@ -118,11 +118,14 @@ namespace KFrame
         void RemoveBattleRoom( KFBattleRoom* kfroom );
 
     private:
-        // 战场列表
-        KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;
-
         // 数据库操作
         KFRedisDriver* _battle_redis_driver;
+
+        // 战场房间列表
+        KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;
+
+        // 版本号
+
     };
 }
 

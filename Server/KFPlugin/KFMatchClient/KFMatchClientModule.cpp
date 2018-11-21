@@ -79,7 +79,7 @@ namespace KFrame
         }
 
         // 开始匹配
-        auto result = ProcessStartMatch( player, kfmsg.matchid(), kfmsg.allowgroup(), battleserverid );
+        auto result = ProcessStartMatch( player, kfmsg.matchid(), kfmsg.allowgroup(), battleserverid, kfmsg.version() );
         if ( result != KFMsg::MatchRequestSuccess )
         {
             _kf_display->SendToGroup( player, result );
@@ -103,7 +103,7 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFMatchClientModule::ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid )
+    uint32 KFMatchClientModule::ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid, const std::string& version )
     {
         // 判断匹配是否存在
         auto kfsetting = _kf_match_config->FindMatchSetting( matchid );
@@ -166,6 +166,7 @@ namespace KFrame
         req.set_playerid( player->GetKeyID() );
         req.set_serverid( KFGlobal::Instance()->_app_id );
         req.set_battleserverid( battleserverid );
+        req.set_version( version );
         FormatMatchGroup( player, req.mutable_pbgroup() );
         auto ok = SendMessageToMatch( KFMsg::S2S_MATCH_TO_PROXY_REQ, &req );
         if ( !ok )

@@ -70,13 +70,14 @@ namespace KFrame
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
 
+        // 版本号
+        kfglobal->LoadVersion( "version" );
+
         // 初始化appid
-        auto strappid = params[ __KF_STRING__( appid ) ];
-        ParseAppId( strappid );
+        ParseAppId( params[ __KF_STRING__( appid ) ] );
 
         // 读取启动配置
-        auto strfile = params[ __KF_STRING__( startup ) ];
-        if ( !_kf_startup->InitStartup( strfile ) )
+        if ( !_kf_startup->InitStartup( params[ __KF_STRING__( startup ) ] ) )
         {
             return false;
         }
@@ -86,12 +87,10 @@ namespace KFrame
 #endif
 
         // 初始化服务类型
-        auto strservicetype = params[ __KF_STRING__( service ) ];
-        kfglobal->InitNetService( strservicetype );
+        kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
 
         // 初始化log
-        auto strlogtype = params[ __KF_STRING__( log ) ];
-        kfglobal->InitLogger( strlogtype );
+        kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
 
         // 加载插件
         if ( !_kf_startup->LoadPlugin() )
@@ -109,7 +108,7 @@ namespace KFrame
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        __LOG_INFO__( "[{}:{}:{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, kfglobal->GetVersion() );
 
         // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );

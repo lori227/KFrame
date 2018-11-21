@@ -44,6 +44,9 @@ namespace KFrame
     public:
         //////////////////////////////////////////////
         KFMap< uint32, uint32, KFChannelSetting > _kf_channel;
+
+        // 渠道开放列表
+        std::set< uint32 > _open_channel_list;
     };
 
 
