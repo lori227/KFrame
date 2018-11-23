@@ -36,7 +36,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGuildProxyModule ::HandleCreateGuildReq )
     {
         __PROTO_PARSE__( KFMsg::S2SCreateGuidReq );
-        auto guildid = KFUtility::Make64Guid( kfmsg.playerid() );
+        auto guildid = KFGlobal::Instance()->Make64Guid();
 
         auto shardid = _kf_cluster_proxy->FindMinObjectShard();
         if ( shardid == _invalid_int )

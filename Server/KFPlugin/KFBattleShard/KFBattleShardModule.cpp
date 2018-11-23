@@ -158,7 +158,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleRegisterServerToBattleShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterServerToBattleShardReq );
-        auto proxyid = __KF_HEAD_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
         auto strserverid = KFAppID::ToString( kfmsg.serverid() );
 
         __LOG_DEBUG__( "register version[{}] battle[{}|{}:{}|{}] req!", kfmsg.version(), strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );
@@ -182,7 +182,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBattleShardModule::HandleTellBattleRegisterToShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STellBattleRegisterToShardReq );
-        auto proxyid = __KF_HEAD_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
 
         auto strserverid = KFAppID::ToString( kfmsg.serverid() );
         __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] req!",
@@ -273,12 +273,12 @@ namespace KFrame
         if ( kfroom == nullptr )
         {
             kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
-            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount() );
+            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount(), kfmsg.version() );
             _kf_room_list.Insert( kfmsg.roomid(), kfroom );
         }
 
         // 设置路由信息
-        kfroom->_match_proxy_id = __KF_HEAD_ID__( kfguid );
+        kfroom->_match_proxy_id = __KF_HEAD_ID__( kfid );
         kfroom->_match_shard_id = kfmsg.matchshardid();
 
         {
@@ -346,7 +346,7 @@ namespace KFrame
             KFMsg::S2SResetMatchRoomReq req;
             req.set_matchid( kfmsg.matchid() );
             req.set_roomid( kfmsg.roomid() );
-            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.matchshardid(), KFMsg::S2S_RESET_MATCH_ROOM_REQ, &req );
+            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.matchshardid(), KFMsg::S2S_RESET_MATCH_ROOM_REQ, &req );
             return;
         }
 
@@ -511,7 +511,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_roomid( _invalid_int );
         ack.set_matchid( _invalid_int );
-        _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
+        _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_QUERY_BATTLE_ROOM_ACK, &ack );
         __LOG_DEBUG__( "player[{}] not in room[{}]!", kfmsg.playerid(), kfmsg.roomid() );
     }
 
@@ -636,7 +636,7 @@ namespace KFrame
             req.set_playerid( kfmsg.playerid() );
             req.set_roomid( KFUtility::ToValue< uint64 >( iter.first ) );
             KFProto::Parse( req.mutable_pbscore(), iter.second, KFCompressEnum::Compress );
-            _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
+            _kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_PLAYER_BATTLE_SCORE_REQ, &req );
         }
     }
 

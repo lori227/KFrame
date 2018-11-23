@@ -69,9 +69,6 @@ namespace KFrame
         // 删除一个字符串中的指定字符串
         static bool DelString( std::string& srcstring, const std::string& delstr, std::string& strnew );
 
-        // 生产guid
-        static uint64 Make64Guid( uint32 dataid );
-
         // 格式化标题
         static std::string FormatTitleText( const std::string& appname, const std::string& apptype, const std::string& appid );
 

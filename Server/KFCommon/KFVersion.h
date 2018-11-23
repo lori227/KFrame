@@ -36,9 +36,9 @@ namespace KFrame
         void FromString( std::string& strversion )
         {
             _str_version = strversion;
-            _client_version = KFUtility::SplitValue< uint32 >( strversion, "." );
-            _server_version = KFUtility::SplitValue< uint32 >( strversion, "." );
-            _battle_version = KFUtility::SplitValue< uint32 >( strversion, "." );
+            _client_version = KFUtility::SplitString( strversion, "." );
+            _server_version = KFUtility::SplitString( strversion, "." );
+            _battle_version = KFUtility::SplitString( strversion, "." );
             _build_version = KFUtility::SplitString( strversion, "." );
         }
 

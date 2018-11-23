@@ -162,7 +162,7 @@ namespace KFrame
             kfinvite = __KF_CREATE__( KFInviteGroup );
             kfinvite->_match_id = matchid;
             kfinvite->_max_count = maxcount;
-            kfinvite->_group_id = KFUtility::Make64Guid( player->GetKeyID() );
+            kfinvite->_group_id = KFGlobal::Instance()->Make64Guid();
             _invite_group_list.Insert( player->GetKeyID(), kfinvite );
         }
         else
@@ -450,7 +450,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SConsentInviteMatchGroupReq );
 
-        auto playerid = __KF_DATA_ID__( kfguid );
+        auto playerid = __KF_DATA_ID__( kfid );
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {

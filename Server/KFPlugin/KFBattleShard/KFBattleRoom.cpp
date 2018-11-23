@@ -30,12 +30,13 @@ namespace KFrame
     {
     }
 
-    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount )
+    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount, const std::string& version )
     {
         _match_id = matchid;
         _battle_room_id = roomid;
         _max_player_count = maxplayercount;
         _battle_server_id = battleserverid;
+        _battle_version = version;
 
         // 设置有效时间
         SetValidTime();
@@ -221,7 +222,7 @@ namespace KFrame
         _kf_battle_manage->AllocBattleServer( _battle_server_id, _battle_version, & _battle_server );
         if ( !_battle_server.IsValid() )
         {
-            __LOG_ERROR__( "room[{}] alloc battle server failed!", _battle_room_id );
+            __LOG_ERROR__( "version[{}] room[{}] alloc battle server failed!", _battle_version, _battle_room_id );
 
             // 通知玩家等待时间
             auto kfresult = _battle_redis_driver->QueryMap( "zrange {} 0 0 withscores", __KF_STRING__( battletime ) );
@@ -250,7 +251,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_DEBUG__( "room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_room_id,
+            __LOG_DEBUG__( "version[{}] room[{}] alloc battle[{}:{}:{}:{}] ok!", _battle_version, _battle_room_id,
                            _battle_server._server_id, _battle_server._proxy_id, _battle_server._ip, _battle_server._port );
 
             // 如果房间人数大于开启数量

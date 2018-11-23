@@ -45,7 +45,7 @@ namespace KFrame
     {
         _pb_player.CopyFrom( pbplayer );
 
-        auto temp = __TO_STRING__( KFUtility::Make64Guid( pbplayer.playerid() ) );
+        auto temp = __TO_STRING__( KFGlobal::Instance()->Make64Guid() );
         _token = KFCrypto::Md5Encode( temp.c_str() );
 
         _status = KFPlayerStatus::StatusEnterRoom;

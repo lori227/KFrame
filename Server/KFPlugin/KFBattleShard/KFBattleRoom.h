@@ -26,7 +26,7 @@ namespace KFrame
         ~KFBattleRoom();
 
         // 初始化
-        void InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount );
+        void InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount, const std::string& version );
 
         // 添加阵营
         KFBattleCamp* AddCamp( const KFMsg::PBBattleCamp* pbcamp );

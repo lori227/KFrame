@@ -1,6 +1,7 @@
 ﻿#include "KFUtility.h"
 #include "KFMacros.h"
 #include "KFDate.h"
+#include "KFAppID.h"
 
 #ifdef _WIN32
     #include <winsock2.h>
@@ -128,19 +129,6 @@ namespace KFrame
 
         strnew = srcstring.substr( 0, npos ) + srcstring.substr( npos + delstr.size(), std::string::npos );
         return true;
-    }
-
-
-    uint64 KFUtility::Make64Guid( uint32 dataid )
-    {
-        static uint32 _sequence = 0;
-
-        auto time = KFDate::GetTimeEx();
-        time &= 0xFFFFFFFF;		// 32位
-        dataid &= 0xFFFFFF;		// 24位
-        _sequence = ( _sequence + 1 ) & 0xFF; // 8位
-
-        return ( time << 32 ) | ( dataid << 8 ) | _sequence;
     }
 
     // 格式化标题
