@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_DEFINE_H__
 #define __KF_DEFINE_H__
 
-#include "KFGuid.h"
+#include "KFId.h"
 
 namespace google
 {
@@ -52,9 +52,9 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////
     // 网络函数
-    typedef std::function<void( const KFGuid& guid, const char* data, uint32 length )> KFMessageFunction;
-    typedef std::function<void( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )> KFNetFunction;
-    typedef std::function<bool( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )> KFTransmitFunction;
+    typedef std::function<void( const KFId& kfid, const char* data, uint32 length )> KFMessageFunction;
+    typedef std::function<void( const KFId& kfid, uint32 msgid, const char* data, uint32 length )> KFNetFunction;
+    typedef std::function<bool( const KFId& kfid, uint32 msgid, const char* data, uint32 length )> KFTransmitFunction;
     ////////////////////////////////////////////////////////////////////////
     // 客户端 连接 和 断开 回调函数
     typedef std::function< void( uint32 serverid, const std::string& servername, const std::string& servertype ) > KFClientLostFunction;

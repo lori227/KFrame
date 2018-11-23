@@ -61,7 +61,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleBattlePingReq )
     {
-        _kf_cluster_proxy->SendToClient( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_BATTLE_PING_ACK, nullptr, 0 );
+        _kf_cluster_proxy->SendToClient( __KF_HEAD_ID__( kfid ), KFMsg::S2S_BATTLE_PING_ACK, nullptr, 0 );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBattleProxyModule::HandleRegisterBattleServerReq )
@@ -124,7 +124,7 @@ namespace KFrame
         req.set_matchid( kfmsg.matchid() );
         req.set_roomid( kfmsg.roomid() );
         req.set_battleserverid( kfmsg.battleserverid() );
-        req.set_matchshardid( __KF_HEAD_ID__( kfguid ) );
+        req.set_matchshardid( __KF_HEAD_ID__( kfid ) );
         req.set_maxplayercount( kfmsg.maxplayercount() );
         req.set_version( kfmsg.version() );
         auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ, &req );

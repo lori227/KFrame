@@ -281,7 +281,7 @@ namespace KFrame
                 else
                 {
                     // 处理回调函数
-                    _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                    _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
                 }
 
                 // 每次处理200个消息
@@ -316,7 +316,7 @@ namespace KFrame
                 else
                 {
                     // 处理回调函数
-                    _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                    _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
                 }
 
                 // 每次处理200个消息

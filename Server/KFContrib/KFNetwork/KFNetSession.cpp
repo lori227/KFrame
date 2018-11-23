@@ -299,16 +299,16 @@ namespace KFrame
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
     {
-        message->_guid._head_id = _object_id;
+        message->_kfid._head_id = _object_id;
         bool ok = _send_queue.PushObject( message );
         if ( !ok )
         {
             if ( !_is_send_queue_full )
             {
                 _is_send_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] guid[{}:{}] failed!",
+                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] id[{}:{}] failed!",
                                   _session_id, _object_id, KFAppID::ToString( _session_id ),
-                                  message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
+                                  message->_msgid, __KF_HEAD_ID__( message->_kfid ), __KF_DATA_ID__( message->_kfid ) );
             }
         }
         else
@@ -321,16 +321,16 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        message->_guid._head_id = _object_id;
+        message->_kfid._head_id = _object_id;
         auto ok = _recv_queue.PushObject( message );
         if ( !ok )
         {
             if ( !_is_recv_queue_full )
             {
                 _is_recv_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] guid[{}:{}] failed!",
+                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] id[{}:{}] failed!",
                                   _session_id, _object_id, KFAppID::ToString( _session_id ),
-                                  message->_msgid, __KF_HEAD_ID__( message->_guid ), __KF_DATA_ID__( message->_guid ) );
+                                  message->_msgid, __KF_HEAD_ID__( message->_kfid ), __KF_DATA_ID__( message->_kfid ) );
             }
         }
         else

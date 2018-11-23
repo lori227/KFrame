@@ -274,14 +274,14 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
-  // required string version = 7;
+  // required bytes version = 7;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 7;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -525,14 +525,14 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
-  // required string version = 7;
+  // required bytes version = 7;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 7;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -958,14 +958,14 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // required string ip = 7;
+  // required bytes ip = 7;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 7;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -977,14 +977,14 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 port() const;
   inline void set_port(::google::protobuf::uint32 value);
 
-  // required string token = 9;
+  // required bytes token = 9;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 9;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -2216,7 +2216,7 @@ inline void S2SMatchToProxyReq::set_battleserverid(::google::protobuf::uint32 va
   battleserverid_ = value;
 }
 
-// required string version = 7;
+// required bytes version = 7;
 inline bool S2SMatchToProxyReq::has_version() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -2249,7 +2249,7 @@ inline void S2SMatchToProxyReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SMatchToProxyReq::set_version(const char* value, size_t size) {
+inline void S2SMatchToProxyReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -2508,7 +2508,7 @@ inline void S2SMatchToShardReq::set_battleserverid(::google::protobuf::uint32 va
   battleserverid_ = value;
 }
 
-// required string version = 7;
+// required bytes version = 7;
 inline bool S2SMatchToShardReq::has_version() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -2541,7 +2541,7 @@ inline void S2SMatchToShardReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SMatchToShardReq::set_version(const char* value, size_t size) {
+inline void S2SMatchToShardReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -2880,7 +2880,7 @@ inline void S2SNoticeMatchRoomReq::set_roomid(::google::protobuf::uint64 value) 
   roomid_ = value;
 }
 
-// required string ip = 7;
+// required bytes ip = 7;
 inline bool S2SNoticeMatchRoomReq::has_ip() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -2913,7 +2913,7 @@ inline void S2SNoticeMatchRoomReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SNoticeMatchRoomReq::set_ip(const char* value, size_t size) {
+inline void S2SNoticeMatchRoomReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -2972,7 +2972,7 @@ inline void S2SNoticeMatchRoomReq::set_port(::google::protobuf::uint32 value) {
   port_ = value;
 }
 
-// required string token = 9;
+// required bytes token = 9;
 inline bool S2SNoticeMatchRoomReq::has_token() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -3005,7 +3005,7 @@ inline void S2SNoticeMatchRoomReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SNoticeMatchRoomReq::set_token(const char* value, size_t size) {
+inline void S2SNoticeMatchRoomReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;

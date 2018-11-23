@@ -48,8 +48,8 @@ namespace KFrame
         virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message );
 
         // 给指定对象发送消息
-        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, google::protobuf::Message* message );
 
         // 给指定类型发送消息
         virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message );
@@ -104,7 +104,7 @@ namespace KFrame
 
     protected:
         // 消息处理函数
-        void HandleNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
         // 断线处理
         __KF_SERVER_LOST_FUNCTION__( OnServerLostHandle );

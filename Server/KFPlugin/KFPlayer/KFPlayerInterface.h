@@ -183,7 +183,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __CLIENT_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto playerid = __KF_DATA_ID__( kfguid ); \
+    auto playerid = __KF_DATA_ID__( kfid ); \
     auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );\
     if ( player == nullptr )\
     {\
@@ -200,7 +200,7 @@ namespace KFrame
 
 #define __ROUTE_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto playerid = __KF_DATA_ID__( kfguid ); \
+    auto playerid = __KF_DATA_ID__( kfid ); \
     auto player = _kf_player->FindPlayer( playerid );\
     if ( player == nullptr )\
     {\

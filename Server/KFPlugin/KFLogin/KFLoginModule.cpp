@@ -105,7 +105,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyReq );
 
-        auto gateid = __KF_HEAD_ID__( kfguid );
+        auto gateid = __KF_HEAD_ID__( kfid );
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();

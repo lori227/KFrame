@@ -440,25 +440,25 @@ void protobuf_AddDesc_KFFrameMessage_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\024KFFrameMessage.proto\022\005KFMsg\"g\n\nListenD"
-    "ata\022\r\n\005appid\030\001 \001(\r\022\017\n\007appname\030\002 \002(\t\022\017\n\007a"
-    "pptype\030\003 \002(\t\022\n\n\002ip\030\004 \002(\t\022\014\n\004port\030\005 \002(\r\022\016"
+    "ata\022\r\n\005appid\030\001 \001(\r\022\017\n\007appname\030\002 \002(\014\022\017\n\007a"
+    "pptype\030\003 \002(\014\022\n\n\002ip\030\004 \002(\014\022\014\n\004port\030\005 \002(\r\022\016"
     "\n\006zoneid\030\006 \001(\r\"8\n\023RegisterToServerReq\022!\n"
     "\006listen\030\001 \002(\0132\021.KFMsg.ListenData\"F\n\023Regi"
-    "sterToServerAck\022\017\n\007apptype\030\001 \002(\t\022\r\n\005appi"
-    "d\030\002 \002(\r\022\017\n\007appname\030\003 \002(\t\"c\n\024TellRegister"
-    "ToServer\022\022\n\nservername\030\001 \002(\t\022\024\n\014serverzo"
+    "sterToServerAck\022\017\n\007apptype\030\001 \002(\014\022\r\n\005appi"
+    "d\030\002 \002(\r\022\017\n\007appname\030\003 \002(\014\"c\n\024TellRegister"
+    "ToServer\022\022\n\nservername\030\001 \002(\014\022\024\n\014serverzo"
     "neid\030\002 \002(\r\022!\n\006listen\030\003 \002(\0132\021.KFMsg.Liste"
     "nData\"\205\001\n\030TellUnRegisterFromServer\022\022\n\nse"
-    "rvername\030\001 \002(\t\022\024\n\014serverzoneid\030\002 \002(\r\022\r\n\005"
-    "appid\030\003 \002(\r\022\017\n\007appname\030\004 \002(\t\022\017\n\007apptype\030"
-    "\005 \002(\t\022\016\n\006zoneid\030\006 \002(\r\"/\n\013PBRouteZone\022\016\n\006"
+    "rvername\030\001 \002(\014\022\024\n\014serverzoneid\030\002 \002(\r\022\r\n\005"
+    "appid\030\003 \002(\r\022\017\n\007appname\030\004 \002(\014\022\017\n\007apptype\030"
+    "\005 \002(\014\022\016\n\006zoneid\030\006 \002(\r\"/\n\013PBRouteZone\022\016\n\006"
     "zoneid\030\001 \002(\r\022\020\n\010serverid\030\002 \002(\r\"\?\n\027S2SReg"
     "isterRouteZoneReq\022$\n\010zonedata\030\001 \002(\0132\022.KF"
     "Msg.PBRouteZone\"@\n\030S2SRegisterRouteProxy"
     "Req\022$\n\010zonedata\030\001 \003(\0132\022.KFMsg.PBRouteZon"
     "e\"\\\n\026PBTransmitRouteMessage\022\020\n\010serverid\030"
     "\002 \002(\r\022\020\n\010playerid\030\003 \002(\r\022\r\n\005msgid\030\004 \002(\r\022\017"
-    "\n\007msgdata\030\005 \002(\t\"U\n\036S2STransmitRouteZoneM"
+    "\n\007msgdata\030\005 \002(\014\"U\n\036S2STransmitRouteZoneM"
     "essageReq\0223\n\014transmitdata\030\001 \002(\0132\035.KFMsg."
     "PBTransmitRouteMessage\"U\n\036S2STransmitRou"
     "teZoneMessageAck\0223\n\014transmitdata\030\001 \002(\0132\035"
@@ -468,11 +468,11 @@ void protobuf_AddDesc_KFFrameMessage_2eproto() {
     "\037S2STransmitRouteProxyMessageAck\0223\n\014tran"
     "smitdata\030\001 \002(\0132\035.KFMsg.PBTransmitRouteMe"
     "ssage\"u\n\tS2SLogReq\022\021\n\tlog_level\030\001 \002(\005\022\017\n"
-    "\007zone_id\030\002 \002(\005\022\020\n\010app_name\030\003 \002(\t\022\020\n\010app_"
-    "type\030\004 \002(\t\022\016\n\006app_id\030\005 \002(\005\022\020\n\010log_info\030\006"
-    " \002(\t\"\216\001\n\027S2SUpdateOnlineToDirReq\022\016\n\006zone"
-    "id\030\001 \002(\r\022\020\n\010zonename\030\002 \002(\t\022\023\n\013zonechanne"
-    "l\030\003 \002(\r\022\r\n\005appid\030\004 \002(\r\022\n\n\002ip\030\005 \002(\t\022\014\n\004po"
+    "\007zone_id\030\002 \002(\005\022\020\n\010app_name\030\003 \002(\014\022\020\n\010app_"
+    "type\030\004 \002(\014\022\016\n\006app_id\030\005 \002(\005\022\020\n\010log_info\030\006"
+    " \002(\014\"\216\001\n\027S2SUpdateOnlineToDirReq\022\016\n\006zone"
+    "id\030\001 \002(\r\022\020\n\010zonename\030\002 \002(\014\022\023\n\013zonechanne"
+    "l\030\003 \002(\r\022\r\n\005appid\030\004 \002(\r\022\n\n\002ip\030\005 \002(\014\022\014\n\004po"
     "rt\030\006 \002(\r\022\023\n\013onlinecount\030\007 \002(\r\"(\n\027S2SRemo"
     "veOnlineToDirReq\022\r\n\005appid\030\001 \002(\r*\340\003\n\rFram"
     "eProtocol\022\037\n\032S2S_REGISTER_TO_SERVER_REQ\020"
@@ -677,16 +677,13 @@ bool ListenData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string appname = 2;
+      // required bytes appname = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_appname:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -694,16 +691,13 @@ bool ListenData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string apptype = 3;
+      // required bytes apptype = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -711,16 +705,13 @@ bool ListenData::MergePartialFromCodedStream(
         break;
       }
 
-      // required string ip = 4;
+      // required bytes ip = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_ip:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_ip()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ip().data(), this->ip().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -783,30 +774,21 @@ void ListenData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->appid(), output);
   }
 
-  // required string appname = 2;
+  // required bytes appname = 2;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       2, this->appname(), output);
   }
 
-  // required string apptype = 3;
+  // required bytes apptype = 3;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       3, this->apptype(), output);
   }
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       4, this->ip(), output);
   }
 
@@ -833,33 +815,24 @@ void ListenData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->appid(), target);
   }
 
-  // required string appname = 2;
+  // required bytes appname = 2;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         2, this->appname(), target);
   }
 
-  // required string apptype = 3;
+  // required bytes apptype = 3;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->apptype(), target);
   }
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         4, this->ip(), target);
   }
 
@@ -891,24 +864,24 @@ int ListenData::ByteSize() const {
           this->appid());
     }
 
-    // required string appname = 2;
+    // required bytes appname = 2;
     if (has_appname()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->appname());
     }
 
-    // required string apptype = 3;
+    // required bytes apptype = 3;
     if (has_apptype()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->apptype());
     }
 
-    // required string ip = 4;
+    // required bytes ip = 4;
     if (has_ip()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->ip());
     }
 
@@ -1323,15 +1296,12 @@ bool RegisterToServerAck::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string apptype = 1;
+      // required bytes apptype = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1355,16 +1325,13 @@ bool RegisterToServerAck::MergePartialFromCodedStream(
         break;
       }
 
-      // required string appname = 3;
+      // required bytes appname = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_appname:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1390,12 +1357,9 @@ bool RegisterToServerAck::MergePartialFromCodedStream(
 
 void RegisterToServerAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string apptype = 1;
+  // required bytes apptype = 1;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       1, this->apptype(), output);
   }
 
@@ -1404,12 +1368,9 @@ void RegisterToServerAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->appid(), output);
   }
 
-  // required string appname = 3;
+  // required bytes appname = 3;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       3, this->appname(), output);
   }
 
@@ -1421,13 +1382,10 @@ void RegisterToServerAck::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* RegisterToServerAck::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string apptype = 1;
+  // required bytes apptype = 1;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         1, this->apptype(), target);
   }
 
@@ -1436,13 +1394,10 @@ void RegisterToServerAck::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->appid(), target);
   }
 
-  // required string appname = 3;
+  // required bytes appname = 3;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->appname(), target);
   }
 
@@ -1457,10 +1412,10 @@ int RegisterToServerAck::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string apptype = 1;
+    // required bytes apptype = 1;
     if (has_apptype()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->apptype());
     }
 
@@ -1471,10 +1426,10 @@ int RegisterToServerAck::ByteSize() const {
           this->appid());
     }
 
-    // required string appname = 3;
+    // required bytes appname = 3;
     if (has_appname()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->appname());
     }
 
@@ -1643,15 +1598,12 @@ bool TellRegisterToServer::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string servername = 1;
+      // required bytes servername = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_servername()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->servername().data(), this->servername().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1707,12 +1659,9 @@ bool TellRegisterToServer::MergePartialFromCodedStream(
 
 void TellRegisterToServer::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string servername = 1;
+  // required bytes servername = 1;
   if (has_servername()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->servername().data(), this->servername().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       1, this->servername(), output);
   }
 
@@ -1735,13 +1684,10 @@ void TellRegisterToServer::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* TellRegisterToServer::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string servername = 1;
+  // required bytes servername = 1;
   if (has_servername()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->servername().data(), this->servername().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         1, this->servername(), target);
   }
 
@@ -1768,10 +1714,10 @@ int TellRegisterToServer::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string servername = 1;
+    // required bytes servername = 1;
     if (has_servername()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->servername());
     }
 
@@ -1976,15 +1922,12 @@ bool TellUnRegisterFromServer::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string servername = 1;
+      // required bytes servername = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_servername()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->servername().data(), this->servername().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2024,16 +1967,13 @@ bool TellUnRegisterFromServer::MergePartialFromCodedStream(
         break;
       }
 
-      // required string appname = 4;
+      // required bytes appname = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_appname:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_appname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appname().data(), this->appname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2041,16 +1981,13 @@ bool TellUnRegisterFromServer::MergePartialFromCodedStream(
         break;
       }
 
-      // required string apptype = 5;
+      // required bytes apptype = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_apptype:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_apptype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->apptype().data(), this->apptype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2092,12 +2029,9 @@ bool TellUnRegisterFromServer::MergePartialFromCodedStream(
 
 void TellUnRegisterFromServer::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string servername = 1;
+  // required bytes servername = 1;
   if (has_servername()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->servername().data(), this->servername().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       1, this->servername(), output);
   }
 
@@ -2111,21 +2045,15 @@ void TellUnRegisterFromServer::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->appid(), output);
   }
 
-  // required string appname = 4;
+  // required bytes appname = 4;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       4, this->appname(), output);
   }
 
-  // required string apptype = 5;
+  // required bytes apptype = 5;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       5, this->apptype(), output);
   }
 
@@ -2142,13 +2070,10 @@ void TellUnRegisterFromServer::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* TellUnRegisterFromServer::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string servername = 1;
+  // required bytes servername = 1;
   if (has_servername()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->servername().data(), this->servername().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         1, this->servername(), target);
   }
 
@@ -2162,23 +2087,17 @@ void TellUnRegisterFromServer::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->appid(), target);
   }
 
-  // required string appname = 4;
+  // required bytes appname = 4;
   if (has_appname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appname().data(), this->appname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         4, this->appname(), target);
   }
 
-  // required string apptype = 5;
+  // required bytes apptype = 5;
   if (has_apptype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->apptype().data(), this->apptype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->apptype(), target);
   }
 
@@ -2198,10 +2117,10 @@ int TellUnRegisterFromServer::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string servername = 1;
+    // required bytes servername = 1;
     if (has_servername()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->servername());
     }
 
@@ -2219,17 +2138,17 @@ int TellUnRegisterFromServer::ByteSize() const {
           this->appid());
     }
 
-    // required string appname = 4;
+    // required bytes appname = 4;
     if (has_appname()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->appname());
     }
 
-    // required string apptype = 5;
+    // required bytes apptype = 5;
     if (has_apptype()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->apptype());
     }
 
@@ -3135,16 +3054,13 @@ bool PBTransmitRouteMessage::MergePartialFromCodedStream(
         break;
       }
 
-      // required string msgdata = 5;
+      // required bytes msgdata = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_msgdata:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_msgdata()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->msgdata().data(), this->msgdata().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3185,12 +3101,9 @@ void PBTransmitRouteMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->msgid(), output);
   }
 
-  // required string msgdata = 5;
+  // required bytes msgdata = 5;
   if (has_msgdata()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->msgdata().data(), this->msgdata().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       5, this->msgdata(), output);
   }
 
@@ -3217,13 +3130,10 @@ void PBTransmitRouteMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->msgid(), target);
   }
 
-  // required string msgdata = 5;
+  // required bytes msgdata = 5;
   if (has_msgdata()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->msgdata().data(), this->msgdata().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->msgdata(), target);
   }
 
@@ -3259,10 +3169,10 @@ int PBTransmitRouteMessage::ByteSize() const {
           this->msgid());
     }
 
-    // required string msgdata = 5;
+    // required bytes msgdata = 5;
     if (has_msgdata()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->msgdata());
     }
 
@@ -4353,16 +4263,13 @@ bool S2SLogReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string app_name = 3;
+      // required bytes app_name = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_app_name:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_app_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->app_name().data(), this->app_name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4370,16 +4277,13 @@ bool S2SLogReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string app_type = 4;
+      // required bytes app_type = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_app_type:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_app_type()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->app_type().data(), this->app_type().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4403,16 +4307,13 @@ bool S2SLogReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string log_info = 6;
+      // required bytes log_info = 6;
       case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_log_info:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_log_info()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->log_info().data(), this->log_info().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4448,21 +4349,15 @@ void S2SLogReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->zone_id(), output);
   }
 
-  // required string app_name = 3;
+  // required bytes app_name = 3;
   if (has_app_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->app_name().data(), this->app_name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       3, this->app_name(), output);
   }
 
-  // required string app_type = 4;
+  // required bytes app_type = 4;
   if (has_app_type()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->app_type().data(), this->app_type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       4, this->app_type(), output);
   }
 
@@ -4471,12 +4366,9 @@ void S2SLogReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->app_id(), output);
   }
 
-  // required string log_info = 6;
+  // required bytes log_info = 6;
   if (has_log_info()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->log_info().data(), this->log_info().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       6, this->log_info(), output);
   }
 
@@ -4498,23 +4390,17 @@ void S2SLogReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->zone_id(), target);
   }
 
-  // required string app_name = 3;
+  // required bytes app_name = 3;
   if (has_app_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->app_name().data(), this->app_name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->app_name(), target);
   }
 
-  // required string app_type = 4;
+  // required bytes app_type = 4;
   if (has_app_type()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->app_type().data(), this->app_type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         4, this->app_type(), target);
   }
 
@@ -4523,13 +4409,10 @@ void S2SLogReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->app_id(), target);
   }
 
-  // required string log_info = 6;
+  // required bytes log_info = 6;
   if (has_log_info()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->log_info().data(), this->log_info().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         6, this->log_info(), target);
   }
 
@@ -4558,17 +4441,17 @@ int S2SLogReq::ByteSize() const {
           this->zone_id());
     }
 
-    // required string app_name = 3;
+    // required bytes app_name = 3;
     if (has_app_name()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->app_name());
     }
 
-    // required string app_type = 4;
+    // required bytes app_type = 4;
     if (has_app_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->app_type());
     }
 
@@ -4579,10 +4462,10 @@ int S2SLogReq::ByteSize() const {
           this->app_id());
     }
 
-    // required string log_info = 6;
+    // required bytes log_info = 6;
     if (has_log_info()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->log_info());
     }
 
@@ -4793,16 +4676,13 @@ bool S2SUpdateOnlineToDirReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string zonename = 2;
+      // required bytes zonename = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_zonename:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_zonename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->zonename().data(), this->zonename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4842,16 +4722,13 @@ bool S2SUpdateOnlineToDirReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string ip = 5;
+      // required bytes ip = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_ip:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_ip()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ip().data(), this->ip().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4914,12 +4791,9 @@ void S2SUpdateOnlineToDirReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->zoneid(), output);
   }
 
-  // required string zonename = 2;
+  // required bytes zonename = 2;
   if (has_zonename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->zonename().data(), this->zonename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       2, this->zonename(), output);
   }
 
@@ -4933,12 +4807,9 @@ void S2SUpdateOnlineToDirReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->appid(), output);
   }
 
-  // required string ip = 5;
+  // required bytes ip = 5;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       5, this->ip(), output);
   }
 
@@ -4965,13 +4836,10 @@ void S2SUpdateOnlineToDirReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->zoneid(), target);
   }
 
-  // required string zonename = 2;
+  // required bytes zonename = 2;
   if (has_zonename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->zonename().data(), this->zonename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         2, this->zonename(), target);
   }
 
@@ -4985,13 +4853,10 @@ void S2SUpdateOnlineToDirReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->appid(), target);
   }
 
-  // required string ip = 5;
+  // required bytes ip = 5;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->ip(), target);
   }
 
@@ -5023,10 +4888,10 @@ int S2SUpdateOnlineToDirReq::ByteSize() const {
           this->zoneid());
     }
 
-    // required string zonename = 2;
+    // required bytes zonename = 2;
     if (has_zonename()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->zonename());
     }
 
@@ -5044,10 +4909,10 @@ int S2SUpdateOnlineToDirReq::ByteSize() const {
           this->appid());
     }
 
-    // required string ip = 5;
+    // required bytes ip = 5;
     if (has_ip()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->ip());
     }
 

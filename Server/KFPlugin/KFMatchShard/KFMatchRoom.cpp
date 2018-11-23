@@ -27,7 +27,7 @@ namespace KFrame
         _match_id = _kf_match_queue->_match_id;
         _battle_server_id = battleserverid;
         _battle_version = version;
-        _room_id = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
+        _room_id = KFGlobal::Instance()->Make64Guid();
 
         // 开启创建定时器
         _create_timer.StartTimer( 1, 10000 );

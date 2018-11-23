@@ -222,14 +222,14 @@ class LIBPROTOC_EXPORT S2SAllocBattleIdReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string ip = 1;
+  // required bytes ip = 1;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 1;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -408,14 +408,14 @@ class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string ip = 2;
+  // required bytes ip = 2;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 2;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -441,14 +441,14 @@ class LIBPROTOC_EXPORT S2SRegisterBattleServerReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 battleshardid() const;
   inline void set_battleshardid(::google::protobuf::uint32 value);
 
-  // required string version = 6;
+  // required bytes version = 6;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 6;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -642,14 +642,14 @@ class LIBPROTOC_EXPORT S2SRegisterServerToBattleShardReq : public ::google::prot
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string ip = 2;
+  // required bytes ip = 2;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 2;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -668,14 +668,14 @@ class LIBPROTOC_EXPORT S2SRegisterServerToBattleShardReq : public ::google::prot
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // required string version = 5;
+  // required bytes version = 5;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 5;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -781,14 +781,14 @@ class LIBPROTOC_EXPORT S2STellBattleRegisterToShardReq : public ::google::protob
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // required string ip = 3;
+  // required bytes ip = 3;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 3;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -800,14 +800,14 @@ class LIBPROTOC_EXPORT S2STellBattleRegisterToShardReq : public ::google::protob
   inline ::google::protobuf::uint32 port() const;
   inline void set_port(::google::protobuf::uint32 value);
 
-  // required string version = 5;
+  // required bytes version = 5;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 5;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -1009,14 +1009,14 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleProxyReq : public ::google::protobuf
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
-  // required string version = 5;
+  // required bytes version = 5;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 5;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -1143,14 +1143,14 @@ class LIBPROTOC_EXPORT S2SCreateRoomToBattleShardReq : public ::google::protobuf
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
-  // required string version = 6;
+  // required bytes version = 6;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 6;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -2119,14 +2119,14 @@ class LIBPROTOC_EXPORT S2SPlayerEnterBattleRoomReq : public ::google::protobuf::
   inline ::KFMsg::PBBattlePlayer* release_player();
   inline void set_allocated_player(::KFMsg::PBBattlePlayer* player);
 
-  // required string token = 3;
+  // required bytes token = 3;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 3;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -3845,14 +3845,14 @@ class LIBPROTOC_EXPORT S2STellBattleRoomFinishReq : public ::google::protobuf::M
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -4141,14 +4141,14 @@ class LIBPROTOC_EXPORT S2SBattleRoomScoreBalanceAck : public ::google::protobuf:
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string reward = 3;
+  // required bytes reward = 3;
   inline bool has_reward() const;
   inline void clear_reward();
   static const int kRewardFieldNumber = 3;
   inline const ::std::string& reward() const;
   inline void set_reward(const ::std::string& value);
   inline void set_reward(const char* value);
-  inline void set_reward(const char* value, size_t size);
+  inline void set_reward(const void* value, size_t size);
   inline ::std::string* mutable_reward();
   inline ::std::string* release_reward();
   inline void set_allocated_reward(::std::string* reward);
@@ -4620,14 +4620,14 @@ class LIBPROTOC_EXPORT S2STellRoomFinishToBattleShardReq : public ::google::prot
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string ip = 3;
+  // required bytes ip = 3;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 3;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -4838,7 +4838,7 @@ class LIBPROTOC_EXPORT S2SResetBattleRoomReq : public ::google::protobuf::Messag
 
 // S2SAllocBattleIdReq
 
-// required string ip = 1;
+// required bytes ip = 1;
 inline bool S2SAllocBattleIdReq::has_ip() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4871,7 +4871,7 @@ inline void S2SAllocBattleIdReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SAllocBattleIdReq::set_ip(const char* value, size_t size) {
+inline void S2SAllocBattleIdReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -4982,7 +4982,7 @@ inline void S2SRegisterBattleServerReq::set_serverid(::google::protobuf::uint32 
   serverid_ = value;
 }
 
-// required string ip = 2;
+// required bytes ip = 2;
 inline bool S2SRegisterBattleServerReq::has_ip() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5015,7 +5015,7 @@ inline void S2SRegisterBattleServerReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SRegisterBattleServerReq::set_ip(const char* value, size_t size) {
+inline void S2SRegisterBattleServerReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -5118,7 +5118,7 @@ inline void S2SRegisterBattleServerReq::set_battleshardid(::google::protobuf::ui
   battleshardid_ = value;
 }
 
-// required string version = 6;
+// required bytes version = 6;
 inline bool S2SRegisterBattleServerReq::has_version() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -5151,7 +5151,7 @@ inline void S2SRegisterBattleServerReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SRegisterBattleServerReq::set_version(const char* value, size_t size) {
+inline void S2SRegisterBattleServerReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -5262,7 +5262,7 @@ inline void S2SRegisterServerToBattleShardReq::set_serverid(::google::protobuf::
   serverid_ = value;
 }
 
-// required string ip = 2;
+// required bytes ip = 2;
 inline bool S2SRegisterServerToBattleShardReq::has_ip() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5295,7 +5295,7 @@ inline void S2SRegisterServerToBattleShardReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SRegisterServerToBattleShardReq::set_ip(const char* value, size_t size) {
+inline void S2SRegisterServerToBattleShardReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -5376,7 +5376,7 @@ inline void S2SRegisterServerToBattleShardReq::set_roomid(::google::protobuf::ui
   roomid_ = value;
 }
 
-// required string version = 5;
+// required bytes version = 5;
 inline bool S2SRegisterServerToBattleShardReq::has_version() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -5409,7 +5409,7 @@ inline void S2SRegisterServerToBattleShardReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SRegisterServerToBattleShardReq::set_version(const char* value, size_t size) {
+inline void S2SRegisterServerToBattleShardReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -5494,7 +5494,7 @@ inline void S2STellBattleRegisterToShardReq::set_roomid(::google::protobuf::uint
   roomid_ = value;
 }
 
-// required string ip = 3;
+// required bytes ip = 3;
 inline bool S2STellBattleRegisterToShardReq::has_ip() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -5527,7 +5527,7 @@ inline void S2STellBattleRegisterToShardReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2STellBattleRegisterToShardReq::set_ip(const char* value, size_t size) {
+inline void S2STellBattleRegisterToShardReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -5586,7 +5586,7 @@ inline void S2STellBattleRegisterToShardReq::set_port(::google::protobuf::uint32
   port_ = value;
 }
 
-// required string version = 5;
+// required bytes version = 5;
 inline bool S2STellBattleRegisterToShardReq::has_version() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -5619,7 +5619,7 @@ inline void S2STellBattleRegisterToShardReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2STellBattleRegisterToShardReq::set_version(const char* value, size_t size) {
+inline void S2STellBattleRegisterToShardReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -5774,7 +5774,7 @@ inline void S2SCreateRoomToBattleProxyReq::set_battleserverid(::google::protobuf
   battleserverid_ = value;
 }
 
-// required string version = 5;
+// required bytes version = 5;
 inline bool S2SCreateRoomToBattleProxyReq::has_version() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -5807,7 +5807,7 @@ inline void S2SCreateRoomToBattleProxyReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SCreateRoomToBattleProxyReq::set_version(const char* value, size_t size) {
+inline void S2SCreateRoomToBattleProxyReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -5958,7 +5958,7 @@ inline void S2SCreateRoomToBattleShardReq::set_battleserverid(::google::protobuf
   battleserverid_ = value;
 }
 
-// required string version = 6;
+// required bytes version = 6;
 inline bool S2SCreateRoomToBattleShardReq::has_version() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -5991,7 +5991,7 @@ inline void S2SCreateRoomToBattleShardReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void S2SCreateRoomToBattleShardReq::set_version(const char* value, size_t size) {
+inline void S2SCreateRoomToBattleShardReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -6756,7 +6756,7 @@ inline void S2SPlayerEnterBattleRoomReq::set_allocated_player(::KFMsg::PBBattleP
   }
 }
 
-// required string token = 3;
+// required bytes token = 3;
 inline bool S2SPlayerEnterBattleRoomReq::has_token() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -6789,7 +6789,7 @@ inline void S2SPlayerEnterBattleRoomReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SPlayerEnterBattleRoomReq::set_token(const char* value, size_t size) {
+inline void S2SPlayerEnterBattleRoomReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -7972,7 +7972,7 @@ inline void S2STellBattleRoomFinishReq::set_serverid(::google::protobuf::uint32 
   serverid_ = value;
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool S2STellBattleRoomFinishReq::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -8005,7 +8005,7 @@ inline void S2STellBattleRoomFinishReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2STellBattleRoomFinishReq::set_ip(const char* value, size_t size) {
+inline void S2STellBattleRoomFinishReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -8202,7 +8202,7 @@ inline void S2SBattleRoomScoreBalanceAck::set_playerid(::google::protobuf::uint3
   playerid_ = value;
 }
 
-// required string reward = 3;
+// required bytes reward = 3;
 inline bool S2SBattleRoomScoreBalanceAck::has_reward() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -8235,7 +8235,7 @@ inline void S2SBattleRoomScoreBalanceAck::set_reward(const char* value) {
   }
   reward_->assign(value);
 }
-inline void S2SBattleRoomScoreBalanceAck::set_reward(const char* value, size_t size) {
+inline void S2SBattleRoomScoreBalanceAck::set_reward(const void* value, size_t size) {
   set_has_reward();
   if (reward_ == &::google::protobuf::internal::kEmptyString) {
     reward_ = new ::std::string;
@@ -8544,7 +8544,7 @@ inline void S2STellRoomFinishToBattleShardReq::set_serverid(::google::protobuf::
   serverid_ = value;
 }
 
-// required string ip = 3;
+// required bytes ip = 3;
 inline bool S2STellRoomFinishToBattleShardReq::has_ip() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -8577,7 +8577,7 @@ inline void S2STellRoomFinishToBattleShardReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2STellRoomFinishToBattleShardReq::set_ip(const char* value, size_t size) {
+inline void S2STellRoomFinishToBattleShardReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;

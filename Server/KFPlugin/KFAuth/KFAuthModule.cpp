@@ -37,9 +37,6 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthLogin )
     {
-        // 判断ip黑名单
-        //authjson[ __KF_STRING__( ip ) ] = ip;
-
         // 渠道验证
         auto authdata = _kf_channel->AuthChannelLogin( data );
 

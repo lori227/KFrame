@@ -366,14 +366,14 @@ class LIBPROTOC_EXPORT S2STransmitMessageReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -466,14 +466,14 @@ class LIBPROTOC_EXPORT S2SBroadcastMessageReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 2;
+  // required bytes msgdata = 2;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 2;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -563,14 +563,14 @@ class LIBPROTOC_EXPORT S2SBroadcastToWord : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 2;
+  // required bytes msgdata = 2;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 2;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -660,14 +660,14 @@ class LIBPROTOC_EXPORT S2SBroadcastToGame : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 2;
+  // required bytes msgdata = 2;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 2;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -757,14 +757,14 @@ class LIBPROTOC_EXPORT S2SBroadcastToGate : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 2;
+  // required bytes msgdata = 2;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 2;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -861,14 +861,14 @@ class LIBPROTOC_EXPORT S2STransmitToPlayer : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -961,14 +961,14 @@ class LIBPROTOC_EXPORT S2STransmitToServer : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -1150,14 +1150,14 @@ class LIBPROTOC_EXPORT S2STransmitToDataShardReq : public ::google::protobuf::Me
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -1725,26 +1725,26 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required string ip = 3;
+  // required bytes ip = 3;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 3;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -1952,14 +1952,14 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string token = 1;
+  // required bytes token = 1;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 1;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -1985,14 +1985,14 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 channel() const;
   inline void set_channel(::google::protobuf::uint32 value);
 
-  // required string account = 5;
+  // required bytes account = 5;
   inline bool has_account() const;
   inline void clear_account();
   static const int kAccountFieldNumber = 5;
   inline const ::std::string& account() const;
   inline void set_account(const ::std::string& value);
   inline void set_account(const char* value);
-  inline void set_account(const char* value, size_t size);
+  inline void set_account(const void* value, size_t size);
   inline ::std::string* mutable_account();
   inline ::std::string* release_account();
   inline void set_allocated_account(::std::string* account);
@@ -2883,26 +2883,26 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameReq : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string oldname = 2;
+  // required bytes oldname = 2;
   inline bool has_oldname() const;
   inline void clear_oldname();
   static const int kOldnameFieldNumber = 2;
   inline const ::std::string& oldname() const;
   inline void set_oldname(const ::std::string& value);
   inline void set_oldname(const char* value);
-  inline void set_oldname(const char* value, size_t size);
+  inline void set_oldname(const void* value, size_t size);
   inline ::std::string* mutable_oldname();
   inline ::std::string* release_oldname();
   inline void set_allocated_oldname(::std::string* oldname);
 
-  // required string newname = 3;
+  // required bytes newname = 3;
   inline bool has_newname() const;
   inline void clear_newname();
   static const int kNewnameFieldNumber = 3;
   inline const ::std::string& newname() const;
   inline void set_newname(const ::std::string& value);
   inline void set_newname(const char* value);
-  inline void set_newname(const char* value, size_t size);
+  inline void set_newname(const void* value, size_t size);
   inline ::std::string* mutable_newname();
   inline ::std::string* release_newname();
   inline void set_allocated_newname(::std::string* newname);
@@ -2995,26 +2995,26 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameAck : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string oldname = 2;
+  // required bytes oldname = 2;
   inline bool has_oldname() const;
   inline void clear_oldname();
   static const int kOldnameFieldNumber = 2;
   inline const ::std::string& oldname() const;
   inline void set_oldname(const ::std::string& value);
   inline void set_oldname(const char* value);
-  inline void set_oldname(const char* value, size_t size);
+  inline void set_oldname(const void* value, size_t size);
   inline ::std::string* mutable_oldname();
   inline ::std::string* release_oldname();
   inline void set_allocated_oldname(::std::string* oldname);
 
-  // required string newname = 3;
+  // required bytes newname = 3;
   inline bool has_newname() const;
   inline void clear_newname();
   static const int kNewnameFieldNumber = 3;
   inline const ::std::string& newname() const;
   inline void set_newname(const ::std::string& value);
   inline void set_newname(const char* value);
-  inline void set_newname(const char* value, size_t size);
+  inline void set_newname(const void* value, size_t size);
   inline ::std::string* mutable_newname();
   inline ::std::string* release_newname();
   inline void set_allocated_newname(::std::string* newname);
@@ -3117,14 +3117,14 @@ class LIBPROTOC_EXPORT S2SCreateRoleReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string newname = 2;
+  // required bytes newname = 2;
   inline bool has_newname() const;
   inline void clear_newname();
   static const int kNewnameFieldNumber = 2;
   inline const ::std::string& newname() const;
   inline void set_newname(const ::std::string& value);
   inline void set_newname(const char* value);
-  inline void set_newname(const char* value, size_t size);
+  inline void set_newname(const void* value, size_t size);
   inline ::std::string* mutable_newname();
   inline ::std::string* release_newname();
   inline void set_allocated_newname(::std::string* newname);
@@ -3244,14 +3244,14 @@ class LIBPROTOC_EXPORT S2SCreateRoleAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string newname = 2;
+  // required bytes newname = 2;
   inline bool has_newname() const;
   inline void clear_newname();
   static const int kNewnameFieldNumber = 2;
   inline const ::std::string& newname() const;
   inline void set_newname(const ::std::string& value);
   inline void set_newname(const char* value);
-  inline void set_newname(const char* value, size_t size);
+  inline void set_newname(const void* value, size_t size);
   inline ::std::string* mutable_newname();
   inline ::std::string* release_newname();
   inline void set_allocated_newname(::std::string* newname);
@@ -4811,14 +4811,14 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 targetplayerid() const;
   inline void set_targetplayerid(::google::protobuf::uint32 value);
 
-  // required string message = 3;
+  // required bytes message = 3;
   inline bool has_message() const;
   inline void clear_message();
   static const int kMessageFieldNumber = 3;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
-  inline void set_message(const char* value, size_t size);
+  inline void set_message(const void* value, size_t size);
   inline ::std::string* mutable_message();
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
@@ -4830,14 +4830,14 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string targetname = 5;
+  // required bytes targetname = 5;
   inline bool has_targetname() const;
   inline void clear_targetname();
   static const int kTargetnameFieldNumber = 5;
   inline const ::std::string& targetname() const;
   inline void set_targetname(const ::std::string& value);
   inline void set_targetname(const char* value);
-  inline void set_targetname(const char* value, size_t size);
+  inline void set_targetname(const void* value, size_t size);
   inline ::std::string* mutable_targetname();
   inline ::std::string* release_targetname();
   inline void set_allocated_targetname(::std::string* targetname);
@@ -5320,14 +5320,14 @@ class LIBPROTOC_EXPORT S2SAddFriendReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string targetname = 4;
+  // required bytes targetname = 4;
   inline bool has_targetname() const;
   inline void clear_targetname();
   static const int kTargetnameFieldNumber = 4;
   inline const ::std::string& targetname() const;
   inline void set_targetname(const ::std::string& value);
   inline void set_targetname(const char* value);
-  inline void set_targetname(const char* value, size_t size);
+  inline void set_targetname(const void* value, size_t size);
   inline ::std::string* mutable_targetname();
   inline ::std::string* release_targetname();
   inline void set_allocated_targetname(::std::string* targetname);
@@ -5734,14 +5734,14 @@ class LIBPROTOC_EXPORT S2SQueryBasicReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string name = 2;
+  // required bytes name = 2;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 2;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -7129,14 +7129,14 @@ class LIBPROTOC_EXPORT S2SReceiveInviteMatchGroupReq : public ::google::protobuf
   inline ::KFMsg::PBObject* release_inviter();
   inline void set_allocated_inviter(::KFMsg::PBObject* inviter);
 
-  // required string source = 4;
+  // required bytes source = 4;
   inline bool has_source() const;
   inline void clear_source();
   static const int kSourceFieldNumber = 4;
   inline const ::std::string& source() const;
   inline void set_source(const ::std::string& value);
   inline void set_source(const char* value);
-  inline void set_source(const char* value, size_t size);
+  inline void set_source(const void* value, size_t size);
   inline ::std::string* mutable_source();
   inline ::std::string* release_source();
   inline void set_allocated_source(::std::string* source);
@@ -7162,14 +7162,14 @@ class LIBPROTOC_EXPORT S2SReceiveInviteMatchGroupReq : public ::google::protobuf
   inline ::google::protobuf::uint32 inviterserverid() const;
   inline void set_inviterserverid(::google::protobuf::uint32 value);
 
-  // required string playername = 8;
+  // required bytes playername = 8;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 8;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
@@ -8331,14 +8331,14 @@ class LIBPROTOC_EXPORT S2SConsentApplyMatchGroupAck : public ::google::protobuf:
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string playername = 5;
+  // required bytes playername = 5;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 5;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
@@ -8638,14 +8638,14 @@ class LIBPROTOC_EXPORT S2SUpdateGroupMemberReq : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 memberid() const;
   inline void set_memberid(::google::protobuf::uint32 value);
 
-  // required string dataname = 3;
+  // required bytes dataname = 3;
   inline bool has_dataname() const;
   inline void clear_dataname();
   static const int kDatanameFieldNumber = 3;
   inline const ::std::string& dataname() const;
   inline void set_dataname(const ::std::string& value);
   inline void set_dataname(const char* value);
-  inline void set_dataname(const char* value, size_t size);
+  inline void set_dataname(const void* value, size_t size);
   inline ::std::string* mutable_dataname();
   inline ::std::string* release_dataname();
   inline void set_allocated_dataname(::std::string* dataname);
@@ -8750,14 +8750,14 @@ class LIBPROTOC_EXPORT S2SUpdateGroupMemberAck : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 memberid() const;
   inline void set_memberid(::google::protobuf::uint32 value);
 
-  // required string dataname = 2;
+  // required bytes dataname = 2;
   inline bool has_dataname() const;
   inline void clear_dataname();
   static const int kDatanameFieldNumber = 2;
   inline const ::std::string& dataname() const;
   inline void set_dataname(const ::std::string& value);
   inline void set_dataname(const char* value);
-  inline void set_dataname(const char* value, size_t size);
+  inline void set_dataname(const void* value, size_t size);
   inline ::std::string* mutable_dataname();
   inline ::std::string* release_dataname();
   inline void set_allocated_dataname(::std::string* dataname);
@@ -9987,26 +9987,26 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string guildname = 4;
+  // required bytes guildname = 4;
   inline bool has_guildname() const;
   inline void clear_guildname();
   static const int kGuildnameFieldNumber = 4;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
-  inline void set_guildname(const char* value, size_t size);
+  inline void set_guildname(const void* value, size_t size);
   inline ::std::string* mutable_guildname();
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
@@ -10018,14 +10018,14 @@ class LIBPROTOC_EXPORT S2SCreateGuidReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 6;
+  // optional bytes manifesto = 6;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
   static const int kManifestoFieldNumber = 6;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
-  inline void set_manifesto(const char* value, size_t size);
+  inline void set_manifesto(const void* value, size_t size);
   inline ::std::string* mutable_manifesto();
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
@@ -10134,26 +10134,26 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string guildname = 4;
+  // required bytes guildname = 4;
   inline bool has_guildname() const;
   inline void clear_guildname();
   static const int kGuildnameFieldNumber = 4;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
-  inline void set_guildname(const char* value, size_t size);
+  inline void set_guildname(const void* value, size_t size);
   inline ::std::string* mutable_guildname();
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
@@ -10165,14 +10165,14 @@ class LIBPROTOC_EXPORT S2SCreateGuildToShardReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 6;
+  // optional bytes manifesto = 6;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
   static const int kManifestoFieldNumber = 6;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
-  inline void set_manifesto(const char* value, size_t size);
+  inline void set_manifesto(const void* value, size_t size);
   inline ::std::string* mutable_manifesto();
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
@@ -10305,14 +10305,14 @@ class LIBPROTOC_EXPORT S2SCreateGuildAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 5;
+  // optional bytes manifesto = 5;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
   static const int kManifestoFieldNumber = 5;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
-  inline void set_manifesto(const char* value, size_t size);
+  inline void set_manifesto(const void* value, size_t size);
   inline ::std::string* mutable_manifesto();
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
@@ -12442,14 +12442,14 @@ class LIBPROTOC_EXPORT S2SSearchGuildByNameReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string guildname = 1;
+  // required bytes guildname = 1;
   inline bool has_guildname() const;
   inline void clear_guildname();
   static const int kGuildnameFieldNumber = 1;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
-  inline void set_guildname(const char* value, size_t size);
+  inline void set_guildname(const void* value, size_t size);
   inline ::std::string* mutable_guildname();
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
@@ -12563,14 +12563,14 @@ class LIBPROTOC_EXPORT S2SSetGuildSwitchReq : public ::google::protobuf::Message
   inline ::google::protobuf::uint64 guildid() const;
   inline void set_guildid(::google::protobuf::uint64 value);
 
-  // required string type = 3;
+  // required bytes type = 3;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 3;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -13200,14 +13200,14 @@ class LIBPROTOC_EXPORT S2SSendChatToServer : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -13219,14 +13219,14 @@ class LIBPROTOC_EXPORT S2SSendChatToServer : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 isvoice() const;
   inline void set_isvoice(::google::protobuf::uint32 value);
 
-  // required string playername = 3;
+  // required bytes playername = 3;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 3;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
@@ -13238,14 +13238,14 @@ class LIBPROTOC_EXPORT S2SSendChatToServer : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string playericon = 5;
+  // required bytes playericon = 5;
   inline bool has_playericon() const;
   inline void clear_playericon();
   static const int kPlayericonFieldNumber = 5;
   inline const ::std::string& playericon() const;
   inline void set_playericon(const ::std::string& value);
   inline void set_playericon(const char* value);
-  inline void set_playericon(const char* value, size_t size);
+  inline void set_playericon(const void* value, size_t size);
   inline ::std::string* mutable_playericon();
   inline ::std::string* release_playericon();
   inline void set_allocated_playericon(::std::string* playericon);
@@ -13264,14 +13264,14 @@ class LIBPROTOC_EXPORT S2SSendChatToServer : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 playersex() const;
   inline void set_playersex(::google::protobuf::uint32 value);
 
-  // required string playericonbox = 8;
+  // required bytes playericonbox = 8;
   inline bool has_playericonbox() const;
   inline void clear_playericonbox();
   static const int kPlayericonboxFieldNumber = 8;
   inline const ::std::string& playericonbox() const;
   inline void set_playericonbox(const ::std::string& value);
   inline void set_playericonbox(const char* value);
-  inline void set_playericonbox(const char* value, size_t size);
+  inline void set_playericonbox(const void* value, size_t size);
   inline ::std::string* mutable_playericonbox();
   inline ::std::string* release_playericonbox();
   inline void set_allocated_playericonbox(::std::string* playericonbox);
@@ -13377,7 +13377,7 @@ inline void S2STransmitMessageReq::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2STransmitMessageReq::has_msgdata() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -13410,7 +13410,7 @@ inline void S2STransmitMessageReq::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2STransmitMessageReq::set_msgdata(const char* value, size_t size) {
+inline void S2STransmitMessageReq::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13473,7 +13473,7 @@ inline void S2SBroadcastMessageReq::set_msgid(::google::protobuf::uint32 value) 
   msgid_ = value;
 }
 
-// required string msgdata = 2;
+// required bytes msgdata = 2;
 inline bool S2SBroadcastMessageReq::has_msgdata() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -13506,7 +13506,7 @@ inline void S2SBroadcastMessageReq::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SBroadcastMessageReq::set_msgdata(const char* value, size_t size) {
+inline void S2SBroadcastMessageReq::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13569,7 +13569,7 @@ inline void S2SBroadcastToWord::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 2;
+// required bytes msgdata = 2;
 inline bool S2SBroadcastToWord::has_msgdata() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -13602,7 +13602,7 @@ inline void S2SBroadcastToWord::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SBroadcastToWord::set_msgdata(const char* value, size_t size) {
+inline void S2SBroadcastToWord::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13665,7 +13665,7 @@ inline void S2SBroadcastToGame::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 2;
+// required bytes msgdata = 2;
 inline bool S2SBroadcastToGame::has_msgdata() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -13698,7 +13698,7 @@ inline void S2SBroadcastToGame::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SBroadcastToGame::set_msgdata(const char* value, size_t size) {
+inline void S2SBroadcastToGame::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13761,7 +13761,7 @@ inline void S2SBroadcastToGate::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 2;
+// required bytes msgdata = 2;
 inline bool S2SBroadcastToGate::has_msgdata() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -13794,7 +13794,7 @@ inline void S2SBroadcastToGate::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SBroadcastToGate::set_msgdata(const char* value, size_t size) {
+inline void S2SBroadcastToGate::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13879,7 +13879,7 @@ inline void S2STransmitToPlayer::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2STransmitToPlayer::has_msgdata() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -13912,7 +13912,7 @@ inline void S2STransmitToPlayer::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2STransmitToPlayer::set_msgdata(const char* value, size_t size) {
+inline void S2STransmitToPlayer::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -13975,7 +13975,7 @@ inline void S2STransmitToServer::set_msgid(::google::protobuf::uint32 value) {
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2STransmitToServer::has_msgdata() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -14008,7 +14008,7 @@ inline void S2STransmitToServer::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2STransmitToServer::set_msgdata(const char* value, size_t size) {
+inline void S2STransmitToServer::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -14122,7 +14122,7 @@ inline void S2STransmitToDataShardReq::set_msgid(::google::protobuf::uint32 valu
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2STransmitToDataShardReq::has_msgdata() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -14155,7 +14155,7 @@ inline void S2STransmitToDataShardReq::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2STransmitToDataShardReq::set_msgdata(const char* value, size_t size) {
+inline void S2STransmitToDataShardReq::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -14499,7 +14499,7 @@ inline void S2SLoginLoginVerifyReq::set_accountid(::google::protobuf::uint32 val
   accountid_ = value;
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool S2SLoginLoginVerifyReq::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -14532,7 +14532,7 @@ inline void S2SLoginLoginVerifyReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SLoginLoginVerifyReq::set_token(const char* value, size_t size) {
+inline void S2SLoginLoginVerifyReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -14569,7 +14569,7 @@ inline void S2SLoginLoginVerifyReq::set_allocated_token(::std::string* token) {
   }
 }
 
-// required string ip = 3;
+// required bytes ip = 3;
 inline bool S2SLoginLoginVerifyReq::has_ip() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -14602,7 +14602,7 @@ inline void S2SLoginLoginVerifyReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SLoginLoginVerifyReq::set_ip(const char* value, size_t size) {
+inline void S2SLoginLoginVerifyReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -14757,7 +14757,7 @@ inline void S2SLoginLoginVerifyAck::set_bantime(::google::protobuf::uint32 value
 
 // PBLoginData
 
-// required string token = 1;
+// required bytes token = 1;
 inline bool PBLoginData::has_token() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14790,7 +14790,7 @@ inline void PBLoginData::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void PBLoginData::set_token(const char* value, size_t size) {
+inline void PBLoginData::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -14893,7 +14893,7 @@ inline void PBLoginData::set_channel(::google::protobuf::uint32 value) {
   channel_ = value;
 }
 
-// required string account = 5;
+// required bytes account = 5;
 inline bool PBLoginData::has_account() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -14926,7 +14926,7 @@ inline void PBLoginData::set_account(const char* value) {
   }
   account_->assign(value);
 }
-inline void PBLoginData::set_account(const char* value, size_t size) {
+inline void PBLoginData::set_account(const void* value, size_t size) {
   set_has_account();
   if (account_ == &::google::protobuf::internal::kEmptyString) {
     account_ = new ::std::string;
@@ -15589,7 +15589,7 @@ inline void S2SSetPlayerNameReq::set_playerid(::google::protobuf::uint32 value) 
   playerid_ = value;
 }
 
-// required string oldname = 2;
+// required bytes oldname = 2;
 inline bool S2SSetPlayerNameReq::has_oldname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -15622,7 +15622,7 @@ inline void S2SSetPlayerNameReq::set_oldname(const char* value) {
   }
   oldname_->assign(value);
 }
-inline void S2SSetPlayerNameReq::set_oldname(const char* value, size_t size) {
+inline void S2SSetPlayerNameReq::set_oldname(const void* value, size_t size) {
   set_has_oldname();
   if (oldname_ == &::google::protobuf::internal::kEmptyString) {
     oldname_ = new ::std::string;
@@ -15659,7 +15659,7 @@ inline void S2SSetPlayerNameReq::set_allocated_oldname(::std::string* oldname) {
   }
 }
 
-// required string newname = 3;
+// required bytes newname = 3;
 inline bool S2SSetPlayerNameReq::has_newname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -15692,7 +15692,7 @@ inline void S2SSetPlayerNameReq::set_newname(const char* value) {
   }
   newname_->assign(value);
 }
-inline void S2SSetPlayerNameReq::set_newname(const char* value, size_t size) {
+inline void S2SSetPlayerNameReq::set_newname(const void* value, size_t size) {
   set_has_newname();
   if (newname_ == &::google::protobuf::internal::kEmptyString) {
     newname_ = new ::std::string;
@@ -15755,7 +15755,7 @@ inline void S2SSetPlayerNameAck::set_playerid(::google::protobuf::uint32 value) 
   playerid_ = value;
 }
 
-// required string oldname = 2;
+// required bytes oldname = 2;
 inline bool S2SSetPlayerNameAck::has_oldname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -15788,7 +15788,7 @@ inline void S2SSetPlayerNameAck::set_oldname(const char* value) {
   }
   oldname_->assign(value);
 }
-inline void S2SSetPlayerNameAck::set_oldname(const char* value, size_t size) {
+inline void S2SSetPlayerNameAck::set_oldname(const void* value, size_t size) {
   set_has_oldname();
   if (oldname_ == &::google::protobuf::internal::kEmptyString) {
     oldname_ = new ::std::string;
@@ -15825,7 +15825,7 @@ inline void S2SSetPlayerNameAck::set_allocated_oldname(::std::string* oldname) {
   }
 }
 
-// required string newname = 3;
+// required bytes newname = 3;
 inline bool S2SSetPlayerNameAck::has_newname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -15858,7 +15858,7 @@ inline void S2SSetPlayerNameAck::set_newname(const char* value) {
   }
   newname_->assign(value);
 }
-inline void S2SSetPlayerNameAck::set_newname(const char* value, size_t size) {
+inline void S2SSetPlayerNameAck::set_newname(const void* value, size_t size) {
   set_has_newname();
   if (newname_ == &::google::protobuf::internal::kEmptyString) {
     newname_ = new ::std::string;
@@ -15943,7 +15943,7 @@ inline void S2SCreateRoleReq::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string newname = 2;
+// required bytes newname = 2;
 inline bool S2SCreateRoleReq::has_newname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -15976,7 +15976,7 @@ inline void S2SCreateRoleReq::set_newname(const char* value) {
   }
   newname_->assign(value);
 }
-inline void S2SCreateRoleReq::set_newname(const char* value, size_t size) {
+inline void S2SCreateRoleReq::set_newname(const void* value, size_t size) {
   set_has_newname();
   if (newname_ == &::google::protobuf::internal::kEmptyString) {
     newname_ = new ::std::string;
@@ -16105,7 +16105,7 @@ inline void S2SCreateRoleAck::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string newname = 2;
+// required bytes newname = 2;
 inline bool S2SCreateRoleAck::has_newname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -16138,7 +16138,7 @@ inline void S2SCreateRoleAck::set_newname(const char* value) {
   }
   newname_->assign(value);
 }
-inline void S2SCreateRoleAck::set_newname(const char* value, size_t size) {
+inline void S2SCreateRoleAck::set_newname(const void* value, size_t size) {
   set_has_newname();
   if (newname_ == &::google::protobuf::internal::kEmptyString) {
     newname_ = new ::std::string;
@@ -17154,7 +17154,7 @@ inline void S2SAddFriendInviteReq::set_targetplayerid(::google::protobuf::uint32
   targetplayerid_ = value;
 }
 
-// required string message = 3;
+// required bytes message = 3;
 inline bool S2SAddFriendInviteReq::has_message() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -17187,7 +17187,7 @@ inline void S2SAddFriendInviteReq::set_message(const char* value) {
   }
   message_->assign(value);
 }
-inline void S2SAddFriendInviteReq::set_message(const char* value, size_t size) {
+inline void S2SAddFriendInviteReq::set_message(const void* value, size_t size) {
   set_has_message();
   if (message_ == &::google::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
@@ -17246,7 +17246,7 @@ inline void S2SAddFriendInviteReq::set_serverid(::google::protobuf::uint32 value
   serverid_ = value;
 }
 
-// required string targetname = 5;
+// required bytes targetname = 5;
 inline bool S2SAddFriendInviteReq::has_targetname() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -17279,7 +17279,7 @@ inline void S2SAddFriendInviteReq::set_targetname(const char* value) {
   }
   targetname_->assign(value);
 }
-inline void S2SAddFriendInviteReq::set_targetname(const char* value, size_t size) {
+inline void S2SAddFriendInviteReq::set_targetname(const void* value, size_t size) {
   set_has_targetname();
   if (targetname_ == &::google::protobuf::internal::kEmptyString) {
     targetname_ = new ::std::string;
@@ -17594,7 +17594,7 @@ inline void S2SAddFriendReq::set_serverid(::google::protobuf::uint32 value) {
   serverid_ = value;
 }
 
-// required string targetname = 4;
+// required bytes targetname = 4;
 inline bool S2SAddFriendReq::has_targetname() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -17627,7 +17627,7 @@ inline void S2SAddFriendReq::set_targetname(const char* value) {
   }
   targetname_->assign(value);
 }
-inline void S2SAddFriendReq::set_targetname(const char* value, size_t size) {
+inline void S2SAddFriendReq::set_targetname(const void* value, size_t size) {
   set_has_targetname();
   if (targetname_ == &::google::protobuf::internal::kEmptyString) {
     targetname_ = new ::std::string;
@@ -17919,7 +17919,7 @@ inline void S2SQueryBasicReq::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string name = 2;
+// required bytes name = 2;
 inline bool S2SQueryBasicReq::has_name() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -17952,7 +17952,7 @@ inline void S2SQueryBasicReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SQueryBasicReq::set_name(const char* value, size_t size) {
+inline void S2SQueryBasicReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -19089,7 +19089,7 @@ inline void S2SReceiveInviteMatchGroupReq::set_allocated_inviter(::KFMsg::PBObje
   }
 }
 
-// required string source = 4;
+// required bytes source = 4;
 inline bool S2SReceiveInviteMatchGroupReq::has_source() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -19122,7 +19122,7 @@ inline void S2SReceiveInviteMatchGroupReq::set_source(const char* value) {
   }
   source_->assign(value);
 }
-inline void S2SReceiveInviteMatchGroupReq::set_source(const char* value, size_t size) {
+inline void S2SReceiveInviteMatchGroupReq::set_source(const void* value, size_t size) {
   set_has_source();
   if (source_ == &::google::protobuf::internal::kEmptyString) {
     source_ = new ::std::string;
@@ -19225,7 +19225,7 @@ inline void S2SReceiveInviteMatchGroupReq::set_inviterserverid(::google::protobu
   inviterserverid_ = value;
 }
 
-// required string playername = 8;
+// required bytes playername = 8;
 inline bool S2SReceiveInviteMatchGroupReq::has_playername() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -19258,7 +19258,7 @@ inline void S2SReceiveInviteMatchGroupReq::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void S2SReceiveInviteMatchGroupReq::set_playername(const char* value, size_t size) {
+inline void S2SReceiveInviteMatchGroupReq::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -20170,7 +20170,7 @@ inline void S2SConsentApplyMatchGroupAck::set_serverid(::google::protobuf::uint3
   serverid_ = value;
 }
 
-// required string playername = 5;
+// required bytes playername = 5;
 inline bool S2SConsentApplyMatchGroupAck::has_playername() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -20203,7 +20203,7 @@ inline void S2SConsentApplyMatchGroupAck::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void S2SConsentApplyMatchGroupAck::set_playername(const char* value, size_t size) {
+inline void S2SConsentApplyMatchGroupAck::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -20406,7 +20406,7 @@ inline void S2SUpdateGroupMemberReq::set_memberid(::google::protobuf::uint32 val
   memberid_ = value;
 }
 
-// required string dataname = 3;
+// required bytes dataname = 3;
 inline bool S2SUpdateGroupMemberReq::has_dataname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -20439,7 +20439,7 @@ inline void S2SUpdateGroupMemberReq::set_dataname(const char* value) {
   }
   dataname_->assign(value);
 }
-inline void S2SUpdateGroupMemberReq::set_dataname(const char* value, size_t size) {
+inline void S2SUpdateGroupMemberReq::set_dataname(const void* value, size_t size) {
   set_has_dataname();
   if (dataname_ == &::google::protobuf::internal::kEmptyString) {
     dataname_ = new ::std::string;
@@ -20540,7 +20540,7 @@ inline void S2SUpdateGroupMemberAck::set_memberid(::google::protobuf::uint32 val
   memberid_ = value;
 }
 
-// required string dataname = 2;
+// required bytes dataname = 2;
 inline bool S2SUpdateGroupMemberAck::has_dataname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -20573,7 +20573,7 @@ inline void S2SUpdateGroupMemberAck::set_dataname(const char* value) {
   }
   dataname_->assign(value);
 }
-inline void S2SUpdateGroupMemberAck::set_dataname(const char* value, size_t size) {
+inline void S2SUpdateGroupMemberAck::set_dataname(const void* value, size_t size) {
   set_has_dataname();
   if (dataname_ == &::google::protobuf::internal::kEmptyString) {
     dataname_ = new ::std::string;
@@ -21469,7 +21469,7 @@ inline void S2SCreateGuidReq::set_serverid(::google::protobuf::uint32 value) {
   serverid_ = value;
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool S2SCreateGuidReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -21502,7 +21502,7 @@ inline void S2SCreateGuidReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SCreateGuidReq::set_name(const char* value, size_t size) {
+inline void S2SCreateGuidReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -21539,7 +21539,7 @@ inline void S2SCreateGuidReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string guildname = 4;
+// required bytes guildname = 4;
 inline bool S2SCreateGuidReq::has_guildname() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -21572,7 +21572,7 @@ inline void S2SCreateGuidReq::set_guildname(const char* value) {
   }
   guildname_->assign(value);
 }
-inline void S2SCreateGuidReq::set_guildname(const char* value, size_t size) {
+inline void S2SCreateGuidReq::set_guildname(const void* value, size_t size) {
   set_has_guildname();
   if (guildname_ == &::google::protobuf::internal::kEmptyString) {
     guildname_ = new ::std::string;
@@ -21631,7 +21631,7 @@ inline void S2SCreateGuidReq::set_medal(::google::protobuf::uint32 value) {
   medal_ = value;
 }
 
-// optional string manifesto = 6;
+// optional bytes manifesto = 6;
 inline bool S2SCreateGuidReq::has_manifesto() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -21664,7 +21664,7 @@ inline void S2SCreateGuidReq::set_manifesto(const char* value) {
   }
   manifesto_->assign(value);
 }
-inline void S2SCreateGuidReq::set_manifesto(const char* value, size_t size) {
+inline void S2SCreateGuidReq::set_manifesto(const void* value, size_t size) {
   set_has_manifesto();
   if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
     manifesto_ = new ::std::string;
@@ -21749,7 +21749,7 @@ inline void S2SCreateGuildToShardReq::set_serverid(::google::protobuf::uint32 va
   serverid_ = value;
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool S2SCreateGuildToShardReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -21782,7 +21782,7 @@ inline void S2SCreateGuildToShardReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SCreateGuildToShardReq::set_name(const char* value, size_t size) {
+inline void S2SCreateGuildToShardReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -21819,7 +21819,7 @@ inline void S2SCreateGuildToShardReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string guildname = 4;
+// required bytes guildname = 4;
 inline bool S2SCreateGuildToShardReq::has_guildname() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -21852,7 +21852,7 @@ inline void S2SCreateGuildToShardReq::set_guildname(const char* value) {
   }
   guildname_->assign(value);
 }
-inline void S2SCreateGuildToShardReq::set_guildname(const char* value, size_t size) {
+inline void S2SCreateGuildToShardReq::set_guildname(const void* value, size_t size) {
   set_has_guildname();
   if (guildname_ == &::google::protobuf::internal::kEmptyString) {
     guildname_ = new ::std::string;
@@ -21911,7 +21911,7 @@ inline void S2SCreateGuildToShardReq::set_medal(::google::protobuf::uint32 value
   medal_ = value;
 }
 
-// optional string manifesto = 6;
+// optional bytes manifesto = 6;
 inline bool S2SCreateGuildToShardReq::has_manifesto() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -21944,7 +21944,7 @@ inline void S2SCreateGuildToShardReq::set_manifesto(const char* value) {
   }
   manifesto_->assign(value);
 }
-inline void S2SCreateGuildToShardReq::set_manifesto(const char* value, size_t size) {
+inline void S2SCreateGuildToShardReq::set_manifesto(const void* value, size_t size) {
   set_has_manifesto();
   if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
     manifesto_ = new ::std::string;
@@ -22095,7 +22095,7 @@ inline void S2SCreateGuildAck::set_medal(::google::protobuf::uint32 value) {
   medal_ = value;
 }
 
-// optional string manifesto = 5;
+// optional bytes manifesto = 5;
 inline bool S2SCreateGuildAck::has_manifesto() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -22128,7 +22128,7 @@ inline void S2SCreateGuildAck::set_manifesto(const char* value) {
   }
   manifesto_->assign(value);
 }
-inline void S2SCreateGuildAck::set_manifesto(const char* value, size_t size) {
+inline void S2SCreateGuildAck::set_manifesto(const void* value, size_t size) {
   set_has_manifesto();
   if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
     manifesto_ = new ::std::string;
@@ -23735,7 +23735,7 @@ inline void S2SAppointGuildMemberReq::set_serverid(::google::protobuf::uint32 va
 
 // S2SSearchGuildByNameReq
 
-// required string guildname = 1;
+// required bytes guildname = 1;
 inline bool S2SSearchGuildByNameReq::has_guildname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -23768,7 +23768,7 @@ inline void S2SSearchGuildByNameReq::set_guildname(const char* value) {
   }
   guildname_->assign(value);
 }
-inline void S2SSearchGuildByNameReq::set_guildname(const char* value, size_t size) {
+inline void S2SSearchGuildByNameReq::set_guildname(const void* value, size_t size) {
   set_has_guildname();
   if (guildname_ == &::google::protobuf::internal::kEmptyString) {
     guildname_ = new ::std::string;
@@ -23897,7 +23897,7 @@ inline void S2SSetGuildSwitchReq::set_guildid(::google::protobuf::uint64 value) 
   guildid_ = value;
 }
 
-// required string type = 3;
+// required bytes type = 3;
 inline bool S2SSetGuildSwitchReq::has_type() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -23930,7 +23930,7 @@ inline void S2SSetGuildSwitchReq::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void S2SSetGuildSwitchReq::set_type(const char* value, size_t size) {
+inline void S2SSetGuildSwitchReq::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -24419,7 +24419,7 @@ inline void S2SGMAddMailReq::set_allocated_pbmail(::KFMsg::PBMail* pbmail) {
 
 // S2SSendChatToServer
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool S2SSendChatToServer::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -24452,7 +24452,7 @@ inline void S2SSendChatToServer::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void S2SSendChatToServer::set_chatinfo(const char* value, size_t size) {
+inline void S2SSendChatToServer::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -24511,7 +24511,7 @@ inline void S2SSendChatToServer::set_isvoice(::google::protobuf::uint32 value) {
   isvoice_ = value;
 }
 
-// required string playername = 3;
+// required bytes playername = 3;
 inline bool S2SSendChatToServer::has_playername() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -24544,7 +24544,7 @@ inline void S2SSendChatToServer::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void S2SSendChatToServer::set_playername(const char* value, size_t size) {
+inline void S2SSendChatToServer::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -24603,7 +24603,7 @@ inline void S2SSendChatToServer::set_playerid(::google::protobuf::uint32 value) 
   playerid_ = value;
 }
 
-// required string playericon = 5;
+// required bytes playericon = 5;
 inline bool S2SSendChatToServer::has_playericon() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -24636,7 +24636,7 @@ inline void S2SSendChatToServer::set_playericon(const char* value) {
   }
   playericon_->assign(value);
 }
-inline void S2SSendChatToServer::set_playericon(const char* value, size_t size) {
+inline void S2SSendChatToServer::set_playericon(const void* value, size_t size) {
   set_has_playericon();
   if (playericon_ == &::google::protobuf::internal::kEmptyString) {
     playericon_ = new ::std::string;
@@ -24717,7 +24717,7 @@ inline void S2SSendChatToServer::set_playersex(::google::protobuf::uint32 value)
   playersex_ = value;
 }
 
-// required string playericonbox = 8;
+// required bytes playericonbox = 8;
 inline bool S2SSendChatToServer::has_playericonbox() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -24750,7 +24750,7 @@ inline void S2SSendChatToServer::set_playericonbox(const char* value) {
   }
   playericonbox_->assign(value);
 }
-inline void S2SSendChatToServer::set_playericonbox(const char* value, size_t size) {
+inline void S2SSendChatToServer::set_playericonbox(const void* value, size_t size) {
   set_has_playericonbox();
   if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
     playericonbox_ = new ::std::string;

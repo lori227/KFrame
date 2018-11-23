@@ -67,7 +67,7 @@ enum BattleEnum
 // S2S_ALLOC_BATTLE_ID_REQ
 message S2SAllocBattleIdReq
 {
-	required string ip = 1;
+	required bytes ip = 1;
 	required uint32 port = 2;
 }
 
@@ -84,11 +84,11 @@ message S2SAllocBattleIdAck
 message S2SRegisterBattleServerReq
 {
 	required uint32 serverid = 1;		// 服务器id
-	required string ip = 2;				// ip
+	required bytes ip = 2;				// ip
 	required uint32 port = 3;			// port
 	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
 	required uint32 battleshardid = 5;	// 战斗服务器集群逻辑分片id		
-	required string version = 6;		// 版本号
+	required bytes version = 6;		// 版本号
 }
 
 // 战斗服务器集群=>战斗服务器
@@ -106,10 +106,10 @@ message S2SRegisterBattleServerAck
 message S2SRegisterServerToBattleShardReq
 {
 	required uint32 serverid = 1;		// 服务器id
-	required string ip = 2;				// ip
+	required bytes ip = 2;				// ip
 	required uint32 port = 3;			// port
 	required uint64 roomid = 4;			// 如果已经开启房间 没有 = 0
-	required string version = 5;		// 版本号
+	required bytes version = 5;		// 版本号
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -119,9 +119,9 @@ message S2STellBattleRegisterToShardReq
 {
 	required uint32 serverid = 1;		// 服务器id
 	required uint64 roomid = 2;			// 房间id
-	required string ip = 3;				// ip
+	required bytes ip = 3;				// ip
 	required uint32 port = 4;			// port
-	required string version = 5;		// 版本号
+	required bytes version = 5;		// 版本号
 }
 
 // 战斗服务器集群代理=>战斗服务器集群逻辑分片
@@ -141,7 +141,7 @@ message S2SCreateRoomToBattleProxyReq
 	required uint64 roomid = 2;				// 房间id( 如果一个进程多个房间, 需要用id来区分他们 )
 	required uint32 maxplayercount = 3;		// 这个房间的最大人数
 	required uint32 battleserverid = 4;		// 指定的房间id
-	required string version = 5;			// 版本号
+	required bytes version = 5;			// 版本号
 
 }
 
@@ -158,7 +158,7 @@ message S2SCreateRoomToBattleShardReq
 	required uint32 matchshardid = 3;		// 匹配shardid
 	required uint32 maxplayercount = 4;		// 这个房间的最大人数
 	required uint32 battleserverid = 5;		// 指定的房间id
-	required string version = 6;			// 版本号
+	required bytes version = 6;			// 版本号
 }
 
 // 战斗服务器集群逻辑分片=>匹配服务器集群逻辑分片
@@ -252,7 +252,7 @@ message S2SPlayerEnterBattleRoomReq
 {
 	required uint64 roomid = 1;			// 房间id	
 	required PBBattlePlayer player = 2;	// 玩家
-	required string token = 3;			// token
+	required bytes token = 3;			// token
 }
 
 // 战斗服务器=>战斗服务器集群逻辑分片
@@ -428,7 +428,7 @@ message S2STellBattleRoomFinishReq
 	required uint32 battleshardid = 1;	// 战斗服务器集群逻辑分片id
 	required uint64 roomid = 2;			// 房间id
 	required uint32 serverid = 3;		// 服务器id
-	required string ip = 4;				// ip
+	required bytes ip = 4;				// ip
 }
 
 // 战斗服务器=>战斗服务器集群逻辑分
@@ -456,7 +456,7 @@ message S2SBattleRoomScoreBalanceAck
 {
 	required uint64 roomid = 1;		// 房间id
 	required uint32 playerid = 2;	// 玩家列表
-	required string reward = 3;		// 奖励字串( 需要解析 )
+	required bytes reward = 3;		// 奖励字串( 需要解析 )
 }
 
 // 战斗服务器集群逻辑=>战斗服务器集群逻辑
@@ -498,7 +498,7 @@ message S2STellRoomFinishToBattleShardReq
 {
 	required uint64 roomid = 1;		// 房间id
 	required uint32 serverid = 2;	// 服务器id
-	required string ip = 3;			// ip
+	required bytes ip = 3;			// ip
 }
 
 // 通知战场关闭

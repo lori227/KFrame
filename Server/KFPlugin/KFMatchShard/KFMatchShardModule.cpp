@@ -171,7 +171,7 @@ namespace KFrame
         KFMsg::S2SQueryMatchRoomAck ack;
         ack.set_matchid( matchid );
         ack.set_playerid( kfmsg.playerid() );
-        auto ok = _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfguid ), kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
+        auto ok = _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_QUERY_MATCH_ROOM_ACK, &ack );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}] query match[{}] ok!", kfmsg.playerid(), kfmsg.matchid() );

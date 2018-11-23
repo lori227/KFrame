@@ -54,7 +54,7 @@ namespace KFrame
         void ChangeState( const VectorString& param );
 
     private:
-        void HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
     private:
         // 属性组件

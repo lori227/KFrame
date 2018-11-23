@@ -37,7 +37,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverReq );
 
-        auto proxyid = __KF_HEAD_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
         {
             auto clientid = kfmsg.clientid( i );
@@ -49,7 +49,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterClientLostReq );
 
-        auto proxyid = __KF_HEAD_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
         {
             auto clientid = kfmsg.clientid( i );
@@ -97,10 +97,10 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( handleid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendToClient( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
-        auto proxyid = __KF_HEAD_ID__( kfguid );
-        auto clientid = __KF_DATA_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
+        auto clientid = __KF_DATA_ID__( kfid );
         if ( proxyid == _invalid_int )
         {
             proxyid = FindProxyId( clientid );
@@ -109,10 +109,10 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendToClient( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( const KFId& kfid, uint32 msgid, google::protobuf::Message* message )
     {
-        auto proxyid = __KF_HEAD_ID__( kfguid );
-        auto clientid = __KF_DATA_ID__( kfguid );
+        auto proxyid = __KF_HEAD_ID__( kfid );
+        auto clientid = __KF_DATA_ID__( kfid );
         if ( proxyid == _invalid_int )
         {
             proxyid = FindProxyId( clientid );

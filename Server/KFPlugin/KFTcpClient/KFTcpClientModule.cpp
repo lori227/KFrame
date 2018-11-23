@@ -138,9 +138,9 @@ namespace KFrame
         _kf_client_engine->SendMessageToServer( servername, servertype, msgid, data, length );
     }
 
-    void KFTcpClientModule::HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
-        bool handleresult = _kf_message->CallFunction( guid, msgid, data, length );
+        bool handleresult = _kf_message->CallFunction( kfid, msgid, data, length );
         if ( handleresult )
         {
             return;
@@ -148,7 +148,7 @@ namespace KFrame
 
         if ( _kf_transmit_function != nullptr )
         {
-            auto ok = _kf_transmit_function( guid, msgid, data, length );
+            auto ok = _kf_transmit_function( kfid, msgid, data, length );
             if ( !ok )
             {
                 __LOG_ERROR__( "tcp client transmit msgid[{}] failed!", msgid );

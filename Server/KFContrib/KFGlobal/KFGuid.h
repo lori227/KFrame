@@ -1,0 +1,66 @@
+﻿#ifndef __KF_GUID_H__
+#define __KF_GUID_H__
+
+#include "KFInclude.h"
+
+namespace KFrame
+{
+    /*
+    +------+---------------+----------+----------------+----------+
+    | sign | delta seconds | zone id  | worker node id | sequence |
+    +------+---------------+----------+----------------+----------+
+    | 1bit |     30bits    |  12bits  |     8bits      |  13bits  |
+    +------+---------------+----------+----------------+----------+
+    */
+
+    // 默认
+    // 1	符号位
+    // 30	时间( 大概可以支持34年, 可以修改项目开始时间 )
+    // 12	zoneid  可以支持4095个小区不会重复
+    // 8	workerid 255个工作者进程不会重复
+    // 13	序列号 同一进程1秒钟内超过8191个就会重复 -- 应该不可能, 除非你要疯
+    // 可以保证同一模块生成的guid不相同, 不同模块可能会一样
+
+    class KFGuid
+    {
+    public:
+        KFGuid() = default;
+        KFGuid( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+
+        // 生产guid
+        uint64 Make64Guid();
+
+        // 打印guid
+        void Print64Guid( uint64 guid );
+    private:
+        // 上一次时间
+        uint64 _last_time{ 0 };
+
+        // 序列号
+        uint32 _sequence{ 0 };
+
+        // 符号位
+        uint32 _sign_bits{ 1 };
+
+        // 时间位
+        uint32 _time_bits{ 30 };
+        uint64 _max_time{ 0x1FFFFFFF };
+        uint32 _time_shift{ 33 };
+
+        // 小区位
+        uint32 _zone_bits{ 12 };
+        uint64 _max_zone{ 0xFFF };
+        uint32 _zone_shift{ 22 };
+
+        // 进程位
+        uint32 _worker_bits{ 8 };
+        uint64 _max_worker{ 0xFF };
+        uint32 _worker_shift{ 14 };
+
+        // 序列位
+        uint32 _seq_bits{ 13 };
+        uint64 _max_seq{ 0x1FFF };
+    };
+}
+
+#endif

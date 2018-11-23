@@ -33,15 +33,15 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 执行函数
-        bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        bool CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
         // 取消注册
         virtual void UnRegisterFunction( uint32 msgid );
 
         //////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
-        virtual void SendToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendToClient( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToClient( const KFId& kfid, uint32 serverid, uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 转发消息到工作线程

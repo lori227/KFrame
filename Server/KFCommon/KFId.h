@@ -6,28 +6,28 @@
 namespace KFrame
 {
     template< class T >
-    class KFID
+    class KFIDTemplate
     {
     public:
-        KFID()
+        KFIDTemplate()
         {
             _head_id = 0;
             _data_id = 0;
         }
 
-        KFID( T headid, T dataid )
+        KFIDTemplate( T headid, T dataid )
         {
             _head_id = headid;
             _data_id = dataid;
         }
 
-        KFID( const KFID& kfid )
+        KFIDTemplate( const KFIDTemplate& kfid )
         {
             _head_id = kfid._head_id;
             _data_id = kfid._data_id;
         }
 
-        KFID& operator = ( const KFID& kfid )
+        KFIDTemplate& operator = ( const KFIDTemplate& kfid )
         {
             _head_id = kfid._head_id;
             _data_id = kfid._data_id;
@@ -35,17 +35,17 @@ namespace KFrame
             return *this;
         }
 
-        bool operator == ( const KFID& kfid ) const
+        bool operator == ( const KFIDTemplate& kfid ) const
         {
             return _head_id == kfid._head_id && _data_id == kfid._data_id;
         }
 
-        bool operator != ( const KFID& kfid ) const
+        bool operator != ( const KFIDTemplate& kfid ) const
         {
             return _head_id != kfid._head_id || _data_id != kfid._data_id;
         }
 
-        bool operator > ( const KFID& kfid ) const
+        bool operator > ( const KFIDTemplate& kfid ) const
         {
             if ( _head_id == kfid._head_id )
             {
@@ -55,7 +55,7 @@ namespace KFrame
             return _head_id > kfid._head_id;
         }
 
-        bool operator < ( const KFID& kfid ) const
+        bool operator < ( const KFIDTemplate& kfid ) const
         {
             if ( _head_id == kfid._head_id )
             {
@@ -70,10 +70,10 @@ namespace KFrame
         T _data_id;
     };
 
-    typedef KFID< uint32 > KFGuid;
+    typedef KFIDTemplate< uint32 > KFId;
 
-#define  __KF_DATA_ID__( kfguid ) kfguid._data_id
-#define  __KF_HEAD_ID__( kfguid ) kfguid._head_id
+#define  __KF_DATA_ID__( kfid ) kfid._data_id
+#define  __KF_HEAD_ID__( kfid ) kfid._head_id
     /////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 }

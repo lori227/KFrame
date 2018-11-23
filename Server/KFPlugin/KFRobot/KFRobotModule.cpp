@@ -108,7 +108,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __ROBOT_PROTO_PARSE__( msgtype ) \
-    auto robotid = __KF_HEAD_ID__( kfguid );\
+    auto robotid = __KF_HEAD_ID__( kfid );\
     auto kfrobot = _robot_list.Find( robotid );\
     if ( kfrobot == nullptr )\
     {\
@@ -127,16 +127,16 @@ namespace KFrame
         kfrobot->Initialize( robotid, _net_client, _kf_component );
     }
 
-    void KFRobotModule::HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )
+    void KFRobotModule::HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
-        bool handleresult = _kf_message->CallFunction( guid, msgid, data, length );
+        bool handleresult = _kf_message->CallFunction( kfid, msgid, data, length );
 
         if ( handleresult )
         {
             return;
         }
 
-        auto robotid = __KF_HEAD_ID__( guid );
+        auto robotid = __KF_HEAD_ID__( kfid );
         __LOG_INFO__( "[{}] robot[{}] recv msgid[{}]!",
                       __FUNCTION__, robotid, msgid );
     }

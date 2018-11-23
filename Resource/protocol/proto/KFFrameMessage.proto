@@ -23,9 +23,9 @@ enum FrameProtocol
 message ListenData
 {
 	optional uint32 appid = 1;
-	required string appname = 2;
-	required string apptype = 3;
-	required string ip = 4;
+	required bytes appname = 2;
+	required bytes apptype = 3;
+	required bytes ip = 4;
 	required uint32 port = 5;	
 	optional uint32 zoneid = 6;	
 }
@@ -42,15 +42,15 @@ message RegisterToServerReq
 // S2S_REGISTER_TO_SERVER_ACK
 message RegisterToServerAck
 {
-	required string apptype = 1;
+	required bytes apptype = 1;
 	required uint32 appid = 2;
-	required string appname = 3;
+	required bytes appname = 3;
 }
 
 // S2S_TELL_REGISTER_TO_SERVER
 message TellRegisterToServer
 {
-	required string servername = 1;
+	required bytes servername = 1;
 	required uint32 serverzoneid = 2;
 
 	required ListenData listen = 3;
@@ -59,12 +59,12 @@ message TellRegisterToServer
 // S2S_TELL_UNREGISTER_FROM_SERVER
 message TellUnRegisterFromServer
 {
-	required string servername = 1;
+	required bytes servername = 1;
 	required uint32 serverzoneid = 2;
 
 	required uint32 appid = 3;
-	required string appname = 4;
-	required string apptype = 5;
+	required bytes appname = 4;
+	required bytes apptype = 5;
 	required uint32 zoneid = 6;	
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ message PBTransmitRouteMessage
 	required uint32 serverid = 2;
 	required uint32 playerid = 3;
 	required uint32 msgid = 4;
-	required string msgdata = 5;
+	required bytes msgdata = 5;
 }
 
 // S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ
@@ -124,10 +124,10 @@ message S2SLogReq
 {
 	required int32 log_level		= 1;
 	required int32 zone_id			= 2;
-	required string app_name		= 3;
-	required string app_type		= 4;
+	required bytes app_name		= 3;
+	required bytes app_type		= 4;
 	required int32 app_id			= 5;
-	required string log_info		= 6;
+	required bytes log_info		= 6;
 }
 
 
@@ -135,10 +135,10 @@ message S2SLogReq
 message S2SUpdateOnlineToDirReq
 {
 	required uint32 zoneid = 1;			// 小区id
-	required string zonename = 2;		// 小区名字
+	required bytes zonename = 2;		// 小区名字
 	required uint32 zonechannel = 3;	// 小区类型
 	required uint32 appid = 4;			// 服务器id
-	required string ip = 5;				// ip
+	required bytes ip = 5;				// ip
 	required uint32 port = 6;			// port
 	required uint32 onlinecount = 7;	// 当前在线人数
 }

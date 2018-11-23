@@ -561,7 +561,7 @@ namespace KFrame
 
     __KF_TRANSMIT_FUNCTION__( KFPlayerModule::TransmitMessageToPlayer )
     {
-        auto playerid = __KF_DATA_ID__( kfguid );
+        auto playerid = __KF_DATA_ID__( kfid );
         auto player = FindPlayer( playerid );
         if ( player == nullptr )
         {

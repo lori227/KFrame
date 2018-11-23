@@ -23,7 +23,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 执行函数
-        bool CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        bool CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // 取消注册
@@ -40,7 +40,7 @@ namespace KFrame
     };
 
     template<typename T>
-    void RegisterFunction( KFRobotMessageModule* self, uint32 msgid, T* object, void ( T::*handle )( const KFGuid& guid, const char* data, uint32 length ) )
+    void RegisterFunction( KFRobotMessageModule* self, uint32 msgid, T* object, void ( T::*handle )( const KFId& kfid, const char* data, uint32 length ) )
     {
         KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
         self->AddFunction( msgid, function );

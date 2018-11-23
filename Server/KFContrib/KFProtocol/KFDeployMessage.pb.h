@@ -121,50 +121,50 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
 
   // accessors -------------------------------------------------------
 
-  // required string agentid = 1;
+  // required bytes agentid = 1;
   inline bool has_agentid() const;
   inline void clear_agentid();
   static const int kAgentidFieldNumber = 1;
   inline const ::std::string& agentid() const;
   inline void set_agentid(const ::std::string& value);
   inline void set_agentid(const char* value);
-  inline void set_agentid(const char* value, size_t size);
+  inline void set_agentid(const void* value, size_t size);
   inline ::std::string* mutable_agentid();
   inline ::std::string* release_agentid();
   inline void set_allocated_agentid(::std::string* agentid);
 
-  // required string localip = 2;
+  // required bytes localip = 2;
   inline bool has_localip() const;
   inline void clear_localip();
   static const int kLocalipFieldNumber = 2;
   inline const ::std::string& localip() const;
   inline void set_localip(const ::std::string& value);
   inline void set_localip(const char* value);
-  inline void set_localip(const char* value, size_t size);
+  inline void set_localip(const void* value, size_t size);
   inline ::std::string* mutable_localip();
   inline ::std::string* release_localip();
   inline void set_allocated_localip(::std::string* localip);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string type = 4;
+  // required bytes type = 4;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 4;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -263,14 +263,14 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string localip = 1;
+  // required bytes localip = 1;
   inline bool has_localip() const;
   inline void clear_localip();
   static const int kLocalipFieldNumber = 1;
   inline const ::std::string& localip() const;
   inline void set_localip(const ::std::string& value);
   inline void set_localip(const char* value);
-  inline void set_localip(const char* value, size_t size);
+  inline void set_localip(const void* value, size_t size);
   inline ::std::string* mutable_localip();
   inline ::std::string* release_localip();
   inline void set_allocated_localip(::std::string* localip);
@@ -350,50 +350,50 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressAck : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string appname = 1;
+  // required bytes appname = 1;
   inline bool has_appname() const;
   inline void clear_appname();
   static const int kAppnameFieldNumber = 1;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
-  inline void set_appname(const char* value, size_t size);
+  inline void set_appname(const void* value, size_t size);
   inline ::std::string* mutable_appname();
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
-  // required string apptype = 2;
+  // required bytes apptype = 2;
   inline bool has_apptype() const;
   inline void clear_apptype();
   static const int kApptypeFieldNumber = 2;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
-  inline void set_apptype(const char* value, size_t size);
+  inline void set_apptype(const void* value, size_t size);
   inline ::std::string* mutable_apptype();
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required string appid = 3;
+  // required bytes appid = 3;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 3;
   inline const ::std::string& appid() const;
   inline void set_appid(const ::std::string& value);
   inline void set_appid(const char* value);
-  inline void set_appid(const char* value, size_t size);
+  inline void set_appid(const void* value, size_t size);
   inline ::std::string* mutable_appid();
   inline ::std::string* release_appid();
   inline void set_allocated_appid(::std::string* appid);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -492,50 +492,50 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string command = 1;
+  // required bytes command = 1;
   inline bool has_command() const;
   inline void clear_command();
   static const int kCommandFieldNumber = 1;
   inline const ::std::string& command() const;
   inline void set_command(const ::std::string& value);
   inline void set_command(const char* value);
-  inline void set_command(const char* value, size_t size);
+  inline void set_command(const void* value, size_t size);
   inline ::std::string* mutable_command();
   inline ::std::string* release_command();
   inline void set_allocated_command(::std::string* command);
 
-  // required string appname = 2;
+  // required bytes appname = 2;
   inline bool has_appname() const;
   inline void clear_appname();
   static const int kAppnameFieldNumber = 2;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
-  inline void set_appname(const char* value, size_t size);
+  inline void set_appname(const void* value, size_t size);
   inline ::std::string* mutable_appname();
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
-  // required string apptype = 3;
+  // required bytes apptype = 3;
   inline bool has_apptype() const;
   inline void clear_apptype();
   static const int kApptypeFieldNumber = 3;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
-  inline void set_apptype(const char* value, size_t size);
+  inline void set_apptype(const void* value, size_t size);
   inline ::std::string* mutable_apptype();
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required string appid = 4;
+  // required bytes appid = 4;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 4;
   inline const ::std::string& appid() const;
   inline void set_appid(const ::std::string& value);
   inline void set_appid(const char* value);
-  inline void set_appid(const char* value, size_t size);
+  inline void set_appid(const void* value, size_t size);
   inline ::std::string* mutable_appid();
   inline ::std::string* release_appid();
   inline void set_allocated_appid(::std::string* appid);
@@ -547,26 +547,26 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 zoneid() const;
   inline void set_zoneid(::google::protobuf::uint32 value);
 
-  // required string value = 6;
+  // required bytes value = 6;
   inline bool has_value() const;
   inline void clear_value();
   static const int kValueFieldNumber = 6;
   inline const ::std::string& value() const;
   inline void set_value(const ::std::string& value);
   inline void set_value(const char* value);
-  inline void set_value(const char* value, size_t size);
+  inline void set_value(const void* value, size_t size);
   inline ::std::string* mutable_value();
   inline ::std::string* release_value();
   inline void set_allocated_value(::std::string* value);
 
-  // required string logurl = 7;
+  // required bytes logurl = 7;
   inline bool has_logurl() const;
   inline void clear_logurl();
   static const int kLogurlFieldNumber = 7;
   inline const ::std::string& logurl() const;
   inline void set_logurl(const ::std::string& value);
   inline void set_logurl(const char* value);
-  inline void set_logurl(const char* value, size_t size);
+  inline void set_logurl(const void* value, size_t size);
   inline ::std::string* mutable_logurl();
   inline ::std::string* release_logurl();
   inline void set_allocated_logurl(::std::string* logurl);
@@ -867,7 +867,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::
 
 // S2SRegisterAgentToServerReq
 
-// required string agentid = 1;
+// required bytes agentid = 1;
 inline bool S2SRegisterAgentToServerReq::has_agentid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -900,7 +900,7 @@ inline void S2SRegisterAgentToServerReq::set_agentid(const char* value) {
   }
   agentid_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_agentid(const char* value, size_t size) {
+inline void S2SRegisterAgentToServerReq::set_agentid(const void* value, size_t size) {
   set_has_agentid();
   if (agentid_ == &::google::protobuf::internal::kEmptyString) {
     agentid_ = new ::std::string;
@@ -937,7 +937,7 @@ inline void S2SRegisterAgentToServerReq::set_allocated_agentid(::std::string* ag
   }
 }
 
-// required string localip = 2;
+// required bytes localip = 2;
 inline bool S2SRegisterAgentToServerReq::has_localip() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -970,7 +970,7 @@ inline void S2SRegisterAgentToServerReq::set_localip(const char* value) {
   }
   localip_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_localip(const char* value, size_t size) {
+inline void S2SRegisterAgentToServerReq::set_localip(const void* value, size_t size) {
   set_has_localip();
   if (localip_ == &::google::protobuf::internal::kEmptyString) {
     localip_ = new ::std::string;
@@ -1007,7 +1007,7 @@ inline void S2SRegisterAgentToServerReq::set_allocated_localip(::std::string* lo
   }
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool S2SRegisterAgentToServerReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1040,7 +1040,7 @@ inline void S2SRegisterAgentToServerReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_name(const char* value, size_t size) {
+inline void S2SRegisterAgentToServerReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -1077,7 +1077,7 @@ inline void S2SRegisterAgentToServerReq::set_allocated_name(::std::string* name)
   }
 }
 
-// required string type = 4;
+// required bytes type = 4;
 inline bool S2SRegisterAgentToServerReq::has_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1110,7 +1110,7 @@ inline void S2SRegisterAgentToServerReq::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void S2SRegisterAgentToServerReq::set_type(const char* value, size_t size) {
+inline void S2SRegisterAgentToServerReq::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -1173,7 +1173,7 @@ inline void S2SRegisterAgentToServerReq::set_port(::google::protobuf::uint32 val
 
 // S2SGetAgentIpAddressReq
 
-// required string localip = 1;
+// required bytes localip = 1;
 inline bool S2SGetAgentIpAddressReq::has_localip() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1206,7 +1206,7 @@ inline void S2SGetAgentIpAddressReq::set_localip(const char* value) {
   }
   localip_->assign(value);
 }
-inline void S2SGetAgentIpAddressReq::set_localip(const char* value, size_t size) {
+inline void S2SGetAgentIpAddressReq::set_localip(const void* value, size_t size) {
   set_has_localip();
   if (localip_ == &::google::protobuf::internal::kEmptyString) {
     localip_ = new ::std::string;
@@ -1247,7 +1247,7 @@ inline void S2SGetAgentIpAddressReq::set_allocated_localip(::std::string* locali
 
 // S2SGetAgentIpAddressAck
 
-// required string appname = 1;
+// required bytes appname = 1;
 inline bool S2SGetAgentIpAddressAck::has_appname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1280,7 +1280,7 @@ inline void S2SGetAgentIpAddressAck::set_appname(const char* value) {
   }
   appname_->assign(value);
 }
-inline void S2SGetAgentIpAddressAck::set_appname(const char* value, size_t size) {
+inline void S2SGetAgentIpAddressAck::set_appname(const void* value, size_t size) {
   set_has_appname();
   if (appname_ == &::google::protobuf::internal::kEmptyString) {
     appname_ = new ::std::string;
@@ -1317,7 +1317,7 @@ inline void S2SGetAgentIpAddressAck::set_allocated_appname(::std::string* appnam
   }
 }
 
-// required string apptype = 2;
+// required bytes apptype = 2;
 inline bool S2SGetAgentIpAddressAck::has_apptype() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1350,7 +1350,7 @@ inline void S2SGetAgentIpAddressAck::set_apptype(const char* value) {
   }
   apptype_->assign(value);
 }
-inline void S2SGetAgentIpAddressAck::set_apptype(const char* value, size_t size) {
+inline void S2SGetAgentIpAddressAck::set_apptype(const void* value, size_t size) {
   set_has_apptype();
   if (apptype_ == &::google::protobuf::internal::kEmptyString) {
     apptype_ = new ::std::string;
@@ -1387,7 +1387,7 @@ inline void S2SGetAgentIpAddressAck::set_allocated_apptype(::std::string* apptyp
   }
 }
 
-// required string appid = 3;
+// required bytes appid = 3;
 inline bool S2SGetAgentIpAddressAck::has_appid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1420,7 +1420,7 @@ inline void S2SGetAgentIpAddressAck::set_appid(const char* value) {
   }
   appid_->assign(value);
 }
-inline void S2SGetAgentIpAddressAck::set_appid(const char* value, size_t size) {
+inline void S2SGetAgentIpAddressAck::set_appid(const void* value, size_t size) {
   set_has_appid();
   if (appid_ == &::google::protobuf::internal::kEmptyString) {
     appid_ = new ::std::string;
@@ -1457,7 +1457,7 @@ inline void S2SGetAgentIpAddressAck::set_allocated_appid(::std::string* appid) {
   }
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool S2SGetAgentIpAddressAck::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1490,7 +1490,7 @@ inline void S2SGetAgentIpAddressAck::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SGetAgentIpAddressAck::set_ip(const char* value, size_t size) {
+inline void S2SGetAgentIpAddressAck::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -1553,7 +1553,7 @@ inline void S2SGetAgentIpAddressAck::set_port(::google::protobuf::uint32 value) 
 
 // PBDeployCommand
 
-// required string command = 1;
+// required bytes command = 1;
 inline bool PBDeployCommand::has_command() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1586,7 +1586,7 @@ inline void PBDeployCommand::set_command(const char* value) {
   }
   command_->assign(value);
 }
-inline void PBDeployCommand::set_command(const char* value, size_t size) {
+inline void PBDeployCommand::set_command(const void* value, size_t size) {
   set_has_command();
   if (command_ == &::google::protobuf::internal::kEmptyString) {
     command_ = new ::std::string;
@@ -1623,7 +1623,7 @@ inline void PBDeployCommand::set_allocated_command(::std::string* command) {
   }
 }
 
-// required string appname = 2;
+// required bytes appname = 2;
 inline bool PBDeployCommand::has_appname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1656,7 +1656,7 @@ inline void PBDeployCommand::set_appname(const char* value) {
   }
   appname_->assign(value);
 }
-inline void PBDeployCommand::set_appname(const char* value, size_t size) {
+inline void PBDeployCommand::set_appname(const void* value, size_t size) {
   set_has_appname();
   if (appname_ == &::google::protobuf::internal::kEmptyString) {
     appname_ = new ::std::string;
@@ -1693,7 +1693,7 @@ inline void PBDeployCommand::set_allocated_appname(::std::string* appname) {
   }
 }
 
-// required string apptype = 3;
+// required bytes apptype = 3;
 inline bool PBDeployCommand::has_apptype() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1726,7 +1726,7 @@ inline void PBDeployCommand::set_apptype(const char* value) {
   }
   apptype_->assign(value);
 }
-inline void PBDeployCommand::set_apptype(const char* value, size_t size) {
+inline void PBDeployCommand::set_apptype(const void* value, size_t size) {
   set_has_apptype();
   if (apptype_ == &::google::protobuf::internal::kEmptyString) {
     apptype_ = new ::std::string;
@@ -1763,7 +1763,7 @@ inline void PBDeployCommand::set_allocated_apptype(::std::string* apptype) {
   }
 }
 
-// required string appid = 4;
+// required bytes appid = 4;
 inline bool PBDeployCommand::has_appid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1796,7 +1796,7 @@ inline void PBDeployCommand::set_appid(const char* value) {
   }
   appid_->assign(value);
 }
-inline void PBDeployCommand::set_appid(const char* value, size_t size) {
+inline void PBDeployCommand::set_appid(const void* value, size_t size) {
   set_has_appid();
   if (appid_ == &::google::protobuf::internal::kEmptyString) {
     appid_ = new ::std::string;
@@ -1855,7 +1855,7 @@ inline void PBDeployCommand::set_zoneid(::google::protobuf::uint32 value) {
   zoneid_ = value;
 }
 
-// required string value = 6;
+// required bytes value = 6;
 inline bool PBDeployCommand::has_value() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -1888,7 +1888,7 @@ inline void PBDeployCommand::set_value(const char* value) {
   }
   value_->assign(value);
 }
-inline void PBDeployCommand::set_value(const char* value, size_t size) {
+inline void PBDeployCommand::set_value(const void* value, size_t size) {
   set_has_value();
   if (value_ == &::google::protobuf::internal::kEmptyString) {
     value_ = new ::std::string;
@@ -1925,7 +1925,7 @@ inline void PBDeployCommand::set_allocated_value(::std::string* value) {
   }
 }
 
-// required string logurl = 7;
+// required bytes logurl = 7;
 inline bool PBDeployCommand::has_logurl() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -1958,7 +1958,7 @@ inline void PBDeployCommand::set_logurl(const char* value) {
   }
   logurl_->assign(value);
 }
-inline void PBDeployCommand::set_logurl(const char* value, size_t size) {
+inline void PBDeployCommand::set_logurl(const void* value, size_t size) {
   set_has_logurl();
   if (logurl_ == &::google::protobuf::internal::kEmptyString) {
     logurl_ = new ::std::string;

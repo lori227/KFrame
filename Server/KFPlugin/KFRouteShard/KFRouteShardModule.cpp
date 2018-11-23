@@ -44,7 +44,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterRouteProxyReq );
 
-        auto handleid = __KF_HEAD_ID__( kfguid );
+        auto handleid = __KF_HEAD_ID__( kfid );
 
         for ( auto i = 0; i < kfmsg.zonedata_size(); ++i )
         {

@@ -59,7 +59,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
-        uint32 handleid = __KF_HEAD_ID__( kfguid );
+        uint32 handleid = __KF_HEAD_ID__( kfid );
 
         __LOG_DEBUG__( "[{}] cluster[{}] key req!", kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
 
@@ -86,7 +86,7 @@ namespace KFrame
         else
         {
             // 创建token
-            std::string token = MakeAuthToken( kfguid );
+            std::string token = MakeAuthToken( kfid );
             ack.set_token( token );
             ack.set_ip( kfproxy->_ip );
             ack.set_port( kfproxy->_port );
@@ -107,11 +107,11 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    std::string KFClusterMasterModule::MakeAuthToken( const KFGuid& guid )
+    std::string KFClusterMasterModule::MakeAuthToken( const KFId& kfid )
     {
-        std::string headid = KFUtility::ToString( guid._head_id );
-        std::string dataid = KFUtility::ToString( guid._data_id );
-        std::string date = KFUtility::ToString( KFDate::GetTimeEx() );
+        std::string headid = __TO_STRING__( kfid._head_id );
+        std::string dataid = __TO_STRING__( kfid._data_id );
+        std::string date = __TO_STRING__( KFDate::GetTimeEx() );
 
         std::string temp = __FORMAT__( "{}:{}-{}:{}", headid, dataid, date, ++_cluster_serial );
         return KFCrypto::Md5Encode( temp );
@@ -121,7 +121,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAllocObjectToMasterReq );
 
-        auto shardid = __KF_HEAD_ID__( kfguid );
+        auto shardid = __KF_HEAD_ID__( kfid );
 
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {

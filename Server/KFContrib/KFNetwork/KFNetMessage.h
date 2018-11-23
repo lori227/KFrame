@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_MESSAGE_H__
 #define __NET_MESSAGE_H__
 
-#include "KFGuid.h"
+#include "KFId.h"
 
 #pragma pack( 1 )
 
@@ -11,7 +11,7 @@ namespace KFrame
     class KFNetHead
     {
     public:
-        KFGuid _guid;		// guid
+        KFId _kfid;			// id
         uint32 _length;		// 消息长度
         uint16 _msgid;		// 消息类型
         uint16 _child;		// 子消息个数( 包括自己 )
@@ -37,7 +37,7 @@ namespace KFrame
 
         // 复制消息
         void CopyFrom( KFNetMessage* message );
-        void CopyFrom( const KFGuid& guid, uint32 msgid, const int8* data, uint32 length );
+        void CopyFrom( const KFId& kfid, uint32 msgid, const int8* data, uint32 length );
         ///////////////////////////////////////////////////////////////////////////////
 
     protected:

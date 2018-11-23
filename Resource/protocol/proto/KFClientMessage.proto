@@ -118,7 +118,7 @@ enum ClientProtocol
 message MsgResultDisplay
 {
 	required uint32 result = 1;
-	repeated string param = 2;
+	repeated bytes param = 2;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,8 +136,8 @@ message MsgTellBeKick
 message MsgLoginVerifyReq
 {
 	required uint32 accountid = 1;	// 账号id
-	required string token = 2;		// token
-	optional string version = 3;	// 客户端版本号
+	required bytes token = 2;		// token
+	required bytes version = 3;	// 客户端版本号
 }
 
 // 登录验证结果
@@ -145,8 +145,8 @@ message MsgLoginVerifyReq
 message MsgLoginVerifyAck
 {
 	required uint32 playerid = 1;
-	required string token = 2;
-	required string ip = 3;
+	required bytes token = 2;
+	required bytes ip = 3;
 	required uint32 port = 4;
 }
 
@@ -155,7 +155,7 @@ message MsgLoginVerifyAck
 message MsgLoginGameReq
 {
 	required uint32 playerid = 1;
-	required string token = 2;
+	required bytes token = 2;
 }
 
 // 登出游戏
@@ -169,7 +169,7 @@ message MsgLoginOutReq
 // MSG_CREATE_ROLE_REQ
 message MsgCreateRoleReq
 {
-	required string name = 1;		// 名字
+	required bytes name = 1;		// 名字
 	required uint32 sex = 2;		// 性别
 	required uint32 model = 3;		// 模型id
 	optional uint32 inviterid = 4[default=0];	// 邀请人
@@ -179,7 +179,7 @@ message MsgCreateRoleReq
 // MSG_CHANGE_NAME_REQ
 message MsgChangeNameReq
 {
-	required string name = 1;
+	required bytes name = 1;
 }
 
 // 设置性别
@@ -193,28 +193,28 @@ message MsgChangeSexReq
 // MSG_CHANGE_ICON_REQ
 message MsgChangeIconReq
 {
-	required string icon = 1;	// 头像路径
+	required bytes icon = 1;	// 头像路径
 }
 
 // 修改头像框请求
 //MSG_CHANGE_ICON_BOX_REQ
 message MsgChangeIconBoxReq
 {
-	required string iconbox = 1;
+	required bytes iconbox = 1;
 }
 
 // 客户端修改个性签名请求
 //MSG_CHANGE_MOTTO_REQ
 message MsgChangeMottoReq
 {
-	required string motto = 1;	//个性签名
+	required bytes motto = 1;	//个性签名
 }
 
 // 查询玩家
 // MSG_QUERY_BASIC_REQ
 message MsgQueryBasicReq
 {
-	required string name = 1;
+	required bytes name = 1;
 }
 
 // 查询其他玩家数据，不能查询自己的数据
@@ -260,7 +260,7 @@ message MsgReceiveAchieveRewardReq
 // MSG_RECEIVE_GIFT_REWARD_REQ
 message MsgReceiveGiftRewardReq
 {
-	required string giftkey = 1;
+	required bytes giftkey = 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,7 +306,7 @@ message MsgStartMatchReq
 	required uint32 matchid = 1;			// matchid
 	optional bool allowgroup = 2;			// 是否允许组队
 	optional uint32 battleserverid = 3;		// 测试需要匹配的battleid
-	required string version = 4;			// 客户端版本
+	required bytes version = 4;			// 客户端版本
 }
 
 // 开始匹配回应
@@ -337,9 +337,9 @@ message MsgMatchResultAck
 	required uint32 matchid = 1;
 	required uint64 roomid = 2;
 	required uint32 serverid = 3;
-	required string ip = 4;
+	required bytes ip = 4;
 	required uint32 port = 5;
-	required string token = 6;
+	required bytes token = 6;
 }
 
 // 通知匹配预计等待时间( 在没有战斗服情况下 )
@@ -363,8 +363,8 @@ message MsgTellMatchPlayerCount
 message MsgAddFriendInviteReq
 {
 	required uint32 playerid = 1;	// 玩家id
-	required string message = 2;	// 留言
-	required string name = 3;		// 玩家名字
+	required bytes message = 2;	// 留言
+	required bytes name = 3;		// 玩家名字
 }
 
 // 回复添加好友请求
@@ -404,7 +404,7 @@ message MsgEnterChatReq
 //	MSG_SEND_CHAT_REQ
 message MsgSendChatReq
 {
-	required string chatinfo = 1;	//聊天内容
+	required bytes chatinfo = 1;	//聊天内容
 	required uint32 isvoice = 2;	//是否是语音消息
 }
 
@@ -412,14 +412,14 @@ message MsgSendChatReq
 //	MSG_SEND_CHAT_INFO
 message MsgSendChatInfo
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
-	required string playername = 3;		//发送聊天的玩家名字
+	required bytes playername = 3;		//发送聊天的玩家名字
 	required uint32 playerid = 4;		//发送聊天的玩家id
-	required string playericon = 5;		//发送聊天的玩家头像
+	required bytes playericon = 5;		//发送聊天的玩家头像
 	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
-	required string playericonbox = 8;	//发送聊天的玩家头像框
+	required bytes playericonbox = 8;	//发送聊天的玩家头像框
 	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
 }
 
@@ -434,11 +434,11 @@ message MsgLeaveChatReq
 //MSG_SEND_ONEBYONE_CHAT_REQ
 message MsgSendOneByOneChatReq
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 	required uint32 playerid = 3;		//玩家id
-	required string chattype = 4;
-	required string selfinfo = 5;		//本人信息
+	required bytes chattype = 4;
+	required bytes selfinfo = 5;		//本人信息
 	required uint32 serverid = 6;
 }
 
@@ -446,11 +446,11 @@ message MsgSendOneByOneChatReq
 //MSG_SEND_ONEBYONE_CHAT_INFO
 message MsgSendOneByOneChatInfo
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 	required uint32 playerid = 3;		//发送聊天的玩家id
-	required string chattype = 4;
-	required string playerinfo = 5;		//发送聊天的玩家信息
+	required bytes chattype = 4;
+	required bytes playerinfo = 5;		//发送聊天的玩家信息
 	required uint32 serverid = 6;
 }
 
@@ -458,22 +458,22 @@ message MsgSendOneByOneChatInfo
 // MSG_DEBUG_COMMAND_REQ
 message MsgDebugCommandReq
 {
-	required string command = 1;	// 命令
-	repeated string params = 2;		// 参数列表
+	required bytes command = 1;	// 命令
+	repeated bytes params = 2;		// 参数列表
 }
 
 // 显示奖励的物品
 // MSG_SHOW_REWARD_AGENT
 message MsgShowRewardAgent
 {
-	required string reward = 1;	// 奖励字串( 客户端需要解析 )
+	required bytes reward = 1;	// 奖励字串( 客户端需要解析 )
 }
 
 // 客户端发送大厅组队聊天消息请求
 // MSG_SEND_GROUPCHAT_REQ
 message MsgSendGroupChatReq
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 }
 
@@ -481,7 +481,7 @@ message MsgSendGroupChatReq
 // MSG_SEND_GROUPCHAT_INFO
 message MsgSendGroupChatInfo
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 	required uint32 playerid = 3;		//发送聊天的玩家id
 }
@@ -493,7 +493,7 @@ message MsgSendGroupChatInfo
 //	MSG_BUY_STORE_REQ = 1350;
 message MsgBuyStoreReq
 {
-	required string buytype = 1;	//购买类型
+	required bytes buytype = 1;	//购买类型
 	required uint32 shopid = 2;		//商城道具id
 	required uint32 num = 3;		//道具数量
 }
@@ -538,7 +538,7 @@ message MsgQueryToastCountAck
 // MSG_REMOVE_DATA_REQ
 message MsgRemoveDataReq
 {
-	required string dataname = 1;	// 属性名称
+	required bytes dataname = 1;	// 属性名称
 	required uint64 key = 2;		// id
 	required uint32 count = 3;		// 数量
 }
@@ -574,9 +574,9 @@ message MsgInviteMatchGroupReq
 {
 	required uint32 serverid = 1;		// 游戏内服务器id
 	required uint32 playerid = 2;		// 玩家id
-	required string source = 3;			// 从哪里邀请
+	required bytes source = 3;			// 从哪里邀请
 	required uint32 matchid = 4;		// 匹配模式
-	required string playername = 5;		// 被邀请玩家名字
+	required bytes playername = 5;		// 被邀请玩家名字
 }
 
 // 同意/拒绝玩家邀请
@@ -722,8 +722,8 @@ message MsgQuerySettingAck
 // MSG_UPDATE_SETTING_REQ
 message MsgUpdateSettingReq
 {
-	required string settingkey = 1;
-	required string settingvalue = 2;
+	required bytes settingkey = 1;
+	required bytes settingvalue = 2;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -746,7 +746,7 @@ message MsgQueryRecentListAck
 // MSG_COMPOUND_DATA_REQ
 message MsgCompoundDataReq
 {
-	required string dataname = 1;	// 属性名称( 在class中 )
+	required bytes dataname = 1;	// 属性名称( 在class中 )
 	required uint32 key = 2;		// 属性id
 }
 
@@ -791,17 +791,17 @@ message MsgSevenSignInRewardReq
 // MSG_TELL_SEVEN_EXTEND_REWARD
 message MsgTellSevenExtendReward
 {
-	required string playername = 1;		// 玩家名字
-	required string reward = 2;		// 奖励内容
+	required bytes playername = 1;		// 玩家名字
+	required bytes reward = 2;		// 奖励内容
 }
 
 // 创建帮派
 // MSG_CREATE_GUILD_REQ
 message MsgCreateGuildReq
 {
-	required string guildname = 1;		// 帮派名字
+	required bytes guildname = 1;		// 帮派名字
 	required uint32 medal = 2;		// 帮派勋章
-	optional string manifesto = 3;		// 帮派宣言 
+	optional bytes manifesto = 3;		// 帮派宣言 
 }
 
 // 邀请加入帮派
@@ -895,7 +895,7 @@ message MsgAppointGuildMemberReq
 // MSG_SEARCH_GUILD_BY_NAME_REQ
 message MsgSearchGuildByNameReq
 {
-	required string guildname = 1;		// 帮派名字
+	required bytes guildname = 1;		// 帮派名字
 }
 
 
@@ -903,7 +903,7 @@ message MsgSearchGuildByNameReq
 // MSG_SET_GUILD_SWITCH_REQ
 message MsgSetGuildSwitchReq
 {
-	required string type = 1;		// 设置类型
+	required bytes type = 1;		// 设置类型
 	required uint32 flag = 2;		// 设置数值	
 }
 
@@ -919,37 +919,37 @@ message MsgQueryGuildLogReq
 message MsgQueryGuildLogAck
 {
 	required uint32 page = 1;		// 页数
-	repeated string guildlog = 2;		// 帮派日志
+	repeated bytes guildlog = 2;		// 帮派日志
 }
 
 // 走马灯消息
 // MSG_TELL_MARQUEE
 message MsgTellMarquee
 {
-	required string content = 1;	// 显示内容
+	required bytes content = 1;	// 显示内容
 }
 
 // 系统公告
 // MSG_TELL_SYS_NOTICE
 message MsgTellSysNotcie
 {
-	required string content = 1;	// 显示内容
+	required bytes content = 1;	// 显示内容
 }
 
 // 绑定支付宝
 // MSG_BIND_ALIPAY_REQ
 message MsgBindAlipayReq
 {
-	required string name = 1;		// 支付宝姓名
-	required string alipay = 2;		// 支付宝账号
+	required bytes name = 1;		// 支付宝姓名
+	required bytes alipay = 2;		// 支付宝账号
 }
 
 // 申请提现
 // MSG_EXCHANGE_INVITE_SCORE_REQ
 message MsgExChangeInviteScoreReq
 {
-	required string name = 1;		// 支付宝姓名
-	required string alipay = 2;		// 支付宝账号
+	required bytes name = 1;		// 支付宝姓名
+	required bytes alipay = 2;		// 支付宝账号
 }
 
 // 申请提现
@@ -984,8 +984,8 @@ message MsgExChangeInviteRecordReq
 
 message PBExChangeInviteRecord
 {
-	required string name = 1;		// 支付宝姓名
-	required string alipay = 2;		// 支付宝账号
+	required bytes name = 1;		// 支付宝姓名
+	required bytes alipay = 2;		// 支付宝账号
 	required uint32 score = 3;		// 积分
 	required uint64 time = 4;		// 时间
 }

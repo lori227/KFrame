@@ -38,7 +38,11 @@
     {\
         __CHECK_PLUGIN_FUNCTION__( name, function )\
         {   \
-            _kf_plugin_manage->Register##function##Function< name##Module >( _sort, kfmodule, &name##Module::function );\
+            auto ok = _kf_plugin_manage->Register##function##Function< name##Module >( _sort, kfmodule, &name##Module::function );\
+            if ( !ok )\
+            {\
+                __LOG_ERROR__( "sort[{}] {} is already register!", #function, _sort );\
+            }\
         }\
     }
 
@@ -177,16 +181,17 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterRunFunction( uint32 sort, T* object, void ( T::*handle )() )
+        bool RegisterRunFunction( uint32 sort, T* object, void ( T::*handle )() )
         {
             auto kffunction = _run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                return __LOG_ERROR__( "sort[{}] run is already register!", sort );
+                return false;
             }
 
             kffunction = _run_functions.Create( sort );
             kffunction->_function = std::bind( handle, object );
+            return true;
         }
 
         void UnRegisterRunFunction( uint32 sort )
@@ -196,16 +201,17 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterAfterRunFunction( uint32 sort, T* object, void ( T::*handle )( ) )
+        bool RegisterAfterRunFunction( uint32 sort, T* object, void ( T::*handle )( ) )
         {
             auto kffunction = _after_run_functions.Find( sort );
             if ( kffunction != nullptr )
             {
-                return __LOG_ERROR__( "sort[{}] afterrun is already register!", sort );
+                return false;
             }
 
             kffunction = _after_run_functions.Create( sort );
             kffunction->_function = std::bind( handle, object );
+            return true;
         }
 
         void UnRegisterAfterRunFunction( uint32 sort )

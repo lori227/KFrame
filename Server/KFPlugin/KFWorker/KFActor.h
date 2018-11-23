@@ -29,10 +29,10 @@ namespace KFrame
         bool IsBusy();
 
         // 添加请求消息
-        bool PushReqMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length );
+        bool PushReqMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
         // 添加响应消息
-        bool PushAckMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message );
+        bool PushAckMessage( const KFId& kfid, uint32 msgid, google::protobuf::Message* message );
         bool PushAckMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message );
 
     protected:
@@ -47,7 +47,7 @@ namespace KFrame
         volatile bool _actor_thread_run;
 
         // 暂存的Guid
-        KFGuid _kf_guid;
+        KFId _kf_guid;
 
         // 需要处理的请求消息
         KFQueue< KFWorkerMessage > _req_message_queue;

@@ -144,38 +144,38 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required string appname = 2;
+  // required bytes appname = 2;
   inline bool has_appname() const;
   inline void clear_appname();
   static const int kAppnameFieldNumber = 2;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
-  inline void set_appname(const char* value, size_t size);
+  inline void set_appname(const void* value, size_t size);
   inline ::std::string* mutable_appname();
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
-  // required string apptype = 3;
+  // required bytes apptype = 3;
   inline bool has_apptype() const;
   inline void clear_apptype();
   static const int kApptypeFieldNumber = 3;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
-  inline void set_apptype(const char* value, size_t size);
+  inline void set_apptype(const void* value, size_t size);
   inline ::std::string* mutable_apptype();
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -368,14 +368,14 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string apptype = 1;
+  // required bytes apptype = 1;
   inline bool has_apptype() const;
   inline void clear_apptype();
   static const int kApptypeFieldNumber = 1;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
-  inline void set_apptype(const char* value, size_t size);
+  inline void set_apptype(const void* value, size_t size);
   inline ::std::string* mutable_apptype();
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
@@ -387,14 +387,14 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required string appname = 3;
+  // required bytes appname = 3;
   inline bool has_appname() const;
   inline void clear_appname();
   static const int kAppnameFieldNumber = 3;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
-  inline void set_appname(const char* value, size_t size);
+  inline void set_appname(const void* value, size_t size);
   inline ::std::string* mutable_appname();
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
@@ -480,14 +480,14 @@ class LIBPROTOC_EXPORT TellRegisterToServer : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required string servername = 1;
+  // required bytes servername = 1;
   inline bool has_servername() const;
   inline void clear_servername();
   static const int kServernameFieldNumber = 1;
   inline const ::std::string& servername() const;
   inline void set_servername(const ::std::string& value);
   inline void set_servername(const char* value);
-  inline void set_servername(const char* value, size_t size);
+  inline void set_servername(const void* value, size_t size);
   inline ::std::string* mutable_servername();
   inline ::std::string* release_servername();
   inline void set_allocated_servername(::std::string* servername);
@@ -589,14 +589,14 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required string servername = 1;
+  // required bytes servername = 1;
   inline bool has_servername() const;
   inline void clear_servername();
   static const int kServernameFieldNumber = 1;
   inline const ::std::string& servername() const;
   inline void set_servername(const ::std::string& value);
   inline void set_servername(const char* value);
-  inline void set_servername(const char* value, size_t size);
+  inline void set_servername(const void* value, size_t size);
   inline ::std::string* mutable_servername();
   inline ::std::string* release_servername();
   inline void set_allocated_servername(::std::string* servername);
@@ -615,26 +615,26 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required string appname = 4;
+  // required bytes appname = 4;
   inline bool has_appname() const;
   inline void clear_appname();
   static const int kAppnameFieldNumber = 4;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
-  inline void set_appname(const char* value, size_t size);
+  inline void set_appname(const void* value, size_t size);
   inline ::std::string* mutable_appname();
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
-  // required string apptype = 5;
+  // required bytes apptype = 5;
   inline bool has_apptype() const;
   inline void clear_apptype();
   static const int kApptypeFieldNumber = 5;
   inline const ::std::string& apptype() const;
   inline void set_apptype(const ::std::string& value);
   inline void set_apptype(const char* value);
-  inline void set_apptype(const char* value, size_t size);
+  inline void set_apptype(const void* value, size_t size);
   inline ::std::string* mutable_apptype();
   inline ::std::string* release_apptype();
   inline void set_allocated_apptype(::std::string* apptype);
@@ -1018,14 +1018,14 @@ class LIBPROTOC_EXPORT PBTransmitRouteMessage : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 5;
+  // required bytes msgdata = 5;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 5;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -1464,26 +1464,26 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 zone_id() const;
   inline void set_zone_id(::google::protobuf::int32 value);
 
-  // required string app_name = 3;
+  // required bytes app_name = 3;
   inline bool has_app_name() const;
   inline void clear_app_name();
   static const int kAppNameFieldNumber = 3;
   inline const ::std::string& app_name() const;
   inline void set_app_name(const ::std::string& value);
   inline void set_app_name(const char* value);
-  inline void set_app_name(const char* value, size_t size);
+  inline void set_app_name(const void* value, size_t size);
   inline ::std::string* mutable_app_name();
   inline ::std::string* release_app_name();
   inline void set_allocated_app_name(::std::string* app_name);
 
-  // required string app_type = 4;
+  // required bytes app_type = 4;
   inline bool has_app_type() const;
   inline void clear_app_type();
   static const int kAppTypeFieldNumber = 4;
   inline const ::std::string& app_type() const;
   inline void set_app_type(const ::std::string& value);
   inline void set_app_type(const char* value);
-  inline void set_app_type(const char* value, size_t size);
+  inline void set_app_type(const void* value, size_t size);
   inline ::std::string* mutable_app_type();
   inline ::std::string* release_app_type();
   inline void set_allocated_app_type(::std::string* app_type);
@@ -1495,14 +1495,14 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 app_id() const;
   inline void set_app_id(::google::protobuf::int32 value);
 
-  // required string log_info = 6;
+  // required bytes log_info = 6;
   inline bool has_log_info() const;
   inline void clear_log_info();
   static const int kLogInfoFieldNumber = 6;
   inline const ::std::string& log_info() const;
   inline void set_log_info(const ::std::string& value);
   inline void set_log_info(const char* value);
-  inline void set_log_info(const char* value, size_t size);
+  inline void set_log_info(const void* value, size_t size);
   inline ::std::string* mutable_log_info();
   inline ::std::string* release_log_info();
   inline void set_allocated_log_info(::std::string* log_info);
@@ -1604,14 +1604,14 @@ class LIBPROTOC_EXPORT S2SUpdateOnlineToDirReq : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 zoneid() const;
   inline void set_zoneid(::google::protobuf::uint32 value);
 
-  // required string zonename = 2;
+  // required bytes zonename = 2;
   inline bool has_zonename() const;
   inline void clear_zonename();
   static const int kZonenameFieldNumber = 2;
   inline const ::std::string& zonename() const;
   inline void set_zonename(const ::std::string& value);
   inline void set_zonename(const char* value);
-  inline void set_zonename(const char* value, size_t size);
+  inline void set_zonename(const void* value, size_t size);
   inline ::std::string* mutable_zonename();
   inline ::std::string* release_zonename();
   inline void set_allocated_zonename(::std::string* zonename);
@@ -1630,14 +1630,14 @@ class LIBPROTOC_EXPORT S2SUpdateOnlineToDirReq : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 appid() const;
   inline void set_appid(::google::protobuf::uint32 value);
 
-  // required string ip = 5;
+  // required bytes ip = 5;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 5;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -1804,7 +1804,7 @@ inline void ListenData::set_appid(::google::protobuf::uint32 value) {
   appid_ = value;
 }
 
-// required string appname = 2;
+// required bytes appname = 2;
 inline bool ListenData::has_appname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1837,7 +1837,7 @@ inline void ListenData::set_appname(const char* value) {
   }
   appname_->assign(value);
 }
-inline void ListenData::set_appname(const char* value, size_t size) {
+inline void ListenData::set_appname(const void* value, size_t size) {
   set_has_appname();
   if (appname_ == &::google::protobuf::internal::kEmptyString) {
     appname_ = new ::std::string;
@@ -1874,7 +1874,7 @@ inline void ListenData::set_allocated_appname(::std::string* appname) {
   }
 }
 
-// required string apptype = 3;
+// required bytes apptype = 3;
 inline bool ListenData::has_apptype() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1907,7 +1907,7 @@ inline void ListenData::set_apptype(const char* value) {
   }
   apptype_->assign(value);
 }
-inline void ListenData::set_apptype(const char* value, size_t size) {
+inline void ListenData::set_apptype(const void* value, size_t size) {
   set_has_apptype();
   if (apptype_ == &::google::protobuf::internal::kEmptyString) {
     apptype_ = new ::std::string;
@@ -1944,7 +1944,7 @@ inline void ListenData::set_allocated_apptype(::std::string* apptype) {
   }
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool ListenData::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1977,7 +1977,7 @@ inline void ListenData::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void ListenData::set_ip(const char* value, size_t size) {
+inline void ListenData::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -2104,7 +2104,7 @@ inline void RegisterToServerReq::set_allocated_listen(::KFMsg::ListenData* liste
 
 // RegisterToServerAck
 
-// required string apptype = 1;
+// required bytes apptype = 1;
 inline bool RegisterToServerAck::has_apptype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2137,7 +2137,7 @@ inline void RegisterToServerAck::set_apptype(const char* value) {
   }
   apptype_->assign(value);
 }
-inline void RegisterToServerAck::set_apptype(const char* value, size_t size) {
+inline void RegisterToServerAck::set_apptype(const void* value, size_t size) {
   set_has_apptype();
   if (apptype_ == &::google::protobuf::internal::kEmptyString) {
     apptype_ = new ::std::string;
@@ -2196,7 +2196,7 @@ inline void RegisterToServerAck::set_appid(::google::protobuf::uint32 value) {
   appid_ = value;
 }
 
-// required string appname = 3;
+// required bytes appname = 3;
 inline bool RegisterToServerAck::has_appname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2229,7 +2229,7 @@ inline void RegisterToServerAck::set_appname(const char* value) {
   }
   appname_->assign(value);
 }
-inline void RegisterToServerAck::set_appname(const char* value, size_t size) {
+inline void RegisterToServerAck::set_appname(const void* value, size_t size) {
   set_has_appname();
   if (appname_ == &::google::protobuf::internal::kEmptyString) {
     appname_ = new ::std::string;
@@ -2270,7 +2270,7 @@ inline void RegisterToServerAck::set_allocated_appname(::std::string* appname) {
 
 // TellRegisterToServer
 
-// required string servername = 1;
+// required bytes servername = 1;
 inline bool TellRegisterToServer::has_servername() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2303,7 +2303,7 @@ inline void TellRegisterToServer::set_servername(const char* value) {
   }
   servername_->assign(value);
 }
-inline void TellRegisterToServer::set_servername(const char* value, size_t size) {
+inline void TellRegisterToServer::set_servername(const void* value, size_t size) {
   set_has_servername();
   if (servername_ == &::google::protobuf::internal::kEmptyString) {
     servername_ = new ::std::string;
@@ -2404,7 +2404,7 @@ inline void TellRegisterToServer::set_allocated_listen(::KFMsg::ListenData* list
 
 // TellUnRegisterFromServer
 
-// required string servername = 1;
+// required bytes servername = 1;
 inline bool TellUnRegisterFromServer::has_servername() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2437,7 +2437,7 @@ inline void TellUnRegisterFromServer::set_servername(const char* value) {
   }
   servername_->assign(value);
 }
-inline void TellUnRegisterFromServer::set_servername(const char* value, size_t size) {
+inline void TellUnRegisterFromServer::set_servername(const void* value, size_t size) {
   set_has_servername();
   if (servername_ == &::google::protobuf::internal::kEmptyString) {
     servername_ = new ::std::string;
@@ -2518,7 +2518,7 @@ inline void TellUnRegisterFromServer::set_appid(::google::protobuf::uint32 value
   appid_ = value;
 }
 
-// required string appname = 4;
+// required bytes appname = 4;
 inline bool TellUnRegisterFromServer::has_appname() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2551,7 +2551,7 @@ inline void TellUnRegisterFromServer::set_appname(const char* value) {
   }
   appname_->assign(value);
 }
-inline void TellUnRegisterFromServer::set_appname(const char* value, size_t size) {
+inline void TellUnRegisterFromServer::set_appname(const void* value, size_t size) {
   set_has_appname();
   if (appname_ == &::google::protobuf::internal::kEmptyString) {
     appname_ = new ::std::string;
@@ -2588,7 +2588,7 @@ inline void TellUnRegisterFromServer::set_allocated_appname(::std::string* appna
   }
 }
 
-// required string apptype = 5;
+// required bytes apptype = 5;
 inline bool TellUnRegisterFromServer::has_apptype() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2621,7 +2621,7 @@ inline void TellUnRegisterFromServer::set_apptype(const char* value) {
   }
   apptype_->assign(value);
 }
-inline void TellUnRegisterFromServer::set_apptype(const char* value, size_t size) {
+inline void TellUnRegisterFromServer::set_apptype(const void* value, size_t size) {
   set_has_apptype();
   if (apptype_ == &::google::protobuf::internal::kEmptyString) {
     apptype_ = new ::std::string;
@@ -2869,7 +2869,7 @@ inline void PBTransmitRouteMessage::set_msgid(::google::protobuf::uint32 value) 
   msgid_ = value;
 }
 
-// required string msgdata = 5;
+// required bytes msgdata = 5;
 inline bool PBTransmitRouteMessage::has_msgdata() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2902,7 +2902,7 @@ inline void PBTransmitRouteMessage::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void PBTransmitRouteMessage::set_msgdata(const char* value, size_t size) {
+inline void PBTransmitRouteMessage::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -3155,7 +3155,7 @@ inline void S2SLogReq::set_zone_id(::google::protobuf::int32 value) {
   zone_id_ = value;
 }
 
-// required string app_name = 3;
+// required bytes app_name = 3;
 inline bool S2SLogReq::has_app_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3188,7 +3188,7 @@ inline void S2SLogReq::set_app_name(const char* value) {
   }
   app_name_->assign(value);
 }
-inline void S2SLogReq::set_app_name(const char* value, size_t size) {
+inline void S2SLogReq::set_app_name(const void* value, size_t size) {
   set_has_app_name();
   if (app_name_ == &::google::protobuf::internal::kEmptyString) {
     app_name_ = new ::std::string;
@@ -3225,7 +3225,7 @@ inline void S2SLogReq::set_allocated_app_name(::std::string* app_name) {
   }
 }
 
-// required string app_type = 4;
+// required bytes app_type = 4;
 inline bool S2SLogReq::has_app_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3258,7 +3258,7 @@ inline void S2SLogReq::set_app_type(const char* value) {
   }
   app_type_->assign(value);
 }
-inline void S2SLogReq::set_app_type(const char* value, size_t size) {
+inline void S2SLogReq::set_app_type(const void* value, size_t size) {
   set_has_app_type();
   if (app_type_ == &::google::protobuf::internal::kEmptyString) {
     app_type_ = new ::std::string;
@@ -3317,7 +3317,7 @@ inline void S2SLogReq::set_app_id(::google::protobuf::int32 value) {
   app_id_ = value;
 }
 
-// required string log_info = 6;
+// required bytes log_info = 6;
 inline bool S2SLogReq::has_log_info() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -3350,7 +3350,7 @@ inline void S2SLogReq::set_log_info(const char* value) {
   }
   log_info_->assign(value);
 }
-inline void S2SLogReq::set_log_info(const char* value, size_t size) {
+inline void S2SLogReq::set_log_info(const void* value, size_t size) {
   set_has_log_info();
   if (log_info_ == &::google::protobuf::internal::kEmptyString) {
     log_info_ = new ::std::string;
@@ -3413,7 +3413,7 @@ inline void S2SUpdateOnlineToDirReq::set_zoneid(::google::protobuf::uint32 value
   zoneid_ = value;
 }
 
-// required string zonename = 2;
+// required bytes zonename = 2;
 inline bool S2SUpdateOnlineToDirReq::has_zonename() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3446,7 +3446,7 @@ inline void S2SUpdateOnlineToDirReq::set_zonename(const char* value) {
   }
   zonename_->assign(value);
 }
-inline void S2SUpdateOnlineToDirReq::set_zonename(const char* value, size_t size) {
+inline void S2SUpdateOnlineToDirReq::set_zonename(const void* value, size_t size) {
   set_has_zonename();
   if (zonename_ == &::google::protobuf::internal::kEmptyString) {
     zonename_ = new ::std::string;
@@ -3527,7 +3527,7 @@ inline void S2SUpdateOnlineToDirReq::set_appid(::google::protobuf::uint32 value)
   appid_ = value;
 }
 
-// required string ip = 5;
+// required bytes ip = 5;
 inline bool S2SUpdateOnlineToDirReq::has_ip() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -3560,7 +3560,7 @@ inline void S2SUpdateOnlineToDirReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SUpdateOnlineToDirReq::set_ip(const char* value, size_t size) {
+inline void S2SUpdateOnlineToDirReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;

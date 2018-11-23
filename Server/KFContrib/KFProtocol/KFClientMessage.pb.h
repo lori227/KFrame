@@ -329,7 +329,7 @@ class LIBPROTOC_EXPORT MsgResultDisplay : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 result() const;
   inline void set_result(::google::protobuf::uint32 value);
 
-  // repeated string param = 2;
+  // repeated bytes param = 2;
   inline int param_size() const;
   inline void clear_param();
   static const int kParamFieldNumber = 2;
@@ -337,11 +337,11 @@ class LIBPROTOC_EXPORT MsgResultDisplay : public ::google::protobuf::Message {
   inline ::std::string* mutable_param(int index);
   inline void set_param(int index, const ::std::string& value);
   inline void set_param(int index, const char* value);
-  inline void set_param(int index, const char* value, size_t size);
+  inline void set_param(int index, const void* value, size_t size);
   inline ::std::string* add_param();
   inline void add_param(const ::std::string& value);
   inline void add_param(const char* value);
-  inline void add_param(const char* value, size_t size);
+  inline void add_param(const void* value, size_t size);
   inline const ::google::protobuf::RepeatedPtrField< ::std::string>& param() const;
   inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_param();
 
@@ -510,26 +510,26 @@ class LIBPROTOC_EXPORT MsgLoginVerifyReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 accountid() const;
   inline void set_accountid(::google::protobuf::uint32 value);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // optional string version = 3;
+  // required bytes version = 3;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 3;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -622,26 +622,26 @@ class LIBPROTOC_EXPORT MsgLoginVerifyAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required string ip = 3;
+  // required bytes ip = 3;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 3;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -744,14 +744,14 @@ class LIBPROTOC_EXPORT MsgLoginGameReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -906,14 +906,14 @@ class LIBPROTOC_EXPORT MsgCreateRoleReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1023,14 +1023,14 @@ class LIBPROTOC_EXPORT MsgChangeNameReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1192,14 +1192,14 @@ class LIBPROTOC_EXPORT MsgChangeIconReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string icon = 1;
+  // required bytes icon = 1;
   inline bool has_icon() const;
   inline void clear_icon();
   static const int kIconFieldNumber = 1;
   inline const ::std::string& icon() const;
   inline void set_icon(const ::std::string& value);
   inline void set_icon(const char* value);
-  inline void set_icon(const char* value, size_t size);
+  inline void set_icon(const void* value, size_t size);
   inline ::std::string* mutable_icon();
   inline ::std::string* release_icon();
   inline void set_allocated_icon(::std::string* icon);
@@ -1279,14 +1279,14 @@ class LIBPROTOC_EXPORT MsgChangeIconBoxReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string iconbox = 1;
+  // required bytes iconbox = 1;
   inline bool has_iconbox() const;
   inline void clear_iconbox();
   static const int kIconboxFieldNumber = 1;
   inline const ::std::string& iconbox() const;
   inline void set_iconbox(const ::std::string& value);
   inline void set_iconbox(const char* value);
-  inline void set_iconbox(const char* value, size_t size);
+  inline void set_iconbox(const void* value, size_t size);
   inline ::std::string* mutable_iconbox();
   inline ::std::string* release_iconbox();
   inline void set_allocated_iconbox(::std::string* iconbox);
@@ -1366,14 +1366,14 @@ class LIBPROTOC_EXPORT MsgChangeMottoReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string motto = 1;
+  // required bytes motto = 1;
   inline bool has_motto() const;
   inline void clear_motto();
   static const int kMottoFieldNumber = 1;
   inline const ::std::string& motto() const;
   inline void set_motto(const ::std::string& value);
   inline void set_motto(const char* value);
-  inline void set_motto(const char* value, size_t size);
+  inline void set_motto(const void* value, size_t size);
   inline ::std::string* mutable_motto();
   inline ::std::string* release_motto();
   inline void set_allocated_motto(::std::string* motto);
@@ -1453,14 +1453,14 @@ class LIBPROTOC_EXPORT MsgQueryBasicReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1878,14 +1878,14 @@ class LIBPROTOC_EXPORT MsgReceiveGiftRewardReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string giftkey = 1;
+  // required bytes giftkey = 1;
   inline bool has_giftkey() const;
   inline void clear_giftkey();
   static const int kGiftkeyFieldNumber = 1;
   inline const ::std::string& giftkey() const;
   inline void set_giftkey(const ::std::string& value);
   inline void set_giftkey(const char* value);
-  inline void set_giftkey(const char* value, size_t size);
+  inline void set_giftkey(const void* value, size_t size);
   inline ::std::string* mutable_giftkey();
   inline ::std::string* release_giftkey();
   inline void set_allocated_giftkey(::std::string* giftkey);
@@ -2314,14 +2314,14 @@ class LIBPROTOC_EXPORT MsgStartMatchReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 battleserverid() const;
   inline void set_battleserverid(::google::protobuf::uint32 value);
 
-  // required string version = 4;
+  // required bytes version = 4;
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 4;
   inline const ::std::string& version() const;
   inline void set_version(const ::std::string& value);
   inline void set_version(const char* value);
-  inline void set_version(const char* value, size_t size);
+  inline void set_version(const void* value, size_t size);
   inline ::std::string* mutable_version();
   inline ::std::string* release_version();
   inline void set_allocated_version(::std::string* version);
@@ -2667,14 +2667,14 @@ class LIBPROTOC_EXPORT MsgMatchResultAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 serverid() const;
   inline void set_serverid(::google::protobuf::uint32 value);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -2686,14 +2686,14 @@ class LIBPROTOC_EXPORT MsgMatchResultAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 port() const;
   inline void set_port(::google::protobuf::uint32 value);
 
-  // required string token = 6;
+  // required bytes token = 6;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 6;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -2959,26 +2959,26 @@ class LIBPROTOC_EXPORT MsgAddFriendInviteReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string message = 2;
+  // required bytes message = 2;
   inline bool has_message() const;
   inline void clear_message();
   static const int kMessageFieldNumber = 2;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
-  inline void set_message(const char* value, size_t size);
+  inline void set_message(const void* value, size_t size);
   inline ::std::string* mutable_message();
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -3392,14 +3392,14 @@ class LIBPROTOC_EXPORT MsgSendChatReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -3489,14 +3489,14 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -3508,14 +3508,14 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 isvoice() const;
   inline void set_isvoice(::google::protobuf::uint32 value);
 
-  // required string playername = 3;
+  // required bytes playername = 3;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 3;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
@@ -3527,14 +3527,14 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string playericon = 5;
+  // required bytes playericon = 5;
   inline bool has_playericon() const;
   inline void clear_playericon();
   static const int kPlayericonFieldNumber = 5;
   inline const ::std::string& playericon() const;
   inline void set_playericon(const ::std::string& value);
   inline void set_playericon(const char* value);
-  inline void set_playericon(const char* value, size_t size);
+  inline void set_playericon(const void* value, size_t size);
   inline ::std::string* mutable_playericon();
   inline ::std::string* release_playericon();
   inline void set_allocated_playericon(::std::string* playericon);
@@ -3553,14 +3553,14 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playersex() const;
   inline void set_playersex(::google::protobuf::uint32 value);
 
-  // required string playericonbox = 8;
+  // required bytes playericonbox = 8;
   inline bool has_playericonbox() const;
   inline void clear_playericonbox();
   static const int kPlayericonboxFieldNumber = 8;
   inline const ::std::string& playericonbox() const;
   inline void set_playericonbox(const ::std::string& value);
   inline void set_playericonbox(const char* value);
-  inline void set_playericonbox(const char* value, size_t size);
+  inline void set_playericonbox(const void* value, size_t size);
   inline ::std::string* mutable_playericonbox();
   inline ::std::string* release_playericonbox();
   inline void set_allocated_playericonbox(::std::string* playericonbox);
@@ -3743,14 +3743,14 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatReq : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -3769,26 +3769,26 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string chattype = 4;
+  // required bytes chattype = 4;
   inline bool has_chattype() const;
   inline void clear_chattype();
   static const int kChattypeFieldNumber = 4;
   inline const ::std::string& chattype() const;
   inline void set_chattype(const ::std::string& value);
   inline void set_chattype(const char* value);
-  inline void set_chattype(const char* value, size_t size);
+  inline void set_chattype(const void* value, size_t size);
   inline ::std::string* mutable_chattype();
   inline ::std::string* release_chattype();
   inline void set_allocated_chattype(::std::string* chattype);
 
-  // required string selfinfo = 5;
+  // required bytes selfinfo = 5;
   inline bool has_selfinfo() const;
   inline void clear_selfinfo();
   static const int kSelfinfoFieldNumber = 5;
   inline const ::std::string& selfinfo() const;
   inline void set_selfinfo(const ::std::string& value);
   inline void set_selfinfo(const char* value);
-  inline void set_selfinfo(const char* value, size_t size);
+  inline void set_selfinfo(const void* value, size_t size);
   inline ::std::string* mutable_selfinfo();
   inline ::std::string* release_selfinfo();
   inline void set_allocated_selfinfo(::std::string* selfinfo);
@@ -3890,14 +3890,14 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatInfo : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -3916,26 +3916,26 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatInfo : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string chattype = 4;
+  // required bytes chattype = 4;
   inline bool has_chattype() const;
   inline void clear_chattype();
   static const int kChattypeFieldNumber = 4;
   inline const ::std::string& chattype() const;
   inline void set_chattype(const ::std::string& value);
   inline void set_chattype(const char* value);
-  inline void set_chattype(const char* value, size_t size);
+  inline void set_chattype(const void* value, size_t size);
   inline ::std::string* mutable_chattype();
   inline ::std::string* release_chattype();
   inline void set_allocated_chattype(::std::string* chattype);
 
-  // required string playerinfo = 5;
+  // required bytes playerinfo = 5;
   inline bool has_playerinfo() const;
   inline void clear_playerinfo();
   static const int kPlayerinfoFieldNumber = 5;
   inline const ::std::string& playerinfo() const;
   inline void set_playerinfo(const ::std::string& value);
   inline void set_playerinfo(const char* value);
-  inline void set_playerinfo(const char* value, size_t size);
+  inline void set_playerinfo(const void* value, size_t size);
   inline ::std::string* mutable_playerinfo();
   inline ::std::string* release_playerinfo();
   inline void set_allocated_playerinfo(::std::string* playerinfo);
@@ -4037,19 +4037,19 @@ class LIBPROTOC_EXPORT MsgDebugCommandReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string command = 1;
+  // required bytes command = 1;
   inline bool has_command() const;
   inline void clear_command();
   static const int kCommandFieldNumber = 1;
   inline const ::std::string& command() const;
   inline void set_command(const ::std::string& value);
   inline void set_command(const char* value);
-  inline void set_command(const char* value, size_t size);
+  inline void set_command(const void* value, size_t size);
   inline ::std::string* mutable_command();
   inline ::std::string* release_command();
   inline void set_allocated_command(::std::string* command);
 
-  // repeated string params = 2;
+  // repeated bytes params = 2;
   inline int params_size() const;
   inline void clear_params();
   static const int kParamsFieldNumber = 2;
@@ -4057,11 +4057,11 @@ class LIBPROTOC_EXPORT MsgDebugCommandReq : public ::google::protobuf::Message {
   inline ::std::string* mutable_params(int index);
   inline void set_params(int index, const ::std::string& value);
   inline void set_params(int index, const char* value);
-  inline void set_params(int index, const char* value, size_t size);
+  inline void set_params(int index, const void* value, size_t size);
   inline ::std::string* add_params();
   inline void add_params(const ::std::string& value);
   inline void add_params(const char* value);
-  inline void add_params(const char* value, size_t size);
+  inline void add_params(const void* value, size_t size);
   inline const ::google::protobuf::RepeatedPtrField< ::std::string>& params() const;
   inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_params();
 
@@ -4141,14 +4141,14 @@ class LIBPROTOC_EXPORT MsgShowRewardAgent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string reward = 1;
+  // required bytes reward = 1;
   inline bool has_reward() const;
   inline void clear_reward();
   static const int kRewardFieldNumber = 1;
   inline const ::std::string& reward() const;
   inline void set_reward(const ::std::string& value);
   inline void set_reward(const char* value);
-  inline void set_reward(const char* value, size_t size);
+  inline void set_reward(const void* value, size_t size);
   inline ::std::string* mutable_reward();
   inline ::std::string* release_reward();
   inline void set_allocated_reward(::std::string* reward);
@@ -4228,14 +4228,14 @@ class LIBPROTOC_EXPORT MsgSendGroupChatReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -4325,14 +4325,14 @@ class LIBPROTOC_EXPORT MsgSendGroupChatInfo : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required string chatinfo = 1;
+  // required bytes chatinfo = 1;
   inline bool has_chatinfo() const;
   inline void clear_chatinfo();
   static const int kChatinfoFieldNumber = 1;
   inline const ::std::string& chatinfo() const;
   inline void set_chatinfo(const ::std::string& value);
   inline void set_chatinfo(const char* value);
-  inline void set_chatinfo(const char* value, size_t size);
+  inline void set_chatinfo(const void* value, size_t size);
   inline ::std::string* mutable_chatinfo();
   inline ::std::string* release_chatinfo();
   inline void set_allocated_chatinfo(::std::string* chatinfo);
@@ -4432,14 +4432,14 @@ class LIBPROTOC_EXPORT MsgBuyStoreReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string buytype = 1;
+  // required bytes buytype = 1;
   inline bool has_buytype() const;
   inline void clear_buytype();
   static const int kBuytypeFieldNumber = 1;
   inline const ::std::string& buytype() const;
   inline void set_buytype(const ::std::string& value);
   inline void set_buytype(const char* value);
-  inline void set_buytype(const char* value, size_t size);
+  inline void set_buytype(const void* value, size_t size);
   inline ::std::string* mutable_buytype();
   inline ::std::string* release_buytype();
   inline void set_allocated_buytype(::std::string* buytype);
@@ -4887,14 +4887,14 @@ class LIBPROTOC_EXPORT MsgRemoveDataReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string dataname = 1;
+  // required bytes dataname = 1;
   inline bool has_dataname() const;
   inline void clear_dataname();
   static const int kDatanameFieldNumber = 1;
   inline const ::std::string& dataname() const;
   inline void set_dataname(const ::std::string& value);
   inline void set_dataname(const char* value);
-  inline void set_dataname(const char* value, size_t size);
+  inline void set_dataname(const void* value, size_t size);
   inline ::std::string* mutable_dataname();
   inline ::std::string* release_dataname();
   inline void set_allocated_dataname(::std::string* dataname);
@@ -5264,14 +5264,14 @@ class LIBPROTOC_EXPORT MsgInviteMatchGroupReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // required string source = 3;
+  // required bytes source = 3;
   inline bool has_source() const;
   inline void clear_source();
   static const int kSourceFieldNumber = 3;
   inline const ::std::string& source() const;
   inline void set_source(const ::std::string& value);
   inline void set_source(const char* value);
-  inline void set_source(const char* value, size_t size);
+  inline void set_source(const void* value, size_t size);
   inline ::std::string* mutable_source();
   inline ::std::string* release_source();
   inline void set_allocated_source(::std::string* source);
@@ -5283,14 +5283,14 @@ class LIBPROTOC_EXPORT MsgInviteMatchGroupReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required string playername = 5;
+  // required bytes playername = 5;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 5;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
@@ -6941,26 +6941,26 @@ class LIBPROTOC_EXPORT MsgUpdateSettingReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string settingkey = 1;
+  // required bytes settingkey = 1;
   inline bool has_settingkey() const;
   inline void clear_settingkey();
   static const int kSettingkeyFieldNumber = 1;
   inline const ::std::string& settingkey() const;
   inline void set_settingkey(const ::std::string& value);
   inline void set_settingkey(const char* value);
-  inline void set_settingkey(const char* value, size_t size);
+  inline void set_settingkey(const void* value, size_t size);
   inline ::std::string* mutable_settingkey();
   inline ::std::string* release_settingkey();
   inline void set_allocated_settingkey(::std::string* settingkey);
 
-  // required string settingvalue = 2;
+  // required bytes settingvalue = 2;
   inline bool has_settingvalue() const;
   inline void clear_settingvalue();
   static const int kSettingvalueFieldNumber = 2;
   inline const ::std::string& settingvalue() const;
   inline void set_settingvalue(const ::std::string& value);
   inline void set_settingvalue(const char* value);
-  inline void set_settingvalue(const char* value, size_t size);
+  inline void set_settingvalue(const void* value, size_t size);
   inline ::std::string* mutable_settingvalue();
   inline ::std::string* release_settingvalue();
   inline void set_allocated_settingvalue(::std::string* settingvalue);
@@ -7199,14 +7199,14 @@ class LIBPROTOC_EXPORT MsgCompoundDataReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string dataname = 1;
+  // required bytes dataname = 1;
   inline bool has_dataname() const;
   inline void clear_dataname();
   static const int kDatanameFieldNumber = 1;
   inline const ::std::string& dataname() const;
   inline void set_dataname(const ::std::string& value);
   inline void set_dataname(const char* value);
-  inline void set_dataname(const char* value, size_t size);
+  inline void set_dataname(const void* value, size_t size);
   inline ::std::string* mutable_dataname();
   inline ::std::string* release_dataname();
   inline void set_allocated_dataname(::std::string* dataname);
@@ -7730,26 +7730,26 @@ class LIBPROTOC_EXPORT MsgTellSevenExtendReward : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required string playername = 1;
+  // required bytes playername = 1;
   inline bool has_playername() const;
   inline void clear_playername();
   static const int kPlayernameFieldNumber = 1;
   inline const ::std::string& playername() const;
   inline void set_playername(const ::std::string& value);
   inline void set_playername(const char* value);
-  inline void set_playername(const char* value, size_t size);
+  inline void set_playername(const void* value, size_t size);
   inline ::std::string* mutable_playername();
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
 
-  // required string reward = 2;
+  // required bytes reward = 2;
   inline bool has_reward() const;
   inline void clear_reward();
   static const int kRewardFieldNumber = 2;
   inline const ::std::string& reward() const;
   inline void set_reward(const ::std::string& value);
   inline void set_reward(const char* value);
-  inline void set_reward(const char* value, size_t size);
+  inline void set_reward(const void* value, size_t size);
   inline ::std::string* mutable_reward();
   inline ::std::string* release_reward();
   inline void set_allocated_reward(::std::string* reward);
@@ -7832,14 +7832,14 @@ class LIBPROTOC_EXPORT MsgCreateGuildReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string guildname = 1;
+  // required bytes guildname = 1;
   inline bool has_guildname() const;
   inline void clear_guildname();
   static const int kGuildnameFieldNumber = 1;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
-  inline void set_guildname(const char* value, size_t size);
+  inline void set_guildname(const void* value, size_t size);
   inline ::std::string* mutable_guildname();
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
@@ -7851,14 +7851,14 @@ class LIBPROTOC_EXPORT MsgCreateGuildReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 medal() const;
   inline void set_medal(::google::protobuf::uint32 value);
 
-  // optional string manifesto = 3;
+  // optional bytes manifesto = 3;
   inline bool has_manifesto() const;
   inline void clear_manifesto();
   static const int kManifestoFieldNumber = 3;
   inline const ::std::string& manifesto() const;
   inline void set_manifesto(const ::std::string& value);
   inline void set_manifesto(const char* value);
-  inline void set_manifesto(const char* value, size_t size);
+  inline void set_manifesto(const void* value, size_t size);
   inline ::std::string* mutable_manifesto();
   inline ::std::string* release_manifesto();
   inline void set_allocated_manifesto(::std::string* manifesto);
@@ -8943,14 +8943,14 @@ class LIBPROTOC_EXPORT MsgSearchGuildByNameReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required string guildname = 1;
+  // required bytes guildname = 1;
   inline bool has_guildname() const;
   inline void clear_guildname();
   static const int kGuildnameFieldNumber = 1;
   inline const ::std::string& guildname() const;
   inline void set_guildname(const ::std::string& value);
   inline void set_guildname(const char* value);
-  inline void set_guildname(const char* value, size_t size);
+  inline void set_guildname(const void* value, size_t size);
   inline ::std::string* mutable_guildname();
   inline ::std::string* release_guildname();
   inline void set_allocated_guildname(::std::string* guildname);
@@ -9030,14 +9030,14 @@ class LIBPROTOC_EXPORT MsgSetGuildSwitchReq : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required string type = 1;
+  // required bytes type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -9216,7 +9216,7 @@ class LIBPROTOC_EXPORT MsgQueryGuildLogAck : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 page() const;
   inline void set_page(::google::protobuf::uint32 value);
 
-  // repeated string guildlog = 2;
+  // repeated bytes guildlog = 2;
   inline int guildlog_size() const;
   inline void clear_guildlog();
   static const int kGuildlogFieldNumber = 2;
@@ -9224,11 +9224,11 @@ class LIBPROTOC_EXPORT MsgQueryGuildLogAck : public ::google::protobuf::Message 
   inline ::std::string* mutable_guildlog(int index);
   inline void set_guildlog(int index, const ::std::string& value);
   inline void set_guildlog(int index, const char* value);
-  inline void set_guildlog(int index, const char* value, size_t size);
+  inline void set_guildlog(int index, const void* value, size_t size);
   inline ::std::string* add_guildlog();
   inline void add_guildlog(const ::std::string& value);
   inline void add_guildlog(const char* value);
-  inline void add_guildlog(const char* value, size_t size);
+  inline void add_guildlog(const void* value, size_t size);
   inline const ::google::protobuf::RepeatedPtrField< ::std::string>& guildlog() const;
   inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_guildlog();
 
@@ -9308,14 +9308,14 @@ class LIBPROTOC_EXPORT MsgTellMarquee : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
+  // required bytes content = 1;
   inline bool has_content() const;
   inline void clear_content();
   static const int kContentFieldNumber = 1;
   inline const ::std::string& content() const;
   inline void set_content(const ::std::string& value);
   inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
+  inline void set_content(const void* value, size_t size);
   inline ::std::string* mutable_content();
   inline ::std::string* release_content();
   inline void set_allocated_content(::std::string* content);
@@ -9395,14 +9395,14 @@ class LIBPROTOC_EXPORT MsgTellSysNotcie : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
+  // required bytes content = 1;
   inline bool has_content() const;
   inline void clear_content();
   static const int kContentFieldNumber = 1;
   inline const ::std::string& content() const;
   inline void set_content(const ::std::string& value);
   inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
+  inline void set_content(const void* value, size_t size);
   inline ::std::string* mutable_content();
   inline ::std::string* release_content();
   inline void set_allocated_content(::std::string* content);
@@ -9482,26 +9482,26 @@ class LIBPROTOC_EXPORT MsgBindAlipayReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string alipay = 2;
+  // required bytes alipay = 2;
   inline bool has_alipay() const;
   inline void clear_alipay();
   static const int kAlipayFieldNumber = 2;
   inline const ::std::string& alipay() const;
   inline void set_alipay(const ::std::string& value);
   inline void set_alipay(const char* value);
-  inline void set_alipay(const char* value, size_t size);
+  inline void set_alipay(const void* value, size_t size);
   inline ::std::string* mutable_alipay();
   inline ::std::string* release_alipay();
   inline void set_allocated_alipay(::std::string* alipay);
@@ -9584,26 +9584,26 @@ class LIBPROTOC_EXPORT MsgExChangeInviteScoreReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string alipay = 2;
+  // required bytes alipay = 2;
   inline bool has_alipay() const;
   inline void clear_alipay();
   static const int kAlipayFieldNumber = 2;
   inline const ::std::string& alipay() const;
   inline void set_alipay(const ::std::string& value);
   inline void set_alipay(const char* value);
-  inline void set_alipay(const char* value, size_t size);
+  inline void set_alipay(const void* value, size_t size);
   inline ::std::string* mutable_alipay();
   inline ::std::string* release_alipay();
   inline void set_allocated_alipay(::std::string* alipay);
@@ -10014,26 +10014,26 @@ class LIBPROTOC_EXPORT PBExChangeInviteRecord : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required string name = 1;
+  // required bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string alipay = 2;
+  // required bytes alipay = 2;
   inline bool has_alipay() const;
   inline void clear_alipay();
   static const int kAlipayFieldNumber = 2;
   inline const ::std::string& alipay() const;
   inline void set_alipay(const ::std::string& value);
   inline void set_alipay(const char* value);
-  inline void set_alipay(const char* value, size_t size);
+  inline void set_alipay(const void* value, size_t size);
   inline ::std::string* mutable_alipay();
   inline ::std::string* release_alipay();
   inline void set_allocated_alipay(::std::string* alipay);
@@ -10194,7 +10194,7 @@ inline void MsgResultDisplay::set_result(::google::protobuf::uint32 value) {
   result_ = value;
 }
 
-// repeated string param = 2;
+// repeated bytes param = 2;
 inline int MsgResultDisplay::param_size() const {
   return param_.size();
 }
@@ -10213,7 +10213,7 @@ inline void MsgResultDisplay::set_param(int index, const ::std::string& value) {
 inline void MsgResultDisplay::set_param(int index, const char* value) {
   param_.Mutable(index)->assign(value);
 }
-inline void MsgResultDisplay::set_param(int index, const char* value, size_t size) {
+inline void MsgResultDisplay::set_param(int index, const void* value, size_t size) {
   param_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
 }
@@ -10226,7 +10226,7 @@ inline void MsgResultDisplay::add_param(const ::std::string& value) {
 inline void MsgResultDisplay::add_param(const char* value) {
   param_.Add()->assign(value);
 }
-inline void MsgResultDisplay::add_param(const char* value, size_t size) {
+inline void MsgResultDisplay::add_param(const void* value, size_t size) {
   param_.Add()->assign(reinterpret_cast<const char*>(value), size);
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
@@ -10290,7 +10290,7 @@ inline void MsgLoginVerifyReq::set_accountid(::google::protobuf::uint32 value) {
   accountid_ = value;
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool MsgLoginVerifyReq::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -10323,7 +10323,7 @@ inline void MsgLoginVerifyReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void MsgLoginVerifyReq::set_token(const char* value, size_t size) {
+inline void MsgLoginVerifyReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -10360,7 +10360,7 @@ inline void MsgLoginVerifyReq::set_allocated_token(::std::string* token) {
   }
 }
 
-// optional string version = 3;
+// required bytes version = 3;
 inline bool MsgLoginVerifyReq::has_version() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -10393,7 +10393,7 @@ inline void MsgLoginVerifyReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void MsgLoginVerifyReq::set_version(const char* value, size_t size) {
+inline void MsgLoginVerifyReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -10456,7 +10456,7 @@ inline void MsgLoginVerifyAck::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool MsgLoginVerifyAck::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -10489,7 +10489,7 @@ inline void MsgLoginVerifyAck::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void MsgLoginVerifyAck::set_token(const char* value, size_t size) {
+inline void MsgLoginVerifyAck::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -10526,7 +10526,7 @@ inline void MsgLoginVerifyAck::set_allocated_token(::std::string* token) {
   }
 }
 
-// required string ip = 3;
+// required bytes ip = 3;
 inline bool MsgLoginVerifyAck::has_ip() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -10559,7 +10559,7 @@ inline void MsgLoginVerifyAck::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void MsgLoginVerifyAck::set_ip(const char* value, size_t size) {
+inline void MsgLoginVerifyAck::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -10644,7 +10644,7 @@ inline void MsgLoginGameReq::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool MsgLoginGameReq::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -10677,7 +10677,7 @@ inline void MsgLoginGameReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void MsgLoginGameReq::set_token(const char* value, size_t size) {
+inline void MsgLoginGameReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -10722,7 +10722,7 @@ inline void MsgLoginGameReq::set_allocated_token(::std::string* token) {
 
 // MsgCreateRoleReq
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool MsgCreateRoleReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10755,7 +10755,7 @@ inline void MsgCreateRoleReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgCreateRoleReq::set_name(const char* value, size_t size) {
+inline void MsgCreateRoleReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -10862,7 +10862,7 @@ inline void MsgCreateRoleReq::set_inviterid(::google::protobuf::uint32 value) {
 
 // MsgChangeNameReq
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool MsgChangeNameReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10895,7 +10895,7 @@ inline void MsgChangeNameReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgChangeNameReq::set_name(const char* value, size_t size) {
+inline void MsgChangeNameReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -10962,7 +10962,7 @@ inline void MsgChangeSexReq::set_sex(::google::protobuf::uint32 value) {
 
 // MsgChangeIconReq
 
-// required string icon = 1;
+// required bytes icon = 1;
 inline bool MsgChangeIconReq::has_icon() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10995,7 +10995,7 @@ inline void MsgChangeIconReq::set_icon(const char* value) {
   }
   icon_->assign(value);
 }
-inline void MsgChangeIconReq::set_icon(const char* value, size_t size) {
+inline void MsgChangeIconReq::set_icon(const void* value, size_t size) {
   set_has_icon();
   if (icon_ == &::google::protobuf::internal::kEmptyString) {
     icon_ = new ::std::string;
@@ -11036,7 +11036,7 @@ inline void MsgChangeIconReq::set_allocated_icon(::std::string* icon) {
 
 // MsgChangeIconBoxReq
 
-// required string iconbox = 1;
+// required bytes iconbox = 1;
 inline bool MsgChangeIconBoxReq::has_iconbox() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11069,7 +11069,7 @@ inline void MsgChangeIconBoxReq::set_iconbox(const char* value) {
   }
   iconbox_->assign(value);
 }
-inline void MsgChangeIconBoxReq::set_iconbox(const char* value, size_t size) {
+inline void MsgChangeIconBoxReq::set_iconbox(const void* value, size_t size) {
   set_has_iconbox();
   if (iconbox_ == &::google::protobuf::internal::kEmptyString) {
     iconbox_ = new ::std::string;
@@ -11110,7 +11110,7 @@ inline void MsgChangeIconBoxReq::set_allocated_iconbox(::std::string* iconbox) {
 
 // MsgChangeMottoReq
 
-// required string motto = 1;
+// required bytes motto = 1;
 inline bool MsgChangeMottoReq::has_motto() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11143,7 +11143,7 @@ inline void MsgChangeMottoReq::set_motto(const char* value) {
   }
   motto_->assign(value);
 }
-inline void MsgChangeMottoReq::set_motto(const char* value, size_t size) {
+inline void MsgChangeMottoReq::set_motto(const void* value, size_t size) {
   set_has_motto();
   if (motto_ == &::google::protobuf::internal::kEmptyString) {
     motto_ = new ::std::string;
@@ -11184,7 +11184,7 @@ inline void MsgChangeMottoReq::set_allocated_motto(::std::string* motto) {
 
 // MsgQueryBasicReq
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool MsgQueryBasicReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11217,7 +11217,7 @@ inline void MsgQueryBasicReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgQueryBasicReq::set_name(const char* value, size_t size) {
+inline void MsgQueryBasicReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -11384,7 +11384,7 @@ inline void MsgReceiveAchieveRewardReq::set_achieveid(::google::protobuf::uint32
 
 // MsgReceiveGiftRewardReq
 
-// required string giftkey = 1;
+// required bytes giftkey = 1;
 inline bool MsgReceiveGiftRewardReq::has_giftkey() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11417,7 +11417,7 @@ inline void MsgReceiveGiftRewardReq::set_giftkey(const char* value) {
   }
   giftkey_->assign(value);
 }
-inline void MsgReceiveGiftRewardReq::set_giftkey(const char* value, size_t size) {
+inline void MsgReceiveGiftRewardReq::set_giftkey(const void* value, size_t size) {
   set_has_giftkey();
   if (giftkey_ == &::google::protobuf::internal::kEmptyString) {
     giftkey_ = new ::std::string;
@@ -11628,7 +11628,7 @@ inline void MsgStartMatchReq::set_battleserverid(::google::protobuf::uint32 valu
   battleserverid_ = value;
 }
 
-// required string version = 4;
+// required bytes version = 4;
 inline bool MsgStartMatchReq::has_version() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -11661,7 +11661,7 @@ inline void MsgStartMatchReq::set_version(const char* value) {
   }
   version_->assign(value);
 }
-inline void MsgStartMatchReq::set_version(const char* value, size_t size) {
+inline void MsgStartMatchReq::set_version(const void* value, size_t size) {
   set_has_version();
   if (version_ == &::google::protobuf::internal::kEmptyString) {
     version_ = new ::std::string;
@@ -11824,7 +11824,7 @@ inline void MsgMatchResultAck::set_serverid(::google::protobuf::uint32 value) {
   serverid_ = value;
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool MsgMatchResultAck::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -11857,7 +11857,7 @@ inline void MsgMatchResultAck::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void MsgMatchResultAck::set_ip(const char* value, size_t size) {
+inline void MsgMatchResultAck::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -11916,7 +11916,7 @@ inline void MsgMatchResultAck::set_port(::google::protobuf::uint32 value) {
   port_ = value;
 }
 
-// required string token = 6;
+// required bytes token = 6;
 inline bool MsgMatchResultAck::has_token() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -11949,7 +11949,7 @@ inline void MsgMatchResultAck::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void MsgMatchResultAck::set_token(const char* value, size_t size) {
+inline void MsgMatchResultAck::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -12064,7 +12064,7 @@ inline void MsgAddFriendInviteReq::set_playerid(::google::protobuf::uint32 value
   playerid_ = value;
 }
 
-// required string message = 2;
+// required bytes message = 2;
 inline bool MsgAddFriendInviteReq::has_message() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -12097,7 +12097,7 @@ inline void MsgAddFriendInviteReq::set_message(const char* value) {
   }
   message_->assign(value);
 }
-inline void MsgAddFriendInviteReq::set_message(const char* value, size_t size) {
+inline void MsgAddFriendInviteReq::set_message(const void* value, size_t size) {
   set_has_message();
   if (message_ == &::google::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
@@ -12134,7 +12134,7 @@ inline void MsgAddFriendInviteReq::set_allocated_message(::std::string* message)
   }
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool MsgAddFriendInviteReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -12167,7 +12167,7 @@ inline void MsgAddFriendInviteReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgAddFriendInviteReq::set_name(const char* value, size_t size) {
+inline void MsgAddFriendInviteReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -12312,7 +12312,7 @@ inline void MsgSetRefuseFriendInviteReq::set_refuse(::google::protobuf::uint32 v
 
 // MsgSendChatReq
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendChatReq::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12345,7 +12345,7 @@ inline void MsgSendChatReq::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendChatReq::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendChatReq::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -12408,7 +12408,7 @@ inline void MsgSendChatReq::set_isvoice(::google::protobuf::uint32 value) {
 
 // MsgSendChatInfo
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendChatInfo::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12441,7 +12441,7 @@ inline void MsgSendChatInfo::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendChatInfo::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendChatInfo::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -12500,7 +12500,7 @@ inline void MsgSendChatInfo::set_isvoice(::google::protobuf::uint32 value) {
   isvoice_ = value;
 }
 
-// required string playername = 3;
+// required bytes playername = 3;
 inline bool MsgSendChatInfo::has_playername() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -12533,7 +12533,7 @@ inline void MsgSendChatInfo::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void MsgSendChatInfo::set_playername(const char* value, size_t size) {
+inline void MsgSendChatInfo::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -12592,7 +12592,7 @@ inline void MsgSendChatInfo::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// required string playericon = 5;
+// required bytes playericon = 5;
 inline bool MsgSendChatInfo::has_playericon() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -12625,7 +12625,7 @@ inline void MsgSendChatInfo::set_playericon(const char* value) {
   }
   playericon_->assign(value);
 }
-inline void MsgSendChatInfo::set_playericon(const char* value, size_t size) {
+inline void MsgSendChatInfo::set_playericon(const void* value, size_t size) {
   set_has_playericon();
   if (playericon_ == &::google::protobuf::internal::kEmptyString) {
     playericon_ = new ::std::string;
@@ -12706,7 +12706,7 @@ inline void MsgSendChatInfo::set_playersex(::google::protobuf::uint32 value) {
   playersex_ = value;
 }
 
-// required string playericonbox = 8;
+// required bytes playericonbox = 8;
 inline bool MsgSendChatInfo::has_playericonbox() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -12739,7 +12739,7 @@ inline void MsgSendChatInfo::set_playericonbox(const char* value) {
   }
   playericonbox_->assign(value);
 }
-inline void MsgSendChatInfo::set_playericonbox(const char* value, size_t size) {
+inline void MsgSendChatInfo::set_playericonbox(const void* value, size_t size) {
   set_has_playericonbox();
   if (playericonbox_ == &::google::protobuf::internal::kEmptyString) {
     playericonbox_ = new ::std::string;
@@ -12806,7 +12806,7 @@ inline void MsgSendChatInfo::set_playerserverid(::google::protobuf::uint32 value
 
 // MsgSendOneByOneChatReq
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendOneByOneChatReq::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12839,7 +12839,7 @@ inline void MsgSendOneByOneChatReq::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendOneByOneChatReq::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendOneByOneChatReq::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -12920,7 +12920,7 @@ inline void MsgSendOneByOneChatReq::set_playerid(::google::protobuf::uint32 valu
   playerid_ = value;
 }
 
-// required string chattype = 4;
+// required bytes chattype = 4;
 inline bool MsgSendOneByOneChatReq::has_chattype() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -12953,7 +12953,7 @@ inline void MsgSendOneByOneChatReq::set_chattype(const char* value) {
   }
   chattype_->assign(value);
 }
-inline void MsgSendOneByOneChatReq::set_chattype(const char* value, size_t size) {
+inline void MsgSendOneByOneChatReq::set_chattype(const void* value, size_t size) {
   set_has_chattype();
   if (chattype_ == &::google::protobuf::internal::kEmptyString) {
     chattype_ = new ::std::string;
@@ -12990,7 +12990,7 @@ inline void MsgSendOneByOneChatReq::set_allocated_chattype(::std::string* chatty
   }
 }
 
-// required string selfinfo = 5;
+// required bytes selfinfo = 5;
 inline bool MsgSendOneByOneChatReq::has_selfinfo() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -13023,7 +13023,7 @@ inline void MsgSendOneByOneChatReq::set_selfinfo(const char* value) {
   }
   selfinfo_->assign(value);
 }
-inline void MsgSendOneByOneChatReq::set_selfinfo(const char* value, size_t size) {
+inline void MsgSendOneByOneChatReq::set_selfinfo(const void* value, size_t size) {
   set_has_selfinfo();
   if (selfinfo_ == &::google::protobuf::internal::kEmptyString) {
     selfinfo_ = new ::std::string;
@@ -13086,7 +13086,7 @@ inline void MsgSendOneByOneChatReq::set_serverid(::google::protobuf::uint32 valu
 
 // MsgSendOneByOneChatInfo
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendOneByOneChatInfo::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13119,7 +13119,7 @@ inline void MsgSendOneByOneChatInfo::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendOneByOneChatInfo::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendOneByOneChatInfo::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -13200,7 +13200,7 @@ inline void MsgSendOneByOneChatInfo::set_playerid(::google::protobuf::uint32 val
   playerid_ = value;
 }
 
-// required string chattype = 4;
+// required bytes chattype = 4;
 inline bool MsgSendOneByOneChatInfo::has_chattype() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -13233,7 +13233,7 @@ inline void MsgSendOneByOneChatInfo::set_chattype(const char* value) {
   }
   chattype_->assign(value);
 }
-inline void MsgSendOneByOneChatInfo::set_chattype(const char* value, size_t size) {
+inline void MsgSendOneByOneChatInfo::set_chattype(const void* value, size_t size) {
   set_has_chattype();
   if (chattype_ == &::google::protobuf::internal::kEmptyString) {
     chattype_ = new ::std::string;
@@ -13270,7 +13270,7 @@ inline void MsgSendOneByOneChatInfo::set_allocated_chattype(::std::string* chatt
   }
 }
 
-// required string playerinfo = 5;
+// required bytes playerinfo = 5;
 inline bool MsgSendOneByOneChatInfo::has_playerinfo() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -13303,7 +13303,7 @@ inline void MsgSendOneByOneChatInfo::set_playerinfo(const char* value) {
   }
   playerinfo_->assign(value);
 }
-inline void MsgSendOneByOneChatInfo::set_playerinfo(const char* value, size_t size) {
+inline void MsgSendOneByOneChatInfo::set_playerinfo(const void* value, size_t size) {
   set_has_playerinfo();
   if (playerinfo_ == &::google::protobuf::internal::kEmptyString) {
     playerinfo_ = new ::std::string;
@@ -13366,7 +13366,7 @@ inline void MsgSendOneByOneChatInfo::set_serverid(::google::protobuf::uint32 val
 
 // MsgDebugCommandReq
 
-// required string command = 1;
+// required bytes command = 1;
 inline bool MsgDebugCommandReq::has_command() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13399,7 +13399,7 @@ inline void MsgDebugCommandReq::set_command(const char* value) {
   }
   command_->assign(value);
 }
-inline void MsgDebugCommandReq::set_command(const char* value, size_t size) {
+inline void MsgDebugCommandReq::set_command(const void* value, size_t size) {
   set_has_command();
   if (command_ == &::google::protobuf::internal::kEmptyString) {
     command_ = new ::std::string;
@@ -13436,7 +13436,7 @@ inline void MsgDebugCommandReq::set_allocated_command(::std::string* command) {
   }
 }
 
-// repeated string params = 2;
+// repeated bytes params = 2;
 inline int MsgDebugCommandReq::params_size() const {
   return params_.size();
 }
@@ -13455,7 +13455,7 @@ inline void MsgDebugCommandReq::set_params(int index, const ::std::string& value
 inline void MsgDebugCommandReq::set_params(int index, const char* value) {
   params_.Mutable(index)->assign(value);
 }
-inline void MsgDebugCommandReq::set_params(int index, const char* value, size_t size) {
+inline void MsgDebugCommandReq::set_params(int index, const void* value, size_t size) {
   params_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
 }
@@ -13468,7 +13468,7 @@ inline void MsgDebugCommandReq::add_params(const ::std::string& value) {
 inline void MsgDebugCommandReq::add_params(const char* value) {
   params_.Add()->assign(value);
 }
-inline void MsgDebugCommandReq::add_params(const char* value, size_t size) {
+inline void MsgDebugCommandReq::add_params(const void* value, size_t size) {
   params_.Add()->assign(reinterpret_cast<const char*>(value), size);
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
@@ -13484,7 +13484,7 @@ MsgDebugCommandReq::mutable_params() {
 
 // MsgShowRewardAgent
 
-// required string reward = 1;
+// required bytes reward = 1;
 inline bool MsgShowRewardAgent::has_reward() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13517,7 +13517,7 @@ inline void MsgShowRewardAgent::set_reward(const char* value) {
   }
   reward_->assign(value);
 }
-inline void MsgShowRewardAgent::set_reward(const char* value, size_t size) {
+inline void MsgShowRewardAgent::set_reward(const void* value, size_t size) {
   set_has_reward();
   if (reward_ == &::google::protobuf::internal::kEmptyString) {
     reward_ = new ::std::string;
@@ -13558,7 +13558,7 @@ inline void MsgShowRewardAgent::set_allocated_reward(::std::string* reward) {
 
 // MsgSendGroupChatReq
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendGroupChatReq::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13591,7 +13591,7 @@ inline void MsgSendGroupChatReq::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendGroupChatReq::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendGroupChatReq::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -13654,7 +13654,7 @@ inline void MsgSendGroupChatReq::set_isvoice(::google::protobuf::uint32 value) {
 
 // MsgSendGroupChatInfo
 
-// required string chatinfo = 1;
+// required bytes chatinfo = 1;
 inline bool MsgSendGroupChatInfo::has_chatinfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13687,7 +13687,7 @@ inline void MsgSendGroupChatInfo::set_chatinfo(const char* value) {
   }
   chatinfo_->assign(value);
 }
-inline void MsgSendGroupChatInfo::set_chatinfo(const char* value, size_t size) {
+inline void MsgSendGroupChatInfo::set_chatinfo(const void* value, size_t size) {
   set_has_chatinfo();
   if (chatinfo_ == &::google::protobuf::internal::kEmptyString) {
     chatinfo_ = new ::std::string;
@@ -13772,7 +13772,7 @@ inline void MsgSendGroupChatInfo::set_playerid(::google::protobuf::uint32 value)
 
 // MsgBuyStoreReq
 
-// required string buytype = 1;
+// required bytes buytype = 1;
 inline bool MsgBuyStoreReq::has_buytype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13805,7 +13805,7 @@ inline void MsgBuyStoreReq::set_buytype(const char* value) {
   }
   buytype_->assign(value);
 }
-inline void MsgBuyStoreReq::set_buytype(const char* value, size_t size) {
+inline void MsgBuyStoreReq::set_buytype(const void* value, size_t size) {
   set_has_buytype();
   if (buytype_ == &::google::protobuf::internal::kEmptyString) {
     buytype_ = new ::std::string;
@@ -14038,7 +14038,7 @@ inline void MsgQueryToastCountAck::set_toastcount(::google::protobuf::uint32 val
 
 // MsgRemoveDataReq
 
-// required string dataname = 1;
+// required bytes dataname = 1;
 inline bool MsgRemoveDataReq::has_dataname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14071,7 +14071,7 @@ inline void MsgRemoveDataReq::set_dataname(const char* value) {
   }
   dataname_->assign(value);
 }
-inline void MsgRemoveDataReq::set_dataname(const char* value, size_t size) {
+inline void MsgRemoveDataReq::set_dataname(const void* value, size_t size) {
   set_has_dataname();
   if (dataname_ == &::google::protobuf::internal::kEmptyString) {
     dataname_ = new ::std::string;
@@ -14300,7 +14300,7 @@ inline void MsgInviteMatchGroupReq::set_playerid(::google::protobuf::uint32 valu
   playerid_ = value;
 }
 
-// required string source = 3;
+// required bytes source = 3;
 inline bool MsgInviteMatchGroupReq::has_source() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -14333,7 +14333,7 @@ inline void MsgInviteMatchGroupReq::set_source(const char* value) {
   }
   source_->assign(value);
 }
-inline void MsgInviteMatchGroupReq::set_source(const char* value, size_t size) {
+inline void MsgInviteMatchGroupReq::set_source(const void* value, size_t size) {
   set_has_source();
   if (source_ == &::google::protobuf::internal::kEmptyString) {
     source_ = new ::std::string;
@@ -14392,7 +14392,7 @@ inline void MsgInviteMatchGroupReq::set_matchid(::google::protobuf::uint32 value
   matchid_ = value;
 }
 
-// required string playername = 5;
+// required bytes playername = 5;
 inline bool MsgInviteMatchGroupReq::has_playername() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -14425,7 +14425,7 @@ inline void MsgInviteMatchGroupReq::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void MsgInviteMatchGroupReq::set_playername(const char* value, size_t size) {
+inline void MsgInviteMatchGroupReq::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -15129,7 +15129,7 @@ inline void MsgQuerySettingAck::set_allocated_pbsetting(::KFMsg::PBObject* pbset
 
 // MsgUpdateSettingReq
 
-// required string settingkey = 1;
+// required bytes settingkey = 1;
 inline bool MsgUpdateSettingReq::has_settingkey() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -15162,7 +15162,7 @@ inline void MsgUpdateSettingReq::set_settingkey(const char* value) {
   }
   settingkey_->assign(value);
 }
-inline void MsgUpdateSettingReq::set_settingkey(const char* value, size_t size) {
+inline void MsgUpdateSettingReq::set_settingkey(const void* value, size_t size) {
   set_has_settingkey();
   if (settingkey_ == &::google::protobuf::internal::kEmptyString) {
     settingkey_ = new ::std::string;
@@ -15199,7 +15199,7 @@ inline void MsgUpdateSettingReq::set_allocated_settingkey(::std::string* setting
   }
 }
 
-// required string settingvalue = 2;
+// required bytes settingvalue = 2;
 inline bool MsgUpdateSettingReq::has_settingvalue() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -15232,7 +15232,7 @@ inline void MsgUpdateSettingReq::set_settingvalue(const char* value) {
   }
   settingvalue_->assign(value);
 }
-inline void MsgUpdateSettingReq::set_settingvalue(const char* value, size_t size) {
+inline void MsgUpdateSettingReq::set_settingvalue(const void* value, size_t size) {
   set_has_settingvalue();
   if (settingvalue_ == &::google::protobuf::internal::kEmptyString) {
     settingvalue_ = new ::std::string;
@@ -15319,7 +15319,7 @@ inline void MsgQueryRecentListAck::set_allocated_recentlist(::KFMsg::PBRecord* r
 
 // MsgCompoundDataReq
 
-// required string dataname = 1;
+// required bytes dataname = 1;
 inline bool MsgCompoundDataReq::has_dataname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -15352,7 +15352,7 @@ inline void MsgCompoundDataReq::set_dataname(const char* value) {
   }
   dataname_->assign(value);
 }
-inline void MsgCompoundDataReq::set_dataname(const char* value, size_t size) {
+inline void MsgCompoundDataReq::set_dataname(const void* value, size_t size) {
   set_has_dataname();
   if (dataname_ == &::google::protobuf::internal::kEmptyString) {
     dataname_ = new ::std::string;
@@ -15621,7 +15621,7 @@ inline void MsgSevenSignInRewardReq::set_day(::google::protobuf::uint32 value) {
 
 // MsgTellSevenExtendReward
 
-// required string playername = 1;
+// required bytes playername = 1;
 inline bool MsgTellSevenExtendReward::has_playername() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -15654,7 +15654,7 @@ inline void MsgTellSevenExtendReward::set_playername(const char* value) {
   }
   playername_->assign(value);
 }
-inline void MsgTellSevenExtendReward::set_playername(const char* value, size_t size) {
+inline void MsgTellSevenExtendReward::set_playername(const void* value, size_t size) {
   set_has_playername();
   if (playername_ == &::google::protobuf::internal::kEmptyString) {
     playername_ = new ::std::string;
@@ -15691,7 +15691,7 @@ inline void MsgTellSevenExtendReward::set_allocated_playername(::std::string* pl
   }
 }
 
-// required string reward = 2;
+// required bytes reward = 2;
 inline bool MsgTellSevenExtendReward::has_reward() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -15724,7 +15724,7 @@ inline void MsgTellSevenExtendReward::set_reward(const char* value) {
   }
   reward_->assign(value);
 }
-inline void MsgTellSevenExtendReward::set_reward(const char* value, size_t size) {
+inline void MsgTellSevenExtendReward::set_reward(const void* value, size_t size) {
   set_has_reward();
   if (reward_ == &::google::protobuf::internal::kEmptyString) {
     reward_ = new ::std::string;
@@ -15765,7 +15765,7 @@ inline void MsgTellSevenExtendReward::set_allocated_reward(::std::string* reward
 
 // MsgCreateGuildReq
 
-// required string guildname = 1;
+// required bytes guildname = 1;
 inline bool MsgCreateGuildReq::has_guildname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -15798,7 +15798,7 @@ inline void MsgCreateGuildReq::set_guildname(const char* value) {
   }
   guildname_->assign(value);
 }
-inline void MsgCreateGuildReq::set_guildname(const char* value, size_t size) {
+inline void MsgCreateGuildReq::set_guildname(const void* value, size_t size) {
   set_has_guildname();
   if (guildname_ == &::google::protobuf::internal::kEmptyString) {
     guildname_ = new ::std::string;
@@ -15857,7 +15857,7 @@ inline void MsgCreateGuildReq::set_medal(::google::protobuf::uint32 value) {
   medal_ = value;
 }
 
-// optional string manifesto = 3;
+// optional bytes manifesto = 3;
 inline bool MsgCreateGuildReq::has_manifesto() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -15890,7 +15890,7 @@ inline void MsgCreateGuildReq::set_manifesto(const char* value) {
   }
   manifesto_->assign(value);
 }
-inline void MsgCreateGuildReq::set_manifesto(const char* value, size_t size) {
+inline void MsgCreateGuildReq::set_manifesto(const void* value, size_t size) {
   set_has_manifesto();
   if (manifesto_ == &::google::protobuf::internal::kEmptyString) {
     manifesto_ = new ::std::string;
@@ -16284,7 +16284,7 @@ inline void MsgAppointGuildMemberReq::set_title(::google::protobuf::uint32 value
 
 // MsgSearchGuildByNameReq
 
-// required string guildname = 1;
+// required bytes guildname = 1;
 inline bool MsgSearchGuildByNameReq::has_guildname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16317,7 +16317,7 @@ inline void MsgSearchGuildByNameReq::set_guildname(const char* value) {
   }
   guildname_->assign(value);
 }
-inline void MsgSearchGuildByNameReq::set_guildname(const char* value, size_t size) {
+inline void MsgSearchGuildByNameReq::set_guildname(const void* value, size_t size) {
   set_has_guildname();
   if (guildname_ == &::google::protobuf::internal::kEmptyString) {
     guildname_ = new ::std::string;
@@ -16358,7 +16358,7 @@ inline void MsgSearchGuildByNameReq::set_allocated_guildname(::std::string* guil
 
 // MsgSetGuildSwitchReq
 
-// required string type = 1;
+// required bytes type = 1;
 inline bool MsgSetGuildSwitchReq::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16391,7 +16391,7 @@ inline void MsgSetGuildSwitchReq::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void MsgSetGuildSwitchReq::set_type(const char* value, size_t size) {
+inline void MsgSetGuildSwitchReq::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -16502,7 +16502,7 @@ inline void MsgQueryGuildLogAck::set_page(::google::protobuf::uint32 value) {
   page_ = value;
 }
 
-// repeated string guildlog = 2;
+// repeated bytes guildlog = 2;
 inline int MsgQueryGuildLogAck::guildlog_size() const {
   return guildlog_.size();
 }
@@ -16521,7 +16521,7 @@ inline void MsgQueryGuildLogAck::set_guildlog(int index, const ::std::string& va
 inline void MsgQueryGuildLogAck::set_guildlog(int index, const char* value) {
   guildlog_.Mutable(index)->assign(value);
 }
-inline void MsgQueryGuildLogAck::set_guildlog(int index, const char* value, size_t size) {
+inline void MsgQueryGuildLogAck::set_guildlog(int index, const void* value, size_t size) {
   guildlog_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
 }
@@ -16534,7 +16534,7 @@ inline void MsgQueryGuildLogAck::add_guildlog(const ::std::string& value) {
 inline void MsgQueryGuildLogAck::add_guildlog(const char* value) {
   guildlog_.Add()->assign(value);
 }
-inline void MsgQueryGuildLogAck::add_guildlog(const char* value, size_t size) {
+inline void MsgQueryGuildLogAck::add_guildlog(const void* value, size_t size) {
   guildlog_.Add()->assign(reinterpret_cast<const char*>(value), size);
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
@@ -16550,7 +16550,7 @@ MsgQueryGuildLogAck::mutable_guildlog() {
 
 // MsgTellMarquee
 
-// required string content = 1;
+// required bytes content = 1;
 inline bool MsgTellMarquee::has_content() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16583,7 +16583,7 @@ inline void MsgTellMarquee::set_content(const char* value) {
   }
   content_->assign(value);
 }
-inline void MsgTellMarquee::set_content(const char* value, size_t size) {
+inline void MsgTellMarquee::set_content(const void* value, size_t size) {
   set_has_content();
   if (content_ == &::google::protobuf::internal::kEmptyString) {
     content_ = new ::std::string;
@@ -16624,7 +16624,7 @@ inline void MsgTellMarquee::set_allocated_content(::std::string* content) {
 
 // MsgTellSysNotcie
 
-// required string content = 1;
+// required bytes content = 1;
 inline bool MsgTellSysNotcie::has_content() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16657,7 +16657,7 @@ inline void MsgTellSysNotcie::set_content(const char* value) {
   }
   content_->assign(value);
 }
-inline void MsgTellSysNotcie::set_content(const char* value, size_t size) {
+inline void MsgTellSysNotcie::set_content(const void* value, size_t size) {
   set_has_content();
   if (content_ == &::google::protobuf::internal::kEmptyString) {
     content_ = new ::std::string;
@@ -16698,7 +16698,7 @@ inline void MsgTellSysNotcie::set_allocated_content(::std::string* content) {
 
 // MsgBindAlipayReq
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool MsgBindAlipayReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16731,7 +16731,7 @@ inline void MsgBindAlipayReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgBindAlipayReq::set_name(const char* value, size_t size) {
+inline void MsgBindAlipayReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -16768,7 +16768,7 @@ inline void MsgBindAlipayReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string alipay = 2;
+// required bytes alipay = 2;
 inline bool MsgBindAlipayReq::has_alipay() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -16801,7 +16801,7 @@ inline void MsgBindAlipayReq::set_alipay(const char* value) {
   }
   alipay_->assign(value);
 }
-inline void MsgBindAlipayReq::set_alipay(const char* value, size_t size) {
+inline void MsgBindAlipayReq::set_alipay(const void* value, size_t size) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
@@ -16842,7 +16842,7 @@ inline void MsgBindAlipayReq::set_allocated_alipay(::std::string* alipay) {
 
 // MsgExChangeInviteScoreReq
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool MsgExChangeInviteScoreReq::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16875,7 +16875,7 @@ inline void MsgExChangeInviteScoreReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void MsgExChangeInviteScoreReq::set_name(const char* value, size_t size) {
+inline void MsgExChangeInviteScoreReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -16912,7 +16912,7 @@ inline void MsgExChangeInviteScoreReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string alipay = 2;
+// required bytes alipay = 2;
 inline bool MsgExChangeInviteScoreReq::has_alipay() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -16945,7 +16945,7 @@ inline void MsgExChangeInviteScoreReq::set_alipay(const char* value) {
   }
   alipay_->assign(value);
 }
-inline void MsgExChangeInviteScoreReq::set_alipay(const char* value, size_t size) {
+inline void MsgExChangeInviteScoreReq::set_alipay(const void* value, size_t size) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;
@@ -17090,7 +17090,7 @@ inline void MsgQueryInviteScoreAck::set_leftscore(::google::protobuf::uint32 val
 
 // PBExChangeInviteRecord
 
-// required string name = 1;
+// required bytes name = 1;
 inline bool PBExChangeInviteRecord::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -17123,7 +17123,7 @@ inline void PBExChangeInviteRecord::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBExChangeInviteRecord::set_name(const char* value, size_t size) {
+inline void PBExChangeInviteRecord::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -17160,7 +17160,7 @@ inline void PBExChangeInviteRecord::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string alipay = 2;
+// required bytes alipay = 2;
 inline bool PBExChangeInviteRecord::has_alipay() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -17193,7 +17193,7 @@ inline void PBExChangeInviteRecord::set_alipay(const char* value) {
   }
   alipay_->assign(value);
 }
-inline void PBExChangeInviteRecord::set_alipay(const char* value, size_t size) {
+inline void PBExChangeInviteRecord::set_alipay(const void* value, size_t size) {
   set_has_alipay();
   if (alipay_ == &::google::protobuf::internal::kEmptyString) {
     alipay_ = new ::std::string;

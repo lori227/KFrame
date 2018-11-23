@@ -9,13 +9,13 @@ namespace KFrame
     #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_WORKER_MESSAGE__
     #define __UNREGISTER_PUBLIC_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
     #define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( public ) )
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfid, msgid, message )
 #else
     #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_MESSAGE__
     #define __UNREGISTER_PUBLIC_MESSAGE__ __UNREGISTER_MESSAGE__
     static KFRedisDriver* _kf_redis_driver = nullptr;
     #define __PUBLIC_REDIS_DRIVER__ _kf_redis_driver
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
+    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
 #endif
 
     void KFPublicShardModule::BeforeRun()

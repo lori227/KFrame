@@ -36,6 +36,7 @@
     <ClInclude Include="KFUInt32.h" />
     <ClInclude Include="KFUInt64.h" />
     <ClInclude Include="KFVector3D.h" />
+    <ClInclude Include="KFUidGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KFData.inl" />

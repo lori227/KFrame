@@ -14,10 +14,10 @@ namespace KFrame
             uint32 _app_id;
             struct AppData
             {
-                uint8 _channel_id;
-                uint8 _zone_id;
-                uint8 _server_type;
-                uint8 _instance_id;
+                uint32 _channel_id : 4;		// 16	渠道独立环境
+                uint32 _zone_id : 12;		// 4095 小区
+                uint32 _server_type : 8;	// 255	类型
+                uint32 _worker_id : 8;		// 255	进程实例
             } _app_data;
         };
 
@@ -28,16 +28,16 @@ namespace KFrame
 
         KFAppID( std::string strappid )
         {
-            _union._app_data._channel_id = KFUtility::SplitValue< uint8 >( strappid, "." );
-            _union._app_data._zone_id = KFUtility::SplitValue< uint8 >( strappid, "." );
-            _union._app_data._server_type = KFUtility::SplitValue< uint8 >( strappid, "." );
-            _union._app_data._instance_id = KFUtility::SplitValue< uint8 >( strappid, "." );
+            _union._app_data._channel_id = KFUtility::SplitValue< uint32 >( strappid, "." );
+            _union._app_data._zone_id = KFUtility::SplitValue< uint32 >( strappid, "." );
+            _union._app_data._server_type = KFUtility::SplitValue< uint32 >( strappid, "." );
+            _union._app_data._worker_id = KFUtility::SplitValue< uint32 >( strappid, "." );
         }
 
         std::string ToString()
         {
             return __FORMAT__( "{}.{}.{}.{}", _union._app_data._channel_id, _union._app_data._zone_id,
-                               _union._app_data._server_type, _union._app_data._instance_id );
+                               _union._app_data._server_type, _union._app_data._worker_id );
         }
 
 

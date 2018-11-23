@@ -94,7 +94,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleLoginWorldVerifyReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginWorldVerifyReq );
-        auto loginid = __KF_HEAD_ID__( kfguid );
+        auto loginid = __KF_HEAD_ID__( kfid );
 
         auto pblogin = &kfmsg.pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] login world req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
@@ -148,7 +148,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SGameSyncOnlineReq );
 
-        auto serverid = __KF_HEAD_ID__( kfguid );
+        auto serverid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.playerid_size(); ++i )
         {
             auto playerid = kfmsg.playerid( i );
@@ -196,7 +196,7 @@ namespace KFrame
 
         auto kfonline = CreateOnline( kfmsg.playerid() );
         kfonline->_player_id = kfmsg.playerid();
-        kfonline->_game_id = __KF_HEAD_ID__( kfguid );
+        kfonline->_game_id = __KF_HEAD_ID__( kfid );
         kfonline->_account_id = kfmsg.accountid();
 
         // 更新到认证服务器

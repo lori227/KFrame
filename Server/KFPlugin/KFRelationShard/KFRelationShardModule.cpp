@@ -516,7 +516,7 @@ namespace KFrame
             MapStringToPBPlayer( queryplayerdata->_value, playerid, pbrelation );
         }
 
-        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_QUERY_RECENT_LIST_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_QUERY_RECENT_LIST_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandlePlayerToastReq )
@@ -568,6 +568,6 @@ namespace KFrame
         KFMsg::MsgQueryToastCountAck ack;
         ack.set_playerid( kfmsg.targetplayerid() );
         ack.set_toastcount( querytoastcount->_value );
-        _kf_cluster_shard->SendToClient( kfguid, KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &ack );
+        _kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_QUERY_TOAST_COUNT_ACK, &ack );
     }
 }

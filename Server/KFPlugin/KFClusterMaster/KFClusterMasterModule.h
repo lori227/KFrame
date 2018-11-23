@@ -49,7 +49,7 @@ namespace KFrame
 
     private:
         // 生成认证token
-        std::string MakeAuthToken( const KFGuid& guid );
+        std::string MakeAuthToken( const KFId& kfid );
 
         // 获得 objectid 的数量
         std::set< uint32 > GetShardObject( uint32 shardid );

@@ -14,7 +14,6 @@ function makeversion()
 	declare -i version=`cat .md5list | grep "$1" | cut -d ":" -f 3`
 	if [ $oldmd5client != $newmd5client ];then
 		declare -i newversion=$version+1
-		echo "newversion=$newversion"
 		sed -i "s/$oldmd5client:$version/$newmd5client:$newversion/g" .md5list
 		version=$newversion
 	fi

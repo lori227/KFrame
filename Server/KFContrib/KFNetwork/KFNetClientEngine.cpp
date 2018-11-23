@@ -67,7 +67,7 @@ namespace KFrame
             auto message = kfclient->PopNetMessage();
             while ( message != nullptr )
             {
-                _net_function( message->_guid, message->_msgid, message->_data, message->_length );
+                _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
 
                 // 每次处理200个消息
                 ++messagecount;

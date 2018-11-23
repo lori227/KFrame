@@ -505,13 +505,13 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
     "bgroup\030\001 \002(\0132\023.KFMsg.PBMatchGroup\022\017\n\007mat"
     "chid\030\002 \002(\r\022\022\n\nallowgroup\030\003 \002(\010\022\020\n\010player"
     "id\030\004 \002(\r\022\020\n\010serverid\030\005 \002(\r\022\026\n\016battleserv"
-    "erid\030\006 \002(\r\022\017\n\007version\030\007 \002(\t\"H\n\023S2SMatchT"
+    "erid\030\006 \002(\r\022\017\n\007version\030\007 \002(\014\"H\n\023S2SMatchT"
     "oClientAck\022\016\n\006result\030\001 \002(\r\022\017\n\007matchid\030\002 "
     "\002(\r\022\020\n\010playerid\030\003 \002(\r\"\254\001\n\022S2SMatchToShar"
     "dReq\022$\n\007pbgroup\030\001 \002(\0132\023.KFMsg.PBMatchGro"
     "up\022\017\n\007matchid\030\002 \002(\r\022\022\n\nallowgroup\030\003 \002(\010\022"
     "\020\n\010playerid\030\004 \002(\r\022\020\n\010serverid\030\005 \002(\r\022\026\n\016b"
-    "attleserverid\030\006 \002(\r\022\017\n\007version\030\007 \002(\t\"=\n\030"
+    "attleserverid\030\006 \002(\r\022\017\n\007version\030\007 \002(\014\"=\n\030"
     "S2SCancelMatchToProxyReq\022\017\n\007matchid\030\001 \002("
     "\r\022\020\n\010playerid\030\002 \002(\r\"=\n\030S2SCancelMatchToS"
     "hardReq\022\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002"
@@ -520,8 +520,8 @@ void protobuf_AddDesc_KFMatchMessage_2eproto() {
     "\003 \002(\004\"\254\001\n\025S2SNoticeMatchRoomReq\022\017\n\007match"
     "id\030\001 \002(\r\022\025\n\rbattleshardid\030\002 \002(\r\022\016\n\006campi"
     "d\030\003 \002(\r\022\020\n\010playerid\030\004 \002(\r\022\020\n\010serverid\030\005 "
-    "\002(\r\022\016\n\006roomid\030\006 \002(\004\022\n\n\002ip\030\007 \002(\t\022\014\n\004port\030"
-    "\010 \002(\r\022\r\n\005token\030\t \002(\t\"I\n\025S2SNoticeMatchRo"
+    "\002(\r\022\016\n\006roomid\030\006 \002(\004\022\n\n\002ip\030\007 \002(\014\022\014\n\004port\030"
+    "\010 \002(\r\022\r\n\005token\030\t \002(\014\"I\n\025S2SNoticeMatchRo"
     "omAck\022\016\n\006roomid\030\001 \002(\004\022\016\n\006campid\030\002 \002(\r\022\020\n"
     "\010playerid\030\003 \002(\r\"K\n\024S2SQueryMatchRoomReq\022"
     "\017\n\007matchid\030\001 \002(\r\022\020\n\010playerid\030\002 \002(\r\022\020\n\010se"
@@ -1038,16 +1038,13 @@ bool S2SMatchToProxyReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string version = 7;
+      // required bytes version = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_version:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_version()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->version().data(), this->version().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1104,12 +1101,9 @@ void S2SMatchToProxyReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->battleserverid(), output);
   }
 
-  // required string version = 7;
+  // required bytes version = 7;
   if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       7, this->version(), output);
   }
 
@@ -1153,13 +1147,10 @@ void S2SMatchToProxyReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->battleserverid(), target);
   }
 
-  // required string version = 7;
+  // required bytes version = 7;
   if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->version(), target);
   }
 
@@ -1214,10 +1205,10 @@ int S2SMatchToProxyReq::ByteSize() const {
           this->battleserverid());
     }
 
-    // required string version = 7;
+    // required bytes version = 7;
     if (has_version()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->version());
     }
 
@@ -1799,16 +1790,13 @@ bool S2SMatchToShardReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string version = 7;
+      // required bytes version = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_version:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_version()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->version().data(), this->version().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1865,12 +1853,9 @@ void S2SMatchToShardReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->battleserverid(), output);
   }
 
-  // required string version = 7;
+  // required bytes version = 7;
   if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       7, this->version(), output);
   }
 
@@ -1914,13 +1899,10 @@ void S2SMatchToShardReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->battleserverid(), target);
   }
 
-  // required string version = 7;
+  // required bytes version = 7;
   if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->version(), target);
   }
 
@@ -1975,10 +1957,10 @@ int S2SMatchToShardReq::ByteSize() const {
           this->battleserverid());
     }
 
-    // required string version = 7;
+    // required bytes version = 7;
     if (has_version()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->version());
     }
 
@@ -3071,16 +3053,13 @@ bool S2SNoticeMatchRoomReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string ip = 7;
+      // required bytes ip = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_ip:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_ip()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ip().data(), this->ip().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3104,16 +3083,13 @@ bool S2SNoticeMatchRoomReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required string token = 9;
+      // required bytes token = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_token:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_token()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->token().data(), this->token().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3169,12 +3145,9 @@ void S2SNoticeMatchRoomReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(6, this->roomid(), output);
   }
 
-  // required string ip = 7;
+  // required bytes ip = 7;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       7, this->ip(), output);
   }
 
@@ -3183,12 +3156,9 @@ void S2SNoticeMatchRoomReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->port(), output);
   }
 
-  // required string token = 9;
+  // required bytes token = 9;
   if (has_token()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->token().data(), this->token().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       9, this->token(), output);
   }
 
@@ -3230,13 +3200,10 @@ void S2SNoticeMatchRoomReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(6, this->roomid(), target);
   }
 
-  // required string ip = 7;
+  // required bytes ip = 7;
   if (has_ip()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ip().data(), this->ip().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->ip(), target);
   }
 
@@ -3245,13 +3212,10 @@ void S2SNoticeMatchRoomReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->port(), target);
   }
 
-  // required string token = 9;
+  // required bytes token = 9;
   if (has_token()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->token().data(), this->token().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         9, this->token(), target);
   }
 
@@ -3308,10 +3272,10 @@ int S2SNoticeMatchRoomReq::ByteSize() const {
           this->roomid());
     }
 
-    // required string ip = 7;
+    // required bytes ip = 7;
     if (has_ip()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->ip());
     }
 
@@ -3324,10 +3288,10 @@ int S2SNoticeMatchRoomReq::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required string token = 9;
+    // required bytes token = 9;
     if (has_token()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->token());
     }
 

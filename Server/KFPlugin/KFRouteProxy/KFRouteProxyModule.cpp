@@ -49,7 +49,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterRouteZoneReq );
 
-        auto handleid = __KF_HEAD_ID__( kfguid );
+        auto handleid = __KF_HEAD_ID__( kfid );
         auto zonedata = &kfmsg.zonedata();
 
         // 注册到管理器
@@ -70,7 +70,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2STransmitRouteZoneMessageReq );
 
         // 选择一个client 发送消息
-        auto handleid = __KF_HEAD_ID__( kfguid );
+        auto handleid = __KF_HEAD_ID__( kfid );
         uint32 shardserverid = _kf_cluster_proxy->SelectClusterShard( handleid );
         if ( shardserverid == _invalid_int )
         {

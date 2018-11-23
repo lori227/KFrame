@@ -26,10 +26,10 @@ enum ClusterProtocol
 // S2S_CLUSTER_REGISTER_REQ
 message S2SClusterRegisterReq
 {
-	required string type = 1;
+	required bytes type = 1;
 	required uint32 id = 2;
-	required string name = 3;
-	required string ip = 4;
+	required bytes name = 3;
+	required bytes ip = 4;
 	required uint32 port = 5;
 }
 
@@ -37,10 +37,10 @@ message S2SClusterRegisterReq
 // S2S_CLUSTER_UPDATE_REQ
 message S2SClusterUpdateReq
 {
-	required string type = 1;
+	required bytes type = 1;
 	required uint32 id = 2;
-	required string name = 3;
-	required string ip = 4;
+	required bytes name = 3;
+	required bytes ip = 4;
 	required uint32 port = 5;
 	required uint32 count = 6;
 }
@@ -49,20 +49,20 @@ message S2SClusterUpdateReq
 // S2S_CLUSTER_AUTH_REQ
 message S2SClusterAuthReq
 {
-	required string clustertype = 1;
-	required string clusterkey = 2;
+	required bytes clustertype = 1;
+	required bytes clusterkey = 2;
 }
 
 // 集群登录认证回馈
 // S2S_CLUSTER_AUTH_ACK
 message S2SClusterAuthAck
 {
-	required string clustertype = 1;
-	required string token = 2;
-	required string type = 3;
+	required bytes clustertype = 1;
+	required bytes token = 2;
+	required bytes type = 3;
 	required uint32 id = 4;
-	required string name = 5;
-	required string ip = 6;
+	required bytes name = 5;
+	required bytes ip = 6;
 	required uint32 port = 7;	
 }
 
@@ -70,7 +70,7 @@ message S2SClusterAuthAck
 // S2S_CLUSTER_TOKEN_REQ
 message S2SClusterTokenReq
 {
-	required string token = 1;
+	required bytes token = 1;
 	required uint32 gateid = 2;
 }
 
@@ -78,8 +78,8 @@ message S2SClusterTokenReq
 // S2S_CLUSTER_VERIFY_REQ
 message S2SClusterVerifyReq
 {
-	required string clustertype = 1;
-	required string token = 2;
+	required bytes clustertype = 1;
+	required bytes token = 2;
 	required uint32 serverid = 3;
 }
 
@@ -87,7 +87,7 @@ message S2SClusterVerifyReq
 // S2S_CLUSTER_VERIFY_ACK
 message S2SClusterVerifyAck
 {
-	required string clustertype = 1;	// 集群类型
+	required bytes clustertype = 1;	// 集群类型
 	required uint32 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
 }
 
@@ -147,7 +147,7 @@ message S2SSendToDynamicObjectReq
 {
 	required uint64 objectid = 1;
 	required uint32 msgid = 2;
-	required string msgdata = 3;
+	required bytes msgdata = 3;
 	required uint32	serverid = 4;
 }
 
@@ -157,7 +157,7 @@ message S2SSendToStaticObjectReq
 {
 	required uint32 objectid = 1;
 	required uint32 msgid = 2;
-	required string msgdata = 3;
+	required bytes msgdata = 3;
 	required uint32	serverid = 4;
 }
 //////////////////////////////////////////////////////////////////////

@@ -89,7 +89,7 @@ namespace KFrame
                     }
                 }
 
-                retmessage->_guid._head_id = _object_id;
+                retmessage->_kfid._head_id = _object_id;
             }
             else
             {
@@ -128,8 +128,8 @@ namespace KFrame
     {
         auto netmessage = KFNetMessage::Create( length );
 
-        KFGuid kfguid( 0, objectid );
-        netmessage->CopyFrom( kfguid, msgid, data, length );
+        KFId kfid( 0, objectid );
+        netmessage->CopyFrom( kfid, msgid, data, length );
         return AddSendMessage( netmessage );
     }
 
@@ -142,14 +142,14 @@ namespace KFrame
         uint32 messagecount = ( datalength + KFNetDefine::MaxMessageLength - 1 ) / KFNetDefine::MaxMessageLength;
 
         // 消息头
-        KFGuid kfguid( 0, objectid );
+        KFId kfid( 0, objectid );
         auto message = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
-        message->CopyFrom( kfguid, msgid, nullptr, length );
+        message->CopyFrom( kfid, msgid, nullptr, length );
 
         // 子消息头
         auto headmessage = KFNetMessage::Create( KFNetMessage::HeadLength() );
         headmessage->_child = messagecount;
-        headmessage->CopyFrom( kfguid, KFNetDefine::CUT_MSGCHILDBEGIN, _net_services->_buff_address, KFNetMessage::HeadLength() );
+        headmessage->CopyFrom( kfid, KFNetDefine::CUT_MSGCHILDBEGIN, _net_services->_buff_address, KFNetMessage::HeadLength() );
         if ( !AddSendMessage( headmessage ) )
         {
             ok = false;
@@ -165,7 +165,7 @@ namespace KFrame
             // 消息拷贝
             auto childmessage = KFNetMessage::Create( sendlength );
             childmessage->_child = i + 1;
-            childmessage->CopyFrom( kfguid, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
+            childmessage->CopyFrom( kfid, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
             if ( !AddSendMessage( childmessage ) )
             {
                 ok = false;

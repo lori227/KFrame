@@ -1,4 +1,4 @@
-#ifndef __KF_KFRAME_H__
+﻿#ifndef __KF_KFRAME_H__
 #define __KF_KFRAME_H__
 
 #include "KFSystem.h"
@@ -6,7 +6,7 @@
 #include "KFMap.h"
 #include "KFEnum.h"
 #include "KFBind.h"
-#include "KFGuid.h"
+#include "KFId.h"
 #include "KFQueue.h"
 #include "KFDefine.h"
 #include "KFVector.h"

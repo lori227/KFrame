@@ -289,7 +289,7 @@ namespace KFrame
         }
 
         // guid
-        auto itemguid = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
+        auto itemguid = KFGlobal::Instance()->Make64Guid();
         kfitem->SetValue( datasetting->_key_name, itemguid );
 
         // 把guid添加进属性表中
@@ -320,7 +320,7 @@ namespace KFrame
             kftarget->SetValue( __KF_STRING__( count ), itemcount );
 
             auto configid = kfsource->GetValue< uint32 >( datasetting->_config_key_name );
-            auto newitemguid = KFUtility::Make64Guid( KFGlobal::Instance()->_app_id );
+            auto newitemguid = KFGlobal::Instance()->Make64Guid();
             kftarget->SetKeyID( newitemguid );
 
             player->UpdateData( kfsource, __KF_STRING__( count ), KFOperateEnum::Dec, itemcount );

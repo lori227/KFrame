@@ -41,7 +41,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRegisterMatchReq );
 
-        auto shardid = __KF_HEAD_ID__( kfguid );
+        auto shardid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.matchid_size(); ++i )
         {
             auto matchid = kfmsg.matchid( i );
@@ -81,7 +81,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMatchProxyModule::HandleMatchToProxyReq )
     {
         __PROTO_PARSE__( KFMsg::S2SMatchToProxyReq );
-        auto clientid = __KF_HEAD_ID__( kfguid );
+        auto clientid = __KF_HEAD_ID__( kfid );
 
         auto shardid = _kf_cluster_proxy->FindStaticShard( kfmsg.matchid() );
         if ( shardid == _invalid_int )

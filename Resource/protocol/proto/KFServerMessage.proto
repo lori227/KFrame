@@ -137,35 +137,35 @@ message S2STransmitMessageReq
 {
 	required uint32 playerid = 1;
 	required uint32 msgid = 2;
-	required string msgdata = 3;
+	required bytes msgdata = 3;
 }
 
 // S2S_BROADCAST_MESSAGE_REQ
 message S2SBroadcastMessageReq
 {
 	required uint32 msgid = 1;			// 消息id
-	required string msgdata = 2;		// 消息内容
+	required bytes msgdata = 2;		// 消息内容
 }
 
 // S2S_BROADCAST_TO_WORLD
 message S2SBroadcastToWord
 {
 	required uint32 msgid = 1;			// 消息id
-	required string msgdata = 2;		// 消息内容
+	required bytes msgdata = 2;		// 消息内容
 }
 
 // S2S_BROADCAST_TO_GAME
 message S2SBroadcastToGame
 {
 	required uint32 msgid = 1;			// 消息id
-	required string msgdata = 2;		// 消息内容
+	required bytes msgdata = 2;		// 消息内容
 }
 
 // S2S_BROADCAST_TO_GATE
 message S2SBroadcastToGate
 {
 	required uint32 msgid = 1;			// 消息id
-	required string msgdata = 2;		// 消息内容
+	required bytes msgdata = 2;		// 消息内容
 }
 
 // S2S_TRANSMIT_TO_PLAYER
@@ -173,14 +173,14 @@ message S2STransmitToPlayer
 {
 	required uint32 playerid = 1;		// 玩家id
 	required uint32 msgid = 2;			// 消息id
-	required string msgdata = 3;		// 消息内容
+	required bytes msgdata = 3;		// 消息内容
 }
 
 // S2S_TRANSMIT_TO_SERVER
 message S2STransmitToServer
 {
 	required uint32 msgid = 2;			// 消息id
-	required string msgdata = 3;		// 消息内容
+	required bytes msgdata = 3;		// 消息内容
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ message S2STransmitToDataShardReq
 {
 	required uint32 zoneid = 1;
 	required uint32 msgid = 2;
-	required string msgdata = 3;
+	required bytes msgdata = 3;
 }
 
 // S2S_SAVE_PLAYER_REQ
@@ -247,8 +247,8 @@ message S2SKickGatePlayerReq
 message S2SLoginLoginVerifyReq
 {
 	required uint32 accountid = 1;	// 账号id
-	required string token = 2;		// token
-	required string ip = 3;			// ip
+	required bytes token = 2;		// token
+	required bytes ip = 3;			// ip
 	required uint32 sessionid = 4;	// sessionid
 }
 
@@ -264,11 +264,11 @@ message S2SLoginLoginVerifyAck
 
 message PBLoginData
 {
-	required string token = 1;		// token
+	required bytes token = 1;		// token
 	required uint32 gateid = 2;		// 服务器id
 	required uint32 sessionid = 3;	// sessionid
 	required uint32 channel = 4;	// 渠道id
-	required string account = 5;	// 账号
+	required bytes account = 5;	// 账号
 	required uint32 accountid = 6;	// 账号id
 	required uint32 playerid = 7;	// 角色id
 	required PBStrings channeldata = 8;	// 渠道数据	
@@ -339,16 +339,16 @@ message S2SPlayerDisconnectionReq
 message S2SSetPlayerNameReq
 {
 	required uint32 playerid = 1;
-	required string oldname = 2;
-	required string newname = 3;
+	required bytes oldname = 2;
+	required bytes newname = 3;
 }
 
 // S2S_SET_PLAYER_NAME_ACK
 message S2SSetPlayerNameAck
 {
 	required uint32 playerid = 1;
-	required string oldname = 2;
-	required string newname = 3;
+	required bytes oldname = 2;
+	required bytes newname = 3;
 	required uint32 result = 4;
 }
 
@@ -357,7 +357,7 @@ message S2SSetPlayerNameAck
 message S2SCreateRoleReq
 {
 	required uint32 playerid = 1;
-	required string newname = 2;
+	required bytes newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
 	required uint32 inviterid = 5;
@@ -368,7 +368,7 @@ message S2SCreateRoleReq
 message S2SCreateRoleAck
 {
 	required uint32 playerid = 1;
-	required string newname = 2;
+	required bytes newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
 	required uint32 inviterid = 5;
@@ -501,9 +501,9 @@ message S2SAddFriendInviteReq
 {
 	required uint32 selfplayerid = 1;	// 申请id
 	required uint32 targetplayerid = 2;	// 对方id
-	required string message = 3;		// 留言	
+	required bytes message = 3;		// 留言	
 	required uint32 serverid = 4;
-	required string targetname = 5;		// 对方名字
+	required bytes targetname = 5;		// 对方名字
 }
 
 // 添加好友申请
@@ -545,7 +545,7 @@ message S2SAddFriendReq
 	required uint32 selfplayerid = 1;	// 申请id
 	required uint32 targetplayerid = 2;	// 对方id
 	required uint32 serverid = 3;
-	required string targetname = 4;		// 对方名字
+	required bytes targetname = 4;		// 对方名字
 }
 
 // 添加好友
@@ -574,7 +574,7 @@ message S2SUpdateFriendLinessReq
 	required uint32 friendliness = 3;	// 好友度
 	required uint32 type = 4;			// 类型
 	//optional uint32 serverid = 5;		// 申请服务器id
-	//optional string targetname = 6;		// 对方名字
+	//optional bytes targetname = 6;		// 对方名字
 }
 
 // 查询基础数据
@@ -582,7 +582,7 @@ message S2SUpdateFriendLinessReq
 message S2SQueryBasicReq
 {
 	required uint32 playerid = 1;
-	required string name = 2;
+	required bytes name = 2;
 }
 
 // 查询基础数据
@@ -711,11 +711,11 @@ message S2SReceiveInviteMatchGroupReq
 	required uint32 playerid = 1;		 // 玩家id
 	required uint64 groupid = 2;		 // 队伍id
 	required PBObject inviter = 3;		 // 邀请者(BasicPlayer)
-	required string source = 4;			 // 从哪里发起邀请
+	required bytes source = 4;			 // 从哪里发起邀请
 	required uint32 matchid = 5;		 // 匹配模式
 	required uint32 inviterplayerid = 6; // 邀请者id
 	required uint32 inviterserverid = 7; // 服务器id
-	required string playername = 8;		 // 被邀请玩家名字
+	required bytes playername = 8;		 // 被邀请玩家名字
 }
 
 // 同意玩家邀请请求
@@ -817,7 +817,7 @@ message S2SConsentApplyMatchGroupAck
 	required uint32 playerid = 2;		// 申请人id
 	required uint32 captainid = 3;		// 队长id
 	required uint32 serverid = 4;		// 服务器id
-	required string playername = 5;		// 玩家名字
+	required bytes playername = 5;		// 玩家名字
 }
 
 // 上线查询队伍信息
@@ -843,7 +843,7 @@ message S2SUpdateGroupMemberReq
 {
 	required uint64 groupid = 1;		// 队伍
 	required uint32 memberid = 2;		// 队员id
-	required string dataname = 3;		// 属性名称
+	required bytes dataname = 3;		// 属性名称
 	required PBStrings pbstrings = 4;	// 更新数值
 }
 
@@ -852,7 +852,7 @@ message S2SUpdateGroupMemberReq
 message S2SUpdateGroupMemberAck
 {
 	required uint32 memberid = 1;		// 队员id
-	required string dataname = 2;		// 属性名称
+	required bytes dataname = 2;		// 属性名称
 	required PBStrings pbstrings = 3;	// 更新数值
 }
 
@@ -960,10 +960,10 @@ message S2SCreateGuidReq
 {
 	required uint32 playerid = 1;	// 玩家id
 	required uint32 serverid = 2;	//服务器id
-	required string name = 3;	// 玩家名字
-	required string guildname = 4;	// 帮派名字
+	required bytes name = 3;	// 玩家名字
+	required bytes guildname = 4;	// 帮派名字
 	required uint32 medal = 5;	// 帮派勋章
-	optional string manifesto = 6;	// 帮派宣言 
+	optional bytes manifesto = 6;	// 帮派宣言 
 }
 
 // 创建帮派请求发送到shard
@@ -972,10 +972,10 @@ message S2SCreateGuildToShardReq
 {
 	required uint32 playerid = 1;	// 玩家id
 	required uint32 serverid = 2;	//服务器id
-	required string name = 3;	// 玩家名字
-	required string guildname = 4;	// 帮派名字
+	required bytes name = 3;	// 玩家名字
+	required bytes guildname = 4;	// 帮派名字
 	required uint32 medal = 5;	// 帮派勋章
-	optional string manifesto = 6;	// 帮派宣言
+	optional bytes manifesto = 6;	// 帮派宣言
 	required uint64 guildid = 7;	// 帮派id
 }
 
@@ -987,7 +987,7 @@ message S2SCreateGuildAck
 	required uint32 playerid = 2;	//玩家id
 	required uint64 guildid = 3;	// 帮派id
 	required uint32 medal = 4;	// 帮派勋章
-	optional string manifesto = 5;	// 帮派宣言	
+	optional bytes manifesto = 5;	// 帮派宣言	
 }
 
 // 更新帮派成员基础信息
@@ -1175,7 +1175,7 @@ message S2SAppointGuildMemberReq
 // S2S_SEARCH_GUILD_BY_NAME_REQ
 message S2SSearchGuildByNameReq
 {
-	required string guildname = 1;		// 帮派名字
+	required bytes guildname = 1;		// 帮派名字
 	required uint32 serverid = 2;		// 服务器id
 	required uint32 playerid = 3;		// 玩家id
 }
@@ -1186,7 +1186,7 @@ message S2SSetGuildSwitchReq
 {
 	required uint32 playerid = 1;		// 玩家id
 	required uint64 guildid = 2;		// 帮派id
-	required string type = 3;		// 帮派管理类别
+	required bytes type = 3;		// 帮派管理类别
 	required uint32 flag = 4;		// 设置的值
 	required uint32 serverid = 5;		// 服务器id
 }
@@ -1240,13 +1240,13 @@ message S2SGMAddMailReq
 // S2S_SEND_CHAT_TO_SERVER
 message S2SSendChatToServer
 {
-	required string chatinfo = 1;		//聊天内容
+	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
-	required string playername = 3;		//发送聊天的玩家名字
+	required bytes playername = 3;		//发送聊天的玩家名字
 	required uint32 playerid = 4;		//发送聊天的玩家id
-	required string playericon = 5;		//发送聊天的玩家头像
+	required bytes playericon = 5;		//发送聊天的玩家头像
 	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
-	required string playericonbox = 8;	//发送聊天的玩家头像框
+	required bytes playericonbox = 8;	//发送聊天的玩家头像框
 	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
 }

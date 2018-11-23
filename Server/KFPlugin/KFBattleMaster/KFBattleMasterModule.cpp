@@ -40,7 +40,7 @@ namespace KFrame
 
         KFMsg::S2SAllocBattleIdAck ack;
         ack.set_id( serverid );
-        _kf_tcp_server->SendNetMessage( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_ALLOC_BATTLE_ID_ACK, &ack );
+        _kf_tcp_server->SendNetMessage( __KF_HEAD_ID__( kfid ), KFMsg::S2S_ALLOC_BATTLE_ID_ACK, &ack );
 
         if ( serverid != _invalid_int )
         {
@@ -77,7 +77,7 @@ namespace KFrame
         KFAppID kfappid( 0 );
         kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_channel;
         kfappid._union._app_data._server_type = KFServerEnum::BattleServer + ( kfallocid->_value / std::numeric_limits<uint8>::max() );
-        kfappid._union._app_data._instance_id = ( kfallocid->_value % std::numeric_limits<uint8>::max() );
+        kfappid._union._app_data._worker_id = ( kfallocid->_value % std::numeric_limits<uint8>::max() );
 
         // 保存数据库
         auto strserverid = kfappid.ToString();

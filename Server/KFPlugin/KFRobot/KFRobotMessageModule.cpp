@@ -24,7 +24,7 @@ namespace KFrame
         kffunction->_function = function;
     }
 
-    bool KFRobotMessageModule::CallFunction( const KFGuid& guid, uint32 msgid, const char* data, uint32 length )
+    bool KFRobotMessageModule::CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
         auto kffunction = _kf_message_function.Find( msgid );
         if ( kffunction == nullptr )
@@ -32,7 +32,7 @@ namespace KFrame
             return false;
         }
 
-        kffunction->_function( guid, data, length );
+        kffunction->_function( kfid, data, length );
         return true;
     }
 

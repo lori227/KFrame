@@ -46,7 +46,7 @@ namespace KFrame
     public:
         // 绑定消息事件
         template< class T >
-        void BindNetFunction( T* object, void ( T::*handle )( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) )
+        void BindNetFunction( T* object, void ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
         {
             _net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
         }

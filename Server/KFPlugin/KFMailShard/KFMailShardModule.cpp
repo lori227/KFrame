@@ -2,7 +2,7 @@
 
 namespace KFrame
 {
-#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfguid, msgid, message )
+#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
 
     void KFMailShardModule::BeforeRun()
     {

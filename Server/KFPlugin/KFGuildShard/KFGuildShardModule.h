@@ -241,7 +241,7 @@ namespace KFrame
         */
         bool SendMessageToGuildMember( uint32 playerid, uint64 guild, uint32 msgid, ::google::protobuf::Message* message, VectorString& offlineids, bool containself = true );
 
-        bool SendPlayerGuildChangeToClient( const KFGuid& kfguid, uint32 playerid, uint64 guildid, uint32 code );
+        bool SendPlayerGuildChangeToClient( const KFId& kfid, uint32 playerid, uint64 guildid, uint32 code );
 
         // 发送给帮派指定职位的成员
         bool SendMessageToGuildMember( uint64 guild, std::set<uint32>& titles, uint32 msgid, ::google::protobuf::Message* message );

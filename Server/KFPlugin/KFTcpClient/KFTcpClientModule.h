@@ -90,7 +90,7 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////
         // 处理客户端消息
-        void HandleNetMessage( const KFGuid& guid, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
         // 是否连接自己
         bool IsSelfConnection( const std::string& name, const std::string& type, uint32 id );

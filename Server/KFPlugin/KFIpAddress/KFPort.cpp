@@ -46,8 +46,7 @@ namespace KFrame
         case __ID_PORT__:
         {
             KFAppID kfappid( appid );
-            auto instanceid = kfappid._union._app_data._instance_id;
-            port = baseport + instanceid;
+            port = baseport + kfappid._union._app_data._worker_id;
         }
         break;
         case __SH_PORT__:

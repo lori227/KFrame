@@ -84,7 +84,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::MsgLoginVerifyReq );
 
         // 连接id
-        auto handleid = __KF_HEAD_ID__( kfguid );
+        auto handleid = __KF_HEAD_ID__( kfid );
 
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
@@ -99,13 +99,10 @@ namespace KFrame
         }
 
         // 判断版本号
-        if ( kfmsg.has_version() )
+        auto compatibility = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
+        if ( !compatibility )
         {
-            auto ok = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
-            if ( !ok )
-            {
-                return _kf_display->SendToClient( handleid, KFMsg::VersionNotCompatibility );
-            }
+            return _kf_display->SendToClient( handleid, KFMsg::VersionNotCompatibility );
         }
 
         // 没有可用的login
@@ -172,7 +169,7 @@ namespace KFrame
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
     __KF_TRANSMIT_FUNCTION__( KFGateModule::SendToClient )
     {
-        auto playerid = __KF_DATA_ID__( kfguid );
+        auto playerid = __KF_DATA_ID__( kfid );
         if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             __LOG_ERROR__( "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
@@ -190,7 +187,7 @@ namespace KFrame
 
     __KF_TRANSMIT_FUNCTION__( KFGateModule::SendMessageToGame )
     {
-        auto playerid = __KF_HEAD_ID__( kfguid );
+        auto playerid = __KF_HEAD_ID__( kfid );
         if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             __LOG_ERROR__( "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
@@ -269,7 +266,7 @@ namespace KFrame
 
             // 创建角色
             auto kfrole = CreateRole( pblogin->playerid() );
-            kfrole->_game_id = __KF_HEAD_ID__( kfguid );
+            kfrole->_game_id = __KF_HEAD_ID__( kfid );
             kfrole->_role_id = pblogin->playerid();
             kfrole->_session_id = pblogin->sessionid();
 
@@ -291,7 +288,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginOutReq )
     {
-        auto playerid = __KF_HEAD_ID__( kfguid );
+        auto playerid = __KF_HEAD_ID__( kfid );
         __LOG_DEBUG__( "player[{}] login out!", playerid );
 
         auto kfrole = FindRole( playerid );

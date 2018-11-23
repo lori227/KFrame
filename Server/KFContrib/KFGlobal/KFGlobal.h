@@ -9,6 +9,7 @@ namespace KFrame
 {
     class KFRand;
     class KFLogger;
+    class KFGuid;
 
     class KFGlobal
     {
@@ -41,6 +42,11 @@ namespace KFrame
         // 范围内随机
         uint32 RandInRange( uint32 min, uint32 max, uint32 base );
 
+        // 创建guid
+        uint64 Make64Guid();
+
+        // 打印guid
+        void Print64Guid( uint64 guid );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化日志
         void InitLogger( std::string& strtype );
@@ -65,7 +71,7 @@ namespace KFrame
         template<typename... P>
         void Log( uint32 level, const char* function, uint32 line, const std::string& myfmt, P&& ... args )
         {
-            if ( _logger == nullptr || level < _log_level )
+            if ( _kf_logger == nullptr || level < _log_level )
             {
                 return;
             }
@@ -135,17 +141,19 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////
     private:
         // 版本
-        KFVersion* _version;
+        KFVersion* _kf_version;
 
         // log 指针
-        KFLogger* _logger;
+        KFLogger* _kf_logger;
 
         // log打印级别
         uint32 _log_level;
 
         // 单线程随机类
-        KFRand* _rand;
+        KFRand* _kf_rand;
 
+        // guid
+        KFGuid* _kf_guid;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////

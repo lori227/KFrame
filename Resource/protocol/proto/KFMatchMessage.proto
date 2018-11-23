@@ -44,7 +44,7 @@ message S2SMatchToProxyReq
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
 	required uint32 battleserverid = 6;
-	required string version = 7;			// 客户端版本
+	required bytes version = 7;			// 客户端版本
 }
 
 // S2S_MATCH_TO_CLIENT_ACK
@@ -64,7 +64,7 @@ message S2SMatchToShardReq
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
 	required uint32 battleserverid = 6;
-	required string version = 7;			// 客户端版本
+	required bytes version = 7;			// 客户端版本
 }
 
 // 取消匹配
@@ -102,9 +102,9 @@ message S2SNoticeMatchRoomReq
 	required uint32 playerid = 4;
 	required uint32 serverid = 5;
 	required uint64 roomid = 6;
-	required string ip = 7;
+	required bytes ip = 7;
 	required uint32 port = 8;
-	required string token = 9;
+	required bytes token = 9;
 }
 
 // 匹配结果

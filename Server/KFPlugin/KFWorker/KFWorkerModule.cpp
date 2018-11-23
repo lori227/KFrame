@@ -47,7 +47,7 @@ namespace KFrame
         kffunction->_function = function;
     }
 
-    bool KFWorkerModule::CallFunction( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+    bool KFWorkerModule::CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
         auto kffunction = _kf_message_function.Find( msgid );
         if ( kffunction == nullptr )
@@ -55,7 +55,7 @@ namespace KFrame
             return false;
         }
 
-        kffunction->_function( kfguid, data, length );
+        kffunction->_function( kfid, data, length );
         return true;
     }
 
@@ -100,22 +100,22 @@ namespace KFrame
     __KF_TRANSMIT_FUNCTION__( KFWorkerModule::SendMessageToWorker )
     {
         auto kfactor = FindWorkActor();
-        kfactor->PushReqMessage( kfguid, msgid, data, length );
+        kfactor->PushReqMessage( kfid, msgid, data, length );
         return true;
     }
 
-    void KFWorkerModule::SendToClient( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto kftemp = const_cast< KFGuid* >( &kfguid );
+        auto kftemp = const_cast< KFId* >( &kfid );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );
         auto kfactor = reinterpret_cast< KFActor* >( *kfuint64 );
 
-        kfactor->PushAckMessage( kfguid, msgid, message );
+        kfactor->PushAckMessage( kfid, msgid, message );
     }
 
-    void KFWorkerModule::SendToClient( const KFGuid& kfguid, uint32 serverid, uint32 msgid, google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const KFId& kfid, uint32 serverid, uint32 msgid, google::protobuf::Message* message )
     {
-        auto kftemp = const_cast< KFGuid* >( &kfguid );
+        auto kftemp = const_cast< KFId* >( &kfid );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );
         auto kfactor = reinterpret_cast< KFActor* >( *kfuint64 );
 

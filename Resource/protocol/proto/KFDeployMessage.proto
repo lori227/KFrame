@@ -15,10 +15,10 @@ enum DeployProtocol
 // S2S_REGISTER_AGENT_TO_SERVER_REQ
 message S2SRegisterAgentToServerReq
 {
-	required string agentid = 1;
-	required string localip = 2;
-	required string name = 3;
-	required string type = 4;
+	required bytes agentid = 1;
+	required bytes localip = 2;
+	required bytes name = 3;
+	required bytes type = 4;
 	required uint32 port = 5;
 }
 
@@ -26,29 +26,29 @@ message S2SRegisterAgentToServerReq
 // S2S_GET_AGENT_IP_ADDRESS_REQ
 message S2SGetAgentIpAddressReq
 {
-	required string localip = 1;
+	required bytes localip = 1;
 }
 
 // 分配Agent连接地址回应
 // S2S_GET_AGENT_IP_ADDRESS_ACK
 message S2SGetAgentIpAddressAck
 {
-	required string appname = 1;
-	required string apptype = 2;
-	required string appid = 3;
-	required string ip = 4;	
+	required bytes appname = 1;
+	required bytes apptype = 2;
+	required bytes appid = 3;
+	required bytes ip = 4;	
 	required uint32 port = 5;
 }
 
 message PBDeployCommand
 {
-	required string command = 1;	// command
-	required string appname = 2;	// appname
-	required string apptype = 3;	// apptype
-	required string appid = 4;		// appid
+	required bytes command = 1;	// command
+	required bytes appname = 2;	// appname
+	required bytes apptype = 3;	// apptype
+	required bytes appid = 4;		// appid
 	required uint32 zoneid = 5;		// 分区
-	required string value = 6;		// 数值
-	required string logurl = 7; 	// 日志记录url
+	required bytes value = 6;		// 数值
+	required bytes logurl = 7; 	// 日志记录url
 }
 
 // 部署命令

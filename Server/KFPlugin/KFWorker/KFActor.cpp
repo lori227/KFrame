@@ -78,7 +78,7 @@ namespace KFrame
         }
     }
 
-    bool KFActor::PushReqMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+    bool KFActor::PushReqMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
         if ( _req_message_queue.IsFull() )
         {
@@ -86,12 +86,12 @@ namespace KFrame
         }
 
         auto message = __KF_CREATE_BATCH__( KFWorkerMessage, 100 );
-        message->CopyFrom( kfguid, msgid, data, length );
+        message->CopyFrom( kfid, msgid, data, length );
         _req_message_queue.PushObject( message );
         return true;
     }
 
-    bool KFActor::PushAckMessage( const KFGuid& kfguid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {
@@ -114,14 +114,14 @@ namespace KFrame
             return false;
         }
 
-        KFGuid kfguid;
-        kfguid._head_id = _invalid_int;
-        kfguid._data_id = serverid;
+        KFId kfid;
+        kfid._head_id = _invalid_int;
+        kfid._data_id = serverid;
 
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_CREATE_BATCH__( KFWorkerMessage, 100 );
-        workermessage->CopyFrom( kfguid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( kfid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage );
         return true;
     }

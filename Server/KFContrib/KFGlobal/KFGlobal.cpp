@@ -1,5 +1,6 @@
 ﻿#include "KFrame.h"
 #include "KFRand.h"
+#include "KFGuid.h"
 #include "KFLogger.h"
 
 namespace KFrame
@@ -16,16 +17,18 @@ namespace KFrame
         _listen_port = 0;
         _zone_id = 0;
         _log_level = 0;
-        _rand = new KFRand();
-        _logger = nullptr;
-        _version = new KFVersion();
+        _kf_rand = new KFRand();
+        _kf_logger = nullptr;
+        _kf_version = new KFVersion();
+        _kf_guid = new KFGuid( 30, 12, 8, 13 );
     }
 
     KFGlobal::~KFGlobal()
     {
-        __DELETE_OBJECT__( _rand );
-        __DELETE_OBJECT__( _logger );
-        __DELETE_OBJECT__( _version );
+        __DELETE_OBJECT__( _kf_rand );
+        __DELETE_OBJECT__( _kf_logger );
+        __DELETE_OBJECT__( _kf_version );
+        __DELETE_OBJECT__( _kf_guid );
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -45,9 +48,9 @@ namespace KFrame
 
     void KFGlobal::RunUpdate()
     {
-        if ( _logger != nullptr )
+        if ( _kf_logger != nullptr )
         {
-            _logger->RunUpdate();
+            _kf_logger->RunUpdate();
         }
     }
 
@@ -63,30 +66,30 @@ namespace KFrame
 
         versionfile >> strdata;
         KFUtility::SplitString( strdata, ":" );
-        _version->FromString( strdata );
+        _kf_version->FromString( strdata );
 
         strdata.clear();
         versionfile >> strdata;
         KFUtility::SplitString( strdata, ":" );
-        _version->_repository_version = strdata;
+        _kf_version->_repository_version = strdata;
 
         return true;
     }
 
     const std::string& KFGlobal::GetVersion()
     {
-        return _version->_str_version;
+        return _kf_version->_str_version;
     }
 
     bool KFGlobal::CheckVersionCompatibility( const std::string& version )
     {
         auto strversion = version;
-        return _version->CheckCompatibility( strversion );
+        return _kf_version->CheckCompatibility( strversion );
     }
 
     uint32 KFGlobal::RandRatio( uint32 ratio )
     {
-        auto value = _rand->Rand32();
+        auto value = _kf_rand->Rand32();
         return value % ratio;
     }
 
@@ -97,8 +100,18 @@ namespace KFrame
             return base;
         }
 
-        uint32 index = _rand->Rand32() % ( max - min + base );
+        uint32 index = _kf_rand->Rand32() % ( max - min + base );
         return min + index;
+    }
+
+    uint64 KFGlobal::Make64Guid()
+    {
+        return _kf_guid->Make64Guid();
+    }
+
+    void KFGlobal::Print64Guid( uint64 guid )
+    {
+        _kf_guid->Print64Guid( guid );
     }
 
     void KFGlobal::InitNetService( std::string& strtype )
@@ -138,18 +151,18 @@ namespace KFrame
         switch ( logtype )
         {
         case KFLogTypeEnum::Local:
-            _logger = new KFLocalLogger();
+            _kf_logger = new KFLocalLogger();
             break;
         case KFLogTypeEnum::Remote:
-            _logger = new KFRemoteLogger();
+            _kf_logger = new KFRemoteLogger();
             break;
         default:
             break;
         }
 
-        if ( _logger != nullptr )
+        if ( _kf_logger != nullptr )
         {
-            _logger->Initialize( _app_name, _app_type, _app_id );
+            _kf_logger->Initialize( _app_name, _app_type, _app_id );
             SetLogLevel( KFUtility::SplitValue< uint32 >( strtype, "." ) );
         }
     }
@@ -169,17 +182,17 @@ namespace KFrame
 
     void KFGlobal::Log( uint32 level, const std::string& content )
     {
-        _logger->Log( level, content );
+        _kf_logger->Log( level, content );
     }
 
     void KFGlobal::SetRemoteLogFunction( KFLogFunction& function )
     {
-        if ( _logger == nullptr )
+        if ( _kf_logger == nullptr )
         {
             return;
         }
 
-        _logger->SetRemoteLogFunction( function );
+        _kf_logger->SetRemoteLogFunction( function );
     }
 
 }

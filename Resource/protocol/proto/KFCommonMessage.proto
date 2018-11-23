@@ -380,7 +380,7 @@ message Vector3D
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 message PBInt32
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional sint32 value = 2;
 }
 
@@ -393,32 +393,32 @@ message PBUIntUInt
 
 message PBUInt32
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional uint32 value = 2;
 }
 
 message PBInt64
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional sint64 value = 2;
 }
 
 message PBUInt64
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional uint64 value = 2;
 }
 
 message PBDouble
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional double value = 2;
 }
 
 message PBString
 {
-	optional string name = 1;
-	optional string value = 2;
+	optional bytes name = 1;
+	optional bytes value = 2;
 }
 
 message PBStrings
@@ -428,25 +428,25 @@ message PBStrings
 
 message PBVector3D
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	optional Vector3D value = 2;
 }
 
 message PBArray
 {
-	optional string name = 1;
+	optional bytes name = 1;
 	repeated sint32 pbint32 = 2;
 	repeated uint32 pbuint32 = 3;
 	repeated sint64 pbint64 = 4;
 	repeated uint64 pbuint64 = 5;
 	repeated double pbdouble = 6;
-	repeated string pbstring = 7;
+	repeated bytes pbstring = 7;
 	repeated Vector3D pbvector3d = 8;
 }
 
 message PBObject
 {
-	optional string name = 1;		// 属性名字
+	optional bytes name = 1;		// 属性名字
 	optional uint64 key = 2;		// 对象的key值, 逻辑使用( 没有是0 )
 	repeated PBInt32 pbint32 = 3;		
 	repeated PBUInt32 pbuint32 = 4;
@@ -462,7 +462,7 @@ message PBObject
 
 message PBRecord
 {
-	optional string name = 1;			// 属性名字
+	optional bytes name = 1;			// 属性名字
  	repeated PBObject pbobject = 2;		// 对象列表
 }
 
@@ -500,10 +500,10 @@ message PBBattlePlayer
 	optional uint32 zoneid = 1;			// 游戏分区id
 	optional uint32 serverid = 2;		// 游戏内服务器id
 	optional uint32 playerid = 3;		// 玩家id
-	optional string name = 4;			// 玩家名字
+	optional bytes name = 4;			// 玩家名字
 	optional uint32 sex = 5;			// 玩家性别
-	optional string icon = 6;			// 玩家icon
-	optional string iconbox = 7;		// 玩家头像框
+	optional bytes icon = 6;			// 玩家icon
+	optional bytes iconbox = 7;		// 玩家头像框
 	optional uint32 grading = 8;		// 段位
 	optional uint32 modelid = 9;		// 模型id
 	optional uint32 clothesid = 10;		// 时装id
@@ -534,8 +534,8 @@ message PBMatchGroup
 message PBGuestData
 {
 	required uint32 guestid = 1;		// 访客id
-	required string guesticon = 2;		// 访客头像
-	required string guesticonbox = 3;	// 访客头像框
+	required bytes guesticon = 2;		// 访客头像
+	required bytes guesticonbox = 3;	// 访客头像框
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -547,7 +547,7 @@ message PBBattleScore
 	repeated PBUInt32 pbdata = 3;		// 各项数据
 	optional uint32 score = 4;			// 评分
 	optional uint32 matchid = 5;		// 属性字段( 服务器使用 )
-	optional string reward = 6;			// 奖励字串( 服务器使用 )
+	optional bytes reward = 6;			// 奖励字串( 服务器使用 )
 	optional PBTaskDatas achieve = 7;	// 成就数据	
 	repeated uint32 members = 8;		// 同阵营的玩家
 	optional uint32 playercount = 9;	// 战场总人数

@@ -92,7 +92,7 @@ namespace KFrame
 
         auto msgid = transmitdata->msgid();
 
-        KFGuid tempguid = kfguid;
+        auto tempguid = kfid;
         tempguid._data_id = transmitdata->playerid();
         auto msgdata = transmitdata->msgdata().data();
         auto msglength = static_cast< uint32 >( transmitdata->msgdata().length() );

@@ -211,7 +211,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateFriendReq );
 
-        auto playerid = __KF_DATA_ID__( kfguid );
+        auto playerid = __KF_DATA_ID__( kfid );
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {

@@ -309,7 +309,7 @@ namespace KFrame
         KFMsg::S2SClusterVerifyAck ack;
         ack.set_serverid( serverid );
         ack.set_clustertype( kfmsg.clustertype() );
-        _kf_tcp_server->SendNetMessage( __KF_HEAD_ID__( kfguid ), KFMsg::S2S_CLUSTER_VERIFY_ACK, &ack );
+        _kf_tcp_server->SendNetMessage( __KF_HEAD_ID__( kfid ), KFMsg::S2S_CLUSTER_VERIFY_ACK, &ack );
 
         if ( serverid != 0 )
         {
@@ -323,8 +323,8 @@ namespace KFrame
 
     __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToShard )
     {
-        auto handleid = __KF_HEAD_ID__( kfguid );
-        auto shardserverid = __KF_DATA_ID__( kfguid );
+        auto handleid = __KF_HEAD_ID__( kfid );
+        auto shardserverid = __KF_DATA_ID__( kfid );
 
         if ( shardserverid == _invalid_int )
         {
@@ -341,7 +341,7 @@ namespace KFrame
 
     __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToClient )
     {
-        auto handleid = __KF_DATA_ID__( kfguid );
+        auto handleid = __KF_DATA_ID__( kfid );
         return _kf_tcp_server->SendNetMessage( handleid, msgid, data, length );
     }
 
@@ -351,7 +351,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddObjectToProxyReq );
 
-        auto shardid = __KF_HEAD_ID__( kfguid );
+        auto shardid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
         {
             auto objectid = kfmsg.objectid( i );
@@ -391,7 +391,7 @@ namespace KFrame
             __LOG_DEBUG__( "remove object[{}] ok!", objectid );
         }
 
-        auto shardid = __KF_HEAD_ID__( kfguid );
+        auto shardid = __KF_HEAD_ID__( kfid );
         DecObjectCount( shardid, kfmsg.objectid_size() );
     }
 

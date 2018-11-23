@@ -17,9 +17,9 @@ namespace KFrame
         }
     }
 
-    void KFWorkerMessage::CopyFrom( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length )
+    void KFWorkerMessage::CopyFrom( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
-        _kfguid = kfguid;
+        _kfguid = kfid;
         _msgid = msgid;
         _length = length;
         if ( _length > 0 )

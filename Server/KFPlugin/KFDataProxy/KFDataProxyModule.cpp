@@ -34,7 +34,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFDataProxyModule::HandleTransmitToDataShardReq )
     {
         __PROTO_PARSE__( KFMsg::S2STransmitToDataShardReq );
-        auto clientid = __KF_HEAD_ID__( kfguid );
+        auto clientid = __KF_HEAD_ID__( kfid );
 
         auto shardid = _kf_cluster_proxy->SelectClusterShard( kfmsg.zoneid(), true );
         if ( shardid == _invalid_int )

@@ -42,8 +42,8 @@ namespace KFrame
         virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给指定对象发送消息
-        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( const KFGuid& kfguid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给指定类型发送消息
         virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
@@ -93,7 +93,7 @@ namespace KFrame
         // 注册转发
         template< class T >
         void RegisterTransmitFunction( T* object,
-                                       bool ( T::*handle )( const KFGuid& guid, uint32 msgid, const char* data, uint32 length ) )
+                                       bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
         {
             KFTransmitFunction function = std::bind( handle, object,
                                           std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );

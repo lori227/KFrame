@@ -43,6 +43,7 @@
     <ClInclude Include="KFObject.h" />
     <ClInclude Include="KFRecord.h" />
     <ClInclude Include="KFString.h" />
+    <ClInclude Include="KFUidGenerator.h" />
     <ClInclude Include="KFUInt32.h" />
     <ClInclude Include="KFUInt64.h" />
     <ClInclude Include="KFVector3D.h" />

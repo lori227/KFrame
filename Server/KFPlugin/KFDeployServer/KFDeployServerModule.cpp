@@ -92,7 +92,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SGetAgentIpAddressReq );
 
-        auto clientid = __KF_HEAD_ID__( kfguid );
+        auto clientid = __KF_HEAD_ID__( kfid );
         for ( auto& iter : _agent_list._objects )
         {
             auto* kfagent = iter.second;

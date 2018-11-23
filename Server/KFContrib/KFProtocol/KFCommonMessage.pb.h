@@ -781,14 +781,14 @@ class LIBPROTOC_EXPORT PBInt32 : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -970,14 +970,14 @@ class LIBPROTOC_EXPORT PBUInt32 : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1067,14 +1067,14 @@ class LIBPROTOC_EXPORT PBInt64 : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1164,14 +1164,14 @@ class LIBPROTOC_EXPORT PBUInt64 : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1261,14 +1261,14 @@ class LIBPROTOC_EXPORT PBDouble : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1358,26 +1358,26 @@ class LIBPROTOC_EXPORT PBString : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional string value = 2;
+  // optional bytes value = 2;
   inline bool has_value() const;
   inline void clear_value();
   static const int kValueFieldNumber = 2;
   inline const ::std::string& value() const;
   inline void set_value(const ::std::string& value);
   inline void set_value(const char* value);
-  inline void set_value(const char* value, size_t size);
+  inline void set_value(const void* value, size_t size);
   inline ::std::string* mutable_value();
   inline ::std::string* release_value();
   inline void set_allocated_value(::std::string* value);
@@ -1545,14 +1545,14 @@ class LIBPROTOC_EXPORT PBVector3D : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1644,14 +1644,14 @@ class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -1716,7 +1716,7 @@ class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedField< double >*
       mutable_pbdouble();
 
-  // repeated string pbstring = 7;
+  // repeated bytes pbstring = 7;
   inline int pbstring_size() const;
   inline void clear_pbstring();
   static const int kPbstringFieldNumber = 7;
@@ -1724,11 +1724,11 @@ class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message {
   inline ::std::string* mutable_pbstring(int index);
   inline void set_pbstring(int index, const ::std::string& value);
   inline void set_pbstring(int index, const char* value);
-  inline void set_pbstring(int index, const char* value, size_t size);
+  inline void set_pbstring(int index, const void* value, size_t size);
   inline ::std::string* add_pbstring();
   inline void add_pbstring(const ::std::string& value);
   inline void add_pbstring(const char* value);
-  inline void add_pbstring(const char* value, size_t size);
+  inline void add_pbstring(const void* value, size_t size);
   inline const ::google::protobuf::RepeatedPtrField< ::std::string>& pbstring() const;
   inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_pbstring();
 
@@ -1826,14 +1826,14 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -2053,14 +2053,14 @@ class LIBPROTOC_EXPORT PBRecord : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // optional bytes name = 1;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 1;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -2550,14 +2550,14 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 playerid() const;
   inline void set_playerid(::google::protobuf::uint32 value);
 
-  // optional string name = 4;
+  // optional bytes name = 4;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 4;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
@@ -2569,26 +2569,26 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 sex() const;
   inline void set_sex(::google::protobuf::uint32 value);
 
-  // optional string icon = 6;
+  // optional bytes icon = 6;
   inline bool has_icon() const;
   inline void clear_icon();
   static const int kIconFieldNumber = 6;
   inline const ::std::string& icon() const;
   inline void set_icon(const ::std::string& value);
   inline void set_icon(const char* value);
-  inline void set_icon(const char* value, size_t size);
+  inline void set_icon(const void* value, size_t size);
   inline ::std::string* mutable_icon();
   inline ::std::string* release_icon();
   inline void set_allocated_icon(::std::string* icon);
 
-  // optional string iconbox = 7;
+  // optional bytes iconbox = 7;
   inline bool has_iconbox() const;
   inline void clear_iconbox();
   static const int kIconboxFieldNumber = 7;
   inline const ::std::string& iconbox() const;
   inline void set_iconbox(const ::std::string& value);
   inline void set_iconbox(const char* value);
-  inline void set_iconbox(const char* value, size_t size);
+  inline void set_iconbox(const void* value, size_t size);
   inline ::std::string* mutable_iconbox();
   inline ::std::string* release_iconbox();
   inline void set_allocated_iconbox(::std::string* iconbox);
@@ -2945,26 +2945,26 @@ class LIBPROTOC_EXPORT PBGuestData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 guestid() const;
   inline void set_guestid(::google::protobuf::uint32 value);
 
-  // required string guesticon = 2;
+  // required bytes guesticon = 2;
   inline bool has_guesticon() const;
   inline void clear_guesticon();
   static const int kGuesticonFieldNumber = 2;
   inline const ::std::string& guesticon() const;
   inline void set_guesticon(const ::std::string& value);
   inline void set_guesticon(const char* value);
-  inline void set_guesticon(const char* value, size_t size);
+  inline void set_guesticon(const void* value, size_t size);
   inline ::std::string* mutable_guesticon();
   inline ::std::string* release_guesticon();
   inline void set_allocated_guesticon(::std::string* guesticon);
 
-  // required string guesticonbox = 3;
+  // required bytes guesticonbox = 3;
   inline bool has_guesticonbox() const;
   inline void clear_guesticonbox();
   static const int kGuesticonboxFieldNumber = 3;
   inline const ::std::string& guesticonbox() const;
   inline void set_guesticonbox(const ::std::string& value);
   inline void set_guesticonbox(const char* value);
-  inline void set_guesticonbox(const char* value, size_t size);
+  inline void set_guesticonbox(const void* value, size_t size);
   inline ::std::string* mutable_guesticonbox();
   inline ::std::string* release_guesticonbox();
   inline void set_allocated_guesticonbox(::std::string* guesticonbox);
@@ -3090,14 +3090,14 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // optional string reward = 6;
+  // optional bytes reward = 6;
   inline bool has_reward() const;
   inline void clear_reward();
   static const int kRewardFieldNumber = 6;
   inline const ::std::string& reward() const;
   inline void set_reward(const ::std::string& value);
   inline void set_reward(const char* value);
-  inline void set_reward(const char* value, size_t size);
+  inline void set_reward(const void* value, size_t size);
   inline ::std::string* mutable_reward();
   inline ::std::string* release_reward();
   inline void set_allocated_reward(::std::string* reward);
@@ -3747,7 +3747,7 @@ inline void Vector3D::set_z(double value) {
 
 // PBInt32
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBInt32::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3780,7 +3780,7 @@ inline void PBInt32::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBInt32::set_name(const char* value, size_t size) {
+inline void PBInt32::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -3891,7 +3891,7 @@ inline void PBUIntUInt::set_value(::google::protobuf::uint32 value) {
 
 // PBUInt32
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBUInt32::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3924,7 +3924,7 @@ inline void PBUInt32::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBUInt32::set_name(const char* value, size_t size) {
+inline void PBUInt32::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -3987,7 +3987,7 @@ inline void PBUInt32::set_value(::google::protobuf::uint32 value) {
 
 // PBInt64
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBInt64::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4020,7 +4020,7 @@ inline void PBInt64::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBInt64::set_name(const char* value, size_t size) {
+inline void PBInt64::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4083,7 +4083,7 @@ inline void PBInt64::set_value(::google::protobuf::int64 value) {
 
 // PBUInt64
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBUInt64::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4116,7 +4116,7 @@ inline void PBUInt64::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBUInt64::set_name(const char* value, size_t size) {
+inline void PBUInt64::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4179,7 +4179,7 @@ inline void PBUInt64::set_value(::google::protobuf::uint64 value) {
 
 // PBDouble
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBDouble::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4212,7 +4212,7 @@ inline void PBDouble::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBDouble::set_name(const char* value, size_t size) {
+inline void PBDouble::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4275,7 +4275,7 @@ inline void PBDouble::set_value(double value) {
 
 // PBString
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBString::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4308,7 +4308,7 @@ inline void PBString::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBString::set_name(const char* value, size_t size) {
+inline void PBString::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4345,7 +4345,7 @@ inline void PBString::set_allocated_name(::std::string* name) {
   }
 }
 
-// optional string value = 2;
+// optional bytes value = 2;
 inline bool PBString::has_value() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4378,7 +4378,7 @@ inline void PBString::set_value(const char* value) {
   }
   value_->assign(value);
 }
-inline void PBString::set_value(const char* value, size_t size) {
+inline void PBString::set_value(const void* value, size_t size) {
   set_has_value();
   if (value_ == &::google::protobuf::internal::kEmptyString) {
     value_ = new ::std::string;
@@ -4448,7 +4448,7 @@ PBStrings::mutable_pbstring() {
 
 // PBVector3D
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBVector3D::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4481,7 +4481,7 @@ inline void PBVector3D::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBVector3D::set_name(const char* value, size_t size) {
+inline void PBVector3D::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4560,7 +4560,7 @@ inline void PBVector3D::set_allocated_value(::KFMsg::Vector3D* value) {
 
 // PBArray
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBArray::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4593,7 +4593,7 @@ inline void PBArray::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBArray::set_name(const char* value, size_t size) {
+inline void PBArray::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -4755,7 +4755,7 @@ PBArray::mutable_pbdouble() {
   return &pbdouble_;
 }
 
-// repeated string pbstring = 7;
+// repeated bytes pbstring = 7;
 inline int PBArray::pbstring_size() const {
   return pbstring_.size();
 }
@@ -4774,7 +4774,7 @@ inline void PBArray::set_pbstring(int index, const ::std::string& value) {
 inline void PBArray::set_pbstring(int index, const char* value) {
   pbstring_.Mutable(index)->assign(value);
 }
-inline void PBArray::set_pbstring(int index, const char* value, size_t size) {
+inline void PBArray::set_pbstring(int index, const void* value, size_t size) {
   pbstring_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
 }
@@ -4787,7 +4787,7 @@ inline void PBArray::add_pbstring(const ::std::string& value) {
 inline void PBArray::add_pbstring(const char* value) {
   pbstring_.Add()->assign(value);
 }
-inline void PBArray::add_pbstring(const char* value, size_t size) {
+inline void PBArray::add_pbstring(const void* value, size_t size) {
   pbstring_.Add()->assign(reinterpret_cast<const char*>(value), size);
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
@@ -4828,7 +4828,7 @@ PBArray::mutable_pbvector3d() {
 
 // PBObject
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBObject::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4861,7 +4861,7 @@ inline void PBObject::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBObject::set_name(const char* value, size_t size) {
+inline void PBObject::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -5174,7 +5174,7 @@ PBObject::mutable_pbrecord() {
 
 // PBRecord
 
-// optional string name = 1;
+// optional bytes name = 1;
 inline bool PBRecord::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5207,7 +5207,7 @@ inline void PBRecord::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBRecord::set_name(const char* value, size_t size) {
+inline void PBRecord::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -5553,7 +5553,7 @@ inline void PBBattlePlayer::set_playerid(::google::protobuf::uint32 value) {
   playerid_ = value;
 }
 
-// optional string name = 4;
+// optional bytes name = 4;
 inline bool PBBattlePlayer::has_name() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -5586,7 +5586,7 @@ inline void PBBattlePlayer::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void PBBattlePlayer::set_name(const char* value, size_t size) {
+inline void PBBattlePlayer::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -5645,7 +5645,7 @@ inline void PBBattlePlayer::set_sex(::google::protobuf::uint32 value) {
   sex_ = value;
 }
 
-// optional string icon = 6;
+// optional bytes icon = 6;
 inline bool PBBattlePlayer::has_icon() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -5678,7 +5678,7 @@ inline void PBBattlePlayer::set_icon(const char* value) {
   }
   icon_->assign(value);
 }
-inline void PBBattlePlayer::set_icon(const char* value, size_t size) {
+inline void PBBattlePlayer::set_icon(const void* value, size_t size) {
   set_has_icon();
   if (icon_ == &::google::protobuf::internal::kEmptyString) {
     icon_ = new ::std::string;
@@ -5715,7 +5715,7 @@ inline void PBBattlePlayer::set_allocated_icon(::std::string* icon) {
   }
 }
 
-// optional string iconbox = 7;
+// optional bytes iconbox = 7;
 inline bool PBBattlePlayer::has_iconbox() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -5748,7 +5748,7 @@ inline void PBBattlePlayer::set_iconbox(const char* value) {
   }
   iconbox_->assign(value);
 }
-inline void PBBattlePlayer::set_iconbox(const char* value, size_t size) {
+inline void PBBattlePlayer::set_iconbox(const void* value, size_t size) {
   set_has_iconbox();
   if (iconbox_ == &::google::protobuf::internal::kEmptyString) {
     iconbox_ = new ::std::string;
@@ -6061,7 +6061,7 @@ inline void PBGuestData::set_guestid(::google::protobuf::uint32 value) {
   guestid_ = value;
 }
 
-// required string guesticon = 2;
+// required bytes guesticon = 2;
 inline bool PBGuestData::has_guesticon() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -6094,7 +6094,7 @@ inline void PBGuestData::set_guesticon(const char* value) {
   }
   guesticon_->assign(value);
 }
-inline void PBGuestData::set_guesticon(const char* value, size_t size) {
+inline void PBGuestData::set_guesticon(const void* value, size_t size) {
   set_has_guesticon();
   if (guesticon_ == &::google::protobuf::internal::kEmptyString) {
     guesticon_ = new ::std::string;
@@ -6131,7 +6131,7 @@ inline void PBGuestData::set_allocated_guesticon(::std::string* guesticon) {
   }
 }
 
-// required string guesticonbox = 3;
+// required bytes guesticonbox = 3;
 inline bool PBGuestData::has_guesticonbox() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -6164,7 +6164,7 @@ inline void PBGuestData::set_guesticonbox(const char* value) {
   }
   guesticonbox_->assign(value);
 }
-inline void PBGuestData::set_guesticonbox(const char* value, size_t size) {
+inline void PBGuestData::set_guesticonbox(const void* value, size_t size) {
   set_has_guesticonbox();
   if (guesticonbox_ == &::google::protobuf::internal::kEmptyString) {
     guesticonbox_ = new ::std::string;
@@ -6318,7 +6318,7 @@ inline void PBBattleScore::set_matchid(::google::protobuf::uint32 value) {
   matchid_ = value;
 }
 
-// optional string reward = 6;
+// optional bytes reward = 6;
 inline bool PBBattleScore::has_reward() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -6351,7 +6351,7 @@ inline void PBBattleScore::set_reward(const char* value) {
   }
   reward_->assign(value);
 }
-inline void PBBattleScore::set_reward(const char* value, size_t size) {
+inline void PBBattleScore::set_reward(const void* value, size_t size) {
   set_has_reward();
   if (reward_ == &::google::protobuf::internal::kEmptyString) {
     reward_ = new ::std::string;

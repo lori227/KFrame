@@ -140,14 +140,14 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // required string type = 1;
+  // required bytes type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -159,26 +159,26 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 id() const;
   inline void set_id(::google::protobuf::uint32 value);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -277,14 +277,14 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string type = 1;
+  // required bytes type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -296,26 +296,26 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 id() const;
   inline void set_id(::google::protobuf::uint32 value);
 
-  // required string name = 3;
+  // required bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string ip = 4;
+  // required bytes ip = 4;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 4;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -424,26 +424,26 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string clustertype = 1;
+  // required bytes clustertype = 1;
   inline bool has_clustertype() const;
   inline void clear_clustertype();
   static const int kClustertypeFieldNumber = 1;
   inline const ::std::string& clustertype() const;
   inline void set_clustertype(const ::std::string& value);
   inline void set_clustertype(const char* value);
-  inline void set_clustertype(const char* value, size_t size);
+  inline void set_clustertype(const void* value, size_t size);
   inline ::std::string* mutable_clustertype();
   inline ::std::string* release_clustertype();
   inline void set_allocated_clustertype(::std::string* clustertype);
 
-  // required string clusterkey = 2;
+  // required bytes clusterkey = 2;
   inline bool has_clusterkey() const;
   inline void clear_clusterkey();
   static const int kClusterkeyFieldNumber = 2;
   inline const ::std::string& clusterkey() const;
   inline void set_clusterkey(const ::std::string& value);
   inline void set_clusterkey(const char* value);
-  inline void set_clusterkey(const char* value, size_t size);
+  inline void set_clusterkey(const void* value, size_t size);
   inline ::std::string* mutable_clusterkey();
   inline ::std::string* release_clusterkey();
   inline void set_allocated_clusterkey(::std::string* clusterkey);
@@ -526,38 +526,38 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string clustertype = 1;
+  // required bytes clustertype = 1;
   inline bool has_clustertype() const;
   inline void clear_clustertype();
   static const int kClustertypeFieldNumber = 1;
   inline const ::std::string& clustertype() const;
   inline void set_clustertype(const ::std::string& value);
   inline void set_clustertype(const char* value);
-  inline void set_clustertype(const char* value, size_t size);
+  inline void set_clustertype(const void* value, size_t size);
   inline ::std::string* mutable_clustertype();
   inline ::std::string* release_clustertype();
   inline void set_allocated_clustertype(::std::string* clustertype);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required string type = 3;
+  // required bytes type = 3;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 3;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
@@ -569,26 +569,26 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 id() const;
   inline void set_id(::google::protobuf::uint32 value);
 
-  // required string name = 5;
+  // required bytes name = 5;
   inline bool has_name() const;
   inline void clear_name();
   static const int kNameFieldNumber = 5;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
+  inline void set_name(const void* value, size_t size);
   inline ::std::string* mutable_name();
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // required string ip = 6;
+  // required bytes ip = 6;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 6;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
@@ -693,14 +693,14 @@ class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string token = 1;
+  // required bytes token = 1;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 1;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -790,26 +790,26 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string clustertype = 1;
+  // required bytes clustertype = 1;
   inline bool has_clustertype() const;
   inline void clear_clustertype();
   static const int kClustertypeFieldNumber = 1;
   inline const ::std::string& clustertype() const;
   inline void set_clustertype(const ::std::string& value);
   inline void set_clustertype(const char* value);
-  inline void set_clustertype(const char* value, size_t size);
+  inline void set_clustertype(const void* value, size_t size);
   inline ::std::string* mutable_clustertype();
   inline ::std::string* release_clustertype();
   inline void set_allocated_clustertype(::std::string* clustertype);
 
-  // required string token = 2;
+  // required bytes token = 2;
   inline bool has_token() const;
   inline void clear_token();
   static const int kTokenFieldNumber = 2;
   inline const ::std::string& token() const;
   inline void set_token(const ::std::string& value);
   inline void set_token(const char* value);
-  inline void set_token(const char* value, size_t size);
+  inline void set_token(const void* value, size_t size);
   inline ::std::string* mutable_token();
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
@@ -902,14 +902,14 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required string clustertype = 1;
+  // required bytes clustertype = 1;
   inline bool has_clustertype() const;
   inline void clear_clustertype();
   static const int kClustertypeFieldNumber = 1;
   inline const ::std::string& clustertype() const;
   inline void set_clustertype(const ::std::string& value);
   inline void set_clustertype(const char* value);
-  inline void set_clustertype(const char* value, size_t size);
+  inline void set_clustertype(const void* value, size_t size);
   inline ::std::string* mutable_clustertype();
   inline ::std::string* release_clustertype();
   inline void set_allocated_clustertype(::std::string* clustertype);
@@ -1621,14 +1621,14 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -1738,14 +1738,14 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required string msgdata = 3;
+  // required bytes msgdata = 3;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
-  inline void set_msgdata(const char* value, size_t size);
+  inline void set_msgdata(const void* value, size_t size);
   inline ::std::string* mutable_msgdata();
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
@@ -1792,7 +1792,7 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
 
 // S2SClusterRegisterReq
 
-// required string type = 1;
+// required bytes type = 1;
 inline bool S2SClusterRegisterReq::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1825,7 +1825,7 @@ inline void S2SClusterRegisterReq::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void S2SClusterRegisterReq::set_type(const char* value, size_t size) {
+inline void S2SClusterRegisterReq::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -1884,7 +1884,7 @@ inline void S2SClusterRegisterReq::set_id(::google::protobuf::uint32 value) {
   id_ = value;
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool S2SClusterRegisterReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1917,7 +1917,7 @@ inline void S2SClusterRegisterReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SClusterRegisterReq::set_name(const char* value, size_t size) {
+inline void S2SClusterRegisterReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -1954,7 +1954,7 @@ inline void S2SClusterRegisterReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool S2SClusterRegisterReq::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1987,7 +1987,7 @@ inline void S2SClusterRegisterReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SClusterRegisterReq::set_ip(const char* value, size_t size) {
+inline void S2SClusterRegisterReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -2050,7 +2050,7 @@ inline void S2SClusterRegisterReq::set_port(::google::protobuf::uint32 value) {
 
 // S2SClusterUpdateReq
 
-// required string type = 1;
+// required bytes type = 1;
 inline bool S2SClusterUpdateReq::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2083,7 +2083,7 @@ inline void S2SClusterUpdateReq::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void S2SClusterUpdateReq::set_type(const char* value, size_t size) {
+inline void S2SClusterUpdateReq::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -2142,7 +2142,7 @@ inline void S2SClusterUpdateReq::set_id(::google::protobuf::uint32 value) {
   id_ = value;
 }
 
-// required string name = 3;
+// required bytes name = 3;
 inline bool S2SClusterUpdateReq::has_name() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2175,7 +2175,7 @@ inline void S2SClusterUpdateReq::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SClusterUpdateReq::set_name(const char* value, size_t size) {
+inline void S2SClusterUpdateReq::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -2212,7 +2212,7 @@ inline void S2SClusterUpdateReq::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string ip = 4;
+// required bytes ip = 4;
 inline bool S2SClusterUpdateReq::has_ip() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2245,7 +2245,7 @@ inline void S2SClusterUpdateReq::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SClusterUpdateReq::set_ip(const char* value, size_t size) {
+inline void S2SClusterUpdateReq::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -2330,7 +2330,7 @@ inline void S2SClusterUpdateReq::set_count(::google::protobuf::uint32 value) {
 
 // S2SClusterAuthReq
 
-// required string clustertype = 1;
+// required bytes clustertype = 1;
 inline bool S2SClusterAuthReq::has_clustertype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2363,7 +2363,7 @@ inline void S2SClusterAuthReq::set_clustertype(const char* value) {
   }
   clustertype_->assign(value);
 }
-inline void S2SClusterAuthReq::set_clustertype(const char* value, size_t size) {
+inline void S2SClusterAuthReq::set_clustertype(const void* value, size_t size) {
   set_has_clustertype();
   if (clustertype_ == &::google::protobuf::internal::kEmptyString) {
     clustertype_ = new ::std::string;
@@ -2400,7 +2400,7 @@ inline void S2SClusterAuthReq::set_allocated_clustertype(::std::string* clustert
   }
 }
 
-// required string clusterkey = 2;
+// required bytes clusterkey = 2;
 inline bool S2SClusterAuthReq::has_clusterkey() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2433,7 +2433,7 @@ inline void S2SClusterAuthReq::set_clusterkey(const char* value) {
   }
   clusterkey_->assign(value);
 }
-inline void S2SClusterAuthReq::set_clusterkey(const char* value, size_t size) {
+inline void S2SClusterAuthReq::set_clusterkey(const void* value, size_t size) {
   set_has_clusterkey();
   if (clusterkey_ == &::google::protobuf::internal::kEmptyString) {
     clusterkey_ = new ::std::string;
@@ -2474,7 +2474,7 @@ inline void S2SClusterAuthReq::set_allocated_clusterkey(::std::string* clusterke
 
 // S2SClusterAuthAck
 
-// required string clustertype = 1;
+// required bytes clustertype = 1;
 inline bool S2SClusterAuthAck::has_clustertype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2507,7 +2507,7 @@ inline void S2SClusterAuthAck::set_clustertype(const char* value) {
   }
   clustertype_->assign(value);
 }
-inline void S2SClusterAuthAck::set_clustertype(const char* value, size_t size) {
+inline void S2SClusterAuthAck::set_clustertype(const void* value, size_t size) {
   set_has_clustertype();
   if (clustertype_ == &::google::protobuf::internal::kEmptyString) {
     clustertype_ = new ::std::string;
@@ -2544,7 +2544,7 @@ inline void S2SClusterAuthAck::set_allocated_clustertype(::std::string* clustert
   }
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool S2SClusterAuthAck::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2577,7 +2577,7 @@ inline void S2SClusterAuthAck::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SClusterAuthAck::set_token(const char* value, size_t size) {
+inline void S2SClusterAuthAck::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -2614,7 +2614,7 @@ inline void S2SClusterAuthAck::set_allocated_token(::std::string* token) {
   }
 }
 
-// required string type = 3;
+// required bytes type = 3;
 inline bool S2SClusterAuthAck::has_type() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2647,7 +2647,7 @@ inline void S2SClusterAuthAck::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void S2SClusterAuthAck::set_type(const char* value, size_t size) {
+inline void S2SClusterAuthAck::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -2706,7 +2706,7 @@ inline void S2SClusterAuthAck::set_id(::google::protobuf::uint32 value) {
   id_ = value;
 }
 
-// required string name = 5;
+// required bytes name = 5;
 inline bool S2SClusterAuthAck::has_name() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2739,7 +2739,7 @@ inline void S2SClusterAuthAck::set_name(const char* value) {
   }
   name_->assign(value);
 }
-inline void S2SClusterAuthAck::set_name(const char* value, size_t size) {
+inline void S2SClusterAuthAck::set_name(const void* value, size_t size) {
   set_has_name();
   if (name_ == &::google::protobuf::internal::kEmptyString) {
     name_ = new ::std::string;
@@ -2776,7 +2776,7 @@ inline void S2SClusterAuthAck::set_allocated_name(::std::string* name) {
   }
 }
 
-// required string ip = 6;
+// required bytes ip = 6;
 inline bool S2SClusterAuthAck::has_ip() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -2809,7 +2809,7 @@ inline void S2SClusterAuthAck::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void S2SClusterAuthAck::set_ip(const char* value, size_t size) {
+inline void S2SClusterAuthAck::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -2872,7 +2872,7 @@ inline void S2SClusterAuthAck::set_port(::google::protobuf::uint32 value) {
 
 // S2SClusterTokenReq
 
-// required string token = 1;
+// required bytes token = 1;
 inline bool S2SClusterTokenReq::has_token() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2905,7 +2905,7 @@ inline void S2SClusterTokenReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SClusterTokenReq::set_token(const char* value, size_t size) {
+inline void S2SClusterTokenReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -2968,7 +2968,7 @@ inline void S2SClusterTokenReq::set_gateid(::google::protobuf::uint32 value) {
 
 // S2SClusterVerifyReq
 
-// required string clustertype = 1;
+// required bytes clustertype = 1;
 inline bool S2SClusterVerifyReq::has_clustertype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3001,7 +3001,7 @@ inline void S2SClusterVerifyReq::set_clustertype(const char* value) {
   }
   clustertype_->assign(value);
 }
-inline void S2SClusterVerifyReq::set_clustertype(const char* value, size_t size) {
+inline void S2SClusterVerifyReq::set_clustertype(const void* value, size_t size) {
   set_has_clustertype();
   if (clustertype_ == &::google::protobuf::internal::kEmptyString) {
     clustertype_ = new ::std::string;
@@ -3038,7 +3038,7 @@ inline void S2SClusterVerifyReq::set_allocated_clustertype(::std::string* cluste
   }
 }
 
-// required string token = 2;
+// required bytes token = 2;
 inline bool S2SClusterVerifyReq::has_token() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3071,7 +3071,7 @@ inline void S2SClusterVerifyReq::set_token(const char* value) {
   }
   token_->assign(value);
 }
-inline void S2SClusterVerifyReq::set_token(const char* value, size_t size) {
+inline void S2SClusterVerifyReq::set_token(const void* value, size_t size) {
   set_has_token();
   if (token_ == &::google::protobuf::internal::kEmptyString) {
     token_ = new ::std::string;
@@ -3134,7 +3134,7 @@ inline void S2SClusterVerifyReq::set_serverid(::google::protobuf::uint32 value) 
 
 // S2SClusterVerifyAck
 
-// required string clustertype = 1;
+// required bytes clustertype = 1;
 inline bool S2SClusterVerifyAck::has_clustertype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3167,7 +3167,7 @@ inline void S2SClusterVerifyAck::set_clustertype(const char* value) {
   }
   clustertype_->assign(value);
 }
-inline void S2SClusterVerifyAck::set_clustertype(const char* value, size_t size) {
+inline void S2SClusterVerifyAck::set_clustertype(const void* value, size_t size) {
   set_has_clustertype();
   if (clustertype_ == &::google::protobuf::internal::kEmptyString) {
     clustertype_ = new ::std::string;
@@ -3502,7 +3502,7 @@ inline void S2SSendToDynamicObjectReq::set_msgid(::google::protobuf::uint32 valu
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2SSendToDynamicObjectReq::has_msgdata() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3535,7 +3535,7 @@ inline void S2SSendToDynamicObjectReq::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SSendToDynamicObjectReq::set_msgdata(const char* value, size_t size) {
+inline void S2SSendToDynamicObjectReq::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
@@ -3642,7 +3642,7 @@ inline void S2SSendToStaticObjectReq::set_msgid(::google::protobuf::uint32 value
   msgid_ = value;
 }
 
-// required string msgdata = 3;
+// required bytes msgdata = 3;
 inline bool S2SSendToStaticObjectReq::has_msgdata() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3675,7 +3675,7 @@ inline void S2SSendToStaticObjectReq::set_msgdata(const char* value) {
   }
   msgdata_->assign(value);
 }
-inline void S2SSendToStaticObjectReq::set_msgdata(const char* value, size_t size) {
+inline void S2SSendToStaticObjectReq::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
   if (msgdata_ == &::google::protobuf::internal::kEmptyString) {
     msgdata_ = new ::std::string;
