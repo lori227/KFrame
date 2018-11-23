@@ -503,7 +503,7 @@ message PBBattlePlayer
 	optional bytes name = 4;			// 玩家名字
 	optional uint32 sex = 5;			// 玩家性别
 	optional bytes icon = 6;			// 玩家icon
-	optional bytes iconbox = 7;		// 玩家头像框
+	optional bytes iconbox = 7;			// 玩家头像框
 	optional uint32 grading = 8;		// 段位
 	optional uint32 modelid = 9;		// 模型id
 	optional uint32 clothesid = 10;		// 时装id

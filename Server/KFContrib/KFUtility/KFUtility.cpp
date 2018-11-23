@@ -1,9 +1,7 @@
 ﻿#include "KFUtility.h"
 #include "KFMacros.h"
-#include "KFDate.h"
-#include "KFAppID.h"
 
-#ifdef _WIN32
+#if __KF_SYSTEM__ == __KF_WIN__
     #include <winsock2.h>
     #include <time.h>
 #else

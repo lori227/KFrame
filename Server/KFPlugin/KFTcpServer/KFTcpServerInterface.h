@@ -1,4 +1,4 @@
-#ifndef __KF_TCP_SERVER_INTERFACE_H__
+ï»¿#ifndef __KF_TCP_SERVER_INTERFACE_H__
 #define __KF_TCP_SERVER_INTERFACE_H__
 
 #include "KFrame.h"
@@ -10,50 +10,50 @@ namespace KFrame
     public:
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        // ×¢²áµ½Á¬½ÓÆ÷
+        // æ³¨å†Œåˆ°è¿æ¥å™¨
         virtual bool RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid ) = 0;
 
-        // ¹Ø±ÕÁ¬½ÓÆ÷
+        // å…³é—­è¿æ¥å™¨
         virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line ) = 0;
 
-        // Á¬½ÓÊıÁ¿
+        // è¿æ¥æ•°é‡
         virtual uint32 GetHandleCount() = 0;
 
-        // Á¬½ÓÁĞ±í
+        // è¿æ¥åˆ—è¡¨
         virtual void GetHandleList( std::list< uint32 >& handlelist ) = 0;
 
-        // »ñµÃÁ¬½Óip
+        // è·å¾—è¿æ¥ip
         virtual const std::string& GetHandleIp( uint32 handleid ) = 0;
 
-        // ÉèÖÃid
+        // è®¾ç½®id
         virtual bool BindObjectId( uint32 handleid, uint32 objectid ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////
 
-        // ¸øÈ«²¿¿Í»§¶Ë·¢ËÍÏûÏ¢
+        // ç»™å…¨éƒ¨å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 ) = 0;
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 ) = 0;
 
-        // ¸øÖ¸¶¨¿Í»§¶Ë·¢ËÍÏûÏ¢
+        // ç»™æŒ‡å®šå®¢æˆ·ç«¯å‘é€æ¶ˆæ¯
         virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
         virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
-        // ¸øÖ¸¶¨¶ÔÏó·¢ËÍÏûÏ¢
+        // ç»™æŒ‡å®šå¯¹è±¡å‘é€æ¶ˆæ¯
         virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
         virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
-        // ¸øÖ¸¶¨¶ÔÏó·¢ËÍÏûÏ¢
+        // ç»™æŒ‡å®šå¯¹è±¡å‘é€æ¶ˆæ¯
         virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) = 0;
         virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
-        // ¸øÖ¸¶¨ÀàĞÍ·¢ËÍÏûÏ¢
+        // ç»™æŒ‡å®šç±»å‹å‘é€æ¶ˆæ¯
         virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         virtual void SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message ) = 0;
         virtual void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length ) = 0;
 
-        // ¸øÄ³Ò»ÀàĞÍ¿Í»§¶Ë·¢ËÍÏûÏ¢
+        // ç»™æŸä¸€ç±»å‹å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯
         //////////////////////////////////////////////////////////////////////////////////////////
-        // ×¢²áÁ¬½Ó³É¹¦º¯Êı
+        // æ³¨å†Œè¿æ¥æˆåŠŸå‡½æ•°
         template< class T >
         void RegisterDiscoverFunction( T* object,
                                        void ( T::*handle )( uint32 handleid, const std::string& servername, const std::string& servertype, const std::string& ip, uint32 port ) )
@@ -64,7 +64,7 @@ namespace KFrame
             AddDiscoverFunction( typeid( T ).name(), function );
         }
 
-        // Ğ¶ÔØ
+        // å¸è½½
         template< class T >
         void UnRegisterDiscoverFunction( T* object )
         {
@@ -72,7 +72,7 @@ namespace KFrame
         }
         //////////////////////////////////////////////////////////////////////////////////////////
 
-        // ×¢²á¶ÏÏß»Øµ÷º¯Êı
+        // æ³¨å†Œæ–­çº¿å›è°ƒå‡½æ•°
         template< class T >
         void RegisterLostFunction( T* object,
                                    void ( T::*handle )( uint32 id, const std::string& servername, const std::string& servertype  ) )
@@ -83,14 +83,14 @@ namespace KFrame
             AddLostFunction( typeid( T ).name(), function );
         }
 
-        // Ğ¶ÔØ
+        // å¸è½½
         template< class T >
         void UnRegisterLostFunction( T* object )
         {
             RemoveLostFunction( typeid( T ).name() );
         }
         /////////////////////////////////////////////////////////////////////////////
-        // ×¢²á×ª·¢
+        // æ³¨å†Œè½¬å‘
         template< class T >
         void RegisterTransmitFunction( T* object,
                                        bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )

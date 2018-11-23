@@ -27,16 +27,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto onlinetime = kfobject->GetValue<uint64>( __KF_STRING__( onlinetime ) );
-        if ( onlinetime == _invalid_int || onlinetime < 0 )
-        {
-            onlinetime = KFGlobal::Instance()->_real_time;
-            player->UpdateData( __KF_STRING__( onlinetime ), KFOperateEnum::Set, KFGlobal::Instance()->_real_time );
-        }
-
-        //检查steam免费周末活动标志,如果是通过免费周末过来的玩家，则该值是1
-        auto steamfreeweekend = kfobject->GetValue<uint32>( __KF_STRING__( steamfreeweekend ) );
-
-        if ( kfglobal->_real_time > onlinetime && steamfreeweekend <= 0 )
+        if ( onlinetime != _invalid_int && kfglobal->_real_time > onlinetime )
         {
             player->UpdateData( __KF_STRING__( totalonlinetime ), KFOperateEnum::Add, kfglobal->_real_time - onlinetime );
         }
