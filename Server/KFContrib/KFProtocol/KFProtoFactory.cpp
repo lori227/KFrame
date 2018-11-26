@@ -140,6 +140,7 @@ namespace KFrame
             return reflection->GetRepeatedField< double >( *message, filed ).size();
             break;
         case google::protobuf::FieldDescriptor::TYPE_STRING:
+        case google::protobuf::FieldDescriptor::TYPE_BYTES:
             return reflection->GetRepeatedPtrField< std::string >( *message, filed ).size();
             break;
         case google::protobuf::FieldDescriptor::TYPE_MESSAGE:
