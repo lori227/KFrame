@@ -21,7 +21,10 @@ namespace KFrame
     std::string KFHttp::RunHttp( const std::string& url, const std::string& data )
     {
         __LOG_DEBUG__( "http url={}", url );
-        __LOG_DEBUG__( "http data={}", data );
+        if ( !data.empty() )
+        {
+            __LOG_DEBUG__( "http data={}", data );
+        }
 
         Poco::Net::HTTPRequest request;
         request.setContentType( "application/json" );

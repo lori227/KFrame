@@ -86,11 +86,11 @@ namespace KFrame
         __STRING_DEFINE__( code );
         __STRING_DEFINE__( machine );
         __STRING_DEFINE__( errcode );
-        __STRING_DEFINE__( accesstoken );
-        __STRING_DEFINE__( refreshtoken );
+        __STRING_DEFINE__( access_token );
+        __STRING_DEFINE__( refresh_token );
         __STRING_DEFINE__( openid );
         __STRING_DEFINE__( scope );
-        __STRING_DEFINE__( expiresin );
+        __STRING_DEFINE__( expires_in );
         __STRING_DEFINE__( weixindata );
         __STRING_DEFINE__( unionid );
         __STRING_DEFINE__( nickname );
