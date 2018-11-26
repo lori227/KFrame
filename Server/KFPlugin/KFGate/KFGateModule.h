@@ -89,6 +89,10 @@ namespace KFrame
         // 登出游戏
         __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
 
+    protected:
+        // 发送登录失败消息
+        void SendLoginFailedMessage( uint32 sessionid, uint32 result, uint32 bantime );
+
     private:
         // login服务器列表
         KFConHash _kf_login_conhash;

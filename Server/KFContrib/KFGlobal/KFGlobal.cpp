@@ -83,8 +83,7 @@ namespace KFrame
 
     bool KFGlobal::CheckVersionCompatibility( const std::string& version )
     {
-        auto strversion = version;
-        return _kf_version->CheckCompatibility( strversion );
+        return _kf_version->CheckCompatibility( version );
     }
 
     uint32 KFGlobal::RandRatio( uint32 ratio )

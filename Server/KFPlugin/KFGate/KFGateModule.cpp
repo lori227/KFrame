@@ -62,6 +62,15 @@ namespace KFrame
     {
         return _kf_role_list.Size();
     }
+
+    void KFGateModule::SendLoginFailedMessage( uint32 sessionid, uint32 result, uint32 bantime )
+    {
+        // 消息到这里的都是错误结果
+        _kf_display->SendToClient( sessionid, result, bantime );
+
+        // 2秒后主动断开游戏
+        _kf_tcp_server->CloseNetHandle( sessionid, 2000, __FUNC_LINE__ );
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGateModule::OnClientConnectionLogin )
     {
@@ -102,15 +111,14 @@ namespace KFrame
         auto compatibility = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
         if ( !compatibility )
         {
-            return _kf_display->SendToClient( handleid, KFMsg::VersionNotCompatibility );
+            return SendLoginFailedMessage( handleid, KFMsg::VersionNotCompatibility, 0 );
         }
 
         // 没有可用的login
         auto loginserverid = _kf_login_conhash.FindHashNode( accountid );
         if ( loginserverid == _invalid_int )
         {
-            _kf_display->SendToClient( handleid, KFMsg::LoginSystemBusy );
-            return __LOG_ERROR__( "accountid[{}] no login!", accountid );
+            return SendLoginFailedMessage( handleid, KFMsg::LoginSystemBusy, 0 );
         }
 
         // ip
@@ -130,8 +138,7 @@ namespace KFrame
         else
         {
             // 发送错误
-            _kf_display->SendToClient( handleid, KFMsg::LoginSystemBusy );
-            __LOG_ERROR__( "accountid[{}:{}] login failed!", accountid, ip );
+            SendLoginFailedMessage( handleid, KFMsg::LoginSystemBusy, 0 );
         }
     }
 
@@ -140,11 +147,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyAck );
         __LOG_DEBUG__( "player[{}] login verify result[{}]!", kfmsg.accountid(), kfmsg.result() );
 
-        // 消息到这里的都是错误结果
-        _kf_display->SendToClient( kfmsg.sessionid(), kfmsg.result(), kfmsg.bantime() );
-
-        // 2秒后主动断开游戏
-        _kf_tcp_server->CloseNetHandle( kfmsg.sessionid(), 2000, __FUNC_LINE__ );
+        SendLoginFailedMessage( kfmsg.sessionid(), kfmsg.result(), kfmsg.bantime() );
     }
 
     __KF_SERVER_LOST_FUNCTION__( KFGateModule::OnPlayerDisconnection )
@@ -246,43 +249,38 @@ namespace KFrame
         auto result = kfmsg.result();
         auto pblogin = &kfmsg.pblogin();
 
+        __LOG_DEBUG__( "player[{}:{}] session[{}] enter game req!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+
         if ( result != KFMsg::Success )
         {
             __LOG_ERROR__( "player[{}:{}] login failed[{}]!", pblogin->accountid(), pblogin->playerid(), result );
+            return SendLoginFailedMessage( pblogin->sessionid(), result, 0 );
+        }
 
-            // 发送错误消息
-            _kf_display->SendToClient( pblogin->playerid(), result );
+        // 绑定角色id
+        if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->playerid() ) )
+        {
+            return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+        }
 
-            // 断开连接, 客户端重新走登录流程
-            _kf_tcp_server->CloseNetHandle( pblogin->sessionid(), 1000, __FUNC_LINE__ );
+        // 创建角色
+        auto kfrole = CreateRole( pblogin->playerid() );
+        kfrole->_game_id = __KF_HEAD_ID__( kfid );
+        kfrole->_role_id = pblogin->playerid();
+        kfrole->_session_id = pblogin->sessionid();
+
+        // 通知进入游戏
+        KFMsg::MsgEnterGame enter;
+        enter.set_servertime( kfmsg.servertime() );
+        enter.mutable_playerdata()->CopyFrom( kfmsg.playerdata() );
+        auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
+        if ( ok )
+        {
+            __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
         }
         else
         {
-            // 绑定角色id
-            if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->playerid() ) )
-            {
-                return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
-            }
-
-            // 创建角色
-            auto kfrole = CreateRole( pblogin->playerid() );
-            kfrole->_game_id = __KF_HEAD_ID__( kfid );
-            kfrole->_role_id = pblogin->playerid();
-            kfrole->_session_id = pblogin->sessionid();
-
-            // 通知进入游戏
-            KFMsg::MsgEnterGame enter;
-            enter.set_servertime( kfmsg.servertime() );
-            enter.mutable_playerdata()->CopyFrom( kfmsg.playerdata() );
-            auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
-            if ( ok )
-            {
-                __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
-            }
-            else
-            {
-                __LOG_ERROR__( "player[{}:{}] session[{}] enter game failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
-            }
+            __LOG_ERROR__( "player[{}:{}] session[{}] enter game failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
         }
     }
 
@@ -321,5 +319,4 @@ namespace KFrame
         tell.set_content( param );
         _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
     }
-
 }

@@ -16,7 +16,7 @@ namespace KFrame
         }
 
         // 判断版本号是否兼容
-        bool CheckCompatibility( std::string version )
+        bool CheckCompatibility( const std::string& version )
         {
             KFVersion kfversion( version );
 
