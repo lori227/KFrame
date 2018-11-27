@@ -2,21 +2,6 @@
 
 namespace KFrame
 {
-    KFPlayerModule::KFPlayerModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFPlayerModule::~KFPlayerModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    void KFPlayerModule::InitModule()
-    {
-
-    }
-
     void KFPlayerModule::BeforeRun()
     {
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFPlayerModule::OnClientConnectionWorld );

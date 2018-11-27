@@ -28,11 +28,8 @@ namespace KFrame
     class KFPlayerModule : public KFPlayerInterface
     {
     public:
-        KFPlayerModule();
-        ~KFPlayerModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFPlayerModule() = default;
+        ~KFPlayerModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -156,7 +153,7 @@ namespace KFrame
 
     private:
         // 玩家组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
 
         // 更新函数
         KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;
