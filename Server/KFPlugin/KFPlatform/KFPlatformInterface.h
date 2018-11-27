@@ -1,4 +1,4 @@
-#ifndef __KF_PLATFORM_INTERFACE_H__
+ï»¿#ifndef __KF_PLATFORM_INTERFACE_H__
 #define __KF_PLATFORM_INTERFACE_H__
 
 #include "KFrame.h"
@@ -8,13 +8,10 @@ namespace KFrame
     class KFPlatformInterface : public KFModule
     {
     public:
-        // »ñµÃapiµØÖ·
+        // è·å¾—apiåœ°å€
         virtual const std::string& GetPlatformApiUrl() = 0;
 
-        // ´´½¨Ç©Ãû
-        virtual const std::string& MakePlatformSign( uint32 nowtime ) = 0;
-
-        // ´´½¨Æ½Ì¨Á¬½Ó
+        // åˆ›å»ºå¹³å°è¿æ¥
         virtual const std::string& MakePlatformUrl( const std::string& path ) = 0;
     };
 

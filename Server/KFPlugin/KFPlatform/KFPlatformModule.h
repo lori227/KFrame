@@ -10,11 +10,7 @@
 ************************************************************************/
 
 #include "KFPlatformInterface.h"
-#include "KFMessage/KFMessageInterface.h"
-#include "KFPlayer/KFPlayerInterface.h"
 #include "KFOption/KFOptionInterface.h"
-#include "KFDisplay/KFDisplayInterface.h"
-#include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
 {
@@ -24,38 +20,15 @@ namespace KFrame
         KFPlatformModule() = default;
         ~KFPlatformModule() = default;
 
-        // 逻辑
-        virtual void BeforeRun();
-
-        // 关闭
-        virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 获得api地址
         virtual const std::string& GetPlatformApiUrl();
-
-        // 创建签名
-        virtual const std::string& MakePlatformSign( uint32 nowtime );
 
         // 创建平台连接
         virtual const std::string& MakePlatformUrl( const std::string& path );
 
     protected:
-        // 绑定支付宝
-        __KF_MESSAGE_FUNCTION__( HandleBindAlipayReq );
-        __KF_HTTP_CALL_BACK_FUNCTION__( OnBindAlipayCallBack );
-
-        // 查询邀请积分
-        __KF_MESSAGE_FUNCTION__( HandleQueryInviteScoreReq );
-        __KF_HTTP_CALL_BACK_FUNCTION__( OnQueryInviteScoreCallBack );
-
-        // 兑换邀请积分
-        __KF_MESSAGE_FUNCTION__( HandleExchangeInviteScoreReq );
-        __KF_HTTP_CALL_BACK_FUNCTION__( OnExchangeInviteScoreCallBack );
-
-        // 查询兑换记录
-        __KF_MESSAGE_FUNCTION__( HandleExChangeInviteRecordReq );
-        __KF_HTTP_CALL_BACK_FUNCTION__( OnExChangeInviteRecordCallBack );
-        ////////////////////////////////////////////////////////////////////////////////
+        const std::string& MakePlatformSign( uint32 nowtime );
     };
 }
 

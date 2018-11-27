@@ -183,6 +183,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KFDiffChannel", "KFDiffChan
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFSteam", "KFPlugin\KFSteam\KFSteam.vcxproj", "{9FF045E2-4412-48B0-B079-3DCC5D2FC99D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFAttribute", "KFPlugin\KFAttribute\KFAttribute.vcxproj", "{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -463,6 +465,10 @@ Global
 		{9FF045E2-4412-48B0-B079-3DCC5D2FC99D}.Debug|x64.Build.0 = Debug|x64
 		{9FF045E2-4412-48B0-B079-3DCC5D2FC99D}.Release|x64.ActiveCfg = Release|x64
 		{9FF045E2-4412-48B0-B079-3DCC5D2FC99D}.Release|x64.Build.0 = Release|x64
+		{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}.Debug|x64.ActiveCfg = Debug|x64
+		{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}.Debug|x64.Build.0 = Debug|x64
+		{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}.Release|x64.ActiveCfg = Release|x64
+		{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -555,9 +561,10 @@ Global
 		{C8A6AB49-B1D7-4CF1-A792-03E56E7C3F18} = {597ABECC-C08A-42F2-9E2D-E6E893DF9385}
 		{58E2DA91-3673-40B1-8383-3B3760F3168C} = {85F208C1-96A0-4D9A-8582-A348FF5F3B41}
 		{9FF045E2-4412-48B0-B079-3DCC5D2FC99D} = {58E2DA91-3673-40B1-8383-3B3760F3168C}
+		{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34} = {CC34363F-FF7F-4907-93F1-610CB368B7B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal

@@ -109,6 +109,7 @@ enum ClientProtocol
 	MSG_EXCHANGE_INVITE_RECORD_REQ = 307;		// 兑换记录
 	MSG_EXCHANGE_INVITE_RECORD_ACK = 308;		// 兑换记录
 	MSG_TELL_MATCH_PLAYER_COUNT = 309;			// 通知正在匹配人数
+	MSG_TITLE_CHANGE_REQ = 310;					// 请求更换称号
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -995,4 +996,11 @@ message PBExChangeInviteRecord
 message MsgExChangeInviteRecordAck
 {
 	repeated PBExChangeInviteRecord record = 1;
+}
+
+// 请求更换称号
+// MSG_TITLE_CHANGE_REQ
+message MsgTitleChangeReq
+{
+	required uint32 titleid = 1;	// 称号id
 }

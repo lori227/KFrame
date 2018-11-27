@@ -63,7 +63,7 @@ enum AckEnum
 	AchieveNotDone 				= 56;		// 请先完成成就
 	AchieveReceiveRewardOK 		= 57;		// 领取成就奖励成功
 	ReceiveGiftOK 				= 58;		// 领取礼包成功
-	ReceiveGiftFailed 			= 59;		// 领取礼包失败	
+	ReceiveGiftFailed 			= 59;		// 领取礼包失败, 错误码:<Text>%s</Text>	
 	MailNotExist				= 60;		// 邮件不存在
 	MailAlreadyReceived			= 61;		// 邮件奖励已经领取
 	MailNotHaveReward			= 62;		// 邮件没有奖励
@@ -191,7 +191,7 @@ enum AckEnum
 	BattleNotCompatibility 		= 187;		// 战斗服版本不兼容, 请升级客户端
 	BattleNotPrepare			= 188;		// 战斗服还没有准备好
 	BanForbidLogin				= 189;		// 你被禁止游戏到<Text>%s</Text>时间.
-
+	TitleNotExist				= 190;		// 你没有获得此称号
 
 
 	FriendFriendCountOver		= 10000;	// 好友列表已满  (超过10000的是客户端自己的消息提示，服务器不需要处理)

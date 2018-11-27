@@ -31,5 +31,7 @@
 		<Plugin Sort="292" Name="KFPlatform" Config=""/>
 		<Plugin Sort="293" Name="KFSchedule" Config=""/>
 		<Plugin Sort="294" Name="KFSteam" Channel="3" Config=""/> <!--just for steam-->
+		<Plugin Sort="295" Name="KFGift" Config=""/>
+		<Plugin Sort="296" Name="KFAttribute" Config=""/>
 	</Plugins>
 </Setting>

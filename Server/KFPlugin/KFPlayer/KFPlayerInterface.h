@@ -127,6 +127,9 @@ namespace KFrame
         // 玩家数量
         virtual uint32 GetPlayerCount() = 0;
 
+        // 保存玩家
+        virtual void SavePlayer( KFEntity* player ) = 0;
+
         // 踢掉角色
         virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line ) = 0;
 

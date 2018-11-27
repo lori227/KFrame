@@ -1,31 +1,24 @@
-#include "KFTitleModule.h"
-#include "KFTitleConfig.h"
-#include "KFTitleField.h"
-#include "KFPlayer/KFPlayerInterface.h"
-#include "KFKernel/KFKernelInterface.h"
-#include "KFComponent/KFComponentInterface.h"
-#include "KFNetFunction/KFNetFunctionInterface.h"
+﻿#include "KFTitleModule.h"
+
 namespace KFrame
 {
-    KFTitleModule::KFTitleModule()
-    {
-        _kf_player_logic = nullptr;
-    }
-
-    KFTitleModule::~KFTitleModule()
-    {
-    }
-
-    void KFTitleModule::InitMoudle()
-    {
-        ///////////////////////////////////////////////////////////////////////////////
-        _kf_config->AddConfig( _kf_title_config, _kf_plugin->_config, true );
-    }
-
     void KFTitleModule::BeforeRun()
     {
-        _kf_player_logic = _kf_component->FindComponent( KFField::_player );
+        //__REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ, &KFTaskModule::HandleTitleChangeReq );
     }
+
+    void KFTitleModule::BeforeShut()
+    {
+        //__UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ );
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFTitleModule::HandleTitleChangeReq )
+    {
+        //__CLIENT_PROTO_PARSE__( KFMsg::MsgReceiveTaskRewardReq );
+
+        //auto result = ReceiveTaskReward( player, kfmsg.taskid() );
+        //_kf_display->SendToClient( player, result, kfmsg.taskid() );
+    }
 }

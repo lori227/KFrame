@@ -1,25 +1,26 @@
-﻿#include "KFTitlePlugin.h"
-#include "KFTitleModule.h"
-#include "KFPlayer/KFPlayerInterface.h"
-#include "KFKernel/KFKernelInterface.h"
-#include "KFComponent/KFComponentInterface.h"
-#include "KFNetFunction/KFNetFunctionInterface.h"
+﻿#include "KFTaskPlugin.h"
+#include "KFTaskModule.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFTitlePlugin::Install()
+    void KFTaskPlugin::Install()
     {
-        _kf_plugin_manage->RegistModule< KFTitlePlugin, KFTitleInterface >( new KFTitleModule() );
+        __REGISTER_MODULE__( KFTask );
     }
 
-    void KFTitlePlugin::UnInstall()
+    void KFTaskPlugin::UnInstall()
     {
-        _kf_plugin_manage->UnRegistModule< KFTitlePlugin, KFTitleInterface >();
+        __UNREGISTER_MODULE__( KFTask );
     }
 
-    void KFTitlePlugin::LoadModule()
+    void KFTaskPlugin::LoadModule()
     {
-
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
     }
+
 }

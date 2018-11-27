@@ -1,7 +1,7 @@
-﻿#include "KFTaskPlugin.h"
+﻿#include "KFAttributePlugin.h"
 #include "KFLibrary.h"
 
-__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFTaskPlugin );
-__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFTaskPlugin );
+__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFAttributePlugin );
+__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFAttributePlugin );
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

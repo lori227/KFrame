@@ -128,9 +128,6 @@ namespace KFrame
         const char* LuaGetOptionString( const char* name, const char* logicid );
         uint32 LuaGetOptionUint32( const char* name, const char* logicid );
 
-        // 创建api签名
-        const char* LuaMakePlatformSign( uint32 nowtime );
-
         // 创建平台地址
         const char* LuaMakePlatformUrl( const char* path );
 

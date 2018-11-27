@@ -9,19 +9,13 @@
 //    @Date             :    2017-1-20
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFPlayerInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFGame/KFGameInterface.h"
-#include "KFZone/KFZoneInterface.h"
-#include "KFDebug/KFDebugInterface.h"
-#include "KFTimer/KFTimerInterface.h"
-#include "KFLua/KFLuaInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFFilter/KFFilterInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
@@ -47,19 +41,19 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
         // 初始化
-        void InitPlayer( KFEntity* kfentity );
-        void UnInitPlayer( KFEntity* kfentity );
+        void InitPlayer( KFEntity* player );
+        void UnInitPlayer( KFEntity* player );
 
         // 逻辑刷新
-        void RunPlayer( KFEntity* kfentity );
+        void RunPlayer( KFEntity* player );
 
-        // 保存玩家
-        void SavePlayer( KFEntity* kfentity );
         ////////////////////////////////////////////////////////////////////////////
         // 玩家数量
         virtual uint32 GetPlayerCount();
+
+        // 保存玩家
+        virtual void SavePlayer( KFEntity* player );
 
         // 踢掉角色
         virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
@@ -117,15 +111,6 @@ namespace KFrame
         // 部署服务器关闭
         __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
 
-        // 添加属性
-        __KF_DEBUG_FUNCTION__( DebugAddData );
-
-        // 减少属性
-        __KF_DEBUG_FUNCTION__( DebugDecData );
-
-        // 设置属性
-        __KF_DEBUG_FUNCTION__( DebugSetData );
-
     protected:
         // 登录token
         __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
@@ -141,51 +126,6 @@ namespace KFrame
 
         // 处理踢人消息
         __KF_MESSAGE_FUNCTION__( HandleKickGamePlayerReq );
-
-        // 处理创建角色
-        __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
-
-        // 处理创建角色
-        __KF_MESSAGE_FUNCTION__( HandleCreateRoleAck );
-
-        // 处理修改名字请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeNameReq );
-
-        // 处理设置性别请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeSexReq );
-
-        // 处理设置名字回馈
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameAck );
-
-        // 请求修改人物头像
-        __KF_MESSAGE_FUNCTION__( HandleChangeIconReq );
-
-        // 处理修改头像框请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeIconBoxReq );
-
-        // 请求修改个性签名
-        __KF_MESSAGE_FUNCTION__( HandleChangeMottoReq );
-
-        // 查询玩家所有数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
-
-        // 处理查询玩家所有数据回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerAck );
-
-        // 删除属性请求
-        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
-
-        // 查询访客信息
-        __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
-
-        // 查询访客信息回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
-
-        // 查询玩家设置请求
-        __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );
-
-        // 玩家更新设置请求
-        __KF_MESSAGE_FUNCTION__( HandleUpdateSettingReq );
 
     private:
         // 创建角色
@@ -213,14 +153,10 @@ namespace KFrame
         // 显示添加奖励消息
         void SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 检查名字的有效性
-        bool CheckNameValid( const std::string& name );
+
     private:
         // 玩家组件
         KFComponent* _kf_component;
-
-        // 玩家数据
-        KFData* _kf_player_data;
 
         // 更新函数
         KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;

@@ -39,16 +39,20 @@ namespace KFrame
         auto channel = channels.FindNode( "Channel" );
         while ( channel.IsValid() )
         {
-            auto channelid = channel.GetUInt32( "Id" );
-            auto kfchannelsetting = _kf_channel.Create( channelid );
+            auto service = channel.GetUInt32( "Service", true, _invalid_int );
+            if ( KFGlobal::Instance()->CheckChannelService( _invalid_int, service ) )
+            {
+                auto channelid = channel.GetUInt32( "Id" );
+                auto kfchannelsetting = _kf_channel.Create( channelid );
 
-            kfchannelsetting->_channel_id = channelid;
-            kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
-            kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
-            kfchannelsetting->_app_id = channel.GetString( "AppId" );
-            kfchannelsetting->_app_key = channel.GetString( "AppKey" );
-            kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
-            kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
+                kfchannelsetting->_channel_id = channelid;
+                kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
+                kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
+                kfchannelsetting->_app_id = channel.GetString( "AppId" );
+                kfchannelsetting->_app_key = channel.GetString( "AppKey" );
+                kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
+                kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
+            }
 
             channel.NextNode();
         }

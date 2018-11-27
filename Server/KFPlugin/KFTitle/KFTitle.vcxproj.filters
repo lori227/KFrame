@@ -2,15 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTitleConfig.cpp" />
-    <ClCompile Include="KFTitlePlugin.cpp" />
     <ClCompile Include="KFTitleModule.cpp" />
+    <ClCompile Include="KFTitlePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTitleConfig.h" />
     <ClInclude Include="KFTitleInterface.h" />
-    <ClInclude Include="KFTitlePlugin.h" />
     <ClInclude Include="KFTitleModule.h" />
-    <ClInclude Include="KFTitleField.h" />
+    <ClInclude Include="KFTitlePlugin.h" />
   </ItemGroup>
 </Project>

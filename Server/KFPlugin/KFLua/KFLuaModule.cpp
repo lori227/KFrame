@@ -388,12 +388,6 @@ namespace KFrame
         return _kf_option->GetUInt32( name, logicid );
     }
 
-    const char* KFLuaModule::LuaMakePlatformSign( uint32 nowtime )
-    {
-        auto& strsign = _kf_platform->MakePlatformSign( nowtime );
-        return strsign.c_str();
-    }
-
     const char* KFLuaModule::LuaMakePlatformUrl( const char* path )
     {
         auto& strurl = _kf_platform->MakePlatformUrl( path );

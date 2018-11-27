@@ -169,6 +169,7 @@ namespace KFrame
         __STRING_DEFINE__( validtime );
         __STRING_DEFINE__( sendtime );
         __STRING_DEFINE__( title );
+        __STRING_DEFINE__( titleid );
         __STRING_DEFINE__( content );
         __STRING_DEFINE__( basic );
         __STRING_DEFINE__( message );

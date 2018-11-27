@@ -143,6 +143,7 @@ class MsgQueryInviteScoreAck;
 class MsgExChangeInviteRecordReq;
 class PBExChangeInviteRecord;
 class MsgExChangeInviteRecordAck;
+class MsgTitleChangeReq;
 
 enum ClientProtocol {
   MSG_TELL_BE_KICK = 100,
@@ -249,11 +250,12 @@ enum ClientProtocol {
   MSG_EXCHANGE_INVITE_SCORE_ACK = 306,
   MSG_EXCHANGE_INVITE_RECORD_REQ = 307,
   MSG_EXCHANGE_INVITE_RECORD_ACK = 308,
-  MSG_TELL_MATCH_PLAYER_COUNT = 309
+  MSG_TELL_MATCH_PLAYER_COUNT = 309,
+  MSG_TITLE_CHANGE_REQ = 310
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_TELL_BE_KICK;
-const ClientProtocol ClientProtocol_MAX = MSG_TELL_MATCH_PLAYER_COUNT;
+const ClientProtocol ClientProtocol_MAX = MSG_TITLE_CHANGE_REQ;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();
@@ -10165,6 +10167,88 @@ class LIBPROTOC_EXPORT MsgExChangeInviteRecordAck : public ::google::protobuf::M
   void InitAsDefaultInstance();
   static MsgExChangeInviteRecordAck* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTitleChangeReq : public ::google::protobuf::Message {
+ public:
+  MsgTitleChangeReq();
+  virtual ~MsgTitleChangeReq();
+
+  MsgTitleChangeReq(const MsgTitleChangeReq& from);
+
+  inline MsgTitleChangeReq& operator=(const MsgTitleChangeReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTitleChangeReq& default_instance();
+
+  void Swap(MsgTitleChangeReq* other);
+
+  // implements Message ----------------------------------------------
+
+  MsgTitleChangeReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgTitleChangeReq& from);
+  void MergeFrom(const MsgTitleChangeReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 titleid = 1;
+  inline bool has_titleid() const;
+  inline void clear_titleid();
+  static const int kTitleidFieldNumber = 1;
+  inline ::google::protobuf::uint32 titleid() const;
+  inline void set_titleid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTitleChangeReq)
+ private:
+  inline void set_has_titleid();
+  inline void clear_has_titleid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 titleid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFClientMessage_2eproto();
+  friend void protobuf_AssignDesc_KFClientMessage_2eproto();
+  friend void protobuf_ShutdownFile_KFClientMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgTitleChangeReq* default_instance_;
+};
 // ===================================================================
 
 
@@ -17301,6 +17385,32 @@ MsgExChangeInviteRecordAck::record() const {
 inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBExChangeInviteRecord >*
 MsgExChangeInviteRecordAck::mutable_record() {
   return &record_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgTitleChangeReq
+
+// required uint32 titleid = 1;
+inline bool MsgTitleChangeReq::has_titleid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MsgTitleChangeReq::set_has_titleid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void MsgTitleChangeReq::clear_has_titleid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void MsgTitleChangeReq::clear_titleid() {
+  titleid_ = 0u;
+  clear_has_titleid();
+}
+inline ::google::protobuf::uint32 MsgTitleChangeReq::titleid() const {
+  return titleid_;
+}
+inline void MsgTitleChangeReq::set_titleid(::google::protobuf::uint32 value) {
+  set_has_titleid();
+  titleid_ = value;
 }
 
 

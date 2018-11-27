@@ -12,19 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTitleModule.cpp" />
-    <ClCompile Include="KFTitlePlugin.cpp" />
+    <ClCompile Include="KFAttributeModule.cpp" />
+    <ClCompile Include="KFAttributePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTitleInterface.h" />
-    <ClInclude Include="KFTitleModule.h" />
-    <ClInclude Include="KFTitlePlugin.h" />
+    <ClInclude Include="KFAttributeInterface.h" />
+    <ClInclude Include="KFAttributeModule.h" />
+    <ClInclude Include="KFAttributePlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{48B5CD22-37CB-42BE-8EB7-22FC27140E6A}</ProjectGuid>
+    <ProjectGuid>{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFTitle</ProjectName>
+    <ProjectName>KFAttribute</ProjectName>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

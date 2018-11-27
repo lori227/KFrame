@@ -249,6 +249,7 @@ enum AckEnum {
   BattleNotCompatibility = 187,
   BattleNotPrepare = 188,
   BanForbidLogin = 189,
+  TitleNotExist = 190,
   FriendFriendCountOver = 10000,
   FriendApplyCountOver = 10001,
   FriendSearchEmpty = 10002,

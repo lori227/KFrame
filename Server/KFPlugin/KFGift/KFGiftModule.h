@@ -11,21 +11,20 @@
 
 #include "KFrame.h"
 #include "KFGiftInterface.h"
-#include "KFZone/KFZoneInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFPlatform/KFPlatformInterface.h"
 
 namespace KFrame
 {
     class KFGiftModule : public KFGiftInterface
     {
     public:
-        KFGiftModule();
-        ~KFGiftModule();
+        KFGiftModule() = default;
+        ~KFGiftModule() = default;
 
         // 逻辑
         virtual void BeforeRun();
@@ -37,12 +36,24 @@ namespace KFrame
     protected:
         // 领取礼包奖励
         __KF_MESSAGE_FUNCTION__( HandleReceiveGiftRewardReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( HandleReceiveGiftResult );
 
-    private:
-        // 领取礼包回馈
-        void HandleReceiveGiftResult( std::string& senddata, std::string& recvdata );
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
+        // 绑定支付宝
+        __KF_MESSAGE_FUNCTION__( HandleBindAlipayReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnBindAlipayCallBack );
+
+        // 查询邀请积分
+        __KF_MESSAGE_FUNCTION__( HandleQueryInviteScoreReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnQueryInviteScoreCallBack );
+
+        // 兑换邀请积分
+        __KF_MESSAGE_FUNCTION__( HandleExchangeInviteScoreReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnExchangeInviteScoreCallBack );
+
+        // 查询兑换记录
+        __KF_MESSAGE_FUNCTION__( HandleExChangeInviteRecordReq );
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnExChangeInviteRecordCallBack );
+
     };
 }
 

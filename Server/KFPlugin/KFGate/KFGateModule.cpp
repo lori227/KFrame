@@ -104,6 +104,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->RegisteNetHandle( handleid, handleid, _invalid_int );
         if ( !ok )
         {
+            _kf_tcp_server->CloseNetHandle( handleid, 1000, __FUNC_LINE__ );
             return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, handleid );
         }
 

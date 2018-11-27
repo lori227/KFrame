@@ -40,6 +40,7 @@ endmacro(BUILD_PLUGIN_MACRO project_name)
 
 add_subdirectory(KFAchieve)
 add_subdirectory(KFActivity)
+add_subdirectory(KFAttribute)
 add_subdirectory(KFAuth)
 add_subdirectory(KFBattleMaster)
 add_subdirectory(KFBattleClient)

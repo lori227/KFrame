@@ -1,10 +1,10 @@
-﻿#ifndef __KF_TASK_PLUGIN_H__
-#define __KF_TASK_PLUGIN_H__
+﻿#ifndef __KF_ATTRIBUTE_PLUGIN_H__
+#define __KF_ATTRIBUTE_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFTaskPlugin : public KFPlugin
+    class KFAttributePlugin : public KFPlugin
     {
     public:
         // 注册
