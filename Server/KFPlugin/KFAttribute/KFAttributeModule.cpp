@@ -35,6 +35,7 @@ namespace KFrame
     {
         _kf_kernel->ReleaseObject( _kf_player_data );
 
+
         // 取消注册debug函数
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ) );
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ) );
@@ -399,4 +400,5 @@ namespace KFrame
 
         player->UpdateData( __KF_STRING__( titleid ), KFOperateEnum::Set, kfmsg.titleid() );
     }
+
 }

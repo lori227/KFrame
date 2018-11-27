@@ -14,11 +14,10 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFStoreModule : public KFStoreInterface
     {
     public:
-        KFStoreModule();
+        KFStoreModule() = default;
         ~KFStoreModule() = default;
 
         //初始化
@@ -32,6 +31,9 @@ namespace KFrame
 
 
     protected:
+        // 更新折扣
+        __KF_UPDATE_DATA_FUNCTION__( OnDiscountUpdateCallBack );
+
         //购买商品
         __KF_MESSAGE_FUNCTION__( HandleBuyStoreReq );
 
@@ -57,8 +59,7 @@ namespace KFrame
         uint32 ModifyWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid, uint32 status );
 
     private:
-        KFComponent* _kf_component;
-
+        KFComponent* _kf_component{ nullptr };
     };
 
 }

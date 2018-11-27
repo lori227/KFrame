@@ -4,16 +4,6 @@
 
 namespace KFrame
 {
-    KFTaskModule::KFTaskModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFTaskModule::~KFTaskModule()
-    {
-
-    }
-
     void KFTaskModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_task_config, true );

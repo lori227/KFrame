@@ -45,6 +45,7 @@ namespace KFrame
         // 设置属性
         __KF_DEBUG_FUNCTION__( DebugSetData );
 
+
     protected:
         // 查询玩家所有数据
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );

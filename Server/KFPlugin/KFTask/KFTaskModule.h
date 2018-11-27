@@ -23,8 +23,8 @@ namespace KFrame
     class KFTaskModule : public KFTaskInterface
     {
     public:
-        KFTaskModule();
-        ~KFTaskModule();
+        KFTaskModule() = default;
+        ~KFTaskModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -58,7 +58,7 @@ namespace KFrame
         // 领取任务奖励
         uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
     private:
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

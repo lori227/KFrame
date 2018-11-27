@@ -2,14 +2,8 @@
 #include "KFStoreConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
-
 namespace KFrame
 {
-    KFStoreModule::KFStoreModule()
-    {
-        _kf_component = nullptr;
-    }
-
     void KFStoreModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_store_config, true );
@@ -17,6 +11,9 @@ namespace KFrame
 
     void KFStoreModule::BeforeRun()
     {
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( discount ), this, &KFStoreModule::OnDiscountUpdateCallBack );
+
         __REGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ, &KFStoreModule::HandleBuyStoreReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_GIVE_STORE_REQ, &KFStoreModule::HandleGiveStoreReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_INFO_REQ, &KFStoreModule::HandleQueryStoreInfoReq );
@@ -26,6 +23,7 @@ namespace KFrame
     void KFStoreModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__( _kf_store_config );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( player ), __KF_STRING__( discount ) );
 
         __UNREGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_GIVE_STORE_REQ );
@@ -35,6 +33,15 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_UPDATE_DATA_FUNCTION__( KFStoreModule::OnDiscountUpdateCallBack )
+    {
+        // 取最小的折扣, 但不能为0
+        if ( newvalue == 0 || newvalue > oldvalue )
+        {
+            kfdata->SetValue< uint64 >( oldvalue );
+        }
+    }
+
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleBuyStoreReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgBuyStoreReq );

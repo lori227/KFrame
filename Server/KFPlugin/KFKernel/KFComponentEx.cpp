@@ -433,11 +433,6 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, uint64 key, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
     {
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, key );
-        }
-
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -467,15 +462,15 @@ namespace KFrame
                 }
             }
         }
+
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, key );
+        }
     }
 
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value )
     {
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, kfentity->GetKeyID() );
-        }
-
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -505,15 +500,15 @@ namespace KFrame
                 }
             }
         }
+
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, kfentity->GetKeyID() );
+        }
     }
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
     {
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncAddData( kfdata, key );
-        }
-
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -542,15 +537,15 @@ namespace KFrame
                 }
             }
         }
+
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncAddData( kfdata, key );
+        }
     }
 
     void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
     {
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncRemoveData( kfdata, key );
-        }
-
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -577,6 +572,11 @@ namespace KFrame
                     kffunction->_function( kfentity, kfparent, key, kfdata );
                 }
             }
+        }
+
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncRemoveData( kfdata, key );
         }
     }
 
