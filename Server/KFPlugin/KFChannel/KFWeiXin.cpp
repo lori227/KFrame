@@ -138,11 +138,11 @@ namespace KFrame
         response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
         response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( unionid ) ) );
 
-        KFJson kfextend;
-        kfextend.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );
-        kfextend.SetValue( __KF_STRING__( sex ), userjson.GetInt32( __KF_STRING__( sex ) ) );
-        kfextend.SetValue( __KF_STRING__( icon ), userjson.GetString( __KF_STRING__( headimgurl ) ) );
-        response.SetValue( __KF_STRING__( extend ), kfextend );
+        //KFJson kfextend;
+        //kfextend.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );
+        //kfextend.SetValue( __KF_STRING__( sex ), userjson.GetInt32( __KF_STRING__( sex ) ) );
+        //kfextend.SetValue( __KF_STRING__( icon ), userjson.GetString( __KF_STRING__( headimgurl ) ) );
+        //response.SetValue( __KF_STRING__( extend ), kfextend );
 
         return _kf_http_server->SendResponse( response );
     }
