@@ -33,12 +33,10 @@ namespace KFrame
 
         // 判断是否超时
         bool IsTrusteeTimeout( uint64 nowtime );
-
         //////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 关闭回调
         static void OnShutCallBack( uv_handle_t* handle );
-
     public:
         // 状态
         bool _is_trustee;

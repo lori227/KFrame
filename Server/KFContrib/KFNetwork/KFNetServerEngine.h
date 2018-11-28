@@ -92,17 +92,14 @@ namespace KFrame
         void RunCloseHandle();
 
         // 处理网络消息
-        void RunTrusteeMessage();
-        void RunHandleMessage();
+        void RunTrusteeMessage( uint64 nowtime );
+        void RunHandleMessage( uint64 nowtime );
 
     public:
         // 有效连接列表
         KFMap< uint32, uint32, KFNetHandle > _kf_handles;
 
     protected:
-        // 当前时间
-        uint64 _now_time;
-
         // 服务器服务
         KFNetServerServices* _net_server_services;
 

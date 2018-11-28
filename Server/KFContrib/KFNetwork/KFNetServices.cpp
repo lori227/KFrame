@@ -15,6 +15,7 @@ namespace KFrame
         _buff_address = nullptr;
         _buff_length = 0;
         _queue_size = 10000;
+        _now_time = 0;
     }
 
     KFNetServices::~KFNetServices()

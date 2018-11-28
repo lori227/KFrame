@@ -63,6 +63,9 @@ namespace KFrame
         // 是否已经关闭
         volatile bool _is_shutdown;
 
+        // 当前时间
+        uint64 _now_time;
+
     protected:
         // 线程逻辑标识
         volatile bool _thread_run;

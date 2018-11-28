@@ -4,7 +4,6 @@ namespace KFrame
 {
     KFNetServerEngine::KFNetServerEngine()
     {
-        _now_time = 0;
         _net_function = nullptr;
         _net_server_services = nullptr;
         _server_lost_function = nullptr;
@@ -64,7 +63,7 @@ namespace KFrame
 
     void KFNetServerEngine::RunEngine( uint64 nowtime )
     {
-        _now_time = nowtime;
+        _net_server_services->_now_time = nowtime;
         _net_server_services->_net_event->RunEvent();
 
         // 删除托管的连接
@@ -77,8 +76,8 @@ namespace KFrame
         RunCloseHandle();
 
         // 处理消息
-        RunTrusteeMessage();
-        RunHandleMessage();
+        RunTrusteeMessage( nowtime );
+        RunHandleMessage( nowtime );
     }
 
     uint32 KFNetServerEngine::GetHandleCount()
@@ -119,7 +118,7 @@ namespace KFrame
         _trustee_handles.Insert( eventdata->_id, kfhandle );
 
         // 设置托管超时时间
-        kfhandle->SetTrusteeTimeout( _now_time + 30000 );
+        kfhandle->SetTrusteeTimeout( _net_server_services->_now_time + 30000 );
     }
 
     void KFNetServerEngine::OnServerShutDown( const KFEventData* eventdata )
@@ -168,7 +167,7 @@ namespace KFrame
     {
         __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]!", id, KFAppID::ToString( id ) );
 
-        _close_handles[ id ] = _now_time + delaytime;
+        _close_handles[ id ] = _net_server_services->_now_time + delaytime;
         return true;
     }
 
@@ -231,7 +230,7 @@ namespace KFrame
         auto kfhandle = _trustee_handles.First();
         while ( kfhandle != nullptr )
         {
-            if ( kfhandle->IsTrusteeTimeout( _now_time ) )
+            if ( kfhandle->IsTrusteeTimeout( _net_server_services->_now_time ) )
             {
                 kfhandle->CloseHandle();
             }
@@ -244,7 +243,7 @@ namespace KFrame
     {
         for ( auto iter = _close_handles.begin(); iter != _close_handles.end(); )
         {
-            if ( iter->second > _now_time )
+            if ( iter->second > _net_server_services->_now_time )
             {
                 ++iter;
                 continue;
@@ -260,7 +259,7 @@ namespace KFrame
         }
     }
 
-    void KFNetServerEngine::RunTrusteeMessage()
+    void KFNetServerEngine::RunTrusteeMessage( uint64 nowtime )
     {
         // 每次取10个消息, 防止占用过多的cpu
         static const uint32 _max_message_count = 10;
@@ -268,34 +267,11 @@ namespace KFrame
         for ( auto& iter : _trustee_handles._objects )
         {
             auto kfhandle = iter.second;
-
-            auto messagecount = 0u;
-            auto message = kfhandle->PopNetMessage();
-            while ( message != nullptr )
-            {
-                if ( message->_msgid == 0 )
-                {
-                    // ping
-                    kfhandle->SendNetMessage( 0, nullptr, 0 );
-                }
-                else
-                {
-                    // 处理回调函数
-                    _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
-                }
-
-                // 每次处理200个消息
-                ++messagecount;
-                if ( messagecount >= _max_message_count )
-                {
-                    break;
-                }
-                message = kfhandle->PopNetMessage();
-            }
+            kfhandle->RunUpdate( _net_function, _max_message_count );
         }
     }
 
-    void KFNetServerEngine::RunHandleMessage()
+    void KFNetServerEngine::RunHandleMessage( uint64 nowtime )
     {
         // 每次取200个消息, 防止占用过多的cpu
         static const uint32 _max_message_count = 200;
@@ -303,30 +279,7 @@ namespace KFrame
         for ( auto& iter : _kf_handles._objects )
         {
             auto kfhandle = iter.second;
-
-            auto messagecount = 0u;
-            auto message = kfhandle->PopNetMessage();
-            while ( message != nullptr )
-            {
-                if ( message->_msgid == 0 )
-                {
-                    // ping
-                    kfhandle->SendNetMessage( 0, nullptr, 0 );
-                }
-                else
-                {
-                    // 处理回调函数
-                    _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
-                }
-
-                // 每次处理200个消息
-                ++messagecount;
-                if ( messagecount >= _max_message_count )
-                {
-                    break;
-                }
-                message = kfhandle->PopNetMessage();
-            }
+            kfhandle->RunUpdate( _net_function, _max_message_count );
         }
     }
 

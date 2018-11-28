@@ -211,7 +211,53 @@ namespace KFrame
 
         // 发送消息
         _net_services->SendNetMessage( this );
-
+        _last_message_time = _net_services->_now_time;
         return ok;
+    }
+
+    void KFNetConnector::RunUpdate( KFNetFunction& netfunction, uint32 maxcount )
+    {
+        // 处理消息
+        RunMessage( netfunction, maxcount );
+
+        // ping 消息
+        RunSendPing();
+    }
+
+    void KFNetConnector::RunSendPing()
+    {
+        // 20秒没有消息通讯, 发送一次ping消息
+        // keeplive 经常会失灵, 很久才监测到锻炼 问题待查
+        if ( _net_services->_now_time < _last_message_time + 20000u )
+        {
+            return;
+        }
+
+        SendNetMessage( 0, nullptr, 0 );
+    }
+
+    void KFNetConnector::RunMessage( KFNetFunction& netfunction, uint32 maxcount )
+    {
+        auto messagecount = _invalid_int;
+        auto message = PopNetMessage();
+        while ( message != nullptr )
+        {
+            // 处理回调函数
+            netfunction( message->_kfid, message->_msgid, message->_data, message->_length );
+
+            // 每次处理200个消息
+            ++messagecount;
+            if ( messagecount >= maxcount )
+            {
+                break;
+            }
+            message = PopNetMessage();
+        }
+
+        // 设置处理消息时间
+        if ( messagecount != _invalid_int )
+        {
+            _last_message_time = _net_services->_now_time;
+        }
     }
 }

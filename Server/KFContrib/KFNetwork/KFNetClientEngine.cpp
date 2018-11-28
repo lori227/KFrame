@@ -46,6 +46,7 @@ namespace KFrame
     void KFNetClientEngine::RunEngine( uint64 nowtime )
     {
         // 网络事件
+        _net_client_services->_now_time = nowtime;
         _net_client_services->_net_event->RunEvent();
 
         // 添加客户端
@@ -60,25 +61,10 @@ namespace KFrame
         // 每次取200个消息, 防止占用过多的cpu
         static const uint32 _max_message_count = 200;
 
-        auto kfclient = _kf_clients.First();
-        while ( kfclient != nullptr )
+        for ( auto iter : _kf_clients._objects )
         {
-            auto messagecount = 0u;
-            auto message = kfclient->PopNetMessage();
-            while ( message != nullptr )
-            {
-                _net_function( message->_kfid, message->_msgid, message->_data, message->_length );
-
-                // 每次处理200个消息
-                ++messagecount;
-                if ( messagecount >= _max_message_count )
-                {
-                    break;
-                }
-                message = kfclient->PopNetMessage();
-            }
-
-            kfclient = _kf_clients.Next();
+            auto kfclient = iter.second;
+            kfclient->RunUpdate( _net_function, _max_message_count );
         }
     }
 

@@ -20,6 +20,12 @@ namespace KFrame
 
     bool KFMessageModule::CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {
+        // ping 消息不处理
+        if ( msgid == 0 )
+        {
+            return true;
+        }
+
         auto kffunction = _kf_message_function.Find( msgid );
         if ( kffunction == nullptr )
         {
