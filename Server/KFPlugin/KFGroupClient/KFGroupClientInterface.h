@@ -14,13 +14,13 @@ namespace KFrame
         virtual bool SendToGroup( uint64 groupid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 判断是否是队员
-        virtual bool IsGroupMember( KFEntity* player, uint32 playerid ) = 0;
+        virtual bool IsGroupMember( KFEntity* player, uint64 playerid ) = 0;
 
         // 判断是否是队长
-        virtual bool IsGroupCaptain( KFEntity* player, uint32 playerid ) = 0;
+        virtual bool IsGroupCaptain( KFEntity* player, uint64 playerid ) = 0;
 
         // 删除一个队员
-        virtual void RemoveGroupMember( uint64 groupid, uint32 playerid ) = 0;
+        virtual void RemoveGroupMember( uint64 groupid, uint64 playerid ) = 0;
 
         // 队员数量(没有队伍为1)
         virtual uint32 GroupMemberCount( KFEntity* player ) = 0;

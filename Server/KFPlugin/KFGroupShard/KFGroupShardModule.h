@@ -24,11 +24,8 @@ namespace KFrame
     class KFGroupShardModule : public KFGroupShardInterface
     {
     public:
-        KFGroupShardModule();
-        ~KFGroupShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFGroupShardModule() = default;
+        ~KFGroupShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -41,7 +38,7 @@ namespace KFrame
         __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
 
         // 发现代理服务器
-        void OnServerDiscoverGroupProxy( uint32 proxyid );
+        void OnServerDiscoverGroupProxy( uint64 proxyid );
 
     protected:
         // 创建队伍
@@ -74,7 +71,7 @@ namespace KFrame
     protected:
         // 发送消息给队员
         bool SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message );
-        void SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid = 0 );
+        void SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint64 excludeid = 0 );
 
         // 队伍选择新队长
         KFData* ChooseNewGroupCaptain( KFData* kfmemberrecord );
@@ -92,7 +89,7 @@ namespace KFrame
         void SendGroupDataToMember( KFData* kfmemberrecord, KFData* kfnewmember, KFEntity* kfgroup, bool newadd );
     private:
         // 队伍组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

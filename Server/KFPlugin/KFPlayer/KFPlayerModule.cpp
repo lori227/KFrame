@@ -226,7 +226,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerEnterWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
+            req.set_accountid( kfobject->GetValue( __KF_STRING__( accountid ) ) );
             _kf_game->SendToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
         }
     }
@@ -239,7 +239,7 @@ namespace KFrame
             // 发送消息到世界服务器
             KFMsg::S2SPlayerLeaveWorldReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_accountid( kfobject->GetValue< uint32 >( __KF_STRING__( accountid ) ) );
+            req.set_accountid( kfobject->GetValue( __KF_STRING__( accountid ) ) );
             _kf_game->SendToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
         }
     }
@@ -361,15 +361,15 @@ namespace KFrame
         return player;
     }
 
-    void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint32 playerid )
+    void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
         auto kfobject = player->GetData();
         auto kfglobal = KFGlobal::Instance();
 
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        kfbasic->SetValue< uint32 >( __KF_STRING__( serverid ), kfglobal->_app_id );
-        kfbasic->SetValue< uint32 >( __KF_STRING__( status ), KFMsg::OnlineStatus );
-        kfbasic->SetValue< uint64 >( __KF_STRING__( statustime ), kfglobal->_real_time );
+        kfbasic->SetValue( __KF_STRING__( status ), KFMsg::OnlineStatus );
+        kfbasic->SetValue( __KF_STRING__( statustime ), kfglobal->_real_time );
+        kfbasic->SetValue( __KF_STRING__( serverid ), kfglobal->_app_id._union._id );
 
         // 设置名字
         auto name = kfbasic->GetValue< std::string >( __KF_STRING__( name ) );
@@ -377,14 +377,14 @@ namespace KFrame
         player->SetName( asciiname );
 
         // 判断新玩家
-        auto basicid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
+        auto basicid = kfbasic->GetValue( __KF_STRING__( id ) );
         if ( basicid == playerid )
         {
             return;
         }
 
-        kfbasic->SetValue< uint32 >( __KF_STRING__( id ), playerid );
-        kfobject->SetValue < uint64 >( __KF_STRING__( birthday ), kfglobal->_real_time );
+        kfbasic->SetValue( __KF_STRING__( id ), playerid );
+        kfobject->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
         for ( auto iter : _new_player_function._objects )
         {
             auto kffunction = iter.second;
@@ -392,17 +392,17 @@ namespace KFrame
         }
     }
 
-    KFEntity* KFPlayerModule::FindPlayer( uint32 playerid, const char* function, uint32 line )
+    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid, const char* function, uint32 line )
     {
         return _kf_component->FindEntity( playerid, function, line );
     }
 
-    KFEntity* KFPlayerModule::FindPlayer( uint32 playerid )
+    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid )
     {
         return _kf_component->FindEntity( playerid );
     }
 
-    bool KFPlayerModule::SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFPlayerModule::SendToClient( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
@@ -413,7 +413,7 @@ namespace KFrame
         return SendToClient( player, msgid, message );
     }
 
-    bool KFPlayerModule::SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length )
+    bool KFPlayerModule::SendToClient( uint64 playerid, uint32 msgid, const char* data, uint32 length )
     {
         auto player = FindPlayer( playerid, __FUNC_LINE__ );
         if ( player == nullptr )
@@ -427,26 +427,21 @@ namespace KFrame
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfobject = player->GetData();
-        auto playerid = static_cast< uint32 >( player->GetKeyID() );
-        auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
-
-        return _kf_game->SendToClient( gateid, playerid, msgid, message );
+        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
+        return _kf_game->SendToClient( gateid, player->GetKeyID(), msgid, message );
     }
 
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length )
     {
         auto kfobject = player->GetData();
-        auto playerid = static_cast< uint32 >( player->GetKeyID() );
-        auto gateid = kfobject->GetValue< uint32 >( __KF_STRING__( gateid ) );
-
-        return _kf_game->SendToClient( gateid, playerid, msgid, data, length );
+        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
+        return _kf_game->SendToClient( gateid, player->GetKeyID(), msgid, data, length );
     }
 
     bool KFPlayerModule::SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
-        auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
-
+        auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
+        auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
         return _kf_route->SendToRoute( serverid, playerid, msgid, message );
     }
 
@@ -549,7 +544,7 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line )
+    void KFPlayerModule::KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line )
     {
         auto player = FindPlayer( playerid );
         if ( player == nullptr )
@@ -630,14 +625,14 @@ namespace KFrame
     bool KFPlayerModule::CheckOperateFrequently( KFEntity* player, uint32 time )
     {
         auto kfobject = player->GetData();
-        auto operatetime = kfobject->GetValue< uint64 >( __KF_STRING__( operatetime ) );
+        auto operatetime = kfobject->GetValue( __KF_STRING__( operatetime ) );
         if ( KFGlobal::Instance()->_game_time < operatetime )
         {
             _kf_display->SendToClient( player, KFMsg::OperateFrequently );
             return true;
         }
 
-        kfobject->SetValue< uint64 >( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time + time );
+        kfobject->SetValue( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time + time );
         return false;
     }
 }

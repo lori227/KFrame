@@ -23,8 +23,8 @@ namespace KFrame
     class KFActivityModule : public KFActivityInterface
     {
     public:
-        KFActivityModule();
-        ~KFActivityModule();
+        KFActivityModule() = default;
+        ~KFActivityModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -62,7 +62,7 @@ namespace KFrame
         void CheckResetDailyActivity( KFEntity* player );
 
     private:
-        KFComponent* _kf_componnet;
+        KFComponent* _kf_componnet{ nullptr };
     };
 }
 

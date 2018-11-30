@@ -384,13 +384,6 @@ message PBInt32
 	optional sint32 value = 2;
 }
 
-message PBUIntUInt
-{
-	optional uint64 key = 1;
-	optional uint32 value = 2;
-}
-
-
 message PBUInt32
 {
 	optional bytes name = 1;
@@ -469,7 +462,7 @@ message PBRecord
 message PBRankData
 {
 	optional uint32 rankindex = 1;		// 从1开始
-	optional uint32 playerid = 2;		// 玩家id
+	optional uint64 playerid = 2;		// 玩家id
 	optional uint64 rankscore = 3;		// 排行的数据( 客户端好友排行根据这个排序 )
 	optional PBStrings pbdata = 4;		// 排行榜数据
 }
@@ -497,19 +490,18 @@ message PBTaskDatas
 // 进入房间的房间信息
 message PBBattlePlayer
 {
-	optional uint32 zoneid = 1;			// 游戏分区id
-	optional uint32 serverid = 2;		// 游戏内服务器id
-	optional uint32 playerid = 3;		// 玩家id
-	optional bytes name = 4;			// 玩家名字
-	optional uint32 sex = 5;			// 玩家性别
-	optional bytes icon = 6;			// 玩家icon
-	optional bytes iconbox = 7;			// 玩家头像框
-	optional uint32 grading = 8;		// 段位
-	optional uint32 modelid = 9;		// 模型id
-	optional uint32 clothesid = 10;		// 时装id
-	optional uint64 groupid = 11;		// 队伍id
-	optional uint32 campid = 12;		// 阵营id( 根据此id来判断是否敌对 )
-	optional PBTaskDatas achieve = 13;	// 成就数据
+	optional uint64 serverid = 1;		// 游戏内服务器id
+	optional uint64 playerid = 2;		// 玩家id
+	optional bytes name = 3;			// 玩家名字
+	optional uint32 sex = 4;			// 玩家性别
+	optional bytes icon = 5;			// 玩家icon
+	optional bytes iconbox = 6;			// 玩家头像框
+	optional uint32 grading = 7;		// 段位
+	optional uint32 modelid = 8;		// 模型id
+	optional uint32 clothesid = 9;		// 时装id
+	optional uint64 groupid = 10;		// 队伍id
+	optional uint32 campid = 11;		// 阵营id( 根据此id来判断是否敌对 )
+	optional PBTaskDatas achieve = 12;	// 成就数据
 
 }
 
@@ -533,7 +525,7 @@ message PBMatchGroup
 // 访客信息
 message PBGuestData
 {
-	required uint32 guestid = 1;		// 访客id
+	required uint64 guestid = 1;		// 访客id
 	required bytes guesticon = 2;		// 访客头像
 	required bytes guesticonbox = 3;	// 访客头像框
 }
@@ -542,21 +534,21 @@ message PBGuestData
 // 战绩
 message PBBattleScore
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint32 ranking = 2;		// 排名( 从1开始 )
 	repeated PBUInt32 pbdata = 3;		// 各项数据
-	optional uint32 score = 4;			// 评分
+	optional sint32 score = 4;			// 评分
 	optional uint32 matchid = 5;		// 属性字段( 服务器使用 )
 	optional bytes reward = 6;			// 奖励字串( 服务器使用 )
 	optional PBTaskDatas achieve = 7;	// 成就数据	
-	repeated uint32 members = 8;		// 同阵营的玩家
+	repeated uint64 members = 8;		// 同阵营的玩家
 	optional uint32 playercount = 9;	// 战场总人数
 }
 
 // 最近玩家
 message PBRecentData
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	required uint32 ranking = 2;	// 排名
 	required uint32 totalnum =3;	// 单局游戏人数
 	optional uint32 kill  = 4;	// 单局击杀人数
@@ -565,18 +557,10 @@ message PBRecentData
 	optional uint32 relationtype = 7; // 关系类型 0:好友 1:被淘汰者
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 玩家id
-message PBPlayerIds
-{
-	repeated uint32 playerid = 1;	// 玩家id
-}
-
 // 帮派申请列表数据结构
 message PBApplicationlist
 {
-	required uint32 playerid = 1;	// 申请者玩家id
+	required uint64 playerid = 1;	// 申请者玩家id
 	required uint64 time = 2;	// 申请时间
 	required PBStrings basic = 3;	// 申请者基础信息
 }

@@ -21,7 +21,7 @@ namespace KFrame
     class KFRouteClientModule : public KFRouteClientInterface
     {
     public:
-        KFRouteClientModule();
+        KFRouteClientModule() = default;
         ~KFRouteClientModule() = default;
 
         // 初始化
@@ -32,8 +32,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 转发消息
-        virtual bool SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, const char* data, uint32 length );
 
         // 卸载
         virtual void UnRegisterTransmitFunction();
@@ -45,10 +45,10 @@ namespace KFrame
 
     private:
         // 连接到RouteProxy
-        void OnConnectionRouteCluster( uint32 serverid );
+        void OnConnectionRouteCluster( uint64 serverid );
     private:
         // 转发函数
-        KFTransmitFunction _kf_transmit_function;
+        KFTransmitFunction _kf_transmit_function{ nullptr };
     };
 }
 

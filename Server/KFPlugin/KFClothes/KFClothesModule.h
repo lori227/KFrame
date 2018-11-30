@@ -25,8 +25,8 @@ namespace KFrame
     class KFClothesModule : public KFClothesInterface
     {
     public:
-        KFClothesModule();
-        ~KFClothesModule();
+        KFClothesModule() = default;
+        ~KFClothesModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -77,7 +77,7 @@ namespace KFrame
         // 改变模型
         __KF_MESSAGE_FUNCTION__( HandleChangeModelReq );
     protected:
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

@@ -26,8 +26,8 @@ namespace KFrame
     class KFItemModule : public KFItemInterface
     {
     public:
-        KFItemModule();
-        ~KFItemModule();
+        KFItemModule() = default;
+        ~KFItemModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -99,7 +99,7 @@ namespace KFrame
         KFData* MoveItem( KFEntity* player, KFData* kfsource, KFData* kftarget, uint32 itemcount );
 
     protected:
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

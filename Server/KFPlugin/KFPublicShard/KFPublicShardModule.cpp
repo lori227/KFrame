@@ -70,16 +70,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBasicReq );
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        auto queryid = redisdriver->QueryUInt32( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
+        auto queryid = redisdriver->QueryString( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
 
         KFMsg::S2SQueryBasicAck ack;
         ack.set_playerid( kfmsg.playerid() );
 
         auto pbobject = ack.mutable_pbobject();
-        pbobject->set_key( queryid->_value );
+        pbobject->set_key( KFUtility::ToValue< uint64>( queryid->_value ) );
 
         // 查询所有数据
-        if ( queryid->_value != _invalid_int )
+        if ( !queryid->_value.empty() )
         {
             auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
             for ( auto& iter : querydata->_value )
@@ -161,7 +161,7 @@ namespace KFrame
             auto guestlist = redisdriver->QueryList( "zrevrange {}:{} 0 3", __KF_STRING__( guest ), kfmsg.queryid() );
             for ( auto& strid : guestlist->_value )
             {
-                auto guestid = KFUtility::ToValue< uint32 >( strid );
+                auto guestid = KFUtility::ToValue< uint64 >( strid );
                 auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), guestid );
 
                 auto pbguestdata = ack.add_guestdata();
@@ -174,18 +174,19 @@ namespace KFrame
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_GUEST_ACK, &ack );
     }
 
-    uint32 KFPublicShardModule::ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname )
+    uint32 KFPublicShardModule::ProcessSetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
     {
         auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
-        auto queryplayerid = redisdriver->QueryUInt32( "get {}:{}", __KF_STRING__( name ), newname );
+        auto queryplayerid = redisdriver->QueryString( "get {}:{}", __KF_STRING__( name ), newname );
         if ( !queryplayerid->IsOk() )
         {
             return KFMsg::PublicDatabaseError;
         }
 
         // 如果已经设置, 并且不是自己, 返回错误
-        if ( queryplayerid->_value != _invalid_int && queryplayerid->_value != playerid )
+        auto queryid = KFUtility::ToValue< uint64 >( queryplayerid->_value );
+        if ( queryid != _invalid_int && queryid != playerid )
         {
             return KFMsg::NameAlreadyExist;
         }

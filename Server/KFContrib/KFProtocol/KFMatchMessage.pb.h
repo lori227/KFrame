@@ -253,26 +253,26 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   inline bool allowgroup() const;
   inline void set_allowgroup(bool value);
 
-  // required uint32 playerid = 4;
+  // required uint64 playerid = 4;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 5;
+  // required uint64 serverid = 5;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 5;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
-  // required uint32 battleserverid = 6;
+  // required uint64 battleserverid = 6;
   inline bool has_battleserverid() const;
   inline void clear_battleserverid();
   static const int kBattleserveridFieldNumber = 6;
-  inline ::google::protobuf::uint32 battleserverid() const;
-  inline void set_battleserverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint64 value);
 
   // required bytes version = 7;
   inline bool has_version() const;
@@ -308,10 +308,10 @@ class LIBPROTOC_EXPORT S2SMatchToProxyReq : public ::google::protobuf::Message {
   ::KFMsg::PBMatchGroup* pbgroup_;
   ::google::protobuf::uint32 matchid_;
   bool allowgroup_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 battleserverid_;
   ::std::string* version_;
-  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
@@ -393,12 +393,12 @@ class LIBPROTOC_EXPORT S2SMatchToClientAck : public ::google::protobuf::Message 
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SMatchToClientAck)
  private:
@@ -413,7 +413,7 @@ class LIBPROTOC_EXPORT S2SMatchToClientAck : public ::google::protobuf::Message 
 
   ::google::protobuf::uint32 result_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -504,26 +504,26 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   inline bool allowgroup() const;
   inline void set_allowgroup(bool value);
 
-  // required uint32 playerid = 4;
+  // required uint64 playerid = 4;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 5;
+  // required uint64 serverid = 5;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 5;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
-  // required uint32 battleserverid = 6;
+  // required uint64 battleserverid = 6;
   inline bool has_battleserverid() const;
   inline void clear_battleserverid();
   static const int kBattleserveridFieldNumber = 6;
-  inline ::google::protobuf::uint32 battleserverid() const;
-  inline void set_battleserverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 battleserverid() const;
+  inline void set_battleserverid(::google::protobuf::uint64 value);
 
   // required bytes version = 7;
   inline bool has_version() const;
@@ -559,10 +559,10 @@ class LIBPROTOC_EXPORT S2SMatchToShardReq : public ::google::protobuf::Message {
   ::KFMsg::PBMatchGroup* pbgroup_;
   ::google::protobuf::uint32 matchid_;
   bool allowgroup_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 battleserverid_;
   ::std::string* version_;
-  ::google::protobuf::uint32 battleserverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
@@ -637,12 +637,12 @@ class LIBPROTOC_EXPORT S2SCancelMatchToProxyReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCancelMatchToProxyReq)
  private:
@@ -653,8 +653,8 @@ class LIBPROTOC_EXPORT S2SCancelMatchToProxyReq : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -729,12 +729,12 @@ class LIBPROTOC_EXPORT S2SCancelMatchToShardReq : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SCancelMatchToShardReq)
  private:
@@ -745,8 +745,8 @@ class LIBPROTOC_EXPORT S2SCancelMatchToShardReq : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -923,12 +923,12 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 battleshardid = 2;
+  // required uint64 battleshardid = 2;
   inline bool has_battleshardid() const;
   inline void clear_battleshardid();
   static const int kBattleshardidFieldNumber = 2;
-  inline ::google::protobuf::uint32 battleshardid() const;
-  inline void set_battleshardid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 battleshardid() const;
+  inline void set_battleshardid(::google::protobuf::uint64 value);
 
   // required uint32 campid = 3;
   inline bool has_campid() const;
@@ -937,19 +937,19 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 4;
+  // required uint64 playerid = 4;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 5;
+  // required uint64 serverid = 5;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 5;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // required uint64 roomid = 6;
   inline bool has_roomid() const;
@@ -1012,15 +1012,15 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomReq : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 battleshardid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 battleshardid_;
   ::google::protobuf::uint32 campid_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::uint32 serverid_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
   ::std::string* token_;
+  ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
@@ -1102,12 +1102,12 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomAck : public ::google::protobuf::Messag
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SNoticeMatchRoomAck)
  private:
@@ -1121,8 +1121,8 @@ class LIBPROTOC_EXPORT S2SNoticeMatchRoomAck : public ::google::protobuf::Messag
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 campid_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1197,19 +1197,19 @@ class LIBPROTOC_EXPORT S2SQueryMatchRoomReq : public ::google::protobuf::Message
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryMatchRoomReq)
  private:
@@ -1222,9 +1222,9 @@ class LIBPROTOC_EXPORT S2SQueryMatchRoomReq : public ::google::protobuf::Message
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1299,19 +1299,19 @@ class LIBPROTOC_EXPORT S2SQueryRoomToMatchShardReq : public ::google::protobuf::
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRoomToMatchShardReq)
  private:
@@ -1324,9 +1324,9 @@ class LIBPROTOC_EXPORT S2SQueryRoomToMatchShardReq : public ::google::protobuf::
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1401,12 +1401,12 @@ class LIBPROTOC_EXPORT S2SQueryMatchRoomAck : public ::google::protobuf::Message
   inline ::google::protobuf::uint32 matchid() const;
   inline void set_matchid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryMatchRoomAck)
  private:
@@ -1417,8 +1417,8 @@ class LIBPROTOC_EXPORT S2SQueryMatchRoomAck : public ::google::protobuf::Message
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 matchid_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1493,19 +1493,19 @@ class LIBPROTOC_EXPORT S2SQueryBattleRoomReq : public ::google::protobuf::Messag
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryBattleRoomReq)
  private:
@@ -1519,8 +1519,8 @@ class LIBPROTOC_EXPORT S2SQueryBattleRoomReq : public ::google::protobuf::Messag
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1588,12 +1588,12 @@ class LIBPROTOC_EXPORT S2SQueryBattleRoomAck : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint64 roomid = 2;
   inline bool has_roomid() const;
@@ -1620,8 +1620,8 @@ class LIBPROTOC_EXPORT S2SQueryBattleRoomAck : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::uint32 playerid_;
   ::google::protobuf::uint32 matchid_;
 
   mutable int _cached_size_;
@@ -1697,19 +1697,19 @@ class LIBPROTOC_EXPORT S2SQueryRoomToBattleShardReq : public ::google::protobuf:
   inline ::google::protobuf::uint64 roomid() const;
   inline void set_roomid(::google::protobuf::uint64 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRoomToBattleShardReq)
  private:
@@ -1723,8 +1723,8 @@ class LIBPROTOC_EXPORT S2SQueryRoomToBattleShardReq : public ::google::protobuf:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1806,19 +1806,19 @@ class LIBPROTOC_EXPORT S2SPlayerOnlineToBattleShardReq : public ::google::protob
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // required uint32 serverid = 4;
+  // required uint64 serverid = 4;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SPlayerOnlineToBattleShardReq)
  private:
@@ -1834,9 +1834,9 @@ class LIBPROTOC_EXPORT S2SPlayerOnlineToBattleShardReq : public ::google::protob
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 roomid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint32 campid_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -1904,12 +1904,12 @@ class LIBPROTOC_EXPORT S2SNoticeMatchStateReq : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 matchid = 2;
   inline bool has_matchid() const;
@@ -1927,7 +1927,7 @@ class LIBPROTOC_EXPORT S2SNoticeMatchStateReq : public ::google::protobuf::Messa
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 matchid_;
 
   mutable int _cached_size_;
@@ -2150,7 +2150,7 @@ inline void S2SMatchToProxyReq::set_allowgroup(bool value) {
   allowgroup_ = value;
 }
 
-// required uint32 playerid = 4;
+// required uint64 playerid = 4;
 inline bool S2SMatchToProxyReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2161,18 +2161,18 @@ inline void S2SMatchToProxyReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SMatchToProxyReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SMatchToProxyReq::playerid() const {
+inline ::google::protobuf::uint64 S2SMatchToProxyReq::playerid() const {
   return playerid_;
 }
-inline void S2SMatchToProxyReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SMatchToProxyReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 5;
+// required uint64 serverid = 5;
 inline bool S2SMatchToProxyReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2183,18 +2183,18 @@ inline void S2SMatchToProxyReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SMatchToProxyReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SMatchToProxyReq::serverid() const {
+inline ::google::protobuf::uint64 S2SMatchToProxyReq::serverid() const {
   return serverid_;
 }
-inline void S2SMatchToProxyReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SMatchToProxyReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
 
-// required uint32 battleserverid = 6;
+// required uint64 battleserverid = 6;
 inline bool S2SMatchToProxyReq::has_battleserverid() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -2205,13 +2205,13 @@ inline void S2SMatchToProxyReq::clear_has_battleserverid() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SMatchToProxyReq::clear_battleserverid() {
-  battleserverid_ = 0u;
+  battleserverid_ = GOOGLE_ULONGLONG(0);
   clear_has_battleserverid();
 }
-inline ::google::protobuf::uint32 S2SMatchToProxyReq::battleserverid() const {
+inline ::google::protobuf::uint64 S2SMatchToProxyReq::battleserverid() const {
   return battleserverid_;
 }
-inline void S2SMatchToProxyReq::set_battleserverid(::google::protobuf::uint32 value) {
+inline void S2SMatchToProxyReq::set_battleserverid(::google::protobuf::uint64 value) {
   set_has_battleserverid();
   battleserverid_ = value;
 }
@@ -2334,7 +2334,7 @@ inline void S2SMatchToClientAck::set_matchid(::google::protobuf::uint32 value) {
   matchid_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool S2SMatchToClientAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2345,13 +2345,13 @@ inline void S2SMatchToClientAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SMatchToClientAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SMatchToClientAck::playerid() const {
+inline ::google::protobuf::uint64 S2SMatchToClientAck::playerid() const {
   return playerid_;
 }
-inline void S2SMatchToClientAck::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SMatchToClientAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2442,7 +2442,7 @@ inline void S2SMatchToShardReq::set_allowgroup(bool value) {
   allowgroup_ = value;
 }
 
-// required uint32 playerid = 4;
+// required uint64 playerid = 4;
 inline bool S2SMatchToShardReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2453,18 +2453,18 @@ inline void S2SMatchToShardReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SMatchToShardReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SMatchToShardReq::playerid() const {
+inline ::google::protobuf::uint64 S2SMatchToShardReq::playerid() const {
   return playerid_;
 }
-inline void S2SMatchToShardReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SMatchToShardReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 5;
+// required uint64 serverid = 5;
 inline bool S2SMatchToShardReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2475,18 +2475,18 @@ inline void S2SMatchToShardReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SMatchToShardReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SMatchToShardReq::serverid() const {
+inline ::google::protobuf::uint64 S2SMatchToShardReq::serverid() const {
   return serverid_;
 }
-inline void S2SMatchToShardReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SMatchToShardReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
 
-// required uint32 battleserverid = 6;
+// required uint64 battleserverid = 6;
 inline bool S2SMatchToShardReq::has_battleserverid() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -2497,13 +2497,13 @@ inline void S2SMatchToShardReq::clear_has_battleserverid() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void S2SMatchToShardReq::clear_battleserverid() {
-  battleserverid_ = 0u;
+  battleserverid_ = GOOGLE_ULONGLONG(0);
   clear_has_battleserverid();
 }
-inline ::google::protobuf::uint32 S2SMatchToShardReq::battleserverid() const {
+inline ::google::protobuf::uint64 S2SMatchToShardReq::battleserverid() const {
   return battleserverid_;
 }
-inline void S2SMatchToShardReq::set_battleserverid(::google::protobuf::uint32 value) {
+inline void S2SMatchToShardReq::set_battleserverid(::google::protobuf::uint64 value) {
   set_has_battleserverid();
   battleserverid_ = value;
 }
@@ -2604,7 +2604,7 @@ inline void S2SCancelMatchToProxyReq::set_matchid(::google::protobuf::uint32 val
   matchid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SCancelMatchToProxyReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2615,13 +2615,13 @@ inline void S2SCancelMatchToProxyReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SCancelMatchToProxyReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SCancelMatchToProxyReq::playerid() const {
+inline ::google::protobuf::uint64 S2SCancelMatchToProxyReq::playerid() const {
   return playerid_;
 }
-inline void S2SCancelMatchToProxyReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SCancelMatchToProxyReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2652,7 +2652,7 @@ inline void S2SCancelMatchToShardReq::set_matchid(::google::protobuf::uint32 val
   matchid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SCancelMatchToShardReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2663,13 +2663,13 @@ inline void S2SCancelMatchToShardReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SCancelMatchToShardReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SCancelMatchToShardReq::playerid() const {
+inline ::google::protobuf::uint64 S2SCancelMatchToShardReq::playerid() const {
   return playerid_;
 }
-inline void S2SCancelMatchToShardReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SCancelMatchToShardReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2770,7 +2770,7 @@ inline void S2SNoticeMatchRoomReq::set_matchid(::google::protobuf::uint32 value)
   matchid_ = value;
 }
 
-// required uint32 battleshardid = 2;
+// required uint64 battleshardid = 2;
 inline bool S2SNoticeMatchRoomReq::has_battleshardid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2781,13 +2781,13 @@ inline void S2SNoticeMatchRoomReq::clear_has_battleshardid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SNoticeMatchRoomReq::clear_battleshardid() {
-  battleshardid_ = 0u;
+  battleshardid_ = GOOGLE_ULONGLONG(0);
   clear_has_battleshardid();
 }
-inline ::google::protobuf::uint32 S2SNoticeMatchRoomReq::battleshardid() const {
+inline ::google::protobuf::uint64 S2SNoticeMatchRoomReq::battleshardid() const {
   return battleshardid_;
 }
-inline void S2SNoticeMatchRoomReq::set_battleshardid(::google::protobuf::uint32 value) {
+inline void S2SNoticeMatchRoomReq::set_battleshardid(::google::protobuf::uint64 value) {
   set_has_battleshardid();
   battleshardid_ = value;
 }
@@ -2814,7 +2814,7 @@ inline void S2SNoticeMatchRoomReq::set_campid(::google::protobuf::uint32 value) 
   campid_ = value;
 }
 
-// required uint32 playerid = 4;
+// required uint64 playerid = 4;
 inline bool S2SNoticeMatchRoomReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2825,18 +2825,18 @@ inline void S2SNoticeMatchRoomReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SNoticeMatchRoomReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SNoticeMatchRoomReq::playerid() const {
+inline ::google::protobuf::uint64 S2SNoticeMatchRoomReq::playerid() const {
   return playerid_;
 }
-inline void S2SNoticeMatchRoomReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SNoticeMatchRoomReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 5;
+// required uint64 serverid = 5;
 inline bool S2SNoticeMatchRoomReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2847,13 +2847,13 @@ inline void S2SNoticeMatchRoomReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SNoticeMatchRoomReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SNoticeMatchRoomReq::serverid() const {
+inline ::google::protobuf::uint64 S2SNoticeMatchRoomReq::serverid() const {
   return serverid_;
 }
-inline void S2SNoticeMatchRoomReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SNoticeMatchRoomReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3090,7 +3090,7 @@ inline void S2SNoticeMatchRoomAck::set_campid(::google::protobuf::uint32 value) 
   campid_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool S2SNoticeMatchRoomAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3101,13 +3101,13 @@ inline void S2SNoticeMatchRoomAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SNoticeMatchRoomAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SNoticeMatchRoomAck::playerid() const {
+inline ::google::protobuf::uint64 S2SNoticeMatchRoomAck::playerid() const {
   return playerid_;
 }
-inline void S2SNoticeMatchRoomAck::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SNoticeMatchRoomAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -3138,7 +3138,7 @@ inline void S2SQueryMatchRoomReq::set_matchid(::google::protobuf::uint32 value) 
   matchid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SQueryMatchRoomReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3149,18 +3149,18 @@ inline void S2SQueryMatchRoomReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SQueryMatchRoomReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryMatchRoomReq::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryMatchRoomReq::playerid() const {
   return playerid_;
 }
-inline void S2SQueryMatchRoomReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryMatchRoomReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 3;
+// required uint64 serverid = 3;
 inline bool S2SQueryMatchRoomReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3171,13 +3171,13 @@ inline void S2SQueryMatchRoomReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SQueryMatchRoomReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SQueryMatchRoomReq::serverid() const {
+inline ::google::protobuf::uint64 S2SQueryMatchRoomReq::serverid() const {
   return serverid_;
 }
-inline void S2SQueryMatchRoomReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SQueryMatchRoomReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3208,7 +3208,7 @@ inline void S2SQueryRoomToMatchShardReq::set_matchid(::google::protobuf::uint32 
   matchid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SQueryRoomToMatchShardReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3219,18 +3219,18 @@ inline void S2SQueryRoomToMatchShardReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SQueryRoomToMatchShardReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryRoomToMatchShardReq::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryRoomToMatchShardReq::playerid() const {
   return playerid_;
 }
-inline void S2SQueryRoomToMatchShardReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryRoomToMatchShardReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 3;
+// required uint64 serverid = 3;
 inline bool S2SQueryRoomToMatchShardReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3241,13 +3241,13 @@ inline void S2SQueryRoomToMatchShardReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SQueryRoomToMatchShardReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SQueryRoomToMatchShardReq::serverid() const {
+inline ::google::protobuf::uint64 S2SQueryRoomToMatchShardReq::serverid() const {
   return serverid_;
 }
-inline void S2SQueryRoomToMatchShardReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SQueryRoomToMatchShardReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3278,7 +3278,7 @@ inline void S2SQueryMatchRoomAck::set_matchid(::google::protobuf::uint32 value) 
   matchid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SQueryMatchRoomAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3289,13 +3289,13 @@ inline void S2SQueryMatchRoomAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SQueryMatchRoomAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryMatchRoomAck::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryMatchRoomAck::playerid() const {
   return playerid_;
 }
-inline void S2SQueryMatchRoomAck::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryMatchRoomAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -3326,7 +3326,7 @@ inline void S2SQueryBattleRoomReq::set_roomid(::google::protobuf::uint64 value) 
   roomid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SQueryBattleRoomReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3337,18 +3337,18 @@ inline void S2SQueryBattleRoomReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SQueryBattleRoomReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryBattleRoomReq::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryBattleRoomReq::playerid() const {
   return playerid_;
 }
-inline void S2SQueryBattleRoomReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryBattleRoomReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 3;
+// required uint64 serverid = 3;
 inline bool S2SQueryBattleRoomReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3359,13 +3359,13 @@ inline void S2SQueryBattleRoomReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SQueryBattleRoomReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SQueryBattleRoomReq::serverid() const {
+inline ::google::protobuf::uint64 S2SQueryBattleRoomReq::serverid() const {
   return serverid_;
 }
-inline void S2SQueryBattleRoomReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SQueryBattleRoomReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3374,7 +3374,7 @@ inline void S2SQueryBattleRoomReq::set_serverid(::google::protobuf::uint32 value
 
 // S2SQueryBattleRoomAck
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool S2SQueryBattleRoomAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3385,13 +3385,13 @@ inline void S2SQueryBattleRoomAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SQueryBattleRoomAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryBattleRoomAck::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryBattleRoomAck::playerid() const {
   return playerid_;
 }
-inline void S2SQueryBattleRoomAck::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryBattleRoomAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -3466,7 +3466,7 @@ inline void S2SQueryRoomToBattleShardReq::set_roomid(::google::protobuf::uint64 
   roomid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool S2SQueryRoomToBattleShardReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3477,18 +3477,18 @@ inline void S2SQueryRoomToBattleShardReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SQueryRoomToBattleShardReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SQueryRoomToBattleShardReq::playerid() const {
+inline ::google::protobuf::uint64 S2SQueryRoomToBattleShardReq::playerid() const {
   return playerid_;
 }
-inline void S2SQueryRoomToBattleShardReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SQueryRoomToBattleShardReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 3;
+// required uint64 serverid = 3;
 inline bool S2SQueryRoomToBattleShardReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3499,13 +3499,13 @@ inline void S2SQueryRoomToBattleShardReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SQueryRoomToBattleShardReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SQueryRoomToBattleShardReq::serverid() const {
+inline ::google::protobuf::uint64 S2SQueryRoomToBattleShardReq::serverid() const {
   return serverid_;
 }
-inline void S2SQueryRoomToBattleShardReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SQueryRoomToBattleShardReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3558,7 +3558,7 @@ inline void S2SPlayerOnlineToBattleShardReq::set_campid(::google::protobuf::uint
   campid_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool S2SPlayerOnlineToBattleShardReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3569,18 +3569,18 @@ inline void S2SPlayerOnlineToBattleShardReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SPlayerOnlineToBattleShardReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SPlayerOnlineToBattleShardReq::playerid() const {
+inline ::google::protobuf::uint64 S2SPlayerOnlineToBattleShardReq::playerid() const {
   return playerid_;
 }
-inline void S2SPlayerOnlineToBattleShardReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SPlayerOnlineToBattleShardReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// required uint32 serverid = 4;
+// required uint64 serverid = 4;
 inline bool S2SPlayerOnlineToBattleShardReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3591,13 +3591,13 @@ inline void S2SPlayerOnlineToBattleShardReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SPlayerOnlineToBattleShardReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SPlayerOnlineToBattleShardReq::serverid() const {
+inline ::google::protobuf::uint64 S2SPlayerOnlineToBattleShardReq::serverid() const {
   return serverid_;
 }
-inline void S2SPlayerOnlineToBattleShardReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SPlayerOnlineToBattleShardReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3606,7 +3606,7 @@ inline void S2SPlayerOnlineToBattleShardReq::set_serverid(::google::protobuf::ui
 
 // S2SNoticeMatchStateReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool S2SNoticeMatchStateReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3617,13 +3617,13 @@ inline void S2SNoticeMatchStateReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SNoticeMatchStateReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 S2SNoticeMatchStateReq::playerid() const {
+inline ::google::protobuf::uint64 S2SNoticeMatchStateReq::playerid() const {
   return playerid_;
 }
-inline void S2SNoticeMatchStateReq::set_playerid(::google::protobuf::uint32 value) {
+inline void S2SNoticeMatchStateReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }

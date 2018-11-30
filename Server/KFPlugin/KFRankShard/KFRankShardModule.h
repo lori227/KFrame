@@ -108,14 +108,14 @@ namespace KFrame
         void RefreshRankData( uint32 rankid );
 
         // 加载玩家显示数据
-        void LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint32 playerid );
+        void LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint64 playerid );
 
         // 格式化排行榜数据key
         std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
         std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting );
+        uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
     private:
         // 排行榜
         KFRedisDriver* _rank_driver;

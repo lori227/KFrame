@@ -20,8 +20,8 @@ namespace KFrame
     class KFResetModule : public KFResetInterface
     {
     public:
-        KFResetModule();
-        ~KFResetModule();
+        KFResetModule() = default;
+        ~KFResetModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -48,10 +48,10 @@ namespace KFrame
 
     private:
         // 是否需要刷新
-        bool _need_to_reset;
+        bool _need_to_reset{ false };
 
         // 上次刷新时间
-        uint64 _next_reset_data_time;
+        uint64 _next_reset_data_time{ 0 };
     };
 }
 

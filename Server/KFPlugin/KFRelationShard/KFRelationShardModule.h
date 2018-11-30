@@ -27,11 +27,8 @@ namespace KFrame
     class KFRelationShardModule : public KFRelationShardInterface
     {
     public:
-        KFRelationShardModule();
-        ~KFRelationShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFRelationShardModule() = default;
+        ~KFRelationShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -80,28 +77,28 @@ namespace KFrame
 
     protected:
         // 信息转换成好友信息
-        void MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBRelation* pbrelation );
+        void MapStringToPBPlayer( MapString& values, uint64 friendid, KFMsg::PBRelation* pbrelation );
         void MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd );
 
         // 格式化好友key
-        std::string FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid );
-        std::string FormatFriendLimitKey( uint32 firstid, uint32 secondid, uint32 type );
+        std::string FormatFriendKey( const std::string& key, uint64 firstid, uint64 secondid );
+        std::string FormatFriendLimitKey( uint64 firstid, uint64 secondid, uint32 type );
 
         // 发送添加好友消息
-        void SendAddFriendToClient( uint32 serverid, MapString& values, uint32 friendid, uint32 playerid );
+        void SendAddFriendToClient( uint64 serverid, MapString& values, uint64 friendid, uint64 playerid );
 
         // 发送更新好友度
-        void SendAddFriendLinessToClient( uint32 selfid, uint32 targetid, uint32 friendliness );
+        void SendAddFriendLinessToClient( uint64 selfid, uint64 targetid, uint32 friendliness );
 
         // 更新好友度
-        void UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 type, uint32 addvalue );
+        void UpdateFriendLiness( uint64 selfplayerid, uint64 targetplayerid, uint32 type, uint32 addvalue );
 
     private:
         // 公共属性数据库
-        KFRedisDriver* _public_redis_driver;
+        KFRedisDriver* _public_redis_driver{ nullptr };
 
         // 关系数据库
-        KFRedisDriver* _relation_redis_driver;
+        KFRedisDriver* _relation_redis_driver{ nullptr };
     };
 }
 

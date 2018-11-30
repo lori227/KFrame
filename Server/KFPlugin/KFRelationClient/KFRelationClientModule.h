@@ -29,11 +29,8 @@ namespace KFrame
     class KFRelationClientModule : public KFRelationClientInterface
     {
     public:
-        KFRelationClientModule();
-        ~KFRelationClientModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFRelationClientModule() = default;
+        ~KFRelationClientModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -44,8 +41,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 添加好友度 （目前只支持增加）
-        virtual void AddFriendLiness( KFEntity* player, uint32 friendid, uint32 type, uint32 value );
-        virtual void AddFriendLinessOnce( KFEntity* player, uint32 friendid, uint32 type, uint32 value );
+        virtual void AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value );
+        virtual void AddFriendLinessOnce( KFEntity* player, uint64 friendid, uint32 type, uint32 value );
 
         // 发送消息到关系属性
         virtual bool SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message );
@@ -121,13 +118,10 @@ namespace KFrame
         // 解析好友信息
         void PBRelationToKFData( const KFMsg::PBRelation* pbfriend, KFData* kffriend );
 
-        // 解析最近列表消息
-        KFData* PBRecentListToKFData( uint32 playerid, const KFMsg::PBRecentData* pbrecentdata,
-                                      const KFMsg::PBStrings*  basicdata, const KFDataSetting* kfsetting );
         // 好友申请操作
         void ReplyFriendInvite( KFEntity* player, uint32 operate );
-        void ReplyFriendInvite( KFEntity* player, uint32 playerid, uint32 operate );
-        uint32 ReplyFriendInvite( KFEntity* player, KFData* kfinvite, uint32 operate );
+        void ReplyFriendInvite( KFEntity* player, uint64 playerid, uint32 operate );
+        uint64 ReplyFriendInvite( KFEntity* player, KFData* kfinvite, uint32 operate );
 
         // 添加好友
         void AddFriend( KFEntity* player, KFData* kfinvite );
@@ -142,7 +136,7 @@ namespace KFrame
         void AddRecentPlayer( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore );
     private:
         // 玩家组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

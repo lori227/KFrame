@@ -24,17 +24,17 @@ namespace KFrame
         bool IsFull( const KFMatchSetting* kfsetting );
 
         // 是否存在玩家
-        bool HavePlayer( uint32 playerid );
+        bool HavePlayer( uint64 playerid );
 
         // 删除玩家
-        bool RemovePlayer( uint32 playerid );
+        bool RemovePlayer( uint64 playerid );
 
     public:
         // 队伍id
         uint64 _group_id;
 
         // 指定的战场id
-        uint32 _battle_server_id;
+        uint64 _battle_server_id;
 
         // 战场版本
         std::string _battle_version;
@@ -43,7 +43,7 @@ namespace KFrame
         KFMatchQueue* _kf_match_queue;
 
         // 匹配的玩家列表
-        std::map< uint32, KFMatchPlayer* > _player_list;
+        std::map< uint64, KFMatchPlayer* > _player_list;
     };
 }
 

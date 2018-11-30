@@ -5,15 +5,6 @@
 
 namespace KFrame
 {
-    KFActivityModule::KFActivityModule()
-    {
-        _kf_componnet = nullptr;
-    }
-
-    KFActivityModule::~KFActivityModule()
-    {
-    }
-
     void KFActivityModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_activity_config, true );

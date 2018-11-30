@@ -36,7 +36,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToDir );
 
         // 连接到DirProxy
-        void OnConnectionDirCluster( uint32 serverid );
+        void OnConnectionDirCluster( uint64 serverid );
     };
 }
 

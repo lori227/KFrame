@@ -3,14 +3,6 @@
 
 namespace KFrame
 {
-    KFDirProxyModule::KFDirProxyModule()
-    {
-    }
-
-    KFDirProxyModule::~KFDirProxyModule()
-    {
-    }
-
     void KFDirProxyModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFDirProxyModule::OnServerLostClient );

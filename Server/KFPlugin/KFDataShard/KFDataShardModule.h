@@ -76,17 +76,17 @@ namespace KFrame
 
     protected:
         // 加载数据
-        bool LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject );
+        bool LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject );
 
         // 保存数据
-        bool SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject );
+        bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject );
 
         // 删除数据
-        void DeletePlayerData( uint32 zoneid, uint32 id );
+        void DeletePlayerData( uint32 zoneid, uint64 playerid );
 
     private:
         // 数据保存
-        KFMap< uint32, uint32, KFDataKeeper > _kf_data_keeper;
+        KFMap< uint64, uint64, KFDataKeeper > _kf_data_keeper;
     };
 }
 

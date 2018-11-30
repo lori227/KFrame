@@ -4,15 +4,6 @@
 
 namespace KFrame
 {
-    KFAchieveModule::KFAchieveModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFAchieveModule::~KFAchieveModule()
-    {
-
-    }
     void KFAchieveModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_achieve_config, true );

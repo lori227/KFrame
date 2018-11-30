@@ -26,7 +26,7 @@ namespace KFrame
 
     protected:
         // 连接到LogProxy
-        void OnConnectionLogCluster( uint32 serverid );
+        void OnConnectionLogCluster( uint64 serverid );
     };
 }
 

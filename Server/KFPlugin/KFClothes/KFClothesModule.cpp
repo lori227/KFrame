@@ -4,15 +4,6 @@
 
 namespace KFrame
 {
-    KFClothesModule::KFClothesModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFClothesModule::~KFClothesModule()
-    {
-    }
-
     void KFClothesModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_clothes_config, true );
@@ -214,7 +205,7 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto agenttime = kfagent->GetValue( __KF_STRING__( time ) );
-            auto validtime = kfclothes->GetValue< uint64 >( __KF_STRING__( time ) );
+            auto validtime = kfclothes->GetValue( __KF_STRING__( time ) );
             if ( validtime == 0 )
             {
                 if ( agenttime == 0 )
@@ -263,7 +254,7 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFClothesModule::OnAddClothesCallBack )
     {
-        auto validtime = kfdata->GetValue< uint64 >( __KF_STRING__( time ) );
+        auto validtime = kfdata->GetValue( __KF_STRING__( time ) );
         if ( validtime == 0 )
         {
             return;
@@ -295,7 +286,7 @@ namespace KFrame
         auto kfmodel = kfmodelrecord->FirstData();
         while ( kfmodel != nullptr )
         {
-            auto clothesid = kfmodel->GetValue< uint32 >( __KF_STRING__( clothesid ) );
+            auto clothesid = kfmodel->GetValue( __KF_STRING__( clothesid ) );
             if ( clothesid != _invalid_int && clothesid == key )
             {
                 player->UpdateData( kfmodel, __KF_STRING__( clothesid ), KFOperateEnum::Set, _invalid_int );
@@ -305,7 +296,7 @@ namespace KFrame
         }
 
         //判断被删除时装是否是当前穿戴时装
-        auto kfclothesid = kfobject->GetValue< uint32 >( __KF_STRING__( clothesid ) );
+        auto kfclothesid = kfobject->GetValue( __KF_STRING__( clothesid ) );
         if ( kfclothesid != _invalid_int && kfclothesid == key )
         {
             player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, _invalid_int );
@@ -335,7 +326,7 @@ namespace KFrame
                 return _kf_display->SendToClient( player, KFMsg::ClothesDataError, kfmsg.clothesid() );
             }
 
-            auto modleid = kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) );
+            auto modleid = kfobject->GetValue( __KF_STRING__( modelid ) );
             if ( !kfsetting->HasModle( modleid ) )
             {
                 return _kf_display->SendToClient( player, KFMsg::ClothesModleNotMatch );
@@ -388,7 +379,7 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( modelid ), KFOperateEnum::Set, kfmsg.modelid() );
 
         // 判断默认时装
-        auto clothesid = kfmodel->GetValue< uint32 >( __KF_STRING__( clothesid ) );
+        auto clothesid = kfmodel->GetValue( __KF_STRING__( clothesid ) );
         player->UpdateData( __KF_STRING__( clothesid ), KFOperateEnum::Set, clothesid );
 
         _kf_display->SendToClient( player, KFMsg::ModelChangeOK );

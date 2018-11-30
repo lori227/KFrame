@@ -24,8 +24,8 @@ namespace KFrame
     class KFBattleShardModule : public KFBattleShardInterface
     {
     public:
-        KFBattleShardModule();
-        ~KFBattleShardModule();
+        KFBattleShardModule() = default;
+        ~KFBattleShardModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -112,20 +112,17 @@ namespace KFrame
         KFBattleRoom* FindRoom( uint64 roomid, const char* function, uint32 line );
 
         // 服务器id
-        KFBattleRoom* FindBattleRoomByServerId( uint32 serverid );
+        KFBattleRoom* FindBattleRoomByServerId( uint64 serverid );
 
         // 删除一个房间
         void RemoveBattleRoom( KFBattleRoom* kfroom );
 
     private:
         // 数据库操作
-        KFRedisDriver* _battle_redis_driver;
+        KFRedisDriver* _battle_redis_driver{ nullptr };
 
         // 战场房间列表
         KFMap< uint64, uint64, KFBattleRoom > _kf_room_list;
-
-        // 版本号
-
     };
 }
 

@@ -72,7 +72,7 @@ namespace KFrame
     {
         if ( servername == KFGlobal::Instance()->_app_name && servertype == __KF_STRING__( master ) )
         {
-            std::set< uint32 > objectlist;
+            std::set< uint64 > objectlist;
 
             for ( auto& iter : _kf_match_config->_kf_match_setting._objects )
             {

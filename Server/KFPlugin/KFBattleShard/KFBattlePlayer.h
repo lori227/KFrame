@@ -30,7 +30,7 @@ namespace KFrame
         static void Release( KFBattlePlayer* kfplayer );
 
         // 玩家id
-        uint32 GetID();
+        uint64 GetID();
 
         // 队伍id
         uint64 GetGroupID();
@@ -57,10 +57,10 @@ namespace KFrame
         void LeaveBattleRoomReq( KFBattleRoom* kfroom );
 
         // 查询游戏房间
-        bool QueryBattleRoom( KFBattleRoom* kfroom, uint32 serverid );
+        bool QueryBattleRoom( KFBattleRoom* kfroom, uint64 serverid );
 
         // 玩家上线
-        void OnlineBattleRoom( uint32 serverid );
+        void OnlineBattleRoom( uint64 serverid );
 
         // 离开战场
         void FinishLeaveRoom( KFBattleRoom* kfroom );

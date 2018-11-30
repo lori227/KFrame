@@ -13,7 +13,7 @@ namespace KFrame
         virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 更新公共数据
-        virtual bool UpdatePublicData( uint32 playerid, const MapString& values ) = 0;
+        virtual bool UpdatePublicData( uint64 playerid, const MapString& values ) = 0;
         virtual bool UpdatePublicData( KFEntity* player, const MapString& values ) = 0;
     };
 

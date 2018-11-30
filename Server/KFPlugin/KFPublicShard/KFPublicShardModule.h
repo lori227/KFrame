@@ -55,7 +55,7 @@ namespace KFrame
 
     private:
         // 设置玩家名字
-        uint32 ProcessSetPlayerName( uint32 playerid, const std::string& oldname, const std::string& newname );
+        uint32 ProcessSetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
     };
 }
 

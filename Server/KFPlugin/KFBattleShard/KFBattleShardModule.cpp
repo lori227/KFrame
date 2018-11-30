@@ -5,15 +5,6 @@
 
 namespace KFrame
 {
-    KFBattleShardModule::KFBattleShardModule()
-    {
-        _battle_redis_driver = nullptr;
-    }
-
-    KFBattleShardModule::~KFBattleShardModule()
-    {
-    }
-
     void KFBattleShardModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_battle_config, true );
@@ -228,7 +219,7 @@ namespace KFrame
         __LOG_DEBUG__( "battle[{}|{}:{}] update room[{}] ok!", strserverid, kfmsg.ip().c_str(), kfmsg.port(), kfmsg.roomid() );
     }
 
-    KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint32 serverid )
+    KFBattleRoom* KFBattleShardModule::FindBattleRoomByServerId( uint64 serverid )
     {
         if ( serverid == _invalid_int )
         {
@@ -286,7 +277,7 @@ namespace KFrame
             KFMsg::S2SCreateRoomToMatchShardAck ack;
             ack.set_matchid( kfmsg.matchid() );
             ack.set_roomid( kfmsg.roomid() );
-            ack.set_battleshardid( KFGlobal::Instance()->_app_id );
+            ack.set_battleshardid( KFGlobal::Instance()->_app_id._union._id );
             kfroom->SendMessageToMatch( KFMsg::S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK, &ack );
         }
 

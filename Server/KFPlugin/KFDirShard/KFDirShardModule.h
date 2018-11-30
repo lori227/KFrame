@@ -42,7 +42,7 @@ namespace KFrame
         std::string _zone_name;
 
         // 服务器id
-        uint32 _app_id;
+        uint64 _app_id;
 
         // 小区ip
         std::string _zone_ip;

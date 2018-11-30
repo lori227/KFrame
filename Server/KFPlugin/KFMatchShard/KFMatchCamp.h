@@ -20,7 +20,7 @@ namespace KFrame
 
         // 玩家离开
         bool RemoveGroup( uint64 groupid );
-        bool RemovePlayer( uint64 groupid, uint32 playerid );
+        bool RemovePlayer( uint64 groupid, uint64 playerid );
 
         // 玩家数量
         uint32 PlayerCount();
@@ -34,7 +34,7 @@ namespace KFrame
 
     public:
         // 指定的战场id
-        uint32 _battle_server_id;
+        uint64 _battle_server_id;
 
         // 战场版本
         std::string _battle_version;

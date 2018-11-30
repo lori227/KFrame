@@ -31,7 +31,7 @@ namespace KFrame
         __KF_DESTROY__( KFBattlePlayer, kfplayer );
     }
 
-    uint32 KFBattlePlayer::GetID()
+    uint64 KFBattlePlayer::GetID()
     {
         return _pb_player.playerid();
     }
@@ -112,7 +112,6 @@ namespace KFrame
         // 发送消息
         KFMsg::S2SNoticeMatchRoomReq req;
         req.set_matchid( kfroom->_match_id );
-        req.set_battleshardid( KFGlobal::Instance()->_app_id );
         req.set_campid( _pb_player.campid() );
         req.set_playerid( _pb_player.playerid() );
         req.set_serverid( kfroom->_battle_server._server_id );
@@ -120,6 +119,7 @@ namespace KFrame
         req.set_port( kfroom->_battle_server._port );
         req.set_roomid( kfroom->_battle_room_id );
         req.set_token( _token );
+        req.set_battleshardid( KFGlobal::Instance()->_app_id._union._id );
         auto ok = SendToClient( KFMsg::S2S_NOTICE_MATCH_ROOM_REQ, &req );
         if ( ok )
         {
@@ -183,7 +183,7 @@ namespace KFrame
         SendLeaveRoomToGame( kfroom );
     }
 
-    bool KFBattlePlayer::QueryBattleRoom( KFBattleRoom* kfroom, uint32 serverid )
+    bool KFBattlePlayer::QueryBattleRoom( KFBattleRoom* kfroom, uint64 serverid )
     {
         // 设置游戏服务器id
         _pb_player.set_serverid( serverid );
@@ -199,7 +199,7 @@ namespace KFrame
         return true;
     }
 
-    void KFBattlePlayer::OnlineBattleRoom( uint32 serverid )
+    void KFBattlePlayer::OnlineBattleRoom( uint64 serverid )
     {
         _pb_player.set_serverid( serverid );
         if ( _status == KFPlayerStatus::StatusDisconnetRoom )

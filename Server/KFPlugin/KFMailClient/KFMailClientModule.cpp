@@ -3,15 +3,6 @@
 
 namespace KFrame
 {
-    KFMailClientModule::KFMailClientModule()
-    {
-    }
-
-    KFMailClientModule::~KFMailClientModule()
-    {
-
-    }
-
     void KFMailClientModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_mail_config, true );
@@ -77,8 +68,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFMailClientModule::OnTimerQueryMail )
     {
-        auto playerid = static_cast< uint32 >( objectid );
-        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -89,11 +79,11 @@ namespace KFrame
         {
             // 获得该类型最大的邮件id
             auto maxmailid = FindMaxMailId( player, i );
-            SendQueryMailMessage( playerid, i, maxmailid );
+            SendQueryMailMessage( objectid, i, maxmailid );
         }
     }
 
-    void KFMailClientModule::SendQueryMailMessage( uint32 playerid, uint32 mailtype, uint64 maxmailid )
+    void KFMailClientModule::SendQueryMailMessage( uint64 playerid, uint32 mailtype, uint64 maxmailid )
     {
         KFMsg::S2SQueryMailReq req;
         req.set_playerid( playerid );
@@ -123,10 +113,10 @@ namespace KFrame
         auto kfmail = kfmailrecord->FirstData();
         while ( kfmail != nullptr )
         {
-            auto type = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
+            auto type = kfmail->GetValue( __KF_STRING__( type ) );
             if ( type == mailtype )
             {
-                auto mailid = kfmail->GetValue< uint64 >( __KF_STRING__( id ) );
+                auto mailid = kfmail->GetValue( __KF_STRING__( id ) );
                 if ( mailid > maxmailid )
                 {
                     maxmailid = mailid;
@@ -149,10 +139,10 @@ namespace KFrame
         auto kfmail = kfmailrecord->FirstData();
         while ( kfmail != nullptr )
         {
-            auto type = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
+            auto type = kfmail->GetValue( __KF_STRING__( type ) );
             if ( type == mailtype )
             {
-                auto mailid = kfmail->GetValue< uint64 >( __KF_STRING__( id ) );
+                auto mailid = kfmail->GetValue( __KF_STRING__( id ) );
                 if ( mailid < minmailid )
                 {
                     minmailid = mailid;
@@ -207,8 +197,8 @@ namespace KFrame
 
     bool KFMailClientModule::CheckMailTimeOut( KFData* kfmail )
     {
-        auto validtime = kfmail->GetValue<uint32>( __KF_STRING__( validtime ) );
-        auto sendtime = kfmail->GetValue<uint64>( __KF_STRING__( sendtime ) );
+        auto validtime = kfmail->GetValue( __KF_STRING__( validtime ) );
+        auto sendtime = kfmail->GetValue( __KF_STRING__( sendtime ) );
 
         return sendtime + validtime < KFGlobal::Instance()->_real_time;
     }
@@ -229,7 +219,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailTimeOut );
         }
 
-        auto flag = kfmail->GetValue< uint32>( __KF_STRING__( flag ) );
+        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
         if ( flag != KFMsg::FlagEnum::Init )
         {
             return;
@@ -251,7 +241,7 @@ namespace KFrame
         }
 
         // 如果有奖励, 并且没有领取
-        auto flag = kfmail->GetValue< uint32 >( __KF_STRING__( flag ) );
+        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
         auto reward = kfmail->GetValue< std::string >( __KF_STRING__( reward ) );
         if ( flag != KFMsg::FlagEnum::Received && !reward.empty() )
         {
@@ -273,7 +263,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailNotExist );
         }
 
-        auto flag = kfmail->GetValue< uint32 >( __KF_STRING__( flag ) );
+        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
         if ( flag == KFMsg::FlagEnum::Received )
         {
             return _kf_display->SendToClient( player, KFMsg::MailAlreadyReceived );
@@ -290,7 +280,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailTimeOut );
         }
 
-        auto mailtype = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
+        auto mailtype = kfmail->GetValue( __KF_STRING__( type ) );
         auto deltype = _kf_option->GetUInt32( __KF_STRING__( mailreceiveremove ), mailtype );
         if ( deltype == 1 )
         {
@@ -302,10 +292,10 @@ namespace KFrame
         }
     }
 
-    bool KFMailClientModule::UpdateFlagToMail( uint32 playerid, KFData* kfmail, uint32 flag )
+    bool KFMailClientModule::UpdateFlagToMail( uint64 playerid, KFData* kfmail, uint32 flag )
     {
         auto mailid = kfmail->GetKeyID();
-        auto mailtype = kfmail->GetValue< uint32 >( __KF_STRING__( type ) );
+        auto mailtype = kfmail->GetValue( __KF_STRING__( type ) );
 
         KFMsg::S2SUpdateMailFlagReq req;
         req.set_playerid( playerid );
@@ -383,13 +373,12 @@ namespace KFrame
         player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
 
         // 如果有配置回复邮件id, 回复邮件
-        auto configid = kfmail->GetValue< uint32 >( __KF_STRING__( configid ) );
+        auto configid = kfmail->GetValue( __KF_STRING__( configid ) );
         auto kfsetting = _kf_mail_config->FindMailSetting( configid );
         if ( kfsetting != nullptr && kfsetting->_reply_id != _invalid_int )
         {
-            auto senderid = kfmail->GetValue< uint32 >( __KF_STRING__( senderid ) );
-            auto serverid = kfmail->GetValue< uint32 >( __KF_STRING__( serverid ) );
-            SendMail( player, serverid, senderid, kfsetting->_reply_id, reward );
+            auto senderid = kfmail->GetValue( __KF_STRING__( senderid ) );
+            SendMail( player, senderid, kfsetting->_reply_id, reward );
         }
     }
 
@@ -466,7 +455,7 @@ namespace KFrame
         return _mail_data;
     }
 
-    bool KFMailClientModule::SendAddMailToCluster( uint32 serverid, uint32 playerid, uint32 mailtype, const MapString& maildata )
+    bool KFMailClientModule::SendAddMailToCluster( uint64 playerid, uint32 mailtype, const MapString& maildata )
     {
         KFMsg::S2SAddMailReq req;
         req.set_mailtype( mailtype );
@@ -500,10 +489,10 @@ namespace KFrame
         }
 
         auto& maildata = FormatMailData( nullptr, kfsetting, kfagents, _invalid_str );
-        return SendAddMailToCluster( KFGlobal::Instance()->_app_id, player->GetKeyID(), kfsetting->_type, maildata );
+        return SendAddMailToCluster( player->GetKeyID(), kfsetting->_type, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const KFAgents* kfagents )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFAgents* kfagents )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -513,10 +502,10 @@ namespace KFrame
 
         auto& maildata = FormatMailData( player, kfsetting, kfagents, _invalid_str  );
 
-        return SendAddMailToCluster( toserverid, toplayerid, kfsetting->_type, maildata );
+        return SendAddMailToCluster( toplayerid, kfsetting->_type, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const std::string& extend )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const std::string& extend )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -525,7 +514,7 @@ namespace KFrame
         }
 
         auto& maildata = FormatMailData( player, kfsetting, nullptr, extend );
-        return SendAddMailToCluster( toserverid, toplayerid, kfsetting->_type, maildata );
+        return SendAddMailToCluster( toplayerid, kfsetting->_type, maildata );
     }
 }
 

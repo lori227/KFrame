@@ -13,7 +13,7 @@ namespace KFrame
         _kf_cluster->UnRegisterConnectionFunction( __KF_STRING__( log ) );
     }
 
-    void KFLogClientModule::OnConnectionLogCluster( uint32 serverid )
+    void KFLogClientModule::OnConnectionLogCluster( uint64 serverid )
     {
         auto kfglobal = KFGlobal::Instance();
 
@@ -26,13 +26,12 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SLogReq req;
+        req.set_log_info( loginfo );
         req.set_log_level( loglevel );
         req.set_app_name( kfglobal->_app_name );
         req.set_app_type( kfglobal->_app_type );
-        req.set_app_id( kfglobal->_app_id );
-        req.set_zone_id( kfglobal->_zone_id );
-        req.set_log_info( loginfo );
-
+        req.set_app_id( kfglobal->_str_app_id );
+        req.set_zone_id( kfglobal->_app_id._union._app_data._zone_id );
         return _kf_cluster->SendToShard( __KF_STRING__( log ), KFMsg::S2S_LOG_REQ, &req );
     }
 

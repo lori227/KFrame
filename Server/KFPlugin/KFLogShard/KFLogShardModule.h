@@ -31,10 +31,10 @@ namespace KFrame
 
     protected:
 
-        void Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& loginfo );
+        void Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid, const std::string& loginfo );
 
-        void CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, uint32 appid );
-        const std::shared_ptr<spdlog::logger>& GetLogger( uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid );
+        void CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, const std::string& strappid );
+        const std::shared_ptr<spdlog::logger>& GetLogger( uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid );
 
     protected:
         __KF_MESSAGE_FUNCTION__( HandleRemoteLogReq );

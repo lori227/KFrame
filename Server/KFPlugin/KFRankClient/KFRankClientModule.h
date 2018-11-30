@@ -24,8 +24,8 @@ namespace KFrame
     class KFRankClientModule : public KFRankClientInterface
     {
     public:
-        KFRankClientModule();
-        ~KFRankClientModule();
+        KFRankClientModule() = default;
+        ~KFRankClientModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -73,7 +73,7 @@ namespace KFrame
 
     private:
         // 玩家组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
 
         // 更新的排行榜操作
         std::map< uint32, std::set< KFRankSetting* > > _update_rank_list;

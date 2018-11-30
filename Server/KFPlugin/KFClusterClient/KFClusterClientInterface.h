@@ -12,7 +12,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterConnectionFunction( const std::string& name, T* object, void ( T::*handle )( uint32 ) )
+        void RegisterConnectionFunction( const std::string& name, T* object, void ( T::*handle )( uint64 ) )
         {
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddConnectionFunction( name, function );

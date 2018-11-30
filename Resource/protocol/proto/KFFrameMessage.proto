@@ -122,11 +122,11 @@ message S2STransmitRouteProxyMessageAck
 // S2S_LOG_REQ
 message S2SLogReq
 {
-	required int32 log_level	= 1;
-	required int32 zone_id		= 2;
+	required uint32 log_level	= 1;
+	required uint32 zone_id		= 2;
 	required bytes app_name		= 3;
 	required bytes app_type		= 4;
-	required uint64 app_id		= 5;
+	required bytes app_id		= 5;
 	required bytes log_info		= 6;
 }
 

@@ -3,14 +3,6 @@
 
 namespace KFrame
 {
-    KFMatchClientModule::KFMatchClientModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFMatchClientModule::~KFMatchClientModule()
-    {
-    }
 
     void KFMatchClientModule::InitModule()
     {
@@ -69,8 +61,8 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgStartMatchReq );
 
         // 测试服务器指定战场ip
-        auto battleserverid = _invalid_int;
-        if ( KFGlobal::Instance()->_app_channel == KFMsg::Internal )
+        uint64 battleserverid = _invalid_int;
+        if ( KFGlobal::Instance()->_app_id._union._app_data._channel_id == KFMsg::Internal )
         {
             if ( kfmsg.has_battleserverid() )
             {
@@ -91,7 +83,7 @@ namespace KFrame
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
-            auto isparpre = kfmember->GetValue< uint32 >( __KF_STRING__( prepare ) );
+            auto isparpre = kfmember->GetValue( __KF_STRING__( prepare ) );
             if ( isparpre == _invalid_int )
             {
                 return false;
@@ -103,7 +95,7 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFMatchClientModule::ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid, const std::string& version )
+    uint32 KFMatchClientModule::ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint64 battleserverid, const std::string& version )
     {
         // 判断匹配是否存在
         auto kfsetting = _kf_match_config->FindMatchSetting( matchid );
@@ -115,7 +107,7 @@ namespace KFrame
         auto kfobject = player->GetData();
 
         // 正在房间中
-        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        auto roomid = kfobject->GetValue( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
             __LOG_ERROR__( "player[{}] match already in battle[{}]", player->GetKeyID(), roomid );
@@ -124,7 +116,7 @@ namespace KFrame
         }
 
         // 是否正在匹配中
-        auto waitmatchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        auto waitmatchid = kfobject->GetValue( __KF_STRING__( matchid ) );
         if ( waitmatchid != _invalid_int )
         {
             return KFMsg::MatchAlreadyWait;
@@ -142,11 +134,11 @@ namespace KFrame
         }
 
         // 如果有队伍
-        auto groupid = kfgroup->GetValue< uint64 >( __KF_STRING__( id ) );
+        auto groupid = kfgroup->GetValue( __KF_STRING__( id ) );
         if ( groupid != _invalid_int )
         {
             // 队长才能匹配
-            auto captainid = kfgroup->GetValue< uint32 >( __KF_STRING__( captainid ) );
+            auto captainid = kfgroup->GetValue( __KF_STRING__( captainid ) );
             if ( captainid != player->GetKeyID() )
             {
                 return KFMsg::GroupNotCaption;
@@ -164,7 +156,7 @@ namespace KFrame
         req.set_matchid( matchid );
         req.set_allowgroup( allowgroup );
         req.set_playerid( player->GetKeyID() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         req.set_battleserverid( battleserverid );
         req.set_version( version );
         FormatMatchGroup( player, req.mutable_pbgroup() );
@@ -175,14 +167,14 @@ namespace KFrame
         }
 
         // 设置正在等待匹配中, 防止客户端请求多次
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), matchid );
+        kfobject->SetValue( __KF_STRING__( matchid ), matchid );
         return KFMsg::MatchRequestSuccess;
     }
 
     void KFMatchClientModule::FormatMatchGroup( KFEntity* player, KFMsg::PBMatchGroup* pbgroup )
     {
         auto kfobject = player->GetData();
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+        auto groupid = kfobject->GetValue( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid == _invalid_int )
         {
             groupid = kfobject->GetKeyID();
@@ -205,19 +197,19 @@ namespace KFrame
     void KFMatchClientModule::FormatMatchPlayer( KFData* kfobject, KFMsg::PBBattlePlayer* pbplayer )
     {
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        pbplayer->set_serverid( kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) ) );
-        pbplayer->set_playerid( kfbasic->GetValue< uint32 >( __KF_STRING__( id ) ) );
+        pbplayer->set_serverid( kfbasic->GetValue( __KF_STRING__( serverid ) ) );
+        pbplayer->set_playerid( kfbasic->GetValue( __KF_STRING__( id ) ) );
 
-        pbplayer->set_sex( kfbasic->GetValue< uint32 >( __KF_STRING__( sex ) ) );
+        pbplayer->set_sex( kfbasic->GetValue( __KF_STRING__( sex ) ) );
+        pbplayer->set_grading( kfbasic->GetValue( __KF_STRING__( grading ) ) );
+        pbplayer->set_groupid( kfbasic->GetValue( __KF_STRING__( groupid ) ) );
         pbplayer->set_name( kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) );
         pbplayer->set_icon( kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) );
         pbplayer->set_iconbox( kfbasic->GetValue< std::string >( __KF_STRING__( iconbox ) ) );
-        pbplayer->set_grading( kfbasic->GetValue< uint32 >( __KF_STRING__( grading ) ) );
-        pbplayer->set_groupid( kfbasic->GetValue< uint64 >( __KF_STRING__( groupid ) ) );
 
         // 模型, 时装
-        pbplayer->set_modelid( kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) ) );
-        pbplayer->set_clothesid( kfobject->GetValue< uint32 >( __KF_STRING__( clothesid ) ) );
+        pbplayer->set_modelid( kfobject->GetValue( __KF_STRING__( modelid ) ) );
+        pbplayer->set_clothesid( kfobject->GetValue( __KF_STRING__( clothesid ) ) );
 
         // 成就信息
         auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
@@ -229,13 +221,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelMatchReq );
 
         auto kfobject = player->GetData();
-        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        auto matchid = kfobject->GetValue( __KF_STRING__( matchid ) );
         if ( matchid == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::MatchNotInMatch );
         }
 
-        auto roomid = kfobject->GetValue< uint32 >( __KF_STRING__( roomid ) );
+        auto roomid = kfobject->GetValue( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::MatchCancelInBattle );
@@ -261,7 +253,7 @@ namespace KFrame
         _kf_display->SendToGroup( player, kfmsg.result() );
 
         auto kfobject = player->GetData();
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), _invalid_int );
+        kfobject->SetValue( __KF_STRING__( matchid ), _invalid_int );
 
         if ( kfmsg.result() == KFMsg::MatchRequestSuccess )
         {
@@ -288,14 +280,14 @@ namespace KFrame
     void KFMatchClientModule::OnEnterQueryMatchRoom( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        auto matchid = kfobject->GetValue( __KF_STRING__( matchid ) );
         if ( matchid == _invalid_int )
         {
             return;
         }
 
         // roomid不为0, 在battleclient里处理
-        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        auto roomid = kfobject->GetValue( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
             return;
@@ -304,7 +296,7 @@ namespace KFrame
         KFMsg::S2SQueryMatchRoomReq req;
         req.set_matchid( matchid );
         req.set_playerid( player->GetKeyID() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToMatch( KFMsg::S2S_QUERY_MATCH_ROOM_REQ, &req );
     }
 
@@ -313,21 +305,21 @@ namespace KFrame
         auto kfobject = player->GetData();
 
         // 不在匹配
-        auto matchid = kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) );
+        auto matchid = kfobject->GetValue( __KF_STRING__( matchid ) );
         if ( matchid == _invalid_int )
         {
             return;
         }
 
         // 已经在战场中, 不能取消
-        auto roomid = kfobject->GetValue< uint64 >( __KF_STRING__( roomid ) );
+        auto roomid = kfobject->GetValue( __KF_STRING__( roomid ) );
         if ( roomid != _invalid_int )
         {
             return;
         }
 
         // 在队伍中也不能取消
-        auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+        auto groupid = kfobject->GetValue( __KF_STRING__( group ), __KF_STRING__( id ) );
         if ( groupid != _invalid_int )
         {
             return;
@@ -362,7 +354,7 @@ namespace KFrame
         }
         else
         {
-            auto groupid = kfobject->GetValue< uint64 >( __KF_STRING__( group ), __KF_STRING__( id ) );
+            auto groupid = kfobject->GetValue( __KF_STRING__( group ), __KF_STRING__( id ) );
             if ( groupid != _invalid_int )
             {
                 player->UpdateData( kfbasic, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::GroupStatus );

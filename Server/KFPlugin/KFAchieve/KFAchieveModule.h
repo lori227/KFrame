@@ -22,8 +22,8 @@ namespace KFrame
     class KFAchieveModule : public KFAchieveInterface
     {
     public:
-        KFAchieveModule();
-        ~KFAchieveModule();
+        KFAchieveModule() = default;
+        ~KFAchieveModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -61,7 +61,7 @@ namespace KFrame
         void UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
 
     private:
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

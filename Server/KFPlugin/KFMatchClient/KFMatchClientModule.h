@@ -27,8 +27,8 @@ namespace KFrame
     class KFMatchClientModule : public KFMatchClientInterface
     {
     public:
-        KFMatchClientModule();
-        ~KFMatchClientModule();
+        KFMatchClientModule() = default;
+        ~KFMatchClientModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -67,7 +67,7 @@ namespace KFrame
 
     private:
         // 处理开始匹配
-        uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint32 battleserverid, const std::string& version );
+        uint32 ProcessStartMatch( KFEntity* player, uint32 matchid, bool allowgroup, uint64 battleserverid, const std::string& version );
 
         // 判断所有队员准备
         bool IsAllGroupMemberPrepare( KFData* kfmemberrecord );
@@ -88,8 +88,7 @@ namespace KFrame
         void UpdateMatchStateToGroup( KFEntity* player, uint32 matchid );
 
     private:
-        KFComponent* _kf_component;
-
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

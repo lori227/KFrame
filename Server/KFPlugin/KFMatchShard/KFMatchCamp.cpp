@@ -60,7 +60,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFMatchCamp::RemovePlayer( uint64 groupid, uint32 playerid )
+    bool KFMatchCamp::RemovePlayer( uint64 groupid, uint64 playerid )
     {
         auto kfgroup = _group_list.Find( groupid );
         if ( kfgroup == nullptr )
@@ -97,7 +97,7 @@ namespace KFrame
         SaveTo( req.mutable_pbcamp() );
         req.set_matchid( kfroom->_match_id );
         req.set_roomid( kfroom->_room_id );
-        req.set_matchshardid( KFGlobal::Instance()->_app_id );
+        req.set_matchshardid( KFGlobal::Instance()->_app_id._union._id );
         auto ok = kfroom->SendToBattle( KFMsg::S2S_ADD_CAMP_TO_BATTLE_SHARD_REQ, &req );
         if ( ok )
         {

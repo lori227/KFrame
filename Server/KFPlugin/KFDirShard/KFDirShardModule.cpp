@@ -41,7 +41,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SUpdateOnlineToDirReq );
 
         // 判断渠道, 渠道不同不能注册
-        if ( KFGlobal::Instance()->_app_channel != kfmsg.zonechannel() )
+        if ( KFGlobal::Instance()->_app_id._union._app_data._channel_id != kfmsg.zonechannel() )
         {
             return;
         }

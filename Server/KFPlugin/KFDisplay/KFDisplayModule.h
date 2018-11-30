@@ -27,7 +27,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     private:
         // Gate/Proxy ==> Client
-        virtual void SendToClient( uint32 playerid, uint32 result, ListString& params );
+        virtual void SendToClient( uint64 playerid, uint32 result, ListString& params );
 
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
@@ -36,10 +36,10 @@ namespace KFrame
         virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );
 
         // Cluster ==> Game
-        virtual void SendToGame( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
+        virtual void SendToGame( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
 
         // Game ==> Route ==> Game
-        virtual void SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, ListString& params );
+        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );
 
     };

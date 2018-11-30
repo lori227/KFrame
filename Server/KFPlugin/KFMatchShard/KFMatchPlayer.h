@@ -40,7 +40,7 @@ namespace KFrame
 
         // 服务器id
         uint32 GetServerID() const;
-        void SetServerID( uint32 serverid );
+        void SetServerID( uint64 serverid );
 
         // 发送消息
         bool SendToGame( uint32 msgid, google::protobuf::Message* message );

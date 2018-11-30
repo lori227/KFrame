@@ -505,12 +505,12 @@ class LIBPROTOC_EXPORT MsgLoginVerifyReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 accountid = 1;
+  // required uint64 accountid = 1;
   inline bool has_accountid() const;
   inline void clear_accountid();
   static const int kAccountidFieldNumber = 1;
-  inline ::google::protobuf::uint32 accountid() const;
-  inline void set_accountid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 accountid() const;
+  inline void set_accountid(::google::protobuf::uint64 value);
 
   // required bytes token = 2;
   inline bool has_token() const;
@@ -547,9 +547,9 @@ class LIBPROTOC_EXPORT MsgLoginVerifyReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 accountid_;
   ::std::string* token_;
   ::std::string* version_;
-  ::google::protobuf::uint32 accountid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -617,12 +617,12 @@ class LIBPROTOC_EXPORT MsgLoginVerifyAck : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes token = 2;
   inline bool has_token() const;
@@ -668,10 +668,10 @@ class LIBPROTOC_EXPORT MsgLoginVerifyAck : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::std::string* token_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -739,12 +739,12 @@ class LIBPROTOC_EXPORT MsgLoginGameReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes token = 2;
   inline bool has_token() const;
@@ -767,8 +767,8 @@ class LIBPROTOC_EXPORT MsgLoginGameReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::std::string* token_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -934,12 +934,12 @@ class LIBPROTOC_EXPORT MsgCreateRoleReq : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 model() const;
   inline void set_model(::google::protobuf::uint32 value);
 
-  // optional uint32 inviterid = 4 [default = 0];
+  // optional uint64 inviterid = 4 [default = 0];
   inline bool has_inviterid() const;
   inline void clear_inviterid();
   static const int kInviteridFieldNumber = 4;
-  inline ::google::protobuf::uint32 inviterid() const;
-  inline void set_inviterid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgCreateRoleReq)
  private:
@@ -957,7 +957,7 @@ class LIBPROTOC_EXPORT MsgCreateRoleReq : public ::google::protobuf::Message {
   ::std::string* name_;
   ::google::protobuf::uint32 sex_;
   ::google::protobuf::uint32 model_;
-  ::google::protobuf::uint32 inviterid_;
+  ::google::protobuf::uint64 inviterid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -1542,12 +1542,12 @@ class LIBPROTOC_EXPORT MsgQueryPlayerReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryPlayerReq)
  private:
@@ -1556,7 +1556,7 @@ class LIBPROTOC_EXPORT MsgQueryPlayerReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -2954,12 +2954,12 @@ class LIBPROTOC_EXPORT MsgAddFriendInviteReq : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes message = 2;
   inline bool has_message() const;
@@ -2996,9 +2996,9 @@ class LIBPROTOC_EXPORT MsgAddFriendInviteReq : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::std::string* message_;
   ::std::string* name_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -3066,12 +3066,12 @@ class LIBPROTOC_EXPORT MsgReplyFriendInviteReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 operate = 2;
   inline bool has_operate() const;
@@ -3089,7 +3089,7 @@ class LIBPROTOC_EXPORT MsgReplyFriendInviteReq : public ::google::protobuf::Mess
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 operate_;
 
   mutable int _cached_size_;
@@ -3158,12 +3158,12 @@ class LIBPROTOC_EXPORT MsgDelFriendReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgDelFriendReq)
  private:
@@ -3172,7 +3172,7 @@ class LIBPROTOC_EXPORT MsgDelFriendReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -3522,12 +3522,12 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::std::string* release_playername();
   inline void set_allocated_playername(::std::string* playername);
 
-  // required uint32 playerid = 4;
+  // required uint64 playerid = 4;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes playericon = 5;
   inline bool has_playericon() const;
@@ -3567,12 +3567,12 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
   inline ::std::string* release_playericonbox();
   inline void set_allocated_playericonbox(::std::string* playericonbox);
 
-  // required uint32 playerserverid = 9;
+  // required uint64 playerserverid = 9;
   inline bool has_playerserverid() const;
   inline void clear_playerserverid();
   static const int kPlayerserveridFieldNumber = 9;
-  inline ::google::protobuf::uint32 playerserverid() const;
-  inline void set_playerserverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerserverid() const;
+  inline void set_playerserverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSendChatInfo)
  private:
@@ -3599,13 +3599,13 @@ class LIBPROTOC_EXPORT MsgSendChatInfo : public ::google::protobuf::Message {
 
   ::std::string* chatinfo_;
   ::std::string* playername_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 isvoice_;
-  ::google::protobuf::uint32 playerid_;
-  ::std::string* playericon_;
   ::google::protobuf::uint32 playergrade_;
-  ::google::protobuf::uint32 playersex_;
+  ::std::string* playericon_;
   ::std::string* playericonbox_;
-  ::google::protobuf::uint32 playerserverid_;
+  ::google::protobuf::uint64 playerserverid_;
+  ::google::protobuf::uint32 playersex_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
@@ -3764,12 +3764,12 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatReq : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 isvoice() const;
   inline void set_isvoice(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes chattype = 4;
   inline bool has_chattype() const;
@@ -3795,12 +3795,12 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatReq : public ::google::protobuf::Messa
   inline ::std::string* release_selfinfo();
   inline void set_allocated_selfinfo(::std::string* selfinfo);
 
-  // required uint32 serverid = 6;
+  // required uint64 serverid = 6;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 6;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSendOneByOneChatReq)
  private:
@@ -3820,11 +3820,11 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatReq : public ::google::protobuf::Messa
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* chatinfo_;
-  ::google::protobuf::uint32 isvoice_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::std::string* chattype_;
   ::std::string* selfinfo_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint32 isvoice_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -3911,12 +3911,12 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatInfo : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 isvoice() const;
   inline void set_isvoice(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes chattype = 4;
   inline bool has_chattype() const;
@@ -3942,12 +3942,12 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatInfo : public ::google::protobuf::Mess
   inline ::std::string* release_playerinfo();
   inline void set_allocated_playerinfo(::std::string* playerinfo);
 
-  // required uint32 serverid = 6;
+  // required uint64 serverid = 6;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 6;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSendOneByOneChatInfo)
  private:
@@ -3967,11 +3967,11 @@ class LIBPROTOC_EXPORT MsgSendOneByOneChatInfo : public ::google::protobuf::Mess
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* chatinfo_;
-  ::google::protobuf::uint32 isvoice_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::std::string* chattype_;
   ::std::string* playerinfo_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint32 isvoice_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -4346,12 +4346,12 @@ class LIBPROTOC_EXPORT MsgSendGroupChatInfo : public ::google::protobuf::Message
   inline ::google::protobuf::uint32 isvoice() const;
   inline void set_isvoice(::google::protobuf::uint32 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSendGroupChatInfo)
  private:
@@ -4365,8 +4365,8 @@ class LIBPROTOC_EXPORT MsgSendGroupChatInfo : public ::google::protobuf::Message
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* chatinfo_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 isvoice_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -4541,12 +4541,12 @@ class LIBPROTOC_EXPORT MsgGiveStoreReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 toplayerid = 1;
+  // required uint64 toplayerid = 1;
   inline bool has_toplayerid() const;
   inline void clear_toplayerid();
   static const int kToplayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 toplayerid() const;
-  inline void set_toplayerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 toplayerid() const;
+  inline void set_toplayerid(::google::protobuf::uint64 value);
 
   // required uint32 shopid = 2;
   inline bool has_shopid() const;
@@ -4564,7 +4564,7 @@ class LIBPROTOC_EXPORT MsgGiveStoreReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 toplayerid_;
+  ::google::protobuf::uint64 toplayerid_;
   ::google::protobuf::uint32 shopid_;
 
   mutable int _cached_size_;
@@ -4633,12 +4633,12 @@ class LIBPROTOC_EXPORT MsgPlayerToastReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgPlayerToastReq)
  private:
@@ -4647,7 +4647,7 @@ class LIBPROTOC_EXPORT MsgPlayerToastReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -4715,12 +4715,12 @@ class LIBPROTOC_EXPORT MsgQueryToastCountReq : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryToastCountReq)
  private:
@@ -4729,7 +4729,7 @@ class LIBPROTOC_EXPORT MsgQueryToastCountReq : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -4797,12 +4797,12 @@ class LIBPROTOC_EXPORT MsgQueryToastCountAck : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 toastcount = 2;
   inline bool has_toastcount() const;
@@ -4820,7 +4820,7 @@ class LIBPROTOC_EXPORT MsgQueryToastCountAck : public ::google::protobuf::Messag
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 toastcount_;
 
   mutable int _cached_size_;
@@ -5252,19 +5252,19 @@ class LIBPROTOC_EXPORT MsgInviteMatchGroupReq : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 serverid = 1;
+  // required uint64 serverid = 1;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
-  // required uint32 playerid = 2;
+  // required uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required bytes source = 3;
   inline bool has_source() const;
@@ -5312,8 +5312,8 @@ class LIBPROTOC_EXPORT MsgInviteMatchGroupReq : public ::google::protobuf::Messa
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 serverid_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 playerid_;
   ::std::string* source_;
   ::std::string* playername_;
   ::google::protobuf::uint32 matchid_;
@@ -5391,12 +5391,12 @@ class LIBPROTOC_EXPORT MsgReplyInviteMatchGroupReq : public ::google::protobuf::
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // required uint32 inviterid = 2;
+  // required uint64 inviterid = 2;
   inline bool has_inviterid() const;
   inline void clear_inviterid();
   static const int kInviteridFieldNumber = 2;
-  inline ::google::protobuf::uint32 inviterid() const;
-  inline void set_inviterid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint64 value);
 
   // required uint32 operate = 3;
   inline bool has_operate() const;
@@ -5417,7 +5417,7 @@ class LIBPROTOC_EXPORT MsgReplyInviteMatchGroupReq : public ::google::protobuf::
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 groupid_;
-  ::google::protobuf::uint32 inviterid_;
+  ::google::protobuf::uint64 inviterid_;
   ::google::protobuf::uint32 operate_;
 
   mutable int _cached_size_;
@@ -5558,12 +5558,12 @@ class LIBPROTOC_EXPORT MsgKickMatchGroupReq : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required uint32 memberid = 1;
+  // required uint64 memberid = 1;
   inline bool has_memberid() const;
   inline void clear_memberid();
   static const int kMemberidFieldNumber = 1;
-  inline ::google::protobuf::uint32 memberid() const;
-  inline void set_memberid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 memberid() const;
+  inline void set_memberid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgKickMatchGroupReq)
  private:
@@ -5572,7 +5572,7 @@ class LIBPROTOC_EXPORT MsgKickMatchGroupReq : public ::google::protobuf::Message
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 memberid_;
+  ::google::protobuf::uint64 memberid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -5722,12 +5722,12 @@ class LIBPROTOC_EXPORT MsgReplyApplyMatchGroupReq : public ::google::protobuf::M
 
   // accessors -------------------------------------------------------
 
-  // required uint32 applyid = 1;
+  // required uint64 applyid = 1;
   inline bool has_applyid() const;
   inline void clear_applyid();
   static const int kApplyidFieldNumber = 1;
-  inline ::google::protobuf::uint32 applyid() const;
-  inline void set_applyid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 applyid() const;
+  inline void set_applyid(::google::protobuf::uint64 value);
 
   // required uint32 operate = 3;
   inline bool has_operate() const;
@@ -5745,7 +5745,7 @@ class LIBPROTOC_EXPORT MsgReplyApplyMatchGroupReq : public ::google::protobuf::M
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 applyid_;
+  ::google::protobuf::uint64 applyid_;
   ::google::protobuf::uint32 operate_;
 
   mutable int _cached_size_;
@@ -5978,12 +5978,12 @@ class LIBPROTOC_EXPORT MsgQueryGuestReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryGuestReq)
  private:
@@ -5992,7 +5992,7 @@ class LIBPROTOC_EXPORT MsgQueryGuestReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -6060,12 +6060,12 @@ class LIBPROTOC_EXPORT MsgQueryGuestAck : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 guestcount = 2;
   inline bool has_guestcount() const;
@@ -6095,9 +6095,9 @@ class LIBPROTOC_EXPORT MsgQueryGuestAck : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 guestcount_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBGuestData > guestdata_;
+  ::google::protobuf::uint32 guestcount_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -7946,12 +7946,12 @@ class LIBPROTOC_EXPORT MsgInviteGuildReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 inviterid = 1;
+  // required uint64 inviterid = 1;
   inline bool has_inviterid() const;
   inline void clear_inviterid();
   static const int kInviteridFieldNumber = 1;
-  inline ::google::protobuf::uint32 inviterid() const;
-  inline void set_inviterid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 inviterid() const;
+  inline void set_inviterid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgInviteGuildReq)
  private:
@@ -7960,7 +7960,7 @@ class LIBPROTOC_EXPORT MsgInviteGuildReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 inviterid_;
+  ::google::protobuf::uint64 inviterid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -8192,12 +8192,12 @@ class LIBPROTOC_EXPORT MsgTransferMasterReq : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required uint32 newmasterid = 1;
+  // required uint64 newmasterid = 1;
   inline bool has_newmasterid() const;
   inline void clear_newmasterid();
   static const int kNewmasteridFieldNumber = 1;
-  inline ::google::protobuf::uint32 newmasterid() const;
-  inline void set_newmasterid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 newmasterid() const;
+  inline void set_newmasterid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgTransferMasterReq)
  private:
@@ -8206,7 +8206,7 @@ class LIBPROTOC_EXPORT MsgTransferMasterReq : public ::google::protobuf::Message
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 newmasterid_;
+  ::google::protobuf::uint64 newmasterid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -8274,12 +8274,12 @@ class LIBPROTOC_EXPORT MsgReviewApplyReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 playerid = 1;
+  // optional uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 operatortype = 2;
   inline bool has_operatortype() const;
@@ -8297,7 +8297,7 @@ class LIBPROTOC_EXPORT MsgReviewApplyReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 operatortype_;
 
   mutable int _cached_size_;
@@ -8699,12 +8699,12 @@ class LIBPROTOC_EXPORT MsgKickMemberReq : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 toplayerid = 1;
+  // required uint64 toplayerid = 1;
   inline bool has_toplayerid() const;
   inline void clear_toplayerid();
   static const int kToplayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 toplayerid() const;
-  inline void set_toplayerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 toplayerid() const;
+  inline void set_toplayerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgKickMemberReq)
  private:
@@ -8713,7 +8713,7 @@ class LIBPROTOC_EXPORT MsgKickMemberReq : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 toplayerid_;
+  ::google::protobuf::uint64 toplayerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -8853,12 +8853,12 @@ class LIBPROTOC_EXPORT MsgAppointGuildMemberReq : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required uint32 toplayerid = 1;
+  // required uint64 toplayerid = 1;
   inline bool has_toplayerid() const;
   inline void clear_toplayerid();
   static const int kToplayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 toplayerid() const;
-  inline void set_toplayerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 toplayerid() const;
+  inline void set_toplayerid(::google::protobuf::uint64 value);
 
   // required uint32 title = 2;
   inline bool has_title() const;
@@ -8876,7 +8876,7 @@ class LIBPROTOC_EXPORT MsgAppointGuildMemberReq : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 toplayerid_;
+  ::google::protobuf::uint64 toplayerid_;
   ::google::protobuf::uint32 title_;
 
   mutable int _cached_size_;
@@ -10352,7 +10352,7 @@ inline void MsgTellBeKick::set_type(::google::protobuf::uint32 value) {
 
 // MsgLoginVerifyReq
 
-// required uint32 accountid = 1;
+// required uint64 accountid = 1;
 inline bool MsgLoginVerifyReq::has_accountid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10363,13 +10363,13 @@ inline void MsgLoginVerifyReq::clear_has_accountid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgLoginVerifyReq::clear_accountid() {
-  accountid_ = 0u;
+  accountid_ = GOOGLE_ULONGLONG(0);
   clear_has_accountid();
 }
-inline ::google::protobuf::uint32 MsgLoginVerifyReq::accountid() const {
+inline ::google::protobuf::uint64 MsgLoginVerifyReq::accountid() const {
   return accountid_;
 }
-inline void MsgLoginVerifyReq::set_accountid(::google::protobuf::uint32 value) {
+inline void MsgLoginVerifyReq::set_accountid(::google::protobuf::uint64 value) {
   set_has_accountid();
   accountid_ = value;
 }
@@ -10518,7 +10518,7 @@ inline void MsgLoginVerifyReq::set_allocated_version(::std::string* version) {
 
 // MsgLoginVerifyAck
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgLoginVerifyAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10529,13 +10529,13 @@ inline void MsgLoginVerifyAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgLoginVerifyAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgLoginVerifyAck::playerid() const {
+inline ::google::protobuf::uint64 MsgLoginVerifyAck::playerid() const {
   return playerid_;
 }
-inline void MsgLoginVerifyAck::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgLoginVerifyAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -10706,7 +10706,7 @@ inline void MsgLoginVerifyAck::set_port(::google::protobuf::uint32 value) {
 
 // MsgLoginGameReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgLoginGameReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -10717,13 +10717,13 @@ inline void MsgLoginGameReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgLoginGameReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgLoginGameReq::playerid() const {
+inline ::google::protobuf::uint64 MsgLoginGameReq::playerid() const {
   return playerid_;
 }
-inline void MsgLoginGameReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgLoginGameReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -10920,7 +10920,7 @@ inline void MsgCreateRoleReq::set_model(::google::protobuf::uint32 value) {
   model_ = value;
 }
 
-// optional uint32 inviterid = 4 [default = 0];
+// optional uint64 inviterid = 4 [default = 0];
 inline bool MsgCreateRoleReq::has_inviterid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -10931,13 +10931,13 @@ inline void MsgCreateRoleReq::clear_has_inviterid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void MsgCreateRoleReq::clear_inviterid() {
-  inviterid_ = 0u;
+  inviterid_ = GOOGLE_ULONGLONG(0);
   clear_has_inviterid();
 }
-inline ::google::protobuf::uint32 MsgCreateRoleReq::inviterid() const {
+inline ::google::protobuf::uint64 MsgCreateRoleReq::inviterid() const {
   return inviterid_;
 }
-inline void MsgCreateRoleReq::set_inviterid(::google::protobuf::uint32 value) {
+inline void MsgCreateRoleReq::set_inviterid(::google::protobuf::uint64 value) {
   set_has_inviterid();
   inviterid_ = value;
 }
@@ -11342,7 +11342,7 @@ inline void MsgQueryBasicReq::set_allocated_name(::std::string* name) {
 
 // MsgQueryPlayerReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgQueryPlayerReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11353,13 +11353,13 @@ inline void MsgQueryPlayerReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgQueryPlayerReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgQueryPlayerReq::playerid() const {
+inline ::google::protobuf::uint64 MsgQueryPlayerReq::playerid() const {
   return playerid_;
 }
-inline void MsgQueryPlayerReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgQueryPlayerReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -12126,7 +12126,7 @@ inline void MsgTellMatchPlayerCount::set_count(::google::protobuf::uint32 value)
 
 // MsgAddFriendInviteReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgAddFriendInviteReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12137,13 +12137,13 @@ inline void MsgAddFriendInviteReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgAddFriendInviteReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgAddFriendInviteReq::playerid() const {
+inline ::google::protobuf::uint64 MsgAddFriendInviteReq::playerid() const {
   return playerid_;
 }
-inline void MsgAddFriendInviteReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgAddFriendInviteReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -12292,7 +12292,7 @@ inline void MsgAddFriendInviteReq::set_allocated_name(::std::string* name) {
 
 // MsgReplyFriendInviteReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgReplyFriendInviteReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12303,13 +12303,13 @@ inline void MsgReplyFriendInviteReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgReplyFriendInviteReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgReplyFriendInviteReq::playerid() const {
+inline ::google::protobuf::uint64 MsgReplyFriendInviteReq::playerid() const {
   return playerid_;
 }
-inline void MsgReplyFriendInviteReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgReplyFriendInviteReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -12340,7 +12340,7 @@ inline void MsgReplyFriendInviteReq::set_operate(::google::protobuf::uint32 valu
 
 // MsgDelFriendReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgDelFriendReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -12351,13 +12351,13 @@ inline void MsgDelFriendReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgDelFriendReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgDelFriendReq::playerid() const {
+inline ::google::protobuf::uint64 MsgDelFriendReq::playerid() const {
   return playerid_;
 }
-inline void MsgDelFriendReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgDelFriendReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -12654,7 +12654,7 @@ inline void MsgSendChatInfo::set_allocated_playername(::std::string* playername)
   }
 }
 
-// required uint32 playerid = 4;
+// required uint64 playerid = 4;
 inline bool MsgSendChatInfo::has_playerid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -12665,13 +12665,13 @@ inline void MsgSendChatInfo::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void MsgSendChatInfo::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSendChatInfo::playerid() const {
+inline ::google::protobuf::uint64 MsgSendChatInfo::playerid() const {
   return playerid_;
 }
-inline void MsgSendChatInfo::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSendChatInfo::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -12860,7 +12860,7 @@ inline void MsgSendChatInfo::set_allocated_playericonbox(::std::string* playeric
   }
 }
 
-// required uint32 playerserverid = 9;
+// required uint64 playerserverid = 9;
 inline bool MsgSendChatInfo::has_playerserverid() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -12871,13 +12871,13 @@ inline void MsgSendChatInfo::clear_has_playerserverid() {
   _has_bits_[0] &= ~0x00000100u;
 }
 inline void MsgSendChatInfo::clear_playerserverid() {
-  playerserverid_ = 0u;
+  playerserverid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerserverid();
 }
-inline ::google::protobuf::uint32 MsgSendChatInfo::playerserverid() const {
+inline ::google::protobuf::uint64 MsgSendChatInfo::playerserverid() const {
   return playerserverid_;
 }
-inline void MsgSendChatInfo::set_playerserverid(::google::protobuf::uint32 value) {
+inline void MsgSendChatInfo::set_playerserverid(::google::protobuf::uint64 value) {
   set_has_playerserverid();
   playerserverid_ = value;
 }
@@ -12982,7 +12982,7 @@ inline void MsgSendOneByOneChatReq::set_isvoice(::google::protobuf::uint32 value
   isvoice_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool MsgSendOneByOneChatReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -12993,13 +12993,13 @@ inline void MsgSendOneByOneChatReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void MsgSendOneByOneChatReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSendOneByOneChatReq::playerid() const {
+inline ::google::protobuf::uint64 MsgSendOneByOneChatReq::playerid() const {
   return playerid_;
 }
-inline void MsgSendOneByOneChatReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSendOneByOneChatReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -13144,7 +13144,7 @@ inline void MsgSendOneByOneChatReq::set_allocated_selfinfo(::std::string* selfin
   }
 }
 
-// required uint32 serverid = 6;
+// required uint64 serverid = 6;
 inline bool MsgSendOneByOneChatReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -13155,13 +13155,13 @@ inline void MsgSendOneByOneChatReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void MsgSendOneByOneChatReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 MsgSendOneByOneChatReq::serverid() const {
+inline ::google::protobuf::uint64 MsgSendOneByOneChatReq::serverid() const {
   return serverid_;
 }
-inline void MsgSendOneByOneChatReq::set_serverid(::google::protobuf::uint32 value) {
+inline void MsgSendOneByOneChatReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -13262,7 +13262,7 @@ inline void MsgSendOneByOneChatInfo::set_isvoice(::google::protobuf::uint32 valu
   isvoice_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool MsgSendOneByOneChatInfo::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -13273,13 +13273,13 @@ inline void MsgSendOneByOneChatInfo::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void MsgSendOneByOneChatInfo::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSendOneByOneChatInfo::playerid() const {
+inline ::google::protobuf::uint64 MsgSendOneByOneChatInfo::playerid() const {
   return playerid_;
 }
-inline void MsgSendOneByOneChatInfo::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSendOneByOneChatInfo::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -13424,7 +13424,7 @@ inline void MsgSendOneByOneChatInfo::set_allocated_playerinfo(::std::string* pla
   }
 }
 
-// required uint32 serverid = 6;
+// required uint64 serverid = 6;
 inline bool MsgSendOneByOneChatInfo::has_serverid() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -13435,13 +13435,13 @@ inline void MsgSendOneByOneChatInfo::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void MsgSendOneByOneChatInfo::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 MsgSendOneByOneChatInfo::serverid() const {
+inline ::google::protobuf::uint64 MsgSendOneByOneChatInfo::serverid() const {
   return serverid_;
 }
-inline void MsgSendOneByOneChatInfo::set_serverid(::google::protobuf::uint32 value) {
+inline void MsgSendOneByOneChatInfo::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -13830,7 +13830,7 @@ inline void MsgSendGroupChatInfo::set_isvoice(::google::protobuf::uint32 value) 
   isvoice_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool MsgSendGroupChatInfo::has_playerid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -13841,13 +13841,13 @@ inline void MsgSendGroupChatInfo::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void MsgSendGroupChatInfo::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSendGroupChatInfo::playerid() const {
+inline ::google::protobuf::uint64 MsgSendGroupChatInfo::playerid() const {
   return playerid_;
 }
-inline void MsgSendGroupChatInfo::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSendGroupChatInfo::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -13974,7 +13974,7 @@ inline void MsgBuyStoreReq::set_num(::google::protobuf::uint32 value) {
 
 // MsgGiveStoreReq
 
-// required uint32 toplayerid = 1;
+// required uint64 toplayerid = 1;
 inline bool MsgGiveStoreReq::has_toplayerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -13985,13 +13985,13 @@ inline void MsgGiveStoreReq::clear_has_toplayerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgGiveStoreReq::clear_toplayerid() {
-  toplayerid_ = 0u;
+  toplayerid_ = GOOGLE_ULONGLONG(0);
   clear_has_toplayerid();
 }
-inline ::google::protobuf::uint32 MsgGiveStoreReq::toplayerid() const {
+inline ::google::protobuf::uint64 MsgGiveStoreReq::toplayerid() const {
   return toplayerid_;
 }
-inline void MsgGiveStoreReq::set_toplayerid(::google::protobuf::uint32 value) {
+inline void MsgGiveStoreReq::set_toplayerid(::google::protobuf::uint64 value) {
   set_has_toplayerid();
   toplayerid_ = value;
 }
@@ -14022,7 +14022,7 @@ inline void MsgGiveStoreReq::set_shopid(::google::protobuf::uint32 value) {
 
 // MsgPlayerToastReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgPlayerToastReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14033,13 +14033,13 @@ inline void MsgPlayerToastReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgPlayerToastReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgPlayerToastReq::playerid() const {
+inline ::google::protobuf::uint64 MsgPlayerToastReq::playerid() const {
   return playerid_;
 }
-inline void MsgPlayerToastReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgPlayerToastReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -14048,7 +14048,7 @@ inline void MsgPlayerToastReq::set_playerid(::google::protobuf::uint32 value) {
 
 // MsgQueryToastCountReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgQueryToastCountReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14059,13 +14059,13 @@ inline void MsgQueryToastCountReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgQueryToastCountReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgQueryToastCountReq::playerid() const {
+inline ::google::protobuf::uint64 MsgQueryToastCountReq::playerid() const {
   return playerid_;
 }
-inline void MsgQueryToastCountReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgQueryToastCountReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -14074,7 +14074,7 @@ inline void MsgQueryToastCountReq::set_playerid(::google::protobuf::uint32 value
 
 // MsgQueryToastCountAck
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgQueryToastCountAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14085,13 +14085,13 @@ inline void MsgQueryToastCountAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgQueryToastCountAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgQueryToastCountAck::playerid() const {
+inline ::google::protobuf::uint64 MsgQueryToastCountAck::playerid() const {
   return playerid_;
 }
-inline void MsgQueryToastCountAck::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgQueryToastCountAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -14340,7 +14340,7 @@ inline void MsgDressClothesReq::set_clothesid(::google::protobuf::uint32 value) 
 
 // MsgInviteMatchGroupReq
 
-// required uint32 serverid = 1;
+// required uint64 serverid = 1;
 inline bool MsgInviteMatchGroupReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14351,18 +14351,18 @@ inline void MsgInviteMatchGroupReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgInviteMatchGroupReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 MsgInviteMatchGroupReq::serverid() const {
+inline ::google::protobuf::uint64 MsgInviteMatchGroupReq::serverid() const {
   return serverid_;
 }
-inline void MsgInviteMatchGroupReq::set_serverid(::google::protobuf::uint32 value) {
+inline void MsgInviteMatchGroupReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
 
-// required uint32 playerid = 2;
+// required uint64 playerid = 2;
 inline bool MsgInviteMatchGroupReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -14373,13 +14373,13 @@ inline void MsgInviteMatchGroupReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void MsgInviteMatchGroupReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgInviteMatchGroupReq::playerid() const {
+inline ::google::protobuf::uint64 MsgInviteMatchGroupReq::playerid() const {
   return playerid_;
 }
-inline void MsgInviteMatchGroupReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgInviteMatchGroupReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -14572,7 +14572,7 @@ inline void MsgReplyInviteMatchGroupReq::set_groupid(::google::protobuf::uint64 
   groupid_ = value;
 }
 
-// required uint32 inviterid = 2;
+// required uint64 inviterid = 2;
 inline bool MsgReplyInviteMatchGroupReq::has_inviterid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -14583,13 +14583,13 @@ inline void MsgReplyInviteMatchGroupReq::clear_has_inviterid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void MsgReplyInviteMatchGroupReq::clear_inviterid() {
-  inviterid_ = 0u;
+  inviterid_ = GOOGLE_ULONGLONG(0);
   clear_has_inviterid();
 }
-inline ::google::protobuf::uint32 MsgReplyInviteMatchGroupReq::inviterid() const {
+inline ::google::protobuf::uint64 MsgReplyInviteMatchGroupReq::inviterid() const {
   return inviterid_;
 }
-inline void MsgReplyInviteMatchGroupReq::set_inviterid(::google::protobuf::uint32 value) {
+inline void MsgReplyInviteMatchGroupReq::set_inviterid(::google::protobuf::uint64 value) {
   set_has_inviterid();
   inviterid_ = value;
 }
@@ -14624,7 +14624,7 @@ inline void MsgReplyInviteMatchGroupReq::set_operate(::google::protobuf::uint32 
 
 // MsgKickMatchGroupReq
 
-// required uint32 memberid = 1;
+// required uint64 memberid = 1;
 inline bool MsgKickMatchGroupReq::has_memberid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14635,13 +14635,13 @@ inline void MsgKickMatchGroupReq::clear_has_memberid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgKickMatchGroupReq::clear_memberid() {
-  memberid_ = 0u;
+  memberid_ = GOOGLE_ULONGLONG(0);
   clear_has_memberid();
 }
-inline ::google::protobuf::uint32 MsgKickMatchGroupReq::memberid() const {
+inline ::google::protobuf::uint64 MsgKickMatchGroupReq::memberid() const {
   return memberid_;
 }
-inline void MsgKickMatchGroupReq::set_memberid(::google::protobuf::uint32 value) {
+inline void MsgKickMatchGroupReq::set_memberid(::google::protobuf::uint64 value) {
   set_has_memberid();
   memberid_ = value;
 }
@@ -14676,7 +14676,7 @@ inline void MsgApplyMatchGroupReq::set_groupid(::google::protobuf::uint64 value)
 
 // MsgReplyApplyMatchGroupReq
 
-// required uint32 applyid = 1;
+// required uint64 applyid = 1;
 inline bool MsgReplyApplyMatchGroupReq::has_applyid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14687,13 +14687,13 @@ inline void MsgReplyApplyMatchGroupReq::clear_has_applyid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgReplyApplyMatchGroupReq::clear_applyid() {
-  applyid_ = 0u;
+  applyid_ = GOOGLE_ULONGLONG(0);
   clear_has_applyid();
 }
-inline ::google::protobuf::uint32 MsgReplyApplyMatchGroupReq::applyid() const {
+inline ::google::protobuf::uint64 MsgReplyApplyMatchGroupReq::applyid() const {
   return applyid_;
 }
-inline void MsgReplyApplyMatchGroupReq::set_applyid(::google::protobuf::uint32 value) {
+inline void MsgReplyApplyMatchGroupReq::set_applyid(::google::protobuf::uint64 value) {
   set_has_applyid();
   applyid_ = value;
 }
@@ -14776,7 +14776,7 @@ inline void MsgUpdateGroupMatchReq::set_matchid(::google::protobuf::uint32 value
 
 // MsgQueryGuestReq
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgQueryGuestReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14787,13 +14787,13 @@ inline void MsgQueryGuestReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgQueryGuestReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgQueryGuestReq::playerid() const {
+inline ::google::protobuf::uint64 MsgQueryGuestReq::playerid() const {
   return playerid_;
 }
-inline void MsgQueryGuestReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgQueryGuestReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -14802,7 +14802,7 @@ inline void MsgQueryGuestReq::set_playerid(::google::protobuf::uint32 value) {
 
 // MsgQueryGuestAck
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgQueryGuestAck::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -14813,13 +14813,13 @@ inline void MsgQueryGuestAck::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgQueryGuestAck::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgQueryGuestAck::playerid() const {
+inline ::google::protobuf::uint64 MsgQueryGuestAck::playerid() const {
   return playerid_;
 }
-inline void MsgQueryGuestAck::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgQueryGuestAck::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -16015,7 +16015,7 @@ inline void MsgCreateGuildReq::set_allocated_manifesto(::std::string* manifesto)
 
 // MsgInviteGuildReq
 
-// required uint32 inviterid = 1;
+// required uint64 inviterid = 1;
 inline bool MsgInviteGuildReq::has_inviterid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16026,13 +16026,13 @@ inline void MsgInviteGuildReq::clear_has_inviterid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgInviteGuildReq::clear_inviterid() {
-  inviterid_ = 0u;
+  inviterid_ = GOOGLE_ULONGLONG(0);
   clear_has_inviterid();
 }
-inline ::google::protobuf::uint32 MsgInviteGuildReq::inviterid() const {
+inline ::google::protobuf::uint64 MsgInviteGuildReq::inviterid() const {
   return inviterid_;
 }
-inline void MsgInviteGuildReq::set_inviterid(::google::protobuf::uint32 value) {
+inline void MsgInviteGuildReq::set_inviterid(::google::protobuf::uint64 value) {
   set_has_inviterid();
   inviterid_ = value;
 }
@@ -16093,7 +16093,7 @@ inline void MsgApplyGuildReq::set_invitor(::google::protobuf::uint64 value) {
 
 // MsgTransferMasterReq
 
-// required uint32 newmasterid = 1;
+// required uint64 newmasterid = 1;
 inline bool MsgTransferMasterReq::has_newmasterid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16104,13 +16104,13 @@ inline void MsgTransferMasterReq::clear_has_newmasterid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgTransferMasterReq::clear_newmasterid() {
-  newmasterid_ = 0u;
+  newmasterid_ = GOOGLE_ULONGLONG(0);
   clear_has_newmasterid();
 }
-inline ::google::protobuf::uint32 MsgTransferMasterReq::newmasterid() const {
+inline ::google::protobuf::uint64 MsgTransferMasterReq::newmasterid() const {
   return newmasterid_;
 }
-inline void MsgTransferMasterReq::set_newmasterid(::google::protobuf::uint32 value) {
+inline void MsgTransferMasterReq::set_newmasterid(::google::protobuf::uint64 value) {
   set_has_newmasterid();
   newmasterid_ = value;
 }
@@ -16119,7 +16119,7 @@ inline void MsgTransferMasterReq::set_newmasterid(::google::protobuf::uint32 val
 
 // MsgReviewApplyReq
 
-// optional uint32 playerid = 1;
+// optional uint64 playerid = 1;
 inline bool MsgReviewApplyReq::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16130,13 +16130,13 @@ inline void MsgReviewApplyReq::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgReviewApplyReq::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgReviewApplyReq::playerid() const {
+inline ::google::protobuf::uint64 MsgReviewApplyReq::playerid() const {
   return playerid_;
 }
-inline void MsgReviewApplyReq::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgReviewApplyReq::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -16290,7 +16290,7 @@ MsgQueryGuildListAck::mutable_guilddatas() {
 
 // MsgKickMemberReq
 
-// required uint32 toplayerid = 1;
+// required uint64 toplayerid = 1;
 inline bool MsgKickMemberReq::has_toplayerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16301,13 +16301,13 @@ inline void MsgKickMemberReq::clear_has_toplayerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgKickMemberReq::clear_toplayerid() {
-  toplayerid_ = 0u;
+  toplayerid_ = GOOGLE_ULONGLONG(0);
   clear_has_toplayerid();
 }
-inline ::google::protobuf::uint32 MsgKickMemberReq::toplayerid() const {
+inline ::google::protobuf::uint64 MsgKickMemberReq::toplayerid() const {
   return toplayerid_;
 }
-inline void MsgKickMemberReq::set_toplayerid(::google::protobuf::uint32 value) {
+inline void MsgKickMemberReq::set_toplayerid(::google::protobuf::uint64 value) {
   set_has_toplayerid();
   toplayerid_ = value;
 }
@@ -16320,7 +16320,7 @@ inline void MsgKickMemberReq::set_toplayerid(::google::protobuf::uint32 value) {
 
 // MsgAppointGuildMemberReq
 
-// required uint32 toplayerid = 1;
+// required uint64 toplayerid = 1;
 inline bool MsgAppointGuildMemberReq::has_toplayerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -16331,13 +16331,13 @@ inline void MsgAppointGuildMemberReq::clear_has_toplayerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgAppointGuildMemberReq::clear_toplayerid() {
-  toplayerid_ = 0u;
+  toplayerid_ = GOOGLE_ULONGLONG(0);
   clear_has_toplayerid();
 }
-inline ::google::protobuf::uint32 MsgAppointGuildMemberReq::toplayerid() const {
+inline ::google::protobuf::uint64 MsgAppointGuildMemberReq::toplayerid() const {
   return toplayerid_;
 }
-inline void MsgAppointGuildMemberReq::set_toplayerid(::google::protobuf::uint32 value) {
+inline void MsgAppointGuildMemberReq::set_toplayerid(::google::protobuf::uint64 value) {
   set_has_toplayerid();
   toplayerid_ = value;
 }

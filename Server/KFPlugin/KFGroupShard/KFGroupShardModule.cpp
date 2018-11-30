@@ -2,20 +2,6 @@
 
 namespace KFrame
 {
-
-    KFGroupShardModule::KFGroupShardModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFGroupShardModule::~KFGroupShardModule()
-    {
-    }
-
-    void KFGroupShardModule::InitModule()
-    {
-    }
-
     void KFGroupShardModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( group ) );
@@ -58,7 +44,7 @@ namespace KFrame
         }
     }
 
-    void KFGroupShardModule::OnServerDiscoverGroupProxy( uint32 proxyid )
+    void KFGroupShardModule::OnServerDiscoverGroupProxy( uint64 proxyid )
     {
         std::set< uint64 > grouplist;
 
@@ -75,17 +61,17 @@ namespace KFrame
     bool KFGroupShardModule::SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfbasic = kfmember->FindData( __KF_STRING__( basic ) );
-        auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
+        auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
         if ( serverid == _invalid_int )
         {
             return false;
         }
 
-        auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
+        auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
         return _kf_cluster_shard->SendToPlayer( serverid, playerid, msgid, message );
     }
 
-    void KFGroupShardModule::SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint32 excludeid /* = 0 */ )
+    void KFGroupShardModule::SendToGroup( KFData* kfmemberrecord, uint32 msgid, ::google::protobuf::Message* message, uint64 excludeid /* = 0 */ )
     {
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
@@ -106,13 +92,13 @@ namespace KFrame
         auto kfgroup = _kf_component->CreateEntity( kfmsg.groupid() );
 
         auto kfobject = kfgroup->GetData();
-        kfobject->SetValue< uint32 >( __KF_STRING__( captainid ), kfmsg.playerid() );
-        kfobject->SetValue< uint32 >( __KF_STRING__( maxcount ), kfmsg.maxcount() );
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), kfmsg.matchid() );
+        kfobject->SetValue( __KF_STRING__( captainid ), kfmsg.playerid() );
+        kfobject->SetValue( __KF_STRING__( maxcount ), kfmsg.maxcount() );
+        kfobject->SetValue( __KF_STRING__( matchid ), kfmsg.matchid() );
 
         auto kfmemberrecord = kfobject->FindData( __KF_STRING__( groupmember ) );
         auto kfmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), &kfmsg.pbmember() );
-        kfmember->SetValue< uint64 >( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
+        kfmember->SetValue( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
         kfmemberrecord->AddData( kfmember->GetKeyID(), kfmember );
 
         // 通知玩家队伍信息
@@ -136,7 +122,7 @@ namespace KFrame
 
         // 判断成员数量
         auto kfobject = kfgroup->GetData();
-        auto maxcount = kfobject->GetValue< uint32 >( __KF_STRING__( maxcount ) );
+        auto maxcount = kfobject->GetValue( __KF_STRING__( maxcount ) );
 
         auto kfmemberrecord = kfobject->FindData( __KF_STRING__( groupmember ) );
         if ( kfmemberrecord->Size() >= maxcount )
@@ -146,7 +132,7 @@ namespace KFrame
 
         // 加入新成员
         auto kfnewmember = _kf_kernel->CreateObject( kfmemberrecord->GetDataSetting(), &kfmsg.pbmember() );
-        kfnewmember->SetValue< uint64 >( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
+        kfnewmember->SetValue( __KF_STRING__( time ), KFGlobal::Instance()->_real_time );
         kfmemberrecord->AddData( kfnewmember->GetKeyID(), kfnewmember );
 
         // 通知新队员加入
@@ -171,7 +157,7 @@ namespace KFrame
         }
 
         auto kfobject = kfgroup->GetData();
-        auto captainid = kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) );
+        auto captainid = kfobject->GetValue( __KF_STRING__( captainid ) );
         auto kfmember = kfobject->FindData( __KF_STRING__( groupmember ), captainid );
         if ( kfmember == nullptr )
         {
@@ -217,7 +203,7 @@ namespace KFrame
         else
         {
             // 判断是否是队长
-            auto captainid = kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) );
+            auto captainid = kfobject->GetValue( __KF_STRING__( captainid ) );
             if ( captainid == kfmsg.playerid() )
             {
                 ProcessChooseGroupCaptain( kfgroup );
@@ -230,7 +216,7 @@ namespace KFrame
         auto kfmember = kfmemberrecord->FirstData();
         while ( kfmember != nullptr )
         {
-            auto serverid = kfmember->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
+            auto serverid = kfmember->GetValue( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
             if ( serverid != _invalid_int )
             {
                 return kfmember;
@@ -256,7 +242,7 @@ namespace KFrame
         }
 
         // 设置新队长
-        kfobject->SetValue< uint32 >( __KF_STRING__( captainid ), kfmember->GetKeyID() );
+        kfobject->SetValue( __KF_STRING__( captainid ), kfmember->GetKeyID() );
 
         // 通知玩家你已经成为队长了
 
@@ -293,7 +279,7 @@ namespace KFrame
         }
 
         auto kfobject = kfgroup->GetData();
-        auto captainid = kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) );
+        auto captainid = kfobject->GetValue( __KF_STRING__( captainid ) );
         if ( captainid != kfmsg.captainid() )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.captainid(), KFMsg::GroupNotCaption );
@@ -342,12 +328,12 @@ namespace KFrame
         {
             auto pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( serverid ) );
-            pbstring->set_value( KFUtility::ToString< uint32 >( kfmsg.serverid() ) );
+            pbstring->set_value( KFUtility::ToString( kfmsg.serverid() ) );
         }
         {
             auto pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( status ) );
-            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::GroupStatus ) );
+            pbstring->set_value( KFUtility::ToString( KFMsg::GroupStatus ) );
         }
         SendUpdateMemberToGroup( kfmsg.groupid(), kfmemberrecord, kfquerymember, __KF_STRING__( basic ), pbstrings );
 
@@ -361,9 +347,9 @@ namespace KFrame
 
         KFMsg::S2STellMatchGroupDataAck ack;
         ack.set_groupid( kfgroup->GetKeyID() );
-        ack.set_maxcount( kfobject->GetValue< uint32 >( __KF_STRING__( maxcount ) ) );
-        ack.set_matchid( kfobject->GetValue< uint32 >( __KF_STRING__( matchid ) ) );
-        ack.set_captainid( kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) ) );
+        ack.set_maxcount( kfobject->GetValue( __KF_STRING__( maxcount ) ) );
+        ack.set_matchid( kfobject->GetValue( __KF_STRING__( matchid ) ) );
+        ack.set_captainid( kfobject->GetValue( __KF_STRING__( captainid ) ) );
         ack.set_newadd( newadd );
 
         auto kfmember = kfmemberrecord->FirstData();
@@ -387,7 +373,7 @@ namespace KFrame
         }
 
         auto kfobject = kfgroup->GetData();
-        auto captainid = kfobject->GetValue< uint32 >( __KF_STRING__( captainid ) );
+        auto captainid = kfobject->GetValue( __KF_STRING__( captainid ) );
         if ( kfmsg.playerid() == captainid )
         {
             auto ok = ProcessChooseGroupCaptain( kfgroup );
@@ -414,7 +400,7 @@ namespace KFrame
 
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( status ) );
-            pbstring->set_value( KFUtility::ToString< uint32 >( KFMsg::OfflineStatus ) );
+            pbstring->set_value( KFUtility::ToString( KFMsg::OfflineStatus ) );
 
             pbstring = pbstrings.add_pbstring();
             pbstring->set_name( __KF_STRING__( prepare ) );
@@ -482,8 +468,8 @@ namespace KFrame
         }
 
         auto kfobject = kfgroup->GetData();
-        kfobject->SetValue< uint32 >( __KF_STRING__( matchid ), kfmsg.matchid() );
-        kfobject->SetValue< uint32 >( __KF_STRING__( maxcount ), kfmsg.maxcount() );
+        kfobject->SetValue( __KF_STRING__( matchid ), kfmsg.matchid() );
+        kfobject->SetValue( __KF_STRING__( maxcount ), kfmsg.maxcount() );
 
         // 同步给客户端
         KFMsg::S2SUpdateGroupDataAck ack;

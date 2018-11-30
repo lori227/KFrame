@@ -27,10 +27,10 @@ namespace KFrame
     {
     public:
         // playerid
-        uint32 _player_id{ 0 };
+        uint64 _player_id{ 0 };
 
         // gateid
-        uint32 _gate_id{ 0 };
+        uint64 _gate_id{ 0 };
 
         // 上次发言时间
         uint64 _last_chat_time{ 0 };
@@ -82,7 +82,7 @@ namespace KFrame
 
     private:
         // 江湖聊天室
-        KFMap < uint32, uint32, KFChatPlayer > _chat_player_list;
+        KFMap < uint64, uint64, KFChatPlayer > _chat_player_list;
     };
 }
 

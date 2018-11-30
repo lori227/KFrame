@@ -122,7 +122,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
 
-        auto modleid = kfbasic->GetValue< uint32 >( __KF_STRING__( model ) );
+        auto modleid = kfbasic->GetValue( __KF_STRING__( model ) );
         if ( modleid != _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::CreateRoleAlready );

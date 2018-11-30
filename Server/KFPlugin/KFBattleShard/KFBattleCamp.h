@@ -16,7 +16,7 @@ namespace KFrame
         void LoadFrom( const KFMsg::PBBattleCamp* pbcamp );
 
         // 是否有玩家
-        bool HavePlayer( uint32 playerid );
+        bool HavePlayer( uint64 playerid );
 
         // 玩家数量
         uint32 PlayerCount();
@@ -38,7 +38,7 @@ namespace KFrame
         uint32 _camp_id;
 
         // 玩家列表
-        KFMap< uint32, uint32, KFBattlePlayer > _kf_player_list;
+        KFMap< uint64, uint64, KFBattlePlayer > _kf_player_list;
     };
 
 }

@@ -71,7 +71,7 @@ namespace KFrame
 
     private:
         // 战斗服务器断开连接
-        void OnServerLostBattleServer( uint32 serverid );
+        void OnServerLostBattleServer( uint64 serverid );
     };
 }
 

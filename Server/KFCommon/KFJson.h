@@ -76,7 +76,14 @@ namespace KFrame
                 else if ( iter->isInt() )
                 {
                     values[ iter.name() ] = __TO_STRING__( iter->asInt() );
-
+                }
+                else if ( iter->isUInt64() )
+                {
+                    values[ iter.name() ] = __TO_STRING__( iter->asUInt64() );
+                }
+                else if ( iter->isInt64() )
+                {
+                    values[ iter.name() ] = __TO_STRING__( iter->asInt64() );
                 }
                 else if ( iter->isDouble() )
                 {
@@ -117,9 +124,41 @@ namespace KFrame
         {
             auto& value = this->operator[]( key );
 
-            if ( value.isUInt() || value.isInt() )
+            if ( value.isInt() )
+            {
+                return value.asInt();
+            }
+            else if ( value.isUInt() )
             {
                 return value.asUInt();
+            }
+            else if ( value.isString() )
+            {
+                return KFUtility::ToValue< uint32 >( value.asString() );
+            }
+
+            return _invalid_int;
+        }
+
+        inline uint64 GetUInt64( const std::string& key )
+        {
+            auto& value = this->operator[]( key );
+
+            if ( value.isInt() )
+            {
+                return value.asInt();
+            }
+            else if ( value.isUInt() )
+            {
+                return value.asUInt();
+            }
+            else if ( value.isInt64() )
+            {
+                return value.asInt64();
+            }
+            else if ( value.isUInt64() )
+            {
+                return value.asUInt64();
             }
             else if ( value.isString() )
             {
@@ -132,6 +171,12 @@ namespace KFrame
         inline void SetUInt32( const std::string& key, const std::string& value )
         {
             auto intvalue = KFUtility::ToValue< uint32 >( value );
+            SetValue( key, intvalue );
+        }
+
+        inline void SetUInt64( const std::string& key, const std::string& value )
+        {
+            auto intvalue = KFUtility::ToValue< uint64 >( value );
             SetValue( key, intvalue );
         }
 
@@ -167,10 +212,19 @@ namespace KFrame
             {
                 return __TO_STRING__( value.asInt() );
             }
+            else if ( value.isInt64() )
+            {
+                return __TO_STRING__( value.asInt64() );
+            }
+            else if ( value.isUInt64() )
+            {
+                return __TO_STRING__( value.asUInt64() );
+            }
             else if ( value.isDouble() )
             {
                 return __TO_STRING__( value.asDouble() );
             }
+
             return _invalid_str;
         }
 

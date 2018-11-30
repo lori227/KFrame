@@ -26,7 +26,7 @@ namespace KFrame
         ~KFBattleRoom();
 
         // 初始化
-        void InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount, const std::string& version );
+        void InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version );
 
         // 添加阵营
         KFBattleCamp* AddCamp( const KFMsg::PBBattleCamp* pbcamp );
@@ -54,22 +54,22 @@ namespace KFrame
         void ConfirmOpenMatchRoom();
 
         // 更新游戏房间
-        bool UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port, const std::string& version );
+        bool UpdateBattleRoom( uint64 proxyid, uint64 serverid, const std::string& ip, uint32 port, const std::string& version );
 
         // 进入游戏房间
-        bool ConfirmEnterBattleRoom( uint32 campid, uint32 playerid );
+        bool ConfirmEnterBattleRoom( uint32 campid, uint64 playerid );
 
         // 离开游戏房间
-        bool LeaveBattleRoom( uint32 campid, uint32 playerid );
+        bool LeaveBattleRoom( uint32 campid, uint64 playerid );
 
         // 取消匹配
         bool CancelMatch( uint32 campid, uint64 groupid );
 
         // 确认匹配结果
-        bool NoticeBattleRoom( uint32 campid, uint32 playerid );
+        bool NoticeBattleRoom( uint32 campid, uint64 playerid );
 
         // 登陆游戏房间
-        bool LoginBattleRoom( uint32 campid, uint32 playerid );
+        bool LoginBattleRoom( uint32 campid, uint64 playerid );
 
         // 开始游戏房间
         void StartBattleRoom( uint32 maxtime );
@@ -78,7 +78,7 @@ namespace KFrame
         void ConfirmStartBattleRoom();
 
         // 查询游戏房间
-        bool QueryBattleRoom( uint32 playerid, uint32 serverid );
+        bool QueryBattleRoom( uint64 playerid, uint64 serverid );
 
         // 游戏房间结束
         void FinishBattleRoom();
@@ -87,7 +87,7 @@ namespace KFrame
         void FreeInValidRoom();
 
         // 玩家上线
-        bool PlayerOnlineBattleRoom( uint32 campid, uint32 playerid, uint32 serverid );
+        bool PlayerOnlineBattleRoom( uint32 campid, uint64 playerid, uint64 serverid );
 
         // 结算
         bool BattleScoreBalance( KFMsg::PBBattleScore* pbscore );
@@ -106,8 +106,8 @@ namespace KFrame
 
     protected:
         // 查找玩家
-        KFBattlePlayer* FindBattlePlayer( uint32 playerid );
-        KFBattlePlayer* FindBattlePlayer( uint32 campid, uint32 playerid );
+        KFBattlePlayer* FindBattlePlayer( uint64 playerid );
+        KFBattlePlayer* FindBattlePlayer( uint32 campid, uint64 playerid );
 
         // 更新状态
         void UpdateRoomStatus( uint32 status, uint32 intervaltime );
@@ -137,16 +137,16 @@ namespace KFrame
         uint32 _match_id;
 
         // 匹配proxyid
-        uint32 _match_proxy_id;
+        uint64 _match_proxy_id;
 
         // 匹配 shardid
-        uint32 _match_shard_id;
+        uint64 _match_shard_id;
 
         // 房间id
         uint64 _battle_room_id;
 
         // 指定的战场id
-        uint32 _battle_server_id;
+        uint64 _battle_server_id;
 
         // 版本号
         std::string _battle_version;

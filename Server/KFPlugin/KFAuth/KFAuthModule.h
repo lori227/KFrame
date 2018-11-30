@@ -65,25 +65,25 @@ namespace KFrame
         MapString QueryCreateAccount( const std::string& account, uint32 channel );
 
         // 保存渠道数据
-        void UpdateChannelData( uint32 accountid, uint32 channel, KFJson& kfjson );
+        void UpdateChannelData( uint64 accountid, uint32 channel, KFJson& kfjson );
 
         // 创建登录Token
-        std::string CreateLoginToken( uint32 accountid, MapString& accountdata );
+        std::string CreateLoginToken( uint64 accountid, MapString& accountdata );
 
         // 踢人下线
         bool KickAccountOffline( MapString& accountdata );
 
         // 获得目录服务器列表
-        std::string QueryDirList( uint32 accountid, const std::string& token, MapString& accountdata );
+        std::string QueryDirList( uint64 accountid, const std::string& token, MapString& accountdata );
 
         // 创建小区的玩家id
-        uint32 QueryCreatePlayerId( uint32 channel, uint32 accountid, uint32 zoneid, uint32 logiczoneid );
+        uint64 QueryCreatePlayerId( uint32 channel, uint64 accountid, uint32 zoneid, uint32 logiczoneid );
 
         //验证激活码
-        std::string VerifyActivationCode( MapString& accountdata, const uint32 accountid, const std::string& activationcode );
+        std::string VerifyActivationCode( MapString& accountdata, uint64 accountid, const std::string& activationcode );
 
         // 判断登陆黑名单
-        uint32 CheckLoginBlackList( const std::string& ip, uint32 accountid, uint32 playerid );
+        uint64 CheckLoginBlackList( const std::string& ip, uint64 accountid, uint64 playerid );
     };
 }
 

@@ -386,12 +386,11 @@ namespace KFrame
             maildata[pbdata->name()] = pbdata->value();
         }
 
-        if ( kfmsg.has_playerids() )
+        if ( kfmsg.playerids_size() > 0 )
         {
-            auto pbplayerids = &kfmsg.playerids();
-            for ( auto i = 0; i < pbplayerids->playerid_size(); ++i )
+            for ( auto i = 0; i < kfmsg.playerids_size(); ++i )
             {
-                auto playerid = pbplayerids->playerid( i );
+                auto playerid = kfmsg.playerids( i );
                 auto ok = AddMail( playerid, kfmsg.mailtype(), maildata );
                 if ( !ok )
                 {

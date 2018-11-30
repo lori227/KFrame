@@ -59,7 +59,7 @@ namespace KFrame
         return _pb_player.serverid();
     }
 
-    void KFMatchPlayer::SetServerID( uint32 serverid )
+    void KFMatchPlayer::SetServerID( uint64 serverid )
     {
         _pb_player.set_serverid( serverid );
     }

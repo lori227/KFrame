@@ -34,10 +34,11 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleAllocBattleIdReq );
 
     protected:
-        uint32 AllocBattleId( const std::string& ip, uint32 port );
+        // 计算战场id
+        uint64 AllocBattleId( const std::string& ip, uint32 port );
 
     private:
-        KFRedisDriver* _kf_battle_driver;
+        KFRedisDriver* _kf_battle_driver{ nullptr };
     };
 }
 

@@ -136,7 +136,7 @@ message MsgTellBeKick
 // MSG_LOGIN_VERIFY_REQ
 message MsgLoginVerifyReq
 {
-	required uint32 accountid = 1;	// 账号id
+	required uint64 accountid = 1;	// 账号id
 	required bytes token = 2;		// token
 	required bytes version = 3;	// 客户端版本号
 }
@@ -145,7 +145,7 @@ message MsgLoginVerifyReq
 // MSG_LOGIN_VERIFY_ACK
 message MsgLoginVerifyAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes token = 2;
 	required bytes ip = 3;
 	required uint32 port = 4;
@@ -155,7 +155,7 @@ message MsgLoginVerifyAck
 // MSG_LOGIN_GAME_REQ
 message MsgLoginGameReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes token = 2;
 }
 
@@ -173,7 +173,7 @@ message MsgCreateRoleReq
 	required bytes name = 1;		// 名字
 	required uint32 sex = 2;		// 性别
 	required uint32 model = 3;		// 模型id
-	optional uint32 inviterid = 4[default=0];	// 邀请人
+	optional uint64 inviterid = 4[default=0];	// 邀请人
 }
 
 // 修改名字
@@ -222,7 +222,7 @@ message MsgQueryBasicReq
 // MSG_QUERY_PLAYER_REQ
 message MsgQueryPlayerReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -363,7 +363,7 @@ message MsgTellMatchPlayerCount
 // MSG_ADD_FRIEND_INVITE_REQ
 message MsgAddFriendInviteReq
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	required bytes message = 2;	// 留言
 	required bytes name = 3;		// 玩家名字
 }
@@ -372,7 +372,7 @@ message MsgAddFriendInviteReq
 // MSG_REPLY_FRIEND_INVITE_REQ
 message MsgReplyFriendInviteReq
 {
-	required uint32 playerid = 1;	// 玩家id 0 表示所有
+	required uint64 playerid = 1;	// 玩家id 0 表示所有
 	required uint32 operate = 2;	// 1=同意 2=拒绝 3=直接删除请求 
 }
 
@@ -380,7 +380,7 @@ message MsgReplyFriendInviteReq
 // MSG_DEL_FRIEND_REQ
 message MsgDelFriendReq
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 }
 
 // 设置拒绝添加好友
@@ -416,12 +416,12 @@ message MsgSendChatInfo
 	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 	required bytes playername = 3;		//发送聊天的玩家名字
-	required uint32 playerid = 4;		//发送聊天的玩家id
+	required uint64 playerid = 4;		//发送聊天的玩家id
 	required bytes playericon = 5;		//发送聊天的玩家头像
 	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
 	required bytes playericonbox = 8;	//发送聊天的玩家头像框
-	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
+	required uint64 playerserverid = 9;	//发送聊天的玩家服务器id
 }
 
 //客户端离开江湖聊天室请求
@@ -437,10 +437,10 @@ message MsgSendOneByOneChatReq
 {
 	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
-	required uint32 playerid = 3;		//玩家id
+	required uint64 playerid = 3;		//玩家id
 	required bytes chattype = 4;
 	required bytes selfinfo = 5;		//本人信息
-	required uint32 serverid = 6;
+	required uint64 serverid = 6;
 }
 
 //服务器通知一对一聊天信息
@@ -449,10 +449,10 @@ message MsgSendOneByOneChatInfo
 {
 	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
-	required uint32 playerid = 3;		//发送聊天的玩家id
+	required uint64 playerid = 3;		//发送聊天的玩家id
 	required bytes chattype = 4;
 	required bytes playerinfo = 5;		//发送聊天的玩家信息
-	required uint32 serverid = 6;
+	required uint64 serverid = 6;
 }
 
 // 客户端发送GM指令请求
@@ -484,7 +484,7 @@ message MsgSendGroupChatInfo
 {
 	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
-	required uint32 playerid = 3;		//发送聊天的玩家id
+	required uint64 playerid = 3;		//发送聊天的玩家id
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -503,7 +503,7 @@ message MsgBuyStoreReq
 //MSG_GIVE_STORE_REQ = 1351
 message MsgGiveStoreReq
 {
-	required uint32 toplayerid = 1;	//赠予玩家的id	
+	required uint64 toplayerid = 1;	//赠予玩家的id	
 	required uint32 shopid = 2;		//商城id
 }
 
@@ -514,21 +514,21 @@ message MsgGiveStoreReq
 //MSG_PLAYER_TOAST_REQ
 message MsgPlayerToastReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 }
 
 // 查询总的被敬酒次数请求
 //MSG_QUERY_TOAST_COUNT_REQ
 message MsgQueryToastCountReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 }
 
 // 查询总的被敬酒次数回馈
 //MSG_QUERY_TOAST_COUNT_ACK
 message MsgQueryToastCountAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint32 toastcount = 2;
 }
 	
@@ -573,8 +573,8 @@ message MsgDressClothesReq
 // MSG_INVITE_MATCH_GROUP_REQ
 message MsgInviteMatchGroupReq
 {
-	required uint32 serverid = 1;		// 游戏内服务器id
-	required uint32 playerid = 2;		// 玩家id
+	required uint64 serverid = 1;		// 游戏内服务器id
+	required uint64 playerid = 2;		// 玩家id
 	required bytes source = 3;			// 从哪里邀请
 	required uint32 matchid = 4;		// 匹配模式
 	required bytes playername = 5;		// 被邀请玩家名字
@@ -585,7 +585,7 @@ message MsgInviteMatchGroupReq
 message MsgReplyInviteMatchGroupReq
 {
 	required uint64 groupid = 1;		// 队伍id
-	required uint32 inviterid = 2;		// 邀请者id
+	required uint64 inviterid = 2;		// 邀请者id
 	required uint32 operate = 3;		// 操作	对应InviteEnum
 }
 
@@ -600,7 +600,7 @@ message MsgLeaveMatchGroupReq
 // MSG_KICK_MATCH_GROUP_REQ
 message MsgKickMatchGroupReq
 {
-	required uint32 memberid = 1;
+	required uint64 memberid = 1;
 }
 
 // 申请加入队伍
@@ -614,7 +614,7 @@ message MsgApplyMatchGroupReq
 // MSG_REPLY_APPLY_MATCH_GROUP_REQ
 message MsgReplyApplyMatchGroupReq
 {
-	required uint32 applyid = 1;		// 申请人id
+	required uint64 applyid = 1;		// 申请人id
 	required uint32 operate = 3;		// 操作	对应InviteEnum
 }
 
@@ -639,14 +639,14 @@ message MsgUpdateGroupMatchReq
 // MSG_QUERY_GUEST_REQ
 message MsgQueryGuestReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 }
 
 // 查询访客信息回馈
 // MSG_QUERY_GUEST_ACK
 message MsgQueryGuestAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint32 guestcount = 2;		//本月访客数量
 	repeated PBGuestData guestdata = 3;	//最近访客信息
 }
@@ -809,7 +809,7 @@ message MsgCreateGuildReq
 // MSG_INVITE_GUILD_REQ
 message MsgInviteGuildReq
 {
-	required uint32 inviterid = 1;		// 被邀请人id
+	required uint64 inviterid = 1;		// 被邀请人id
 	
 }
 
@@ -831,14 +831,14 @@ message MsgExitGuildReq
 // MSG_TRANSFER_MASTER_REQ
 message MsgTransferMasterReq
 {
-	required uint32 newmasterid = 1;	// 接受者id
+	required uint64 newmasterid = 1;	// 接受者id
 }
 
 // 审批申请列表
 // MSG_REVIEW_APPLY_REQ
 message MsgReviewApplyReq
 {
-	optional uint32 playerid = 1;		// 被审核玩家(一键操作不填)
+	optional uint64 playerid = 1;		// 被审核玩家(一键操作不填)
 	required uint32 operatortype =2;	// 操作类型 (1:同意,2:拒绝)
 	
 }
@@ -875,7 +875,7 @@ message MsgQueryGuildListAck
 // MSG_KICK_MEMBER_REQ
 message MsgKickMemberReq
 {
-	required uint32 toplayerid = 1;		// 被踢掉的玩家id
+	required uint64 toplayerid = 1;		// 被踢掉的玩家id
 }
 
 // 升级帮派
@@ -888,7 +888,7 @@ message MsgUpgradeGuildReq
 // MSG_APPOINT_GUILD_MEMBER_REQ
 message MsgAppointGuildMemberReq
 {
-	required uint32 toplayerid = 1;		// 被任命人的id
+	required uint64 toplayerid = 1;		// 被任命人的id
 	required uint32 title = 2;		// 任命的职位
 }
 

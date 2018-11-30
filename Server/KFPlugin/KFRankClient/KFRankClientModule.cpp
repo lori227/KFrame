@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFRankClientModule::KFRankClientModule()
-    {
-
-    }
-
-    KFRankClientModule::~KFRankClientModule()
-    {
-
-    }
-
     void KFRankClientModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_rank_config, true );
@@ -182,7 +172,7 @@ namespace KFrame
         KFMsg::S2SQueryRankListReq req;
         req.set_playerid( playerid );
         req.set_rankid( kfmsg.rankid() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
         auto ok = SendMessageToRank( kfmsg.rankid(), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
@@ -204,7 +194,7 @@ namespace KFrame
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_playerid( playerid );
         req.set_rankid( kfmsg.rankid() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
 
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );

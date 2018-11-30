@@ -44,11 +44,8 @@ namespace KFrame
     class KFGroupClientModule : public KFGroupClientInterface
     {
     public:
-        KFGroupClientModule();
-        ~KFGroupClientModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFGroupClientModule() = default;
+        ~KFGroupClientModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -58,13 +55,13 @@ namespace KFrame
         virtual void BeforeShut();
 
         // 判断是否是队员
-        virtual bool IsGroupMember( KFEntity* player, uint32 playerid );
+        virtual bool IsGroupMember( KFEntity* player, uint64 playerid );
 
         // 判断是否是队长
-        virtual bool IsGroupCaptain( KFEntity* player, uint32 playerid );
+        virtual bool IsGroupCaptain( KFEntity* player, uint64 playerid );
 
         // 删除一个队员
-        virtual void RemoveGroupMember( uint64 groupid, uint32 playerid );
+        virtual void RemoveGroupMember( uint64 groupid, uint64 playerid );
 
         // 队员数量(没有队伍为1)
         virtual uint32 GroupMemberCount( KFEntity* player );
@@ -173,7 +170,7 @@ namespace KFrame
         void ProcessLeaveMatchGroup( KFEntity* player );
 
         // 更新玩家队伍基础信息
-        bool UpdateMemberToMatchGroup( uint64 groupid, uint32 playerid, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
+        bool UpdateMemberToMatchGroup( uint64 groupid, uint64 playerid, const std::string& dataname, const KFMsg::PBStrings& pbstrings );
 
         // 更新匹配模式
         void UpdateMatchToGroup( KFEntity* player, uint64 groupid, uint32 matchid, uint32 maxcount );
@@ -183,13 +180,13 @@ namespace KFrame
 
     private:
         // 匹配队伍成员
-        KFData* _kf_group_member;
+        KFData* _kf_group_member{ nullptr };
 
         // 组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
 
         // 邀请列表
-        KFMap< uint32, uint32, KFInviteGroup > _invite_group_list;
+        KFMap< uint64, uint64, KFInviteGroup > _invite_group_list;
     };
 }
 

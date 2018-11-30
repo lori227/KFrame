@@ -41,9 +41,9 @@ message S2SMatchToProxyReq
 	required PBMatchGroup pbgroup = 1;
 	required uint32 matchid = 2;
 	required bool allowgroup = 3;
-	required uint32 playerid = 4;
-	required uint32 serverid = 5;
-	required uint32 battleserverid = 6;
+	required uint64 playerid = 4;
+	required uint64 serverid = 5;
+	required uint64 battleserverid = 6;
 	required bytes version = 7;			// 客户端版本
 }
 
@@ -52,7 +52,7 @@ message S2SMatchToClientAck
 {
 	required uint32 result = 1;
 	required uint32 matchid = 2;
-	required uint32 playerid = 3;
+	required uint64 playerid = 3;
 }
 
 // S2S_MATCH_TO_SHARD_REQ
@@ -61,9 +61,9 @@ message S2SMatchToShardReq
 	required PBMatchGroup pbgroup = 1;
 	required uint32 matchid = 2;
 	required bool allowgroup = 3;
-	required uint32 playerid = 4;
-	required uint32 serverid = 5;
-	required uint32 battleserverid = 6;
+	required uint64 playerid = 4;
+	required uint64 serverid = 5;
+	required uint64 battleserverid = 6;
 	required bytes version = 7;			// 客户端版本
 }
 
@@ -72,7 +72,7 @@ message S2SMatchToShardReq
 message S2SCancelMatchToProxyReq
 {
 	required uint32 matchid = 1;	// 匹配模式	
-	required uint32 playerid = 2;	// 玩家id	
+	required uint64 playerid = 2;	// 玩家id	
 }
 
 // 取消匹配
@@ -80,7 +80,7 @@ message S2SCancelMatchToProxyReq
 message S2SCancelMatchToShardReq
 {
 	required uint32 matchid = 1;	// 匹配模式	
-	required uint32 playerid = 2;	// 玩家id		
+	required uint64 playerid = 2;	// 玩家id		
 }
 
 // 取消匹配
@@ -97,10 +97,10 @@ message S2SCancelMatchToBattleShardReq
 message S2SNoticeMatchRoomReq
 {
 	required uint32 matchid = 1;
-	required uint32 battleshardid = 2;
+	required uint64 battleshardid = 2;
 	required uint32 campid = 3;
-	required uint32 playerid = 4;
-	required uint32 serverid = 5;
+	required uint64 playerid = 4;
+	required uint64 serverid = 5;
 	required uint64 roomid = 6;
 	required bytes ip = 7;
 	required uint32 port = 8;
@@ -113,7 +113,7 @@ message S2SNoticeMatchRoomAck
 {
 	required uint64 roomid = 1;
 	required uint32 campid = 2;
-	required uint32 playerid = 3;
+	required uint64 playerid = 3;
 }
 
 // 查询匹配信息
@@ -121,8 +121,8 @@ message S2SNoticeMatchRoomAck
 message S2SQueryMatchRoomReq
 {
 	required uint32 matchid = 1;
-	required uint32 playerid = 2;
-	required uint32 serverid = 3;
+	required uint64 playerid = 2;
+	required uint64 serverid = 3;
 }
 
 // 查询匹配信息
@@ -130,8 +130,8 @@ message S2SQueryMatchRoomReq
 message S2SQueryRoomToMatchShardReq
 {
 	required uint32 matchid = 1;
-	required uint32 playerid = 2;
-	required uint32 serverid = 3;	
+	required uint64 playerid = 2;
+	required uint64 serverid = 3;	
 }
 
 // 查询匹配信息
@@ -139,7 +139,7 @@ message S2SQueryRoomToMatchShardReq
 message S2SQueryMatchRoomAck
 {
 	required uint32 matchid = 1;
-	required uint32 playerid = 2;
+	required uint64 playerid = 2;
 }
 
 // 查询匹配信息
@@ -147,14 +147,14 @@ message S2SQueryMatchRoomAck
 message S2SQueryBattleRoomReq
 {
 	required uint64 roomid = 1;
-	required uint32 playerid = 2;
-	required uint32 serverid = 3;		
+	required uint64 playerid = 2;
+	required uint64 serverid = 3;		
 }
 
 // S2S_QUERY_BATTLE_ROOM_ACK
 message S2SQueryBattleRoomAck
 {
-	required uint32 playerid = 1;	
+	required uint64 playerid = 1;	
 	required uint64 roomid = 2;
 	required uint32 matchid = 3;
 }
@@ -164,8 +164,8 @@ message S2SQueryBattleRoomAck
 message S2SQueryRoomToBattleShardReq
 {
 	required uint64 roomid = 1;
-	required uint32 playerid = 2;
-	required uint32 serverid = 3;		
+	required uint64 playerid = 2;
+	required uint64 serverid = 3;		
 }
 
 // 通知战斗服务器玩家上线
@@ -174,15 +174,15 @@ message S2SPlayerOnlineToBattleShardReq
 {	
 	required uint64 roomid = 1;
 	required uint32 campid = 2;
-	required uint32 playerid = 3;
-	required uint32 serverid = 4;	
+	required uint64 playerid = 3;
+	required uint64 serverid = 4;	
 }
 
 // 通知玩家处于匹配状态
 // S2S_NOTICE_MATCH_STATE_REQ
 message S2SNoticeMatchStateReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint32 matchid = 2;
 }
 

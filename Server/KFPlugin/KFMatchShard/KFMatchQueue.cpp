@@ -15,7 +15,7 @@ namespace KFrame
         return ++_camp_id_maker;
     }
 
-    KFMatchCamp* KFMatchQueue::CreateMatchCamp( uint32 battleserverid, const std::string& version )
+    KFMatchCamp* KFMatchQueue::CreateMatchCamp( uint64 battleserverid, const std::string& version )
     {
         auto kfcamp = __KF_CREATE__( KFMatchCamp );
         kfcamp->_camp_id = MakeCampID();
@@ -39,12 +39,12 @@ namespace KFrame
         return kfplayer;
     }
 
-    KFMatchPlayer* KFMatchQueue::FindMatchPlayer( uint32 playerid )
+    KFMatchPlayer* KFMatchQueue::FindMatchPlayer( uint64 playerid )
     {
         return _kf_player_list.Find( playerid );
     }
 
-    void KFMatchQueue::RemoveMatchPlayer( uint32 playerid )
+    void KFMatchQueue::RemoveMatchPlayer( uint64 playerid )
     {
         _kf_player_list.Remove( playerid );
     }
@@ -68,7 +68,7 @@ namespace KFrame
         }
     }
     //////////////////////////////////////////////////////////////////////////////////
-    void KFMatchQueue::StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint32 battleserverid, const std::string& version )
+    void KFMatchQueue::StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint64 battleserverid, const std::string& version )
     {
         auto kfgroup = __KF_CREATE__( KFMatchGroup );
         kfgroup->_kf_match_queue = this;
@@ -100,7 +100,7 @@ namespace KFrame
         _wait_group_list.Insert( kfgroup->_group_id, kfgroup );
     }
 
-    KFMatchRoom* KFMatchQueue::FindWaitMatchRoom( uint32 battleserverid, uint32 playercount, const std::string& version )
+    KFMatchRoom* KFMatchQueue::FindWaitMatchRoom( uint64 battleserverid, uint32 playercount, const std::string& version )
     {
         auto kfroom = _kf_room_list.First();
         while ( kfroom != nullptr )
@@ -173,7 +173,7 @@ namespace KFrame
         return kfcamp;
     }
 
-    bool KFMatchQueue::MatchGroupList( uint32 battleserverid, const std::string& version, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
+    bool KFMatchQueue::MatchGroupList( uint64 battleserverid, const std::string& version, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
     {
         // 如果 需要3个队伍, 先找3个人, 找不到就找2个人的队伍, 在找不到找1个人的队伍
         auto needcount = _kf_setting->_max_group_player_count - groupcount;
@@ -206,7 +206,7 @@ namespace KFrame
         return false;
     }
 
-    KFMatchGroup* KFMatchQueue::FindGroupByCount( uint32 battleserverid, const std::string& version, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
+    KFMatchGroup* KFMatchQueue::FindGroupByCount( uint64 battleserverid, const std::string& version, uint32 groupcount, std::set<KFMatchGroup*>& grouplist )
     {
         for ( auto iter : _wait_group_list._objects )
         {
@@ -239,7 +239,7 @@ namespace KFrame
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
-    bool KFMatchQueue::CreateBattleRoomAck( uint64 roomid, uint32 battleshardid )
+    bool KFMatchQueue::CreateBattleRoomAck( uint64 roomid, uint64 battleshardid )
     {
         auto kfroom = _kf_room_list.Find( roomid );
         if ( kfroom == nullptr )
@@ -302,7 +302,7 @@ namespace KFrame
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
-    bool KFMatchQueue::CancelMatch( uint32 playerid )
+    bool KFMatchQueue::CancelMatch( uint64 playerid )
     {
         auto kfplayer = _kf_player_list.Find( playerid );
         if ( kfplayer == nullptr )
@@ -326,7 +326,7 @@ namespace KFrame
         return true;
     }
 
-    KFMatchGroup* KFMatchQueue::FindMatchGroup( uint32 playerid )
+    KFMatchGroup* KFMatchQueue::FindMatchGroup( uint64 playerid )
     {
         auto kfgroup = _wait_group_list.First();
         while ( kfgroup != nullptr )
@@ -342,7 +342,7 @@ namespace KFrame
         return nullptr;
     }
 
-    bool KFMatchQueue::QueryMatchRoom( uint32 playerid, uint32 serverid )
+    bool KFMatchQueue::QueryMatchRoom( uint64 playerid, uint64 serverid )
     {
         auto kfplayer = _kf_player_list.Find( playerid );
         if ( kfplayer == nullptr )
@@ -366,7 +366,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFMatchQueue::LeaveBattleRoom( uint64 roomid, uint32 campid, uint64 groupid, uint32 playerid )
+    bool KFMatchQueue::LeaveBattleRoom( uint64 roomid, uint32 campid, uint64 groupid, uint64 playerid )
     {
         auto kfplayer = _kf_player_list.Find( playerid );
         if ( kfplayer != nullptr )

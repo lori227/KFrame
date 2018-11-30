@@ -68,7 +68,7 @@ namespace KFrame
             auto playerid = KFUtility::SplitValue< uint32 >( strplayerids, "," );
             if ( playerid != _invalid_int )
             {
-                req.mutable_playerids()->add_playerid( playerid );
+                req.add_playerids( playerid );
             }
         }
         request.removeMember( __KF_STRING__( playerids ) );

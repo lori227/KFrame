@@ -17,26 +17,26 @@ namespace KFrame
         KFMatchPlayer* CreateMatchPlayer( const KFMsg::PBBattlePlayer* pbplayer );
 
         // 查找匹配玩家
-        KFMatchPlayer* FindMatchPlayer( uint32 playerid );
+        KFMatchPlayer* FindMatchPlayer( uint64 playerid );
 
         // 删除匹配玩家
-        void RemoveMatchPlayer( uint32 playerid );
+        void RemoveMatchPlayer( uint64 playerid );
 
         //////////////////////////////////////////////////////////////////////////////////////
         // 创建阵营id
         uint32 MakeCampID();
 
         // 创建阵营
-        KFMatchCamp* CreateMatchCamp( uint32 battleserverid, const std::string& version );
+        KFMatchCamp* CreateMatchCamp( uint64 battleserverid, const std::string& version );
 
         // 查找正在匹配的房间
-        KFMatchRoom* FindWaitMatchRoom( uint32 battleid, uint32 playercount, const std::string& version );
+        KFMatchRoom* FindWaitMatchRoom( uint64 battleid, uint32 playercount, const std::string& version );
 
         // 开始匹配
-        void StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint32 battleserverid, const std::string& version );
+        void StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint64 battleserverid, const std::string& version );
 
         // 取消匹配
-        bool CancelMatch( uint32 playerid );
+        bool CancelMatch( uint64 playerid );
 
         // 添加等待组队队伍
         void AddWaitGroup( KFMatchGroup* kfgroup );
@@ -45,7 +45,7 @@ namespace KFrame
         void RunMatch();
 
         // 开启战斗房间
-        bool CreateBattleRoomAck( uint64 roomid, uint32 battleshardid );
+        bool CreateBattleRoomAck( uint64 roomid, uint64 battleshardid );
 
         // 进入战斗房间
         bool CampEnterBattleRoomAck( uint64 roomid, uint32 campid, bool addok );
@@ -60,10 +60,10 @@ namespace KFrame
         bool TellMatchRoomClose( uint64 roomid );
 
         // 查询房间
-        bool QueryMatchRoom( uint32 playerid, uint32 serverid );
+        bool QueryMatchRoom( uint64 playerid, uint64 serverid );
 
         // 离开战斗房间
-        bool LeaveBattleRoom( uint64 roomid, uint32 campid, uint64 groupid, uint32 playerid );
+        bool LeaveBattleRoom( uint64 roomid, uint32 campid, uint64 groupid, uint64 playerid );
 
         // 重置房间
         bool ResetMatchRoom( uint64 roomid );
@@ -76,14 +76,14 @@ namespace KFrame
         void RunMatchGroupToCamp();
 
         // 查找队伍
-        KFMatchGroup* FindMatchGroup( uint32 playerid );
-        KFMatchGroup* FindGroupByCount( uint32 battleserverid, const std::string& version, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
+        KFMatchGroup* FindMatchGroup( uint64 playerid );
+        KFMatchGroup* FindGroupByCount( uint64 battleserverid, const std::string& version, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
 
         // 匹配队伍到阵营
         KFMatchCamp* MatchGroupToCamp();
 
         // 匹配队伍列表
-        bool MatchGroupList( uint32 battleserverid, const std::string& version, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
+        bool MatchGroupList( uint64 battleserverid, const std::string& version, uint32 groupcount, std::set< KFMatchGroup* >& grouplist );
 
     public:
         // 匹配id
@@ -102,7 +102,7 @@ namespace KFrame
         KFMap< uint64, uint64, KFMatchRoom > _kf_room_list;
 
         // 玩家的列表
-        KFMap< uint32, uint32, KFMatchPlayer > _kf_player_list;
+        KFMap< uint64, uint64, KFMatchPlayer > _kf_player_list;
     };
 }
 

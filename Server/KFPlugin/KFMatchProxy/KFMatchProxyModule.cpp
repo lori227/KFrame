@@ -66,7 +66,7 @@ namespace KFrame
         }
     }
 
-    uint32 KFMatchProxyModule::FindMatchShard( uint32 matchid, uint32 playerid )
+    uint64 KFMatchProxyModule::FindMatchShard( uint32 matchid, uint64 playerid )
     {
         // 选择一个匹配服务器
         auto matchshard = _match_shard.Find( matchid );

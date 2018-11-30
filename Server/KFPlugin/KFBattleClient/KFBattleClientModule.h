@@ -24,11 +24,8 @@ namespace KFrame
     class KFBattleClientModule : public KFBattleClientInterface
     {
     public:
-        KFBattleClientModule();
-        ~KFBattleClientModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFBattleClientModule() = default;
+        ~KFBattleClientModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -43,7 +40,7 @@ namespace KFrame
         virtual bool SendMessageToBattle( uint64 roomid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 查询战场
-        virtual void QueryBattleRoom( uint32 playerid, uint64 roomid );
+        virtual void QueryBattleRoom( uint64 playerid, uint64 roomid );
 
     protected:
 
@@ -73,7 +70,7 @@ namespace KFrame
         uint32 CalcTotalScore( KFEntity* player );
 
     private:
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
     };
 }
 

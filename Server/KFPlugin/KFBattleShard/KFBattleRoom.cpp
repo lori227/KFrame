@@ -30,7 +30,7 @@ namespace KFrame
     {
     }
 
-    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint32 battleserverid, uint32 maxplayercount, const std::string& version )
+    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version )
     {
         _match_id = matchid;
         _battle_room_id = roomid;
@@ -279,7 +279,7 @@ namespace KFrame
         req.set_matchid( _match_id );
         req.set_roomid( _battle_room_id );
         req.set_maxplayercount( _max_player_count );
-        req.set_battleshardid( KFGlobal::Instance()->_app_id );
+        req.set_battleshardid( KFGlobal::Instance()->_app_id._union._id );
         auto ok = SendMessageToBattle( KFMsg::S2S_OPEN_BATTLE_ROOM_REQ, &req );
         if ( ok )
         {
@@ -341,7 +341,7 @@ namespace KFrame
         }
     }
 
-    bool KFBattleRoom::ConfirmEnterBattleRoom( uint32 campid, uint32 playerid )
+    bool KFBattleRoom::ConfirmEnterBattleRoom( uint32 campid, uint64 playerid )
     {
         auto kfplayer = FindBattlePlayer( campid, playerid );
         if ( kfplayer == nullptr )
@@ -353,7 +353,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFBattleRoom::LoginBattleRoom( uint32 campid, uint32 playerid )
+    bool KFBattleRoom::LoginBattleRoom( uint32 campid, uint64 playerid )
     {
         auto kfplayer = FindBattlePlayer( campid, playerid );
         if ( kfplayer == nullptr )
@@ -364,7 +364,7 @@ namespace KFrame
         return kfplayer->LoginBattleRoomReq( this );
     }
 
-    bool KFBattleRoom::LeaveBattleRoom( uint32 campid, uint32 playerid )
+    bool KFBattleRoom::LeaveBattleRoom( uint32 campid, uint64 playerid )
     {
         auto kfplayer = FindBattlePlayer( campid, playerid );
         if ( kfplayer == nullptr )
@@ -413,7 +413,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFBattleRoom::NoticeBattleRoom( uint32 campid, uint32 playerid )
+    bool KFBattleRoom::NoticeBattleRoom( uint32 campid, uint64 playerid )
     {
         auto kfplayer = FindBattlePlayer( campid, playerid );
         if ( kfplayer == nullptr )
@@ -425,7 +425,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFBattleRoom::QueryBattleRoom( uint32 playerid, uint32 serverid )
+    bool KFBattleRoom::QueryBattleRoom( uint64 playerid, uint64 serverid )
     {
         auto kfplayer = FindBattlePlayer( playerid );
         if ( kfplayer == nullptr )
@@ -436,7 +436,7 @@ namespace KFrame
         return kfplayer->QueryBattleRoom( this, serverid );
     }
 
-    bool KFBattleRoom::UpdateBattleRoom( uint32 proxyid, uint32 serverid, const std::string& ip, uint32 port, const std::string& version )
+    bool KFBattleRoom::UpdateBattleRoom( uint64 proxyid, uint64 serverid, const std::string& ip, uint32 port, const std::string& version )
     {
         if ( _battle_server.IsValid() )
         {
@@ -575,7 +575,7 @@ namespace KFrame
         }
     }
 
-    KFBattlePlayer* KFBattleRoom::FindBattlePlayer( uint32 playerid )
+    KFBattlePlayer* KFBattleRoom::FindBattlePlayer( uint64 playerid )
     {
         auto kfcamp = _kf_camp_list.First();
         while ( kfcamp != nullptr )
@@ -592,7 +592,7 @@ namespace KFrame
         return nullptr;
     }
 
-    KFBattlePlayer* KFBattleRoom::FindBattlePlayer( uint32 campid, uint32 playerid )
+    KFBattlePlayer* KFBattleRoom::FindBattlePlayer( uint32 campid, uint64 playerid )
     {
         auto kfcamp = _kf_camp_list.Find( campid );
         if ( kfcamp == nullptr )
@@ -603,7 +603,7 @@ namespace KFrame
         return kfcamp->_kf_player_list.Find( playerid );
     }
 
-    bool KFBattleRoom::PlayerOnlineBattleRoom( uint32 campid, uint32 playerid, uint32 serverid )
+    bool KFBattleRoom::PlayerOnlineBattleRoom( uint32 campid, uint64 playerid, uint64 serverid )
     {
         auto kfplayer = FindBattlePlayer( campid, playerid );
         if ( kfplayer == nullptr )

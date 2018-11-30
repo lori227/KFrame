@@ -53,7 +53,7 @@ namespace KFrame
 
     private:
         // 查找一个匹配服务器
-        uint32 FindMatchShard( uint32 matchid, uint32 playerid );
+        uint64 FindMatchShard( uint32 matchid, uint64 playerid );
 
     private:
         // 匹配shard列表

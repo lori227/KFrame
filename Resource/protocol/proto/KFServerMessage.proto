@@ -135,7 +135,7 @@ enum ServerProtocol
 // S2S_TRANSMIT_MESSAGE_REQ
 message S2STransmitMessageReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint32 msgid = 2;
 	required bytes msgdata = 3;
 }
@@ -171,7 +171,7 @@ message S2SBroadcastToGate
 // S2S_TRANSMIT_TO_PLAYER
 message S2STransmitToPlayer
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint32 msgid = 2;			// 消息id
 	required bytes msgdata = 3;		// 消息内容
 }
@@ -203,23 +203,23 @@ message S2STransmitToDataShardReq
 // S2S_SAVE_PLAYER_REQ
 message S2SSavePlayerReq
 {
-	required uint32 zoneid = 1;	
-	required uint32 id = 2;
+	required uint64 id = 1;
+	required uint32 zoneid = 2;	
 	required PBObject data = 3;
 }
 
 // S2S_DELETE_PLAYER_REQ
 message S2SDeletePlayerReq
 {
-	required uint32 zoneid = 1;
-	required uint32 id = 2;
+	required uint64 id = 1;
+	required uint32 zoneid = 2;
 }
 
 // 更新公共数据
 // S2S_UPDATE_PUBLIC_DATA_REQ
 message S2SUpdatePublicDataReq
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	repeated PBString pbdata = 4;		// 属性
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,14 +228,14 @@ message S2SUpdatePublicDataReq
 // S2S_KICK_GAME_PLAYER_REQ
 message S2SKickGamePlayerReq
 {
-	required uint32 playerid = 1;		// 角色id
+	required uint64 playerid = 1;		// 角色id
 	required uint32 type = 2;
 }
 
 // S2S_KICK_GATE_PLAYER_REQ
 message S2SKickGatePlayerReq
 {
-	required uint32 playerid = 1;		// 角色id
+	required uint64 playerid = 1;		// 角色id
 	required uint32 type = 2;
 
 }
@@ -246,10 +246,10 @@ message S2SKickGatePlayerReq
 // S2S_LOGIN_LOGIN_VERIFY_REQ
 message S2SLoginLoginVerifyReq
 {
-	required uint32 accountid = 1;	// 账号id
+	required uint64 accountid = 1;	// 账号id
 	required bytes token = 2;		// token
 	required bytes ip = 3;			// ip
-	required uint32 sessionid = 4;	// sessionid
+	required uint64 sessionid = 4;	// sessionid
 }
 
 // 登录验证请求
@@ -257,20 +257,20 @@ message S2SLoginLoginVerifyReq
 message S2SLoginLoginVerifyAck
 {
 	required uint32 result = 1;		// 结果
-	required uint32 accountid = 2;	// 账号id
-	required uint32 sessionid = 3;	// sessionid
-	required uint32 bantime = 4;	// 禁止游戏的时间
+	required uint64 accountid = 2;	// 账号id
+	required uint64 sessionid = 3;	// sessionid
+	required uint64 bantime = 4;	// 禁止游戏的时间
 }
 
 message PBLoginData
 {
 	required bytes token = 1;		// token
-	required uint32 gateid = 2;		// 服务器id
-	required uint32 sessionid = 3;	// sessionid
+	required uint64 gateid = 2;		// 服务器id
+	required uint64 sessionid = 3;	// sessionid
 	required uint32 channel = 4;	// 渠道id
 	required bytes account = 5;	// 账号
-	required uint32 accountid = 6;	// 账号id
-	required uint32 playerid = 7;	// 角色id
+	required uint64 accountid = 6;	// 账号id
+	required uint64 playerid = 7;	// 角色id
 	required PBStrings channeldata = 8;	// 渠道数据	
 }
 
@@ -285,10 +285,10 @@ message S2SLoginWorldVerifyReq
 // S2S_LOGIN_FAILED_TO_LOGIN_ACK
 message S2SLoginFailedToLoginAck
 {
-	required uint32 gateid = 1;	// 服务器id
+	required uint64 gateid = 1;	// 服务器id
 	required uint32 result = 2;	// 结果
-	required uint32 accountid = 3;	// 账号id
-	required uint32 sessionid = 4;	// sessionid
+	required uint64 accountid = 3;	// 账号id
+	required uint64 sessionid = 4;	// sessionid
 }
 
 // 通知登录节点Token信息
@@ -326,19 +326,19 @@ message S2SLoginLoadPlayerAck
 // S2S_LOGIN_OUT_REQ
 message S2SLoginOutReq
 {
-	required uint32 playerid = 1; 
+	required uint64 playerid = 1; 
 }
 
 // S2S_PLAYER_DISCONNECTION_REQ
 message S2SPlayerDisconnectionReq
 {
-	required uint32 playerid = 1; 
+	required uint64 playerid = 1; 
 }
 
 // S2S_SET_PLAYER_NAME_REQ
 message S2SSetPlayerNameReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes oldname = 2;
 	required bytes newname = 3;
 }
@@ -346,7 +346,7 @@ message S2SSetPlayerNameReq
 // S2S_SET_PLAYER_NAME_ACK
 message S2SSetPlayerNameAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes oldname = 2;
 	required bytes newname = 3;
 	required uint32 result = 4;
@@ -356,7 +356,7 @@ message S2SSetPlayerNameAck
 // S2S_CREATE_ROLE_REQ
 message S2SCreateRoleReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
@@ -367,7 +367,7 @@ message S2SCreateRoleReq
 // S2S_CREATE_ROLE_ACK
 message S2SCreateRoleAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes newname = 2;
 	required uint32 modleid = 3;
 	required uint32 sex = 4;
@@ -380,22 +380,22 @@ message S2SCreateRoleAck
 // S2S_PLAYER_ENTER_WORLD_REQ
 message S2SPlayerEnterWorldReq
 {
-	required uint32 playerid = 1;		// 角色id	
-	required uint32 accountid = 2;		// 账号id
+	required uint64 playerid = 1;		// 角色id	
+	required uint64 accountid = 2;		// 账号id
 }
 
 // S2S_PLAYER_LEAVE_WORLD_REQ
 message S2SPlayerLeaveWorldReq
 {
-	required uint32 playerid = 1;		// 角色id
-	required uint32 accountid = 2;		// 账号id
+	required uint64 playerid = 1;		// 角色id
+	required uint64 accountid = 2;		// 账号id
 }
 
 // 同步在线玩家
 // S2S_GAME_SYNC_ONLINE_REQ
 message S2SGameSyncOnlineReq
 {
-	repeated uint32 playerid = 1;
+	repeated uint64 playerid = 1;
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -403,7 +403,7 @@ message S2SGameSyncOnlineReq
 // S2S_QUERY_MAIL_REQ
 message S2SQueryMailReq
 {
-	required uint32 playerid = 1;		//  角色id
+	required uint64 playerid = 1;		//  角色id
 	required uint32 mailtype = 2;		//  邮件类型
 	required uint64 maxmailid = 3;			// 最大的邮件id
 }
@@ -423,7 +423,7 @@ message PBMails
 // S2S_QUERY_MAIL_ACK
 message S2SQueryMailAck
 {
-	required uint32 playerid = 1;	//  角色id
+	required uint64 playerid = 1;	//  角色id
 	required PBMails mails = 2;	// 邮件信息
 	required uint32 mailtype = 3;	// 邮件类型
 }
@@ -432,7 +432,7 @@ message S2SQueryMailAck
 // S2S_DELETE_MAIL_REQ
 message S2SDeleteMailReq
 {
-	required uint32 playerid = 1;		// 角色id
+	required uint64 playerid = 1;		// 角色id
 	required uint64 mailid = 2;			// 邮件id
 	required uint32 mailtype = 3;		// 邮件类型
 }
@@ -441,7 +441,7 @@ message S2SDeleteMailReq
 // S2S_ADD_MAIL_REQ
 message S2SAddMailReq
 {
-	required uint32 playerid = 1;		// 角色id
+	required uint64 playerid = 1;		// 角色id
 	required uint32 mailtype = 3;		// 邮件类型
 	required PBMail pbmail = 5;			// 邮件信息
 }
@@ -450,7 +450,7 @@ message S2SAddMailReq
 // S2S_NOTICE_NEW_MAIL_REQ
 message S2SNoticeNewMailReq
 {
-	required uint32 playerid = 1;	// 角色id	
+	required uint64 playerid = 1;	// 角色id	
 	required uint32 mailtype = 2;	// 邮件类型	
 }
 
@@ -458,7 +458,7 @@ message S2SNoticeNewMailReq
 ////////////////////////////////////////////////////////////////////////
 message PBRelation
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBStrings playerdata = 2;
 	required PBStrings relationdata = 3;
 }
@@ -467,23 +467,23 @@ message PBRelation
 // S2S_QUERY_FRIEND_REQ
 message S2SQueryFriendReq
 {
-	required uint32 playerid = 1;	// 玩家id
-	required uint32 serverid = 2;
+	required uint64 playerid = 1;	// 玩家id
+	required uint64 serverid = 2;
 }
 
 // 查询好友申请信息
 // S2S_QUERY_FRIEND_INVITE_REQ
 message S2SQueryFriendInviteReq
 {
-	required uint32 playerid = 1;	// 玩家id
-	required uint32 serverid = 2;
+	required uint64 playerid = 1;	// 玩家id
+	required uint64 serverid = 2;
 }
 
 // 查询好友信息
 // S2S_QUERY_FRIEND_ACK
 message S2SQueryFriendAck
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
@@ -491,7 +491,7 @@ message S2SQueryFriendAck
 // S2S_QUERY_FRIEND_INVITE_ACK
 message S2SQueryFriendInviteAck
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
@@ -499,10 +499,10 @@ message S2SQueryFriendInviteAck
 // S2S_ADD_FRIEND_INVITE_REQ
 message S2SAddFriendInviteReq
 {
-	required uint32 selfplayerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
+	required uint64 selfplayerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
 	required bytes message = 3;		// 留言	
-	required uint32 serverid = 4;
+	required uint64 serverid = 4;
 	required bytes targetname = 5;		// 对方名字
 }
 
@@ -510,7 +510,7 @@ message S2SAddFriendInviteReq
 // S2S_ADD_FRIEND_INVITE_ACK
 message S2SAddFriendInviteAck
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	required PBRelation pbfriend = 2;	// 好友数据	
 }
 
@@ -518,33 +518,33 @@ message S2SAddFriendInviteAck
 // S2S_DEL_FRIEND_REQ
 message S2SDelFriendReq
 {
-	required uint32 selfplayerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
+	required uint64 selfplayerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
 }
 
 // 删除好友
 // S2S_DEL_FRIEND_ACK
 message S2SDelFriendAck
 {
-	required uint32 playerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
+	required uint64 playerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
 }
 
 // 删除好友请求
 // S2S_DEL_FRIEND_INVITE_REQ
 message S2SDelFriendInviteReq
 {
-	required uint32 selfplayerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
+	required uint64 selfplayerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
 }
 
 // 添加好友
 // S2S_ADD_FRIEND_REQ
 message S2SAddFriendReq
 {
-	required uint32 selfplayerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
-	required uint32 serverid = 3;
+	required uint64 selfplayerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
+	required uint64 serverid = 3;
 	required bytes targetname = 4;		// 对方名字
 }
 
@@ -552,7 +552,7 @@ message S2SAddFriendReq
 // S2S_ADD_FRIEND_ACK
 message S2SAddFriendAck
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required PBRelation pbfriend = 2;		// 好友信息
 }
 
@@ -560,8 +560,8 @@ message S2SAddFriendAck
 // S2S_UPDATE_FRIEND_REQ
 message S2SUpdateFriendReq
 {
-	required uint32 friendid = 1;
-	required uint32 serverid = 2;
+	required uint64 friendid = 1;
+	required uint64 serverid = 2;
 	repeated PBString pbdata = 3;
 }
 
@@ -569,8 +569,8 @@ message S2SUpdateFriendReq
 // S2S_UPDATE_FRIEND_LINESS_REQ
 message S2SUpdateFriendLinessReq
 {
-	required uint32 selfplayerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
+	required uint64 selfplayerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
 	required uint32 friendliness = 3;	// 好友度
 	required uint32 type = 4;			// 类型
 	//optional uint32 serverid = 5;		// 申请服务器id
@@ -581,7 +581,7 @@ message S2SUpdateFriendLinessReq
 // S2S_QUERY_BASIC_REQ
 message S2SQueryBasicReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required bytes name = 2;
 }
 
@@ -589,7 +589,7 @@ message S2SQueryBasicReq
 // S2S_QUERY_BASIC_ACK
 message S2SQueryBasicAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbobject = 2;
 }
 
@@ -598,15 +598,15 @@ message S2SQueryBasicAck
 message S2SQueryPlayerReq
 {
 	required uint32 zoneid = 1;
-	required uint32 playerid = 2;
-	required uint32 queryid = 3;
+	required uint64 playerid = 2;
+	required uint64 queryid = 3;
 }
 
 // 查询属性
 // S2S_QUERY_PLAYER_ACK
 message S2SQueryPlayerAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbobject = 2;
 }
 
@@ -614,7 +614,7 @@ message S2SQueryPlayerAck
 // S2S_UPDATE_MAIL_FLAG_REQ
 message S2SUpdateMailFlagReq
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint64 mailid = 2;
 	required uint32 mailtype = 3;
 	required uint32 flag = 4;
@@ -624,7 +624,7 @@ message S2SUpdateMailFlagReq
 // S2S_UPDATE_MAIL_FLAG_ACK
 message S2SUpdateMailFlagAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required uint64 mailid = 2;
 	required uint32 mailtype = 3;
 	required uint32 flag = 4;
@@ -637,9 +637,9 @@ message S2SUpdateMailFlagAck
 //S2S_PLAYER_TOAST_REQ
 message S2SPlayerToastReq
 {
-	required uint32 selfplayerid = 1;			// 敬酒人
-	required uint32 targetplayerid = 2;         // 被敬酒人
-	required uint32 serverid = 3;         		// 服务器id
+	required uint64 selfplayerid = 1;			// 敬酒人
+	required uint64 targetplayerid = 2;         // 被敬酒人
+	required uint64 serverid = 3;         		// 服务器id
 }
 
 //玩家敬酒回馈
@@ -647,17 +647,17 @@ message S2SPlayerToastReq
 message S2SPlayerToastAck
 {
 	required uint32 result = 1;					// 敬酒结果
-	required uint32 playerid = 2;				// 敬酒人
-	required uint32 targetplayerid = 3;			// 被敬酒人
-	required uint32 targetserverid = 4;			// 被敬酒人serverid
+	required uint64 playerid = 2;				// 敬酒人
+	required uint64 targetplayerid = 3;			// 被敬酒人
+	required uint64 targetserverid = 4;			// 被敬酒人serverid
 }
 
 // 查询总的敬酒次数请求
 //S2S_QUERY_TOAST_COUNT_REQ
 message S2SQueryToastCountReq
 {
-	required uint32 selfplayerid = 1;
-	required uint32 targetplayerid = 2;
+	required uint64 selfplayerid = 1;
+	required uint64 targetplayerid = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -667,9 +667,9 @@ message S2SQueryToastCountReq
 // S2S_UPDATE_FRIENDLINESS_ACK
 message S2SUpdateFriendLinessAck
 {
-	required uint32 playerid = 1;	// 申请id
-	required uint32 targetplayerid = 2;	// 对方id
-	required uint32 friendliness = 3;	// 好友度
+	required uint64 playerid = 1;	// 申请id
+	required uint64 targetplayerid = 2;	// 对方id
+	required uint64 friendliness = 3;	// 好友度
 }
 
 // 创建匹配小组
@@ -680,7 +680,7 @@ message S2SCreateMatchGroupReq
 	required uint64 groupid = 2;
 	required uint32 maxcount = 3;
 	required uint32 matchid = 4;
-	required uint32 playerid = 5;
+	required uint64 playerid = 5;
 }
 
 // 更新队伍信息
@@ -690,7 +690,7 @@ message S2SUpdateGroupMatchReq
 	required uint64 groupid = 1;
 	required uint32 maxcount = 2;
 	required uint32 matchid = 3;
-	required uint32 playerid = 4;
+	required uint64 playerid = 4;
 }
 
 // 创建匹配小组
@@ -701,20 +701,20 @@ message S2SCreateMatchGroupToShardReq
 	required uint64 groupid = 2;
 	required uint32 maxcount = 3;
 	required uint32 matchid = 4;
-	required uint32 playerid = 5;
+	required uint64 playerid = 5;
 }
 
 // 接收到组队请求
 // S2S_RECEIVE_INVITE_MATCH_GROUP_REQ
 message S2SReceiveInviteMatchGroupReq
 {
-	required uint32 playerid = 1;		 // 玩家id
+	required uint64 playerid = 1;		 // 玩家id
 	required uint64 groupid = 2;		 // 队伍id
 	required PBObject inviter = 3;		 // 邀请者(BasicPlayer)
 	required bytes source = 4;			 // 从哪里发起邀请
 	required uint32 matchid = 5;		 // 匹配模式
-	required uint32 inviterplayerid = 6; // 邀请者id
-	required uint32 inviterserverid = 7; // 服务器id
+	required uint64 inviterplayerid = 6; // 邀请者id
+	required uint64 inviterserverid = 7; // 服务器id
 	required bytes playername = 8;		 // 被邀请玩家名字
 }
 
@@ -723,8 +723,8 @@ message S2SReceiveInviteMatchGroupReq
 message S2SConsentInviteMatchGroupReq
 {
 	required uint64 groupid = 1;		// 队伍id
-	required uint32 playerid = 2;		// 玩家id
-	required uint32 serverid = 3;		// 服务器id
+	required uint64 playerid = 2;		// 玩家id
+	required uint64 serverid = 3;		// 服务器id
 	optional PBObject pbmember = 4;		// 队员信息
 }
 
@@ -733,8 +733,8 @@ message S2SConsentInviteMatchGroupReq
 message S2SAddMatchGroupMemberReq
 {
 	required uint64 groupid = 1;		// 队伍id
-	required uint32 playerid = 2;		// 玩家id
-	required uint32 serverid = 3;		// 服务器id
+	required uint64 playerid = 2;		// 玩家id
+	required uint64 serverid = 3;		// 服务器id
 	optional PBObject pbmember = 4;		// 队员信息
 }
 
@@ -751,7 +751,7 @@ message S2STellMatchGroupDataAck
 {
 	repeated PBObject pbmember = 1;
 	optional uint64 groupid = 2;
-	optional uint32 captainid = 3;
+	optional uint64 captainid = 3;
 	optional uint32 maxcount = 4;
 	optional uint32 matchid = 5;
 	optional bool newadd = 6;		// 是否新加入队伍
@@ -761,7 +761,7 @@ message S2STellMatchGroupDataAck
 // S2S_REMOVE_MATCH_GROUP_MEMBER_ACK
 message S2SRemoveMatchGroupMemberAck
 {
-	required uint32 memberid = 1;
+	required uint64 memberid = 1;
 }
 
 // 离开队伍请求
@@ -769,7 +769,7 @@ message S2SRemoveMatchGroupMemberAck
 message S2SLeaveMatchGroupReq
 {
 	required uint64 groupid = 1;
-	required uint32 playerid = 2;	
+	required uint64 playerid = 2;	
 }
 
 // 踢出队员
@@ -777,16 +777,16 @@ message S2SLeaveMatchGroupReq
 message S2SKickMatchGroupReq
 {
 	required uint64 groupid = 1;
-	required uint32 captainid = 2;	
-	required uint32 serverid = 3;
-	required uint32 memberid = 4;	
+	required uint64 captainid = 2;	
+	required uint64 serverid = 3;
+	required uint64 memberid = 4;	
 }
 
 // 离开队伍
 // S2S_LEAVE_MATCH_GROUP_ACK
 message S2SLeaveMatchGroupAck
 {
-	required uint32 playerid = 1;	
+	required uint64 playerid = 1;	
 }
 
 // 申请加入队伍
@@ -794,8 +794,8 @@ message S2SLeaveMatchGroupAck
 message S2SApplyMatchGroupReq
 {
 	required uint64 groupid = 1;		// 队伍id
-	required uint32 playerid = 2;		// 玩家id
-	required uint32 serverid = 3;		// 服务器id
+	required uint64 playerid = 2;		// 玩家id
+	required uint64 serverid = 3;		// 服务器id
 	required PBObject pbmember = 4;		// 队员信息
 }
 
@@ -803,9 +803,9 @@ message S2SApplyMatchGroupReq
 // S2S_APPLY_MATCH_GROUP_ACK
 message S2SApplyMatchGroupAck
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbmember = 2;		// 队员信息
-	required uint32 serverid = 3;		// 服务器id
+	required uint64 serverid = 3;		// 服务器id
 }
 
 
@@ -814,9 +814,9 @@ message S2SApplyMatchGroupAck
 message S2SConsentApplyMatchGroupAck
 {
 	required uint64 groupid = 1;		// 队伍id
-	required uint32 playerid = 2;		// 申请人id
-	required uint32 captainid = 3;		// 队长id
-	required uint32 serverid = 4;		// 服务器id
+	required uint64 playerid = 2;		// 申请人id
+	required uint64 captainid = 3;		// 队长id
+	required uint64 serverid = 4;		// 服务器id
 	required bytes playername = 5;		// 玩家名字
 }
 
@@ -825,8 +825,8 @@ message S2SConsentApplyMatchGroupAck
 message S2SOnLineQueryMatchGroupReq
 {
 	required uint64 groupid = 1;	// 队伍id
-	required uint32 playerid = 2;	// 玩家id
-	required uint32 serverid = 3;	// 服务器id
+	required uint64 playerid = 2;	// 玩家id
+	required uint64 serverid = 3;	// 服务器id
 }
 
 // 离线更新队伍信息
@@ -834,7 +834,7 @@ message S2SOnLineQueryMatchGroupReq
 message S2SOffLineUpdateMatchGroupReq
 {
 	required uint64 groupid = 1;	// 队伍id
-	required uint32 playerid = 2;	// 玩家id
+	required uint64 playerid = 2;	// 玩家id
 }
 
 // 更新队员的基础信息
@@ -842,7 +842,7 @@ message S2SOffLineUpdateMatchGroupReq
 message S2SUpdateGroupMemberReq
 {
 	required uint64 groupid = 1;		// 队伍
-	required uint32 memberid = 2;		// 队员id
+	required uint64 memberid = 2;		// 队员id
 	required bytes dataname = 3;		// 属性名称
 	required PBStrings pbstrings = 4;	// 更新数值
 }
@@ -851,7 +851,7 @@ message S2SUpdateGroupMemberReq
 // S2S_UPDATE_GROUP_MEMBER_ACK
 message S2SUpdateGroupMemberAck
 {
-	required uint32 memberid = 1;		// 队员id
+	required uint64 memberid = 1;		// 队员id
 	required bytes dataname = 2;		// 属性名称
 	required PBStrings pbstrings = 3;	// 更新数值
 }
@@ -868,8 +868,8 @@ message S2SUpdateGroupDataAck
 // S2S_UPDATE_GUEST_LIST_REQ
 message S2SUpdateGuestListReq
 {
-	required uint32 playerid = 1;		// 玩家id
-	required uint32 guestid = 2;		// 访客id
+	required uint64 playerid = 1;		// 玩家id
+	required uint64 guestid = 2;		// 访客id
 	required uint64 guesttime = 3;		// 拜访时间戳
 }
 
@@ -877,8 +877,8 @@ message S2SUpdateGuestListReq
 // S2S_QUERY_GUEST_REQ
 message S2SQueryGuestReq
 {
-	required uint32 playerid = 1;		// 发起请求的玩家id
-	required uint32 queryid = 2;		// 被查询的玩家id
+	required uint64 playerid = 1;		// 发起请求的玩家id
+	required uint64 queryid = 2;		// 被查询的玩家id
 	required uint64 querytime = 3;		// 请求时间戳
 }
 
@@ -886,8 +886,8 @@ message S2SQueryGuestReq
 // S2S_QUERY_GUEST_ACK
 message S2SQueryGuestAck
 {
-	required uint32 playerid = 1;		// 发起请求的玩家id
-	required uint32 queryid = 2;		// 被查询的玩家id
+	required uint64 playerid = 1;		// 发起请求的玩家id
+	required uint64 queryid = 2;		// 被查询的玩家id
 	required uint32 guestcount = 3;		// 本月访客数量
 	repeated PBGuestData guestdata = 4;	// 最近访客信息
 }
@@ -896,14 +896,14 @@ message S2SQueryGuestAck
 // S2S_NEW_PLAYER_LOGIN_MAIL_REQ
 message S2SNewPlayerLoginMailReq
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 }
 
 // 更新排行榜数据
 // S2S_UPDATE_RANK_DATA_REQ
 message S2SUpdateRankDataReq
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint32 rankid = 2;		// 榜单id
 	required uint32 zoneid = 3;		// 小区id
 	required PBRankData pbrankdata = 4;	// 排行榜数据
@@ -913,8 +913,8 @@ message S2SUpdateRankDataReq
 // S2S_QUERY_RANK_LIST_REQ
 message S2SQueryRankListReq
 {
-	required uint32 playerid = 1;		// 玩家id
-	required uint32 serverid = 2;		// 服务器id
+	required uint64 playerid = 1;		// 玩家id
+	required uint64 serverid = 2;		// 服务器id
 	required uint32 rankid = 3;			// 排行榜id
 	required uint32 zoneid = 4;			// 小区id
 }
@@ -923,10 +923,10 @@ message S2SQueryRankListReq
 // S2S_QUERY_FRIEND_RANK_LIST_REQ
 message S2SQueryFriendRankListReq
 {
-	required uint32 playerid = 1;		// 玩家id
-	required uint32 serverid = 2;		// 服务器id
+	required uint64 playerid = 1;		// 玩家id
+	required uint64 serverid = 2;		// 服务器id
 	required uint32 rankid = 3;			// 榜单类型
-	repeated uint32 friendid = 4;		// 待查询的玩家好友id
+	repeated uint64 friendid = 4;		// 待查询的玩家好友id
 }
 
 // 添加最近的人游戏数据
@@ -934,8 +934,8 @@ message S2SQueryFriendRankListReq
 message S2SAddRecentPlayerDataReq
 {
 	required uint64 roomid = 1;
-	required uint32 playerid = 2;
-	repeated uint32 members = 3;
+	required uint64 playerid = 2;
+	repeated uint64 members = 3;
 	required PBStrings pbdata = 4;
 }
 
@@ -943,14 +943,14 @@ message S2SAddRecentPlayerDataReq
 // S2S_QUERY_RECENT_LIST_REQ
 message S2SQueryRecentListReq
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 }
 
 // 通知处理最近游戏列表	
 // S2S_QUERY_RECENT_LIST_ACK
 message S2SQueryRecentListAck
 {
-	required uint32 playerid = 1;		// 角色id
+	required uint64 playerid = 1;		// 角色id
 	repeated PBRelation pbrelation = 2;	// 最近玩家数据	
 }
 
@@ -958,8 +958,8 @@ message S2SQueryRecentListAck
 // S2S_CREATE_GUILD_REQ
 message S2SCreateGuidReq
 {
-	required uint32 playerid = 1;	// 玩家id
-	required uint32 serverid = 2;	//服务器id
+	required uint64 playerid = 1;	// 玩家id
+	required uint64 serverid = 2;	//服务器id
 	required bytes name = 3;	// 玩家名字
 	required bytes guildname = 4;	// 帮派名字
 	required uint32 medal = 5;	// 帮派勋章
@@ -970,8 +970,8 @@ message S2SCreateGuidReq
 // S2S_CREATE_GUILD_TO_SHARD_REQ
 message S2SCreateGuildToShardReq
 {
-	required uint32 playerid = 1;	// 玩家id
-	required uint32 serverid = 2;	//服务器id
+	required uint64 playerid = 1;	// 玩家id
+	required uint64 serverid = 2;	//服务器id
 	required bytes name = 3;	// 玩家名字
 	required bytes guildname = 4;	// 帮派名字
 	required uint32 medal = 5;	// 帮派勋章
@@ -984,7 +984,7 @@ message S2SCreateGuildToShardReq
 message S2SCreateGuildAck
 {
 	required uint32 code = 1;	// 处理结果
-	required uint32 playerid = 2;	//玩家id
+	required uint64 playerid = 2;	//玩家id
 	required uint64 guildid = 3;	// 帮派id
 	required uint32 medal = 4;	// 帮派勋章
 	optional bytes manifesto = 5;	// 帮派宣言	
@@ -994,7 +994,7 @@ message S2SCreateGuildAck
 // S2S_UPDATE_MEMBER_BASIC_DATA_REQ
 message S2SUpdateMemberBasicDataReq
 {
-	required uint32 playerid = 1;	// 角色id
+	required uint64 playerid = 1;	// 角色id
 	required uint64 guildid = 2;	// 帮派id
 	repeated PBString pbdata = 3;   // 角色基础信息
 }
@@ -1005,9 +1005,9 @@ message S2SUpdateMemberBasicDataReq
 message S2SInviteGuildReq
 {
 	required uint64 guildid = 1;	// 邀请加入的帮派id
-	required uint32 invitor = 2;	// 邀请者id
-	required uint32 invitedid = 3;	// 被邀请者的id
-	required uint32 serverid = 4;	// 邀请者服务Id
+	required uint64 invitor = 2;	// 邀请者id
+	required uint64 invitedid = 3;	// 被邀请者的id
+	required uint64 serverid = 4;	// 邀请者服务Id
 }
 
 // 邀请好友加入帮派反馈
@@ -1015,8 +1015,8 @@ message S2SInviteGuildReq
 message S2SInviteGuildAck
 {
 	required uint64 guildid = 1;	// 邀请加入的帮派id
-	required uint32 playerid = 2;	// 邀请者id
-	required uint32 invitedid = 3;	// 被邀请者的id
+	required uint64 playerid = 2;	// 邀请者id
+	required uint64 invitedid = 3;	// 被邀请者的id
 }
 
 // 申请加入帮派请求
@@ -1024,15 +1024,15 @@ message S2SInviteGuildAck
 message S2SApplyGuildReq
 {
 	required uint64 guildid = 1;			// 申请加入的帮派
-	required uint32 invitor = 2;			// 推荐者id
-	required uint32 playerid = 3;			// 申请者id
+	required uint64 invitor = 2;			// 推荐者id
+	required uint64 playerid = 3;			// 申请者id
 }
 
 // 申请加入帮派反馈
 // S2S_APPLY_GUILD_ACK
 message S2SApplyGuildAck
 {
-	required uint32 playerid = 1;			// 申请者id
+	required uint64 playerid = 1;			// 申请者id
 	required uint64 guildid = 2;			// 申请加入的帮派
 	required uint32 code = 3;			// 标志位
 }
@@ -1041,7 +1041,7 @@ message S2SApplyGuildAck
 // S2S_PLAYER_GUILD_CHANGE_REQ
 message S2SPlayerGuildChangeReq
 {
-	required uint32 playerid = 1;			// 玩家id
+	required uint64 playerid = 1;			// 玩家id
 	required uint64 guildid = 2;			// 帮派id
 	required uint32 code = 3;			// 状态码//加入帮派//退出帮派等
 }
@@ -1051,8 +1051,8 @@ message S2SPlayerGuildChangeReq
 message S2SExitGuildReq
 {
 	required uint64 guildid = 1;			// 帮派id
-	required uint32 playerid = 2;			// 玩家id
-	required uint32 serverid = 3;			// 服务器id
+	required uint64 playerid = 2;			// 玩家id
+	required uint64 serverid = 3;			// 服务器id
 }
 
 // 转让帮派请求
@@ -1060,9 +1060,9 @@ message S2SExitGuildReq
 message S2STransferMasterReq
 {
 	required uint64 guildid = 1;			// 帮派id
-	required uint32 playerid = 2;			// 现任帮主id
-	required uint32 newmasterid = 3;		// 新的帮主id
-	required uint32 serverid = 4;			// 服务器id
+	required uint64 playerid = 2;			// 现任帮主id
+	required uint64 newmasterid = 3;		// 新的帮主id
+	required uint64 serverid = 4;			// 服务器id
 }
 
 // 审核帮派成员加入
@@ -1070,28 +1070,28 @@ message S2STransferMasterReq
 message S2SReviewApplyReq
 {
 	required uint32 playerid = 1;			// 操作者id
-	optional uint32 dealplayerid = 2;		// 被操作人id
+	optional uint64 dealplayerid = 2;		// 被操作人id
 	required uint32 operatortype = 3;		// 操作类型
 	required uint64 guildid= 4;			// 帮派id
-	required uint32 serverid = 5;			// 服务器id
+	required uint64 serverid = 5;			// 服务器id
 }
 
 // 解散帮派
 // S2S_DISSOLVE_GUILD_REQ
 message S2SDissolveGuildReq
 {
-	required uint32 playerid =1;			// 操作者id
+	required uint64 playerid =1;			// 操作者id
 	required uint64 guildid = 2;			// 帮派id
-	required uint32 serverid = 3;			// 服务器id
+	required uint64 serverid = 3;			// 服务器id
 }
 
 // 修改帮派徽章
 // S2S_MODIFY_MEDAL_REQ
 message S2SModifyMedalReq
 {
-	required uint32 playerid = 1;			// 操作者id
+	required uint64 playerid = 1;			// 操作者id
 	required uint64 guildid = 2;			// 帮派id
-	required uint32 serverid =3;			// 服务器id
+	required uint64 serverid =3;			// 服务器id
 	required uint32 newmedal = 4;		// 新的徽章id
 }
 
@@ -1099,8 +1099,8 @@ message S2SModifyMedalReq
 // S2S_QUERY_GUILD_LIST_REQ
 message S2SQueryGuildListReq
 {
-	required uint32 playerid = 1;			// 操作者id
-	required uint32 serverid = 2;			// 服务器id
+	required uint64 playerid = 1;			// 操作者id
+	required uint64 serverid = 2;			// 服务器id
 	optional PBGuildIdArray guilds = 3;	// 要查询的帮派id
 	required uint32 cursor = 4;		// 查询的游标（从0开始）
 }
@@ -1109,10 +1109,10 @@ message S2SQueryGuildListReq
 // S2S_KICK_MEMBER_REQ
 message S2SKickMemberReq
 {
-	required uint32 playerid = 1;			// 操作者id
+	required uint64 playerid = 1;			// 操作者id
 	required uint64 guildid = 2;			// 帮派id
-	required uint32 toplayerid = 3;			// 被踢人的id
-	required uint32 serverid = 4;			// 服务器id
+	required uint64 toplayerid = 3;			// 被踢人的id
+	required uint64 serverid = 4;			// 服务器id
 }
 
 // 登录请求自身帮派数据
@@ -1128,7 +1128,7 @@ message S2SLoginQueryGuildReq
 // S2S_LOGIN_QUERY_GUILD_ACK
 message S2SLoginQueryGuildAck
 {
-	required uint32 playerid = 1;			// 角色id
+	required uint64 playerid = 1;			// 角色id
 	required PBObject guilddata = 2;		// 帮派数据
 	required bool showapplicant = 3;		// 是否展示申请列表
 	required uint64 guildid = 4;			// 帮派id
@@ -1139,7 +1139,7 @@ message S2SLoginQueryGuildAck
 message S2SUpdateGuildDataReq
 {
 	required uint64 guildid = 1;
-	required uint32 playerid = 2;		// 玩家id
+	required uint64 playerid = 2;		// 玩家id
 	repeated PBString pbdata = 3;		// 属性
 }
 
@@ -1148,14 +1148,14 @@ message S2SUpdateGuildDataReq
 message S2SUpgradeGuildReq
 {
 	required uint64 guildid = 1;		// 帮派id
-	required uint32 playerid = 2;		// 玩家id
+	required uint64 playerid = 2;		// 玩家id
 }
 
 // 帮派升级反馈
 // S2S_UPGRADE_GUILD_ACK
 message S2SUpgradeGuildAck
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint32 level = 2;		// 帮派等级
 	required uint32 code = 3;		// retcode
 }
@@ -1164,11 +1164,11 @@ message S2SUpgradeGuildAck
 // S2S_APPOINT_GUILD_MEMBER_REQ
 message S2SAppointGuildMemberReq
 {
-	required uint32 playerid = 1;	// 玩家id
+	required uint64 playerid = 1;	// 玩家id
 	required uint64 guildid = 2;	// 帮派id
-	required uint32 toplayerid = 3;	// 任命玩家的id
+	required uint64 toplayerid = 3;	// 任命玩家的id
 	required uint32 title = 4;		// 任命的职位
-	required uint32 serverid = 5;	// 服务器id
+	required uint64 serverid = 5;	// 服务器id
 }
 
 // 根据帮派名字搜索帮派信息
@@ -1176,33 +1176,33 @@ message S2SAppointGuildMemberReq
 message S2SSearchGuildByNameReq
 {
 	required bytes guildname = 1;		// 帮派名字
-	required uint32 serverid = 2;		// 服务器id
-	required uint32 playerid = 3;		// 玩家id
+	required uint64 serverid = 2;		// 服务器id
+	required uint64 playerid = 3;		// 玩家id
 }
 
 // 设置帮派管理开关
 // S2S_SET_GUILD_SWITCH_REQ
 message S2SSetGuildSwitchReq
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint64 guildid = 2;		// 帮派id
 	required bytes type = 3;		// 帮派管理类别
 	required uint32 flag = 4;		// 设置的值
-	required uint32 serverid = 5;		// 服务器id
+	required uint64 serverid = 5;		// 服务器id
 }
 
 // 登录请求guildid
 // S2S_LOGIN_QUERY_GUILDID_REQ
 message S2SLoginQueryGuildidReq
 {
-	required uint32 playerid = 1;		// 玩家id
-	required uint32 serverid = 2;		// 服务器id
+	required uint64 playerid = 1;		// 玩家id
+	required uint64 serverid = 2;		// 服务器id
 }
 
 // S2S_LOGIN_QUERY_GUILDID_ACK
 message S2SLoginQueryGuildidAck
 {
-	required uint32 playerid = 1;		// 玩家id
+	required uint64 playerid = 1;		// 玩家id
 	required uint64 guildid = 2;		// 帮派id
 }
 
@@ -1211,8 +1211,8 @@ message S2SLoginQueryGuildidAck
 message S2SQueryGuildLogReq
 {
 	required uint64 guildid= 1;		// 帮派id
-	required uint32 playerid = 2;		// 玩家id
-	required uint32 serverid = 3;		// 服务器id
+	required uint64 playerid = 2;		// 玩家id
+	required uint64 serverid = 3;		// 服务器id
 	required uint32 beginpos = 4;		// 开始位置
 	required uint32 endpos = 5;		// 结束位置
 	required uint32 page = 6;		// 页数
@@ -1223,7 +1223,7 @@ message S2SQueryGuildLogReq
 message S2SAddGuildActivenessReq
 {
 	required uint64 guildid = 1;		// 帮派id
-	required uint32 playerid = 2;		// 玩家id
+	required uint64 playerid = 2;		// 玩家id
 	required uint32 activeness = 3;		// 活跃度
 }
 
@@ -1231,7 +1231,7 @@ message S2SAddGuildActivenessReq
 // S2S_GM_ADD_MAIL_REQ
 message S2SGMAddMailReq
 {
-	optional PBPlayerIds playerids = 1;		// 角色id
+	repeated uint64 playerids = 1;		// 角色id
 	required uint32 mailtype = 2;			// 邮件类型
 	required PBMail pbmail = 3;			// 邮件信息
 }
@@ -1243,10 +1243,10 @@ message S2SSendChatToServer
 	required bytes chatinfo = 1;		//聊天内容
 	required uint32 isvoice = 2;		//是否是语音消息
 	required bytes playername = 3;		//发送聊天的玩家名字
-	required uint32 playerid = 4;		//发送聊天的玩家id
+	required uint64 playerid = 4;		//发送聊天的玩家id
 	required bytes playericon = 5;		//发送聊天的玩家头像
 	required uint32 playergrade = 6;	//发送聊天的玩家评分等级
 	required uint32 playersex = 7;		//发送聊天的玩家性别
 	required bytes playericonbox = 8;	//发送聊天的玩家头像框
-	required uint32 playerserverid = 9;	//发送聊天的玩家服务器id
+	required uint64 playerserverid = 9;	//发送聊天的玩家服务器id
 }

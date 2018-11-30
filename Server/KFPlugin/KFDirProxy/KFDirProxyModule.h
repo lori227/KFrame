@@ -20,8 +20,8 @@ namespace KFrame
     class KFDirProxyModule : public KFDirProxyInterface
     {
     public:
-        KFDirProxyModule();
-        ~KFDirProxyModule();
+        KFDirProxyModule() = default;
+        ~KFDirProxyModule() = default;
 
         // 初始化
         virtual void BeforeRun();

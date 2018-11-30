@@ -2,20 +2,6 @@
 
 namespace KFrame
 {
-    KFRelationShardModule::KFRelationShardModule()
-    {
-        _public_redis_driver = nullptr;
-        _relation_redis_driver = nullptr;
-    }
-
-    KFRelationShardModule::~KFRelationShardModule()
-    {
-    }
-
-    void KFRelationShardModule::InitModule()
-    {
-    }
-
     void KFRelationShardModule::BeforeRun()
     {
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
@@ -67,7 +53,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationShardModule::MapStringToPBPlayer( MapString& values, uint32 friendid, KFMsg::PBRelation* pbrelation )
+    void KFRelationShardModule::MapStringToPBPlayer( MapString& values, uint64 friendid, KFMsg::PBRelation* pbrelation )
     {
         pbrelation->set_playerid( friendid );
 
@@ -108,14 +94,14 @@ namespace KFrame
         }
     }
 
-    std::string KFRelationShardModule::FormatFriendKey( const std::string& key, uint32 firstid, uint32 secondid )
+    std::string KFRelationShardModule::FormatFriendKey( const std::string& key, uint64 firstid, uint64 secondid )
     {
         auto id1 = __MIN__( firstid, secondid );
         auto id2 = __MAX__( firstid, secondid );
         return __FORMAT__( "{}:{}:{}", key, id1, id2 );
     }
 
-    std::string KFRelationShardModule::FormatFriendLimitKey( uint32 firstid, uint32 secondid, uint32 type )
+    std::string KFRelationShardModule::FormatFriendLimitKey( uint64 firstid, uint64 secondid, uint32 type )
     {
         auto id1 = __MIN__( firstid, secondid );
         auto id2 = __MAX__( firstid, secondid );
@@ -138,7 +124,7 @@ namespace KFrame
 
         for ( auto& strid : queryidlist->_value )
         {
-            auto friendid = KFUtility::ToValue< uint32 >( strid );
+            auto friendid = KFUtility::ToValue< uint64 >( strid );
 
             // 好友的基本信息
             auto publicdata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), friendid );
@@ -169,14 +155,14 @@ namespace KFrame
             return;
         }
 
-        std::set< uint32 > removes;
+        std::set< uint64 > removes;
 
         KFMsg::S2SQueryFriendInviteAck ack;
         ack.set_playerid( kfmsg.playerid() );
 
         for ( auto& strid : queryidlist->_value )
         {
-            auto friendid = KFUtility::ToValue< uint32 >( strid );
+            auto friendid = KFUtility::ToValue< uint64 >( strid );
 
             // 获得邀请的时间
             auto queryinvitedata = _relation_redis_driver->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( invite ), kfmsg.playerid(), friendid );
@@ -220,7 +206,7 @@ namespace KFrame
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::PublicDatabaseError );
         }
 
-        auto refuseinvite = KFUtility::ToValue< uint32 >( querytargetdata->_value[ __KF_STRING__( refuseinvite ) ] );
+        auto refuseinvite = KFUtility::ToValue< uint64 >( querytargetdata->_value[ __KF_STRING__( refuseinvite ) ] );
         if ( refuseinvite != _invalid_int )
         {
             return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendRefuseInvite, kfmsg.targetname() );
@@ -267,7 +253,7 @@ namespace KFrame
         _kf_display->SendToGame( kfmsg.serverid(), kfmsg.selfplayerid(), KFMsg::FriendInviteOK );
 
         // 判断对方是否在线, 如果在线直接发送消息
-        auto serverid = KFUtility::ToValue< uint32 >( querytargetdata->_value[ __KF_STRING__( serverid ) ] );
+        auto serverid = KFUtility::ToValue< uint64 >( querytargetdata->_value[ __KF_STRING__( serverid ) ] );
         if ( serverid == _invalid_int )
         {
             return;
@@ -348,7 +334,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationShardModule::SendAddFriendToClient( uint32 serverid, MapString& values, uint32 friendid, uint32 playerid )
+    void KFRelationShardModule::SendAddFriendToClient( uint64 serverid, MapString& values, uint64 friendid, uint64 playerid )
     {
         KFMsg::S2SAddFriendAck ack;
         ack.set_playerid( playerid );
@@ -390,7 +376,7 @@ namespace KFrame
         UpdateFriendLiness( kfmsg.selfplayerid(), kfmsg.targetplayerid(), kfmsg.type(), kfmsg.friendliness() );
     }
 
-    void KFRelationShardModule::UpdateFriendLiness( uint32 selfplayerid, uint32 targetplayerid, uint32 type, uint32 addvalue )
+    void KFRelationShardModule::UpdateFriendLiness( uint64 selfplayerid, uint64 targetplayerid, uint32 type, uint32 addvalue )
     {
         static auto _max_friend_liness = _kf_option->FindOption( __KF_STRING__( freindlinessmax ) );
 
@@ -430,7 +416,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationShardModule::SendAddFriendLinessToClient( uint32 selfid, uint32 targetid, uint32 friendliness )
+    void KFRelationShardModule::SendAddFriendLinessToClient( uint64 selfid, uint64 targetid, uint32 friendliness )
     {
         auto queryserverid = _public_redis_driver->QueryUInt32( "hget {}:{} {}", __KF_STRING__( public ), selfid, __KF_STRING__( serverid ) );
         if ( queryserverid->_value == _invalid_int )
@@ -488,7 +474,7 @@ namespace KFrame
         for ( auto& iter : queryrecentlist->_value )
         {
             // 查询记录
-            auto playerid = KFUtility::ToValue< uint32 >( iter.first );
+            auto playerid = KFUtility::ToValue< uint64 >( iter.first );
             auto roomid = KFUtility::ToValue< uint64 >( iter.second );
 
             auto querydata = _relation_redis_driver->QueryString( "get {}:{}:{}", __KF_STRING__( battlerecored ), playerid, roomid );

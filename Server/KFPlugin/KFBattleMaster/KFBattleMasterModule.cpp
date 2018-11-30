@@ -53,7 +53,7 @@ namespace KFrame
         }
     }
 
-    uint32 KFBattleMasterModule::AllocBattleId( const std::string& ip, uint32 port )
+    uint64 KFBattleMasterModule::AllocBattleId( const std::string& ip, uint32 port )
     {
         // 先查询是否存在
         auto kfqueryid = _kf_battle_driver->QueryString( "get {}:{}:{}", __KF_STRING__( battleid ), ip, port );
@@ -64,7 +64,7 @@ namespace KFrame
 
         if ( !kfqueryid->_value.empty() )
         {
-            return KFAppID::ToUInt32( kfqueryid->_value );
+            return KFAppID::ToUInt64( kfqueryid->_value );
         }
 
         // 重新分配
@@ -75,14 +75,15 @@ namespace KFrame
         }
 
         KFAppID kfappid( 0 );
-        kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_channel;
-        kfappid._union._app_data._server_type = KFServerEnum::BattleServer + ( kfallocid->_value / std::numeric_limits<uint8>::max() );
-        kfappid._union._app_data._worker_id = ( kfallocid->_value % std::numeric_limits<uint8>::max() );
+        kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_id._union._app_data._channel_id;
+        kfappid._union._app_data._zone_id = 0;
+        kfappid._union._app_data._server_type = KFServerEnum::BattleServer;
+        kfappid._union._app_data._worker_id = kfallocid->_value;
 
         // 保存数据库
         auto strserverid = kfappid.ToString();
         _kf_battle_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( battleid ), ip, port, strserverid );
 
-        return kfappid._union._app_id;
+        return kfappid._union._id;
     }
 }

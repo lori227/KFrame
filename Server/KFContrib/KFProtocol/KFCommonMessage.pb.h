@@ -36,7 +36,6 @@ void protobuf_ShutdownFile_KFCommonMessage_2eproto();
 
 class Vector3D;
 class PBInt32;
-class PBUIntUInt;
 class PBUInt32;
 class PBInt64;
 class PBUInt64;
@@ -57,7 +56,6 @@ class PBMatchGroup;
 class PBGuestData;
 class PBBattleScore;
 class PBRecentData;
-class PBPlayerIds;
 class PBApplicationlist;
 class PBApplicationlists;
 class PBGuildIdArray;
@@ -822,98 +820,6 @@ class LIBPROTOC_EXPORT PBInt32 : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static PBInt32* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT PBUIntUInt : public ::google::protobuf::Message {
- public:
-  PBUIntUInt();
-  virtual ~PBUIntUInt();
-
-  PBUIntUInt(const PBUIntUInt& from);
-
-  inline PBUIntUInt& operator=(const PBUIntUInt& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBUIntUInt& default_instance();
-
-  void Swap(PBUIntUInt* other);
-
-  // implements Message ----------------------------------------------
-
-  PBUIntUInt* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBUIntUInt& from);
-  void MergeFrom(const PBUIntUInt& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint64 key = 1;
-  inline bool has_key() const;
-  inline void clear_key();
-  static const int kKeyFieldNumber = 1;
-  inline ::google::protobuf::uint64 key() const;
-  inline void set_key(::google::protobuf::uint64 value);
-
-  // optional uint32 value = 2;
-  inline bool has_value() const;
-  inline void clear_value();
-  static const int kValueFieldNumber = 2;
-  inline ::google::protobuf::uint32 value() const;
-  inline void set_value(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBUIntUInt)
- private:
-  inline void set_has_key();
-  inline void clear_has_key();
-  inline void set_has_value();
-  inline void clear_has_value();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint64 key_;
-  ::google::protobuf::uint32 value_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
-  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PBUIntUInt* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2161,12 +2067,12 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 rankindex() const;
   inline void set_rankindex(::google::protobuf::uint32 value);
 
-  // optional uint32 playerid = 2;
+  // optional uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // optional uint64 rankscore = 3;
   inline bool has_rankscore() const;
@@ -2197,10 +2103,10 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 rankindex_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint64 rankscore_;
   ::KFMsg::PBStrings* pbdata_;
+  ::google::protobuf::uint32 rankindex_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -2530,31 +2436,24 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 zoneid = 1;
-  inline bool has_zoneid() const;
-  inline void clear_zoneid();
-  static const int kZoneidFieldNumber = 1;
-  inline ::google::protobuf::uint32 zoneid() const;
-  inline void set_zoneid(::google::protobuf::uint32 value);
-
-  // optional uint32 serverid = 2;
+  // optional uint64 serverid = 1;
   inline bool has_serverid() const;
   inline void clear_serverid();
-  static const int kServeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  static const int kServeridFieldNumber = 1;
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
-  // optional uint32 playerid = 3;
+  // optional uint64 playerid = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  static const int kPlayeridFieldNumber = 2;
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
-  // optional bytes name = 4;
+  // optional bytes name = 3;
   inline bool has_name() const;
   inline void clear_name();
-  static const int kNameFieldNumber = 4;
+  static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
@@ -2563,17 +2462,17 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional uint32 sex = 5;
+  // optional uint32 sex = 4;
   inline bool has_sex() const;
   inline void clear_sex();
-  static const int kSexFieldNumber = 5;
+  static const int kSexFieldNumber = 4;
   inline ::google::protobuf::uint32 sex() const;
   inline void set_sex(::google::protobuf::uint32 value);
 
-  // optional bytes icon = 6;
+  // optional bytes icon = 5;
   inline bool has_icon() const;
   inline void clear_icon();
-  static const int kIconFieldNumber = 6;
+  static const int kIconFieldNumber = 5;
   inline const ::std::string& icon() const;
   inline void set_icon(const ::std::string& value);
   inline void set_icon(const char* value);
@@ -2582,10 +2481,10 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::std::string* release_icon();
   inline void set_allocated_icon(::std::string* icon);
 
-  // optional bytes iconbox = 7;
+  // optional bytes iconbox = 6;
   inline bool has_iconbox() const;
   inline void clear_iconbox();
-  static const int kIconboxFieldNumber = 7;
+  static const int kIconboxFieldNumber = 6;
   inline const ::std::string& iconbox() const;
   inline void set_iconbox(const ::std::string& value);
   inline void set_iconbox(const char* value);
@@ -2594,45 +2493,45 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
   inline ::std::string* release_iconbox();
   inline void set_allocated_iconbox(::std::string* iconbox);
 
-  // optional uint32 grading = 8;
+  // optional uint32 grading = 7;
   inline bool has_grading() const;
   inline void clear_grading();
-  static const int kGradingFieldNumber = 8;
+  static const int kGradingFieldNumber = 7;
   inline ::google::protobuf::uint32 grading() const;
   inline void set_grading(::google::protobuf::uint32 value);
 
-  // optional uint32 modelid = 9;
+  // optional uint32 modelid = 8;
   inline bool has_modelid() const;
   inline void clear_modelid();
-  static const int kModelidFieldNumber = 9;
+  static const int kModelidFieldNumber = 8;
   inline ::google::protobuf::uint32 modelid() const;
   inline void set_modelid(::google::protobuf::uint32 value);
 
-  // optional uint32 clothesid = 10;
+  // optional uint32 clothesid = 9;
   inline bool has_clothesid() const;
   inline void clear_clothesid();
-  static const int kClothesidFieldNumber = 10;
+  static const int kClothesidFieldNumber = 9;
   inline ::google::protobuf::uint32 clothesid() const;
   inline void set_clothesid(::google::protobuf::uint32 value);
 
-  // optional uint64 groupid = 11;
+  // optional uint64 groupid = 10;
   inline bool has_groupid() const;
   inline void clear_groupid();
-  static const int kGroupidFieldNumber = 11;
+  static const int kGroupidFieldNumber = 10;
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // optional uint32 campid = 12;
+  // optional uint32 campid = 11;
   inline bool has_campid() const;
   inline void clear_campid();
-  static const int kCampidFieldNumber = 12;
+  static const int kCampidFieldNumber = 11;
   inline ::google::protobuf::uint32 campid() const;
   inline void set_campid(::google::protobuf::uint32 value);
 
-  // optional .KFMsg.PBTaskDatas achieve = 13;
+  // optional .KFMsg.PBTaskDatas achieve = 12;
   inline bool has_achieve() const;
   inline void clear_achieve();
-  static const int kAchieveFieldNumber = 13;
+  static const int kAchieveFieldNumber = 12;
   inline const ::KFMsg::PBTaskDatas& achieve() const;
   inline ::KFMsg::PBTaskDatas* mutable_achieve();
   inline ::KFMsg::PBTaskDatas* release_achieve();
@@ -2640,8 +2539,6 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBBattlePlayer)
  private:
-  inline void set_has_zoneid();
-  inline void clear_has_zoneid();
   inline void set_has_serverid();
   inline void clear_has_serverid();
   inline void set_has_playerid();
@@ -2669,22 +2566,21 @@ class LIBPROTOC_EXPORT PBBattlePlayer : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 zoneid_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 playerid_;
   ::std::string* name_;
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 sex_;
   ::std::string* icon_;
-  ::std::string* iconbox_;
+  ::google::protobuf::uint32 sex_;
   ::google::protobuf::uint32 grading_;
+  ::std::string* iconbox_;
   ::google::protobuf::uint32 modelid_;
-  ::google::protobuf::uint64 groupid_;
   ::google::protobuf::uint32 clothesid_;
-  ::google::protobuf::uint32 campid_;
+  ::google::protobuf::uint64 groupid_;
   ::KFMsg::PBTaskDatas* achieve_;
+  ::google::protobuf::uint32 campid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
 
   friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
   friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
@@ -2939,12 +2835,12 @@ class LIBPROTOC_EXPORT PBGuestData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 guestid = 1;
+  // required uint64 guestid = 1;
   inline bool has_guestid() const;
   inline void clear_guestid();
   static const int kGuestidFieldNumber = 1;
-  inline ::google::protobuf::uint32 guestid() const;
-  inline void set_guestid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 guestid() const;
+  inline void set_guestid(::google::protobuf::uint64 value);
 
   // required bytes guesticon = 2;
   inline bool has_guesticon() const;
@@ -2981,9 +2877,9 @@ class LIBPROTOC_EXPORT PBGuestData : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 guestid_;
   ::std::string* guesticon_;
   ::std::string* guesticonbox_;
-  ::google::protobuf::uint32 guestid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -3051,12 +2947,12 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 ranking = 2;
   inline bool has_ranking() const;
@@ -3077,12 +2973,12 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 >*
       mutable_pbdata();
 
-  // optional uint32 score = 4;
+  // optional sint32 score = 4;
   inline bool has_score() const;
   inline void clear_score();
   static const int kScoreFieldNumber = 4;
-  inline ::google::protobuf::uint32 score() const;
-  inline void set_score(::google::protobuf::uint32 value);
+  inline ::google::protobuf::int32 score() const;
+  inline void set_score(::google::protobuf::int32 value);
 
   // optional uint32 matchid = 5;
   inline bool has_matchid() const;
@@ -3112,16 +3008,16 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
   inline ::KFMsg::PBTaskDatas* release_achieve();
   inline void set_allocated_achieve(::KFMsg::PBTaskDatas* achieve);
 
-  // repeated uint32 members = 8;
+  // repeated uint64 members = 8;
   inline int members_size() const;
   inline void clear_members();
   static const int kMembersFieldNumber = 8;
-  inline ::google::protobuf::uint32 members(int index) const;
-  inline void set_members(int index, ::google::protobuf::uint32 value);
-  inline void add_members(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 members(int index) const;
+  inline void set_members(int index, ::google::protobuf::uint64 value);
+  inline void add_members(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       members() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_members();
 
   // optional uint32 playercount = 9;
@@ -3150,15 +3046,15 @@ class LIBPROTOC_EXPORT PBBattleScore : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
-  ::google::protobuf::uint32 ranking_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBUInt32 > pbdata_;
-  ::google::protobuf::uint32 score_;
-  ::google::protobuf::uint32 matchid_;
+  ::google::protobuf::uint32 ranking_;
+  ::google::protobuf::int32 score_;
   ::std::string* reward_;
   ::KFMsg::PBTaskDatas* achieve_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > members_;
+  ::google::protobuf::uint32 matchid_;
   ::google::protobuf::uint32 playercount_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > members_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
@@ -3226,12 +3122,12 @@ class LIBPROTOC_EXPORT PBRecentData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 ranking = 2;
   inline bool has_ranking() const;
@@ -3294,7 +3190,7 @@ class LIBPROTOC_EXPORT PBRecentData : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 ranking_;
   ::google::protobuf::uint32 totalnum_;
   ::google::protobuf::uint32 kill_;
@@ -3311,91 +3207,6 @@ class LIBPROTOC_EXPORT PBRecentData : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static PBRecentData* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT PBPlayerIds : public ::google::protobuf::Message {
- public:
-  PBPlayerIds();
-  virtual ~PBPlayerIds();
-
-  PBPlayerIds(const PBPlayerIds& from);
-
-  inline PBPlayerIds& operator=(const PBPlayerIds& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBPlayerIds& default_instance();
-
-  void Swap(PBPlayerIds* other);
-
-  // implements Message ----------------------------------------------
-
-  PBPlayerIds* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBPlayerIds& from);
-  void MergeFrom(const PBPlayerIds& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated uint32 playerid = 1;
-  inline int playerid_size() const;
-  inline void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid(int index) const;
-  inline void set_playerid(int index, ::google::protobuf::uint32 value);
-  inline void add_playerid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      playerid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_playerid();
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBPlayerIds)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > playerid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-
-  friend void LIBPROTOC_EXPORT protobuf_AddDesc_KFCommonMessage_2eproto();
-  friend void protobuf_AssignDesc_KFCommonMessage_2eproto();
-  friend void protobuf_ShutdownFile_KFCommonMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PBPlayerIds* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3453,12 +3264,12 @@ class LIBPROTOC_EXPORT PBApplicationlist : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint64 time = 2;
   inline bool has_time() const;
@@ -3487,9 +3298,9 @@ class LIBPROTOC_EXPORT PBApplicationlist : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint64 time_;
   ::KFMsg::PBStrings* basic_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -3836,54 +3647,6 @@ inline ::google::protobuf::int32 PBInt32::value() const {
   return value_;
 }
 inline void PBInt32::set_value(::google::protobuf::int32 value) {
-  set_has_value();
-  value_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PBUIntUInt
-
-// optional uint64 key = 1;
-inline bool PBUIntUInt::has_key() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void PBUIntUInt::set_has_key() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void PBUIntUInt::clear_has_key() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void PBUIntUInt::clear_key() {
-  key_ = GOOGLE_ULONGLONG(0);
-  clear_has_key();
-}
-inline ::google::protobuf::uint64 PBUIntUInt::key() const {
-  return key_;
-}
-inline void PBUIntUInt::set_key(::google::protobuf::uint64 value) {
-  set_has_key();
-  key_ = value;
-}
-
-// optional uint32 value = 2;
-inline bool PBUIntUInt::has_value() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void PBUIntUInt::set_has_value() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void PBUIntUInt::clear_has_value() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void PBUIntUInt::clear_value() {
-  value_ = 0u;
-  clear_has_value();
-}
-inline ::google::protobuf::uint32 PBUIntUInt::value() const {
-  return value_;
-}
-inline void PBUIntUInt::set_value(::google::protobuf::uint32 value) {
   set_has_value();
   value_ = value;
 }
@@ -5296,7 +5059,7 @@ inline void PBRankData::set_rankindex(::google::protobuf::uint32 value) {
   rankindex_ = value;
 }
 
-// optional uint32 playerid = 2;
+// optional uint64 playerid = 2;
 inline bool PBRankData::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5307,13 +5070,13 @@ inline void PBRankData::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void PBRankData::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBRankData::playerid() const {
+inline ::google::protobuf::uint64 PBRankData::playerid() const {
   return playerid_;
 }
-inline void PBRankData::set_playerid(::google::protobuf::uint32 value) {
+inline void PBRankData::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -5488,81 +5251,59 @@ PBTaskDatas::mutable_taskdata() {
 
 // PBBattlePlayer
 
-// optional uint32 zoneid = 1;
-inline bool PBBattlePlayer::has_zoneid() const {
+// optional uint64 serverid = 1;
+inline bool PBBattlePlayer::has_serverid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PBBattlePlayer::set_has_zoneid() {
+inline void PBBattlePlayer::set_has_serverid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PBBattlePlayer::clear_has_zoneid() {
+inline void PBBattlePlayer::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void PBBattlePlayer::clear_zoneid() {
-  zoneid_ = 0u;
-  clear_has_zoneid();
-}
-inline ::google::protobuf::uint32 PBBattlePlayer::zoneid() const {
-  return zoneid_;
-}
-inline void PBBattlePlayer::set_zoneid(::google::protobuf::uint32 value) {
-  set_has_zoneid();
-  zoneid_ = value;
-}
-
-// optional uint32 serverid = 2;
-inline bool PBBattlePlayer::has_serverid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void PBBattlePlayer::set_has_serverid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void PBBattlePlayer::clear_has_serverid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
 inline void PBBattlePlayer::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 PBBattlePlayer::serverid() const {
+inline ::google::protobuf::uint64 PBBattlePlayer::serverid() const {
   return serverid_;
 }
-inline void PBBattlePlayer::set_serverid(::google::protobuf::uint32 value) {
+inline void PBBattlePlayer::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
 
-// optional uint32 playerid = 3;
+// optional uint64 playerid = 2;
 inline bool PBBattlePlayer::has_playerid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
 inline void PBBattlePlayer::set_has_playerid() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000002u;
 }
 inline void PBBattlePlayer::clear_has_playerid() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void PBBattlePlayer::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBBattlePlayer::playerid() const {
+inline ::google::protobuf::uint64 PBBattlePlayer::playerid() const {
   return playerid_;
 }
-inline void PBBattlePlayer::set_playerid(::google::protobuf::uint32 value) {
+inline void PBBattlePlayer::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
 
-// optional bytes name = 4;
+// optional bytes name = 3;
 inline bool PBBattlePlayer::has_name() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void PBBattlePlayer::set_has_name() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void PBBattlePlayer::clear_has_name() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void PBBattlePlayer::clear_name() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -5624,15 +5365,15 @@ inline void PBBattlePlayer::set_allocated_name(::std::string* name) {
   }
 }
 
-// optional uint32 sex = 5;
+// optional uint32 sex = 4;
 inline bool PBBattlePlayer::has_sex() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void PBBattlePlayer::set_has_sex() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void PBBattlePlayer::clear_has_sex() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void PBBattlePlayer::clear_sex() {
   sex_ = 0u;
@@ -5646,15 +5387,15 @@ inline void PBBattlePlayer::set_sex(::google::protobuf::uint32 value) {
   sex_ = value;
 }
 
-// optional bytes icon = 6;
+// optional bytes icon = 5;
 inline bool PBBattlePlayer::has_icon() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void PBBattlePlayer::set_has_icon() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void PBBattlePlayer::clear_has_icon() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void PBBattlePlayer::clear_icon() {
   if (icon_ != &::google::protobuf::internal::kEmptyString) {
@@ -5716,15 +5457,15 @@ inline void PBBattlePlayer::set_allocated_icon(::std::string* icon) {
   }
 }
 
-// optional bytes iconbox = 7;
+// optional bytes iconbox = 6;
 inline bool PBBattlePlayer::has_iconbox() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void PBBattlePlayer::set_has_iconbox() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void PBBattlePlayer::clear_has_iconbox() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void PBBattlePlayer::clear_iconbox() {
   if (iconbox_ != &::google::protobuf::internal::kEmptyString) {
@@ -5786,15 +5527,15 @@ inline void PBBattlePlayer::set_allocated_iconbox(::std::string* iconbox) {
   }
 }
 
-// optional uint32 grading = 8;
+// optional uint32 grading = 7;
 inline bool PBBattlePlayer::has_grading() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void PBBattlePlayer::set_has_grading() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void PBBattlePlayer::clear_has_grading() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void PBBattlePlayer::clear_grading() {
   grading_ = 0u;
@@ -5808,15 +5549,15 @@ inline void PBBattlePlayer::set_grading(::google::protobuf::uint32 value) {
   grading_ = value;
 }
 
-// optional uint32 modelid = 9;
+// optional uint32 modelid = 8;
 inline bool PBBattlePlayer::has_modelid() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void PBBattlePlayer::set_has_modelid() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void PBBattlePlayer::clear_has_modelid() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void PBBattlePlayer::clear_modelid() {
   modelid_ = 0u;
@@ -5830,15 +5571,15 @@ inline void PBBattlePlayer::set_modelid(::google::protobuf::uint32 value) {
   modelid_ = value;
 }
 
-// optional uint32 clothesid = 10;
+// optional uint32 clothesid = 9;
 inline bool PBBattlePlayer::has_clothesid() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void PBBattlePlayer::set_has_clothesid() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void PBBattlePlayer::clear_has_clothesid() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void PBBattlePlayer::clear_clothesid() {
   clothesid_ = 0u;
@@ -5852,15 +5593,15 @@ inline void PBBattlePlayer::set_clothesid(::google::protobuf::uint32 value) {
   clothesid_ = value;
 }
 
-// optional uint64 groupid = 11;
+// optional uint64 groupid = 10;
 inline bool PBBattlePlayer::has_groupid() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 inline void PBBattlePlayer::set_has_groupid() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000200u;
 }
 inline void PBBattlePlayer::clear_has_groupid() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void PBBattlePlayer::clear_groupid() {
   groupid_ = GOOGLE_ULONGLONG(0);
@@ -5874,15 +5615,15 @@ inline void PBBattlePlayer::set_groupid(::google::protobuf::uint64 value) {
   groupid_ = value;
 }
 
-// optional uint32 campid = 12;
+// optional uint32 campid = 11;
 inline bool PBBattlePlayer::has_campid() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void PBBattlePlayer::set_has_campid() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void PBBattlePlayer::clear_has_campid() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void PBBattlePlayer::clear_campid() {
   campid_ = 0u;
@@ -5896,15 +5637,15 @@ inline void PBBattlePlayer::set_campid(::google::protobuf::uint32 value) {
   campid_ = value;
 }
 
-// optional .KFMsg.PBTaskDatas achieve = 13;
+// optional .KFMsg.PBTaskDatas achieve = 12;
 inline bool PBBattlePlayer::has_achieve() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void PBBattlePlayer::set_has_achieve() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void PBBattlePlayer::clear_has_achieve() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void PBBattlePlayer::clear_achieve() {
   if (achieve_ != NULL) achieve_->::KFMsg::PBTaskDatas::Clear();
@@ -6040,7 +5781,7 @@ PBMatchGroup::mutable_pbplayer() {
 
 // PBGuestData
 
-// required uint32 guestid = 1;
+// required uint64 guestid = 1;
 inline bool PBGuestData::has_guestid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6051,13 +5792,13 @@ inline void PBGuestData::clear_has_guestid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void PBGuestData::clear_guestid() {
-  guestid_ = 0u;
+  guestid_ = GOOGLE_ULONGLONG(0);
   clear_has_guestid();
 }
-inline ::google::protobuf::uint32 PBGuestData::guestid() const {
+inline ::google::protobuf::uint64 PBGuestData::guestid() const {
   return guestid_;
 }
-inline void PBGuestData::set_guestid(::google::protobuf::uint32 value) {
+inline void PBGuestData::set_guestid(::google::protobuf::uint64 value) {
   set_has_guestid();
   guestid_ = value;
 }
@@ -6206,7 +5947,7 @@ inline void PBGuestData::set_allocated_guesticonbox(::std::string* guesticonbox)
 
 // PBBattleScore
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool PBBattleScore::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6217,13 +5958,13 @@ inline void PBBattleScore::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void PBBattleScore::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBBattleScore::playerid() const {
+inline ::google::protobuf::uint64 PBBattleScore::playerid() const {
   return playerid_;
 }
-inline void PBBattleScore::set_playerid(::google::protobuf::uint32 value) {
+inline void PBBattleScore::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -6275,7 +6016,7 @@ PBBattleScore::mutable_pbdata() {
   return &pbdata_;
 }
 
-// optional uint32 score = 4;
+// optional sint32 score = 4;
 inline bool PBBattleScore::has_score() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -6286,13 +6027,13 @@ inline void PBBattleScore::clear_has_score() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void PBBattleScore::clear_score() {
-  score_ = 0u;
+  score_ = 0;
   clear_has_score();
 }
-inline ::google::protobuf::uint32 PBBattleScore::score() const {
+inline ::google::protobuf::int32 PBBattleScore::score() const {
   return score_;
 }
-inline void PBBattleScore::set_score(::google::protobuf::uint32 value) {
+inline void PBBattleScore::set_score(::google::protobuf::int32 value) {
   set_has_score();
   score_ = value;
 }
@@ -6427,27 +6168,27 @@ inline void PBBattleScore::set_allocated_achieve(::KFMsg::PBTaskDatas* achieve) 
   }
 }
 
-// repeated uint32 members = 8;
+// repeated uint64 members = 8;
 inline int PBBattleScore::members_size() const {
   return members_.size();
 }
 inline void PBBattleScore::clear_members() {
   members_.Clear();
 }
-inline ::google::protobuf::uint32 PBBattleScore::members(int index) const {
+inline ::google::protobuf::uint64 PBBattleScore::members(int index) const {
   return members_.Get(index);
 }
-inline void PBBattleScore::set_members(int index, ::google::protobuf::uint32 value) {
+inline void PBBattleScore::set_members(int index, ::google::protobuf::uint64 value) {
   members_.Set(index, value);
 }
-inline void PBBattleScore::add_members(::google::protobuf::uint32 value) {
+inline void PBBattleScore::add_members(::google::protobuf::uint64 value) {
   members_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 PBBattleScore::members() const {
   return members_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 PBBattleScore::mutable_members() {
   return &members_;
 }
@@ -6478,7 +6219,7 @@ inline void PBBattleScore::set_playercount(::google::protobuf::uint32 value) {
 
 // PBRecentData
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool PBRecentData::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6489,13 +6230,13 @@ inline void PBRecentData::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void PBRecentData::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBRecentData::playerid() const {
+inline ::google::protobuf::uint64 PBRecentData::playerid() const {
   return playerid_;
 }
-inline void PBRecentData::set_playerid(::google::protobuf::uint32 value) {
+inline void PBRecentData::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -6634,38 +6375,9 @@ inline void PBRecentData::set_relationtype(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// PBPlayerIds
-
-// repeated uint32 playerid = 1;
-inline int PBPlayerIds::playerid_size() const {
-  return playerid_.size();
-}
-inline void PBPlayerIds::clear_playerid() {
-  playerid_.Clear();
-}
-inline ::google::protobuf::uint32 PBPlayerIds::playerid(int index) const {
-  return playerid_.Get(index);
-}
-inline void PBPlayerIds::set_playerid(int index, ::google::protobuf::uint32 value) {
-  playerid_.Set(index, value);
-}
-inline void PBPlayerIds::add_playerid(::google::protobuf::uint32 value) {
-  playerid_.Add(value);
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-PBPlayerIds::playerid() const {
-  return playerid_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-PBPlayerIds::mutable_playerid() {
-  return &playerid_;
-}
-
-// -------------------------------------------------------------------
-
 // PBApplicationlist
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool PBApplicationlist::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6676,13 +6388,13 @@ inline void PBApplicationlist::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void PBApplicationlist::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBApplicationlist::playerid() const {
+inline ::google::protobuf::uint64 PBApplicationlist::playerid() const {
   return playerid_;
 }
-inline void PBApplicationlist::set_playerid(::google::protobuf::uint32 value) {
+inline void PBApplicationlist::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }

@@ -2,20 +2,6 @@
 
 namespace KFrame
 {
-    KFBattleClientModule::KFBattleClientModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFBattleClientModule::~KFBattleClientModule()
-    {
-    }
-
-    void KFBattleClientModule::InitModule()
-    {
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFBattleClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
@@ -71,12 +57,12 @@ namespace KFrame
         QueryBattleRoom( player->GetKeyID(), roomid );
     }
 
-    void KFBattleClientModule::QueryBattleRoom( uint32 playerid, uint64 roomid )
+    void KFBattleClientModule::QueryBattleRoom( uint64 playerid, uint64 roomid )
     {
         KFMsg::S2SQueryBattleRoomReq req;
         req.set_roomid( roomid );
         req.set_playerid( playerid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToBattle( KFMsg::S2S_QUERY_BATTLE_ROOM_REQ, &req );
     }
 

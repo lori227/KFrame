@@ -40,7 +40,7 @@ namespace KFrame
         _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
     }
 
-    void KFBattleManage::RegisterBattleServer( uint32 serverid, uint32 proxyid, const std::string& ip, uint32 port, const std::string& version )
+    void KFBattleManage::RegisterBattleServer( uint64 serverid, uint64 proxyid, const std::string& ip, uint32 port, const std::string& version )
     {
         // 为了避免单点问题, 保存到redis缓存中
         // 先删除列表在添加到列表中
@@ -59,7 +59,7 @@ namespace KFrame
         _battle_redis_driver->Pipeline();
     }
 
-    void KFBattleManage::UnRegisterBattleServer( uint32 serverid )
+    void KFBattleManage::UnRegisterBattleServer( uint64 serverid )
     {
         auto kfresult = _battle_redis_driver->QueryString( "hget {}:{} {}", __KF_STRING__( battle ), serverid, __KF_STRING__( version ) );
         if ( kfresult->_value.empty() )
@@ -80,7 +80,7 @@ namespace KFrame
         __LOG_DEBUG__( "unregister battle server[{}] version[{}]!", serverid, kfresult->_value );
     }
 
-    void KFBattleManage::AllocBattleServer( uint32 battleserverid, const std::string& version, KFBattleServer* battleserver )
+    void KFBattleManage::AllocBattleServer( uint64 battleserverid, const std::string& version, KFBattleServer* battleserver )
     {
         // 找到负载最小的一个
         auto queryserverid = battleserverid;
@@ -126,14 +126,14 @@ namespace KFrame
         }
     }
 
-    void KFBattleManage::RemoveBattleServer( uint32 serverid, const std::string& version )
+    void KFBattleManage::RemoveBattleServer( uint64 serverid, const std::string& version )
     {
         _battle_redis_driver->Execute( "srem {}:{} {}", __KF_STRING__( battlelist ), version, serverid );
 
         __LOG_DEBUG__( "remove battle server[{}] version[{}]!", serverid, version );
     }
 
-    void KFBattleManage::FreeBattleServer( uint32 serverid, const std::string& version )
+    void KFBattleManage::FreeBattleServer( uint64 serverid, const std::string& version )
     {
         __LOG_DEBUG__( "free battle server[{}] version[{}]!", serverid, version );
 

@@ -3,12 +3,6 @@
 
 namespace KFrame
 {
-    KFPublicClientModule::KFPublicClientModule()
-    {
-        _kf_component = nullptr;
-        _kf_basic = nullptr;
-    }
-
     void KFPublicClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
@@ -52,7 +46,7 @@ namespace KFrame
         return UpdatePublicData( player->GetKeyID(), values );
     }
 
-    bool KFPublicClientModule::UpdatePublicData( uint32 playerid, const MapString& values )
+    bool KFPublicClientModule::UpdatePublicData( uint64 playerid, const MapString& values )
     {
         KFMsg::S2SUpdatePublicDataReq req;
         req.set_playerid( playerid );
@@ -101,11 +95,13 @@ namespace KFrame
 
     void KFPublicClientModule::OnEnterUpdatePublicData( KFEntity* player )
     {
+        auto kfglobal = KFGlobal::Instance();
+
         MapString values;
-        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id );
         values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
         values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineStatus );
-        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
+        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( kfglobal->_app_id._union._id );
         UpdatePublicData( player, values );
     }
 

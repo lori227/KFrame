@@ -58,7 +58,7 @@ namespace KFrame
         }
         else
         {
-            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), json.GetInt32( __KF_STRING__( steamfreeweekend ) ) );
+            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), json.GetUInt32( __KF_STRING__( steamfreeweekend ) ) );
         }
 
         response.SetValue( __KF_STRING__( extend ), kfextend );

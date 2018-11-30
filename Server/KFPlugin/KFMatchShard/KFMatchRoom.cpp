@@ -21,7 +21,7 @@ namespace KFrame
         _camp_list.Clear();
     }
 
-    void KFMatchRoom::Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid, const std::string& version )
+    void KFMatchRoom::Initialize( KFMatchQueue* kfmatchqueue, uint64 battleserverid, const std::string& version )
     {
         _kf_match_queue = kfmatchqueue;
         _match_id = _kf_match_queue->_match_id;
@@ -99,7 +99,7 @@ namespace KFrame
         CalcRoomPlayerCount( KFOperateEnum::Add, kfcamp->PlayerCount(), __FUNC_LINE__ );
     }
 
-    bool KFMatchRoom::IsWaitMatch( uint32 battleserverid, uint32 playercount, const std::string& version )
+    bool KFMatchRoom::IsWaitMatch( uint64 battleserverid, uint32 playercount, const std::string& version )
     {
         // 版本号
         if ( _battle_version != version )
@@ -162,7 +162,7 @@ namespace KFrame
         }
     }
 
-    void KFMatchRoom::CreateBattleRoomAck( uint32 battleshardid )
+    void KFMatchRoom::CreateBattleRoomAck( uint64 battleshardid )
     {
         _create_timer.StopTimer();
         _battle_shard_id = battleshardid;
@@ -241,7 +241,7 @@ namespace KFrame
         }
     }
 
-    bool KFMatchRoom::LeaveBattleRoom( uint32 campid, uint64 groupid, uint32 playerid )
+    bool KFMatchRoom::LeaveBattleRoom( uint32 campid, uint64 groupid, uint64 playerid )
     {
         auto kfcamp = _camp_list.Find( campid );
         if ( kfcamp == nullptr )

@@ -47,7 +47,7 @@ namespace KFrame
         }
     }
 
-    void KFBattleProxyModule::OnServerLostBattleServer( uint32 serverid )
+    void KFBattleProxyModule::OnServerLostBattleServer( uint64 serverid )
     {
         KFMsg::S2SDisconnectServerToBattleShardReq req;
         req.set_serverid( serverid );

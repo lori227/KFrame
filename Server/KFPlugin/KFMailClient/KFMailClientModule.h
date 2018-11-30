@@ -28,8 +28,8 @@ namespace KFrame
     class KFMailClientModule : public KFMailClientInterface
     {
     public:
-        KFMailClientModule();
-        ~KFMailClientModule();
+        KFMailClientModule() = default;
+        ~KFMailClientModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -45,10 +45,10 @@ namespace KFrame
         virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents );
 
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const KFAgents* kfagents );
+        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFAgents* kfagents );
 
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* player, uint32 toserverid, uint32 toplayerid, uint32 mailconfigid, const std::string& extend );
+        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const std::string& extend );
 
     protected:
 
@@ -90,7 +90,7 @@ namespace KFrame
         bool SendMessageToMail( uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送查询邮件消息
-        void SendQueryMailMessage( uint32 playerid, uint32 mailtype, uint64 maxmailid );
+        void SendQueryMailMessage( uint64 playerid, uint32 mailtype, uint64 maxmailid );
 
         // 获得最大邮件id
         uint64 FindMaxMailId( KFEntity* player, uint32 mailtype );
@@ -102,7 +102,7 @@ namespace KFrame
         bool CheckMailTimeOut( KFData* kfmail );
 
         // 更新状态到邮件
-        bool UpdateFlagToMail( uint32 playerid, KFData* kfmail, uint32 flag );
+        bool UpdateFlagToMail( uint64 playerid, KFData* kfmail, uint32 flag );
 
         // 领取邮件奖励
         void ReceiveMailReward( KFEntity* player, uint64 mailid );
@@ -114,7 +114,7 @@ namespace KFrame
         MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFAgents* kfagents, const std::string& extend );
 
         // 发送添加邮件
-        bool SendAddMailToCluster( uint32 serverid, uint32 playerid, uint32 mailtype, const MapString& maildata );
+        bool SendAddMailToCluster( uint64 playerid, uint32 mailtype, const MapString& maildata );
     };
 }
 

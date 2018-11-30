@@ -13,7 +13,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Gate/Proxy ==> Client
         template< class...Args >
-        inline void SendToClient( uint32 playerid, uint32 result, Args&& ... args )
+        inline void SendToClient( uint64 playerid, uint32 result, Args&& ... args )
         {
             ListString params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -33,7 +33,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Cluster ==> Game
         template< class...Args >
-        inline void SendToGame( uint32 serverid, uint32 playerid, uint32 result, Args&& ... args )
+        inline void SendToGame( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
         {
             ListString params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -43,7 +43,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Game ==> Route ==> Game
         template< class...Args >
-        inline void SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, Args&& ... args )
+        inline void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
         {
             ListString params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -83,7 +83,7 @@ namespace KFrame
 
     private:
         // Gate/Proxy ==> Client
-        virtual void SendToClient( uint32 playerid, uint32 result, ListString& params ) = 0;
+        virtual void SendToClient( uint64 playerid, uint32 result, ListString& params ) = 0;
 
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params ) = 0;
@@ -92,10 +92,10 @@ namespace KFrame
         virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params ) = 0;
 
         // Cluster ==> Game
-        virtual void SendToGame( uint32 serverid, uint32 playerid, uint32 result, ListString& params ) = 0;
+        virtual void SendToGame( uint64 serverid, uint64 playerid, uint32 result, ListString& params ) = 0;
 
         // Game ==> Route ==> Game
-        virtual void SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, ListString& params ) = 0;
+        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params ) = 0;
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params ) = 0;
 
     };

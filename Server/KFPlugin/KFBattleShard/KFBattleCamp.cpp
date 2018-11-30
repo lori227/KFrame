@@ -17,7 +17,7 @@ namespace KFrame
         return _kf_player_list.Size();
     }
 
-    bool KFBattleCamp::HavePlayer( uint32 playerid )
+    bool KFBattleCamp::HavePlayer( uint64 playerid )
     {
         auto kfplayer = _kf_player_list.Find( playerid );
         return kfplayer != nullptr;

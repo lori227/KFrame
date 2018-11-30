@@ -110,7 +110,7 @@ namespace KFrame
         req.set_chatinfo( chatinfo );
         req.set_playerid( playerid );
         req.set_isvoice( kfmsg.isvoice() );
-        req.set_playerserverid( KFGlobal::Instance()->_app_id );
+        req.set_playerserverid( KFGlobal::Instance()->_app_id._union._id );
         req.set_playername( kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) );
         req.set_playericon( kfbasic->GetValue< std::string >( __KF_STRING__( icon ) ) );
         req.set_playergrade( kfbasic->GetValue< uint32 >( __KF_STRING__( grade ) ) );
@@ -156,7 +156,7 @@ namespace KFrame
         info.set_isvoice( kfmsg.isvoice() );
         info.set_chattype( kfmsg.chattype() );
         info.set_playerinfo( kfmsg.selfinfo() );
-        info.set_serverid( KFGlobal::Instance()->_app_id );
+        info.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         _kf_route->SendToRoute( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_SEND_ONEBYONE_CHAT_INFO, &info );
     }
 

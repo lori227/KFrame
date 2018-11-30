@@ -53,15 +53,15 @@ namespace KFrame
         virtual void SavePlayer( KFEntity* player );
 
         // 踢掉角色
-        virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line );
+        virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line );
 
         // 查找玩家
-        virtual KFEntity* FindPlayer( uint32 playerid );
-        virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line );
+        virtual KFEntity* FindPlayer( uint64 playerid );
+        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line );
 
         // 发送消息
-        virtual bool SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 playerid, uint32 msgid, const char* data, uint32 length );
 
         virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
         virtual bool SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length );
@@ -129,7 +129,7 @@ namespace KFrame
         KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 创建角色
-        void OnEnterCreatePlayer( KFEntity* player, uint32 playerid );
+        void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
 
         // 进入游戏世界
         void SendEnterMessageToWorld( KFEntity* player );

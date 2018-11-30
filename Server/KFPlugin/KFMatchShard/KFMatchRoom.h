@@ -13,10 +13,10 @@ namespace KFrame
         ~KFMatchRoom();
 
         // 初始化
-        void Initialize( KFMatchQueue* kfmatchqueue, uint32 battleserverid, const std::string& version );
+        void Initialize( KFMatchQueue* kfmatchqueue, uint64 battleserverid, const std::string& version );
 
         // 是否正在等待匹配
-        bool IsWaitMatch( uint32 battleserverid, uint32 playercount, const std::string& version );
+        bool IsWaitMatch( uint64 battleserverid, uint32 playercount, const std::string& version );
 
         // 添加阵营
         void AddCamp( KFMatchCamp* kfcamp );
@@ -28,7 +28,7 @@ namespace KFrame
         void CreateBatterRoomReq();
 
         // 创建房间
-        void CreateBattleRoomAck( uint32 battleshardid );
+        void CreateBattleRoomAck( uint64 battleshardid );
 
         // 阵营进入战场
         void EnterBattleRoomReq();
@@ -43,7 +43,7 @@ namespace KFrame
         void TellRoomStart();
 
         // 离开游戏房间
-        bool LeaveBattleRoom( uint32 campid, uint64 groupid, uint32 playerid );
+        bool LeaveBattleRoom( uint32 campid, uint64 groupid, uint64 playerid );
 
         // 取消匹配
         bool CancelMatch( uint32 campid, uint64 groupid );
@@ -80,7 +80,7 @@ namespace KFrame
         KFClockTimer _create_timer;
 
         // 指定的战场id
-        uint32 _battle_server_id;
+        uint64 _battle_server_id;
 
         // 总人数
         uint32 _room_player_count;
@@ -89,7 +89,7 @@ namespace KFrame
         uint64 _battle_start_time;
 
         // 战场服务器集群的分片id
-        uint32 _battle_shard_id;
+        uint64 _battle_shard_id;
 
         // 已经停止加入阵营了
         bool _is_stop_add_camp;

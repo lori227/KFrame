@@ -22,7 +22,7 @@ namespace KFrame
     class KFPublicClientModule : public KFPublicClientInterface
     {
     public:
-        KFPublicClientModule();
+        KFPublicClientModule() = default;
         ~KFPublicClientModule() = default;
 
         // 刷新
@@ -34,7 +34,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 更新公共数据
-        virtual bool UpdatePublicData( uint32 playerid, const MapString& values );
+        virtual bool UpdatePublicData( uint64 playerid, const MapString& values );
         virtual bool UpdatePublicData( KFEntity* player, const MapString& values );
 
         // 发送消息到Public
@@ -60,10 +60,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicAck );
     private:
         // 组件
-        KFComponent* _kf_component;
+        KFComponent* _kf_component{ nullptr };
 
         // 基础模块
-        KFData* _kf_basic;
+        KFData* _kf_basic{ nullptr };
     };
 }
 

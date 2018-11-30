@@ -3,16 +3,6 @@
 
 namespace KFrame
 {
-    KFResetModule::KFResetModule()
-    {
-        _need_to_reset = false;
-        _next_reset_data_time = 0;
-    }
-
-    KFResetModule::~KFResetModule()
-    {
-    }
-
     void KFResetModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_reset_config, true );
@@ -68,7 +58,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
 
-            auto lasttime = kfnoterecord->GetValue< uint64 >( kfsetting->_note_id, __KF_STRING__( value ) );
+            auto lasttime = kfnoterecord->GetValue( kfsetting->_note_id, __KF_STRING__( value ) );
             if ( !KFDate::CheckTime( kfsetting->_time_type, kfsetting->_time_value, kfsetting->_time_hour, lasttime, nowtime ) )
             {
                 continue;
@@ -90,7 +80,7 @@ namespace KFrame
                 {
                     player->RemoveData( kfreset->_parent_name );
                 }
-                else if ( kfreset->_key == 0 )
+                else if ( kfreset->_key == _invalid_int )
                 {
                     player->UpdateData( kfreset->_parent_name, kfreset->_data_name, kfreset->_operate, kfreset->_value );
                 }

@@ -4,15 +4,6 @@
 
 namespace KFrame
 {
-    KFItemModule::KFItemModule()
-    {
-        _kf_component = nullptr;
-    }
-
-    KFItemModule::~KFItemModule()
-    {
-    }
-
     void KFItemModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_item_config, true );
@@ -241,7 +232,7 @@ namespace KFrame
 
             for ( auto kfitem : finditem )
             {
-                auto oldcount = kfitem->GetValue< uint32 >( __KF_STRING__( count ) );
+                auto oldcount = kfitem->GetValue( __KF_STRING__( count ) );
                 oldcount = __MIN__( oldcount, itemsetting->_overlay_count );
                 auto canadd = itemsetting->_overlay_count - oldcount;
                 uint32 addcount = __MIN__( canadd, count );
@@ -293,7 +284,7 @@ namespace KFrame
         kfitem->SetValue( datasetting->_key_name, itemguid );
 
         // 把guid添加进属性表中
-        kfagent->AddValue( datasetting->_key_name, KFUtility::ToString< uint64 >( itemguid ) );
+        kfagent->AddValue( datasetting->_key_name, __TO_STRING__( itemguid ) );
 
         // 添加物品
         player->AddData( kfparent, itemguid, kfitem );
@@ -319,7 +310,7 @@ namespace KFrame
             // 设置数量
             kftarget->SetValue( __KF_STRING__( count ), itemcount );
 
-            auto configid = kfsource->GetValue< uint32 >( datasetting->_config_key_name );
+            auto configid = kfsource->GetValue( datasetting->_config_key_name );
             auto newitemguid = KFGlobal::Instance()->Make64Guid();
             kftarget->SetKeyID( newitemguid );
 
@@ -336,8 +327,8 @@ namespace KFrame
     __KF_UPDATE_DATA_FUNCTION__( KFItemModule::OnItemCountUpdateCallBack )
     {
         // 调用脚本
-        auto itemcount = kfdata->GetValue<uint32>();
-        if ( itemcount > 0 )
+        auto itemcount = kfdata->GetValue();
+        if ( itemcount > 0u )
         {
             return;
         }
@@ -350,7 +341,7 @@ namespace KFrame
     {
         auto datasetting = kfdata->GetDataSetting();
 
-        auto itemid = kfdata->GetValue< uint32 >( datasetting->_config_key_name );
+        auto itemid = kfdata->GetValue( datasetting->_config_key_name );
         auto itemsetting = _kf_item_config->FindItemSetting( itemid );
         if ( itemsetting == nullptr )
         {
@@ -383,7 +374,7 @@ namespace KFrame
     {
         auto datasetting = kfdata->GetDataSetting();
 
-        auto itemid = kfdata->GetValue< uint32 >( datasetting->_config_key_name );
+        auto itemid = kfdata->GetValue( datasetting->_config_key_name );
         auto itemsetting = _kf_item_config->FindItemSetting( itemid );
         if ( itemsetting == nullptr )
         {
@@ -440,7 +431,7 @@ namespace KFrame
             if ( iseligibility )
             {
                 // 属性满足, 累计数量
-                totalcount += kfitem->GetValue< uint32 >( __KF_STRING__( count ) );
+                totalcount += kfitem->GetValue( __KF_STRING__( count ) );
                 if ( totalcount >= itemcount )
                 {
                     return true;
@@ -480,7 +471,7 @@ namespace KFrame
             auto iseligibility = kfagent->IsEligibilityData( kfitem, __KF_STRING__( count ) );
             if ( iseligibility )
             {
-                auto removecount = __MIN__( itemcount, kfitem->GetValue< uint32 >( __KF_STRING__( count ) ) );
+                auto removecount = __MIN__( itemcount, kfitem->GetValue( __KF_STRING__( count ) ) );
 
                 player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, removecount );
                 itemcount -= removecount;
@@ -506,7 +497,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemNotExist );
         }
 
-        auto itemid = kfitem->GetValue< uint32 >( __KF_STRING__( id ) );
+        auto itemid = kfitem->GetValue( __KF_STRING__( id ) );
         auto kfsetting = _kf_item_config->FindItemSetting( itemid );
         if ( kfsetting == nullptr )
         {

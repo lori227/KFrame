@@ -29,7 +29,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////
 
-    void KFLogShardModule::Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid, const std::string& loginfo )
+    void KFLogShardModule::Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid, const std::string& loginfo )
     {
         if ( level < spdlog::level::trace || level >= spdlog::level::off )
         {
@@ -37,7 +37,7 @@ namespace KFrame
             return;
         }
 
-        auto& logger = GetLogger( zoneid, appname, apptype, appid );
+        auto& logger = GetLogger( zoneid, appname, apptype, strappid );
         if ( logger == nullptr )
         {
             return;
@@ -46,11 +46,9 @@ namespace KFrame
         logger->log( ( spdlog::level::level_enum )level, loginfo.c_str() );
     }
 
-    void KFLogShardModule::CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, uint32 appid )
+    void KFLogShardModule::CreateLogger( const std::string& zonename, const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
         std::vector<spdlog::sink_ptr> sinks_vec;
-
-        auto strappid = KFAppID::ToString( appid );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string logname = __FORMAT__( "..\\binlog\\{}-{}-{}.log", appname, apptype, strappid );
@@ -72,7 +70,7 @@ namespace KFrame
 #endif
         sinks_vec.push_back( date_and_hour_sink );
 
-        std::string name = __FORMAT__( "{}-{}-{}", appname, apptype, appid );
+        std::string name = __FORMAT__( "{}-{}-{}", appname, apptype, strappid );
         auto remote_logger = std::make_shared<spdlog::async_logger>( name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
@@ -88,7 +86,7 @@ namespace KFrame
         _loggers.insert( std::make_pair( name, remote_logger ) );
     }
 
-    const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( uint32 zoneid, const std::string& appname, const std::string& apptype, uint32 appid )
+    const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
         static std::shared_ptr<spdlog::logger> NULLPTR_ = nullptr;
 
@@ -98,11 +96,11 @@ namespace KFrame
             zonename = "cluster";
         }
 
-        std::string logger_unique_name = __FORMAT__( "{}-{}-{}", appname, apptype, appid );
+        std::string logger_unique_name = __FORMAT__( "{}-{}-{}", appname, apptype, strappid );
         auto iter = _loggers.find( logger_unique_name );
         if ( iter == _loggers.end() )
         {
-            CreateLogger( zonename, appname, apptype, appid );
+            CreateLogger( zonename, appname, apptype, strappid );
         }
 
         iter = _loggers.find( logger_unique_name );

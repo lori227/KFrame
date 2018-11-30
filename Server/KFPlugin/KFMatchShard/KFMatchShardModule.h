@@ -82,7 +82,7 @@ namespace KFrame
         KFMatchQueue* FindMatchQueue( uint32 matchid, const char* function, uint32 line );
 
     private:
-        KFRedisDriver* _kf_battle_driver;
+        KFRedisDriver* _kf_battle_driver{ nullptr };
 
         // 匹配模式列表
         KFMap< uint32, uint32, KFMatchQueue > _kf_match_queue;

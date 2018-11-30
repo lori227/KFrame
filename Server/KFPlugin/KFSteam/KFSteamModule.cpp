@@ -26,14 +26,8 @@ namespace KFrame
 
     void KFSteamModule::KickFreeWeekendPlayer()
     {
-        auto _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        if ( _kf_component == nullptr )
-        {
-            __LOG_ERROR__( "can't find player component" );
-            return;
-        }
-
-        for ( auto kfentity = _kf_component->FirstEntity(); kfentity != nullptr; kfentity = _kf_component->NextEntity() )
+        auto kfcomponent = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        for ( auto kfentity = kfcomponent->FirstEntity(); kfentity != nullptr; kfentity = kfcomponent->NextEntity() )
         {
             auto entitydata = kfentity->GetData();
             auto steamfreeweekend = entitydata->GetValue<uint32>( __KF_STRING__( steamfreeweekend ) );

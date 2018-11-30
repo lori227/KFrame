@@ -28,7 +28,7 @@ namespace KFrame
         return PlayerCount() >= kfsetting->_max_group_player_count;
     }
 
-    bool KFMatchGroup::HavePlayer( uint32 playerid )
+    bool KFMatchGroup::HavePlayer( uint64 playerid )
     {
         auto iter = _player_list.find( playerid );
         return iter != _player_list.end();
@@ -50,7 +50,7 @@ namespace KFrame
         }
     }
 
-    bool KFMatchGroup::RemovePlayer( uint32 playerid )
+    bool KFMatchGroup::RemovePlayer( uint64 playerid )
     {
         _kf_match_queue->RemoveMatchPlayer( playerid );
         return _player_list.erase( playerid ) > 0u;

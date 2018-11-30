@@ -5,7 +5,7 @@ namespace KFrame
 {
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-    void KFDisplayModule::SendToClient( uint32 playerid, uint32 result, ListString& params )
+    void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, ListString& params )
     {
         KFMsg::MsgResultDisplay display;
         display.set_result( result );
@@ -55,7 +55,7 @@ namespace KFrame
         }
     }
 
-    void KFDisplayModule::SendToGame( uint32 serverid, uint32 playerid, uint32 result, ListString& params )
+    void KFDisplayModule::SendToGame( uint64 serverid, uint64 playerid, uint32 result, ListString& params )
     {
         KFMsg::MsgResultDisplay display;
         display.set_result( result );
@@ -74,7 +74,7 @@ namespace KFrame
         }
     }
 
-    void KFDisplayModule::SendToPlayer( uint32 serverid, uint32 playerid, uint32 result, ListString& params )
+    void KFDisplayModule::SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params )
     {
         KFMsg::MsgResultDisplay display;
         display.set_result( result );
@@ -95,8 +95,8 @@ namespace KFrame
 
     void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )
     {
-        auto serverid = kfbasic->GetValue< uint32 >( __KF_STRING__( serverid ) );
-        auto playerid = kfbasic->GetValue< uint32 >( __KF_STRING__( id ) );
+        auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
+        auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
         SendToPlayer( serverid, playerid, result, params );
     }
 }

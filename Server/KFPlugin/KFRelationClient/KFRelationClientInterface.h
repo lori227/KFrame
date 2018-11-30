@@ -17,8 +17,8 @@ namespace KFrame
         virtual bool SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 添加好友度
-        virtual void AddFriendLiness( KFEntity* player, uint32 friendid, uint32 type, uint32 value ) = 0;
-        virtual void AddFriendLinessOnce( KFEntity* player, uint32 friendid, uint32 type, uint32 value ) = 0;
+        virtual void AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value ) = 0;
+        virtual void AddFriendLinessOnce( KFEntity* player, uint64 friendid, uint32 type, uint32 value ) = 0;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 计算战场成绩, 好友度/ 最近的玩家战绩

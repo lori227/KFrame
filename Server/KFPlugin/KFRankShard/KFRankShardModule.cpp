@@ -217,7 +217,7 @@ namespace KFrame
             auto rankindex = 0u;
             for ( auto& strplayerid : queryidlist->_value )
             {
-                auto playerid = KFUtility::ToValue< uint32 >( strplayerid );
+                auto playerid = KFUtility::ToValue< uint64 >( strplayerid );
 
                 // 读取排行榜信息
                 auto queryrankdata = _rank_driver->QueryString( "hget {} {}", rankdatakey, playerid );
@@ -260,7 +260,7 @@ namespace KFrame
         }
     }
 
-    void KFRankShardModule::LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint32 playerid )
+    void KFRankShardModule::LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint64 playerid )
     {
         //// 查询玩家的信息
         //MapString playervalues;
@@ -365,7 +365,7 @@ namespace KFrame
         _kf_cluster_shard->SendToPlayer( kfmsg.serverid(), kfmsg.playerid(), KFMsg::MSG_QUERY_FRIEND_RANK_LIST_ACK, &ack );
     }
 
-    uint32 KFRankShardModule::CalcRankZoneId( uint32 playerid, const KFRankSetting* kfsetting )
+    uint32 KFRankShardModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting )
     {
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFRankEnum::ZoneRank )

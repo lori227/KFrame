@@ -131,15 +131,15 @@ namespace KFrame
         virtual void SavePlayer( KFEntity* player ) = 0;
 
         // 踢掉角色
-        virtual void KickPlayer( uint32 playerid, uint32 type, const char* function, uint32 line ) = 0;
+        virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line ) = 0;
 
         // 查找玩家
-        virtual KFEntity* FindPlayer( uint32 playerid ) = 0;
-        virtual KFEntity* FindPlayer( uint32 playerid, const char* function, uint32 line ) = 0;
+        virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
+        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line ) = 0;
 
         // 发送消息
-        virtual bool SendToClient( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint64 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         virtual bool SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length ) = 0;

@@ -47,10 +47,10 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint32 id, KFMsg::PBObject* pbobject )
+    bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject )
     {
         // 先判断在keeper中是否存在
-        auto kfkeeper = _kf_data_keeper.Find( id );
+        auto kfkeeper = _kf_data_keeper.Find( playerid );
         if ( kfkeeper != nullptr )
         {
             pbobject->CopyFrom( kfkeeper->_pb_object );
@@ -60,15 +60,14 @@ namespace KFrame
         auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
             return false;
         }
 
-        auto kfresult = redisdriver->QueryString( "hget {}:{} {}",
-                        __KF_STRING__( player ), id, __KF_STRING__( data ) );
+        auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "player[{}:{}] query failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] query failed!", zoneid, playerid );
             return false;
         }
 
@@ -77,7 +76,7 @@ namespace KFrame
             auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] parse failed!", zoneid, id );
+                __LOG_ERROR__( "player[{}:{}] parse failed!", zoneid, playerid );
                 return false;
             }
         }
@@ -85,37 +84,36 @@ namespace KFrame
         return true;
     }
 
-    bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint32 id, const KFMsg::PBObject* pbobject )
+    bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject )
     {
         auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
         if ( strdata == _invalid_str )
         {
-            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, playerid );
             return false;
         }
 
         auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
             return false;
         }
 
-        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}",
-                                              __KF_STRING__( player ), id, __KF_STRING__( data ), strdata );
+        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ), strdata );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "player[{}:{}] save failed!", zoneid, id );
+            __LOG_ERROR__( "player[{}:{}] save failed!", zoneid, playerid );
             return false;
         }
 
-        __LOG_DEBUG__( "player [{}:{}] save ok!", zoneid, id );
+        __LOG_DEBUG__( "player [{}:{}] save ok!", zoneid, playerid );
         return true;
     }
 
     __KF_TIMER_FUNCTION__( KFDataShardModule::OnTimerSaveDataKeeper )
     {
-        std::set< uint32 > removes;
+        std::set< uint64 > removes;
         for ( auto iter : _kf_data_keeper._objects )
         {
             auto kfkeeper = iter.second;
@@ -133,7 +131,7 @@ namespace KFrame
         }
     }
 
-    void KFDataShardModule::DeletePlayerData( uint32 zoneid, uint32 id )
+    void KFDataShardModule::DeletePlayerData( uint32 zoneid, uint64 playerid )
     {
 #ifndef __KF_DEBUG__
         return;
@@ -144,11 +142,11 @@ namespace KFrame
             return;
         }
 
-        redisdriver->Append( "del {}:{}", __KF_STRING__( player ), id );
-        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, id );
+        redisdriver->Append( "del {}:{}", __KF_STRING__( player ), playerid );
+        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, playerid );
         redisdriver->Pipeline();
 
-        __LOG_DEBUG__( "player[{}:{}] delete ok!", zoneid, id );
+        __LOG_DEBUG__( "player[{}:{}] delete ok!", zoneid, playerid );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

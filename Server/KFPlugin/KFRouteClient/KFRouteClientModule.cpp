@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    KFRouteClientModule::KFRouteClientModule()
-    {
-        _kf_transmit_function = nullptr;
-    }
-
     void KFRouteClientModule::BeforeRun()
     {
         _kf_cluster->RegisterConnectionFunction( __KF_STRING__( route ), this, &KFRouteClientModule::OnConnectionRouteCluster );
@@ -35,7 +30,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRouteClientModule::OnConnectionRouteCluster( uint32 serverid )
+    void KFRouteClientModule::OnConnectionRouteCluster( uint64 serverid )
     {
         // 只有Game才注册路由信息
         auto kfglobal = KFGlobal::Instance();
@@ -47,12 +42,12 @@ namespace KFrame
         // 连接到Route Proxy, 发送区信息到Proxy
         KFMsg::S2SRegisterRouteZoneReq req;
         auto zonedata = req.mutable_zonedata();
-        zonedata->set_serverid( kfglobal->_app_id );
         zonedata->set_zoneid( _kf_zone->GetZone()->_id );
+        zonedata->set_serverid( kfglobal->_app_id._union._id );
         _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &req );
     }
 
-    bool KFRouteClientModule::SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         if ( serverid == _invalid_int || playerid == _invalid_int )
         {
@@ -73,7 +68,7 @@ namespace KFrame
         return ok;
     }
 
-    bool KFRouteClientModule::SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length )
+    bool KFRouteClientModule::SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, const char* data, uint32 length )
     {
         KFMsg::S2STransmitRouteZoneMessageReq req;
         auto transmitdata = req.mutable_transmitdata();
