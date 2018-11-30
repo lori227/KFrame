@@ -35,10 +35,15 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFStoreModule::OnDiscountUpdateCallBack )
     {
+        if ( oldvalue == 0 )
+        {
+            oldvalue = 100;
+        }
+
         // 取最小的折扣, 但不能为0
         if ( newvalue == 0 || newvalue > oldvalue )
         {
-            kfdata->SetValue< uint64 >( oldvalue );
+            player->UpdateData( kfdata, key, KFOperateEnum::Set, oldvalue );
         }
     }
 

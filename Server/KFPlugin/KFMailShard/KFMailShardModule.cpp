@@ -142,7 +142,7 @@ namespace KFrame
                 pbdata->set_name( iter.first );
 
                 // 系统邮件做特殊处理
-                if ( iter.first == __KF_STRING__( flag ) && kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
+                if ( iter.first == __KF_STRING__( flag ) )
                 {
                     pbdata->set_value( mailiter.second );
                 }
@@ -166,7 +166,7 @@ namespace KFrame
         // 删除过期邮件
         if ( !overduelist.empty() )
         {
-            _mail_redis_driver->Update( overduelist, "zrem {}", maillistkey );
+            _mail_redis_driver->Update( overduelist, "hdel {}", maillistkey );
         }
     }
 

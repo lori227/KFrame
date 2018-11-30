@@ -15,7 +15,7 @@ namespace KFrame
         virtual ~KFNetServerEngine();
 
         // 初始化
-        void InitEngine( uint32 maxqueuesize );
+        void InitEngine( uint32 maxqueuesize, uint32 messagetype );
 
         // 初始化服务
         int32 StartEngine( const std::string& ip, uint32 port, uint32 maxconnect, uint32 timeout );

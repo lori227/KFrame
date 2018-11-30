@@ -42,7 +42,7 @@ namespace KFrame
     protected:
 
         // 初始化
-        void InitSession( uint32 id, uint32 queuecount );
+        void InitSession( uint32 id, uint32 queuecount, uint32 headlength );
 
         // 添加发送消息
         bool AddSendMessage( KFNetMessage* message );
@@ -115,6 +115,9 @@ namespace KFrame
         uv_stream_t* _uv_stream;
 
     private:
+        // 消息头长度
+        uint32 _message_head_length;
+
         // 接收消息buffer
         uint32 _receive_length;
         char _receive_buff[ KFNetDefine::MaxRecvBuffLength ];

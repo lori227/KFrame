@@ -37,6 +37,7 @@ namespace KFrame
                 kfsetting._port = servernode.GetUInt32( "Port", true, 0 );
                 kfsetting._time_out = servernode.GetUInt32( "TimeOut", true, 20 );
                 kfsetting._max_queue_size = servernode.GetUInt32( "MaxQueue" );
+                kfsetting._message_type = servernode.GetUInt32( "MessageType", true, KFMessageEnum::Server );
                 _tcp_setting_list.push_back( kfsetting );
 
                 servernode.NextNode();

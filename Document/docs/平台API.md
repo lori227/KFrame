@@ -327,3 +327,44 @@ Content-Length: 100
 //成功返回示例:
 {"code":0,"msg":"Success","data":[{"money":"1000","alipay":"xxxxx","name":"xf","time":1541844730},{"money":"1000","alipay":"xxxxx","name":"xf","time":1541844730}]}
 ```
+
+
+### 使用礼包码
+
+- 接口名: verifyCdkCode
+- 接口说明: 使用礼包码兑换（也叫手机激活码）
+- URL格式: http://192.168.1.9:8080/v1/server/verifyCdkCode?sig=XX&appid=10001&timestamp=1578745715
+- 入参说明:
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| accountid | uint32 | 游戏内角色id |
+| channel | int | 渠道id |
+| cdkCode | string | 16位礼包码（手机激活码） |
+
+- 返回说明: 返回结果格式为json, 字段名说明为
+
+| 参数名称 | 类型 | 描述 |
+| - | - | - |
+| code | int | 返回码, 0:正确 其他:失败 |
+| msg | string | code非0，则表示"错误码, 错误提示", 详细注释参见错误码描述 |
+| data | json | 返回的数据 （返回列表，字段有：toolCode：道具码|
+
+- 示例:
+
+```html
+POST v1/server/verifyCdkCode?appid=10001&sig=c10833849d244d5178bafbaab0e9db2e&timestamp=1543387943
+HTTP/1.0
+Host:192.168.1.9:8080
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+{
+    "accountid": 1010074,
+	"channel": 3,
+    "cdkCode": 2WeX49c196561E1C,
+}
+
+//成功返回示例:
+{"code":0,"msg":"Success","data":{"toolCode":"[{\"clothes\":{\"id\":\"20001\"|\"count\":\"1\"|\"time\":\"86400\"}}]"}}
+```

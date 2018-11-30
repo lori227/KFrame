@@ -11,14 +11,27 @@ namespace KFrame
     class KFNetHead
     {
     public:
-        KFId _kfid;			// id
         uint32 _length;		// 消息长度
         uint16 _msgid;		// 消息类型
         uint16 _child;		// 子消息个数( 包括自己 )
     };
 
+    // 客户端与服务器之间的消息头
+    class KFClientHead : public KFNetHead
+    {
+    public:
+
+    };
+
+    // 服务器之间的消息头
+    class KFServerHead : public KFNetHead
+    {
+    public:
+        KFId _kfid;		// 数据id
+    };
+    ///////////////////////////////////////////////////////////////////////////////////////////
     // 消息基类
-    class KFNetMessage : public KFNetHead
+    class KFNetMessage : public KFServerHead
     {
     public:
         KFNetMessage();
@@ -28,7 +41,7 @@ namespace KFrame
         void Release();
 
         static uint32 HeadLength() {
-            return sizeof( KFNetHead );
+            return sizeof( KFServerHead );
         }
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////

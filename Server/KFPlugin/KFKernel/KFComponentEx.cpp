@@ -231,18 +231,13 @@ namespace KFrame
 
     void KFComponentEx::BindAddDataFunction( const std::string& module, const std::string& dataname, KFAddDataFunction& function )
     {
-        auto kfbind = _add_data_function.Create( dataname );
-        auto kffunction = kfbind->Create( module );
+        auto kffunction = _add_data_function.Create( dataname );
         kffunction->_function = function;
     }
 
     void KFComponentEx::UnBindAddDataFunction( const std::string& module, const std::string& dataname )
     {
-        auto kfbind = _add_data_function.Find( dataname );
-        if ( kfbind != nullptr )
-        {
-            kfbind->Remove( module );
-        }
+        _add_data_function.Remove( dataname );
     }
 
     void KFComponentEx::BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function )
@@ -258,18 +253,13 @@ namespace KFrame
 
     void KFComponentEx::BindRemoveDataFunction( const std::string& module, const std::string& dataname, KFRemoveDataFunction& function )
     {
-        auto kfbind = _remove_data_function.Create( dataname );
-        auto kffunction = kfbind->Create( module );
+        auto kffunction = _remove_data_function.Create( dataname );
         kffunction->_function = function;
     }
 
     void KFComponentEx::UnBindRemoveDataFunction( const std::string& module, const std::string& dataname )
     {
-        auto kfbind = _remove_data_function.Find( dataname );
-        if ( kfbind != nullptr )
-        {
-            kfbind->Remove( module );
-        }
+        _remove_data_function.Remove( dataname );
     }
 
     void KFComponentEx::BindUpdateDataModule( const std::string& module, KFUpdateDataFunction& function )
@@ -286,19 +276,14 @@ namespace KFrame
     void KFComponentEx::BindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function )
     {
         auto datakey = DataKeyType( parentname, dataname );
-        auto kfbind = _update_data_function.Create( datakey );
-        auto kffunction = kfbind->Create( module );
+        auto kffunction = _update_data_function.Create( datakey );
         kffunction->_function = function;
     }
 
     void KFComponentEx::UnBindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname )
     {
         auto datakey = DataKeyType( parentname, dataname );
-        auto kfbind = _update_data_function.Find( datakey );
-        if ( kfbind != nullptr )
-        {
-            kfbind->Remove( module );
-        }
+        _update_data_function.Remove( datakey );
     }
 
     void KFComponentEx::BindUpdateStringModule( const std::string& module, KFUpdateStringFunction& function )
@@ -315,20 +300,14 @@ namespace KFrame
     void KFComponentEx::BindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function )
     {
         auto datakey = DataKeyType( parentname, dataname );
-
-        auto kfbind = _update_string_function.Create( datakey );
-        auto kffunction = kfbind->Create( module );
+        auto kffunction = _update_string_function.Create( datakey );
         kffunction->_function = function;
     }
 
     void KFComponentEx::UnBindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname )
     {
         auto datakey = DataKeyType( parentname, dataname );
-        auto kfbind = _update_string_function.Find( datakey );
-        if ( kfbind != nullptr )
-        {
-            kfbind->Remove( module );
-        }
+        _update_string_function.Remove( datakey );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindEntityInitializeFunction( KFEntityFunction& function )
@@ -433,6 +412,11 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, uint64 key, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
     {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, key );
+        }
+
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -452,25 +436,21 @@ namespace KFrame
             // 注册的函数
             auto kfparent = kfdata->GetParent();
             auto findkey = DataKeyType( kfparent->GetName(), kfdata->GetName() );
-            auto kfbind = _update_data_function.Find( findkey );
-            if ( kfbind != nullptr )
+            auto kffunction = _update_data_function.Find( findkey );
+            if ( kffunction != nullptr )
             {
-                for ( auto& iter : kfbind->_objects )
-                {
-                    auto kffunction = iter.second;
-                    kffunction->_function( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
-                }
+                kffunction->_function( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
             }
-        }
-
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, key );
         }
     }
 
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value )
     {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, kfentity->GetKeyID() );
+        }
+
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -490,25 +470,21 @@ namespace KFrame
             // 注册的函数
             auto kfparent = kfdata->GetParent();
             auto findkey = DataKeyType( kfparent->GetName(), kfdata->GetName() );
-            auto kfbind = _update_string_function.Find( findkey );
-            if ( kfbind != nullptr )
+            auto kffunction = _update_string_function.Find( findkey );
+            if ( kffunction != nullptr )
             {
-                for ( auto& iter : kfbind->_objects )
-                {
-                    auto kffunction = iter.second;
-                    kffunction->_function( kfentity, kfdata, value );
-                }
+                kffunction->_function( kfentity, kfdata, value );
             }
-        }
-
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncUpdateData( kfdata, kfentity->GetKeyID() );
         }
     }
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
     {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncAddData( kfdata, key );
+        }
+
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -527,25 +503,21 @@ namespace KFrame
 
         {
             // 注册的函数
-            auto kfbind = _add_data_function.Find( kfdata->GetName() );
-            if ( kfbind != nullptr )
+            auto kffunction = _add_data_function.Find( kfdata->GetName() );
+            if ( kffunction != nullptr )
             {
-                for ( auto& iter : kfbind->_objects )
-                {
-                    auto kffunction = iter.second;
-                    kffunction->_function( kfentity, kfparent, key, kfdata );
-                }
+                kffunction->_function( kfentity, kfparent, key, kfdata );
             }
-        }
-
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncAddData( kfdata, key );
         }
     }
 
     void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
     {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncRemoveData( kfdata, key );
+        }
+
         // 开启保存数据库定时器
         if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
         {
@@ -563,20 +535,11 @@ namespace KFrame
 
         {
             // 注册的函数
-            auto kfbind = _remove_data_function.Find( kfdata->GetName() );
-            if ( kfbind != nullptr )
+            auto kffunction = _remove_data_function.Find( kfdata->GetName() );
+            if ( kffunction != nullptr )
             {
-                for ( auto& iter : kfbind->_objects )
-                {
-                    auto kffunction = iter.second;
-                    kffunction->_function( kfentity, kfparent, key, kfdata );
-                }
+                kffunction->_function( kfentity, kfparent, key, kfdata );
             }
-        }
-
-        if ( kfentity->IsInited() )
-        {
-            static_cast< KFEntityEx* >( kfentity )->SyncRemoveData( kfdata, key );
         }
     }
 

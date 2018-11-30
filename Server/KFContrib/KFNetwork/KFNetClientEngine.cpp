@@ -20,7 +20,7 @@ namespace KFrame
     {
         // 网络服务
         _net_client_services = __KF_NEW__( KFNetClientServices );
-        _net_client_services->InitServices( 100, queuesize );
+        _net_client_services->InitServices( 100, queuesize, KFMessageEnum::Server );
         _net_client_services->StartServices( nullptr );
 
         // 注册网络时间

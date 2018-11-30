@@ -16,8 +16,11 @@ namespace KFrame
 
     void KFNetConnector::InitConnector( uint32 id, KFNetServices* netservices )
     {
-        InitSession( id, netservices->_queue_size );
         _net_services = netservices;
+
+        // 消息头长度
+        uint32 headlength = ( netservices->_message_type == KFMessageEnum::Server ? sizeof( KFServerHead ) : sizeof( KFClientHead ) );
+        InitSession( id, netservices->_queue_size, headlength );
     }
 
     // 弹出一个消息
@@ -227,7 +230,7 @@ namespace KFrame
     void KFNetConnector::RunSendPing()
     {
         // 20秒没有消息通讯, 发送一次ping消息
-        // keeplive 经常会失灵, 很久才监测到锻炼 问题待查
+        // keeplive 经常会失灵, 很久才检测到断开 问题待查
         if ( _net_services->_now_time < _last_message_time + 20000u )
         {
             return;

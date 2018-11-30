@@ -136,7 +136,7 @@ namespace KFrame
 
         KFJson response;
         response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
-        response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( unionid ) ) );
+        response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( openid ) ) );
 
         //KFJson kfextend;
         //kfextend.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );

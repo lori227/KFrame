@@ -14,7 +14,7 @@ namespace KFrame
         virtual ~KFNetServices();
 
         // 初始化
-        virtual void InitServices( uint32 eventcount, uint32 queuecount );
+        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype );
 
         // 开始服务
         virtual int32 StartServices( const KFNetSetting* kfsetting );
@@ -66,6 +66,8 @@ namespace KFrame
         // 当前时间
         uint64 _now_time;
 
+        // 服务器消息类型
+        uint32 _message_type;
     protected:
         // 线程逻辑标识
         volatile bool _thread_run;

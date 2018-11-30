@@ -30,6 +30,7 @@
 	<!-- InteranetIp 外网ip 127.0.0.1 提供局域网ip  0.0.0.0 提供公网ip -->
 	<!-- MaxQueue 最大队列数量 默认20000 -->
 	<!-- TimeOut 掉线监测时间 默认20 -->
+	<!-- MessageType 消息类型  1 服务器之间通讯  2 服务器与客户端之间通讯-->
 	
 	<!-- tcp服务器配置 -->
 	<TcpServer>
@@ -43,7 +44,7 @@
 		<Server AppName="deploy" AppType="server" Type="0" Port="0" MaxQueue="20000"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200"/>
+		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" MessageType="2"/>
 	</TcpServer>
 </Config>
 

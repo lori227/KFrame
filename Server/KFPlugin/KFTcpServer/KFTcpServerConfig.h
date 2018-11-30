@@ -17,6 +17,7 @@ namespace KFrame
             _max_queue_size = 10000;
             _time_out = 20;
             _local_ip = "0.0.0.0";
+            _message_type = KFMessageEnum::Server;
         }
 
         std::string _app_name;
@@ -28,6 +29,7 @@ namespace KFrame
         uint32 _time_out;
         uint32 _max_connection;
         uint32 _max_queue_size;
+        uint32 _message_type;
     };
 
     class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >

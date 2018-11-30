@@ -22,6 +22,16 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
+    // 消息类型
+    namespace KFMessageEnum
+    {
+        enum MyEnum
+        {
+            Server = 1,		// 服务器与服务器之间消息
+            Client = 2,		// 客户端与服务器之间消息
+        };
+    }
+
     namespace KFServerEnum
     {
         enum MyEnum

@@ -15,6 +15,7 @@ namespace KFrame
         _is_sending = false;
         _is_send_queue_full = false;
         _is_recv_queue_full = false;
+        _message_head_length = 0;
 
         memset( _receive_buff, 0, sizeof( _receive_buff ) );
         memset( _req_recv_buffer, 0, sizeof( _req_recv_buffer ) );
@@ -26,11 +27,12 @@ namespace KFrame
 
     }
 
-    void KFNetSession::InitSession( uint32 id, uint32 queuecount )
+    void KFNetSession::InitSession( uint32 id, uint32 queuecount, uint32 headlength )
     {
         _session_id = id;
         _object_id = id;
         _uv_write.data = this;
+        _message_head_length = headlength;
         _send_queue.InitQueue( queuecount );
         _recv_queue.InitQueue( queuecount );
     }
@@ -124,8 +126,8 @@ namespace KFrame
                     break;
                 }
 
-                memcpy( _req_send_buffer + _send_length, message, KFNetMessage::HeadLength() );
-                _send_length += KFNetMessage::HeadLength();
+                memcpy( _req_send_buffer + _send_length, message, _message_head_length );
+                _send_length += _message_head_length;
 
                 if ( message->_length > 0 )	// 不是空消息
                 {
@@ -148,7 +150,7 @@ namespace KFrame
 
     bool KFNetSession::CheckBufferLength( uint32 totallength, uint32 messagelength )
     {
-        if ( totallength + KFNetMessage::HeadLength() + messagelength <= KFNetDefine::MaxReqBuffLength )
+        if ( totallength + _message_head_length + messagelength <= KFNetDefine::MaxReqBuffLength )
         {
             return true;
         }
@@ -185,12 +187,12 @@ namespace KFrame
             return;
         }
 
-        while ( _receive_length >= ( nowposition + KFNetMessage::HeadLength() + nethead->_length ) )
+        while ( _receive_length >= ( nowposition + _message_head_length + nethead->_length ) )
         {
             auto recvmessage = KFNetMessage::Create( nethead->_length );
-            memcpy( recvmessage, nethead, KFNetMessage::HeadLength() );
+            memcpy( recvmessage, nethead, _message_head_length );
 
-            nowposition += KFNetMessage::HeadLength();
+            nowposition += _message_head_length;
             if ( nethead->_length > 0 )
             {
                 recvmessage->CopyData( _receive_buff + nowposition, nethead->_length );
@@ -219,7 +221,7 @@ namespace KFrame
 
     KFNetHead* KFNetSession::CheckReciveBuffValid( uint32 position )
     {
-        if ( _receive_length < ( position + KFNetMessage::HeadLength() ) )
+        if ( _receive_length < ( position + _message_head_length ) )
         {
             return nullptr;
         }

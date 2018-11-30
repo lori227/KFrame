@@ -16,6 +16,7 @@ namespace KFrame
         _buff_length = 0;
         _queue_size = 10000;
         _now_time = 0;
+        _message_type = 0;
     }
 
     KFNetServices::~KFNetServices()
@@ -32,7 +33,7 @@ namespace KFrame
         _uv_loop = nullptr;
     }
 
-    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount )
+    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype )
     {
         if ( queuecount != 0 )
         {
@@ -42,6 +43,7 @@ namespace KFrame
         _net_event = __KF_NEW__( KFNetEvent );
         _net_event->InitEvent( eventcount );
 
+        _message_type = messagetype;
         _buff_length = KFNetDefine::SerializeBuffLength;
         _buff_address = reinterpret_cast< char* >( malloc( _buff_length ) );
 

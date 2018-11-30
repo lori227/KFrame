@@ -160,19 +160,19 @@ namespace KFrame
         // 属性更新回调列表
         typedef std::pair< std::string, std::string > DataKeyType;
         KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_module;
-        KFMap < std::string, const std::string&, KFBind< std::string, const std::string&, KFAddDataFunction > > _add_data_function;
+        KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_function;
 
         // 删除数据的回调函数
         KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_module;
-        KFMap< std::string, const std::string&, KFBind< std::string, const std::string&, KFRemoveDataFunction > > _remove_data_function;
+        KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_function;
 
         // 更新数据的回调函数
         KFBind< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
-        KFMap< DataKeyType, const DataKeyType&, KFBind< std::string, const std::string&, KFUpdateDataFunction > > _update_data_function;
+        KFBind< DataKeyType, const DataKeyType&, KFUpdateDataFunction > _update_data_function;
 
         // 更新数据的回调函数
         KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
-        KFMap< DataKeyType, const DataKeyType&, KFBind< std::string, const std::string&, KFUpdateStringFunction > > _update_string_function;
+        KFBind< DataKeyType, const DataKeyType&, KFUpdateStringFunction > _update_string_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         KFEntityFunction _entity_initialize_function;
         KFEntityFunction _entity_uninitialize_function;

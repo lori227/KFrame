@@ -62,7 +62,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         auto kftcpsetting = FindTcpServerSetting();
-        _kf_server_engine->InitEngine( kftcpsetting->_max_queue_size );
+        _kf_server_engine->InitEngine( kftcpsetting->_max_queue_size, kftcpsetting->_message_type );
         _kf_server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
         _kf_server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
 
