@@ -30,7 +30,7 @@ namespace KFrame
 
         KFJson sendjson;
         sendjson.SetValue( __KF_STRING__( accountid ), playerid );
-        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_channel );
+        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
         sendjson.SetValue( __KF_STRING__( name ), kfmsg.name() );
         sendjson.SetValue( __KF_STRING__( alipay ), kfmsg.alipay() );
         _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnBindAlipayCallBack, apiurl, sendjson );
@@ -71,7 +71,7 @@ namespace KFrame
 
         KFJson sendjson;
         sendjson.SetValue( __KF_STRING__( accountid ), playerid );
-        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_channel );
+        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
         _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnQueryInviteScoreCallBack, apiurl, sendjson );
     }
 
@@ -123,7 +123,7 @@ namespace KFrame
         sendjson.SetValue( __KF_STRING__( accountid ), playerid );
         sendjson.SetValue( __KF_STRING__( name ), kfmsg.name() );
         sendjson.SetValue( __KF_STRING__( alipay ), kfmsg.alipay() );
-        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_channel );
+        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
         _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnExchangeInviteScoreCallBack, apiurl, sendjson );
     }
 
@@ -173,7 +173,7 @@ namespace KFrame
 
         KFJson sendjson;
         sendjson.SetValue( __KF_STRING__( accountid ), playerid );
-        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_channel );
+        sendjson.SetValue( __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
         _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnExChangeInviteRecordCallBack, apiurl, sendjson );
     }
 

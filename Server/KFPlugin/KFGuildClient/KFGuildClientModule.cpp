@@ -114,7 +114,7 @@ namespace KFrame
     {
         KFMsg::S2SLoginQueryGuildidReq req;
         req.set_playerid( player->GetKeyID() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         auto kfobject = player->GetData();
         auto kfguildid = kfobject->FindData( __KF_STRING__( basic ), __KF_STRING__( guildid ) );
         kfguildid->SetValue<uint64>( _invalid_int );
@@ -131,7 +131,7 @@ namespace KFrame
             return;
         }
         MapString values;
-        values[__KF_STRING__( serverid )] = __TO_STRING__( KFGlobal::Instance()->_app_id );
+        values[__KF_STRING__( serverid )] = __TO_STRING__( KFGlobal::Instance()->_app_id._union._id );
         values[__KF_STRING__( id )] = __TO_STRING__( player->GetKeyID() );
         values[__KF_STRING__( status )] = __TO_STRING__( KFMsg::OnlineStatus );
         values[__KF_STRING__( statustime )] = __TO_STRING__( KFGlobal::Instance()->_real_time );
@@ -311,7 +311,7 @@ namespace KFrame
         req.set_name( name );
         req.set_guildname( kfmsg.guildname() );
         req.set_medal( kfmsg.medal() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         if ( SendMessageToGuild( KFMsg::S2S_CREATE_GUILD_REQ, &req ) )
         {
             player->RemoveAgentData( &guilddatasetting->_cost_item, __FUNC_LINE__ );
@@ -402,7 +402,7 @@ namespace KFrame
         req.set_invitor( playerid );
         req.set_invitedid( kfmsg.inviterid() );
         auto kfgobal = KFGlobal::Instance();
-        req.set_serverid( kfgobal->_app_id );
+        req.set_serverid( kfgobal->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_INVITE_GUILD_REQ, &req );
 
     }
@@ -435,8 +435,7 @@ namespace KFrame
             player->AddData( kfguildinvites, kfguildinvite );
         }
         // 发送邮件
-        auto serverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-        _kf_mail->SendMail( player, serverid, kfmsg.invitedid(), KFGuildEnum::InviteGuildMailId, KFUtility::ToString( kfmsg.guildid() ) );
+        _kf_mail->SendMail( player, kfmsg.invitedid(), KFGuildEnum::InviteGuildMailId, KFUtility::ToString( kfmsg.guildid() ) );
 
     }
 
@@ -528,7 +527,7 @@ namespace KFrame
         KFMsg::S2SExitGuildReq req;
         req.set_guildid( guildid );
         req.set_playerid( playerid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_EXIT_GUILD_REQ, &req );
     }
 
@@ -552,7 +551,7 @@ namespace KFrame
         req.set_guildid( guildid );
         req.set_playerid( playerid );
         req.set_newmasterid( kfmsg.newmasterid() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_TRANSFER_MASTER_REQ, &req );
     }
 
@@ -579,7 +578,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_operatortype( kfmsg.operatortype() );
         req.set_guildid( guildid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_REVIEW_APPLY_REQ, &req );
 
     }
@@ -598,7 +597,7 @@ namespace KFrame
         KFMsg::S2SDissolveGuildReq req;
         req.set_playerid( playerid );
         req.set_guildid( guildid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_DISSOLVE_GUILD_REQ, &req );
     }
 
@@ -635,7 +634,7 @@ namespace KFrame
         KFMsg::S2SModifyMedalReq req;
         req.set_playerid( playerid );
         req.set_guildid( guildid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_MODIFY_MEDAL_REQ, &req );
 
     }
@@ -646,7 +645,7 @@ namespace KFrame
 
         KFMsg::S2SQueryGuildListReq req;
         req.set_playerid( playerid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         if ( kfmsg.has_guilds() )
         {
             req.mutable_guilds()->CopyFrom( kfmsg.guilds() );
@@ -672,7 +671,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_guildid( guildid );
         req.set_toplayerid( kfmsg.toplayerid() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_KICK_MEMBER_REQ, &req );
     }
 
@@ -775,7 +774,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_toplayerid( kfmsg.toplayerid() );
         req.set_title( kfmsg.title() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_APPOINT_GUILD_MEMBER_REQ, &req );
 
     }
@@ -904,7 +903,7 @@ namespace KFrame
 
         KFMsg::S2SSearchGuildByNameReq req;
         req.set_guildname( kfmsg.guildname() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         req.set_playerid( playerid );
         SendMessageToGuild( KFMsg::S2S_SEARCH_GUILD_BY_NAME_REQ, &req );
     }
@@ -927,7 +926,7 @@ namespace KFrame
         req.set_guildid( guildid );
         req.set_type( kfmsg.type() );
         req.set_flag( kfmsg.flag() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         SendMessageToGuild( guildid, KFMsg::S2S_SET_GUILD_SWITCH_REQ, &req );
     }
 
@@ -943,7 +942,7 @@ namespace KFrame
             KFMsg::S2SLoginQueryGuildReq req;
             req.set_guildid( kfmsg.guildid() );
             req.set_playerid( player->GetKeyID() );
-            req.set_serverid( KFGlobal::Instance()->_app_id );
+            req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
             if ( !SendMessageToGuild( kfmsg.guildid(), KFMsg::S2S_LOGIN_QUERY_GUILD_REQ, &req ) )
             {
                 __LOG_ERROR__( "player[{}] login query guildid[{}] send message failed!", player->GetKeyID(), guildid );
@@ -993,7 +992,7 @@ namespace KFrame
         KFMsg::S2SQueryGuildLogReq req;
         req.set_playerid( playerid );
         req.set_guildid( guildid );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         req.set_beginpos( beginpos );
         req.set_endpos( endpos );
         req.set_page( kfmsg.page() );

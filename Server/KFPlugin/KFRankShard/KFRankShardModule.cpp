@@ -60,7 +60,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFRankShardModule::OnServerDiscoverClient )
     {
-        std::set< uint32 > ranklist;
+        std::set< uint64 > ranklist;
         for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
         {
             auto kfsetting = iter.second;

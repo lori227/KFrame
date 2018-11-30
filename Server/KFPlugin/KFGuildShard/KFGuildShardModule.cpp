@@ -127,7 +127,7 @@ namespace KFrame
     {
         LoadGuildData();
 
-        __REGISTER_LOOP_TIMER__( KFGlobal::Instance()->_app_id, KFTimeEnum::OneMinuteMicSecond * 10, &KFGuildShardModule::OnTimerRefreshGuild );
+        __REGISTER_LOOP_TIMER__( KFGlobal::Instance()->_app_id._union._id, KFTimeEnum::OneMinuteMicSecond * 10, &KFGuildShardModule::OnTimerRefreshGuild );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFGuildShardModule::OnServerDiscoverClient )
@@ -166,7 +166,7 @@ namespace KFrame
         // 删除帮派名字和id对应的hash
         redisdriver->Append( "hdel {} {}", __KF_STRING__( guildnameidhash ), guildname );
         // 移除本shard管理的guildid集合
-        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( guildidset ), KFGlobal::Instance()->_app_id, guildid );
+        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( guildidset ), KFGlobal::Instance()->_app_id._union._id, guildid );
         // 删除帮派的排行榜
         redisdriver->Append( "zrem {} {}", __KF_STRING__( guildrank ), guildid );
         // 删除帮派日志
@@ -430,7 +430,7 @@ namespace KFrame
         redisdriver->Append( "hset {} {} {}", __KF_STRING__( guildnameidhash ), kfmsg.guildname(), kfmsg.guildid() );
         // shardid->guildid
         auto kfglobal = KFGlobal::Instance();
-        redisdriver->Append( "sadd {}:{} {}", __KF_STRING__( guildidset ), kfglobal->_app_id, kfmsg.guildid() );
+        redisdriver->Append( "sadd {}:{} {}", __KF_STRING__( guildidset ), kfglobal->_app_id._union._id, kfmsg.guildid() );
 
         // 创建帮派实体
         auto kfguild = _kf_component->CreateEntity( kfmsg.guildid() );
@@ -1158,7 +1158,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         // 获取当前shard所存储的guildid
-        auto queryguildlist = redisdriver->QueryList( "smembers {}:{}", __KF_STRING__( guildidset ), kfglobal->_app_id );
+        auto queryguildlist = redisdriver->QueryList( "smembers {}:{}", __KF_STRING__( guildidset ), kfglobal->_app_id._union._id );
         if ( !queryguildlist->IsOk() || queryguildlist->_value.empty() )
         {
             return;

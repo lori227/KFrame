@@ -208,8 +208,7 @@ namespace KFrame
         }
 
         // 发送邮件
-        auto toserverid = kffriend->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-        auto ok = _kf_mail->SendMail( player, toserverid, kfmsg.toplayerid(), kfsetting->_give_mail_id, &kfsetting->_buy_item );
+        auto ok = _kf_mail->SendMail( player, kfmsg.toplayerid(), kfsetting->_give_mail_id, &kfsetting->_buy_item );
         if ( ok )
         {
             _kf_display->SendToClient( player, KFMsg::GiveBuyOK, kfmsg.shopid() );
