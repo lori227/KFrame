@@ -48,7 +48,7 @@ namespace KFrame
         return __KF_CREATE__( KFScheduleTime );
     }
 
-    void KFScheduleModule::AddRemoveSchedule( const std::string& module, uint32 objectid )
+    void KFScheduleModule::AddRemoveSchedule( const std::string& module, uint64 objectid )
     {
         _kf_schedule_remove.insert( std::make_pair( module, objectid ) );
     }
@@ -138,14 +138,14 @@ namespace KFrame
         auto iter = _kf_schedule_data.find( kfdata->_module );
         if ( iter == _kf_schedule_data.end() )
         {
-            std::map< uint32, KFScheduleData* > temp;
+            std::map< uint64, KFScheduleData* > temp;
             iter = _kf_schedule_data.insert( std::make_pair( kfdata->_module, temp ) ).first;
         }
 
         iter->second.insert( std::make_pair( kfdata->_schedule_time->_object_id, kfdata ) );
     }
 
-    void KFScheduleModule::RemoveSchedule( const std::string& module, uint32 objectid )
+    void KFScheduleModule::RemoveSchedule( const std::string& module, uint64 objectid )
     {
         auto iter = _kf_schedule_data.find( module );
         if ( iter == _kf_schedule_data.end() )

@@ -113,7 +113,7 @@ namespace KFrame
         kfactor->PushAckMessage( kfid, msgid, message );
     }
 
-    void KFWorkerModule::SendToClient( const KFId& kfid, uint32 serverid, uint32 msgid, google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const KFId& kfid, uint64 serverid, uint32 msgid, google::protobuf::Message* message )
     {
         auto kftemp = const_cast< KFId* >( &kfid );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );

@@ -137,12 +137,12 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 appid = 1;
+  // optional uint64 appid = 1;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 1;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 appid() const;
+  inline void set_appid(::google::protobuf::uint64 value);
 
   // required bytes appname = 2;
   inline bool has_appname() const;
@@ -211,11 +211,11 @@ class LIBPROTOC_EXPORT ListenData : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 appid_;
   ::std::string* appname_;
   ::std::string* apptype_;
-  ::google::protobuf::uint32 appid_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
   ::google::protobuf::uint32 zoneid_;
 
   mutable int _cached_size_;
@@ -368,29 +368,17 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required bytes apptype = 1;
-  inline bool has_apptype() const;
-  inline void clear_apptype();
-  static const int kApptypeFieldNumber = 1;
-  inline const ::std::string& apptype() const;
-  inline void set_apptype(const ::std::string& value);
-  inline void set_apptype(const char* value);
-  inline void set_apptype(const void* value, size_t size);
-  inline ::std::string* mutable_apptype();
-  inline ::std::string* release_apptype();
-  inline void set_allocated_apptype(::std::string* apptype);
-
-  // required uint32 appid = 2;
+  // required uint64 appid = 1;
   inline bool has_appid() const;
   inline void clear_appid();
-  static const int kAppidFieldNumber = 2;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  static const int kAppidFieldNumber = 1;
+  inline ::google::protobuf::uint64 appid() const;
+  inline void set_appid(::google::protobuf::uint64 value);
 
-  // required bytes appname = 3;
+  // required bytes appname = 2;
   inline bool has_appname() const;
   inline void clear_appname();
-  static const int kAppnameFieldNumber = 3;
+  static const int kAppnameFieldNumber = 2;
   inline const ::std::string& appname() const;
   inline void set_appname(const ::std::string& value);
   inline void set_appname(const char* value);
@@ -399,20 +387,32 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
   inline ::std::string* release_appname();
   inline void set_allocated_appname(::std::string* appname);
 
+  // required bytes apptype = 3;
+  inline bool has_apptype() const;
+  inline void clear_apptype();
+  static const int kApptypeFieldNumber = 3;
+  inline const ::std::string& apptype() const;
+  inline void set_apptype(const ::std::string& value);
+  inline void set_apptype(const char* value);
+  inline void set_apptype(const void* value, size_t size);
+  inline ::std::string* mutable_apptype();
+  inline ::std::string* release_apptype();
+  inline void set_allocated_apptype(::std::string* apptype);
+
   // @@protoc_insertion_point(class_scope:KFMsg.RegisterToServerAck)
  private:
-  inline void set_has_apptype();
-  inline void clear_has_apptype();
   inline void set_has_appid();
   inline void clear_has_appid();
   inline void set_has_appname();
   inline void clear_has_appname();
+  inline void set_has_apptype();
+  inline void clear_has_apptype();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* apptype_;
+  ::google::protobuf::uint64 appid_;
   ::std::string* appname_;
-  ::google::protobuf::uint32 appid_;
+  ::std::string* apptype_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -608,12 +608,12 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 serverzoneid() const;
   inline void set_serverzoneid(::google::protobuf::uint32 value);
 
-  // required uint32 appid = 3;
+  // required uint64 appid = 3;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 3;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 appid() const;
+  inline void set_appid(::google::protobuf::uint64 value);
 
   // required bytes appname = 4;
   inline bool has_appname() const;
@@ -664,11 +664,11 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* servername_;
-  ::google::protobuf::uint32 serverzoneid_;
-  ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint64 appid_;
   ::std::string* appname_;
-  ::std::string* apptype_;
+  ::google::protobuf::uint32 serverzoneid_;
   ::google::protobuf::uint32 zoneid_;
+  ::std::string* apptype_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -743,12 +743,12 @@ class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 zoneid() const;
   inline void set_zoneid(::google::protobuf::uint32 value);
 
-  // required uint32 serverid = 2;
+  // required uint64 serverid = 2;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBRouteZone)
  private:
@@ -759,8 +759,8 @@ class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint32 zoneid_;
-  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -997,19 +997,19 @@ class LIBPROTOC_EXPORT PBTransmitRouteMessage : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 serverid = 2;
+  // required uint64 serverid = 2;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
-  // required uint32 playerid = 3;
+  // required uint64 playerid = 3;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required uint32 msgid = 4;
   inline bool has_msgid() const;
@@ -1043,8 +1043,8 @@ class LIBPROTOC_EXPORT PBTransmitRouteMessage : public ::google::protobuf::Messa
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 serverid_;
-  ::google::protobuf::uint32 playerid_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 playerid_;
   ::std::string* msgdata_;
   ::google::protobuf::uint32 msgid_;
 
@@ -1488,12 +1488,12 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   inline ::std::string* release_app_type();
   inline void set_allocated_app_type(::std::string* app_type);
 
-  // required int32 app_id = 5;
+  // required uint64 app_id = 5;
   inline bool has_app_id() const;
   inline void clear_app_id();
   static const int kAppIdFieldNumber = 5;
-  inline ::google::protobuf::int32 app_id() const;
-  inline void set_app_id(::google::protobuf::int32 value);
+  inline ::google::protobuf::uint64 app_id() const;
+  inline void set_app_id(::google::protobuf::uint64 value);
 
   // required bytes log_info = 6;
   inline bool has_log_info() const;
@@ -1528,8 +1528,8 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message {
   ::google::protobuf::int32 zone_id_;
   ::std::string* app_name_;
   ::std::string* app_type_;
+  ::google::protobuf::uint64 app_id_;
   ::std::string* log_info_;
-  ::google::protobuf::int32 app_id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
@@ -1623,12 +1623,12 @@ class LIBPROTOC_EXPORT S2SUpdateOnlineToDirReq : public ::google::protobuf::Mess
   inline ::google::protobuf::uint32 zonechannel() const;
   inline void set_zonechannel(::google::protobuf::uint32 value);
 
-  // required uint32 appid = 4;
+  // required uint64 appid = 4;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 4;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 appid() const;
+  inline void set_appid(::google::protobuf::uint64 value);
 
   // required bytes ip = 5;
   inline bool has_ip() const;
@@ -1678,8 +1678,8 @@ class LIBPROTOC_EXPORT S2SUpdateOnlineToDirReq : public ::google::protobuf::Mess
   ::std::string* zonename_;
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 zonechannel_;
+  ::google::protobuf::uint64 appid_;
   ::std::string* ip_;
-  ::google::protobuf::uint32 appid_;
   ::google::protobuf::uint32 port_;
   ::google::protobuf::uint32 onlinecount_;
 
@@ -1749,12 +1749,12 @@ class LIBPROTOC_EXPORT S2SRemoveOnlineToDirReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // required uint32 appid = 1;
+  // required uint64 appid = 1;
   inline bool has_appid() const;
   inline void clear_appid();
   static const int kAppidFieldNumber = 1;
-  inline ::google::protobuf::uint32 appid() const;
-  inline void set_appid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 appid() const;
+  inline void set_appid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SRemoveOnlineToDirReq)
  private:
@@ -1763,7 +1763,7 @@ class LIBPROTOC_EXPORT S2SRemoveOnlineToDirReq : public ::google::protobuf::Mess
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 appid_;
+  ::google::protobuf::uint64 appid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1782,7 +1782,7 @@ class LIBPROTOC_EXPORT S2SRemoveOnlineToDirReq : public ::google::protobuf::Mess
 
 // ListenData
 
-// optional uint32 appid = 1;
+// optional uint64 appid = 1;
 inline bool ListenData::has_appid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1793,13 +1793,13 @@ inline void ListenData::clear_has_appid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void ListenData::clear_appid() {
-  appid_ = 0u;
+  appid_ = GOOGLE_ULONGLONG(0);
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 ListenData::appid() const {
+inline ::google::protobuf::uint64 ListenData::appid() const {
   return appid_;
 }
-inline void ListenData::set_appid(::google::protobuf::uint32 value) {
+inline void ListenData::set_appid(::google::protobuf::uint64 value) {
   set_has_appid();
   appid_ = value;
 }
@@ -2104,107 +2104,37 @@ inline void RegisterToServerReq::set_allocated_listen(::KFMsg::ListenData* liste
 
 // RegisterToServerAck
 
-// required bytes apptype = 1;
-inline bool RegisterToServerAck::has_apptype() const {
+// required uint64 appid = 1;
+inline bool RegisterToServerAck::has_appid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RegisterToServerAck::set_has_apptype() {
+inline void RegisterToServerAck::set_has_appid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RegisterToServerAck::clear_has_apptype() {
+inline void RegisterToServerAck::clear_has_appid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RegisterToServerAck::clear_apptype() {
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    apptype_->clear();
-  }
-  clear_has_apptype();
-}
-inline const ::std::string& RegisterToServerAck::apptype() const {
-  return *apptype_;
-}
-inline void RegisterToServerAck::set_apptype(const ::std::string& value) {
-  set_has_apptype();
-  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
-    apptype_ = new ::std::string;
-  }
-  apptype_->assign(value);
-}
-inline void RegisterToServerAck::set_apptype(const char* value) {
-  set_has_apptype();
-  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
-    apptype_ = new ::std::string;
-  }
-  apptype_->assign(value);
-}
-inline void RegisterToServerAck::set_apptype(const void* value, size_t size) {
-  set_has_apptype();
-  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
-    apptype_ = new ::std::string;
-  }
-  apptype_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RegisterToServerAck::mutable_apptype() {
-  set_has_apptype();
-  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
-    apptype_ = new ::std::string;
-  }
-  return apptype_;
-}
-inline ::std::string* RegisterToServerAck::release_apptype() {
-  clear_has_apptype();
-  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = apptype_;
-    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RegisterToServerAck::set_allocated_apptype(::std::string* apptype) {
-  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
-    delete apptype_;
-  }
-  if (apptype) {
-    set_has_apptype();
-    apptype_ = apptype;
-  } else {
-    clear_has_apptype();
-    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// required uint32 appid = 2;
-inline bool RegisterToServerAck::has_appid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RegisterToServerAck::set_has_appid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RegisterToServerAck::clear_has_appid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
 inline void RegisterToServerAck::clear_appid() {
-  appid_ = 0u;
+  appid_ = GOOGLE_ULONGLONG(0);
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 RegisterToServerAck::appid() const {
+inline ::google::protobuf::uint64 RegisterToServerAck::appid() const {
   return appid_;
 }
-inline void RegisterToServerAck::set_appid(::google::protobuf::uint32 value) {
+inline void RegisterToServerAck::set_appid(::google::protobuf::uint64 value) {
   set_has_appid();
   appid_ = value;
 }
 
-// required bytes appname = 3;
+// required bytes appname = 2;
 inline bool RegisterToServerAck::has_appname() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
 inline void RegisterToServerAck::set_has_appname() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000002u;
 }
 inline void RegisterToServerAck::clear_has_appname() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void RegisterToServerAck::clear_appname() {
   if (appname_ != &::google::protobuf::internal::kEmptyString) {
@@ -2263,6 +2193,76 @@ inline void RegisterToServerAck::set_allocated_appname(::std::string* appname) {
   } else {
     clear_has_appname();
     appname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes apptype = 3;
+inline bool RegisterToServerAck::has_apptype() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RegisterToServerAck::set_has_apptype() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RegisterToServerAck::clear_has_apptype() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RegisterToServerAck::clear_apptype() {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    apptype_->clear();
+  }
+  clear_has_apptype();
+}
+inline const ::std::string& RegisterToServerAck::apptype() const {
+  return *apptype_;
+}
+inline void RegisterToServerAck::set_apptype(const ::std::string& value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void RegisterToServerAck::set_apptype(const char* value) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(value);
+}
+inline void RegisterToServerAck::set_apptype(const void* value, size_t size) {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  apptype_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RegisterToServerAck::mutable_apptype() {
+  set_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    apptype_ = new ::std::string;
+  }
+  return apptype_;
+}
+inline ::std::string* RegisterToServerAck::release_apptype() {
+  clear_has_apptype();
+  if (apptype_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = apptype_;
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RegisterToServerAck::set_allocated_apptype(::std::string* apptype) {
+  if (apptype_ != &::google::protobuf::internal::kEmptyString) {
+    delete apptype_;
+  }
+  if (apptype) {
+    set_has_apptype();
+    apptype_ = apptype;
+  } else {
+    clear_has_apptype();
+    apptype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -2496,7 +2496,7 @@ inline void TellUnRegisterFromServer::set_serverzoneid(::google::protobuf::uint3
   serverzoneid_ = value;
 }
 
-// required uint32 appid = 3;
+// required uint64 appid = 3;
 inline bool TellUnRegisterFromServer::has_appid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2507,13 +2507,13 @@ inline void TellUnRegisterFromServer::clear_has_appid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void TellUnRegisterFromServer::clear_appid() {
-  appid_ = 0u;
+  appid_ = GOOGLE_ULONGLONG(0);
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 TellUnRegisterFromServer::appid() const {
+inline ::google::protobuf::uint64 TellUnRegisterFromServer::appid() const {
   return appid_;
 }
-inline void TellUnRegisterFromServer::set_appid(::google::protobuf::uint32 value) {
+inline void TellUnRegisterFromServer::set_appid(::google::protobuf::uint64 value) {
   set_has_appid();
   appid_ = value;
 }
@@ -2706,7 +2706,7 @@ inline void PBRouteZone::set_zoneid(::google::protobuf::uint32 value) {
   zoneid_ = value;
 }
 
-// required uint32 serverid = 2;
+// required uint64 serverid = 2;
 inline bool PBRouteZone::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2717,13 +2717,13 @@ inline void PBRouteZone::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void PBRouteZone::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 PBRouteZone::serverid() const {
+inline ::google::protobuf::uint64 PBRouteZone::serverid() const {
   return serverid_;
 }
-inline void PBRouteZone::set_serverid(::google::protobuf::uint32 value) {
+inline void PBRouteZone::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -2803,7 +2803,7 @@ S2SRegisterRouteProxyReq::mutable_zonedata() {
 
 // PBTransmitRouteMessage
 
-// required uint32 serverid = 2;
+// required uint64 serverid = 2;
 inline bool PBTransmitRouteMessage::has_serverid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2814,18 +2814,18 @@ inline void PBTransmitRouteMessage::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void PBTransmitRouteMessage::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 PBTransmitRouteMessage::serverid() const {
+inline ::google::protobuf::uint64 PBTransmitRouteMessage::serverid() const {
   return serverid_;
 }
-inline void PBTransmitRouteMessage::set_serverid(::google::protobuf::uint32 value) {
+inline void PBTransmitRouteMessage::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
 
-// required uint32 playerid = 3;
+// required uint64 playerid = 3;
 inline bool PBTransmitRouteMessage::has_playerid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2836,13 +2836,13 @@ inline void PBTransmitRouteMessage::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void PBTransmitRouteMessage::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 PBTransmitRouteMessage::playerid() const {
+inline ::google::protobuf::uint64 PBTransmitRouteMessage::playerid() const {
   return playerid_;
 }
-inline void PBTransmitRouteMessage::set_playerid(::google::protobuf::uint32 value) {
+inline void PBTransmitRouteMessage::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -3295,7 +3295,7 @@ inline void S2SLogReq::set_allocated_app_type(::std::string* app_type) {
   }
 }
 
-// required int32 app_id = 5;
+// required uint64 app_id = 5;
 inline bool S2SLogReq::has_app_id() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -3306,13 +3306,13 @@ inline void S2SLogReq::clear_has_app_id() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void S2SLogReq::clear_app_id() {
-  app_id_ = 0;
+  app_id_ = GOOGLE_ULONGLONG(0);
   clear_has_app_id();
 }
-inline ::google::protobuf::int32 S2SLogReq::app_id() const {
+inline ::google::protobuf::uint64 S2SLogReq::app_id() const {
   return app_id_;
 }
-inline void S2SLogReq::set_app_id(::google::protobuf::int32 value) {
+inline void S2SLogReq::set_app_id(::google::protobuf::uint64 value) {
   set_has_app_id();
   app_id_ = value;
 }
@@ -3505,7 +3505,7 @@ inline void S2SUpdateOnlineToDirReq::set_zonechannel(::google::protobuf::uint32 
   zonechannel_ = value;
 }
 
-// required uint32 appid = 4;
+// required uint64 appid = 4;
 inline bool S2SUpdateOnlineToDirReq::has_appid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3516,13 +3516,13 @@ inline void S2SUpdateOnlineToDirReq::clear_has_appid() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SUpdateOnlineToDirReq::clear_appid() {
-  appid_ = 0u;
+  appid_ = GOOGLE_ULONGLONG(0);
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 S2SUpdateOnlineToDirReq::appid() const {
+inline ::google::protobuf::uint64 S2SUpdateOnlineToDirReq::appid() const {
   return appid_;
 }
-inline void S2SUpdateOnlineToDirReq::set_appid(::google::protobuf::uint32 value) {
+inline void S2SUpdateOnlineToDirReq::set_appid(::google::protobuf::uint64 value) {
   set_has_appid();
   appid_ = value;
 }
@@ -3645,7 +3645,7 @@ inline void S2SUpdateOnlineToDirReq::set_onlinecount(::google::protobuf::uint32 
 
 // S2SRemoveOnlineToDirReq
 
-// required uint32 appid = 1;
+// required uint64 appid = 1;
 inline bool S2SRemoveOnlineToDirReq::has_appid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3656,13 +3656,13 @@ inline void S2SRemoveOnlineToDirReq::clear_has_appid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SRemoveOnlineToDirReq::clear_appid() {
-  appid_ = 0u;
+  appid_ = GOOGLE_ULONGLONG(0);
   clear_has_appid();
 }
-inline ::google::protobuf::uint32 S2SRemoveOnlineToDirReq::appid() const {
+inline ::google::protobuf::uint64 S2SRemoveOnlineToDirReq::appid() const {
   return appid_;
 }
-inline void S2SRemoveOnlineToDirReq::set_appid(::google::protobuf::uint32 value) {
+inline void S2SRemoveOnlineToDirReq::set_appid(::google::protobuf::uint64 value) {
   set_has_appid();
   appid_ = value;
 }

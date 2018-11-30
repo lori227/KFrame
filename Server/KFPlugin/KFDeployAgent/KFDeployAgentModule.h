@@ -66,11 +66,11 @@ namespace KFrame
     class KFDeployAgentModule : public KFDeployAgentInterface
     {
     public:
-        KFDeployAgentModule();
-        ~KFDeployAgentModule();
+        KFDeployAgentModule() = default;
+        ~KFDeployAgentModule() = default;
 
-        // 初始化
-        virtual void InitModule();
+        // 加载
+        virtual void AfterLoad();
 
         // 逻辑
         virtual void BeforeRun();
@@ -200,11 +200,11 @@ namespace KFrame
         void SendLogMessage( const std::string& url, const std::string& msg );
     private:
         // 部署服务器的
-        uint32 _deploy_server_id;
+        uint64 _deploy_server_id{ 0 };
 
         // mysql
-        KFMySQLDriver* _deploy_driver;
-        KFMySQLDriver* _version_driver;
+        KFMySQLDriver* _deploy_driver{ nullptr };
+        KFMySQLDriver* _version_driver{ nullptr };
 
         // deploy列表
         KFMap< std::string, const std::string&, KFDeployData > _deploy_list;
@@ -214,7 +214,7 @@ namespace KFrame
         KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
 
         // 当前执行的任务
-        KFDeployTask* _kf_task;
+        KFDeployTask* _kf_task{ nullptr };
 
         // 部署任务队列
         std::list< KFDeployTask* > _deploy_task;

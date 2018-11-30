@@ -40,12 +40,12 @@ namespace KFrame
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 );
 
-        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, google::protobuf::Message* message );
 
         // 给指定对象发送消息
-        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, google::protobuf::Message* message );
 
         // 给指定对象发送消息
         virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
@@ -58,22 +58,22 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid );
+        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handleid, uint64 objectid );
 
         // 删除连接器
-        virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line );
+        virtual bool CloseNetHandle( uint64 handleid, uint32 delaytime, const char* function, uint32 line );
 
         // 连接数量
         virtual uint32 GetHandleCount();
 
         // 连接列表
-        virtual void GetHandleList( std::list< uint32 >& handlelist );
+        virtual void GetHandleList( std::list< uint64 >& handlelist );
 
         // 获得连接ip
-        virtual const std::string& GetHandleIp( uint32 handleid );
+        virtual const std::string& GetHandleIp( uint64 handleid );
 
         // 设置id
-        virtual bool BindObjectId( uint32 handleid, uint32 objectid );
+        virtual bool BindObjectId( uint64 handleid, uint64 objectid );
         /////////////////////////////////////////////////////////////////////////
     protected:
         // 处理客户端注册

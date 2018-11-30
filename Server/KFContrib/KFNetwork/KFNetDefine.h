@@ -93,7 +93,7 @@ namespace KFrame
         uint32 _type;
 
         // id
-        uint32 _id;
+        uint64 _id;
 
         // 数据
         void* _data;

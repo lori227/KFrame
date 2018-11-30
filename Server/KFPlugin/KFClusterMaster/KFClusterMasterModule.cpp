@@ -140,9 +140,9 @@ namespace KFrame
         SendAllocShardToProxy( _invalid_int );
     }
 
-    std::set< uint32 > KFClusterMasterModule::GetShardObject( uint32 shardid )
+    std::set< uint64 > KFClusterMasterModule::GetShardObject( uint64 shardid )
     {
-        std::set< uint32 > outvalue;
+        std::set< uint64 > outvalue;
         for ( auto& iter : _object_to_shard )
         {
             if ( iter.second == shardid )
@@ -154,11 +154,11 @@ namespace KFrame
         return outvalue;
     }
 
-    void KFClusterMasterModule::BalanceAllocShard( uint32 shardid )
+    void KFClusterMasterModule::BalanceAllocShard( uint64 shardid )
     {
         _object_to_shard.clear();
 
-        std::vector< uint32 > shardlist;
+        std::vector< uint64 > shardlist;
         for ( auto iter : _shard_objects )
         {
             shardlist.push_back( iter.first );
@@ -186,16 +186,16 @@ namespace KFrame
         }
     }
 
-    bool KFClusterMasterModule::HaveObject( uint32 shardid, uint32 objectid )
+    bool KFClusterMasterModule::HaveObject( uint64 shardid, uint64 objectid )
     {
-        return _shard_objects[ shardid ].count( objectid ) > 0;
+        return _shard_objects[ shardid ].count( objectid ) > 0u;
     }
 
-    uint32 KFClusterMasterModule::FindShard( uint32 objectid )
+    uint64 KFClusterMasterModule::FindShard( uint64 objectid )
     {
         for ( auto iter : _shard_objects )
         {
-            if ( iter.second.count( objectid ) > 0 )
+            if ( iter.second.count( objectid ) > 0u )
             {
                 return iter.first;
             }
@@ -204,7 +204,7 @@ namespace KFrame
         return _invalid_int;
     }
 
-    void KFClusterMasterModule::SendAllocShardToProxy( uint32 proxyid )
+    void KFClusterMasterModule::SendAllocShardToProxy( uint64 proxyid )
     {
         KFMsg::S2SAllocObjectToProxyAck ack;
 

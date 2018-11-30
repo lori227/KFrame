@@ -107,7 +107,7 @@ namespace KFrame
                 kfappid._union._app_data._zone_id = zoneid;
             }
 
-            kfaddress._app_id = kfappid._union._app_id;
+            kfaddress._app_id = kfappid._union._id;
             kfaddress._str_app_id = kfappid.ToString();
         }
     }

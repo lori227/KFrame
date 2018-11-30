@@ -39,7 +39,7 @@ namespace KFrame
             while ( channelnode.IsValid() )
             {
                 auto channelid = channelnode.GetUInt32( "ChannelId" );
-                if ( channelid == kfglobal->_app_channel )
+                if ( kfglobal->CheckChannelService( channelid, _invalid_int ) )
                 {
                     kfsetting->_address = channelnode.GetString( "Address" );
                     kfsetting->_port = channelnode.GetUInt32( "Port" );

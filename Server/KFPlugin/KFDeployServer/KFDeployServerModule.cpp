@@ -5,16 +5,6 @@
 
 namespace KFrame
 {
-    KFDeployServerModule::KFDeployServerModule()
-    {
-        _mysql_driver = nullptr;
-    }
-
-    KFDeployServerModule::~KFDeployServerModule()
-    {
-
-    }
-
     void KFDeployServerModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFDeployServerModule::OnServerLostClient );
@@ -73,7 +63,7 @@ namespace KFrame
         kfagentdata->_type = kfmsg.type();
         kfagentdata->_port = kfmsg.port();
 
-        UpdateAgentToDatabase( kfagentdata, 1 );
+        UpdateAgentToDatabase( kfagentdata, 1u );
     }
 
     void KFDeployServerModule::UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status )

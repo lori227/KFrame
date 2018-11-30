@@ -9,7 +9,7 @@ namespace KFrame
     class KFDump
     {
     public:
-        KFDump( const char* appname, const char* apptype, int appid );
+        KFDump( const char* appname, const char* apptype, const char* appid );
         ~KFDump();
 
         // 异常回调

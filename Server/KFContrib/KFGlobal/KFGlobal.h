@@ -105,7 +105,7 @@ namespace KFrame
         uint64 _game_time;
 
         // appid
-        uint32 _app_id;
+        KFAppID _app_id;
         std::string _str_app_id;
 
         // 类型
@@ -119,12 +119,6 @@ namespace KFrame
 
         // 运行类型( 正式 测试 )
         uint32 _service_type;
-
-        // 分区id
-        uint32 _zone_id;
-
-        // 服务渠道
-        uint32 _app_channel;
 
         // 内网ip
         std::string _local_ip;

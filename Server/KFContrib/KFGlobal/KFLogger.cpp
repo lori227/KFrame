@@ -14,10 +14,10 @@ namespace KFrame
         delete _spd_log;
     }
 
-    bool KFLocalLogger::Initialize( const std::string& appname, const std::string& apptype, uint32 appid )
+    bool KFLocalLogger::Initialize( const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
         std::string outpath = __FORMAT__( ".{}_output", spdlog::details::os::folder_sep );
-        return _spd_log->Initialize( outpath, appname, apptype, appid );
+        return _spd_log->Initialize( outpath, appname, apptype, strappid );
     }
 
     void KFLocalLogger::Log( uint32 loglevel, const std::string& content )

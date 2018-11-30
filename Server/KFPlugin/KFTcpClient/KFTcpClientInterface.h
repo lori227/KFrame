@@ -9,20 +9,20 @@ namespace KFrame
     {
     public:
         // 添加连接
-        virtual void StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port ) = 0;
+        virtual void StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port ) = 0;
 
         // 断开连接
-        virtual void CloseClient( uint32 serverid, const char* function, uint32 line ) = 0;
+        virtual void CloseClient( uint64 serverid, const char* function, uint32 line ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendNetMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint32 serverid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
         virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;
@@ -38,10 +38,9 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加注册回调函数
         template< class T >
-        void RegisterConnectionFunction( T* object, void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
+        void RegisterConnectionFunction( T* object, void ( T::*handle )( uint64 serverid, const std::string& servername, const std::string& servertype ) )
         {
-            KFClientConnectionFunction function = std::bind( handle, object,
-                                                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            KFClientConnectionFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddConnectionFunction( typeid( T ).name(), function );
         }
 
@@ -54,10 +53,9 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 断线函数回调
         template< class T >
-        void RegisterLostFunction( T* object, void ( T::*handle )( uint32 serverid, const std::string& servername, const std::string& servertype ) )
+        void RegisterLostFunction( T* object, void ( T::*handle )( uint64 serverid, const std::string& servername, const std::string& servertype ) )
         {
-            KFClientLostFunction function = std::bind( handle, object,
-                                            std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            KFClientLostFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddLostFunction( typeid( T ).name(), function );
         }
 
@@ -73,8 +71,7 @@ namespace KFrame
         template< class T >
         void RegisterTransmitFunction( T* object, bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTransmitFunction function = std::bind( handle, object,
-                                          std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            KFTransmitFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTransmitFunction( typeid( T ).name(), function );
         }
 
@@ -106,10 +103,10 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_CLIENT_LOST_FUNCTION__( function ) \
-    void function( uint32 serverid, const std::string& servername, const std::string& servertype )
+    void function( uint64 serverid, const std::string& servername, const std::string& servertype )
 
 #define __KF_CLIENT_CONNECT_FUNCTION__( function ) \
-    void function( uint32 serverid, const std::string& servername, const std::string& servertype )
+    void function( uint64 serverid, const std::string& servername, const std::string& servertype )
 
 #define __REGISTER_CLIENT_CONNECTION_FUNCTION__( function ) \
     _kf_tcp_client->RegisterConnectionFunction( this, function )

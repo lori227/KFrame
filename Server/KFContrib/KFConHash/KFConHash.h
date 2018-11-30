@@ -15,21 +15,21 @@ namespace KFrame
         ~KFConHash();
 
         // 添加Hash节点
-        void AddHashNode( const std::string& name, uint32 id, uint32 virtualcount );
+        void AddHashNode( const std::string& name, uint64 id, uint32 virtualcount );
 
         // 删除Hash节点
-        bool RemoveHashNode( uint32 id );
+        bool RemoveHashNode( uint64 id );
 
         // 查抄Hash节点
-        uint32 FindHashNode( uint64 objectid, bool cache = false );
-        uint32 FindHashNode( const std::string& data, bool cache = false );
-        uint32 FindHashNode( const std::string& data, uint64 objectid, bool cache = false );
+        uint64 FindHashNode( uint64 objectid, bool cache = false );
+        uint64 FindHashNode( const std::string& data, bool cache = false );
+        uint64 FindHashNode( const std::string& data, uint64 objectid, bool cache = false );
 
         // 获得所有节点
-        void GetAllHashNode( std::list< uint32 >& nodes );
+        void GetAllHashNode( std::list< uint64 >& nodes );
 
         // 是否存在节点
-        bool HaveHashNode( uint32 id );
+        bool HaveHashNode( uint64 id );
 
         // 节点数量
         uint32 GetHashNodeCount();

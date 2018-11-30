@@ -54,12 +54,12 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
 
-        listendata->set_appid( kfglobal->_app_id );
+        listendata->set_appid( kfglobal->_app_id._union._id );
         listendata->set_apptype( kfglobal->_app_type );
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_ip( kfglobal->_interanet_ip );
         listendata->set_port( kfglobal->_listen_port );
-        listendata->set_zoneid( kfglobal->_zone_id );
+        listendata->set_zoneid( kfglobal->_app_id._union._app_data._zone_id );
 
         auto strdata = req.SerializeAsString();
         SendNetMessage( serverid, KFMsg::S2S_REGISTER_TO_SERVER_REQ, strdata.data(), strdata.size() );
@@ -77,13 +77,13 @@ namespace KFrame
         _kf_client_engine->SendNetMessage( msgid, strdata.data(), strdata.size() );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
         return _kf_client_engine->SendNetMessage( serverid, msgid, strdata.data(), strdata.size() );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
         return _kf_client_engine->SendNetMessage( serverid, objectid, msgid, strdata.data(), strdata.size() );
@@ -94,12 +94,12 @@ namespace KFrame
         _kf_client_engine->SendNetMessage( msgid, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint32 serverid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_client_engine->SendNetMessage( serverid, msgid, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_client_engine->SendNetMessage( serverid, objectid, msgid, data, length );
     }
@@ -161,7 +161,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpClientModule::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
+    void KFTcpClientModule::StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port )
     {
         if ( IsSelfConnection( name, type, id ) )
         {
@@ -175,7 +175,7 @@ namespace KFrame
         }
     }
 
-    bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint32 id )
+    bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint64 id )
     {
         auto kfglobal = KFGlobal::Instance();
 
@@ -188,12 +188,11 @@ namespace KFrame
         return false;
     }
 
-    void KFTcpClientModule::CloseClient( uint32 serverid, const char* function, uint32 line )
+    void KFTcpClientModule::CloseClient( uint64 serverid, const char* function, uint32 line )
     {
         _kf_client_engine->CloseClient( serverid, function, line );
 
-        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!",
-                                KFAppID::ToString( serverid ) );
+        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!", KFAppID::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +207,7 @@ namespace KFrame
         _kf_connection_function.Remove( name );
     }
 
-    void KFTcpClientModule::CallClientConnectionFunction( uint32 serverid, const std::string& servername, const std::string& servertype )
+    void KFTcpClientModule::CallClientConnectionFunction( uint64 serverid, const std::string& servername, const std::string& servertype )
     {
         for ( auto& iter : _kf_connection_function._objects )
         {
@@ -228,7 +227,7 @@ namespace KFrame
         _kf_lost_function.Remove( name );
     }
 
-    void KFTcpClientModule::CallClientLostFunction( uint32 serverid, const std::string& servername, const std::string& servertype )
+    void KFTcpClientModule::CallClientLostFunction( uint64 serverid, const std::string& servername, const std::string& servertype )
     {
         for ( auto& iter : _kf_lost_function._objects )
         {

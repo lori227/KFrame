@@ -61,9 +61,6 @@ namespace KFrame
         // apptype
         std::string _app_type;
 
-        // 服务器id
-        uint32 _server_id;
-
         // Plugin path
         std::string _plugin_path;
 

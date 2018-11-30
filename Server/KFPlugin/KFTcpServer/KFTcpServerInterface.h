@@ -11,22 +11,22 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid ) = 0;
+        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handleid, uint64 objectid ) = 0;
 
         // 关闭连接器
-        virtual bool CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line ) = 0;
+        virtual bool CloseNetHandle( uint64 handleid, uint32 delaytime, const char* function, uint32 line ) = 0;
 
         // 连接数量
         virtual uint32 GetHandleCount() = 0;
 
         // 连接列表
-        virtual void GetHandleList( std::list< uint32 >& handlelist ) = 0;
+        virtual void GetHandleList( std::list< uint64 >& handlelist ) = 0;
 
         // 获得连接ip
-        virtual const std::string& GetHandleIp( uint32 handleid ) = 0;
+        virtual const std::string& GetHandleIp( uint64 handleid ) = 0;
 
         // 设置id
-        virtual bool BindObjectId( uint32 handleid, uint32 objectid ) = 0;
+        virtual bool BindObjectId( uint64 handleid, uint64 objectid ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////
 
         // 给全部客户端发送消息
@@ -34,12 +34,12 @@ namespace KFrame
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 excludeid = 0 ) = 0;
 
         // 给指定客户端发送消息
-        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给指定对象发送消息
-        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 给指定对象发送消息
         virtual bool SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) = 0;
@@ -55,12 +55,9 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接成功函数
         template< class T >
-        void RegisterDiscoverFunction( T* object,
-                                       void ( T::*handle )( uint32 handleid, const std::string& servername, const std::string& servertype, const std::string& ip, uint32 port ) )
+        void RegisterDiscoverFunction( T* object, void ( T::*handle )( uint64 handleid, const std::string& servername, const std::string& servertype, const std::string& ip, uint32 port ) )
         {
-            KFServerDiscoverFunction function = std::bind( handle, object,
-                                                std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
-
+            KFServerDiscoverFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
             AddDiscoverFunction( typeid( T ).name(), function );
         }
 
@@ -74,12 +71,9 @@ namespace KFrame
 
         // 注册断线回调函数
         template< class T >
-        void RegisterLostFunction( T* object,
-                                   void ( T::*handle )( uint32 id, const std::string& servername, const std::string& servertype  ) )
+        void RegisterLostFunction( T* object, void ( T::*handle )( uint64 id, const std::string& servername, const std::string& servertype  ) )
         {
-            KFServerLostFunction function = std::bind( handle, object,
-                                            std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-
+            KFServerLostFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddLostFunction( typeid( T ).name(), function );
         }
 
@@ -92,11 +86,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template< class T >
-        void RegisterTransmitFunction( T* object,
-                                       bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTransmitFunction( T* object, bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTransmitFunction function = std::bind( handle, object,
-                                          std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            KFTransmitFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTransmitFunction( typeid( T ).name(), function );
         }
 
@@ -123,10 +115,10 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_SERVER_LOST_FUNCTION__( function ) \
-    void function( uint32 handleid, const std::string& handlename, const std::string& handletype )
+    void function( uint64 handleid, const std::string& handlename, const std::string& handletype )
 
 #define __KF_SERVER_DISCOVER_FUNCTION__( function ) \
-    void function( uint32 handleid, const std::string& handlename , const std::string& handletype, const std::string& ip, uint32 port )
+    void function( uint64 handleid, const std::string& handlename , const std::string& handletype, const std::string& ip, uint32 port )
 
 #define __REGISTER_SERVER_DISCOVER_FUNCTION__( function ) \
     _kf_tcp_server->RegisterDiscoverFunction( this, function )

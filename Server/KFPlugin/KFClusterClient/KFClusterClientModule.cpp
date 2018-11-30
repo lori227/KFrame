@@ -36,7 +36,7 @@ namespace KFrame
         _kf_connection_function.Remove( name );
     }
 
-    void KFClusterClientModule::CallClusterConnectionFunction( const std::string& name, uint32 serverid )
+    void KFClusterClientModule::CallClusterConnectionFunction( const std::string& name, uint64 serverid )
     {
         auto kfbind = _kf_connection_function.Find( name );
         if ( kfbind == nullptr )
@@ -126,7 +126,7 @@ namespace KFrame
         return kfclusterclient->SendNetMessage( msgid, message );
     }
 
-    bool KFClusterClientModule::SendNetMessage( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendNetMessage( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message )
     {
         auto kfclusterclient = _kf_cluster_client.Find( name );
         if ( kfclusterclient == nullptr )
@@ -138,7 +138,7 @@ namespace KFrame
         return kfclusterclient->SendNetMessage( shardid, msgid, message );
     }
 
-    bool KFClusterClientModule::SendToShard( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToShard( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message )
     {
         return SendNetMessage( name, shardid, msgid, message );
     }
@@ -148,13 +148,13 @@ namespace KFrame
         return SendNetMessage( name, msgid, message );
     }
 
-    bool KFClusterClientModule::SendToStaticObject( const std::string& name, uint32 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToStaticObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
     {
         KFMsg::S2SSendToStaticObjectReq req;
-        req.set_serverid( KFGlobal::Instance()->_app_id );
         req.set_objectid( objectid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         return SendNetMessage( name, KFMsg::S2S_SEND_TO_STATIC_OBJECT_REQ, &req );
     }
 
@@ -164,7 +164,7 @@ namespace KFrame
         req.set_objectid( objectid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         return SendNetMessage( name, KFMsg::S2S_SEND_TO_DYNAMIC_OBJECT_REQ, &req );
     }
 }

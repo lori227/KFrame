@@ -39,7 +39,7 @@ namespace KFrame
         virtual const std::string& GetInteranetIp();
 
         // 计算监听端口
-        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint32 appid );
+        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid );
 
         // 查找ip地址
         virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );

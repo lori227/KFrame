@@ -24,19 +24,19 @@ namespace KFrame
         void RunEngine( uint64 nowtime );
 
         // 开始一个客户端
-        bool StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port );
+        bool StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port );
 
         // 关闭一个客户端
-        void CloseClient( uint32 id, const char* function, uint32 line );
+        void CloseClient( uint64 id, const char* function, uint32 line );
 
         // 查找客户端
-        KFNetClient* FindClient( uint32 id );
+        KFNetClient* FindClient( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint32 serverid, uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length );
 
         // 指定发送消息
         void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );
@@ -53,14 +53,14 @@ namespace KFrame
 
         // 绑定连接事件
         template< class T >
-        void BindConnectFunction( T* object, void ( T::*handle )( uint32 id, const std::string& name, const std::string& type ) )
+        void BindConnectFunction( T* object, void ( T::*handle )( uint64 id, const std::string& name, const std::string& type ) )
         {
             _client_connect_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
         }
 
         // 绑定断开事件
         template< class T >
-        void BindDisconnectFunction( T* object, void ( T::*handle )( uint32 id, const std::string& name, const std::string& type ) )
+        void BindDisconnectFunction( T* object, void ( T::*handle )( uint64 id, const std::string& name, const std::string& type ) )
         {
             _client_disconnect_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
         }
@@ -91,10 +91,10 @@ namespace KFrame
 
     protected:
         // 等待启动的客户端
-        std::map< uint32, KFNetSetting > _wait_clients;
+        std::map< uint64, KFNetSetting > _wait_clients;
 
         // 客户端列表
-        KFMap< uint32, uint32, KFNetClient > _kf_clients;
+        KFMap< uint64, uint64, KFNetClient > _kf_clients;
 
     protected:
         // 消息函数

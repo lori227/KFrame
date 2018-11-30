@@ -23,7 +23,7 @@ namespace KFrame
         virtual void SetDate( uint32 control, uint32 minute, uint32 hour = 0, uint32 day = 0, uint32 month = 0, uint32 year = 0 );
 
         // 设置回调数据
-        virtual void SetData( uint32 objectid, const void* data, uint32 size );
+        virtual void SetData( uint64 objectid, const void* data, uint32 size );
 
     public:
         uint32 _type;		// 类型
@@ -36,7 +36,7 @@ namespace KFrame
         uint32 _control;	// 控制类型
 
         // 回调参数
-        uint32 _object_id;
+        uint64 _object_id;
         int8* _data;
         uint32 _size;
     };

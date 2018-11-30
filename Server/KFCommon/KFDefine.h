@@ -57,12 +57,12 @@ namespace KFrame
     typedef std::function<bool( const KFId& kfid, uint32 msgid, const char* data, uint32 length )> KFTransmitFunction;
     ////////////////////////////////////////////////////////////////////////
     // 客户端 连接 和 断开 回调函数
-    typedef std::function< void( uint32 serverid, const std::string& servername, const std::string& servertype ) > KFClientLostFunction;
-    typedef std::function< void( uint32 serverid, const std::string& servername, const std::string& servertype ) > KFClientConnectionFunction;
+    typedef std::function< void( uint64 serverid, const std::string& servername, const std::string& servertype ) > KFClientLostFunction;
+    typedef std::function< void( uint64 serverid, const std::string& servername, const std::string& servertype ) > KFClientConnectionFunction;
     ////////////////////////////////////////////////////////////////////////
     // 服务器 连接 和 断开 回调函数
-    typedef std::function< void( uint32 id, const std::string& name, const std::string& type ) > KFServerLostFunction;
-    typedef std::function< void( uint32 id, const std::string& name, const std::string& type, const std::string& ip, uint32 port ) > KFServerDiscoverFunction;
+    typedef std::function< void( uint64 id, const std::string& name, const std::string& type ) > KFServerLostFunction;
+    typedef std::function< void( uint64 id, const std::string& name, const std::string& type, const std::string& ip, uint32 port ) > KFServerDiscoverFunction;
     ////////////////////////////////////////////////////////////////////////
     // http client 回调函数
     typedef std::function<void( std::string& data, std::string& result, std::string& callback )> KFHttpClientFunction;

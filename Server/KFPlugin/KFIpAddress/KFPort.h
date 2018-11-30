@@ -15,7 +15,7 @@ namespace KFrame
         }
 
     public:
-        uint32 _id;
+        uint64 _id;
         uint32 _port;
     };
 
@@ -29,7 +29,7 @@ namespace KFrame
         }
 
         // 查找端口
-        KFPort* FindPort( uint32 id );
+        KFPort* FindPort( uint64 id );
 
     public:
         // 是否初始化
@@ -45,7 +45,6 @@ namespace KFrame
 #define __FIX_PORT__ 0	// 固定计算端口
 #define __ID_PORT__ 1	// id计算端口
 #define __SH_PORT__ 2	// 共享内存计算端口
-#define __ZONE_PORT__ 3 // 按照分区计算端口
 
     ///////////////////////////////////////////////////////////////////////
     class KFNetProt
@@ -55,7 +54,7 @@ namespace KFrame
         ~KFNetProt();
 
         // 计算一个监听端口
-        uint32 CalcListenPort( uint32 porttype, uint32 baseport, uint32 appid );
+        uint32 CalcListenPort( uint32 porttype, uint32 baseport, uint64 appid );
 
     private:
         // 共享内存

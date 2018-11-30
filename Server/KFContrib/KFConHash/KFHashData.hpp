@@ -6,28 +6,28 @@
 
 namespace KFrame
 {
-	class HashNode
-	{
-	public:
-		// 节点id
-		uint32 _id;
+    class HashNode
+    {
+    public:
+        // 节点id
+        uint64 _id;
 
-		// 节点名字
-		std::string _name;
+        // 节点名字
+        std::string _name;
 
-		// 虚拟节点列表
-		std::vector< uint32 > _virtual_list;
-	};
+        // 虚拟节点列表
+        std::vector< uint64 > _virtual_list;
+    };
 
-	class VirtualHashNode
-	{
-	public:
-		// hash key
-		uint32 _hash_key;
+    class VirtualHashNode
+    {
+    public:
+        // hash key
+        uint32 _hash_key;
 
-		// 真实节点的指针
-		HashNode* _hash_node;
-	};
+        // 真实节点的指针
+        HashNode* _hash_node;
+    };
 }
 
 #endif

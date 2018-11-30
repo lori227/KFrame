@@ -31,6 +31,7 @@ namespace KFrame
         __STRING_DEFINE__( accountmake );
         __STRING_DEFINE__( address );
         __STRING_DEFINE__( appid );
+        __STRING_DEFINE__( strappid );
         __STRING_DEFINE__( appname );
         __STRING_DEFINE__( apptype );
         __STRING_DEFINE__( appchannel );
@@ -40,6 +41,7 @@ namespace KFrame
         __STRING_DEFINE__( appkey );
         __STRING_DEFINE__( localip );
         __STRING_DEFINE__( interanetip );
+        __STRING_DEFINE__( agent );
         __STRING_DEFINE__( agentid );
         __STRING_DEFINE__( auth );
         __STRING_DEFINE__( activation );

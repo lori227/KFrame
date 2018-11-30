@@ -26,7 +26,7 @@ namespace KFrame
         void ShutEvent();
 
         // 添加连接事件
-        void AddEvent( uint32 type, uint32 id, void* data = nullptr, const char* describe = "", int32 code = 0 );
+        void AddEvent( uint32 type, uint64 id, void* data = nullptr, const char* describe = "", int32 code = 0 );
 
         // 事件更新
         void RunEvent();

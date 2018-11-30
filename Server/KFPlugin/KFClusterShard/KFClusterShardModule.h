@@ -37,8 +37,8 @@ namespace KFrame
         virtual void SendToProxy( uint32 msgid, google::protobuf::Message* message );
 
         // 发型消息到代理服务器
-        virtual bool SendToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint64 handleid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToProxy( uint64 handleid, uint32 msgid, google::protobuf::Message* message );
 
         // 发型消息到代理服务器
         virtual bool SendToClient( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
@@ -46,30 +46,30 @@ namespace KFrame
 
 
         // 发型消息到代理服务器
-        virtual bool SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint64 clientid, uint32 msgid, google::protobuf::Message* message );
 
 
         // 发型消息到代理服务器
-        virtual bool SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 proxyid, uint64 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint64 proxyid, uint64 clientid, uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息到玩家
-        virtual bool SendToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 clientid, uint64 playerid, uint32 msgid, google::protobuf::Message* message );
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 注册对象映射
         virtual void AddObjectToProxy( uint64 objectid );
-        virtual void AddObjectToProxy( uint32 proxyid, const std::set< uint64 >& objectlist );
+        virtual void AddObjectToProxy( uint64 proxyid, const std::set< uint64 >& objectlist );
 
         // 删除对象映射
         virtual void RemoveObjectToProxy( uint64 objectid );
         virtual void RemoveObjectToProxy( const std::set< uint64 >& objectlist );
 
         // 分配Shard
-        virtual void AllocObjectToMaster( const std::set< uint32 >& objectlist );
-        virtual const std::set< uint32 >& GetAllocObjectList();
+        virtual void AllocObjectToMaster( const std::set< uint64 >& objectlist );
+        virtual const std::set< uint64 >& GetAllocObjectList();
 
     protected:
         // 注册路由信息
@@ -87,17 +87,17 @@ namespace KFrame
 
     protected:
         // 查找路由信息
-        uint32 FindProxyId( uint32 clientid );
+        uint64 FindProxyId( uint64 clientid );
 
         virtual void AddAllocObjectFunction( const std::string& module, KFAllocObjectFunction& function );
         virtual void RemoveAllocObjectFunction( const std::string& module );
 
     protected:
         // 客户端路由信息
-        std::map< uint32, uint32 > _proxy_client_list;
+        std::map< uint64, uint64 > _proxy_client_list;
 
         // shard分配的object列表
-        std::set < uint32 > _object_list;
+        std::set < uint64 > _object_list;
 
         // 绑定函数
         KFBind< std::string, const std::string&, KFAllocObjectFunction > _kf_alloc_object_function;

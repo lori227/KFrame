@@ -15,37 +15,37 @@ namespace KFrame
         _hash_logic = nullptr;
     }
 
-    void KFConHash::AddHashNode( const std::string& name, uint32 id, uint32 virtualcount )
+    void KFConHash::AddHashNode( const std::string& name, uint64 id, uint32 virtualcount )
     {
         _hash_logic->AddHashNode( name, id, virtualcount );
     }
 
-    bool KFConHash::RemoveHashNode( uint32 id )
+    bool KFConHash::RemoveHashNode( uint64 id )
     {
         return _hash_logic->RemoveHashNode( id );
     }
 
-    uint32 KFConHash::FindHashNode( uint64 objectid, bool cache /* = false */ )
+    uint64 KFConHash::FindHashNode( uint64 objectid, bool cache /* = false */ )
     {
         return _hash_logic->FindHashNode( objectid, cache );
     }
 
-    uint32 KFConHash::FindHashNode( const std::string& data, bool cache /* = false */ )
+    uint64 KFConHash::FindHashNode( const std::string& data, bool cache /* = false */ )
     {
         return _hash_logic->FindHashNode( data, cache );
     }
 
-    uint32 KFConHash::FindHashNode( const std::string& data, uint64 objectid, bool cache /* = false */ )
+    uint64 KFConHash::FindHashNode( const std::string& data, uint64 objectid, bool cache /* = false */ )
     {
         return _hash_logic->FindHashNode( data, objectid, cache );
     }
 
-    void KFConHash::GetAllHashNode( std::list<uint32>& nodes )
+    void KFConHash::GetAllHashNode( std::list<uint64>& nodes )
     {
         _hash_logic->GetAllHashNode( nodes );
     }
 
-    bool KFConHash::HaveHashNode( uint32 id )
+    bool KFConHash::HaveHashNode( uint64 id )
     {
         return _hash_logic->HaveHashNode( id );
     }

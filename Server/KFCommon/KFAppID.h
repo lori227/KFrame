@@ -11,27 +11,32 @@ namespace KFrame
     public:
         union MyUnion
         {
-            uint32 _app_id;
+            uint64 _id;
             struct AppData
             {
-                uint32 _channel_id : 4;		// 16	渠道独立环境
-                uint32 _zone_id : 12;		// 4095 小区
-                uint32 _server_type : 8;	// 255	类型
-                uint32 _worker_id : 8;		// 255	进程实例
+                uint16 _channel_id;
+                uint16 _zone_id;
+                uint16 _server_type;
+                uint16 _worker_id;
             } _app_data;
         };
 
-        KFAppID( uint32 appid )
+        KFAppID()
         {
-            _union._app_id = appid;
+            _union._id = 0u;
+        }
+
+        KFAppID( uint64 appid )
+        {
+            _union._id = appid;
         }
 
         KFAppID( std::string strappid )
         {
-            _union._app_data._channel_id = KFUtility::SplitValue< uint32 >( strappid, "." );
-            _union._app_data._zone_id = KFUtility::SplitValue< uint32 >( strappid, "." );
-            _union._app_data._server_type = KFUtility::SplitValue< uint32 >( strappid, "." );
-            _union._app_data._worker_id = KFUtility::SplitValue< uint32 >( strappid, "." );
+            _union._app_data._channel_id = KFUtility::SplitValue< uint16 >( strappid, "." );
+            _union._app_data._zone_id = KFUtility::SplitValue< uint16 >( strappid, "." );
+            _union._app_data._server_type = KFUtility::SplitValue< uint16 >( strappid, "." );
+            _union._app_data._worker_id = KFUtility::SplitValue< uint16 >( strappid, "." );
         }
 
         std::string ToString()
@@ -41,16 +46,16 @@ namespace KFrame
         }
 
 
-        static std::string ToString( uint32 appid )
+        static std::string ToString( uint64 appid )
         {
             KFAppID kfappid( appid );
             return kfappid.ToString();
         }
 
-        static uint32 ToUInt32( std::string strappid )
+        static uint64 ToUInt64( std::string strappid )
         {
             KFAppID kfappid( strappid );
-            return kfappid._union._app_id;
+            return kfappid._union._id;
         }
 
     public:

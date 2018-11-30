@@ -6,7 +6,6 @@ namespace KFrame
     KFDeployClientModule::KFDeployClientModule()
     {
         _deploy_server_id = 0;
-        _deploy_agent_id = 0;
     }
 
     void KFDeployClientModule::BeforeRun()
@@ -34,8 +33,8 @@ namespace KFrame
         if ( servername == __KF_STRING__( deploy ) && servertype == __KF_STRING__( server ) )
         {
             KFAppID kfappid( serverid );
-            kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_channel;
-            _deploy_server_id = kfappid._union._app_id;
+            kfappid._union._app_data._channel_id = KFGlobal::Instance()->_app_id._union._app_data._channel_id;
+            _deploy_server_id = kfappid._union._id;
         }
     }
 
@@ -63,7 +62,7 @@ namespace KFrame
         _deploy_server_id = 0;
 
         // 连接Agent
-        auto appid = KFAppID::ToUInt32( kfmsg.appid() );
+        auto appid = KFAppID::ToUInt64( kfmsg.appid() );
         _kf_tcp_client->StartClient( kfmsg.appname(), kfmsg.apptype(), appid, kfmsg.ip(), kfmsg.port() );
     }
 

@@ -22,7 +22,7 @@ enum FrameProtocol
 ////////////////////////////////////////////////////////////////////////////////
 message ListenData
 {
-	optional uint32 appid = 1;
+	optional uint64 appid = 1;
 	required bytes appname = 2;
 	required bytes apptype = 3;
 	required bytes ip = 4;
@@ -42,9 +42,9 @@ message RegisterToServerReq
 // S2S_REGISTER_TO_SERVER_ACK
 message RegisterToServerAck
 {
-	required bytes apptype = 1;
-	required uint32 appid = 2;
-	required bytes appname = 3;
+	required uint64 appid = 1;
+	required bytes appname = 2;
+	required bytes apptype = 3;
 }
 
 // S2S_TELL_REGISTER_TO_SERVER
@@ -62,7 +62,7 @@ message TellUnRegisterFromServer
 	required bytes servername = 1;
 	required uint32 serverzoneid = 2;
 
-	required uint32 appid = 3;
+	required uint64 appid = 3;
 	required bytes appname = 4;
 	required bytes apptype = 5;
 	required uint32 zoneid = 6;	
@@ -72,7 +72,7 @@ message TellUnRegisterFromServer
 message PBRouteZone
 {
 	required uint32 zoneid = 1;
-	required uint32 serverid = 2;
+	required uint64 serverid = 2;
 }
 
 // S2S_REGISTER_ROUTE_ZONE_REQ
@@ -89,8 +89,8 @@ message S2SRegisterRouteProxyReq
 
 message PBTransmitRouteMessage
 {
-	required uint32 serverid = 2;
-	required uint32 playerid = 3;
+	required uint64 serverid = 2;
+	required uint64 playerid = 3;
 	required uint32 msgid = 4;
 	required bytes msgdata = 5;
 }
@@ -122,11 +122,11 @@ message S2STransmitRouteProxyMessageAck
 // S2S_LOG_REQ
 message S2SLogReq
 {
-	required int32 log_level		= 1;
-	required int32 zone_id			= 2;
+	required int32 log_level	= 1;
+	required int32 zone_id		= 2;
 	required bytes app_name		= 3;
 	required bytes app_type		= 4;
-	required int32 app_id			= 5;
+	required uint64 app_id		= 5;
 	required bytes log_info		= 6;
 }
 
@@ -137,7 +137,7 @@ message S2SUpdateOnlineToDirReq
 	required uint32 zoneid = 1;			// 小区id
 	required bytes zonename = 2;		// 小区名字
 	required uint32 zonechannel = 3;	// 小区类型
-	required uint32 appid = 4;			// 服务器id
+	required uint64 appid = 4;			// 服务器id
 	required bytes ip = 5;				// ip
 	required uint32 port = 6;			// port
 	required uint32 onlinecount = 7;	// 当前在线人数
@@ -146,5 +146,5 @@ message S2SUpdateOnlineToDirReq
 // S2S_REMOVE_ONLINE_TO_DIR_REQ
 message S2SRemoveOnlineToDirReq
 {
-	required uint32 appid = 1;			// 服务器id
+	required uint64 appid = 1;			// 服务器id
 }

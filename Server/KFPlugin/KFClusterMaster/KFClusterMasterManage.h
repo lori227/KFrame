@@ -14,7 +14,7 @@ namespace KFrame
         }
 
         // id
-        uint32 _id;
+        uint64 _id;
 
         // type
         std::string _type;
@@ -39,25 +39,25 @@ namespace KFrame
         KFProxyManage() = default;
         ~KFProxyManage() = default;
 
-        // 添加GateServer
-        void AddProxyServer( const std::string& type, uint32 handleid, const std::string& name, const std::string& ip, uint32 port, uint32 clientcount );
+        // 添加ProxyServer
+        void AddProxyServer( const std::string& type, uint64 handleid, const std::string& name, const std::string& ip, uint32 port, uint32 clientcount );
 
-        // 删除GateServer
-        void RemoveProxyServer( uint32 handleid );
+        // 删除ProxyServer
+        void RemoveProxyServer( uint64 handleid );
 
-        // 更新GateServer
-        void UpdateProxyServer( uint32 handleid, uint32 clientcount );
+        // 更新ProxyServer
+        void UpdateProxyServer( uint64 handleid, uint32 clientcount );
 
-        // 选择GateServer
+        // 选择ProxyServer
         KFProxyData* SelectProxyServer();
-        KFProxyData* HashProxyServer( uint32 clientid );
+        KFProxyData* HashProxyServer( uint64 clientid );
 
         // 查找代理服务器
-        KFProxyData* FindProxyServer( uint32 handleid );
+        KFProxyData* FindProxyServer( uint64 handleid );
 
     public:
         // gate连接列表
-        KFMap< uint32, uint32, KFProxyData > _kf_proxy_list;
+        KFMap< uint64, uint64, KFProxyData > _kf_proxy_list;
 
         // hash一致性列表
         KFConHash _kf_hash;

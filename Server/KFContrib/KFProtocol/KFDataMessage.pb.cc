@@ -293,11 +293,11 @@ void protobuf_AddDesc_KFDataMessage_2eproto() {
     "ect\"5\n\022MsgTellQueryPlayer\022\037\n\006player\030\001 \002("
     "\0132\017.KFMsg.PBObject\"4\n\021MsgTellQueryBasic\022"
     "\037\n\006player\030\001 \002(\0132\017.KFMsg.PBObject\"K\n\026MsgS"
-    "yncUpdateGuildData\022\020\n\010playerid\030\001 \002(\r\022\037\n\006"
+    "yncUpdateGuildData\022\020\n\010playerid\030\001 \002(\004\022\037\n\006"
     "pbdata\030\002 \002(\0132\017.KFMsg.PBObject\"H\n\023MsgSync"
-    "AddGuildData\022\020\n\010playerid\030\001 \002(\r\022\037\n\006pbdata"
+    "AddGuildData\022\020\n\010playerid\030\001 \002(\004\022\037\n\006pbdata"
     "\030\002 \002(\0132\017.KFMsg.PBObject\"K\n\026MsgSyncRemove"
-    "GuildData\022\020\n\010playerid\030\001 \002(\r\022\037\n\006pbdata\030\002 "
+    "GuildData\022\020\n\010playerid\030\001 \002(\004\022\037\n\006pbdata\030\002 "
     "\002(\0132\017.KFMsg.PBObject\"3\n\021MsgTellQueryGuil"
     "d\022\036\n\005guild\030\001 \002(\0132\017.KFMsg.PBObject*\237\002\n\014Da"
     "taProtocol\022\030\n\024MSG_LOGIN_ENTER_GAME\020\n\022\030\n\024"
@@ -1710,7 +1710,7 @@ MsgSyncUpdateGuildData::MsgSyncUpdateGuildData(const MsgSyncUpdateGuildData& fro
 
 void MsgSyncUpdateGuildData::SharedCtor() {
   _cached_size_ = 0;
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   pbdata_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1748,7 +1748,7 @@ MsgSyncUpdateGuildData* MsgSyncUpdateGuildData::New() const {
 
 void MsgSyncUpdateGuildData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    playerid_ = 0u;
+    playerid_ = GOOGLE_ULONGLONG(0);
     if (has_pbdata()) {
       if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
     }
@@ -1763,12 +1763,12 @@ bool MsgSyncUpdateGuildData::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 playerid = 1;
+      // required uint64 playerid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &playerid_)));
           set_has_playerid();
         } else {
@@ -1810,9 +1810,9 @@ bool MsgSyncUpdateGuildData::MergePartialFromCodedStream(
 
 void MsgSyncUpdateGuildData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -1829,9 +1829,9 @@ void MsgSyncUpdateGuildData::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgSyncUpdateGuildData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -1852,10 +1852,10 @@ int MsgSyncUpdateGuildData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 playerid = 1;
+    // required uint64 playerid = 1;
     if (has_playerid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->playerid());
     }
 
@@ -1964,7 +1964,7 @@ MsgSyncAddGuildData::MsgSyncAddGuildData(const MsgSyncAddGuildData& from)
 
 void MsgSyncAddGuildData::SharedCtor() {
   _cached_size_ = 0;
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   pbdata_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2002,7 +2002,7 @@ MsgSyncAddGuildData* MsgSyncAddGuildData::New() const {
 
 void MsgSyncAddGuildData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    playerid_ = 0u;
+    playerid_ = GOOGLE_ULONGLONG(0);
     if (has_pbdata()) {
       if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
     }
@@ -2017,12 +2017,12 @@ bool MsgSyncAddGuildData::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 playerid = 1;
+      // required uint64 playerid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &playerid_)));
           set_has_playerid();
         } else {
@@ -2064,9 +2064,9 @@ bool MsgSyncAddGuildData::MergePartialFromCodedStream(
 
 void MsgSyncAddGuildData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -2083,9 +2083,9 @@ void MsgSyncAddGuildData::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgSyncAddGuildData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -2106,10 +2106,10 @@ int MsgSyncAddGuildData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 playerid = 1;
+    // required uint64 playerid = 1;
     if (has_playerid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->playerid());
     }
 
@@ -2218,7 +2218,7 @@ MsgSyncRemoveGuildData::MsgSyncRemoveGuildData(const MsgSyncRemoveGuildData& fro
 
 void MsgSyncRemoveGuildData::SharedCtor() {
   _cached_size_ = 0;
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   pbdata_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2256,7 +2256,7 @@ MsgSyncRemoveGuildData* MsgSyncRemoveGuildData::New() const {
 
 void MsgSyncRemoveGuildData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    playerid_ = 0u;
+    playerid_ = GOOGLE_ULONGLONG(0);
     if (has_pbdata()) {
       if (pbdata_ != NULL) pbdata_->::KFMsg::PBObject::Clear();
     }
@@ -2271,12 +2271,12 @@ bool MsgSyncRemoveGuildData::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 playerid = 1;
+      // required uint64 playerid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &playerid_)));
           set_has_playerid();
         } else {
@@ -2318,9 +2318,9 @@ bool MsgSyncRemoveGuildData::MergePartialFromCodedStream(
 
 void MsgSyncRemoveGuildData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -2337,9 +2337,9 @@ void MsgSyncRemoveGuildData::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgSyncRemoveGuildData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   if (has_playerid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
   // required .KFMsg.PBObject pbdata = 2;
@@ -2360,10 +2360,10 @@ int MsgSyncRemoveGuildData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 playerid = 1;
+    // required uint64 playerid = 1;
     if (has_playerid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->playerid());
     }
 

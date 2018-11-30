@@ -48,7 +48,7 @@ namespace KFrame
         KFNetServices::ShutServices();
     }
 
-    uint32 KFNetServerServices::MakeTrusteeID()
+    uint64 KFNetServerServices::MakeTrusteeID()
     {
         return ++_trustee_id;
     }

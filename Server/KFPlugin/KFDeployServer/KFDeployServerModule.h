@@ -54,8 +54,8 @@ namespace KFrame
     class KFDeployServerModule : public KFDeployServerInterface
     {
     public:
-        KFDeployServerModule();
-        ~KFDeployServerModule();
+        KFDeployServerModule() = default;
+        ~KFDeployServerModule() = default;
 
         // 逻辑
         virtual void BeforeRun();
@@ -96,7 +96,7 @@ namespace KFrame
         void SendLogMessage( const std::string& url, const std::string& msg );
 
     private:
-        KFMySQLDriver* _mysql_driver;
+        KFMySQLDriver* _mysql_driver{ nullptr };
 
         // Agent列表
         KFMap< std::string, const std::string&, KFAgentData > _agent_list;

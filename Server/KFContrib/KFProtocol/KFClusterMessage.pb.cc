@@ -313,9 +313,9 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
   S2SSendToDynamicObjectReq_descriptor_ = file->message_type(14);
   static const int S2SSendToDynamicObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, objectid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, msgid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, msgdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToDynamicObjectReq, serverid_),
   };
   S2SSendToDynamicObjectReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -331,9 +331,9 @@ void protobuf_AssignDesc_KFClusterMessage_2eproto() {
   S2SSendToStaticObjectReq_descriptor_ = file->message_type(15);
   static const int S2SSendToStaticObjectReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, objectid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, msgid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, msgdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(S2SSendToStaticObjectReq, serverid_),
   };
   S2SSendToStaticObjectReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -439,33 +439,33 @@ void protobuf_AddDesc_KFClusterMessage_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\026KFClusterMessage.proto\022\005KFMsg\"Y\n\025S2SCl"
     "usterRegisterReq\022\014\n\004type\030\001 \002(\014\022\n\n\002id\030\002 \002"
-    "(\r\022\014\n\004name\030\003 \002(\014\022\n\n\002ip\030\004 \002(\014\022\014\n\004port\030\005 \002"
+    "(\004\022\014\n\004name\030\003 \002(\014\022\n\n\002ip\030\004 \002(\014\022\014\n\004port\030\005 \002"
     "(\r\"f\n\023S2SClusterUpdateReq\022\014\n\004type\030\001 \002(\014\022"
-    "\n\n\002id\030\002 \002(\r\022\014\n\004name\030\003 \002(\014\022\n\n\002ip\030\004 \002(\014\022\014\n"
+    "\n\n\002id\030\002 \002(\004\022\014\n\004name\030\003 \002(\014\022\n\n\002ip\030\004 \002(\014\022\014\n"
     "\004port\030\005 \002(\r\022\r\n\005count\030\006 \002(\r\"<\n\021S2SCluster"
     "AuthReq\022\023\n\013clustertype\030\001 \002(\014\022\022\n\nclusterk"
     "ey\030\002 \002(\014\"y\n\021S2SClusterAuthAck\022\023\n\013cluster"
     "type\030\001 \002(\014\022\r\n\005token\030\002 \002(\014\022\014\n\004type\030\003 \002(\014\022"
-    "\n\n\002id\030\004 \002(\r\022\014\n\004name\030\005 \002(\014\022\n\n\002ip\030\006 \002(\014\022\014\n"
+    "\n\n\002id\030\004 \002(\004\022\014\n\004name\030\005 \002(\014\022\n\n\002ip\030\006 \002(\014\022\014\n"
     "\004port\030\007 \002(\r\"3\n\022S2SClusterTokenReq\022\r\n\005tok"
-    "en\030\001 \002(\014\022\016\n\006gateid\030\002 \002(\r\"K\n\023S2SClusterVe"
+    "en\030\001 \002(\014\022\016\n\006gateid\030\002 \002(\004\"K\n\023S2SClusterVe"
     "rifyReq\022\023\n\013clustertype\030\001 \002(\014\022\r\n\005token\030\002 "
-    "\002(\014\022\020\n\010serverid\030\003 \002(\r\"<\n\023S2SClusterVerif"
+    "\002(\014\022\020\n\010serverid\030\003 \002(\004\"<\n\023S2SClusterVerif"
     "yAck\022\023\n\013clustertype\030\001 \002(\014\022\020\n\010serverid\030\002 "
-    "\002(\r\"/\n\033S2SClusterClientDiscoverReq\022\020\n\010cl"
-    "ientid\030\001 \003(\r\"+\n\027S2SClusterClientLostReq\022"
-    "\020\n\010clientid\030\001 \003(\r\"*\n\026S2SAddObjectToProxy"
+    "\002(\004\"/\n\033S2SClusterClientDiscoverReq\022\020\n\010cl"
+    "ientid\030\001 \003(\004\"+\n\027S2SClusterClientLostReq\022"
+    "\020\n\010clientid\030\001 \003(\004\"*\n\026S2SAddObjectToProxy"
     "Req\022\020\n\010objectid\030\001 \003(\004\"-\n\031S2SRemoveObject"
     "ToProxyReq\022\020\n\010objectid\030\002 \003(\004\"-\n\031S2SAlloc"
-    "ObjectToMasterReq\022\020\n\010objectid\030\001 \003(\r\"=\n\030S"
+    "ObjectToMasterReq\022\020\n\010objectid\030\001 \003(\004\"=\n\030S"
     "2SAllocObjectToProxyAck\022\020\n\010objectid\030\001 \003("
-    "\r\022\017\n\007shardid\030\002 \003(\r\",\n\030S2SAllocObjectToSh"
-    "ardAck\022\020\n\010objectid\030\001 \003(\r\"_\n\031S2SSendToDyn"
-    "amicObjectReq\022\020\n\010objectid\030\001 \002(\004\022\r\n\005msgid"
-    "\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\014\022\020\n\010serverid\030\004 \002("
-    "\r\"^\n\030S2SSendToStaticObjectReq\022\020\n\010objecti"
-    "d\030\001 \002(\r\022\r\n\005msgid\030\002 \002(\r\022\017\n\007msgdata\030\003 \002(\014\022"
-    "\020\n\010serverid\030\004 \002(\r*\236\004\n\017ClusterProtocol\022\035\n"
+    "\004\022\017\n\007shardid\030\002 \003(\004\",\n\030S2SAllocObjectToSh"
+    "ardAck\022\020\n\010objectid\030\001 \003(\004\"_\n\031S2SSendToDyn"
+    "amicObjectReq\022\020\n\010objectid\030\001 \002(\004\022\020\n\010serve"
+    "rid\030\002 \002(\004\022\r\n\005msgid\030\003 \002(\r\022\017\n\007msgdata\030\004 \002("
+    "\014\"^\n\030S2SSendToStaticObjectReq\022\020\n\010objecti"
+    "d\030\001 \002(\004\022\020\n\010serverid\030\002 \002(\004\022\r\n\005msgid\030\003 \002(\r"
+    "\022\017\n\007msgdata\030\004 \002(\014*\236\004\n\017ClusterProtocol\022\035\n"
     "\030S2S_CLUSTER_REGISTER_REQ\020\365N\022\033\n\026S2S_CLUS"
     "TER_UPDATE_REQ\020\366N\022\031\n\024S2S_CLUSTER_AUTH_RE"
     "Q\020\367N\022\031\n\024S2S_CLUSTER_AUTH_ACK\020\370N\022\032\n\025S2S_C"
@@ -579,7 +579,7 @@ S2SClusterRegisterReq::S2SClusterRegisterReq(const S2SClusterRegisterReq& from)
 void S2SClusterRegisterReq::SharedCtor() {
   _cached_size_ = 0;
   type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   port_ = 0u;
@@ -632,7 +632,7 @@ void S2SClusterRegisterReq::Clear() {
         type_->clear();
       }
     }
-    id_ = 0u;
+    id_ = GOOGLE_ULONGLONG(0);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
         name_->clear();
@@ -668,13 +668,13 @@ bool S2SClusterRegisterReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 id = 2;
+      // required uint64 id = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -752,9 +752,9 @@ void S2SClusterRegisterReq::SerializeWithCachedSizes(
       1, this->type(), output);
   }
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->id(), output);
   }
 
   // required bytes name = 3;
@@ -789,9 +789,9 @@ void S2SClusterRegisterReq::SerializeWithCachedSizes(
         1, this->type(), target);
   }
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->id(), target);
   }
 
   // required bytes name = 3;
@@ -831,10 +831,10 @@ int S2SClusterRegisterReq::ByteSize() const {
           this->type());
     }
 
-    // required uint32 id = 2;
+    // required uint64 id = 2;
     if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->id());
     }
 
@@ -973,7 +973,7 @@ S2SClusterUpdateReq::S2SClusterUpdateReq(const S2SClusterUpdateReq& from)
 void S2SClusterUpdateReq::SharedCtor() {
   _cached_size_ = 0;
   type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   port_ = 0u;
@@ -1027,7 +1027,7 @@ void S2SClusterUpdateReq::Clear() {
         type_->clear();
       }
     }
-    id_ = 0u;
+    id_ = GOOGLE_ULONGLONG(0);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
         name_->clear();
@@ -1064,13 +1064,13 @@ bool S2SClusterUpdateReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 id = 2;
+      // required uint64 id = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -1164,9 +1164,9 @@ void S2SClusterUpdateReq::SerializeWithCachedSizes(
       1, this->type(), output);
   }
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->id(), output);
   }
 
   // required bytes name = 3;
@@ -1206,9 +1206,9 @@ void S2SClusterUpdateReq::SerializeWithCachedSizes(
         1, this->type(), target);
   }
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->id(), target);
   }
 
   // required bytes name = 3;
@@ -1253,10 +1253,10 @@ int S2SClusterUpdateReq::ByteSize() const {
           this->type());
     }
 
-    // required uint32 id = 2;
+    // required uint64 id = 2;
     if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->id());
     }
 
@@ -1674,7 +1674,7 @@ void S2SClusterAuthAck::SharedCtor() {
   clustertype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   port_ = 0u;
@@ -1743,7 +1743,7 @@ void S2SClusterAuthAck::Clear() {
         type_->clear();
       }
     }
-    id_ = 0u;
+    id_ = GOOGLE_ULONGLONG(0);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
         name_->clear();
@@ -1807,13 +1807,13 @@ bool S2SClusterAuthAck::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 id = 4;
+      // required uint64 id = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -1903,9 +1903,9 @@ void S2SClusterAuthAck::SerializeWithCachedSizes(
       3, this->type(), output);
   }
 
-  // required uint32 id = 4;
+  // required uint64 id = 4;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->id(), output);
   }
 
   // required bytes name = 5;
@@ -1954,9 +1954,9 @@ void S2SClusterAuthAck::SerializeWithCachedSizes(
         3, this->type(), target);
   }
 
-  // required uint32 id = 4;
+  // required uint64 id = 4;
   if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->id(), target);
   }
 
   // required bytes name = 5;
@@ -2010,10 +2010,10 @@ int S2SClusterAuthAck::ByteSize() const {
           this->type());
     }
 
-    // required uint32 id = 4;
+    // required uint64 id = 4;
     if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->id());
     }
 
@@ -2156,7 +2156,7 @@ S2SClusterTokenReq::S2SClusterTokenReq(const S2SClusterTokenReq& from)
 void S2SClusterTokenReq::SharedCtor() {
   _cached_size_ = 0;
   token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  gateid_ = 0u;
+  gateid_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2200,7 +2200,7 @@ void S2SClusterTokenReq::Clear() {
         token_->clear();
       }
     }
-    gateid_ = 0u;
+    gateid_ = GOOGLE_ULONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2225,13 +2225,13 @@ bool S2SClusterTokenReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 gateid = 2;
+      // required uint64 gateid = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_gateid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &gateid_)));
           set_has_gateid();
         } else {
@@ -2265,9 +2265,9 @@ void S2SClusterTokenReq::SerializeWithCachedSizes(
       1, this->token(), output);
   }
 
-  // required uint32 gateid = 2;
+  // required uint64 gateid = 2;
   if (has_gateid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gateid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->gateid(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2285,9 +2285,9 @@ void S2SClusterTokenReq::SerializeWithCachedSizes(
         1, this->token(), target);
   }
 
-  // required uint32 gateid = 2;
+  // required uint64 gateid = 2;
   if (has_gateid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->gateid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->gateid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2308,10 +2308,10 @@ int S2SClusterTokenReq::ByteSize() const {
           this->token());
     }
 
-    // required uint32 gateid = 2;
+    // required uint64 gateid = 2;
     if (has_gateid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->gateid());
     }
 
@@ -2415,7 +2415,7 @@ void S2SClusterVerifyReq::SharedCtor() {
   _cached_size_ = 0;
   clustertype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2467,7 +2467,7 @@ void S2SClusterVerifyReq::Clear() {
         token_->clear();
       }
     }
-    serverid_ = 0u;
+    serverid_ = GOOGLE_ULONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2506,13 +2506,13 @@ bool S2SClusterVerifyReq::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 serverid = 3;
+      // required uint64 serverid = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_serverid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &serverid_)));
           set_has_serverid();
         } else {
@@ -2552,9 +2552,9 @@ void S2SClusterVerifyReq::SerializeWithCachedSizes(
       2, this->token(), output);
   }
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   if (has_serverid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->serverid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->serverid(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2579,9 +2579,9 @@ void S2SClusterVerifyReq::SerializeWithCachedSizes(
         2, this->token(), target);
   }
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   if (has_serverid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->serverid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->serverid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2609,10 +2609,10 @@ int S2SClusterVerifyReq::ByteSize() const {
           this->token());
     }
 
-    // required uint32 serverid = 3;
+    // required uint64 serverid = 3;
     if (has_serverid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->serverid());
     }
 
@@ -2718,7 +2718,7 @@ S2SClusterVerifyAck::S2SClusterVerifyAck(const S2SClusterVerifyAck& from)
 void S2SClusterVerifyAck::SharedCtor() {
   _cached_size_ = 0;
   clustertype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2762,7 +2762,7 @@ void S2SClusterVerifyAck::Clear() {
         clustertype_->clear();
       }
     }
-    serverid_ = 0u;
+    serverid_ = GOOGLE_ULONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2787,13 +2787,13 @@ bool S2SClusterVerifyAck::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 serverid = 2;
+      // required uint64 serverid = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_serverid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &serverid_)));
           set_has_serverid();
         } else {
@@ -2827,9 +2827,9 @@ void S2SClusterVerifyAck::SerializeWithCachedSizes(
       1, this->clustertype(), output);
   }
 
-  // required uint32 serverid = 2;
+  // required uint64 serverid = 2;
   if (has_serverid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->serverid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->serverid(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2847,9 +2847,9 @@ void S2SClusterVerifyAck::SerializeWithCachedSizes(
         1, this->clustertype(), target);
   }
 
-  // required uint32 serverid = 2;
+  // required uint64 serverid = 2;
   if (has_serverid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->serverid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->serverid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2870,10 +2870,10 @@ int S2SClusterVerifyAck::ByteSize() const {
           this->clustertype());
     }
 
-    // required uint32 serverid = 2;
+    // required uint64 serverid = 2;
     if (has_serverid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->serverid());
     }
 
@@ -3018,19 +3018,19 @@ bool S2SClusterClientDiscoverReq::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 clientid = 1;
+      // repeated uint64 clientid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_clientid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8, input, this->mutable_clientid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_clientid())));
         } else {
           goto handle_uninterpreted;
@@ -3058,9 +3058,9 @@ bool S2SClusterClientDiscoverReq::MergePartialFromCodedStream(
 
 void S2SClusterClientDiscoverReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       1, this->clientid(i), output);
   }
 
@@ -3072,10 +3072,10 @@ void S2SClusterClientDiscoverReq::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SClusterClientDiscoverReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->clientid(i), target);
+      WriteUInt64ToArray(1, this->clientid(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3088,12 +3088,12 @@ void S2SClusterClientDiscoverReq::SerializeWithCachedSizes(
 int S2SClusterClientDiscoverReq::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->clientid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->clientid(i));
+        UInt64Size(this->clientid(i));
     }
     total_size += 1 * this->clientid_size() + data_size;
   }
@@ -3229,19 +3229,19 @@ bool S2SClusterClientLostReq::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 clientid = 1;
+      // repeated uint64 clientid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_clientid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8, input, this->mutable_clientid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_clientid())));
         } else {
           goto handle_uninterpreted;
@@ -3269,9 +3269,9 @@ bool S2SClusterClientLostReq::MergePartialFromCodedStream(
 
 void S2SClusterClientLostReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       1, this->clientid(i), output);
   }
 
@@ -3283,10 +3283,10 @@ void S2SClusterClientLostReq::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SClusterClientLostReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   for (int i = 0; i < this->clientid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->clientid(i), target);
+      WriteUInt64ToArray(1, this->clientid(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3299,12 +3299,12 @@ void S2SClusterClientLostReq::SerializeWithCachedSizes(
 int S2SClusterClientLostReq::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->clientid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->clientid(i));
+        UInt64Size(this->clientid(i));
     }
     total_size += 1 * this->clientid_size() + data_size;
   }
@@ -3862,19 +3862,19 @@ bool S2SAllocObjectToMasterReq::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 objectid = 1;
+      // repeated uint64 objectid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_objectid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8, input, this->mutable_objectid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_objectid())));
         } else {
           goto handle_uninterpreted;
@@ -3902,9 +3902,9 @@ bool S2SAllocObjectToMasterReq::MergePartialFromCodedStream(
 
 void S2SAllocObjectToMasterReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       1, this->objectid(i), output);
   }
 
@@ -3916,10 +3916,10 @@ void S2SAllocObjectToMasterReq::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SAllocObjectToMasterReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->objectid(i), target);
+      WriteUInt64ToArray(1, this->objectid(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3932,12 +3932,12 @@ void S2SAllocObjectToMasterReq::SerializeWithCachedSizes(
 int S2SAllocObjectToMasterReq::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->objectid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->objectid(i));
+        UInt64Size(this->objectid(i));
     }
     total_size += 1 * this->objectid_size() + data_size;
   }
@@ -4075,19 +4075,19 @@ bool S2SAllocObjectToProxyAck::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 objectid = 1;
+      // repeated uint64 objectid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_objectid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8, input, this->mutable_objectid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_objectid())));
         } else {
           goto handle_uninterpreted;
@@ -4097,19 +4097,19 @@ bool S2SAllocObjectToProxyAck::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 shardid = 2;
+      // repeated uint64 shardid = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_shardid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 16, input, this->mutable_shardid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_shardid())));
         } else {
           goto handle_uninterpreted;
@@ -4137,15 +4137,15 @@ bool S2SAllocObjectToProxyAck::MergePartialFromCodedStream(
 
 void S2SAllocObjectToProxyAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       1, this->objectid(i), output);
   }
 
-  // repeated uint32 shardid = 2;
+  // repeated uint64 shardid = 2;
   for (int i = 0; i < this->shardid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       2, this->shardid(i), output);
   }
 
@@ -4157,16 +4157,16 @@ void S2SAllocObjectToProxyAck::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SAllocObjectToProxyAck::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->objectid(i), target);
+      WriteUInt64ToArray(1, this->objectid(i), target);
   }
 
-  // repeated uint32 shardid = 2;
+  // repeated uint64 shardid = 2;
   for (int i = 0; i < this->shardid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(2, this->shardid(i), target);
+      WriteUInt64ToArray(2, this->shardid(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4179,22 +4179,22 @@ void S2SAllocObjectToProxyAck::SerializeWithCachedSizes(
 int S2SAllocObjectToProxyAck::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->objectid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->objectid(i));
+        UInt64Size(this->objectid(i));
     }
     total_size += 1 * this->objectid_size() + data_size;
   }
 
-  // repeated uint32 shardid = 2;
+  // repeated uint64 shardid = 2;
   {
     int data_size = 0;
     for (int i = 0; i < this->shardid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->shardid(i));
+        UInt64Size(this->shardid(i));
     }
     total_size += 1 * this->shardid_size() + data_size;
   }
@@ -4332,19 +4332,19 @@ bool S2SAllocObjectToShardAck::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 objectid = 1;
+      // repeated uint64 objectid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_objectid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8, input, this->mutable_objectid())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_objectid())));
         } else {
           goto handle_uninterpreted;
@@ -4372,9 +4372,9 @@ bool S2SAllocObjectToShardAck::MergePartialFromCodedStream(
 
 void S2SAllocObjectToShardAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(
       1, this->objectid(i), output);
   }
 
@@ -4386,10 +4386,10 @@ void S2SAllocObjectToShardAck::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SAllocObjectToShardAck::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   for (int i = 0; i < this->objectid_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->objectid(i), target);
+      WriteUInt64ToArray(1, this->objectid(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4402,12 +4402,12 @@ void S2SAllocObjectToShardAck::SerializeWithCachedSizes(
 int S2SAllocObjectToShardAck::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->objectid_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->objectid(i));
+        UInt64Size(this->objectid(i));
     }
     total_size += 1 * this->objectid_size() + data_size;
   }
@@ -4480,9 +4480,9 @@ void S2SAllocObjectToShardAck::Swap(S2SAllocObjectToShardAck* other) {
 
 #ifndef _MSC_VER
 const int S2SSendToDynamicObjectReq::kObjectidFieldNumber;
+const int S2SSendToDynamicObjectReq::kServeridFieldNumber;
 const int S2SSendToDynamicObjectReq::kMsgidFieldNumber;
 const int S2SSendToDynamicObjectReq::kMsgdataFieldNumber;
-const int S2SSendToDynamicObjectReq::kServeridFieldNumber;
 #endif  // !_MSC_VER
 
 S2SSendToDynamicObjectReq::S2SSendToDynamicObjectReq()
@@ -4502,9 +4502,9 @@ S2SSendToDynamicObjectReq::S2SSendToDynamicObjectReq(const S2SSendToDynamicObjec
 void S2SSendToDynamicObjectReq::SharedCtor() {
   _cached_size_ = 0;
   objectid_ = GOOGLE_ULONGLONG(0);
+  serverid_ = GOOGLE_ULONGLONG(0);
   msgid_ = 0u;
   msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  serverid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4544,13 +4544,13 @@ S2SSendToDynamicObjectReq* S2SSendToDynamicObjectReq::New() const {
 void S2SSendToDynamicObjectReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     objectid_ = GOOGLE_ULONGLONG(0);
+    serverid_ = GOOGLE_ULONGLONG(0);
     msgid_ = 0u;
     if (has_msgdata()) {
       if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
         msgdata_->clear();
       }
     }
-    serverid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4573,12 +4573,28 @@ bool S2SSendToDynamicObjectReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_msgid;
+        if (input->ExpectTag(16)) goto parse_serverid;
         break;
       }
 
-      // required uint32 msgid = 2;
+      // required uint64 serverid = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_serverid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &serverid_)));
+          set_has_serverid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_msgid;
+        break;
+      }
+
+      // required uint32 msgid = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_msgid:
@@ -4589,33 +4605,17 @@ bool S2SSendToDynamicObjectReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_msgdata;
+        if (input->ExpectTag(34)) goto parse_msgdata;
         break;
       }
 
-      // required bytes msgdata = 3;
-      case 3: {
+      // required bytes msgdata = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_msgdata:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_msgdata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_serverid;
-        break;
-      }
-
-      // required uint32 serverid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_serverid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &serverid_)));
-          set_has_serverid();
         } else {
           goto handle_uninterpreted;
         }
@@ -4646,20 +4646,20 @@ void S2SSendToDynamicObjectReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->objectid(), output);
   }
 
-  // required uint32 msgid = 2;
-  if (has_msgid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->msgid(), output);
+  // required uint64 serverid = 2;
+  if (has_serverid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->serverid(), output);
   }
 
-  // required bytes msgdata = 3;
+  // required uint32 msgid = 3;
+  if (has_msgid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msgid(), output);
+  }
+
+  // required bytes msgdata = 4;
   if (has_msgdata()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytes(
-      3, this->msgdata(), output);
-  }
-
-  // required uint32 serverid = 4;
-  if (has_serverid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
+      4, this->msgdata(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4675,21 +4675,21 @@ void S2SSendToDynamicObjectReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->objectid(), target);
   }
 
-  // required uint32 msgid = 2;
-  if (has_msgid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->msgid(), target);
+  // required uint64 serverid = 2;
+  if (has_serverid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->serverid(), target);
   }
 
-  // required bytes msgdata = 3;
+  // required uint32 msgid = 3;
+  if (has_msgid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msgid(), target);
+  }
+
+  // required bytes msgdata = 4;
   if (has_msgdata()) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->msgdata(), target);
-  }
-
-  // required uint32 serverid = 4;
-  if (has_serverid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
+        4, this->msgdata(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4710,25 +4710,25 @@ int S2SSendToDynamicObjectReq::ByteSize() const {
           this->objectid());
     }
 
-    // required uint32 msgid = 2;
+    // required uint64 serverid = 2;
+    if (has_serverid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->serverid());
+    }
+
+    // required uint32 msgid = 3;
     if (has_msgid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->msgid());
     }
 
-    // required bytes msgdata = 3;
+    // required bytes msgdata = 4;
     if (has_msgdata()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->msgdata());
-    }
-
-    // required uint32 serverid = 4;
-    if (has_serverid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->serverid());
     }
 
   }
@@ -4761,14 +4761,14 @@ void S2SSendToDynamicObjectReq::MergeFrom(const S2SSendToDynamicObjectReq& from)
     if (from.has_objectid()) {
       set_objectid(from.objectid());
     }
+    if (from.has_serverid()) {
+      set_serverid(from.serverid());
+    }
     if (from.has_msgid()) {
       set_msgid(from.msgid());
     }
     if (from.has_msgdata()) {
       set_msgdata(from.msgdata());
-    }
-    if (from.has_serverid()) {
-      set_serverid(from.serverid());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -4795,9 +4795,9 @@ bool S2SSendToDynamicObjectReq::IsInitialized() const {
 void S2SSendToDynamicObjectReq::Swap(S2SSendToDynamicObjectReq* other) {
   if (other != this) {
     std::swap(objectid_, other->objectid_);
+    std::swap(serverid_, other->serverid_);
     std::swap(msgid_, other->msgid_);
     std::swap(msgdata_, other->msgdata_);
-    std::swap(serverid_, other->serverid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4817,9 +4817,9 @@ void S2SSendToDynamicObjectReq::Swap(S2SSendToDynamicObjectReq* other) {
 
 #ifndef _MSC_VER
 const int S2SSendToStaticObjectReq::kObjectidFieldNumber;
+const int S2SSendToStaticObjectReq::kServeridFieldNumber;
 const int S2SSendToStaticObjectReq::kMsgidFieldNumber;
 const int S2SSendToStaticObjectReq::kMsgdataFieldNumber;
-const int S2SSendToStaticObjectReq::kServeridFieldNumber;
 #endif  // !_MSC_VER
 
 S2SSendToStaticObjectReq::S2SSendToStaticObjectReq()
@@ -4838,10 +4838,10 @@ S2SSendToStaticObjectReq::S2SSendToStaticObjectReq(const S2SSendToStaticObjectRe
 
 void S2SSendToStaticObjectReq::SharedCtor() {
   _cached_size_ = 0;
-  objectid_ = 0u;
+  objectid_ = GOOGLE_ULONGLONG(0);
+  serverid_ = GOOGLE_ULONGLONG(0);
   msgid_ = 0u;
   msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  serverid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4880,14 +4880,14 @@ S2SSendToStaticObjectReq* S2SSendToStaticObjectReq::New() const {
 
 void S2SSendToStaticObjectReq::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    objectid_ = 0u;
+    objectid_ = GOOGLE_ULONGLONG(0);
+    serverid_ = GOOGLE_ULONGLONG(0);
     msgid_ = 0u;
     if (has_msgdata()) {
       if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
         msgdata_->clear();
       }
     }
-    serverid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -4899,23 +4899,39 @@ bool S2SSendToStaticObjectReq::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 objectid = 1;
+      // required uint64 objectid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &objectid_)));
           set_has_objectid();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_msgid;
+        if (input->ExpectTag(16)) goto parse_serverid;
         break;
       }
 
-      // required uint32 msgid = 2;
+      // required uint64 serverid = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_serverid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &serverid_)));
+          set_has_serverid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_msgid;
+        break;
+      }
+
+      // required uint32 msgid = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_msgid:
@@ -4926,33 +4942,17 @@ bool S2SSendToStaticObjectReq::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_msgdata;
+        if (input->ExpectTag(34)) goto parse_msgdata;
         break;
       }
 
-      // required bytes msgdata = 3;
-      case 3: {
+      // required bytes msgdata = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_msgdata:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_msgdata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_serverid;
-        break;
-      }
-
-      // required uint32 serverid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_serverid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &serverid_)));
-          set_has_serverid();
         } else {
           goto handle_uninterpreted;
         }
@@ -4978,25 +4978,25 @@ bool S2SSendToStaticObjectReq::MergePartialFromCodedStream(
 
 void S2SSendToStaticObjectReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 objectid = 1;
+  // required uint64 objectid = 1;
   if (has_objectid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->objectid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->objectid(), output);
   }
 
-  // required uint32 msgid = 2;
+  // required uint64 serverid = 2;
+  if (has_serverid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->serverid(), output);
+  }
+
+  // required uint32 msgid = 3;
   if (has_msgid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->msgid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msgid(), output);
   }
 
-  // required bytes msgdata = 3;
+  // required bytes msgdata = 4;
   if (has_msgdata()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytes(
-      3, this->msgdata(), output);
-  }
-
-  // required uint32 serverid = 4;
-  if (has_serverid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
+      4, this->msgdata(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -5007,26 +5007,26 @@ void S2SSendToStaticObjectReq::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* S2SSendToStaticObjectReq::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 objectid = 1;
+  // required uint64 objectid = 1;
   if (has_objectid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->objectid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->objectid(), target);
   }
 
-  // required uint32 msgid = 2;
+  // required uint64 serverid = 2;
+  if (has_serverid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->serverid(), target);
+  }
+
+  // required uint32 msgid = 3;
   if (has_msgid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->msgid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msgid(), target);
   }
 
-  // required bytes msgdata = 3;
+  // required bytes msgdata = 4;
   if (has_msgdata()) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->msgdata(), target);
-  }
-
-  // required uint32 serverid = 4;
-  if (has_serverid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
+        4, this->msgdata(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -5040,32 +5040,32 @@ int S2SSendToStaticObjectReq::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 objectid = 1;
+    // required uint64 objectid = 1;
     if (has_objectid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->objectid());
     }
 
-    // required uint32 msgid = 2;
+    // required uint64 serverid = 2;
+    if (has_serverid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->serverid());
+    }
+
+    // required uint32 msgid = 3;
     if (has_msgid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->msgid());
     }
 
-    // required bytes msgdata = 3;
+    // required bytes msgdata = 4;
     if (has_msgdata()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->msgdata());
-    }
-
-    // required uint32 serverid = 4;
-    if (has_serverid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->serverid());
     }
 
   }
@@ -5098,14 +5098,14 @@ void S2SSendToStaticObjectReq::MergeFrom(const S2SSendToStaticObjectReq& from) {
     if (from.has_objectid()) {
       set_objectid(from.objectid());
     }
+    if (from.has_serverid()) {
+      set_serverid(from.serverid());
+    }
     if (from.has_msgid()) {
       set_msgid(from.msgid());
     }
     if (from.has_msgdata()) {
       set_msgdata(from.msgdata());
-    }
-    if (from.has_serverid()) {
-      set_serverid(from.serverid());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -5132,9 +5132,9 @@ bool S2SSendToStaticObjectReq::IsInitialized() const {
 void S2SSendToStaticObjectReq::Swap(S2SSendToStaticObjectReq* other) {
   if (other != this) {
     std::swap(objectid_, other->objectid_);
+    std::swap(serverid_, other->serverid_);
     std::swap(msgid_, other->msgid_);
     std::swap(msgdata_, other->msgdata_);
-    std::swap(serverid_, other->serverid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

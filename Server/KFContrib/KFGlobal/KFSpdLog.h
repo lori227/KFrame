@@ -15,7 +15,7 @@ namespace KFrame
         ~KFSpdLog();
 
         // 初始化
-        bool Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid );
+        bool Initialize( const std::string& path, const std::string& appname, const std::string& apptype, const std::string& strappid );
 
         // 打印日志
         void Log( uint32 loglevel, const std::string& content );

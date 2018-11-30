@@ -14,7 +14,7 @@ namespace KFrame
         _net_services = nullptr;
     }
 
-    void KFNetConnector::InitConnector( uint32 id, KFNetServices* netservices )
+    void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices )
     {
         _net_services = netservices;
 
@@ -64,10 +64,10 @@ namespace KFrame
                     retmessage->_data = buffaddress + sizeof( KFNetMessage );
 
                     // 合并子消息
-                    uint32 copylength = 0u;
+                    auto copylength = 0u;
                     auto leftlength = _net_services->_buff_length - sizeof( KFNetMessage );
 
-                    for ( uint32 i = 0u; i < childcount; ++i )
+                    for ( auto i = 0u; i < childcount; ++i )
                     {
                         auto childmessage = _recv_queue.Front();
 
@@ -127,7 +127,7 @@ namespace KFrame
     }
 
     // 添加一个发送消息
-    bool KFNetConnector::SendSingleMessage( uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendSingleMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         auto netmessage = KFNetMessage::Create( length );
 
@@ -136,7 +136,7 @@ namespace KFrame
         return AddSendMessage( netmessage );
     }
 
-    bool KFNetConnector::SendMultiMessage( uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendMultiMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         auto ok = true;
 
@@ -198,7 +198,7 @@ namespace KFrame
         return SendNetMessage( 0, msgid, data, length );
     }
 
-    bool KFNetConnector::SendNetMessage( uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendNetMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         bool ok = false;
 

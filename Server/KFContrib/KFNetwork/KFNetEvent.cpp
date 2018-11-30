@@ -19,7 +19,7 @@ namespace KFrame
         _net_event_data.InitQueue( maxcount );
     }
 
-    void KFNetEvent::AddEvent( uint32 type, uint32 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
+    void KFNetEvent::AddEvent( uint32 type, uint64 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
     {
         auto eventdata = __KF_CREATE_BATCH__( KFEventData, 50 );
 

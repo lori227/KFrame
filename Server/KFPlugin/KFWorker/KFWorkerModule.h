@@ -41,7 +41,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         virtual void SendToClient( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendToClient( const KFId& kfid, uint32 serverid, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendToClient( const KFId& kfid, uint64 serverid, uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 转发消息到工作线程

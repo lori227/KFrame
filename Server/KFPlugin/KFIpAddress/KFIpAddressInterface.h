@@ -23,7 +23,7 @@ namespace KFrame
         std::string _app_type;
 
         // 服务器id
-        uint32 _app_id;
+        uint64 _app_id;
         std::string _str_app_id;
 
         // 服务器ip
@@ -57,7 +57,7 @@ namespace KFrame
         virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist ) = 0;
 
         // 计算监听端口
-        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint32 appid ) = 0;
+        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid ) = 0;
 
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip ) = 0;

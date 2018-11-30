@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFAppConfig::KFAppConfig()
     {
-        _server_id = 0;
+
     }
 
     KFAppConfig::~KFAppConfig()

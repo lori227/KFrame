@@ -22,7 +22,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK );
     }
 
-    uint32 KFClusterShardModule::FindProxyId( uint32 clientid )
+    uint64 KFClusterShardModule::FindProxyId( uint64 clientid )
     {
         auto iter = _proxy_client_list.find( clientid );
         if ( iter == _proxy_client_list.end() )
@@ -59,7 +59,7 @@ namespace KFrame
 
     __KF_SERVER_LOST_FUNCTION__( KFClusterShardModule::OnServerLostHandle )
     {
-        std::set< uint32 > removelist;
+        std::set< uint64 > removelist;
 
         for ( auto iter : _proxy_client_list )
         {
@@ -87,12 +87,12 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( msgid, message );
     }
 
-    bool KFClusterShardModule::SendToProxy( uint32 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToProxy( uint64 handleid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendToProxy( uint32 handleid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToProxy( uint64 handleid, uint32 msgid, google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( handleid, msgid, message );
     }
@@ -121,29 +121,29 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length )
     {
         auto proxyid = FindProxyId( clientid );
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendToClient( uint32 clientid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         auto proxyid = FindProxyId( clientid );
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToClient( uint64 proxyid, uint64 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
-    bool KFClusterShardModule::SendToClient( uint32 proxyid, uint32 clientid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint64 proxyid, uint64 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 
-    bool KFClusterShardModule::SendToPlayer( uint32 clientid, uint32 playerid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToPlayer( uint64 clientid, uint64 playerid, uint32 msgid, google::protobuf::Message* message )
     {
         KFMsg::S2STransmitRouteZoneMessageAck ack;
         auto transmitdata = ack.mutable_transmitdata();
@@ -161,7 +161,7 @@ namespace KFrame
         SendToProxy( KFMsg::S2S_ADD_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::AddObjectToProxy( uint32 proxyid, const std::set<uint64>& objectlist )
+    void KFClusterShardModule::AddObjectToProxy( uint64 proxyid, const std::set<uint64>& objectlist )
     {
         KFMsg::S2SAddObjectToProxyReq req;
         for ( auto objectid : objectlist )
@@ -188,7 +188,7 @@ namespace KFrame
         SendToProxy( KFMsg::S2S_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFClusterShardModule::AllocObjectToMaster( const std::set<uint32>& objectlist )
+    void KFClusterShardModule::AllocObjectToMaster( const std::set<uint64>& objectlist )
     {
         KFMsg::S2SAllocObjectToMasterReq req;
         for ( auto objectid : objectlist )
@@ -217,7 +217,7 @@ namespace KFrame
         }
     }
 
-    const std::set< uint32 >& KFClusterShardModule::GetAllocObjectList()
+    const std::set< uint64 >& KFClusterShardModule::GetAllocObjectList()
     {
         return _object_list;
     }

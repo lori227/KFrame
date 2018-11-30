@@ -13,7 +13,7 @@ namespace KFrame
 
     }
 
-    void KFHashLogic::AddHashNode( const std::string& name, uint32 id, uint32 virtualcount /* = 1 */ )
+    void KFHashLogic::AddHashNode( const std::string& name, uint64 id, uint32 virtualcount /* = 1 */ )
     {
         auto node = _node_list.Create( id );
 
@@ -43,7 +43,7 @@ namespace KFrame
         }
     }
 
-    bool KFHashLogic::RemoveHashNode( uint32 id )
+    bool KFHashLogic::RemoveHashNode( uint64 id )
     {
         auto node = _node_list.Find( id );
         if ( node == nullptr )
@@ -61,7 +61,7 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFHashLogic::FindHashNode( const std::string& data, bool cache )
+    uint64 KFHashLogic::FindHashNode( const std::string& data, bool cache )
     {
         // 现在已经选择的列表中查找, 优化一下 不要每次都算hash和查找
         if ( cache )
@@ -97,19 +97,19 @@ namespace KFrame
         return nodeid;
     }
 
-    uint32 KFHashLogic::FindHashNode( uint64 objectid, bool cache )
+    uint64 KFHashLogic::FindHashNode( uint64 objectid, bool cache )
     {
         auto strdata = __FORMAT__( "object:{}", objectid );
         return FindHashNode( strdata, cache );
     }
 
-    uint32 KFHashLogic::FindHashNode( const std::string& data, uint64 objectid, bool cache )
+    uint64 KFHashLogic::FindHashNode( const std::string& data, uint64 objectid, bool cache )
     {
         auto strdata = __FORMAT__( "{}:{}", data, objectid );
         return FindHashNode( strdata, cache );
     }
 
-    void KFHashLogic::GetAllHashNode( std::list<uint32>& nodes )
+    void KFHashLogic::GetAllHashNode( std::list<uint64>& nodes )
     {
         nodes.clear();
 
@@ -119,12 +119,12 @@ namespace KFrame
         }
     }
 
-    bool KFHashLogic::HaveHashNode( uint32 id )
+    bool KFHashLogic::HaveHashNode( uint64 id )
     {
         return _node_list.Find( id ) != nullptr;
     }
 
-    uint32 KFHashLogic::FindSelectNode( const std::string& data )
+    uint64 KFHashLogic::FindSelectNode( const std::string& data )
     {
         auto iter = _select_list.find( data );
         if ( iter == _select_list.end() )

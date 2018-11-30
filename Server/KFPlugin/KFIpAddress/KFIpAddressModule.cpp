@@ -42,7 +42,7 @@ namespace KFrame
         }
 
         // 修改appid
-        _kf_ip_config->SetMasterAppId( kfglobal->_app_channel, kfglobal->_zone_id );
+        _kf_ip_config->SetMasterAppId( kfglobal->_app_id._union._app_data._channel_id, kfglobal->_app_id._union._app_data._zone_id );
 
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
@@ -51,7 +51,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint32 appid )
+    uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint64 appid )
     {
         return _net_port.CalcListenPort( type, port, appid );
     }

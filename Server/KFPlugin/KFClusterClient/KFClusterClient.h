@@ -17,23 +17,23 @@ namespace KFrame
         void StartClusterMasterClient();
 
         // 连接事件
-        void OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid );
+        void OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint64 serverid );
 
         // 断线事件
-        void OnLostClusterServer( const std::string& servertype, uint32 serverid );
+        void OnLostClusterServer( const std::string& servertype, uint64 serverid );
 
         // 认证成功
-        void ProcessClusterAuth( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port, const std::string& token );
+        void ProcessClusterAuth( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port, const std::string& token );
 
         // 验证token成功
-        void ProcessClusterVerify( uint32 serverid );
+        void ProcessClusterVerify( uint64 serverid );
 
         // 发送消息
         bool SendNetMessage( uint32 msgid, google::protobuf::Message* message );
-        bool SendNetMessage( uint32 objectid, uint32 msgid, google::protobuf::Message* message );
+        bool SendNetMessage( uint64 objectid, uint32 msgid, google::protobuf::Message* message );
 
         bool SendNetMessage( uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint32 objectid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length );
 
     protected:
         // 发送认证消息
@@ -48,7 +48,7 @@ namespace KFrame
 
         // 集群设置
         std::string _cluster_master_name;
-        uint32 _cluster_master_id{ 0 };
+        uint64 _cluster_master_id{ 0 };
         std::string _str_master_id;
 
     private:
@@ -59,7 +59,7 @@ namespace KFrame
         std::string _auth_token;
 
         // proxy id
-        uint32 _cluster_proxy_id{ 0 };
+        uint64 _cluster_proxy_id{ 0 };
     };
 }
 

@@ -41,8 +41,8 @@ namespace KFrame
         void AddSchedule( KFScheduleData* kfdata );
 
         // 删除计划任务
-        void AddRemoveSchedule( const std::string& module, uint32 objectid );
-        void RemoveSchedule( const std::string& module, uint32 objectid );
+        void AddRemoveSchedule( const std::string& module, uint64 objectid );
+        void RemoveSchedule( const std::string& module, uint64 objectid );
 
         void RunScheduleUpdate();
         void RunScheduleRegister();
@@ -53,10 +53,10 @@ namespace KFrame
         std::list< KFScheduleData* > _kf_schedule_register;
 
         // 计划任务
-        std::map< std::string, std::map< uint32, KFScheduleData* > > _kf_schedule_data;
+        std::map< std::string, std::map< uint64, KFScheduleData* > > _kf_schedule_data;
 
         // 需要删除的任务
-        std::map< std::string, uint32 > _kf_schedule_remove;
+        std::map< std::string, uint64 > _kf_schedule_remove;
 
         // 更新定时器
         KFClockTimer _update_timer;

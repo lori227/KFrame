@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    typedef std::function< void( uint32 serverid ) > KFClusterConnectionFunction;
+    typedef std::function< void( uint64 serverid ) > KFClusterConnectionFunction;
     class KFClusterClientInterface : public KFModule
     {
     public:
@@ -26,10 +26,10 @@ namespace KFrame
 
         // 发送消息
         virtual bool SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendToShard( const std::string& name, uint32 shardid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToShard( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发送到静态对象所在的分片服务器
-        virtual bool SendToStaticObject( const std::string& name, uint32 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToStaticObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发送到动态对象所在的分片服务器
         virtual bool SendToDynamicObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;

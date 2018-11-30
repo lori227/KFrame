@@ -82,17 +82,17 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFClusterProxyModule::SelectClusterShard( uint64 objectid, bool cache /* = false */ )
+    uint64 KFClusterProxyModule::SelectClusterShard( uint64 objectid, bool cache /* = false */ )
     {
         return _kf_hash.FindHashNode( objectid, cache );
     }
 
-    uint32 KFClusterProxyModule::SelectClusterShard( const char* data, bool cache /* = false */ )
+    uint64 KFClusterProxyModule::SelectClusterShard( const char* data, bool cache /* = false */ )
     {
         return _kf_hash.FindHashNode( data, cache );
     }
 
-    uint32 KFClusterProxyModule::SelectClusterShard( const char* data, uint32 objectid, bool cache /* = false */ )
+    uint64 KFClusterProxyModule::SelectClusterShard( const char* data, uint64 objectid, bool cache /* = false */ )
     {
         return _kf_hash.FindHashNode( data, objectid, cache );
     }
@@ -107,22 +107,22 @@ namespace KFrame
         _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), msgid, message );
     }
 
-    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToShard( uint64 shardid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_client->SendNetMessage( shardid, msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToShard( uint64 shardid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_client->SendNetMessage( shardid, msgid, message );
     }
 
-    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, message );
     }
@@ -137,12 +137,12 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( msgid, data, length );
     }
 
-    bool KFClusterProxyModule::SendToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFClusterProxyModule::SendToClient( uint64 clientid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( clientid, msgid, message );
     }
 
-    bool KFClusterProxyModule::SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );
     }
@@ -167,14 +167,14 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
     {
         _master_server_id = serverid;
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SClusterRegisterReq req;
         req.set_type( kfglobal->_app_type );
-        req.set_id( kfglobal->_app_id );
+        req.set_id( kfglobal->_app_id._union._id );
         req.set_name( kfglobal->_app_name );
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
@@ -184,7 +184,7 @@ namespace KFrame
         __REGISTER_LOOP_TIMER__( _master_server_id, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint64 serverid )
     {
         _in_service = true;
         _kf_hash.AddHashNode( servername, serverid, 100 );
@@ -193,7 +193,7 @@ namespace KFrame
         KFMsg::S2SClusterClientDiscoverReq req;
 
         // 所得所有的连接列表
-        std::list< uint32 > clientlist;
+        std::list< uint64 > clientlist;
         _kf_tcp_server->GetHandleList( clientlist );
         for ( auto clientid : clientlist )
         {
@@ -235,13 +235,13 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 serverid )
     {
         _master_server_id = 0u;
         __UNREGISTER_OBJECT_TIMER__( serverid );
     }
 
-    void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint32 serverid )
+    void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint64 serverid )
     {
         _kf_hash.RemoveHashNode( serverid );
 
@@ -261,7 +261,7 @@ namespace KFrame
 
         KFMsg::S2SClusterUpdateReq req;
         req.set_type( kfglobal->_app_type );
-        req.set_id( kfglobal->_app_id );
+        req.set_id( kfglobal->_app_id._union._id );
         req.set_name( kfglobal->_app_name );
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
@@ -281,7 +281,7 @@ namespace KFrame
         __LOG_DEBUG__( "update client[{}] token[{}]!", KFAppID::ToString( kftoken->_gate_id ), kftoken->_token );
     }
 
-    uint32 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint32 serverid )
+    uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 serverid )
     {
         auto kftoken = _kf_token_list.Find( token );
         if ( kftoken == nullptr )
@@ -395,13 +395,13 @@ namespace KFrame
         DecObjectCount( shardid, kfmsg.objectid_size() );
     }
 
-    void KFClusterProxyModule::AddDynamicShard( uint64 objectid, uint32 shardid )
+    void KFClusterProxyModule::AddDynamicShard( uint64 objectid, uint64 shardid )
     {
-        AddObjectCount( shardid, 1 );
+        AddObjectCount( shardid, 1u );
         _kf_dynamic_shard[ objectid ] = shardid;
     }
 
-    uint32 KFClusterProxyModule::FindDynamicShard( uint64 objectid )
+    uint64 KFClusterProxyModule::FindDynamicShard( uint64 objectid )
     {
         auto iter = _kf_dynamic_shard.find( objectid );
         if ( iter == _kf_dynamic_shard.end() )
@@ -412,7 +412,7 @@ namespace KFrame
         return iter->second;
     }
 
-    void KFClusterProxyModule::RemoveObjectShard( uint32 shardid )
+    void KFClusterProxyModule::RemoveObjectShard( uint64 shardid )
     {
         for ( auto iter = _kf_dynamic_shard.begin(); iter != _kf_dynamic_shard.end(); )
         {
@@ -427,12 +427,12 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::AddObjectCount( uint32 shardid, uint32 count )
+    void KFClusterProxyModule::AddObjectCount( uint64 shardid, uint32 count )
     {
         _kf_object_count[ shardid ] += count;
     }
 
-    void KFClusterProxyModule::DecObjectCount( uint32 shardid, uint32 count )
+    void KFClusterProxyModule::DecObjectCount( uint64 shardid, uint32 count )
     {
         auto iter = _kf_object_count.find( shardid );
         if ( iter == _kf_object_count.end() )
@@ -457,7 +457,7 @@ namespace KFrame
         SendToShard( shardid, kfmsg.serverid(), kfmsg.msgid(), msgdata.data(), msgdata.size() );
     }
 
-    uint32 KFClusterProxyModule::FindMinObjectShard()
+    uint64 KFClusterProxyModule::FindMinObjectShard()
     {
         auto mincount = std::numeric_limits<uint32>::max();
         auto shardid = 0;
@@ -474,7 +474,7 @@ namespace KFrame
         return shardid;
     }
 
-    uint32 KFClusterProxyModule::FindStaticShard( uint32 objectid )
+    uint64 KFClusterProxyModule::FindStaticShard( uint64 objectid )
     {
         auto iter = _kf_static_shard.find( objectid );
         if ( iter == _kf_static_shard.end() )

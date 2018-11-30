@@ -3,7 +3,7 @@
 namespace KFrame
 {
 
-    void KFProxyManage::AddProxyServer( const std::string& type, uint32 handleid, const std::string& name, const std::string& ip, uint32 port, uint32 clientcount )
+    void KFProxyManage::AddProxyServer( const std::string& type, uint64 handleid, const std::string& name, const std::string& ip, uint32 port, uint32 clientcount )
     {
         auto kfgate = _kf_proxy_list.Find( handleid );
         if ( kfgate == nullptr )
@@ -21,7 +21,7 @@ namespace KFrame
         kfgate->_client_count = clientcount;
     }
 
-    void KFProxyManage::UpdateProxyServer( uint32 handleid, uint32 clientcount )
+    void KFProxyManage::UpdateProxyServer( uint64 handleid, uint32 clientcount )
     {
         auto kfgate = _kf_proxy_list.Find( handleid );
         if ( kfgate == nullptr )
@@ -32,13 +32,13 @@ namespace KFrame
         kfgate->_client_count = clientcount;
     }
 
-    void KFProxyManage::RemoveProxyServer( uint32 handleid )
+    void KFProxyManage::RemoveProxyServer( uint64 handleid )
     {
         _kf_proxy_list.Remove( handleid );
         _kf_hash.RemoveHashNode( handleid );
     }
 
-    KFProxyData* KFProxyManage::FindProxyServer( uint32 handleid )
+    KFProxyData* KFProxyManage::FindProxyServer( uint64 handleid )
     {
         return _kf_proxy_list.Find( handleid );
     }
@@ -68,7 +68,7 @@ namespace KFrame
         return kfproxydata;
     }
 
-    KFProxyData* KFProxyManage::HashProxyServer( uint32 clientid )
+    KFProxyData* KFProxyManage::HashProxyServer( uint64 clientid )
     {
         auto proxyid = _kf_hash.FindHashNode( clientid, true );
         if ( proxyid == _invalid_int )

@@ -63,7 +63,6 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////////////
-    typedef std::list< KFNetMessage* > MessageList;
 }
 
 #pragma pack()

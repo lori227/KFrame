@@ -42,7 +42,7 @@ namespace KFrame
     protected:
 
         // 初始化
-        void InitSession( uint32 id, uint32 queuecount, uint32 headlength );
+        void InitSession( uint64 id, uint32 queuecount, uint32 headlength );
 
         // 添加发送消息
         bool AddSendMessage( KFNetMessage* message );
@@ -85,10 +85,10 @@ namespace KFrame
 
     public:
         // 连接id
-        uint32 _session_id;
+        uint64 _session_id;
 
         // 绑定对象id
-        uint32 _object_id;
+        uint64 _object_id;
 
         // 是否已经连接
         volatile bool _is_connected;

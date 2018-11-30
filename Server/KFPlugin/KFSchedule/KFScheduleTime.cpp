@@ -59,7 +59,7 @@ namespace KFrame
     }
 
     // 设置回调数据
-    void KFScheduleTime::SetData( uint32 objectid, const void* data, uint32 size )
+    void KFScheduleTime::SetData( uint64 objectid, const void* data, uint32 size )
     {
         _object_id = objectid;
         if ( data == nullptr || size == 0 )

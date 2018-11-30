@@ -4,7 +4,7 @@
 namespace KFrame
 {
 
-    KFPort* KFramePort::FindPort( uint32 id )
+    KFPort* KFramePort::FindPort( uint64 id )
     {
         KFLocker locker( _kf_mutex );
 
@@ -38,7 +38,7 @@ namespace KFrame
 
     }
 
-    uint32 KFNetProt::CalcListenPort( uint32 porttype, uint32 baseport, uint32 appid )
+    uint32 KFNetProt::CalcListenPort( uint32 porttype, uint32 baseport, uint64 appid )
     {
         uint32 port = baseport;
         switch ( porttype )
@@ -64,12 +64,6 @@ namespace KFrame
             // 查找自己是否在列表中
             auto kfport = kframeport->FindPort( appid );
             port = baseport + kfport->_port;
-        }
-        break;
-        case __ZONE_PORT__:
-        {
-            auto zoneid = ( appid / 1000 ) % 1000;
-            port = baseport + zoneid;
         }
         break;
         default:

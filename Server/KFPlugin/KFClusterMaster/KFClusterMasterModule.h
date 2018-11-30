@@ -52,35 +52,35 @@ namespace KFrame
         std::string MakeAuthToken( const KFId& kfid );
 
         // 获得 objectid 的数量
-        std::set< uint32 > GetShardObject( uint32 shardid );
+        std::set< uint64 > GetShardObject( uint64 shardid );
 
         // 分配shard
-        void BalanceAllocShard( uint32 shardid );
+        void BalanceAllocShard( uint64 shardid );
 
         // 判断是否拥有objectid
-        bool HaveObject( uint32 shardid, uint32 objectid );
+        bool HaveObject( uint64 shardid, uint64 objectid );
 
         // 查找拥有object的shard
-        uint32 FindShard( uint32 objectid );
+        uint64 FindShard( uint64 objectid );
 
         // 发送分配shard到proxy
-        void SendAllocShardToProxy( uint32 proxyid );
+        void SendAllocShardToProxy( uint64 proxyid );
 
         // 发送分配shard到shard
         void SendAllocShardToShard();
 
     private:
         // 序列号
-        uint32 _cluster_serial{0};
+        uint64 _cluster_serial{0};
 
         // 记录shard分配数据
-        std::map< uint32, uint32 > _object_to_shard;
+        std::map< uint64, uint64 > _object_to_shard;
 
         // shard存在的objectid
-        std::map< uint32, std::set< uint32 > > _shard_objects;
+        std::map< uint64, std::set< uint64 > > _shard_objects;
 
         // 所有的objectid列表
-        std::set< uint32 > _total_objects;
+        std::set< uint64 > _total_objects;
     };
 }
 

@@ -67,21 +67,21 @@ message MsgTellQueryBasic
 // MSG_SYNC_UPDATE_GUILD_DATA
 message MsgSyncUpdateGuildData
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_ADD_GUILD_DATA
 message MsgSyncAddGuildData
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_REMOVE_GUILD_DATA
 message MsgSyncRemoveGuildData
 {
-	required uint32 playerid = 1;
+	required uint64 playerid = 1;
 	required PBObject pbdata = 2;	
 }
 

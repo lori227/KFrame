@@ -16,19 +16,56 @@
 
 namespace KFrame
 {
-    KFDeployAgentModule::KFDeployAgentModule()
+    void KFDeployAgentModule::AfterLoad()
     {
-        _deploy_server_id = 0;
-        _kf_task = nullptr;
-    }
+        auto kfglobal = KFGlobal::Instance();
+        _deploy_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
+        if ( _deploy_driver == nullptr )
+        {
+            return __LOG_CRITICAL__( "deploy mysql is nullprt" );
+        }
 
-    KFDeployAgentModule::~KFDeployAgentModule()
-    {
+        // 获得本机ip, 查询appid
+        auto localip = _kf_ip_address->GetLocalIp();
+        auto queryappid = _deploy_driver->QueryString( "select `{}` from `{}` where `{}`='{}'",
+                          __KF_STRING__( strappid ), __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
+        if ( !queryappid->IsOk() )
+        {
+            return;
+        }
 
-    }
+        auto strappid = queryappid->_value;
+        if ( strappid.empty() )
+        {
+            // 插入新的appid
+            MapString values;
+            values[ __KF_STRING__( localip ) ] = localip;
+            _deploy_driver->Insert( __KF_STRING__( agent ), values );
 
-    void KFDeployAgentModule::InitModule()
-    {
+            // 查询新的appid
+            auto queryid = _deploy_driver->QueryString( "select `{}` from `{}` where `{}`='{}'",
+                           __KF_STRING__( id ), __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
+            if ( !queryid->IsOk() || queryid->_value.empty() )
+            {
+                return;
+            }
+
+            KFAppID kfappid( 0 );
+            kfappid._union._app_data._channel_id = kfglobal->_app_id._union._app_data._channel_id;
+            kfappid._union._app_data._zone_id = 0;
+            kfappid._union._app_data._server_type = KFServerEnum::DeployAgent;
+            kfappid._union._app_data._worker_id = KFUtility::ToValue< uint16 >( queryid->_value );
+
+            strappid = kfappid.ToString();
+            values[ __KF_STRING__( id ) ] = queryid->_value;
+            values[ __KF_STRING__( strappid ) ] = strappid;
+            values[ __KF_STRING__( appid ) ] = __TO_STRING__( kfappid._union._id );
+            _deploy_driver->Insert( __KF_STRING__( agent ), values );
+        }
+
+        KFAppID kfappid( strappid );
+        kfglobal->_app_id = kfappid;
+        kfglobal->_str_app_id = strappid;
     }
 
     void KFDeployAgentModule::BeforeRun()
@@ -54,11 +91,10 @@ namespace KFrame
     void KFDeployAgentModule::OnceRun()
     {
         __MKDIR__( _pid_path );
-        _deploy_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
         _version_driver = _kf_mysql->CreateExecute( __KF_STRING__( version ) );
-        if ( _deploy_driver == nullptr || _version_driver == nullptr )
+        if ( _version_driver == nullptr )
         {
-            return __LOG_CRITICAL__( "deploy mysql is nullprt" );
+            return __LOG_CRITICAL__( "version mysql is nullprt" );
         }
 
         // 加载部署信息
@@ -137,8 +173,8 @@ namespace KFrame
             auto kfglobal = KFGlobal::Instance();
 
             KFAppID kfappid( serverid );
-            kfappid._union._app_data._channel_id = kfglobal->_app_channel;
-            _deploy_server_id = kfappid._union._app_id;
+            kfappid._union._app_data._channel_id = kfglobal->_app_id._union._app_data._channel_id;
+            _deploy_server_id = kfappid._union._id;
 
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;

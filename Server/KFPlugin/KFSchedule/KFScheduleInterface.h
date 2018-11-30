@@ -33,13 +33,13 @@ namespace KFrame
         virtual void SetDate( uint32 controltype, uint32 minute, uint32 hour = 0, uint32 day = 0, uint32 month = 0, uint32 year = 0 ) = 0;
 
         // 设置回调数据
-        virtual void SetData( uint32 objectid, const void* data, uint32 size ) = 0;
+        virtual void SetData( uint64 objectid, const void* data, uint32 size ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////
     // 计划任务回调
-    typedef std::function<void( uint32 objectid, const char* data, uint32 size )> KFScheduleFunction;
+    typedef std::function<void( uint64 objectid, const char* data, uint32 size )> KFScheduleFunction;
 
     class KFScheduleInterface : public KFModule
     {
@@ -50,7 +50,7 @@ namespace KFrame
 
         // 注册计划任务
         template< class T >
-        void RegisterSchedule( KFScheduleSetting* kfsetting, T* object, void ( T::*handle )( uint32 objectid, const char* data, uint32 size ) )
+        void RegisterSchedule( KFScheduleSetting* kfsetting, T* object, void ( T::*handle )( uint64 objectid, const char* data, uint32 size ) )
         {
             KFScheduleFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddSchedule( typeid( T ).name(), kfsetting, function );
@@ -75,7 +75,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_SCHEDULE_FUNCTION__( function )\
-    void function( uint32 objectid, const char* data, uint32 size )
+    void function( uint64 objectid, const char* data, uint32 size )
 
 #define __REGISTER_SCHEDULE_FUNCTION__( kfsetting, function ) \
     _kf_schedule->RegisterSchedule( kfsetting, this, function )

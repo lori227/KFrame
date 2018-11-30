@@ -37,7 +37,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // 部署命令
-        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string&  appid, uint32 zoneid );
+        virtual void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
     protected:
         virtual void AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function );

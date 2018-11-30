@@ -14,7 +14,7 @@ namespace KFrame
         void CopyFrom( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
 
     public:
-        KFId _kfguid;
+        KFId _kfid;
         uint32 _msgid;
         char* _data;
         uint32 _length;

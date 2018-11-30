@@ -51,7 +51,7 @@ namespace KFrame
             kftcpsetting->_port = kfaddress->_port;
         }
 
-        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id );
+        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id._union._id );
         return kftcpsetting;
     }
 
@@ -115,7 +115,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFTcpServerModule::RegisteNetHandle( uint32 sessionid, uint32 handleid, uint32 objectid )
+    bool KFTcpServerModule::RegisteNetHandle( uint64 sessionid, uint64 handleid, uint64 objectid )
     {
         auto kfhandle = _kf_server_engine->RegisteHandle( sessionid, handleid, objectid );
         if ( kfhandle == nullptr )
@@ -126,7 +126,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFTcpServerModule::CloseNetHandle( uint32 handleid, uint32 delaytime, const char* function, uint32 line )
+    bool KFTcpServerModule::CloseNetHandle( uint64 handleid, uint32 delaytime, const char* function, uint32 line )
     {
         return _kf_server_engine->CloseHandle( handleid, delaytime, function, line );
     }
@@ -136,17 +136,17 @@ namespace KFrame
         return _kf_server_engine->GetHandleCount();
     }
 
-    void KFTcpServerModule::GetHandleList( std::list<uint32>& handlelist )
+    void KFTcpServerModule::GetHandleList( std::list<uint64>& handlelist )
     {
         _kf_server_engine->GetHandleList( handlelist );
     }
 
-    const std::string& KFTcpServerModule::GetHandleIp( uint32 handleid )
+    const std::string& KFTcpServerModule::GetHandleIp( uint64 handleid )
     {
         return _kf_server_engine->GetHandleIp( handleid );
     }
 
-    bool KFTcpServerModule::BindObjectId( uint32 handleid, uint32 objectid )
+    bool KFTcpServerModule::BindObjectId( uint64 handleid, uint64 objectid )
     {
         return _kf_server_engine->BindObjectId( handleid, objectid );
     }
@@ -255,8 +255,8 @@ namespace KFrame
         // 注册回馈
         KFMsg::RegisterToServerAck ack;
         ack.set_apptype( kfglobal->_app_type );
-        ack.set_appid( kfglobal->_app_id );
         ack.set_appname( kfglobal->_app_name );
+        ack.set_appid( kfglobal->_app_id._union._id );
         SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
 
         // 广播新连接给所有连接着
@@ -267,15 +267,16 @@ namespace KFrame
 
         CallDiscoverFunction( kfhandle );
 
-        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!",
-                      name, type, KFAppID::ToString( handlid ), listendata->ip(), listendata->port() );
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!", name, type, KFAppID::ToString( handlid ), listendata->ip(), listendata->port() );
     }
 
     void KFTcpServerModule::BroadcastRegisterToServer( KFNetHandle* kfhandle )
     {
+        auto kfglobal = KFGlobal::Instance();
+
         KFMsg::TellRegisterToServer tell;
-        tell.set_servername( KFGlobal::Instance()->_app_name );
-        tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
+        tell.set_servername( kfglobal->_app_name );
+        tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
 
         auto listendata = tell.mutable_listen();
         listendata->set_appid( kfhandle->_app_id );
@@ -289,12 +290,14 @@ namespace KFrame
 
     void KFTcpServerModule::SendRegisterToServerToHandle( KFNetHandle* kfhandle )
     {
+        auto kfglobal = KFGlobal::Instance();
+
         for ( auto& iter : _kf_server_engine->_kf_handles._objects )
         {
             auto nethandle = iter.second;
             KFMsg::TellRegisterToServer tell;
-            tell.set_servername( KFGlobal::Instance()->_app_name );
-            tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
+            tell.set_servername( kfglobal->_app_name );
+            tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
 
             auto listendata = tell.mutable_listen();
             listendata->set_appid( nethandle->_app_id );
@@ -314,13 +317,15 @@ namespace KFrame
             return;
         }
 
+        auto kfglobal = KFGlobal::Instance();
+
         KFMsg::TellUnRegisterFromServer tell;
         tell.set_appid( kfhandle->_app_id );
         tell.set_appname( kfhandle->_app_name );
         tell.set_apptype( kfhandle->_app_type );
         tell.set_zoneid( kfhandle->_zone_id );
-        tell.set_servername( KFGlobal::Instance()->_app_name );
-        tell.set_serverzoneid( KFGlobal::Instance()->_zone_id );
+        tell.set_servername( kfglobal->_app_name );
+        tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_object_id );
 
         __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost connect!",
@@ -334,7 +339,7 @@ namespace KFrame
         SendNetMessage( msgid, strdata.data(), strdata.size(), excludeid );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint32 handleid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
         return _kf_server_engine->SendNetMessage( handleid, msgid, strdata.data(), strdata.size() );
@@ -345,17 +350,17 @@ namespace KFrame
         _kf_server_engine->SendNetMessage( msgid, data, length, excludeid );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_server_engine->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_server_engine->SendNetMessage( handleid, objectid, msgid, data, length );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
         return _kf_server_engine->SendNetMessage( handleid, objectid, msgid, strdata.data(), strdata.size() );

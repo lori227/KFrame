@@ -27,7 +27,7 @@ namespace KFrame
 
     }
 
-    void KFNetSession::InitSession( uint32 id, uint32 queuecount, uint32 headlength )
+    void KFNetSession::InitSession( uint64 id, uint32 queuecount, uint32 headlength )
     {
         _session_id = id;
         _object_id = id;

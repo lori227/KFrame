@@ -47,7 +47,7 @@ namespace KFrame
         // 如果是不同小区, 不能连接
         if ( connectname != kfglobal->_app_name ||
                 connecttype == __KF_STRING__( master ) ||
-                zoneid != kfglobal->_zone_id )
+                zoneid != kfglobal->_app_id._union._app_data._zone_id )
         {
             return false;
         }
@@ -83,7 +83,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         if ( kfmsg.servername() != kfglobal->_app_name ||
-                kfmsg.serverzoneid() != kfglobal->_zone_id )
+                kfmsg.serverzoneid() != kfglobal->_app_id._union._app_data._zone_id )
         {
             return;
         }
@@ -103,7 +103,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         if ( kfmsg.servername() != kfglobal->_app_name ||
-                kfmsg.serverzoneid() != kfglobal->_zone_id )
+                kfmsg.serverzoneid() != kfglobal->_app_id._union._app_data._zone_id )
         {
             return;
         }

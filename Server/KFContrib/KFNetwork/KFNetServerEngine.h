@@ -27,30 +27,30 @@ namespace KFrame
         void ShutEngine();
 
         // 关闭连接
-        bool CloseHandle( uint32 id, uint32 delaytime, const char* function, uint32 line );
+        bool CloseHandle( uint64 id, uint32 delaytime, const char* function, uint32 line );
 
         // 注册一个Handle
-        KFNetHandle* RegisteHandle( uint32 trusteeid, uint32 handleid, uint32 objectid );
+        KFNetHandle* RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid );
 
         // 获得一个Handle
-        KFNetHandle* FindNetHandle( uint32 handleid );
+        KFNetHandle* FindNetHandle( uint64 handleid );
 
         // 连接数量
         uint32 GetHandleCount();
 
         // 连接列表
-        void GetHandleList( std::list< uint32 >& handlelist );
+        void GetHandleList( std::list< uint64 >& handlelist );
 
         // 获得连接ip
-        const std::string& GetHandleIp( uint32 handleid );
+        const std::string& GetHandleIp( uint64 handleid );
 
         // 设置id
-        bool BindObjectId( uint32 handleid, uint32 objectid );
+        bool BindObjectId( uint64 handleid, uint64 objectid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
-        bool SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length );
 
         void SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length );
         void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
@@ -65,7 +65,7 @@ namespace KFrame
 
         // 绑定断开事件
         template< class T >
-        void BindLostFunction( T* object, void ( T::*handle )( uint32 id, const std::string& name, const std::string& type ) )
+        void BindLostFunction( T* object, void ( T::*handle )( uint64 id, const std::string& name, const std::string& type ) )
         {
             _server_lost_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
         }
@@ -97,20 +97,20 @@ namespace KFrame
 
     public:
         // 有效连接列表
-        KFMap< uint32, uint32, KFNetHandle > _kf_handles;
+        KFMap< uint64, uint64, KFNetHandle > _kf_handles;
 
     protected:
         // 服务器服务
         KFNetServerServices* _net_server_services;
 
         // 等待验证的托管连接
-        KFMap< uint32, uint32, KFNetHandle > _trustee_handles;
+        KFMap< uint64, uint64, KFNetHandle > _trustee_handles;
 
         // 删除的托管连接
-        std::map< uint32, bool > _remove_trustees;
+        std::map< uint64, bool > _remove_trustees;
 
         // 需要关闭的连接
-        std::map< uint32, uint64 > _close_handles;
+        std::map< uint64, uint64 > _close_handles;
     private:
 
         // 消息函数

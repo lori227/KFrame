@@ -51,10 +51,7 @@ namespace KFrame
     private:
 
         // 部署serverid
-        uint32 _deploy_server_id;
-
-        // 部署agentid
-        uint32 _deploy_agent_id;
+        uint64 _deploy_server_id;
     };
 }
 

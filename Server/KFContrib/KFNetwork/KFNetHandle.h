@@ -14,7 +14,7 @@ namespace KFrame
         virtual ~KFNetHandle();
 
         // 初始化
-        void InitHandle( uint32 id, void* uvtcp, KFNetServerServices* netservices );
+        void InitHandle( uint64 id, void* uvtcp, KFNetServerServices* netservices );
 
         // 关闭服务
         void CloseHandle();
@@ -42,7 +42,7 @@ namespace KFrame
         bool _is_trustee;
 
         // appid
-        uint32 _app_id;
+        uint64 _app_id;
 
         // 类型
         std::string _app_type;

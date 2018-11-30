@@ -9,6 +9,5 @@
     <ClInclude Include="KFDeployServerInterface.h" />
     <ClInclude Include="KFDeployServerModule.h" />
     <ClInclude Include="KFDeployServerPlugin.h" />
-    <ClInclude Include="KFDeployDefine.h" />
   </ItemGroup>
 </Project>

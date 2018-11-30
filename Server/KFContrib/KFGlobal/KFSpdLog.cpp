@@ -13,10 +13,8 @@ namespace KFrame
         spdlog::drop_all();
     }
 
-    bool KFSpdLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, uint32 appid )
+    bool KFSpdLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        auto strappid = KFAppID::ToString( appid );
-
 #if __KF_SYSTEM__ == __KF_WIN__
         _local_log_path = __FORMAT__( "{}\\{}-{}-{}", path, appname, apptype, strappid );
 #else

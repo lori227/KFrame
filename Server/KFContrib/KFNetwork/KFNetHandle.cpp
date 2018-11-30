@@ -20,7 +20,7 @@ namespace KFrame
         __KF_DELETE__( _uv_tcp );
     }
 
-    void KFNetHandle::InitHandle( uint32 id, void* uvtcp, KFNetServerServices* netservices )
+    void KFNetHandle::InitHandle( uint64 id, void* uvtcp, KFNetServerServices* netservices )
     {
         _is_trustee = true;
         _net_services = netservices;

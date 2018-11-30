@@ -11,11 +11,9 @@ namespace KFrame
     {
         _app_run = true;
         _app_id = 0;
-        _app_channel = 0;
         _game_time = 0;
         _real_time = 0;
         _listen_port = 0;
-        _zone_id = 0;
         _log_level = 0;
         _kf_rand = new KFRand();
         _kf_logger = nullptr;
@@ -131,7 +129,7 @@ namespace KFrame
     // 判断渠道和服务类型
     bool KFGlobal::CheckChannelService( uint32 channel, uint32 service )
     {
-        if ( channel != 0 && channel != _app_channel )
+        if ( channel != 0 && channel != _app_id._union._app_data._channel_id )
         {
             return false;
         }
@@ -161,7 +159,7 @@ namespace KFrame
 
         if ( _kf_logger != nullptr )
         {
-            _kf_logger->Initialize( _app_name, _app_type, _app_id );
+            _kf_logger->Initialize( _app_name, _app_type, _str_app_id );
             SetLogLevel( KFUtility::SplitValue< uint32 >( strtype, "." ) );
         }
     }

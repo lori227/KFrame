@@ -70,7 +70,7 @@ namespace KFrame
         T _data_id;
     };
 
-    typedef KFIDTemplate< uint32 > KFId;
+    typedef KFIDTemplate< uint64 > KFId;
 
 #define  __KF_DATA_ID__( kfid ) kfid._data_id
 #define  __KF_HEAD_ID__( kfid ) kfid._head_id

@@ -14,7 +14,7 @@ namespace KFrame
         _redis_list.push_back( kfsetting );
         _redis_hash.AddHashNode( "redis", static_cast< uint32 >( _redis_list.size() - 1 ), 100 );
 
-        auto index = _redis_hash.FindHashNode( KFGlobal::Instance()->_app_id );
+        auto index = _redis_hash.FindHashNode( KFGlobal::Instance()->_app_id._union._id );
         _kfseting = &_redis_list[ index ];
     }
 

@@ -152,12 +152,12 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 2;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 id() const;
+  inline void set_id(::google::protobuf::uint64 value);
 
   // required bytes name = 3;
   inline bool has_name() const;
@@ -206,10 +206,10 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* type_;
+  ::google::protobuf::uint64 id_;
   ::std::string* name_;
-  ::google::protobuf::uint32 id_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
@@ -289,12 +289,12 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // required uint32 id = 2;
+  // required uint64 id = 2;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 2;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 id() const;
+  inline void set_id(::google::protobuf::uint64 value);
 
   // required bytes name = 3;
   inline bool has_name() const;
@@ -352,10 +352,10 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* type_;
+  ::google::protobuf::uint64 id_;
   ::std::string* name_;
-  ::google::protobuf::uint32 id_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
   ::google::protobuf::uint32 count_;
 
   mutable int _cached_size_;
@@ -562,12 +562,12 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message {
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // required uint32 id = 4;
+  // required uint64 id = 4;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 4;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 id() const;
+  inline void set_id(::google::protobuf::uint64 value);
 
   // required bytes name = 5;
   inline bool has_name() const;
@@ -622,10 +622,10 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message {
   ::std::string* clustertype_;
   ::std::string* token_;
   ::std::string* type_;
+  ::google::protobuf::uint64 id_;
   ::std::string* name_;
-  ::google::protobuf::uint32 id_;
-  ::google::protobuf::uint32 port_;
   ::std::string* ip_;
+  ::google::protobuf::uint32 port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
@@ -705,12 +705,12 @@ class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message {
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required uint32 gateid = 2;
+  // required uint64 gateid = 2;
   inline bool has_gateid() const;
   inline void clear_gateid();
   static const int kGateidFieldNumber = 2;
-  inline ::google::protobuf::uint32 gateid() const;
-  inline void set_gateid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 gateid() const;
+  inline void set_gateid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterTokenReq)
  private:
@@ -722,7 +722,7 @@ class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* token_;
-  ::google::protobuf::uint32 gateid_;
+  ::google::protobuf::uint64 gateid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -814,12 +814,12 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
   inline ::std::string* release_token();
   inline void set_allocated_token(::std::string* token);
 
-  // required uint32 serverid = 3;
+  // required uint64 serverid = 3;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 3;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyReq)
  private:
@@ -834,7 +834,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
 
   ::std::string* clustertype_;
   ::std::string* token_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -914,12 +914,12 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
   inline ::std::string* release_clustertype();
   inline void set_allocated_clustertype(::std::string* clustertype);
 
-  // required uint32 serverid = 2;
+  // required uint64 serverid = 2;
   inline bool has_serverid() const;
   inline void clear_serverid();
   static const int kServeridFieldNumber = 2;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyAck)
  private:
@@ -931,7 +931,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* clustertype_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint64 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -999,16 +999,16 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   inline int clientid_size() const;
   inline void clear_clientid();
   static const int kClientidFieldNumber = 1;
-  inline ::google::protobuf::uint32 clientid(int index) const;
-  inline void set_clientid(int index, ::google::protobuf::uint32 value);
-  inline void add_clientid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 clientid(int index) const;
+  inline void set_clientid(int index, ::google::protobuf::uint64 value);
+  inline void add_clientid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       clientid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_clientid();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientDiscoverReq)
@@ -1016,7 +1016,7 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > clientid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > clientid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1084,16 +1084,16 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 clientid = 1;
+  // repeated uint64 clientid = 1;
   inline int clientid_size() const;
   inline void clear_clientid();
   static const int kClientidFieldNumber = 1;
-  inline ::google::protobuf::uint32 clientid(int index) const;
-  inline void set_clientid(int index, ::google::protobuf::uint32 value);
-  inline void add_clientid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 clientid(int index) const;
+  inline void set_clientid(int index, ::google::protobuf::uint64 value);
+  inline void add_clientid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       clientid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_clientid();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientLostReq)
@@ -1101,7 +1101,7 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > clientid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > clientid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1339,16 +1339,16 @@ class LIBPROTOC_EXPORT S2SAllocObjectToMasterReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   inline int objectid_size() const;
   inline void clear_objectid();
   static const int kObjectidFieldNumber = 1;
-  inline ::google::protobuf::uint32 objectid(int index) const;
-  inline void set_objectid(int index, ::google::protobuf::uint32 value);
-  inline void add_objectid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 objectid(int index) const;
+  inline void set_objectid(int index, ::google::protobuf::uint64 value);
+  inline void add_objectid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       objectid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_objectid();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToMasterReq)
@@ -1356,7 +1356,7 @@ class LIBPROTOC_EXPORT S2SAllocObjectToMasterReq : public ::google::protobuf::Me
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > objectid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > objectid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1424,28 +1424,28 @@ class LIBPROTOC_EXPORT S2SAllocObjectToProxyAck : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   inline int objectid_size() const;
   inline void clear_objectid();
   static const int kObjectidFieldNumber = 1;
-  inline ::google::protobuf::uint32 objectid(int index) const;
-  inline void set_objectid(int index, ::google::protobuf::uint32 value);
-  inline void add_objectid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 objectid(int index) const;
+  inline void set_objectid(int index, ::google::protobuf::uint64 value);
+  inline void add_objectid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       objectid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_objectid();
 
-  // repeated uint32 shardid = 2;
+  // repeated uint64 shardid = 2;
   inline int shardid_size() const;
   inline void clear_shardid();
   static const int kShardidFieldNumber = 2;
-  inline ::google::protobuf::uint32 shardid(int index) const;
-  inline void set_shardid(int index, ::google::protobuf::uint32 value);
-  inline void add_shardid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 shardid(int index) const;
+  inline void set_shardid(int index, ::google::protobuf::uint64 value);
+  inline void add_shardid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       shardid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_shardid();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToProxyAck)
@@ -1453,8 +1453,8 @@ class LIBPROTOC_EXPORT S2SAllocObjectToProxyAck : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > objectid_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > shardid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > objectid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > shardid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1522,16 +1522,16 @@ class LIBPROTOC_EXPORT S2SAllocObjectToShardAck : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 objectid = 1;
+  // repeated uint64 objectid = 1;
   inline int objectid_size() const;
   inline void clear_objectid();
   static const int kObjectidFieldNumber = 1;
-  inline ::google::protobuf::uint32 objectid(int index) const;
-  inline void set_objectid(int index, ::google::protobuf::uint32 value);
-  inline void add_objectid(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  inline ::google::protobuf::uint64 objectid(int index) const;
+  inline void set_objectid(int index, ::google::protobuf::uint64 value);
+  inline void add_objectid(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
       objectid() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_objectid();
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SAllocObjectToShardAck)
@@ -1539,7 +1539,7 @@ class LIBPROTOC_EXPORT S2SAllocObjectToShardAck : public ::google::protobuf::Mes
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > objectid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > objectid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1614,17 +1614,24 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
   inline ::google::protobuf::uint64 objectid() const;
   inline void set_objectid(::google::protobuf::uint64 value);
 
-  // required uint32 msgid = 2;
+  // required uint64 serverid = 2;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 2;
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
+
+  // required uint32 msgid = 3;
   inline bool has_msgid() const;
   inline void clear_msgid();
-  static const int kMsgidFieldNumber = 2;
+  static const int kMsgidFieldNumber = 3;
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required bytes msgdata = 3;
+  // required bytes msgdata = 4;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
-  static const int kMsgdataFieldNumber = 3;
+  static const int kMsgdataFieldNumber = 4;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
@@ -1633,30 +1640,23 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
 
-  // required uint32 serverid = 4;
-  inline bool has_serverid() const;
-  inline void clear_serverid();
-  static const int kServeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSendToDynamicObjectReq)
  private:
   inline void set_has_objectid();
   inline void clear_has_objectid();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
   inline void set_has_msgid();
   inline void clear_has_msgid();
   inline void set_has_msgdata();
   inline void clear_has_msgdata();
-  inline void set_has_serverid();
-  inline void clear_has_serverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 objectid_;
+  ::google::protobuf::uint64 serverid_;
   ::std::string* msgdata_;
   ::google::protobuf::uint32 msgid_;
-  ::google::protobuf::uint32 serverid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -1724,24 +1724,31 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
 
   // accessors -------------------------------------------------------
 
-  // required uint32 objectid = 1;
+  // required uint64 objectid = 1;
   inline bool has_objectid() const;
   inline void clear_objectid();
   static const int kObjectidFieldNumber = 1;
-  inline ::google::protobuf::uint32 objectid() const;
-  inline void set_objectid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 objectid() const;
+  inline void set_objectid(::google::protobuf::uint64 value);
 
-  // required uint32 msgid = 2;
+  // required uint64 serverid = 2;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 2;
+  inline ::google::protobuf::uint64 serverid() const;
+  inline void set_serverid(::google::protobuf::uint64 value);
+
+  // required uint32 msgid = 3;
   inline bool has_msgid() const;
   inline void clear_msgid();
-  static const int kMsgidFieldNumber = 2;
+  static const int kMsgidFieldNumber = 3;
   inline ::google::protobuf::uint32 msgid() const;
   inline void set_msgid(::google::protobuf::uint32 value);
 
-  // required bytes msgdata = 3;
+  // required bytes msgdata = 4;
   inline bool has_msgdata() const;
   inline void clear_msgdata();
-  static const int kMsgdataFieldNumber = 3;
+  static const int kMsgdataFieldNumber = 4;
   inline const ::std::string& msgdata() const;
   inline void set_msgdata(const ::std::string& value);
   inline void set_msgdata(const char* value);
@@ -1750,30 +1757,23 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
   inline ::std::string* release_msgdata();
   inline void set_allocated_msgdata(::std::string* msgdata);
 
-  // required uint32 serverid = 4;
-  inline bool has_serverid() const;
-  inline void clear_serverid();
-  static const int kServeridFieldNumber = 4;
-  inline ::google::protobuf::uint32 serverid() const;
-  inline void set_serverid(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSendToStaticObjectReq)
  private:
   inline void set_has_objectid();
   inline void clear_has_objectid();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
   inline void set_has_msgid();
   inline void clear_has_msgid();
   inline void set_has_msgdata();
   inline void clear_has_msgdata();
-  inline void set_has_serverid();
-  inline void clear_has_serverid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint32 objectid_;
-  ::google::protobuf::uint32 msgid_;
+  ::google::protobuf::uint64 objectid_;
+  ::google::protobuf::uint64 serverid_;
   ::std::string* msgdata_;
-  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint32 msgid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -1862,7 +1862,7 @@ inline void S2SClusterRegisterReq::set_allocated_type(::std::string* type) {
   }
 }
 
-// required uint32 id = 2;
+// required uint64 id = 2;
 inline bool S2SClusterRegisterReq::has_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1873,13 +1873,13 @@ inline void S2SClusterRegisterReq::clear_has_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SClusterRegisterReq::clear_id() {
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   clear_has_id();
 }
-inline ::google::protobuf::uint32 S2SClusterRegisterReq::id() const {
+inline ::google::protobuf::uint64 S2SClusterRegisterReq::id() const {
   return id_;
 }
-inline void S2SClusterRegisterReq::set_id(::google::protobuf::uint32 value) {
+inline void S2SClusterRegisterReq::set_id(::google::protobuf::uint64 value) {
   set_has_id();
   id_ = value;
 }
@@ -2120,7 +2120,7 @@ inline void S2SClusterUpdateReq::set_allocated_type(::std::string* type) {
   }
 }
 
-// required uint32 id = 2;
+// required uint64 id = 2;
 inline bool S2SClusterUpdateReq::has_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2131,13 +2131,13 @@ inline void S2SClusterUpdateReq::clear_has_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SClusterUpdateReq::clear_id() {
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   clear_has_id();
 }
-inline ::google::protobuf::uint32 S2SClusterUpdateReq::id() const {
+inline ::google::protobuf::uint64 S2SClusterUpdateReq::id() const {
   return id_;
 }
-inline void S2SClusterUpdateReq::set_id(::google::protobuf::uint32 value) {
+inline void S2SClusterUpdateReq::set_id(::google::protobuf::uint64 value) {
   set_has_id();
   id_ = value;
 }
@@ -2684,7 +2684,7 @@ inline void S2SClusterAuthAck::set_allocated_type(::std::string* type) {
   }
 }
 
-// required uint32 id = 4;
+// required uint64 id = 4;
 inline bool S2SClusterAuthAck::has_id() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -2695,13 +2695,13 @@ inline void S2SClusterAuthAck::clear_has_id() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SClusterAuthAck::clear_id() {
-  id_ = 0u;
+  id_ = GOOGLE_ULONGLONG(0);
   clear_has_id();
 }
-inline ::google::protobuf::uint32 S2SClusterAuthAck::id() const {
+inline ::google::protobuf::uint64 S2SClusterAuthAck::id() const {
   return id_;
 }
-inline void S2SClusterAuthAck::set_id(::google::protobuf::uint32 value) {
+inline void S2SClusterAuthAck::set_id(::google::protobuf::uint64 value) {
   set_has_id();
   id_ = value;
 }
@@ -2942,7 +2942,7 @@ inline void S2SClusterTokenReq::set_allocated_token(::std::string* token) {
   }
 }
 
-// required uint32 gateid = 2;
+// required uint64 gateid = 2;
 inline bool S2SClusterTokenReq::has_gateid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2953,13 +2953,13 @@ inline void S2SClusterTokenReq::clear_has_gateid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SClusterTokenReq::clear_gateid() {
-  gateid_ = 0u;
+  gateid_ = GOOGLE_ULONGLONG(0);
   clear_has_gateid();
 }
-inline ::google::protobuf::uint32 S2SClusterTokenReq::gateid() const {
+inline ::google::protobuf::uint64 S2SClusterTokenReq::gateid() const {
   return gateid_;
 }
-inline void S2SClusterTokenReq::set_gateid(::google::protobuf::uint32 value) {
+inline void S2SClusterTokenReq::set_gateid(::google::protobuf::uint64 value) {
   set_has_gateid();
   gateid_ = value;
 }
@@ -3108,7 +3108,7 @@ inline void S2SClusterVerifyReq::set_allocated_token(::std::string* token) {
   }
 }
 
-// required uint32 serverid = 3;
+// required uint64 serverid = 3;
 inline bool S2SClusterVerifyReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3119,13 +3119,13 @@ inline void S2SClusterVerifyReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SClusterVerifyReq::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SClusterVerifyReq::serverid() const {
+inline ::google::protobuf::uint64 S2SClusterVerifyReq::serverid() const {
   return serverid_;
 }
-inline void S2SClusterVerifyReq::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SClusterVerifyReq::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3204,7 +3204,7 @@ inline void S2SClusterVerifyAck::set_allocated_clustertype(::std::string* cluste
   }
 }
 
-// required uint32 serverid = 2;
+// required uint64 serverid = 2;
 inline bool S2SClusterVerifyAck::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3215,13 +3215,13 @@ inline void S2SClusterVerifyAck::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void S2SClusterVerifyAck::clear_serverid() {
-  serverid_ = 0u;
+  serverid_ = GOOGLE_ULONGLONG(0);
   clear_has_serverid();
 }
-inline ::google::protobuf::uint32 S2SClusterVerifyAck::serverid() const {
+inline ::google::protobuf::uint64 S2SClusterVerifyAck::serverid() const {
   return serverid_;
 }
-inline void S2SClusterVerifyAck::set_serverid(::google::protobuf::uint32 value) {
+inline void S2SClusterVerifyAck::set_serverid(::google::protobuf::uint64 value) {
   set_has_serverid();
   serverid_ = value;
 }
@@ -3230,27 +3230,27 @@ inline void S2SClusterVerifyAck::set_serverid(::google::protobuf::uint32 value) 
 
 // S2SClusterClientDiscoverReq
 
-// repeated uint32 clientid = 1;
+// repeated uint64 clientid = 1;
 inline int S2SClusterClientDiscoverReq::clientid_size() const {
   return clientid_.size();
 }
 inline void S2SClusterClientDiscoverReq::clear_clientid() {
   clientid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SClusterClientDiscoverReq::clientid(int index) const {
+inline ::google::protobuf::uint64 S2SClusterClientDiscoverReq::clientid(int index) const {
   return clientid_.Get(index);
 }
-inline void S2SClusterClientDiscoverReq::set_clientid(int index, ::google::protobuf::uint32 value) {
+inline void S2SClusterClientDiscoverReq::set_clientid(int index, ::google::protobuf::uint64 value) {
   clientid_.Set(index, value);
 }
-inline void S2SClusterClientDiscoverReq::add_clientid(::google::protobuf::uint32 value) {
+inline void S2SClusterClientDiscoverReq::add_clientid(::google::protobuf::uint64 value) {
   clientid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SClusterClientDiscoverReq::clientid() const {
   return clientid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SClusterClientDiscoverReq::mutable_clientid() {
   return &clientid_;
 }
@@ -3259,27 +3259,27 @@ S2SClusterClientDiscoverReq::mutable_clientid() {
 
 // S2SClusterClientLostReq
 
-// repeated uint32 clientid = 1;
+// repeated uint64 clientid = 1;
 inline int S2SClusterClientLostReq::clientid_size() const {
   return clientid_.size();
 }
 inline void S2SClusterClientLostReq::clear_clientid() {
   clientid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SClusterClientLostReq::clientid(int index) const {
+inline ::google::protobuf::uint64 S2SClusterClientLostReq::clientid(int index) const {
   return clientid_.Get(index);
 }
-inline void S2SClusterClientLostReq::set_clientid(int index, ::google::protobuf::uint32 value) {
+inline void S2SClusterClientLostReq::set_clientid(int index, ::google::protobuf::uint64 value) {
   clientid_.Set(index, value);
 }
-inline void S2SClusterClientLostReq::add_clientid(::google::protobuf::uint32 value) {
+inline void S2SClusterClientLostReq::add_clientid(::google::protobuf::uint64 value) {
   clientid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SClusterClientLostReq::clientid() const {
   return clientid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SClusterClientLostReq::mutable_clientid() {
   return &clientid_;
 }
@@ -3346,27 +3346,27 @@ S2SRemoveObjectToProxyReq::mutable_objectid() {
 
 // S2SAllocObjectToMasterReq
 
-// repeated uint32 objectid = 1;
+// repeated uint64 objectid = 1;
 inline int S2SAllocObjectToMasterReq::objectid_size() const {
   return objectid_.size();
 }
 inline void S2SAllocObjectToMasterReq::clear_objectid() {
   objectid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SAllocObjectToMasterReq::objectid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToMasterReq::objectid(int index) const {
   return objectid_.Get(index);
 }
-inline void S2SAllocObjectToMasterReq::set_objectid(int index, ::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToMasterReq::set_objectid(int index, ::google::protobuf::uint64 value) {
   objectid_.Set(index, value);
 }
-inline void S2SAllocObjectToMasterReq::add_objectid(::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToMasterReq::add_objectid(::google::protobuf::uint64 value) {
   objectid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SAllocObjectToMasterReq::objectid() const {
   return objectid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SAllocObjectToMasterReq::mutable_objectid() {
   return &objectid_;
 }
@@ -3375,52 +3375,52 @@ S2SAllocObjectToMasterReq::mutable_objectid() {
 
 // S2SAllocObjectToProxyAck
 
-// repeated uint32 objectid = 1;
+// repeated uint64 objectid = 1;
 inline int S2SAllocObjectToProxyAck::objectid_size() const {
   return objectid_.size();
 }
 inline void S2SAllocObjectToProxyAck::clear_objectid() {
   objectid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SAllocObjectToProxyAck::objectid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToProxyAck::objectid(int index) const {
   return objectid_.Get(index);
 }
-inline void S2SAllocObjectToProxyAck::set_objectid(int index, ::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::set_objectid(int index, ::google::protobuf::uint64 value) {
   objectid_.Set(index, value);
 }
-inline void S2SAllocObjectToProxyAck::add_objectid(::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::add_objectid(::google::protobuf::uint64 value) {
   objectid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SAllocObjectToProxyAck::objectid() const {
   return objectid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SAllocObjectToProxyAck::mutable_objectid() {
   return &objectid_;
 }
 
-// repeated uint32 shardid = 2;
+// repeated uint64 shardid = 2;
 inline int S2SAllocObjectToProxyAck::shardid_size() const {
   return shardid_.size();
 }
 inline void S2SAllocObjectToProxyAck::clear_shardid() {
   shardid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SAllocObjectToProxyAck::shardid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToProxyAck::shardid(int index) const {
   return shardid_.Get(index);
 }
-inline void S2SAllocObjectToProxyAck::set_shardid(int index, ::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::set_shardid(int index, ::google::protobuf::uint64 value) {
   shardid_.Set(index, value);
 }
-inline void S2SAllocObjectToProxyAck::add_shardid(::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToProxyAck::add_shardid(::google::protobuf::uint64 value) {
   shardid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SAllocObjectToProxyAck::shardid() const {
   return shardid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SAllocObjectToProxyAck::mutable_shardid() {
   return &shardid_;
 }
@@ -3429,27 +3429,27 @@ S2SAllocObjectToProxyAck::mutable_shardid() {
 
 // S2SAllocObjectToShardAck
 
-// repeated uint32 objectid = 1;
+// repeated uint64 objectid = 1;
 inline int S2SAllocObjectToShardAck::objectid_size() const {
   return objectid_.size();
 }
 inline void S2SAllocObjectToShardAck::clear_objectid() {
   objectid_.Clear();
 }
-inline ::google::protobuf::uint32 S2SAllocObjectToShardAck::objectid(int index) const {
+inline ::google::protobuf::uint64 S2SAllocObjectToShardAck::objectid(int index) const {
   return objectid_.Get(index);
 }
-inline void S2SAllocObjectToShardAck::set_objectid(int index, ::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToShardAck::set_objectid(int index, ::google::protobuf::uint64 value) {
   objectid_.Set(index, value);
 }
-inline void S2SAllocObjectToShardAck::add_objectid(::google::protobuf::uint32 value) {
+inline void S2SAllocObjectToShardAck::add_objectid(::google::protobuf::uint64 value) {
   objectid_.Add(value);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
 S2SAllocObjectToShardAck::objectid() const {
   return objectid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
 S2SAllocObjectToShardAck::mutable_objectid() {
   return &objectid_;
 }
@@ -3480,15 +3480,37 @@ inline void S2SSendToDynamicObjectReq::set_objectid(::google::protobuf::uint64 v
   objectid_ = value;
 }
 
-// required uint32 msgid = 2;
-inline bool S2SSendToDynamicObjectReq::has_msgid() const {
+// required uint64 serverid = 2;
+inline bool S2SSendToDynamicObjectReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SSendToDynamicObjectReq::set_has_msgid() {
+inline void S2SSendToDynamicObjectReq::set_has_serverid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SSendToDynamicObjectReq::clear_has_msgid() {
+inline void S2SSendToDynamicObjectReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SSendToDynamicObjectReq::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint64 S2SSendToDynamicObjectReq::serverid() const {
+  return serverid_;
+}
+inline void S2SSendToDynamicObjectReq::set_serverid(::google::protobuf::uint64 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
+// required uint32 msgid = 3;
+inline bool S2SSendToDynamicObjectReq::has_msgid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SSendToDynamicObjectReq::set_has_msgid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SSendToDynamicObjectReq::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SSendToDynamicObjectReq::clear_msgid() {
   msgid_ = 0u;
@@ -3502,15 +3524,15 @@ inline void S2SSendToDynamicObjectReq::set_msgid(::google::protobuf::uint32 valu
   msgid_ = value;
 }
 
-// required bytes msgdata = 3;
+// required bytes msgdata = 4;
 inline bool S2SSendToDynamicObjectReq::has_msgdata() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SSendToDynamicObjectReq::set_has_msgdata() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SSendToDynamicObjectReq::clear_has_msgdata() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SSendToDynamicObjectReq::clear_msgdata() {
   if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
@@ -3572,33 +3594,11 @@ inline void S2SSendToDynamicObjectReq::set_allocated_msgdata(::std::string* msgd
   }
 }
 
-// required uint32 serverid = 4;
-inline bool S2SSendToDynamicObjectReq::has_serverid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SSendToDynamicObjectReq::set_has_serverid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SSendToDynamicObjectReq::clear_has_serverid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SSendToDynamicObjectReq::clear_serverid() {
-  serverid_ = 0u;
-  clear_has_serverid();
-}
-inline ::google::protobuf::uint32 S2SSendToDynamicObjectReq::serverid() const {
-  return serverid_;
-}
-inline void S2SSendToDynamicObjectReq::set_serverid(::google::protobuf::uint32 value) {
-  set_has_serverid();
-  serverid_ = value;
-}
-
 // -------------------------------------------------------------------
 
 // S2SSendToStaticObjectReq
 
-// required uint32 objectid = 1;
+// required uint64 objectid = 1;
 inline bool S2SSendToStaticObjectReq::has_objectid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3609,26 +3609,48 @@ inline void S2SSendToStaticObjectReq::clear_has_objectid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void S2SSendToStaticObjectReq::clear_objectid() {
-  objectid_ = 0u;
+  objectid_ = GOOGLE_ULONGLONG(0);
   clear_has_objectid();
 }
-inline ::google::protobuf::uint32 S2SSendToStaticObjectReq::objectid() const {
+inline ::google::protobuf::uint64 S2SSendToStaticObjectReq::objectid() const {
   return objectid_;
 }
-inline void S2SSendToStaticObjectReq::set_objectid(::google::protobuf::uint32 value) {
+inline void S2SSendToStaticObjectReq::set_objectid(::google::protobuf::uint64 value) {
   set_has_objectid();
   objectid_ = value;
 }
 
-// required uint32 msgid = 2;
-inline bool S2SSendToStaticObjectReq::has_msgid() const {
+// required uint64 serverid = 2;
+inline bool S2SSendToStaticObjectReq::has_serverid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void S2SSendToStaticObjectReq::set_has_msgid() {
+inline void S2SSendToStaticObjectReq::set_has_serverid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void S2SSendToStaticObjectReq::clear_has_msgid() {
+inline void S2SSendToStaticObjectReq::clear_has_serverid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2SSendToStaticObjectReq::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint64 S2SSendToStaticObjectReq::serverid() const {
+  return serverid_;
+}
+inline void S2SSendToStaticObjectReq::set_serverid(::google::protobuf::uint64 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
+// required uint32 msgid = 3;
+inline bool S2SSendToStaticObjectReq::has_msgid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void S2SSendToStaticObjectReq::set_has_msgid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void S2SSendToStaticObjectReq::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void S2SSendToStaticObjectReq::clear_msgid() {
   msgid_ = 0u;
@@ -3642,15 +3664,15 @@ inline void S2SSendToStaticObjectReq::set_msgid(::google::protobuf::uint32 value
   msgid_ = value;
 }
 
-// required bytes msgdata = 3;
+// required bytes msgdata = 4;
 inline bool S2SSendToStaticObjectReq::has_msgdata() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void S2SSendToStaticObjectReq::set_has_msgdata() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void S2SSendToStaticObjectReq::clear_has_msgdata() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void S2SSendToStaticObjectReq::clear_msgdata() {
   if (msgdata_ != &::google::protobuf::internal::kEmptyString) {
@@ -3710,28 +3732,6 @@ inline void S2SSendToStaticObjectReq::set_allocated_msgdata(::std::string* msgda
     clear_has_msgdata();
     msgdata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
-}
-
-// required uint32 serverid = 4;
-inline bool S2SSendToStaticObjectReq::has_serverid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void S2SSendToStaticObjectReq::set_has_serverid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void S2SSendToStaticObjectReq::clear_has_serverid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void S2SSendToStaticObjectReq::clear_serverid() {
-  serverid_ = 0u;
-  clear_has_serverid();
-}
-inline ::google::protobuf::uint32 S2SSendToStaticObjectReq::serverid() const {
-  return serverid_;
-}
-inline void S2SSendToStaticObjectReq::set_serverid(::google::protobuf::uint32 value) {
-  set_has_serverid();
-  serverid_ = value;
 }
 
 

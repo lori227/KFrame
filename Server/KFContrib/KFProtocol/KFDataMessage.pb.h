@@ -643,12 +643,12 @@ class LIBPROTOC_EXPORT MsgSyncUpdateGuildData : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required .KFMsg.PBObject pbdata = 2;
   inline bool has_pbdata() const;
@@ -668,8 +668,8 @@ class LIBPROTOC_EXPORT MsgSyncUpdateGuildData : public ::google::protobuf::Messa
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::KFMsg::PBObject* pbdata_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -737,12 +737,12 @@ class LIBPROTOC_EXPORT MsgSyncAddGuildData : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required .KFMsg.PBObject pbdata = 2;
   inline bool has_pbdata() const;
@@ -762,8 +762,8 @@ class LIBPROTOC_EXPORT MsgSyncAddGuildData : public ::google::protobuf::Message 
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::KFMsg::PBObject* pbdata_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -831,12 +831,12 @@ class LIBPROTOC_EXPORT MsgSyncRemoveGuildData : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // required uint32 playerid = 1;
+  // required uint64 playerid = 1;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
-  inline ::google::protobuf::uint32 playerid() const;
-  inline void set_playerid(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 playerid() const;
+  inline void set_playerid(::google::protobuf::uint64 value);
 
   // required .KFMsg.PBObject pbdata = 2;
   inline bool has_pbdata() const;
@@ -856,8 +856,8 @@ class LIBPROTOC_EXPORT MsgSyncRemoveGuildData : public ::google::protobuf::Messa
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::uint64 playerid_;
   ::KFMsg::PBObject* pbdata_;
-  ::google::protobuf::uint32 playerid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1234,7 +1234,7 @@ inline void MsgTellQueryBasic::set_allocated_player(::KFMsg::PBObject* player) {
 
 // MsgSyncUpdateGuildData
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgSyncUpdateGuildData::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1245,13 +1245,13 @@ inline void MsgSyncUpdateGuildData::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgSyncUpdateGuildData::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSyncUpdateGuildData::playerid() const {
+inline ::google::protobuf::uint64 MsgSyncUpdateGuildData::playerid() const {
   return playerid_;
 }
-inline void MsgSyncUpdateGuildData::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSyncUpdateGuildData::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -1298,7 +1298,7 @@ inline void MsgSyncUpdateGuildData::set_allocated_pbdata(::KFMsg::PBObject* pbda
 
 // MsgSyncAddGuildData
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgSyncAddGuildData::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1309,13 +1309,13 @@ inline void MsgSyncAddGuildData::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgSyncAddGuildData::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSyncAddGuildData::playerid() const {
+inline ::google::protobuf::uint64 MsgSyncAddGuildData::playerid() const {
   return playerid_;
 }
-inline void MsgSyncAddGuildData::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSyncAddGuildData::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -1362,7 +1362,7 @@ inline void MsgSyncAddGuildData::set_allocated_pbdata(::KFMsg::PBObject* pbdata)
 
 // MsgSyncRemoveGuildData
 
-// required uint32 playerid = 1;
+// required uint64 playerid = 1;
 inline bool MsgSyncRemoveGuildData::has_playerid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1373,13 +1373,13 @@ inline void MsgSyncRemoveGuildData::clear_has_playerid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MsgSyncRemoveGuildData::clear_playerid() {
-  playerid_ = 0u;
+  playerid_ = GOOGLE_ULONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::uint32 MsgSyncRemoveGuildData::playerid() const {
+inline ::google::protobuf::uint64 MsgSyncRemoveGuildData::playerid() const {
   return playerid_;
 }
-inline void MsgSyncRemoveGuildData::set_playerid(::google::protobuf::uint32 value) {
+inline void MsgSyncRemoveGuildData::set_playerid(::google::protobuf::uint64 value) {
   set_has_playerid();
   playerid_ = value;
 }

@@ -26,11 +26,11 @@ namespace KFrame
         static void OnConnectionCallBack( uv_stream_t* pstream, int status );
 
         // 创建托管id
-        uint32 MakeTrusteeID();
+        uint64 MakeTrusteeID();
 
     protected:
         // 托管连接id
-        uint32 _trustee_id;
+        uint64 _trustee_id;
 
         // uv tcp
         uv_tcp_t _uv_server;

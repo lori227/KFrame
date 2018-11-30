@@ -50,7 +50,7 @@ namespace KFrame
                 break;
             }
 
-            _kf_cluster_shard->SendToClient( message->_kfguid, message->_msgid, message->_data, message->_length );
+            _kf_cluster_shard->SendToClient( message->_kfid, message->_msgid, message->_data, message->_length );
             __KF_DESTROY__( KFWorkerMessage, message );
         } while ( ++count < _max_message_count );
     }
@@ -67,12 +67,12 @@ namespace KFrame
             }
             else
             {
-                _kf_guid = message->_kfguid;
+                _kf_guid = message->_kfid;
 
-                auto* kfactor = reinterpret_cast< uint64* >( &message->_kfguid );
+                auto* kfactor = reinterpret_cast< uint64* >( &message->_kfid );
                 *kfactor = reinterpret_cast< uint64 >( this );
 
-                _kf_worker_moduler->CallFunction( message->_kfguid, message->_msgid, message->_data, message->_length );
+                _kf_worker_moduler->CallFunction( message->_kfid, message->_msgid, message->_data, message->_length );
                 __KF_DESTROY__( KFWorkerMessage, message );
             }
         }
@@ -107,7 +107,7 @@ namespace KFrame
     }
 
 
-    bool KFActor::PushAckMessage( uint32 serverid, uint32 msgid, google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {

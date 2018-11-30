@@ -85,7 +85,7 @@ namespace KFrame
         return _kf_handles.Size();
     }
 
-    void KFNetServerEngine::GetHandleList( std::list<uint32>& handlelist )
+    void KFNetServerEngine::GetHandleList( std::list<uint64>& handlelist )
     {
         auto kfhandle = _kf_handles.First();
         while ( kfhandle != nullptr )
@@ -95,12 +95,12 @@ namespace KFrame
         }
     }
 
-    KFNetHandle* KFNetServerEngine::FindNetHandle( uint32 handleid )
+    KFNetHandle* KFNetServerEngine::FindNetHandle( uint64 handleid )
     {
         return _kf_handles.Find( handleid );
     }
 
-    const std::string& KFNetServerEngine::GetHandleIp( uint32 handleid )
+    const std::string& KFNetServerEngine::GetHandleIp( uint64 handleid )
     {
         auto kfhandle = FindNetHandle( handleid );
         if ( kfhandle == nullptr )
@@ -163,7 +163,7 @@ namespace KFrame
         kfhandle->CloseHandle();
     }
 
-    bool KFNetServerEngine::CloseHandle( uint32 id, uint32 delaytime, const char* function, uint32 line )
+    bool KFNetServerEngine::CloseHandle( uint64 id, uint32 delaytime, const char* function, uint32 line )
     {
         __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]!", id, KFAppID::ToString( id ) );
 
@@ -171,7 +171,7 @@ namespace KFrame
         return true;
     }
 
-    KFNetHandle* KFNetServerEngine::RegisteHandle( uint32 trusteeid, uint32 handleid, uint32 objectid )
+    KFNetHandle* KFNetServerEngine::RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid )
     {
         auto kfhandle = _trustee_handles.Find( trusteeid );
         if ( kfhandle == nullptr )
@@ -198,7 +198,7 @@ namespace KFrame
         return kfhandle;
     }
 
-    bool KFNetServerEngine::BindObjectId( uint32 handleid, uint32 objectid )
+    bool KFNetServerEngine::BindObjectId( uint64 handleid, uint64 objectid )
     {
         auto kfhandle = _kf_handles.Find( handleid );
         if ( kfhandle == nullptr )
@@ -327,7 +327,7 @@ namespace KFrame
         }
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint32 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
@@ -339,7 +339,7 @@ namespace KFrame
         return handle->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint32 handleid, uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )

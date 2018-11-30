@@ -83,7 +83,7 @@ namespace KFrame
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id );
+        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
 #endif
 
         // 初始化服务类型
@@ -121,12 +121,10 @@ namespace KFrame
         // game    101.1.xxxx.1
 
         auto kfglobal = KFGlobal::Instance();
-        kfglobal->_str_app_id = strappid;
 
         KFAppID kfappid( strappid );
-        kfglobal->_app_id = kfappid._union._app_id;
-        kfglobal->_zone_id = kfappid._union._app_data._zone_id;
-        kfglobal->_app_channel = kfappid._union._app_data._channel_id;
+        kfglobal->_app_id = kfappid;
+        kfglobal->_str_app_id = strappid;
     }
 
     void KFServices::RunUpdate()
@@ -160,7 +158,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         // 把log时间分来, 每日切换的时候, 有可能创建文件夹的时候被占用, 然后切换日志失败
-        auto spacetime = kfglobal->_app_id % 10000 + kfglobal->RandInRange( 100, 1000, 0 );
+        auto spacetime = kfglobal->_app_id._union._id % 10000 + kfglobal->RandInRange( 100, 1000, 0 );
         _memory_timer.StartTimer( kfglobal->_game_time, 5 * KFTimeEnum::OneMinuteMicSecond + spacetime );
     }
 

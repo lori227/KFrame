@@ -14,7 +14,7 @@ namespace KFrame
         }
 
     public:
-        uint32 _id;				// id
+        uint64 _id;				// id
         std::string _type;		// 类型
         std::string _name;		// 名称
         std::string _ip;		// ip地址

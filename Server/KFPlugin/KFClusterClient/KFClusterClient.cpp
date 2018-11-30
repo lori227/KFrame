@@ -9,7 +9,7 @@ namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFClusterClient::OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint32 serverid )
+    void KFClusterClient::OnConnectionClusterServer( const std::string& servername, const std::string& servertype, uint64 serverid )
     {
         auto strid = KFAppID::ToString( serverid );
         __LOG_DEBUG__( "connect cluster server[{}:{}:{}]", servername, servertype, strid );
@@ -29,7 +29,7 @@ namespace KFrame
         }
     }
 
-    void KFClusterClient::OnLostClusterServer( const std::string& servertype, uint32 serverid )
+    void KFClusterClient::OnLostClusterServer( const std::string& servertype, uint64 serverid )
     {
         if ( servertype == __KF_STRING__( proxy ) )
         {
@@ -71,7 +71,7 @@ namespace KFrame
         }
     }
 
-    void KFClusterClient::ProcessClusterAuth( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port, const std::string& token )
+    void KFClusterClient::ProcessClusterAuth( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port, const std::string& token )
     {
         // 停止定时器
         __UNREGISTER_OBJECT_TIMER__( _cluster_master_id );
@@ -92,7 +92,7 @@ namespace KFrame
         KFMsg::S2SClusterVerifyReq req;
         req.set_token( _auth_token );
         req.set_clustertype( _cluster_master_name );
-        req.set_serverid( KFGlobal::Instance()->_app_id );
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_REQ, &req );
         if ( !ok )
         {
@@ -100,7 +100,7 @@ namespace KFrame
         }
     }
 
-    void KFClusterClient::ProcessClusterVerify( uint32 serverid )
+    void KFClusterClient::ProcessClusterVerify( uint64 serverid )
     {
         // 停止定时器
         __UNREGISTER_OBJECT_TIMER__( _cluster_proxy_id );
@@ -128,7 +128,7 @@ namespace KFrame
         return SendNetMessage( msgid, data.data(), data.size() );
     }
 
-    bool KFClusterClient::SendNetMessage( uint32 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClient::SendNetMessage( uint64 objectid, uint32 msgid, google::protobuf::Message* message )
     {
         auto data = message->SerializeAsString();
         return SendNetMessage( objectid, msgid, data.data(), data.size() );
@@ -145,7 +145,7 @@ namespace KFrame
         return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, msgid, data, length );
     }
 
-    bool KFClusterClient::SendNetMessage( uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterClient::SendNetMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         if ( !_cluster_in_services )
         {

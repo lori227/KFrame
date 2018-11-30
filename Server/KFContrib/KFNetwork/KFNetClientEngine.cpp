@@ -131,7 +131,7 @@ namespace KFrame
         __LOG_ERROR__( "[{}:{}:{}|{}:{}] connect failed!", kfsetting->_name, kfsetting->_type, KFAppID::ToString( kfsetting->_id ), kfsetting->_ip, kfsetting->_port );
     }
 
-    bool KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint32 id, const std::string& ip, uint32 port )
+    bool KFNetClientEngine::StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port )
     {
         auto kfclient = _kf_clients.Find( id );
         if ( kfclient != nullptr )
@@ -167,12 +167,12 @@ namespace KFrame
         _wait_clients.clear();
     }
 
-    KFNetClient* KFNetClientEngine::FindClient( uint32 id )
+    KFNetClient* KFNetClientEngine::FindClient( uint64 id )
     {
         return _kf_clients.Find( id );
     }
 
-    void KFNetClientEngine::CloseClient( uint32 id, const char* function, uint32 line )
+    void KFNetClientEngine::CloseClient( uint64 id, const char* function, uint32 line )
     {
         auto kfclient = _kf_clients.Find( id );
         if ( kfclient == nullptr )
@@ -193,7 +193,7 @@ namespace KFrame
         }
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint32 serverid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length )
     {
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
@@ -205,7 +205,7 @@ namespace KFrame
         return netclient->SendNetMessage( msgid, data, length );
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint32 serverid, uint32 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
     {
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )

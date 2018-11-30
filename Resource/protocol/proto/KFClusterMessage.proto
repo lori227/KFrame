@@ -27,7 +27,7 @@ enum ClusterProtocol
 message S2SClusterRegisterReq
 {
 	required bytes type = 1;
-	required uint32 id = 2;
+	required uint64 id = 2;
 	required bytes name = 3;
 	required bytes ip = 4;
 	required uint32 port = 5;
@@ -38,7 +38,7 @@ message S2SClusterRegisterReq
 message S2SClusterUpdateReq
 {
 	required bytes type = 1;
-	required uint32 id = 2;
+	required uint64 id = 2;
 	required bytes name = 3;
 	required bytes ip = 4;
 	required uint32 port = 5;
@@ -60,7 +60,7 @@ message S2SClusterAuthAck
 	required bytes clustertype = 1;
 	required bytes token = 2;
 	required bytes type = 3;
-	required uint32 id = 4;
+	required uint64 id = 4;
 	required bytes name = 5;
 	required bytes ip = 6;
 	required uint32 port = 7;	
@@ -71,7 +71,7 @@ message S2SClusterAuthAck
 message S2SClusterTokenReq
 {
 	required bytes token = 1;
-	required uint32 gateid = 2;
+	required uint64 gateid = 2;
 }
 
 // 验证token
@@ -80,7 +80,7 @@ message S2SClusterVerifyReq
 {
 	required bytes clustertype = 1;
 	required bytes token = 2;
-	required uint32 serverid = 3;
+	required uint64 serverid = 3;
 }
 
 // 认证回馈
@@ -88,21 +88,21 @@ message S2SClusterVerifyReq
 message S2SClusterVerifyAck
 {
 	required bytes clustertype = 1;	// 集群类型
-	required uint32 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
+	required uint64 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
 }
 
 // 发现客户端列表
 // S2S_CLUSTER_CLIENT_DISCOVER_REQ
 message S2SClusterClientDiscoverReq
 {
-	repeated uint32 clientid = 1;	// 客户端列表
+	repeated uint64 clientid = 1;	// 客户端列表
 }
 
 // 丢失客户端列表
 // S2S_CLUSTER_CLIENT_LOST_REQ
 message S2SClusterClientLostReq
 {
-	repeated uint32 clientid = 1;	// 客户端列表
+	repeated uint64 clientid = 1;	// 客户端列表
 }
 
 // 注册对象映射
@@ -123,22 +123,22 @@ message S2SRemoveObjectToProxyReq
 // S2S_ALLOC_OBJECT_TO_MASTER_REQ
 message S2SAllocObjectToMasterReq
 {
-	repeated uint32 objectid = 1;
+	repeated uint64 objectid = 1;
 }
 
 // 请求分派Shard
 // S2S_ALLOC_OBJECT_TO_PROXY_ACK
 message S2SAllocObjectToProxyAck
 {
-	repeated uint32 objectid = 1;
-	repeated uint32 shardid = 2;
+	repeated uint64 objectid = 1;
+	repeated uint64 shardid = 2;
 }
 
 // 请求分派Shard
 // S2S_ALLOC_OBJECT_TO_SHARD_ACK
 message S2SAllocObjectToShardAck
 {
-	repeated uint32 objectid = 1;
+	repeated uint64 objectid = 1;
 }
 
 // 发送消息到动态对象
@@ -146,19 +146,19 @@ message S2SAllocObjectToShardAck
 message S2SSendToDynamicObjectReq
 {
 	required uint64 objectid = 1;
-	required uint32 msgid = 2;
-	required bytes msgdata = 3;
-	required uint32	serverid = 4;
+	required uint64	serverid = 2;
+	required uint32 msgid = 3;
+	required bytes msgdata = 4;
 }
 
 // 发送消息到静态对象
 // S2S_SEND_TO_STATIC_OBJECT_REQ
 message S2SSendToStaticObjectReq
 {
-	required uint32 objectid = 1;
-	required uint32 msgid = 2;
-	required bytes msgdata = 3;
-	required uint32	serverid = 4;
+	required uint64 objectid = 1;
+	required uint64	serverid = 2;
+	required uint32 msgid = 3;
+	required bytes msgdata = 4;
 }
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////

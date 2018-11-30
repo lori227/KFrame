@@ -31,7 +31,7 @@ namespace KFrame
     public:
 
         std::string _token;
-        uint32 _gate_id;
+        uint64 _gate_id;
         uint64 _valid_time;
     };
 
@@ -54,39 +54,39 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        virtual uint32 SelectClusterShard( const char* data, bool cache = false );
-        virtual uint32 SelectClusterShard( uint64 objectid, bool cache = false );
-        virtual uint32 SelectClusterShard( const char* data, uint32 objectid, bool cache = false );
+        virtual uint64 SelectClusterShard( const char* data, bool cache = false );
+        virtual uint64 SelectClusterShard( uint64 objectid, bool cache = false );
+        virtual uint64 SelectClusterShard( const char* data, uint64 objectid, bool cache = false );
 
         // 发送消息到Shard
         virtual void SendToShard( uint32 msgid, ::google::protobuf::Message* message );
         virtual void SendToShard( uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendToShard( uint32 shardid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToShard( uint32 shardid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToShard( uint64 shardid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToShard( uint64 shardid, uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToShard( uint32 shardid, uint32 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, const char* data, uint32 length );
 
         // 发送消息到客户端
         virtual void SendToClient( uint32 msgid, ::google::protobuf::Message* message );
         virtual void SendToClient( uint32 msgid, const char* data, uint32 length );
 
-        virtual bool SendToClient( uint32 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToClient( uint32 clientid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint64 clientid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length );
 
         ////////////////////////////////////////////////////////////////////////////////
         // 添加映射
-        virtual void AddDynamicShard( uint64 objectid, uint32 shardid );
+        virtual void AddDynamicShard( uint64 objectid, uint64 shardid );
 
         // 查找映射
-        virtual uint32 FindDynamicShard( uint64 objectid );
+        virtual uint64 FindDynamicShard( uint64 objectid );
 
         // 查找负载最小的逻辑分片id
-        virtual uint32 FindMinObjectShard();
+        virtual uint64 FindMinObjectShard();
 
         // 查找映射
-        virtual uint32 FindStaticShard( uint32 objectid );
+        virtual uint64 FindStaticShard( uint64 objectid );
 
     protected:
         // 处理更新token信息
@@ -136,14 +136,14 @@ namespace KFrame
 
     private:
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterMaster( const std::string& servername, uint32 serverid );
+        void OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid );
 
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterShard( const std::string& servername, uint32 serverid );
+        void OnClientConnectionClusterShard( const std::string& servername, uint64 serverid );
 
         // 断开连接
-        void OnClientLostClusterMaster( const std::string& servername, uint32 serverid );
-        void OnClientLostClusterShard( const std::string& servername, uint32 serverid );
+        void OnClientLostClusterMaster( const std::string& servername, uint64 serverid );
+        void OnClientLostClusterShard( const std::string& servername, uint64 serverid );
 
         // 检查token有效时间
         void RunClusterTokenValidTime();
@@ -152,20 +152,20 @@ namespace KFrame
         void RunRemoveClusterToken();
 
         // 验证集群客户端登录
-        uint32 ClusterVerifyLogin( const std::string& token, uint32 serverid );
+        uint64 ClusterVerifyLogin( const std::string& token, uint64 serverid );
 
         // 删除对象映射
-        virtual void RemoveObjectShard( uint32 shardid );
+        virtual void RemoveObjectShard( uint64 shardid );
 
         // 添加数量
-        void AddObjectCount( uint32 shardid, uint32 count );
+        void AddObjectCount( uint64 shardid, uint32 count );
 
         // 减少数量
-        void DecObjectCount( uint32 shardid, uint32 count );
+        void DecObjectCount( uint64 shardid, uint32 count );
 
     private:
         // masterid
-        uint32 _master_server_id{ 0 };
+        uint64 _master_server_id{ 0 };
 
         // 是否在服务中
         bool _in_service{ false };
@@ -180,13 +180,13 @@ namespace KFrame
         KFConHash _kf_hash;
 
         // 对象映射列表
-        std::map< uint64, uint32 > _kf_dynamic_shard;
+        std::map< uint64, uint64 > _kf_dynamic_shard;
 
         // 对象数量
-        std::map< uint64, uint32 > _kf_object_count;
+        std::map< uint64, uint64 > _kf_object_count;
 
         // 分配列表
-        std::map< uint32, uint32 > _kf_static_shard;
+        std::map< uint64, uint64 > _kf_static_shard;
     };
 }
 #endif

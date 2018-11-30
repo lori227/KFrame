@@ -28,7 +28,7 @@ namespace KFrame
         virtual void Log( uint32 loglevel, const std::string& content ) = 0;
 
         // 初始化
-        virtual bool Initialize( const std::string& appname, const std::string& apptype, uint32 appid ) = 0;
+        virtual bool Initialize( const std::string& appname, const std::string& apptype, const std::string& strappid ) = 0;
 
         // 设置远程log函数
         virtual void SetRemoteLogFunction( KFLogFunction& function ) {};
@@ -46,7 +46,7 @@ namespace KFrame
         virtual void Log( uint32 loglevel, const std::string& content );
 
         // 初始化
-        virtual bool Initialize( const std::string& appname, const std::string& apptype, uint32 appid );
+        virtual bool Initialize( const std::string& appname, const std::string& apptype, const std::string& strappid );
 
     protected:
         // 日志逻辑

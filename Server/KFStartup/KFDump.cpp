@@ -13,11 +13,11 @@ namespace KFrame
     static char _app_name[ MAX_PATH ];
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    KFDump::KFDump( const char* appname, const char* apptype, int appid )
+    KFDump::KFDump( const char* appname, const char* apptype, const char* strappid )
     {
         memset( _app_name, 0, sizeof( _app_name ) );
 
-        sprintf_s( _app_name, "%s-%s-%d", appname, apptype, appid );
+        sprintf_s( _app_name, "%s-%s-%s", appname, apptype, strappid );
         ::SetUnhandledExceptionFilter( MyExceptionFilter );
     }
 
