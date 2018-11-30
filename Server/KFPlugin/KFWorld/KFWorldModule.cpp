@@ -36,19 +36,19 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ) );
     }
 
-    KFOnline* KFWorldModule::CreateOnline( uint32 playerid )
+    KFOnline* KFWorldModule::CreateOnline( uint64 playerid )
     {
         auto kfonline = _kf_online_list.Create( playerid );
         kfonline->_player_id = playerid;
         return kfonline;
     }
 
-    KFOnline* KFWorldModule::FindOnline( uint32 playerid )
+    KFOnline* KFWorldModule::FindOnline( uint64 playerid )
     {
         return _kf_online_list.Find( playerid );
     }
 
-    bool KFWorldModule::RemoveOnline( uint32 playerid )
+    bool KFWorldModule::RemoveOnline( uint64 playerid )
     {
         return _kf_online_list.Remove( playerid );
     }
@@ -58,7 +58,7 @@ namespace KFrame
         return _kf_online_list.Size();
     }
 
-    bool KFWorldModule::SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFWorldModule::SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfonline = FindOnline( playerid );
         if ( kfonline == nullptr )
@@ -70,7 +70,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFWorldModule::SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFWorldModule::SendToGame( uint64 gameid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
     }
@@ -126,7 +126,7 @@ namespace KFrame
         }
     }
 
-    void KFWorldModule::SendVerifyFailedToLogin( uint32 result, uint32 loginid, uint32 gateid, uint32 accountid, uint32 sessionid )
+    void KFWorldModule::SendVerifyFailedToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 accountid, uint64 sessionid )
     {
         KFMsg::S2SLoginFailedToLoginAck ack;
         ack.set_result( result );
@@ -213,7 +213,7 @@ namespace KFrame
         UpdateOnlineToAuth( kfmsg.accountid(), kfmsg.playerid(), false );
     }
 
-    void KFWorldModule::UpdateOnlineToAuth( uint32 accountid, uint32 playerid, bool online )
+    void KFWorldModule::UpdateOnlineToAuth( uint64 accountid, uint64 playerid, bool online )
     {
         static auto _world_url = _kf_http_server->GetHttpUrl();
         static auto _update_url = _kf_option->GetString( __KF_STRING__( authurl ) ) + __KF_STRING__( onlinezone );
@@ -239,7 +239,7 @@ namespace KFrame
         __LOG_DEBUG__( "online player count=[{}]", _kf_online_list.Size() );
     }
 
-    bool KFWorldModule::KickOnline( uint32 playerid, const char* function, uint32 line )
+    bool KFWorldModule::KickOnline( uint64 playerid, const char* function, uint32 line )
     {
         auto kfonline = FindOnline( playerid );
         if ( kfonline == nullptr )

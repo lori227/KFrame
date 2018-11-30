@@ -12,12 +12,12 @@ namespace KFrame
 {
     uint32 KFUtility::CalcZoneId( uint64 playerid )
     {
-        return ( playerid / KFZoneEnum::MaxPlayerCount );
+        return static_cast< uint32 >( playerid / KFZoneEnum::MaxPlayerCount );
     }
 
     uint64 KFUtility::CalcPlayerid( uint64 id, uint32 zoneid )
     {
-        return id + zoneid * KFZoneEnum::MaxPlayerCount;
+        return id + static_cast< uint64 >( zoneid ) * KFZoneEnum::MaxPlayerCount;
     }
 
     bool KFUtility::IsZeroFloat( float value, float epsilon )

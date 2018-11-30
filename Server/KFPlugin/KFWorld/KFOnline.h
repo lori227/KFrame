@@ -23,13 +23,13 @@ namespace KFrame
 
     public:
         // playerid
-        uint32 _player_id;
+        uint64 _player_id;
 
         // gameid
-        uint32 _game_id;
+        uint64 _game_id;
 
         // accountid
-        uint32 _account_id;
+        uint64 _account_id;
     };
 }
 

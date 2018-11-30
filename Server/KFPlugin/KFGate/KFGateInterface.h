@@ -11,13 +11,13 @@ namespace KFrame
     {
     public:
         // 创建玩家
-        virtual KFRole* CreateRole( uint32 roleid ) = 0;
+        virtual KFRole* CreateRole( uint64 roleid ) = 0;
 
         // 查找玩家
-        virtual KFRole* FindRole( uint32 roleid ) = 0;
+        virtual KFRole* FindRole( uint64 roleid ) = 0;
 
         // 删除玩家
-        virtual bool RemoveRole( uint32 roleid ) = 0;
+        virtual bool RemoveRole( uint64 roleid ) = 0;
 
         // 获得玩家数量
         virtual uint32 GetRoleCount() = 0;

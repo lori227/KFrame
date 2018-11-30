@@ -10,26 +10,26 @@ namespace KFrame
     {
     public:
         // 创建在线玩家
-        virtual KFOnline* CreateOnline( uint32 playerid ) = 0;
+        virtual KFOnline* CreateOnline( uint64 playerid ) = 0;
 
         // 查找在线玩家
-        virtual KFOnline* FindOnline( uint32 playerid ) = 0;
+        virtual KFOnline* FindOnline( uint64 playerid ) = 0;
 
         // 在线玩家的总人数
         virtual uint32 GetOnlineCount() = 0;
 
         // 删除在线玩家
-        virtual bool RemoveOnline( uint32 playerid ) = 0;
+        virtual bool RemoveOnline( uint64 playerid ) = 0;
 
         // 踢掉在线玩家
-        virtual bool KickOnline( uint32 playerid, const char* function, uint32 line ) = 0;
+        virtual bool KickOnline( uint64 playerid, const char* function, uint32 line ) = 0;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到玩家
-        virtual bool SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到游戏服务器
-        virtual bool SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGame( uint64 gameid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };

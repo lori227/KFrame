@@ -14,11 +14,11 @@ namespace KFrame
 
         // 发送消息到Gate服务器
         virtual void SendToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到客户端
-        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         // 广播消息到客户端
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;
@@ -28,7 +28,7 @@ namespace KFrame
         virtual bool TransmitToServer( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 转发给玩家
-        virtual bool TransmitToPlayer( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

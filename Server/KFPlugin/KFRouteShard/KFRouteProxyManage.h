@@ -16,8 +16,8 @@ namespace KFrame
         }
 
         uint32 _zone_id;
-        uint32 _server_id;
-        uint32 _handle_id;
+        uint64 _server_id;
+        uint64 _handle_id;
     };
 
     // 匹配服务器管理器
@@ -28,17 +28,17 @@ namespace KFrame
         ~KFRouteProxyManage();
 
         // 添加游戏区
-        KFRouteProxy* AddRouteProxy( uint32 zoneid, uint32 serverid, uint32 handleid );
+        KFRouteProxy* AddRouteProxy( uint32 zoneid, uint64 serverid, uint64 handleid );
 
         // 删除游戏区
-        void RemoveRouteProxy( uint32 serverid );
+        void RemoveRouteProxy( uint64 serverid );
 
         // 查找登录节点
-        KFRouteProxy* FindRouteProxy( uint32 serverid );
+        KFRouteProxy* FindRouteProxy( uint64 serverid );
 
     public:
         // 登录节点列表
-        KFMap< uint32, uint32, KFRouteProxy > _kf_route_proxy;
+        KFMap< uint64, uint64, KFRouteProxy > _kf_route_proxy;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

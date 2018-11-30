@@ -2,7 +2,7 @@
 
 namespace KFrame
 {
-    KFRouteZone* KFRouteZoneManage::AddRouteZone( uint32 zoneid, uint32 serverid, uint32 handleid )
+    KFRouteZone* KFRouteZoneManage::AddRouteZone( uint32 zoneid, uint64 serverid, uint64 handleid )
     {
         auto routezone = _kf_route_zone.Create( serverid );
         routezone->_zone_id = zoneid;
@@ -12,12 +12,12 @@ namespace KFrame
         return routezone;
     }
 
-    void KFRouteZoneManage::RemoveRouteZone(  uint32 serverid )
+    void KFRouteZoneManage::RemoveRouteZone( uint64 serverid )
     {
         _kf_route_zone.Remove( serverid );
     }
 
-    KFRouteZone* KFRouteZoneManage::FindRouteZone( uint32 serverid )
+    KFRouteZone* KFRouteZoneManage::FindRouteZone( uint64 serverid )
     {
         return _kf_route_zone.Find( serverid );
     }

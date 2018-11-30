@@ -20,11 +20,8 @@ namespace KFrame
     class KFGameModule : public KFGameInterface
     {
     public:
-        KFGameModule();
-        ~KFGameModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFGameModule() = default;
+        ~KFGameModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -38,18 +35,18 @@ namespace KFrame
 
         // 发送消息到Gate服务器
         virtual void SendToGate( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到客户端
-        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, const char* data, uint32 length );
 
         // 广播消息到客户端
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
         virtual bool BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 消息转发
-        virtual bool TransmitToPlayer( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 转发服务器
         virtual bool TransmitToServer( uint32 msgid, ::google::protobuf::Message* message );
@@ -67,7 +64,7 @@ namespace KFrame
 
     private:
         // 世界服务器id
-        uint32 _world_server_id;
+        uint64 _world_server_id{ _invalid_int };
     };
 }
 

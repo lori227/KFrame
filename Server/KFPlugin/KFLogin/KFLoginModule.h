@@ -26,8 +26,8 @@ namespace KFrame
     class KFLoginModule : public KFLoginInterface
     {
     public:
-        KFLoginModule();
-        ~KFLoginModule();
+        KFLoginModule() = default;
+        ~KFLoginModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -43,7 +43,7 @@ namespace KFrame
         virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
 
     protected:
         // 连接成功
@@ -68,15 +68,15 @@ namespace KFrame
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
 
         // 发送登录验证结果消息
-        void SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid, uint32 bantime );
+        void SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
 
     private:
 
         // 世界服务器id
-        uint32 _world_server_id;
+        uint64 _world_server_id{ _invalid_int };
 
         // 关闭登录
-        bool _is_login_close;
+        bool _is_login_close{ false };
     };
 }
 

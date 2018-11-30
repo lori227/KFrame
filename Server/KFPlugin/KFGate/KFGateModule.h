@@ -37,13 +37,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建代理玩家
-        virtual KFRole* CreateRole( uint32 roleid );
+        virtual KFRole* CreateRole( uint64 roleid );
 
         // 查找代理玩家
-        virtual KFRole* FindRole( uint32 roleid );
+        virtual KFRole* FindRole( uint64 roleid );
 
         // 删除代理玩家
-        virtual bool RemoveRole( uint32 roleid );
+        virtual bool RemoveRole( uint64 roleid );
 
         // 获得玩家数量
         virtual uint32 GetRoleCount();
@@ -91,14 +91,14 @@ namespace KFrame
 
     protected:
         // 发送登录失败消息
-        void SendLoginFailedMessage( uint32 sessionid, uint32 result, uint32 bantime );
+        void SendLoginFailedMessage( uint64 sessionid, uint32 result, uint64 bantime );
 
     private:
         // login服务器列表
         KFConHash _kf_login_conhash;
 
         // 玩家列表
-        KFMap< uint32, uint32, KFRoleEx > _kf_role_list;
+        KFMap< uint64, uint64, KFRoleEx > _kf_role_list;
     };
 }
 

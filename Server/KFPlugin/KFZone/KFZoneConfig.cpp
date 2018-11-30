@@ -20,7 +20,7 @@ namespace KFrame
             if ( KFGlobal::Instance()->CheckChannelService( channel, service ) )
             {
                 auto id = xmlnode.GetUInt32( "Id" );
-                if ( KFGlobal::Instance()->_zone_id == id )
+                if ( KFGlobal::Instance()->_app_id._union._app_data._zone_id == id )
                 {
                     _zone._id = id;
                     _zone._logic_id = xmlnode.GetUInt32( "LogicId" );

@@ -16,7 +16,7 @@ namespace KFrame
         virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送消息到Gate服务器
-        virtual bool SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

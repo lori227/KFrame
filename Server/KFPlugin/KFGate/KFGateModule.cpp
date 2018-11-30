@@ -40,7 +40,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRole* KFGateModule::CreateRole( uint32 roleid )
+    KFRole* KFGateModule::CreateRole( uint64 roleid )
     {
         auto kfrole = _kf_role_list.Create( roleid );
         kfrole->_role_id = roleid;
@@ -48,12 +48,12 @@ namespace KFrame
         return kfrole;
     }
 
-    KFRole* KFGateModule::FindRole( uint32 roleid )
+    KFRole* KFGateModule::FindRole( uint64 roleid )
     {
         return _kf_role_list.Find( roleid );
     }
 
-    bool KFGateModule::RemoveRole( uint32 roleid )
+    bool KFGateModule::RemoveRole( uint64 roleid )
     {
         return _kf_role_list.Remove( roleid );
     }
@@ -63,7 +63,7 @@ namespace KFrame
         return _kf_role_list.Size();
     }
 
-    void KFGateModule::SendLoginFailedMessage( uint32 sessionid, uint32 result, uint32 bantime )
+    void KFGateModule::SendLoginFailedMessage( uint64 sessionid, uint32 result, uint64 bantime )
     {
         // 消息到这里的都是错误结果
         _kf_display->SendToClient( sessionid, result, bantime );

@@ -3,20 +3,6 @@
 
 namespace KFrame
 {
-    KFGameModule::KFGameModule()
-    {
-        _world_server_id = _invalid_int;
-    }
-
-    KFGameModule::~KFGameModule()
-    {
-
-    }
-
-    void KFGameModule::InitModule()
-    {
-    }
-
     void KFGameModule::BeforeRun()
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGameModule::OnClientLostServer );
@@ -67,18 +53,18 @@ namespace KFrame
     }
 
     // 发送消息到Gate服务器
-    bool KFGameModule::SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, message );
     }
 
-    bool KFGameModule::SendToClient( uint32 gateid, uint32 playerid, uint32 msgid, const char* data, uint32 length )
+    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, const char* data, uint32 length )
     {
         return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, data, length );
     }
@@ -111,7 +97,7 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE, &req );
     }
 
-    bool KFGameModule::TransmitToPlayer( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         KFMsg::S2STransmitToPlayer req;
         req.set_playerid( playerid );

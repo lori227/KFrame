@@ -38,26 +38,26 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
 
         // 创建代理玩家
-        virtual KFOnline* CreateOnline( uint32 playerid );
+        virtual KFOnline* CreateOnline( uint64 playerid );
 
         // 查找代理玩家
-        virtual KFOnline* FindOnline( uint32 playerid );
+        virtual KFOnline* FindOnline( uint64 playerid );
 
         // 删除代理玩家
-        virtual bool RemoveOnline( uint32 playerid );
+        virtual bool RemoveOnline( uint64 playerid );
 
         // 踢掉在线玩家
-        virtual bool KickOnline( uint32 playerid, const char* function, uint32 line );
+        virtual bool KickOnline( uint64 playerid, const char* function, uint32 line );
 
         // 在线玩家的总人数
         virtual uint32 GetOnlineCount();
         /////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息到玩家
-        bool SendToOnline( uint32 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到游戏服务器
-        virtual bool SendToGame( uint32 gameid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToGame( uint64 gameid, uint32 msgid, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////
     protected:
         // 断开Game
@@ -93,14 +93,14 @@ namespace KFrame
         __KF_HTTP_FUNCTION__( HandleHttpKickOnline );
 
         // 发送验证结果消息
-        void SendVerifyFailedToLogin( uint32 result, uint32 loginid, uint32 gateid,  uint32 accountid, uint32 sessionid );
+        void SendVerifyFailedToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 accountid, uint64 sessionid );
 
         // 更新在线状态
-        void UpdateOnlineToAuth( uint32 accountid, uint32 playerid, bool online );
+        void UpdateOnlineToAuth( uint64 accountid, uint64 playerid, bool online );
 
     private:
         // 在线玩家列表
-        KFMap< uint32, uint32, KFOnlineEx > _kf_online_list;
+        KFMap< uint64, uint64, KFOnlineEx > _kf_online_list;
 
         // 游戏服务列表
         KFConHash _kf_game_conhash;

@@ -9,8 +9,8 @@ namespace KFrame
     {
     public:
         // 转发消息
-        virtual bool SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToRoute( uint32 serverid, uint32 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接成功函数

@@ -4,17 +4,6 @@
 
 namespace KFrame
 {
-    KFLoginModule::KFLoginModule()
-    {
-        _is_login_close = false;
-        _world_server_id = _invalid_int;
-    }
-
-    KFLoginModule::~KFLoginModule()
-    {
-
-    }
-
     void KFLoginModule::BeforeRun()
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
@@ -72,7 +61,7 @@ namespace KFrame
     }
 
     // 发送消息到Gate服务器
-    bool KFLoginModule::SendToGate( uint32 gateid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
     }
@@ -83,7 +72,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFLoginModule::SendLoginVerifyMessage( uint32 result, uint32 gateid, uint32 sessionid, uint32 accountid, uint32 bantime )
+    void KFLoginModule::SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime )
     {
         KFMsg::S2SLoginLoginVerifyAck ack;
         ack.set_result( result );
@@ -139,22 +128,22 @@ namespace KFrame
         KFJson sendjson( senddata );
         KFJson recvjson( recvdata );
 
-        auto gateid = sendjson.GetUInt32( __KF_STRING__( gateid ) );
-        auto accountid = sendjson.GetUInt32( __KF_STRING__( accountid ) );
-        auto sessionid = sendjson.GetUInt32( __KF_STRING__( sessionid ) );
+        auto gateid = sendjson.GetUInt64( __KF_STRING__( gateid ) );
+        auto accountid = sendjson.GetUInt64( __KF_STRING__( accountid ) );
+        auto sessionid = sendjson.GetUInt64( __KF_STRING__( sessionid ) );
 
         // 验证失败
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
         if ( retcode != KFMsg::Success )
         {
-            auto bantime = recvjson.GetUInt32( __KF_STRING__( bantime ) );
+            auto bantime = recvjson.GetUInt64( __KF_STRING__( bantime ) );
             return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid, bantime );
         }
 
         auto token = recvjson.GetString( __KF_STRING__( token ) );
         auto account = recvjson.GetString( __KF_STRING__( account ) );
         auto channel = recvjson.GetUInt32( __KF_STRING__( channel ) );
-        auto playerid = recvjson.GetUInt32( __KF_STRING__( playerid ) );
+        auto playerid = recvjson.GetUInt64( __KF_STRING__( playerid ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
         {
             return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );

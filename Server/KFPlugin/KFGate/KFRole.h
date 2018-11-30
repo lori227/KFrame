@@ -28,13 +28,13 @@ namespace KFrame
 
     public:
         // 角色id( playerid )
-        uint32 _role_id;
+        uint64 _role_id;
 
         // game游戏服务器id
-        uint32 _game_id;
+        uint64 _game_id;
 
         // 连接id
-        uint32 _session_id;
+        uint64 _session_id;
 
         // 登录token
         std::string _token;
