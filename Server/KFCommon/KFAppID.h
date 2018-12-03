@@ -15,8 +15,8 @@ namespace KFrame
             struct AppData
             {
                 uint16 _channel_id;
-                uint16 _zone_id;
                 uint16 _server_type;
+                uint16 _zone_id;
                 uint16 _worker_id;
             } _app_data;
         };
@@ -34,8 +34,8 @@ namespace KFrame
         KFAppID( std::string strappid )
         {
             _union._app_data._channel_id = KFUtility::SplitValue< uint16 >( strappid, "." );
-            _union._app_data._zone_id = KFUtility::SplitValue< uint16 >( strappid, "." );
             _union._app_data._server_type = KFUtility::SplitValue< uint16 >( strappid, "." );
+            _union._app_data._zone_id = KFUtility::SplitValue< uint16 >( strappid, "." );
             _union._app_data._worker_id = KFUtility::SplitValue< uint16 >( strappid, "." );
         }
 

@@ -18,7 +18,7 @@ namespace KFrame
         _kf_rand = new KFRand();
         _kf_logger = nullptr;
         _kf_version = new KFVersion();
-        _kf_guid = new KFGuid( 30, 12, 8, 13 );
+        _kf_guid = new KFGuid( 29, 14, 8, 12 );
     }
 
     KFGlobal::~KFGlobal()

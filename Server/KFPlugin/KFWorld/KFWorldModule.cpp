@@ -265,9 +265,9 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFWorldModule::HandleHttpKickOnline )
     {
         KFJson kfjson( data );
-
-        auto playerid = kfjson.GetUInt32( __KF_STRING__( playerid ) );
+        auto playerid = kfjson.GetUInt64( __KF_STRING__( playerid ) );
         KickOnline( playerid, __FUNC_LINE__ );
+
         return _invalid_str;
     }
 }
