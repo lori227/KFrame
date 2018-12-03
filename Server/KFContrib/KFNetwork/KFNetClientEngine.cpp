@@ -32,11 +32,10 @@ namespace KFrame
 
     void KFNetClientEngine::ShutEngine()
     {
-        auto kfclient = _kf_clients.First();
-        while ( kfclient != nullptr )
+        for ( auto iter : _kf_clients._objects )
         {
+            auto kfclient = iter.second;
             kfclient->CloseClient();
-            kfclient = _kf_clients.Next();
         }
 
         _net_client_services->ShutServices();
