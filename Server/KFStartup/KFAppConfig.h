@@ -29,12 +29,11 @@ namespace KFrame
     class KFAppConfig : public KFSingleton< KFAppConfig >
     {
     public:
-        KFAppConfig();
-        ~KFAppConfig();
+        KFAppConfig() = default;
+        ~KFAppConfig() = default;
 
         // 加载启动配置
         bool LoadStartupConfig( const std::string& file );
-
 
     protected:
 

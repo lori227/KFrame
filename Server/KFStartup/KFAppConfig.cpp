@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFAppConfig::KFAppConfig()
-    {
-
-    }
-
-    KFAppConfig::~KFAppConfig()
-    {
-
-    }
-
     KFAppSetting* KFAppConfig::GetStartupSetting( const std::string& name )
     {
         auto iter = _startups.find( name );

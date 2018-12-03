@@ -16,7 +16,7 @@ namespace KFrame
 
     KFLibrary::~KFLibrary()
     {
-        _instance = nullptr;
+        UnLoad();
     }
 
     bool KFLibrary::Load( const std::string& path, const std::string& name )
@@ -24,7 +24,10 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         _path = path + name + ".dll";
         _instance = LoadLibraryEx( _path.c_str(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH );
-        return _instance != nullptr;
+        if ( _instance == nullptr )
+        {
+            __LOG_LOCAL__( "load dll - {}", GetLastError() );
+        }
 #else
         _path = path + name + ".so";
         _instance = dlopen( _path.c_str(), RTLD_GLOBAL | RTLD_LAZY );
@@ -32,8 +35,9 @@ namespace KFrame
         {
             __LOG_LOCAL__( "dlopen - {}", dlerror() );
         }
-        return _instance != nullptr;
 #endif
+
+        return _instance != nullptr;
     }
 
     void KFLibrary::UnLoad()
