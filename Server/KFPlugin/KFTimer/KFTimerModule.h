@@ -22,7 +22,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////
 
         MaxSlot = 1000,	// 定时器最大槽数量
-        SlotTime = 1,	// 每个槽时间
+        SlotTime = 10,	// 每个槽时间
         WheelTime = MaxSlot * SlotTime,
     };
 
