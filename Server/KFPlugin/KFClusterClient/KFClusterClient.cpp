@@ -58,7 +58,16 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClusterClient::OnTimerSendClusterAuthMessage )
     {
+        if ( _cluster_master_name.empty() )
+        {
+            return;
+        }
+
         auto _cluster_key = _kf_option->GetString( __KF_STRING__( clusterkey ), _cluster_master_name );
+        if ( _cluster_key.empty() )
+        {
+            return __LOG_ERROR__( "[{}] can't find clusterkey!", _cluster_master_name );
+        }
 
         // 请求认证
         KFMsg::S2SClusterAuthReq req;
