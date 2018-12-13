@@ -16,7 +16,6 @@ namespace KFrame
 
     void KFDeployAgentPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_ftp, KFFtpInterface );
         __FIND_MODULE__( _kf_mysql, KFMySQLInterface );
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );

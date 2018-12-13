@@ -920,7 +920,7 @@ namespace KFrame
             if ( isserver )
             {
                 deploydata->_is_download = true;
-                _kf_ftp->StartDownload( kflaunch->_ftp_id, kflaunch->_app_path, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
+                //_kf_ftp->StartDownload( kflaunch->_ftp_id, kflaunch->_app_path, this, &KFDeployAgentModule::OnFtpDownLoadCallBack );
             }
         }
     }

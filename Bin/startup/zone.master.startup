@@ -3,6 +3,6 @@
 	<Plugins AppName="zone" AppType="master" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFDeployClient" Config=""/>
 		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/server.network"/>
-		<Plugin Sort="120" Name="KFZone" Config="./setting/zone.setting"/>		
+		<Plugin Sort="120" Name="KFZone" Config="./setting/{}_{}_zone.setting"/>		
 	</Plugins>
 </Setting>

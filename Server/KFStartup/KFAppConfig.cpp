@@ -93,16 +93,23 @@ namespace KFrame
             _common_startup_file = plugins.GetString( "Common", true );
         }
 
+        auto kfglobal = KFGlobal::Instance();
+
         auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
             auto channel = node.GetUInt32( "Channel", true, _invalid_int );
-            if ( KFGlobal::Instance()->CheckChannelService( channel, _invalid_int ) )
+            if ( kfglobal->CheckChannelService( channel, _invalid_int ) )
             {
                 KFAppSetting setting;
                 setting._sort = node.GetUInt32( "Sort" );
                 setting._name = node.GetString( "Name" );
                 setting._config_file = node.GetString( "Config" );
+                if ( !setting._config_file.empty() )
+                {
+                    setting._config_file = __FORMAT__( setting._config_file, kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type  )
+                }
+
                 AddStartupSetting( setting );
             }
 

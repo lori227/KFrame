@@ -41,8 +41,8 @@ namespace KFrame
 
         std::string ToString()
         {
-            return __FORMAT__( "{}.{}.{}.{}", _union._app_data._channel_id, _union._app_data._zone_id,
-                               _union._app_data._server_type, _union._app_data._worker_id );
+            return __FORMAT__( "{}.{}.{}.{}", _union._app_data._channel_id,
+                               _union._app_data._server_type, _union._app_data._zone_id, _union._app_data._worker_id );
         }
 
 

@@ -12,6 +12,7 @@ namespace KFrame
         KFIpAddress()
         {
             _port = 0;
+            _app_id = 0;
             _port_type = 0;
         }
 

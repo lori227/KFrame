@@ -57,19 +57,19 @@ namespace KFrame
 
     KFRedisLogic* KFRedisModule::FindRedisLogic( uint32 id )
     {
-        KFLocker lock( _mt_mutex );
-
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
+
+        KFLocker lock( _mt_mutex );
         return _redis_logic.Find( key );
     }
 
     void KFRedisModule::InsertRedisLogic( uint32 id, KFRedisLogic* kfredislogic )
     {
-        KFLocker lock( _mt_mutex );
-
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
+
+        KFLocker lock( _mt_mutex );
         _redis_logic.Insert( key, kfredislogic );
     }
 }

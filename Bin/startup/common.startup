@@ -4,7 +4,7 @@
 		<Plugin Sort="1" Name="KFDeployCommand" Config=""/>
 		<Plugin Sort="2" Name="KFHttpClient" Config=""/>
 		<Plugin Sort="3" Name="KFBus" Config="./setting/bus.relation"/>
-		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip.address"/>
+		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip_{}_{}.address"/>
 		<Plugin Sort="5" Name="KFConfig" Config=""/>
 		<Plugin Sort="6" Name="KFMessage" Config=""/>
 		<Plugin Sort="7" Name="KFTimer"  Config=""/>

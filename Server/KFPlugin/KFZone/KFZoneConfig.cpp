@@ -15,19 +15,14 @@ namespace KFrame
         auto xmlnode = zones.FindNode( "Zone" );
         while ( xmlnode.IsValid() )
         {
-            auto channel = xmlnode.GetUInt32( "Channel" );
-            auto service = xmlnode.GetUInt32( "Service" );
-            if ( KFGlobal::Instance()->CheckChannelService( channel, service ) )
+            auto id = xmlnode.GetUInt32( "Id" );
+            if ( KFGlobal::Instance()->_app_id._union._app_data._zone_id == id )
             {
-                auto id = xmlnode.GetUInt32( "Id" );
-                if ( KFGlobal::Instance()->_app_id._union._app_data._zone_id == id )
-                {
-                    _zone._id = id;
-                    _zone._logic_id = xmlnode.GetUInt32( "LogicId" );
-                    _zone._name = xmlnode.GetString( "Name" );
-                    _zone._ip = xmlnode.GetString( "Ip", true );
-                    break;
-                }
+                _zone._id = id;
+                _zone._logic_id = xmlnode.GetUInt32( "LogicId" );
+                _zone._name = xmlnode.GetString( "Name" );
+                _zone._ip = xmlnode.GetString( "Ip", true );
+                break;
             }
 
             xmlnode.NextNode();
