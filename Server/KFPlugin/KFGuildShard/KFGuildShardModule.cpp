@@ -4,8 +4,8 @@
 namespace KFrame
 {
 #define __USE_WORKER__
-#define __GUILD_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( guild ) )
-#define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( public ) )
+#define __GUILD_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( guild ) )
+#define __PUBLIC_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( public ) )
 
 #ifdef __USE_WORKER__
     #define __REGISTER_GUILD_MESSAGE__ __REGISTER_WORKER_MESSAGE__

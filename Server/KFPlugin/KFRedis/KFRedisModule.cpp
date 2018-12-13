@@ -10,20 +10,22 @@ namespace KFrame
 
     void KFRedisModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__( _kf_redis_config );
-
-        KFLocker lock( _mt_mutex );
-        for ( auto& iter : _redis_execute._objects )
         {
-            iter.second->ShutDown();
+            KFLocker lock( _mt_mutex );
+            for ( auto& iter : _redis_logic._objects )
+            {
+                iter.second->ShutDown();
+            }
         }
+
+        __KF_REMOVE_CONFIG__( _kf_redis_config );
     }
 
     void KFRedisModule::AfterRun()
     {
         {
             KFLocker lock( _mt_mutex );
-            for ( auto& iter : _redis_execute._objects )
+            for ( auto& iter : _redis_logic._objects )
             {
                 iter.second->Run();
             }
@@ -31,48 +33,43 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRedisDriver* KFRedisModule::CreateExecute( const std::string& module, uint32 logicid /* = 0 */ )
+    KFRedisDriver* KFRedisModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfsetting = _kf_redis_config->FindRedisSetting( module, logicid );
-        if ( kfsetting == nullptr )
+        auto kfredistype = _kf_redis_config->FindRedisType( module, logicid );
+        if ( kfredistype == nullptr )
         {
+            __LOG_ERROR__( "[{}:{}] can't find redis type!", module, logicid );
             return nullptr;
         }
 
+        auto kfredislogic = FindRedisLogic( kfredistype->_id );
+        if ( kfredislogic != nullptr )
+        {
+            return kfredislogic;
+        }
+
+        kfredislogic = __KF_CREATE_BATCH__( KFRedisLogic, 5 );
+        kfredislogic->Initialize( kfredistype );
+
+        InsertRedisLogic( kfredistype->_id, kfredislogic );
+        return kfredislogic;
+    }
+
+    KFRedisLogic* KFRedisModule::FindRedisLogic( uint32 id )
+    {
         KFLocker lock( _mt_mutex );
-        return CreateExecute( kfsetting->_id, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
-    }
 
-    KFRedisDriver* KFRedisModule::CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password )
-    {
-        auto kfredisexecute = FindRedisExecute( id );
-        if ( kfredisexecute != nullptr )
-        {
-            return kfredisexecute;
-        }
-
-        kfredisexecute = __KF_CREATE_BATCH__( KFRedisExecute, 5 );
-        auto result = kfredisexecute->Initialize( ip, port, password );
-        if ( result != KFEnum::Ok )
-        {
-            __LOG_ERROR__( "redis connect[ id={} ip={}:{} ] failed!", id, ip, port );
-        }
-
-        InsertRedisExecute( id, kfredisexecute );
-        return kfredisexecute;
-    }
-
-    KFRedisExecute* KFRedisModule::FindRedisExecute( uint32 id )
-    {
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
-        return _redis_execute.Find( key );
+        return _redis_logic.Find( key );
     }
 
-    void KFRedisModule::InsertRedisExecute( uint32 id, KFRedisExecute* kfredisexecute )
+    void KFRedisModule::InsertRedisLogic( uint32 id, KFRedisLogic* kfredislogic )
     {
+        KFLocker lock( _mt_mutex );
+
         auto threadid = KFThread::GetThreadID();
         auto key = RedisKey( threadid, id );
-        _redis_execute.Insert( key, kfredisexecute );
+        _redis_logic.Insert( key, kfredislogic );
     }
 }

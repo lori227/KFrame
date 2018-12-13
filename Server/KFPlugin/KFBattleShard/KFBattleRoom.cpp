@@ -20,7 +20,6 @@ namespace KFrame
         _req_count = 0;
         _battle_server_id = 0;
         _battle_valid_time = _invalid_int;
-        _battle_redis_driver = nullptr;
         _is_match_room_open = false;
         _battle_wait_time = 0;
         _last_interval_time = 0;
@@ -30,13 +29,14 @@ namespace KFrame
     {
     }
 
-    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version )
+    void KFBattleRoom::InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version, KFRedisDriver* redisdriver )
     {
         _match_id = matchid;
         _battle_room_id = roomid;
         _max_player_count = maxplayercount;
         _battle_server_id = battleserverid;
         _battle_version = version;
+        _battle_redis_driver = redisdriver;
 
         // 设置有效时间
         SetValidTime();
@@ -44,7 +44,7 @@ namespace KFrame
         // 开启申请定时器
         UpdateRoomStatus( KFRoomStatus::StatusBattleRoomAlloc, 5000 );
 
-        _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+
     }
 
     void KFBattleRoom::UpdateRoomStatus( uint32 status, uint32 intervaltime )
@@ -505,6 +505,7 @@ namespace KFrame
 
         // 保存结束时间
         auto endtime = KFGlobal::Instance()->_real_time + maxtime + 10;
+
         _battle_redis_driver->Execute( "zadd {} {} {}", __KF_STRING__( battletime ), endtime, _battle_room_id );
     }
 

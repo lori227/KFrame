@@ -6,6 +6,7 @@
     <ClCompile Include="KFRedisExecute.cpp" />
     <ClCompile Include="KFRedisModule.cpp" />
     <ClCompile Include="KFRedisPlugin.cpp" />
+    <ClCompile Include="KFRedisLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRedisConfig.h" />
@@ -14,5 +15,6 @@
     <ClInclude Include="KFRedisInterface.h" />
     <ClInclude Include="KFRedisModule.h" />
     <ClInclude Include="KFRedisPlugin.h" />
+    <ClInclude Include="KFRedisLogic.h" />
   </ItemGroup>
 </Project>

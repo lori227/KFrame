@@ -60,12 +60,11 @@ namespace KFrame
 
     void KFItemModule::CheckStartItemTimer( KFEntity* player )
     {
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-
         // 检查所有衣服, 找到时间最少的一个衣服
         auto _min_valid_time = std::numeric_limits<uint32>::max();
 
+        auto kfobject = player->GetData();
+        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
         auto kfitem = kfitemrecord->FirstData();
         while ( kfitem != nullptr )
         {
@@ -96,15 +95,11 @@ namespace KFrame
 
     void KFItemModule::RemoveValidTimeoutItem( KFEntity* player )
     {
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        if ( kfitemrecord == nullptr )
-        {
-            return;
-        }
-
         // 查找时间道具
         std::map< KFData*, uint64 > timeitem;
+
+        auto kfobject = player->GetData();
+        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
         auto kfitem = kfitemrecord->FirstData();
         while ( kfitem != nullptr )
         {
@@ -162,25 +157,19 @@ namespace KFrame
             return __LOG_ERROR__( "[{}] item id = 0!", kfagent->_string );
         }
 
-        auto kfagentvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
-        if ( kfagentvalue == nullptr )
-        {
-            return __LOG_ERROR__( "[{}] item count = null!", kfagent->_string );
-        }
-
-        auto itemcount = _kf_kernel->CalcAgentValue( kfagentvalue, multiple );
-
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        if ( kfitemrecord == nullptr )
-        {
-            return __LOG_ERROR__( "[{}] player[{}] item record = null!", kfagent->_string, player->GetKeyID() );
-        }
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 只有真正的物品道具才创建实体
+        // 只有真正的实体道具才会添加到背包中
         if ( itemsetting->IsRealItem() )
         {
+            // 计算物品数量
+            auto kfagentvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
+            if ( kfagentvalue == nullptr )
+            {
+                return __LOG_ERROR__( "[{}] item count = null!", kfagent->_string );
+            }
+            auto itemcount = _kf_kernel->CalcAgentValue( kfagentvalue, multiple );
+
+            auto kfobject = player->GetData();
+            auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
             do
             {
                 switch ( itemsetting->_overlay_type )
@@ -213,9 +202,8 @@ namespace KFrame
         }
 
         // 存在该物品, 加上有效时间
-        uint32 totaltime = itemsetting->_valid_time * count;
-
         auto kfitem = finditem.front();
+        auto totaltime = itemsetting->_valid_time * count;
         player->UpdateData( kfitem, __KF_STRING__( time ), KFOperateEnum::Add, totaltime );
         return 0;
     }
@@ -235,7 +223,7 @@ namespace KFrame
                 auto oldcount = kfitem->GetValue( __KF_STRING__( count ) );
                 oldcount = __MIN__( oldcount, itemsetting->_overlay_count );
                 auto canadd = itemsetting->_overlay_count - oldcount;
-                uint32 addcount = __MIN__( canadd, count );
+                auto addcount = __MIN__( canadd, count );
                 if ( addcount == 0 )
                 {
                     continue;
@@ -509,13 +497,23 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
         }
 
-        // 删除道具
-        player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1 );
-
-        // 添加奖励
-        if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
+        // 如果是使用启动道具
+        if ( kfsetting->_time_type == KFItemEnum::UseTimeStart )
         {
-            player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
+            auto validtime = kfsetting->_valid_time + KFGlobal::Instance()->_real_time;
+            player->UpdateData( kfitem, __KF_STRING__( time ), KFOperateEnum::Set, validtime );
+            CheckStartItemTimer( player );
+        }
+        else
+        {
+            // 删除道具
+            player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1 );
+
+            // 添加奖励
+            if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
+            {
+                player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
+            }
         }
 
         // 调用lua脚本

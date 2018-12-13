@@ -1,26 +1,23 @@
 ﻿#ifndef __KF_REDIS_EXECUTE_H__
 #define __KF_REDIS_EXECUTE_H__
 
-#include "KFRedisInterface.h"
+#include "KFrame.h"
 #include "hiredis/hiredis.h"
 
 namespace KFrame
 {
-    class KFRedisExecute : public KFRedisDriver
+    class KFRedisExecute
     {
     public:
         /////////////////////////////////////////////////////////////////////////////////////////////
         KFRedisExecute();
-        ~KFRedisExecute();
+        virtual ~KFRedisExecute();
 
         // 初始化
         int32 Initialize( const std::string& ip, uint32 port, const std::string& password );
 
         // 关闭
         void ShutDown();
-
-        // 切换索引
-        void SelectIndex( uint32 index );
 
         // 逻辑
         void Run();
@@ -32,32 +29,12 @@ namespace KFrame
 
         // 是否断开连接
         bool IsDisconnected();
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////
 
-        // 执行更新
-        virtual KFResult< voidptr >* UpdateExecute( const std::string& strsql );
-
-        // 查询数据库
-        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql );
-        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
-        virtual KFResult< std::string >* StringExecute( const std::string& strsql );
-        virtual KFResult< MapString >* MapExecute( const std::string& strsql );
-        virtual KFResult< ListString >* ListExecute( const std::string& strsql );
-        virtual KFResult< VectorString >* VectorExecute( const std::string& strsql );
-
-        // 添加执行命令
-        virtual void AppendCommand( const std::string& strsql );
-        virtual KFResult< voidptr >* Pipeline();
-        virtual KFResult< ListString >* ListPipelineExecute();
-        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute();
-
-    private:
         // 执行语句
         redisReply* Execute( const std::string& strsql );
         redisReply* TryExecute( KFBaseResult* kfresult, const std::string& strsql );
 
-    private:
+    protected:
         // ip
         std::string _ip;
 
@@ -73,13 +50,57 @@ namespace KFrame
         // 数据库索引
         uint32 _index;
 
-        // 需要执行的命令集
-        ListString _commands;
+        // 返回结果列表
+        std::vector< KFBaseResultQueue* > _result_queue_list;
+    };
 
-        //////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    class KFWriteExecute : public KFRedisExecute
+    {
+    public:
+        KFWriteExecute();
+        virtual ~KFWriteExecute();
 
+        // 写操作
+        // 执行更新
+        virtual KFResult< voidptr >* VoidExecute( const std::string& strsql );
+        virtual KFResult< uint64 >* UpdateExecute( const std::string& strsql );
+
+        // 批量写
+        virtual KFResult< voidptr >* Pipeline( const ListString& commands );
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+    private:
         // 返回结果
         KFResultQueue< voidptr > _void_result_queue;
+        KFResultQueue< uint64 > _uint64_result_queue;
+    };
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    class KFReadExecute : public KFRedisExecute
+    {
+    public:
+        KFReadExecute();
+        virtual ~KFReadExecute();
+
+        ///////////////////////////////////////////////////////
+        // 读操作
+        // 查询数据库
+        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql );
+        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
+        virtual KFResult< std::string >* StringExecute( const std::string& strsql );
+        virtual KFResult< MapString >* MapExecute( const std::string& strsql );
+        virtual KFResult< ListString >* ListExecute( const std::string& strsql );
+        virtual KFResult< VectorString >* VectorExecute( const std::string& strsql );
+
+        // 添加执行命令
+        virtual KFResult< ListString >* ListPipelineExecute( const ListString& commands );
+        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute( const ListString& commands );
+        ///////////////////////////////////////////////////////
+    private:
+        // 返回结果
         KFResultQueue< uint32 > _uint32_result_queue;
         KFResultQueue< std::string > _string_result_queue;
         KFResultQueue< uint64 > _uint64_result_queue;
@@ -87,8 +108,6 @@ namespace KFrame
         KFResultQueue< VectorString > _vector_result_queue;
         KFResultQueue< ListString > _list_result_queue;
         KFResultQueue< std::list< MapString > > _list_map_result_queue;
-
-        std::vector< KFBaseResultQueue* > _result_queue_list;
     };
 }
 #endif

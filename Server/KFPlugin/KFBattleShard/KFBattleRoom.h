@@ -26,7 +26,7 @@ namespace KFrame
         ~KFBattleRoom();
 
         // 初始化
-        void InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version );
+        void InitRoom( uint32 matchid, uint64 roomid, uint64 battleserverid, uint32 maxplayercount, const std::string& version, KFRedisDriver* redisdriver );
 
         // 添加阵营
         KFBattleCamp* AddCamp( const KFMsg::PBBattleCamp* pbcamp );
@@ -184,8 +184,8 @@ namespace KFrame
         // 房间开启等待时间
         uint32 _battle_wait_time;
 
-        // redis
-        KFRedisDriver* _battle_redis_driver;
+    private:
+        KFRedisDriver* _battle_redis_driver{ nullptr };
     };
 }
 

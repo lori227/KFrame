@@ -15,6 +15,8 @@ namespace KFrame
             _result = KFEnum::Ok;
         }
 
+        virtual ~KFBaseResult() = default;
+
         inline bool IsOk() const
         {
             return _result == KFEnum::Ok;
@@ -67,6 +69,7 @@ namespace KFrame
     class KFBaseResultQueue
     {
     public:
+        virtual ~KFBaseResultQueue() = default;
         virtual void Free() = 0;
     };
 

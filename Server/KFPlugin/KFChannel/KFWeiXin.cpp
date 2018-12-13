@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-#define __LOGIN_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( account ) )
+#define __LOGIN_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( account ) )
 #define __Execute_Redis__( query ) \
     if ( !query ) \
     { \
@@ -47,17 +47,12 @@ namespace KFrame
             auto expirestime = accessjson.GetUInt32( __KF_STRING__( expires_in ) );
             auto scope = accessjson.GetString( __KF_STRING__( scope ) );
 
-            auto redisdriver = __LOGIN_REDIS_DRIVER__;
-
             // 保存access_token
+            auto redisdriver = __LOGIN_REDIS_DRIVER__;
             redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
-                                 __KF_STRING__( access_token ), machinecode,
-                                 __KF_STRING__( access_token ), accesstoken,
-                                 __KF_STRING__( openid ), openid,
-                                 __KF_STRING__( scope ), scope );
+                                 __KF_STRING__( access_token ), machinecode, __KF_STRING__( access_token ), accesstoken,
+                                 __KF_STRING__( openid ), openid, __KF_STRING__( scope ), scope );
             redisdriver->Append( "expire {}:{} {}", __KF_STRING__( access_token ), machinecode, expirestime - 200 );
-
-            // 保存refresh_token
             redisdriver->Append( "hset {}:{} {} {}", __KF_STRING__( refresh_token ), machinecode, __KF_STRING__( refresh_token ), accesstoken );
             redisdriver->Append( "expire {}:{} {}", __KF_STRING__( refresh_token ), machinecode, 2590000 );
             redisdriver->Pipeline();
@@ -66,7 +61,6 @@ namespace KFrame
         {
             // 机器码获得账号的access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
-
             auto weixindata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( access_token ), machinecode );
             if ( !weixindata->IsOk() )
             {

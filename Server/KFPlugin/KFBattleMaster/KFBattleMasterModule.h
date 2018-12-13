@@ -38,7 +38,7 @@ namespace KFrame
         uint64 AllocBattleId( const std::string& ip, uint32 port );
 
     private:
-        KFRedisDriver* _kf_battle_driver{ nullptr };
+        KFRedisDriver* _battle_redis_driver{ nullptr };
     };
 }
 

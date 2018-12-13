@@ -33,10 +33,11 @@ namespace KFrame
     class KFBattleManage : public KFSingleton< KFBattleManage >
     {
     public:
-        KFBattleManage();
+        KFBattleManage() = default;
+        ~KFBattleManage() = default;
 
         // 初始化
-        void Initialize();
+        void Initialize( KFRedisDriver* redisdriver );
 
         // 注册战场
         void RegisterBattleServer( uint64 serverid, uint64 proxyid, const std::string& ip, uint32 port, const std::string& version );
@@ -54,12 +55,12 @@ namespace KFrame
         void FreeBattleServer( uint64 serverid, const std::string& version );
 
     private:
-        KFRedisDriver* _battle_redis_driver;
+        KFRedisDriver* _battle_redis_driver{ nullptr };
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
     static auto _kf_battle_manage = KFBattleManage::Instance();
+    ////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

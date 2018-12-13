@@ -30,7 +30,7 @@ namespace KFrame
         bool IsValid();
 
         // 兄弟节点
-        void NextNode();
+        void NextNode( const char* key = nullptr );
 
         // 查找子节点
         KFNode FindNode( const char* key );

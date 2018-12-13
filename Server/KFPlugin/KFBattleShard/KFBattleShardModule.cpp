@@ -65,8 +65,8 @@ namespace KFrame
 
     void KFBattleShardModule::OnceRun()
     {
-        _kf_battle_manage->Initialize();
-        _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        _battle_redis_driver = _kf_redis->Create( __KF_STRING__( battle ) );
+        _kf_battle_manage->Initialize( _battle_redis_driver );
     }
 
     void KFBattleShardModule::Run()
@@ -264,7 +264,7 @@ namespace KFrame
         if ( kfroom == nullptr )
         {
             kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
-            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount(), kfmsg.version() );
+            kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount(), kfmsg.version(), _battle_redis_driver );
             _kf_room_list.Insert( kfmsg.roomid(), kfroom );
         }
 

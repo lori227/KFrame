@@ -30,8 +30,8 @@ namespace KFrame
     void KFMailShardModule::OnceRun()
     {
         // 初始化redis
-        _mail_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( mail ) );
-        _public_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
+        _mail_redis_driver = _kf_redis->Create( __KF_STRING__( mail ) );
+        _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
 
         // 每天5点 清理过期的全局邮件
         auto cleartime = _kf_option->GetUInt32( __KF_STRING__( wholemailcleartime ) );
@@ -194,7 +194,7 @@ namespace KFrame
     bool KFMailShardModule::AddMail( uint32 playerid, uint32 mailtype, MapString& maildata )
     {
         // 创建一个邮件id
-        auto uint64result = _mail_redis_driver->QueryUInt64( "incr {}", __KF_STRING__( mailidcreater ) );
+        auto uint64result = _mail_redis_driver->Execute( "incr {}", __KF_STRING__( mailidcreater ) );
         if ( uint64result->_value == _invalid_int )
         {
             return false;

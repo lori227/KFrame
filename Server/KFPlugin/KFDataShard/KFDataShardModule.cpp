@@ -3,34 +3,17 @@
 
 namespace KFrame
 {
-#define __ZONE_REDIS_DRIVER__( zoneid ) _kf_redis->CreateExecute( __KF_STRING__( zone ), _invalid_int )
-
-#define __REGISTER_DATA_MESSAGE__ __REGISTER_MESSAGE__
-#define __UNREGISTER_DATA_MESSAGE__ __UNREGISTER_MESSAGE__
+#define __DATA_REDIS_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), _invalid_int )
 #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
-
-    KFDataShardModule::KFDataShardModule()
-    {
-
-    }
-
-    KFDataShardModule::~KFDataShardModule()
-    {
-
-    }
-
-    void KFDataShardModule::InitModule()
-    {
-    }
 
     void KFDataShardModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
-        __REGISTER_DATA_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ, &KFDataShardModule::HandleDeletePlayerReq );
-        __REGISTER_DATA_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &KFDataShardModule::HandleLoginLoadPlayerReq );
-        __REGISTER_DATA_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ, &KFDataShardModule::HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ, &KFDataShardModule::HandleDeletePlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &KFDataShardModule::HandleLoginLoadPlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ, &KFDataShardModule::HandleQueryPlayerReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -39,10 +22,10 @@ namespace KFrame
         __UNREGISTER_TIMER__();
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
-        __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ );
-        __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ );
-        __UNREGISTER_DATA_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +40,7 @@ namespace KFrame
             return true;
         }
 
-        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
             __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
@@ -93,7 +76,7 @@ namespace KFrame
             return false;
         }
 
-        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
             __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
@@ -136,7 +119,7 @@ namespace KFrame
 #ifndef __KF_DEBUG__
         return;
 #endif
-        auto redisdriver = __ZONE_REDIS_DRIVER__( zoneid );
+        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
             return;

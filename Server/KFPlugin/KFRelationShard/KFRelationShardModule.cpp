@@ -40,8 +40,8 @@ namespace KFrame
 
     void KFRelationShardModule::OnceRun()
     {
-        _public_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
-        _relation_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( relation ) );
+        _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
+        _relation_redis_driver = _kf_redis->Create( __KF_STRING__( relation ) );
     }
 
     __KF_SCHEDULE_FUNCTION__( KFRelationShardModule::OnScheduleClearFriendLiness )

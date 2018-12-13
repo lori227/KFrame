@@ -30,14 +30,9 @@ namespace KFrame
         return true;
     }
     /////////////////////////////////////////////////////////////////////////
-    KFBattleManage::KFBattleManage()
+    void KFBattleManage::Initialize( KFRedisDriver* redisdriver )
     {
-        _battle_redis_driver = nullptr;
-    }
-
-    void KFBattleManage::Initialize()
-    {
-        _battle_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        _battle_redis_driver = redisdriver;
     }
 
     void KFBattleManage::RegisterBattleServer( uint64 serverid, uint64 proxyid, const std::string& ip, uint32 port, const std::string& version )
@@ -55,7 +50,6 @@ namespace KFrame
         _battle_redis_driver->Append( "sadd {}:{} {}", __KF_STRING__( battlelist ), version, serverid );
         _battle_redis_driver->Append( "sadd {}:{} {}", __KF_STRING__( battleversion ), version, serverid );
         _battle_redis_driver->Append( "sadd {} {}", __KF_STRING__( battleversionlist ), version );
-
         _battle_redis_driver->Pipeline();
     }
 

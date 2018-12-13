@@ -26,10 +26,10 @@ namespace KFrame
         return _node != nullptr;
     }
 
-    void KFNode::NextNode()
+    void KFNode::NextNode( const char* key /* = nullptr */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
-        _node = xmlnode->next_sibling();
+        _node = xmlnode->next_sibling( key );
     }
 
     KFNode KFNode::FindNode( const char* key )

@@ -4,7 +4,7 @@
 
 namespace KFrame
 {
-#define __DIR_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( dir ) )
+#define __DIR_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( dir ) )
 
     void KFDirShardModule::BeforeRun()
     {

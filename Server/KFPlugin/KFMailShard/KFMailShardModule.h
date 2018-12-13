@@ -81,9 +81,11 @@ namespace KFrame
 
         // 通知有新邮件
         void NoticePlayerNewMail( uint32 playerid, uint32 mailtype );
-
     private:
+        // 邮件数据库
         KFRedisDriver* _mail_redis_driver{ nullptr };
+
+        // 公共数据数据库
         KFRedisDriver* _public_redis_driver{ nullptr };
     };
 }

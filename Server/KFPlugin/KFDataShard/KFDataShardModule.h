@@ -35,7 +35,7 @@ namespace KFrame
         uint32 _zone_id;
 
         // 玩家id
-        uint32 _player_id;
+        uint64 _player_id;
 
         // 玩家数据
         KFMsg::PBObject _pb_object;
@@ -44,11 +44,8 @@ namespace KFrame
     class KFDataShardModule : public KFDataShardInterface
     {
     public:
-        KFDataShardModule();
-        ~KFDataShardModule();
-
-        // 加载配置
-        virtual void InitModule();
+        KFDataShardModule() = default;
+        ~KFDataShardModule() = default;
 
         // 初始化
         virtual void BeforeRun();

@@ -9,13 +9,7 @@ namespace KFrame
     class KFRedisDriver
     {
     public:
-        // 执行数据库
-        template< typename... P >
-        KFResult< voidptr >* Execute( const char* myfmt, P&& ... args )
-        {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return UpdateExecute( strsql );
-        }
+        virtual ~KFRedisDriver() = default;
 
         // 更新数据库
         template< typename T, typename... P >
@@ -25,6 +19,14 @@ namespace KFrame
             auto strformat = __FORMAT__( myfmt, std::forward<P>( args )... );
 
             auto strsql = strformat + " " + strvalue;
+            return VoidExecute( strsql );
+        }
+
+        // 执行数据库
+        template< typename... P >
+        KFResult< uint64 >* Execute( const char* myfmt, P&& ... args )
+        {
+            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return UpdateExecute( strsql );
         }
 
@@ -122,7 +124,8 @@ namespace KFrame
 
     protected:
         // 执行更新
-        virtual KFResult< voidptr >* UpdateExecute( const std::string& strsql ) = 0;
+        virtual KFResult< voidptr >* VoidExecute( const std::string& strsql ) = 0;
+        virtual KFResult< uint64 >* UpdateExecute( const std::string& strsql ) = 0;
 
         // 查询数据库
         virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql ) = 0;
@@ -143,15 +146,14 @@ namespace KFrame
     class KFRedisInterface : public KFModule
     {
     public:
-        // 创建RedisExecute
-        virtual KFRedisDriver* CreateExecute( const std::string& module, uint32 logicid = 0 ) = 0;
+        // 创建redis
+        virtual KFRedisDriver* Create( const std::string& module, uint32 logicid = 0 ) = 0;
     };
 
 
     ///////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_redis, KFRedisInterface );
     ///////////////////////////////////////////////////////////////////////////////
-
 }
 
 #endif

@@ -11,7 +11,7 @@
 
 #include "KFrame.h"
 #include "KFRedisInterface.h"
-#include "KFRedisExecute.h"
+#include "KFRedisLogic.h"
 
 namespace KFrame
 {
@@ -30,18 +30,15 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 创建RedisExecute
-        virtual KFRedisDriver* CreateExecute( const std::string& module, uint32 logicid = 0 );
+        // 创建
+        virtual KFRedisDriver* Create( const std::string& module, uint32 logicid = 0 );
 
     protected:
-        // 创建redis
-        KFRedisDriver* CreateExecute( uint32 id, const std::string& ip, uint32 port, const std::string& password );
-
         // 查找
-        KFRedisExecute* FindRedisExecute( uint32 id );
+        KFRedisLogic* FindRedisLogic( uint32 id );
 
         // 插入redis
-        void InsertRedisExecute( uint32 id, KFRedisExecute* kfredisexecute );
+        void InsertRedisLogic( uint32 id, KFRedisLogic* kfredislogic );
 
     private:
         // 线程锁
@@ -49,7 +46,7 @@ namespace KFrame
 
         // 多线程列表
         typedef std::pair< uint32, uint32 > RedisKey;
-        KFMap< RedisKey, const RedisKey&, KFRedisExecute > _redis_execute;
+        KFMap< RedisKey, const RedisKey&, KFRedisLogic > _redis_logic;
     };
 }
 

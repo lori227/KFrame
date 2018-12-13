@@ -25,7 +25,7 @@ namespace KFrame
 
     void KFMatchShardModule::OnceRun()
     {
-        _kf_battle_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        _battle_redis_driver = _kf_redis->Create( __KF_STRING__( battle ) );
         __REGISTER_LOOP_TIMER__( 0, 10000, &KFMatchShardModule::OnTimerQueryBattleVersion );
     }
 
@@ -87,7 +87,7 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFMatchShardModule::OnTimerQueryBattleVersion )
     {
         // 查询战斗服版本号
-        auto kflist = _kf_battle_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
+        auto kflist = _battle_redis_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
         if ( !kflist->IsOk() )
         {
             return;

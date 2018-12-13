@@ -15,7 +15,6 @@
 #include "KFWorker/KFWorkerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
 
 namespace KFrame
 {
@@ -53,9 +52,16 @@ namespace KFrame
         // 处理查询访客请求
         __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
 
-    private:
+    protected:
         // 设置玩家名字
         uint32 ProcessSetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
+
+    private:
+        // 名字数据库
+        KFRedisDriver* _name_redis_driver{ nullptr };
+
+        // 公共属性
+        KFRedisDriver* _public_redis_driver{ nullptr };
     };
 }
 

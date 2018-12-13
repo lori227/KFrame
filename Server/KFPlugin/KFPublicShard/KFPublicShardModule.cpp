@@ -3,52 +3,34 @@
 
 namespace KFrame
 {
-    //#define __USE_WORKER__
-
-#ifdef __USE_WORKER__
-    #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_WORKER_MESSAGE__
-    #define __UNREGISTER_PUBLIC_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-    #define __PUBLIC_REDIS_DRIVER__ _kf_redis->CreateExecute( __KF_STRING__( public ) )
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_worker->SendToClient( kfid, msgid, message )
-#else
-    #define __REGISTER_PUBLIC_MESSAGE__ __REGISTER_MESSAGE__
-    #define __UNREGISTER_PUBLIC_MESSAGE__ __UNREGISTER_MESSAGE__
-    static KFRedisDriver* _kf_redis_driver = nullptr;
-    #define __PUBLIC_REDIS_DRIVER__ _kf_redis_driver
-    #define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
-#endif
+#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
 
     void KFPublicShardModule::BeforeRun()
     {
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ, &KFPublicShardModule::HandleCreateRoleReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &KFPublicShardModule::HandleUpdatePublicDataReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ, &KFPublicShardModule::HandleQueryBasicDataReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ, &KFPublicShardModule::HandleSetPlayerNameReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &KFPublicShardModule::HandleUpdateGuestListReq );
-        __REGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ, &KFPublicShardModule::HandleQueryGuestReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ, &KFPublicShardModule::HandleCreateRoleReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &KFPublicShardModule::HandleUpdatePublicDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ, &KFPublicShardModule::HandleQueryBasicDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ, &KFPublicShardModule::HandleSetPlayerNameReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &KFPublicShardModule::HandleUpdateGuestListReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ, &KFPublicShardModule::HandleQueryGuestReq );
     }
 
     void KFPublicShardModule::BeforeShut()
     {
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ );
-        __UNREGISTER_PUBLIC_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ );
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_schedule->UnRegisterSchedule( this );
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ );
     }
+
 
     void KFPublicShardModule::OnceRun()
     {
-#ifndef __USE_WORKER__
-        // 初始化redis
-        _kf_redis_driver = _kf_redis->CreateExecute( __KF_STRING__( public ) );
-#endif
+        _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
+        _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleUpdatePublicDataReq )
@@ -62,15 +44,14 @@ namespace KFrame
             values[ pbdata->name() ] = pbdata->value();
         }
 
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
+        _public_redis_driver->Update( values, "hmset {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryBasicDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBasicReq );
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        auto queryid = redisdriver->QueryString( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
+
+        auto queryid = _name_redis_driver->QueryString( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
 
         KFMsg::S2SQueryBasicAck ack;
         ack.set_playerid( kfmsg.playerid() );
@@ -81,7 +62,7 @@ namespace KFrame
         // 查询所有数据
         if ( !queryid->_value.empty() )
         {
-            auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
+            auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
             for ( auto& iter : querydata->_value )
             {
                 auto pbstring = pbobject->add_pbstring();
@@ -100,12 +81,12 @@ namespace KFrame
         uint32 result = ProcessSetPlayerName( kfmsg.playerid(), _invalid_str, kfmsg.newname() );
 
         KFMsg::S2SCreateRoleAck ack;
+        ack.set_result( result );
         ack.set_playerid( kfmsg.playerid() );
         ack.set_newname( kfmsg.newname() );
         ack.set_modleid( kfmsg.modleid() );
         ack.set_sex( kfmsg.sex() );
         ack.set_inviterid( kfmsg.inviterid() );
-        ack.set_result( result );
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_CREATE_ROLE_ACK, &ack );
     }
 
@@ -117,10 +98,10 @@ namespace KFrame
         uint32 result = ProcessSetPlayerName( kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
 
         KFMsg::S2SSetPlayerNameAck ack;
+        ack.set_result( result );
         ack.set_playerid( kfmsg.playerid() );
         ack.set_oldname( kfmsg.oldname() );
         ack.set_newname( kfmsg.newname() );
-        ack.set_result( result );
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_SET_PLAYER_NAME_ACK, &ack );
     }
 
@@ -129,21 +110,19 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SUpdateGuestListReq );
 
         // 保存访客信息
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-        redisdriver->Execute( "zadd {}:{} {} {}", __KF_STRING__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
+        _public_redis_driver->Execute( "zadd {}:{} {} {}", __KF_STRING__( guest ), kfmsg.playerid(), kfmsg.guesttime(), kfmsg.guestid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryGuestReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryGuestReq );
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
 
         // 删除过期访客信息
         auto querytime = kfmsg.querytime();
         uint64 validtime = KFTimeEnum::OneDaySecond * KFTimeEnum::OneMonthDay;
         if ( querytime > validtime )
         {
-            redisdriver->Execute( "zremrangebyscore {}:{} {} {}", __KF_STRING__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
+            _public_redis_driver->Execute( "zremrangebyscore {}:{} {} {}", __KF_STRING__( guest ), kfmsg.queryid(), _invalid_int, querytime - validtime );
         }
 
         // 返回访客信息
@@ -152,17 +131,18 @@ namespace KFrame
         ack.set_queryid( kfmsg.queryid() );
 
         // 获取访客数量
-        auto querycount = redisdriver->QueryUInt64( "zcard {}:{}", __KF_STRING__( guest ), kfmsg.queryid() );
+        auto querycount = _public_redis_driver->QueryUInt64( "zcard {}:{}", __KF_STRING__( guest ), kfmsg.queryid() );
         ack.set_guestcount( querycount->_value );
 
         // 获取最近四位访客的信息
         if ( querycount->_value != _invalid_int )
         {
-            auto guestlist = redisdriver->QueryList( "zrevrange {}:{} 0 3", __KF_STRING__( guest ), kfmsg.queryid() );
+            auto guestlist = _public_redis_driver->QueryList( "zrevrange {}:{} 0 3", __KF_STRING__( guest ), kfmsg.queryid() );
             for ( auto& strid : guestlist->_value )
             {
                 auto guestid = KFUtility::ToValue< uint64 >( strid );
-                auto querydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), guestid );
+
+                auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), guestid );
 
                 auto pbguestdata = ack.add_guestdata();
                 pbguestdata->set_guestid( guestid );
@@ -176,9 +156,7 @@ namespace KFrame
 
     uint32 KFPublicShardModule::ProcessSetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
     {
-        auto redisdriver = __PUBLIC_REDIS_DRIVER__;
-
-        auto queryplayerid = redisdriver->QueryString( "get {}:{}", __KF_STRING__( name ), newname );
+        auto queryplayerid = _name_redis_driver->QueryString( "get {}:{}", __KF_STRING__( name ), newname );
         if ( !queryplayerid->IsOk() )
         {
             return KFMsg::PublicDatabaseError;
@@ -192,7 +170,7 @@ namespace KFrame
         }
 
         // 保存名字
-        auto kfresult = redisdriver->Execute( "set {}:{} {}", __KF_STRING__( name ), newname, playerid );
+        auto kfresult = _name_redis_driver->Execute( "set {}:{} {}", __KF_STRING__( name ), newname, playerid );
         if ( !kfresult->IsOk() )
         {
             return KFMsg::PublicDatabaseError;
@@ -201,7 +179,7 @@ namespace KFrame
         // 删除旧的名字关联
         if ( !oldname.empty() )
         {
-            redisdriver->Execute( "del {}:{}", __KF_STRING__( name ), oldname );
+            _name_redis_driver->Execute( "del {}:{}", __KF_STRING__( name ), oldname );
         }
 
         return KFMsg::Success;

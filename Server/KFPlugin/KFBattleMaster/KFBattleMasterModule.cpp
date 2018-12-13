@@ -11,15 +11,15 @@ namespace KFrame
 
     void KFBattleMasterModule::OnceRun()
     {
-        _kf_battle_driver = _kf_redis->CreateExecute( __KF_STRING__( battle ) );
+        _battle_redis_driver = _kf_redis->Create( __KF_STRING__( battle ) );
 
-        auto kflist = _kf_battle_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
+        auto kflist = _battle_redis_driver->QueryList( "smembers {}", __KF_STRING__( battleversionlist ) );
         for ( auto& strversion : kflist->_value )
         {
-            _kf_battle_driver->Execute( "del {}:{}", __KF_STRING__( battleversion ), strversion );
+            _battle_redis_driver->Execute( "del {}:{}", __KF_STRING__( battleversion ), strversion );
         }
 
-        _kf_battle_driver->Execute( "del {}", __KF_STRING__( battleversionlist ) );
+        _battle_redis_driver->Execute( "del {}", __KF_STRING__( battleversionlist ) );
     }
 
     void KFBattleMasterModule::BeforeShut()
@@ -56,7 +56,7 @@ namespace KFrame
     uint64 KFBattleMasterModule::AllocBattleId( const std::string& ip, uint32 port )
     {
         // 先查询是否存在
-        auto kfqueryid = _kf_battle_driver->QueryString( "get {}:{}:{}", __KF_STRING__( battleid ), ip, port );
+        auto kfqueryid = _battle_redis_driver->QueryString( "get {}:{}:{}", __KF_STRING__( battleid ), ip, port );
         if ( !kfqueryid->IsOk() )
         {
             return _invalid_int;
@@ -68,7 +68,7 @@ namespace KFrame
         }
 
         // 重新分配
-        auto kfallocid = _kf_battle_driver->QueryUInt64( "incr {}", __KF_STRING__( battleidcreater ) );
+        auto kfallocid = _battle_redis_driver->Execute( "incr {}", __KF_STRING__( battleidcreater ) );
         if ( !kfallocid->IsOk() || kfallocid->_value == _invalid_int )
         {
             return _invalid_int;
@@ -82,7 +82,7 @@ namespace KFrame
 
         // 保存数据库
         auto strserverid = kfappid.ToString();
-        _kf_battle_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( battleid ), ip, port, strserverid );
+        _battle_redis_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( battleid ), ip, port, strserverid );
 
         return kfappid._union._id;
     }

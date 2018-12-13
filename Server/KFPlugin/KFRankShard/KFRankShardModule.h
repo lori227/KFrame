@@ -54,8 +54,8 @@ namespace KFrame
     class KFRankShardModule : public KFRankShardInterface
     {
     public:
-        KFRankShardModule();
-        ~KFRankShardModule();
+        KFRankShardModule() = default;
+        ~KFRankShardModule() = default;
 
         // 加载配置
         virtual void InitModule();
@@ -118,7 +118,7 @@ namespace KFrame
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
     private:
         // 排行榜
-        KFRedisDriver* _rank_driver;
+        KFRedisDriver* _rank_redis_driver{ nullptr };
 
         // 排行榜列表
         typedef std::pair< uint32, uint32 > RankKey;

@@ -94,11 +94,11 @@ namespace KFrame
         void UpdateFriendLiness( uint64 selfplayerid, uint64 targetplayerid, uint32 type, uint32 addvalue );
 
     private:
-        // 公共属性数据库
-        KFRedisDriver* _public_redis_driver{ nullptr };
-
         // 关系数据库
         KFRedisDriver* _relation_redis_driver{ nullptr };
+
+        // 公共数据数据库
+        KFRedisDriver* _public_redis_driver{ nullptr };
     };
 }
 
