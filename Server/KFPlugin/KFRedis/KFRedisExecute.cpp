@@ -7,7 +7,6 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFRedisExecute::KFRedisExecute()
     {
-        _index = 0;
         _port = 0;
         _redis_context = nullptr;
     }

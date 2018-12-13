@@ -47,9 +47,6 @@ namespace KFrame
         // redis环境
         redisContext* _redis_context;
 
-        // 数据库索引
-        uint32 _index;
-
         // 返回结果列表
         std::vector< KFBaseResultQueue* > _result_queue_list;
     };
@@ -63,7 +60,6 @@ namespace KFrame
         virtual ~KFWriteExecute();
 
         // 写操作
-        // 执行更新
         virtual KFResult< voidptr >* VoidExecute( const std::string& strsql );
         virtual KFResult< uint64 >* UpdateExecute( const std::string& strsql );
 
@@ -78,7 +74,6 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-
     class KFReadExecute : public KFRedisExecute
     {
     public:
@@ -87,7 +82,6 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////
         // 读操作
-        // 查询数据库
         virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql );
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
         virtual KFResult< std::string >* StringExecute( const std::string& strsql );
