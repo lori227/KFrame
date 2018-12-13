@@ -5,6 +5,6 @@
 		<Plugin Sort="110" Name="KFHttpServer" Config="./setting/server.network"/>
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
 		<Plugin Sort="130" Name="KFDirShard" Config=""/>
-		<Plugin Sort="140" Name="KFRedis" Config="./setting/redis.address"/>
+		<Plugin Sort="140" Name="KFRedis" Config="./setting/{}_{}_redis.address"/>
 	</Plugins>
 </Setting>
