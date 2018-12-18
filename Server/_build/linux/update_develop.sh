@@ -1,1 +1,1 @@
-sh update_file.sh 100 $1
+sh update_file.sh develop $1 

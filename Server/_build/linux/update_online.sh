@@ -1,1 +1,1 @@
-sh update_file.sh 1 $1
+sh update_file.sh online $1
