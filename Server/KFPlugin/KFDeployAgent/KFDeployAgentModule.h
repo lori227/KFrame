@@ -203,7 +203,6 @@ namespace KFrame
 
         // mysql
         KFMySQLDriver* _deploy_driver{ nullptr };
-        KFMySQLDriver* _version_driver{ nullptr };
 
         // deploy 表名字
         std::string _deploy_table_name;

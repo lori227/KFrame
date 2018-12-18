@@ -93,11 +93,6 @@ namespace KFrame
     void KFDeployAgentModule::OnceRun()
     {
         __MKDIR__( _pid_path );
-        _version_driver = _kf_mysql->CreateExecute( __KF_STRING__( version ) );
-        if ( _version_driver == nullptr )
-        {
-            return __LOG_CRITICAL__( "version mysql is nullprt" );
-        }
 
         // 加载部署信息
         try
@@ -995,7 +990,7 @@ namespace KFrame
     void KFDeployAgentModule::StartWgetVersionTask()
     {
         // 查询版本路径
-        auto queryurl = _version_driver->QueryString( "select `version_url` from version where `version_name`='{}';", _kf_task->_value );
+        auto queryurl = _deploy_driver->QueryString( "select `version_url` from version where `version_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
             return;
@@ -1011,7 +1006,7 @@ namespace KFrame
 
     bool KFDeployAgentModule::CheckWgetVersionTaskFinish()
     {
-        auto querymd5 = _version_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
+        auto querymd5 = _deploy_driver->QueryString( "select `version_md5` from version where `version_name`='{}';", _kf_task->_value );
         if ( !querymd5->IsOk() || querymd5->_value.empty() )
         {
             return true;
@@ -1072,7 +1067,7 @@ namespace KFrame
     void KFDeployAgentModule::StartDownFileTask()
     {
         // 查询版本路径
-        auto queryurl = _version_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
+        auto queryurl = _deploy_driver->QueryString( "select `file_url` from file where `file_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
             return;
@@ -1088,7 +1083,7 @@ namespace KFrame
 
     bool KFDeployAgentModule::CheckDownFileTaskFinish()
     {
-        auto querymap = _version_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
+        auto querymap = _deploy_driver->QueryMap( "select * from file where `file_name`='{}';", _kf_task->_value );
         if ( !querymap->IsOk() || querymap->_value.empty() )
         {
             return true;
