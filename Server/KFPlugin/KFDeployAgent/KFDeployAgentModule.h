@@ -205,6 +205,9 @@ namespace KFrame
         KFMySQLDriver* _deploy_driver{ nullptr };
         KFMySQLDriver* _version_driver{ nullptr };
 
+        // deploy 表名字
+        std::string _deploy_table_name;
+
         // deploy列表
         KFMap< std::string, const std::string&, KFDeployData > _deploy_list;
 

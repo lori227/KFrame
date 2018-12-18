@@ -25,6 +25,8 @@ namespace KFrame
             return __LOG_CRITICAL__( "deploy mysql is nullprt" );
         }
 
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
+
         // 获得本机ip, 查询appid
         auto localip = _kf_ip_address->GetLocalIp();
         auto queryappid = _deploy_driver->QueryString( "select `{}` from `{}` where `{}`='{}'",
@@ -147,7 +149,7 @@ namespace KFrame
         {
             MapString keyvalue;
             keyvalue[ __KF_STRING__( localip ) ] = KFGlobal::Instance()->_local_ip;
-            auto querydeploydata = _deploy_driver->Select( __KF_STRING__( deploy ), keyvalue );
+            auto querydeploydata = _deploy_driver->Select( _deploy_table_name, keyvalue );
             for ( auto& values : querydeploydata->_value )
             {
                 auto deploydata = __KF_CREATE__( KFDeployData );
@@ -489,7 +491,7 @@ namespace KFrame
         MapString keyvalues;
         keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
         keyvalues[ __KF_STRING__( service ) ] = deploydata->_service_type;
-        _deploy_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
+        _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
     }
 
     std::string KFDeployAgentModule::FormatPidFileName( KFDeployData* deploydata )
@@ -1060,7 +1062,7 @@ namespace KFrame
                 MapString keyvalues;
                 keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
                 keyvalues[ __KF_STRING__( service ) ] = deploydata->_service_type;
-                _deploy_driver->Update( __KF_STRING__( deploy ), keyvalues, updatevalues );
+                _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
             }
         }
 
