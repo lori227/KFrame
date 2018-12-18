@@ -1,4 +1,5 @@
 ﻿#include "KFAppConfig.h"
+#include "Poco/File.h"
 
 namespace KFrame
 {
@@ -107,7 +108,21 @@ namespace KFrame
                 setting._config_file = node.GetString( "Config" );
                 if ( !setting._config_file.empty() )
                 {
-                    setting._config_file = __FORMAT__( setting._config_file, kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type  )
+                    auto configfile = __FORMAT__( setting._config_file, kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
+
+                    // 判断文件是否存在
+                    Poco::File file( configfile );
+                    if ( !file.exists() )
+                    {
+                        configfile = __FORMAT__( setting._config_file, kfglobal->_app_id._union._app_data._channel_id, _invalid_int );
+                        Poco::File file( configfile );
+                        if ( !file.exists() )
+                        {
+                            configfile = __FORMAT__( setting._config_file, _invalid_int, _invalid_int );
+                        }
+                    }
+
+                    setting._config_file = configfile;
                 }
 
                 AddStartupSetting( setting );
