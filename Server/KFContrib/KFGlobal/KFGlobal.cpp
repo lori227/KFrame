@@ -15,8 +15,8 @@ namespace KFrame
         _real_time = 0;
         _listen_port = 0;
         _log_level = 0;
-        _kf_rand = new KFRand();
         _kf_logger = nullptr;
+        _kf_rand = new KFRand();
         _kf_version = new KFVersion();
         _kf_guid = new KFGuid( 29, 14, 8, 12 );
     }
