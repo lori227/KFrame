@@ -44,13 +44,15 @@ namespace KFrame
             auto result = _lua_state->LoadFile( file.c_str() );
             if ( result != 0 )
             {
-                return __LOG_ERROR__( "Load [{}] Failed!", file );
+                return __LOG_ERROR__( "load [{}] failed result[{}]!", file, result );
             }
 
             _lua_state->Call( 0, 0 );
 
             _lua_file = file;
             _is_initialized = true;
+
+            __LOG_INFO__( "load [{}] ok!", file );
         }
         catch ( LuaPlus::LuaException& e )
         {
@@ -58,7 +60,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "load [{}] failed unknown!", file  );
+            __LOG_ERROR__( "load [{}] failed unknown!", file );
         }
     }
 }
