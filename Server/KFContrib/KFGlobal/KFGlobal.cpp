@@ -179,17 +179,18 @@ namespace KFrame
 
     void KFGlobal::Log( uint32 level, const std::string& content )
     {
-        _kf_logger->Log( level, content );
+        if ( _kf_logger != nullptr )
+        {
+            _kf_logger->Log( level, content );
+        }
     }
 
     void KFGlobal::SetRemoteLogFunction( KFLogFunction& function )
     {
-        if ( _kf_logger == nullptr )
+        if ( _kf_logger != nullptr )
         {
-            return;
+            _kf_logger->SetRemoteLogFunction( function );
         }
-
-        _kf_logger->SetRemoteLogFunction( function );
     }
 
 }
