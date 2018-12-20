@@ -163,7 +163,7 @@ namespace KFrame
 
         __LOG_INFO__( "[{}:{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
 
-        // linux程序正常退出时会core, 判断是每个so文件中的同名全局函数造成
+        // linux程序正常退出时会core, 应该是每个so文件中的同名全局变量造成的
         // 这里不让程序退出, 由agent等待超时kill
         // kfglobal->_app_run = false;
     }
