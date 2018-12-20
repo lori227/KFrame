@@ -12,7 +12,6 @@ namespace KFrame
         _use_value = 0;
     }
 
-
     bool KFAgentValue::SetValue( const std::string& dataname, std::string value )
     {
         _data_name = dataname;

@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : #001-小兵研发192.168.10.230
+Source Server         : #001-小兵研发
 Source Server Version : 50722
 Source Host           : 192.168.10.230:3306
 Source Database       : kfdeploy
@@ -10,10 +10,28 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-10-29 18:32:21
+Date: 2018-12-20 14:50:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `agent`
+-- ----------------------------
+DROP TABLE IF EXISTS `agent`;
+CREATE TABLE `agent` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `localip` varchar(50) NOT NULL DEFAULT '',
+  `strappid` varchar(50) NOT NULL DEFAULT '',
+  `appid` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `ip` (`localip`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of agent
+-- ----------------------------
+INSERT INTO `agent` VALUES ('1', '192.168.1.58', '1.0.3.1', '281487861612545');
 
 -- ----------------------------
 -- Table structure for `deploy`
@@ -39,84 +57,103 @@ CREATE TABLE `deploy` (
 -- ----------------------------
 -- Records of deploy
 -- ----------------------------
-INSERT INTO `deploy` VALUES ('1.0.11.1', '1.1', 'data', 'master', '2.1', '1', '1', '0', '23488', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.11.1', '1.2', 'data', 'master', '2.1', '1', '1', '0', '23488', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.111.1', '1.1', 'log', 'master', '1.1', '1', '1', '0', '23498', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.111.1', '1.2', 'log', 'master', '1.1', '1', '1', '0', '23498', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.112.1', '1.1', 'log', 'proxy', '1.1', '1', '1', '0', '23510', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.112.1', '1.2', 'log', 'proxy', '1.1', '1', '1', '0', '23510', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.113.1', '1.1', 'log', 'shard', '1.1', '1', '1', '0', '23522', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.113.1', '1.2', 'log', 'shard', '1.1', '1', '1', '0', '23522', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.12.1', '1.1', 'data', 'proxy', '2.1', '1', '1', '0', '23533', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.12.1', '1.2', 'data', 'proxy', '2.1', '1', '1', '0', '23533', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.121.1', '1.1', 'dir', 'master', '2.1', '1', '1', '0', '23545', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.121.1', '1.2', 'dir', 'master', '2.1', '1', '1', '0', '23545', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.122.1', '1.1', 'dir', 'proxy', '2.1', '1', '1', '0', '23555', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.122.1', '1.2', 'dir', 'proxy', '2.1', '1', '1', '0', '23555', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.123.1', '1.1', 'dir', 'shard', '2.1', '1', '1', '0', '23566', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.123.1', '1.2', 'dir', 'shard', '2.1', '1', '1', '0', '23566', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.13.1', '1.1', 'data', 'shard', '2.1', '1', '1', '0', '23581', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.13.1', '1.2', 'data', 'shard', '2.1', '1', '1', '0', '23581', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.21.1', '1.1', 'public', 'master', '2.1', '1', '1', '0', '23592', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.21.1', '1.2', 'public', 'master', '2.1', '1', '1', '0', '23592', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.22.1', '1.1', 'public', 'proxy', '2.1', '1', '1', '0', '23604', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.22.1', '1.2', 'public', 'proxy', '2.1', '1', '1', '0', '23604', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.23.1', '1.1', 'public', 'shard', '2.1', '1', '1', '0', '23615', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.23.1', '1.2', 'public', 'shard', '2.1', '1', '1', '0', '23615', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.31.1', '1.1', 'route', 'master', '2.1', '1', '1', '0', '23626', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.31.1', '1.2', 'route', 'master', '2.1', '1', '1', '0', '23626', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.32.1', '1.1', 'route', 'proxy', '2.1', '1', '1', '0', '23638', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.32.1', '1.2', 'route', 'proxy', '2.1', '1', '1', '0', '23638', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.33.1', '1.1', 'route', 'shard', '2.1', '1', '1', '0', '23649', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.33.1', '1.2', 'route', 'shard', '2.1', '1', '1', '0', '23649', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.4.1', '1.1', 'auth', 'auth', '2.1', '1', '1', '0', '23661', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.4.1', '1.2', 'auth', 'auth', '2.1', '1', '1', '0', '23661', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.41.1', '1.1', 'match', 'master', '2.1', '1', '1', '0', '23674', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.41.1', '1.2', 'match', 'master', '2.1', '1', '1', '0', '23674', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.42.1', '1.1', 'match', 'proxy', '2.1', '1', '1', '0', '23685', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.42.1', '1.2', 'match', 'proxy', '2.1', '1', '1', '0', '23685', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.43.1', '1.1', 'match', 'shard', '2.1', '1', '1', '0', '23697', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.43.1', '1.2', 'match', 'shard', '2.1', '1', '1', '0', '23697', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.51.1', '1.1', 'battle', 'master', '2.1', '1', '1', '0', '23710', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.51.1', '1.2', 'battle', 'master', '2.1', '1', '1', '0', '23710', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.52.1', '1.1', 'battle', 'proxy', '2.1', '1', '1', '0', '23722', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.52.1', '1.2', 'battle', 'proxy', '2.1', '1', '1', '0', '23722', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.53.1', '1.1', 'battle', 'shard', '2.1', '1', '1', '0', '23733', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.53.1', '1.2', 'battle', 'shard', '2.1', '1', '1', '0', '23733', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.61.1', '1.1', 'mail', 'master', '2.1', '1', '1', '0', '23744', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.61.1', '1.2', 'mail', 'master', '2.1', '1', '1', '0', '23744', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.62.1', '1.1', 'mail', 'proxy', '2.1', '1', '1', '0', '23756', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.62.1', '1.2', 'mail', 'proxy', '2.1', '1', '1', '0', '23756', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.63.1', '1.1', 'mail', 'shard', '2.1', '1', '1', '0', '23767', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.63.1', '1.2', 'mail', 'shard', '2.1', '1', '1', '0', '23767', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.71.1', '1.1', 'relation', 'master', '2.1', '1', '1', '0', '23778', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.71.1', '1.2', 'relation', 'master', '2.1', '1', '1', '0', '23778', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.72.1', '1.1', 'relation', 'proxy', '2.1', '1', '1', '0', '23790', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.72.1', '1.2', 'relation', 'proxy', '2.1', '1', '1', '0', '23790', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.73.1', '1.1', 'relation', 'shard', '2.1', '1', '1', '0', '23801', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.73.1', '1.2', 'relation', 'shard', '2.1', '1', '1', '0', '23801', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.81.1', '1.1', 'group', 'master', '2.1', '1', '1', '0', '23813', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.81.1', '1.2', 'group', 'master', '2.1', '1', '1', '0', '23813', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.82.1', '1.1', 'group', 'proxy', '2.1', '1', '1', '0', '23824', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.82.1', '1.2', 'group', 'proxy', '2.1', '1', '1', '0', '23824', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.83.1', '1.1', 'group', 'shard', '2.1', '1', '1', '0', '23836', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.83.1', '1.2', 'group', 'shard', '2.1', '1', '1', '0', '23836', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.91.1', '1.1', 'rank', 'master', '2.1', '1', '1', '0', '23847', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.91.1', '1.2', 'rank', 'master', '2.1', '1', '1', '0', '23847', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.92.1', '1.1', 'rank', 'proxy', '2.1', '1', '1', '0', '23859', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.92.1', '1.2', 'rank', 'proxy', '2.1', '1', '1', '0', '23859', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.93.1', '1.1', 'rank', 'shard', '2.1', '1', '1', '0', '23870', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.0.93.1', '1.2', 'rank', 'shard', '2.1', '1', '1', '0', '23870', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.241.1', '1.1', 'zone', 'master', '2.1', '1', '1', '0', '23882', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.241.1', '1.2', 'zone', 'master', '2.1', '1', '1', '0', '23882', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.242.1', '1.1', 'zone', 'world', '2.1', '1', '1', '0', '23893', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.242.1', '1.2', 'zone', 'world', '2.1', '1', '1', '0', '23893', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.243.1', '1.1', 'zone', 'gate', '2.1', '1', '1', '0', '23908', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.243.1', '1.2', 'zone', 'gate', '2.1', '1', '1', '0', '23908', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.244.1', '1.1', 'zone', 'login', '2.1', '1', '1', '0', '23919', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.244.1', '1.2', 'zone', 'login', '2.1', '1', '1', '0', '23919', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.245.1', '1.1', 'zone', 'game', '2.1', '1', '1', '0', '23930', '1540808547', '1.0.3.1', '192.168.10.230', 'sgame_develop_315_201810291815');
-INSERT INTO `deploy` VALUES ('1.1.245.1', '1.2', 'zone', 'game', '2.1', '1', '1', '0', '23930', '1540808547', '1.0.3.1', '192.168.1.9', 'sgame_develop_315_201810291815');
+INSERT INTO `deploy` VALUES ('1.0.11.1', '1.1', 'data', 'master', '2.1', '1', '1', '0', '28180', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.11.1', '1.2', 'data', 'master', '2.1', '1', '1', '0', '56468', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.111.1', '1.1', 'log', 'master', '1.1', '1', '1', '0', '28190', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.111.1', '1.2', 'log', 'master', '1.1', '1', '1', '0', '56478', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.112.1', '1.1', 'log', 'proxy', '1.1', '1', '1', '0', '28201', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.112.1', '1.2', 'log', 'proxy', '1.1', '1', '1', '0', '56489', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.113.1', '1.1', 'log', 'shard', '1.1', '1', '1', '0', '28212', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.113.1', '1.2', 'log', 'shard', '1.1', '1', '1', '0', '56501', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.12.1', '1.1', 'data', 'proxy', '2.1', '1', '1', '0', '28223', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.12.1', '1.2', 'data', 'proxy', '2.1', '1', '1', '0', '56512', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.121.1', '1.1', 'dir', 'master', '2.1', '1', '1', '0', '28233', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.121.1', '1.2', 'dir', 'master', '2.1', '1', '1', '0', '56522', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.122.1', '1.1', 'dir', 'proxy', '2.1', '1', '1', '0', '28243', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.122.1', '1.2', 'dir', 'proxy', '2.1', '1', '1', '0', '56533', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.123.1', '1.1', 'dir', 'shard', '2.1', '1', '1', '0', '28253', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.123.1', '1.2', 'dir', 'shard', '2.1', '1', '1', '0', '56543', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.13.1', '1.1', 'data', 'shard', '2.1', '1', '1', '0', '28260', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.13.1', '1.2', 'data', 'shard', '2.1', '1', '1', '0', '56551', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.21.1', '1.1', 'public', 'master', '2.1', '1', '1', '0', '28267', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.21.1', '1.2', 'public', 'master', '2.1', '1', '1', '0', '56558', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.22.1', '1.1', 'public', 'proxy', '2.1', '1', '1', '0', '28277', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.22.1', '1.2', 'public', 'proxy', '2.1', '1', '1', '0', '56568', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.23.1', '1.1', 'public', 'shard', '2.1', '1', '1', '0', '28296', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.23.1', '1.2', 'public', 'shard', '2.1', '1', '1', '0', '56579', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.31.1', '1.1', 'route', 'master', '2.1', '1', '1', '0', '28303', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.31.1', '1.2', 'route', 'master', '2.1', '1', '1', '0', '56586', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.32.1', '1.1', 'route', 'proxy', '2.1', '1', '1', '0', '28313', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.32.1', '1.2', 'route', 'proxy', '2.1', '1', '1', '0', '56596', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.33.1', '1.1', 'route', 'shard', '2.1', '1', '1', '0', '28323', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.33.1', '1.2', 'route', 'shard', '2.1', '1', '1', '0', '56607', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.4.1', '1.1', 'auth', 'auth', '2.1', '1', '1', '0', '28333', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.4.1', '1.2', 'auth', 'auth', '2.1', '1', '1', '0', '56618', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.41.1', '1.1', 'match', 'master', '2.1', '1', '1', '0', '28340', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.41.1', '1.2', 'match', 'master', '2.1', '1', '1', '0', '56636', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.42.1', '1.1', 'match', 'proxy', '2.1', '1', '1', '0', '28350', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.42.1', '1.2', 'match', 'proxy', '2.1', '1', '1', '0', '56650', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.43.1', '1.1', 'match', 'shard', '2.1', '1', '1', '0', '28360', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.43.1', '1.2', 'match', 'shard', '2.1', '1', '1', '0', '56661', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.51.1', '1.1', 'battle', 'master', '2.1', '1', '1', '0', '28367', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.51.1', '1.2', 'battle', 'master', '2.1', '1', '1', '0', '56669', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.52.1', '1.1', 'battle', 'proxy', '2.1', '1', '1', '0', '28374', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.52.1', '1.2', 'battle', 'proxy', '2.1', '1', '1', '0', '56681', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.53.1', '1.1', 'battle', 'shard', '2.1', '1', '1', '0', '28384', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.53.1', '1.2', 'battle', 'shard', '2.1', '1', '1', '0', '56692', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.61.1', '1.1', 'mail', 'master', '2.1', '1', '1', '0', '28391', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.61.1', '1.2', 'mail', 'master', '2.1', '1', '1', '0', '56700', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.62.1', '1.1', 'mail', 'proxy', '2.1', '1', '1', '0', '28401', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.62.1', '1.2', 'mail', 'proxy', '2.1', '1', '1', '0', '56713', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.63.1', '1.1', 'mail', 'shard', '2.1', '1', '1', '0', '28411', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.63.1', '1.2', 'mail', 'shard', '2.1', '1', '1', '0', '56731', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.71.1', '1.1', 'relation', 'master', '2.1', '1', '1', '0', '28418', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.71.1', '1.2', 'relation', 'master', '2.1', '1', '1', '0', '56739', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.72.1', '1.1', 'relation', 'proxy', '2.1', '1', '1', '0', '28428', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.72.1', '1.2', 'relation', 'proxy', '2.1', '1', '1', '0', '56752', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.73.1', '1.1', 'relation', 'shard', '2.1', '1', '1', '0', '28438', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.73.1', '1.2', 'relation', 'shard', '2.1', '1', '1', '0', '56763', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.81.1', '1.1', 'group', 'master', '2.1', '1', '1', '0', '28445', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.81.1', '1.2', 'group', 'master', '2.1', '1', '1', '0', '56770', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.82.1', '1.1', 'group', 'proxy', '2.1', '1', '1', '0', '28455', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.82.1', '1.2', 'group', 'proxy', '2.1', '1', '1', '0', '56785', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.83.1', '1.1', 'group', 'shard', '2.1', '1', '1', '0', '28465', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.83.1', '1.2', 'group', 'shard', '2.1', '1', '1', '0', '56805', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.91.1', '1.1', 'rank', 'master', '2.1', '1', '1', '0', '28475', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.91.1', '1.2', 'rank', 'master', '2.1', '1', '1', '0', '56817', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.92.1', '1.1', 'rank', 'proxy', '2.1', '1', '1', '0', '28486', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.92.1', '1.2', 'rank', 'proxy', '2.1', '1', '1', '0', '56832', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.93.1', '1.1', 'rank', 'shard', '2.1', '1', '1', '0', '28498', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.0.93.1', '1.2', 'rank', 'shard', '2.1', '1', '1', '0', '56844', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.241.1', '1.1', 'zone', 'master', '2.1', '1', '1', '0', '28511', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.241.1', '1.2', 'zone', 'master', '2.1', '1', '1', '0', '56851', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.242.1', '1.1', 'zone', 'world', '2.1', '1', '1', '0', '28523', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.242.1', '1.2', 'zone', 'world', '2.1', '1', '1', '0', '56865', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.243.1', '1.1', 'zone', 'gate', '2.1', '1', '1', '0', '28538', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.243.1', '1.2', 'zone', 'gate', '2.1', '1', '1', '0', '56881', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.244.1', '1.1', 'zone', 'login', '2.1', '1', '1', '0', '28555', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.244.1', '1.2', 'zone', 'login', '2.1', '1', '1', '0', '56892', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.245.1', '1.1', 'zone', 'game', '2.1', '1', '1', '0', '28566', '1545281873', '1.0.3.1', '192.168.10.230', 'sgserver_develop_2');
+INSERT INTO `deploy` VALUES ('1.1.245.1', '1.2', 'zone', 'game', '2.1', '1', '1', '0', '56904', '1545282192', '1.0.3.1', '192.168.1.9', 'sgserver_develop_2');
+
+-- ----------------------------
+-- Table structure for `file`
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `file_name` varchar(50) NOT NULL,
+  `file_path` varchar(50) NOT NULL,
+  `file_url` varchar(200) NOT NULL,
+  `file_time` datetime NOT NULL,
+  `file_md5` varchar(50) NOT NULL,
+  PRIMARY KEY (`file_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of file
+-- ----------------------------
+INSERT INTO `file` VALUES ('enter.lua', 'script', 'http://192.168.10.230/upload/enter.lua', '2018-10-18 14:01:29', '8e6d2f8f825e447398283bb08c1bf290');
+INSERT INTO `file` VALUES ('option.config', 'config', 'http://192.168.10.230/upload/option.config', '2018-10-18 13:23:03', 'daf7dd1210711728e1eadaf9b68767fd');
 
 -- ----------------------------
 -- Table structure for `launch`
@@ -203,4 +240,26 @@ CREATE TABLE `machine` (
 -- Records of machine
 -- ----------------------------
 INSERT INTO `machine` VALUES ('内网测试机', '192.168.1.9', '192.168.1.9', '4', '8', '16', '320', '1.0.3.1', '1', '12074');
-INSERT INTO `machine` VALUES ('研发测试机', '192.168.10.230', '192.168.10.230', '8', '16', '16', '100', '1.0.3.1', '1', '12028');
+INSERT INTO `machine` VALUES ('研发测试机', '192.168.10.230', '192.168.10.230', '8', '16', '16', '100', '1.0.3.1', '1', '12001');
+
+-- ----------------------------
+-- Table structure for `version`
+-- ----------------------------
+DROP TABLE IF EXISTS `version`;
+CREATE TABLE `version` (
+  `version_time` datetime NOT NULL,
+  `version_name` varchar(128) NOT NULL,
+  `version_url` varchar(512) NOT NULL,
+  `version_md5` varchar(32) NOT NULL,
+  PRIMARY KEY (`version_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of version
+-- ----------------------------
+INSERT INTO `version` VALUES ('2018-08-29 12:13:16', 'sgame_svn_9216_201808291212.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9216_201808291212.tar.gz', 'b0c792e23567a983df2d2b7337a5eb70');
+INSERT INTO `version` VALUES ('2018-08-29 16:20:27', 'sgame_svn_9267_201808291619.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9267_201808291619.tar.gz', 'f8b291c558236a29f790df7aaebbfc3d');
+INSERT INTO `version` VALUES ('2018-08-29 16:47:09', 'sgame_svn_9273_201808291646.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9273_201808291646.tar.gz', '00fdbe8502e4f61504fcebe1a02d634d');
+INSERT INTO `version` VALUES ('2018-08-29 19:13:05', 'sgame_svn_9296_201808291912.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9296_201808291912.tar.gz', '9786cb6718a7baaed1b96eeb25537cfe');
+INSERT INTO `version` VALUES ('2018-08-29 20:43:04', 'sgame_svn_9332_201808292042.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9332_201808292042.tar.gz', '7107e3537bf95585ef9233a1587e520e');
+INSERT INTO `version` VALUES ('2018-08-29 21:18:31', 'sgame_svn_9340_201808292117.tar.gz', 'http://version.leiwu.com/upload/sgame_svn_9340_201808292117.tar.gz', '56ca6ecbda43778686dd00bd27f7fb01');

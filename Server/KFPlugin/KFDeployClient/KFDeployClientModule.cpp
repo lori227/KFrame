@@ -25,7 +25,7 @@ namespace KFrame
 
         auto agentid = KFUtility::SplitString( agentdata, "|" );
         auto ip = KFUtility::SplitString( agentdata, "|" );
-        auto port = KFUtility::SplitValue< uint32 >( agentdata, "port" );
+        auto port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
 
         auto appid = KFAppID::ToUInt64( agentid );
         _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), appid, ip, port );
