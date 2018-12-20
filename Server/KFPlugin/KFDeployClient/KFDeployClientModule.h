@@ -25,33 +25,19 @@ namespace KFrame
     class KFDeployClientModule : public KFDeployClientInterface
     {
     public:
-        KFDeployClientModule();
+        KFDeployClientModule() = default;
         ~KFDeployClientModule() = default;
 
         // 逻辑
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void ShutDown();
 
     protected:
-        // 连接成功
-        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectDeployServer );
-
-        // 启动服务器
-        __KF_TIMER_FUNCTION__( OnTimerGetAgentIpAddress );
-
-    protected:
-        // 获得Agent地址
-        __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressAck );
-
         // 关闭服务器
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandToMasterReq );
-
-    private:
-
-        // 部署serverid
-        uint64 _deploy_server_id;
     };
 }
 

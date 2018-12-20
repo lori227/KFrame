@@ -67,6 +67,7 @@ namespace KFrame
 
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
+        kfglobal->_startup_params = params;
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
 

@@ -132,6 +132,8 @@ namespace KFrame
         // 程序标题
         std::string _title_text;
 
+        // 启动参数
+        MapString _startup_params;
         /////////////////////////////////////////////////////////////////////////////////
     private:
         // 版本

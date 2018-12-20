@@ -304,6 +304,8 @@ namespace KFrame
             return false;
         }
 
+        auto kfglobal = KFGlobal::Instance();
+
         // 启动进程
         STARTUPINFO startupinfo;
         memset( &startupinfo, 0, sizeof( STARTUPINFO ) );
@@ -314,11 +316,12 @@ namespace KFrame
         uint32 createflag = CREATE_NO_WINDOW;
         auto apppath = kflaunch->GetAppPath();
         auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
-        auto param = __FORMAT__( " {}={} {}={} {}={} {}={}",
+        auto param = __FORMAT__( " {}={} {}={} {}={} {}={} {}={}|{}|{}",
                                  __KF_STRING__( appid ), deploydata->_app_id,
                                  __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( service ), deploydata->_service_type,
-                                 __KF_STRING__( startup ), kflaunch->_app_config );
+                                 __KF_STRING__( startup ), kflaunch->_app_config,
+                                 __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
         PROCESS_INFORMATION processinfo;
@@ -396,6 +399,9 @@ namespace KFrame
 
         auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );
         args.push_back( const_cast< char* >( strfile.c_str() ) );
+
+        auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
+        args.push_back( const_cast< char* >( stragent.c_str() ) );
 
         args.push_back( nullptr );
 

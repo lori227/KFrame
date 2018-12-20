@@ -9,14 +9,8 @@
 	<!--ConnectId 指定连接目标服务器id -->
 
 	<Bus>
-		<Connection AppName="*" AppType="master" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
 		<Connection AppName="*" AppType="agent" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
-		
-		<Connection AppName="auth" AppType="*" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
 		<Connection AppName="auth" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-		
-		<Connection AppName="platform" AppType="*" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
-		<Connection AppName="platform" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 
 		<Connection AppName="data" AppType="*" AppId="*" ConnectName="data" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="data" AppType="proxy" AppId="*" ConnectName="data" ConnectType="shard" ConnectId="*"/>
