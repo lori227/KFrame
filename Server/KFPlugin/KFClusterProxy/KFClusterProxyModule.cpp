@@ -205,9 +205,26 @@ namespace KFrame
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
     {
-        KFMsg::S2SClusterClientDiscoverReq req;
-        req.add_clientid( handleid );
-        SendToShard( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &req );
+        // 判断是否有token验证
+        for ( auto& iter : _kf_token_list._objects )
+        {
+            auto kftoken = iter.second;
+            if ( kftoken->_gate_id == handleid )
+            {
+                // 启动定时器, 10秒钟内部不验证, 关闭连接
+                __REGISTER_LIMIT_TIMER__( handleid, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
+                return;
+            }
+        }
+
+        // 没有则认为是非法的连接, 直接关闭
+        _kf_tcp_client->CloseClient( handleid, __FUNC_LINE__ );
+    }
+
+    __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerClusterAuthTimeOut )
+    {
+        // 认证超时, 关闭连接
+        _kf_tcp_client->CloseClient( objectid, __FUNC_LINE__ );
     }
 
     __KF_SERVER_LOST_FUNCTION__( KFClusterProxyModule::OnServerLostClient )
@@ -304,7 +321,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterVerifyReq );
 
-        uint32 serverid = ClusterVerifyLogin( kfmsg.token(), kfmsg.serverid() );
+        auto serverid = ClusterVerifyLogin( kfmsg.token(), kfmsg.serverid() );
 
         KFMsg::S2SClusterVerifyAck ack;
         ack.set_serverid( serverid );
@@ -313,6 +330,14 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
+            // 删除定时器
+            __UNREGISTER_OBJECT_TIMER__( serverid );
+
+            // 通知shard
+            KFMsg::S2SClusterClientDiscoverReq req;
+            req.add_clientid( serverid );
+            SendToShard( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &req );
+
             __LOG_DEBUG__( "[{}:{}:{}] cluster verify ok!", KFAppID::ToString( kfmsg.serverid() ), kfmsg.token(), KFAppID::ToString( serverid ) );
         }
         else

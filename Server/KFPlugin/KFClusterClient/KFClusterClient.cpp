@@ -46,10 +46,10 @@ namespace KFrame
         _cluster_proxy_id = 0;
         _cluster_in_services = false;
 
-        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_master_name, __KF_STRING__( master ), _str_master_id );
+        auto* kfaddress = _kf_ip_address->FindIpAddress( _kf_cluster_setting->_name, __KF_STRING__( master ), _str_master_id );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't find cluster[{}:{}:{}:{}] address!", _cluster_master_name, __KF_STRING__( master ), _cluster_master_id, _str_master_id );
+            return __LOG_ERROR__( "can't find cluster[{}:{}:{}:{}] address!", _kf_cluster_setting->_name, __KF_STRING__( master ), _cluster_master_id, _str_master_id );
         }
 
         _kf_tcp_client->StartClient( kfaddress->_app_name, kfaddress->_app_type, kfaddress->_app_id, kfaddress->_ip, kfaddress->_port );
@@ -58,21 +58,10 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClusterClient::OnTimerSendClusterAuthMessage )
     {
-        if ( _cluster_master_name.empty() )
-        {
-            return;
-        }
-
-        auto _cluster_key = _kf_option->GetString( __KF_STRING__( clusterkey ), _cluster_master_name );
-        if ( _cluster_key.empty() )
-        {
-            return __LOG_ERROR__( "[{}] can't find clusterkey!", _cluster_master_name );
-        }
-
         // 请求认证
         KFMsg::S2SClusterAuthReq req;
-        req.set_clusterkey( _cluster_key );
-        req.set_clustertype( _cluster_master_name );
+        req.set_clusterkey( _kf_cluster_setting->_key );
+        req.set_clustertype( _kf_cluster_setting->_name );
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_REQ, &req );
         if ( !ok )
         {
@@ -100,7 +89,7 @@ namespace KFrame
         // 请求认证
         KFMsg::S2SClusterVerifyReq req;
         req.set_token( _auth_token );
-        req.set_clustertype( _cluster_master_name );
+        req.set_clustertype( _kf_cluster_setting->_name );
         req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_REQ, &req );
         if ( !ok )
@@ -116,13 +105,13 @@ namespace KFrame
 
         if ( serverid != 0 )
         {
-            __LOG_INFO__( "[{}] cluster services ok!", _cluster_master_name );
+            __LOG_INFO__( "[{}] cluster services ok!", _kf_cluster_setting->_name );
 
             // 设置可以服务
             _cluster_in_services = true;
 
             // 回调函数
-            _cluster_client_module->CallClusterConnectionFunction( _cluster_master_name, serverid );
+            _cluster_client_module->CallClusterConnectionFunction( _kf_cluster_setting->_name, serverid );
         }
         else
         {
@@ -147,7 +136,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( "cluster[{}] not in services! msgid[{}]", _cluster_master_name, msgid );
+            __LOG_ERROR__( "cluster[{}] not in services! msgid[{}]", _kf_cluster_setting->_name, msgid );
             return false;
         }
 
@@ -158,7 +147,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( "cluster[{}] not in services! objectid[{}] msgid[{}]", _cluster_master_name, objectid, msgid );
+            __LOG_ERROR__( "cluster[{}] not in services! objectid[{}] msgid[{}]", _kf_cluster_setting->_name, objectid, msgid );
             return false;
         }
 

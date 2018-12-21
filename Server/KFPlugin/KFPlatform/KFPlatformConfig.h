@@ -1,5 +1,5 @@
-﻿#ifndef __KF_OPTION_CONFIG_H__
-#define __KF_OPTION_CONFIG_H__
+﻿#ifndef __KF_PLATFORM_CONFIG_H__
+#define __KF_PLATFORM_CONFIG_H__
 
 #include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"

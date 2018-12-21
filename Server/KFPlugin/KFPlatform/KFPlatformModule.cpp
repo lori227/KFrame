@@ -4,6 +4,16 @@
 
 namespace KFrame
 {
+    void KFPlatformModule::InitModule()
+    {
+        __KF_ADD_CONFIG__( _kf_platform_config, true );
+    }
+
+    void KFPlatformModule::BeforeShut()
+    {
+        __KF_REMOVE_CONFIG__( _kf_platform_config );
+    }
+
     const std::string& KFPlatformModule::GetPlatformApiUrl()
     {
         return _kf_platform_config->_app_url;

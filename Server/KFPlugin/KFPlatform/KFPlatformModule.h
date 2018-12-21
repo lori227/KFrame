@@ -10,6 +10,7 @@
 ************************************************************************/
 
 #include "KFPlatformInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
@@ -19,6 +20,10 @@ namespace KFrame
     public:
         KFPlatformModule() = default;
         ~KFPlatformModule() = default;
+
+        virtual void InitModule();
+
+        virtual void BeforeShut();
 
         ////////////////////////////////////////////////////////////////////////////////
         // 获得api地址

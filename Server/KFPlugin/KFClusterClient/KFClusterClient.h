@@ -3,6 +3,7 @@
 
 #include "KFrame.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFClusterClientConfig.h"
 
 namespace KFrame
 {
@@ -47,7 +48,8 @@ namespace KFrame
         KFClusterClientModule* _cluster_client_module;
 
         // 集群设置
-        std::string _cluster_master_name;
+        const KFClusterSetting* _kf_cluster_setting;
+
         uint64 _cluster_master_id{ 0 };
         std::string _str_master_id;
 

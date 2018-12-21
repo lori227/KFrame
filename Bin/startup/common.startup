@@ -9,7 +9,7 @@
 		<Plugin Sort="6" Name="KFMessage" Config=""/>
 		<Plugin Sort="7" Name="KFTimer"  Config=""/>
 		<Plugin Sort="8" Name="KFTcpClient" Config=""/>
-		<Plugin Sort="9" Name="KFClusterClient" Config=""/>
+		<Plugin Sort="9" Name="KFClusterClient" Config="./setting/cluster.setting"/>
 		<Plugin Sort="10" Name="KFLogClient" Config=""/>
 		<Plugin Sort="11" Name="KFOption" Config="./config/option.config"/>	
 	</Plugins>

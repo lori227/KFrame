@@ -12,11 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFClusterMasterConfig.cpp" />
     <ClCompile Include="KFClusterMasterManage.cpp" />
     <ClCompile Include="KFClusterMasterModule.cpp" />
     <ClCompile Include="KFClusterMasterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFClusterMasterConfig.h" />
     <ClInclude Include="KFClusterMasterInterface.h" />
     <ClInclude Include="KFClusterMasterManage.h" />
     <ClInclude Include="KFClusterMasterModule.h" />

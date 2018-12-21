@@ -23,7 +23,9 @@ namespace KFrame
         ~KFClusterMasterModule() = default;
 
         // 初始化
+        virtual void InitModule();
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -70,6 +72,9 @@ namespace KFrame
         void SendAllocShardToShard();
 
     private:
+        // 认证key
+        std::string _cluster_key;
+
         // 序列号
         uint64 _cluster_serial{0};
 
@@ -81,6 +86,8 @@ namespace KFrame
 
         // 所有的objectid列表
         std::set< uint64 > _total_objects;
+
+
     };
 }
 

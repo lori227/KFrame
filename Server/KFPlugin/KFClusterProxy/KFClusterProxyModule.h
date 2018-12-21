@@ -121,6 +121,9 @@ namespace KFrame
         // 更新
         __KF_TIMER_FUNCTION__( OnTimerSendClusterUpdateMessage );
 
+        // 认证超时
+        __KF_TIMER_FUNCTION__( OnTimerClusterAuthTimeOut );
+
     protected:
         // 连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionServer );

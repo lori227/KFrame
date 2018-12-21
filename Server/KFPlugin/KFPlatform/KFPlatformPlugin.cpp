@@ -17,6 +17,7 @@ namespace KFrame
     void KFPlatformPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 
 }

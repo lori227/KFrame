@@ -12,6 +12,7 @@
 #include "KFClusterClient.h"
 #include "KFBus/KFBusInterface.h"
 #include "KFClusterClientInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -27,6 +28,7 @@ namespace KFrame
         ~KFClusterClientModule() = default;
 
         // 初始化
+        virtual void InitModule();
         virtual void BeforeRun();
 
         // 关闭
