@@ -30,7 +30,7 @@ namespace KFrame
         virtual void CloseSession();
 
         // 断开事件
-        virtual void OnDisconnect( const char* error, int32 code );
+        virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
     private:
         // 启动连接定时器

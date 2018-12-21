@@ -23,7 +23,7 @@ namespace KFrame
         virtual void CloseSession();
 
         // 断开事件
-        virtual void OnDisconnect( const char* error, int32 code );
+        virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
         // 是否是服务器
         bool IsServer() const;

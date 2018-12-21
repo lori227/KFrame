@@ -92,7 +92,7 @@ namespace KFrame
         auto netsession = reinterpret_cast< KFNetSession* >( uvwrite->data );
         if ( status != 0 )
         {
-            netsession->OnDisconnect( __FUNCTION__, status );
+            netsession->OnDisconnect( status, __FUNC_LINE__ );
         }
         else
         {
@@ -162,6 +162,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFNetSession::OnRecvData( const char* buffer, uint32 length )
     {
+        if ( length == 0 )
+        {
+            return __LOG_DEBUG__( "session[{}:{}:{}] recv length=0!", _session_id, _object_id, KFAppID::ToString( _session_id ) );
+        }
+
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
@@ -284,19 +289,20 @@ namespace KFrame
         auto netsession = reinterpret_cast< KFNetSession* >( uvstream->data );
         if ( length < 0 )
         {
-            return netsession->OnDisconnect( __FUNCTION__, static_cast< uint32 >( length ) );
+            return netsession->OnDisconnect( static_cast< int32 >( length ), __FUNC_LINE__ );
         }
 
-        // 连接状态接受消息
+        // 接受数据
         netsession->OnRecvData( pbuffer->base, static_cast< uint32 >( length ) );
         netsession->StartRecvData();
     }
 
-    void KFNetSession::OnDisconnect( const char* error, int32 code )
+    void KFNetSession::OnDisconnect( int32 code, const char* function, uint32 line )
     {
         _is_connected = false;
-        __LOG_DEBUG__( "session[{}:{}:{}] disconnect[{}:{}]!",
-                       _session_id, _object_id, KFAppID::ToString( _session_id ), error, code );
+        __LOG_DEBUG_FUNCTION__( function, line, "session[{}:{}:{}] disconnect[{}:{}]!",
+                                _session_id, _object_id, KFAppID::ToString( _session_id ),
+                                code, uv_err_name( code ) );
     }
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )

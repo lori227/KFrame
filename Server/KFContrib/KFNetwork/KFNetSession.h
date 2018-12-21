@@ -21,7 +21,7 @@ namespace KFrame
         virtual void OnConnect( uv_stream_t* uvstream );
 
         // 断线
-        virtual void OnDisconnect( const char* error, int32 code );
+        virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
         // 开始连接
         virtual void StartSession() {}

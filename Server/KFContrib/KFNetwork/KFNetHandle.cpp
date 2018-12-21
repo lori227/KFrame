@@ -64,9 +64,9 @@ namespace KFrame
         return nowtime >= _trustee_timeout;
     }
 
-    void KFNetHandle::OnDisconnect( const char* error, int32 code )
+    void KFNetHandle::OnDisconnect( int32 code, const char* function, uint32 line )
     {
-        KFNetSession::OnDisconnect( error, code );
+        KFNetSession::OnDisconnect( code, function, line );
         _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _session_id );
     }
 
