@@ -99,21 +99,15 @@ namespace KFrame
         }
 
         // 发送远程log
-        do
+        for ( auto kfdata : templist )
         {
-            auto kfdata = templist.front();
             auto ok = _remote_log_function( kfdata->_log_level, kfdata->_content );
-            if ( ok )
+            if ( !ok )
             {
-                __KF_DESTROY__( KFLogData, kfdata );
-                templist.pop_front();
+                KFLocalLogger::Log( kfdata->_log_level, kfdata->_content );
             }
-            else
-            {
-                KFLocker locker( _kf_mutex );
-                _log_data_list.splice( _log_data_list.begin(), templist );
-                break;
-            }
-        } while ( !templist.empty() );
+
+            __KF_DESTROY__( KFLogData, kfdata );
+        }
     }
 }
