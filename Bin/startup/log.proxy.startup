@@ -3,12 +3,12 @@
 	<Plugins AppName="log" AppType="proxy" WinPluginPath="./" LinuxPluginPath="./bin/" >
 		<Plugin Sort="1" Name="KFDeployCommand" Config=""/>
 		<Plugin Sort="2" Name="KFHttpClient" Config=""/>
-		<Plugin Sort="3" Name="KFBus" Config="./setting/bus.relation"/>
-		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip.address"/>	
+		<Plugin Sort="3" Name="KFBus" Config="./setting/bus.setting"/>
+		<Plugin Sort="4" Name="KFIpAddress" Config="./setting/ip.setting"/>	
 		<Plugin Sort="6" Name="KFTimer" Config=""/>
 		<Plugin Sort="10" Name="KFMessage" Config=""/>
 		<Plugin Sort="20" Name="KFConfig" Config=""/>
-		<Plugin Sort="40" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="40" Name="KFTcpServer" Config="./setting/tcpserver.setting"/>
 		<Plugin Sort="50" Name="KFTcpClient" Config=""/>
 		<Plugin Sort="80" Name="KFClusterProxy" Config=""/>
    		<Plugin Sort="90" Name="KFLogProxy" Config=""/>

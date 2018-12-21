@@ -4,10 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFPlatformModule.cpp" />
     <ClCompile Include="KFPlatformPlugin.cpp" />
+    <ClCompile Include="KFPlatformConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFPlatformInterface.h" />
     <ClInclude Include="KFPlatformModule.h" />
     <ClInclude Include="KFPlatformPlugin.h" />
+    <ClInclude Include="KFPlatformConfig.h" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 <Setting>
 	<Plugins AppName="guild" AppType="master" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFDeployClient" Config=""/>
-		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/tcpserver.setting"/>
 		<Plugin Sort="130" Name="KFClusterMaster" Config="./setting/cluster.setting"/>
 	</Plugins>
 </Setting>

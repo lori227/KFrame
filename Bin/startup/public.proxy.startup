@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins AppName="public" AppType="proxy" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
-		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/server.network"/>
+		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/tcpserver.setting"/>
 		<Plugin Sort="110" Name="KFClusterProxy" Config=""/>
 		<Plugin Sort="120" Name="KFPublicProxy" Config=""/>
 	</Plugins>

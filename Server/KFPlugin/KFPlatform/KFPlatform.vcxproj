@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFPlatformConfig.cpp" />
     <ClCompile Include="KFPlatformModule.cpp" />
     <ClCompile Include="KFPlatformPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFPlatformConfig.h" />
     <ClInclude Include="KFPlatformInterface.h" />
     <ClInclude Include="KFPlatformModule.h" />
     <ClInclude Include="KFPlatformPlugin.h" />
