@@ -29,6 +29,9 @@ namespace KFrame
     public:
         // 配置的连接地址
         std::vector< KFIpAddress > _ip_address_list;
+
+        // 认证地址
+        std::string _auth_url;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

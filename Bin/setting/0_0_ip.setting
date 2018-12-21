@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
+	<!-- 认证服务器地址 -->
+	<AuthServer Url="http://127.0.0.1:7777/"/>
 
 	<!--Port 端口-->
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 3=小区计算-->
@@ -46,7 +48,8 @@
 
 		<!-- zone master 根据zone.setting动态更新-->
 		<Server AppName="zone" AppType="master" AppId="0.91.0.1" Ip="127.0.0.1" Type="0" Port="11000"/>
-
 	</TcpServer>
+
+
 </Config>
 

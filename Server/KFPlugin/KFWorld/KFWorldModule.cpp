@@ -216,7 +216,7 @@ namespace KFrame
     void KFWorldModule::UpdateOnlineToAuth( uint64 accountid, uint64 playerid, bool online )
     {
         static auto _world_url = _kf_http_server->GetHttpUrl();
-        static auto _update_url = _kf_option->GetString( __KF_STRING__( authurl ) ) + __KF_STRING__( onlinezone );
+        static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( onlinezone );
 
         // 在线服务器
         KFJson sendjson;

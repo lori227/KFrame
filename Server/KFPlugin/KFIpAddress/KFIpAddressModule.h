@@ -48,6 +48,8 @@ namespace KFrame
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip );
 
+        // 获得auth地址
+        virtual const std::string& GetAuthUrl();
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();

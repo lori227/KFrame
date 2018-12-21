@@ -62,6 +62,9 @@ namespace KFrame
 
         // 修改小区master地址
         virtual void SetZoneIpAddress( const std::string& ip ) = 0;
+
+        // 获得auth地址
+        virtual const std::string& GetAuthUrl() = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

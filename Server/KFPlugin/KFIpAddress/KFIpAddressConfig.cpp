@@ -9,6 +9,11 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
+
+        auto authnode = config.FindNode( "AuthServer" );
+        _auth_url = authnode.GetString( "Url" );
+        //////////////////////////////////////////////////////////////////
+
         auto tcpnode = config.FindNode( "TcpServer" );
         if ( tcpnode.IsValid() )
         {

@@ -152,4 +152,10 @@ namespace KFrame
         return ip;
     }
 #endif
+
+    const std::string& KFIpAddressModule::GetAuthUrl()
+    {
+        return _kf_ip_config->_auth_url;
+    }
+
 }
