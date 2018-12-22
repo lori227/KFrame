@@ -126,6 +126,11 @@ namespace KFrame
 
     void KFNetServices::CloseSession( KFNetSession* netsession )
     {
+        if ( netsession->_is_shutdown )
+        {
+            return;
+        }
+
         netsession->_is_shutdown = true;
 
         {

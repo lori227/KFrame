@@ -66,8 +66,8 @@ namespace KFrame
         _net_server_services->_now_time = nowtime;
         _net_server_services->_net_event->RunEvent();
 
-        // 删除托管的连接
-        RunRemoveTrusteeHandle();
+        // 注册托管连接
+        RunRegisterTrusteeHandle();
 
         // 判断托管超时
         RunCheckTrusteeTimeout();
@@ -126,26 +126,29 @@ namespace KFrame
         auto istrustee = reinterpret_cast< uint64 >( eventdata->_data ) == 1 ? true : false;
         if ( istrustee )
         {
-            _trustee_handles.Remove( eventdata->_id );
+            auto ok = _trustee_handles.Remove( eventdata->_id );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "trustee handle[{}] shutdown failed!", eventdata->_id );
+            }
         }
         else
         {
-            auto kfhandle = _kf_handles.Find( eventdata->_id );
-            if ( kfhandle != nullptr )
+            auto ok = _kf_handles.Remove( eventdata->_id );
+            if ( !ok )
             {
-                __LOG_DEBUG__( "handle[{}:{}:{}] shutdown ok!", kfhandle->_session_id, kfhandle->_object_id, KFAppID::ToString( kfhandle->_object_id ) );
+                __LOG_ERROR__( "handle[{}] shutdown failed!", eventdata->_id );
             }
-
-            _kf_handles.Remove( eventdata->_id );
         }
     }
 
     void KFNetServerEngine::OnServerDisconnect( const KFEventData* eventdata )
     {
+        // 断开连接
         auto kfhandle = _kf_handles.Find( eventdata->_id );
         if ( kfhandle != nullptr )
         {
-            // 断开连接
+            kfhandle->_is_trustee = false;
             if ( _server_lost_function != nullptr )
             {
                 _server_lost_function( kfhandle->_session_id, kfhandle->_app_name, kfhandle->_app_type );
@@ -158,6 +161,7 @@ namespace KFrame
             {
                 return __LOG_ERROR__( "can't find handle[{}]!", eventdata->_id );
             }
+            kfhandle->_is_trustee = true;
         }
 
         kfhandle->CloseHandle();
@@ -169,33 +173,6 @@ namespace KFrame
 
         _close_handles[ id ] = _net_server_services->_now_time + delaytime;
         return true;
-    }
-
-    KFNetHandle* KFNetServerEngine::RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid )
-    {
-        auto kfhandle = _trustee_handles.Find( trusteeid );
-        if ( kfhandle == nullptr )
-        {
-            __LOG_ERROR__( "trustee handle[{}:{}] can't find!", trusteeid, handleid );
-            return nullptr;
-        }
-
-        // 已经在列表中
-        auto findhandle = _kf_handles.Find( handleid );
-        if ( findhandle != nullptr )
-        {
-            __LOG_ERROR__( "handle[{}:{}] already exist!", handleid, KFAppID::ToString( handleid ) );
-            return nullptr;
-        }
-
-        // 从代理列表中删除
-        _remove_trustees[ trusteeid ] = false;
-
-        kfhandle->_is_trustee = false;
-        kfhandle->_session_id = handleid;
-        kfhandle->_object_id = objectid;
-        _kf_handles.Insert( handleid, kfhandle );
-        return kfhandle;
     }
 
     bool KFNetServerEngine::BindObjectId( uint64 handleid, uint64 objectid )
@@ -210,19 +187,50 @@ namespace KFrame
         return true;
     }
 
-    void KFNetServerEngine::RunRemoveTrusteeHandle()
+    KFNetHandle* KFNetServerEngine::RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid )
     {
-        if ( _remove_trustees.empty() )
+        auto kfhandle = _trustee_handles.Find( trusteeid );
+        if ( kfhandle == nullptr || kfhandle->_is_shutdown )
+        {
+            __LOG_ERROR__( "trustee handle[{}:{}] can't find!", trusteeid, handleid );
+            return nullptr;
+        }
+
+        // 已经在列表中
+        if ( _kf_handles.Find( handleid ) != nullptr )
+        {
+            __LOG_ERROR__( "handle[{}:{}] already exist!", handleid, KFAppID::ToString( handleid ) );
+            return nullptr;
+        }
+
+        // 设置属性, 并加入注册列表中
+        kfhandle->_is_trustee = false;
+        kfhandle->_trustee_timeout = 0;
+        kfhandle->_object_id = objectid;
+        kfhandle->_session_id = handleid;
+        _register_trustees.insert( trusteeid );
+
+        return kfhandle;
+    }
+
+    void KFNetServerEngine::RunRegisterTrusteeHandle()
+    {
+        if ( _register_trustees.empty() )
         {
             return;
         }
 
-        for ( auto iter : _remove_trustees )
+        for ( auto id : _register_trustees )
         {
-            _trustee_handles.Remove( iter.first, iter.second );
+            auto kfhandle = _trustee_handles.Find( id );
+            if ( kfhandle != nullptr )
+            {
+                _kf_handles.Insert( id, kfhandle );
+                _trustee_handles.Remove( id, false );
+            }
         }
 
-        _remove_trustees.clear();
+        _register_trustees.clear();
     }
 
     void KFNetServerEngine::RunCheckTrusteeTimeout()

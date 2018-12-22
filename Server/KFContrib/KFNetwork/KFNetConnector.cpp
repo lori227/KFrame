@@ -220,6 +220,12 @@ namespace KFrame
 
     void KFNetConnector::RunUpdate( KFNetFunction& netfunction, uint32 maxcount )
     {
+        // 已经关闭了, 不处理消息
+        if ( _is_shutdown )
+        {
+            return;
+        }
+
         // 处理消息
         RunMessage( netfunction, maxcount );
 

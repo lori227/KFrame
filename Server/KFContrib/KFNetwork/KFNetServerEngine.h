@@ -82,8 +82,8 @@ namespace KFrame
 
     protected:
 
-        // 执行删除托管连接
-        void RunRemoveTrusteeHandle();
+        // 执行注册托管连接
+        void RunRegisterTrusteeHandle();
 
         // 判断托管超时
         void RunCheckTrusteeTimeout();
@@ -106,8 +106,8 @@ namespace KFrame
         // 等待验证的托管连接
         KFMap< uint64, uint64, KFNetHandle > _trustee_handles;
 
-        // 删除的托管连接
-        std::map< uint64, bool > _remove_trustees;
+        // 已经注册的链接
+        std::set< uint64 > _register_trustees;
 
         // 需要关闭的连接
         std::map< uint64, uint64 > _close_handles;

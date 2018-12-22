@@ -118,11 +118,8 @@ namespace KFrame
 
     void KFNetClient::CloseClient()
     {
-        if ( !_is_shutdown )
-        {
-            // 关闭连接
-            _net_services->CloseSession( this );
-        }
+        // 关闭连接
+        _net_services->CloseSession( this );
     }
 
     void KFNetClient::CloseSession()
