@@ -12,8 +12,8 @@ namespace KFrame
     class KFNetClient : public KFNetConnector
     {
     public:
-        KFNetClient();
-        virtual ~KFNetClient();
+        KFNetClient() = default;
+        virtual ~KFNetClient() = default;
 
         ////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////

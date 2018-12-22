@@ -5,16 +5,6 @@
 
 namespace KFrame
 {
-    KFNetClient::KFNetClient()
-    {
-        _is_connected = false;
-    }
-
-    KFNetClient::~KFNetClient()
-    {
-
-    }
-
     void KFNetClient::StartClient( KFNetClientServices* netservices, const KFNetSetting& netsetting )
     {
         // 连接配置
