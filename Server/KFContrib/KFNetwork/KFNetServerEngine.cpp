@@ -204,7 +204,6 @@ namespace KFrame
         }
 
         // 设置属性, 并加入注册列表中
-        kfhandle->_is_trustee = false;
         kfhandle->_trustee_timeout = 0;
         kfhandle->_object_id = objectid;
         kfhandle->_session_id = handleid;
@@ -223,11 +222,14 @@ namespace KFrame
         for ( auto id : _register_trustees )
         {
             auto kfhandle = _trustee_handles.Find( id );
-            if ( kfhandle != nullptr )
+            if ( kfhandle == nullptr || kfhandle->_is_shutdown )
             {
-                _kf_handles.Insert( id, kfhandle );
-                _trustee_handles.Remove( id, false );
+                continue;
             }
+
+            kfhandle->_is_trustee = false;
+            _kf_handles.Insert( id, kfhandle );
+            _trustee_handles.Remove( id, false );
         }
 
         _register_trustees.clear();
