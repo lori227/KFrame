@@ -107,7 +107,7 @@ namespace KFrame
         KFMap< uint64, uint64, KFNetHandle > _trustee_handles;
 
         // 已经注册的链接
-        std::set< uint64 > _register_trustees;
+        std::set< uint64 > _remove_trustees;
 
         // 需要关闭的连接
         std::map< uint64, uint64 > _close_handles;
