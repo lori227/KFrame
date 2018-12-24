@@ -296,6 +296,11 @@ namespace KFrame
         for ( auto& iter : _kf_server_engine->_kf_handles._objects )
         {
             auto nethandle = iter.second;
+            if ( nethandle == kfhandle )
+            {
+                continue;
+            }
+
             KFMsg::TellRegisterToServer tell;
             tell.set_servername( kfglobal->_app_name );
             tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
