@@ -190,7 +190,7 @@ namespace KFrame
     KFNetHandle* KFNetServerEngine::RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid )
     {
         auto kfhandle = _trustee_handles.Find( trusteeid );
-        if ( kfhandle == nullptr || kfhandle->_is_shutdown )
+        if ( kfhandle == nullptr || kfhandle->_is_shutdown || !kfhandle->_is_connected )
         {
             __LOG_ERROR__( "trustee handle[{}:{}] can't find!", trusteeid, handleid );
             return nullptr;

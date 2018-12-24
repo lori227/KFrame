@@ -242,9 +242,9 @@ namespace KFrame
 
                 // 删除指定数量以后的排序
                 auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
-                if ( rankcount->_value > kfsetting->_max_count )
+                if ( rankcount->_value > kfsetting->_max_count + 1 )
                 {
-                    _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count );
+                    _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count - 1 );
                 }
             }
         }
