@@ -140,6 +140,8 @@ namespace KFrame
                 __LOG_ERROR__( "handle[{}] shutdown failed!", eventdata->_id );
             }
         }
+
+        __LOG_DEBUG__( "handle[{}:{}] shutdown ok!", eventdata->_id, reinterpret_cast< uint64 >( eventdata->_data ) );
     }
 
     void KFNetServerEngine::OnServerDisconnect( const KFEventData* eventdata )

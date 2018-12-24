@@ -257,7 +257,8 @@ namespace KFrame
         ack.set_apptype( kfglobal->_app_type );
         ack.set_appname( kfglobal->_app_name );
         ack.set_appid( kfglobal->_app_id._union._id );
-        SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
+        auto strdata = ack.SerializeAsString();
+        kfhandle->SendNetMessage( KFMsg::S2S_REGISTER_TO_SERVER_ACK, strdata.data(), strdata.size() );
 
         // 广播新连接给所有连接着
         BroadcastRegisterToServer( kfhandle );
@@ -306,7 +307,9 @@ namespace KFrame
             listendata->set_zoneid( nethandle->_zone_id );
             listendata->set_ip( nethandle->_listen_ip );
             listendata->set_port( nethandle->_listen_port );
-            SendNetMessage( kfhandle->_object_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+
+            auto strdata = tell.SerializeAsString();
+            kfhandle->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, strdata.data(), strdata.size() );
         }
     }
 
