@@ -93,42 +93,42 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::MsgLoginVerifyReq );
 
         // 连接id
-        auto handleid = __KF_HEAD_ID__( kfid );
+        auto sessionid = __KF_HEAD_ID__( kfid );
 
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
 
-        __LOG_DEBUG__( "accountid[{}] login gate req!", accountid );
+        __LOG_DEBUG__( "session[{}] accountid[{}:{}] login gate req!", sessionid, accountid );
 
         // 注册连接器
-        auto ok = _kf_tcp_server->RegisteNetHandle( handleid, handleid, _invalid_int );
+        auto ok = _kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int );
         if ( !ok )
         {
-            return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, handleid );
+            return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, sessionid );
         }
 
         // 判断版本号
         auto compatibility = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
         if ( !compatibility )
         {
-            return SendLoginFailedMessage( handleid, KFMsg::VersionNotCompatibility, 0 );
+            return SendLoginFailedMessage( sessionid, KFMsg::VersionNotCompatibility, 0 );
         }
 
         // 没有可用的login
         auto loginserverid = _kf_login_conhash.FindHashNode( accountid );
         if ( loginserverid == _invalid_int )
         {
-            return SendLoginFailedMessage( handleid, KFMsg::LoginSystemBusy, 0 );
+            return SendLoginFailedMessage( sessionid, KFMsg::LoginSystemBusy, 0 );
         }
 
         // ip
-        auto& ip = _kf_tcp_server->GetHandleIp( handleid );
+        auto& ip = _kf_tcp_server->GetHandleIp( sessionid );
 
         // 发送到Login服务器验证
         KFMsg::S2SLoginLoginVerifyReq req;
         req.set_ip( ip );
         req.set_token( token );
-        req.set_sessionid( handleid );
+        req.set_sessionid( sessionid );
         req.set_accountid( accountid );
         ok = _kf_tcp_client->SendNetMessage( loginserverid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
         if ( ok )
@@ -138,7 +138,7 @@ namespace KFrame
         else
         {
             // 发送错误
-            SendLoginFailedMessage( handleid, KFMsg::LoginSystemBusy, 0 );
+            SendLoginFailedMessage( sessionid, KFMsg::LoginSystemBusy, 0 );
         }
     }
 
