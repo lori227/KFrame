@@ -98,7 +98,7 @@ namespace KFrame
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
 
-        __LOG_DEBUG__( "session[{}] accountid[{}:{}] login gate req!", sessionid, accountid );
+        __LOG_DEBUG__( "session[{}] accountid[{}] login gate req!", sessionid, accountid );
 
         // 注册连接器
         auto ok = _kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int );
