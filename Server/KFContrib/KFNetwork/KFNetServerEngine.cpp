@@ -66,17 +66,17 @@ namespace KFrame
         _net_server_services->_now_time = nowtime;
         _net_server_services->_net_event->RunEvent();
 
-        // 注册托管连接
-        RunRegisterTrusteeHandle();
-
         // 判断托管超时
         RunCheckTrusteeTimeout();
 
         // 需要关闭的连接
         RunCloseHandle();
 
-        // 处理消息
+        // 托管连接消息
         RunTrusteeMessage( nowtime );
+        RunRemoveTrusteeHandle();
+
+        // 注册连接消息
         RunHandleMessage( nowtime );
     }
 
@@ -215,7 +215,7 @@ namespace KFrame
         return kfhandle;
     }
 
-    void KFNetServerEngine::RunRegisterTrusteeHandle()
+    void KFNetServerEngine::RunRemoveTrusteeHandle()
     {
         if ( _remove_trustees.empty() )
         {

@@ -81,9 +81,8 @@ namespace KFrame
         void OnServerDisconnect( const KFEventData* eventdata );
 
     protected:
-
-        // 执行注册托管连接
-        void RunRegisterTrusteeHandle();
+        // 删除托管连接
+        void RunRemoveTrusteeHandle();
 
         // 判断托管超时
         void RunCheckTrusteeTimeout();
