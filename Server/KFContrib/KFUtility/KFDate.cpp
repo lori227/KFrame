@@ -216,12 +216,6 @@ namespace KFrame
             return lasthour <= hour || nowhour >= hour;
         }
 
-        // 同一天, 小于1小时
-        if ( timedistance < KFTimeEnum::OneHourSecond )
-        {
-            return false;
-        }
-
         return ( lasthour < hour && nowhour >= hour );
     }
 
