@@ -48,6 +48,17 @@ function yellow(){
 cd ../../KFLibrary
 libpath=_lib/linux/3rd/
 #-----------------------------------------------------
+blue "start building tcmalloc"
+
+cd tcmalloc
+bash ./configure --prefix=/usr/local
+make clean
+make -j 4
+cp -R -f src/.libs/*.so* ../../$libpath
+cd ../
+
+blue "end building tcmalloc"
+#-----------------------------------------------------
 blue "start building google protobuf"
 
 cd google/protobuf
