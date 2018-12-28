@@ -384,6 +384,7 @@ namespace KFrame
         }
 
         std::vector<char*> args;
+        auto kfglobal = KFGlobal::Instance();
 
         auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
