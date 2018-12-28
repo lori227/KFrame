@@ -26,7 +26,7 @@ namespace KFrame
 
     void KFAuthModule::BeforeRun()
     {
-        DWORD tStart, tEnd;
+        size_t tStart, tEnd;
 
         tStart = clock();
         func();
