@@ -50,7 +50,10 @@ libpath=_lib/linux/3rd/
 #-----------------------------------------------------
 blue "start building tcmalloc"
 
+yum -y install libunwind
+
 cd tcmalloc
+bash ./autogen.sh
 bash ./configure --prefix=/usr/local
 make clean
 make -j 4

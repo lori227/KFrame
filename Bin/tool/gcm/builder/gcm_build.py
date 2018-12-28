@@ -106,6 +106,7 @@ def copy_version():
         shutil.copy(win_other_dll_path + '/libeay32.dll', os.path.join(output_folder, 'bin'))
         shutil.copy(win_other_dll_path + '/ssleay32.dll', os.path.join(output_folder, 'bin'))
         shutil.copy(win_other_dll_path + '/libmysql.dll', os.path.join(output_folder, 'bin'))
+        shutil.copy(win_other_dll_path + '/libtcmalloc_minimal.dll', os.path.join(output_folder, 'bin'))
 
 def gen_shell():
     if os.path.exists(output_folder):
