@@ -101,13 +101,7 @@ namespace KFrame
         template< class T >
         inline void SetValue( const std::string& key, T value )
         {
-            this->operator[]( key ) = value;
-        }
-
-        template<>
-        inline void SetValue( const std::string& key, uint64 value )
-        {
-            this->operator[]( key ) = static_cast<uint32>( value );
+            //this->operator[]( key ) = value;
         }
 
         inline int32 GetInt32( const std::string& key )
