@@ -48,16 +48,26 @@ function yellow(){
 cd ../../KFLibrary
 libpath=_lib/linux/3rd/
 #-----------------------------------------------------
-blue "start building tcmalloc"
+blue "start building libunwind"
 
-yum -y install libunwind
+cd libunwind
+bash ./configure --prefix=/usr/local
+make clean
+make -j 4
+make install
+cd ../
+
+blue "end building libunwind"
+
+#-----------------------------------------------------
+blue "start building tcmalloc"
 
 cd tcmalloc
 bash ./autogen.sh
 bash ./configure --prefix=/usr/local
 make clean
 make -j 4
-cp -R -f src/.libs/*.so* ../../$libpath
+cp -R -f /usr/local/lib/libtcmalloc* ../../$libpath
 cd ../
 
 blue "end building tcmalloc"
