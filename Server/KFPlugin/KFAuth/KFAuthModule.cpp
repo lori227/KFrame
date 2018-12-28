@@ -8,32 +8,8 @@ namespace KFrame
 #define __DIR_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( dir ) )
 #define __PUBLIC_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( public ) )
 
-#define COUNT 1000*500
-    void func()
-    {
-        size_t j = 0;
-        for ( size_t i = 0; i < COUNT; ++i )
-        {
-            if ( j > 1001 )
-            {
-                j = 0;
-            }
-            int* pInt = ( int* )malloc( i * sizeof( int ) );
-            free( pInt );
-        }
-    }
-
-
     void KFAuthModule::BeforeRun()
     {
-        size_t tStart, tEnd;
-
-        tStart = clock();
-        func();
-        tEnd = clock();
-
-        printf( "%lu\n", tEnd - tStart );
-
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( activation ), false, &KFAuthModule::HandleAuthActivation );
