@@ -26,10 +26,7 @@ namespace KFrame
 
     void KFSpdLog::Log( uint32 loglevel, const std::string& content )
     {
-        if ( _logger != nullptr )
-        {
-            _logger->log( ( spdlog::level::level_enum )loglevel, content );
-        }
+        _logger->log( ( spdlog::level::level_enum )loglevel, content );
     }
 
     void KFSpdLog::CreateLogger()
