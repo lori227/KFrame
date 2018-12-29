@@ -75,18 +75,18 @@ namespace KFrame
         // 初始化appid
         ParseAppId( params[ __KF_STRING__( appid ) ] );
 
-        // 版本号
-        kfglobal->LoadVersion( "version" );
-
-        // 初始化服务类型
-        kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
+#if __KF_SYSTEM__ == __KF_WIN__
+        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
+#endif
 
         // 初始化log
         kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
 
-#if __KF_SYSTEM__ == __KF_WIN__
-        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
-#endif
+        // 初始化服务类型
+        kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
+
+        // 版本号
+        kfglobal->LoadVersion( "version" );
 
         // 读取启动配置
         std::string startupfile = "";
