@@ -30,8 +30,6 @@
 #include "KFPlugin/KFPlugin.h"
 #include "KFConHash/KFConHash.h"
 #include "KFPlugin/KFPluginManage.h"
-#include "KFMemory/KFBuffer.h"
 #include "KFMemory/KFMalloc.h"
-#include "KFMemory/KFShareMemory.h"
 
 #endif

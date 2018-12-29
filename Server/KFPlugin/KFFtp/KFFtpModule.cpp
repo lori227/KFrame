@@ -14,7 +14,7 @@ namespace KFrame
     {
         for ( auto& iter : _ftp_thread_list )
         {
-            __KF_DESTROY__( KFFtpThread, iter.second );
+            __KF_DELETE__( KFFtpThread, iter.second );
         }
         _ftp_thread_list.clear();
     }
@@ -39,7 +39,7 @@ namespace KFrame
 
         _kf_ftp_thread->FinishThread();
         _ftp_thread_list.erase( _kf_ftp_thread->_app_path );
-        __KF_DESTROY__( KFFtpThread, _kf_ftp_thread );
+        __KF_DELETE__( KFFtpThread, _kf_ftp_thread );
         _kf_ftp_thread = nullptr;
 
         if ( _ftp_thread_list.empty() )
@@ -66,7 +66,7 @@ namespace KFrame
             return;
         }
 
-        auto kfftpthread = __KF_CREATE__( KFDownloadThread );
+        auto kfftpthread = __KF_NEW__( KFDownloadThread );
         kfftpthread->_ftp_id = ftpid;
         kfftpthread->_app_path = apppath;
         kfftpthread->_ftp_function = function;
@@ -82,7 +82,7 @@ namespace KFrame
             return;
         }
 
-        auto kfftpthread = __KF_CREATE__( KFUploadThread );
+        auto kfftpthread = __KF_NEW__( KFUploadThread );
         kfftpthread->_ftp_id = ftpid;
         kfftpthread->_app_path = apppath;
         kfftpthread->_ftp_function = function;

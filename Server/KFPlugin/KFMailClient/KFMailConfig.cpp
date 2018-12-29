@@ -3,16 +3,6 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFMailConfig::KFMailConfig()
-    {
-
-    }
-
-    KFMailConfig::~KFMailConfig()
-    {
-
-    }
-
     const KFMailSetting* KFMailConfig::FindMailSetting( uint32 configid ) const
     {
         return _mail_setting.Find( configid );
@@ -27,9 +17,10 @@ namespace KFrame
         auto setting = config.FindNode( "Setting" );
         while ( setting.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFMailSetting );
+            auto configid = setting.GetUInt32( "ConfigId" );
+            auto kfsetting = _mail_setting.Create( configid );
 
-            kfsetting->_config_id = setting.GetUInt32( "ConfigId" );
+            kfsetting->_config_id = configid;
             kfsetting->_type = setting.GetUInt32( "Type" );
             kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
 
@@ -45,7 +36,6 @@ namespace KFrame
 
             auto stragent = setting.GetString( "Reward" );
             kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
-            _mail_setting.Insert( kfsetting->_config_id, kfsetting );
 
             setting.NextNode();
         }

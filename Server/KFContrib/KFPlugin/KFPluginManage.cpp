@@ -205,7 +205,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////
     void KFPluginManage::AddCommand( const std::string& command )
     {
-        auto kfcommand = __KF_CREATE__( KFDebugCommand );
+        auto kfcommand = __KF_NEW__( KFDebugCommand );
         kfcommand->_command = command;
         _commands.PushObject( kfcommand );
     }
@@ -226,7 +226,7 @@ namespace KFrame
                     kffunction->_function( params );
                 }
             }
-            __KF_DESTROY__( KFDebugCommand, kfcommand );
+            __KF_DELETE__( KFDebugCommand, kfcommand );
             kfcommand = _commands.PopObject();
         }
     }

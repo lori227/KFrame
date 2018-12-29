@@ -47,14 +47,11 @@ namespace KFrame
         }
 
         // 更新小区信息
-        auto kfdirdata = _kf_dir_list.Find( kfmsg.zoneid() );
-        if ( kfdirdata == nullptr )
+        auto kfdirdata = _kf_dir_list.Create( kfmsg.zoneid() );
+        if ( kfdirdata->_zone_id == _invalid_int )
         {
-            kfdirdata = __KF_CREATE__( KFDirData );
             kfdirdata->_zone_id = kfmsg.zoneid();
             kfdirdata->_zone_channel = kfmsg.zonechannel();
-            _kf_dir_list.Insert( kfmsg.zoneid(), kfdirdata );
-
             __LOG_INFO__( "login gate [{}][{}:{}] register!", KFAppID::ToString( kfmsg.appid() ), kfmsg.ip(), kfmsg.port() );
         }
 

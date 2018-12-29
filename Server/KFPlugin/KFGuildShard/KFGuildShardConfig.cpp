@@ -29,7 +29,7 @@ namespace KFrame
                 auto childnode = xmlnode.FindNode( "Guild" );
                 while ( childnode.IsValid() )
                 {
-                    auto kfsetting = __KF_CREATE__( KFGuildSetting );
+                    auto kfsetting = __KF_NEW__( KFGuildSetting );
                     kfsetting->_level = childnode.GetUInt32( "Level" );
                     kfsetting->_max_member = childnode.GetUInt32( "MaxMember" );
                     kfsetting->_upgrade_activeness = childnode.GetUInt32( "UpgradeActiveness" );

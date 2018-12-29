@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFNetEvent::AddEvent( uint32 type, uint64 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
     {
-        auto eventdata = __KF_CREATE_BATCH__( KFEventData, 50 );
+        auto eventdata = __KF_NEW__( KFEventData );
 
         eventdata->_id = id;
         eventdata->_type = type;
@@ -37,7 +37,7 @@ namespace KFrame
         while ( eventdata != nullptr )
         {
             HandleBindEventFunction( eventdata );
-            __KF_DESTROY__( KFEventData, eventdata );
+            __KF_DELETE__( KFEventData, eventdata );
 
             eventdata = _net_event_data.PopObject();
         }

@@ -43,7 +43,7 @@ namespace KFrame
         KFMatchQueue* _kf_match_queue;
 
         // 匹配的玩家列表
-        std::map< uint64, KFMatchPlayer* > _player_list;
+        std::unordered_map< uint64, KFMatchPlayer* > _player_list;
     };
 }
 

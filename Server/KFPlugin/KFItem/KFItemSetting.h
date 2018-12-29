@@ -96,7 +96,7 @@ namespace KFrame
         std::string _lua_file;
 
         // lua函数
-        std::map< uint32, std::string > _function;
+        std::unordered_map< uint32, std::string > _function;
 
         // 奖励类型
         uint32 _reward_type;

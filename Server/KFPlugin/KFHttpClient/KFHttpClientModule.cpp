@@ -16,7 +16,7 @@ namespace KFrame
             KFLocker locker( _kf_req_mutex );
             for ( auto httpdata : _req_http_data )
             {
-                __KF_DESTROY__( KFHttpData, httpdata );
+                __KF_DELETE__( KFHttpData, httpdata );
             }
             _req_http_data.clear();
         }
@@ -25,7 +25,7 @@ namespace KFrame
             KFLocker locker( _kf_ack_mutex );
             for ( auto httpdata : _ack_http_data )
             {
-                __KF_DESTROY__( KFHttpData, httpdata );
+                __KF_DELETE__( KFHttpData, httpdata );
             }
             _ack_http_data.clear();
         }
@@ -52,7 +52,7 @@ namespace KFrame
         for ( auto httpdata : templist )
         {
             httpdata->Response();
-            __KF_DESTROY__( KFHttpData, httpdata );
+            __KF_DELETE__( KFHttpData, httpdata );
         }
     }
 
@@ -137,7 +137,7 @@ namespace KFrame
 
     void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
     {
-        auto httpdata = __KF_CREATE__( KFHttpData );
+        auto httpdata = __KF_NEW__( KFHttpData );
         httpdata->_url = url;
         httpdata->_data = data;
         httpdata->_callback = callback;
@@ -145,11 +145,11 @@ namespace KFrame
 
         if ( IsHttpsClient( url ) )
         {
-            httpdata->_http = __KF_CREATE__( KFHttpsClient );
+            httpdata->_http = __KF_NEW__( KFHttpsClient );
         }
         else
         {
-            httpdata->_http = __KF_CREATE__( KFHttpClient );
+            httpdata->_http = __KF_NEW__( KFHttpClient );
         }
 
         AddHttpData( httpdata );

@@ -2,7 +2,6 @@
 #include "KFStartup.h"
 #include "KFAppConfig.h"
 #include "KFApplication.h"
-#include "KFMemory/KFLogMemory.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include "KFDump.h"
@@ -70,21 +69,11 @@ namespace KFrame
         kfglobal->_startup_params = params;
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
-
-        // 版本号
-        kfglobal->LoadVersion( "version" );
+        kfglobal->_app_name = params[ __KF_STRING__( appname ) ];
+        kfglobal->_app_type = params[ __KF_STRING__( apptype ) ];
 
         // 初始化appid
         ParseAppId( params[ __KF_STRING__( appid ) ] );
-
-        // 初始化服务类型
-        kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
-
-        // 读取启动配置
-        if ( !_kf_startup->InitStartup( params[ __KF_STRING__( startup ) ] ) )
-        {
-            return false;
-        }
 
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
@@ -93,8 +82,24 @@ namespace KFrame
         // 初始化log
         kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
 
-        // 加载插件
-        if ( !_kf_startup->LoadPlugin() )
+        // 初始化服务类型
+        kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
+
+        // 版本号
+        kfglobal->LoadVersion( "version" );
+
+        // 读取启动配置
+        std::string startupfile = "";
+        if ( kfglobal->_app_type.empty() )
+        {
+            startupfile = __FORMAT__( "./startup/{}.startup", kfglobal->_app_name );
+        }
+        else
+        {
+            startupfile = __FORMAT__( "./startup/{}.{}.startup", kfglobal->_app_name, kfglobal->_app_type );
+        }
+
+        if ( !_kf_startup->InitStartup( startupfile ) )
         {
             return false;
         }
@@ -170,6 +175,6 @@ namespace KFrame
             return;
         }
 
-        KFMalloc::Instance()->PrintLogMemory();
+        KFMalloc::Instance()->PrintMemoryLog();
     }
 }

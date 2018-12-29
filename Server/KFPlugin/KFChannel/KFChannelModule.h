@@ -68,7 +68,7 @@ namespace KFrame
         KFBind< uint32, uint32, KFChannelFunction > _kf_pay_function;
 
         // 注册的渠道
-        std::map< uint32, KFChannel* > _kf_channel_list;
+        std::unordered_map< uint32, KFChannel* > _kf_channel_list;
     };
 }
 

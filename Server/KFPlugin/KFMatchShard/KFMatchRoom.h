@@ -13,7 +13,7 @@ namespace KFrame
         ~KFMatchRoom();
 
         // 初始化
-        void Initialize( KFMatchQueue* kfmatchqueue, uint64 battleserverid, const std::string& version );
+        void Initialize( KFMatchQueue* kfmatchqueue, uint64 roomid, uint64 battleserverid, const std::string& version );
 
         // 是否正在等待匹配
         bool IsWaitMatch( uint64 battleserverid, uint32 playercount, const std::string& version );

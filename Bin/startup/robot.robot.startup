@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="robot" AppType="single" WinPluginPath="./" LinuxPluginPath="./bin/" >
+	<Plugins>
 		<Plugin Sort="1" Name="KFDeployCommand" Config=""/>
 		<Plugin Sort="10" Name="KFConfig" Config=""/>
 		<Plugin Sort="20" Name="KFOption" Config="./config/option.config"/>

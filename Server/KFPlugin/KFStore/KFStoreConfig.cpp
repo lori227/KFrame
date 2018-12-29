@@ -24,9 +24,10 @@ namespace KFrame
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFStoreSetting );
-            kfsetting->_id = xmlnode.GetUInt32( "Id" );
+            auto id = xmlnode.GetUInt32( "Id" );
+            auto kfsetting = _store_setting.Create( id );
 
+            kfsetting->_id = id;
             kfsetting->_type = xmlnode.GetUInt32( "Type" );
             kfsetting->_item_type = xmlnode.GetUInt32( "ItemType" );
             kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
@@ -51,9 +52,7 @@ namespace KFrame
             kfsetting->_return_mail_id = xmlnode.GetUInt32( "ReturnMailId" );
             kfsetting->_give_friend_liness = xmlnode.GetUInt32( "GiveFriendLiness" );
 
-
             _version = xmlnode.GetUInt32( "Version" );
-            _store_setting.Insert( kfsetting->_id, kfsetting );
 
             // 热更新消息包
             MakePBStore( xmlnode );

@@ -101,7 +101,7 @@ namespace KFrame
             auto* oldobject = _objects[ _push_index ];
             if ( oldobject != nullptr )
             {
-                __KF_DESTROY__( T, object );
+                __KF_DELETE__( T, object );
                 return false;
             }
 
@@ -138,7 +138,7 @@ namespace KFrame
                 return;
             }
 
-            __KF_DESTROY__( T, object );
+            __KF_DELETE__( T, object );
 
             _objects[ _pop_index ] = nullptr;
             _pop_index = ( _pop_index + 1 ) % _max_count;
@@ -151,7 +151,7 @@ namespace KFrame
                 auto object = _objects[ i ];
                 if ( object != nullptr )
                 {
-                    __KF_DESTROY__( T, object );
+                    __KF_DELETE__( T, object );
                     _objects[ i ] = nullptr;
                 }
             }

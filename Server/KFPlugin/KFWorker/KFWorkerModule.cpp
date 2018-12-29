@@ -11,7 +11,7 @@ namespace KFrame
     {
         for ( auto kfactor : _kf_actor )
         {
-            __KF_DESTROY__( KFActor, kfactor );
+            __KF_DELETE__( KFActor, kfactor );
         }
     }
 
@@ -67,7 +67,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFActor* KFWorkerModule::CreateWorkActor()
     {
-        auto kfactor = __KF_CREATE_BATCH__( KFActor, 20 );
+        auto kfactor = __KF_NEW__( KFActor );
         kfactor->InitActor( this, 5000, 5000 );
         _kf_actor.push_back( kfactor );
 

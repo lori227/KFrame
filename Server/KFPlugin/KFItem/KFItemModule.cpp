@@ -96,7 +96,7 @@ namespace KFrame
     void KFItemModule::RemoveValidTimeoutItem( KFEntity* player )
     {
         // 查找时间道具
-        std::map< KFData*, uint64 > timeitem;
+        std::unordered_map< KFData*, uint64 > timeitem;
 
         auto kfobject = player->GetData();
         auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );

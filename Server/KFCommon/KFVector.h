@@ -24,7 +24,7 @@ namespace KFrame
         {
             for ( auto object : _objects )
             {
-                __KF_DESTROY__( T, object );
+                __KF_DELETE__( T, object );
             }
 
             _objects.clear();

@@ -23,7 +23,7 @@ namespace KFrame
     {
         _buff_length = 0;
         free( _buff_address );
-        __KF_DELETE__( _net_event );
+        delete _net_event;
 
         uv_mutex_destroy( &_uv_shut_mutex );
         uv_mutex_destroy( &_uv_send_mutex );
@@ -40,7 +40,7 @@ namespace KFrame
             _queue_size = queuecount;
         }
 
-        _net_event = __KF_NEW__( KFNetEvent );
+        _net_event = new KFNetEvent();
         _net_event->InitEvent( eventcount );
 
         _message_type = messagetype;

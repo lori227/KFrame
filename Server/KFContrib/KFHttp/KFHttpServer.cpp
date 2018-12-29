@@ -25,7 +25,7 @@ namespace KFrame
         KFLocker kflocker( _kf_mutex );
         for ( auto kfdata : _kf_function_data )
         {
-            __KF_DESTROY__( KFFunctionData, kfdata );
+            __KF_DELETE__( KFFunctionData, kfdata );
         }
         _kf_function_data.clear();
     }
@@ -89,7 +89,7 @@ namespace KFrame
             return strdata;
         }
 
-        auto kfdata = __KF_CREATE__( KFFunctionData );
+        auto kfdata = __KF_NEW__( KFFunctionData );
         kfdata->_ip = ip;
         kfdata->_data = data;
         kfdata->_kf_function = kffunction;
@@ -121,7 +121,7 @@ namespace KFrame
                 __LOG_ERROR__( "http function failed! data=[{}]", kfdata->_data );
             }
 
-            __KF_DESTROY__( KFFunctionData, kfdata );
+            __KF_DELETE__( KFFunctionData, kfdata );
         }
     }
 }

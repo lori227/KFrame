@@ -13,7 +13,7 @@ namespace KFrame
     {
         if ( _data != nullptr )
         {
-            __KF_FREE__( char, _data, _length );
+            __KF_FREE__( char, _data );
         }
     }
 

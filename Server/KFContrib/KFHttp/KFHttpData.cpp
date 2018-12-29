@@ -12,7 +12,7 @@ namespace KFrame
 
     KFHttpData::~KFHttpData()
     {
-        __KF_DESTROY__( KFHttp, _http );
+        __KF_DELETE__( KFHttp, _http );
     }
 
     void KFHttpData::Request()

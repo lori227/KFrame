@@ -65,7 +65,7 @@ namespace KFrame
             return kfdriver;
         }
 
-        auto kfexecute = __KF_CREATE_BATCH__( KFMySQLExecute, 5 );
+        auto kfexecute = __KF_NEW__( KFMySQLExecute );
         kfexecute->InitMySQL( id, user, password, database, ip, port );
 
         InsertMySQLExecute( id, kfexecute );

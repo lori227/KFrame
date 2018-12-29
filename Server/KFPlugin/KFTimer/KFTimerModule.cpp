@@ -26,7 +26,7 @@ namespace KFrame
         {
             for ( auto miter : iter.second )
             {
-                __KF_DESTROY__( KFTimerData, miter.second );
+                __KF_DELETE__( KFTimerData, miter.second );
             }
         }
 
@@ -77,7 +77,7 @@ namespace KFrame
             if ( kfdata->_module == module &&
                     ( objectid == _invalid_int || kfdata->_id == objectid ) )
             {
-                __KF_DESTROY__( KFTimerData, kfdata );
+                __KF_DELETE__( KFTimerData, kfdata );
                 iter = _register_timer_data.erase( iter );
             }
             else
@@ -100,7 +100,7 @@ namespace KFrame
             auto kfdata = miter.second;
 
             RemoveSlotTimer( kfdata );
-            __KF_DESTROY__( KFTimerData, kfdata );
+            __KF_DELETE__( KFTimerData, kfdata );
         }
         iter->second.clear();
 
@@ -125,7 +125,7 @@ namespace KFrame
 
         auto kfdata = miter->second;
         RemoveSlotTimer( kfdata );
-        __KF_DESTROY__( KFTimerData, kfdata );
+        __KF_DELETE__( KFTimerData, kfdata );
 
         iter->second.erase( miter );
         if ( iter->second.empty() )
@@ -186,7 +186,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTimerModule::AddLoopTimer( const std::string& module, uint64 objectid, uint32 intervaltime, KFTimerFunction& function )
     {
-        auto kfdata = __KF_CREATE__( KFTimerData );
+        auto kfdata = __KF_NEW__( KFTimerData );
         kfdata->_id = objectid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Loop;
@@ -197,7 +197,7 @@ namespace KFrame
 
     void KFTimerModule::AddLimitTimer( const std::string& module, uint64 objectid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
     {
-        auto kfdata = __KF_CREATE__( KFTimerData );
+        auto kfdata = __KF_NEW__( KFTimerData );
         kfdata->_id = objectid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;
@@ -216,7 +216,7 @@ namespace KFrame
             return;
         }
 
-        kfdata = __KF_CREATE__( KFTimerData );
+        kfdata = __KF_NEW__( KFTimerData );
         kfdata->_id = objectid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;

@@ -1,6 +1,6 @@
 ﻿#include "KFIpAddressModule.h"
 #include "KFIpAddressConfig.h"
-
+#include "KFPort.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <winsock2.h>
@@ -53,8 +53,38 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint64 appid )
     {
-        return _net_port.CalcListenPort( type, port, appid );
+        switch ( type )
+        {
+        case __ID_PORT__:
+        {
+            KFAppID kfappid( appid );
+            port = port + kfappid._union._app_data._worker_id;
+        }
+        break;
+        case __SH_PORT__:
+        {
+            // 共享内存结算
+            auto address = __KF_SHARE_MEMORY__( __KF_STRING__( port ), 10240 );
+
+            auto kframeport = reinterpret_cast< KFramePort* >( address );
+            if ( kframeport->_is_inited == 0 )
+            {
+                kframeport = new ( address ) KFramePort();
+                kframeport->_is_inited = 1;
+            }
+
+            // 查找自己是否在列表中
+            auto kfport = kframeport->FindPort( appid );
+            port = port + kfport->_port;
+        }
+        break;
+        default:
+            break;
+        }
+
+        return port;
     }
+
     const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
         return _kf_ip_config->FindIpAddress( appname, apptype, appid );

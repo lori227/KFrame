@@ -169,11 +169,11 @@ namespace KFrame
         _log_level = level;
         if ( _log_level == 0 )
         {
-            KFMalloc::Instance()->SetLogMemoryOpen( true );
+            KFMalloc::Instance()->SetLogOpen( true );
         }
         else
         {
-            KFMalloc::Instance()->SetLogMemoryOpen( false );
+            KFMalloc::Instance()->SetLogOpen( false );
         }
     }
 

@@ -48,7 +48,7 @@ namespace KFrame
             return kfredislogic;
         }
 
-        kfredislogic = __KF_CREATE_BATCH__( KFRedisLogic, 5 );
+        kfredislogic = __KF_NEW__( KFRedisLogic );
         kfredislogic->Initialize( kfredistype );
 
         InsertRedisLogic( kfredistype->_id, kfredislogic );

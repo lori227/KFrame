@@ -53,7 +53,7 @@ namespace KFrame
                 return object;
             }
 
-            object = __KF_CREATE__( ObjectType );
+            object = __KF_NEW__( ObjectType );
             Insert( key, object );
             return object;
         }
@@ -75,7 +75,7 @@ namespace KFrame
 
             if ( isdelete )
             {
-                __KF_DESTROY__( ObjectType, iter->second );
+                __KF_DELETE__( ObjectType, iter->second );
             }
 
             _objects.erase( iter );
@@ -89,7 +89,7 @@ namespace KFrame
             {
                 for ( auto iter = _objects.begin(); iter != _objects.end(); ++iter )
                 {
-                    __KF_DESTROY__( ObjectType, iter->second );
+                    __KF_DELETE__( ObjectType, iter->second );
                 }
             }
 

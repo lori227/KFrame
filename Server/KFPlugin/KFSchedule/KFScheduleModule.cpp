@@ -14,7 +14,7 @@ namespace KFrame
         {
             for ( auto miter : iter.second )
             {
-                __KF_DESTROY__( KFScheduleData, miter.second );
+                __KF_DELETE__( KFScheduleData, miter.second );
             }
         }
 
@@ -31,7 +31,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFScheduleModule::AddSchedule( const std::string& module, KFScheduleSetting* kfsetting, KFScheduleFunction& function )
     {
-        auto kftimerdata = __KF_CREATE__( KFScheduleData );
+        auto kftimerdata = __KF_NEW__( KFScheduleData );
         kftimerdata->_module = module;
         kftimerdata->_schedule_time = static_cast< KFScheduleTime* >( kfsetting );
         kftimerdata->_function = function;
@@ -45,7 +45,7 @@ namespace KFrame
 
     KFScheduleSetting* KFScheduleModule::CreateScheduleSetting()
     {
-        return __KF_CREATE__( KFScheduleTime );
+        return __KF_NEW__( KFScheduleTime );
     }
 
     void KFScheduleModule::AddRemoveSchedule( const std::string& module, uint64 objectid )
@@ -159,7 +159,7 @@ namespace KFrame
             return;
         }
 
-        __KF_DESTROY__( KFScheduleData, miter->second );
+        __KF_DELETE__( KFScheduleData, miter->second );
         iter->second.erase( miter );
     }
 }

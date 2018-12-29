@@ -13,7 +13,7 @@ namespace KFrame
 
     KFRobotModule::~KFRobotModule()
     {
-        __KF_DELETE__( _net_client );
+        delete _net_client;
     }
 
     void KFRobotModule::InitModule()
@@ -24,7 +24,7 @@ namespace KFrame
     void KFRobotModule::BeforeRun()
     {
         //  __REGISTER_RUN_FUNCTION__( &KFRobotModule::Run );
-        _net_client = __KF_NEW__( KFNetClientEngine );
+        _net_client = new KFNetClientEngine();
         _net_client->InitEngine( 10000 );
         _net_client->BindNetFunction( this, &KFRobotModule::HandleNetMessage );
         _net_client->BindConnectFunction( this, &KFRobotModule::OnClientConnected );
@@ -462,7 +462,7 @@ namespace KFrame
                 auto pbstring = pbguilddatas.pbstring( j );
                 if ( pbstring.name() == __KF_STRING__( id ) )
                 {
-                    auto guildlistdata = __KF_CREATE__( GuildListData );
+                    auto guildlistdata = __KF_NEW__( GuildListData );
                     auto guildid = KFUtility::ToValue<uint64>( pbstring.value() );
                     guildlistdata->guildid = guildid;
                     kfrobot->_guild_list.Insert( guildid, guildlistdata );

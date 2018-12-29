@@ -54,17 +54,11 @@ namespace KFrame
         std::string _common_startup_file;
 
     public:
-        // appname
-        std::string _app_name;
-
-        // apptype
-        std::string _app_type;
-
         // Plugin path
         std::string _plugin_path;
 
         // 配置
-        std::map< std::string, KFAppSetting > _startups;
+        std::unordered_map< std::string, KFAppSetting > _startups;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
