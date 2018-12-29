@@ -10,12 +10,18 @@ namespace KFrame
 {
     KFSpdLog::~KFSpdLog()
     {
-        spdlog::drop_all();
+        spdlog::drop( _log_name );
     }
 
     bool KFSpdLog::Initialize( const std::string& path, const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        CreateLogger( path, appname, apptype, strappid );
+#if __KF_SYSTEM__ == __KF_WIN__
+        _log_name = __FORMAT__( "{}\\{}-{}-{}.log", path, appname, apptype, strappid );
+#else
+        _log_name = __FORMAT__( "{}/{}-{}-{}.log", path, appname, apptype, strappid );
+#endif
+
+        CreateLogger();
         return true;
     }
 
@@ -27,7 +33,7 @@ namespace KFrame
         }
     }
 
-    void KFSpdLog::CreateLogger( const std::string& path, const std::string& appname, const std::string& apptype, const std::string& strappid )
+    void KFSpdLog::CreateLogger()
     {
         std::vector<spdlog::sink_ptr> sinks_vec;
 
@@ -38,15 +44,10 @@ namespace KFrame
 #endif
         sinks_vec.push_back( color_sink );
 
-#if __KF_SYSTEM__ == __KF_WIN__
-        auto log_name = __FORMAT__( "{}\\{}-{}-{}.log", path, appname, apptype, strappid );
-#else
-        auto log_name = __FORMAT__( "{}/{}-{}-{}.log", path, appname, apptype, strappid );
-#endif
-        auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( log_name );
+        auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name );
 
         sinks_vec.push_back( date_and_hour_sink );
-        _logger = std::make_shared<spdlog::async_logger>( log_name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
+        _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
         _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );

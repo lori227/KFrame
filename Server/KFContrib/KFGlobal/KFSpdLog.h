@@ -23,9 +23,13 @@ namespace KFrame
     protected:
 
         // 创建log
-        void CreateLogger( const std::string& path, const std::string& appname, const std::string& apptype, const std::string& strappid );
+        void CreateLogger();
 
     private:
+
+        // 名字
+        std::string _log_name;
+
         // 日志对象
         spdlogger _logger;
     };
