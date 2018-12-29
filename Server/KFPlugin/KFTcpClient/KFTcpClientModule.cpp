@@ -11,12 +11,12 @@ namespace KFrame
 
     KFTcpClientModule::~KFTcpClientModule()
     {
-        __KF_DELETE__( _kf_client_engine );
+        delete _kf_client_engine;
     }
 
     void KFTcpClientModule::InitModule()
     {
-        _kf_client_engine = __KF_NEW__( KFNetClientEngine );
+        _kf_client_engine = new KFNetClientEngine();
     }
 
     void KFTcpClientModule::BeforeRun()

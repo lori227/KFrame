@@ -145,7 +145,7 @@ namespace KFrame
         auto kfinvite = _invite_group_list.Find( player->GetKeyID() );
         if ( kfinvite == nullptr )
         {
-            kfinvite = __KF_CREATE__( KFInviteGroup );
+            kfinvite = __KF_NEW__( KFInviteGroup );
             kfinvite->_match_id = matchid;
             kfinvite->_max_count = maxcount;
             kfinvite->_group_id = KFGlobal::Instance()->Make64Guid();

@@ -11,7 +11,7 @@ namespace KFrame
 
     KFScheduleData::~KFScheduleData()
     {
-        __KF_DESTROY__( KFScheduleTime, _schedule_time );
+        __KF_DELETE__( KFScheduleTime, _schedule_time );
     }
 
     bool KFScheduleData::Execute( uint64 year, uint64 month, uint64 day, uint64 dayofweek, uint64 hour, uint64 minute )

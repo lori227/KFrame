@@ -84,13 +84,13 @@ namespace KFrame
             KFLocker locker( _kf_mutex );
             for ( auto kfresult : _idle_list )
             {
-                __KF_DESTROY__( KFResult<T>, kfresult );
+                __KF_DELETE__( KFResult< T >, kfresult );
             }
             _idle_list.clear();
 
             for ( auto kfresult : _use_list )
             {
-                __KF_DESTROY__( KFResult<T>, kfresult );
+                __KF_DELETE__( KFResult< T >, kfresult );
             }
             _use_list.clear();
         }
@@ -103,7 +103,7 @@ namespace KFrame
             KFLocker locker( _kf_mutex );
             if ( _idle_list.empty() )
             {
-                kfresult = __KF_CREATE_BATCH__( KFResult< T >, 10 );
+                kfresult = __KF_NEW__( KFResult< T > );
             }
             else
             {

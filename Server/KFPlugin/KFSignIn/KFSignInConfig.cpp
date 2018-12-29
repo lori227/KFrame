@@ -8,12 +8,6 @@ namespace KFrame
         _signin_setting.Clear();
     }
 
-    void KFSignInConfig::AddSignInSetting( uint32 type, uint32 day, KFSignInSetting* kfstting )
-    {
-        SignInKey key( type, day );
-        _signin_setting.Insert( key, kfstting );
-    }
-
     const KFSignInSetting* KFSignInConfig::FindSignInSetting( uint32 type, uint32 day ) const
     {
         SignInKey key( type, day );
@@ -30,9 +24,12 @@ namespace KFrame
         while ( xmlnode.IsValid() )
         {
             auto type = xmlnode.GetUInt32( "Type" );
+            auto day = xmlnode.GetUInt32( "Day" );
 
-            auto kfsetting = __KF_CREATE__( KFSignInSetting );
-            kfsetting->_day = xmlnode.GetUInt32( "Day" );
+            SignInKey signkey( type, day );
+            auto kfsetting = _signin_setting.Create( signkey );
+
+            kfsetting->_day = day;
             kfsetting->_probability = xmlnode.GetUInt32( "Probability" );
 
             auto strreward = xmlnode.GetString( "Reward" );
@@ -41,7 +38,6 @@ namespace KFrame
             auto strextend = xmlnode.GetString( "ExtendReward" );
             kfsetting->_extend.ParseFromString( strextend, __FUNC_LINE__ );
 
-            AddSignInSetting( type, kfsetting->_day, kfsetting );
             xmlnode.NextNode();
         }
         //////////////////////////////////////////////////////////////////

@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFPort.h"
 #include "KFIpAddressInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -56,10 +55,7 @@ namespace KFrame
 #else
         std::string GetLinuxLocalIp();
 #endif
-
     protected:
-        KFNetProt _net_port;
-
         // 内网ip
         std::string _local_ip;
 

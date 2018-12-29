@@ -87,9 +87,6 @@ namespace KFrame
         };
 
     protected:
-
-        void AddKFAchieveSetting( KFAchieveSetting* kfsetting );
-
         void AddKFTypeAchieve( KFAchieveSetting* kfsetting );
 
     private:

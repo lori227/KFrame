@@ -17,7 +17,7 @@ namespace KFrame
 
     KFMatchCamp* KFMatchQueue::CreateMatchCamp( uint64 battleserverid, const std::string& version )
     {
-        auto kfcamp = __KF_CREATE__( KFMatchCamp );
+        auto kfcamp = __KF_NEW__( KFMatchCamp );
         kfcamp->_camp_id = MakeCampID();
         kfcamp->_battle_server_id = battleserverid;
         kfcamp->_battle_version = version;
@@ -70,7 +70,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////
     void KFMatchQueue::StartMatch( const KFMsg::PBMatchGroup* pbgroup, bool allowgroup, uint64 battleserverid, const std::string& version )
     {
-        auto kfgroup = __KF_CREATE__( KFMatchGroup );
+        auto kfgroup = __KF_NEW__( KFMatchGroup );
         kfgroup->_kf_match_queue = this;
         kfgroup->_battle_server_id = battleserverid;
         kfgroup->_battle_version = version;
@@ -114,9 +114,9 @@ namespace KFrame
         }
 
         // 如果没有找到, 创建一个
-        kfroom = __KF_CREATE_BATCH__( KFMatchRoom, 100 );
-        kfroom->Initialize( this, battleserverid, version );
-        _kf_room_list.Insert( kfroom->_room_id, kfroom );
+        auto roomid = KFGlobal::Instance()->Make64Guid();
+        kfroom = _kf_room_list.Create( roomid );
+        kfroom->Initialize( this, roomid, battleserverid, version );
         return kfroom;
     }
 

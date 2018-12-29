@@ -132,7 +132,7 @@ namespace KFrame
             auto querylaunchdata = _deploy_driver->Select( __KF_STRING__( launch ) );
             for ( auto& values : querylaunchdata->_value )
             {
-                auto kfsetting = __KF_CREATE__( KFLaunchSetting );
+                auto kfsetting = __KF_NEW__( KFLaunchSetting );
                 kfsetting->CopyFrom( values );
 
                 LaunchKey key( kfsetting->_app_name, kfsetting->_app_type );
@@ -147,7 +147,7 @@ namespace KFrame
             auto querydeploydata = _deploy_driver->Select( _deploy_table_name, keyvalue );
             for ( auto& values : querydeploydata->_value )
             {
-                auto deploydata = __KF_CREATE__( KFDeployData );
+                auto deploydata = __KF_NEW__( KFDeployData );
                 deploydata->CopyFrom( values );
                 deploydata->_kf_launch = _launch_list.Find( LaunchKey( deploydata->_app_name, deploydata->_app_type ) );
                 if ( deploydata->_kf_launch == nullptr )
@@ -642,13 +642,13 @@ namespace KFrame
         {
             for ( auto kftask : _deploy_task )
             {
-                __KF_DESTROY__( KFDeployTask, kftask );
+                __KF_DELETE__( KFDeployTask, kftask );
             }
             _deploy_task.clear();
 
             if ( _kf_task != nullptr )
             {
-                __KF_DESTROY__( KFDeployTask, _kf_task );
+                __KF_DELETE__( KFDeployTask, _kf_task );
                 _kf_task = nullptr;
             }
 
@@ -662,7 +662,7 @@ namespace KFrame
 
     void KFDeployAgentModule::AddDeployTask( const std::string& command, KFMsg::PBDeployCommand* pbdeploy )
     {
-        auto kftask = __KF_CREATE__( KFDeployTask );
+        auto kftask = __KF_NEW__( KFDeployTask );
         kftask->_command = command;
         kftask->_value = pbdeploy->value();
         kftask->_app_name = pbdeploy->appname();
@@ -698,7 +698,7 @@ namespace KFrame
                            _kf_task->_command, _kf_task->_value,
                            _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
-                __KF_DESTROY__( KFDeployTask, _kf_task );
+                __KF_DELETE__( KFDeployTask, _kf_task );
                 _kf_task = nullptr;
 
                 if ( !_deploy_task.empty() )
@@ -973,7 +973,7 @@ namespace KFrame
         if ( !ftpok )
         {
             // 下载失败, 重新启动任务
-            auto kftask = __KF_CREATE__( KFDeployTask );
+            auto kftask = __KF_NEW__( KFDeployTask );
             *kftask = *_kf_task;
             _deploy_task.push_front( kftask );
         }

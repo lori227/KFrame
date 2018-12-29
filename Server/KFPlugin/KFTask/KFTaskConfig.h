@@ -81,7 +81,7 @@ namespace KFrame
         }
 
     public:
-        std::map< std::string, KFTaskType > _task_type;
+        std::unordered_map< std::string, KFTaskType > _task_type;
     };
 
     /////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ namespace KFrame
         KFMap< uint32, uint32, KFTaskSetting > _task_setting;
 
         // 类型绑定的列表
-        std::map< std::string, KFDataTaskTypes > _task_types;
+        std::unordered_map< std::string, KFDataTaskTypes > _task_types;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

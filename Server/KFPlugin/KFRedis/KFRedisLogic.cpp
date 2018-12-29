@@ -5,16 +5,16 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFRedisLogic::KFRedisLogic()
     {
-        _read_execute = __KF_CREATE_BATCH__( KFReadExecute, 5 );
-        _write_execute = __KF_CREATE_BATCH__( KFWriteExecute, 5 );
+        _read_execute = __KF_NEW__( KFReadExecute );
+        _write_execute = __KF_NEW__( KFWriteExecute );
     }
 
     KFRedisLogic::~KFRedisLogic()
     {
         ShutDown();
 
-        __KF_DESTROY__( KFRedisExecute, _read_execute );
-        __KF_DESTROY__( KFWriteExecute, _write_execute );
+        __KF_DELETE__( KFRedisExecute, _read_execute );
+        __KF_DELETE__( KFWriteExecute, _write_execute );
     }
 
     void KFRedisLogic::ShutDown()

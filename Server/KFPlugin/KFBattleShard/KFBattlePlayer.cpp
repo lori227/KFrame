@@ -20,7 +20,7 @@ namespace KFrame
 
     KFBattlePlayer* KFBattlePlayer::Create( const KFMsg::PBBattlePlayer& pbplayer )
     {
-        auto kfplayer = __KF_CREATE_BATCH__( KFBattlePlayer, 100 );
+        auto kfplayer = __KF_NEW__( KFBattlePlayer );
         kfplayer->LoadFrom( pbplayer );
 
         return kfplayer;
@@ -28,7 +28,7 @@ namespace KFrame
 
     void KFBattlePlayer::Release( KFBattlePlayer* kfplayer )
     {
-        __KF_DESTROY__( KFBattlePlayer, kfplayer );
+        __KF_DELETE__( KFBattlePlayer, kfplayer );
     }
 
     uint64 KFBattlePlayer::GetID()

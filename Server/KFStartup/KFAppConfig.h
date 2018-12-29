@@ -64,7 +64,7 @@ namespace KFrame
         std::string _plugin_path;
 
         // 配置
-        std::map< std::string, KFAppSetting > _startups;
+        std::unordered_map< std::string, KFAppSetting > _startups;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

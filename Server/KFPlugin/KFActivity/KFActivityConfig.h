@@ -61,7 +61,7 @@ namespace KFrame
         uint32 _key;				// 键值
         uint32 _operate;			// 操作类型
 
-        std::map< uint64, KFActivityData* > _datas;  // 活动数据
+        std::unordered_map< uint64, KFActivityData* > _datas;  // 活动数据
 
         const KFActivityData* FindActivityData( uint32 id ) const;
         void AddActivityData( KFActivityData* data );

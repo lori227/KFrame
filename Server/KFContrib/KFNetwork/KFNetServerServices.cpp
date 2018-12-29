@@ -70,14 +70,14 @@ namespace KFrame
         // 创建一个id
         auto id = netservices->MakeTrusteeID();
 
-        auto uvtcp = __KF_NEW__( uv_tcp_t );
+        auto uvtcp = new uv_tcp_t();
         uv_tcp_init( netservices->_uv_loop, uvtcp );
 
         uvtcp->data = stream;
         uv_accept( stream, reinterpret_cast< uv_stream_t* >( uvtcp ) );
 
         // 创建句柄
-        auto kfhandle = __KF_CREATE__( KFNetHandle );
+        auto kfhandle = __KF_NEW__( KFNetHandle );
         kfhandle->InitHandle( id, uvtcp, netservices );
 
         //  添加连接成功事件

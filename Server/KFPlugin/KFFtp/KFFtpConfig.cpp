@@ -24,7 +24,7 @@ namespace KFrame
         auto ftpnode = ftpsnode.FindNode( "Ftp" );
         while ( ftpnode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFFtpSetting );
+            auto kfsetting = __KF_NEW__( KFFtpSetting );
 
             kfsetting->_id = ftpnode.GetUInt32( "FtpId" );
             kfsetting->_address = ftpnode.GetString( "Address" );

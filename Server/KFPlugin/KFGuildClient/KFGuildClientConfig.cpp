@@ -88,8 +88,11 @@ namespace KFrame
                 auto childnode = xmlnode.FindNode( "Guild" );
                 while ( childnode.IsValid() )
                 {
-                    auto kfsetting = __KF_CREATE__( KFGuildSetting );
-                    kfsetting->_level = childnode.GetUInt32( "Level" );
+                    auto level = childnode.GetUInt32( "Level" );
+                    _max_level = __MAX__( level, _max_level );
+
+                    auto kfsetting = _guild_setting.Create( level );
+                    kfsetting->_level = level;
                     kfsetting->_max_member = childnode.GetUInt32( "MaxMember" );
                     kfsetting->_upgrade_activeness = childnode.GetUInt32( "UpgradeActiveness" );
                     kfsetting->_degrade_activeness = childnode.GetUInt32( "DegradeActiveness" );
@@ -98,8 +101,7 @@ namespace KFrame
                     kfsetting->_medal_list = childnode.GetString( "MedalList" );
                     kfsetting->_max_log = childnode.GetUInt32( "MaxLog" );
 
-                    _max_level = __MAX__( kfsetting->_level, _max_level );
-                    _guild_setting.Insert( kfsetting->_level, kfsetting );
+
                     childnode.NextNode();
                 }
 
@@ -167,7 +169,7 @@ namespace KFrame
                 auto childnode = xmlnode.FindNode( "GuildActiness" );
                 while ( childnode.IsValid() )
                 {
-                    auto kfsetting = __KF_CREATE__( KFGuildActivenessSetting );
+                    auto kfsetting = __KF_NEW__( KFGuildActivenessSetting );
                     kfsetting->_id = childnode.GetUInt32( "Id" );
                     kfsetting->_add_activeness_value = childnode.GetUInt32( "AddActivenessOnce" );
                     kfsetting->_parent_name = childnode.GetString( "ParentName" );

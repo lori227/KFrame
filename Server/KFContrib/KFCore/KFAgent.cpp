@@ -126,7 +126,7 @@ namespace KFrame
     {
         for ( auto kfagent : _agents )
         {
-            __KF_DESTROY__( KFAgent, kfagent );
+            __KF_DELETE__( KFAgent, kfagent );
         }
         _agents.clear();
     }
@@ -168,7 +168,7 @@ namespace KFrame
                     continue;
                 }
 
-                auto kfagent = __KF_CREATE_BATCH__( KFAgent, 100 );
+                auto kfagent = __KF_NEW__( KFAgent );
                 kfagent->_string = iter->toStyledString();
                 kfagent->_data_name = begin.name();
 
@@ -183,7 +183,7 @@ namespace KFrame
                     }
                     else
                     {
-                        auto kfvalue = __KF_CREATE_BATCH__( KFAgentValue, 100 );
+                        auto kfvalue = __KF_NEW__( KFAgentValue );
                         _is_rand_agent |= kfvalue->SetValue( name, value );
                         kfagent->_datas.Insert( name, kfvalue );
                     }

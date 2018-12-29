@@ -2,7 +2,6 @@
 #include "KFStartup.h"
 #include "KFAppConfig.h"
 #include "KFApplication.h"
-#include "KFMemory/KFLogMemory.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include "KFDump.h"
@@ -170,6 +169,6 @@ namespace KFrame
             return;
         }
 
-        KFMalloc::Instance()->PrintLogMemory();
+        KFMalloc::Instance()->PrintMemoryLog();
     }
 }

@@ -24,9 +24,10 @@ namespace KFrame
         auto ranknode = ranksnode.FindNode( "Rank" );
         while ( ranknode.IsValid() )
         {
-            auto kfsetting = __KF_CREATE__( KFRankSetting );
+            auto id = ranknode.GetUInt32( "Id" );
+            auto kfsetting = _kf_rank_setting.Create( id );
 
-            kfsetting->_rank_id = ranknode.GetUInt32( "Id" );
+            kfsetting->_rank_id = id;
             kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
             kfsetting->_parent_data = ranknode.GetString( "ParentData" );
             kfsetting->_rank_data = ranknode.GetString( "RankData" );
@@ -37,17 +38,11 @@ namespace KFrame
             kfsetting->_refresh_minute = ranknode.GetUInt32( "RefreshMinute" );
             kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
 
-            AddRankSetting( kfsetting );
             ranknode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
 
         return true;
-    }
-
-    void KFRankShardConfig::AddRankSetting( KFRankSetting* kfsetting )
-    {
-        _kf_rank_setting.Insert( kfsetting->_rank_id, kfsetting );
     }
 
     const KFRankSetting* KFRankShardConfig::FindRankSetting( uint32 rankid ) const

@@ -52,12 +52,6 @@ namespace KFrame
         // 获得排行榜列表
         std::vector< KFRankSetting* >& FindRankSetting( const std::string& parentdata, const std::string& rankdata );
 
-    protected:
-        // 添加ranksetting
-        void AddRankSetting( KFRankSetting* kfsetting );
-        // 添加更新ranksetting
-        void AddUpdateSetting( const std::string& parentname, const std::string& dataname, KFRankSetting* kfsetting );
-
     public:
         // 玩家属性
         std::vector< DataType > _player_data;
@@ -67,8 +61,6 @@ namespace KFrame
 
         typedef std::pair< std::string, std::string > RankDataType;
         std::map< RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;
-
-        std::map<RankDataType, std::vector< KFRankSetting* > > _kf_rank_update_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

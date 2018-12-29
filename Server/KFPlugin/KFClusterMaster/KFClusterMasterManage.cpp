@@ -8,7 +8,7 @@ namespace KFrame
         auto kfgate = _kf_proxy_list.Find( handleid );
         if ( kfgate == nullptr )
         {
-            kfgate = __KF_CREATE__( KFProxyData );
+            kfgate = __KF_NEW__( KFProxyData );
             kfgate->_id = handleid;
             kfgate->_type = type;
             kfgate->_name = name;

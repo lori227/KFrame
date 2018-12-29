@@ -34,9 +34,6 @@ namespace KFrame
 
         const KFSignInSetting* FindSignInSetting( uint32 type, uint32 day ) const;
 
-    protected:
-        // 添加配置
-        void AddSignInSetting( uint32 type, uint32 day, KFSignInSetting* kfstting );
     public:
         // 称号列表
         typedef std::pair< uint32, uint32 > SignInKey;

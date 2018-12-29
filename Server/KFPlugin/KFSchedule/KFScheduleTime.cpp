@@ -18,7 +18,7 @@ namespace KFrame
 
     KFScheduleTime::~KFScheduleTime()
     {
-        __KF_FREE__( int8, _data, _size );
+        __KF_FREE__( int8, _data );
     }
 
     void KFScheduleTime::SetDayOfWeek( uint32 controltype, uint32 minute, uint32 hour, uint32 dayofweek, uint32 month /* = 0 */ )

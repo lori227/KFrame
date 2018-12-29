@@ -13,7 +13,7 @@ namespace KFrame
 
     KFHttpsClient::KFHttpsClient()
     {
-        _https_session = __KF_NEW__( Poco::Net::HTTPSClientSession, _context );
+        _https_session = new Poco::Net::HTTPSClientSession( _context );
     }
 
     void KFHttpsClient::Initialize()
@@ -28,7 +28,7 @@ namespace KFrame
 
     KFHttpsClient::~KFHttpsClient()
     {
-        __KF_DELETE__( _https_session );
+        delete _https_session;
     }
 
     Poco::Net::HTTPClientSession* KFHttpsClient::GetHttpSession()

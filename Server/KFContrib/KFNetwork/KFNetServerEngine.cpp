@@ -11,13 +11,13 @@ namespace KFrame
 
     KFNetServerEngine::~KFNetServerEngine()
     {
-        __KF_DELETE__( _net_server_services );
+        delete _net_server_services;
     }
 
     ////////////////////////////////////////////////////
     void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 messagetype )
     {
-        _net_server_services = __KF_NEW__( KFNetServerServices );
+        _net_server_services = new KFNetServerServices();
         _net_server_services->InitServices( 10000, maxqueuesize, messagetype );
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////

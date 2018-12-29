@@ -107,9 +107,8 @@ namespace KFrame
         auto kfcamp = _kf_camp_list.Find( pbcamp->campid() );
         if ( kfcamp == nullptr )
         {
-            kfcamp = __KF_CREATE_BATCH__( KFBattleCamp, 100 );
+            kfcamp = _kf_camp_list.Create( pbcamp->campid() );
             kfcamp->LoadFrom( pbcamp );
-            _kf_camp_list.Insert( kfcamp->_camp_id, kfcamp );
 
             // 玩家数量
             AddPlayerCount( kfcamp->PlayerCount() );

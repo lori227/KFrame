@@ -12,13 +12,13 @@ namespace KFrame
 
     KFTcpServerModule::~KFTcpServerModule()
     {
-        __KF_DELETE__( _kf_server_engine );
+        delete _kf_server_engine;
     }
 
     void KFTcpServerModule::InitModule()
     {
+        _kf_server_engine = new KFNetServerEngine();
         __KF_ADD_CONFIG__( _kf_server_config, false );
-        _kf_server_engine = __KF_NEW__( KFNetServerEngine );
     }
 
     KFTcpSetting* KFTcpServerModule::FindTcpServerSetting()

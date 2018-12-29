@@ -38,7 +38,7 @@ namespace KFrame
         KFLocker locker( _kf_mutex );
         for ( auto kfdata : _log_data_list )
         {
-            __KF_DESTROY__( KFLogData, kfdata );
+            __KF_DELETE__( KFLogData, kfdata );
         }
         _log_data_list.clear();
     }
@@ -61,7 +61,7 @@ namespace KFrame
         else
         {
             // 添加到队列
-            auto kfdata = __KF_CREATE__( KFLogData );
+            auto kfdata = __KF_NEW__( KFLogData );
             kfdata->_log_level = loglevel;
             kfdata->_content = content;
 
@@ -74,7 +74,7 @@ namespace KFrame
                 auto kfdata = _log_data_list.front();
                 KFLocalLogger::Log( kfdata->_log_level, kfdata->_content );
 
-                __KF_DESTROY__( KFLogData, kfdata );
+                __KF_DELETE__( KFLogData, kfdata );
                 _log_data_list.pop_front();
             }
         }
@@ -107,7 +107,7 @@ namespace KFrame
                 KFLocalLogger::Log( kfdata->_log_level, kfdata->_content );
             }
 
-            __KF_DESTROY__( KFLogData, kfdata );
+            __KF_DELETE__( KFLogData, kfdata );
         }
     }
 }

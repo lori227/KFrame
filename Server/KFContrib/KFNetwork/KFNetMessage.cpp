@@ -29,7 +29,7 @@ namespace KFrame
 
     KFNetMessage* KFNetMessage::Create( uint32 length )
     {
-        KFNetMessage* message = __KF_CREATE_BATCH__( KFNetMessage, 50 );
+        KFNetMessage* message = __KF_NEW__( KFNetMessage );
         message->MallocData( length );
         return message;
     }
@@ -37,8 +37,7 @@ namespace KFrame
     void KFNetMessage::Release()
     {
         FreeData();
-
-        __KF_DESTROY__( KFNetMessage, this );
+        __KF_DELETE__( KFNetMessage, this );
     }
 
     void KFNetMessage::CopyFrom( KFNetMessage* message )
@@ -73,7 +72,7 @@ namespace KFrame
     {
         if ( _data != nullptr )
         {
-            __KF_FREE__( int8, _data, _length );
+            __KF_FREE__( int8, _data );
         }
 
         _data = nullptr;

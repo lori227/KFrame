@@ -51,7 +51,7 @@ namespace KFrame
             }
 
             _kf_cluster_shard->SendToClient( message->_kfid, message->_msgid, message->_data, message->_length );
-            __KF_DESTROY__( KFWorkerMessage, message );
+            __KF_DELETE__( KFWorkerMessage, message );
         } while ( ++count < _max_message_count );
     }
 
@@ -73,7 +73,7 @@ namespace KFrame
                 *kfactor = reinterpret_cast< uint64 >( this );
 
                 _kf_worker_moduler->CallFunction( message->_kfid, message->_msgid, message->_data, message->_length );
-                __KF_DESTROY__( KFWorkerMessage, message );
+                __KF_DELETE__( KFWorkerMessage, message );
             }
         }
     }
@@ -85,7 +85,7 @@ namespace KFrame
             return false;
         }
 
-        auto message = __KF_CREATE_BATCH__( KFWorkerMessage, 100 );
+        auto message = __KF_NEW__( KFWorkerMessage );
         message->CopyFrom( kfid, msgid, data, length );
         _req_message_queue.PushObject( message );
         return true;
@@ -100,7 +100,7 @@ namespace KFrame
 
         auto strdata = message->SerializeAsString();
 
-        auto workermessage = __KF_CREATE_BATCH__( KFWorkerMessage, 100 );
+        auto workermessage = __KF_NEW__( KFWorkerMessage );
         workermessage->CopyFrom( _kf_guid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage );
         return true;
@@ -120,7 +120,7 @@ namespace KFrame
 
         auto strdata = message->SerializeAsString();
 
-        auto workermessage = __KF_CREATE_BATCH__( KFWorkerMessage, 100 );
+        auto workermessage = __KF_NEW__( KFWorkerMessage );
         workermessage->CopyFrom( kfid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage );
         return true;

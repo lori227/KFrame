@@ -24,34 +24,34 @@ namespace KFrame
         switch ( type )
         {
         case KFDataDefine::Type_Int32:
-            return __KF_CREATE_BATCH__( KFInt32, 50 );
+            return __KF_NEW__( KFInt32 );
             break;
         case KFDataDefine::Type_UInt32:
-            return __KF_CREATE_BATCH__( KFUInt32, 50 );
+            return __KF_NEW__( KFUInt32 );
             break;
         case KFDataDefine::Type_Int64:
-            return __KF_CREATE_BATCH__( KFInt64, 50 );
+            return __KF_NEW__( KFInt64 );
             break;
         case KFDataDefine::Type_UInt64:
-            return __KF_CREATE_BATCH__( KFUInt64, 50 );
+            return __KF_NEW__( KFUInt64 );
             break;
         case KFDataDefine::Type_Double:
-            return __KF_CREATE_BATCH__( KFDouble, 50 );
+            return __KF_NEW__( KFDouble );
             break;
         case KFDataDefine::Type_String:
-            return __KF_CREATE_BATCH__( KFString, 50 );
+            return __KF_NEW__( KFString );
             break;
         case KFDataDefine::Type_Vector3D:
-            return __KF_CREATE_BATCH__( KFVector3D, 50 );
+            return __KF_NEW__( KFVector3D );
             break;
         case KFDataDefine::Type_Object:
-            return __KF_CREATE_BATCH__( KFObject, 50 );
+            return __KF_NEW__( KFObject );
             break;
         case KFDataDefine::Type_Record:
-            return __KF_CREATE_BATCH__( KFRecord, 50 );
+            return __KF_NEW__( KFRecord );
             break;
         case KFDataDefine::Type_Array:
-            return __KF_CREATE_BATCH__( KFArray, 50 );
+            return __KF_NEW__( KFArray );
             break;
         default:
             break;
@@ -62,7 +62,7 @@ namespace KFrame
 
     void KFDataFactory::Release( KFData* kfdata )
     {
-        __KF_DESTROY__( KFData, kfdata );
+        __KF_DELETE__( KFData, kfdata );
     }
 
     KFData* KFDataFactory::CreateData( const std::string& classname, const std::string& dataname )

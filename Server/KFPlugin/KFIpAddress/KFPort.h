@@ -46,20 +46,6 @@ namespace KFrame
 #define __ID_PORT__ 1	// id计算端口
 #define __SH_PORT__ 2	// 共享内存计算端口
 
-    ///////////////////////////////////////////////////////////////////////
-    class KFNetProt
-    {
-    public:
-        KFNetProt();
-        ~KFNetProt();
-
-        // 计算一个监听端口
-        uint32 CalcListenPort( uint32 porttype, uint32 baseport, uint64 appid );
-
-    private:
-        // 共享内存
-        KFShareMemory _kf_share_memory;
-    };
 }
 #endif
 

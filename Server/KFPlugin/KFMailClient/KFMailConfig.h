@@ -53,8 +53,8 @@ namespace KFrame
     class KFMailConfig : public KFConfig, public KFSingleton< KFMailConfig >
     {
     public:
-        KFMailConfig();
-        ~KFMailConfig();
+        KFMailConfig() = default;
+        ~KFMailConfig() = default;
 
         bool LoadConfig();
 

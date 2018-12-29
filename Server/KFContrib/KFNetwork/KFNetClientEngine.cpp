@@ -13,13 +13,13 @@ namespace KFrame
 
     KFNetClientEngine::~KFNetClientEngine()
     {
-        __KF_DELETE__( _net_client_services );
+        delete _net_client_services;
     }
 
     void KFNetClientEngine::InitEngine( uint32 queuesize )
     {
         // 网络服务
-        _net_client_services = __KF_NEW__( KFNetClientServices );
+        _net_client_services = new KFNetClientServices();
         _net_client_services->InitServices( 100, queuesize, KFMessageEnum::Server );
         _net_client_services->StartServices( nullptr );
 

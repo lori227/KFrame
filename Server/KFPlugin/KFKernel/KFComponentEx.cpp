@@ -112,7 +112,7 @@ namespace KFrame
 
     KFEntity* KFComponentEx::CreateEntity( uint64 key )
     {
-        auto kfentity = __KF_CREATE__( KFEntityEx );
+        auto kfentity = __KF_NEW__( KFEntityEx );
         kfentity->InitData( this, _component_name );
 
         AddEntity( key, kfentity );

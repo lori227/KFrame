@@ -260,12 +260,10 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SCreateRoomToBattleShardReq );
 
         // 创建房间
-        auto kfroom = _kf_room_list.Find( kfmsg.roomid() );
-        if ( kfroom == nullptr )
+        auto kfroom = _kf_room_list.Create( kfmsg.roomid() );
+        if ( kfroom->_battle_room_id == _invalid_int )
         {
-            kfroom = __KF_CREATE_BATCH__( KFBattleRoom, 100 );
             kfroom->InitRoom( kfmsg.matchid(), kfmsg.roomid(), kfmsg.battleserverid(), kfmsg.maxplayercount(), kfmsg.version(), _battle_redis_driver );
-            _kf_room_list.Insert( kfmsg.roomid(), kfroom );
         }
 
         // 设置路由信息
