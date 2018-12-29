@@ -35,19 +35,19 @@ namespace KFrame
 
     void KFSpdLog::CreateLogger()
     {
-        std::vector<spdlog::sink_ptr> sinks_vec;
+        std::vector<spdlog::sink_ptr> sinksvec;
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
+        auto colorsink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 #else
-        auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
+        auto colorsink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 #endif
-        sinks_vec.push_back( color_sink );
+        sinksvec.push_back( colorsink );
 
         auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name );
 
-        sinks_vec.push_back( date_and_hour_sink );
-        _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
+        sinksvec.push_back( date_and_hour_sink );
+        _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), 1024 );
 
 #if defined(__KF_DEBUG__)
         _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
