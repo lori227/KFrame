@@ -12,11 +12,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfglobal = KFGlobal::Instance();
-        kfglobal->_app_name = _app_config->_app_name;
-        kfglobal->_app_type = _app_config->_app_type;
-
-        return true;
+        return LoadPlugin();
     }
 
     bool KFStartup::LoadPlugin()

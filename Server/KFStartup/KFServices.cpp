@@ -69,31 +69,37 @@ namespace KFrame
         kfglobal->_startup_params = params;
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
-
-        // 版本号
-        kfglobal->LoadVersion( "version" );
+        kfglobal->_app_name = params[ __KF_STRING__( appname ) ];
+        kfglobal->_app_type = params[ __KF_STRING__( apptype ) ];
 
         // 初始化appid
         ParseAppId( params[ __KF_STRING__( appid ) ] );
 
+        // 版本号
+        kfglobal->LoadVersion( "version" );
+
         // 初始化服务类型
         kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
 
-        // 读取启动配置
-        if ( !_kf_startup->InitStartup( params[ __KF_STRING__( startup ) ] ) )
-        {
-            return false;
-        }
+        // 初始化log
+        kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
 #endif
 
-        // 初始化log
-        kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
+        // 读取启动配置
+        std::string startupfile = "";
+        if ( kfglobal->_app_type.empty() )
+        {
+            startupfile = __FORMAT__( "./startup/{}.startup", kfglobal->_app_name );
+        }
+        else
+        {
+            startupfile = __FORMAT__( "./startup/{}.{}.startup", kfglobal->_app_name, kfglobal->_app_type );
+        }
 
-        // 加载插件
-        if ( !_kf_startup->LoadPlugin() )
+        if ( !_kf_startup->InitStartup( startupfile ) )
         {
             return false;
         }

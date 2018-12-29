@@ -21,6 +21,12 @@ namespace KFrame
 
     bool KFAppConfig::LoadStartupConfig( const std::string& file )
     {
+#if __KF_SYSTEM__ == __KF_WIN__
+        _plugin_path = "./";
+#else
+        _plugin_path = "./bin/;
+#endif
+
         auto ok = LoadServerConfig( file );
         if ( ok )
         {
@@ -69,26 +75,6 @@ namespace KFrame
     void KFAppConfig::ReadPluginSetting( KFNode& root )
     {
         auto plugins = root.FindNode( "Plugins" );
-
-        if ( _app_name.empty() )
-        {
-            _app_name = plugins.GetString( "AppName" );
-        }
-
-        if ( _app_type.empty() )
-        {
-            _app_type = plugins.GetString( "AppType" );
-        }
-
-        if ( _plugin_path.empty() )
-        {
-#if __KF_SYSTEM__ == __KF_WIN__
-            _plugin_path = plugins.GetString( "WinPluginPath" );
-#else
-            _plugin_path = plugins.GetString( "LinuxPluginPath" );
-#endif
-        }
-
         if ( _common_startup_file.empty() )
         {
             _common_startup_file = plugins.GetString( "Common", true );

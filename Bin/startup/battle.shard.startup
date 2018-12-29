@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins AppName="battle" AppType="shard" WinPluginPath="./" LinuxPluginPath="./bin/" Common="./startup/common.startup">
+	<Plugins Common="./startup/common.startup">
 		<Plugin Sort="100" Name="KFTcpServer" Config="./setting/tcpserver.setting"/>
 		<Plugin Sort="110" Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
 		<Plugin Sort="120" Name="KFClusterShard" Config=""/>
