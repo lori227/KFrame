@@ -43,10 +43,7 @@ namespace KFrame
         auto colorsink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 #endif
         sinksvec.push_back( colorsink );
-
-        auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name );
-
-        sinksvec.push_back( date_and_hour_sink );
+        sinksvec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name ) );
         _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), 1024 );
 
 #if defined(__KF_DEBUG__)
