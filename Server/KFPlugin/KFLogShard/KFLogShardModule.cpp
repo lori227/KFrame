@@ -51,21 +51,13 @@ namespace KFrame
         std::vector<spdlog::sink_ptr> sinks_vec;
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        std::string logpath = __FORMAT__( "..\\binlog\\{}", loggername );
-#else
-        std::string logpath = __FORMAT__( "../binlog/{}", loggername );
-#endif
-
-        auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( logpath );
-#if __KF_SYSTEM__ == __KF_WIN__
         auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 #else
         auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 #endif
 
         sinks_vec.push_back( color_sink );
-        sinks_vec.push_back( date_and_hour_sink );
-
+        sinks_vec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( loggername ) );
         auto remote_logger = std::make_shared<spdlog::async_logger>( loggername, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
 
 #if defined(__KF_DEBUG__)
@@ -83,17 +75,19 @@ namespace KFrame
 
     const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        static std::shared_ptr<spdlog::logger> NULLPTR_ = nullptr;
-
-        std::string loggername = __FORMAT__( "{}-{}-{}.log", appname, apptype, strappid );
+#if __KF_SYSTEM__ == __KF_WIN__
+        std::string loggername = __FORMAT__( "..\\binlog\\{}-{}-{}.log", appname, apptype, strappid );
+#else
+        std::string loggername = __FORMAT__( "../binlog/{}-{}-{}.log", appname, apptype, strappid );
+#endif
         auto iter = _loggers.find( loggername );
         if ( iter == _loggers.end() )
         {
             CreateLogger( loggername );
+            iter = _loggers.find( loggername );
         }
 
-        iter = _loggers.find( loggername );
-        return ( iter == _loggers.end() ) ? NULLPTR_ : iter->second;
+        return iter->second;
     }
 
     //////////////////////////////////////////////////////////////////////////
