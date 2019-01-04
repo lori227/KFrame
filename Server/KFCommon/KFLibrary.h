@@ -5,7 +5,6 @@
 #if __KF_SYSTEM__ == __KF_WIN__
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_DEBUG__
-        #pragma comment( lib, "jsoncppd.lib" )
         #pragma comment( lib, "libprotobufd.lib" )
         #pragma comment( lib, "iphlpapi.lib" )
         #pragma comment( lib, "libmysql.lib" )
@@ -31,7 +30,6 @@
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_RELEASE__
-        #pragma comment( lib, "jsoncpp.lib" )
         #pragma comment( lib, "libprotobuf.lib" )
         #pragma comment( lib, "iphlpapi.lib" )
         #pragma comment( lib, "libmysql.lib" )

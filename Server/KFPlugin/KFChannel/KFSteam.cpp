@@ -1,5 +1,4 @@
 ﻿#include "KFSteam.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -8,7 +7,7 @@ namespace KFrame
 {
     std::string KFSteam::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
-        auto token = json.GetString( __KF_STRING__( token ) );
+        auto token = __JSON_GET_STRING__( json, __KF_STRING__( token ) );
 
         auto urldata = __FORMAT__( "{}?key={}&appid={}&ticket={}", kfsetting->_login_url, kfsetting->_app_key, kfsetting->_app_id, token );
 
@@ -18,51 +17,36 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::SteamError );
         }
 
-        KFJson kfresult( resultdata );
-        if ( !kfresult.isMember( __KF_STRING__( response ) ) )
+        __JSON_PARSE_STRING__( kfresult, resultdata );
+        if ( !kfresult.HasMember( __KF_STRING__( response ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }
 
         // {"response":{"error":{"errorcode":101,"errordesc":"Invalid ticket"}}}
-        KFJson kfdata = kfresult[ __KF_STRING__( response ) ];
-        if ( kfdata.isMember( __KF_STRING__( error ) ) )
+        auto& kfdata = kfresult[ __KF_STRING__( response ) ];
+        if ( kfdata.HasMember( __KF_STRING__( error ) ) )
         {
-            KFJson kferror = kfdata[ __KF_STRING__( error ) ];
-            return _kf_http_server->SendResponse( kferror, KFMsg::SteamAuthError );
+            return _kf_http_server->SendResponseCode( KFMsg::SteamAuthError );
         }
 
         //{"response":{"params":{"result":"OK","steamid":"76561198859198521","ownersteamid":"76561198859198521","vacbanned":false,"publisherbanned":false}}}
-        if ( !kfdata.isMember( __KF_STRING__( params ) ) )
+        if ( !kfdata.HasMember( __KF_STRING__( params ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }
 
-        KFJson kfparams = kfdata[ __KF_STRING__( params ) ];
-        if ( !kfparams.isMember( __KF_STRING__( steamid ) ) )
+        auto& kfparams = kfdata[ __KF_STRING__( params ) ];
+        if ( !kfparams.HasMember( __KF_STRING__( steamid ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }
 
-        auto steamid = kfparams.GetString( __KF_STRING__( steamid ) );
+        auto steamid = __JSON_GET_STRING__( kfparams, __KF_STRING__( steamid ) );
 
-        KFJson response;
-        response.SetValue( __KF_STRING__( account ), steamid );
-        response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
-
-        //设置渠道额外数据
-        KFJson kfextend;
-        if ( !json.isMember( __KF_STRING__( steamfreeweekend ) ) )
-        {
-            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), _invalid_int );
-        }
-        else
-        {
-            kfextend.SetValue( __KF_STRING__( steamfreeweekend ), json.GetUInt32( __KF_STRING__( steamfreeweekend ) ) );
-        }
-
-        response.SetValue( __KF_STRING__( extend ), kfextend );
-
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( account ), steamid );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_channel_id );
         return _kf_http_server->SendResponse( response );
     }
 

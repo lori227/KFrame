@@ -113,8 +113,8 @@ namespace KFrame
 
     std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, KFJson& json )
     {
-        auto temp = json.Serialize();
-        return StartSTHttpClient( url, temp );
+        auto data = __JSON_SERIALIZE__( json );
+        return StartSTHttpClient( url, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpClientModule::StartMTHttpClient( const std::string& url, const std::string& data )
@@ -131,7 +131,7 @@ namespace KFrame
 
     void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
     {
-        auto data = json.Serialize();
+        auto data = __JSON_SERIALIZE__( json );
         StartMTHttpClient( function, url, data, callback );
     }
 

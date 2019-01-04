@@ -7,6 +7,7 @@
 #include "KFEnum.h"
 #include "KFBind.h"
 #include "KFId.h"
+#include "KFJson.h"
 #include "KFQueue.h"
 #include "KFDefine.h"
 #include "KFVector.h"

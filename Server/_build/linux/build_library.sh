@@ -86,24 +86,6 @@ blue "end building google protobuf"
 
 #pause
 #-----------------------------------------------------
-blue "start building json"
-
-cd json
-
-if [ -d "build" ]; then
-	rm -rf build
-fi
-
-mkdir build && cd build
-cmake -G "Unix Makefiles" -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DCMAKE_BUILD_TYPE=release ../
-make -j 4
-cp -R -f src/lib_json/*.so* ../../../$libpath
-cd ../../
-
-blue "end building json"
-
-#pause
-#-----------------------------------------------------
 blue "start building libiconv"
 
 cd libiconv/linux/source

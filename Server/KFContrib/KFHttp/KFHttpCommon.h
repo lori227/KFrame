@@ -2,10 +2,10 @@
 #define __KF_HTTP_COMMON_H__
 
 #include "KFDefine.h"
+#include "KFJson.h"
 
 namespace KFrame
 {
-    class KFJson;
     class KFHttpCommon
     {
     public:

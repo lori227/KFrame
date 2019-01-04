@@ -399,6 +399,7 @@ namespace KFrame
         __STRING_DEFINE__( banplayerid );
         __STRING_DEFINE__( queryaccount );
         __STRING_DEFINE__( discount );
+        __STRING_DEFINE__( activationCode );
     }
 }
 

@@ -102,10 +102,10 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
 
-        auto scheduletime = request.GetUInt32( __KF_STRING__( scheduletime ) );
-        auto logurl = request.GetString( __KF_STRING__( callback ) );
+        auto logurl = __JSON_GET_STRING__( request, __KF_STRING__( callback ) );
+        auto scheduletime = __JSON_GET_UINT32__( request, __KF_STRING__( scheduletime ) );
 
         LogDeploy( logurl, "server recv command=[{}]", data );
 
@@ -128,20 +128,20 @@ namespace KFrame
 
     __KF_SCHEDULE_FUNCTION__( KFDeployServerModule::OnDeployCommandToAgent )
     {
-        KFJson request( data, size );
+        __JSON_PARSE_CHAR__( request, data, size );
 
         KFMsg::S2SDeployCommandToAgentReq req;
         auto pbdeploy = req.mutable_deploycommand();
-        pbdeploy->set_command( request.GetString( __KF_STRING__( command ) ) );
-        pbdeploy->set_value( request.GetString( __KF_STRING__( value ) ) );
-        pbdeploy->set_appname( request.GetString( __KF_STRING__( appname ) ) );
-        pbdeploy->set_apptype( request.GetString( __KF_STRING__( apptype ) ) );
-        pbdeploy->set_appid( request.GetString( __KF_STRING__( appid ) ) );
-        pbdeploy->set_zoneid( request.GetUInt32( __KF_STRING__( zoneid ) ) );
-        pbdeploy->set_logurl( request.GetString( __KF_STRING__( callback ) ) );
+        pbdeploy->set_command( __JSON_GET_STRING__( request, __KF_STRING__( command ) ) );
+        pbdeploy->set_value( __JSON_GET_STRING__( request, __KF_STRING__( value ) ) );
+        pbdeploy->set_appname( __JSON_GET_STRING__( request, __KF_STRING__( appname ) ) );
+        pbdeploy->set_apptype( __JSON_GET_STRING__( request, __KF_STRING__( apptype ) ) );
+        pbdeploy->set_appid( __JSON_GET_STRING__( request, __KF_STRING__( appid ) ) );
+        pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) ) );
+        pbdeploy->set_logurl( __JSON_GET_STRING__( request, __KF_STRING__( callback ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 
-        auto logurl = request.GetString( __KF_STRING__( callback ) );
+        auto logurl = __JSON_GET_STRING__( request, __KF_STRING__( callback ) );
         LogDeploy( logurl, "server distribute command=[{}]", data );
     }
 
@@ -151,8 +151,8 @@ namespace KFrame
 
         if ( !url.empty() )
         {
-            KFJson response;
-            response[ __KF_STRING__( msg ) ] = msg;
+            __JSON_DOCUMENT__( response );
+            __JSON_SET_VALUE__( response, __KF_STRING__( msg ), msg );
             _kf_http_client->StartMTHttpClient( url, response );
         }
     }

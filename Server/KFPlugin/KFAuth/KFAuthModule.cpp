@@ -1,5 +1,4 @@
 ﻿#include "KFAuthModule.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -40,15 +39,15 @@ namespace KFrame
         // 渠道验证
         auto authdata = _kf_channel->AuthChannelLogin( data );
 
-        KFJson authjson( authdata );
+        __JSON_PARSE_STRING__( authjson, authdata );
         auto retcode = _kf_http_server->GetResponseCode( authjson );
         if ( retcode != KFMsg::Success )
         {
             return _kf_http_server->SendResponseCode( retcode );
         }
 
-        auto account = authjson.GetString( __KF_STRING__( account ) );
-        auto channel = authjson.GetUInt32( __KF_STRING__( channel ) );
+        auto account = __JSON_GET_STRING__( authjson, __KF_STRING__( account ) );
+        auto channel = __JSON_GET_UINT32__( authjson, __KF_STRING__( channel ) );
         if ( account.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
@@ -71,9 +70,9 @@ namespace KFrame
             auto activation = accountdata[ __KF_STRING__( activation ) ];
             if ( activation.empty() )
             {
-                KFJson response;
-                response.SetValue( __KF_STRING__( accountid ), accountid );
-                response.SetValue<uint32>( __KF_STRING__( retcode ), KFMsg::ActivationAccount );
+                __JSON_DOCUMENT__( response );
+                __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
+                __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), KFMsg::ActivationAccount );
                 return _kf_http_server->SendResponse( response );
             }
         }
@@ -99,17 +98,14 @@ namespace KFrame
 
     void KFAuthModule::UpdateChannelData( uint64 accountid, uint32 channel, KFJson& kfjson )
     {
-        if ( !kfjson.isMember( __KF_STRING__( extend ) ) )
+        if ( !kfjson.HasMember( __KF_STRING__( extend ) ) )
         {
             return;
         }
 
         MapString values;
-        KFJson kfextend = kfjson[ __KF_STRING__( extend ) ];
-        for ( auto iter = kfextend.begin(); iter != kfextend.end(); ++iter )
-        {
-            values[ iter.name() ] = iter->asString();
-        }
+        auto& kfextend = kfjson[ __KF_STRING__( extend ) ];
+        __JSON_TO_MAP__( kfextend, values );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( extend ), accountid );
@@ -209,11 +205,11 @@ namespace KFrame
 
         auto kickurl = url + __KF_STRING__( kickonline );
 
-        KFJson kfjson;
-        kfjson.SetValue( __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
-        auto kickresult = _kf_http_client->StartSTHttpClient( kickurl, kfjson );
+        __JSON_DOCUMENT__( kfkickjson );
+        __JSON_SET_VALUE__( kfkickjson, __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
+        auto kickresult = _kf_http_client->StartSTHttpClient( kickurl, kfkickjson );
 
-        KFJson kfresponse( kickresult );
+        __JSON_PARSE_STRING__( kfresponse, kickresult );
         auto retcode = _kf_http_server->GetResponseCode( kfresponse );
         return retcode == KFMsg::Success;
     }
@@ -232,12 +228,12 @@ namespace KFrame
         auto zoneid = KFUtility::ToValue<uint32>( accountdata[ __KF_STRING__( zoneid ) ] );
 
         // 获取服务器列表
-        KFJson dirrequest;
-        dirrequest.SetValue( __KF_STRING__( zoneid ), zoneid );
-        dirrequest.SetValue( __KF_STRING__( accountid ), accountid );
+        __JSON_DOCUMENT__( dirrequest );
+        __JSON_SET_VALUE__( dirrequest, __KF_STRING__( zoneid ), zoneid );
+        __JSON_SET_VALUE__( dirrequest, __KF_STRING__( accountid ), accountid );
         auto urlresponse = _kf_http_client->StartSTHttpClient( dirurl, dirrequest );
 
-        KFJson kfdirjson( urlresponse );
+        __JSON_PARSE_STRING__( kfdirjson, urlresponse );
         auto dirretcode = _kf_http_server->GetResponseCode( kfdirjson );
         if ( dirretcode != KFMsg::Success )
         {
@@ -251,15 +247,15 @@ namespace KFrame
         }
 
         // 返回认证结果
-        kfdirjson.SetValue( __KF_STRING__( token ), token );
-        kfdirjson.SetValue( __KF_STRING__( accountid ), accountid );
+        __JSON_SET_VALUE__( kfdirjson, __KF_STRING__( token ), token );
+        __JSON_SET_VALUE__( kfdirjson, __KF_STRING__( accountid ), accountid );
         return _kf_http_server->SendResponse( kfdirjson );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthActivation )
     {
-        KFJson request( data );
-        auto accountid = request.GetUInt64( __KF_STRING__( accountid ) );
+        __JSON_PARSE_STRING__( request, data );
+        auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
         if ( accountid == _invalid_int )
         {
             return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
@@ -280,7 +276,7 @@ namespace KFrame
         }
 
         // 保存激活码
-        auto code = request.GetString( __KF_STRING__( code ) );
+        auto code = __JSON_GET_STRING__( request, __KF_STRING__( code ) );
 
         //// 判断激活码是否存在
         //auto isexist = redisdriver->QueryUInt64( "sismember {} {}", __KF_STRING__( activationcode ), code );
@@ -305,19 +301,28 @@ namespace KFrame
 
         auto account = accountdata[ __KF_STRING__( account ) ];
 
-        KFJson postjson;
-        postjson.SetValue( "accountid", accountid );
-        postjson.SetValue( "activationCode", activationcode );
-        postjson.SetValue( "openid", account );
-        postjson.SetValue( "channel", KFGlobal::Instance()->_app_id._union._app_data._channel_id );
+        __JSON_DOCUMENT__( postjson );
+        __JSON_SET_VALUE__( postjson, __KF_STRING__( accountid ), accountid );
+        __JSON_SET_VALUE__( postjson, __KF_STRING__( activationCode ), activationcode );
+        __JSON_SET_VALUE__( postjson, __KF_STRING__( openid ), account );
+        __JSON_SET_VALUE__( postjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
 
         //去平台通过激活码激活
         auto result = _kf_http_client->StartSTHttpClient( apiurl, postjson );
-        KFJson resp( result );
-        if ( resp[ "code" ] != 0 )
+        __JSON_PARSE_STRING__( resp, result );
+
+        if ( !resp.HasMember( __KF_STRING__( code ) ) )
         {
-            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
             __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
+            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+            return _invalid_int;
+        }
+
+        auto code = __JSON_GET_UINT32__( resp, __KF_STRING__( code ) );
+        if ( code != 0 )
+        {
+            __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
+            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
             return _invalid_str;
         }
 
@@ -331,12 +336,12 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleVerifyToken )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
 
-        auto loginip = request.GetString( __KF_STRING__( ip ) );
-        auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
-        auto logiczoneid = request.GetUInt32( __KF_STRING__( logiczoneid ) );
-        auto accountid = request.GetUInt64( __KF_STRING__( accountid ) );
+        auto loginip = __JSON_GET_STRING__( request, __KF_STRING__( ip ) );
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+        auto logiczoneid = __JSON_GET_UINT32__( request, __KF_STRING__( logiczoneid ) );
+        auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
         if ( zoneid == _invalid_int || logiczoneid == _invalid_int )
         {
             return _kf_http_server->SendResponseCode( KFMsg::HttpDataError );
@@ -344,7 +349,7 @@ namespace KFrame
 
         // 判断token是否正确
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto token = request.GetString( __KF_STRING__( token ) );
+        auto token = __JSON_GET_STRING__( request, __KF_STRING__( token ) );
         auto loginkey = __FORMAT__( "{}:{}", __KF_STRING__( login ), token );
         auto querytoken = redisdriver->QueryMap( "hgetall {}", loginkey );
         if ( !querytoken->IsOk() )
@@ -371,8 +376,8 @@ namespace KFrame
         auto bantime = CheckLoginBlackList( loginip, accountid, playerid );
         if ( bantime != _invalid_int )
         {
-            KFJson response;
-            response.SetValue( __KF_STRING__( bantime ), bantime );
+            __JSON_DOCUMENT__( response );
+            __JSON_SET_VALUE__( response, __KF_STRING__( bantime ), bantime );
             return _kf_http_server->SendResponse( response, KFMsg::BanForbidLogin );
         }
 
@@ -380,22 +385,20 @@ namespace KFrame
         redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( accountid ), queryaccountid, __KF_STRING__( ip ), loginip );
 
         // 返回结果
-        KFJson response;
-        response.SetValue( __KF_STRING__( token ), token );
-        response.SetValue( __KF_STRING__( channel ), channel );
-        response.SetValue( __KF_STRING__( playerid ), playerid );
-        response.SetValue( __KF_STRING__( account ), account );
-        response.SetValue( __KF_STRING__( accountid ), accountid );
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), channel );
+        __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( response, __KF_STRING__( account ), account );
+        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
 
         // 加载渠道数据
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( extend ), accountid );
+        if ( !kfresult->_value.empty() )
         {
             KFJson kfchanneljson;
-            auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( extend ), accountid );
-            for ( auto& iter : kfresult->_value )
-            {
-                kfchanneljson.SetValue( iter.first, iter.second );
-            }
-            response.SetValue( __KF_STRING__( channeldata ), kfchanneljson );
+            __JSON_FROM_MAP__( kfchanneljson, kfresult->_value );
+            __JSON_SET_VALUE__( response, __KF_STRING__( channeldata ), kfchanneljson );
         }
 
         return _kf_http_server->SendResponse( response );
@@ -440,17 +443,12 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleUpdateOnline )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
 
-        auto accountid = request.GetString( __KF_STRING__( accountid ) );
-        auto playerid = request.GetString( __KF_STRING__( playerid ) );
-        auto online = request.GetString( __KF_STRING__( online ) );
-        auto zoneid = request.GetString( __KF_STRING__( zoneid ) );
+        auto accountid = __JSON_GET_STRING__( request, __KF_STRING__( accountid ) );
 
         MapString values;
-        values[ __KF_STRING__( playerid ) ] = playerid;
-        values[ __KF_STRING__( online ) ] = online;
-        values[ __KF_STRING__( zoneid ) ] = zoneid;
+        __JSON_TO_MAP__( request, values );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
@@ -507,26 +505,26 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleBanLogin )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
-        auto bantime = request.GetUInt64( __KF_STRING__( bantime ) );
+        auto bantime = __JSON_GET_UINT64__( request, __KF_STRING__( bantime ) );
 
         uint64 kickaccountid = _invalid_int;
 
         // 账号
-        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        if ( request.HasMember( __KF_STRING__( accountid ) ) )
         {
-            auto accountid = request.GetUInt64( __KF_STRING__( accountid ) );
+            auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
             redisdriver->Execute( "hset {} {} {}", __KF_STRING__( banaccountid ), accountid, bantime );
 
             kickaccountid = accountid;
         }
 
         // 角色
-        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        if ( request.HasMember( __KF_STRING__( playerid ) ) )
         {
-            auto playerid = request.GetUInt64( __KF_STRING__( playerid ) );
+            auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
             redisdriver->Execute( "hset {} {} {}", __KF_STRING__( banplayerid ), playerid, bantime );
 
             if ( kickaccountid != _invalid_int )
@@ -537,9 +535,9 @@ namespace KFrame
         }
 
         // ip
-        if ( request.isMember( __KF_STRING__( ip ) ) )
+        if ( request.HasMember( __KF_STRING__( ip ) ) )
         {
-            auto banip = request.GetString( __KF_STRING__( ip ) );
+            auto banip = __JSON_GET_STRING__( request, __KF_STRING__( ip ) );
             redisdriver->Execute( "hset {} {} {}", __KF_STRING__( banip ), banip, bantime );
         }
 
@@ -555,27 +553,27 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleUnBanLogin )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 账号
-        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        if ( request.HasMember( __KF_STRING__( accountid ) ) )
         {
-            auto accountid = request.GetUInt64( __KF_STRING__( accountid ) );
+            auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
             redisdriver->Execute( "hset {} {}", __KF_STRING__( banaccountid ), accountid );
         }
 
         // 角色
-        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        if ( request.HasMember( __KF_STRING__( playerid ) ) )
         {
-            auto playerid = request.GetUInt64( __KF_STRING__( playerid ) );
+            auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
             redisdriver->Execute( "hdel {} {}", __KF_STRING__( banplayerid ), playerid );
         }
 
         // ip
-        if ( request.isMember( __KF_STRING__( ip ) ) )
+        if ( request.HasMember( __KF_STRING__( ip ) ) )
         {
-            auto banip = request.GetString( __KF_STRING__( ip ) );
+            auto banip = __JSON_GET_STRING__( request, __KF_STRING__( ip ) );
             redisdriver->Execute( "hset {} {}", __KF_STRING__( banip ), banip );
         }
 
@@ -584,32 +582,32 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryBanLogin )
     {
-        KFJson response;
-        KFJson request( data );
+        __JSON_DOCUMENT__( response );
+        __JSON_PARSE_STRING__( request, data );
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 角色
-        if ( request.isMember( __KF_STRING__( playerid ) ) )
+        if ( request.HasMember( __KF_STRING__( playerid ) ) )
         {
-            auto playerid = request.GetUInt64( __KF_STRING__( playerid ) );
+            auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
             auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banplayerid ), playerid );
-            response.SetValue( __KF_STRING__( banplayerid ), kfquery->_value );
+            __JSON_SET_VALUE__( response, __KF_STRING__( banplayerid ), kfquery->_value );
         }
 
         // 账号
-        if ( request.isMember( __KF_STRING__( accountid ) ) )
+        if ( request.HasMember( __KF_STRING__( accountid ) ) )
         {
-            auto accountid = request.GetUInt64( __KF_STRING__( accountid ) );
+            auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
             auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banaccountid ), accountid );
-            response.SetValue( __KF_STRING__( banaccountid ), kfquery->_value );
+            __JSON_SET_VALUE__( response, __KF_STRING__( banaccountid ), kfquery->_value );
         }
 
         // ip
-        if ( request.isMember( __KF_STRING__( ip ) ) )
+        if ( request.HasMember( __KF_STRING__( ip ) ) )
         {
-            auto banip = request.GetString( __KF_STRING__( ip ) );
+            auto banip = __JSON_GET_STRING__( request, __KF_STRING__( ip ) );
             auto kfquery = redisdriver->QueryString( "hget {} {}", __KF_STRING__( banip ), banip );
-            response.SetValue( __KF_STRING__( banip ), kfquery->_value );
+            __JSON_SET_VALUE__( response, __KF_STRING__( banip ), kfquery->_value );
         }
 
         return _kf_http_server->SendResponse( response );
@@ -617,17 +615,16 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryAccountData )
     {
-        KFJson response;
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
-        auto accountid = request.GetString( __KF_STRING__( accountid ) );
+        auto accountid = __JSON_GET_STRING__( request, __KF_STRING__( accountid ) );
         if ( accountid.empty() )
         {
-            auto playerid = request.GetString( __KF_STRING__( playerid ) );
+            auto playerid = __JSON_GET_STRING__( request, __KF_STRING__( playerid ) );
             if ( playerid.empty() )
             {
-                auto playername = request.GetString( __KF_STRING__( name ) );
+                auto playername = __JSON_GET_STRING__( request, __KF_STRING__( name ) );
 
                 auto publicdriver = __PUBLIC_REDIS_DRIVER__;
                 auto kfquery = publicdriver->QueryString( "get {}:{}", __KF_STRING__( name ), playername );
@@ -639,8 +636,9 @@ namespace KFrame
         }
 
         auto kfquery = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
-        response.Parse( kfquery->_value );
 
+        __JSON_DOCUMENT__( response );
+        __JSON_FROM_MAP__( response, kfquery->_value );
         return _kf_http_server->SendResponse( response );
     }
 }

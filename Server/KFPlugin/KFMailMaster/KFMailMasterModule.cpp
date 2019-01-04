@@ -1,5 +1,4 @@
 ﻿#include "KFMailMasterModule.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -50,8 +49,9 @@ namespace KFrame
 
     __KF_COMMAND_FUNCTION__( KFMailMasterModule::OnCommandAddMail )
     {
-        KFJson request( param );
-        auto mailtype = request.GetUInt32( __KF_STRING__( type ) );
+        __JSON_PARSE_STRING__( request, param );
+
+        auto mailtype = __JSON_GET_UINT32__( request, __KF_STRING__( type ) );
         if ( mailtype < KFMsg::MailEnum_MIN || mailtype > KFMsg::MailEnum_MAX )
         {
             __LOG_INFO__( "add gm mail type[{}] error!", mailtype );
@@ -62,7 +62,7 @@ namespace KFrame
         req.set_mailtype( mailtype );
 
         // 邮件玩家列表
-        auto strplayerids = request.GetString( __KF_STRING__( playerids ) );
+        auto strplayerids = __JSON_GET_STRING__( request, __KF_STRING__( playerids ) );
         while ( !strplayerids.empty() )
         {
             auto playerid = KFUtility::SplitValue< uint32 >( strplayerids, "," );
@@ -71,17 +71,18 @@ namespace KFrame
                 req.add_playerids( playerid );
             }
         }
-        request.removeMember( __KF_STRING__( playerids ) );
+
+        __JOSN_REMOVE__( request, __KF_STRING__( playerids ) );
 
         // 邮件内容
         auto pbmail = req.mutable_pbmail();
-        for ( auto iter = request.begin(); iter != request.end(); ++iter )
+        for ( auto iter = request.MemberBegin(); iter != request.MemberEnd(); ++iter )
         {
             auto pbdata = pbmail->add_data();
-            pbdata->set_name( iter.name() );
+            pbdata->set_name( iter->name.GetString() );
 
             // 删除空格和%
-            auto strdata = iter->asString();
+            std::string strdata = iter->value.GetString();
             KFUtility::ReplaceString( strdata, " ", "" );
             KFUtility::ReplaceString( strdata, "%", "" );
             pbdata->set_value( strdata );

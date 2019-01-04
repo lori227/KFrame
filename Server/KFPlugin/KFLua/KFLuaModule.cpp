@@ -1,5 +1,4 @@
 ﻿#include "KFLuaModule.h"
-#include "KFJson.h"
 
 namespace KFrame
 {
@@ -362,11 +361,11 @@ namespace KFrame
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLuaModule::OnLuaHttpCallBack )
     {
-        KFJson kfjson( callback );
+        __JSON_PARSE_STRING__( kfjson, callback );
 
-        auto objectid = kfjson.GetUInt64( __KF_STRING__( playerid ) );
-        auto luafile = kfjson.GetString( __KF_STRING__( luafile ) );
-        auto luafunction = kfjson.GetString( __KF_STRING__( luafunction ) );
+        auto objectid = __JSON_GET_UINT64__( kfjson, __KF_STRING__( playerid ) );
+        auto luafile = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafile ) );
+        auto luafunction = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafunction ) );
         if ( luafile.empty() || luafunction.empty() )
         {
             return;

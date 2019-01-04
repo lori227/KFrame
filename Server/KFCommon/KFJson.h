@@ -1,344 +1,133 @@
 ﻿#ifndef __KF_JSON_H__
 #define __KF_JSON_H__
 
-#include "KFDefine.h"
-#include "KFMacros.h"
-#include "json/json.h"
-#include "KFUtility/KFUtility.h"
+#include "KFInclude.h"
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 
 namespace KFrame
 {
-    class KFJson : public Json::Value
+    typedef rapidjson::Document KFJson;
+
+    // 序列化
+    static inline std::string JsonSerialize( rapidjson::Document& kfjson )
     {
-    public:
-        KFJson()
-        {
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer( buffer );
+        kfjson.Accept( writer );
 
+        return buffer.GetString();
+    }
+
+    // 获得数字
+    template< class T >
+    static inline T GetJsonNumber( rapidjson::Value& kfjson, std::string& name )
+    {
+        auto& value = kfjson[ name ];
+        if ( value.IsNumber() )
+        {
+            return value.Get< T >();
+        }
+        else if ( value.IsString() )
+        {
+            return static_cast< T >( atoll( value.GetString() ) );
         }
 
-        KFJson( const std::string& data )
+        return 0;
+    }
+
+    // 获得字串
+    static inline std::string GetJsonString( rapidjson::Value& kfjson, std::string& name )
+    {
+        auto& value = kfjson[ name ];
+        if ( value.IsString() )
         {
-            Parse( data );
+            return value.GetString();
+        }
+        else if ( value.IsNumber() )
+        {
+            return std::to_string( value.GetUint64() );
         }
 
-        KFJson( const char* data, uint32 size )
-        {
-            Parse( data, size );
-        }
+        return "";
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
-        KFJson( const Json::Value& value )
-        {
-            this->copy( value );
-        }
-        ///////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////
-        inline bool Parse( const char* data, uint32 size )
-        {
-            std::string temp;
-            temp.assign( data, size );
-            return Parse( temp );
-        }
+    // 解析json
+#define __JSON_PARSE_STRING__( kfjson, data )\
+    rapidjson::Document kfjson;\
+    kfjson.Parse( data.c_str() );\
+    if ( kfjson.HasParseError() )\
+    {\
+        __LOG_ERROR__( "json=[{}] parse error=[{}]!", data, kfjson.GetParseError() );\
+    }\
 
-        inline bool Parse( const std::string& data )
-        {
-            if ( data.empty() )
-            {
-                return false;
-            }
+#define __JSON_PARSE_CHAR__( kfjson, data, size )\
+    rapidjson::Document kfjson;\
+    kfjson.Parse( data, size );\
+    if ( kfjson.HasParseError() )\
+    {\
+        __LOG_ERROR__( "json=[{}] parse error=[{}]!", data, kfjson.GetParseError() ); \
+    }\
 
-            // 解析
-            Json::Reader reader;
-            return reader.parse( data, *this, false );
-        }
+#define __JSON_SERIALIZE__( kfjson ) JsonSerialize( kfjson )
 
-        inline bool Parse( const MapString& values )
-        {
-            for ( auto& iter : values )
-            {
-                SetValue< const std::string& >( iter.first, iter.second );
-            }
+#define  __JSON_DOCUMENT__( kfjson )\
+    rapidjson::Document kfjson;\
+    auto &allocator = kfjson.GetAllocator();\
+    kfjson.SetObject();\
 
-            return true;
-        }
+#define  __JSON_OBJECT__( kfjson )\
+    rapidjson::Value kfjson( rapidjson::kObjectType )
 
-        inline void Serialize( MapString& values )
-        {
-            for ( auto iter = this->begin(); iter != this->end(); ++iter )
-            {
-                if ( iter->isString() )
-                {
-                    values[ iter.name() ] = iter->asString();
-                }
-                else if ( iter->isUInt() )
-                {
-                    values[ iter.name() ] = __TO_STRING__( iter->asUInt() );
-                }
-                else if ( iter->isInt() )
-                {
-                    values[ iter.name() ] = __TO_STRING__( iter->asInt() );
-                }
-                else if ( iter->isUInt64() )
-                {
-                    values[ iter.name() ] = __TO_STRING__( iter->asUInt64() );
-                }
-                else if ( iter->isInt64() )
-                {
-                    values[ iter.name() ] = __TO_STRING__( iter->asInt64() );
-                }
-                else if ( iter->isDouble() )
-                {
-                    values[ iter.name() ] = __TO_STRING__( iter->asDouble() );
-                }
-            }
-        }
+#define  __JSON_ARRAY__( kfjson )\
+    rapidjson::Value kfjson( rapidjson::kArrayType )
 
-        // 系列化
-        inline std::string Serialize()
-        {
-            return this->toStyledString();
-        }
+#define __JSON_GET_INT32__( kfjson, name ) GetJsonNumber< int32 >( kfjson, name )
+#define __JSON_GET_UINT32__( kfjson, name ) GetJsonNumber< uint32 >( kfjson, name )
+#define __JSON_GET_INT64__( kfjson, name ) GetJsonNumber< int64 >( kfjson, name )
+#define __JSON_GET_UINT64__( kfjson, name ) GetJsonNumber< uint64 >( kfjson, name )
+#define __JSON_GET_FLOAT__( kfjson, name ) GetJsonNumber< float >( kfjson, name )
+#define __JSON_GET_DOUBLE__( kfjson, name ) GetJsonNumber< double >( kfjson, name )
+#define __JSON_GET_STRING__( kfjson, name ) GetJsonString( kfjson, name )
+#define __JSON_GET_ARRRY__( kfjson, name ) kfjson[ name ].GetArray()
 
-        template< class T >
-        inline void SetValue( const std::string& key, T value )
-        {
-            //this->operator[]( key ) = value;
-        }
+#define __JSON_SET_VALUE__( kfjson, name, value ) kfjson.AddMember( rapidjson::StringRef( name.c_str() ), value, allocator )
 
-        inline int32 GetInt32( const std::string& key )
-        {
-            auto& value = this->operator[]( key );
+#define  __JSON_ADD_VALUE__( kfjson, value ) kfjson.PushBack( value, allocator );
+#define  __JSON_ADD_STRING__( kfjson, value ) kfjson.PushBack( rapidjson::StringRef( value.c_str() ), allocator )
 
-            if ( value.isUInt() || value.isInt() )
-            {
-                return value.asInt();
-            }
-            else if ( value.isString() )
-            {
-                return KFUtility::ToValue< int32 >( value.asString() );
-            }
+#define __JOSN_REMOVE__( kfjson, name ) kfjson.RemoveMember( name )
 
-            return _invalid_int;
-        }
+#define  __JSON_ARRAY_SIZE__( kfjson ) kfjson.Size()
+#define  __JSON_ARRAY_INDEX__( kfjson, index ) kfjson[ index ]
 
-        inline uint32 GetUInt32( const std::string& key )
-        {
-            auto& value = this->operator[]( key );
+#define  __JSON_FROM_MAP__( kfjson, values ) \
+    for( auto& iter : values )\
+    {\
+        auto& key = iter.first;\
+        auto& value = iter.second;\
+        __JSON_SET_VALUE__( kfjson, key, value );\
+    }\
 
-            if ( value.isInt() )
-            {
-                return value.asInt();
-            }
-            else if ( value.isUInt() )
-            {
-                return value.asUInt();
-            }
-            else if ( value.isString() )
-            {
-                return KFUtility::ToValue< uint32 >( value.asString() );
-            }
+#define  __JSON_TO_MAP__( kfjson, values ) \
+    for( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++iter )\
+    {\
+        std::string value = "";\
+        if ( iter->value.IsString() )\
+        {   \
+            value = iter->value.GetString(); \
+        }\
+        else if ( iter->value.IsNumber() )\
+        {   \
+            value = std::to_string( iter->value.GetUint64() ); \
+        }\
+        values[ iter->name.GetString() ] = value; \
+    }\
 
-            return _invalid_int;
-        }
 
-        inline uint64 GetUInt64( const std::string& key )
-        {
-            auto& value = this->operator[]( key );
-
-            if ( value.isInt() )
-            {
-                return value.asInt();
-            }
-            else if ( value.isUInt() )
-            {
-                return value.asUInt();
-            }
-            else if ( value.isInt64() )
-            {
-                return value.asInt64();
-            }
-            else if ( value.isUInt64() )
-            {
-                return value.asUInt64();
-            }
-            else if ( value.isString() )
-            {
-                return KFUtility::ToValue< uint32 >( value.asString() );
-            }
-
-            return _invalid_int;
-        }
-
-        inline void SetUInt32( const std::string& key, const std::string& value )
-        {
-            auto intvalue = KFUtility::ToValue< uint32 >( value );
-            SetValue( key, intvalue );
-        }
-
-        inline void SetUInt64( const std::string& key, const std::string& value )
-        {
-            auto intvalue = KFUtility::ToValue< uint64 >( value );
-            SetValue( key, intvalue );
-        }
-
-        inline double GetDouble( const std::string& key )
-        {
-            auto& value = this->operator[]( key );
-
-            if ( value.isDouble() )
-            {
-                return value.asDouble();
-            }
-            else if ( value.isString() )
-            {
-                return KFUtility::ToValue< double >( value.asString() );
-            }
-
-            return _invalid_int;
-        }
-
-        inline std::string GetString( const std::string& key )
-        {
-            auto& value = this->operator[]( key );
-
-            if ( value.isString() )
-            {
-                return value.asString();
-            }
-            else if ( value.isUInt() )
-            {
-                return __TO_STRING__( value.asUInt() );
-            }
-            else if ( value.isInt() )
-            {
-                return __TO_STRING__( value.asInt() );
-            }
-            else if ( value.isInt64() )
-            {
-                return __TO_STRING__( value.asInt64() );
-            }
-            else if ( value.isUInt64() )
-            {
-                return __TO_STRING__( value.asUInt64() );
-            }
-            else if ( value.isDouble() )
-            {
-                return __TO_STRING__( value.asDouble() );
-            }
-
-            return _invalid_str;
-        }
-
-        inline bool GetArray( const std::string& key, std::vector<std::string>& matchkeys, int& cursor, std::map<std::string, std::string>& des )
-        {
-            des.clear();
-            auto& value = this->operator[]( key );
-            if ( value.isNull() )
-            {
-                return false;
-            }
-
-            if ( !value.isArray() )
-            {
-                return false;
-            }
-            if ( cursor > ( int )value.size() )
-            {
-                return false;
-            }
-
-            auto values = value[ cursor ];
-            if ( !values )
-            {
-                return false;
-            }
-
-            for ( auto& iter : matchkeys )
-            {
-                std::string mapkey = iter;
-                auto& elem = values.operator[]( iter );
-                if ( elem.isInt() )
-                {
-                    auto strelem = __TO_STRING__( elem.asUInt() );
-                    des.insert( std::make_pair( mapkey, strelem ) );
-                }
-                else if ( elem.isUInt() )
-                {
-                    auto strelem = __TO_STRING__( value.asInt() );
-                    des.insert( std::make_pair( mapkey, strelem ) );
-
-                }
-                else if ( elem.isString() )
-                {
-                    des.insert( std::make_pair( mapkey, elem.asString() ) );
-                }
-            }
-
-            cursor++;
-            return true;
-        }
-
-        /*
-        template<typename T>
-        inline bool GetArray( const std::string& key, std::vector<T>& des )
-        {
-            des.clear();
-            if ( !this->isMember( key ) )
-            {
-                return false;
-            }
-
-            auto& value = this->operator[]( key );
-            if ( !value.isArray() )
-            {
-                return false;
-            }
-
-            for ( auto i = 0; i < value.size(); ++i )
-            {
-                auto elem = value[i];
-                if ( elem.isNull() )
-                {
-                    continue;
-                }
-                else if ( elem.isBool() )
-                {
-                    des.push_back( static_cast<T>( elem.asBool() ) );
-                }
-                else if ( elem.isInt() )
-                {
-                    des.push_back( static_cast<T>( elem.asInt() ) );
-                }
-                else if ( elem.isInt64() )
-                {
-                    des.push_back( static_cast<T>( elem.asInt64() ) );
-                }
-
-                else if ( elem.isUInt() )
-                {
-                    des.push_back( static_cast<T>( elem.asUInt() ) );
-                }
-
-                else if ( elem.isUInt64() )
-                {
-                    des.push_back( static_cast<T>( elem.asUInt64() ) );
-                }
-
-                else if ( elem.isIntegral() )
-                {
-                    des.push_back( static_cast<T>( elem.asLargestInt() ) );
-                }
-
-                else if ( elem.isDouble() )
-                {
-                    des.push_back( static_cast<T>( elem.asDouble() ) );
-                }
-
-            }
-
-            return true;
-        }*/
-
-    };
 }
 
 #endif

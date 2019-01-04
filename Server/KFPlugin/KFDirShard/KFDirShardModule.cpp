@@ -1,5 +1,4 @@
 ﻿#include "KFDirShardModule.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -90,15 +89,16 @@ namespace KFrame
     {
         static auto kfdiroption = _kf_option->FindOption( __KF_STRING__( dirtype ) );
 
-        KFJson response;
-        response.SetValue( __KF_STRING__( serverlisttype ), kfdiroption->_uint32_value );
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( serverlisttype ), kfdiroption->_uint32_value );
 
         switch ( kfdiroption->_uint32_value )
         {
         case KFServerEnum::SelectServerData:
         {
-            KFJson request( data );
-            auto zoneid = request.GetUInt32( __KF_STRING__( zoneid ) );
+            __JSON_PARSE_STRING__( request, data );
+
+            auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
             if ( zoneid == _invalid_int )
             {
                 zoneid = BalanceAllocZoneId();
@@ -110,8 +110,8 @@ namespace KFrame
                 return _kf_http_server->SendResponseCode( KFMsg::CanNotFindLoginNode );
             }
 
-            response.SetValue( __KF_STRING__( ip ), kfdirdata->_zone_ip );
-            response.SetValue( __KF_STRING__( port ), kfdirdata->_zone_port );
+            __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfdirdata->_zone_ip );
+            __JSON_SET_VALUE__( response, __KF_STRING__( port ), kfdirdata->_zone_port );
         }
         break;
         default:
@@ -128,16 +128,15 @@ namespace KFrame
                 auto kfdirdata = iter.second;
 
                 KFJson kfjson;
-                kfjson.SetValue( __KF_STRING__( id ), kfdirdata->_zone_id );
-                kfjson.SetValue( __KF_STRING__( type ), kfdirdata->_zone_channel );
-                kfjson.SetValue( __KF_STRING__( name ), kfdirdata->_zone_name );
-                kfjson.SetValue( __KF_STRING__( ip ), kfdirdata->_zone_ip );
-                kfjson.SetValue( __KF_STRING__( port ), kfdirdata->_zone_port );
-
-                kfdirlistjson.append( kfjson );
+                __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), kfdirdata->_zone_id );
+                __JSON_SET_VALUE__( kfjson, __KF_STRING__( type ), kfdirdata->_zone_channel );
+                __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), kfdirdata->_zone_name );
+                __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), kfdirdata->_zone_ip );
+                __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), kfdirdata->_zone_port );
+                __JSON_ADD_VALUE__( kfdirlistjson, kfjson );
             }
 
-            response.SetValue< Json::Value& >( __KF_STRING__( serverlist ), kfdirlistjson );
+            __JSON_SET_VALUE__( response, __KF_STRING__( serverlist ), kfdirlistjson );
         }
         break;
         }

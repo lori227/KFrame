@@ -2,7 +2,6 @@
 #define __KF_AUTH_STATE_H__
 
 #include "KFState.h"
-#include "KFJson.h"
 
 namespace KFrame
 {

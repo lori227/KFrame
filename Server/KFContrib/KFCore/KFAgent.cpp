@@ -138,60 +138,62 @@ namespace KFrame
             return false;
         }
 
-        _string = agentstring;
         _agents.clear();
+        _string = agentstring;
 
-        // 先把字串转换成json格式
-        std::string temp = agentstring;
-        KFUtility::ReplaceString( temp, "|", "," );
+        //{ "money":1111, "diamon":2222, "item":[{"id":1,"count":2 },{"id":3,"count":4}] }
 
         try
         {
-            KFJson kfjson;
-            if ( !kfjson.Parse( temp ) )
+            __JSON_PARSE_STRING__( kfjson, agentstring );
+            if ( kfjson.HasParseError() )
             {
-                __LOG_ERROR__( function, line, "[{}] parse agent failed!", agentstring );
                 return false;
             }
 
-            for ( auto iter = kfjson.begin(); iter != kfjson.end(); ++iter )
-            {
-                if ( iter->empty() )
-                {
-                    continue;
-                }
+            //for ( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++i )
+            //{
 
-                auto begin = iter->begin();
-                auto& kfobject = *begin;
-                if ( kfobject.isNull() )
-                {
-                    continue;
-                }
+            //}
 
-                auto kfagent = __KF_NEW__( KFAgent );
-                kfagent->_string = iter->toStyledString();
-                kfagent->_data_name = begin.name();
+            //for ( auto iter = kfjson.begin(); iter != kfjson.end(); ++iter )
+            //{
+            //    if ( iter->empty() )
+            //    {
+            //        continue;
+            //    }
 
-                for ( auto citer = kfobject.begin(); citer != kfobject.end(); ++citer )
-                {
-                    auto name = citer.name();
-                    auto value = citer->asString();
+            //    auto begin = iter->begin();
+            //    auto& kfobject = *begin;
+            //    if ( kfobject.isNull() )
+            //    {
+            //        continue;
+            //    }
 
-                    if ( name == __KF_STRING__( id ) )
-                    {
-                        kfagent->_config_id = KFUtility::ToValue< uint32 >( value );
-                    }
-                    else
-                    {
-                        auto kfvalue = __KF_NEW__( KFAgentValue );
-                        _is_rand_agent |= kfvalue->SetValue( name, value );
-                        kfagent->_datas.Insert( name, kfvalue );
-                    }
-                }
+            //    auto kfagent = __KF_NEW__( KFAgent );
+            //    kfagent->_string = iter->toStyledString();
+            //    kfagent->_data_name = begin.name();
 
-                kfagent->_kf_agents = this;
-                _agents.push_back( kfagent );
-            }
+            //    for ( auto citer = kfobject.begin(); citer != kfobject.end(); ++citer )
+            //    {
+            //        auto name = citer.name();
+            //        auto value = citer->asString();
+
+            //        if ( name == __KF_STRING__( id ) )
+            //        {
+            //            kfagent->_config_id = KFUtility::ToValue< uint32 >( value );
+            //        }
+            //        else
+            //        {
+            //            auto kfvalue = __KF_NEW__( KFAgentValue );
+            //            _is_rand_agent |= kfvalue->SetValue( name, value );
+            //            kfagent->_datas.Insert( name, kfvalue );
+            //        }
+            //    }
+
+            //    kfagent->_kf_agents = this;
+            //    _agents.push_back( kfagent );
+            //}
         }
         catch ( ... )
         {
@@ -217,32 +219,32 @@ namespace KFrame
             return _string;
         }
 
-        // 重新格式化
+        //// 重新格式化
         static std::string _show_string;
-        _show_string.clear();
+        //_show_string.clear();
 
-        KFJson kfjson;
-        for ( auto kfagent : _agents )
-        {
-            KFJson kfdata;
-            for ( auto& iter : kfagent->_datas._objects )
-            {
-                auto kfvalue = iter.second;
-                kfdata[ iter.first ] = __TO_STRING__( kfvalue->GetUseValue() );
-            }
+        //KFJson kfjson;
+        //for ( auto kfagent : _agents )
+        //{
+        //    KFJson kfdata;
+        //    for ( auto& iter : kfagent->_datas._objects )
+        //    {
+        //        auto kfvalue = iter.second;
+        //        kfdata[ iter.first ] = __TO_STRING__( kfvalue->GetUseValue() );
+        //    }
 
-            if ( kfagent->_config_id != _invalid_int )
-            {
-                kfdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfagent->_config_id );
-            }
+        //    if ( kfagent->_config_id != _invalid_int )
+        //    {
+        //        kfdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfagent->_config_id );
+        //    }
 
-            KFJson kfreward;
-            kfreward[ kfagent->_data_name ] = kfdata;
-            kfjson.append( kfreward );
-        }
+        //    KFJson kfreward;
+        //    kfreward[ kfagent->_data_name ] = kfdata;
+        //    kfjson.append( kfreward );
+        //}
 
-        _show_string = kfjson.Serialize();
-        KFUtility::ReplaceString( _show_string, ",", "|" );
+        //_show_string = kfjson.Serialize();
+        //KFUtility::ReplaceString( _show_string, ",", "|" );
 
         return _show_string;
     }

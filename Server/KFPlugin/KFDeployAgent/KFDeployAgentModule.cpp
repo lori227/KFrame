@@ -591,8 +591,10 @@ namespace KFrame
 
         if ( !url.empty() )
         {
-            KFJson response;
-            response[ __KF_STRING__( msg ) ] = __FORMAT__( "agent[{}] {}", KFGlobal::Instance()->_str_app_id, msg );
+            auto strmsg = __FORMAT__( "agent[{}] {}", KFGlobal::Instance()->_str_app_id, msg );
+
+            __JSON_DOCUMENT__( response );
+            __JSON_SET_VALUE__( response, __KF_STRING__( msg ), strmsg );
             _kf_http_client->StartMTHttpClient( url, response );
         }
     }

@@ -1,6 +1,4 @@
 ﻿#include "KFDeployUploadModule.h"
-#include "KFJson.h"
-
 
 namespace KFrame
 {
@@ -31,10 +29,10 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFDeployUploadModule::HandleUploadFile )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
 
-        auto ftpid = request.GetUInt32( __KF_STRING__( ftpid ) );
-        auto apppath = request.GetString( __KF_STRING__( apppath ) );
+        auto ftpid = __JSON_GET_UINT32__( request, __KF_STRING__( ftpid ) );
+        auto apppath = __JSON_GET_STRING__( request, __KF_STRING__( apppath ) );
 
         // 启动ftp下载
         _kf_ftp->StartUpload( ftpid, apppath );

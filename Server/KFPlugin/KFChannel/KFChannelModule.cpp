@@ -1,6 +1,5 @@
 ﻿#include "KFChannelModule.h"
 #include "KFChannelConfig.h"
-#include "KFJson.h"
 #include "KFInternal.h"
 #include "KFWeiXin.h"
 #include "KFSteam.h"
@@ -43,9 +42,9 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFChannelModule::AuthChannelLogin( const std::string& data )
     {
-        KFJson request( data );
+        __JSON_PARSE_STRING__( request, data );
 
-        auto channel = request.GetUInt32( __KF_STRING__( channel ) );
+        auto channel = __JSON_GET_UINT32__( request, __KF_STRING__( channel ) );
         if ( !_kf_channel_config->IsChannelOpen( channel ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::ChannelNotSupport );

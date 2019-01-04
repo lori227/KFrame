@@ -1,5 +1,4 @@
 ﻿#include "KFWeiXin.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -15,8 +14,8 @@ namespace KFrame
 
     std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
-        auto machinecode = json.GetString( __KF_STRING__( machine ) );
-        auto weixincode = json.GetString( __KF_STRING__( code ) );
+        auto machinecode = __JSON_GET_STRING__( json, __KF_STRING__( machine ) );
+        auto weixincode = __JSON_GET_STRING__( json, __KF_STRING__( code ) );
 
         std::string accesstoken = "";
         std::string openid = "";
@@ -33,19 +32,19 @@ namespace KFrame
                 return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );
             }
 
-            KFJson accessjson( accessdata );
+            __JSON_PARSE_STRING__( accessjson, accessdata );
 
             // 如果出错, 返回错误码
-            if ( accessjson.isMember( __KF_STRING__( errcode ) ) )
+            if ( accessjson.HasMember( __KF_STRING__( errcode ) ) )
             {
                 return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinCodeError );
             }
 
-            accesstoken = accessjson.GetString( __KF_STRING__( access_token ) );
-            openid = accessjson.GetString( __KF_STRING__( openid ) );
-            auto refreshtoken = accessjson.GetString( __KF_STRING__( refresh_token ) );
-            auto expirestime = accessjson.GetUInt32( __KF_STRING__( expires_in ) );
-            auto scope = accessjson.GetString( __KF_STRING__( scope ) );
+            accesstoken = __JSON_GET_STRING__( accessjson, __KF_STRING__( access_token ) );
+            openid = __JSON_GET_STRING__( accessjson, __KF_STRING__( openid ) );
+            auto refreshtoken = __JSON_GET_STRING__( accessjson, __KF_STRING__( refresh_token ) );
+            auto expirestime = __JSON_GET_UINT32__( accessjson, __KF_STRING__( expires_in ) );
+            auto scope = __JSON_GET_STRING__( accessjson, __KF_STRING__( scope ) );
 
             // 保存access_token
             auto redisdriver = __LOGIN_REDIS_DRIVER__;
@@ -96,16 +95,16 @@ namespace KFrame
                     return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );
                 }
 
-                KFJson accessjson( accessdata );
-                if ( accessjson.isMember( __KF_STRING__( errcode ) ) )
+                __JSON_PARSE_STRING__( accessjson, accessdata );
+                if ( accessjson.HasMember( __KF_STRING__( errcode ) ) )
                 {
                     return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinTokenError );
                 }
 
-                accesstoken = accessjson.GetString( __KF_STRING__( access_token ) );
-                openid = accessjson.GetString( __KF_STRING__( openid ) );
-                auto expirestime = accessjson.GetUInt32( __KF_STRING__( expires_in ) );
-                auto scope = accessjson.GetString( __KF_STRING__( scope ) );
+                accesstoken = __JSON_GET_STRING__( accessjson, __KF_STRING__( access_token ) );
+                openid = __JSON_GET_STRING__( accessjson, __KF_STRING__( openid ) );
+                auto expirestime = __JSON_GET_UINT32__( accessjson, __KF_STRING__( expires_in ) );
+                auto scope = __JSON_GET_STRING__( accessjson, __KF_STRING__( scope ) );
 
                 // 保存access_token
                 redisdriver->Append( "hmset {}:{} {} {}", __KF_STRING__( access_token ), machinecode, __KF_STRING__( access_token ), accesstoken );
@@ -122,15 +121,17 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );
         }
 
-        KFJson userjson( userdata );
-        if ( userjson.isMember( __KF_STRING__( errcode ) ) )
+        __JSON_PARSE_STRING__( userjson, userdata );
+        if ( userjson.HasMember( __KF_STRING__( errcode ) ) )
         {
             return _kf_http_server->SendResponse( userjson, KFMsg::WeiXinUserError );
         }
 
-        KFJson response;
-        response.SetValue( __KF_STRING__( channel ), kfsetting->_channel_id );
-        response.SetValue( __KF_STRING__( account ), userjson.GetString( __KF_STRING__( openid ) ) );
+        //auto openid = __JSON_GET_STRING__( userjson, __KF_STRING__( openid ) );
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( account ), openid );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_channel_id );
 
         //KFJson kfextend;
         //kfextend.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );

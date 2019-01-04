@@ -1,5 +1,4 @@
 ﻿#include "KFLoginModule.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -109,14 +108,14 @@ namespace KFrame
         auto kfzone = _kf_zone->GetZone();
 
         // 访问平台服务器, 验证token
-        KFJson sendjson;
-        sendjson.SetValue( __KF_STRING__( gateid ), gateid );
-        sendjson.SetValue( __KF_STRING__( sessionid ), sessionid );
-        sendjson.SetValue( __KF_STRING__( accountid ), kfmsg.accountid() );
-        sendjson.SetValue( __KF_STRING__( ip ), kfmsg.ip() );
-        sendjson.SetValue( __KF_STRING__( zoneid ), kfzone->_id );
-        sendjson.SetValue( __KF_STRING__( logiczoneid ), kfzone->_logic_id );
-        sendjson.SetValue( __KF_STRING__( token ), kfmsg.token() );
+        __JSON_DOCUMENT__( sendjson );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( gateid ), gateid );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( sessionid ), sessionid );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), kfmsg.accountid() );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( ip ), kfmsg.ip() );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( logiczoneid ), kfzone->_logic_id );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
 
         static auto url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
         _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, url, sendjson );
@@ -125,25 +124,25 @@ namespace KFrame
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )
     {
         // 处理验证结果
-        KFJson sendjson( senddata );
-        KFJson recvjson( recvdata );
+        __JSON_PARSE_STRING__( sendjson, senddata );
+        __JSON_PARSE_STRING__( recvjson, recvdata );
 
-        auto gateid = sendjson.GetUInt64( __KF_STRING__( gateid ) );
-        auto accountid = sendjson.GetUInt64( __KF_STRING__( accountid ) );
-        auto sessionid = sendjson.GetUInt64( __KF_STRING__( sessionid ) );
+        auto gateid = __JSON_GET_UINT64__( sendjson, __KF_STRING__( gateid ) );
+        auto accountid = __JSON_GET_UINT64__( sendjson, __KF_STRING__( accountid ) );
+        auto sessionid = __JSON_GET_UINT64__( sendjson, __KF_STRING__( sessionid ) );
 
         // 验证失败
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
         if ( retcode != KFMsg::Success )
         {
-            auto bantime = recvjson.GetUInt64( __KF_STRING__( bantime ) );
+            auto bantime = __JSON_GET_UINT64__( recvjson, __KF_STRING__( bantime ) );
             return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid, bantime );
         }
 
-        auto token = recvjson.GetString( __KF_STRING__( token ) );
-        auto account = recvjson.GetString( __KF_STRING__( account ) );
-        auto channel = recvjson.GetUInt32( __KF_STRING__( channel ) );
-        auto playerid = recvjson.GetUInt64( __KF_STRING__( playerid ) );
+        auto token = __JSON_GET_STRING__( recvjson, __KF_STRING__( token ) );
+        auto account = __JSON_GET_STRING__( recvjson, __KF_STRING__( account ) );
+        auto channel = __JSON_GET_UINT32__( recvjson, __KF_STRING__( channel ) );
+        auto playerid = __JSON_GET_UINT64__( recvjson, __KF_STRING__( playerid ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
         {
             return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );
@@ -163,14 +162,14 @@ namespace KFrame
 
         // 渠道数据
         auto pbchanneldata = pblogin->mutable_channeldata();
-        if ( recvjson.isMember( __KF_STRING__( channeldata ) ) )
+        if ( recvjson.HasMember( __KF_STRING__( channeldata ) ) )
         {
-            auto channeldata = recvjson[ __KF_STRING__( channeldata ) ];
-            for ( auto iter = channeldata.begin(); iter != channeldata.end(); ++iter )
+            auto& channeldata = recvjson[ __KF_STRING__( channeldata ) ];
+            for ( auto iter = channeldata.MemberBegin(); iter != channeldata.MemberEnd(); ++iter )
             {
                 auto pbdata = pbchanneldata->add_pbstring();
-                pbdata->set_name( iter.name() );
-                pbdata->set_value( iter->asString() );
+                pbdata->set_name( iter->name.GetString() );
+                pbdata->set_value( iter->value.GetString() );
             }
         }
 

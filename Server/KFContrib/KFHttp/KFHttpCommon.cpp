@@ -1,5 +1,4 @@
 ﻿#include "KFHttpCommon.h"
-#include "KFJson.h"
 #include "KFEnum.h"
 #include "KFrame.h"
 
@@ -9,20 +8,19 @@ namespace KFrame
 
     void KFHttpCommon::MakeSignature( KFJson& json )
     {
-        auto data = json.Serialize();
+        auto data = __JSON_SERIALIZE__( json );
         auto temp = __FORMAT__( "{}:{}", data, _crypto_key );
-        auto md4sign = KFCrypto::Md5Encode( temp );
-        json.SetValue< const std::string& >( __KF_STRING__( sign ), md4sign );
+        auto md5sign = KFCrypto::Md5Encode( temp );
+
+        json.AddMember( rapidjson::StringRef( __KF_STRING__( sign ).c_str() ), md5sign, json.GetAllocator() );
     }
 
     bool KFHttpCommon::VerifySignature( KFJson& json )
     {
-        auto sign = json.GetString( __KF_STRING__( sign ) );
-        json.removeMember( __KF_STRING__( sign ) );
+        auto sign = __JSON_GET_STRING__( json, __KF_STRING__( sign ) );
+        json.RemoveMember( __KF_STRING__( sign ) );
 
-        auto data = json.Serialize();
-
-
+        auto data = __JSON_SERIALIZE__( json );
         auto temp = __FORMAT__( "{}:{}", data, _crypto_key );
         auto md4sign = KFCrypto::Md5Encode( temp );
         return sign == md4sign;
@@ -30,30 +28,30 @@ namespace KFrame
 
     std::string KFHttpCommon::SendResponseCode( uint32 code )
     {
-        KFJson response;
-        response.SetValue( __KF_STRING__( retcode ), code );
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), code );
         return SendResponse( response );
     }
 
     uint32 KFHttpCommon::GetResponseCode( KFJson& json )
     {
-        return json.GetUInt32( __KF_STRING__( retcode ) );
+        return __JSON_GET_UINT32__( json, __KF_STRING__( retcode ) );
     }
 
     std::string KFHttpCommon::SendResponse( KFJson& json )
     {
-        if ( !json.isMember( __KF_STRING__( retcode ) ) )
+        if ( !json.HasMember( __KF_STRING__( retcode ) ) )
         {
-            json.SetValue< uint32 >( __KF_STRING__( retcode ), KFEnum::Ok );
+            json.AddMember( rapidjson::StringRef( __KF_STRING__( retcode ).c_str() ), KFEnum::Ok, json.GetAllocator() );
         }
 
-        return json.Serialize();
+        return __JSON_SERIALIZE__( json );
     }
 
     std::string KFHttpCommon::SendResponse( KFJson& json, uint32 code )
     {
-        json.SetValue( __KF_STRING__( retcode ), code );
-        return json.Serialize();
+        json.AddMember( rapidjson::StringRef( __KF_STRING__( retcode ).c_str() ), code, json.GetAllocator() );
+        return __JSON_SERIALIZE__( json );
     }
 }
 

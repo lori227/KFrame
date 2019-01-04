@@ -1,6 +1,5 @@
 ﻿#include "KFWorldModule.h"
 #include "KFOnlineEx.h"
-#include "KFJson.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -219,18 +218,19 @@ namespace KFrame
         static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( onlinezone );
 
         // 在线服务器
-        KFJson sendjson;
-        sendjson.SetValue( __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
-        sendjson.SetValue( __KF_STRING__( playerid ), playerid );
-        sendjson.SetValue( __KF_STRING__( accountid ), accountid );
+        __JSON_DOCUMENT__( sendjson );
+
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), accountid );
         if ( online )
         {
-            sendjson.SetValue( __KF_STRING__( online ), 1 );
-            sendjson.SetValue( __KF_STRING__( zonehttp ), _world_url );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( online ), 1 );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zonehttp ), _world_url );
         }
         else
         {
-            sendjson.SetValue( __KF_STRING__( online ), 0 );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( online ), 0 );
         }
 
         _kf_http_client->StartMTHttpClient( _update_url, sendjson );
@@ -264,8 +264,9 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFWorldModule::HandleHttpKickOnline )
     {
-        KFJson kfjson( data );
-        auto playerid = kfjson.GetUInt64( __KF_STRING__( playerid ) );
+        __JSON_PARSE_STRING__( request, data );
+
+        auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
         KickOnline( playerid, __FUNC_LINE__ );
 
         return _invalid_str;
