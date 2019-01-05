@@ -58,7 +58,7 @@ namespace KFrame
         auto kfskinrecord = kfobject->FindData( __KF_STRING__( skin ) );
 
         // 检查所有皮肤, 找到时间最少的一个
-        auto _min_valid_time = std::numeric_limits<uint64>::max();
+        auto _min_valid_time = __MAX_UINT64__;
 
         auto kfskin = kfskinrecord->FirstData();
         while ( kfskin != nullptr )
@@ -72,7 +72,7 @@ namespace KFrame
             kfskin = kfskinrecord->NextData();
         }
 
-        if ( _min_valid_time == std::numeric_limits<uint64>::max() )
+        if ( _min_valid_time == __MAX_UINT64__ )
         {
             return;
         }

@@ -62,6 +62,38 @@
 #ifndef __TOP_TEN__
     #define __TOP_TEN__ 10
 #endif
+
+#ifndef __MAX_INT8__
+    #define __MAX_INT8__ std::numeric_limits<int8>::max()
+#endif
+
+#ifndef __MAX_UINT8__
+    #define __MAX_UINT8__ std::numeric_limits<uint8>::max()
+#endif
+
+#ifndef __MAX_INT16__
+    #define __MAX_INT16__ std::numeric_limits<int16>::max()
+#endif
+
+#ifndef __MAX_UINT16__
+    #define __MAX_UINT16__ std::numeric_limits<uint16>::max()
+#endif
+
+#ifndef __MAX_INT32__
+    #define __MAX_INT32__ std::numeric_limits<int32>::max()
+#endif
+
+#ifndef __MAX_UINT32__
+    #define __MAX_UINT32__ std::numeric_limits<uint32>::max()
+#endif
+
+#ifndef __MAX_INT64__
+    #define __MAX_INT64__ std::numeric_limits<int64>::max()
+#endif
+
+#ifndef __MAX_UINT64__
+    #define __MAX_UINT64__ std::numeric_limits<uint64>::max()
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
