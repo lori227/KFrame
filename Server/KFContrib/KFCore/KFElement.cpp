@@ -167,38 +167,53 @@ namespace KFrame
 
     const std::string& KFElements::Serialize() const
     {
-        //if ( !_is_rand_agent && !_is_add_value && multiple == 1.0f )
-        // {
-        //   return _string;
-        //  }
+        if ( !_is_rand_value && !_is_change_value )
+        {
+            return _data;
+        }
 
-        //// 重新格式化
+        // 重新格式化
         static std::string _show_string;
-        //_show_string.clear();
+        _show_string.clear();
 
-        //KFJson kfjson;
-        //for ( auto kfagent : _agents )
-        //{
-        //    KFJson kfdata;
-        //    for ( auto& iter : kfagent->_datas._objects )
-        //    {
-        //        auto kfvalue = iter.second;
-        //        kfdata[ iter.first ] = __TO_STRING__( kfvalue->GetUseValue() );
-        //    }
+        __JSON_DOCUMENT__( kfjson );
+        kfjson.SetArray();
 
-        //    if ( kfagent->_config_id != _invalid_int )
-        //    {
-        //        kfdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfagent->_config_id );
-        //    }
+        for ( auto kfelement : _element_list )
+        {
+            if ( kfelement->IsValue() )
+            {
+                auto kfelementvalue = static_cast< KFElementVale* >( kfelement );
+                auto strvalue = __TO_STRING__( kfelementvalue->_value.GetValue() );
 
-        //    KFJson kfreward;
-        //    kfreward[ kfagent->_data_name ] = kfdata;
-        //    kfjson.append( kfreward );
-        //}
+                __JSON_OBJECT__( kfdata );
+                __JSON_SET_VALUE__( kfdata, kfelementvalue->_data_name, strvalue );
+                __JSON_ADD_VALUE__( kfjson, kfdata );
+            }
+            else if ( kfelement->IsObject() )
+            {
+                auto kfelementobject = static_cast< KFElementObject* >( kfelement );
 
-        //_show_string = kfjson.Serialize();
-        //KFUtility::ReplaceString( _show_string, ",", "|" );
+                __JSON_OBJECT__( kfchild );
+                if ( kfelementobject->_config_id != 0u )
+                {
+                    auto strid = __TO_STRING__( kfelementobject->_config_id );
+                    __JSON_SET_VALUE__( kfchild, __KF_STRING__( id ), strid );
+                }
 
+                for ( auto& iter : kfelementobject->_values._objects )
+                {
+                    auto strvalue = __TO_STRING__( iter.second->GetValue() );
+                    __JSON_SET_VALUE__( kfchild, iter.first, strvalue );
+                }
+
+                __JSON_OBJECT__( kfdata );
+                __JSON_SET_VALUE__( kfdata, kfelementobject->_data_name, kfchild );
+                __JSON_ADD_VALUE__( kfjson, kfdata );
+            }
+        }
+
+        _show_string = __JSON_SERIALIZE__( kfjson );
         return _show_string;
     }
 }

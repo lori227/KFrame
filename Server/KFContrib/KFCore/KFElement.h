@@ -101,7 +101,7 @@ namespace KFrame
     public:
 
         // 配置id( 如果有的话 )
-        uint32 _config_id{ 0 };
+        uint32 _config_id{ 0u };
 
         // 属性数据
         KFMap< std::string, const std::string&, KFValue > _values;
