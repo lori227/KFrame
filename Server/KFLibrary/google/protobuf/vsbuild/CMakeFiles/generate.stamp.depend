@@ -1,0 +1,43 @@
+# CMake generation dependency list for this directory.
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeCXXInformation.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeCommonLanguageInclude.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeDependentOption.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeGenericSystem.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeInitializeConfigs.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeLanguageInformation.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeRCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeSystemSpecificInformation.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CMakeSystemSpecificInitialize.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CheckIncludeFile.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CheckLibraryExists.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/CheckSymbolExists.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Compiler/MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Compiler/MSVC-CXX.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/FindThreads.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/GNUInstallDirs.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Platform/Windows-MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Platform/Windows-MSVC-CXX.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Platform/Windows-MSVC.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Platform/Windows.cmake
+D:/Program Files/CMake/share/cmake-3.13/Modules/Platform/WindowsPaths.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/extract_includes.bat.in
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/install.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/libprotobuf-lite.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/libprotobuf.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/libprotoc.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf-config-version.cmake.in
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf-config.cmake.in
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf-lite.pc.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf-module.cmake.in
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf-options.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protobuf.pc.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/cmake/protoc.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/3.13.2/CMakeCCompiler.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/3.13.2/CMakeCXXCompiler.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/3.13.2/CMakeRCCompiler.cmake
+E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/3.13.2/CMakeSystem.cmake
