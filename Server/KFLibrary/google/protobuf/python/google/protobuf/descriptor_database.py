@@ -1,6 +1,6 @@
 # Protocol Buffers - Google's data interchange format
 # Copyright 2008 Google Inc.  All rights reserved.
-# http://code.google.com/p/protobuf/
+# https://developers.google.com/protocol-buffers/
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -32,6 +32,16 @@
 
 __author__ = 'matthewtoia@google.com (Matt Toia)'
 
+import warnings
+
+
+class Error(Exception):
+  pass
+
+
+class DescriptorDatabaseConflictingDefinitionError(Error):
+  """Raised when a proto is added with the same name & different descriptor."""
+
 
 class DescriptorDatabase(object):
   """A container accepting FileDescriptorProtos and maps DescriptorProtos."""
@@ -45,16 +55,31 @@ class DescriptorDatabase(object):
 
     Args:
       file_desc_proto: The FileDescriptorProto to add.
+    Raises:
+      DescriptorDatabaseConflictingDefinitionError: if an attempt is made to
+        add a proto with the same name but different definition than an
+        exisiting proto in the database.
     """
+    proto_name = file_desc_proto.name
+    if proto_name not in self._file_desc_protos_by_file:
+      self._file_desc_protos_by_file[proto_name] = file_desc_proto
+    elif self._file_desc_protos_by_file[proto_name] != file_desc_proto:
+      raise DescriptorDatabaseConflictingDefinitionError(
+          '%s already added, but with different descriptor.' % proto_name)
+    else:
+      return
 
-    self._file_desc_protos_by_file[file_desc_proto.name] = file_desc_proto
+    # Add all the top-level descriptors to the index.
     package = file_desc_proto.package
     for message in file_desc_proto.message_type:
-      self._file_desc_protos_by_symbol.update(
-          (name, file_desc_proto) for name in _ExtractSymbols(message, package))
+      for name in _ExtractSymbols(message, package):
+        self._AddSymbol(name, file_desc_proto)
     for enum in file_desc_proto.enum_type:
-      self._file_desc_protos_by_symbol[
-          '.'.join((package, enum.name))] = file_desc_proto
+      self._AddSymbol(('.'.join((package, enum.name))), file_desc_proto)
+    for extension in file_desc_proto.extension:
+      self._AddSymbol(('.'.join((package, extension.name))), file_desc_proto)
+    for service in file_desc_proto.service:
+      self._AddSymbol(('.'.join((package, service.name))), file_desc_proto)
 
   def FindFileByName(self, name):
     """Finds the file descriptor proto by file name.
@@ -83,6 +108,7 @@ class DescriptorDatabase(object):
 
     'some.package.name.Message'
     'some.package.name.Message.NestedEnum'
+    'some.package.name.Message.some_field'
 
     The file descriptor proto containing the specified symbol must be added to
     this database using the Add method or else an error will be raised.
@@ -96,8 +122,25 @@ class DescriptorDatabase(object):
     Raises:
       KeyError if no file contains the specified symbol.
     """
+    try:
+      return self._file_desc_protos_by_symbol[symbol]
+    except KeyError:
+      # Fields, enum values, and nested extensions are not in
+      # _file_desc_protos_by_symbol. Try to find the top level
+      # descriptor. Non-existent nested symbol under a valid top level
+      # descriptor can also be found. The behavior is the same with
+      # protobuf C++.
+      top_level, _, _ = symbol.rpartition('.')
+      return self._file_desc_protos_by_symbol[top_level]
 
-    return self._file_desc_protos_by_symbol[symbol]
+  def _AddSymbol(self, name, file_desc_proto):
+    if name in self._file_desc_protos_by_symbol:
+      warn_msg = ('Conflict register for file "' + file_desc_proto.name +
+                  '": ' + name +
+                  ' is already defined in file "' +
+                  self._file_desc_protos_by_symbol[name].name + '"')
+      warnings.warn(warn_msg, RuntimeWarning)
+    self._file_desc_protos_by_symbol[name] = file_desc_proto
 
 
 def _ExtractSymbols(desc_proto, package):
@@ -110,11 +153,10 @@ def _ExtractSymbols(desc_proto, package):
   Yields:
     The fully qualified name found in the descriptor.
   """
-
-  message_name = '.'.join((package, desc_proto.name))
+  message_name = package + '.' + desc_proto.name if package else desc_proto.name
   yield message_name
   for nested_type in desc_proto.nested_type:
     for symbol in _ExtractSymbols(nested_type, message_name):
       yield symbol
-    for enum_type in desc_proto.enum_type:
-      yield '.'.join((message_name, enum_type.name))
+  for enum_type in desc_proto.enum_type:
+    yield '.'.join((message_name, enum_type.name))

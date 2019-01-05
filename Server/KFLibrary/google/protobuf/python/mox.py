@@ -31,7 +31,7 @@ If an unexpected method (or an expected method with unexpected
 parameters) is called, then an exception will be raised.
 
 Once you are done interacting with the mock, you need to verify that
-all the expected interactions occured.  (Maybe your code exited
+all the expected interactions occurred.  (Maybe your code exited
 prematurely without calling some cleanup method!)  The verify phase
 ensures that every expected method was called; otherwise, an exception
 will be raised.
@@ -778,7 +778,7 @@ class Comparator:
       rhs: any python object
     """
 
-    raise NotImplementedError, 'method must be implemented by a subclass.'
+    raise NotImplementedError('method must be implemented by a subclass.')
 
   def __eq__(self, rhs):
     return self.equals(rhs)

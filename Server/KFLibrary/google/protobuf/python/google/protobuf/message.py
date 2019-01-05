@@ -1,6 +1,6 @@
 # Protocol Buffers - Google's data interchange format
 # Copyright 2008 Google Inc.  All rights reserved.
-# http://code.google.com/p/protobuf/
+# https://developers.google.com/protocol-buffers/
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -35,7 +35,6 @@
 """Contains an abstract base class for protocol messages."""
 
 __author__ = 'robinson@google.com (Will Robinson)'
-
 
 class Error(Exception): pass
 class DecodeError(Error): pass
@@ -177,12 +176,22 @@ class Message(object):
     raise NotImplementedError
 
   def ParseFromString(self, serialized):
-    """Like MergeFromString(), except we clear the object first."""
+    """Parse serialized protocol buffer data into this message.
+
+    Like MergeFromString(), except we clear the object first and
+    do not return the value that MergeFromString returns.
+    """
     self.Clear()
     self.MergeFromString(serialized)
 
-  def SerializeToString(self):
+  def SerializeToString(self, **kwargs):
     """Serializes the protocol message to a binary string.
+
+    Arguments:
+      **kwargs: Keyword arguments to the serialize method, accepts
+        the following keyword args:
+        deterministic: If true, requests deterministic serialization of the
+          protobuf, with predictable ordering of map keys.
 
     Returns:
       A binary string representation of the message if all of the required
@@ -193,11 +202,17 @@ class Message(object):
     """
     raise NotImplementedError
 
-  def SerializePartialToString(self):
+  def SerializePartialToString(self, **kwargs):
     """Serializes the protocol message to a binary string.
 
     This method is similar to SerializeToString but doesn't check if the
     message is initialized.
+
+    Arguments:
+      **kwargs: Keyword arguments to the serialize method, accepts
+        the following keyword args:
+        deterministic: If true, requests deterministic serialization of the
+          protobuf, with predictable ordering of map keys.
 
     Returns:
       A string representation of the partial message.
@@ -222,25 +237,38 @@ class Message(object):
   # """
   def ListFields(self):
     """Returns a list of (FieldDescriptor, value) tuples for all
-    fields in the message which are not empty.  A singular field is non-empty
-    if HasField() would return true, and a repeated field is non-empty if
-    it contains at least one element.  The fields are ordered by field
-    number"""
+    fields in the message which are not empty.  A message field is
+    non-empty if HasField() would return true. A singular primitive field
+    is non-empty if HasField() would return true in proto2 or it is non zero
+    in proto3. A repeated field is non-empty if it contains at least one
+    element.  The fields are ordered by field number"""
     raise NotImplementedError
 
   def HasField(self, field_name):
-    """Checks if a certain field is set for the message. Note if the
-    field_name is not defined in the message descriptor, ValueError will be
-    raised."""
+    """Checks if a certain field is set for the message, or if any field inside
+    a oneof group is set.  Note that if the field_name is not defined in the
+    message descriptor, ValueError will be raised."""
     raise NotImplementedError
 
   def ClearField(self, field_name):
+    """Clears the contents of a given field, or the field set inside a oneof
+    group.  If the name neither refers to a defined field or oneof group,
+    ValueError is raised."""
+    raise NotImplementedError
+
+  def WhichOneof(self, oneof_group):
+    """Returns the name of the field that is set inside a oneof group, or
+    None if no field is set.  If no group with the given name exists, ValueError
+    will be raised."""
     raise NotImplementedError
 
   def HasExtension(self, extension_handle):
     raise NotImplementedError
 
   def ClearExtension(self, extension_handle):
+    raise NotImplementedError
+
+  def DiscardUnknownFields(self):
     raise NotImplementedError
 
   def ByteSize(self):

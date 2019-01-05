@@ -81,7 +81,7 @@ namespace KFrame
         auto datasetting = kfparent->GetDataSetting();
 
         // 叠加数量 > 1
-        if ( kfsetting->_overlay_count > 1 )
+        if ( kfsetting->_overlay_count > 1u )
         {
             std::list< KFData* > finditem;
             kfparent->FindData( datasetting->_config_key_name, kfsetting->_id, finditem );
@@ -245,8 +245,6 @@ namespace KFrame
             return false;
         }
 
-
-
         uint64 totalcount = _invalid_int;
         for ( auto kfitem : finditem )
         {
@@ -328,7 +326,7 @@ namespace KFrame
         }
 
         // 删除道具
-        player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1 );
+        player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1u );
 
         // 添加奖励
         if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
