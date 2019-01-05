@@ -73,14 +73,14 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindAddAgentFunction( const std::string& dataname, KFAddAgentFunction& function );
-        virtual void UnRegisterAddAgentFunction( const std::string& dataname );
+        virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function );
+        virtual void UnRegisterAddElementFunction( const std::string& dataname );
 
-        virtual void BindCheckAgentFunction( const std::string& dataname, KFCheckAgentFunction& function );
-        virtual void UnRegisterCheckAgentFunction( const std::string& dataname );
+        virtual void BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function );
+        virtual void UnRegisterCheckElementFunction( const std::string& dataname );
 
-        virtual void BindRemoveAgentFunction( const std::string& dataname, KFRemoveAgentFunction& function );
-        virtual void UnRegisterRemoveAgentFunction( const std::string& dataname );
+        virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function );
+        virtual void UnRegisterRemoveElementFunction( const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function );
         virtual void UnBindAddDataModule( const std::string& module );
@@ -149,13 +149,13 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
 
         // 添加元数据函数
-        KFBind< std::string, const std::string&, KFAddAgentFunction > _add_agent_function;
+        KFBind< std::string, const std::string&, KFAddElementFunction > _add_element_function;
 
         // 判断元数据满足
-        KFBind< std::string, const std::string&, KFCheckAgentFunction > _check_agent_function;
+        KFBind< std::string, const std::string&, KFCheckElementFunction > _check_element_function;
 
         // 删除元数据函数
-        KFBind< std::string, const std::string&, KFRemoveAgentFunction > _remove_agent_function;
+        KFBind< std::string, const std::string&, KFRemoveElementFunction > _remove_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调列表
         typedef std::pair< std::string, std::string > DataKeyType;

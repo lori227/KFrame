@@ -183,37 +183,37 @@ namespace KFrame
         return _entitys.Remove( kfentity->GetKeyID() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::BindAddAgentFunction( const std::string& dataname, KFAddAgentFunction& function )
+    void KFComponentEx::BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function )
     {
-        auto kffunction = _add_agent_function.Create( dataname );
+        auto kffunction = _add_element_function.Create( dataname );
         kffunction->_function = function;
     }
 
-    void KFComponentEx::UnRegisterAddAgentFunction( const std::string& dataname )
+    void KFComponentEx::UnRegisterAddElementFunction( const std::string& dataname )
     {
-        _add_agent_function.Remove( dataname );
+        _add_element_function.Remove( dataname );
     }
 
-    void KFComponentEx::BindCheckAgentFunction( const std::string& dataname, KFCheckAgentFunction& function )
+    void KFComponentEx::BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function )
     {
-        auto kffunction = _check_agent_function.Create( dataname );
+        auto kffunction = _check_element_function.Create( dataname );
         kffunction->_function = function;
     }
 
-    void KFComponentEx::UnRegisterCheckAgentFunction( const std::string& dataname )
+    void KFComponentEx::UnRegisterCheckElementFunction( const std::string& dataname )
     {
-        _check_agent_function.Remove( dataname );
+        _check_element_function.Remove( dataname );
     }
 
-    void KFComponentEx::BindRemoveAgentFunction( const std::string& dataname, KFRemoveAgentFunction& function )
+    void KFComponentEx::BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function )
     {
-        auto kffunction = _remove_agent_function.Create( dataname );
+        auto kffunction = _remove_element_function.Create( dataname );
         kffunction->_function = function;
     }
 
-    void KFComponentEx::UnRegisterRemoveAgentFunction( const std::string& dataname )
+    void KFComponentEx::UnRegisterRemoveElementFunction( const std::string& dataname )
     {
-        _remove_agent_function.Remove( dataname );
+        _remove_element_function.Remove( dataname );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

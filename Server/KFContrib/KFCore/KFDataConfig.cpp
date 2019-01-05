@@ -44,10 +44,6 @@ namespace KFrame
             kfdatasetting->_update_function = xmlnode.GetString( "UpdateFunction" );
             kfdatasetting->_remove_function = xmlnode.GetString( "RemoveFunction" );
 
-            if ( xmlnode.GetString( "AutoCreate" ) == "1" )
-            {
-                KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Auto_Create );
-            }
             if ( xmlnode.GetString( "Save" ) == "1" )
             {
                 KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Save_Database );

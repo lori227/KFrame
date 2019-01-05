@@ -609,16 +609,11 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendRewardAgentToClient( KFEntity* player, const std::string& reward, bool showclient, const char* function, uint32 line )
+    void KFPlayerModule::SendRewardAgentToClient( KFEntity* player, const std::string& reward )
     {
-        if ( showclient )
-        {
-            KFMsg::MsgShowRewardAgent show;
-            show.set_reward( reward );
-            SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
-        }
-
-        __LOG_INFO_FUNCTION__( function, line, "player={} add agent=[{}]!", player->GetKeyID(), reward );
+        KFMsg::MsgShowRewardAgent show;
+        show.set_reward( reward );
+        SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
     }
 
     // 判断操作频率

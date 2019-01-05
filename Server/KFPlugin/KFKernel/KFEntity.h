@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_ENTITY_H__
 #define __KF_ENTITY_H__
 
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFCore/KFClassSetting.h"
 
 namespace KFrame
@@ -12,12 +12,15 @@ namespace KFrame
     {
     public:
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // id
         virtual void SetKeyID( uint64 id ) = 0;
         virtual uint64 GetKeyID() = 0;
+
+        // name
         virtual const char* GetName() = 0;
         virtual void SetName( const std::string& name ) = 0;
 
+        // 数据
         virtual KFData* GetData() = 0;
 
         // 是否初始化完成
@@ -43,7 +46,6 @@ namespace KFrame
         virtual bool RemoveData( const std::string& dataname ) = 0;
         virtual bool RemoveData( const std::string& parentname, const std::string& dataname ) = 0;
 
-
         // 更新属性
         virtual void UpdateData( const std::string& dataname, const std::string& value ) = 0;
         virtual void UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value ) = 0;
@@ -61,15 +63,14 @@ namespace KFrame
         virtual uint64 UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 添加元数据
+        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line ) = 0;
 
         // 判断元数据是否满足条件
-        virtual bool CheckAgentData( const KFAgents* kfagents, const char* function, uint32 line ) = 0;
-
-        // 添加元数据
-        virtual void AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line ) = 0;
+        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line ) = 0;
 
         // 删除元数据
-        virtual void RemoveAgentData( const KFAgents* kfagents, const char* function, uint32 line ) = 0;
+        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

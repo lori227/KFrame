@@ -62,9 +62,6 @@ namespace KFrame
         virtual void SerializeToView( KFData* kfdata, KFMsg::PBObject* proto );
         virtual void SerializeToOnline( KFData* kfdata, KFMsg::PBObject* proto );
 
-        // 获得数值
-        virtual uint32 CalcAgentValue( KFAgentValue* kfvalue, float multiple );
-
         // 是否可以倍率
         bool IsMultipleData( const std::string& dataname );
 

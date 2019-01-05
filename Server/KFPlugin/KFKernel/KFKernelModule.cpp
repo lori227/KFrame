@@ -638,17 +638,4 @@ namespace KFrame
     {
         return _multiple_data.find( dataname ) != _multiple_data.end();
     }
-
-    uint32 KFKernelModule::CalcAgentValue( KFAgentValue* kfvalue, float multiple )
-    {
-        auto ok = IsMultipleData( kfvalue->_data_name );
-        if ( !ok )
-        {
-            multiple = 1.0f;
-        }
-
-        return kfvalue->GetValue( multiple );
-    }
-
-
 }

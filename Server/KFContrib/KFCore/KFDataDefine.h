@@ -28,15 +28,14 @@ namespace KFrame
             Mask_Null_Value = 0,			// 无效值
             Mask_Sync_Client = 1 << 1,		// 更新同步玩家
             Mask_Sync_View = 1 << 2,		// 同步给附近玩家
-            Mask_Auto_Create = 1 << 3,		// 自动创建数据
-            Mask_Save_Database = 1 << 4,	// 同步给附近玩家
-            Mask_System_Log = 1 << 5,		// 打印日志
-            Mask_Public_Data = 1 << 6,		// 公共属性
-            Mask_Online_Data = 1 << 7,		// 上线同步玩家
-            Mask_Relation_Data = 1 << 8,	// 关系属性
-            Mask_Group_Data = 1 << 9,		// 队伍属性
-            Mask_Guild_Data = 1 << 10,		// 帮派属性
-            Mask_Rank_Data = 1 << 11,		// 排行榜属性
+            Mask_Save_Database = 1 << 3,	// 同步给附近玩家
+            Mask_System_Log = 1 << 4,		// 打印日志
+            Mask_Public_Data = 1 << 5,		// 公共属性
+            Mask_Online_Data = 1 << 6,		// 上线同步玩家
+            Mask_Relation_Data = 1 << 7,	// 关系属性
+            Mask_Group_Data = 1 << 8,		// 队伍属性
+            Mask_Guild_Data = 1 << 9,		// 帮派属性
+            Mask_Rank_Data = 1 << 10,		// 排行榜属性
 
             Mask_Save_Delete = 1 << 30,		// 删除同步到服务器
             Mask_Sync_Delete = 1 << 31,		// 删除同步到客户端

@@ -3,7 +3,6 @@
 
 #include "KFEntity.h"
 #include "KFCore/KFData.h"
-#include "KFCore/KFAgent.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -60,6 +59,7 @@ namespace KFrame
         virtual void UpdateData( KFData* kfdata, const std::string& value );
         virtual void UpdateData( KFData* kfparent, const std::string& dataname, const std::string& value );
 
+        // 更新属性
         virtual uint64 UpdateData( const std::string& dataname, uint32 operate, uint64 value );
         virtual uint64 UpdateData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value );
         virtual uint64 UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value );
@@ -71,18 +71,14 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
+        // 添加元数据
+        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line );
 
         // 判断元数据是否满足条件
-        virtual bool CheckAgentData( const KFAgents* kfagents, const char* function, uint32 line );
-        bool CheckAgentData( const KFAgent* kfagent, const char* function, uint32 line );
-
-        // 添加元数据
-        virtual void AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line );
-        void AddAgentData( const KFAgent* kfagent, float multiple, const char* function, uint32 line );
+        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line );
 
         // 删除元数据
-        virtual void RemoveAgentData( const KFAgents* kfagents, const char* function, uint32 line );
-        void RemoveAgentData( const KFAgent* kfagent, const char* function, uint32 line );
+        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line );
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -102,23 +98,23 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
 
     protected:
-        // 自动创建对象
-        KFData* AutoCreateData( KFData* kfparent, uint64 key );
-
         // 添加元数据
-        void AddNormalAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line );
-        void AddRecordAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line );
-        void AddObjectAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line );
+        void AddElement( const KFElement* kfelement, const char* function, uint32 line );
+        void AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        void AddObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        void AddRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
 
         // 判断元数据
-        bool CheckNormalAgentData( KFData* kfdata, KFAgent* kfagent );
-        bool CheckObjectAgentData( KFAgent* kfagent );
-        bool CheckRecordAgentData( KFAgent* kfagent );
+        bool CheckElement( const KFElement* kfelement, const char* function, uint32 line );
+        bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        bool CheckObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line );
 
         // 删除元数据
-        void RemoveNormalAgentData( KFAgent* kfagent, const char* function, uint32 line );
-        void RemoveRecordAgentData( KFAgent* kfagent, const char* function, uint32 line );
-        void RemoveObjectAgentData( KFAgent* kfagent, const char* function, uint32 line );
+        void RemoveElement( const KFElement* kfelement, const char* function, uint32 line );
+        void RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        void RemoveRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line );
 
     protected:
         // 同步添加数据

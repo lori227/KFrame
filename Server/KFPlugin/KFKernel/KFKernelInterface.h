@@ -42,10 +42,6 @@ namespace KFrame
         virtual void SerializeToData( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
         virtual void SerializeToView( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
         virtual void SerializeToOnline( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
-        //void SerializeToProto( KFMsg::PBObject* proto, uint32 datamask );
-
-        // 获得数值
-        virtual uint32 CalcAgentValue( KFAgentValue* kfvalue, float multiple ) = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_kernel, KFKernelInterface );

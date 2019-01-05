@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "KFEntity.h"
-#include "KFCore/KFAgent.h"
 #include "KFCore/KFData.h"
 
 namespace KFrame
@@ -13,9 +12,9 @@ namespace KFrame
 #define __DELETE_AND_SAVE__   4		// 删除保存数据库
 
 
-    typedef std::function< void( KFEntity*, KFAgent*, float, const char*, uint32 ) > KFAddAgentFunction;
-    typedef std::function< bool( KFEntity*, KFAgent*, const char*, uint32 ) > KFCheckAgentFunction;
-    typedef std::function< void( KFEntity*, KFAgent*, const char*, uint32 ) > KFRemoveAgentFunction;
+    typedef std::function< void( KFEntity*, KFData*, KFElement*, const char*, uint32 ) > KFAddElementFunction;
+    typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32 ) > KFCheckElementFunction;
+    typedef std::function< void( KFEntity*, KFData*, KFElement*, const char*, uint32 ) > KFRemoveElementFunction;
 
     typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFAddDataFunction;
     typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFRemoveDataFunction;
@@ -24,7 +23,7 @@ namespace KFrame
 
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
     typedef std::function< void( KFEntity*, const KFMsg::PBObject&  ) > KFSyncFunction;
-    typedef std::function< void( KFEntity*, const std::string&, bool, const char*, uint32 ) > KFShowRewardFunction;
+    typedef std::function< void( KFEntity*, const std::string& ) > KFShowRewardFunction;
 
 
 #define __KF_ADD_AGENT_FUNCTION__( addfunction ) \
@@ -91,33 +90,30 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册添加属性函数
         template< class T >
-        void RegisterAddAgentFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, KFAgent*, float, const char*, uint32 ) )
+        void RegisterAddElementFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, KFData*, KFElement*, const char*, uint32 ) )
         {
-            KFAddAgentFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
-            BindAddAgentFunction( dataname, function );
+            KFAddElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
+            BindAddElementFunction( dataname, function );
         }
-
-        virtual void UnRegisterAddAgentFunction( const std::string& dataname ) = 0;
+        virtual void UnRegisterAddElementFunction( const std::string& dataname ) = 0;
 
         // 注册判断属性函数
         template< class T >
-        void RegisterCheckAgentFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity* kfentity, KFAgent* kfagent, const char* function, uint32 line ) )
+        void RegisterCheckAgentFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, KFData*, KFElement*, const char*, uint32 ) )
         {
-            KFCheckAgentFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindCheckAgentFunction( dataname, function );
+            KFCheckElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
+            BindCheckElementFunction( dataname, function );
         }
-
-        virtual void UnRegisterCheckAgentFunction( const std::string& dataname ) = 0;
+        virtual void UnRegisterCheckElementFunction( const std::string& dataname ) = 0;
 
         // 注册删除属性函数
         template< class T >
-        void RegisterRemoveAgentFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, KFAgent* kfagent, const char* function, uint32 line ) )
+        void RegisterRemoveElementFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, KFData*, KFElement*, const char*, uint32 ) )
         {
-            KFRemoveAgentFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindRemoveAgentFunction( dataname, function );
+            KFRemoveElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
+            BindRemoveElementFunction( dataname, function );
         }
-
-        virtual void UnRegisterRemoveAgentFunction( const std::string& dataname ) = 0;
+        virtual void UnRegisterRemoveElementFunction( const std::string& dataname ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册添加属性回调函数
@@ -310,18 +306,17 @@ namespace KFrame
         virtual void UnRegisterSyncRemoveFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterShowRewardFunction( T* object, void ( T::*handle )( KFEntity*, const std::string&, bool, const char*, uint32 ) )
+        void RegisterShowRewardFunction( T* object, void ( T::*handle )( KFEntity*, const std::string& ) )
         {
-            KFShowRewardFunction function = std::bind( handle, object,
-                                            std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5 );
+            KFShowRewardFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindShowRewardFunction( function );
         }
         virtual void UnRegisterShowRewardFunction() = 0;
 
     protected:
-        virtual void BindCheckAgentFunction( const std::string& dataname, KFCheckAgentFunction& function ) = 0;
-        virtual void BindRemoveAgentFunction( const std::string& dataname, KFRemoveAgentFunction& function ) = 0;
-        virtual void BindAddAgentFunction( const std::string& dataname, KFAddAgentFunction& function ) = 0;
+        virtual void BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function ) = 0;
+        virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function ) = 0;
+        virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function ) = 0;
 
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function ) = 0;
         virtual void UnBindAddDataModule( const std::string& module ) = 0;

@@ -1,10 +1,10 @@
 ﻿#include "KFEntityEx.h"
 #include "KFComponentEx.h"
-#include "KFCore/KFAgent.h"
 #include "KFKernelConfig.h"
 #include "KFKernelModule.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFCore/KFDataFactory.h"
+#include "KFOption/KFOptionInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -206,16 +206,17 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
     {
+        // 不存在, 创建
         auto kfobject = kfparent->FindData( key );
         if ( kfobject == nullptr )
         {
-            kfobject = AutoCreateData( kfparent, key );
-            if ( kfobject == nullptr )
-            {
-                return _invalid_int;
-            }
+            kfobject = KFDataFactory::CreateData( kfparent->GetDataSetting() );
+            kfobject->OperateValue( dataname, operate, value );
+            AddData( kfparent, key, kfobject );
+            return value;
         }
 
+        // 存在就更新
         auto kfdata = kfobject->FindData( dataname );
         if ( kfdata == nullptr )
         {
@@ -244,25 +245,6 @@ namespace KFrame
         }
 
         return newvalue;
-    }
-
-    KFData* KFEntityEx::AutoCreateData( KFData* kfparent, uint64 key )
-    {
-        // 不存在 判断是否创建新的对象
-        auto datasetting = kfparent->GetDataSetting();
-        if ( !datasetting->HaveFlagMask( KFDataDefine::Mask_Auto_Create ) )
-        {
-            return nullptr;
-        }
-
-        auto kfdata = KFDataFactory::CreateData( datasetting );
-        if ( kfdata == nullptr )
-        {
-            return nullptr;
-        }
-
-        AddData( kfparent, key, kfdata );
-        return kfdata;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -374,120 +356,143 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddAgentData( const KFAgents* kfagents, float multiple, bool showclient, const char* function, uint32 line )
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line )
     {
-        for ( auto& kfagent : kfagents->_agents )
+        const_cast < KFElements* >( kfelements )->_is_change_value = false;
+        for ( auto& kfelement : kfelements->_element_list )
         {
-            AddAgentData( kfagent, multiple, function, line );
+            AddElement( kfelement, function, line );
         }
 
+        auto& strdata = kfelements->Serialize();
+        __LOG_INFO_FUNCTION__( function, line, "entity={} add element=[{}]!", GetKeyID(), strdata );
+
         // 显示给客户端
-        if ( _kf_component->_show_reward_function != nullptr )
+        if ( _kf_component->_show_reward_function != nullptr && showclient )
         {
-            auto& strreward = kfagents->FormatRewardAgent( multiple );
-            _kf_component->_show_reward_function( this, strreward, showclient, function, line );
+            _kf_component->_show_reward_function( this, strdata );
         }
     }
 
     // 添加元数据
-    void KFEntityEx::AddAgentData( const KFAgent* kfagent, float multiple, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line )
     {
-        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
-        if ( datasetting == nullptr )
+        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]! ", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
         }
 
         // 如果有注册的特殊处理函数
-        auto kffunction = _kf_component->_add_agent_function.Find( kfagent->_data_name );
+        auto kffunction = _kf_component->_add_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            kffunction->_function( this, const_cast< KFAgent* >( kfagent ), multiple, function, line );
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
+        }
+
+        // 没有注册的函数
+        switch ( kfdata->GetType() )
+        {
+        case KFDataDefine::Type_Object:
+            AddObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
+        case KFDataDefine::Type_Record:
+            AddRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
+        case KFDataDefine::Type_Int32:
+        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::Type_Int64:
+        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::Type_Double:
+            AddNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
+        }
+    }
+
+    void KFEntityEx::AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsValue() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+        }
+
+        auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
+
+        // todo:计算倍数
+        float multiple = 1.0f;
+        auto value = kfelementvalue->CalcValue( multiple );
+
+        // 更新数据
+        UpdateData( kfdata, 0, kfelementvalue->_operate, value );
+    }
+
+    void KFEntityEx::AddObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+
+        for ( auto& iter : kfelementobject->_values._objects )
+        {
+            auto& name = iter.first;
+            auto value = iter.second->GetValue();
+            UpdateData( kfdata, name, kfelementobject->_operate, value );
+        }
+    }
+
+    void KFEntityEx::AddRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+        }
+
+        auto kfchild = kfdata->FindData( kfelementobject->_config_id );
+        if ( kfchild == nullptr )
+        {
+            // 不存在, 创建一个, 并更新属性
+            kfchild = KFDataFactory::CreateData( kfdata->GetDataSetting() );
+            for ( auto& iter : kfelementobject->_values._objects )
+            {
+                auto& name = iter.first;
+                auto value = iter.second->CalcValue();
+                kfchild->OperateValue( name, kfelementobject->_operate, value );
+            }
+
+            AddData( kfdata, kfelementobject->_config_id, kfchild );
         }
         else
         {
-            switch ( datasetting->_type )
+            // 存在直接更新属性
+            for ( auto& iter : kfelementobject->_values._objects )
             {
-            case KFDataDefine::Type_String:
-            case KFDataDefine::Type_Array:
-            case KFDataDefine::Type_Vector3D:
-                __LOG_ERROR_FUNCTION__( function, line, "error data type[{}]! ", kfagent->_string );
-                break;
-            case KFDataDefine::Type_Object:
-                AddObjectAgentData( const_cast< KFAgent* >( kfagent ), multiple, function, line );
-                break;
-            case KFDataDefine::Type_Record:
-                AddRecordAgentData( const_cast< KFAgent* >( kfagent ), multiple, function, line );
-                break;
-            default:
-                AddNormalAgentData( const_cast< KFAgent* >( kfagent ), multiple, function, line );
-                break;
+                auto& name = iter.first;
+                auto value = iter.second->CalcValue();
+                UpdateData( kfchild, name, kfelementobject->_operate, value );
             }
         }
     }
-
-
-    void KFEntityEx::AddNormalAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line )
-    {
-        // 操作类型
-        uint32 operate = kfagent->_operate;
-
-        for ( auto& iter : kfagent->_datas._objects )
-        {
-            auto value = _kf_component->_kf_kernel_module->CalcAgentValue( iter.second, multiple );
-            UpdateData( iter.first, operate, value );
-        }
-    }
-
-    void KFEntityEx::AddObjectAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line )
-    {
-        auto kfparent = _kf_object->FindData( kfagent->_data_name );
-        if ( kfparent == nullptr )
-        {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data [{}]!", kfagent->_string );
-        }
-
-        for ( auto& iter : kfagent->_datas._objects )
-        {
-            auto value = _kf_component->_kf_kernel_module->CalcAgentValue( iter.second, multiple );
-            UpdateData( kfparent, iter.first, kfagent->_operate, value );
-        }
-    }
-
-    void KFEntityEx::AddRecordAgentData( KFAgent* kfagent, float multiple, const char* function, uint32 line )
-    {
-        auto configid = kfagent->_config_id;
-        if ( configid == _invalid_int )
-        {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find config id [{}]!", kfagent->_string );
-        }
-
-        // kfrecord
-        auto kfparent = _kf_object->FindData( kfagent->_data_name );
-        if ( kfparent == nullptr )
-        {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data [{}]!", kfagent->_string );
-        }
-
-        auto kfdata = kfparent->FindData( configid );
-        if ( kfdata == nullptr )
-        {
-            UpdateData( kfparent, configid, __KF_STRING__( id ), KFOperateEnum::Set, configid );
-        }
-
-        for ( auto& iter : kfagent->_datas._objects )
-        {
-            auto value = _kf_component->_kf_kernel_module->CalcAgentValue( iter.second, multiple );
-            UpdateData( kfparent, configid, iter.first, kfagent->_operate, value );
-        }
-    }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 判断元数据是否满足条件
-    bool KFEntityEx::CheckAgentData( const KFAgents* kfagents, const char* function, uint32 line )
+    bool KFEntityEx::CheckElement( const KFElements* kfelements, const char* function, uint32 line )
     {
-        for ( auto& kfagent : kfagents->_agents )
+        for ( auto& kfelement : kfelements->_element_list )
         {
-            if ( !CheckAgentData( kfagent, function, line ) )
+            if ( !CheckElement( kfelement, function, line ) )
             {
                 return false;
             }
@@ -496,52 +501,79 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckAgentData( const KFAgent* kfagent, const char* function, uint32 line )
+    bool KFEntityEx::CheckElement( const KFElement* kfelement, const char* function, uint32 line )
     {
-        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
-        if ( datasetting == nullptr )
+        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        if ( kfdata == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
             return false;
         }
 
         // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_check_agent_function.Find( kfagent->_data_name );
+        auto kffunction = _kf_component->_check_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, const_cast< KFAgent* >( kfagent ), function, line );
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
         }
 
         // 找不到处理函数, 用基础函数来处理
-        switch ( datasetting->_type )
+        switch ( kfdata->GetType() )
         {
-        case KFDataDefine::Type_Array:
-        case KFDataDefine::Type_String:
-        case KFDataDefine::Type_Vector3D:
-            __LOG_ERROR_FUNCTION__( function, line, "data type error [{}]!", kfagent->_string );
-            break;
         case KFDataDefine::Type_Record:
-            return CheckRecordAgentData( const_cast< KFAgent* >( kfagent ) );
+            return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
             break;
         case KFDataDefine::Type_Object:
-            return CheckObjectAgentData( const_cast< KFAgent* >( kfagent ) );
+            return CheckObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
             break;
-        default:
-            return CheckNormalAgentData( _kf_object, const_cast< KFAgent* >( kfagent ) );
+        case KFDataDefine::Type_Int32:
+        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::Type_Int64:
+        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::Type_Double:
+            return CheckNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
             break;
         }
 
         return false;
     }
 
-
-    bool KFEntityEx::CheckNormalAgentData( KFData* kfdata, KFAgent* kfagent )
+    bool KFEntityEx::CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
     {
-        for ( auto& iter : kfagent->_datas._objects )
+        if ( !kfelement->IsValue() )
         {
-            auto agentvalue = iter.second->GetValue();
-            auto datavalue = kfdata->GetValue< uint64 >( iter.first );
-            if ( datavalue < agentvalue )
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+            return false;
+        }
+
+        auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
+
+        auto datavalue = kfdata->GetValue();
+        auto elementvalue = kfelementvalue->_value.GetValue();
+        return datavalue >= elementvalue;
+    }
+
+    bool KFEntityEx::CheckObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return false;
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+
+        for ( auto& iter : kfelementobject->_values._objects )
+        {
+            auto kfchild = kfdata->FindData( iter.first );
+            if ( kfchild == nullptr )
+            {
+                return false;
+            }
+
+            auto datavalue = kfchild->GetValue();
+            auto elementvalue = iter.second->GetValue();
+            if ( datavalue < elementvalue )
             {
                 return false;
             }
@@ -550,126 +582,152 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckObjectAgentData( KFAgent* kfagent )
+    bool KFEntityEx::CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line )
     {
-        auto kfdata = _kf_object->FindData( kfagent->_data_name );
+        if ( !kfelement->IsObject() )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return false;
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+            return false;
+        }
+
+        auto kfdata = kfparent->FindData( kfelementobject->_config_id );
         if ( kfdata == nullptr )
         {
             return false;
         }
 
-        return CheckNormalAgentData( kfdata, kfagent );
-    }
-
-    bool KFEntityEx::CheckRecordAgentData( KFAgent* kfagent )
-    {
-        auto kfdata = _kf_object->FindData( kfagent->_data_name, kfagent->_config_id );
-        if ( kfdata == nullptr )
+        for ( auto& iter : kfelementobject->_values._objects )
         {
-            return false;
-        }
-
-        return CheckNormalAgentData( kfdata, kfagent );
-    }
-
-    void KFEntityEx::RemoveAgentData( const KFAgents* kfagents, const char* function, uint32 line )
-    {
-        for ( auto& kfagent : kfagents->_agents )
-        {
-            RemoveAgentData( kfagent, function, line );
-        }
-    }
-
-    // 删除元数据
-    void KFEntityEx::RemoveAgentData( const KFAgent* kfagent, const char* function, uint32 line )
-    {
-        auto datasetting = _kf_object->_class_setting->FindDataSetting( kfagent->_data_name );
-        if ( datasetting == nullptr )
-        {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find setting [{}]!", kfagent->_string );
-        }
-
-        // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_remove_agent_function.Find( kfagent->_data_name );
-        if ( kffunction != nullptr )
-        {
-            // 删除数据
-            kffunction->_function( this, const_cast< KFAgent* >( kfagent ), function, line );
-        }
-        else
-        {
-            // 找不到处理函数, 用基础函数来处理
-            switch ( datasetting->_type )
+            auto kfchild = kfdata->FindData( iter.first );
+            if ( kfchild == nullptr )
             {
-            case KFDataDefine::Type_String:
-            case KFDataDefine::Type_Array:
-            case KFDataDefine::Type_Vector3D:
-                __LOG_ERROR_FUNCTION__( function, line, "data type error [{}]!", kfagent->_string );
-                break;
-            case KFDataDefine::Type_Record:
-                RemoveRecordAgentData( const_cast< KFAgent* >( kfagent ), function, line );
-                break;
-            case KFDataDefine::Type_Object:
-                RemoveObjectAgentData( const_cast< KFAgent* >( kfagent ), function, line );
-                break;
-            default:
-                RemoveNormalAgentData( const_cast< KFAgent* >( kfagent ), function, line );
-                break;
+                return false;
+            }
+
+            auto datavalue = kfchild->GetValue();
+            auto elementvalue = iter.second->GetValue();
+            if ( datavalue < elementvalue )
+            {
+                return false;
             }
         }
 
-        // 记录log
-        if ( datasetting->HaveFlagMask( KFDataDefine::Mask_System_Log ) )
-        {
-            __LOG_INFO_FUNCTION__( function, line, "[{}] remove data [{}]", GetKeyID(), kfagent->_string );
-        }
+        return true;
     }
 
-    void KFEntityEx::RemoveRecordAgentData( KFAgent* kfagent, const char* function, uint32 line )
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    void KFEntityEx::RemoveElement( const KFElements* kfelements, const char* function, uint32 line )
     {
-        auto kfparent = _kf_object->FindData( kfagent->_data_name, kfagent->_config_id );
-        if ( kfparent == nullptr )
+        for ( auto& kfelement : kfelements->_element_list )
         {
-            return __LOG_ERROR_FUNCTION__( function, line,  "can't find config id [{}]!", kfagent->_string );
+            RemoveElement( kfelement, function, line );
         }
 
-        for ( auto& iter : kfagent->_datas._objects )
-        {
-            auto& dataname = iter.first;
-            auto value = iter.second->GetValue();
-
-            UpdateData( kfparent, dataname, KFOperateEnum::Dec, value );
-        }
+        auto& strdata = kfelements->Serialize();
+        __LOG_INFO_FUNCTION__( function, line, "entity={} remove element=[{}]!", GetKeyID(), strdata );
     }
 
-    void KFEntityEx::RemoveObjectAgentData( KFAgent* kfagent, const char* function, uint32 line )
+    // 删除元数据
+    void KFEntityEx::RemoveElement( const KFElement* kfelement, const char* function, uint32 line )
     {
-        auto kfparent = _kf_object->FindData( kfagent->_data_name );
-        if ( kfparent == nullptr )
+        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find config id [{}]!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
         }
 
-        for ( auto& iter : kfagent->_datas._objects )
+        // 如果有注册函数, 执行注册函数
+        auto kffunction = _kf_component->_remove_element_function.Find( kfelement->_data_name );
+        if ( kffunction != nullptr )
         {
-            auto& dataname = iter.first;
-            auto value = iter.second->GetValue();
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
+        }
 
-            UpdateData( kfparent, dataname, KFOperateEnum::Dec, value );
+        // 找不到处理函数, 用基础函数来处理
+        switch ( kfdata->GetType() )
+        {
+        case KFDataDefine::Type_Record:
+            RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
+        case KFDataDefine::Type_Object:
+            RemoveObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
+        case KFDataDefine::Type_Int32:
+        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::Type_Int64:
+        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::Type_Double:
+            RemoveNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            break;
         }
     }
 
-    void KFEntityEx::RemoveNormalAgentData( KFAgent* kfagent, const char* function, uint32 line )
+    void KFEntityEx::RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
     {
-        for ( auto& iter : kfagent->_datas._objects )
+        if ( !kfelement->IsValue() )
         {
-            auto& dataname = iter.first;
-            auto value = iter.second->GetValue();
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+        }
 
-            UpdateData( dataname, KFOperateEnum::Dec, value );
+        auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
+        auto value = kfelementvalue->_value.GetValue();
+        UpdateData( kfdata, 0, KFOperateEnum::Dec, value );
+    }
+
+    void KFEntityEx::RemoveObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        for ( auto& iter : kfelementobject->_values._objects )
+        {
+            auto& name = iter.first;
+            auto value = iter.second->GetValue();
+            UpdateData( kfdata, name, KFOperateEnum::Dec, value );
         }
     }
 
+    void KFEntityEx::RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+        }
+
+        auto kfdata = kfparent->FindData( kfelementobject->_config_id );
+        if ( kfdata == nullptr )
+        {
+            return;
+        }
+
+        for ( auto& iter : kfelementobject->_values._objects )
+        {
+            auto& name = iter.first;
+            auto value = iter.second->GetValue();
+            UpdateData( kfdata, name, KFOperateEnum::Dec, value );
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
