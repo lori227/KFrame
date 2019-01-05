@@ -168,7 +168,7 @@ namespace KFrame
 
             // 设置时间
             auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
-            if ( elementtime != 0u )
+            if ( elementtime != _invalid_int )
             {
                 kfskin->OperateValue( __KF_STRING__( time ), kfelementobject->_operate, KFGlobal::Instance()->_real_time + elementtime );
             }
@@ -181,13 +181,13 @@ namespace KFrame
             // 存在, 判断有效时间
             auto datatime = kfskin->GetValue( __KF_STRING__( time ) );
             auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
-            if ( datatime != 0u )
+            if ( datatime != _invalid_int )
             {
                 // 时限皮肤
-                if ( elementtime == 0u )
+                if ( elementtime == _invalid_int )
                 {
                     // 永久皮肤, 直接把时间更新成永久
-                    player->UpdateData( kfskin, __KF_STRING__( time ), KFOperateEnum::Set, 0u );
+                    player->UpdateData( kfskin, __KF_STRING__( time ), KFOperateEnum::Set, _invalid_int );
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace KFrame
     __KF_ADD_DATA_FUNCTION__( KFSkinModule::OnAddSkinCallBack )
     {
         auto validtime = kfdata->GetValue( __KF_STRING__( time ) );
-        if ( validtime == 0u )
+        if ( validtime == _invalid_int )
         {
             return;
         }

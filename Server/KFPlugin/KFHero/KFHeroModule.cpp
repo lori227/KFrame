@@ -59,7 +59,7 @@ namespace KFrame
         while ( kfhero != nullptr )
         {
             auto validtime = kfhero->GetValue( __KF_STRING__( time ) );
-            if ( validtime != 0 && validtime < _min_valid_time )
+            if ( validtime != _invalid_int && validtime < _min_valid_time )
             {
                 _min_valid_time = validtime;
             }
@@ -166,12 +166,12 @@ namespace KFrame
             // 存在, 判断有效时间
             auto datatime = kfhero->GetValue( __KF_STRING__( time ) );
             auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
-            if ( datatime != 0u )
+            if ( datatime != _invalid_int )
             {
-                if ( elementtime == 0u )
+                if ( elementtime == _invalid_int )
                 {
                     // 永久英雄, 直接把时间更新成永久
-                    player->UpdateData( kfhero, __KF_STRING__( time ), KFOperateEnum::Set, 0 );
+                    player->UpdateData( kfhero, __KF_STRING__( time ), KFOperateEnum::Set, _invalid_int );
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace KFrame
     __KF_ADD_DATA_FUNCTION__( KFHeroModule::OnAddHeroCallBack )
     {
         auto validtime = kfdata->GetValue< uint64 >( __KF_STRING__( time ) );
-        if ( validtime == 0u )
+        if ( validtime == _invalid_int )
         {
             return;
         }

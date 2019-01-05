@@ -61,7 +61,7 @@ namespace KFrame
         {
             // 计算物品数量
             auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
-            if ( itemcount == 0u )
+            if ( itemcount == _invalid_int )
             {
                 return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemcount = null!", kfelement->_parent->_data );
             }
@@ -69,7 +69,7 @@ namespace KFrame
             do
             {
                 itemcount = AddOverlayCountItemData( player, kfdata, kfelementobject, kfsetting, itemcount );
-            } while ( itemcount > 0 );
+            } while ( itemcount > _invalid_int );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ namespace KFrame
                 oldcount = __MIN__( oldcount, kfsetting->_overlay_count );
                 auto canadd = kfsetting->_overlay_count - oldcount;
                 auto addcount = __MIN__( canadd, count );
-                if ( addcount == 0 )
+                if ( addcount == _invalid_int )
                 {
                     continue;
                 }
@@ -102,9 +102,9 @@ namespace KFrame
                 player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Add, addcount );
 
                 count -= addcount;
-                if ( count == 0 )
+                if ( count == _invalid_int )
                 {
-                    return 0;
+                    return _invalid_int;
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace KFrame
     {
         // 调用脚本
         auto itemcount = kfdata->GetValue();
-        if ( itemcount > 0u )
+        if ( itemcount > _invalid_int )
         {
             return;
         }
@@ -231,7 +231,7 @@ namespace KFrame
 
         // 判断数量
         auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
-        if ( itemcount == 0u )
+        if ( itemcount == _invalid_int )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
             return false;
@@ -247,7 +247,7 @@ namespace KFrame
 
 
 
-        uint64 totalcount = 0u;
+        uint64 totalcount = _invalid_int;
         for ( auto kfitem : finditem )
         {
             // 累计数量
@@ -275,7 +275,7 @@ namespace KFrame
         }
 
         auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
-        if ( itemcount == 0u )
+        if ( itemcount == _invalid_int )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
         }
@@ -288,13 +288,13 @@ namespace KFrame
             return;
         }
 
-        uint64 totalcount = 0u;
+        uint64 totalcount = _invalid_int;
         for ( auto kfitem : finditem )
         {
             auto removecount = __MIN__( itemcount, kfitem->GetValue( __KF_STRING__( count ) ) );
             player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, removecount );
             itemcount -= removecount;
-            if ( itemcount == 0u )
+            if ( itemcount == _invalid_int )
             {
                 break;
             }
