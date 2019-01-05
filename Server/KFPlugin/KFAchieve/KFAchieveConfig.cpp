@@ -147,7 +147,7 @@ namespace KFrame
             kfsetting->_parent_name = xmlnode.GetString( "ParentName" );
             kfsetting->_data_name = xmlnode.GetString( "DataName" );
             auto rewards = xmlnode.GetString( "Rewards" );
-            kfsetting->_rewards.ParseFromString( rewards, __FUNC_LINE__ );
+            kfsetting->_rewards.Parse( rewards, __FUNC_LINE__ );
 
             AddKFTypeAchieve( kfsetting );
             if ( KFEnum::Lobby == xmlnode.GetUInt32( "HandleType" ) )

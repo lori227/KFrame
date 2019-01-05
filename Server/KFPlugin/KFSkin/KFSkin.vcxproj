@@ -12,23 +12,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFClothesConfig.cpp" />
-    <ClCompile Include="KFClothesModule.cpp" />
-    <ClCompile Include="KFClothesPlugin.cpp" />
-    <ClCompile Include="KFClothesSetting.cpp" />
+    <ClCompile Include="KFSkinConfig.cpp" />
+    <ClCompile Include="KFSkinModule.cpp" />
+    <ClCompile Include="KFSkinPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFClothesConfig.h" />
-    <ClInclude Include="KFClothesInterface.h" />
-    <ClInclude Include="KFClothesModule.h" />
-    <ClInclude Include="KFClothesPlugin.h" />
-    <ClInclude Include="KFClothesSetting.h" />
+    <ClInclude Include="KFSkinConfig.h" />
+    <ClInclude Include="KFSkinInterface.h" />
+    <ClInclude Include="KFSkinModule.h" />
+    <ClInclude Include="KFSkinPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FCD37D21-547F-42A9-94DB-89588DBEFFA8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFClothes</ProjectName>
+    <ProjectName>KFSkin</ProjectName>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

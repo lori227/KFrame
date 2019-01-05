@@ -2,7 +2,7 @@
 #define __KF_GUILD_CLIENT_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -48,7 +48,7 @@ namespace KFrame
         uint32 _level;
 
         // 升级消费
-        KFAgents _cost_item;
+        KFElements _cost_item;
 
         // 最大成员数量
         uint32 _max_member;

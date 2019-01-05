@@ -1,8 +1,8 @@
-﻿#include "KFClothesPlugin.h"
+﻿#include "KFSkinPlugin.h"
 #include "KFLibrary.h"
 
-__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFClothesPlugin );
-__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFClothesPlugin );
+__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFSkinPlugin );
+__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFSkinPlugin );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

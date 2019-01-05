@@ -1,5 +1,5 @@
-﻿#ifndef __KF_CLOTHES_MOUDLE_H__
-#define __KF_CLOTHES_MOUDLE_H__
+﻿#ifndef __KF_SKIN_MOUDLE_H__
+#define __KF_SKIN_MOUDLE_H__
 
 /************************************************************************
 //    @Module			:    时装包裹系统
@@ -10,7 +10,7 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFClothesInterface.h"
+#include "KFSkinInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
@@ -22,11 +22,11 @@
 namespace KFrame
 {
     class KFComponent;
-    class KFClothesModule : public KFClothesInterface
+    class KFSkinModule : public KFSkinInterface
     {
     public:
-        KFClothesModule() = default;
-        ~KFClothesModule() = default;
+        KFSkinModule() = default;
+        ~KFSkinModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -40,42 +40,34 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
 
     protected:
-        // 添加物品
-        __KF_ADD_AGENT_FUNCTION__( AddClothesAgentData );
+        // 添加皮肤
+        __KF_ADD_ELEMENT_FUNCTION__( AddSkinElement );
 
-        // 衣服数量回调
-        __KF_UPDATE_DATA_FUNCTION__( OnClothesCountUpdateCallBack );
+        // 添加皮肤回调
+        __KF_ADD_DATA_FUNCTION__( OnAddSkinCallBack );
 
-        // 添加物品回调
-        __KF_ADD_DATA_FUNCTION__( OnAddClothesCallBack );
-
-        // 删除物品回调
-        __KF_REMOVE_DATA_FUNCTION__( OnRemoveClothesCallBack );
+        // 删除皮肤回调
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveSkinCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 初始化
-        void OnEnterStartClothesTimer( KFEntity* player );
-        void OnLeaveStopClothesTimer( KFEntity* player );
+        void OnEnterStartSkinTimer( KFEntity* player );
+        void OnLeaveStopSkinTimer( KFEntity* player );
 
         // 检查启动时间定时器
-        void CheckStartClothesTimer( KFEntity* player );
+        void CheckStartSkinTimer( KFEntity* player );
 
-        // 删除超时的时装
-        void RemoveValidTimeoutClothes( KFEntity* player );
+        // 删除超时的皮肤
+        void RemoveInvalidTimeSkin( KFEntity* player );
 
     protected:
         // 检测时间道具
-        __KF_TIMER_FUNCTION__( OnTimerCheckClothesValidTime );
+        __KF_TIMER_FUNCTION__( OnTimerCheckSkinValidTime );
 
     protected:
-        // 处理穿戴时装
-        __KF_MESSAGE_FUNCTION__( HandleDressClothesReq );
+        // 处理穿戴皮肤
+        __KF_MESSAGE_FUNCTION__( HandleDressSkinReq );
 
-        // 设置模型的默认时装id
-        __KF_MESSAGE_FUNCTION__( HandleSetModelDefaultClothesReq );
-
-        // 改变模型
-        __KF_MESSAGE_FUNCTION__( HandleChangeModelReq );
     protected:
         KFComponent* _kf_component{ nullptr };
     };

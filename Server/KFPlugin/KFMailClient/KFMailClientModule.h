@@ -42,10 +42,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 发送邮件
-        virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents );
+        virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFElements* kfelements );
 
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFAgents* kfagents );
+        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFElements* kfelements );
 
         // 发送邮件到对方
         virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const std::string& extend );
@@ -111,7 +111,7 @@ namespace KFrame
         KFData* ParsePBMailToData( const KFMsg::PBMail* pbmail, const KFDataSetting* kfsetting );
 
         // 格式化邮件内容
-        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFAgents* kfagents, const std::string& extend );
+        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements, const std::string& extend );
 
         // 发送添加邮件
         bool SendAddMailToCluster( uint64 playerid, uint32 mailtype, const MapString& maildata );

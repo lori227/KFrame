@@ -2,7 +2,7 @@
 #define __KF_MAIL_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -36,7 +36,7 @@ namespace KFrame
         uint32 _valid_time;
 
         // 附件奖励配置
-        KFAgents _rewards;
+        KFElements _rewards;
 
         // 读取/领取完成后是否立即删除
         uint32 _del_now;

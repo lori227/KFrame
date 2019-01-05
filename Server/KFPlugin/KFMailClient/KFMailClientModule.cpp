@@ -362,15 +362,15 @@ namespace KFrame
             return __LOG_ERROR__( "player[{}] mail[{}] no reward!", player->GetKeyID(), strmailid );
         }
 
-        KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( reward, __FUNC_LINE__ );
+        KFElements kfelements;
+        auto ok = kfelements.Parse( reward, __FUNC_LINE__ );
         if ( !ok )
         {
             return __LOG_ERROR__( "player[{}] mail[{}] reward[{}] error!", player->GetKeyID(), strmailid, reward );
         }
 
         player->UpdateData( kfmail, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
-        player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
+        player->AddElement( &kfelements, true, __FUNC_LINE__ );
 
         // 如果有配置回复邮件id, 回复邮件
         auto configid = kfmail->GetValue( __KF_STRING__( configid ) );
@@ -382,7 +382,7 @@ namespace KFrame
         }
     }
 
-    MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFAgents* kfagents, const std::string& extend )
+    MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements, const std::string& extend )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
@@ -418,13 +418,13 @@ namespace KFrame
         }
 
         // 奖励
-        if ( kfagents != nullptr )
+        if ( kfelements != nullptr )
         {
-            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfagents->_string ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfelements->_data ) );
         }
-        else if ( !kfsetting->_rewards._string.empty() )
+        else if ( !kfsetting->_rewards._data.empty() )
         {
-            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfsetting->_rewards._string ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfsetting->_rewards._data ) );
         }
 
         // 发送者信息
@@ -480,7 +480,7 @@ namespace KFrame
         SendQueryMailMessage( player->GetKeyID(), kfmsg.mailtype(), maxmailid );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint32 mailconfigid, const KFAgents* kfagents )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint32 mailconfigid, const KFElements* kfelements )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -488,11 +488,11 @@ namespace KFrame
             return false;
         }
 
-        auto& maildata = FormatMailData( nullptr, kfsetting, kfagents, _invalid_str );
+        auto& maildata = FormatMailData( nullptr, kfsetting, kfelements, _invalid_str );
         return SendAddMailToCluster( player->GetKeyID(), kfsetting->_type, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFAgents* kfagents )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFElements* kfelements )
     {
         auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
         if ( kfsetting == nullptr )
@@ -500,7 +500,7 @@ namespace KFrame
             return false;
         }
 
-        auto& maildata = FormatMailData( player, kfsetting, kfagents, _invalid_str  );
+        auto& maildata = FormatMailData( player, kfsetting, kfelements, _invalid_str  );
 
         return SendAddMailToCluster( toplayerid, kfsetting->_type, maildata );
     }

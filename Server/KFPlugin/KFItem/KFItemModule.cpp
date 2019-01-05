@@ -1,5 +1,4 @@
 ﻿#include "KFItemModule.h"
-#include "KFItemConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -12,19 +11,12 @@ namespace KFrame
     void KFItemModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterAddDataFunction( __KF_STRING__( item ), this, &KFItemModule::OnAddItemCallBack );
-        _kf_component->RegisterRemoveDataFunction( __KF_STRING__( item ), this, &KFItemModule::OnRemoveItemCallBack );
         _kf_component->RegisterUpdateDataFunction( __KF_STRING__( item ), __KF_STRING__( count ), this, &KFItemModule::OnItemCountUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        _kf_component->RegisterAddAgentFunction( __KF_STRING__( item ), this, &KFItemModule::AddItemAgentData );
-        _kf_component->RegisterCheckAgentFunction( __KF_STRING__( item ), this, &KFItemModule::CheckItemAgentData );
-        _kf_component->RegisterRemoveAgentFunction( __KF_STRING__( item ), this, &KFItemModule::RemoveItemAgentData );
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->RegisterEnterFunction( this, &KFItemModule::OnEnterStartItemTimer );
-        _kf_player->RegisterLeaveFunction( this, &KFItemModule::OnLeaveStopItemTimer );
-
+        _kf_component->RegisterAddElementFunction( __KF_STRING__( item ), this, &KFItemModule::AddItemElement );
+        _kf_component->RegisterCheckElementFunction( __KF_STRING__( item ), this, &KFItemModule::CheckItemElement );
+        _kf_component->RegisterRemoveElementFunction( __KF_STRING__( item ), this, &KFItemModule::RemoveItemElement );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ, &KFItemModule::HandleUseItemReq );
     }
@@ -37,202 +29,78 @@ namespace KFrame
         _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( item ) );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( item ), __KF_STRING__( count ) );
 
-        _kf_component->UnRegisterAddAgentFunction( __KF_STRING__( item ) );
-        _kf_component->UnRegisterCheckAgentFunction( __KF_STRING__( item ) );
-        _kf_component->UnRegisterRemoveAgentFunction( __KF_STRING__( item ) );
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        _kf_component->UnRegisterAddElementFunction( __KF_STRING__( item ) );
+        _kf_component->UnRegisterCheckElementFunction( __KF_STRING__( item ) );
+        _kf_component->UnRegisterRemoveElementFunction( __KF_STRING__( item ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
     }
-
-    void KFItemModule::OnEnterStartItemTimer( KFEntity* player )
-    {
-        CheckStartItemTimer( player );
-    }
-
-    void KFItemModule::OnLeaveStopItemTimer( KFEntity* player )
-    {
-        __UNREGISTER_OBJECT_TIMER__( player->GetKeyID() );
-    }
-
-    void KFItemModule::CheckStartItemTimer( KFEntity* player )
-    {
-        // 检查所有衣服, 找到时间最少的一个衣服
-        auto _min_valid_time = std::numeric_limits<uint32>::max();
-
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        auto kfitem = kfitemrecord->FirstData();
-        while ( kfitem != nullptr )
-        {
-            auto validtime = kfitem->GetValue( __KF_STRING__( time ) );
-            if ( validtime != 0 && validtime < _min_valid_time )
-            {
-                _min_valid_time = validtime;
-            }
-
-            kfitem = kfitemrecord->NextData();
-        }
-
-        if ( _min_valid_time == std::numeric_limits<uint32>::max() )
-        {
-            return;
-        }
-
-        // 如果已经有超时道具
-        if ( _min_valid_time < KFGlobal::Instance()->_real_time )
-        {
-            _min_valid_time = KFGlobal::Instance()->_real_time;
-        }
-
-        // 转换成间隔时间(毫秒) 启动定时器
-        auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerCheckItemValidTime );
-    }
-
-    void KFItemModule::RemoveValidTimeoutItem( KFEntity* player )
-    {
-        // 查找时间道具
-        std::unordered_map< KFData*, uint64 > timeitem;
-
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        auto kfitem = kfitemrecord->FirstData();
-        while ( kfitem != nullptr )
-        {
-            auto validtime = kfitem->GetValue( __KF_STRING__( time ) );
-            if ( validtime != 0 )
-            {
-                timeitem.insert( std::make_pair( kfitem, validtime ) );
-            }
-
-            kfitem = kfitemrecord->NextData();
-        }
-
-        // 删除时间道具
-        for ( auto& iter : timeitem )
-        {
-            auto* kfitem = iter.first;
-            if ( KFGlobal::Instance()->_real_time < iter.second )
-            {
-                continue;
-            }
-
-            // 删除道具
-            player->RemoveData( kfitemrecord, kfitem->GetKeyID() );
-        }
-    }
-
-    __KF_TIMER_FUNCTION__( KFItemModule::OnTimerCheckItemValidTime )
-    {
-        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
-        if ( player == nullptr )
-        {
-            return;
-        }
-
-        // 删除过期的时装
-        RemoveValidTimeoutItem( player );
-
-        // 检查是否需要开启定时器
-        CheckStartItemTimer( player );
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ADD_AGENT_FUNCTION__( KFItemModule::AddItemAgentData )
+    __KF_ADD_ELEMENT_FUNCTION__( KFItemModule::AddItemElement )
     {
-        auto configid = kfagent->_config_id;
-        if ( configid == _invalid_int )
+        if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR__( "[{}] item id = 0!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
-        auto itemsetting = _kf_item_config->FindItemSetting( configid );
-        if ( itemsetting == nullptr )
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR__( "[{}] item id = 0!", kfagent->_string );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+        }
+
+        auto kfsetting = _kf_item_config->FindItemSetting( kfelementobject->_config_id );
+        if ( kfsetting == nullptr )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemsetting = null!", kfelement->_parent->_data );
         }
 
         // 只有真正的实体道具才会添加到背包中
-        if ( itemsetting->IsRealItem() )
+        if ( kfsetting->IsRealItem() )
         {
             // 计算物品数量
-            auto kfagentvalue = kfagent->FindAgentValue( __KF_STRING__( count ) );
-            if ( kfagentvalue == nullptr )
+            auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+            if ( itemcount == 0u )
             {
-                return __LOG_ERROR__( "[{}] item count = null!", kfagent->_string );
+                return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemcount = null!", kfelement->_parent->_data );
             }
-            auto itemcount = _kf_kernel->CalcAgentValue( kfagentvalue, multiple );
 
-            auto kfobject = player->GetData();
-            auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
             do
             {
-                switch ( itemsetting->_overlay_type )
-                {
-                case KFItemEnum::OverlayTime:
-                    itemcount = AddOverlayTimeItemData( player, kfitemrecord, kfagent, itemsetting, itemcount );
-                    break;
-                default:
-                    itemcount = AddOverlayCountItemData( player, kfitemrecord, kfagent, itemsetting, itemcount );
-                    break;
-                }
+                itemcount = AddOverlayCountItemData( player, kfdata, kfelementobject, kfsetting, itemcount );
             } while ( itemcount > 0 );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        CallItemLuaFunction( player, itemsetting, KFItemEnum::AddFunction );
+        CallItemLuaFunction( player, kfsetting, KFItemEnum::AddFunction );
     }
 
-    uint32 KFItemModule::AddOverlayTimeItemData( KFEntity* player, KFData* kfparent, KFAgent* kfagent, const KFItemSetting* itemsetting, uint32 count )
+    uint64 KFItemModule::AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint64 count )
     {
         auto datasetting = kfparent->GetDataSetting();
 
-        std::list< KFData* > finditem;
-        kfparent->FindData( datasetting->_config_key_name, itemsetting->_id, finditem );
-
-        // 没有找到, 创建新的物品
-        if ( finditem.empty() )
-        {
-            return AddNewItemData( player, kfparent, kfagent, itemsetting, count );
-        }
-
-        // 存在该物品, 加上有效时间
-        auto kfitem = finditem.front();
-        auto totaltime = itemsetting->_valid_time * count;
-        player->UpdateData( kfitem, __KF_STRING__( time ), KFOperateEnum::Add, totaltime );
-        return 0;
-    }
-
-    uint32 KFItemModule::AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFAgent* kfagent, const KFItemSetting* itemsetting, uint32 count )
-    {
-        auto datasetting = kfparent->GetDataSetting();
-
-        // 叠加数量 > 1 , 查找
-        if ( itemsetting->_overlay_count > 1 )
+        // 叠加数量 > 1
+        if ( kfsetting->_overlay_count > 1 )
         {
             std::list< KFData* > finditem;
-            kfparent->FindData( datasetting->_config_key_name, itemsetting->_id, finditem );
+            kfparent->FindData( datasetting->_config_key_name, kfsetting->_id, finditem );
 
+            // 判断是否可以叠加完
             for ( auto kfitem : finditem )
             {
                 auto oldcount = kfitem->GetValue( __KF_STRING__( count ) );
-                oldcount = __MIN__( oldcount, itemsetting->_overlay_count );
-                auto canadd = itemsetting->_overlay_count - oldcount;
+                oldcount = __MIN__( oldcount, kfsetting->_overlay_count );
+                auto canadd = kfsetting->_overlay_count - oldcount;
                 auto addcount = __MIN__( canadd, count );
                 if ( addcount == 0 )
                 {
                     continue;
                 }
 
+                // 更新数量
                 player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Add, addcount );
 
-                // 添加guid属性
-                kfagent->AddValue( datasetting->_key_name, KFUtility::ToString( kfitem->GetKeyID() ) );
                 count -= addcount;
                 if ( count == 0 )
                 {
@@ -242,23 +110,23 @@ namespace KFrame
         }
 
         // 添加新的物品
-        return AddNewItemData( player, kfparent, kfagent, itemsetting, count );
+        return AddNewItemData( player, kfparent, kfelementobject, kfsetting, count );
     }
 
-    uint32 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFAgent* kfagent, const KFItemSetting* itemsetting, uint32 count )
+    uint64 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint64 count )
     {
         auto datasetting = kfparent->GetDataSetting();
-        uint32 addcount = __MIN__( count, itemsetting->_overlay_count );
+        uint64 addcount = __MIN__( count, kfsetting->_overlay_count );
 
         auto kfitem = _kf_kernel->CreateObject( datasetting );
-        kfitem->SetValue( datasetting->_config_key_name, itemsetting->_id );
+        kfitem->SetValue( datasetting->_config_key_name, kfsetting->_id );
         kfitem->SetValue( __KF_STRING__( count ), addcount );
 
         // 设置属性
-        for ( auto iter : kfagent->_datas._objects )
+        for ( auto& iter : kfelementobject->_values._objects )
         {
-            auto name = iter.first;
-            if ( name == __KF_STRING__( count ) || name == datasetting->_key_name )
+            auto& name = iter.first;
+            if ( name == __KF_STRING__( count ) )
             {
                 continue;
             }
@@ -271,15 +139,12 @@ namespace KFrame
         auto itemguid = KFGlobal::Instance()->Make64Guid();
         kfitem->SetValue( datasetting->_key_name, itemguid );
 
-        // 把guid添加进属性表中
-        kfagent->AddValue( datasetting->_key_name, __TO_STRING__( itemguid ) );
-
         // 添加物品
         player->AddData( kfparent, itemguid, kfitem );
         return count - addcount;
     }
 
-    KFData* KFItemModule::MoveItem( KFEntity* player, KFData* kfsource, KFData* kftarget, uint32 itemcount  )
+    KFData* KFItemModule::MoveItem( KFEntity* player, KFData* kfsource, KFData* kftarget, uint64 itemcount  )
     {
         auto datasetting = kfsource->GetDataSetting();
         if ( kftarget == nullptr )
@@ -298,10 +163,8 @@ namespace KFrame
             // 设置数量
             kftarget->SetValue( __KF_STRING__( count ), itemcount );
 
-            auto configid = kfsource->GetValue( datasetting->_config_key_name );
-            auto newitemguid = KFGlobal::Instance()->Make64Guid();
-            kftarget->SetKeyID( newitemguid );
-
+            // 设置新的guid
+            kftarget->SetKeyID( KFGlobal::Instance()->Make64Guid() );
             player->UpdateData( kfsource, __KF_STRING__( count ), KFOperateEnum::Dec, itemcount );
         }
         else
@@ -321,152 +184,119 @@ namespace KFrame
             return;
         }
 
-        // 数量为0, 删除该物品
+        // 调用删除脚本
+        auto kfitem = kfdata->GetParent();
+        auto itemid = kfitem->GetValue( kfitem->GetDataSetting()->_config_key_name );
+        auto kfsetting = _kf_item_config->FindItemSetting( itemid );
+        if ( kfsetting != nullptr )
+        {
+            CallItemLuaFunction( player, kfsetting, KFItemEnum::RemoveFunction );
+        }
+
+        // 删除该物品
         player->RemoveData( __KF_STRING__( item ), key );
     }
 
-    __KF_ADD_DATA_FUNCTION__( KFItemModule::OnAddItemCallBack )
+    void KFItemModule::CallItemLuaFunction( KFEntity* player, const KFItemSetting* kfsetting, uint32 functiontype )
     {
-        auto datasetting = kfdata->GetDataSetting();
-
-        auto itemid = kfdata->GetValue( datasetting->_config_key_name );
-        auto itemsetting = _kf_item_config->FindItemSetting( itemid );
-        if ( itemsetting == nullptr )
+        if ( kfsetting->_lua_file.empty() )
         {
             return;
         }
 
-        // 时间道具 开启有效时间
-        OnAddItemDataStartValidTime( player, kfdata, key, itemsetting );
-    }
-
-    void KFItemModule::OnAddItemDataStartValidTime( KFEntity* player, KFData* kfdata, uint64 key, const KFItemSetting* itemsetting )
-    {
-        // 已经存在时间, 不设置有效时间
-        auto validtime = kfdata->GetValue( __KF_STRING__( time ) );
-        if ( validtime != _invalid_int )
-        {
-            return CheckStartItemTimer( player );
-        }
-
-        // 判断时间
-        if ( itemsetting->_time_type == KFItemEnum::AddTimeStart )
-        {
-            validtime = itemsetting->_valid_time + KFGlobal::Instance()->_real_time;
-            player->UpdateData( kfdata, __KF_STRING__( time ), KFOperateEnum::Set, validtime );
-            CheckStartItemTimer( player );
-        }
-    }
-
-    __KF_REMOVE_DATA_FUNCTION__( KFItemModule::OnRemoveItemCallBack )
-    {
-        auto datasetting = kfdata->GetDataSetting();
-
-        auto itemid = kfdata->GetValue( datasetting->_config_key_name );
-        auto itemsetting = _kf_item_config->FindItemSetting( itemid );
-        if ( itemsetting == nullptr )
-        {
-            return;
-        }
-
-        CallItemLuaFunction( player, itemsetting, KFItemEnum::RemoveFunction );
-    }
-
-    void KFItemModule::CallItemLuaFunction( KFEntity* player, const KFItemSetting* itemsetting, uint32 functiontype )
-    {
-        if ( itemsetting->_lua_file.empty() )
-        {
-            return;
-        }
-
-        auto& luafunction = itemsetting->GetFunction( functiontype );
+        auto& luafunction = kfsetting->GetFunction( functiontype );
         if ( luafunction.empty() )
         {
             return;
         }
 
         auto playerid = static_cast<uint32>( player->GetKeyID() );
-        _kf_lua->Call( itemsetting->_lua_file, luafunction, playerid, itemsetting->_id );
+        _kf_lua->Call( kfsetting->_lua_file, luafunction, playerid, kfsetting->_id );
     }
 
-    __KF_CHECK_AGENT_FUNCTION__( KFItemModule::CheckItemAgentData )
+    __KF_CHECK_ELEMENT_FUNCTION__( KFItemModule::CheckItemElement )
     {
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        if ( kfitemrecord == nullptr )
+        if ( !kfelement->IsObject() )
         {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
             return false;
         }
 
-        auto datasetting = kfitemrecord->GetDataSetting();
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            return false;
+        }
+
+        // 判断数量
+        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+        if ( itemcount == 0u )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
+            return false;
+        }
 
         // 获取item列表
         std::list< KFData* > finditem;
-        kfitemrecord->FindData( datasetting->_config_key_name, kfagent->_config_id, finditem );
+        kfdata->FindData( kfdata->GetDataSetting()->_config_key_name, kfelementobject->_config_id, finditem );
         if ( finditem.empty() )
         {
             return false;
         }
 
-        // 判断数量
-        auto itemcount = kfagent->GetValue( __KF_STRING__( count ) );
 
-        uint32 totalcount = 0;
+
+        uint64 totalcount = 0u;
         for ( auto kfitem : finditem )
         {
-            // 判断其他属性
-            auto iseligibility = kfagent->IsEligibilityData( kfitem, __KF_STRING__( count ) );
-            if ( iseligibility )
+            // 累计数量
+            totalcount += kfitem->GetValue( __KF_STRING__( count ) );
+            if ( totalcount >= itemcount )
             {
-                // 属性满足, 累计数量
-                totalcount += kfitem->GetValue( __KF_STRING__( count ) );
-                if ( totalcount >= itemcount )
-                {
-                    return true;
-                }
+                return true;
             }
         }
 
         return false;
     }
 
-    __KF_REMOVE_AGENT_FUNCTION__( KFItemModule::RemoveItemAgentData )
+    __KF_REMOVE_ELEMENT_FUNCTION__( KFItemModule::RemoveItemElement )
     {
-        auto kfobject = player->GetData();
-        auto kfitemrecord = kfobject->FindData( __KF_STRING__( item ) );
-        if ( kfitemrecord == nullptr )
+        if ( !kfelement->IsObject() )
         {
-            return;
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
-        auto datasetting = kfitemrecord->GetDataSetting();
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+        }
+
+        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+        if ( itemcount == 0u )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
+        }
 
         // 获取item列表
         std::list< KFData* > finditem;
-        kfitemrecord->FindData( datasetting->_config_key_name, kfagent->_config_id, finditem );
+        kfdata->FindData( kfdata->GetDataSetting()->_config_key_name, kfelementobject->_config_id, finditem );
         if ( finditem.empty() )
         {
             return;
         }
 
-        // 判断数量
-        auto itemcount = kfagent->GetValue( __KF_STRING__( count ) );
-
-        uint32 totalcount = 0;
+        uint64 totalcount = 0u;
         for ( auto kfitem : finditem )
         {
-            // 判断其他属性
-            auto iseligibility = kfagent->IsEligibilityData( kfitem, __KF_STRING__( count ) );
-            if ( iseligibility )
+            auto removecount = __MIN__( itemcount, kfitem->GetValue( __KF_STRING__( count ) ) );
+            player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, removecount );
+            itemcount -= removecount;
+            if ( itemcount == 0u )
             {
-                auto removecount = __MIN__( itemcount, kfitem->GetValue( __KF_STRING__( count ) ) );
-
-                player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, removecount );
-                itemcount -= removecount;
-                if ( itemcount == 0 )
-                {
-                    break;
-                }
+                break;
             }
         }
     }
@@ -497,23 +327,13 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
         }
 
-        // 如果是使用启动道具
-        if ( kfsetting->_time_type == KFItemEnum::UseTimeStart )
-        {
-            auto validtime = kfsetting->_valid_time + KFGlobal::Instance()->_real_time;
-            player->UpdateData( kfitem, __KF_STRING__( time ), KFOperateEnum::Set, validtime );
-            CheckStartItemTimer( player );
-        }
-        else
-        {
-            // 删除道具
-            player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1 );
+        // 删除道具
+        player->UpdateData( kfitem, __KF_STRING__( count ), KFOperateEnum::Dec, 1 );
 
-            // 添加奖励
-            if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
-            {
-                player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
-            }
+        // 添加奖励
+        if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
+        {
+            player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
         }
 
         // 调用lua脚本

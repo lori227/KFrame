@@ -54,15 +54,6 @@ namespace KFrame
             _operate = operate;
         }
 
-        //// 是否是符合条件的数据
-        //virtual bool IsEligibilityData( KFData* kfdata, float multiple, const std::string& exclude = _invalid_str ) = 0;
-
-        //virtual uint64 CalcValue( float multiple = 1.0f ) = 0;
-
-
-        //virtual uint64 GetValue( const std::string& value ) = 0;
-        //uint64 GetUseValue( const std::string& value );
-
     protected:
         // 类型
         uint32 _type{ 0 };
@@ -90,9 +81,6 @@ namespace KFrame
         // 计算数值
         virtual uint64 CalcValue( float multiple = 1.0f );
 
-        // 是否满足条件
-        virtual bool IsEligibilityData( KFData* kfdata, float multiple, const std::string& exclude = _invalid_str );
-
     public:
         // 属性值
         KFValue _value;
@@ -107,8 +95,8 @@ namespace KFrame
             _type = KFElementEnum::Object;
         }
 
-        // 是否满足条件
-        virtual bool IsEligibilityData( KFData* kfdata, float multiple, const std::string& exclude = _invalid_str );
+        // 计算数值
+        uint64 CalcValue( const std::string& name );
 
     public:
 

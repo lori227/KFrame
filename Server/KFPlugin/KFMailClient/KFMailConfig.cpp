@@ -35,7 +35,7 @@ namespace KFrame
             KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
 
             auto stragent = setting.GetString( "Reward" );
-            kfsetting->_rewards.ParseFromString( stragent, __FUNC_LINE__ );
+            kfsetting->_rewards.Parse( stragent, __FUNC_LINE__ );
 
             setting.NextNode();
         }

@@ -24,10 +24,10 @@ namespace KFrame
             ksetting->_key = key;
 
             auto strcompounddata = setting.GetString( "CompoundData" );
-            ksetting->_compound_data.ParseFromString( strcompounddata, __FUNC_LINE__ );
+            ksetting->_compound_data.Parse( strcompounddata, __FUNC_LINE__ );
 
             auto strcostdata = setting.GetString( "CostData" );
-            ksetting->_cost_data.ParseFromString( strcostdata, __FUNC_LINE__ );
+            ksetting->_cost_data.Parse( strcostdata, __FUNC_LINE__ );
 
             setting.NextNode();
         }

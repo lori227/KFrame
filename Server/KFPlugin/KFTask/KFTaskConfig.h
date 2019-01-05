@@ -2,7 +2,7 @@
 #define __KF_TASK_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -27,7 +27,7 @@ namespace KFrame
         uint32 _use_value{ 0 };			// 使用的实际数值
         uint32 _done_value{ 0 };		// 完成数值
         uint32 _done_type{ 0 };			// 完成条件
-        KFAgents _rewards;				// 奖励
+        KFElements _rewards;			// 奖励
         uint32 _next_id{ 0 };			// 下一个任务id( 剧情任务 )
         uint32 _next_value{ 0 };		// 下一个任务数值( 0 表示不继承 )
 

@@ -2,7 +2,7 @@
 #define __KF_STORE_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFProtocol/KFProtocol.h"
 
@@ -42,13 +42,13 @@ namespace KFrame
         uint32 _buy_max_num;
 
         // 购买得到的道具
-        KFAgents _buy_item;
+        KFElements _buy_item;
 
         // 购买花费的道具
-        KFMap< std::string, const std::string&, KFAgents > _cost_item;
+        KFMap< std::string, const std::string&, KFElements > _cost_item;
 
         // 折扣后的价格
-        KFMap< std::string, const std::string&, KFAgents> _discount_item;
+        KFMap< std::string, const std::string&, KFElements > _discount_item;
 
         // 折扣的开始时间
         uint64 _start_discount_time;
@@ -87,10 +87,10 @@ namespace KFrame
         bool CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime ) const;
 
         //获得购买消耗物品列表
-        const KFAgents* FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const;
+        const KFElements* FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const;
 
         //获取赠送消耗物品列表
-        const KFAgents* FindGiveCostAgents( uint64 nowtime ) const;
+        const KFElements* FindGiveCostAgents( uint64 nowtime ) const;
 
         //检测道具是否超过限购日期
         bool CheckOutOfData( uint64 nowtime ) const;
@@ -144,7 +144,7 @@ namespace KFrame
         KFMsg::MsgQueryStoreInfoAck _client_show;
 
     private:
-        bool StringSplit( KFMap< std::string, const std::string&, KFAgents >& des, std::string src, std::string key );
+        bool StringSplit( KFMap< std::string, const std::string&, KFElements >& des, std::string src, std::string key );
 
         // 格式化热更新包
         void MakePBStore( KFNode& xmlnode );

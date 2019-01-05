@@ -45,32 +45,15 @@ namespace KFrame
         return _value.CalcValue( multiple );
     }
 
-    bool KFElementVale::IsEligibilityData( KFData* kfdata, float multiple, const std::string& exclude /* = _invalid_str */ )
+    uint64 KFElementObject::CalcValue( const std::string& name )
     {
-        auto value = kfdata->GetValue< uint64 >();
-        auto usevalue = _value.GetValue();
-        return value >= usevalue;
-    }
-
-    bool KFElementObject::IsEligibilityData( KFData* kfdata, float multiple, const std::string& exclude /* = _invalid_str */ )
-    {
-        for ( auto& iter : _values._objects )
+        auto kfvalue = _values.Find( name );
+        if ( kfvalue == nullptr )
         {
-            auto& name = iter.first;
-            if ( name == exclude )
-            {
-                continue;
-            }
-
-            auto elementvalue = iter.second->GetValue();
-            auto datavalue = kfdata->GetValue( name );
-            if ( datavalue < elementvalue )
-            {
-                return false;
-            }
+            return 0u;
         }
 
-        return true;
+        return kfvalue->CalcValue();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////

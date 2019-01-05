@@ -2,7 +2,6 @@
 #define __KF_PLAYERT_INTERFACE_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
 #include "KFKernel/KFComponent.h"
 
 namespace KFrame

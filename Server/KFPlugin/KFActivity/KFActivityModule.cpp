@@ -73,9 +73,11 @@ namespace KFrame
             return KFMsg::ActivityNotDone;
         }
 
+        // 更新标记
         player->UpdateData( kfactivity, __KF_STRING__( received ), KFOperateEnum::ABit, activityid );
 
-        player->AddAgentData( &kfsetting->_rewards, 1.0f, true, __FUNC_LINE__ );
+        // 添加奖励
+        player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
         return KFMsg::ActivityReceiveRewardOK;
     }
 

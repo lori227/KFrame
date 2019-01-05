@@ -35,15 +35,15 @@ namespace KFrame
         }
 
         // 判断是否足够
-        if ( player->CheckAgentData( &kfsetting->_cost_data, __FUNC_LINE__ ) )
+        if ( player->CheckElement( &kfsetting->_cost_data, __FUNC_LINE__ ) )
         {
             return _kf_display->SendToClient( player, KFMsg::DataNotEnough );
         }
 
         // 扣除材料
-        player->RemoveAgentData( &kfsetting->_cost_data, __FUNC_LINE__ );
+        player->RemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
 
         // 添加合成的属性
-        player->AddAgentData( &kfsetting->_compound_data, 1.0f, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_compound_data, true, __FUNC_LINE__ );
     }
 }

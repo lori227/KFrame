@@ -1,10 +1,10 @@
-﻿#ifndef __KF_CLOTHES_PLUGIN_H__
-#define __KF_CLOTHES_PLUGIN_H__
+﻿#ifndef __KF_SKIN_PLUGIN_H__
+#define __KF_SKIN_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFClothesPlugin : public KFPlugin
+    class KFSkinPlugin : public KFPlugin
     {
     public:
         // 注册

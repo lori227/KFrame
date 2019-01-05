@@ -341,13 +341,13 @@ namespace KFrame
             return;
         }
 
-        auto& stragent = params[ 0 ];
+        auto& strdata = params[ 0 ];
 
-        KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        KFElements kfelements;
+        auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
+            player->AddElement( &kfelements, true, __FUNC_LINE__ );
         }
     }
 
@@ -358,14 +358,14 @@ namespace KFrame
             return;
         }
 
-        auto& stragent = params[ 0 ];
+        auto& strdata = params[ 0 ];
 
-        KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        KFElements kfelements;
+        auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            kfagents.SetOperate( KFOperateEnum::Set );
-            player->AddAgentData( &kfagents, 1.0f, true, __FUNC_LINE__ );
+            kfelements.SetOperate( KFOperateEnum::Set );
+            player->AddElement( &kfelements, true, __FUNC_LINE__ );
         }
     }
 
@@ -378,11 +378,11 @@ namespace KFrame
 
         auto& stragent = params[ 0 ];
 
-        KFAgents kfagents;
-        auto ok = kfagents.ParseFromString( stragent, __FUNC_LINE__ );
+        KFElements kfelements;
+        auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
-            player->RemoveAgentData( &kfagents, __FUNC_LINE__ );
+            player->RemoveElement( &kfelements, __FUNC_LINE__ );
         }
     }
 

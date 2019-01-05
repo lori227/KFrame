@@ -178,8 +178,8 @@ namespace KFrame
         __STRING_DEFINE__( store );
         __STRING_DEFINE__( model );
         __STRING_DEFINE__( modelid );
-        __STRING_DEFINE__( clothesid );
-        __STRING_DEFINE__( clothes );
+        __STRING_DEFINE__( skin );
+        __STRING_DEFINE__( skinid );
         __STRING_DEFINE__( mailsendinfo );
         __STRING_DEFINE__( gmemaillastid );
         __STRING_DEFINE__( gmemailnum );

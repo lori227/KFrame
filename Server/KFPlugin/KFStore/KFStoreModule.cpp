@@ -93,7 +93,7 @@ namespace KFrame
         }
 
         //检测扣除物品是否足够
-        if ( !player->CheckAgentData( kfagents, __FUNC_LINE__ ) )
+        if ( !player->CheckElement( kfagents, __FUNC_LINE__ ) )
         {
             return KFMsg::StoreLackCost;
         }
@@ -114,10 +114,10 @@ namespace KFrame
         }
 
         //扣除道具
-        player->RemoveAgentData( kfagents, __FUNC_LINE__ );
+        player->RemoveElement( kfagents, __FUNC_LINE__ );
 
         //发送道具
-        player->AddAgentData( &storedatasetting->_buy_item, 1.0f, true, __FUNC_LINE__ );
+        player->AddElement( &storedatasetting->_buy_item, true, __FUNC_LINE__ );
 
         return KFMsg::StoreBuyOK;
     }
@@ -150,9 +150,9 @@ namespace KFrame
 
 
     ///FIXME:目前只判断玩家是否有物品，如果有返回false,不进行数量的判断
-    bool KFStoreModule::CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFAgents* kfagents )
+    bool KFStoreModule::CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFElements* kfagents )
     {
-        return !player->CheckAgentData( kfagents, __FUNC_LINE__ );
+        return !player->CheckElement( kfagents, __FUNC_LINE__ );
     }
 
     void KFStoreModule::SetLimitInfo( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime )
@@ -202,7 +202,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::StoreParamError );
         }
 
-        if ( !player->CheckAgentData( kfcostagents, __FUNC_LINE__ ) )
+        if ( !player->CheckElement( kfcostagents, __FUNC_LINE__ ) )
         {
             return _kf_display->SendToClient( player, KFMsg::GiveLackCost );
         }
@@ -214,7 +214,7 @@ namespace KFrame
             _kf_display->SendToClient( player, KFMsg::GiveBuyOK, kfmsg.shopid() );
 
             // 扣除消耗
-            player->RemoveAgentData( kfcostagents, __FUNC_LINE__ );
+            player->RemoveElement( kfcostagents, __FUNC_LINE__ );
 
             // 添加好友度
             _kf_relation->AddFriendLiness( player, kfmsg.toplayerid(), KFMsg::Give, kfsetting->_give_friend_liness );

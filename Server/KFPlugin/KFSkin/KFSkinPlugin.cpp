@@ -1,21 +1,21 @@
-﻿#include "KFClothesPlugin.h"
-#include "KFClothesModule.h"
+﻿#include "KFSkinPlugin.h"
+#include "KFSkinModule.h"
 
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFClothesPlugin::Install()
+    void KFSkinPlugin::Install()
     {
-        __REGISTER_MODULE__( KFClothes );
+        __REGISTER_MODULE__( KFSkin );
     }
 
-    void KFClothesPlugin::UnInstall()
+    void KFSkinPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFClothes );
+        __UNREGISTER_MODULE__( KFSkin );
     }
 
-    void KFClothesPlugin::LoadModule()
+    void KFSkinPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );

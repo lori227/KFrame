@@ -2,7 +2,7 @@
 #define __KF_COMPOUND_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -18,10 +18,10 @@ namespace KFrame
         uint32 _key;
 
         // 合成的属性
-        KFAgents _compound_data;
+        KFElements _compound_data;
 
         // 花费材料
-        KFAgents _cost_data;
+        KFElements _cost_data;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////

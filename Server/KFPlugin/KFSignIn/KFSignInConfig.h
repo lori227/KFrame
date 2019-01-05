@@ -2,7 +2,7 @@
 #define __KF_SIGNIN_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -17,9 +17,9 @@ namespace KFrame
     {
     public:
         uint32 _day;			// 签到天数
-        KFAgents _reward;		// 奖励
+        KFElements _reward;		// 奖励
         uint32 _probability;	// 概率( 万分比 )
-        KFAgents _extend;		// 额外的奖励
+        KFElements _extend;		// 额外的奖励
     };
 
     ////////////////////////////////////////////////////////////////////////////////////

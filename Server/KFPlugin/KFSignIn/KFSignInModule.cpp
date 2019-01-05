@@ -51,7 +51,7 @@ namespace KFrame
         player->UpdateData( kfsignin, __KF_STRING__( sevenreward ), KFOperateEnum::ABit, kfmsg.day() );
 
         // 添加奖励
-        player->AddAgentData( &kfsetting->_reward, 1.0f, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
 
         // 判断额外奖励
         auto randvalue = KFGlobal::Instance()->RandRatio( KFRatioEnum::Ratio );
@@ -61,12 +61,12 @@ namespace KFrame
         }
 
         // 添加额外奖励
-        player->AddAgentData( &kfsetting->_reward, 1.0f, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
 
         // 广播
         KFMsg::MsgTellSevenExtendReward tell;
         tell.set_playername( player->GetName() );
-        tell.set_reward( kfsetting->_reward.FormatRewardAgent( 1.0f ) );
+        tell.set_reward( kfsetting->_reward.Serialize() );
         _kf_game->BroadcastToWorld( KFMsg::MSG_TELL_SEVEN_EXTEND_REWARD, &tell );
     }
 }

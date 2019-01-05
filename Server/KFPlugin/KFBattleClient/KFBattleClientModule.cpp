@@ -243,11 +243,11 @@ namespace KFrame
         // 奖励
         if ( pbscore->has_reward() && !pbscore->reward().empty() )
         {
-            KFAgents kfagents;
-            auto ok = kfagents.ParseFromString( pbscore->reward(), __FUNC_LINE__ );
+            KFElements kfelements;
+            auto ok = kfelements.Parse( pbscore->reward(), __FUNC_LINE__ );
             if ( ok )
             {
-                player->AddAgentData( &kfagents, 1.0f, false, __FUNC_LINE__ );
+                player->AddElement( &kfelements, false, __FUNC_LINE__ );
             }
         }
 

@@ -50,7 +50,7 @@ namespace KFrame
         // 购买商品
         uint32 BuyStoreResult( KFEntity* player, const std::string& buytype, uint32 shopid, uint32 num );
         bool CheckLimitItem( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime, uint32 buylimits );
-        bool CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFAgents* kfagents );
+        bool CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFElements* kfagents );
         void SetLimitInfo( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime );
 
         // 心愿单

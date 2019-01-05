@@ -108,7 +108,7 @@ namespace KFrame
             kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
 
             auto strrewards = xmlnode.GetString( "Rewards" );
-            kfsetting->_rewards.ParseFromString( strrewards, __FUNC_LINE__ );
+            kfsetting->_rewards.Parse( strrewards, __FUNC_LINE__ );
 
             kfsetting->_next_id = xmlnode.GetUInt32( "NextId" );
             kfsetting->_next_value = xmlnode.GetUInt32( "NextValue" );

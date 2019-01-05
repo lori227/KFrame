@@ -360,6 +360,11 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line )
     {
+        if ( kfelements->_element_list.empty() )
+        {
+            return;
+        }
+
         const_cast < KFElements* >( kfelements )->_is_change_value = false;
         for ( auto& kfelement : kfelements->_element_list )
         {
@@ -382,7 +387,7 @@ namespace KFrame
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
         }
 
         // 如果有注册的特殊处理函数
@@ -415,7 +420,7 @@ namespace KFrame
     {
         if ( !kfelement->IsValue() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
@@ -432,7 +437,7 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
@@ -449,13 +454,13 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
         }
 
         auto kfchild = kfdata->FindData( kfelementobject->_config_id );
@@ -506,7 +511,7 @@ namespace KFrame
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
             return false;
         }
 
@@ -542,7 +547,7 @@ namespace KFrame
     {
         if ( !kfelement->IsValue() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
             return false;
         }
 
@@ -557,7 +562,7 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
             return false;
         }
 
@@ -586,14 +591,14 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
             return false;
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
             return false;
         }
 
@@ -643,7 +648,7 @@ namespace KFrame
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
         }
 
         // 如果有注册函数, 执行注册函数
@@ -676,7 +681,7 @@ namespace KFrame
     {
         if ( !kfelement->IsValue() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
@@ -688,7 +693,7 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
@@ -704,13 +709,13 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelementobject->_data_name );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
         }
 
         auto kfdata = kfparent->FindData( kfelementobject->_config_id );

@@ -209,7 +209,7 @@ namespace KFrame
 
         // 模型, 时装
         pbplayer->set_modelid( kfobject->GetValue( __KF_STRING__( modelid ) ) );
-        pbplayer->set_clothesid( kfobject->GetValue( __KF_STRING__( clothesid ) ) );
+        //pbplayer->set_clothesid( kfobject->GetValue( __KF_STRING__( skinid ) ) );
 
         // 成就信息
         auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );

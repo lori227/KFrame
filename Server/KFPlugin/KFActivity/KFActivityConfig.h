@@ -2,7 +2,7 @@
 #define __KF_ACTIVITY_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -29,7 +29,7 @@ namespace KFrame
 
         uint32 _id;
         uint32 _done_value;
-        KFAgents _rewards;		// 奖励
+        KFElements _rewards;		// 奖励
     };
 
     class KFActivitySetting

@@ -33,7 +33,7 @@ namespace KFrame
             kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
 
             auto strbuyitem = xmlnode.GetString( "BuyItem" );
-            kfsetting->_buy_item.ParseFromString( strbuyitem, __FUNC_LINE__ );
+            kfsetting->_buy_item.Parse( strbuyitem, __FUNC_LINE__ );
 
             StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Money" ), "money" );
             StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Diamond" ), "diamond" );
@@ -98,7 +98,7 @@ namespace KFrame
         }
     }
 
-    bool KFStoreConfig::StringSplit( KFMap< std::string, const std::string&, KFAgents >& des, std::string src, std::string key )
+    bool KFStoreConfig::StringSplit( KFMap< std::string, const std::string&, KFElements >& des, std::string src, std::string key )
     {
         if ( src.empty() )
         {
@@ -106,7 +106,7 @@ namespace KFrame
         }
 
         auto kfagents = des.Create( key );
-        if ( !kfagents->ParseFromString( src, __FUNC_LINE__ ) )
+        if ( !kfagents->Parse( src, __FUNC_LINE__ ) )
         {
             __LOG_ERROR__( "Parse StoreConfig Error key:{},src:{}", key, src );
             return false;
@@ -174,7 +174,7 @@ namespace KFrame
     }
 
 
-    const KFAgents* KFStoreSetting::FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const
+    const KFElements* KFStoreSetting::FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const
     {
         if ( CheckDiscount( nowtime ) )
         {
@@ -185,7 +185,7 @@ namespace KFrame
         return _cost_item.Find( buytype );
     }
 
-    const KFAgents* KFStoreSetting::FindGiveCostAgents( uint64 nowtime ) const
+    const KFElements* KFStoreSetting::FindGiveCostAgents( uint64 nowtime ) const
     {
         if ( CheckDiscount( nowtime ) )
         {

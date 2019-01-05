@@ -299,7 +299,7 @@ namespace KFrame
         }
 
         //
-        if ( !player->CheckAgentData( &guilddatasetting->_cost_item, __FUNC_LINE__ ) )
+        if ( !player->CheckElement( &guilddatasetting->_cost_item, __FUNC_LINE__ ) )
         {
             return _kf_display->SendToClient( player, KFMsg::DataNotEnough );
         }
@@ -314,7 +314,7 @@ namespace KFrame
         req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
         if ( SendMessageToGuild( KFMsg::S2S_CREATE_GUILD_REQ, &req ) )
         {
-            player->RemoveAgentData( &guilddatasetting->_cost_item, __FUNC_LINE__ );
+            player->RemoveElement( &guilddatasetting->_cost_item, __FUNC_LINE__ );
         }
         else
         {
@@ -338,7 +338,7 @@ namespace KFrame
                 return;
             }
             // 把玩家扣的钱补回去
-            player->AddAgentData( &guilddatasetting->_cost_item, 1.0f, false, __FUNC_LINE__ );
+            player->AddElement( &guilddatasetting->_cost_item, false, __FUNC_LINE__ );
             return _kf_display->SendToClient( player, kfmsg.code() );
         }
         else
@@ -701,7 +701,7 @@ namespace KFrame
         {
             return;
         }
-        if ( !player->CheckAgentData( &guildsetting->_cost_item, __FUNC_LINE__ ) )
+        if ( !player->CheckElement( &guildsetting->_cost_item, __FUNC_LINE__ ) )
         {
             return _kf_display->SendToClient( player, KFMsg::DataNotEnough );
         }
@@ -712,7 +712,7 @@ namespace KFrame
 
         if ( SendMessageToGuild( guildid, KFMsg::S2S_UPGRADE_GUILD_REQ, &req ) )
         {
-            player->RemoveAgentData( &guildsetting->_cost_item, __FUNC_LINE__ );
+            player->RemoveElement( &guildsetting->_cost_item, __FUNC_LINE__ );
         }
         else
         {
@@ -728,7 +728,7 @@ namespace KFrame
             auto guildsetting = _kf_guild_config->FindGuildSetting( kfmsg.level() );
             if ( nullptr != guildsetting )
             {
-                player->AddAgentData( &guildsetting->_cost_item, 1.0f, false, __FUNC_LINE__ );
+                player->AddElement( &guildsetting->_cost_item, false, __FUNC_LINE__ );
             }
             return _kf_display->SendToClient( player, kfmsg.code() );
         }

@@ -214,9 +214,9 @@ namespace KFrame
         auto modelid = kfobject->GetValue< uint32 >( __KF_STRING__( modelid ) );
         _kf_group_member->SetValue< uint32 >( __KF_STRING__( modelid ), modelid );
 
-        // 时装id
-        auto clothesid = kfobject->GetValue< uint32 >( __KF_STRING__( clothesid ) );
-        _kf_group_member->SetValue< uint32 >( __KF_STRING__( clothesid ), clothesid );
+        // 皮肤id
+        //auto skinid = kfobject->GetValue< uint32 >( __KF_STRING__( skinid ) );
+        //_kf_group_member->SetValue< uint32 >( __KF_STRING__( skinid ), skinid );
 
         // 序列化
         _kf_kernel->SerializeToClient( _kf_group_member, pbobject );

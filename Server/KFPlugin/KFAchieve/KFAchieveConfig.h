@@ -2,7 +2,7 @@
 #define __KF_ACHIEVE_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFCore/KFAgent.h"
+#include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -31,7 +31,7 @@ namespace KFrame
         uint32 _done_value;			// 完成数值
         uint32 _done_type;			// 完成条件
 
-        KFAgents _rewards;		// 奖励
+        KFElements _rewards;		// 奖励
 
         // 判断是否可以更新
         bool CheckCanUpdate( uint32 key, uint32 level, uint32 operate ) const;

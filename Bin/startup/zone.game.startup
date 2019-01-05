@@ -25,7 +25,7 @@
 		<Plugin Sort="250" Name="KFDebug" Config=""/>
 		<Plugin Sort="260" Name="KFAchieve" Config="./config/achieve.config"/>
 		<Plugin Sort="270" Name="KFStore" Config="./config/store.config"/>
-		<Plugin Sort="280" Name="KFClothes" Config="./config/clothes.config"/>
+		<Plugin Sort="280" Name="KFSkin" Config="./config/skin.config"/>
 		<Plugin Sort="290" Name="KFSignIn" Config="./config/signin.config"/>
 		<Plugin Sort="291" Name="KFFilter" Config="./setting/filter.setting"/>
 		<Plugin Sort="292" Name="KFPlatform" Config="./setting/{}_{}_platform.setting"/>

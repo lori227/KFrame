@@ -97,7 +97,7 @@ namespace KFrame
                     kfsetting->_upgrade_activeness = childnode.GetUInt32( "UpgradeActiveness" );
                     kfsetting->_degrade_activeness = childnode.GetUInt32( "DegradeActiveness" );
                     auto costvalue = childnode.GetString( "Cost" );
-                    kfsetting->_cost_item.ParseFromString( costvalue, __FUNC_LINE__ );
+                    kfsetting->_cost_item.Parse( costvalue, __FUNC_LINE__ );
                     kfsetting->_medal_list = childnode.GetString( "MedalList" );
                     kfsetting->_max_log = childnode.GetUInt32( "MaxLog" );
 
