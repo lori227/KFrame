@@ -2191,10 +2191,10 @@ namespace KFrame
                 kfguildmember = kfguildmembers->NextData();
                 continue;
             }
-            KFMsg::MsgSyncUpdateGuildData sync;
-            sync.set_playerid( memberid );
-            sync.mutable_pbdata()->CopyFrom( pbobect );
-            _kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &sync );
+            //KFMsg::MsgSyncUpdateGuildData sync;
+            //sync.set_playerid( memberid );
+            //sync.mutable_pbdata()->CopyFrom( pbobect );
+            //_kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &sync );
             kfguildmember = kfguildmembers->NextData();
         }
 
@@ -2228,12 +2228,12 @@ namespace KFrame
                 kfguildmember = kfguildmembers->NextData();
                 continue;
             }
-            KFMsg::MsgSyncAddGuildData sync;
-            sync.set_playerid( memberid );
-            sync.mutable_pbdata()->CopyFrom( pbobect );
-            //_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
-            _kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_ADD_GUILD_DATA, &sync );
-            kfguildmember = kfguildmembers->NextData();
+            //KFMsg::MsgSyncAddGuildData sync;
+            //sync.set_playerid( memberid );
+            //sync.mutable_pbdata()->CopyFrom( pbobect );
+            ////_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
+            //_kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_ADD_GUILD_DATA, &sync );
+            //kfguildmember = kfguildmembers->NextData();
         }
         return;
 
@@ -2265,12 +2265,12 @@ namespace KFrame
                 kfguildmember = kfguildmembers->NextData();
                 continue;
             }
-            KFMsg::MsgSyncRemoveGuildData sync;
-            sync.set_playerid( memberid );
-            sync.mutable_pbdata()->CopyFrom( pbobect );
-            //_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
-            _kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &sync );
-            kfguildmember = kfguildmembers->NextData();
+            //KFMsg::MsgSyncRemoveGuildData sync;
+            //sync.set_playerid( memberid );
+            //sync.mutable_pbdata()->CopyFrom( pbobect );
+            ////_kf_cluster_shard->SendToPlayer( serverid, memberid, msgid, message );
+            //_kf_cluster_shard->SendToClient( serverid, KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &sync );
+            //kfguildmember = kfguildmembers->NextData();
         }
         return;
 

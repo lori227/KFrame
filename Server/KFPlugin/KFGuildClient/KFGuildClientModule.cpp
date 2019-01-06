@@ -826,10 +826,10 @@ namespace KFrame
         }
 
         player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( guildid ), KFOperateEnum::Set, kfmsg.guildid() );
-        KFMsg::MsgTellQueryGuild sync;
-        _kf_kernel->SerializeToClient( kfguild, sync.mutable_guild() );
+        //KFMsg::MsgTellQueryGuild sync;
+        //_kf_kernel->SerializeToClient( kfguild, sync.mutable_guild() );
 
-        _kf_player->SendToClient( kfmsg.playerid(), KFMsg::MSG_TELL_QUERY_GUILD, &sync );
+        //_kf_player->SendToClient( kfmsg.playerid(), KFMsg::MSG_TELL_QUERY_GUILD, &sync );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleAddGuildAck )
