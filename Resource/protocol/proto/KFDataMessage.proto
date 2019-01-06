@@ -1,9 +1,10 @@
-import "KFCommonMessage.proto";
-
+syntax = "proto3";
+import "KFDefineMessage.proto";
 package KFMsg;
 
 enum DataProtocol
  {
+	MSG_DATA_PROTOCOL_UNKNOW =0;
 	MSG_LOGIN_ENTER_GAME = 10;				// 通知进入游戏
  	MSG_SYNC_UPDATE_DATA = 11;				// 同步更新属性
 	MSG_SYNC_ADD_DATA = 12;					// 同步增加属性
@@ -24,27 +25,27 @@ enum DataProtocol
 // MSG_LOGIN_ENTER_GAME
 message MsgEnterGame
 {
-	required PBObject playerdata = 1;
-	required uint64 servertime = 2;
+	PBObject playerdata = 1;
+	uint64 servertime = 2;
 }
 
 // 所有的游戏属性同通过这3个消息来完成同步
 // MSG_SYNC_UPDATE_DATA
 message MsgSyncUpdateData
 {
-	required PBObject pbdata = 1;	
+	PBObject pbdata = 1;	
 }
 
 // MSG_SYNC_ADD_DATA
 message MsgSyncAddData
 {
-	required PBObject pbdata = 1;	
+	PBObject pbdata = 1;	
 }
 
 // MSG_SYNC_REMOVE_DATA
 message MsgSyncRemoveData
 {
-	required PBObject pbdata = 1;	
+	PBObject pbdata = 1;	
 }
 
 // 查询玩家信息
@@ -52,14 +53,14 @@ message MsgSyncRemoveData
 // MSG_TELL_QUERY_PLAYER
 message MsgTellQueryPlayer
 {
-	required PBObject player = 1;
+	PBObject player = 1;
 }
 
 // 玩家基础信息
 // MSG_TELL_QUERY_BASIC
 message MsgTellQueryBasic
 {
-	required PBObject player = 1;	
+	PBObject player = 1;	
 }
 
 
@@ -67,27 +68,27 @@ message MsgTellQueryBasic
 // MSG_SYNC_UPDATE_GUILD_DATA
 message MsgSyncUpdateGuildData
 {
-	required uint64 playerid = 1;
-	required PBObject pbdata = 2;	
+	uint64 playerid = 1;
+	PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_ADD_GUILD_DATA
 message MsgSyncAddGuildData
 {
-	required uint64 playerid = 1;
-	required PBObject pbdata = 2;	
+	uint64 playerid = 1;
+	PBObject pbdata = 2;	
 }
 
 // MSG_SYNC_REMOVE_GUILD_DATA
 message MsgSyncRemoveGuildData
 {
-	required uint64 playerid = 1;
-	required PBObject pbdata = 2;	
+	uint64 playerid = 1;
+	PBObject pbdata = 2;	
 }
 
 
 // MSG_TELL_QUERY_GUILD
 message MsgTellQueryGuild
 {
-	required PBObject guild = 1;
+	PBObject guild = 1;
 }
