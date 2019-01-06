@@ -719,14 +719,9 @@ message MsgUseItemReq
 
 
 //商城信息
-message PBStore
-{
-	repeated PBString data = 1;
-}
-
 message PBStores
 {
-	repeated PBStore store = 1;	//商城信息
+	map<string, bytes > store = 1; //商城信息
 }
 
 // 请求商城信息
@@ -918,7 +913,7 @@ message MsgModifyGuildMedalReq
 // MSG_QUERY_GUILD_LIST_REQ
 message MsgQueryGuildListReq
 {
-	PBGuildIdArray guilds = 1;	// 要查询的帮派id
+	repeated uint64 guilds = 1;	// 要查询的帮派id
 	uint32 cursor = 2;		// 查询的游标（从0开始）
 }
 
@@ -926,7 +921,7 @@ message MsgQueryGuildListReq
 // MSG_QUERY_GUILD_LIST_ACK
 message MsgQueryGuildListAck
 {
-	repeated PBStrings guilddatas = 1;	// 帮派信息
+	map<string, bytes> guilddatas = 1;	// 帮派信息
 }
 
 // 踢掉帮派成员

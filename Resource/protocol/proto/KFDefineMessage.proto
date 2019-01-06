@@ -2,94 +2,49 @@ syntax = "proto3";
 package KFMsg;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-message Vector3D
-{
-	double x = 1;
-	double y = 2;
-	double z = 3;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-message PBInt32
-{
-	bytes name = 1;
-	sint32 value = 2;
-}
-
-message PBUInt32
-{
-	bytes name = 1;
-	uint32 value = 2;
-}
-
-message PBInt64
-{
-	bytes name = 1;
-	sint64 value = 2;
-}
-
-message PBUInt64
-{
-	bytes name = 1;
-	uint64 value = 2;
-}
-
-message PBDouble
-{
-	bytes name = 1;
-	double value = 2;
-}
-
-message PBString
-{
-	bytes name = 1;
-	bytes value = 2;
-}
-
-message PBStrings
-{
-	repeated PBString pbstring = 1;
-}
-
-message PBVector3D
-{
-	bytes name = 1;
-	Vector3D value = 2;
-}
-
+// 游戏中只存在uint64的数值
 message PBArray
 {
-	bytes name = 1;
-	repeated sint32 pbint32 = 2;
-	repeated uint32 pbuint32 = 3;
-	repeated sint64 pbint64 = 4;
-	repeated uint64 pbuint64 = 5;
-	repeated double pbdouble = 6;
-	repeated bytes pbstring = 7;
-	repeated Vector3D pbvector3d = 8;
+	map< uint32, uint64 > pbuint64 = 1;	
 }
 
 message PBObject
 {
-	bytes name = 1;		// 属性名字
-	uint64 key = 2;		// 对象的key值, 逻辑使用( 没有是0 )
-	repeated PBInt32 pbint32 = 3;		
-	repeated PBUInt32 pbuint32 = 4;
-	repeated PBInt64 pbint64 = 5;
-	repeated PBUInt64 pbuint64 = 6;
-	repeated PBDouble pbdouble = 7;
-	repeated PBString pbstring = 8;
-	repeated PBVector3D pbvector3d = 9;
-	repeated PBArray pbarray = 10;
-	repeated PBObject pbobject = 11;		// 所有对象
-	repeated PBRecord pbrecord = 12;		// 所有的数组对象
+	// 对象的key值, 逻辑使用( 没有是0 )
+	uint64 key = 1;				
+
+	// int32 属性列表
+	map< string, sint32 > pbint32 = 2;		
+	
+	// uint32 属性列表
+	map< string, uint32 > pbuint32 = 3;	
+
+	// int64 属性列表
+	map< string, sint64 > pbint64 = 4;	
+
+	// uint64 属性列表
+	map< string, uint64 > pbuint64 = 5;	
+
+	// double 属性列表
+	map< string, double > pbdouble = 6;	
+
+	// string 属性列表
+	map< string, bytes > pbstring = 7;	
+
+	// 数组列表
+	map< string, PBArray > pbarray = 8;	
+
+	// 对象列表
+	map< string, PBObject > pbobject = 9;	
+
+	// 集合列表
+	map< string, PBRecord > pbrecord = 10;	
 }
 
 message PBRecord
 {
-	bytes name = 1;			// 属性名字
- 	repeated PBObject pbobject = 2;		// 对象列表
+	// 对象列表
+	map< uint64, PBObject > pbobject = 1;	
 }
 
 message PBRankData
@@ -97,7 +52,7 @@ message PBRankData
 	uint32 rankindex = 1;		// 从1开始
 	uint64 playerid = 2;		// 玩家id
 	uint64 rankscore = 3;		// 排行的数据( 客户端好友排行根据这个排序 )
-	PBStrings pbdata = 4;		// 排行榜数据
+	map< string, bytes > pbdata = 4;		// 排行榜数据
 }
 
 message PBRankDatas
@@ -169,7 +124,7 @@ message PBBattleScore
 {
 	uint64 playerid = 1;		// 玩家id
 	uint32 ranking = 2;		// 排名( 从1开始 )
-	repeated PBUInt32 pbdata = 3;		// 各项数据
+	map< string, uint32 > pbdata = 3;		// 各项数据
 	sint32 score = 4;			// 评分
 	uint32 matchid = 5;		// 属性字段( 服务器使用 )
 	bytes reward = 6;			// 奖励字串( 服务器使用 )
@@ -188,24 +143,4 @@ message PBRecentData
 	uint32 score = 5;	// 评分
 	uint32 bekillid = 6;	// 淘汰者
 	uint32 relationtype = 7; // 关系类型 0:好友 1:被淘汰者
-}
-
-// 帮派申请列表数据结构
-message PBApplicationlist
-{
-	uint64 playerid = 1;	// 申请者玩家id
-	uint64 time = 2;	// 申请时间
-	PBStrings basic = 3;	// 申请者基础信息
-}
-
-// 帮派申请列表
-message PBApplicationlists
-{
-	repeated PBApplicationlist applylists = 1;	// 玩家id
-}
-
-// 帮派id数组
-message PBGuildIdArray
-{
-	repeated uint64 guildid = 1;		// 帮派id
 }

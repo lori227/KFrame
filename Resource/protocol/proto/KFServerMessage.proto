@@ -293,7 +293,7 @@ message S2SDeletePlayerReq
 message S2SUpdatePublicDataReq
 {
 	uint64 playerid = 1;		// 玩家id
-	repeated PBString pbdata = 4;		// 属性
+	map<string, bytes> pbdata = 4;		// 属性
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,7 +344,7 @@ message PBLoginData
 	bytes account = 5;	// 账号
 	uint64 accountid = 6;	// 账号id
 	uint64 playerid = 7;	// 角色id
-	PBStrings channeldata = 8;	// 渠道数据	
+	map<string, bytes> channeldata = 8;	// 渠道数据	
 }
 
 // 世界服务器验证
@@ -484,7 +484,7 @@ message S2SQueryMailReq
 // 邮件信息
 message PBMail
 {
-	repeated PBString data = 1;
+	map<string, bytes> data = 1;
 }
 
 message PBMails
@@ -532,8 +532,8 @@ message S2SNoticeNewMailReq
 message PBRelation
 {
 	uint64 playerid = 1;
-	PBStrings playerdata = 2;
-	PBStrings relationdata = 3;
+	map<string, bytes> playerdata = 2;
+	map<string, bytes> relationdata = 3;
 }
 
 // 查询好友信息
@@ -635,7 +635,7 @@ message S2SUpdateFriendReq
 {
 	uint64 friendid = 1;
 	uint64 serverid = 2;
-	repeated PBString pbdata = 3;
+	map<string, bytes> pbdata = 3;
 }
 
 // 更新好友度
@@ -917,7 +917,7 @@ message S2SUpdateGroupMemberReq
 	uint64 groupid = 1;		// 队伍
 	uint64 memberid = 2;		// 队员id
 	bytes dataname = 3;		// 属性名称
-	PBStrings pbstrings = 4;	// 更新数值
+	map<string, bytes> pbstrings = 4;	// 更新数值
 }
 
 // 更新队员的基础信息
@@ -926,14 +926,14 @@ message S2SUpdateGroupMemberAck
 {
 	uint64 memberid = 1;		// 队员id
 	bytes dataname = 2;		// 属性名称
-	PBStrings pbstrings = 3;	// 更新数值
+	map<string, bytes> pbstrings = 3;	// 更新数值
 }
 
 // 变更为队长
 // S2S_UPDATE_GROUP_DATA_ACK
 message S2SUpdateGroupDataAck
 {
-	repeated PBString pbstring = 1;	// 更新数值
+	map<string, bytes> pbstring = 1;	// 更新数值
 }
 
 
@@ -1009,7 +1009,7 @@ message S2SAddRecentPlayerDataReq
 	uint64 roomid = 1;
 	uint64 playerid = 2;
 	repeated uint64 members = 3;
-	PBStrings pbdata = 4;
+	map<string, bytes> pbdata = 4;
 }
 
 // 请求最近游戏列表
@@ -1069,7 +1069,7 @@ message S2SUpdateMemberBasicDataReq
 {
 	uint64 playerid = 1;	// 角色id
 	uint64 guildid = 2;	// 帮派id
-	repeated PBString pbdata = 3;   // 角色基础信息
+	map<string, bytes> pbdata = 3;   // 角色基础信息
 }
 
 
@@ -1174,7 +1174,7 @@ message S2SQueryGuildListReq
 {
 	uint64 playerid = 1;			// 操作者id
 	uint64 serverid = 2;			// 服务器id
-	PBGuildIdArray guilds = 3;	// 要查询的帮派id
+	repeated uint64 guilds = 3;	// 要查询的帮派id
 	uint32 cursor = 4;		// 查询的游标（从0开始）
 }
 
@@ -1213,7 +1213,7 @@ message S2SUpdateGuildDataReq
 {
 	uint64 guildid = 1;
 	uint64 playerid = 2;		// 玩家id
-	repeated PBString pbdata = 3;		// 属性
+	map<string, bytes> pbdata = 3;		// 属性
 }
 
 // 帮派升级
