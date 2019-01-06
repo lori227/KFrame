@@ -24,7 +24,7 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         _plugin_path = "./";
 #else
-        _plugin_path = "./bin/;
+        _plugin_path = "./bin/";
 #endif
 
         auto ok = LoadServerConfig( file );
