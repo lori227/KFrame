@@ -1,7 +1,9 @@
+syntax = "proto3";
 package KFMsg;
 
 enum FrameProtocol
 {
+	s2s_temp = 0;
 	S2S_REGISTER_TO_SERVER_REQ = 10001;					// 请求注册
 	S2S_REGISTER_TO_SERVER_ACK = 10002;					// 回馈注册
 	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
@@ -22,12 +24,12 @@ enum FrameProtocol
 ////////////////////////////////////////////////////////////////////////////////
 message ListenData
 {
-	optional uint64 appid = 1;
-	required bytes appname = 2;
-	required bytes apptype = 3;
-	required bytes ip = 4;
-	required uint32 port = 5;	
-	optional uint32 zoneid = 6;	
+	uint64 appid = 1;
+	bytes appname = 2;
+	bytes apptype = 3;
+	bytes ip = 4;
+	uint32 port = 5;	
+	uint32 zoneid = 6;	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,50 +37,50 @@ message ListenData
 // S2S_REGISTER_TO_SERVER_REQ
 message RegisterToServerReq
 {
-	required ListenData listen = 1;
+	ListenData listen = 1;
 }
 
 // 注册到服务器返回
 // S2S_REGISTER_TO_SERVER_ACK
 message RegisterToServerAck
 {
-	required uint64 appid = 1;
-	required bytes appname = 2;
-	required bytes apptype = 3;
+	uint64 appid = 1;
+	bytes appname = 2;
+	bytes apptype = 3;
 }
 
 // S2S_TELL_REGISTER_TO_SERVER
 message TellRegisterToServer
 {
-	required bytes servername = 1;
-	required uint32 serverzoneid = 2;
+	bytes servername = 1;
+	uint32 serverzoneid = 2;
 
-	required ListenData listen = 3;
+	ListenData listen = 3;
 }
 
 // S2S_TELL_UNREGISTER_FROM_SERVER
 message TellUnRegisterFromServer
 {
-	required bytes servername = 1;
-	required uint32 serverzoneid = 2;
+	bytes servername = 1;
+	uint32 serverzoneid = 2;
 
-	required uint64 appid = 3;
-	required bytes appname = 4;
-	required bytes apptype = 5;
-	required uint32 zoneid = 6;	
+	uint64 appid = 3;
+	bytes appname = 4;
+	bytes apptype = 5;
+	uint32 zoneid = 6;	
 }
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 message PBRouteZone
 {
-	required uint32 zoneid = 1;
-	required uint64 serverid = 2;
+	uint32 zoneid = 1;
+	uint64 serverid = 2;
 }
 
 // S2S_REGISTER_ROUTE_ZONE_REQ
 message S2SRegisterRouteZoneReq
 {
-	required PBRouteZone zonedata = 1;
+	PBRouteZone zonedata = 1;
 }
 
 // S2S_REGISTER_ROUTE_PROXY_REQ
@@ -89,62 +91,62 @@ message S2SRegisterRouteProxyReq
 
 message PBTransmitRouteMessage
 {
-	required uint64 serverid = 2;
-	required uint64 playerid = 3;
-	required uint32 msgid = 4;
-	required bytes msgdata = 5;
+	uint64 serverid = 2;
+	uint64 playerid = 3;
+	uint32 msgid = 4;
+	bytes msgdata = 5;
 }
 
 // S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ
 message S2STransmitRouteZoneMessageReq
 {
-	required PBTransmitRouteMessage transmitdata = 1;
+	PBTransmitRouteMessage transmitdata = 1;
 }
 
 // S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK
 message S2STransmitRouteZoneMessageAck
 {
-	required PBTransmitRouteMessage transmitdata = 1;
+	PBTransmitRouteMessage transmitdata = 1;
 }
 
 // S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ
 message S2STransmitRouteProxyMessageReq
 {
-	required PBTransmitRouteMessage transmitdata = 1;
+	PBTransmitRouteMessage transmitdata = 1;
 }
 
 // S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_ACK
 message S2STransmitRouteProxyMessageAck
 {
-	required PBTransmitRouteMessage transmitdata = 1;
+	PBTransmitRouteMessage transmitdata = 1;
 }
 //////////////////////////////////////////////////////////////////////////////////
 // S2S_LOG_REQ
 message S2SLogReq
 {
-	required uint32 log_level	= 1;
-	required uint32 zone_id		= 2;
-	required bytes app_name		= 3;
-	required bytes app_type		= 4;
-	required bytes app_id		= 5;
-	required bytes log_info		= 6;
+	uint32 log_level	= 1;
+	uint32 zone_id		= 2;
+	bytes app_name		= 3;
+	bytes app_type		= 4;
+	bytes app_id		= 5;
+	bytes log_info		= 6;
 }
 
 
 // S2S_UPDATE_ONLINE_TO_DIR_REQ
 message S2SUpdateOnlineToDirReq
 {
-	required uint32 zoneid = 1;			// 小区id
-	required bytes zonename = 2;		// 小区名字
-	required uint32 zonechannel = 3;	// 小区类型
-	required uint64 appid = 4;			// 服务器id
-	required bytes ip = 5;				// ip
-	required uint32 port = 6;			// port
-	required uint32 onlinecount = 7;	// 当前在线人数
+	uint32 zoneid = 1;			// 小区id
+	bytes zonename = 2;		// 小区名字
+	uint32 zonechannel = 3;	// 小区类型
+	uint64 appid = 4;			// 服务器id
+	bytes ip = 5;				// ip
+	uint32 port = 6;			// port
+	uint32 onlinecount = 7;	// 当前在线人数
 }
 
 // S2S_REMOVE_ONLINE_TO_DIR_REQ
 message S2SRemoveOnlineToDirReq
 {
-	required uint64 appid = 1;			// 服务器id
+	uint64 appid = 1;			// 服务器id
 }
