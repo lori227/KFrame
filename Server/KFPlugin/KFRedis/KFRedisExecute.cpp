@@ -240,22 +240,6 @@ namespace KFrame
 
     }
 
-    KFResult< uint32 >* KFReadExecute::UInt32Execute( const std::string& strsql )
-    {
-        auto kfresult = _uint32_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
-        if ( redisreply != nullptr )
-        {
-            if ( redisreply->str != nullptr )
-            {
-                kfresult->_value = KFUtility::ToValue< uint32 >( redisreply->str );
-            }
-        }
-
-        __FREE_REPLY__( redisreply );
-        return kfresult;
-    }
-
     KFResult< std::string >* KFReadExecute::StringExecute( const std::string& strsql )
     {
         auto kfresult = _string_result_queue.Alloc();
@@ -275,7 +259,14 @@ namespace KFrame
         auto redisreply = TryExecute( kfresult, strsql );
         if ( redisreply != nullptr )
         {
-            kfresult->_value = redisreply->integer;
+            if ( redisreply->integer != _invalid_int )
+            {
+                kfresult->_value = redisreply->integer;
+            }
+            else if ( redisreply->str != nullptr )
+            {
+                kfresult->_value = KFUtility::ToValue< uint64 >( redisreply->str );
+            }
         }
 
         __FREE_REPLY__( redisreply );

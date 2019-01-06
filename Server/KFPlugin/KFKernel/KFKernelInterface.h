@@ -12,9 +12,6 @@ namespace KFrame
     class KFKernelInterface : public KFModule
     {
     public:
-        // 查找配置
-        virtual const KFClassSetting* FindClassSetting( const std::string& dataname ) = 0;
-
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
@@ -27,7 +24,6 @@ namespace KFrame
         virtual KFData* CreateObject( const std::string& dataname ) = 0;
         virtual KFData* CreateObject( const KFDataSetting* datasetting ) = 0;
         virtual KFData* CreateObject( const std::string& classname, const std::string& dataname ) = 0;
-
         virtual KFData* CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto ) = 0;
 
         // 释放数据
@@ -36,7 +32,6 @@ namespace KFrame
 
         // proto 序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto ) = 0;
-        virtual bool ParseFromProto( KFData* kfdata, const std::string& proto ) = 0;
 
         virtual void SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
         virtual void SerializeToData( KFData* kfdata, KFMsg::PBObject* proto ) = 0;

@@ -74,7 +74,7 @@ void AddDescriptorsImpl() {
       "ExitGuild\020\002*I\n\017GuildReviewEnum\022\025\n\021Unknow"
       "GuildReview\020\000\022\016\n\nAgreeApply\020\001\022\017\n\013RefuseA"
       "pply\020\002*\?\n\nBattleEnum\022\020\n\014BattleUnknow\020\000\022\017"
-      "\n\013OpenSuccess\020\001\022\016\n\nOpenFailed\020\002*\342 \n\010Code"
+      "\n\013OpenSuccess\020\001\022\016\n\nOpenFailed\020\002*\363 \n\010Code"
       "Enum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\r\n\tSignError\020\002\022\017"
       "\n\013WeiXinError\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022"
       "WeiXinTokenTimeout\020\005\022\024\n\020WeiXinTokenError"
@@ -179,10 +179,11 @@ void AddDescriptorsImpl() {
       "hangeInviteRecordError\020\271\001\022\034\n\027VersionNotC"
       "ompatibility\020\272\001\022\033\n\026BattleNotCompatibilit"
       "y\020\273\001\022\025\n\020BattleNotPrepare\020\274\001\022\023\n\016BanForbid"
-      "Login\020\275\001\022\022\n\rTitleNotExist\020\276\001b\006proto3"
+      "Login\020\275\001\022\022\n\rTitleNotExist\020\276\001\022\017\n\nServerBu"
+      "sy\020\350\007b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 5196);
+      descriptor, 5213);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -601,6 +602,7 @@ bool CodeEnum_IsValid(int value) {
     case 188:
     case 189:
     case 190:
+    case 1000:
       return true;
     default:
       return false;

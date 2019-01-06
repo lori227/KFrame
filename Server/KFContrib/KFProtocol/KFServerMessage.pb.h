@@ -7783,10 +7783,10 @@ class LIBPROTOC_EXPORT S2SQueryBasicAck : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBObject pbobject = 2;
+  // .KFMsg.PBObject pbobject = 3;
   bool has_pbobject() const;
   void clear_pbobject();
-  static const int kPbobjectFieldNumber = 2;
+  static const int kPbobjectFieldNumber = 3;
   private:
   const ::KFMsg::PBObject& _internal_pbobject() const;
   public:
@@ -7801,12 +7801,19 @@ class LIBPROTOC_EXPORT S2SQueryBasicAck : public ::google::protobuf::Message /* 
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
+  // uint32 result = 2;
+  void clear_result();
+  static const int kResultFieldNumber = 2;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryBasicAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBObject* pbobject_;
   ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 result_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
 };
@@ -27751,7 +27758,21 @@ inline void S2SQueryBasicAck::set_playerid(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:KFMsg.S2SQueryBasicAck.playerid)
 }
 
-// .KFMsg.PBObject pbobject = 2;
+// uint32 result = 2;
+inline void S2SQueryBasicAck::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryBasicAck::result() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryBasicAck.result)
+  return result_;
+}
+inline void S2SQueryBasicAck::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryBasicAck.result)
+}
+
+// .KFMsg.PBObject pbobject = 3;
 inline bool S2SQueryBasicAck::has_pbobject() const {
   return this != internal_default_instance() && pbobject_ != NULL;
 }

@@ -68,7 +68,7 @@ namespace KFrame
         _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, connectionlist );
 
         // 查找连接的ip地址
-        for ( auto* kfconnection : connectionlist )
+        for ( auto kfconnection : connectionlist )
         {
             // 查找连接信息
             _kf_ip_address->FindIpAddress( kfconnection->_connect_name, kfconnection->_connect_type, kfconnection->_connect_id, outlist );

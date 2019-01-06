@@ -536,12 +536,13 @@ enum CodeEnum {
   BattleNotPrepare = 188,
   BanForbidLogin = 189,
   TitleNotExist = 190,
+  ServerBusy = 1000,
   CodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   CodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = TitleNotExist;
+const CodeEnum CodeEnum_MAX = ServerBusy;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

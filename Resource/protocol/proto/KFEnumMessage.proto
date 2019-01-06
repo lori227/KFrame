@@ -305,4 +305,7 @@ enum CodeEnum
 	BattleNotPrepare			= 188;		// 战斗服还没有准备好
 	BanForbidLogin				= 189;		// 你被禁止游戏到<Text>%s</Text>时间.
 	TitleNotExist				= 190;		// 你没有获得此称号
+
+	ServerBusy = 1000;	// 服务器忙
+	
 }

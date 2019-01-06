@@ -87,11 +87,6 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint32 >* KFRedisLogic::UInt32Execute( const std::string& strsql )
-    {
-        return _read_execute->UInt32Execute( strsql );
-    }
-
     KFResult< std::string >* KFRedisLogic::StringExecute( const std::string& strsql )
     {
         return _read_execute->StringExecute( strsql );

@@ -34,8 +34,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 更新公共数据
-        virtual bool UpdatePublicData( uint64 playerid, const MapString& values );
-        virtual bool UpdatePublicData( KFEntity* player, const MapString& values );
+        virtual bool UpdatePublicData( uint64 playerid, MapString& values );
+        virtual bool UpdatePublicData( KFEntity* player, MapString& values );
 
         // 发送消息到Public
         virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message );

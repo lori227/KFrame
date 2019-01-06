@@ -663,7 +663,8 @@ message S2SQueryBasicReq
 message S2SQueryBasicAck
 {
 	uint64 playerid = 1;
-	PBObject pbobject = 2;
+	uint32 result = 2;
+	PBObject pbobject = 3;
 }
 
 // 查询属性

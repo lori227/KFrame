@@ -37,13 +37,10 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdatePublicDataReq );
 
-        MapString values;
-        for ( auto i = 0; i < kfmsg.pbdata_size(); ++i )
-        {
-            auto pbdata = &kfmsg.pbdata( i );
-            values[ pbdata->name() ] = pbdata->value();
-        }
+        auto pbdata = &kfmsg.pbdata();
 
+        MapString values;
+        values.insert( pbdata->begin(), pbdata->end() );
         _public_redis_driver->Update( values, "hmset {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
     }
 
@@ -51,25 +48,39 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryBasicReq );
 
-        auto queryid = _name_redis_driver->QueryString( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
+        auto queryid = _name_redis_driver->QueryUInt64( "get {}:{}", __KF_STRING__( name ), kfmsg.name() );
+        if ( !queryid->IsOk() )
+        {
+            //return _kf_display->SendToGame
+        }
+
 
         KFMsg::S2SQueryBasicAck ack;
         ack.set_playerid( kfmsg.playerid() );
 
-        auto pbobject = ack.mutable_pbobject();
-        pbobject->set_key( KFUtility::ToValue< uint64>( queryid->_value ) );
+
+        if ( queryid->_value == _invalid_int )
+        {
+            ack.set_result( KFMsg::PublicDatabaseError );
+        }
+        else
+        {
+
+        }
+
 
         // 查询所有数据
-        if ( !queryid->_value.empty() )
-        {
-            auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
-            for ( auto& iter : querydata->_value )
-            {
-                auto pbstring = pbobject->add_pbstring();
-                pbstring->set_name( iter.first );
-                pbstring->set_value( iter.second );
-            }
-        }
+        // todo
+        //if ( !queryid->_value.empty() )
+        //{
+        //    auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
+        //    for ( auto& iter : querydata->_value )
+        //    {
+        //        auto pbstring = pbobject->add_pbstring();
+        //        pbstring->set_name( iter.first );
+        //        pbstring->set_value( iter.second );
+        //    }
+        //}
 
         __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_BASIC_ACK, &ack );
     }

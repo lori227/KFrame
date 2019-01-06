@@ -19,6 +19,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_redis, KFRedisInterface );
         __FIND_MODULE__( _kf_worker, KFWorkerInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
+        __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
     }
 }

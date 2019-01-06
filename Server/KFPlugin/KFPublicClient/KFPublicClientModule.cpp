@@ -41,23 +41,16 @@ namespace KFrame
         return _kf_cluster->SendToShard( __KF_STRING__( public ), msgid, message );
     }
 
-    bool KFPublicClientModule::UpdatePublicData( KFEntity* player, const MapString& values )
+    bool KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
     {
         return UpdatePublicData( player->GetKeyID(), values );
     }
 
-    bool KFPublicClientModule::UpdatePublicData( uint64 playerid, const MapString& values )
+    bool KFPublicClientModule::UpdatePublicData( uint64 playerid, MapString& values )
     {
         KFMsg::S2SUpdatePublicDataReq req;
         req.set_playerid( playerid );
-
-        for ( auto& iter : values )
-        {
-            auto pbstring = req.add_pbdata();
-            pbstring->set_name( iter.first );
-            pbstring->set_value( iter.second );
-        }
-
+        req.mutable_pbdata()->insert( values.begin(), values.end() );
         return SendMessageToPublic( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &req );
     }
 
@@ -129,34 +122,35 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryBasicAck );
 
+        // todo
         KFMsg::MsgTellQueryBasic ack;
         auto pbbasic = ack.mutable_player();
 
-        auto pboject = &kfmsg.pbobject();
-        if ( pboject->key() == _invalid_int )
-        {
-            pbbasic->set_key( _invalid_int );
-            pbbasic->set_name( _kf_basic->GetName() );
-        }
-        else
-        {
-            // 有数据的话 转换一下
-            _kf_basic->Reset();
-            _kf_basic->SetKeyID( pboject->key() );
+        //auto pboject = &kfmsg.pbobject();
+        //if ( pboject->key() == _invalid_int )
+        //{
+        //    pbbasic->set_key( _invalid_int );
+        //    pbbasic->set_name( _kf_basic->GetName() );
+        //}
+        //else
+        //{
+        //    // 有数据的话 转换一下
+        //    _kf_basic->Reset();
+        //    _kf_basic->SetKeyID( pboject->key() );
 
-            for ( auto i = 0; i < pboject->pbstring_size(); ++i )
-            {
-                auto pbstring = &pboject->pbstring( i );
+        //    for ( auto i = 0; i < pboject->pbstring_size(); ++i )
+        //    {
+        //        auto pbstring = &pboject->pbstring( i );
 
-                auto kfdata = _kf_basic->FindData( pbstring->name() );
-                if ( kfdata != nullptr )
-                {
-                    kfdata->SetValue< std::string >( pbstring->value() );
-                }
-            }
+        //        auto kfdata = _kf_basic->FindData( pbstring->name() );
+        //        if ( kfdata != nullptr )
+        //        {
+        //            kfdata->SetValue< std::string >( pbstring->value() );
+        //        }
+        //    }
 
-            _kf_kernel->SerializeToView( _kf_basic, pbbasic );
-        }
+        //    _kf_kernel->SerializeToView( _kf_basic, pbbasic );
+        //}
 
         _kf_player->SendToClient( player, KFMsg::MSG_TELL_QUERY_BASIC, &ack );
     }

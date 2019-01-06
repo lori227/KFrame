@@ -13,6 +13,7 @@
 #include "KFPublicShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFWorker/KFWorkerInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 

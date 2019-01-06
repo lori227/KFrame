@@ -635,7 +635,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject, key_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject, pbint32_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject, pbuint32_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject, pbint64_),
@@ -785,20 +784,20 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 78, 85, sizeof(::KFMsg::PBObject_PbobjectEntry_DoNotUse)},
   { 87, 94, sizeof(::KFMsg::PBObject_PbrecordEntry_DoNotUse)},
   { 96, -1, sizeof(::KFMsg::PBObject)},
-  { 111, 118, sizeof(::KFMsg::PBRecord_PbobjectEntry_DoNotUse)},
-  { 120, -1, sizeof(::KFMsg::PBRecord)},
-  { 126, 133, sizeof(::KFMsg::PBRankData_PbdataEntry_DoNotUse)},
-  { 135, -1, sizeof(::KFMsg::PBRankData)},
-  { 144, -1, sizeof(::KFMsg::PBRankDatas)},
-  { 150, -1, sizeof(::KFMsg::PBTaskData)},
-  { 157, -1, sizeof(::KFMsg::PBTaskDatas)},
-  { 163, -1, sizeof(::KFMsg::PBBattlePlayer)},
-  { 180, -1, sizeof(::KFMsg::PBBattleCamp)},
-  { 187, -1, sizeof(::KFMsg::PBMatchGroup)},
-  { 194, -1, sizeof(::KFMsg::PBGuestData)},
-  { 202, 209, sizeof(::KFMsg::PBBattleScore_PbdataEntry_DoNotUse)},
-  { 211, -1, sizeof(::KFMsg::PBBattleScore)},
-  { 225, -1, sizeof(::KFMsg::PBRecentData)},
+  { 110, 117, sizeof(::KFMsg::PBRecord_PbobjectEntry_DoNotUse)},
+  { 119, -1, sizeof(::KFMsg::PBRecord)},
+  { 125, 132, sizeof(::KFMsg::PBRankData_PbdataEntry_DoNotUse)},
+  { 134, -1, sizeof(::KFMsg::PBRankData)},
+  { 143, -1, sizeof(::KFMsg::PBRankDatas)},
+  { 149, -1, sizeof(::KFMsg::PBTaskData)},
+  { 156, -1, sizeof(::KFMsg::PBTaskDatas)},
+  { 162, -1, sizeof(::KFMsg::PBBattlePlayer)},
+  { 179, -1, sizeof(::KFMsg::PBBattleCamp)},
+  { 186, -1, sizeof(::KFMsg::PBMatchGroup)},
+  { 193, -1, sizeof(::KFMsg::PBGuestData)},
+  { 201, 208, sizeof(::KFMsg::PBBattleScore_PbdataEntry_DoNotUse)},
+  { 210, -1, sizeof(::KFMsg::PBBattleScore)},
+  { 224, -1, sizeof(::KFMsg::PBRecentData)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -854,66 +853,66 @@ void AddDescriptorsImpl() {
       "\n\025KFDefineMessage.proto\022\005KFMsg\"j\n\007PBArra"
       "y\022.\n\010pbuint64\030\001 \003(\0132\034.KFMsg.PBArray.Pbui"
       "nt64Entry\032/\n\rPbuint64Entry\022\013\n\003key\030\001 \001(\r\022"
-      "\r\n\005value\030\002 \001(\004:\0028\001\"\262\007\n\010PBObject\022\013\n\003key\030\001"
-      " \001(\004\022-\n\007pbint32\030\002 \003(\0132\034.KFMsg.PBObject.P"
-      "bint32Entry\022/\n\010pbuint32\030\003 \003(\0132\035.KFMsg.PB"
-      "Object.Pbuint32Entry\022-\n\007pbint64\030\004 \003(\0132\034."
-      "KFMsg.PBObject.Pbint64Entry\022/\n\010pbuint64\030"
-      "\005 \003(\0132\035.KFMsg.PBObject.Pbuint64Entry\022/\n\010"
-      "pbdouble\030\006 \003(\0132\035.KFMsg.PBObject.Pbdouble"
-      "Entry\022/\n\010pbstring\030\007 \003(\0132\035.KFMsg.PBObject"
-      ".PbstringEntry\022-\n\007pbarray\030\010 \003(\0132\034.KFMsg."
-      "PBObject.PbarrayEntry\022/\n\010pbobject\030\t \003(\0132"
-      "\035.KFMsg.PBObject.PbobjectEntry\022/\n\010pbreco"
-      "rd\030\n \003(\0132\035.KFMsg.PBObject.PbrecordEntry\032"
-      ".\n\014Pbint32Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 "
-      "\001(\021:\0028\001\032/\n\rPbuint32Entry\022\013\n\003key\030\001 \001(\t\022\r\n"
-      "\005value\030\002 \001(\r:\0028\001\032.\n\014Pbint64Entry\022\013\n\003key\030"
-      "\001 \001(\t\022\r\n\005value\030\002 \001(\022:\0028\001\032/\n\rPbuint64Entr"
-      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\032/\n\rPbd"
-      "oubleEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\001:\002"
-      "8\001\032/\n\rPbstringEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu"
-      "e\030\002 \001(\014:\0028\001\032>\n\014PbarrayEntry\022\013\n\003key\030\001 \001(\t"
-      "\022\035\n\005value\030\002 \001(\0132\016.KFMsg.PBArray:\0028\001\032@\n\rP"
-      "bobjectEntry\022\013\n\003key\030\001 \001(\t\022\036\n\005value\030\002 \001(\013"
-      "2\017.KFMsg.PBObject:\0028\001\032@\n\rPbrecordEntry\022\013"
-      "\n\003key\030\001 \001(\t\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBRec"
-      "ord:\0028\001\"}\n\010PBRecord\022/\n\010pbobject\030\001 \003(\0132\035."
-      "KFMsg.PBRecord.PbobjectEntry\032@\n\rPbobject"
-      "Entry\022\013\n\003key\030\001 \001(\004\022\036\n\005value\030\002 \001(\0132\017.KFMs"
-      "g.PBObject:\0028\001\"\242\001\n\nPBRankData\022\021\n\trankind"
-      "ex\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\021\n\trankscore\030"
-      "\003 \001(\004\022-\n\006pbdata\030\004 \003(\0132\035.KFMsg.PBRankData"
-      ".PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t"
-      "\022\r\n\005value\030\002 \001(\014:\0028\001\"2\n\013PBRankDatas\022#\n\010ra"
-      "nkdata\030\003 \003(\0132\021.KFMsg.PBRankData\"\'\n\nPBTas"
-      "kData\022\n\n\002id\030\001 \001(\r\022\r\n\005value\030\002 \001(\r\"2\n\013PBTa"
-      "skDatas\022#\n\010taskdata\030\001 \003(\0132\021.KFMsg.PBTask"
-      "Data\"\351\001\n\016PBBattlePlayer\022\020\n\010serverid\030\001 \001("
-      "\004\022\020\n\010playerid\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\013\n\003sex"
-      "\030\004 \001(\r\022\014\n\004icon\030\005 \001(\014\022\017\n\007iconbox\030\006 \001(\014\022\017\n"
-      "\007grading\030\007 \001(\r\022\017\n\007modelid\030\010 \001(\r\022\021\n\tcloth"
-      "esid\030\t \001(\r\022\017\n\007groupid\030\n \001(\004\022\016\n\006campid\030\013 "
-      "\001(\r\022#\n\007achieve\030\014 \001(\0132\022.KFMsg.PBTaskDatas"
-      "\"G\n\014PBBattleCamp\022\016\n\006campid\030\001 \001(\r\022\'\n\010pbpl"
-      "ayer\030\002 \003(\0132\025.KFMsg.PBBattlePlayer\"H\n\014PBM"
-      "atchGroup\022\017\n\007groupid\030\001 \001(\004\022\'\n\010pbplayer\030\002"
-      " \003(\0132\025.KFMsg.PBBattlePlayer\"G\n\013PBGuestDa"
-      "ta\022\017\n\007guestid\030\001 \001(\004\022\021\n\tguesticon\030\002 \001(\014\022\024"
-      "\n\014guesticonbox\030\003 \001(\014\"\216\002\n\rPBBattleScore\022\020"
-      "\n\010playerid\030\001 \001(\004\022\017\n\007ranking\030\002 \001(\r\0220\n\006pbd"
-      "ata\030\003 \003(\0132 .KFMsg.PBBattleScore.PbdataEn"
-      "try\022\r\n\005score\030\004 \001(\021\022\017\n\007matchid\030\005 \001(\r\022\016\n\006r"
-      "eward\030\006 \001(\014\022#\n\007achieve\030\007 \001(\0132\022.KFMsg.PBT"
-      "askDatas\022\017\n\007members\030\010 \003(\004\022\023\n\013playercount"
-      "\030\t \001(\r\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va"
-      "lue\030\002 \001(\r:\0028\001\"\210\001\n\014PBRecentData\022\020\n\010player"
-      "id\030\001 \001(\004\022\017\n\007ranking\030\002 \001(\r\022\020\n\010totalnum\030\003 "
-      "\001(\r\022\014\n\004kill\030\004 \001(\r\022\r\n\005score\030\005 \001(\r\022\020\n\010beki"
-      "llid\030\006 \001(\r\022\024\n\014relationtype\030\007 \001(\rb\006proto3"
+      "\r\n\005value\030\002 \001(\004:\0028\001\"\245\007\n\010PBObject\022-\n\007pbint"
+      "32\030\001 \003(\0132\034.KFMsg.PBObject.Pbint32Entry\022/"
+      "\n\010pbuint32\030\002 \003(\0132\035.KFMsg.PBObject.Pbuint"
+      "32Entry\022-\n\007pbint64\030\003 \003(\0132\034.KFMsg.PBObjec"
+      "t.Pbint64Entry\022/\n\010pbuint64\030\004 \003(\0132\035.KFMsg"
+      ".PBObject.Pbuint64Entry\022/\n\010pbdouble\030\005 \003("
+      "\0132\035.KFMsg.PBObject.PbdoubleEntry\022/\n\010pbst"
+      "ring\030\006 \003(\0132\035.KFMsg.PBObject.PbstringEntr"
+      "y\022-\n\007pbarray\030\007 \003(\0132\034.KFMsg.PBObject.Pbar"
+      "rayEntry\022/\n\010pbobject\030\010 \003(\0132\035.KFMsg.PBObj"
+      "ect.PbobjectEntry\022/\n\010pbrecord\030\t \003(\0132\035.KF"
+      "Msg.PBObject.PbrecordEntry\032.\n\014Pbint32Ent"
+      "ry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\021:\0028\001\032/\n\rPb"
+      "uint32Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\r:"
+      "\0028\001\032.\n\014Pbint64Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu"
+      "e\030\002 \001(\022:\0028\001\032/\n\rPbuint64Entry\022\013\n\003key\030\001 \001("
+      "\t\022\r\n\005value\030\002 \001(\004:\0028\001\032/\n\rPbdoubleEntry\022\013\n"
+      "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\001:\0028\001\032/\n\rPbstrin"
+      "gEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\032>"
+      "\n\014PbarrayEntry\022\013\n\003key\030\001 \001(\t\022\035\n\005value\030\002 \001"
+      "(\0132\016.KFMsg.PBArray:\0028\001\032@\n\rPbobjectEntry\022"
+      "\013\n\003key\030\001 \001(\t\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBOb"
+      "ject:\0028\001\032@\n\rPbrecordEntry\022\013\n\003key\030\001 \001(\t\022\036"
+      "\n\005value\030\002 \001(\0132\017.KFMsg.PBRecord:\0028\001\"}\n\010PB"
+      "Record\022/\n\010pbobject\030\001 \003(\0132\035.KFMsg.PBRecor"
+      "d.PbobjectEntry\032@\n\rPbobjectEntry\022\013\n\003key\030"
+      "\001 \001(\004\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBObject:\0028"
+      "\001\"\242\001\n\nPBRankData\022\021\n\trankindex\030\001 \001(\r\022\020\n\010p"
+      "layerid\030\002 \001(\004\022\021\n\trankscore\030\003 \001(\004\022-\n\006pbda"
+      "ta\030\004 \003(\0132\035.KFMsg.PBRankData.PbdataEntry\032"
+      "-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001"
+      "(\014:\0028\001\"2\n\013PBRankDatas\022#\n\010rankdata\030\003 \003(\0132"
+      "\021.KFMsg.PBRankData\"\'\n\nPBTaskData\022\n\n\002id\030\001"
+      " \001(\r\022\r\n\005value\030\002 \001(\r\"2\n\013PBTaskDatas\022#\n\010ta"
+      "skdata\030\001 \003(\0132\021.KFMsg.PBTaskData\"\351\001\n\016PBBa"
+      "ttlePlayer\022\020\n\010serverid\030\001 \001(\004\022\020\n\010playerid"
+      "\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\013\n\003sex\030\004 \001(\r\022\014\n\004ico"
+      "n\030\005 \001(\014\022\017\n\007iconbox\030\006 \001(\014\022\017\n\007grading\030\007 \001("
+      "\r\022\017\n\007modelid\030\010 \001(\r\022\021\n\tclothesid\030\t \001(\r\022\017\n"
+      "\007groupid\030\n \001(\004\022\016\n\006campid\030\013 \001(\r\022#\n\007achiev"
+      "e\030\014 \001(\0132\022.KFMsg.PBTaskDatas\"G\n\014PBBattleC"
+      "amp\022\016\n\006campid\030\001 \001(\r\022\'\n\010pbplayer\030\002 \003(\0132\025."
+      "KFMsg.PBBattlePlayer\"H\n\014PBMatchGroup\022\017\n\007"
+      "groupid\030\001 \001(\004\022\'\n\010pbplayer\030\002 \003(\0132\025.KFMsg."
+      "PBBattlePlayer\"G\n\013PBGuestData\022\017\n\007guestid"
+      "\030\001 \001(\004\022\021\n\tguesticon\030\002 \001(\014\022\024\n\014guesticonbo"
+      "x\030\003 \001(\014\"\216\002\n\rPBBattleScore\022\020\n\010playerid\030\001 "
+      "\001(\004\022\017\n\007ranking\030\002 \001(\r\0220\n\006pbdata\030\003 \003(\0132 .K"
+      "FMsg.PBBattleScore.PbdataEntry\022\r\n\005score\030"
+      "\004 \001(\021\022\017\n\007matchid\030\005 \001(\r\022\016\n\006reward\030\006 \001(\014\022#"
+      "\n\007achieve\030\007 \001(\0132\022.KFMsg.PBTaskDatas\022\017\n\007m"
+      "embers\030\010 \003(\004\022\023\n\013playercount\030\t \001(\r\032-\n\013Pbd"
+      "ataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\r:\0028\001"
+      "\"\210\001\n\014PBRecentData\022\020\n\010playerid\030\001 \001(\004\022\017\n\007r"
+      "anking\030\002 \001(\r\022\020\n\010totalnum\030\003 \001(\r\022\014\n\004kill\030\004"
+      " \001(\r\022\r\n\005score\030\005 \001(\r\022\020\n\010bekillid\030\006 \001(\r\022\024\n"
+      "\014relationtype\030\007 \001(\rb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2400);
+      descriptor, 2387);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDefineMessage.proto", &protobuf_RegisterTypes);
 }
@@ -1410,7 +1409,6 @@ void PBObject_PbrecordEntry_DoNotUse::MergeFrom(
 void PBObject::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int PBObject::kKeyFieldNumber;
 const int PBObject::kPbint32FieldNumber;
 const int PBObject::kPbuint32FieldNumber;
 const int PBObject::kPbint64FieldNumber;
@@ -1442,12 +1440,10 @@ PBObject::PBObject(const PBObject& from)
   pbarray_.MergeFrom(from.pbarray_);
   pbobject_.MergeFrom(from.pbobject_);
   pbrecord_.MergeFrom(from.pbrecord_);
-  key_ = from.key_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.PBObject)
 }
 
 void PBObject::SharedCtor() {
-  key_ = GOOGLE_ULONGLONG(0);
 }
 
 PBObject::~PBObject() {
@@ -1487,7 +1483,6 @@ void PBObject::Clear() {
   pbarray_.Clear();
   pbobject_.Clear();
   pbrecord_.Clear();
-  key_ = GOOGLE_ULONGLONG(0);
   _internal_metadata_.Clear();
 }
 
@@ -1501,24 +1496,10 @@ bool PBObject::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 key = 1;
+      // map<string, sint32> pbint32 = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &key_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // map<string, sint32> pbint32 = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           PBObject_Pbint32Entry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_Pbint32Entry_DoNotUse,
               ::std::string, ::google::protobuf::int32,
@@ -1538,10 +1519,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, uint32> pbuint32 = 3;
-      case 3: {
+      // map<string, uint32> pbuint32 = 2;
+      case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           PBObject_Pbuint32Entry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_Pbuint32Entry_DoNotUse,
               ::std::string, ::google::protobuf::uint32,
@@ -1561,10 +1542,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, sint64> pbint64 = 4;
-      case 4: {
+      // map<string, sint64> pbint64 = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           PBObject_Pbint64Entry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_Pbint64Entry_DoNotUse,
               ::std::string, ::google::protobuf::int64,
@@ -1584,10 +1565,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, uint64> pbuint64 = 5;
-      case 5: {
+      // map<string, uint64> pbuint64 = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
           PBObject_Pbuint64Entry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_Pbuint64Entry_DoNotUse,
               ::std::string, ::google::protobuf::uint64,
@@ -1607,10 +1588,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, double> pbdouble = 6;
-      case 6: {
+      // map<string, double> pbdouble = 5;
+      case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           PBObject_PbdoubleEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_PbdoubleEntry_DoNotUse,
               ::std::string, double,
@@ -1630,10 +1611,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, bytes> pbstring = 7;
-      case 7: {
+      // map<string, bytes> pbstring = 6;
+      case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           PBObject_PbstringEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_PbstringEntry_DoNotUse,
               ::std::string, ::std::string,
@@ -1653,10 +1634,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .KFMsg.PBArray> pbarray = 8;
-      case 8: {
+      // map<string, .KFMsg.PBArray> pbarray = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           PBObject_PbarrayEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_PbarrayEntry_DoNotUse,
               ::std::string, ::KFMsg::PBArray,
@@ -1676,10 +1657,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .KFMsg.PBObject> pbobject = 9;
-      case 9: {
+      // map<string, .KFMsg.PBObject> pbobject = 8;
+      case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
           PBObject_PbobjectEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_PbobjectEntry_DoNotUse,
               ::std::string, ::KFMsg::PBObject,
@@ -1699,10 +1680,10 @@ bool PBObject::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .KFMsg.PBRecord> pbrecord = 10;
-      case 10: {
+      // map<string, .KFMsg.PBRecord> pbrecord = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
           PBObject_PbrecordEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBObject_PbrecordEntry_DoNotUse,
               ::std::string, ::KFMsg::PBRecord,
@@ -1748,12 +1729,7 @@ void PBObject::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 key = 1;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->key(), output);
-  }
-
-  // map<string, sint32> pbint32 = 2;
+  // map<string, sint32> pbint32 = 1;
   if (!this->pbint32().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::int32 >::const_pointer
         ConstPtr;
@@ -1785,7 +1761,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbint32_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            2, *entry, output);
+            1, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -1796,13 +1772,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbint32_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            2, *entry, output);
+            1, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, uint32> pbuint32 = 3;
+  // map<string, uint32> pbuint32 = 2;
   if (!this->pbuint32().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::uint32 >::const_pointer
         ConstPtr;
@@ -1834,7 +1810,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbuint32_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            3, *entry, output);
+            2, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -1845,13 +1821,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbuint32_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            3, *entry, output);
+            2, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, sint64> pbint64 = 4;
+  // map<string, sint64> pbint64 = 3;
   if (!this->pbint64().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::int64 >::const_pointer
         ConstPtr;
@@ -1883,7 +1859,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbint64_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            4, *entry, output);
+            3, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -1894,13 +1870,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbint64_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            4, *entry, output);
+            3, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, uint64> pbuint64 = 5;
+  // map<string, uint64> pbuint64 = 4;
   if (!this->pbuint64().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >::const_pointer
         ConstPtr;
@@ -1932,7 +1908,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbuint64_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            5, *entry, output);
+            4, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -1943,13 +1919,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbuint64_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            5, *entry, output);
+            4, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, double> pbdouble = 6;
+  // map<string, double> pbdouble = 5;
   if (!this->pbdouble().empty()) {
     typedef ::google::protobuf::Map< ::std::string, double >::const_pointer
         ConstPtr;
@@ -1981,7 +1957,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbdouble_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            6, *entry, output);
+            5, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -1992,13 +1968,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbdouble_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            6, *entry, output);
+            5, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, bytes> pbstring = 7;
+  // map<string, bytes> pbstring = 6;
   if (!this->pbstring().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
         ConstPtr;
@@ -2030,7 +2006,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbstring_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            7, *entry, output);
+            6, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -2041,13 +2017,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbstring_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            7, *entry, output);
+            6, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBArray> pbarray = 8;
+  // map<string, .KFMsg.PBArray> pbarray = 7;
   if (!this->pbarray().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBArray >::const_pointer
         ConstPtr;
@@ -2079,7 +2055,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbarray_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            8, *entry, output);
+            7, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -2090,13 +2066,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbarray_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            8, *entry, output);
+            7, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBObject> pbobject = 9;
+  // map<string, .KFMsg.PBObject> pbobject = 8;
   if (!this->pbobject().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBObject >::const_pointer
         ConstPtr;
@@ -2128,7 +2104,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbobject_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            9, *entry, output);
+            8, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -2139,13 +2115,13 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbobject_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            9, *entry, output);
+            8, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBRecord> pbrecord = 10;
+  // map<string, .KFMsg.PBRecord> pbrecord = 9;
   if (!this->pbrecord().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBRecord >::const_pointer
         ConstPtr;
@@ -2177,7 +2153,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbrecord_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            10, *entry, output);
+            9, *entry, output);
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
     } else {
@@ -2188,7 +2164,7 @@ void PBObject::SerializeWithCachedSizes(
         entry.reset(pbrecord_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            10, *entry, output);
+            9, *entry, output);
         Utf8Check::Check(&*it);
       }
     }
@@ -2208,12 +2184,7 @@ void PBObject::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 key = 1;
-  if (this->key() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->key(), target);
-  }
-
-  // map<string, sint32> pbint32 = 2;
+  // map<string, sint32> pbint32 = 1;
   if (!this->pbint32().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::int32 >::const_pointer
         ConstPtr;
@@ -2246,7 +2217,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       2, *entry, deterministic, target);
+                       1, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2259,14 +2230,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       2, *entry, deterministic, target);
+                       1, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, uint32> pbuint32 = 3;
+  // map<string, uint32> pbuint32 = 2;
   if (!this->pbuint32().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::uint32 >::const_pointer
         ConstPtr;
@@ -2299,7 +2270,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       3, *entry, deterministic, target);
+                       2, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2312,14 +2283,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       3, *entry, deterministic, target);
+                       2, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, sint64> pbint64 = 4;
+  // map<string, sint64> pbint64 = 3;
   if (!this->pbint64().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::int64 >::const_pointer
         ConstPtr;
@@ -2352,7 +2323,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       4, *entry, deterministic, target);
+                       3, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2365,14 +2336,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       4, *entry, deterministic, target);
+                       3, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, uint64> pbuint64 = 5;
+  // map<string, uint64> pbuint64 = 4;
   if (!this->pbuint64().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >::const_pointer
         ConstPtr;
@@ -2405,7 +2376,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       5, *entry, deterministic, target);
+                       4, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2418,14 +2389,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       5, *entry, deterministic, target);
+                       4, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, double> pbdouble = 6;
+  // map<string, double> pbdouble = 5;
   if (!this->pbdouble().empty()) {
     typedef ::google::protobuf::Map< ::std::string, double >::const_pointer
         ConstPtr;
@@ -2458,7 +2429,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       6, *entry, deterministic, target);
+                       5, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2471,14 +2442,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       6, *entry, deterministic, target);
+                       5, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, bytes> pbstring = 7;
+  // map<string, bytes> pbstring = 6;
   if (!this->pbstring().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
         ConstPtr;
@@ -2511,7 +2482,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       7, *entry, deterministic, target);
+                       6, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2524,14 +2495,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       7, *entry, deterministic, target);
+                       6, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBArray> pbarray = 8;
+  // map<string, .KFMsg.PBArray> pbarray = 7;
   if (!this->pbarray().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBArray >::const_pointer
         ConstPtr;
@@ -2564,7 +2535,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       8, *entry, deterministic, target);
+                       7, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2577,14 +2548,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       8, *entry, deterministic, target);
+                       7, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBObject> pbobject = 9;
+  // map<string, .KFMsg.PBObject> pbobject = 8;
   if (!this->pbobject().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBObject >::const_pointer
         ConstPtr;
@@ -2617,7 +2588,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       9, *entry, deterministic, target);
+                       8, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2630,14 +2601,14 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       9, *entry, deterministic, target);
+                       8, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
     }
   }
 
-  // map<string, .KFMsg.PBRecord> pbrecord = 10;
+  // map<string, .KFMsg.PBRecord> pbrecord = 9;
   if (!this->pbrecord().empty()) {
     typedef ::google::protobuf::Map< ::std::string, ::KFMsg::PBRecord >::const_pointer
         ConstPtr;
@@ -2670,7 +2641,7 @@ void PBObject::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       10, *entry, deterministic, target);
+                       9, *entry, deterministic, target);
 ;
         Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
       }
@@ -2683,7 +2654,7 @@ void PBObject::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       10, *entry, deterministic, target);
+                       9, *entry, deterministic, target);
 ;
         Utf8Check::Check(&*it);
       }
@@ -2707,7 +2678,7 @@ size_t PBObject::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // map<string, sint32> pbint32 = 2;
+  // map<string, sint32> pbint32 = 1;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbint32_size());
   {
@@ -2721,7 +2692,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, uint32> pbuint32 = 3;
+  // map<string, uint32> pbuint32 = 2;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbuint32_size());
   {
@@ -2735,7 +2706,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, sint64> pbint64 = 4;
+  // map<string, sint64> pbint64 = 3;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbint64_size());
   {
@@ -2749,7 +2720,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, uint64> pbuint64 = 5;
+  // map<string, uint64> pbuint64 = 4;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbuint64_size());
   {
@@ -2763,7 +2734,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, double> pbdouble = 6;
+  // map<string, double> pbdouble = 5;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbdouble_size());
   {
@@ -2777,7 +2748,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, bytes> pbstring = 7;
+  // map<string, bytes> pbstring = 6;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbstring_size());
   {
@@ -2791,7 +2762,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, .KFMsg.PBArray> pbarray = 8;
+  // map<string, .KFMsg.PBArray> pbarray = 7;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbarray_size());
   {
@@ -2805,7 +2776,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, .KFMsg.PBObject> pbobject = 9;
+  // map<string, .KFMsg.PBObject> pbobject = 8;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbobject_size());
   {
@@ -2819,7 +2790,7 @@ size_t PBObject::ByteSizeLong() const {
     }
   }
 
-  // map<string, .KFMsg.PBRecord> pbrecord = 10;
+  // map<string, .KFMsg.PBRecord> pbrecord = 9;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbrecord_size());
   {
@@ -2831,13 +2802,6 @@ size_t PBObject::ByteSizeLong() const {
       total_size += ::google::protobuf::internal::WireFormatLite::
           MessageSizeNoVirtual(*entry);
     }
-  }
-
-  // uint64 key = 1;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->key());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2876,9 +2840,6 @@ void PBObject::MergeFrom(const PBObject& from) {
   pbarray_.MergeFrom(from.pbarray_);
   pbobject_.MergeFrom(from.pbobject_);
   pbrecord_.MergeFrom(from.pbrecord_);
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
 }
 
 void PBObject::CopyFrom(const ::google::protobuf::Message& from) {
@@ -2914,7 +2875,6 @@ void PBObject::InternalSwap(PBObject* other) {
   pbarray_.Swap(&other->pbarray_);
   pbobject_.Swap(&other->pbobject_);
   pbrecord_.Swap(&other->pbrecord_);
-  swap(key_, other->key_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

@@ -30,18 +30,8 @@ namespace KFrame
             return UpdateExecute( strsql );
         }
 
-        // uint32
-        // redis 其实不会返回uint32 这个函数只是查询string, 然后转成uint32
-        // 注意需要查询的数值一定是可以转成uint32的, 否则返回会不正确
-        template< typename... P >
-        KFResult< uint32 >* QueryUInt32( const char* myfmt, P&& ... args )
-        {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return UInt32Execute( strsql );
-        }
-
         // uint64
-        // redis 直接返回的integer结果
+        // 返回的integer结果 或者 数字字符串
         template< typename... P >
         KFResult< uint64 >* QueryUInt64( const char* myfmt, P&& ... args )
         {
@@ -128,7 +118,6 @@ namespace KFrame
         virtual KFResult< uint64 >* UpdateExecute( const std::string& strsql ) = 0;
 
         // 查询数据库
-        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql ) = 0;
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql ) = 0;
         virtual KFResult< std::string >* StringExecute( const std::string& strsql ) = 0;
         virtual KFResult< MapString >* MapExecute( const std::string& strsql ) = 0;

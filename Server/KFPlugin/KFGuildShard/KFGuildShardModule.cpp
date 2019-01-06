@@ -1924,31 +1924,31 @@ namespace KFrame
 
     void KFGuildShardModule::SerialGuildData( MapString& guilddata, KFMsg::PBStrings* pbguildata )
     {
-        VectorString fields;
-        auto kfguildclass = _kf_kernel->FindClassSetting( __KF_STRING__( guild ) );
-        // 过滤需要查看的字段
-        for ( auto& iter : kfguildclass->_static_data._objects )
-        {
-            if ( iter.second->HaveFlagMask( KFDataDefine::Mask_Sync_View ) )
-            {
-                fields.push_back( iter.first );
-            }
-        }
-        if ( fields.empty() )
-        {
-            return;
-        }
+        //VectorString fields;
+        //auto kfguildclass = _kf_kernel->FindClassSetting( __KF_STRING__( guild ) );
+        //// 过滤需要查看的字段
+        //for ( auto& iter : kfguildclass->_static_data._objects )
+        //{
+        //    if ( iter.second->HaveFlagMask( KFDataDefine::Mask_Sync_View ) )
+        //    {
+        //        fields.push_back( iter.first );
+        //    }
+        //}
+        //if ( fields.empty() )
+        //{
+        //    return;
+        //}
 
-        for ( auto& iter : fields )
-        {
-            auto iterfield = guilddata.find( iter );
-            if ( iterfield != guilddata.end() )
-            {
-                auto pbguild = pbguildata->add_pbstring();
-                pbguild->set_name( iterfield->first );
-                pbguild->set_value( iterfield->second );
-            }
-        }
+        //for ( auto& iter : fields )
+        //{
+        //    auto iterfield = guilddata.find( iter );
+        //    if ( iterfield != guilddata.end() )
+        //    {
+        //        auto pbguild = pbguildata->add_pbstring();
+        //        pbguild->set_name( iterfield->first );
+        //        pbguild->set_value( iterfield->second );
+        //    }
+        //}
     }
 
     bool KFGuildShardModule::SendMessageToGuildMember( uint32 playerid, uint64 guild, uint32 msgid, ::google::protobuf::Message* message, VectorString& offlineids, bool containself )

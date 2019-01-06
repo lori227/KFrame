@@ -13,26 +13,7 @@ namespace google
 
 namespace KFMsg
 {
-    class ListenData;
-
-    class PBInt32;
-    class PBUInt32;
-    class PBInt64;
-    class PBUInt64;
-    class PBDouble;
-    class PBString;
-    class PBStrings;
-    class PBVector3D;
     class PBObject;
-    class PBRecord;
-    class PBArray;
-
-    class PBBattleScore;
-}
-
-namespace Math3D
-{
-    class Vector3D;
 }
 
 namespace KFrame

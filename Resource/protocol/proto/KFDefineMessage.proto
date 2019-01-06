@@ -10,35 +10,32 @@ message PBArray
 
 message PBObject
 {
-	// 对象的key值, 逻辑使用( 没有是0 )
-	uint64 key = 1;				
-
 	// int32 属性列表
-	map< string, sint32 > pbint32 = 2;		
+	map< string, sint32 > pbint32 = 1;		
 	
 	// uint32 属性列表
-	map< string, uint32 > pbuint32 = 3;	
+	map< string, uint32 > pbuint32 = 2;	
 
 	// int64 属性列表
-	map< string, sint64 > pbint64 = 4;	
+	map< string, sint64 > pbint64 = 3;	
 
 	// uint64 属性列表
-	map< string, uint64 > pbuint64 = 5;	
+	map< string, uint64 > pbuint64 = 4;	
 
 	// double 属性列表
-	map< string, double > pbdouble = 6;	
+	map< string, double > pbdouble = 5;	
 
 	// string 属性列表
-	map< string, bytes > pbstring = 7;	
+	map< string, bytes > pbstring = 6;	
 
 	// 数组列表
-	map< string, PBArray > pbarray = 8;	
+	map< string, PBArray > pbarray = 7;	
 
 	// 对象列表
-	map< string, PBObject > pbobject = 9;	
+	map< string, PBObject > pbobject = 8;	
 
 	// 集合列表
-	map< string, PBRecord > pbrecord = 10;	
+	map< string, PBRecord > pbrecord = 9;	
 }
 
 message PBRecord

@@ -40,7 +40,6 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 读操作
         // 查询数据库
-        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql );
         virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
         virtual KFResult< std::string >* StringExecute( const std::string& strsql );
         virtual KFResult< MapString >* MapExecute( const std::string& strsql );

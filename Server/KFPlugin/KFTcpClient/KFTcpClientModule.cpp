@@ -54,9 +54,9 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
 
-        listendata->set_appid( kfglobal->_app_id._union._id );
-        listendata->set_apptype( kfglobal->_app_type );
         listendata->set_appname( kfglobal->_app_name );
+        listendata->set_apptype( kfglobal->_app_type );
+        listendata->set_appid( kfglobal->_app_id._union._id );
         listendata->set_ip( kfglobal->_interanet_ip );
         listendata->set_port( kfglobal->_listen_port );
         listendata->set_zoneid( kfglobal->_app_id._union._app_data._zone_id );

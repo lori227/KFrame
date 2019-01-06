@@ -4526,6 +4526,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryBasicAck, playerid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryBasicAck, result_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryBasicAck, pbobject_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryPlayerReq, _internal_metadata_),
@@ -5738,143 +5739,143 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 450, -1, sizeof(::KFMsg::S2SUpdateFriendLinessReq)},
   { 459, -1, sizeof(::KFMsg::S2SQueryBasicReq)},
   { 466, -1, sizeof(::KFMsg::S2SQueryBasicAck)},
-  { 473, -1, sizeof(::KFMsg::S2SQueryPlayerReq)},
-  { 481, -1, sizeof(::KFMsg::S2SQueryPlayerAck)},
-  { 488, -1, sizeof(::KFMsg::S2SUpdateMailFlagReq)},
-  { 497, -1, sizeof(::KFMsg::S2SUpdateMailFlagAck)},
-  { 506, -1, sizeof(::KFMsg::S2SPlayerToastReq)},
-  { 514, -1, sizeof(::KFMsg::S2SPlayerToastAck)},
-  { 523, -1, sizeof(::KFMsg::S2SQueryToastCountReq)},
-  { 530, -1, sizeof(::KFMsg::S2SUpdateFriendLinessAck)},
-  { 538, -1, sizeof(::KFMsg::S2SCreateMatchGroupReq)},
-  { 548, -1, sizeof(::KFMsg::S2SUpdateGroupMatchReq)},
-  { 557, -1, sizeof(::KFMsg::S2SCreateMatchGroupToShardReq)},
-  { 567, -1, sizeof(::KFMsg::S2SReceiveInviteMatchGroupReq)},
-  { 580, -1, sizeof(::KFMsg::S2SConsentInviteMatchGroupReq)},
-  { 589, -1, sizeof(::KFMsg::S2SAddMatchGroupMemberReq)},
-  { 598, -1, sizeof(::KFMsg::S2SAddMatchGroupMemberAck)},
-  { 604, -1, sizeof(::KFMsg::S2STellMatchGroupDataAck)},
-  { 615, -1, sizeof(::KFMsg::S2SRemoveMatchGroupMemberAck)},
-  { 621, -1, sizeof(::KFMsg::S2SLeaveMatchGroupReq)},
-  { 628, -1, sizeof(::KFMsg::S2SKickMatchGroupReq)},
-  { 637, -1, sizeof(::KFMsg::S2SLeaveMatchGroupAck)},
-  { 643, -1, sizeof(::KFMsg::S2SApplyMatchGroupReq)},
-  { 652, -1, sizeof(::KFMsg::S2SApplyMatchGroupAck)},
-  { 660, -1, sizeof(::KFMsg::S2SConsentApplyMatchGroupAck)},
-  { 670, -1, sizeof(::KFMsg::S2SOnLineQueryMatchGroupReq)},
-  { 678, -1, sizeof(::KFMsg::S2SOffLineUpdateMatchGroupReq)},
-  { 685, 692, sizeof(::KFMsg::S2SUpdateGroupMemberReq_PbstringsEntry_DoNotUse)},
-  { 694, -1, sizeof(::KFMsg::S2SUpdateGroupMemberReq)},
-  { 703, 710, sizeof(::KFMsg::S2SUpdateGroupMemberAck_PbstringsEntry_DoNotUse)},
-  { 712, -1, sizeof(::KFMsg::S2SUpdateGroupMemberAck)},
-  { 720, 727, sizeof(::KFMsg::S2SUpdateGroupDataAck_PbstringEntry_DoNotUse)},
-  { 729, -1, sizeof(::KFMsg::S2SUpdateGroupDataAck)},
-  { 735, -1, sizeof(::KFMsg::S2SUpdateGuestListReq)},
-  { 743, -1, sizeof(::KFMsg::S2SQueryGuestReq)},
-  { 751, -1, sizeof(::KFMsg::S2SQueryGuestAck)},
-  { 760, -1, sizeof(::KFMsg::S2SNewPlayerLoginMailReq)},
-  { 766, -1, sizeof(::KFMsg::S2SUpdateRankDataReq)},
-  { 775, -1, sizeof(::KFMsg::S2SQueryRankListReq)},
-  { 784, -1, sizeof(::KFMsg::S2SQueryFriendRankListReq)},
-  { 793, 800, sizeof(::KFMsg::S2SAddRecentPlayerDataReq_PbdataEntry_DoNotUse)},
-  { 802, -1, sizeof(::KFMsg::S2SAddRecentPlayerDataReq)},
-  { 811, -1, sizeof(::KFMsg::S2SQueryRecentListReq)},
-  { 817, -1, sizeof(::KFMsg::S2SQueryRecentListAck)},
-  { 824, -1, sizeof(::KFMsg::S2SCreateGuidReq)},
-  { 835, -1, sizeof(::KFMsg::S2SCreateGuildToShardReq)},
-  { 847, -1, sizeof(::KFMsg::S2SCreateGuildAck)},
-  { 857, 864, sizeof(::KFMsg::S2SUpdateMemberBasicDataReq_PbdataEntry_DoNotUse)},
-  { 866, -1, sizeof(::KFMsg::S2SUpdateMemberBasicDataReq)},
-  { 874, -1, sizeof(::KFMsg::S2SInviteGuildReq)},
-  { 883, -1, sizeof(::KFMsg::S2SInviteGuildAck)},
-  { 891, -1, sizeof(::KFMsg::S2SApplyGuildReq)},
-  { 899, -1, sizeof(::KFMsg::S2SApplyGuildAck)},
-  { 907, -1, sizeof(::KFMsg::S2SPlayerGuildChangeReq)},
-  { 915, -1, sizeof(::KFMsg::S2SExitGuildReq)},
-  { 923, -1, sizeof(::KFMsg::S2STransferMasterReq)},
-  { 932, -1, sizeof(::KFMsg::S2SReviewApplyReq)},
-  { 942, -1, sizeof(::KFMsg::S2SDissolveGuildReq)},
-  { 950, -1, sizeof(::KFMsg::S2SModifyMedalReq)},
-  { 959, -1, sizeof(::KFMsg::S2SQueryGuildListReq)},
-  { 968, -1, sizeof(::KFMsg::S2SKickMemberReq)},
-  { 977, -1, sizeof(::KFMsg::S2SLoginQueryGuildReq)},
-  { 985, -1, sizeof(::KFMsg::S2SLoginQueryGuildAck)},
-  { 994, 1001, sizeof(::KFMsg::S2SUpdateGuildDataReq_PbdataEntry_DoNotUse)},
-  { 1003, -1, sizeof(::KFMsg::S2SUpdateGuildDataReq)},
-  { 1011, -1, sizeof(::KFMsg::S2SUpgradeGuildReq)},
-  { 1018, -1, sizeof(::KFMsg::S2SUpgradeGuildAck)},
-  { 1026, -1, sizeof(::KFMsg::S2SAppointGuildMemberReq)},
-  { 1036, -1, sizeof(::KFMsg::S2SSearchGuildByNameReq)},
-  { 1044, -1, sizeof(::KFMsg::S2SSetGuildSwitchReq)},
-  { 1054, -1, sizeof(::KFMsg::S2SLoginQueryGuildidReq)},
-  { 1061, -1, sizeof(::KFMsg::S2SLoginQueryGuildidAck)},
-  { 1068, -1, sizeof(::KFMsg::S2SQueryGuildLogReq)},
-  { 1079, -1, sizeof(::KFMsg::S2SAddGuildActivenessReq)},
-  { 1087, -1, sizeof(::KFMsg::S2SGMAddMailReq)},
-  { 1095, -1, sizeof(::KFMsg::S2SSendChatToServer)},
-  { 1109, -1, sizeof(::KFMsg::S2SRegisterMatchReq)},
-  { 1115, -1, sizeof(::KFMsg::S2SMatchToProxyReq)},
-  { 1127, -1, sizeof(::KFMsg::S2SMatchToClientAck)},
-  { 1135, -1, sizeof(::KFMsg::S2SMatchToShardReq)},
-  { 1147, -1, sizeof(::KFMsg::S2SCancelMatchToProxyReq)},
-  { 1154, -1, sizeof(::KFMsg::S2SCancelMatchToShardReq)},
-  { 1161, -1, sizeof(::KFMsg::S2SCancelMatchToBattleShardReq)},
-  { 1169, -1, sizeof(::KFMsg::S2SNoticeMatchRoomReq)},
-  { 1183, -1, sizeof(::KFMsg::S2SNoticeMatchRoomAck)},
-  { 1191, -1, sizeof(::KFMsg::S2SQueryMatchRoomReq)},
-  { 1199, -1, sizeof(::KFMsg::S2SQueryRoomToMatchShardReq)},
-  { 1207, -1, sizeof(::KFMsg::S2SQueryMatchRoomAck)},
-  { 1214, -1, sizeof(::KFMsg::S2SQueryBattleRoomReq)},
-  { 1222, -1, sizeof(::KFMsg::S2SQueryBattleRoomAck)},
-  { 1230, -1, sizeof(::KFMsg::S2SQueryRoomToBattleShardReq)},
-  { 1238, -1, sizeof(::KFMsg::S2SPlayerOnlineToBattleShardReq)},
-  { 1247, -1, sizeof(::KFMsg::S2SNoticeMatchStateReq)},
-  { 1254, -1, sizeof(::KFMsg::S2SResetMatchRoomReq)},
-  { 1261, -1, sizeof(::KFMsg::S2SAllocBattleIdReq)},
-  { 1268, -1, sizeof(::KFMsg::S2SAllocBattleIdAck)},
-  { 1274, -1, sizeof(::KFMsg::S2SRegisterBattleServerReq)},
-  { 1285, -1, sizeof(::KFMsg::S2SRegisterBattleServerAck)},
-  { 1292, -1, sizeof(::KFMsg::S2SRegisterServerToBattleShardReq)},
-  { 1302, -1, sizeof(::KFMsg::S2STellBattleRegisterToShardReq)},
-  { 1312, -1, sizeof(::KFMsg::S2SDisconnectServerToBattleShardReq)},
-  { 1318, -1, sizeof(::KFMsg::S2SCreateRoomToBattleProxyReq)},
-  { 1328, -1, sizeof(::KFMsg::S2SCreateRoomToBattleShardReq)},
-  { 1339, -1, sizeof(::KFMsg::S2SCreateRoomToMatchShardAck)},
-  { 1347, -1, sizeof(::KFMsg::S2SAddCampToBattleShardReq)},
-  { 1356, -1, sizeof(::KFMsg::S2SAddCampToMatchShardAck)},
-  { 1365, -1, sizeof(::KFMsg::S2SOpenBattleRoomReq)},
-  { 1374, -1, sizeof(::KFMsg::S2SOpenBattleRoomAck)},
-  { 1384, -1, sizeof(::KFMsg::S2SOpenBattleRoomToShardAck)},
-  { 1393, -1, sizeof(::KFMsg::S2SOpenRoomToMatchShardReq)},
-  { 1401, -1, sizeof(::KFMsg::S2SOpenRoomToBattleShardAck)},
-  { 1407, -1, sizeof(::KFMsg::S2SPlayerEnterBattleRoomReq)},
-  { 1415, -1, sizeof(::KFMsg::S2SPlayerEnterBattleRoomAck)},
-  { 1424, -1, sizeof(::KFMsg::S2SPlayerEnterRoomToBattleShardAck)},
-  { 1432, -1, sizeof(::KFMsg::S2SPlayerLoginBattleRoomReq)},
-  { 1441, -1, sizeof(::KFMsg::S2SPlayerLoginBattleRoomAck)},
-  { 1449, -1, sizeof(::KFMsg::S2SPlayerLoginRoomToBattleShardReq)},
-  { 1457, -1, sizeof(::KFMsg::S2SPlayerCancelMatchReq)},
-  { 1465, -1, sizeof(::KFMsg::S2SPlayerLeaveBattleRoomReq)},
-  { 1474, -1, sizeof(::KFMsg::S2SPlayerLeaveBattleRoomAck)},
-  { 1482, -1, sizeof(::KFMsg::S2SPlayerLeaveRoomToBattleShardReq)},
-  { 1490, -1, sizeof(::KFMsg::S2SPlayerLeaveRoomToMatchShardReq)},
-  { 1500, -1, sizeof(::KFMsg::S2SLeaveBattleRoomToClientAck)},
-  { 1507, -1, sizeof(::KFMsg::S2STellBattleRoomStartReq)},
-  { 1515, -1, sizeof(::KFMsg::S2STellRoomStartToBattleShardReq)},
-  { 1522, -1, sizeof(::KFMsg::S2STellBattleRoomStartAck)},
-  { 1528, -1, sizeof(::KFMsg::S2STellRoomStartToMatchShardReq)},
-  { 1535, -1, sizeof(::KFMsg::S2STellRoomStartToMatchShardAck)},
-  { 1541, -1, sizeof(::KFMsg::S2STellBattleRoomFinishReq)},
-  { 1550, -1, sizeof(::KFMsg::S2STellBattleRoomFinishAck)},
-  { 1556, -1, sizeof(::KFMsg::S2SBattleRoomScoreBalanceReq)},
-  { 1564, -1, sizeof(::KFMsg::S2SBattleRoomScoreBalanceAck)},
-  { 1572, -1, sizeof(::KFMsg::S2SBattleScoreBalanceToShardReq)},
-  { 1579, -1, sizeof(::KFMsg::S2SPlayerBattleScoreReq)},
-  { 1587, -1, sizeof(::KFMsg::S2SPlayerBattleScoreAck)},
-  { 1594, -1, sizeof(::KFMsg::S2SOnlieQueryBattleScoreReq)},
-  { 1600, -1, sizeof(::KFMsg::S2STellRoomFinishToBattleShardReq)},
-  { 1608, -1, sizeof(::KFMsg::S2STellRoomCloseToMatchShardReq)},
-  { 1615, -1, sizeof(::KFMsg::S2SResetBattleRoomReq)},
+  { 474, -1, sizeof(::KFMsg::S2SQueryPlayerReq)},
+  { 482, -1, sizeof(::KFMsg::S2SQueryPlayerAck)},
+  { 489, -1, sizeof(::KFMsg::S2SUpdateMailFlagReq)},
+  { 498, -1, sizeof(::KFMsg::S2SUpdateMailFlagAck)},
+  { 507, -1, sizeof(::KFMsg::S2SPlayerToastReq)},
+  { 515, -1, sizeof(::KFMsg::S2SPlayerToastAck)},
+  { 524, -1, sizeof(::KFMsg::S2SQueryToastCountReq)},
+  { 531, -1, sizeof(::KFMsg::S2SUpdateFriendLinessAck)},
+  { 539, -1, sizeof(::KFMsg::S2SCreateMatchGroupReq)},
+  { 549, -1, sizeof(::KFMsg::S2SUpdateGroupMatchReq)},
+  { 558, -1, sizeof(::KFMsg::S2SCreateMatchGroupToShardReq)},
+  { 568, -1, sizeof(::KFMsg::S2SReceiveInviteMatchGroupReq)},
+  { 581, -1, sizeof(::KFMsg::S2SConsentInviteMatchGroupReq)},
+  { 590, -1, sizeof(::KFMsg::S2SAddMatchGroupMemberReq)},
+  { 599, -1, sizeof(::KFMsg::S2SAddMatchGroupMemberAck)},
+  { 605, -1, sizeof(::KFMsg::S2STellMatchGroupDataAck)},
+  { 616, -1, sizeof(::KFMsg::S2SRemoveMatchGroupMemberAck)},
+  { 622, -1, sizeof(::KFMsg::S2SLeaveMatchGroupReq)},
+  { 629, -1, sizeof(::KFMsg::S2SKickMatchGroupReq)},
+  { 638, -1, sizeof(::KFMsg::S2SLeaveMatchGroupAck)},
+  { 644, -1, sizeof(::KFMsg::S2SApplyMatchGroupReq)},
+  { 653, -1, sizeof(::KFMsg::S2SApplyMatchGroupAck)},
+  { 661, -1, sizeof(::KFMsg::S2SConsentApplyMatchGroupAck)},
+  { 671, -1, sizeof(::KFMsg::S2SOnLineQueryMatchGroupReq)},
+  { 679, -1, sizeof(::KFMsg::S2SOffLineUpdateMatchGroupReq)},
+  { 686, 693, sizeof(::KFMsg::S2SUpdateGroupMemberReq_PbstringsEntry_DoNotUse)},
+  { 695, -1, sizeof(::KFMsg::S2SUpdateGroupMemberReq)},
+  { 704, 711, sizeof(::KFMsg::S2SUpdateGroupMemberAck_PbstringsEntry_DoNotUse)},
+  { 713, -1, sizeof(::KFMsg::S2SUpdateGroupMemberAck)},
+  { 721, 728, sizeof(::KFMsg::S2SUpdateGroupDataAck_PbstringEntry_DoNotUse)},
+  { 730, -1, sizeof(::KFMsg::S2SUpdateGroupDataAck)},
+  { 736, -1, sizeof(::KFMsg::S2SUpdateGuestListReq)},
+  { 744, -1, sizeof(::KFMsg::S2SQueryGuestReq)},
+  { 752, -1, sizeof(::KFMsg::S2SQueryGuestAck)},
+  { 761, -1, sizeof(::KFMsg::S2SNewPlayerLoginMailReq)},
+  { 767, -1, sizeof(::KFMsg::S2SUpdateRankDataReq)},
+  { 776, -1, sizeof(::KFMsg::S2SQueryRankListReq)},
+  { 785, -1, sizeof(::KFMsg::S2SQueryFriendRankListReq)},
+  { 794, 801, sizeof(::KFMsg::S2SAddRecentPlayerDataReq_PbdataEntry_DoNotUse)},
+  { 803, -1, sizeof(::KFMsg::S2SAddRecentPlayerDataReq)},
+  { 812, -1, sizeof(::KFMsg::S2SQueryRecentListReq)},
+  { 818, -1, sizeof(::KFMsg::S2SQueryRecentListAck)},
+  { 825, -1, sizeof(::KFMsg::S2SCreateGuidReq)},
+  { 836, -1, sizeof(::KFMsg::S2SCreateGuildToShardReq)},
+  { 848, -1, sizeof(::KFMsg::S2SCreateGuildAck)},
+  { 858, 865, sizeof(::KFMsg::S2SUpdateMemberBasicDataReq_PbdataEntry_DoNotUse)},
+  { 867, -1, sizeof(::KFMsg::S2SUpdateMemberBasicDataReq)},
+  { 875, -1, sizeof(::KFMsg::S2SInviteGuildReq)},
+  { 884, -1, sizeof(::KFMsg::S2SInviteGuildAck)},
+  { 892, -1, sizeof(::KFMsg::S2SApplyGuildReq)},
+  { 900, -1, sizeof(::KFMsg::S2SApplyGuildAck)},
+  { 908, -1, sizeof(::KFMsg::S2SPlayerGuildChangeReq)},
+  { 916, -1, sizeof(::KFMsg::S2SExitGuildReq)},
+  { 924, -1, sizeof(::KFMsg::S2STransferMasterReq)},
+  { 933, -1, sizeof(::KFMsg::S2SReviewApplyReq)},
+  { 943, -1, sizeof(::KFMsg::S2SDissolveGuildReq)},
+  { 951, -1, sizeof(::KFMsg::S2SModifyMedalReq)},
+  { 960, -1, sizeof(::KFMsg::S2SQueryGuildListReq)},
+  { 969, -1, sizeof(::KFMsg::S2SKickMemberReq)},
+  { 978, -1, sizeof(::KFMsg::S2SLoginQueryGuildReq)},
+  { 986, -1, sizeof(::KFMsg::S2SLoginQueryGuildAck)},
+  { 995, 1002, sizeof(::KFMsg::S2SUpdateGuildDataReq_PbdataEntry_DoNotUse)},
+  { 1004, -1, sizeof(::KFMsg::S2SUpdateGuildDataReq)},
+  { 1012, -1, sizeof(::KFMsg::S2SUpgradeGuildReq)},
+  { 1019, -1, sizeof(::KFMsg::S2SUpgradeGuildAck)},
+  { 1027, -1, sizeof(::KFMsg::S2SAppointGuildMemberReq)},
+  { 1037, -1, sizeof(::KFMsg::S2SSearchGuildByNameReq)},
+  { 1045, -1, sizeof(::KFMsg::S2SSetGuildSwitchReq)},
+  { 1055, -1, sizeof(::KFMsg::S2SLoginQueryGuildidReq)},
+  { 1062, -1, sizeof(::KFMsg::S2SLoginQueryGuildidAck)},
+  { 1069, -1, sizeof(::KFMsg::S2SQueryGuildLogReq)},
+  { 1080, -1, sizeof(::KFMsg::S2SAddGuildActivenessReq)},
+  { 1088, -1, sizeof(::KFMsg::S2SGMAddMailReq)},
+  { 1096, -1, sizeof(::KFMsg::S2SSendChatToServer)},
+  { 1110, -1, sizeof(::KFMsg::S2SRegisterMatchReq)},
+  { 1116, -1, sizeof(::KFMsg::S2SMatchToProxyReq)},
+  { 1128, -1, sizeof(::KFMsg::S2SMatchToClientAck)},
+  { 1136, -1, sizeof(::KFMsg::S2SMatchToShardReq)},
+  { 1148, -1, sizeof(::KFMsg::S2SCancelMatchToProxyReq)},
+  { 1155, -1, sizeof(::KFMsg::S2SCancelMatchToShardReq)},
+  { 1162, -1, sizeof(::KFMsg::S2SCancelMatchToBattleShardReq)},
+  { 1170, -1, sizeof(::KFMsg::S2SNoticeMatchRoomReq)},
+  { 1184, -1, sizeof(::KFMsg::S2SNoticeMatchRoomAck)},
+  { 1192, -1, sizeof(::KFMsg::S2SQueryMatchRoomReq)},
+  { 1200, -1, sizeof(::KFMsg::S2SQueryRoomToMatchShardReq)},
+  { 1208, -1, sizeof(::KFMsg::S2SQueryMatchRoomAck)},
+  { 1215, -1, sizeof(::KFMsg::S2SQueryBattleRoomReq)},
+  { 1223, -1, sizeof(::KFMsg::S2SQueryBattleRoomAck)},
+  { 1231, -1, sizeof(::KFMsg::S2SQueryRoomToBattleShardReq)},
+  { 1239, -1, sizeof(::KFMsg::S2SPlayerOnlineToBattleShardReq)},
+  { 1248, -1, sizeof(::KFMsg::S2SNoticeMatchStateReq)},
+  { 1255, -1, sizeof(::KFMsg::S2SResetMatchRoomReq)},
+  { 1262, -1, sizeof(::KFMsg::S2SAllocBattleIdReq)},
+  { 1269, -1, sizeof(::KFMsg::S2SAllocBattleIdAck)},
+  { 1275, -1, sizeof(::KFMsg::S2SRegisterBattleServerReq)},
+  { 1286, -1, sizeof(::KFMsg::S2SRegisterBattleServerAck)},
+  { 1293, -1, sizeof(::KFMsg::S2SRegisterServerToBattleShardReq)},
+  { 1303, -1, sizeof(::KFMsg::S2STellBattleRegisterToShardReq)},
+  { 1313, -1, sizeof(::KFMsg::S2SDisconnectServerToBattleShardReq)},
+  { 1319, -1, sizeof(::KFMsg::S2SCreateRoomToBattleProxyReq)},
+  { 1329, -1, sizeof(::KFMsg::S2SCreateRoomToBattleShardReq)},
+  { 1340, -1, sizeof(::KFMsg::S2SCreateRoomToMatchShardAck)},
+  { 1348, -1, sizeof(::KFMsg::S2SAddCampToBattleShardReq)},
+  { 1357, -1, sizeof(::KFMsg::S2SAddCampToMatchShardAck)},
+  { 1366, -1, sizeof(::KFMsg::S2SOpenBattleRoomReq)},
+  { 1375, -1, sizeof(::KFMsg::S2SOpenBattleRoomAck)},
+  { 1385, -1, sizeof(::KFMsg::S2SOpenBattleRoomToShardAck)},
+  { 1394, -1, sizeof(::KFMsg::S2SOpenRoomToMatchShardReq)},
+  { 1402, -1, sizeof(::KFMsg::S2SOpenRoomToBattleShardAck)},
+  { 1408, -1, sizeof(::KFMsg::S2SPlayerEnterBattleRoomReq)},
+  { 1416, -1, sizeof(::KFMsg::S2SPlayerEnterBattleRoomAck)},
+  { 1425, -1, sizeof(::KFMsg::S2SPlayerEnterRoomToBattleShardAck)},
+  { 1433, -1, sizeof(::KFMsg::S2SPlayerLoginBattleRoomReq)},
+  { 1442, -1, sizeof(::KFMsg::S2SPlayerLoginBattleRoomAck)},
+  { 1450, -1, sizeof(::KFMsg::S2SPlayerLoginRoomToBattleShardReq)},
+  { 1458, -1, sizeof(::KFMsg::S2SPlayerCancelMatchReq)},
+  { 1466, -1, sizeof(::KFMsg::S2SPlayerLeaveBattleRoomReq)},
+  { 1475, -1, sizeof(::KFMsg::S2SPlayerLeaveBattleRoomAck)},
+  { 1483, -1, sizeof(::KFMsg::S2SPlayerLeaveRoomToBattleShardReq)},
+  { 1491, -1, sizeof(::KFMsg::S2SPlayerLeaveRoomToMatchShardReq)},
+  { 1501, -1, sizeof(::KFMsg::S2SLeaveBattleRoomToClientAck)},
+  { 1508, -1, sizeof(::KFMsg::S2STellBattleRoomStartReq)},
+  { 1516, -1, sizeof(::KFMsg::S2STellRoomStartToBattleShardReq)},
+  { 1523, -1, sizeof(::KFMsg::S2STellBattleRoomStartAck)},
+  { 1529, -1, sizeof(::KFMsg::S2STellRoomStartToMatchShardReq)},
+  { 1536, -1, sizeof(::KFMsg::S2STellRoomStartToMatchShardAck)},
+  { 1542, -1, sizeof(::KFMsg::S2STellBattleRoomFinishReq)},
+  { 1551, -1, sizeof(::KFMsg::S2STellBattleRoomFinishAck)},
+  { 1557, -1, sizeof(::KFMsg::S2SBattleRoomScoreBalanceReq)},
+  { 1565, -1, sizeof(::KFMsg::S2SBattleRoomScoreBalanceAck)},
+  { 1573, -1, sizeof(::KFMsg::S2SBattleScoreBalanceToShardReq)},
+  { 1580, -1, sizeof(::KFMsg::S2SPlayerBattleScoreReq)},
+  { 1588, -1, sizeof(::KFMsg::S2SPlayerBattleScoreAck)},
+  { 1595, -1, sizeof(::KFMsg::S2SOnlieQueryBattleScoreReq)},
+  { 1601, -1, sizeof(::KFMsg::S2STellRoomFinishToBattleShardReq)},
+  { 1609, -1, sizeof(::KFMsg::S2STellRoomCloseToMatchShardReq)},
+  { 1616, -1, sizeof(::KFMsg::S2SResetBattleRoomReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -6212,481 +6213,482 @@ void AddDescriptorsImpl() {
       "UpdateFriendLinessReq\022\024\n\014selfplayerid\030\001 "
       "\001(\004\022\026\n\016targetplayerid\030\002 \001(\004\022\024\n\014friendlin"
       "ess\030\003 \001(\r\022\014\n\004type\030\004 \001(\r\"2\n\020S2SQueryBasic"
-      "Req\022\020\n\010playerid\030\001 \001(\004\022\014\n\004name\030\002 \001(\014\"G\n\020S"
-      "2SQueryBasicAck\022\020\n\010playerid\030\001 \001(\004\022!\n\010pbo"
-      "bject\030\002 \001(\0132\017.KFMsg.PBObject\"F\n\021S2SQuery"
-      "PlayerReq\022\016\n\006zoneid\030\001 \001(\r\022\020\n\010playerid\030\002 "
-      "\001(\004\022\017\n\007queryid\030\003 \001(\004\"H\n\021S2SQueryPlayerAc"
-      "k\022\020\n\010playerid\030\001 \001(\004\022!\n\010pbobject\030\002 \001(\0132\017."
-      "KFMsg.PBObject\"X\n\024S2SUpdateMailFlagReq\022\020"
-      "\n\010playerid\030\001 \001(\004\022\016\n\006mailid\030\002 \001(\004\022\020\n\010mail"
-      "type\030\003 \001(\r\022\014\n\004flag\030\004 \001(\r\"X\n\024S2SUpdateMai"
-      "lFlagAck\022\020\n\010playerid\030\001 \001(\004\022\016\n\006mailid\030\002 \001"
-      "(\004\022\020\n\010mailtype\030\003 \001(\r\022\014\n\004flag\030\004 \001(\r\"S\n\021S2"
-      "SPlayerToastReq\022\024\n\014selfplayerid\030\001 \001(\004\022\026\n"
-      "\016targetplayerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\""
-      "e\n\021S2SPlayerToastAck\022\016\n\006result\030\001 \001(\r\022\020\n\010"
-      "playerid\030\002 \001(\004\022\026\n\016targetplayerid\030\003 \001(\004\022\026"
-      "\n\016targetserverid\030\004 \001(\004\"E\n\025S2SQueryToastC"
-      "ountReq\022\024\n\014selfplayerid\030\001 \001(\004\022\026\n\016targetp"
-      "layerid\030\002 \001(\004\"Z\n\030S2SUpdateFriendLinessAc"
-      "k\022\020\n\010playerid\030\001 \001(\004\022\026\n\016targetplayerid\030\002 "
-      "\001(\004\022\024\n\014friendliness\030\003 \001(\004\"\201\001\n\026S2SCreateM"
-      "atchGroupReq\022!\n\010pbmember\030\001 \001(\0132\017.KFMsg.P"
-      "BObject\022\017\n\007groupid\030\002 \001(\004\022\020\n\010maxcount\030\003 \001"
-      "(\r\022\017\n\007matchid\030\004 \001(\r\022\020\n\010playerid\030\005 \001(\004\"^\n"
-      "\026S2SUpdateGroupMatchReq\022\017\n\007groupid\030\001 \001(\004"
-      "\022\020\n\010maxcount\030\002 \001(\r\022\017\n\007matchid\030\003 \001(\r\022\020\n\010p"
-      "layerid\030\004 \001(\004\"\210\001\n\035S2SCreateMatchGroupToS"
-      "hardReq\022!\n\010pbmember\030\001 \001(\0132\017.KFMsg.PBObje"
-      "ct\022\017\n\007groupid\030\002 \001(\004\022\020\n\010maxcount\030\003 \001(\r\022\017\n"
-      "\007matchid\030\004 \001(\r\022\020\n\010playerid\030\005 \001(\004\"\313\001\n\035S2S"
-      "ReceiveInviteMatchGroupReq\022\020\n\010playerid\030\001"
-      " \001(\004\022\017\n\007groupid\030\002 \001(\004\022 \n\007inviter\030\003 \001(\0132\017"
-      ".KFMsg.PBObject\022\016\n\006source\030\004 \001(\014\022\017\n\007match"
-      "id\030\005 \001(\r\022\027\n\017inviterplayerid\030\006 \001(\004\022\027\n\017inv"
-      "iterserverid\030\007 \001(\004\022\022\n\nplayername\030\010 \001(\014\"w"
-      "\n\035S2SConsentInviteMatchGroupReq\022\017\n\007group"
-      "id\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003"
-      " \001(\004\022!\n\010pbmember\030\004 \001(\0132\017.KFMsg.PBObject\""
-      "s\n\031S2SAddMatchGroupMemberReq\022\017\n\007groupid\030"
-      "\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001("
-      "\004\022!\n\010pbmember\030\004 \001(\0132\017.KFMsg.PBObject\">\n\031"
-      "S2SAddMatchGroupMemberAck\022!\n\010pbmember\030\001 "
-      "\001(\0132\017.KFMsg.PBObject\"\224\001\n\030S2STellMatchGro"
-      "upDataAck\022!\n\010pbmember\030\001 \003(\0132\017.KFMsg.PBOb"
-      "ject\022\017\n\007groupid\030\002 \001(\004\022\021\n\tcaptainid\030\003 \001(\004"
-      "\022\020\n\010maxcount\030\004 \001(\r\022\017\n\007matchid\030\005 \001(\r\022\016\n\006n"
-      "ewadd\030\006 \001(\010\"0\n\034S2SRemoveMatchGroupMember"
-      "Ack\022\020\n\010memberid\030\001 \001(\004\":\n\025S2SLeaveMatchGr"
+      "Req\022\020\n\010playerid\030\001 \001(\004\022\014\n\004name\030\002 \001(\014\"W\n\020S"
+      "2SQueryBasicAck\022\020\n\010playerid\030\001 \001(\004\022\016\n\006res"
+      "ult\030\002 \001(\r\022!\n\010pbobject\030\003 \001(\0132\017.KFMsg.PBOb"
+      "ject\"F\n\021S2SQueryPlayerReq\022\016\n\006zoneid\030\001 \001("
+      "\r\022\020\n\010playerid\030\002 \001(\004\022\017\n\007queryid\030\003 \001(\004\"H\n\021"
+      "S2SQueryPlayerAck\022\020\n\010playerid\030\001 \001(\004\022!\n\010p"
+      "bobject\030\002 \001(\0132\017.KFMsg.PBObject\"X\n\024S2SUpd"
+      "ateMailFlagReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006mail"
+      "id\030\002 \001(\004\022\020\n\010mailtype\030\003 \001(\r\022\014\n\004flag\030\004 \001(\r"
+      "\"X\n\024S2SUpdateMailFlagAck\022\020\n\010playerid\030\001 \001"
+      "(\004\022\016\n\006mailid\030\002 \001(\004\022\020\n\010mailtype\030\003 \001(\r\022\014\n\004"
+      "flag\030\004 \001(\r\"S\n\021S2SPlayerToastReq\022\024\n\014selfp"
+      "layerid\030\001 \001(\004\022\026\n\016targetplayerid\030\002 \001(\004\022\020\n"
+      "\010serverid\030\003 \001(\004\"e\n\021S2SPlayerToastAck\022\016\n\006"
+      "result\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\026\n\016target"
+      "playerid\030\003 \001(\004\022\026\n\016targetserverid\030\004 \001(\004\"E"
+      "\n\025S2SQueryToastCountReq\022\024\n\014selfplayerid\030"
+      "\001 \001(\004\022\026\n\016targetplayerid\030\002 \001(\004\"Z\n\030S2SUpda"
+      "teFriendLinessAck\022\020\n\010playerid\030\001 \001(\004\022\026\n\016t"
+      "argetplayerid\030\002 \001(\004\022\024\n\014friendliness\030\003 \001("
+      "\004\"\201\001\n\026S2SCreateMatchGroupReq\022!\n\010pbmember"
+      "\030\001 \001(\0132\017.KFMsg.PBObject\022\017\n\007groupid\030\002 \001(\004"
+      "\022\020\n\010maxcount\030\003 \001(\r\022\017\n\007matchid\030\004 \001(\r\022\020\n\010p"
+      "layerid\030\005 \001(\004\"^\n\026S2SUpdateGroupMatchReq\022"
+      "\017\n\007groupid\030\001 \001(\004\022\020\n\010maxcount\030\002 \001(\r\022\017\n\007ma"
+      "tchid\030\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\"\210\001\n\035S2SCre"
+      "ateMatchGroupToShardReq\022!\n\010pbmember\030\001 \001("
+      "\0132\017.KFMsg.PBObject\022\017\n\007groupid\030\002 \001(\004\022\020\n\010m"
+      "axcount\030\003 \001(\r\022\017\n\007matchid\030\004 \001(\r\022\020\n\010player"
+      "id\030\005 \001(\004\"\313\001\n\035S2SReceiveInviteMatchGroupR"
+      "eq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007groupid\030\002 \001(\004\022 \n"
+      "\007inviter\030\003 \001(\0132\017.KFMsg.PBObject\022\016\n\006sourc"
+      "e\030\004 \001(\014\022\017\n\007matchid\030\005 \001(\r\022\027\n\017inviterplaye"
+      "rid\030\006 \001(\004\022\027\n\017inviterserverid\030\007 \001(\004\022\022\n\npl"
+      "ayername\030\010 \001(\014\"w\n\035S2SConsentInviteMatchG"
+      "roupReq\022\017\n\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001"
+      "(\004\022\020\n\010serverid\030\003 \001(\004\022!\n\010pbmember\030\004 \001(\0132\017"
+      ".KFMsg.PBObject\"s\n\031S2SAddMatchGroupMembe"
+      "rReq\022\017\n\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022"
+      "\020\n\010serverid\030\003 \001(\004\022!\n\010pbmember\030\004 \001(\0132\017.KF"
+      "Msg.PBObject\">\n\031S2SAddMatchGroupMemberAc"
+      "k\022!\n\010pbmember\030\001 \001(\0132\017.KFMsg.PBObject\"\224\001\n"
+      "\030S2STellMatchGroupDataAck\022!\n\010pbmember\030\001 "
+      "\003(\0132\017.KFMsg.PBObject\022\017\n\007groupid\030\002 \001(\004\022\021\n"
+      "\tcaptainid\030\003 \001(\004\022\020\n\010maxcount\030\004 \001(\r\022\017\n\007ma"
+      "tchid\030\005 \001(\r\022\016\n\006newadd\030\006 \001(\010\"0\n\034S2SRemove"
+      "MatchGroupMemberAck\022\020\n\010memberid\030\001 \001(\004\":\n"
+      "\025S2SLeaveMatchGroupReq\022\017\n\007groupid\030\001 \001(\004\022"
+      "\020\n\010playerid\030\002 \001(\004\"^\n\024S2SKickMatchGroupRe"
+      "q\022\017\n\007groupid\030\001 \001(\004\022\021\n\tcaptainid\030\002 \001(\004\022\020\n"
+      "\010serverid\030\003 \001(\004\022\020\n\010memberid\030\004 \001(\004\")\n\025S2S"
+      "LeaveMatchGroupAck\022\020\n\010playerid\030\001 \001(\004\"o\n\025"
+      "S2SApplyMatchGroupReq\022\017\n\007groupid\030\001 \001(\004\022\020"
+      "\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\022!\n\010pb"
+      "member\030\004 \001(\0132\017.KFMsg.PBObject\"^\n\025S2SAppl"
+      "yMatchGroupAck\022\020\n\010playerid\030\001 \001(\004\022!\n\010pbme"
+      "mber\030\002 \001(\0132\017.KFMsg.PBObject\022\020\n\010serverid\030"
+      "\003 \001(\004\"z\n\034S2SConsentApplyMatchGroupAck\022\017\n"
+      "\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\021\n\tcapt"
+      "ainid\030\003 \001(\004\022\020\n\010serverid\030\004 \001(\004\022\022\n\nplayern"
+      "ame\030\005 \001(\014\"R\n\033S2SOnLineQueryMatchGroupReq"
+      "\022\017\n\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010s"
+      "erverid\030\003 \001(\004\"B\n\035S2SOffLineUpdateMatchGr"
       "oupReq\022\017\n\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001("
-      "\004\"^\n\024S2SKickMatchGroupReq\022\017\n\007groupid\030\001 \001"
-      "(\004\022\021\n\tcaptainid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\022"
-      "\020\n\010memberid\030\004 \001(\004\")\n\025S2SLeaveMatchGroupA"
-      "ck\022\020\n\010playerid\030\001 \001(\004\"o\n\025S2SApplyMatchGro"
-      "upReq\022\017\n\007groupid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004"
-      "\022\020\n\010serverid\030\003 \001(\004\022!\n\010pbmember\030\004 \001(\0132\017.K"
-      "FMsg.PBObject\"^\n\025S2SApplyMatchGroupAck\022\020"
-      "\n\010playerid\030\001 \001(\004\022!\n\010pbmember\030\002 \001(\0132\017.KFM"
-      "sg.PBObject\022\020\n\010serverid\030\003 \001(\004\"z\n\034S2SCons"
-      "entApplyMatchGroupAck\022\017\n\007groupid\030\001 \001(\004\022\020"
-      "\n\010playerid\030\002 \001(\004\022\021\n\tcaptainid\030\003 \001(\004\022\020\n\010s"
-      "erverid\030\004 \001(\004\022\022\n\nplayername\030\005 \001(\014\"R\n\033S2S"
-      "OnLineQueryMatchGroupReq\022\017\n\007groupid\030\001 \001("
-      "\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\"B\n"
-      "\035S2SOffLineUpdateMatchGroupReq\022\017\n\007groupi"
-      "d\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\"\302\001\n\027S2SUpdateG"
-      "roupMemberReq\022\017\n\007groupid\030\001 \001(\004\022\020\n\010member"
-      "id\030\002 \001(\004\022\020\n\010dataname\030\003 \001(\014\022@\n\tpbstrings\030"
-      "\004 \003(\0132-.KFMsg.S2SUpdateGroupMemberReq.Pb"
-      "stringsEntry\0320\n\016PbstringsEntry\022\013\n\003key\030\001 "
-      "\001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\261\001\n\027S2SUpdateGrou"
-      "pMemberAck\022\020\n\010memberid\030\001 \001(\004\022\020\n\010dataname"
-      "\030\002 \001(\014\022@\n\tpbstrings\030\003 \003(\0132-.KFMsg.S2SUpd"
-      "ateGroupMemberAck.PbstringsEntry\0320\n\016Pbst"
-      "ringsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\002"
-      "8\001\"\206\001\n\025S2SUpdateGroupDataAck\022<\n\010pbstring"
-      "\030\001 \003(\0132*.KFMsg.S2SUpdateGroupDataAck.Pbs"
-      "tringEntry\032/\n\rPbstringEntry\022\013\n\003key\030\001 \001(\t"
-      "\022\r\n\005value\030\002 \001(\014:\0028\001\"M\n\025S2SUpdateGuestLis"
-      "tReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guestid\030\002 \001(\004\022"
-      "\021\n\tguesttime\030\003 \001(\004\"H\n\020S2SQueryGuestReq\022\020"
-      "\n\010playerid\030\001 \001(\004\022\017\n\007queryid\030\002 \001(\004\022\021\n\tque"
-      "rytime\030\003 \001(\004\"p\n\020S2SQueryGuestAck\022\020\n\010play"
-      "erid\030\001 \001(\004\022\017\n\007queryid\030\002 \001(\004\022\022\n\nguestcoun"
-      "t\030\003 \001(\r\022%\n\tguestdata\030\004 \003(\0132\022.KFMsg.PBGue"
-      "stData\",\n\030S2SNewPlayerLoginMailReq\022\020\n\010pl"
-      "ayerid\030\001 \001(\004\"o\n\024S2SUpdateRankDataReq\022\020\n\010"
-      "playerid\030\001 \001(\004\022\016\n\006rankid\030\002 \001(\r\022\016\n\006zoneid"
-      "\030\003 \001(\r\022%\n\npbrankdata\030\004 \001(\0132\021.KFMsg.PBRan"
-      "kData\"Y\n\023S2SQueryRankListReq\022\020\n\010playerid"
-      "\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004\022\016\n\006rankid\030\003 \001(\r"
-      "\022\016\n\006zoneid\030\004 \001(\r\"a\n\031S2SQueryFriendRankLi"
-      "stReq\022\020\n\010playerid\030\001 \001(\004\022\020\n\010serverid\030\002 \001("
-      "\004\022\016\n\006rankid\030\003 \001(\r\022\020\n\010friendid\030\004 \003(\004\"\273\001\n\031"
-      "S2SAddRecentPlayerDataReq\022\016\n\006roomid\030\001 \001("
-      "\004\022\020\n\010playerid\030\002 \001(\004\022\017\n\007members\030\003 \003(\004\022<\n\006"
-      "pbdata\030\004 \003(\0132,.KFMsg.S2SAddRecentPlayerD"
-      "ataReq.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key"
-      "\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\")\n\025S2SQueryRec"
-      "entListReq\022\020\n\010playerid\030\001 \001(\004\"P\n\025S2SQuery"
-      "RecentListAck\022\020\n\010playerid\030\001 \001(\004\022%\n\npbrel"
-      "ation\030\002 \003(\0132\021.KFMsg.PBRelation\"y\n\020S2SCre"
-      "ateGuidReq\022\020\n\010playerid\030\001 \001(\004\022\020\n\010serverid"
-      "\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\021\n\tguildname\030\004 \001(\014\022"
-      "\r\n\005medal\030\005 \001(\r\022\021\n\tmanifesto\030\006 \001(\014\"\222\001\n\030S2"
-      "SCreateGuildToShardReq\022\020\n\010playerid\030\001 \001(\004"
-      "\022\020\n\010serverid\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\021\n\tguil"
-      "dname\030\004 \001(\014\022\r\n\005medal\030\005 \001(\r\022\021\n\tmanifesto\030"
-      "\006 \001(\014\022\017\n\007guildid\030\007 \001(\004\"f\n\021S2SCreateGuild"
-      "Ack\022\014\n\004code\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\017\n\007g"
-      "uildid\030\003 \001(\004\022\r\n\005medal\030\004 \001(\r\022\021\n\tmanifesto"
-      "\030\005 \001(\014\"\257\001\n\033S2SUpdateMemberBasicDataReq\022\020"
-      "\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022>\n\006pbd"
-      "ata\030\003 \003(\0132..KFMsg.S2SUpdateMemberBasicDa"
-      "taReq.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key\030"
-      "\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"Z\n\021S2SInviteGui"
-      "ldReq\022\017\n\007guildid\030\001 \001(\004\022\017\n\007invitor\030\002 \001(\004\022"
-      "\021\n\tinvitedid\030\003 \001(\004\022\020\n\010serverid\030\004 \001(\004\"I\n\021"
-      "S2SInviteGuildAck\022\017\n\007guildid\030\001 \001(\004\022\020\n\010pl"
-      "ayerid\030\002 \001(\004\022\021\n\tinvitedid\030\003 \001(\004\"F\n\020S2SAp"
-      "plyGuildReq\022\017\n\007guildid\030\001 \001(\004\022\017\n\007invitor\030"
-      "\002 \001(\004\022\020\n\010playerid\030\003 \001(\004\"C\n\020S2SApplyGuild"
-      "Ack\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\014"
-      "\n\004code\030\003 \001(\r\"J\n\027S2SPlayerGuildChangeReq\022"
-      "\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\014\n\004co"
-      "de\030\003 \001(\r\"F\n\017S2SExitGuildReq\022\017\n\007guildid\030\001"
-      " \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004"
-      "\"`\n\024S2STransferMasterReq\022\017\n\007guildid\030\001 \001("
-      "\004\022\020\n\010playerid\030\002 \001(\004\022\023\n\013newmasterid\030\003 \001(\004"
-      "\022\020\n\010serverid\030\004 \001(\004\"t\n\021S2SReviewApplyReq\022"
-      "\020\n\010playerid\030\001 \001(\r\022\024\n\014dealplayerid\030\002 \001(\004\022"
-      "\024\n\014operatortype\030\003 \001(\r\022\017\n\007guildid\030\004 \001(\004\022\020"
-      "\n\010serverid\030\005 \001(\004\"J\n\023S2SDissolveGuildReq\022"
-      "\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\020\n\010se"
-      "rverid\030\003 \001(\004\"Z\n\021S2SModifyMedalReq\022\020\n\010pla"
-      "yerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\020\n\010serverid"
-      "\030\003 \001(\004\022\020\n\010newmedal\030\004 \001(\r\"Z\n\024S2SQueryGuil"
-      "dListReq\022\020\n\010playerid\030\001 \001(\004\022\020\n\010serverid\030\002"
-      " \001(\004\022\016\n\006guilds\030\003 \003(\004\022\016\n\006cursor\030\004 \001(\r\"[\n\020"
-      "S2SKickMemberReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007gu"
-      "ildid\030\002 \001(\004\022\022\n\ntoplayerid\030\003 \001(\004\022\020\n\010serve"
-      "rid\030\004 \001(\004\"L\n\025S2SLoginQueryGuildReq\022\017\n\007gu"
-      "ildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\r\022\020\n\010serveri"
-      "d\030\003 \001(\r\"u\n\025S2SLoginQueryGuildAck\022\020\n\010play"
-      "erid\030\001 \001(\004\022\"\n\tguilddata\030\002 \001(\0132\017.KFMsg.PB"
-      "Object\022\025\n\rshowapplicant\030\003 \001(\010\022\017\n\007guildid"
-      "\030\004 \001(\004\"\243\001\n\025S2SUpdateGuildDataReq\022\017\n\007guil"
-      "did\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\0228\n\006pbdata\030\003 "
-      "\003(\0132(.KFMsg.S2SUpdateGuildDataReq.Pbdata"
-      "Entry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
-      "ue\030\002 \001(\014:\0028\001\"7\n\022S2SUpgradeGuildReq\022\017\n\007gu"
-      "ildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\"C\n\022S2SUpgr"
-      "adeGuildAck\022\020\n\010playerid\030\001 \001(\004\022\r\n\005level\030\002"
-      " \001(\r\022\014\n\004code\030\003 \001(\r\"r\n\030S2SAppointGuildMem"
-      "berReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001("
-      "\004\022\022\n\ntoplayerid\030\003 \001(\004\022\r\n\005title\030\004 \001(\r\022\020\n\010"
-      "serverid\030\005 \001(\004\"P\n\027S2SSearchGuildByNameRe"
-      "q\022\021\n\tguildname\030\001 \001(\014\022\020\n\010serverid\030\002 \001(\004\022\020"
-      "\n\010playerid\030\003 \001(\004\"g\n\024S2SSetGuildSwitchReq"
-      "\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\014\n\004t"
-      "ype\030\003 \001(\014\022\014\n\004flag\030\004 \001(\r\022\020\n\010serverid\030\005 \001("
-      "\004\"=\n\027S2SLoginQueryGuildidReq\022\020\n\010playerid"
-      "\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004\"<\n\027S2SLoginQuer"
-      "yGuildidAck\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid"
-      "\030\002 \001(\004\"z\n\023S2SQueryGuildLogReq\022\017\n\007guildid"
-      "\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001"
-      "(\004\022\020\n\010beginpos\030\004 \001(\r\022\016\n\006endpos\030\005 \001(\r\022\014\n\004"
-      "page\030\006 \001(\r\"Q\n\030S2SAddGuildActivenessReq\022\017"
-      "\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\022\n\nact"
-      "iveness\030\003 \001(\r\"U\n\017S2SGMAddMailReq\022\021\n\tplay"
-      "erids\030\001 \003(\004\022\020\n\010mailtype\030\002 \001(\r\022\035\n\006pbmail\030"
-      "\003 \001(\0132\r.KFMsg.PBMail\"\311\001\n\023S2SSendChatToSe"
-      "rver\022\020\n\010chatinfo\030\001 \001(\014\022\017\n\007isvoice\030\002 \001(\r\022"
-      "\022\n\nplayername\030\003 \001(\014\022\020\n\010playerid\030\004 \001(\004\022\022\n"
-      "\nplayericon\030\005 \001(\014\022\023\n\013playergrade\030\006 \001(\r\022\021"
-      "\n\tplayersex\030\007 \001(\r\022\025\n\rplayericonbox\030\010 \001(\014"
-      "\022\026\n\016playerserverid\030\t \001(\004\"&\n\023S2SRegisterM"
-      "atchReq\022\017\n\007matchid\030\001 \003(\r\"\254\001\n\022S2SMatchToP"
-      "roxyReq\022$\n\007pbgroup\030\001 \001(\0132\023.KFMsg.PBMatch"
-      "Group\022\017\n\007matchid\030\002 \001(\r\022\022\n\nallowgroup\030\003 \001"
-      "(\010\022\020\n\010playerid\030\004 \001(\004\022\020\n\010serverid\030\005 \001(\004\022\026"
-      "\n\016battleserverid\030\006 \001(\004\022\017\n\007version\030\007 \001(\014\""
-      "H\n\023S2SMatchToClientAck\022\016\n\006result\030\001 \001(\r\022\017"
-      "\n\007matchid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"\254\001\n\022S2"
-      "SMatchToShardReq\022$\n\007pbgroup\030\001 \001(\0132\023.KFMs"
-      "g.PBMatchGroup\022\017\n\007matchid\030\002 \001(\r\022\022\n\nallow"
-      "group\030\003 \001(\010\022\020\n\010playerid\030\004 \001(\004\022\020\n\010serveri"
-      "d\030\005 \001(\004\022\026\n\016battleserverid\030\006 \001(\004\022\017\n\007versi"
-      "on\030\007 \001(\014\"=\n\030S2SCancelMatchToProxyReq\022\017\n\007"
-      "matchid\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"=\n\030S2SCa"
-      "ncelMatchToShardReq\022\017\n\007matchid\030\001 \001(\r\022\020\n\010"
-      "playerid\030\002 \001(\004\"Q\n\036S2SCancelMatchToBattle"
-      "ShardReq\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r"
-      "\022\017\n\007groupid\030\003 \001(\004\"\254\001\n\025S2SNoticeMatchRoom"
-      "Req\022\017\n\007matchid\030\001 \001(\r\022\025\n\rbattleshardid\030\002 "
-      "\001(\004\022\016\n\006campid\030\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\022\020\n"
-      "\010serverid\030\005 \001(\004\022\016\n\006roomid\030\006 \001(\004\022\n\n\002ip\030\007 "
-      "\001(\014\022\014\n\004port\030\010 \001(\r\022\r\n\005token\030\t \001(\014\"I\n\025S2SN"
-      "oticeMatchRoomAck\022\016\n\006roomid\030\001 \001(\004\022\016\n\006cam"
-      "pid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"K\n\024S2SQueryM"
-      "atchRoomReq\022\017\n\007matchid\030\001 \001(\r\022\020\n\010playerid"
-      "\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\"R\n\033S2SQueryRoom"
-      "ToMatchShardReq\022\017\n\007matchid\030\001 \001(\r\022\020\n\010play"
-      "erid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\"9\n\024S2SQuery"
-      "MatchRoomAck\022\017\n\007matchid\030\001 \001(\r\022\020\n\010playeri"
-      "d\030\002 \001(\004\"K\n\025S2SQueryBattleRoomReq\022\016\n\006room"
-      "id\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003"
-      " \001(\004\"J\n\025S2SQueryBattleRoomAck\022\020\n\010playeri"
-      "d\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\017\n\007matchid\030\003 \001(\r"
-      "\"R\n\034S2SQueryRoomToBattleShardReq\022\016\n\006room"
-      "id\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003"
-      " \001(\004\"e\n\037S2SPlayerOnlineToBattleShardReq\022"
+      "\004\"\302\001\n\027S2SUpdateGroupMemberReq\022\017\n\007groupid"
+      "\030\001 \001(\004\022\020\n\010memberid\030\002 \001(\004\022\020\n\010dataname\030\003 \001"
+      "(\014\022@\n\tpbstrings\030\004 \003(\0132-.KFMsg.S2SUpdateG"
+      "roupMemberReq.PbstringsEntry\0320\n\016Pbstring"
+      "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\261"
+      "\001\n\027S2SUpdateGroupMemberAck\022\020\n\010memberid\030\001"
+      " \001(\004\022\020\n\010dataname\030\002 \001(\014\022@\n\tpbstrings\030\003 \003("
+      "\0132-.KFMsg.S2SUpdateGroupMemberAck.Pbstri"
+      "ngsEntry\0320\n\016PbstringsEntry\022\013\n\003key\030\001 \001(\t\022"
+      "\r\n\005value\030\002 \001(\014:\0028\001\"\206\001\n\025S2SUpdateGroupDat"
+      "aAck\022<\n\010pbstring\030\001 \003(\0132*.KFMsg.S2SUpdate"
+      "GroupDataAck.PbstringEntry\032/\n\rPbstringEn"
+      "try\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"M\n\025S"
+      "2SUpdateGuestListReq\022\020\n\010playerid\030\001 \001(\004\022\017"
+      "\n\007guestid\030\002 \001(\004\022\021\n\tguesttime\030\003 \001(\004\"H\n\020S2"
+      "SQueryGuestReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007quer"
+      "yid\030\002 \001(\004\022\021\n\tquerytime\030\003 \001(\004\"p\n\020S2SQuery"
+      "GuestAck\022\020\n\010playerid\030\001 \001(\004\022\017\n\007queryid\030\002 "
+      "\001(\004\022\022\n\nguestcount\030\003 \001(\r\022%\n\tguestdata\030\004 \003"
+      "(\0132\022.KFMsg.PBGuestData\",\n\030S2SNewPlayerLo"
+      "ginMailReq\022\020\n\010playerid\030\001 \001(\004\"o\n\024S2SUpdat"
+      "eRankDataReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006rankid"
+      "\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022%\n\npbrankdata\030\004 \001"
+      "(\0132\021.KFMsg.PBRankData\"Y\n\023S2SQueryRankLis"
+      "tReq\022\020\n\010playerid\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004"
+      "\022\016\n\006rankid\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\"a\n\031S2SQ"
+      "ueryFriendRankListReq\022\020\n\010playerid\030\001 \001(\004\022"
+      "\020\n\010serverid\030\002 \001(\004\022\016\n\006rankid\030\003 \001(\r\022\020\n\010fri"
+      "endid\030\004 \003(\004\"\273\001\n\031S2SAddRecentPlayerDataRe"
+      "q\022\016\n\006roomid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\017\n\007m"
+      "embers\030\003 \003(\004\022<\n\006pbdata\030\004 \003(\0132,.KFMsg.S2S"
+      "AddRecentPlayerDataReq.PbdataEntry\032-\n\013Pb"
+      "dataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028"
+      "\001\")\n\025S2SQueryRecentListReq\022\020\n\010playerid\030\001"
+      " \001(\004\"P\n\025S2SQueryRecentListAck\022\020\n\010playeri"
+      "d\030\001 \001(\004\022%\n\npbrelation\030\002 \003(\0132\021.KFMsg.PBRe"
+      "lation\"y\n\020S2SCreateGuidReq\022\020\n\010playerid\030\001"
+      " \001(\004\022\020\n\010serverid\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\021\n\t"
+      "guildname\030\004 \001(\014\022\r\n\005medal\030\005 \001(\r\022\021\n\tmanife"
+      "sto\030\006 \001(\014\"\222\001\n\030S2SCreateGuildToShardReq\022\020"
+      "\n\010playerid\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004\022\014\n\004na"
+      "me\030\003 \001(\014\022\021\n\tguildname\030\004 \001(\014\022\r\n\005medal\030\005 \001"
+      "(\r\022\021\n\tmanifesto\030\006 \001(\014\022\017\n\007guildid\030\007 \001(\004\"f"
+      "\n\021S2SCreateGuildAck\022\014\n\004code\030\001 \001(\r\022\020\n\010pla"
+      "yerid\030\002 \001(\004\022\017\n\007guildid\030\003 \001(\004\022\r\n\005medal\030\004 "
+      "\001(\r\022\021\n\tmanifesto\030\005 \001(\014\"\257\001\n\033S2SUpdateMemb"
+      "erBasicDataReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guil"
+      "did\030\002 \001(\004\022>\n\006pbdata\030\003 \003(\0132..KFMsg.S2SUpd"
+      "ateMemberBasicDataReq.PbdataEntry\032-\n\013Pbd"
+      "ataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001"
+      "\"Z\n\021S2SInviteGuildReq\022\017\n\007guildid\030\001 \001(\004\022\017"
+      "\n\007invitor\030\002 \001(\004\022\021\n\tinvitedid\030\003 \001(\004\022\020\n\010se"
+      "rverid\030\004 \001(\004\"I\n\021S2SInviteGuildAck\022\017\n\007gui"
+      "ldid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\021\n\tinvitedi"
+      "d\030\003 \001(\004\"F\n\020S2SApplyGuildReq\022\017\n\007guildid\030\001"
+      " \001(\004\022\017\n\007invitor\030\002 \001(\004\022\020\n\010playerid\030\003 \001(\004\""
+      "C\n\020S2SApplyGuildAck\022\020\n\010playerid\030\001 \001(\004\022\017\n"
+      "\007guildid\030\002 \001(\004\022\014\n\004code\030\003 \001(\r\"J\n\027S2SPlaye"
+      "rGuildChangeReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007gui"
+      "ldid\030\002 \001(\004\022\014\n\004code\030\003 \001(\r\"F\n\017S2SExitGuild"
+      "Req\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\020"
+      "\n\010serverid\030\003 \001(\004\"`\n\024S2STransferMasterReq"
+      "\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\023\n\013n"
+      "ewmasterid\030\003 \001(\004\022\020\n\010serverid\030\004 \001(\004\"t\n\021S2"
+      "SReviewApplyReq\022\020\n\010playerid\030\001 \001(\r\022\024\n\014dea"
+      "lplayerid\030\002 \001(\004\022\024\n\014operatortype\030\003 \001(\r\022\017\n"
+      "\007guildid\030\004 \001(\004\022\020\n\010serverid\030\005 \001(\004\"J\n\023S2SD"
+      "issolveGuildReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007gui"
+      "ldid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\"Z\n\021S2SModif"
+      "yMedalReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007guildid\030\002"
+      " \001(\004\022\020\n\010serverid\030\003 \001(\004\022\020\n\010newmedal\030\004 \001(\r"
+      "\"Z\n\024S2SQueryGuildListReq\022\020\n\010playerid\030\001 \001"
+      "(\004\022\020\n\010serverid\030\002 \001(\004\022\016\n\006guilds\030\003 \003(\004\022\016\n\006"
+      "cursor\030\004 \001(\r\"[\n\020S2SKickMemberReq\022\020\n\010play"
+      "erid\030\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\022\022\n\ntoplayeri"
+      "d\030\003 \001(\004\022\020\n\010serverid\030\004 \001(\004\"L\n\025S2SLoginQue"
+      "ryGuildReq\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030"
+      "\002 \001(\r\022\020\n\010serverid\030\003 \001(\r\"u\n\025S2SLoginQuery"
+      "GuildAck\022\020\n\010playerid\030\001 \001(\004\022\"\n\tguilddata\030"
+      "\002 \001(\0132\017.KFMsg.PBObject\022\025\n\rshowapplicant\030"
+      "\003 \001(\010\022\017\n\007guildid\030\004 \001(\004\"\243\001\n\025S2SUpdateGuil"
+      "dDataReq\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030\002 "
+      "\001(\004\0228\n\006pbdata\030\003 \003(\0132(.KFMsg.S2SUpdateGui"
+      "ldDataReq.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003"
+      "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"7\n\022S2SUpgra"
+      "deGuildReq\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030"
+      "\002 \001(\004\"C\n\022S2SUpgradeGuildAck\022\020\n\010playerid\030"
+      "\001 \001(\004\022\r\n\005level\030\002 \001(\r\022\014\n\004code\030\003 \001(\r\"r\n\030S2"
+      "SAppointGuildMemberReq\022\020\n\010playerid\030\001 \001(\004"
+      "\022\017\n\007guildid\030\002 \001(\004\022\022\n\ntoplayerid\030\003 \001(\004\022\r\n"
+      "\005title\030\004 \001(\r\022\020\n\010serverid\030\005 \001(\004\"P\n\027S2SSea"
+      "rchGuildByNameReq\022\021\n\tguildname\030\001 \001(\014\022\020\n\010"
+      "serverid\030\002 \001(\004\022\020\n\010playerid\030\003 \001(\004\"g\n\024S2SS"
+      "etGuildSwitchReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007gu"
+      "ildid\030\002 \001(\004\022\014\n\004type\030\003 \001(\014\022\014\n\004flag\030\004 \001(\r\022"
+      "\020\n\010serverid\030\005 \001(\004\"=\n\027S2SLoginQueryGuildi"
+      "dReq\022\020\n\010playerid\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004"
+      "\"<\n\027S2SLoginQueryGuildidAck\022\020\n\010playerid\030"
+      "\001 \001(\004\022\017\n\007guildid\030\002 \001(\004\"z\n\023S2SQueryGuildL"
+      "ogReq\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004"
+      "\022\020\n\010serverid\030\003 \001(\004\022\020\n\010beginpos\030\004 \001(\r\022\016\n\006"
+      "endpos\030\005 \001(\r\022\014\n\004page\030\006 \001(\r\"Q\n\030S2SAddGuil"
+      "dActivenessReq\022\017\n\007guildid\030\001 \001(\004\022\020\n\010playe"
+      "rid\030\002 \001(\004\022\022\n\nactiveness\030\003 \001(\r\"U\n\017S2SGMAd"
+      "dMailReq\022\021\n\tplayerids\030\001 \003(\004\022\020\n\010mailtype\030"
+      "\002 \001(\r\022\035\n\006pbmail\030\003 \001(\0132\r.KFMsg.PBMail\"\311\001\n"
+      "\023S2SSendChatToServer\022\020\n\010chatinfo\030\001 \001(\014\022\017"
+      "\n\007isvoice\030\002 \001(\r\022\022\n\nplayername\030\003 \001(\014\022\020\n\010p"
+      "layerid\030\004 \001(\004\022\022\n\nplayericon\030\005 \001(\014\022\023\n\013pla"
+      "yergrade\030\006 \001(\r\022\021\n\tplayersex\030\007 \001(\r\022\025\n\rpla"
+      "yericonbox\030\010 \001(\014\022\026\n\016playerserverid\030\t \001(\004"
+      "\"&\n\023S2SRegisterMatchReq\022\017\n\007matchid\030\001 \003(\r"
+      "\"\254\001\n\022S2SMatchToProxyReq\022$\n\007pbgroup\030\001 \001(\013"
+      "2\023.KFMsg.PBMatchGroup\022\017\n\007matchid\030\002 \001(\r\022\022"
+      "\n\nallowgroup\030\003 \001(\010\022\020\n\010playerid\030\004 \001(\004\022\020\n\010"
+      "serverid\030\005 \001(\004\022\026\n\016battleserverid\030\006 \001(\004\022\017"
+      "\n\007version\030\007 \001(\014\"H\n\023S2SMatchToClientAck\022\016"
+      "\n\006result\030\001 \001(\r\022\017\n\007matchid\030\002 \001(\r\022\020\n\010playe"
+      "rid\030\003 \001(\004\"\254\001\n\022S2SMatchToShardReq\022$\n\007pbgr"
+      "oup\030\001 \001(\0132\023.KFMsg.PBMatchGroup\022\017\n\007matchi"
+      "d\030\002 \001(\r\022\022\n\nallowgroup\030\003 \001(\010\022\020\n\010playerid\030"
+      "\004 \001(\004\022\020\n\010serverid\030\005 \001(\004\022\026\n\016battleserveri"
+      "d\030\006 \001(\004\022\017\n\007version\030\007 \001(\014\"=\n\030S2SCancelMat"
+      "chToProxyReq\022\017\n\007matchid\030\001 \001(\r\022\020\n\010playeri"
+      "d\030\002 \001(\004\"=\n\030S2SCancelMatchToShardReq\022\017\n\007m"
+      "atchid\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"Q\n\036S2SCan"
+      "celMatchToBattleShardReq\022\016\n\006roomid\030\001 \001(\004"
+      "\022\016\n\006campid\030\002 \001(\r\022\017\n\007groupid\030\003 \001(\004\"\254\001\n\025S2"
+      "SNoticeMatchRoomReq\022\017\n\007matchid\030\001 \001(\r\022\025\n\r"
+      "battleshardid\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\020\n\010p"
+      "layerid\030\004 \001(\004\022\020\n\010serverid\030\005 \001(\004\022\016\n\006roomi"
+      "d\030\006 \001(\004\022\n\n\002ip\030\007 \001(\014\022\014\n\004port\030\010 \001(\r\022\r\n\005tok"
+      "en\030\t \001(\014\"I\n\025S2SNoticeMatchRoomAck\022\016\n\006roo"
+      "mid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r\022\020\n\010playerid\030\003 "
+      "\001(\004\"K\n\024S2SQueryMatchRoomReq\022\017\n\007matchid\030\001"
+      " \001(\r\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004"
+      "\"R\n\033S2SQueryRoomToMatchShardReq\022\017\n\007match"
+      "id\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\020\n\010serverid\030\003"
+      " \001(\004\"9\n\024S2SQueryMatchRoomAck\022\017\n\007matchid\030"
+      "\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"K\n\025S2SQueryBattl"
+      "eRoomReq\022\016\n\006roomid\030\001 \001(\004\022\020\n\010playerid\030\002 \001"
+      "(\004\022\020\n\010serverid\030\003 \001(\004\"J\n\025S2SQueryBattleRo"
+      "omAck\022\020\n\010playerid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022"
+      "\017\n\007matchid\030\003 \001(\r\"R\n\034S2SQueryRoomToBattle"
+      "ShardReq\022\016\n\006roomid\030\001 \001(\004\022\020\n\010playerid\030\002 \001"
+      "(\004\022\020\n\010serverid\030\003 \001(\004\"e\n\037S2SPlayerOnlineT"
+      "oBattleShardReq\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campi"
+      "d\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\022\020\n\010serverid\030\004 "
+      "\001(\004\";\n\026S2SNoticeMatchStateReq\022\020\n\010playeri"
+      "d\030\001 \001(\004\022\017\n\007matchid\030\002 \001(\r\"7\n\024S2SResetMatc"
+      "hRoomReq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001("
+      "\004\"/\n\023S2SAllocBattleIdReq\022\n\n\002ip\030\001 \001(\014\022\014\n\004"
+      "port\030\002 \001(\r\"!\n\023S2SAllocBattleIdAck\022\n\n\002id\030"
+      "\001 \001(\004\"\200\001\n\032S2SRegisterBattleServerReq\022\020\n\010"
+      "serverid\030\001 \001(\004\022\n\n\002ip\030\002 \001(\014\022\014\n\004port\030\003 \001(\r"
+      "\022\016\n\006roomid\030\004 \001(\004\022\025\n\rbattleshardid\030\005 \001(\004\022"
+      "\017\n\007version\030\006 \001(\014\">\n\032S2SRegisterBattleSer"
+      "verAck\022\020\n\010serverid\030\001 \001(\004\022\016\n\006result\030\002 \001(\r"
+      "\"p\n!S2SRegisterServerToBattleShardReq\022\020\n"
+      "\010serverid\030\001 \001(\004\022\n\n\002ip\030\002 \001(\014\022\014\n\004port\030\003 \001("
+      "\r\022\016\n\006roomid\030\004 \001(\004\022\017\n\007version\030\005 \001(\014\"n\n\037S2"
+      "STellBattleRegisterToShardReq\022\020\n\010serveri"
+      "d\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\n\n\002ip\030\003 \001(\014\022\014\n\004p"
+      "ort\030\004 \001(\r\022\017\n\007version\030\005 \001(\014\"7\n#S2SDisconn"
+      "ectServerToBattleShardReq\022\020\n\010serverid\030\001 "
+      "\001(\004\"\201\001\n\035S2SCreateRoomToBattleProxyReq\022\017\n"
+      "\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\026\n\016maxpla"
+      "yercount\030\003 \001(\r\022\026\n\016battleserverid\030\004 \001(\004\022\017"
+      "\n\007version\030\005 \001(\014\"\227\001\n\035S2SCreateRoomToBattl"
+      "eShardReq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001"
+      "(\004\022\024\n\014matchshardid\030\003 \001(\004\022\026\n\016maxplayercou"
+      "nt\030\004 \001(\r\022\026\n\016battleserverid\030\005 \001(\004\022\017\n\007vers"
+      "ion\030\006 \001(\014\"V\n\034S2SCreateRoomToMatchShardAc"
+      "k\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\025\n\rba"
+      "ttleshardid\030\003 \001(\004\"x\n\032S2SAddCampToBattleS"
+      "hardReq\022\016\n\006roomid\030\001 \001(\004\022#\n\006pbcamp\030\002 \001(\0132"
+      "\023.KFMsg.PBBattleCamp\022\017\n\007matchid\030\003 \001(\r\022\024\n"
+      "\014matchshardid\030\004 \001(\004\"[\n\031S2SAddCampToMatch"
+      "ShardAck\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001("
+      "\004\022\016\n\006campid\030\003 \001(\r\022\r\n\005addok\030\004 \001(\010\"f\n\024S2SO"
+      "penBattleRoomReq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roo"
+      "mid\030\002 \001(\004\022\025\n\rbattleshardid\030\003 \001(\004\022\026\n\016maxp"
+      "layercount\030\004 \001(\r\"p\n\024S2SOpenBattleRoomAck"
+      "\022\025\n\rbattleshardid\030\001 \001(\004\022\017\n\007matchid\030\002 \001(\r"
+      "\022\016\n\006roomid\030\003 \001(\004\022\016\n\006result\030\004 \001(\r\022\020\n\010wait"
+      "time\030\005 \001(\r\"`\n\033S2SOpenBattleRoomToShardAc"
+      "k\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\016\n\006re"
+      "sult\030\003 \001(\r\022\020\n\010waittime\030\004 \001(\r\"O\n\032S2SOpenR"
+      "oomToMatchShardReq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006r"
+      "oomid\030\002 \001(\004\022\020\n\010waittime\030\003 \001(\r\"-\n\033S2SOpen"
+      "RoomToBattleShardAck\022\016\n\006roomid\030\001 \001(\004\"c\n\033"
+      "S2SPlayerEnterBattleRoomReq\022\016\n\006roomid\030\001 "
+      "\001(\004\022%\n\006player\030\002 \001(\0132\025.KFMsg.PBBattlePlay"
+      "er\022\r\n\005token\030\003 \001(\014\"f\n\033S2SPlayerEnterBattl"
+      "eRoomAck\022\025\n\rbattleshardid\030\001 \001(\004\022\016\n\006roomi"
+      "d\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\020\n\010playerid\030\004 \001("
+      "\004\"V\n\"S2SPlayerEnterRoomToBattleShardAck\022"
       "\016\n\006roomid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r\022\020\n\010playe"
-      "rid\030\003 \001(\004\022\020\n\010serverid\030\004 \001(\004\";\n\026S2SNotice"
-      "MatchStateReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007match"
-      "id\030\002 \001(\r\"7\n\024S2SResetMatchRoomReq\022\017\n\007matc"
-      "hid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\"/\n\023S2SAllocBat"
-      "tleIdReq\022\n\n\002ip\030\001 \001(\014\022\014\n\004port\030\002 \001(\r\"!\n\023S2"
-      "SAllocBattleIdAck\022\n\n\002id\030\001 \001(\004\"\200\001\n\032S2SReg"
-      "isterBattleServerReq\022\020\n\010serverid\030\001 \001(\004\022\n"
-      "\n\002ip\030\002 \001(\014\022\014\n\004port\030\003 \001(\r\022\016\n\006roomid\030\004 \001(\004"
-      "\022\025\n\rbattleshardid\030\005 \001(\004\022\017\n\007version\030\006 \001(\014"
-      "\">\n\032S2SRegisterBattleServerAck\022\020\n\010server"
-      "id\030\001 \001(\004\022\016\n\006result\030\002 \001(\r\"p\n!S2SRegisterS"
-      "erverToBattleShardReq\022\020\n\010serverid\030\001 \001(\004\022"
-      "\n\n\002ip\030\002 \001(\014\022\014\n\004port\030\003 \001(\r\022\016\n\006roomid\030\004 \001("
-      "\004\022\017\n\007version\030\005 \001(\014\"n\n\037S2STellBattleRegis"
-      "terToShardReq\022\020\n\010serverid\030\001 \001(\004\022\016\n\006roomi"
-      "d\030\002 \001(\004\022\n\n\002ip\030\003 \001(\014\022\014\n\004port\030\004 \001(\r\022\017\n\007ver"
-      "sion\030\005 \001(\014\"7\n#S2SDisconnectServerToBattl"
-      "eShardReq\022\020\n\010serverid\030\001 \001(\004\"\201\001\n\035S2SCreat"
-      "eRoomToBattleProxyReq\022\017\n\007matchid\030\001 \001(\r\022\016"
-      "\n\006roomid\030\002 \001(\004\022\026\n\016maxplayercount\030\003 \001(\r\022\026"
-      "\n\016battleserverid\030\004 \001(\004\022\017\n\007version\030\005 \001(\014\""
-      "\227\001\n\035S2SCreateRoomToBattleShardReq\022\017\n\007mat"
-      "chid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\024\n\014matchshard"
-      "id\030\003 \001(\004\022\026\n\016maxplayercount\030\004 \001(\r\022\026\n\016batt"
-      "leserverid\030\005 \001(\004\022\017\n\007version\030\006 \001(\014\"V\n\034S2S"
-      "CreateRoomToMatchShardAck\022\017\n\007matchid\030\001 \001"
-      "(\r\022\016\n\006roomid\030\002 \001(\004\022\025\n\rbattleshardid\030\003 \001("
-      "\004\"x\n\032S2SAddCampToBattleShardReq\022\016\n\006roomi"
-      "d\030\001 \001(\004\022#\n\006pbcamp\030\002 \001(\0132\023.KFMsg.PBBattle"
-      "Camp\022\017\n\007matchid\030\003 \001(\r\022\024\n\014matchshardid\030\004 "
-      "\001(\004\"[\n\031S2SAddCampToMatchShardAck\022\017\n\007matc"
-      "hid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\016\n\006campid\030\003 \001("
-      "\r\022\r\n\005addok\030\004 \001(\010\"f\n\024S2SOpenBattleRoomReq"
-      "\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\025\n\rbat"
-      "tleshardid\030\003 \001(\004\022\026\n\016maxplayercount\030\004 \001(\r"
-      "\"p\n\024S2SOpenBattleRoomAck\022\025\n\rbattleshardi"
-      "d\030\001 \001(\004\022\017\n\007matchid\030\002 \001(\r\022\016\n\006roomid\030\003 \001(\004"
-      "\022\016\n\006result\030\004 \001(\r\022\020\n\010waittime\030\005 \001(\r\"`\n\033S2"
-      "SOpenBattleRoomToShardAck\022\017\n\007matchid\030\001 \001"
-      "(\r\022\016\n\006roomid\030\002 \001(\004\022\016\n\006result\030\003 \001(\r\022\020\n\010wa"
-      "ittime\030\004 \001(\r\"O\n\032S2SOpenRoomToMatchShardR"
-      "eq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\022\020\n\010w"
-      "aittime\030\003 \001(\r\"-\n\033S2SOpenRoomToBattleShar"
-      "dAck\022\016\n\006roomid\030\001 \001(\004\"c\n\033S2SPlayerEnterBa"
-      "ttleRoomReq\022\016\n\006roomid\030\001 \001(\004\022%\n\006player\030\002 "
-      "\001(\0132\025.KFMsg.PBBattlePlayer\022\r\n\005token\030\003 \001("
-      "\014\"f\n\033S2SPlayerEnterBattleRoomAck\022\025\n\rbatt"
-      "leshardid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\016\n\006campi"
-      "d\030\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\"V\n\"S2SPlayerEn"
-      "terRoomToBattleShardAck\022\016\n\006roomid\030\001 \001(\004\022"
-      "\016\n\006campid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"f\n\033S2S"
-      "PlayerLoginBattleRoomReq\022\025\n\rbattleshardi"
-      "d\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022"
-      "\020\n\010playerid\030\004 \001(\004\"O\n\033S2SPlayerLoginBattl"
-      "eRoomAck\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r"
-      "\022\020\n\010playerid\030\003 \001(\r\"V\n\"S2SPlayerLoginRoom"
-      "ToBattleShardReq\022\016\n\006roomid\030\002 \001(\004\022\016\n\006camp"
-      "id\030\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\"K\n\027S2SPlayerC"
-      "ancelMatchReq\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campid\030"
-      "\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"f\n\033S2SPlayerLeav"
-      "eBattleRoomReq\022\016\n\006roomid\030\001 \001(\004\022\025\n\rbattle"
-      "shardid\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\020\n\010playeri"
-      "d\030\004 \001(\004\"O\n\033S2SPlayerLeaveBattleRoomAck\022\016"
-      "\n\006roomid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r\022\020\n\010player"
-      "id\030\003 \001(\004\"V\n\"S2SPlayerLeaveRoomToBattleSh"
-      "ardReq\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campid\030\002 \001(\r\022\020"
-      "\n\010playerid\030\003 \001(\004\"w\n!S2SPlayerLeaveRoomTo"
+      "rid\030\003 \001(\004\"f\n\033S2SPlayerLoginBattleRoomReq"
+      "\022\025\n\rbattleshardid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022"
+      "\016\n\006campid\030\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\"O\n\033S2S"
+      "PlayerLoginBattleRoomAck\022\016\n\006roomid\030\001 \001(\004"
+      "\022\016\n\006campid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\r\"V\n\"S2"
+      "SPlayerLoginRoomToBattleShardReq\022\016\n\006room"
+      "id\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\020\n\010playerid\030\004 \001"
+      "(\004\"K\n\027S2SPlayerCancelMatchReq\022\016\n\006roomid\030"
+      "\001 \001(\004\022\016\n\006campid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\""
+      "f\n\033S2SPlayerLeaveBattleRoomReq\022\016\n\006roomid"
+      "\030\001 \001(\004\022\025\n\rbattleshardid\030\002 \001(\004\022\016\n\006campid\030"
+      "\003 \001(\r\022\020\n\010playerid\030\004 \001(\004\"O\n\033S2SPlayerLeav"
+      "eBattleRoomAck\022\016\n\006roomid\030\001 \001(\004\022\016\n\006campid"
+      "\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"V\n\"S2SPlayerLea"
+      "veRoomToBattleShardReq\022\016\n\006roomid\030\001 \001(\004\022\016"
+      "\n\006campid\030\002 \001(\r\022\020\n\010playerid\030\003 \001(\004\"w\n!S2SP"
+      "layerLeaveRoomToMatchShardReq\022\017\n\007matchid"
+      "\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\017"
+      "\n\007groupid\030\004 \001(\004\022\020\n\010playerid\030\005 \001(\004\"A\n\035S2S"
+      "LeaveBattleRoomToClientAck\022\020\n\010playerid\030\001"
+      " \001(\004\022\016\n\006roomid\030\002 \001(\004\"S\n\031S2STellBattleRoo"
+      "mStartReq\022\025\n\rbattleshardid\030\001 \001(\004\022\016\n\006room"
+      "id\030\002 \001(\004\022\017\n\007maxtime\030\003 \001(\r\"C\n S2STellRoom"
+      "StartToBattleShardReq\022\016\n\006roomid\030\001 \001(\004\022\017\n"
+      "\007maxtime\030\002 \001(\r\"+\n\031S2STellBattleRoomStart"
+      "Ack\022\016\n\006roomid\030\001 \001(\004\"B\n\037S2STellRoomStartT"
+      "oMatchShardReq\022\017\n\007matchid\030\001 \001(\r\022\016\n\006roomi"
+      "d\030\002 \001(\004\"1\n\037S2STellRoomStartToMatchShardA"
+      "ck\022\016\n\006roomid\030\001 \001(\004\"a\n\032S2STellBattleRoomF"
+      "inishReq\022\025\n\rbattleshardid\030\001 \001(\004\022\016\n\006roomi"
+      "d\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\022\n\n\002ip\030\004 \001(\014\",\n"
+      "\032S2STellBattleRoomFinishAck\022\016\n\006roomid\030\001 "
+      "\001(\004\"l\n\034S2SBattleRoomScoreBalanceReq\022\016\n\006r"
+      "oomid\030\001 \001(\004\022\025\n\rbattleshardid\030\002 \001(\r\022%\n\007pb"
+      "score\030\003 \001(\0132\024.KFMsg.PBBattleScore\"P\n\034S2S"
+      "BattleRoomScoreBalanceAck\022\016\n\006roomid\030\001 \001("
+      "\004\022\020\n\010playerid\030\002 \001(\004\022\016\n\006reward\030\003 \001(\014\"X\n\037S"
+      "2SBattleScoreBalanceToShardReq\022\016\n\006roomid"
+      "\030\001 \001(\004\022%\n\007pbscore\030\002 \001(\0132\024.KFMsg.PBBattle"
+      "Score\"b\n\027S2SPlayerBattleScoreReq\022\020\n\010play"
+      "erid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022%\n\007pbscore\030\003 "
+      "\001(\0132\024.KFMsg.PBBattleScore\";\n\027S2SPlayerBa"
+      "ttleScoreAck\022\020\n\010playerid\030\001 \001(\004\022\016\n\006roomid"
+      "\030\002 \001(\004\"/\n\033S2SOnlieQueryBattleScoreReq\022\020\n"
+      "\010playerid\030\001 \001(\004\"Q\n!S2STellRoomFinishToBa"
+      "ttleShardReq\022\016\n\006roomid\030\001 \001(\004\022\020\n\010serverid"
+      "\030\002 \001(\004\022\n\n\002ip\030\003 \001(\014\"B\n\037S2STellRoomCloseTo"
       "MatchShardReq\022\017\n\007matchid\030\001 \001(\004\022\016\n\006roomid"
-      "\030\002 \001(\004\022\016\n\006campid\030\003 \001(\r\022\017\n\007groupid\030\004 \001(\004\022"
-      "\020\n\010playerid\030\005 \001(\004\"A\n\035S2SLeaveBattleRoomT"
-      "oClientAck\022\020\n\010playerid\030\001 \001(\004\022\016\n\006roomid\030\002"
-      " \001(\004\"S\n\031S2STellBattleRoomStartReq\022\025\n\rbat"
-      "tleshardid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\017\n\007maxt"
-      "ime\030\003 \001(\r\"C\n S2STellRoomStartToBattleSha"
-      "rdReq\022\016\n\006roomid\030\001 \001(\004\022\017\n\007maxtime\030\002 \001(\r\"+"
-      "\n\031S2STellBattleRoomStartAck\022\016\n\006roomid\030\001 "
-      "\001(\004\"B\n\037S2STellRoomStartToMatchShardReq\022\017"
-      "\n\007matchid\030\001 \001(\r\022\016\n\006roomid\030\002 \001(\004\"1\n\037S2STe"
-      "llRoomStartToMatchShardAck\022\016\n\006roomid\030\001 \001"
-      "(\004\"a\n\032S2STellBattleRoomFinishReq\022\025\n\rbatt"
-      "leshardid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\022\020\n\010serve"
-      "rid\030\003 \001(\004\022\n\n\002ip\030\004 \001(\014\",\n\032S2STellBattleRo"
-      "omFinishAck\022\016\n\006roomid\030\001 \001(\004\"l\n\034S2SBattle"
-      "RoomScoreBalanceReq\022\016\n\006roomid\030\001 \001(\004\022\025\n\rb"
-      "attleshardid\030\002 \001(\r\022%\n\007pbscore\030\003 \001(\0132\024.KF"
-      "Msg.PBBattleScore\"P\n\034S2SBattleRoomScoreB"
-      "alanceAck\022\016\n\006roomid\030\001 \001(\004\022\020\n\010playerid\030\002 "
-      "\001(\004\022\016\n\006reward\030\003 \001(\014\"X\n\037S2SBattleScoreBal"
-      "anceToShardReq\022\016\n\006roomid\030\001 \001(\004\022%\n\007pbscor"
-      "e\030\002 \001(\0132\024.KFMsg.PBBattleScore\"b\n\027S2SPlay"
-      "erBattleScoreReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006ro"
-      "omid\030\002 \001(\004\022%\n\007pbscore\030\003 \001(\0132\024.KFMsg.PBBa"
-      "ttleScore\";\n\027S2SPlayerBattleScoreAck\022\020\n\010"
-      "playerid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\"/\n\033S2SOnl"
-      "ieQueryBattleScoreReq\022\020\n\010playerid\030\001 \001(\004\""
-      "Q\n!S2STellRoomFinishToBattleShardReq\022\016\n\006"
-      "roomid\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004\022\n\n\002ip\030\003 \001"
-      "(\014\"B\n\037S2STellRoomCloseToMatchShardReq\022\017\n"
-      "\007matchid\030\001 \001(\004\022\016\n\006roomid\030\002 \001(\004\"\'\n\025S2SRes"
-      "etBattleRoomReq\022\016\n\006roomid\030\001 \001(\004*\2462\n\016Serv"
-      "erProtocol\022\036\n\032S2S_SERVER_PROTOCOL_UNKNOW"
-      "\020\000\022\033\n\026S2S_REGISTER_MATCH_REQ\020\335V\022\033\n\026S2S_M"
-      "ATCH_TO_PROXY_REQ\020\336V\022\033\n\026S2S_MATCH_TO_SHA"
-      "RD_REQ\020\337V\022\034\n\027S2S_MATCH_TO_CLIENT_ACK\020\340V\022"
-      "\"\n\035S2S_CANCEL_MATCH_TO_PROXY_REQ\020\343V\022\"\n\035S"
-      "2S_CANCEL_MATCH_TO_SHARD_REQ\020\344V\022\036\n\031S2S_N"
-      "OTICE_MATCH_ROOM_REQ\020\345V\022\036\n\031S2S_NOTICE_MA"
-      "TCH_ROOM_ACK\020\346V\022\035\n\030S2S_QUERY_MATCH_ROOM_"
-      "REQ\020\347V\022\035\n\030S2S_QUERY_MATCH_ROOM_ACK\020\350V\022\036\n"
-      "\031S2S_QUERY_BATTLE_ROOM_REQ\020\351V\022\036\n\031S2S_QUE"
-      "RY_BATTLE_ROOM_ACK\020\352V\022&\n!S2S_QUERY_ROOM_"
-      "TO_MATCH_SHARD_REQ\020\353V\022\'\n\"S2S_QUERY_ROOM_"
-      "TO_BATTLE_SHARD_REQ\020\354V\022)\n$S2S_CANCEL_MAT"
-      "CH_TO_BATTLE_SHARD_REQ\020\356V\022*\n%S2S_PLAYER_"
-      "ONLINE_TO_BATTLE_SHARD_REQ\020\360V\022\037\n\032S2S_NOT"
-      "ICE_MATCH_STATE_REQ\020\361V\022\035\n\030S2S_RESET_MATC"
-      "H_ROOM_REQ\020\362V\022#\n\036S2S_REGISTER_BATTLE_SER"
-      "VER_REQ\020\300W\022#\n\036S2S_REGISTER_BATTLE_SERVER"
-      "_ACK\020\301W\022.\n)S2S_DISCONNECT_SERVER_TO_BATT"
-      "LE_SHARD_REQ\020\302W\022,\n\'S2S_REGISTER_SERVER_T"
-      "O_BATTLE_SHARD_REQ\020\303W\022(\n#S2S_CREATE_ROOM"
-      "_TO_BATTLE_PROXY_REQ\020\304W\022(\n#S2S_CREATE_RO"
-      "OM_TO_BATTLE_SHARD_REQ\020\305W\022\'\n\"S2S_CREATE_"
-      "ROOM_TO_MATCH_SHARD_ACK\020\306W\022\035\n\030S2S_OPEN_B"
-      "ATTLE_ROOM_REQ\020\307W\022\035\n\030S2S_OPEN_BATTLE_ROO"
-      "M_ACK\020\310W\022&\n!S2S_OPEN_ROOM_TO_BATTLE_SHAR"
-      "D_ACK\020\311W\022%\n S2S_PLAYER_ENTER_BATTLE_ROOM"
-      "_REQ\020\312W\022%\n S2S_PLAYER_ENTER_BATTLE_ROOM_"
-      "ACK\020\313W\022.\n)S2S_PLAYER_ENTER_ROOM_TO_BATTL"
-      "E_SHARD_ACK\020\314W\022%\n S2S_PLAYER_LEAVE_BATTL"
-      "E_ROOM_REQ\020\315W\022-\n(S2S_PLAYER_LEAVE_ROOM_T"
-      "O_MATCH_SHARD_REQ\020\316W\022#\n\036S2S_TELL_BATTLE_"
-      "ROOM_START_REQ\020\317W\022#\n\036S2S_TELL_BATTLE_ROO"
-      "M_START_ACK\020\320W\022+\n&S2S_TELL_ROOM_START_TO"
-      "_MATCH_SHARD_REQ\020\321W\022%\n S2S_OPEN_ROOM_TO_"
-      "MATCH_SHARD_REQ\020\322W\022$\n\037S2S_TELL_BATTLE_RO"
-      "OM_FINISH_REQ\020\323W\022(\n#S2S_LEAVE_BATTLE_ROO"
-      "M_TO_CLIENT_ACK\020\324W\022,\n\'S2S_TELL_ROOM_STAR"
-      "T_TO_BATTLE_SHARD_REQ\020\325W\022-\n(S2S_TELL_ROO"
-      "M_FINISH_TO_BATTLE_SAHRD_REQ\020\326W\022%\n S2S_A"
-      "DD_CAMP_TO_BATTLE_SHARD_REQ\020\327W\022$\n\037S2S_AD"
-      "D_CAMP_TO_MATCH_SHARD_ACK\020\330W\022(\n#S2S_REMO"
-      "VE_CAMP_TO_BATTLE_SHARD_REQ\020\331W\022 \n\033S2S_PL"
-      "AYER_CANCEL_MATCH_REQ\020\332W\022%\n S2S_PLAYER_L"
-      "EAVE_BATTLE_ROOM_ACK\020\333W\022 \n\033S2S_PLAYER_CA"
-      "NCEL_MATCH_ACK\020\334W\022$\n\037S2S_TELL_BATTLE_ROO"
-      "M_FINISH_ACK\020\335W\022.\n)S2S_PLAYER_LEAVE_ROOM"
-      "_TO_BATTLE_SHARD_REQ\020\336W\022%\n S2S_PLAYER_LO"
-      "GIN_BATTLE_ROOM_REQ\020\337W\022%\n S2S_PLAYER_LOG"
-      "IN_BATTLE_ROOM_ACK\020\340W\022.\n)S2S_PLAYER_LOGI"
-      "N_ROOM_TO_BATTLE_SHARD_REQ\020\341W\022,\n\'S2S_TEL"
-      "L_ROOM_START_TO_BATTLE_SHARD_ACK\020\342W\022*\n%S"
-      "2S_TELL_BATTLE_REGISTER_TO_SHARD_REQ\020\343W\022"
-      "+\n&S2S_TELL_ROOM_CLOSE_TO_MATCH_SHARD_RE"
-      "Q\020\344W\022 \n\033S2S_PLAYER_BATTLE_SCORE_REQ\020\345W\022 "
-      "\n\033S2S_PLAYER_BATTLE_SCORE_ACK\020\346W\022&\n!S2S_"
-      "BATTLE_ROOM_SCORE_BALANCE_REQ\020\347W\022&\n!S2S_"
-      "BATTLE_ROOM_SCORE_BALANCE_ACK\020\350W\022*\n%S2S_"
-      "BATTLE_SCORE_BALANCE_TO_SHARD_REQ\020\351W\022&\n!"
-      "S2S_ONLINE_QUERY_BATTLE_SCORE_REQ\020\352W\022&\n!"
-      "S2S_OPEN_BATTLE_ROOM_TO_SHARD_ACK\020\353W\022\036\n\031"
-      "S2S_RESET_BATTLE_ROOM_REQ\020\354W\022\030\n\023S2S_BATT"
-      "LE_PING_REQ\020\355W\022\030\n\023S2S_BATTLE_PING_ACK\020\356W"
-      "\022\034\n\027S2S_ALLOC_BATTLE_ID_REQ\020\357W\022\034\n\027S2S_AL"
-      "LOC_BATTLE_ID_ACK\020\360W\022\036\n\030S2S_TRANSMIT_MES"
-      "SAGE_REQ\020\211\244\001\022\037\n\031S2S_BROADCAST_MESSAGE_RE"
-      "Q\020\212\244\001\022\031\n\023S2S_SAVE_PLAYER_REQ\020\213\244\001\022\033\n\025S2S_"
-      "DELETE_PLAYER_REQ\020\214\244\001\022 \n\032S2S_UPDATE_PUBL"
-      "IC_DATA_REQ\020\215\244\001\022\"\n\034S2S_UPDATE_ZONE_TO_PR"
-      "OXY_REQ\020\216\244\001\022$\n\036S2S_TRANSMIT_TO_DATA_SHAR"
-      "D_REQ\020\217\244\001\022\034\n\026S2S_BROADCAST_TO_WORLD\020\220\244\001\022"
-      "\033\n\025S2S_BROADCAST_TO_GAME\020\221\244\001\022\033\n\025S2S_BROA"
-      "DCAST_TO_GATE\020\222\244\001\022\034\n\026S2S_TRANSMIT_TO_PLA"
-      "YER\020\223\244\001\022\034\n\026S2S_TRANSMIT_TO_SERVER\020\224\244\001\022\036\n"
-      "\030S2S_KICK_GAME_PLAYER_REQ\020\355\244\001\022\036\n\030S2S_KIC"
-      "K_GATE_PLAYER_REQ\020\356\244\001\022 \n\032S2S_LOGIN_LOGIN"
-      "_VERIFY_REQ\020\360\244\001\022 \n\032S2S_LOGIN_LOGIN_VERIF"
-      "Y_ACK\020\361\244\001\022&\n S2S_LOGIN_TELL_TOKEN_TO_GAM"
-      "E_REQ\020\362\244\001\022 \n\032S2S_LOGIN_WORLD_VERIFY_REQ\020"
-      "\364\244\001\022#\n\035S2S_LOGIN_FAILED_TO_LOGIN_ACK\020\365\244\001"
-      "\022\036\n\030S2S_GAME_SYNC_ONLINE_REQ\020\371\244\001\022\030\n\022S2S_"
-      "LOGIN_GAME_ACK\020\373\244\001\022\037\n\031S2S_LOGIN_LOAD_PLA"
-      "YER_REQ\020\374\244\001\022\037\n\031S2S_LOGIN_LOAD_PLAYER_ACK"
-      "\020\375\244\001\022\027\n\021S2S_LOGIN_OUT_REQ\020\377\244\001\022 \n\032S2S_PLA"
-      "YER_ENTER_WORLD_REQ\020\200\245\001\022 \n\032S2S_PLAYER_LE"
-      "AVE_WORLD_REQ\020\201\245\001\022\035\n\027S2S_SET_PLAYER_NAME"
-      "_REQ\020\204\245\001\022\035\n\027S2S_SET_PLAYER_NAME_ACK\020\205\245\001\022"
-      "\"\n\034S2S_PLAYER_DISCONNECTION_REQ\020\206\245\001\022\030\n\022S"
-      "2S_QUERY_MAIL_REQ\020\207\245\001\022\030\n\022S2S_QUERY_MAIL_"
-      "ACK\020\210\245\001\022\031\n\023S2S_DELETE_MAIL_REQ\020\211\245\001\022\032\n\024S2"
-      "S_QUERY_FRIEND_REQ\020\212\245\001\022\037\n\031S2S_ADD_FRIEND"
-      "_INVITE_REQ\020\213\245\001\022\030\n\022S2S_DEL_FRIEND_REQ\020\214\245"
-      "\001\022\032\n\024S2S_QUERY_FRIEND_ACK\020\215\245\001\022!\n\033S2S_QUE"
-      "RY_FRIEND_INVITE_ACK\020\216\245\001\022\037\n\031S2S_ADD_FRIE"
-      "ND_INVITE_ACK\020\217\245\001\022\037\n\031S2S_DEL_FRIEND_INVI"
-      "TE_REQ\020\220\245\001\022\030\n\022S2S_ADD_FRIEND_REQ\020\221\245\001\022\030\n\022"
-      "S2S_DEL_FRIEND_ACK\020\222\245\001\022\030\n\022S2S_ADD_FRIEND"
-      "_ACK\020\223\245\001\022\033\n\025S2S_UPDATE_FRIEND_REQ\020\224\245\001\022\026\n"
-      "\020S2S_ADD_MAIL_REQ\020\225\245\001\022\035\n\027S2S_NOTICE_NEW_"
-      "MAIL_REQ\020\226\245\001\022\"\n\034S2S_UPDATE_FRIEND_LINESS"
-      "_REQ\020\227\245\001\022\031\n\023S2S_QUERY_BASIC_REQ\020\230\245\001\022\032\n\024S"
-      "2S_QUERY_PLAYER_REQ\020\231\245\001\022\031\n\023S2S_QUERY_BAS"
-      "IC_ACK\020\232\245\001\022\032\n\024S2S_QUERY_PLAYER_ACK\020\233\245\001\022!"
-      "\n\033S2S_QUERY_FRIEND_INVITE_REQ\020\234\245\001\022\031\n\023S2S"
-      "_CREATE_ROLE_REQ\020\236\245\001\022\031\n\023S2S_CREATE_ROLE_"
-      "ACK\020\237\245\001\022\036\n\030S2S_UPDATE_MAIL_FLAG_REQ\020\240\245\001\022"
-      "\036\n\030S2S_UPDATE_MAIL_FLAG_ACK\020\241\245\001\022\032\n\024S2S_P"
-      "LAYER_TOAST_REQ\020\244\245\001\022\032\n\024S2S_PLAYER_TOAST_"
-      "ACK\020\245\245\001\022!\n\033S2S_UPDATE_FRIENDLINESS_ACK\020\246"
-      "\245\001\022 \n\032S2S_CREATE_MATCH_GROUP_REQ\020\247\245\001\022(\n\""
-      "S2S_RECEIVE_INVITE_MATCH_GROUP_REQ\020\250\245\001\022("
-      "\n\"S2S_CONSENT_INVITE_MATCH_GROUP_REQ\020\251\245\001"
-      "\022$\n\036S2S_ADD_MATCH_GROUP_MEMBER_REQ\020\252\245\001\022\'"
-      "\n!S2S_REMOVE_MATCH_GROUP_MEMBER_ACK\020\253\245\001\022"
-      "\037\n\031S2S_LEAVE_MATCH_GROUP_REQ\020\254\245\001\022\036\n\030S2S_"
-      "KICK_MATCH_GROUP_REQ\020\255\245\001\022\037\n\031S2S_APPLY_MA"
-      "TCH_GROUP_REQ\020\256\245\001\022\037\n\031S2S_LEAVE_MATCH_GRO"
-      "UP_ACK\020\257\245\001\022\'\n!S2S_CONSENT_APPLY_MATCH_GR"
-      "OUP_ACK\020\260\245\001\022&\n S2S_ONLINE_QUERY_MATCH_GR"
-      "OUP_REQ\020\261\245\001\022$\n\036S2S_ADD_MATCH_GROUP_MEMBE"
-      "R_ACK\020\262\245\001\022!\n\033S2S_UPDATE_GROUP_MEMBER_ACK"
-      "\020\263\245\001\022!\n\033S2S_UPDATE_GROUP_MEMBER_REQ\020\264\245\001\022"
-      "(\n\"S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ\020\265\245"
-      "\001\022)\n#S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ"
-      "\020\266\245\001\022\037\n\031S2S_UPDATE_GUEST_LIST_REQ\020\267\245\001\022\031\n"
-      "\023S2S_QUERY_GUEST_REQ\020\270\245\001\022\031\n\023S2S_QUERY_GU"
-      "EST_ACK\020\271\245\001\022\037\n\031S2S_UPDATE_GROUP_DATA_ACK"
-      "\020\272\245\001\022\037\n\031S2S_APPLY_MATCH_GROUP_ACK\020\273\245\001\022\037\n"
-      "\031S2S_QUERY_TOAST_COUNT_REQ\020\274\245\001\022\037\n\031S2S_QU"
-      "ERY_TOAST_COUNT_ACK\020\275\245\001\022 \n\032S2S_UPDATE_GR"
-      "OUP_MATCH_REQ\020\276\245\001\022#\n\035S2S_NEW_PLAYER_LOGI"
-      "N_MAIL_REQ\020\300\245\001\022\035\n\027S2S_QUERY_RANK_LIST_RE"
-      "Q\020\303\245\001\022$\n\036S2S_QUERY_FRIEND_RANK_LIST_REQ\020"
-      "\304\245\001\022#\n\035S2S_TELL_MATCH_GROUP_DATA_ACK\020\310\245\001"
-      "\022\036\n\030S2S_UPDATE_RANK_DATA_REQ\020\311\245\001\022$\n\036S2S_"
-      "ADD_RECENT_PLAYER_DATA_REQ\020\312\245\001\022\037\n\031S2S_QU"
-      "ERY_RECENT_LIST_REQ\020\313\245\001\022\037\n\031S2S_QUERY_REC"
-      "ENT_LIST_ACK\020\314\245\001\022\032\n\024S2S_CREATE_GUILD_REQ"
-      "\020\315\245\001\022#\n\035S2S_CREATE_GUILD_TO_SHARD_REQ\020\316\245"
-      "\001\022\032\n\024S2S_CREATE_GUILD_ACK\020\317\245\001\022&\n S2S_UPD"
-      "ATE_MEMBER_BASIC_DATA_REQ\020\320\245\001\022\032\n\024S2S_INV"
-      "ITE_GUILD_REQ\020\321\245\001\022\032\n\024S2S_INVITE_GUILD_AC"
-      "K\020\322\245\001\022\031\n\023S2S_APPLY_GUILD_REQ\020\323\245\001\022\031\n\023S2S_"
-      "APPLY_GUILD_ACK\020\324\245\001\022!\n\033S2S_PLAYER_GUILD_"
-      "CHANGE_REQ\020\325\245\001\022\030\n\022S2S_EXIT_GUILD_REQ\020\326\245\001"
-      "\022\035\n\027S2S_TRANSFER_MASTER_REQ\020\327\245\001\022\032\n\024S2S_R"
-      "EVIEW_APPLY_REQ\020\330\245\001\022\034\n\026S2S_DISSOLVE_GUIL"
-      "D_REQ\020\331\245\001\022\032\n\024S2S_MODIFY_MEDAL_REQ\020\332\245\001\022\036\n"
-      "\030S2S_QUERY_GUILD_LIST_REQ\020\333\245\001\022\031\n\023S2S_KIC"
-      "K_MEMBER_REQ\020\334\245\001\022\037\n\031S2S_LOGIN_QUERY_GUIL"
-      "D_REQ\020\335\245\001\022\037\n\031S2S_LOGIN_QUERY_GUILD_ACK\020\336"
-      "\245\001\022\037\n\031S2S_UPDATE_GUILD_DATA_REQ\020\337\245\001\022\033\n\025S"
-      "2S_UPGRADE_GUILD_REQ\020\340\245\001\022\033\n\025S2S_UPGRADE_"
-      "GUILD_ACK\020\341\245\001\022\"\n\034S2S_APPOINT_GUILD_MEMBE"
-      "R_REQ\020\342\245\001\022\"\n\034S2S_SEARCH_GUILD_BY_NAME_RE"
-      "Q\020\343\245\001\022\036\n\030S2S_SET_GUILD_SWITCH_REQ\020\344\245\001\022!\n"
-      "\033S2S_LOGIN_QUERY_GUILDID_REQ\020\345\245\001\022!\n\033S2S_"
-      "LOGIN_QUERY_GUILDID_ACK\020\346\245\001\022\035\n\027S2S_QUERY"
-      "_GUILD_LOG_REQ\020\347\245\001\022\"\n\034S2S_ADD_GUILD_ACTI"
-      "VENESS_REQ\020\350\245\001\022\031\n\023S2S_GM_ADD_MAIL_REQ\020\264\246"
-      "\001\022\035\n\027S2S_SEND_CHAT_TO_SERVER\020\265\246\001b\006proto3"
+      "\030\002 \001(\004\"\'\n\025S2SResetBattleRoomReq\022\016\n\006roomi"
+      "d\030\001 \001(\004*\2462\n\016ServerProtocol\022\036\n\032S2S_SERVER"
+      "_PROTOCOL_UNKNOW\020\000\022\033\n\026S2S_REGISTER_MATCH"
+      "_REQ\020\335V\022\033\n\026S2S_MATCH_TO_PROXY_REQ\020\336V\022\033\n\026"
+      "S2S_MATCH_TO_SHARD_REQ\020\337V\022\034\n\027S2S_MATCH_T"
+      "O_CLIENT_ACK\020\340V\022\"\n\035S2S_CANCEL_MATCH_TO_P"
+      "ROXY_REQ\020\343V\022\"\n\035S2S_CANCEL_MATCH_TO_SHARD"
+      "_REQ\020\344V\022\036\n\031S2S_NOTICE_MATCH_ROOM_REQ\020\345V\022"
+      "\036\n\031S2S_NOTICE_MATCH_ROOM_ACK\020\346V\022\035\n\030S2S_Q"
+      "UERY_MATCH_ROOM_REQ\020\347V\022\035\n\030S2S_QUERY_MATC"
+      "H_ROOM_ACK\020\350V\022\036\n\031S2S_QUERY_BATTLE_ROOM_R"
+      "EQ\020\351V\022\036\n\031S2S_QUERY_BATTLE_ROOM_ACK\020\352V\022&\n"
+      "!S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ\020\353V\022\'\n"
+      "\"S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ\020\354V\022)"
+      "\n$S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ\020\356"
+      "V\022*\n%S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_R"
+      "EQ\020\360V\022\037\n\032S2S_NOTICE_MATCH_STATE_REQ\020\361V\022\035"
+      "\n\030S2S_RESET_MATCH_ROOM_REQ\020\362V\022#\n\036S2S_REG"
+      "ISTER_BATTLE_SERVER_REQ\020\300W\022#\n\036S2S_REGIST"
+      "ER_BATTLE_SERVER_ACK\020\301W\022.\n)S2S_DISCONNEC"
+      "T_SERVER_TO_BATTLE_SHARD_REQ\020\302W\022,\n\'S2S_R"
+      "EGISTER_SERVER_TO_BATTLE_SHARD_REQ\020\303W\022(\n"
+      "#S2S_CREATE_ROOM_TO_BATTLE_PROXY_REQ\020\304W\022"
+      "(\n#S2S_CREATE_ROOM_TO_BATTLE_SHARD_REQ\020\305"
+      "W\022\'\n\"S2S_CREATE_ROOM_TO_MATCH_SHARD_ACK\020"
+      "\306W\022\035\n\030S2S_OPEN_BATTLE_ROOM_REQ\020\307W\022\035\n\030S2S"
+      "_OPEN_BATTLE_ROOM_ACK\020\310W\022&\n!S2S_OPEN_ROO"
+      "M_TO_BATTLE_SHARD_ACK\020\311W\022%\n S2S_PLAYER_E"
+      "NTER_BATTLE_ROOM_REQ\020\312W\022%\n S2S_PLAYER_EN"
+      "TER_BATTLE_ROOM_ACK\020\313W\022.\n)S2S_PLAYER_ENT"
+      "ER_ROOM_TO_BATTLE_SHARD_ACK\020\314W\022%\n S2S_PL"
+      "AYER_LEAVE_BATTLE_ROOM_REQ\020\315W\022-\n(S2S_PLA"
+      "YER_LEAVE_ROOM_TO_MATCH_SHARD_REQ\020\316W\022#\n\036"
+      "S2S_TELL_BATTLE_ROOM_START_REQ\020\317W\022#\n\036S2S"
+      "_TELL_BATTLE_ROOM_START_ACK\020\320W\022+\n&S2S_TE"
+      "LL_ROOM_START_TO_MATCH_SHARD_REQ\020\321W\022%\n S"
+      "2S_OPEN_ROOM_TO_MATCH_SHARD_REQ\020\322W\022$\n\037S2"
+      "S_TELL_BATTLE_ROOM_FINISH_REQ\020\323W\022(\n#S2S_"
+      "LEAVE_BATTLE_ROOM_TO_CLIENT_ACK\020\324W\022,\n\'S2"
+      "S_TELL_ROOM_START_TO_BATTLE_SHARD_REQ\020\325W"
+      "\022-\n(S2S_TELL_ROOM_FINISH_TO_BATTLE_SAHRD"
+      "_REQ\020\326W\022%\n S2S_ADD_CAMP_TO_BATTLE_SHARD_"
+      "REQ\020\327W\022$\n\037S2S_ADD_CAMP_TO_MATCH_SHARD_AC"
+      "K\020\330W\022(\n#S2S_REMOVE_CAMP_TO_BATTLE_SHARD_"
+      "REQ\020\331W\022 \n\033S2S_PLAYER_CANCEL_MATCH_REQ\020\332W"
+      "\022%\n S2S_PLAYER_LEAVE_BATTLE_ROOM_ACK\020\333W\022"
+      " \n\033S2S_PLAYER_CANCEL_MATCH_ACK\020\334W\022$\n\037S2S"
+      "_TELL_BATTLE_ROOM_FINISH_ACK\020\335W\022.\n)S2S_P"
+      "LAYER_LEAVE_ROOM_TO_BATTLE_SHARD_REQ\020\336W\022"
+      "%\n S2S_PLAYER_LOGIN_BATTLE_ROOM_REQ\020\337W\022%"
+      "\n S2S_PLAYER_LOGIN_BATTLE_ROOM_ACK\020\340W\022.\n"
+      ")S2S_PLAYER_LOGIN_ROOM_TO_BATTLE_SHARD_R"
+      "EQ\020\341W\022,\n\'S2S_TELL_ROOM_START_TO_BATTLE_S"
+      "HARD_ACK\020\342W\022*\n%S2S_TELL_BATTLE_REGISTER_"
+      "TO_SHARD_REQ\020\343W\022+\n&S2S_TELL_ROOM_CLOSE_T"
+      "O_MATCH_SHARD_REQ\020\344W\022 \n\033S2S_PLAYER_BATTL"
+      "E_SCORE_REQ\020\345W\022 \n\033S2S_PLAYER_BATTLE_SCOR"
+      "E_ACK\020\346W\022&\n!S2S_BATTLE_ROOM_SCORE_BALANC"
+      "E_REQ\020\347W\022&\n!S2S_BATTLE_ROOM_SCORE_BALANC"
+      "E_ACK\020\350W\022*\n%S2S_BATTLE_SCORE_BALANCE_TO_"
+      "SHARD_REQ\020\351W\022&\n!S2S_ONLINE_QUERY_BATTLE_"
+      "SCORE_REQ\020\352W\022&\n!S2S_OPEN_BATTLE_ROOM_TO_"
+      "SHARD_ACK\020\353W\022\036\n\031S2S_RESET_BATTLE_ROOM_RE"
+      "Q\020\354W\022\030\n\023S2S_BATTLE_PING_REQ\020\355W\022\030\n\023S2S_BA"
+      "TTLE_PING_ACK\020\356W\022\034\n\027S2S_ALLOC_BATTLE_ID_"
+      "REQ\020\357W\022\034\n\027S2S_ALLOC_BATTLE_ID_ACK\020\360W\022\036\n\030"
+      "S2S_TRANSMIT_MESSAGE_REQ\020\211\244\001\022\037\n\031S2S_BROA"
+      "DCAST_MESSAGE_REQ\020\212\244\001\022\031\n\023S2S_SAVE_PLAYER"
+      "_REQ\020\213\244\001\022\033\n\025S2S_DELETE_PLAYER_REQ\020\214\244\001\022 \n"
+      "\032S2S_UPDATE_PUBLIC_DATA_REQ\020\215\244\001\022\"\n\034S2S_U"
+      "PDATE_ZONE_TO_PROXY_REQ\020\216\244\001\022$\n\036S2S_TRANS"
+      "MIT_TO_DATA_SHARD_REQ\020\217\244\001\022\034\n\026S2S_BROADCA"
+      "ST_TO_WORLD\020\220\244\001\022\033\n\025S2S_BROADCAST_TO_GAME"
+      "\020\221\244\001\022\033\n\025S2S_BROADCAST_TO_GATE\020\222\244\001\022\034\n\026S2S"
+      "_TRANSMIT_TO_PLAYER\020\223\244\001\022\034\n\026S2S_TRANSMIT_"
+      "TO_SERVER\020\224\244\001\022\036\n\030S2S_KICK_GAME_PLAYER_RE"
+      "Q\020\355\244\001\022\036\n\030S2S_KICK_GATE_PLAYER_REQ\020\356\244\001\022 \n"
+      "\032S2S_LOGIN_LOGIN_VERIFY_REQ\020\360\244\001\022 \n\032S2S_L"
+      "OGIN_LOGIN_VERIFY_ACK\020\361\244\001\022&\n S2S_LOGIN_T"
+      "ELL_TOKEN_TO_GAME_REQ\020\362\244\001\022 \n\032S2S_LOGIN_W"
+      "ORLD_VERIFY_REQ\020\364\244\001\022#\n\035S2S_LOGIN_FAILED_"
+      "TO_LOGIN_ACK\020\365\244\001\022\036\n\030S2S_GAME_SYNC_ONLINE"
+      "_REQ\020\371\244\001\022\030\n\022S2S_LOGIN_GAME_ACK\020\373\244\001\022\037\n\031S2"
+      "S_LOGIN_LOAD_PLAYER_REQ\020\374\244\001\022\037\n\031S2S_LOGIN"
+      "_LOAD_PLAYER_ACK\020\375\244\001\022\027\n\021S2S_LOGIN_OUT_RE"
+      "Q\020\377\244\001\022 \n\032S2S_PLAYER_ENTER_WORLD_REQ\020\200\245\001\022"
+      " \n\032S2S_PLAYER_LEAVE_WORLD_REQ\020\201\245\001\022\035\n\027S2S"
+      "_SET_PLAYER_NAME_REQ\020\204\245\001\022\035\n\027S2S_SET_PLAY"
+      "ER_NAME_ACK\020\205\245\001\022\"\n\034S2S_PLAYER_DISCONNECT"
+      "ION_REQ\020\206\245\001\022\030\n\022S2S_QUERY_MAIL_REQ\020\207\245\001\022\030\n"
+      "\022S2S_QUERY_MAIL_ACK\020\210\245\001\022\031\n\023S2S_DELETE_MA"
+      "IL_REQ\020\211\245\001\022\032\n\024S2S_QUERY_FRIEND_REQ\020\212\245\001\022\037"
+      "\n\031S2S_ADD_FRIEND_INVITE_REQ\020\213\245\001\022\030\n\022S2S_D"
+      "EL_FRIEND_REQ\020\214\245\001\022\032\n\024S2S_QUERY_FRIEND_AC"
+      "K\020\215\245\001\022!\n\033S2S_QUERY_FRIEND_INVITE_ACK\020\216\245\001"
+      "\022\037\n\031S2S_ADD_FRIEND_INVITE_ACK\020\217\245\001\022\037\n\031S2S"
+      "_DEL_FRIEND_INVITE_REQ\020\220\245\001\022\030\n\022S2S_ADD_FR"
+      "IEND_REQ\020\221\245\001\022\030\n\022S2S_DEL_FRIEND_ACK\020\222\245\001\022\030"
+      "\n\022S2S_ADD_FRIEND_ACK\020\223\245\001\022\033\n\025S2S_UPDATE_F"
+      "RIEND_REQ\020\224\245\001\022\026\n\020S2S_ADD_MAIL_REQ\020\225\245\001\022\035\n"
+      "\027S2S_NOTICE_NEW_MAIL_REQ\020\226\245\001\022\"\n\034S2S_UPDA"
+      "TE_FRIEND_LINESS_REQ\020\227\245\001\022\031\n\023S2S_QUERY_BA"
+      "SIC_REQ\020\230\245\001\022\032\n\024S2S_QUERY_PLAYER_REQ\020\231\245\001\022"
+      "\031\n\023S2S_QUERY_BASIC_ACK\020\232\245\001\022\032\n\024S2S_QUERY_"
+      "PLAYER_ACK\020\233\245\001\022!\n\033S2S_QUERY_FRIEND_INVIT"
+      "E_REQ\020\234\245\001\022\031\n\023S2S_CREATE_ROLE_REQ\020\236\245\001\022\031\n\023"
+      "S2S_CREATE_ROLE_ACK\020\237\245\001\022\036\n\030S2S_UPDATE_MA"
+      "IL_FLAG_REQ\020\240\245\001\022\036\n\030S2S_UPDATE_MAIL_FLAG_"
+      "ACK\020\241\245\001\022\032\n\024S2S_PLAYER_TOAST_REQ\020\244\245\001\022\032\n\024S"
+      "2S_PLAYER_TOAST_ACK\020\245\245\001\022!\n\033S2S_UPDATE_FR"
+      "IENDLINESS_ACK\020\246\245\001\022 \n\032S2S_CREATE_MATCH_G"
+      "ROUP_REQ\020\247\245\001\022(\n\"S2S_RECEIVE_INVITE_MATCH"
+      "_GROUP_REQ\020\250\245\001\022(\n\"S2S_CONSENT_INVITE_MAT"
+      "CH_GROUP_REQ\020\251\245\001\022$\n\036S2S_ADD_MATCH_GROUP_"
+      "MEMBER_REQ\020\252\245\001\022\'\n!S2S_REMOVE_MATCH_GROUP"
+      "_MEMBER_ACK\020\253\245\001\022\037\n\031S2S_LEAVE_MATCH_GROUP"
+      "_REQ\020\254\245\001\022\036\n\030S2S_KICK_MATCH_GROUP_REQ\020\255\245\001"
+      "\022\037\n\031S2S_APPLY_MATCH_GROUP_REQ\020\256\245\001\022\037\n\031S2S"
+      "_LEAVE_MATCH_GROUP_ACK\020\257\245\001\022\'\n!S2S_CONSEN"
+      "T_APPLY_MATCH_GROUP_ACK\020\260\245\001\022&\n S2S_ONLIN"
+      "E_QUERY_MATCH_GROUP_REQ\020\261\245\001\022$\n\036S2S_ADD_M"
+      "ATCH_GROUP_MEMBER_ACK\020\262\245\001\022!\n\033S2S_UPDATE_"
+      "GROUP_MEMBER_ACK\020\263\245\001\022!\n\033S2S_UPDATE_GROUP"
+      "_MEMBER_REQ\020\264\245\001\022(\n\"S2S_OFFLINE_UPDATE_MA"
+      "TCH_GROUP_REQ\020\265\245\001\022)\n#S2S_CREATE_MATCH_GR"
+      "OUP_TO_SHARD_REQ\020\266\245\001\022\037\n\031S2S_UPDATE_GUEST"
+      "_LIST_REQ\020\267\245\001\022\031\n\023S2S_QUERY_GUEST_REQ\020\270\245\001"
+      "\022\031\n\023S2S_QUERY_GUEST_ACK\020\271\245\001\022\037\n\031S2S_UPDAT"
+      "E_GROUP_DATA_ACK\020\272\245\001\022\037\n\031S2S_APPLY_MATCH_"
+      "GROUP_ACK\020\273\245\001\022\037\n\031S2S_QUERY_TOAST_COUNT_R"
+      "EQ\020\274\245\001\022\037\n\031S2S_QUERY_TOAST_COUNT_ACK\020\275\245\001\022"
+      " \n\032S2S_UPDATE_GROUP_MATCH_REQ\020\276\245\001\022#\n\035S2S"
+      "_NEW_PLAYER_LOGIN_MAIL_REQ\020\300\245\001\022\035\n\027S2S_QU"
+      "ERY_RANK_LIST_REQ\020\303\245\001\022$\n\036S2S_QUERY_FRIEN"
+      "D_RANK_LIST_REQ\020\304\245\001\022#\n\035S2S_TELL_MATCH_GR"
+      "OUP_DATA_ACK\020\310\245\001\022\036\n\030S2S_UPDATE_RANK_DATA"
+      "_REQ\020\311\245\001\022$\n\036S2S_ADD_RECENT_PLAYER_DATA_R"
+      "EQ\020\312\245\001\022\037\n\031S2S_QUERY_RECENT_LIST_REQ\020\313\245\001\022"
+      "\037\n\031S2S_QUERY_RECENT_LIST_ACK\020\314\245\001\022\032\n\024S2S_"
+      "CREATE_GUILD_REQ\020\315\245\001\022#\n\035S2S_CREATE_GUILD"
+      "_TO_SHARD_REQ\020\316\245\001\022\032\n\024S2S_CREATE_GUILD_AC"
+      "K\020\317\245\001\022&\n S2S_UPDATE_MEMBER_BASIC_DATA_RE"
+      "Q\020\320\245\001\022\032\n\024S2S_INVITE_GUILD_REQ\020\321\245\001\022\032\n\024S2S"
+      "_INVITE_GUILD_ACK\020\322\245\001\022\031\n\023S2S_APPLY_GUILD"
+      "_REQ\020\323\245\001\022\031\n\023S2S_APPLY_GUILD_ACK\020\324\245\001\022!\n\033S"
+      "2S_PLAYER_GUILD_CHANGE_REQ\020\325\245\001\022\030\n\022S2S_EX"
+      "IT_GUILD_REQ\020\326\245\001\022\035\n\027S2S_TRANSFER_MASTER_"
+      "REQ\020\327\245\001\022\032\n\024S2S_REVIEW_APPLY_REQ\020\330\245\001\022\034\n\026S"
+      "2S_DISSOLVE_GUILD_REQ\020\331\245\001\022\032\n\024S2S_MODIFY_"
+      "MEDAL_REQ\020\332\245\001\022\036\n\030S2S_QUERY_GUILD_LIST_RE"
+      "Q\020\333\245\001\022\031\n\023S2S_KICK_MEMBER_REQ\020\334\245\001\022\037\n\031S2S_"
+      "LOGIN_QUERY_GUILD_REQ\020\335\245\001\022\037\n\031S2S_LOGIN_Q"
+      "UERY_GUILD_ACK\020\336\245\001\022\037\n\031S2S_UPDATE_GUILD_D"
+      "ATA_REQ\020\337\245\001\022\033\n\025S2S_UPGRADE_GUILD_REQ\020\340\245\001"
+      "\022\033\n\025S2S_UPGRADE_GUILD_ACK\020\341\245\001\022\"\n\034S2S_APP"
+      "OINT_GUILD_MEMBER_REQ\020\342\245\001\022\"\n\034S2S_SEARCH_"
+      "GUILD_BY_NAME_REQ\020\343\245\001\022\036\n\030S2S_SET_GUILD_S"
+      "WITCH_REQ\020\344\245\001\022!\n\033S2S_LOGIN_QUERY_GUILDID"
+      "_REQ\020\345\245\001\022!\n\033S2S_LOGIN_QUERY_GUILDID_ACK\020"
+      "\346\245\001\022\035\n\027S2S_QUERY_GUILD_LOG_REQ\020\347\245\001\022\"\n\034S2"
+      "S_ADD_GUILD_ACTIVENESS_REQ\020\350\245\001\022\031\n\023S2S_GM"
+      "_ADD_MAIL_REQ\020\264\246\001\022\035\n\027S2S_SEND_CHAT_TO_SE"
+      "RVER\020\265\246\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 23400);
+      descriptor, 23416);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFServerMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_KFDefineMessage_2eproto::AddDescriptors();
@@ -23534,6 +23536,7 @@ void S2SQueryBasicAck::clear_pbobject() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SQueryBasicAck::kPlayeridFieldNumber;
+const int S2SQueryBasicAck::kResultFieldNumber;
 const int S2SQueryBasicAck::kPbobjectFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -23553,14 +23556,16 @@ S2SQueryBasicAck::S2SQueryBasicAck(const S2SQueryBasicAck& from)
   } else {
     pbobject_ = NULL;
   }
-  playerid_ = from.playerid_;
+  ::memcpy(&playerid_, &from.playerid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&result_) -
+    reinterpret_cast<char*>(&playerid_)) + sizeof(result_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SQueryBasicAck)
 }
 
 void S2SQueryBasicAck::SharedCtor() {
   ::memset(&pbobject_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&playerid_) -
-      reinterpret_cast<char*>(&pbobject_)) + sizeof(playerid_));
+      reinterpret_cast<char*>(&result_) -
+      reinterpret_cast<char*>(&pbobject_)) + sizeof(result_));
 }
 
 S2SQueryBasicAck::~S2SQueryBasicAck() {
@@ -23596,7 +23601,9 @@ void S2SQueryBasicAck::Clear() {
     delete pbobject_;
   }
   pbobject_ = NULL;
-  playerid_ = GOOGLE_ULONGLONG(0);
+  ::memset(&playerid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&result_) -
+      reinterpret_cast<char*>(&playerid_)) + sizeof(result_));
   _internal_metadata_.Clear();
 }
 
@@ -23624,10 +23631,24 @@ bool S2SQueryBasicAck::MergePartialFromCodedStream(
         break;
       }
 
-      // .KFMsg.PBObject pbobject = 2;
+      // uint32 result = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .KFMsg.PBObject pbobject = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
                input, mutable_pbobject()));
         } else {
@@ -23667,10 +23688,15 @@ void S2SQueryBasicAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
-  // .KFMsg.PBObject pbobject = 2;
+  // uint32 result = 2;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->result(), output);
+  }
+
+  // .KFMsg.PBObject pbobject = 3;
   if (this->has_pbobject()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->_internal_pbobject(), output);
+      3, this->_internal_pbobject(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -23692,11 +23718,16 @@ void S2SQueryBasicAck::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
-  // .KFMsg.PBObject pbobject = 2;
+  // uint32 result = 2;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->result(), target);
+  }
+
+  // .KFMsg.PBObject pbobject = 3;
   if (this->has_pbobject()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, this->_internal_pbobject(), deterministic, target);
+        3, this->_internal_pbobject(), deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -23716,7 +23747,7 @@ size_t S2SQueryBasicAck::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // .KFMsg.PBObject pbobject = 2;
+  // .KFMsg.PBObject pbobject = 3;
   if (this->has_pbobject()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
@@ -23728,6 +23759,13 @@ size_t S2SQueryBasicAck::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->playerid());
+  }
+
+  // uint32 result = 2;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -23763,6 +23801,9 @@ void S2SQueryBasicAck::MergeFrom(const S2SQueryBasicAck& from) {
   if (from.playerid() != 0) {
     set_playerid(from.playerid());
   }
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
 }
 
 void S2SQueryBasicAck::CopyFrom(const ::google::protobuf::Message& from) {
@@ -23791,6 +23832,7 @@ void S2SQueryBasicAck::InternalSwap(S2SQueryBasicAck* other) {
   using std::swap;
   swap(pbobject_, other->pbobject_);
   swap(playerid_, other->playerid_);
+  swap(result_, other->result_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

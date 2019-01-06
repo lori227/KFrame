@@ -572,92 +572,86 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message /* @@protoc
 
   // accessors -------------------------------------------------------
 
-  // map<string, sint32> pbint32 = 2;
+  // map<string, sint32> pbint32 = 1;
   int pbint32_size() const;
   void clear_pbint32();
-  static const int kPbint32FieldNumber = 2;
+  static const int kPbint32FieldNumber = 1;
   const ::google::protobuf::Map< ::std::string, ::google::protobuf::int32 >&
       pbint32() const;
   ::google::protobuf::Map< ::std::string, ::google::protobuf::int32 >*
       mutable_pbint32();
 
-  // map<string, uint32> pbuint32 = 3;
+  // map<string, uint32> pbuint32 = 2;
   int pbuint32_size() const;
   void clear_pbuint32();
-  static const int kPbuint32FieldNumber = 3;
+  static const int kPbuint32FieldNumber = 2;
   const ::google::protobuf::Map< ::std::string, ::google::protobuf::uint32 >&
       pbuint32() const;
   ::google::protobuf::Map< ::std::string, ::google::protobuf::uint32 >*
       mutable_pbuint32();
 
-  // map<string, sint64> pbint64 = 4;
+  // map<string, sint64> pbint64 = 3;
   int pbint64_size() const;
   void clear_pbint64();
-  static const int kPbint64FieldNumber = 4;
+  static const int kPbint64FieldNumber = 3;
   const ::google::protobuf::Map< ::std::string, ::google::protobuf::int64 >&
       pbint64() const;
   ::google::protobuf::Map< ::std::string, ::google::protobuf::int64 >*
       mutable_pbint64();
 
-  // map<string, uint64> pbuint64 = 5;
+  // map<string, uint64> pbuint64 = 4;
   int pbuint64_size() const;
   void clear_pbuint64();
-  static const int kPbuint64FieldNumber = 5;
+  static const int kPbuint64FieldNumber = 4;
   const ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >&
       pbuint64() const;
   ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >*
       mutable_pbuint64();
 
-  // map<string, double> pbdouble = 6;
+  // map<string, double> pbdouble = 5;
   int pbdouble_size() const;
   void clear_pbdouble();
-  static const int kPbdoubleFieldNumber = 6;
+  static const int kPbdoubleFieldNumber = 5;
   const ::google::protobuf::Map< ::std::string, double >&
       pbdouble() const;
   ::google::protobuf::Map< ::std::string, double >*
       mutable_pbdouble();
 
-  // map<string, bytes> pbstring = 7;
+  // map<string, bytes> pbstring = 6;
   int pbstring_size() const;
   void clear_pbstring();
-  static const int kPbstringFieldNumber = 7;
+  static const int kPbstringFieldNumber = 6;
   const ::google::protobuf::Map< ::std::string, ::std::string >&
       pbstring() const;
   ::google::protobuf::Map< ::std::string, ::std::string >*
       mutable_pbstring();
 
-  // map<string, .KFMsg.PBArray> pbarray = 8;
+  // map<string, .KFMsg.PBArray> pbarray = 7;
   int pbarray_size() const;
   void clear_pbarray();
-  static const int kPbarrayFieldNumber = 8;
+  static const int kPbarrayFieldNumber = 7;
   const ::google::protobuf::Map< ::std::string, ::KFMsg::PBArray >&
       pbarray() const;
   ::google::protobuf::Map< ::std::string, ::KFMsg::PBArray >*
       mutable_pbarray();
 
-  // map<string, .KFMsg.PBObject> pbobject = 9;
+  // map<string, .KFMsg.PBObject> pbobject = 8;
   int pbobject_size() const;
   void clear_pbobject();
-  static const int kPbobjectFieldNumber = 9;
+  static const int kPbobjectFieldNumber = 8;
   const ::google::protobuf::Map< ::std::string, ::KFMsg::PBObject >&
       pbobject() const;
   ::google::protobuf::Map< ::std::string, ::KFMsg::PBObject >*
       mutable_pbobject();
 
-  // map<string, .KFMsg.PBRecord> pbrecord = 10;
+  // map<string, .KFMsg.PBRecord> pbrecord = 9;
   int pbrecord_size() const;
   void clear_pbrecord();
-  static const int kPbrecordFieldNumber = 10;
+  static const int kPbrecordFieldNumber = 9;
   const ::google::protobuf::Map< ::std::string, ::KFMsg::PBRecord >&
       pbrecord() const;
   ::google::protobuf::Map< ::std::string, ::KFMsg::PBRecord >*
       mutable_pbrecord();
-
-  // uint64 key = 1;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  ::google::protobuf::uint64 key() const;
-  void set_key(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBObject)
  private:
@@ -717,7 +711,6 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message /* @@protoc
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > pbrecord_;
-  ::google::protobuf::uint64 key_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFDefineMessage_2eproto::TableStruct;
 };
@@ -2319,21 +2312,7 @@ PBArray::mutable_pbuint64() {
 
 // PBObject
 
-// uint64 key = 1;
-inline void PBObject::clear_key() {
-  key_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 PBObject::key() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBObject.key)
-  return key_;
-}
-inline void PBObject::set_key(::google::protobuf::uint64 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBObject.key)
-}
-
-// map<string, sint32> pbint32 = 2;
+// map<string, sint32> pbint32 = 1;
 inline int PBObject::pbint32_size() const {
   return pbint32_.size();
 }
@@ -2351,7 +2330,7 @@ PBObject::mutable_pbint32() {
   return pbint32_.MutableMap();
 }
 
-// map<string, uint32> pbuint32 = 3;
+// map<string, uint32> pbuint32 = 2;
 inline int PBObject::pbuint32_size() const {
   return pbuint32_.size();
 }
@@ -2369,7 +2348,7 @@ PBObject::mutable_pbuint32() {
   return pbuint32_.MutableMap();
 }
 
-// map<string, sint64> pbint64 = 4;
+// map<string, sint64> pbint64 = 3;
 inline int PBObject::pbint64_size() const {
   return pbint64_.size();
 }
@@ -2387,7 +2366,7 @@ PBObject::mutable_pbint64() {
   return pbint64_.MutableMap();
 }
 
-// map<string, uint64> pbuint64 = 5;
+// map<string, uint64> pbuint64 = 4;
 inline int PBObject::pbuint64_size() const {
   return pbuint64_.size();
 }
@@ -2405,7 +2384,7 @@ PBObject::mutable_pbuint64() {
   return pbuint64_.MutableMap();
 }
 
-// map<string, double> pbdouble = 6;
+// map<string, double> pbdouble = 5;
 inline int PBObject::pbdouble_size() const {
   return pbdouble_.size();
 }
@@ -2423,7 +2402,7 @@ PBObject::mutable_pbdouble() {
   return pbdouble_.MutableMap();
 }
 
-// map<string, bytes> pbstring = 7;
+// map<string, bytes> pbstring = 6;
 inline int PBObject::pbstring_size() const {
   return pbstring_.size();
 }
@@ -2441,7 +2420,7 @@ PBObject::mutable_pbstring() {
   return pbstring_.MutableMap();
 }
 
-// map<string, .KFMsg.PBArray> pbarray = 8;
+// map<string, .KFMsg.PBArray> pbarray = 7;
 inline int PBObject::pbarray_size() const {
   return pbarray_.size();
 }
@@ -2459,7 +2438,7 @@ PBObject::mutable_pbarray() {
   return pbarray_.MutableMap();
 }
 
-// map<string, .KFMsg.PBObject> pbobject = 9;
+// map<string, .KFMsg.PBObject> pbobject = 8;
 inline int PBObject::pbobject_size() const {
   return pbobject_.size();
 }
@@ -2477,7 +2456,7 @@ PBObject::mutable_pbobject() {
   return pbobject_.MutableMap();
 }
 
-// map<string, .KFMsg.PBRecord> pbrecord = 10;
+// map<string, .KFMsg.PBRecord> pbrecord = 9;
 inline int PBObject::pbrecord_size() const {
   return pbrecord_.size();
 }
