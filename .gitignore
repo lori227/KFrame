@@ -80,3 +80,5 @@ Bin/*/plugin/
 Bin/*/config/
 Bin/*/*.dll
 Bin/*/*.exe
+Server/KFLibrary/google/protobuf/vsbuild/Debug
+Server/KFLibrary/google/protobuf/vsbuild/Release
