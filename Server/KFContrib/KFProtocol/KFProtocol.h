@@ -5,13 +5,8 @@
 #include "KFEnumMessage.pb.h"
 #include "KFDefineMessage.pb.h"
 #include "KFFrameMessage.pb.h"
-#include "KFClusterMessage.pb.h"
-#include "KFDataMessage.pb.h"
-#include "KFClientMessage.pb.h"
 #include "KFServerMessage.pb.h"
-#include "KFBattleMessage.pb.h"
-#include "KFMatchMessage.pb.h"
-#include "KFDeployMessage.pb.h"
+#include "KFClientMessage.pb.h"
 
 ////////////////////////////////////////////////////////////////////
 

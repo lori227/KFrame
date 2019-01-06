@@ -19,6 +19,31 @@ enum FrameProtocol
 	S2S_LOG_REQ = 10021;								// 记录日志到日志服务器
 	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// 更新登录数量到目录服务器
 	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// 删除登录数据
+
+	S2S_CLUSTER_REGISTER_REQ = 10101;			// 注册到服务器集群
+	S2S_CLUSTER_UPDATE_REQ = 10102;				// 更新集群连接器连接数量
+	S2S_CLUSTER_AUTH_REQ = 10103;				// 集群登录认证
+	S2S_CLUSTER_AUTH_ACK = 10104;				// 集群登录认证
+	S2S_CLUSTER_TOKEN_REQ = 10105;				// 集群Token
+	S2S_CLUSTER_VERIFY_REQ = 10106;				// 验证token请求
+	S2S_CLUSTER_VERIFY_ACK = 10107;				// 验证token回馈
+	S2S_CLUSTER_CLIENT_DISCOVER_REQ = 10108;	// 发现客户端列表
+	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// 添加对象映射
+	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// 删除对象映射
+	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// 请求分配shard
+	S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113;		// 请求分配shard
+	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// 请求分配shard
+	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// 发送到静态对象
+	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// 发送到动态对象
+	S2S_CLUSTER_CLIENT_LOST_REQ = 10117;		// 丢失客户端列表
+
+
+		S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
+	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// 请求分配Agent连接地址
+	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// 请求分配Agent连接地址
+	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10305;	// 部署命令
+	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10306;	// 部署命令
+	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10307;	// 部署命令
  }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -149,4 +174,203 @@ message S2SUpdateOnlineToDirReq
 message S2SRemoveOnlineToDirReq
 {
 	uint64 appid = 1;			// 服务器id
+}
+
+
+// 集群注册
+// S2S_CLUSTER_REGISTER_REQ
+message S2SClusterRegisterReq
+{
+	bytes type = 1;
+	uint64 id = 2;
+	bytes name = 3;
+	bytes ip = 4;
+	uint32 port = 5;
+}
+
+// 更新集群连接器连接数量
+// S2S_CLUSTER_UPDATE_REQ
+message S2SClusterUpdateReq
+{
+	bytes type = 1;
+	uint64 id = 2;
+	bytes name = 3;
+	bytes ip = 4;
+	uint32 port = 5;
+	uint32 count = 6;
+}
+
+// 集群登录认证
+// S2S_CLUSTER_AUTH_REQ
+message S2SClusterAuthReq
+{
+	bytes clustertype = 1;
+	bytes clusterkey = 2;
+}
+
+// 集群登录认证回馈
+// S2S_CLUSTER_AUTH_ACK
+message S2SClusterAuthAck
+{
+	bytes clustertype = 1;
+	bytes token = 2;
+	bytes type = 3;
+	uint64 id = 4;
+	bytes name = 5;
+	bytes ip = 6;
+	uint32 port = 7;	
+}
+
+// 更新token信息
+// S2S_CLUSTER_TOKEN_REQ
+message S2SClusterTokenReq
+{
+	bytes token = 1;
+	uint64 gateid = 2;
+}
+
+// 验证token
+// S2S_CLUSTER_VERIFY_REQ
+message S2SClusterVerifyReq
+{
+	bytes clustertype = 1;
+	bytes token = 2;
+	uint64 serverid = 3;
+}
+
+// 认证回馈
+// S2S_CLUSTER_VERIFY_ACK
+message S2SClusterVerifyAck
+{
+	bytes clustertype = 1;	// 集群类型
+	uint64 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
+}
+
+// 发现客户端列表
+// S2S_CLUSTER_CLIENT_DISCOVER_REQ
+message S2SClusterClientDiscoverReq
+{
+	repeated uint64 clientid = 1;	// 客户端列表
+}
+
+// 丢失客户端列表
+// S2S_CLUSTER_CLIENT_LOST_REQ
+message S2SClusterClientLostReq
+{
+	repeated uint64 clientid = 1;	// 客户端列表
+}
+
+// 注册对象映射
+// S2S_ADD_OBJECT_TO_PROXY_REQ
+message S2SAddObjectToProxyReq
+{
+	repeated uint64 objectid = 1;
+}
+
+// 删除对象映射
+// S2S_REMOVE_OBJECT_TO_PROXY_REQ
+message S2SRemoveObjectToProxyReq
+{
+	repeated uint64 objectid = 2;
+}
+
+// 请求分派Shard
+// S2S_ALLOC_OBJECT_TO_MASTER_REQ
+message S2SAllocObjectToMasterReq
+{
+	repeated uint64 objectid = 1;
+}
+
+// 请求分派Shard
+// S2S_ALLOC_OBJECT_TO_PROXY_ACK
+message S2SAllocObjectToProxyAck
+{
+	repeated uint64 objectid = 1;
+	repeated uint64 shardid = 2;
+}
+
+// 请求分派Shard
+// S2S_ALLOC_OBJECT_TO_SHARD_ACK
+message S2SAllocObjectToShardAck
+{
+	repeated uint64 objectid = 1;
+}
+
+// 发送消息到动态对象
+// S2S_SEND_TO_DYNAMIC_OBJECT_REQ
+message S2SSendToDynamicObjectReq
+{
+	uint64 objectid = 1;
+	uint64	serverid = 2;
+	uint32 msgid = 3;
+	bytes msgdata = 4;
+}
+
+// 发送消息到静态对象
+// S2S_SEND_TO_STATIC_OBJECT_REQ
+message S2SSendToStaticObjectReq
+{
+	uint64 objectid = 1;
+	uint64	serverid = 2;
+	uint32 msgid = 3;
+	bytes msgdata = 4;
+}
+
+// 注册Agent到Services
+// S2S_REGISTER_AGENT_TO_SERVER_REQ
+message S2SRegisterAgentToServerReq
+{
+	bytes agentid = 1;
+	bytes localip = 2;
+	bytes name = 3;
+	bytes type = 4;
+	uint32 port = 5;
+}
+
+// 请求分配Agent连接地址
+// S2S_GET_AGENT_IP_ADDRESS_REQ
+message S2SGetAgentIpAddressReq
+{
+	bytes localip = 1;
+}
+
+// 分配Agent连接地址回应
+// S2S_GET_AGENT_IP_ADDRESS_ACK
+message S2SGetAgentIpAddressAck
+{
+	bytes appname = 1;
+	bytes apptype = 2;
+	bytes appid = 3;
+	bytes ip = 4;	
+	uint32 port = 5;
+}
+
+message PBDeployCommand
+{
+	bytes command = 1;	// command
+	bytes appname = 2;	// appname
+	bytes apptype = 3;	// apptype
+	bytes appid = 4;		// appid
+	uint32 zoneid = 5;		// 分区
+	bytes value = 6;		// 数值
+	bytes logurl = 7; 	// 日志记录url
+}
+
+// 部署命令
+// S2S_DEPLOY_COMMAND_TO_AGENT_REQ
+message S2SDeployCommandToAgentReq
+{
+	PBDeployCommand deploycommand = 1;
+}
+
+// S2S_DEPLOY_COMMAND_TO_MASTER_REQ
+message S2SDeployCommandToMasterReq
+{
+	PBDeployCommand deploycommand = 1;
+}
+
+// S2S_DEPLOY_COMMAND_TO_SERVER_REQ
+message S2SDeployCommandToServerReq
+{
+	PBDeployCommand deploycommand = 1;
 }

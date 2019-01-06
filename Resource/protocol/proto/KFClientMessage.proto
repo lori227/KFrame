@@ -5,13 +5,22 @@ package KFMsg;
 
 enum ClientProtocol
  {
-	MSG_CLIENT_PROTOCOL_UNKNOW = 0;
+	MSG_CLIENT_PROTOCOL_UNKNOW = 0;			// pb3 需要0
+	MSG_RESULT_DISPLAY = 1;					// 结果提示回馈
+
+	// 更新数据消息
+	MSG_LOGIN_ENTER_GAME = 10;				// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 11;				// 同步更新属性
+	MSG_SYNC_ADD_DATA = 12;					// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 13;				// 同步删除属性
+	MSG_TELL_QUERY_PLAYER = 14;				// 查询玩家数据
+	MSG_TELL_QUERY_BASIC = 15;				// 查询基础数据
+
 	MSG_TELL_BE_KICK = 100;						// 被踢下线了
 	MSG_LOGIN_VERIFY_REQ = 101;					// 客户端登录验证请求
 	MSG_LOGIN_VERIFY_ACK = 102;					// 客户端登录验证结果
 	MSG_LOGIN_GAME_REQ = 103;					// 客户端登录游戏请求
 	MSG_LOGIN_OUT_REQ = 105;					// 客户端请求登出游戏
-	MSG_RESULT_DISPLAY = 106;					// 结果提示回馈
 	MSG_CREATE_ROLE_REQ = 107;					// 创建角色
 	MSG_CHANGE_NAME_REQ = 108;					// 修改名字
 	MSG_CHANGE_SEX_REQ = 109;					// 修改性别
@@ -127,6 +136,53 @@ message MsgResultDisplay
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 通知进入游戏世界
+// MSG_LOGIN_ENTER_GAME
+message MsgEnterGame
+{
+	PBObject playerdata = 1;
+	uint64 servertime = 2;
+}
+
+// 所有的游戏属性同通过这3个消息来完成同步
+// MSG_SYNC_UPDATE_DATA
+message MsgSyncUpdateData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_ADD_DATA
+message MsgSyncAddData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_REMOVE_DATA
+message MsgSyncRemoveData
+{
+	PBObject pbdata = 1;	
+}
+
+// 查询玩家信息
+// 如果key为0, 说明没有查询角色
+// MSG_TELL_QUERY_PLAYER
+message MsgTellQueryPlayer
+{
+	PBObject player = 1;
+}
+
+// 玩家基础信息
+// MSG_TELL_QUERY_BASIC
+message MsgTellQueryBasic
+{
+	PBObject player = 1;	
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 // 通知被踢下线
 // MSG_TELL_BE_KICK
 message MsgTellBeKick
