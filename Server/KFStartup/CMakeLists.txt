@@ -30,7 +30,7 @@ add_definitions(
 
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    target_link_libraries(KFStartup dl rt pthread iconv PocoXMLd PocoJSONd PocoUtild PocoFoundationd PocoJSONd KFGlobald KFPlugind KFMemoryd KFUtilityd tcmalloc_minimal)
+    target_link_libraries(KFStartup dl rt pthread iconv PocoJSONd PocoXMLd PocoUtild PocoFoundationd PocoJSONd KFGlobald KFPlugind KFMemoryd KFUtilityd tcmalloc_minimal)
 else()
-    target_link_libraries(KFStartup dl rt pthread iconv PocoXML PocoJSON PocoUtil PocoFoundation PocoJSON  KFGlobal KFPlugin KFMemory KFUtility tcmalloc_minimal)  
+    target_link_libraries(KFStartup dl rt pthread iconv PocoJSON PocoXML PocoUtil PocoFoundation PocoJSON  KFGlobal KFPlugin KFMemory KFUtility tcmalloc_minimal)  
 endif()
