@@ -133,7 +133,7 @@ namespace KFrame
 
         // 验证失败
         auto retcode = _kf_http_client->GetResponseCode( recvjson );
-        if ( retcode != KFMsg::Success )
+        if ( retcode != KFMsg::Ok )
         {
             auto bantime = __JSON_GET_UINT64__( recvjson, __KF_STRING__( bantime ) );
             return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid, bantime );

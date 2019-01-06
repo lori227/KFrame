@@ -314,7 +314,7 @@ namespace KFrame
         }
 
         player->RemoveData( kfwishorders, storeid );
-        return KFMsg::Success;
+        return KFMsg::Ok;
     }
 
     uint32 KFStoreModule::ModifyWishOrder( KFEntity* player, KFData* kfwishorders, uint32 storeid, uint32 status )
@@ -332,7 +332,7 @@ namespace KFrame
         }
 
         player->UpdateData( __KF_STRING__( wishorder ), storeid, __KF_STRING__( status ), KFOperateEnum::Set, status );
-        return KFMsg::Success;
+        return KFMsg::Ok;
     }
 
 

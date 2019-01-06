@@ -64,10 +64,7 @@ namespace KFrame
         uint64 battleserverid = _invalid_int;
         if ( KFGlobal::Instance()->_app_id._union._app_data._channel_id == KFMsg::Internal )
         {
-            if ( kfmsg.has_battleserverid() )
-            {
-                battleserverid = kfmsg.battleserverid();
-            }
+            battleserverid = kfmsg.battleserverid();
         }
 
         // 开始匹配

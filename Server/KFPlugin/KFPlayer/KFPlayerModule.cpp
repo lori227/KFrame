@@ -286,7 +286,7 @@ namespace KFrame
 
         __LOG_DEBUG__( "player[{}:{}:{}] load data ack!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
-        if ( result == KFMsg::Success )
+        if ( result == KFMsg::Ok )
         {
             // 创建玩家
             auto player = CreatePlayer( pblogin, pbplayerdata );

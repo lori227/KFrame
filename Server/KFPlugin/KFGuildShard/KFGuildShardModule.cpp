@@ -403,26 +403,23 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_guildid( kfmsg.guildid() );
         ack.set_medal( kfmsg.medal() );
-        if ( kfmsg.has_manifesto() )
-        {
-            ack.set_manifesto( kfmsg.manifesto() );
-        }
+        ack.set_manifesto( kfmsg.manifesto() );
 
-        // 已经拥有帮派
-        if ( IsGuildMember( kfmsg.playerid() ) )
-        {
-            ack.set_code( KFMsg::GuildHadBuild );
-            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
-            return;
-        }
+        //// 已经拥有帮派
+        //if ( IsGuildMember( kfmsg.playerid() ) )
+        //{
+        //    ack.set_code( KFMsg::GuildHadBuild );
+        //    _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+        //    return;
+        //}
 
-        if ( IsRepeateName( kfmsg.guildname() ) )
-        {
-            // 名字重复
-            ack.set_code( KFMsg::GuildNameRepeat );
-            _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
-            return;
-        }
+        //if ( IsRepeateName( kfmsg.guildname() ) )
+        //{
+        //    // 名字重复
+        //    ack.set_code( KFMsg::GuildNameRepeat );
+        //    _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
+        //    return;
+        //}
 
 
         // 记录帮派名字和id对应的hash， field->guildname, value->guildid
@@ -447,10 +444,7 @@ namespace KFrame
         values[__KF_STRING__( level )] = "1";
         //values[ __KF_STRING__( memberlist ) ] = strplayerid + DEFAULT_SPLIT_STRING;
         values[ __KF_STRING__( totalactiveness ) ] = KFUtility::ToString( _invalid_int );
-        if ( kfmsg.has_manifesto() )
-        {
-            values[ __KF_STRING__( manifesto ) ] = kfmsg.manifesto();
-        }
+        values[ __KF_STRING__( manifesto ) ] = kfmsg.manifesto();
         auto strguildid = KFUtility::ToString( kfmsg.guildid() );
         values[ __KF_STRING__( id ) ] = strguildid;
         for ( auto iter : values )
@@ -465,7 +459,7 @@ namespace KFrame
         // 这边设置完初始化标志后 会根据updata kfdata 回调去hset对应的键值对
         kfguild->SetInited();
         auto retcode = JoinGuild( kfmsg.guildid(), kfmsg.playerid(), KFGuildShardEnum::GuildMaster );
-        if ( KFMsg::Success != retcode )
+        if ( KFMsg::Ok != retcode )
         {
             ack.set_code( retcode );
             _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
@@ -478,7 +472,7 @@ namespace KFrame
         _kf_cluster_shard->AddObjectToProxy( __KF_HEAD_ID__( kfid ), objectlist );
 
         // 通知client 创建军团成功
-        ack.set_code( KFMsg::Success );
+        ack.set_code( KFMsg::Ok );
         _kf_cluster_shard->SendToClient( __KF_HEAD_ID__( kfid ), kfmsg.serverid(), KFMsg::S2S_CREATE_GUILD_ACK, &ack );
         // 通知client
         KFMsg::S2SLoginQueryGuildAck guilddataack;
@@ -535,12 +529,12 @@ namespace KFrame
         // 已经是帮派成员
         if ( IsGuildMember( kfmsg.invitedid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::Playerisguildmember );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::Playerisguildmember );
         }
 
         if ( IsInApplicanlist( kfmsg.guildid(), kfmsg.invitedid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::PlayerInApplicanlist );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.invitor(), KFMsg::PlayerInApplicanlist );
         }
 
         KFMsg::S2SInviteGuildAck ack;
@@ -575,7 +569,7 @@ namespace KFrame
         if ( kfmsg.invitor() == kfobject->GetValue<uint32>( __KF_STRING__( masterid ) ) )
         {
             auto retcode = JoinGuild( kfmsg.guildid(), kfmsg.playerid() );
-            if ( KFMsg::Success == retcode )
+            if ( KFMsg::Ok == retcode )
             {
                 return;
             }
@@ -591,11 +585,11 @@ namespace KFrame
         // 加入申请列表
         if ( !JoinApplicanlist( kfmsg.guildid(), kfmsg.playerid() ) )
         {
-            ack.set_code( KFMsg::GuildApplyListTooLong );
+            //ack.set_code( KFMsg::GuildApplyListTooLong );
         }
         else
         {
-            ack.set_code( KFMsg::Success );
+            ack.set_code( KFMsg::Ok );
         }
         _kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
         //_kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_APPLY_GUILD_ACK, &ack );
@@ -612,7 +606,7 @@ namespace KFrame
 
         if ( IsMaster( kfmsg.playerid(), kfmsg.guildid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMaster );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMaster );
         }
 
         auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
@@ -659,12 +653,12 @@ namespace KFrame
         auto kfobject = kfguild->GetData();
         if ( !IsMaster( kfmsg.playerid(), kfmsg.guildid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         if ( !IsSameGuild( kfmsg.playerid(), kfmsg.newmasterid(), kfmsg.guildid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoSmallGuild );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoSmallGuild );
         }
 
         // 更新老帮主的职位
@@ -713,49 +707,49 @@ namespace KFrame
         auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Review_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            // return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
-        // 处理单个人
-        if ( kfmsg.has_dealplayerid() )
-        {
-            if ( !RemoveApplicanlist( kfmsg.guildid(), kfmsg.dealplayerid() ) )
-            {
-                return  _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoInApplicanlist );
-            }
+        //// 处理单个人
+        //if ( kfmsg.has_dealplayerid() )
+        //{
+        //    if ( !RemoveApplicanlist( kfmsg.guildid(), kfmsg.dealplayerid() ) )
+        //    {
+        //        return  _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoInApplicanlist );
+        //    }
 
-            if ( KFMsg::RefuseApply == kfmsg.operatortype() )
-            {
-                return;
-            }
-            else
-            {
-                if ( IsGuildMember( kfmsg.dealplayerid() ) )
-                {
-                    return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::Playerisguildmember );
-                }
+        //    if ( KFMsg::RefuseApply == kfmsg.operatortype() )
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        if ( IsGuildMember( kfmsg.dealplayerid() ) )
+        //        {
+        //            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::Playerisguildmember );
+        //        }
 
-                auto retcode = JoinGuild( kfmsg.guildid(), kfmsg.dealplayerid() );
-                if ( KFMsg::Success != retcode )
-                {
-                    return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), retcode );
-                }
-            }
-        }
-        else
-        {
-            // 一键拒绝
-            if ( KFMsg::RefuseApply == kfmsg.operatortype() )
-            {
-                auto ok = ClearApplicanlist( kfmsg.guildid() );
-            }
-            else
-            {
-                // 一键添加
-                MoveApplicantToGuild( kfmsg.guildid() );
+        //        auto retcode = JoinGuild( kfmsg.guildid(), kfmsg.dealplayerid() );
+        //        if ( KFMsg::Ok != retcode )
+        //        {
+        //            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), retcode );
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    // 一键拒绝
+        //    if ( KFMsg::RefuseApply == kfmsg.operatortype() )
+        //    {
+        //        auto ok = ClearApplicanlist( kfmsg.guildid() );
+        //    }
+        //    else
+        //    {
+        //        // 一键添加
+        //        MoveApplicantToGuild( kfmsg.guildid() );
 
-            }
-        }
+        //    }
+        //}
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildShardModule::HandleDissolveGuildReq )
@@ -770,7 +764,7 @@ namespace KFrame
         auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Dissolve_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            // return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         _kf_component->RemoveEntity( kfmsg.guildid() );
@@ -791,14 +785,14 @@ namespace KFrame
         auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Modify_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            // return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         auto kfobject = kfguild->GetData();
         auto oldmedal = kfobject->GetValue<uint32>( __KF_STRING__( medal ) );
         if ( oldmedal == kfmsg.newmedal() )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMedalRepeat );
+            //  return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMedalRepeat );
         }
 
         kfguild->UpdateData( __KF_STRING__( medal ), __TO_STRING__( kfmsg.newmedal() ) );
@@ -846,12 +840,12 @@ namespace KFrame
         uint32 title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Dismissal_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         if ( !IsGreatTitle( kfmsg.playerid(), kfmsg.toplayerid(), kfmsg.guildid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         RemoveGuildMember( kfmsg.guildid(), kfmsg.toplayerid() );
@@ -921,7 +915,7 @@ namespace KFrame
         auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Manger_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            // return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
@@ -960,43 +954,43 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
         ack.set_level( _invalid_int );
 
-        auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
-        if ( nullptr == kfguild )
-        {
-            __LOG_ERROR__( "player[{}] updrage guild[{}] level failed!", kfmsg.playerid(), kfmsg.guildid() );
-            ack.set_code( KFMsg::SysError );
-        }
+        //auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
+        //if ( nullptr == kfguild )
+        //{
+        //    __LOG_ERROR__( "player[{}] updrage guild[{}] level failed!", kfmsg.playerid(), kfmsg.guildid() );
+        //    ack.set_code( KFMsg::SysError );
+        //}
 
-        auto kfobject = kfguild->GetData();
-        auto level = kfobject->GetValue<uint32>( __KF_STRING__( level ) );
-        auto kfguildsetting = _kf_guild_shard_config->FindGuildSetting( ++level );
-        ack.set_level( level );
-        if ( nullptr == kfguildsetting )
-        {
-            ack.set_code( KFMsg::GuildMaxLevel );
-        }
+        //auto kfobject = kfguild->GetData();
+        //auto level = kfobject->GetValue<uint32>( __KF_STRING__( level ) );
+        //auto kfguildsetting = _kf_guild_shard_config->FindGuildSetting( ++level );
+        //ack.set_level( level );
+        //if ( nullptr == kfguildsetting )
+        //{
+        //    ack.set_code( KFMsg::GuildMaxLevel );
+        //}
 
-        if ( !IsInGuild( kfmsg.playerid(), kfmsg.guildid() ) )
-        {
-            ack.set_code( KFMsg::PlayerNoGuild );
-        }
+        //if ( !IsInGuild( kfmsg.playerid(), kfmsg.guildid() ) )
+        //{
+        //    ack.set_code( KFMsg::PlayerNoGuild );
+        //}
 
-        auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
-        if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Upgrade_Data ) )
-        {
-            ack.set_code( KFMsg::PlayerNoPower );
-        }
+        //auto title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
+        //if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Upgrade_Data ) )
+        //{
+        //    ack.set_code( KFMsg::PlayerNoPower );
+        //}
 
-        // 判断升级活跃度
-        auto totalactiveness = kfobject->GetValue<uint64>( __KF_STRING__( totalactiveness ) );
-        if ( totalactiveness < kfguildsetting->_upgrade_activeness )
-        {
-            ack.set_code( KFMsg::GuildLackActiveness );
-        }
+        //// 判断升级活跃度
+        //auto totalactiveness = kfobject->GetValue<uint64>( __KF_STRING__( totalactiveness ) );
+        //if ( totalactiveness < kfguildsetting->_upgrade_activeness )
+        //{
+        //    ack.set_code( KFMsg::GuildLackActiveness );
+        //}
 
-        kfguild->UpdateData( __KF_STRING__( level ), KFOperateEnum::Set, level );
-        __LOG_INFO__( "player[{}] upgrade guild[{}] level[{}] success!", kfmsg.guildid(), kfmsg.guildid(), level );
-        ack.set_code( KFMsg::Success );
+        //kfguild->UpdateData( __KF_STRING__( level ), KFOperateEnum::Set, level );
+        //__LOG_INFO__( "player[{}] upgrade guild[{}] level[{}] success!", kfmsg.guildid(), kfmsg.guildid(), level );
+        ack.set_code( KFMsg::Ok );
         _kf_cluster_shard->SendToClient( kfid, KFMsg::S2S_UPGRADE_GUILD_ACK, &ack );
     }
 
@@ -1006,7 +1000,7 @@ namespace KFrame
         uint32 title = GetTitle( kfmsg.playerid(), kfmsg.guildid() );
         if ( !_kf_guild_shard_config->IsOwnPower( title, KFGuildShardEnum::Mask_Appoint_Data ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            //  return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         if ( KFGuildShardEnum::GuildMaster == kfmsg.title() )
@@ -1017,13 +1011,13 @@ namespace KFrame
         // 是否职位高于被处理者并且是同个帮派
         if ( !IsGreatTitle( kfmsg.playerid(), kfmsg.toplayerid(), kfmsg.guildid() ) )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
+            // return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::PlayerNoPower );
         }
 
         auto toplayertitle = GetTitle( kfmsg.toplayerid(), kfmsg.guildid() );
         if ( toplayertitle == kfmsg.title() )
         {
-            return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMemberOwnTitle );
+            //  return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMemberOwnTitle );
         }
 
         auto kfguild = _kf_component->FindEntity( kfmsg.guildid(), __FUNC_LINE__ );
@@ -1058,7 +1052,7 @@ namespace KFrame
             }
             if ( vicemembernum >= kfguildsetting->_max_vicemaster )
             {
-                return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMaxViceMember );
+                //return _kf_display->SendToGame( kfmsg.serverid(), kfmsg.playerid(), KFMsg::GuildMaxViceMember );
             }
             auto newvicemaster = strvicemember + KFUtility::ToString( kfmsg.toplayerid() ) + DEFAULT_SPLIT_STRING;
             kfguild->UpdateData( __KF_STRING__( vicemaster ), newvicemaster );
@@ -1643,7 +1637,7 @@ namespace KFrame
     {
         if ( IsGuildMember( guildid ) )
         {
-            return KFMsg::Playerisguildmember;
+            // return KFMsg::Playerisguildmember;
         }
         auto kfguild = _kf_component->FindEntity( guildid, __FUNC_LINE__ );
         auto kfobject = kfguild->GetData();
@@ -1654,12 +1648,12 @@ namespace KFrame
         if ( nullptr == kfguildsetting )
         {
             __LOG_ERROR__( "player[{}] join guild[{}] failed! guild level[{}] setting:null", playerid, guildid, level );
-            return KFMsg::SysError;
+            //return KFMsg::SysError;
         }
 
         if ( kfguildmembers->Size() >= kfguildsetting->_max_member )
         {
-            return KFMsg::GuildMemberlistTooLong;
+            //return KFMsg::GuildMemberlistTooLong;
         }
         auto kfguildmember = _kf_kernel->CreateObject( kfguildmembers->GetDataSetting() );
 
@@ -1699,7 +1693,7 @@ namespace KFrame
         else
         {
             __LOG_ERROR__( "player[{}] join guild[{}] failed basic is empty ", playerid, guildid );
-            return KFMsg::SysError;
+            // return KFMsg::SysError;
         }
 
         kfguild->AddData( kfguildmembers, kfguildmember );
@@ -1715,7 +1709,7 @@ namespace KFrame
         }
 
 
-        return KFMsg::Success;
+        return KFMsg::Ok;
     }
 
     bool KFGuildShardModule::GetPlayBasic( uint32 playerid, MapString& values, VectorString& field )
@@ -1772,7 +1766,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( KFMsg::Success == JoinGuild( guildid, playerid ) )
+            if ( KFMsg::Ok == JoinGuild( guildid, playerid ) )
             {
                 continue;
             }

@@ -182,7 +182,7 @@ namespace KFrame
             _name_redis_driver->Execute( "del {}:{}", __KF_STRING__( name ), oldname );
         }
 
-        return KFMsg::Success;
+        return KFMsg::Ok;
     }
 
 }

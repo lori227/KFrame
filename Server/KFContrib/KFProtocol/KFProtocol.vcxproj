@@ -13,10 +13,11 @@
   <ItemGroup>
     <ClCompile Include="KFClientMessage.pb.cc" />
     <ClCompile Include="KFClusterMessage.pb.cc" />
-    <ClCompile Include="KFCommonMessage.pb.cc" />
     <ClCompile Include="KFBattleMessage.pb.cc" />
     <ClCompile Include="KFDataMessage.pb.cc" />
+    <ClCompile Include="KFDefineMessage.pb.cc" />
     <ClCompile Include="KFDeployMessage.pb.cc" />
+    <ClCompile Include="KFEnumMessage.pb.cc" />
     <ClCompile Include="KFFrameMessage.pb.cc" />
     <ClCompile Include="KFMatchMessage.pb.cc" />
     <ClCompile Include="KFProtocol.cpp" />
@@ -26,10 +27,11 @@
   <ItemGroup>
     <ClInclude Include="KFClientMessage.pb.h" />
     <ClInclude Include="KFClusterMessage.pb.h" />
-    <ClInclude Include="KFCommonMessage.pb.h" />
     <ClInclude Include="KFBattleMessage.pb.h" />
     <ClInclude Include="KFDataMessage.pb.h" />
+    <ClInclude Include="KFDefineMessage.pb.h" />
     <ClInclude Include="KFDeployMessage.pb.h" />
+    <ClInclude Include="KFEnumMessage.pb.h" />
     <ClInclude Include="KFFrameMessage.pb.h" />
     <ClInclude Include="KFMatchMessage.pb.h" />
     <ClInclude Include="KFProtocol.h" />

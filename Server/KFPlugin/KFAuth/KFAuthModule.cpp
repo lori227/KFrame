@@ -41,7 +41,7 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( authjson, authdata );
         auto retcode = _kf_http_server->GetResponseCode( authjson );
-        if ( retcode != KFMsg::Success )
+        if ( retcode != KFMsg::Ok )
         {
             return _kf_http_server->SendResponseCode( retcode );
         }
@@ -211,7 +211,7 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( kfresponse, kickresult );
         auto retcode = _kf_http_server->GetResponseCode( kfresponse );
-        return retcode == KFMsg::Success;
+        return retcode == KFMsg::Ok;
     }
 
     std::string KFAuthModule::QueryDirList( uint64 accountid, const std::string& token, MapString& accountdata )
@@ -235,7 +235,7 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( kfdirjson, urlresponse );
         auto dirretcode = _kf_http_server->GetResponseCode( kfdirjson );
-        if ( dirretcode != KFMsg::Success )
+        if ( dirretcode != KFMsg::Ok )
         {
             // 失败删除
             if ( dirretcode == 0 )
@@ -453,7 +453,7 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
 
-        return _kf_http_server->SendResponseCode( KFMsg::Success );
+        return _kf_http_server->SendResponseCode( KFMsg::Ok );
     }
 
     uint64 KFAuthModule::CheckLoginBlackList( const std::string& ip, uint64 accountid, uint64 playerid )
@@ -548,7 +548,7 @@ namespace KFrame
             KickAccountOffline( accountdata->_value );
         }
 
-        return _kf_http_server->SendResponseCode( KFMsg::Success );
+        return _kf_http_server->SendResponseCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleUnBanLogin )
@@ -577,7 +577,7 @@ namespace KFrame
             redisdriver->Execute( "hset {} {}", __KF_STRING__( banip ), banip );
         }
 
-        return _kf_http_server->SendResponseCode( KFMsg::Success );
+        return _kf_http_server->SendResponseCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryBanLogin )

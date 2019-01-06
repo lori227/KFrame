@@ -241,14 +241,11 @@ namespace KFrame
 
         // 获得奖励
         std::string reward = _invalid_str;
-        if ( pbscore->has_score() )
+        auto kfsetting = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
+        if ( kfsetting != nullptr )
         {
-            auto kfsetting = _kf_battle_config->FindBattleReward( pbscore->matchid(), pbscore->score() );
-            if ( kfsetting != nullptr )
-            {
-                reward = kfsetting->_reward;
-                pbscore->set_reward( reward );
-            }
+            reward = kfsetting->_reward;
+            pbscore->set_reward( reward );
         }
 
         {

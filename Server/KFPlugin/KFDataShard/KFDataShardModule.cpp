@@ -147,7 +147,7 @@ namespace KFrame
         bool ok = LoadPlayerData( kfmsg.zoneid(), pblogin->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
-            ack.set_result( KFMsg::Success );
+            ack.set_result( KFMsg::Ok );
         }
         else
         {

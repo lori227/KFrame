@@ -241,7 +241,7 @@ namespace KFrame
         _kf_relation->BalanceBattleRelation( player, kfmsg.roomid(), pbscore );
 
         // 奖励
-        if ( pbscore->has_reward() && !pbscore->reward().empty() )
+        if ( !pbscore->reward().empty() )
         {
             KFElements kfelements;
             auto ok = kfelements.Parse( pbscore->reward(), __FUNC_LINE__ );
@@ -252,15 +252,12 @@ namespace KFrame
         }
 
         // 成就
-        if ( pbscore->has_achieve() )
+        auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
+        auto pbachieves = &pbscore->achieve();
+        for ( auto i = 0; i < pbachieves->taskdata_size(); ++i )
         {
-            auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
-            auto pbachieves = &pbscore->achieve();
-            for ( auto i = 0; i < pbachieves->taskdata_size(); ++i )
-            {
-                auto pbachieve = &pbachieves->taskdata( i );
-                player->UpdateData( kfachieves, pbachieve->id(), __KF_STRING__( value ), KFOperateEnum::Set, pbachieve->value() );
-            }
+            auto pbachieve = &pbachieves->taskdata( i );
+            player->UpdateData( kfachieves, pbachieve->id(), __KF_STRING__( value ), KFOperateEnum::Set, pbachieve->value() );
         }
 
         // 回复消息

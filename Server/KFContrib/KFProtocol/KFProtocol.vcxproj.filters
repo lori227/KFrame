@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="KFClientMessage.pb.cc" />
-    <ClCompile Include="KFCommonMessage.pb.cc" />
     <ClCompile Include="KFServerMessage.pb.cc" />
     <ClCompile Include="KFBattleMessage.pb.cc" />
     <ClCompile Include="KFMatchMessage.pb.cc" />
@@ -12,10 +11,11 @@
     <ClCompile Include="KFFrameMessage.pb.cc" />
     <ClCompile Include="KFDeployMessage.pb.cc" />
     <ClCompile Include="KFProtoFactory.cpp" />
+    <ClCompile Include="KFDefineMessage.pb.cc" />
+    <ClCompile Include="KFEnumMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClientMessage.pb.h" />
-    <ClInclude Include="KFCommonMessage.pb.h" />
     <ClInclude Include="KFProtocol.h" />
     <ClInclude Include="KFServerMessage.pb.h" />
     <ClInclude Include="KFBattleMessage.pb.h" />
@@ -25,5 +25,7 @@
     <ClInclude Include="KFFrameMessage.pb.h" />
     <ClInclude Include="KFDeployMessage.pb.h" />
     <ClInclude Include="KFProtoFactory.h" />
+    <ClInclude Include="KFDefineMessage.pb.h" />
+    <ClInclude Include="KFEnumMessage.pb.h" />
   </ItemGroup>
 </Project>

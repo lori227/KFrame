@@ -164,7 +164,7 @@ namespace KFrame
 
         KFMsg::S2SRegisterBattleServerAck ack;
         ack.set_serverid( kfmsg.serverid() );
-        ack.set_result( KFMsg::Success );
+        ack.set_result( KFMsg::Ok );
         _kf_cluster_shard->SendToClient( proxyid, kfmsg.serverid(), KFMsg::S2S_REGISTER_BATTLE_SERVER_ACK, &ack );
 
         __LOG_DEBUG__( "register version[{}] battle[{}|{}:{}|{}] ok!", kfmsg.version(), strserverid, kfmsg.ip(), kfmsg.port(), kfmsg.roomid() );

@@ -2,7 +2,8 @@
 #define __KF_PROTOCOL_H__
 #include "KFInclude.h"
 
-#include "KFCommonMessage.pb.h"
+#include "KFEnumMessage.pb.h"
+#include "KFDefineMessage.pb.h"
 #include "KFFrameMessage.pb.h"
 #include "KFClusterMessage.pb.h"
 #include "KFDataMessage.pb.h"

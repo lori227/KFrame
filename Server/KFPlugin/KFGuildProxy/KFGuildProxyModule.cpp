@@ -51,10 +51,7 @@ namespace KFrame
         req.set_name( kfmsg.name() );
         req.set_guildname( kfmsg.guildname() );
         req.set_medal( kfmsg.medal() );
-        if ( kfmsg.has_manifesto() )
-        {
-            req.set_manifesto( kfmsg.manifesto() );
-        }
+        req.set_manifesto( kfmsg.manifesto() );
 
         auto ok = _kf_cluster_proxy->SendToShard( shardid, KFMsg::S2S_CREATE_GUILD_TO_SHARD_REQ, &req );
         if ( ok )

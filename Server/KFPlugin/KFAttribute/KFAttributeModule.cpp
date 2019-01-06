@@ -151,7 +151,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SCreateRoleAck );
 
-        if ( kfmsg.result() == KFMsg::Success )
+        if ( kfmsg.result() == KFMsg::Ok )
         {
             kfmsg.set_result( KFMsg::CreateRoleOK );
 
@@ -236,7 +236,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SSetPlayerNameAck );
 
-        if ( kfmsg.result() == KFMsg::Success )
+        if ( kfmsg.result() == KFMsg::Ok )
         {
             kfmsg.set_result( KFMsg::NameSetOK );
             player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );

@@ -251,7 +251,7 @@ namespace KFrame
 
         __LOG_DEBUG__( "player[{}:{}] session[{}] enter game req!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
 
-        if ( result != KFMsg::Success )
+        if ( result != KFMsg::Ok )
         {
             __LOG_ERROR__( "player[{}:{}] login failed[{}]!", pblogin->accountid(), pblogin->playerid(), result );
             return SendLoginFailedMessage( pblogin->sessionid(), result, 0 );

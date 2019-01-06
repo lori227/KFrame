@@ -41,7 +41,7 @@ namespace KFrame
         uint32 recode = authjson.GetUInt32( __KF_STRING__( retcode ) );
         kfrobot->_accountid = authjson.GetUInt32( __KF_STRING__( accountid ) );
         kfrobot->_token = authjson.GetString( __KF_STRING__( token ) );
-        if ( KFMsg::Success != recode )
+        if ( KFMsg::Ok != recode )
         {
             __LOG_ERROR__( "url:[{}], accountid:{} code:{}", url.c_str(), kfrobot->_account, authjson.GetUInt32( __KF_STRING__( retcode ) ) );
             return;
