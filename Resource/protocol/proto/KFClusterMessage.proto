@@ -1,7 +1,9 @@
+syntax = "proto3";
 package KFMsg;
 
 enum ClusterProtocol
 {
+	s2s_cluster_temp = 0;
 	S2S_CLUSTER_REGISTER_REQ = 10101;			// 注册到服务器集群
 	S2S_CLUSTER_UPDATE_REQ = 10102;				// 更新集群连接器连接数量
 	S2S_CLUSTER_AUTH_REQ = 10103;				// 集群登录认证
@@ -26,69 +28,69 @@ enum ClusterProtocol
 // S2S_CLUSTER_REGISTER_REQ
 message S2SClusterRegisterReq
 {
-	required bytes type = 1;
-	required uint64 id = 2;
-	required bytes name = 3;
-	required bytes ip = 4;
-	required uint32 port = 5;
+	bytes type = 1;
+	uint64 id = 2;
+	bytes name = 3;
+	bytes ip = 4;
+	uint32 port = 5;
 }
 
 // 更新集群连接器连接数量
 // S2S_CLUSTER_UPDATE_REQ
 message S2SClusterUpdateReq
 {
-	required bytes type = 1;
-	required uint64 id = 2;
-	required bytes name = 3;
-	required bytes ip = 4;
-	required uint32 port = 5;
-	required uint32 count = 6;
+	bytes type = 1;
+	uint64 id = 2;
+	bytes name = 3;
+	bytes ip = 4;
+	uint32 port = 5;
+	uint32 count = 6;
 }
 
 // 集群登录认证
 // S2S_CLUSTER_AUTH_REQ
 message S2SClusterAuthReq
 {
-	required bytes clustertype = 1;
-	required bytes clusterkey = 2;
+	bytes clustertype = 1;
+	bytes clusterkey = 2;
 }
 
 // 集群登录认证回馈
 // S2S_CLUSTER_AUTH_ACK
 message S2SClusterAuthAck
 {
-	required bytes clustertype = 1;
-	required bytes token = 2;
-	required bytes type = 3;
-	required uint64 id = 4;
-	required bytes name = 5;
-	required bytes ip = 6;
-	required uint32 port = 7;	
+	bytes clustertype = 1;
+	bytes token = 2;
+	bytes type = 3;
+	uint64 id = 4;
+	bytes name = 5;
+	bytes ip = 6;
+	uint32 port = 7;	
 }
 
 // 更新token信息
 // S2S_CLUSTER_TOKEN_REQ
 message S2SClusterTokenReq
 {
-	required bytes token = 1;
-	required uint64 gateid = 2;
+	bytes token = 1;
+	uint64 gateid = 2;
 }
 
 // 验证token
 // S2S_CLUSTER_VERIFY_REQ
 message S2SClusterVerifyReq
 {
-	required bytes clustertype = 1;
-	required bytes token = 2;
-	required uint64 serverid = 3;
+	bytes clustertype = 1;
+	bytes token = 2;
+	uint64 serverid = 3;
 }
 
 // 认证回馈
 // S2S_CLUSTER_VERIFY_ACK
 message S2SClusterVerifyAck
 {
-	required bytes clustertype = 1;	// 集群类型
-	required uint64 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
+	bytes clustertype = 1;	// 集群类型
+	uint64 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
 }
 
 // 发现客户端列表
@@ -145,20 +147,20 @@ message S2SAllocObjectToShardAck
 // S2S_SEND_TO_DYNAMIC_OBJECT_REQ
 message S2SSendToDynamicObjectReq
 {
-	required uint64 objectid = 1;
-	required uint64	serverid = 2;
-	required uint32 msgid = 3;
-	required bytes msgdata = 4;
+	uint64 objectid = 1;
+	uint64	serverid = 2;
+	uint32 msgid = 3;
+	bytes msgdata = 4;
 }
 
 // 发送消息到静态对象
 // S2S_SEND_TO_STATIC_OBJECT_REQ
 message S2SSendToStaticObjectReq
 {
-	required uint64 objectid = 1;
-	required uint64	serverid = 2;
-	required uint32 msgid = 3;
-	required bytes msgdata = 4;
+	uint64 objectid = 1;
+	uint64	serverid = 2;
+	uint32 msgid = 3;
+	bytes msgdata = 4;
 }
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
