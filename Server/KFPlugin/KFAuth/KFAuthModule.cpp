@@ -315,7 +315,7 @@ namespace KFrame
         {
             __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
             _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
-            return _invalid_int;
+            return _invalid_str;
         }
 
         auto code = __JSON_GET_UINT32__( resp, __KF_STRING__( code ) );
