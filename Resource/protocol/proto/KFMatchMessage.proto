@@ -1,9 +1,11 @@
-import "KFCommonMessage.proto";
+syntax = "proto3";
+import "KFDefineMessage.proto";
 
 package KFMsg;
 
 enum MatchProtocol
 {	
+	S2S_MATCH_PROTOCOL_UNKNOW =0;
 	S2S_REGISTER_MATCH_REQ = 11101;					// 注册匹配
 	S2S_MATCH_TO_PROXY_REQ = 11102;					// 请求匹配
 	S2S_MATCH_TO_SHARD_REQ = 11103;					// 请求匹配
@@ -38,158 +40,158 @@ message S2SRegisterMatchReq
 // S2S_MATCH_TO_PROXY_REQ
 message S2SMatchToProxyReq
 {
-	required PBMatchGroup pbgroup = 1;
-	required uint32 matchid = 2;
-	required bool allowgroup = 3;
-	required uint64 playerid = 4;
-	required uint64 serverid = 5;
-	required uint64 battleserverid = 6;
-	required bytes version = 7;			// 客户端版本
+	PBMatchGroup pbgroup = 1;
+	uint32 matchid = 2;
+	bool allowgroup = 3;
+	uint64 playerid = 4;
+	uint64 serverid = 5;
+	uint64 battleserverid = 6;
+	bytes version = 7;			// 客户端版本
 }
 
 // S2S_MATCH_TO_CLIENT_ACK
 message S2SMatchToClientAck
 {
-	required uint32 result = 1;
-	required uint32 matchid = 2;
-	required uint64 playerid = 3;
+	uint32 result = 1;
+	uint32 matchid = 2;
+	uint64 playerid = 3;
 }
 
 // S2S_MATCH_TO_SHARD_REQ
 message S2SMatchToShardReq
 {
-	required PBMatchGroup pbgroup = 1;
-	required uint32 matchid = 2;
-	required bool allowgroup = 3;
-	required uint64 playerid = 4;
-	required uint64 serverid = 5;
-	required uint64 battleserverid = 6;
-	required bytes version = 7;			// 客户端版本
+	PBMatchGroup pbgroup = 1;
+	uint32 matchid = 2;
+	bool allowgroup = 3;
+	uint64 playerid = 4;
+	uint64 serverid = 5;
+	uint64 battleserverid = 6;
+	bytes version = 7;			// 客户端版本
 }
 
 // 取消匹配
 // S2S_CANCEL_MATCH_TO_PROXY_REQ
 message S2SCancelMatchToProxyReq
 {
-	required uint32 matchid = 1;	// 匹配模式	
-	required uint64 playerid = 2;	// 玩家id	
+	uint32 matchid = 1;	// 匹配模式	
+	uint64 playerid = 2;	// 玩家id	
 }
 
 // 取消匹配
 // S2S_CANCEL_MATCH_TO_SHARD_REQ
 message S2SCancelMatchToShardReq
 {
-	required uint32 matchid = 1;	// 匹配模式	
-	required uint64 playerid = 2;	// 玩家id		
+	uint32 matchid = 1;	// 匹配模式	
+	uint64 playerid = 2;	// 玩家id		
 }
 
 // 取消匹配
 // S2S_CANCEL_MATCH_TO_BATTLE_SHARD_REQ
 message S2SCancelMatchToBattleShardReq
 {
-	required uint64 roomid = 1;
-	required uint32 campid = 2;
-	required uint64 groupid = 3;
+	uint64 roomid = 1;
+	uint32 campid = 2;
+	uint64 groupid = 3;
 }
 
 // 匹配结果
 // S2S_NOTICE_MATCH_ROOM_REQ
 message S2SNoticeMatchRoomReq
 {
-	required uint32 matchid = 1;
-	required uint64 battleshardid = 2;
-	required uint32 campid = 3;
-	required uint64 playerid = 4;
-	required uint64 serverid = 5;
-	required uint64 roomid = 6;
-	required bytes ip = 7;
-	required uint32 port = 8;
-	required bytes token = 9;
+	uint32 matchid = 1;
+	uint64 battleshardid = 2;
+	uint32 campid = 3;
+	uint64 playerid = 4;
+	uint64 serverid = 5;
+	uint64 roomid = 6;
+	bytes ip = 7;
+	uint32 port = 8;
+	bytes token = 9;
 }
 
 // 匹配结果
 // S2S_NOTICE_MATCH_ROOM_ACK
 message S2SNoticeMatchRoomAck
 {
-	required uint64 roomid = 1;
-	required uint32 campid = 2;
-	required uint64 playerid = 3;
+	uint64 roomid = 1;
+	uint32 campid = 2;
+	uint64 playerid = 3;
 }
 
 // 查询匹配信息
 // S2S_QUERY_MATCH_ROOM_REQ
 message S2SQueryMatchRoomReq
 {
-	required uint32 matchid = 1;
-	required uint64 playerid = 2;
-	required uint64 serverid = 3;
+	uint32 matchid = 1;
+	uint64 playerid = 2;
+	uint64 serverid = 3;
 }
 
 // 查询匹配信息
 // S2S_QUERY_ROOM_TO_MATCH_SHARD_REQ
 message S2SQueryRoomToMatchShardReq
 {
-	required uint32 matchid = 1;
-	required uint64 playerid = 2;
-	required uint64 serverid = 3;	
+	uint32 matchid = 1;
+	uint64 playerid = 2;
+	uint64 serverid = 3;	
 }
 
 // 查询匹配信息
 // S2S_QUERY_MATCH_ROOM_ACK
 message S2SQueryMatchRoomAck
 {
-	required uint32 matchid = 1;
-	required uint64 playerid = 2;
+	uint32 matchid = 1;
+	uint64 playerid = 2;
 }
 
 // 查询匹配信息
 // S2S_QUERY_BATTLE_ROOM_REQ
 message S2SQueryBattleRoomReq
 {
-	required uint64 roomid = 1;
-	required uint64 playerid = 2;
-	required uint64 serverid = 3;		
+	uint64 roomid = 1;
+	uint64 playerid = 2;
+	uint64 serverid = 3;		
 }
 
 // S2S_QUERY_BATTLE_ROOM_ACK
 message S2SQueryBattleRoomAck
 {
-	required uint64 playerid = 1;	
-	required uint64 roomid = 2;
-	required uint32 matchid = 3;
+	uint64 playerid = 1;	
+	uint64 roomid = 2;
+	uint32 matchid = 3;
 }
 
 // 查询匹配信息
 // S2S_QUERY_ROOM_TO_BATTLE_SHARD_REQ
 message S2SQueryRoomToBattleShardReq
 {
-	required uint64 roomid = 1;
-	required uint64 playerid = 2;
-	required uint64 serverid = 3;		
+	uint64 roomid = 1;
+	uint64 playerid = 2;
+	uint64 serverid = 3;		
 }
 
 // 通知战斗服务器玩家上线
 // S2S_PLAYER_ONLINE_TO_BATTLE_SHARD_REQ
 message S2SPlayerOnlineToBattleShardReq
 {	
-	required uint64 roomid = 1;
-	required uint32 campid = 2;
-	required uint64 playerid = 3;
-	required uint64 serverid = 4;	
+	uint64 roomid = 1;
+	uint32 campid = 2;
+	uint64 playerid = 3;
+	uint64 serverid = 4;	
 }
 
 // 通知玩家处于匹配状态
 // S2S_NOTICE_MATCH_STATE_REQ
 message S2SNoticeMatchStateReq
 {
-	required uint64 playerid = 1;
-	required uint32 matchid = 2;
+	uint64 playerid = 1;
+	uint32 matchid = 2;
 }
 
 // 重置匹配房间
 // S2S_RESET_MATCH_ROOM_REQ
 message S2SResetMatchRoomReq
 {
-	required uint32 matchid = 1;
-	required uint64 roomid = 2;
+	uint32 matchid = 1;
+	uint64 roomid = 2;
 }
