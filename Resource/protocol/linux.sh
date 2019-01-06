@@ -27,7 +27,7 @@ makeversion KFClientMessage.proto
 clientversion=$?
 echo "client version=$clientversion"
 
-makeversion KFBattleMessage.proto
+makeversion KFDefineMessage.proto
 battleversion=$?
 echo "battle version=$battleversion"
 
