@@ -55,9 +55,9 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_QUERY_GUILDID_ACK, &KFGuildClientModule::HandleLoginQueryGuildIdAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUILD_LOG_REQ, &KFGuildClientModule::HandleQueryGuildLogReq );
 
-        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &KFGuildClientModule::HandleUpDateGuildAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA, &KFGuildClientModule::HandleAddGuildAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &KFGuildClientModule::HandleRemoveGuildAck );
+        //__REGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA, &KFGuildClientModule::HandleUpDateGuildAck );
+        //__REGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA, &KFGuildClientModule::HandleAddGuildAck );
+        // __REGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA, &KFGuildClientModule::HandleRemoveGuildAck );
 
     }
 
@@ -87,9 +87,9 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_QUERY_GUILDID_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_GUILD_LOG_REQ );
 
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA );
+        //__UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_UPDATE_GUILD_DATA );
+        // __UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_ADD_GUILD_DATA );
+        // __UNREGISTER_MESSAGE__( KFMsg::MSG_SYNC_REMOVE_GUILD_DATA );
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
@@ -834,58 +834,58 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleAddGuildAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::MsgSyncAddGuildData );
-        auto kfobject = player->GetData();
-        //if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
-        {
-            return;
-        }
+        //__SERVER_PROTO_PARSE__( KFMsg::MsgSyncAddGuildData );
+        //auto kfobject = player->GetData();
+        ////if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
+        //{
+        //    return;
+        //}
 
-        auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
-        if ( kfguild == nullptr )
-        {
-            return;
-        }
+        //auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
+        //if ( kfguild == nullptr )
+        //{
+        //    return;
+        //}
 
-        ParseAddGuildFromProto( player, kfguild, nullptr, &kfmsg.pbdata() );
+        //ParseAddGuildFromProto( player, kfguild, nullptr, &kfmsg.pbdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleUpDateGuildAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::MsgSyncUpdateGuildData );
-        auto kfobject = player->GetData();
-        //if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
-        {
-            __LOG_ERROR__( "player[{}] update guild data failed!", kfmsg.playerid() );
-            return;
-        }
+        //__SERVER_PROTO_PARSE__( KFMsg::MsgSyncUpdateGuildData );
+        //auto kfobject = player->GetData();
+        ////if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
+        //{
+        //    __LOG_ERROR__( "player[{}] update guild data failed!", kfmsg.playerid() );
+        //    return;
+        //}
 
-        auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
-        if ( kfguild == nullptr )
-        {
-            __LOG_ERROR__( "player[{}] update guild data field[{}] failed!", kfmsg.playerid(), kfmsg.pbdata().name() );
-            return;
-        }
-        ParseUpdateGuildFromProto( player, kfguild, &kfmsg.pbdata() );
+        //auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
+        //if ( kfguild == nullptr )
+        //{
+        //    __LOG_ERROR__( "player[{}] update guild data field[{}] failed!", kfmsg.playerid(), kfmsg.pbdata().name() );
+        //    return;
+        //}
+        //ParseUpdateGuildFromProto( player, kfguild, &kfmsg.pbdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleRemoveGuildAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::MsgSyncRemoveGuildData );
-        auto kfobject = player->GetData();
-        //if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
-        {
-            __LOG_ERROR__( "player[{}] remove guild data failed!", kfmsg.playerid() );
-            return;
-        }
+        //__SERVER_PROTO_PARSE__( KFMsg::MsgSyncRemoveGuildData );
+        //auto kfobject = player->GetData();
+        ////if ( !kfmsg.pbdata().has_key() || !kfmsg.pbdata().has_name() )
+        //{
+        //    __LOG_ERROR__( "player[{}] remove guild data failed!", kfmsg.playerid() );
+        //    return;
+        //}
 
-        auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
-        if ( kfguild == nullptr )
-        {
-            __LOG_ERROR__( "player[{}] remove guild data field[{}] failed!", kfmsg.playerid(), kfmsg.pbdata().name() );
-            return;
-        }
-        ParseRemoveGuildProto( player, kfguild, &kfmsg.pbdata() );
+        //auto kfguild = kfobject->FindData( kfmsg.pbdata().name() );
+        //if ( kfguild == nullptr )
+        //{
+        //    __LOG_ERROR__( "player[{}] remove guild data field[{}] failed!", kfmsg.playerid(), kfmsg.pbdata().name() );
+        //    return;
+        //}
+        //ParseRemoveGuildProto( player, kfguild, &kfmsg.pbdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGuildClientModule::HandleSearchGuildByNameReq )
