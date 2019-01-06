@@ -110,7 +110,7 @@ namespace KFrame
             }
 
             auto* object = _objects[ index ];
-            __KF_DESTROY__( T, object );
+            __KF_DELETE__( T, object );
             _objects[ index ] = nullptr;
         }
 
