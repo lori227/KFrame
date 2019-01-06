@@ -106,6 +106,13 @@ enum GuildReviewEnum
 	AgreeApply = 1;		// 同意加入帮派
 	RefuseApply = 2;	// 拒绝加入帮派
 }
+
+enum BattleEnum
+{
+	BattleUnknow = 0;
+	OpenSuccess = 1;	// 开启成功
+	OpenFailed = 2;		// 开启失败
+}
 //////////////////////////////////////////////////////////////////////////////////
 
 enum CodeEnum
