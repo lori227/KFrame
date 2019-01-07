@@ -3,14 +3,15 @@ package KFMsg;
 
 enum FrameProtocol
 {
-	s2s_temp = 0;
+	S2S_FRAME_PROTOCOL_BEGIN = 0;						// 框架协议开始
 	S2S_REGISTER_TO_SERVER_REQ = 10001;					// 请求注册
 	S2S_REGISTER_TO_SERVER_ACK = 10002;					// 回馈注册
 	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
 	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// 通知取消注册
 
-	S2S_REGISTER_ROUTE_ZONE_REQ = 10011;				// 注册区信息
-	S2S_REGISTER_ROUTE_PROXY_REQ = 10012;				// 注册区信息
+	S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ = 10011;		// 注册路由客户端到Proxy
+	S2S_REGISTER_ROUTE_CLIENT_TO_SHARD_REQ = 10012;		// 注册路由客户端到Shard
+
 	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ = 10013;		// 消息转发到RouteProxy
 	S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK = 10014;		// 消息转发到RouteProxy
 	S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ = 10015;		// 消息转发到RouteShard
@@ -38,7 +39,7 @@ enum FrameProtocol
 	S2S_CLUSTER_CLIENT_LOST_REQ = 10117;		// 丢失客户端列表
 
 
-		S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
+	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
 	S2S_GET_AGENT_IP_ADDRESS_REQ = 10303;		// 请求分配Agent连接地址
 	S2S_GET_AGENT_IP_ADDRESS_ACK = 10304;		// 请求分配Agent连接地址
 	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10305;	// 部署命令
@@ -96,22 +97,16 @@ message TellUnRegisterFromServer
 }
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
-message PBRouteZone
+// S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ
+message S2SRegisterRouteClientToProxyReq
 {
-	uint32 zoneid = 1;
-	uint64 serverid = 2;
+	uint64 serverid = 1;
 }
 
-// S2S_REGISTER_ROUTE_ZONE_REQ
-message S2SRegisterRouteZoneReq
+// S2S_REGISTER_ROUTE_CLIENT_TO_SHARD_REQ
+message S2SRegisterRouteClientToShardReq
 {
-	PBRouteZone zonedata = 1;
-}
-
-// S2S_REGISTER_ROUTE_PROXY_REQ
-message S2SRegisterRouteProxyReq
-{
-	repeated PBRouteZone zonedata = 1;
+	repeated uint64 serverid = 1;
 }
 
 message PBTransmitRouteMessage

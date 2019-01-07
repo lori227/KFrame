@@ -32,19 +32,11 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFRouteClientModule::OnConnectionRouteCluster( uint64 serverid )
     {
-        // 只有Game才注册路由信息
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_type != __KF_STRING__( game ) )
-        {
-            return;
-        }
-
+        // 注册路由信息
         // 连接到Route Proxy, 发送区信息到Proxy
-        KFMsg::S2SRegisterRouteZoneReq req;
-        auto zonedata = req.mutable_zonedata();
-        zonedata->set_zoneid( _kf_zone->GetZone()->_id );
-        zonedata->set_serverid( kfglobal->_app_id._union._id );
-        _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_ZONE_REQ, &req );
+        KFMsg::S2SRegisterRouteClientToProxyReq req;
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        _kf_cluster->SendToShard( __KF_STRING__( route ), KFMsg::S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ, &req );
     }
 
     bool KFRouteClientModule::SendToRoute( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )

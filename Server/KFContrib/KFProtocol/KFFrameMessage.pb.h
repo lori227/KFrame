@@ -39,7 +39,7 @@ namespace protobuf_KFFrameMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[39];
+  static const ::google::protobuf::internal::ParseTable schema[38];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -53,9 +53,6 @@ LIBPROTOC_EXPORT extern ListenDataDefaultTypeInternal _ListenData_default_instan
 class PBDeployCommand;
 class PBDeployCommandDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBDeployCommandDefaultTypeInternal _PBDeployCommand_default_instance_;
-class PBRouteZone;
-class PBRouteZoneDefaultTypeInternal;
-LIBPROTOC_EXPORT extern PBRouteZoneDefaultTypeInternal _PBRouteZone_default_instance_;
 class PBTransmitRouteMessage;
 class PBTransmitRouteMessageDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBTransmitRouteMessageDefaultTypeInternal _PBTransmitRouteMessage_default_instance_;
@@ -125,12 +122,12 @@ LIBPROTOC_EXPORT extern S2SLogReqDefaultTypeInternal _S2SLogReq_default_instance
 class S2SRegisterAgentToServerReq;
 class S2SRegisterAgentToServerReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRegisterAgentToServerReqDefaultTypeInternal _S2SRegisterAgentToServerReq_default_instance_;
-class S2SRegisterRouteProxyReq;
-class S2SRegisterRouteProxyReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SRegisterRouteProxyReqDefaultTypeInternal _S2SRegisterRouteProxyReq_default_instance_;
-class S2SRegisterRouteZoneReq;
-class S2SRegisterRouteZoneReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SRegisterRouteZoneReqDefaultTypeInternal _S2SRegisterRouteZoneReq_default_instance_;
+class S2SRegisterRouteClientToProxyReq;
+class S2SRegisterRouteClientToProxyReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRegisterRouteClientToProxyReqDefaultTypeInternal _S2SRegisterRouteClientToProxyReq_default_instance_;
+class S2SRegisterRouteClientToShardReq;
+class S2SRegisterRouteClientToShardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRegisterRouteClientToShardReqDefaultTypeInternal _S2SRegisterRouteClientToShardReq_default_instance_;
 class S2SRemoveObjectToProxyReq;
 class S2SRemoveObjectToProxyReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRemoveObjectToProxyReqDefaultTypeInternal _S2SRemoveObjectToProxyReq_default_instance_;
@@ -169,7 +166,6 @@ namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::ListenData* Arena::CreateMaybeMessage<::KFMsg::ListenData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBDeployCommand* Arena::CreateMaybeMessage<::KFMsg::PBDeployCommand>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::PBRouteZone* Arena::CreateMaybeMessage<::KFMsg::PBRouteZone>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBTransmitRouteMessage* Arena::CreateMaybeMessage<::KFMsg::PBTransmitRouteMessage>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerAck* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerReq* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerReq>(Arena*);
@@ -193,8 +189,8 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SGetAgentIpAddressAck* Arena::CreateMaybe
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SGetAgentIpAddressReq* Arena::CreateMaybeMessage<::KFMsg::S2SGetAgentIpAddressReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SLogReq* Arena::CreateMaybeMessage<::KFMsg::S2SLogReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterAgentToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterAgentToServerReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterRouteProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterRouteProxyReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterRouteZoneReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterRouteZoneReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterRouteClientToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterRouteClientToProxyReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterRouteClientToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterRouteClientToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRemoveObjectToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SRemoveObjectToProxyReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRemoveOnlineToDirReq* Arena::CreateMaybeMessage<::KFMsg::S2SRemoveOnlineToDirReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSendToDynamicObjectReq* Arena::CreateMaybeMessage<::KFMsg::S2SSendToDynamicObjectReq>(Arena*);
@@ -211,13 +207,13 @@ template<> LIBPROTOC_EXPORT ::KFMsg::TellUnRegisterFromServer* Arena::CreateMayb
 namespace KFMsg {
 
 enum FrameProtocol {
-  s2s_temp = 0,
+  S2S_FRAME_PROTOCOL_BEGIN = 0,
   S2S_REGISTER_TO_SERVER_REQ = 10001,
   S2S_REGISTER_TO_SERVER_ACK = 10002,
   S2S_TELL_REGISTER_TO_SERVER = 10003,
   S2S_TELL_UNREGISTER_FROM_SERVER = 10004,
-  S2S_REGISTER_ROUTE_ZONE_REQ = 10011,
-  S2S_REGISTER_ROUTE_PROXY_REQ = 10012,
+  S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ = 10011,
+  S2S_REGISTER_ROUTE_CLIENT_TO_SHARD_REQ = 10012,
   S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_REQ = 10013,
   S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_ACK = 10014,
   S2S_TRANSMIT_ROUTE_PROXY_MESSAGE_REQ = 10015,
@@ -251,7 +247,7 @@ enum FrameProtocol {
   FrameProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameProtocol_IsValid(int value);
-const FrameProtocol FrameProtocol_MIN = s2s_temp;
+const FrameProtocol FrameProtocol_MIN = S2S_FRAME_PROTOCOL_BEGIN;
 const FrameProtocol FrameProtocol_MAX = S2S_DEPLOY_COMMAND_TO_SERVER_REQ;
 const int FrameProtocol_ARRAYSIZE = FrameProtocol_MAX + 1;
 
@@ -964,24 +960,24 @@ class LIBPROTOC_EXPORT TellUnRegisterFromServer : public ::google::protobuf::Mes
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBRouteZone) */ {
+class LIBPROTOC_EXPORT S2SRegisterRouteClientToProxyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRegisterRouteClientToProxyReq) */ {
  public:
-  PBRouteZone();
-  virtual ~PBRouteZone();
+  S2SRegisterRouteClientToProxyReq();
+  virtual ~S2SRegisterRouteClientToProxyReq();
 
-  PBRouteZone(const PBRouteZone& from);
+  S2SRegisterRouteClientToProxyReq(const S2SRegisterRouteClientToProxyReq& from);
 
-  inline PBRouteZone& operator=(const PBRouteZone& from) {
+  inline S2SRegisterRouteClientToProxyReq& operator=(const S2SRegisterRouteClientToProxyReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  PBRouteZone(PBRouteZone&& from) noexcept
-    : PBRouteZone() {
+  S2SRegisterRouteClientToProxyReq(S2SRegisterRouteClientToProxyReq&& from) noexcept
+    : S2SRegisterRouteClientToProxyReq() {
     *this = ::std::move(from);
   }
 
-  inline PBRouteZone& operator=(PBRouteZone&& from) noexcept {
+  inline S2SRegisterRouteClientToProxyReq& operator=(S2SRegisterRouteClientToProxyReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -991,34 +987,34 @@ class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message /* @@pro
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PBRouteZone& default_instance();
+  static const S2SRegisterRouteClientToProxyReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PBRouteZone* internal_default_instance() {
-    return reinterpret_cast<const PBRouteZone*>(
-               &_PBRouteZone_default_instance_);
+  static inline const S2SRegisterRouteClientToProxyReq* internal_default_instance() {
+    return reinterpret_cast<const S2SRegisterRouteClientToProxyReq*>(
+               &_S2SRegisterRouteClientToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     5;
 
-  void Swap(PBRouteZone* other);
-  friend void swap(PBRouteZone& a, PBRouteZone& b) {
+  void Swap(S2SRegisterRouteClientToProxyReq* other);
+  friend void swap(S2SRegisterRouteClientToProxyReq& a, S2SRegisterRouteClientToProxyReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PBRouteZone* New() const final {
-    return CreateMaybeMessage<PBRouteZone>(NULL);
+  inline S2SRegisterRouteClientToProxyReq* New() const final {
+    return CreateMaybeMessage<S2SRegisterRouteClientToProxyReq>(NULL);
   }
 
-  PBRouteZone* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<PBRouteZone>(arena);
+  S2SRegisterRouteClientToProxyReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRegisterRouteClientToProxyReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const PBRouteZone& from);
-  void MergeFrom(const PBRouteZone& from);
+  void CopyFrom(const S2SRegisterRouteClientToProxyReq& from);
+  void MergeFrom(const S2SRegisterRouteClientToProxyReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1035,7 +1031,7 @@ class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message /* @@pro
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(PBRouteZone* other);
+  void InternalSwap(S2SRegisterRouteClientToProxyReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1051,47 +1047,40 @@ class LIBPROTOC_EXPORT PBRouteZone : public ::google::protobuf::Message /* @@pro
 
   // accessors -------------------------------------------------------
 
-  // uint64 serverid = 2;
+  // uint64 serverid = 1;
   void clear_serverid();
-  static const int kServeridFieldNumber = 2;
+  static const int kServeridFieldNumber = 1;
   ::google::protobuf::uint64 serverid() const;
   void set_serverid(::google::protobuf::uint64 value);
 
-  // uint32 zoneid = 1;
-  void clear_zoneid();
-  static const int kZoneidFieldNumber = 1;
-  ::google::protobuf::uint32 zoneid() const;
-  void set_zoneid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBRouteZone)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterRouteClientToProxyReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint64 serverid_;
-  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SRegisterRouteZoneReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRegisterRouteZoneReq) */ {
+class LIBPROTOC_EXPORT S2SRegisterRouteClientToShardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRegisterRouteClientToShardReq) */ {
  public:
-  S2SRegisterRouteZoneReq();
-  virtual ~S2SRegisterRouteZoneReq();
+  S2SRegisterRouteClientToShardReq();
+  virtual ~S2SRegisterRouteClientToShardReq();
 
-  S2SRegisterRouteZoneReq(const S2SRegisterRouteZoneReq& from);
+  S2SRegisterRouteClientToShardReq(const S2SRegisterRouteClientToShardReq& from);
 
-  inline S2SRegisterRouteZoneReq& operator=(const S2SRegisterRouteZoneReq& from) {
+  inline S2SRegisterRouteClientToShardReq& operator=(const S2SRegisterRouteClientToShardReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SRegisterRouteZoneReq(S2SRegisterRouteZoneReq&& from) noexcept
-    : S2SRegisterRouteZoneReq() {
+  S2SRegisterRouteClientToShardReq(S2SRegisterRouteClientToShardReq&& from) noexcept
+    : S2SRegisterRouteClientToShardReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SRegisterRouteZoneReq& operator=(S2SRegisterRouteZoneReq&& from) noexcept {
+  inline S2SRegisterRouteClientToShardReq& operator=(S2SRegisterRouteClientToShardReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1101,34 +1090,34 @@ class LIBPROTOC_EXPORT S2SRegisterRouteZoneReq : public ::google::protobuf::Mess
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SRegisterRouteZoneReq& default_instance();
+  static const S2SRegisterRouteClientToShardReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SRegisterRouteZoneReq* internal_default_instance() {
-    return reinterpret_cast<const S2SRegisterRouteZoneReq*>(
-               &_S2SRegisterRouteZoneReq_default_instance_);
+  static inline const S2SRegisterRouteClientToShardReq* internal_default_instance() {
+    return reinterpret_cast<const S2SRegisterRouteClientToShardReq*>(
+               &_S2SRegisterRouteClientToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  void Swap(S2SRegisterRouteZoneReq* other);
-  friend void swap(S2SRegisterRouteZoneReq& a, S2SRegisterRouteZoneReq& b) {
+  void Swap(S2SRegisterRouteClientToShardReq* other);
+  friend void swap(S2SRegisterRouteClientToShardReq& a, S2SRegisterRouteClientToShardReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SRegisterRouteZoneReq* New() const final {
-    return CreateMaybeMessage<S2SRegisterRouteZoneReq>(NULL);
+  inline S2SRegisterRouteClientToShardReq* New() const final {
+    return CreateMaybeMessage<S2SRegisterRouteClientToShardReq>(NULL);
   }
 
-  S2SRegisterRouteZoneReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SRegisterRouteZoneReq>(arena);
+  S2SRegisterRouteClientToShardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRegisterRouteClientToShardReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SRegisterRouteZoneReq& from);
-  void MergeFrom(const S2SRegisterRouteZoneReq& from);
+  void CopyFrom(const S2SRegisterRouteClientToShardReq& from);
+  void MergeFrom(const S2SRegisterRouteClientToShardReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1145,7 +1134,7 @@ class LIBPROTOC_EXPORT S2SRegisterRouteZoneReq : public ::google::protobuf::Mess
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SRegisterRouteZoneReq* other);
+  void InternalSwap(S2SRegisterRouteClientToShardReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1161,132 +1150,24 @@ class LIBPROTOC_EXPORT S2SRegisterRouteZoneReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBRouteZone zonedata = 1;
-  bool has_zonedata() const;
-  void clear_zonedata();
-  static const int kZonedataFieldNumber = 1;
-  private:
-  const ::KFMsg::PBRouteZone& _internal_zonedata() const;
-  public:
-  const ::KFMsg::PBRouteZone& zonedata() const;
-  ::KFMsg::PBRouteZone* release_zonedata();
-  ::KFMsg::PBRouteZone* mutable_zonedata();
-  void set_allocated_zonedata(::KFMsg::PBRouteZone* zonedata);
+  // repeated uint64 serverid = 1;
+  int serverid_size() const;
+  void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  ::google::protobuf::uint64 serverid(int index) const;
+  void set_serverid(int index, ::google::protobuf::uint64 value);
+  void add_serverid(::google::protobuf::uint64 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+      serverid() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+      mutable_serverid();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterRouteZoneReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterRouteClientToShardReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBRouteZone* zonedata_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SRegisterRouteProxyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRegisterRouteProxyReq) */ {
- public:
-  S2SRegisterRouteProxyReq();
-  virtual ~S2SRegisterRouteProxyReq();
-
-  S2SRegisterRouteProxyReq(const S2SRegisterRouteProxyReq& from);
-
-  inline S2SRegisterRouteProxyReq& operator=(const S2SRegisterRouteProxyReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SRegisterRouteProxyReq(S2SRegisterRouteProxyReq&& from) noexcept
-    : S2SRegisterRouteProxyReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SRegisterRouteProxyReq& operator=(S2SRegisterRouteProxyReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SRegisterRouteProxyReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SRegisterRouteProxyReq* internal_default_instance() {
-    return reinterpret_cast<const S2SRegisterRouteProxyReq*>(
-               &_S2SRegisterRouteProxyReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    7;
-
-  void Swap(S2SRegisterRouteProxyReq* other);
-  friend void swap(S2SRegisterRouteProxyReq& a, S2SRegisterRouteProxyReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SRegisterRouteProxyReq* New() const final {
-    return CreateMaybeMessage<S2SRegisterRouteProxyReq>(NULL);
-  }
-
-  S2SRegisterRouteProxyReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SRegisterRouteProxyReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SRegisterRouteProxyReq& from);
-  void MergeFrom(const S2SRegisterRouteProxyReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SRegisterRouteProxyReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated .KFMsg.PBRouteZone zonedata = 1;
-  int zonedata_size() const;
-  void clear_zonedata();
-  static const int kZonedataFieldNumber = 1;
-  ::KFMsg::PBRouteZone* mutable_zonedata(int index);
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRouteZone >*
-      mutable_zonedata();
-  const ::KFMsg::PBRouteZone& zonedata(int index) const;
-  ::KFMsg::PBRouteZone* add_zonedata();
-  const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRouteZone >&
-      zonedata() const;
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SRegisterRouteProxyReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRouteZone > zonedata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > serverid_;
+  mutable int _serverid_cached_byte_size_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
@@ -1327,7 +1208,7 @@ class LIBPROTOC_EXPORT PBTransmitRouteMessage : public ::google::protobuf::Messa
                &_PBTransmitRouteMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    7;
 
   void Swap(PBTransmitRouteMessage* other);
   friend void swap(PBTransmitRouteMessage& a, PBTransmitRouteMessage& b) {
@@ -1459,7 +1340,7 @@ class LIBPROTOC_EXPORT S2STransmitRouteZoneMessageReq : public ::google::protobu
                &_S2STransmitRouteZoneMessageReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    8;
 
   void Swap(S2STransmitRouteZoneMessageReq* other);
   friend void swap(S2STransmitRouteZoneMessageReq& a, S2STransmitRouteZoneMessageReq& b) {
@@ -1568,7 +1449,7 @@ class LIBPROTOC_EXPORT S2STransmitRouteZoneMessageAck : public ::google::protobu
                &_S2STransmitRouteZoneMessageAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    9;
 
   void Swap(S2STransmitRouteZoneMessageAck* other);
   friend void swap(S2STransmitRouteZoneMessageAck& a, S2STransmitRouteZoneMessageAck& b) {
@@ -1677,7 +1558,7 @@ class LIBPROTOC_EXPORT S2STransmitRouteProxyMessageReq : public ::google::protob
                &_S2STransmitRouteProxyMessageReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    10;
 
   void Swap(S2STransmitRouteProxyMessageReq* other);
   friend void swap(S2STransmitRouteProxyMessageReq& a, S2STransmitRouteProxyMessageReq& b) {
@@ -1786,7 +1667,7 @@ class LIBPROTOC_EXPORT S2STransmitRouteProxyMessageAck : public ::google::protob
                &_S2STransmitRouteProxyMessageAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    11;
 
   void Swap(S2STransmitRouteProxyMessageAck* other);
   friend void swap(S2STransmitRouteProxyMessageAck& a, S2STransmitRouteProxyMessageAck& b) {
@@ -1895,7 +1776,7 @@ class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message /* @@proto
                &_S2SLogReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    12;
 
   void Swap(S2SLogReq* other);
   friend void swap(S2SLogReq& a, S2SLogReq& b) {
@@ -2065,7 +1946,7 @@ class LIBPROTOC_EXPORT S2SUpdateOnlineToDirReq : public ::google::protobuf::Mess
                &_S2SUpdateOnlineToDirReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    13;
 
   void Swap(S2SUpdateOnlineToDirReq* other);
   friend void swap(S2SUpdateOnlineToDirReq& a, S2SUpdateOnlineToDirReq& b) {
@@ -2226,7 +2107,7 @@ class LIBPROTOC_EXPORT S2SRemoveOnlineToDirReq : public ::google::protobuf::Mess
                &_S2SRemoveOnlineToDirReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    14;
 
   void Swap(S2SRemoveOnlineToDirReq* other);
   friend void swap(S2SRemoveOnlineToDirReq& a, S2SRemoveOnlineToDirReq& b) {
@@ -2329,7 +2210,7 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
                &_S2SClusterRegisterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    15;
 
   void Swap(S2SClusterRegisterReq* other);
   friend void swap(S2SClusterRegisterReq& a, S2SClusterRegisterReq& b) {
@@ -2484,7 +2365,7 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
                &_S2SClusterUpdateReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    16;
 
   void Swap(S2SClusterUpdateReq* other);
   friend void swap(S2SClusterUpdateReq& a, S2SClusterUpdateReq& b) {
@@ -2646,7 +2527,7 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /*
                &_S2SClusterAuthReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    17;
 
   void Swap(S2SClusterAuthReq* other);
   friend void swap(S2SClusterAuthReq& a, S2SClusterAuthReq& b) {
@@ -2772,7 +2653,7 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message /*
                &_S2SClusterAuthAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    18;
 
   void Swap(S2SClusterAuthAck* other);
   friend void swap(S2SClusterAuthAck& a, S2SClusterAuthAck& b) {
@@ -2957,7 +2838,7 @@ class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message /
                &_S2SClusterTokenReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    19;
 
   void Swap(S2SClusterTokenReq* other);
   friend void swap(S2SClusterTokenReq& a, S2SClusterTokenReq& b) {
@@ -3075,7 +2956,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
                &_S2SClusterVerifyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    20;
 
   void Swap(S2SClusterVerifyReq* other);
   friend void swap(S2SClusterVerifyReq& a, S2SClusterVerifyReq& b) {
@@ -3208,7 +3089,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
                &_S2SClusterVerifyAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    21;
 
   void Swap(S2SClusterVerifyAck* other);
   friend void swap(S2SClusterVerifyAck& a, S2SClusterVerifyAck& b) {
@@ -3326,7 +3207,7 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
                &_S2SClusterClientDiscoverReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    22;
 
   void Swap(S2SClusterClientDiscoverReq* other);
   friend void swap(S2SClusterClientDiscoverReq& a, S2SClusterClientDiscoverReq& b) {
@@ -3436,7 +3317,7 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
                &_S2SClusterClientLostReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    23;
 
   void Swap(S2SClusterClientLostReq* other);
   friend void swap(S2SClusterClientLostReq& a, S2SClusterClientLostReq& b) {
@@ -3546,7 +3427,7 @@ class LIBPROTOC_EXPORT S2SAddObjectToProxyReq : public ::google::protobuf::Messa
                &_S2SAddObjectToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    24;
 
   void Swap(S2SAddObjectToProxyReq* other);
   friend void swap(S2SAddObjectToProxyReq& a, S2SAddObjectToProxyReq& b) {
@@ -3656,7 +3537,7 @@ class LIBPROTOC_EXPORT S2SRemoveObjectToProxyReq : public ::google::protobuf::Me
                &_S2SRemoveObjectToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    25;
 
   void Swap(S2SRemoveObjectToProxyReq* other);
   friend void swap(S2SRemoveObjectToProxyReq& a, S2SRemoveObjectToProxyReq& b) {
@@ -3766,7 +3647,7 @@ class LIBPROTOC_EXPORT S2SAllocObjectToMasterReq : public ::google::protobuf::Me
                &_S2SAllocObjectToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    26;
 
   void Swap(S2SAllocObjectToMasterReq* other);
   friend void swap(S2SAllocObjectToMasterReq& a, S2SAllocObjectToMasterReq& b) {
@@ -3876,7 +3757,7 @@ class LIBPROTOC_EXPORT S2SAllocObjectToProxyAck : public ::google::protobuf::Mes
                &_S2SAllocObjectToProxyAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    27;
 
   void Swap(S2SAllocObjectToProxyAck* other);
   friend void swap(S2SAllocObjectToProxyAck& a, S2SAllocObjectToProxyAck& b) {
@@ -4000,7 +3881,7 @@ class LIBPROTOC_EXPORT S2SAllocObjectToShardAck : public ::google::protobuf::Mes
                &_S2SAllocObjectToShardAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    28;
 
   void Swap(S2SAllocObjectToShardAck* other);
   friend void swap(S2SAllocObjectToShardAck& a, S2SAllocObjectToShardAck& b) {
@@ -4110,7 +3991,7 @@ class LIBPROTOC_EXPORT S2SSendToDynamicObjectReq : public ::google::protobuf::Me
                &_S2SSendToDynamicObjectReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    29;
 
   void Swap(S2SSendToDynamicObjectReq* other);
   friend void swap(S2SSendToDynamicObjectReq& a, S2SSendToDynamicObjectReq& b) {
@@ -4242,7 +4123,7 @@ class LIBPROTOC_EXPORT S2SSendToStaticObjectReq : public ::google::protobuf::Mes
                &_S2SSendToStaticObjectReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    30;
 
   void Swap(S2SSendToStaticObjectReq* other);
   friend void swap(S2SSendToStaticObjectReq& a, S2SSendToStaticObjectReq& b) {
@@ -4374,7 +4255,7 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
                &_S2SRegisterAgentToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    31;
 
   void Swap(S2SRegisterAgentToServerReq* other);
   friend void swap(S2SRegisterAgentToServerReq& a, S2SRegisterAgentToServerReq& b) {
@@ -4537,7 +4418,7 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressReq : public ::google::protobuf::Mess
                &_S2SGetAgentIpAddressReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    32;
 
   void Swap(S2SGetAgentIpAddressReq* other);
   friend void swap(S2SGetAgentIpAddressReq& a, S2SGetAgentIpAddressReq& b) {
@@ -4648,7 +4529,7 @@ class LIBPROTOC_EXPORT S2SGetAgentIpAddressAck : public ::google::protobuf::Mess
                &_S2SGetAgentIpAddressAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    33;
 
   void Swap(S2SGetAgentIpAddressAck* other);
   friend void swap(S2SGetAgentIpAddressAck& a, S2SGetAgentIpAddressAck& b) {
@@ -4811,7 +4692,7 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message /* @
                &_PBDeployCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    34;
 
   void Swap(PBDeployCommand* other);
   friend void swap(PBDeployCommand& a, PBDeployCommand& b) {
@@ -5004,7 +4885,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToAgentReq : public ::google::protobuf::M
                &_S2SDeployCommandToAgentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    35;
 
   void Swap(S2SDeployCommandToAgentReq* other);
   friend void swap(S2SDeployCommandToAgentReq& a, S2SDeployCommandToAgentReq& b) {
@@ -5113,7 +4994,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::
                &_S2SDeployCommandToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    36;
 
   void Swap(S2SDeployCommandToMasterReq* other);
   friend void swap(S2SDeployCommandToMasterReq& a, S2SDeployCommandToMasterReq& b) {
@@ -5222,7 +5103,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::
                &_S2SDeployCommandToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    37;
 
   void Swap(S2SDeployCommandToServerReq* other);
   friend void swap(S2SDeployCommandToServerReq& a, S2SDeployCommandToServerReq& b) {
@@ -6020,126 +5901,54 @@ inline void TellUnRegisterFromServer::set_zoneid(::google::protobuf::uint32 valu
 
 // -------------------------------------------------------------------
 
-// PBRouteZone
+// S2SRegisterRouteClientToProxyReq
 
-// uint32 zoneid = 1;
-inline void PBRouteZone::clear_zoneid() {
-  zoneid_ = 0u;
-}
-inline ::google::protobuf::uint32 PBRouteZone::zoneid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBRouteZone.zoneid)
-  return zoneid_;
-}
-inline void PBRouteZone::set_zoneid(::google::protobuf::uint32 value) {
-  
-  zoneid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBRouteZone.zoneid)
-}
-
-// uint64 serverid = 2;
-inline void PBRouteZone::clear_serverid() {
+// uint64 serverid = 1;
+inline void S2SRegisterRouteClientToProxyReq::clear_serverid() {
   serverid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 PBRouteZone::serverid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBRouteZone.serverid)
+inline ::google::protobuf::uint64 S2SRegisterRouteClientToProxyReq::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRegisterRouteClientToProxyReq.serverid)
   return serverid_;
 }
-inline void PBRouteZone::set_serverid(::google::protobuf::uint64 value) {
+inline void S2SRegisterRouteClientToProxyReq::set_serverid(::google::protobuf::uint64 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBRouteZone.serverid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRegisterRouteClientToProxyReq.serverid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SRegisterRouteZoneReq
+// S2SRegisterRouteClientToShardReq
 
-// .KFMsg.PBRouteZone zonedata = 1;
-inline bool S2SRegisterRouteZoneReq::has_zonedata() const {
-  return this != internal_default_instance() && zonedata_ != NULL;
+// repeated uint64 serverid = 1;
+inline int S2SRegisterRouteClientToShardReq::serverid_size() const {
+  return serverid_.size();
 }
-inline void S2SRegisterRouteZoneReq::clear_zonedata() {
-  if (GetArenaNoVirtual() == NULL && zonedata_ != NULL) {
-    delete zonedata_;
-  }
-  zonedata_ = NULL;
+inline void S2SRegisterRouteClientToShardReq::clear_serverid() {
+  serverid_.Clear();
 }
-inline const ::KFMsg::PBRouteZone& S2SRegisterRouteZoneReq::_internal_zonedata() const {
-  return *zonedata_;
+inline ::google::protobuf::uint64 S2SRegisterRouteClientToShardReq::serverid(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRegisterRouteClientToShardReq.serverid)
+  return serverid_.Get(index);
 }
-inline const ::KFMsg::PBRouteZone& S2SRegisterRouteZoneReq::zonedata() const {
-  const ::KFMsg::PBRouteZone* p = zonedata_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRegisterRouteZoneReq.zonedata)
-  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRouteZone*>(
-      &::KFMsg::_PBRouteZone_default_instance_);
+inline void S2SRegisterRouteClientToShardReq::set_serverid(int index, ::google::protobuf::uint64 value) {
+  serverid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRegisterRouteClientToShardReq.serverid)
 }
-inline ::KFMsg::PBRouteZone* S2SRegisterRouteZoneReq::release_zonedata() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SRegisterRouteZoneReq.zonedata)
-  
-  ::KFMsg::PBRouteZone* temp = zonedata_;
-  zonedata_ = NULL;
-  return temp;
+inline void S2SRegisterRouteClientToShardReq::add_serverid(::google::protobuf::uint64 value) {
+  serverid_.Add(value);
+  // @@protoc_insertion_point(field_add:KFMsg.S2SRegisterRouteClientToShardReq.serverid)
 }
-inline ::KFMsg::PBRouteZone* S2SRegisterRouteZoneReq::mutable_zonedata() {
-  
-  if (zonedata_ == NULL) {
-    auto* p = CreateMaybeMessage<::KFMsg::PBRouteZone>(GetArenaNoVirtual());
-    zonedata_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRegisterRouteZoneReq.zonedata)
-  return zonedata_;
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+S2SRegisterRouteClientToShardReq::serverid() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SRegisterRouteClientToShardReq.serverid)
+  return serverid_;
 }
-inline void S2SRegisterRouteZoneReq::set_allocated_zonedata(::KFMsg::PBRouteZone* zonedata) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete zonedata_;
-  }
-  if (zonedata) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      zonedata = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, zonedata, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  zonedata_ = zonedata;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRegisterRouteZoneReq.zonedata)
-}
-
-// -------------------------------------------------------------------
-
-// S2SRegisterRouteProxyReq
-
-// repeated .KFMsg.PBRouteZone zonedata = 1;
-inline int S2SRegisterRouteProxyReq::zonedata_size() const {
-  return zonedata_.size();
-}
-inline void S2SRegisterRouteProxyReq::clear_zonedata() {
-  zonedata_.Clear();
-}
-inline ::KFMsg::PBRouteZone* S2SRegisterRouteProxyReq::mutable_zonedata(int index) {
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRegisterRouteProxyReq.zonedata)
-  return zonedata_.Mutable(index);
-}
-inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRouteZone >*
-S2SRegisterRouteProxyReq::mutable_zonedata() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SRegisterRouteProxyReq.zonedata)
-  return &zonedata_;
-}
-inline const ::KFMsg::PBRouteZone& S2SRegisterRouteProxyReq::zonedata(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRegisterRouteProxyReq.zonedata)
-  return zonedata_.Get(index);
-}
-inline ::KFMsg::PBRouteZone* S2SRegisterRouteProxyReq::add_zonedata() {
-  // @@protoc_insertion_point(field_add:KFMsg.S2SRegisterRouteProxyReq.zonedata)
-  return zonedata_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRouteZone >&
-S2SRegisterRouteProxyReq::zonedata() const {
-  // @@protoc_insertion_point(field_list:KFMsg.S2SRegisterRouteProxyReq.zonedata)
-  return zonedata_;
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+S2SRegisterRouteClientToShardReq::mutable_serverid() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SRegisterRouteClientToShardReq.serverid)
+  return &serverid_;
 }
 
 // -------------------------------------------------------------------
@@ -9480,8 +9289,6 @@ inline void S2SDeployCommandToServerReq::set_allocated_deploycommand(::KFMsg::PB
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

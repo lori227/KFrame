@@ -36,7 +36,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 调用注册函数
-        void CallClusterConnectionFunction( const std::string& name, uint64 serverid );
+        void CallClusterConnectionFunction( uint64 serverid );
+
+        // 发送消息到proxy
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息
         virtual bool SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message );

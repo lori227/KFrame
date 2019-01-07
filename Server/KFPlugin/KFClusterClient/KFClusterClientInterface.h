@@ -23,6 +23,8 @@ namespace KFrame
             RemoveConnectionFunction( name );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 发送消息到proxy
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发送消息
         virtual bool SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;

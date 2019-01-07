@@ -43,15 +43,19 @@ namespace KFrame
         _kf_connection_function.Remove( name );
     }
 
-    void KFClusterClientModule::CallClusterConnectionFunction( const std::string& name, uint64 serverid )
+    void KFClusterClientModule::CallClusterConnectionFunction( uint64 serverid )
     {
-        auto kfbind = _kf_connection_function.Find( name );
-        if ( kfbind == nullptr )
-        {
-            return;
-        }
+        // 注册路由信息
+        KFMsg::S2SRegisterRouteClientToProxyReq req;
+        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ, &req );
 
-        kfbind->_function( serverid );
+        // 执行回调函数
+        for ( auto& iter : _kf_connection_function._objects )
+        {
+            auto kfbind = iter.second;
+            kfbind->_function( serverid );
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
