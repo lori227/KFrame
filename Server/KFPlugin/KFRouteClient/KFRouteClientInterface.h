@@ -8,9 +8,6 @@ namespace KFrame
     class KFRouteClientInterface : public KFModule
     {
     public:
-        // 转发到所有服务器
-        virtual bool SendToAll( uint32 msgid, ::google::protobuf::Message* message ) = 0;
-
         // 转给到指定类型的所有
         virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 

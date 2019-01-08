@@ -6,7 +6,6 @@ namespace KFrame
     void KFRouteShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_ALL_REQ, &KFRouteShardModule::HandleRouteMessageToAllReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, &KFRouteShardModule::HandleRouteMessageToNameAllReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, &KFRouteShardModule::HandleRouteMessageToNameRandReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, &KFRouteShardModule::HandleRouteMessageToNameBalanceReq );
@@ -23,7 +22,6 @@ namespace KFrame
     void KFRouteShardModule::BeforeShut()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_ALL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ );
@@ -37,17 +35,6 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToAllReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToAllReq );
-
-        KFMsg::S2SRouteMessageToClientAck ack;
-        ack.set_sourceid( kfmsg.sourceid() );
-        ack.set_msgid( kfmsg.msgid() );
-        ack.set_msgdata( kfmsg.msgdata() );
-        _kf_cluster_shard->SendToClient( KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
-    }
-
 #define __FIND_ROUTE_SERVICE__( name )\
     auto routeservice = _route_service_list.Find( name );\
     if ( routeservice == nullptr )\

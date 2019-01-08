@@ -29,8 +29,6 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 转发给所有服务器
-        virtual bool SendToAll( uint32 msgid, ::google::protobuf::Message* message );
 
         // 转给给指定类型的所有
         virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );

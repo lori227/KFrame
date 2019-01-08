@@ -35,15 +35,6 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRouteClientModule::SendToAll( uint32 msgid, ::google::protobuf::Message* message )
-    {
-        KFMsg::S2SRouteMessageToAllReq req;
-        req.set_msgid( msgid );
-        req.set_msgdata( message->SerializeAsString() );
-        req.set_sourceid( KFGlobal::Instance()->_app_id._union._id );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_ALL_REQ, &req );
-    }
-
     bool KFRouteClientModule::SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
     {
         KFMsg::S2SRouteMessageToNameAllReq req;

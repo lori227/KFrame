@@ -31,9 +31,6 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        // 转发消息到所有服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToAllReq );
-
         // 转发消息到某类型所有服务器
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameAllReq );
 
