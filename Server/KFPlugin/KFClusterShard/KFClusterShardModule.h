@@ -39,6 +39,7 @@ namespace KFrame
         virtual bool SendToProxy( uint64 handleid, uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息到client
+        virtual bool SendToClient( uint32 msgid, google::protobuf::Message* message );
         virtual bool SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length );
         virtual bool SendToClient( uint64 clientid, uint32 msgid, google::protobuf::Message* message );
 

@@ -90,16 +90,40 @@ namespace KFrame
         return iter->second;
     }
 
+    bool KFClusterShardModule::SendToClient( uint32 msgid, google::protobuf::Message* message )
+    {
+        for ( auto& iter : _proxy_client_list )
+        {
+            auto clientid = iter.first;
+            auto proxyid = iter.second;
+            _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
+        }
+
+        return true;
+    }
+
 
     bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length )
     {
         auto proxyid = FindProxyId( clientid );
+        if ( proxyid == _invalid_int )
+        {
+            __LOG_ERROR__( "can't find client[{}] proxy!", KFAppID::ToString( clientid ) );
+            return false;
+        }
+
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
     }
 
     bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         auto proxyid = FindProxyId( clientid );
+        if ( proxyid == _invalid_int )
+        {
+            __LOG_ERROR__( "can't find client[{}] proxy!", KFAppID::ToString( clientid ) );
+            return false;
+        }
+
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 }

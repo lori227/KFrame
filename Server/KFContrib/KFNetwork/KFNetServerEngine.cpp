@@ -337,7 +337,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}:{}]!", msgid, handleid, KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppID::ToString( handleid ) );
             return false;
         }
 
@@ -349,7 +349,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}:{}]!", msgid, handleid, KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppID::ToString( handleid ) );
             return false;
         }
 
