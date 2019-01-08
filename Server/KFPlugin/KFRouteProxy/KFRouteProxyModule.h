@@ -31,18 +31,6 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-    protected:
-        // 注册游戏区请求
-        __KF_MESSAGE_FUNCTION__( HandleRegisterZoneReq );
-
-        // 转发消息
-        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteZoneMessageReq );
-
-        // 转发消息
-        __KF_MESSAGE_FUNCTION__( HandleTransmitRouteProxyMessageAck );
-    protected:
-        // 注册到Route shard回调
-        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionRouteShard );
     };
 }
 

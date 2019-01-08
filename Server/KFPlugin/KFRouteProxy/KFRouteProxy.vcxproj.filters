@@ -4,12 +4,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFRouteProxyModule.cpp" />
     <ClCompile Include="KFRouteProxyPlugin.cpp" />
-    <ClCompile Include="KFRouteZoneManage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRouteProxyInterface.h" />
     <ClInclude Include="KFRouteProxyModule.h" />
     <ClInclude Include="KFRouteProxyPlugin.h" />
-    <ClInclude Include="KFRouteZoneManage.h" />
   </ItemGroup>
 </Project>
