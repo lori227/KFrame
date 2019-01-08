@@ -92,7 +92,7 @@ namespace KFrame
             return __LOG_ERROR__( "service[{}] no server!", kfmsg.name() );
         }
 
-        SendRouteMessage( serverid, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid() );
+        SendRouteMessage( serverid, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid(), kfmsg.objectid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq )
