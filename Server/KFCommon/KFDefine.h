@@ -52,6 +52,8 @@ namespace KFrame
     typedef std::function< std::string ( const std::string& ip, const std::string& data )> KFHttpMethodFunction;
 
     //////////////////////////////////////////////////////////////////////////////
+    // 集群连接
+    typedef std::function< void( uint64 ) > KFClusterConnectionFunction;
     //////////////////////////////////////////////////////////////////////////////
     // 日志函数
     typedef std::function< bool( uint32, const std::string& ) > KFLogFunction;

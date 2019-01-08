@@ -13,7 +13,6 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_REQ, &KFDeployServerModule::HandleGetAgentIpAddressReq );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -26,7 +25,6 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_GET_AGENT_IP_ADDRESS_REQ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -76,28 +74,6 @@ namespace KFrame
         updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
         updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
         _mysql_driver->Update( __KF_STRING__( machine ), keyvalue, updatevalue );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleGetAgentIpAddressReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SGetAgentIpAddressReq );
-
-        auto clientid = __KF_HEAD_ID__( kfid );
-        for ( auto& iter : _agent_list._objects )
-        {
-            auto* kfagent = iter.second;
-            if ( kfagent->_local_ip == kfmsg.localip() )
-            {
-                KFMsg::S2SGetAgentIpAddressAck ack;
-                ack.set_appname( kfagent->_name );
-                ack.set_apptype( kfagent->_type );
-                ack.set_appid( kfagent->_agent_id );
-                ack.set_ip( kfagent->_local_ip );
-                ack.set_port( kfagent->_port );
-                _kf_tcp_server->SendNetMessage( clientid, KFMsg::S2S_GET_AGENT_IP_ADDRESS_ACK, &ack );
-                break;
-            }
-        }
     }
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )

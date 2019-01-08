@@ -39,11 +39,6 @@ namespace KFrame
 
     void KFClusterClientModule::CallClusterConnectionFunction( uint64 serverid )
     {
-        // 注册路由信息
-        KFMsg::S2SRegisterRouteClientToProxyReq req;
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-        _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ, &req );
-
         // 执行回调函数
         for ( auto& iter : _kf_connection_function._objects )
         {

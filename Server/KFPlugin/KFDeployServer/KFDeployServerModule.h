@@ -78,9 +78,6 @@ namespace KFrame
         // 注册Agent
         __KF_MESSAGE_FUNCTION__( HandleRegisterAgentToServerReq );
 
-        // 请求分配Agent连接
-        __KF_MESSAGE_FUNCTION__( HandleGetAgentIpAddressReq );
-
     protected:
         // 更新Agnet状态
         void UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status );

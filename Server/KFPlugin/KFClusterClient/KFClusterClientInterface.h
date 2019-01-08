@@ -5,10 +5,11 @@
 
 namespace KFrame
 {
-    typedef std::function< void( uint64 ) > KFClusterConnectionFunction;
     class KFClusterClientInterface : public KFModule
     {
     public:
+        // 发送消息
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册回调
@@ -18,6 +19,7 @@ namespace KFrame
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddConnectionFunction( typid( T ).name(), function );
         }
+        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;
 
         // 卸载回调
         template< class T >
@@ -25,14 +27,8 @@ namespace KFrame
         {
             RemoveConnectionFunction( typid( T ).name() );
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // 发送消息
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
-
-    protected:
-        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;
         virtual void RemoveConnectionFunction( const std::string& name ) = 0;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

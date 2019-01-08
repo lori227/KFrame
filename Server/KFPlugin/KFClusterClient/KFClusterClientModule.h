@@ -34,6 +34,10 @@ namespace KFrame
         // 发送消息
         virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
 
+        // 注册回调函数
+        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
+        virtual void RemoveConnectionFunction( const std::string& name );
+
     protected:
         // 认证回馈
         __KF_MESSAGE_FUNCTION__( HandleClusterAuthToClientAck );
@@ -55,9 +59,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerSendClusterTokenMessage );
     private:
 
-        // 注册回调函数
-        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
-        virtual void RemoveConnectionFunction( const std::string& name );
+
 
         // 调用注册函数
         void CallClusterConnectionFunction( uint64 serverid );

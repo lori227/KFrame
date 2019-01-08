@@ -16,8 +16,6 @@ namespace KFrame
 
     void KFRouteClientPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_zone, KFZoneInterface );
-        __FIND_MODULE__( _kf_game, KFGameInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
     }
