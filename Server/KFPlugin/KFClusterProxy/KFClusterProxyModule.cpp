@@ -246,14 +246,18 @@ namespace KFrame
     __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToShard )
     {
         auto clientid = __KF_HEAD_ID__( kfid );
-        auto shardserverid = _kf_hash.FindHashNode( clientid, true );
-        if ( shardserverid == _invalid_int )
+        auto shardid = __KF_DATA_ID__( kfid );
+        if ( shardid == _invalid_int )
         {
-            __LOG_ERROR__( "msgid[{}] transmit failed!", msgid );
-            return false;
+            shardid = _kf_hash.FindHashNode( clientid, true );
+            if ( shardid == _invalid_int )
+            {
+                __LOG_ERROR__( "msgid[{}] transmit failed!", msgid );
+                return false;
+            }
         }
 
-        return _kf_tcp_client->SendNetMessage( shardserverid, clientid, msgid, data, length );
+        return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
     }
 
     __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToClient )

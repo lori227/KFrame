@@ -30,6 +30,16 @@ namespace KFrame
         virtual bool SendToPlayer( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 同步所有对象到Route Shard
+        virtual void SyncObject( const std::string& name, std::unordered_set< uint64 >& objectlist ) = 0;
+
+        // 添加对象到Route Shard
+        virtual void AddObject( const std::string& name, uint64 objectid ) = 0;
+
+        // 删除对象到Route Shard
+        virtual void RemoveObject( const std::string& name, uint64 objectid ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册回调
         template< class T >
         void RegisterRouteConnectionFunction( T* object, void ( T::*handle )( uint64 ) )

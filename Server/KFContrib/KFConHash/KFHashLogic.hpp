@@ -11,8 +11,8 @@ namespace KFrame
     class KFHashLogic
     {
     public:
-        KFHashLogic();
-        ~KFHashLogic();
+        KFHashLogic() = default;
+        ~KFHashLogic() = default;
 
         // 添加Hash节点
         void AddHashNode( const std::string& name, uint64 id, uint32 virtualcount = 100 );

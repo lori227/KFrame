@@ -27,6 +27,14 @@ enum FrameProtocol
 	S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ = 10105;		// 转发消息到对象所在服务器
 	S2S_ROUTE_MESSAGE_TO_SERVER_REQ = 10106;			// 转发消息到指定服务器
 	S2S_ROUTE_MESSAGE_TO_PLAYER_REQ = 10107;			// 转发消息到指定玩家
+	S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ = 10108;			// Route客户端丢失
+	S2S_ROUTE_DISCOVER_TO_CLIENT_REQ = 10109;			// 通知客户端发现新的服务器
+	S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ = 10110;			// 同步对象列表到Proxy
+	S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ = 10111;			// 添加对象列表到Proxy
+	S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ = 10112;		// 删除对象列表到Proxy
+	S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ = 10113;			// 同步对象列表到shard
+	S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10114;			// 添加对象列表到shard
+	S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10115;		// 删除对象列表到shard
 
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10201;			// 注册Agent到Server
 	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10202;			// 部署命令
@@ -246,6 +254,76 @@ message S2SRouteMessageToPlayerReq
 	uint64 playerid = 3;	// 玩家id
 	uint32 msgid = 4;		// 消息id
 	bytes msgdata = 5;		// 消息内容
+}
+
+// Route客户端丢失
+// S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ
+message S2SRouteClientLostToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+}
+
+// 通知客户端发现新的服务器
+// S2S_ROUTE_DISCOVER_TO_CLIENT_REQ
+message S2SRouteDiscoverToClientReq
+{
+	uint64 shardid = 1;
+}
+
+// 同步对象列表到Proxy
+// S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ
+message S2SRouteSyncObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 shardid = 3;
+	repeated uint64 objectid = 4;
+}
+
+// 同步对象列表到shard
+// S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ
+message S2SRouteSyncObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	repeated uint64 objectid = 3;
+}
+
+// 添加对象列表到proxy
+// S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ
+message S2SRouteAddObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+}
+
+// 添加对象列表到shard
+// S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ
+message S2SRouteAddObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+}
+
+// 删除对象列表到proxy
+// S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ
+message S2SRouteRemoveObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+}
+
+// 删除对象列表到shard
+// S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ
+message S2SRouteRemoveObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
 }
 //////////////////////////////////////////////////////////////////////////////////
 // S2S_LOG_REQ

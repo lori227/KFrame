@@ -3,16 +3,6 @@
 
 namespace KFrame
 {
-    KFHashLogic::KFHashLogic()
-    {
-
-    }
-
-    KFHashLogic::~KFHashLogic()
-    {
-
-    }
-
     void KFHashLogic::AddHashNode( const std::string& name, uint64 id, uint32 virtualcount /* = 1 */ )
     {
         auto node = _node_list.Create( id );

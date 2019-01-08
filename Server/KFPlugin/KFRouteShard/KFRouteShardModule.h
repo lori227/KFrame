@@ -10,9 +10,9 @@
 ************************************************************************/
 
 #include "KFrame.h"
+#include "KFRouteService.h"
 #include "KFRouteShardInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 
 namespace KFrame
@@ -30,11 +30,6 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
-    protected:
-        // proxy 断开连接
-        __KF_SERVER_LOST_FUNCTION__( OnServerLostRouteProxy );
-
     protected:
         // 转发消息到所有服务器
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToAllReq );
@@ -57,10 +52,25 @@ namespace KFrame
         // 转发消息到指定玩家
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq );
 
+        // Route客户端丢失
+        __KF_MESSAGE_FUNCTION__( HandleRouteClientLostToShardReq );
+
+        // 同步对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToShardReq );
+
+        // 添加对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToShardReq );
+
+        // 删除对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToShardReq );
+
     protected:
         // 转发消息
         void SendRouteMessage( uint64 clientid, uint32 msgid, const std::string& msgdata, uint64 sourceid, uint64 playerid = _invalid_int );
 
+    private:
+        // 注册的转发服务
+        KFMap< std::string, const std::string&, KFRouteService > _route_service_list;
     };
 }
 

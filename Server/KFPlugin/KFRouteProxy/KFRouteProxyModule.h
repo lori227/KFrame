@@ -14,7 +14,6 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFClusterProxy/KFClusterProxyInterface.h"
 
 namespace KFrame
 {
@@ -31,6 +30,21 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 丢失连接
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
+
+        // 发现连接
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectServer );
+
+        // 同步对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToProxyReq );
+
+        // 添加对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToProxyReq );
+
+        // 删除对象
+        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToProxyReq );
     };
 }
 

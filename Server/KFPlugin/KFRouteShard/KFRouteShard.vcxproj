@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRouteService.cpp" />
     <ClCompile Include="KFRouteShardModule.cpp" />
     <ClCompile Include="KFRouteShardPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFRouteService.h" />
     <ClInclude Include="KFRouteShardInterface.h" />
     <ClInclude Include="KFRouteShardModule.h" />
     <ClInclude Include="KFRouteShardPlugin.h" />

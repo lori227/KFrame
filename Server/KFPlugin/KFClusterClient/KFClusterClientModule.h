@@ -33,6 +33,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
 
         // 注册回调函数
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );

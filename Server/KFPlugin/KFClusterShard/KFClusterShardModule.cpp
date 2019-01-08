@@ -58,26 +58,15 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFClusterShardModule::SendToProxy( uint32 msgid, const char* data, uint32 length )
-    {
-        _kf_tcp_server->SendNetMessage( msgid, data, length );
-    }
-
     void KFClusterShardModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
     {
         _kf_tcp_server->SendNetMessage( msgid, message );
     }
 
-    bool KFClusterShardModule::SendToProxy( uint64 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterShardModule::SendToProxy( uint64 proxyid, uint32 msgid, google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( handleid, msgid, data, length );
+        return _kf_tcp_server->SendNetMessage( proxyid, msgid, message );
     }
-
-    bool KFClusterShardModule::SendToProxy( uint64 handleid, uint32 msgid, google::protobuf::Message* message )
-    {
-        return _kf_tcp_server->SendNetMessage( handleid, msgid, message );
-    }
-
 
     uint64 KFClusterShardModule::FindProxyId( uint64 clientid )
     {
@@ -102,19 +91,6 @@ namespace KFrame
         return true;
     }
 
-
-    bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length )
-    {
-        auto proxyid = FindProxyId( clientid );
-        if ( proxyid == _invalid_int )
-        {
-            __LOG_ERROR__( "can't find client[{}] proxy!", KFAppID::ToString( clientid ) );
-            return false;
-        }
-
-        return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, data, length );
-    }
-
     bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msgid, google::protobuf::Message* message )
     {
         auto proxyid = FindProxyId( clientid );
@@ -124,6 +100,11 @@ namespace KFrame
             return false;
         }
 
+        return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
+    }
+
+    bool KFClusterShardModule::SendToClient( uint64 proxyid, uint64 clientid, uint32 msgid, google::protobuf::Message* message )
+    {
         return _kf_tcp_server->SendNetMessage( proxyid, clientid, msgid, message );
     }
 }

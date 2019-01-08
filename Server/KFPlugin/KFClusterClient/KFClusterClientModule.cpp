@@ -182,12 +182,17 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////
     bool KFClusterClientModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
     {
+        return SendToProxy( _invalid_int, msgid, message );
+    }
+
+    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    {
         if ( !_cluster_in_services )
         {
             __LOG_ERROR__( "cluster not in service, send msgid[{}] failed!", msgid );
             return false;
         }
 
-        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, msgid, message );
+        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, message );
     }
 }
