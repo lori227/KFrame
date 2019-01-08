@@ -2579,9 +2579,9 @@ class LIBPROTOC_EXPORT S2SClusterAuthToMasterReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // bytes clusterkey = 1;
+  // bytes clusterkey = 2;
   void clear_clusterkey();
-  static const int kClusterkeyFieldNumber = 1;
+  static const int kClusterkeyFieldNumber = 2;
   const ::std::string& clusterkey() const;
   void set_clusterkey(const ::std::string& value);
   #if LANG_CXX11
@@ -2593,23 +2593,9 @@ class LIBPROTOC_EXPORT S2SClusterAuthToMasterReq : public ::google::protobuf::Me
   ::std::string* release_clusterkey();
   void set_allocated_clusterkey(::std::string* clusterkey);
 
-  // bytes clustername = 2;
-  void clear_clustername();
-  static const int kClusternameFieldNumber = 2;
-  const ::std::string& clustername() const;
-  void set_clustername(const ::std::string& value);
-  #if LANG_CXX11
-  void set_clustername(::std::string&& value);
-  #endif
-  void set_clustername(const char* value);
-  void set_clustername(const void* value, size_t size);
-  ::std::string* mutable_clustername();
-  ::std::string* release_clustername();
-  void set_allocated_clustername(::std::string* clustername);
-
-  // uint64 clientid = 3;
+  // uint64 clientid = 1;
   void clear_clientid();
-  static const int kClientidFieldNumber = 3;
+  static const int kClientidFieldNumber = 1;
   ::google::protobuf::uint64 clientid() const;
   void set_clientid(::google::protobuf::uint64 value);
 
@@ -2618,7 +2604,6 @@ class LIBPROTOC_EXPORT S2SClusterAuthToMasterReq : public ::google::protobuf::Me
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr clusterkey_;
-  ::google::protobuf::internal::ArenaStringPtr clustername_;
   ::google::protobuf::uint64 clientid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -7079,7 +7064,21 @@ inline void S2SClusterUpdateToMasterReq::set_count(::google::protobuf::uint32 va
 
 // S2SClusterAuthToMasterReq
 
-// bytes clusterkey = 1;
+// uint64 clientid = 1;
+inline void S2SClusterAuthToMasterReq::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SClusterAuthToMasterReq::clientid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clientid)
+  return clientid_;
+}
+inline void S2SClusterAuthToMasterReq::set_clientid(::google::protobuf::uint64 value) {
+  
+  clientid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clientid)
+}
+
+// bytes clusterkey = 2;
 inline void S2SClusterAuthToMasterReq::clear_clusterkey() {
   clusterkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -7130,73 +7129,6 @@ inline void S2SClusterAuthToMasterReq::set_allocated_clusterkey(::std::string* c
   }
   clusterkey_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clusterkey);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
-}
-
-// bytes clustername = 2;
-inline void S2SClusterAuthToMasterReq::clear_clustername() {
-  clustername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SClusterAuthToMasterReq::clustername() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clustername)
-  return clustername_.GetNoArena();
-}
-inline void S2SClusterAuthToMasterReq::set_clustername(const ::std::string& value) {
-  
-  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clustername)
-}
-#if LANG_CXX11
-inline void S2SClusterAuthToMasterReq::set_clustername(::std::string&& value) {
-  
-  clustername_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToMasterReq.clustername)
-}
-#endif
-inline void S2SClusterAuthToMasterReq::set_clustername(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToMasterReq.clustername)
-}
-inline void S2SClusterAuthToMasterReq::set_clustername(const void* value, size_t size) {
-  
-  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToMasterReq.clustername)
-}
-inline ::std::string* S2SClusterAuthToMasterReq::mutable_clustername() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToMasterReq.clustername)
-  return clustername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SClusterAuthToMasterReq::release_clustername() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToMasterReq.clustername)
-  
-  return clustername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SClusterAuthToMasterReq::set_allocated_clustername(::std::string* clustername) {
-  if (clustername != NULL) {
-    
-  } else {
-    
-  }
-  clustername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustername);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToMasterReq.clustername)
-}
-
-// uint64 clientid = 3;
-inline void S2SClusterAuthToMasterReq::clear_clientid() {
-  clientid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SClusterAuthToMasterReq::clientid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clientid)
-  return clientid_;
-}
-inline void S2SClusterAuthToMasterReq::set_clientid(::google::protobuf::uint64 value) {
-  
-  clientid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clientid)
 }
 
 // -------------------------------------------------------------------

@@ -947,9 +947,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterAuthToMasterReq, clusterkey_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterAuthToMasterReq, clustername_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterAuthToMasterReq, clientid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterAuthToMasterReq, clusterkey_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterAuthToClientAck, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1118,26 +1117,26 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 118, -1, sizeof(::KFMsg::S2SClusterRegisterToMasterReq)},
   { 128, -1, sizeof(::KFMsg::S2SClusterUpdateToMasterReq)},
   { 139, -1, sizeof(::KFMsg::S2SClusterAuthToMasterReq)},
-  { 147, -1, sizeof(::KFMsg::S2SClusterAuthToClientAck)},
-  { 158, -1, sizeof(::KFMsg::S2SClusterTokenToProxyReq)},
-  { 165, -1, sizeof(::KFMsg::S2SClusterVerifyToProxyReq)},
-  { 172, -1, sizeof(::KFMsg::S2SClusterVerifyToClientAck)},
-  { 178, -1, sizeof(::KFMsg::S2SClusterClientDiscoverToShardReq)},
-  { 184, -1, sizeof(::KFMsg::S2SClusterClientLostToShardReq)},
-  { 190, -1, sizeof(::KFMsg::S2SAddObjectToProxyReq)},
-  { 196, -1, sizeof(::KFMsg::S2SRemoveObjectToProxyReq)},
-  { 202, -1, sizeof(::KFMsg::S2SAllocObjectToMasterReq)},
-  { 208, -1, sizeof(::KFMsg::S2SAllocObjectToProxyAck)},
-  { 215, -1, sizeof(::KFMsg::S2SAllocObjectToShardAck)},
-  { 221, -1, sizeof(::KFMsg::S2SSendToDynamicObjectReq)},
-  { 230, -1, sizeof(::KFMsg::S2SSendToStaticObjectReq)},
-  { 239, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
-  { 249, -1, sizeof(::KFMsg::S2SGetAgentIpAddressReq)},
-  { 255, -1, sizeof(::KFMsg::S2SGetAgentIpAddressAck)},
-  { 265, -1, sizeof(::KFMsg::PBDeployCommand)},
-  { 277, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
-  { 283, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
-  { 289, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
+  { 146, -1, sizeof(::KFMsg::S2SClusterAuthToClientAck)},
+  { 157, -1, sizeof(::KFMsg::S2SClusterTokenToProxyReq)},
+  { 164, -1, sizeof(::KFMsg::S2SClusterVerifyToProxyReq)},
+  { 171, -1, sizeof(::KFMsg::S2SClusterVerifyToClientAck)},
+  { 177, -1, sizeof(::KFMsg::S2SClusterClientDiscoverToShardReq)},
+  { 183, -1, sizeof(::KFMsg::S2SClusterClientLostToShardReq)},
+  { 189, -1, sizeof(::KFMsg::S2SAddObjectToProxyReq)},
+  { 195, -1, sizeof(::KFMsg::S2SRemoveObjectToProxyReq)},
+  { 201, -1, sizeof(::KFMsg::S2SAllocObjectToMasterReq)},
+  { 207, -1, sizeof(::KFMsg::S2SAllocObjectToProxyAck)},
+  { 214, -1, sizeof(::KFMsg::S2SAllocObjectToShardAck)},
+  { 220, -1, sizeof(::KFMsg::S2SSendToDynamicObjectReq)},
+  { 229, -1, sizeof(::KFMsg::S2SSendToStaticObjectReq)},
+  { 238, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
+  { 248, -1, sizeof(::KFMsg::S2SGetAgentIpAddressReq)},
+  { 254, -1, sizeof(::KFMsg::S2SGetAgentIpAddressAck)},
+  { 264, -1, sizeof(::KFMsg::PBDeployCommand)},
+  { 276, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
+  { 282, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
+  { 288, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -1241,83 +1240,82 @@ void AddDescriptorsImpl() {
       " \001(\014\022\014\n\004port\030\005 \001(\r\"n\n\033S2SClusterUpdateTo"
       "MasterReq\022\014\n\004type\030\001 \001(\014\022\n\n\002id\030\002 \001(\004\022\014\n\004n"
       "ame\030\003 \001(\014\022\n\n\002ip\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\022\r\n\005c"
-      "ount\030\006 \001(\r\"V\n\031S2SClusterAuthToMasterReq\022"
-      "\022\n\nclusterkey\030\001 \001(\014\022\023\n\013clustername\030\002 \001(\014"
-      "\022\020\n\010clientid\030\003 \001(\004\"l\n\031S2SClusterAuthToCl"
-      "ientAck\022\r\n\005token\030\001 \001(\014\022\014\n\004name\030\002 \001(\014\022\014\n\004"
-      "type\030\003 \001(\014\022\n\n\002id\030\004 \001(\004\022\n\n\002ip\030\005 \001(\014\022\014\n\004po"
-      "rt\030\006 \001(\r\"<\n\031S2SClusterTokenToProxyReq\022\r\n"
-      "\005token\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\"=\n\032S2SClu"
-      "sterVerifyToProxyReq\022\r\n\005token\030\001 \001(\014\022\020\n\010s"
-      "erverid\030\002 \001(\004\"/\n\033S2SClusterVerifyToClien"
-      "tAck\022\020\n\010serverid\030\001 \001(\004\"6\n\"S2SClusterClie"
-      "ntDiscoverToShardReq\022\020\n\010clientid\030\001 \003(\004\"2"
-      "\n\036S2SClusterClientLostToShardReq\022\020\n\010clie"
-      "ntid\030\001 \001(\004\"*\n\026S2SAddObjectToProxyReq\022\020\n\010"
-      "objectid\030\001 \003(\004\"-\n\031S2SRemoveObjectToProxy"
-      "Req\022\020\n\010objectid\030\002 \003(\004\"-\n\031S2SAllocObjectT"
-      "oMasterReq\022\020\n\010objectid\030\001 \003(\004\"=\n\030S2SAlloc"
-      "ObjectToProxyAck\022\020\n\010objectid\030\001 \003(\004\022\017\n\007sh"
-      "ardid\030\002 \003(\004\",\n\030S2SAllocObjectToShardAck\022"
-      "\020\n\010objectid\030\001 \003(\004\"_\n\031S2SSendToDynamicObj"
-      "ectReq\022\020\n\010objectid\030\001 \001(\004\022\020\n\010serverid\030\002 \001"
-      "(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"^\n\030S2"
-      "SSendToStaticObjectReq\022\020\n\010objectid\030\001 \001(\004"
-      "\022\020\n\010serverid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msg"
-      "data\030\004 \001(\014\"i\n\033S2SRegisterAgentToServerRe"
-      "q\022\017\n\007agentid\030\001 \001(\014\022\017\n\007localip\030\002 \001(\014\022\014\n\004n"
-      "ame\030\003 \001(\014\022\014\n\004type\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\"*\n"
-      "\027S2SGetAgentIpAddressReq\022\017\n\007localip\030\001 \001("
-      "\014\"d\n\027S2SGetAgentIpAddressAck\022\017\n\007appname\030"
-      "\001 \001(\014\022\017\n\007apptype\030\002 \001(\014\022\r\n\005appid\030\003 \001(\014\022\n\n"
-      "\002ip\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\"\202\001\n\017PBDeployComm"
-      "and\022\017\n\007command\030\001 \001(\014\022\017\n\007appname\030\002 \001(\014\022\017\n"
-      "\007apptype\030\003 \001(\014\022\r\n\005appid\030\004 \001(\014\022\016\n\006zoneid\030"
-      "\005 \001(\r\022\r\n\005value\030\006 \001(\014\022\016\n\006logurl\030\007 \001(\014\"K\n\032"
-      "S2SDeployCommandToAgentReq\022-\n\rdeploycomm"
-      "and\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"L\n\033S2S"
-      "DeployCommandToMasterReq\022-\n\rdeploycomman"
-      "d\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"L\n\033S2SDe"
-      "ployCommandToServerReq\022-\n\rdeploycommand\030"
-      "\001 \001(\0132\026.KFMsg.PBDeployCommand*\327\n\n\rFrameP"
-      "rotocol\022\034\n\030S2S_FRAME_PROTOCOL_BEGIN\020\000\022\037\n"
-      "\032S2S_REGISTER_TO_SERVER_REQ\020\221N\022\037\n\032S2S_RE"
-      "GISTER_TO_SERVER_ACK\020\222N\022 \n\033S2S_TELL_REGI"
-      "STER_TO_SERVER\020\223N\022$\n\037S2S_TELL_UNREGISTER"
-      "_FROM_SERVER\020\224N\022+\n&S2S_REGISTER_ROUTE_CL"
-      "IENT_TO_PROXY_REQ\020\233N\022+\n&S2S_REGISTER_ROU"
-      "TE_CLIENT_TO_SHARD_REQ\020\234N\022(\n#S2S_TRANSMI"
-      "T_ROUTE_ZONE_MESSAGE_REQ\020\235N\022(\n#S2S_TRANS"
-      "MIT_ROUTE_ZONE_MESSAGE_ACK\020\236N\022)\n$S2S_TRA"
-      "NSMIT_ROUTE_PROXY_MESSAGE_REQ\020\237N\022)\n$S2S_"
-      "TRANSMIT_ROUTE_PROXY_MESSAGE_ACK\020\240N\022\020\n\013S"
-      "2S_LOG_REQ\020\245N\022!\n\034S2S_UPDATE_ONLINE_TO_DI"
-      "R_REQ\020\246N\022!\n\034S2S_REMOVE_ONLINE_TO_DIR_REQ"
-      "\020\247N\022\'\n\"S2S_CLUSTER_REGISTER_TO_MASTER_RE"
-      "Q\020\365N\022%\n S2S_CLUSTER_UPDATE_TO_MASTER_REQ"
-      "\020\366N\022#\n\036S2S_CLUSTER_AUTH_TO_MASTER_REQ\020\367N"
-      "\022#\n\036S2S_CLUSTER_AUTH_TO_CLIENT_ACK\020\370N\022#\n"
-      "\036S2S_CLUSTER_TOKEN_TO_PROXY_REQ\020\371N\022$\n\037S2"
-      "S_CLUSTER_VERIFY_TO_PROXY_REQ\020\372N\022%\n S2S_"
-      "CLUSTER_VERIFY_TO_CLIENT_ACK\020\373N\022-\n(S2S_C"
-      "LUSTER_CLIENT_DISCOVER_TO_SHARD_REQ\020\374N\022)"
-      "\n$S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ\020\375"
-      "N\022#\n\036S2S_REMOVE_OBJECT_TO_PROXY_REQ\020\376N\022#"
-      "\n\036S2S_ALLOC_OBJECT_TO_MASTER_REQ\020\200O\022\"\n\035S"
-      "2S_ALLOC_OBJECT_TO_PROXY_ACK\020\201O\022\"\n\035S2S_A"
-      "LLOC_OBJECT_TO_SHARD_ACK\020\202O\022\"\n\035S2S_SEND_"
-      "TO_STATIC_OBJECT_REQ\020\203O\022#\n\036S2S_SEND_TO_D"
-      "YNAMIC_OBJECT_REQ\020\204O\022 \n\033S2S_ADD_OBJECT_T"
-      "O_PROXY_REQ\020\205O\022%\n S2S_REGISTER_AGENT_TO_"
-      "SERVER_REQ\020\275P\022!\n\034S2S_GET_AGENT_IP_ADDRES"
-      "S_REQ\020\277P\022!\n\034S2S_GET_AGENT_IP_ADDRESS_ACK"
-      "\020\300P\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020\301"
-      "P\022%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ\020\302P"
-      "\022%\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020\303Pb"
-      "\006proto3"
+      "ount\030\006 \001(\r\"A\n\031S2SClusterAuthToMasterReq\022"
+      "\020\n\010clientid\030\001 \001(\004\022\022\n\nclusterkey\030\002 \001(\014\"l\n"
+      "\031S2SClusterAuthToClientAck\022\r\n\005token\030\001 \001("
+      "\014\022\014\n\004name\030\002 \001(\014\022\014\n\004type\030\003 \001(\014\022\n\n\002id\030\004 \001("
+      "\004\022\n\n\002ip\030\005 \001(\014\022\014\n\004port\030\006 \001(\r\"<\n\031S2SCluste"
+      "rTokenToProxyReq\022\r\n\005token\030\001 \001(\014\022\020\n\010clien"
+      "tid\030\002 \001(\004\"=\n\032S2SClusterVerifyToProxyReq\022"
+      "\r\n\005token\030\001 \001(\014\022\020\n\010serverid\030\002 \001(\004\"/\n\033S2SC"
+      "lusterVerifyToClientAck\022\020\n\010serverid\030\001 \001("
+      "\004\"6\n\"S2SClusterClientDiscoverToShardReq\022"
+      "\020\n\010clientid\030\001 \003(\004\"2\n\036S2SClusterClientLos"
+      "tToShardReq\022\020\n\010clientid\030\001 \001(\004\"*\n\026S2SAddO"
+      "bjectToProxyReq\022\020\n\010objectid\030\001 \003(\004\"-\n\031S2S"
+      "RemoveObjectToProxyReq\022\020\n\010objectid\030\002 \003(\004"
+      "\"-\n\031S2SAllocObjectToMasterReq\022\020\n\010objecti"
+      "d\030\001 \003(\004\"=\n\030S2SAllocObjectToProxyAck\022\020\n\010o"
+      "bjectid\030\001 \003(\004\022\017\n\007shardid\030\002 \003(\004\",\n\030S2SAll"
+      "ocObjectToShardAck\022\020\n\010objectid\030\001 \003(\004\"_\n\031"
+      "S2SSendToDynamicObjectReq\022\020\n\010objectid\030\001 "
+      "\001(\004\022\020\n\010serverid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007"
+      "msgdata\030\004 \001(\014\"^\n\030S2SSendToStaticObjectRe"
+      "q\022\020\n\010objectid\030\001 \001(\004\022\020\n\010serverid\030\002 \001(\004\022\r\n"
+      "\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"i\n\033S2SRegi"
+      "sterAgentToServerReq\022\017\n\007agentid\030\001 \001(\014\022\017\n"
+      "\007localip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014\n\004type\030\004 \001"
+      "(\014\022\014\n\004port\030\005 \001(\r\"*\n\027S2SGetAgentIpAddress"
+      "Req\022\017\n\007localip\030\001 \001(\014\"d\n\027S2SGetAgentIpAdd"
+      "ressAck\022\017\n\007appname\030\001 \001(\014\022\017\n\007apptype\030\002 \001("
+      "\014\022\r\n\005appid\030\003 \001(\014\022\n\n\002ip\030\004 \001(\014\022\014\n\004port\030\005 \001"
+      "(\r\"\202\001\n\017PBDeployCommand\022\017\n\007command\030\001 \001(\014\022"
+      "\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022\r\n\005app"
+      "id\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030\006 \001(\014\022"
+      "\016\n\006logurl\030\007 \001(\014\"K\n\032S2SDeployCommandToAge"
+      "ntReq\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBD"
+      "eployCommand\"L\n\033S2SDeployCommandToMaster"
+      "Req\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBDep"
+      "loyCommand\"L\n\033S2SDeployCommandToServerRe"
+      "q\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBDeplo"
+      "yCommand*\327\n\n\rFrameProtocol\022\034\n\030S2S_FRAME_"
+      "PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REGISTER_TO_SERV"
+      "ER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SERVER_ACK\020"
+      "\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVER\020\223N\022$\n\037"
+      "S2S_TELL_UNREGISTER_FROM_SERVER\020\224N\022+\n&S2"
+      "S_REGISTER_ROUTE_CLIENT_TO_PROXY_REQ\020\233N\022"
+      "+\n&S2S_REGISTER_ROUTE_CLIENT_TO_SHARD_RE"
+      "Q\020\234N\022(\n#S2S_TRANSMIT_ROUTE_ZONE_MESSAGE_"
+      "REQ\020\235N\022(\n#S2S_TRANSMIT_ROUTE_ZONE_MESSAG"
+      "E_ACK\020\236N\022)\n$S2S_TRANSMIT_ROUTE_PROXY_MES"
+      "SAGE_REQ\020\237N\022)\n$S2S_TRANSMIT_ROUTE_PROXY_"
+      "MESSAGE_ACK\020\240N\022\020\n\013S2S_LOG_REQ\020\245N\022!\n\034S2S_"
+      "UPDATE_ONLINE_TO_DIR_REQ\020\246N\022!\n\034S2S_REMOV"
+      "E_ONLINE_TO_DIR_REQ\020\247N\022\'\n\"S2S_CLUSTER_RE"
+      "GISTER_TO_MASTER_REQ\020\365N\022%\n S2S_CLUSTER_U"
+      "PDATE_TO_MASTER_REQ\020\366N\022#\n\036S2S_CLUSTER_AU"
+      "TH_TO_MASTER_REQ\020\367N\022#\n\036S2S_CLUSTER_AUTH_"
+      "TO_CLIENT_ACK\020\370N\022#\n\036S2S_CLUSTER_TOKEN_TO"
+      "_PROXY_REQ\020\371N\022$\n\037S2S_CLUSTER_VERIFY_TO_P"
+      "ROXY_REQ\020\372N\022%\n S2S_CLUSTER_VERIFY_TO_CLI"
+      "ENT_ACK\020\373N\022-\n(S2S_CLUSTER_CLIENT_DISCOVE"
+      "R_TO_SHARD_REQ\020\374N\022)\n$S2S_CLUSTER_CLIENT_"
+      "LOST_TO_SHARD_REQ\020\375N\022#\n\036S2S_REMOVE_OBJEC"
+      "T_TO_PROXY_REQ\020\376N\022#\n\036S2S_ALLOC_OBJECT_TO"
+      "_MASTER_REQ\020\200O\022\"\n\035S2S_ALLOC_OBJECT_TO_PR"
+      "OXY_ACK\020\201O\022\"\n\035S2S_ALLOC_OBJECT_TO_SHARD_"
+      "ACK\020\202O\022\"\n\035S2S_SEND_TO_STATIC_OBJECT_REQ\020"
+      "\203O\022#\n\036S2S_SEND_TO_DYNAMIC_OBJECT_REQ\020\204O\022"
+      " \n\033S2S_ADD_OBJECT_TO_PROXY_REQ\020\205O\022%\n S2S"
+      "_REGISTER_AGENT_TO_SERVER_REQ\020\275P\022!\n\034S2S_"
+      "GET_AGENT_IP_ADDRESS_REQ\020\277P\022!\n\034S2S_GET_A"
+      "GENT_IP_ADDRESS_ACK\020\300P\022$\n\037S2S_DEPLOY_COM"
+      "MAND_TO_AGENT_REQ\020\301P\022%\n S2S_DEPLOY_COMMA"
+      "ND_TO_MASTER_REQ\020\302P\022%\n S2S_DEPLOY_COMMAN"
+      "D_TO_SERVER_REQ\020\303Pb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4487);
+      descriptor, 4466);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFFrameMessage.proto", &protobuf_RegisterTypes);
 }
@@ -6868,9 +6866,8 @@ void S2SClusterUpdateToMasterReq::InternalSwap(S2SClusterUpdateToMasterReq* othe
 void S2SClusterAuthToMasterReq::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SClusterAuthToMasterReq::kClusterkeyFieldNumber;
-const int S2SClusterAuthToMasterReq::kClusternameFieldNumber;
 const int S2SClusterAuthToMasterReq::kClientidFieldNumber;
+const int S2SClusterAuthToMasterReq::kClusterkeyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 S2SClusterAuthToMasterReq::S2SClusterAuthToMasterReq()
@@ -6888,17 +6885,12 @@ S2SClusterAuthToMasterReq::S2SClusterAuthToMasterReq(const S2SClusterAuthToMaste
   if (from.clusterkey().size() > 0) {
     clusterkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.clusterkey_);
   }
-  clustername_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.clustername().size() > 0) {
-    clustername_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.clustername_);
-  }
   clientid_ = from.clientid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SClusterAuthToMasterReq)
 }
 
 void S2SClusterAuthToMasterReq::SharedCtor() {
   clusterkey_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clustername_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clientid_ = GOOGLE_ULONGLONG(0);
 }
 
@@ -6909,7 +6901,6 @@ S2SClusterAuthToMasterReq::~S2SClusterAuthToMasterReq() {
 
 void S2SClusterAuthToMasterReq::SharedDtor() {
   clusterkey_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clustername_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void S2SClusterAuthToMasterReq::SetCachedSize(int size) const {
@@ -6933,7 +6924,6 @@ void S2SClusterAuthToMasterReq::Clear() {
   (void) cached_has_bits;
 
   clusterkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clustername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clientid_ = GOOGLE_ULONGLONG(0);
   _internal_metadata_.Clear();
 }
@@ -6948,38 +6938,26 @@ bool S2SClusterAuthToMasterReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes clusterkey = 1;
+      // uint64 clientid = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_clusterkey()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes clustername = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_clustername()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 clientid = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &clientid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes clusterkey = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_clusterkey()));
         } else {
           goto handle_unusual;
         }
@@ -7012,21 +6990,15 @@ void S2SClusterAuthToMasterReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes clusterkey = 1;
+  // uint64 clientid = 1;
+  if (this->clientid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->clientid(), output);
+  }
+
+  // bytes clusterkey = 2;
   if (this->clusterkey().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->clusterkey(), output);
-  }
-
-  // bytes clustername = 2;
-  if (this->clustername().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      2, this->clustername(), output);
-  }
-
-  // uint64 clientid = 3;
-  if (this->clientid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->clientid(), output);
+      2, this->clusterkey(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -7043,23 +7015,16 @@ void S2SClusterAuthToMasterReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes clusterkey = 1;
+  // uint64 clientid = 1;
+  if (this->clientid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->clientid(), target);
+  }
+
+  // bytes clusterkey = 2;
   if (this->clusterkey().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->clusterkey(), target);
-  }
-
-  // bytes clustername = 2;
-  if (this->clustername().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        2, this->clustername(), target);
-  }
-
-  // uint64 clientid = 3;
-  if (this->clientid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->clientid(), target);
+        2, this->clusterkey(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -7079,21 +7044,14 @@ size_t S2SClusterAuthToMasterReq::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes clusterkey = 1;
+  // bytes clusterkey = 2;
   if (this->clusterkey().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->clusterkey());
   }
 
-  // bytes clustername = 2;
-  if (this->clustername().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->clustername());
-  }
-
-  // uint64 clientid = 3;
+  // uint64 clientid = 1;
   if (this->clientid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -7131,10 +7089,6 @@ void S2SClusterAuthToMasterReq::MergeFrom(const S2SClusterAuthToMasterReq& from)
 
     clusterkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.clusterkey_);
   }
-  if (from.clustername().size() > 0) {
-
-    clustername_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.clustername_);
-  }
   if (from.clientid() != 0) {
     set_clientid(from.clientid());
   }
@@ -7165,8 +7119,6 @@ void S2SClusterAuthToMasterReq::Swap(S2SClusterAuthToMasterReq* other) {
 void S2SClusterAuthToMasterReq::InternalSwap(S2SClusterAuthToMasterReq* other) {
   using std::swap;
   clusterkey_.Swap(&other->clusterkey_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  clustername_.Swap(&other->clustername_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(clientid_, other->clientid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
