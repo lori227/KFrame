@@ -387,6 +387,7 @@ namespace KFrame
         __STRING_DEFINE__( leftscore );
         __STRING_DEFINE__( money );
         __STRING_DEFINE__( clusterkey );
+        __STRING_DEFINE__( clustername );
         __STRING_DEFINE__( steamfreeweekend );
         __STRING_DEFINE__( steamfreeweekendstopday );
         __STRING_DEFINE__( steamfreeweekendstophour );
@@ -400,6 +401,8 @@ namespace KFrame
         __STRING_DEFINE__( queryaccount );
         __STRING_DEFINE__( discount );
         __STRING_DEFINE__( activationCode );
+        __STRING_DEFINE__( routeclustername );
+        __STRING_DEFINE__( routeclusterkey );
     }
 }
 

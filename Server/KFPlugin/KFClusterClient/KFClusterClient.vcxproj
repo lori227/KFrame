@@ -12,15 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFClusterClient.cpp" />
-    <ClCompile Include="KFClusterClientConfig.cpp" />
     <ClCompile Include="KFClusterClientModule.cpp" />
     <ClCompile Include="KFClusterClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFClusterClientConfig.h" />
     <ClInclude Include="KFClusterClientInterface.h" />
-    <ClInclude Include="KFClusterClient.h" />
     <ClInclude Include="KFClusterClientModule.h" />
     <ClInclude Include="KFClusterClientPlugin.h" />
   </ItemGroup>

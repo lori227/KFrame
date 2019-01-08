@@ -16,6 +16,34 @@
 
 namespace KFrame
 {
+    // proxy数据
+    class KFProxyData
+    {
+    public:
+        KFProxyData()
+        {
+            _client_count = 0;
+        }
+
+        // id
+        uint64 _id;
+
+        // type
+        std::string _type;
+
+        // name
+        std::string _name;
+
+        // ip
+        std::string _ip;
+
+        // 端口
+        uint32 _port;
+
+        // 当前连接的客户端
+        uint32 _client_count;
+    };
+
     class KFClusterMasterModule : public KFClusterMasterInterface
     {
     public:
@@ -23,9 +51,7 @@ namespace KFrame
         ~KFClusterMasterModule() = default;
 
         // 初始化
-        virtual void InitModule();
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -34,60 +60,41 @@ namespace KFrame
 
     protected:
         // 注册
-        __KF_MESSAGE_FUNCTION__( HandleClusterRegisterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterRegisterToMasterReq );
 
         // 更新连接数量
-        __KF_MESSAGE_FUNCTION__( HandleClusterUpdateReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterUpdateToMasterReq );
 
         // 登录认证
-        __KF_MESSAGE_FUNCTION__( HandleClusterAuthReq );
-
-        // 请求分配shard
-        __KF_MESSAGE_FUNCTION__( HandleAllocObjectToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToMasterReq );
 
     protected:
         // 连接丢失
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClusterProxy );
 
-    private:
-        // 生成认证token
-        std::string MakeAuthToken( const KFId& kfid );
+    protected:
+        // 添加ProxyServer
+        void AddProxyServer( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port, uint32 clientcount );
 
-        // 获得 objectid 的数量
-        std::set< uint64 > GetShardObject( uint64 shardid );
+        // 删除ProxyServer
+        void RemoveProxyServer( uint64 handleid );
 
-        // 分配shard
-        void BalanceAllocShard( uint64 shardid );
+        // 更新ProxyServer
+        void UpdateProxyServer( uint64 handleid, uint32 clientcount );
 
-        // 判断是否拥有objectid
-        bool HaveObject( uint64 shardid, uint64 objectid );
+        // 选择ProxyServer
+        KFProxyData* SelectProxyServer();
+        KFProxyData* HashProxyServer( uint64 clientid );
 
-        // 查找拥有object的shard
-        uint64 FindShard( uint64 objectid );
-
-        // 发送分配shard到proxy
-        void SendAllocShardToProxy( uint64 proxyid );
-
-        // 发送分配shard到shard
-        void SendAllocShardToShard();
+        // 查找代理服务器
+        KFProxyData* FindProxyServer( uint64 handleid );
 
     private:
-        // 认证key
-        std::string _cluster_key;
+        // gate连接列表
+        KFMap< uint64, uint64, KFProxyData > _kf_proxy_list;
 
-        // 序列号
-        uint64 _cluster_serial{0};
-
-        // 记录shard分配数据
-        std::map< uint64, uint64 > _object_to_shard;
-
-        // shard存在的objectid
-        std::map< uint64, std::set< uint64 > > _shard_objects;
-
-        // 所有的objectid列表
-        std::set< uint64 > _total_objects;
-
-
+        // hash一致性列表
+        KFConHash _kf_hash;
     };
 }
 

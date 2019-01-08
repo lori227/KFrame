@@ -24,19 +24,18 @@ namespace KFrame
     public:
         KFClusterToken()
         {
-            _gate_id = 0;
+            _client_id = 0;
             _valid_time = 0;
         }
 
     public:
 
         std::string _token;
-        uint64 _gate_id;
+        uint64 _client_id;
         uint64 _valid_time;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////
-
     class KFClusterProxyModule : public KFClusterProxyInterface
     {
     public:
@@ -48,67 +47,16 @@ namespace KFrame
 
         // 逻辑
         virtual void Run();
-        virtual void AfterRun();
 
         // 关闭
         virtual void BeforeShut();
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-        virtual uint64 SelectClusterShard( const char* data, bool cache = false );
-        virtual uint64 SelectClusterShard( uint64 objectid, bool cache = false );
-        virtual uint64 SelectClusterShard( const char* data, uint64 objectid, bool cache = false );
-
-        // 发送消息到Shard
-        virtual void SendToShard( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendToShard( uint32 msgid, const char* data, uint32 length );
-
-        virtual bool SendToShard( uint64 shardid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToShard( uint64 shardid, uint32 msgid, const char* data, uint32 length );
-
-        virtual bool SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToShard( uint64 shardid, uint64 clientid, uint32 msgid, const char* data, uint32 length );
-
-        // 发送消息到客户端
-        virtual void SendToClient( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendToClient( uint32 msgid, const char* data, uint32 length );
-
-        virtual bool SendToClient( uint64 clientid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToClient( uint64 clientid, uint32 msgid, const char* data, uint32 length );
-
-        ////////////////////////////////////////////////////////////////////////////////
-        // 添加映射
-        virtual void AddDynamicShard( uint64 objectid, uint64 shardid );
-
-        // 查找映射
-        virtual uint64 FindDynamicShard( uint64 objectid );
-
-        // 查找负载最小的逻辑分片id
-        virtual uint64 FindMinObjectShard();
-
-        // 查找映射
-        virtual uint64 FindStaticShard( uint64 objectid );
 
     protected:
         // 处理更新token信息
-        __KF_MESSAGE_FUNCTION__( HandleClusterTokenReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToProxyReq );
 
         // 验证toekn
-        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyReq );
-
-        // 添加对象映射
-        __KF_MESSAGE_FUNCTION__( HandleAddObjectToProxyReq );
-
-        // 删除对象映射
-        __KF_MESSAGE_FUNCTION__( HandleRemoveObjectToProxyReq );
-
-        // 分配shard
-        __KF_MESSAGE_FUNCTION__( HandleAllocObjectToProxyAck );
-
-        // 发送到动态对象
-        __KF_MESSAGE_FUNCTION__( HandleSendToStaticObjectReq );
-
-        // 发送到动态对象
-        __KF_MESSAGE_FUNCTION__( HandleSendToDynamicObjectReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToProxyReq );
 
     protected:
         // 转发消息到Shard
@@ -148,23 +96,8 @@ namespace KFrame
         void OnClientLostClusterMaster( const std::string& servername, uint64 serverid );
         void OnClientLostClusterShard( const std::string& servername, uint64 serverid );
 
-        // 检查token有效时间
-        void RunClusterTokenValidTime();
-
-        // 删除token
-        void RunRemoveClusterToken();
-
         // 验证集群客户端登录
         uint64 ClusterVerifyLogin( const std::string& token, uint64 serverid );
-
-        // 删除对象映射
-        virtual void RemoveObjectShard( uint64 shardid );
-
-        // 添加数量
-        void AddObjectCount( uint64 shardid, uint32 count );
-
-        // 减少数量
-        void DecObjectCount( uint64 shardid, uint32 count );
 
     private:
         // masterid
@@ -175,9 +108,6 @@ namespace KFrame
 
         // 认证的token列表
         KFMap< std::string, const std::string&, KFClusterToken > _kf_token_list;
-
-        // 需要删除的token列表
-        std::set< std::string > _kf_remove_list;
 
         // hash一致性列表
         KFConHash _kf_hash;

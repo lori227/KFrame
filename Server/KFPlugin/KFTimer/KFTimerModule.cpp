@@ -36,6 +36,7 @@ namespace KFrame
 
     void KFTimerModule::Run()
     {
+        RunTimerRemove();
         RunTimerRegister();
         RunTimerUpdate();
     }
@@ -226,16 +227,40 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    bool KFTimerModule::RemoveTimer( const std::string& module )
+    void KFTimerModule::RemoveTimer( const std::string& module )
     {
-        RemoveRegisterData( module, _invalid_int );
-        return RemoveTimerData( module );
+        _remove_timer_data[ module ] = _invalid_int;
     }
 
-    bool KFTimerModule::RemoveTimer( const std::string& module, uint64 objectid )
+    void KFTimerModule::RemoveTimer( const std::string& module, uint64 objectid )
     {
-        RemoveRegisterData( module, objectid );
-        return RemoveTimerData( module, objectid );
+        _remove_timer_data[ module ] = objectid;
+    }
+
+    void KFTimerModule::RunTimerRemove()
+    {
+        if ( _remove_timer_data.empty() )
+        {
+            return;
+        }
+
+        for ( auto& iter : _remove_timer_data )
+        {
+            auto& module = iter.first;
+            auto objectid = iter.second;
+
+            RemoveRegisterData( module, objectid );
+            if ( objectid == _invalid_int )
+            {
+                RemoveTimerData( module );
+            }
+            else
+            {
+                RemoveTimerData( module, objectid );
+            }
+        }
+
+        _remove_timer_data.clear();
     }
 
     uint32 KFTimerModule::FindLeftTime( const std::string& module, uint64 objectid )

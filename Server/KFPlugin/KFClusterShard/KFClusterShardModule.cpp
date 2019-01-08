@@ -7,35 +7,22 @@ namespace KFrame
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterShardModule::OnServerLostHandle );
         //////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ, &KFClusterShardModule::HandleClusterClientDiscoverReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_REQ, &KFClusterShardModule::HandleClusterClientLostReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &KFClusterShardModule::HandleClusterClientDiscoverToShardReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ, &KFClusterShardModule::HandleClusterClientLostToShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK, &KFClusterShardModule::HandleAllocObjectToShardAck );
-
     }
 
     void KFClusterShardModule::BeforeShut()
     {
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK );
     }
-
-    uint64 KFClusterShardModule::FindProxyId( uint64 clientid )
+    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientDiscoverToShardReq )
     {
-        auto iter = _proxy_client_list.find( clientid );
-        if ( iter == _proxy_client_list.end() )
-        {
-            return _invalid_int;
-        }
-
-        return iter->second;
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientDiscoverReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverReq );
+        __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverToShardReq );
 
         auto proxyid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
@@ -45,16 +32,11 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientLostReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientLostToShardReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterClientLostReq );
+        __PROTO_PARSE__( KFMsg::S2SClusterClientLostToShardReq );
 
-        auto proxyid = __KF_HEAD_ID__( kfid );
-        for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
-        {
-            auto clientid = kfmsg.clientid( i );
-            _proxy_client_list.erase( clientid );
-        }
+        _proxy_client_list.erase( kfmsg.clientid() );
     }
 
     __KF_SERVER_LOST_FUNCTION__( KFClusterShardModule::OnServerLostHandle )
@@ -96,6 +78,19 @@ namespace KFrame
     {
         return _kf_tcp_server->SendNetMessage( handleid, msgid, message );
     }
+
+
+    uint64 KFClusterShardModule::FindProxyId( uint64 clientid )
+    {
+        auto iter = _proxy_client_list.find( clientid );
+        if ( iter == _proxy_client_list.end() )
+        {
+            return _invalid_int;
+        }
+
+        return iter->second;
+    }
+
 
     bool KFClusterShardModule::SendToClient( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
     {

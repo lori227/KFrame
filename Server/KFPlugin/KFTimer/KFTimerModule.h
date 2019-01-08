@@ -51,12 +51,13 @@ namespace KFrame
         virtual void AddDelayTimer( const std::string& module, uint64 objectid, uint32 intervaltime, KFTimerFunction& function );
 
         // 删除定时器
-        virtual bool RemoveTimer( const std::string& module );
-        virtual bool RemoveTimer( const std::string& module, uint64 objectid );
+        virtual void RemoveTimer( const std::string& module );
+        virtual void RemoveTimer( const std::string& module, uint64 objectid );
 
     protected:
         void RunTimerUpdate();
         void RunTimerRegister();
+        void RunTimerRemove();
 
         // 查找定时器
         KFTimerData* FindTimerData( const std::string& module, uint64 objectid );
@@ -77,6 +78,7 @@ namespace KFrame
 
         // 刷新定时器
         void RunSlotTimer();
+
     private:
         // 当前槽索引
         uint32 _now_slot;
@@ -92,6 +94,9 @@ namespace KFrame
 
         // 需要注册的定时器
         std::list< KFTimerData* > _register_timer_data;
+
+        // 需要删除的定时器
+        std::map< std::string, uint64 > _remove_timer_data;
     };
 }
 

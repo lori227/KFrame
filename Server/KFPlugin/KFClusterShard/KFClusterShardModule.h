@@ -73,10 +73,10 @@ namespace KFrame
 
     protected:
         // 注册路由信息
-        __KF_MESSAGE_FUNCTION__( HandleClusterClientDiscoverReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientDiscoverToShardReq );
 
         // 客户端丢失
-        __KF_MESSAGE_FUNCTION__( HandleClusterClientLostReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientLostToShardReq );
 
         // 分配object回应
         __KF_MESSAGE_FUNCTION__( HandleAllocObjectToShardAck );
@@ -94,7 +94,7 @@ namespace KFrame
 
     protected:
         // 客户端路由信息
-        std::map< uint64, uint64 > _proxy_client_list;
+        std::unordered_map< uint64, uint64 > _proxy_client_list;
 
         // shard分配的object列表
         std::set < uint64 > _object_list;

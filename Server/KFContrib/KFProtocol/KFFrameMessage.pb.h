@@ -74,33 +74,33 @@ LIBPROTOC_EXPORT extern S2SAllocObjectToProxyAckDefaultTypeInternal _S2SAllocObj
 class S2SAllocObjectToShardAck;
 class S2SAllocObjectToShardAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SAllocObjectToShardAckDefaultTypeInternal _S2SAllocObjectToShardAck_default_instance_;
-class S2SClusterAuthAck;
-class S2SClusterAuthAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterAuthAckDefaultTypeInternal _S2SClusterAuthAck_default_instance_;
-class S2SClusterAuthReq;
-class S2SClusterAuthReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterAuthReqDefaultTypeInternal _S2SClusterAuthReq_default_instance_;
-class S2SClusterClientDiscoverReq;
-class S2SClusterClientDiscoverReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterClientDiscoverReqDefaultTypeInternal _S2SClusterClientDiscoverReq_default_instance_;
-class S2SClusterClientLostReq;
-class S2SClusterClientLostReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterClientLostReqDefaultTypeInternal _S2SClusterClientLostReq_default_instance_;
-class S2SClusterRegisterReq;
-class S2SClusterRegisterReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterRegisterReqDefaultTypeInternal _S2SClusterRegisterReq_default_instance_;
-class S2SClusterTokenReq;
-class S2SClusterTokenReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterTokenReqDefaultTypeInternal _S2SClusterTokenReq_default_instance_;
-class S2SClusterUpdateReq;
-class S2SClusterUpdateReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterUpdateReqDefaultTypeInternal _S2SClusterUpdateReq_default_instance_;
-class S2SClusterVerifyAck;
-class S2SClusterVerifyAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterVerifyAckDefaultTypeInternal _S2SClusterVerifyAck_default_instance_;
-class S2SClusterVerifyReq;
-class S2SClusterVerifyReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SClusterVerifyReqDefaultTypeInternal _S2SClusterVerifyReq_default_instance_;
+class S2SClusterAuthToClientAck;
+class S2SClusterAuthToClientAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterAuthToClientAckDefaultTypeInternal _S2SClusterAuthToClientAck_default_instance_;
+class S2SClusterAuthToMasterReq;
+class S2SClusterAuthToMasterReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterAuthToMasterReqDefaultTypeInternal _S2SClusterAuthToMasterReq_default_instance_;
+class S2SClusterClientDiscoverToShardReq;
+class S2SClusterClientDiscoverToShardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterClientDiscoverToShardReqDefaultTypeInternal _S2SClusterClientDiscoverToShardReq_default_instance_;
+class S2SClusterClientLostToShardReq;
+class S2SClusterClientLostToShardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterClientLostToShardReqDefaultTypeInternal _S2SClusterClientLostToShardReq_default_instance_;
+class S2SClusterRegisterToMasterReq;
+class S2SClusterRegisterToMasterReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterRegisterToMasterReqDefaultTypeInternal _S2SClusterRegisterToMasterReq_default_instance_;
+class S2SClusterTokenToProxyReq;
+class S2SClusterTokenToProxyReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterTokenToProxyReqDefaultTypeInternal _S2SClusterTokenToProxyReq_default_instance_;
+class S2SClusterUpdateToMasterReq;
+class S2SClusterUpdateToMasterReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterUpdateToMasterReqDefaultTypeInternal _S2SClusterUpdateToMasterReq_default_instance_;
+class S2SClusterVerifyToClientAck;
+class S2SClusterVerifyToClientAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterVerifyToClientAckDefaultTypeInternal _S2SClusterVerifyToClientAck_default_instance_;
+class S2SClusterVerifyToProxyReq;
+class S2SClusterVerifyToProxyReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SClusterVerifyToProxyReqDefaultTypeInternal _S2SClusterVerifyToProxyReq_default_instance_;
 class S2SDeployCommandToAgentReq;
 class S2SDeployCommandToAgentReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SDeployCommandToAgentReqDefaultTypeInternal _S2SDeployCommandToAgentReq_default_instance_;
@@ -173,15 +173,15 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddObjectToProxyReq* Arena::CreateMaybeM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SAllocObjectToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SAllocObjectToMasterReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SAllocObjectToProxyAck* Arena::CreateMaybeMessage<::KFMsg::S2SAllocObjectToProxyAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SAllocObjectToShardAck* Arena::CreateMaybeMessage<::KFMsg::S2SAllocObjectToShardAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterAuthAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterAuthAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterAuthReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterAuthReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterClientDiscoverReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterClientDiscoverReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterClientLostReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterClientLostReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterRegisterReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterRegisterReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterTokenReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterTokenReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterUpdateReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterUpdateReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterAuthToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterAuthToClientAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterAuthToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterAuthToMasterReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterClientDiscoverToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterClientDiscoverToShardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterClientLostToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterClientLostToShardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterRegisterToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterRegisterToMasterReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterTokenToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterTokenToProxyReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterUpdateToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterUpdateToMasterReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyToClientAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyToProxyReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToAgentReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToAgentReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToMasterReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToServerReq>(Arena*);
@@ -221,22 +221,22 @@ enum FrameProtocol {
   S2S_LOG_REQ = 10021,
   S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022,
   S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023,
-  S2S_CLUSTER_REGISTER_REQ = 10101,
-  S2S_CLUSTER_UPDATE_REQ = 10102,
-  S2S_CLUSTER_AUTH_REQ = 10103,
-  S2S_CLUSTER_AUTH_ACK = 10104,
-  S2S_CLUSTER_TOKEN_REQ = 10105,
-  S2S_CLUSTER_VERIFY_REQ = 10106,
-  S2S_CLUSTER_VERIFY_ACK = 10107,
-  S2S_CLUSTER_CLIENT_DISCOVER_REQ = 10108,
-  S2S_ADD_OBJECT_TO_PROXY_REQ = 10109,
+  S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101,
+  S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10102,
+  S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10103,
+  S2S_CLUSTER_AUTH_TO_CLIENT_ACK = 10104,
+  S2S_CLUSTER_TOKEN_TO_PROXY_REQ = 10105,
+  S2S_CLUSTER_VERIFY_TO_PROXY_REQ = 10106,
+  S2S_CLUSTER_VERIFY_TO_CLIENT_ACK = 10107,
+  S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ = 10108,
+  S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ = 10109,
   S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110,
   S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112,
   S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113,
   S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114,
   S2S_SEND_TO_STATIC_OBJECT_REQ = 10115,
   S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116,
-  S2S_CLUSTER_CLIENT_LOST_REQ = 10117,
+  S2S_ADD_OBJECT_TO_PROXY_REQ = 10117,
   S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301,
   S2S_GET_AGENT_IP_ADDRESS_REQ = 10303,
   S2S_GET_AGENT_IP_ADDRESS_ACK = 10304,
@@ -2175,24 +2175,24 @@ class LIBPROTOC_EXPORT S2SRemoveOnlineToDirReq : public ::google::protobuf::Mess
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterRegisterReq) */ {
+class LIBPROTOC_EXPORT S2SClusterRegisterToMasterReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterRegisterToMasterReq) */ {
  public:
-  S2SClusterRegisterReq();
-  virtual ~S2SClusterRegisterReq();
+  S2SClusterRegisterToMasterReq();
+  virtual ~S2SClusterRegisterToMasterReq();
 
-  S2SClusterRegisterReq(const S2SClusterRegisterReq& from);
+  S2SClusterRegisterToMasterReq(const S2SClusterRegisterToMasterReq& from);
 
-  inline S2SClusterRegisterReq& operator=(const S2SClusterRegisterReq& from) {
+  inline S2SClusterRegisterToMasterReq& operator=(const S2SClusterRegisterToMasterReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterRegisterReq(S2SClusterRegisterReq&& from) noexcept
-    : S2SClusterRegisterReq() {
+  S2SClusterRegisterToMasterReq(S2SClusterRegisterToMasterReq&& from) noexcept
+    : S2SClusterRegisterToMasterReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterRegisterReq& operator=(S2SClusterRegisterReq&& from) noexcept {
+  inline S2SClusterRegisterToMasterReq& operator=(S2SClusterRegisterToMasterReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2202,34 +2202,34 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterRegisterReq& default_instance();
+  static const S2SClusterRegisterToMasterReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterRegisterReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterRegisterReq*>(
-               &_S2SClusterRegisterReq_default_instance_);
+  static inline const S2SClusterRegisterToMasterReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterRegisterToMasterReq*>(
+               &_S2SClusterRegisterToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     15;
 
-  void Swap(S2SClusterRegisterReq* other);
-  friend void swap(S2SClusterRegisterReq& a, S2SClusterRegisterReq& b) {
+  void Swap(S2SClusterRegisterToMasterReq* other);
+  friend void swap(S2SClusterRegisterToMasterReq& a, S2SClusterRegisterToMasterReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterRegisterReq* New() const final {
-    return CreateMaybeMessage<S2SClusterRegisterReq>(NULL);
+  inline S2SClusterRegisterToMasterReq* New() const final {
+    return CreateMaybeMessage<S2SClusterRegisterToMasterReq>(NULL);
   }
 
-  S2SClusterRegisterReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterRegisterReq>(arena);
+  S2SClusterRegisterToMasterReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterRegisterToMasterReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterRegisterReq& from);
-  void MergeFrom(const S2SClusterRegisterReq& from);
+  void CopyFrom(const S2SClusterRegisterToMasterReq& from);
+  void MergeFrom(const S2SClusterRegisterToMasterReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -2246,7 +2246,7 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterRegisterReq* other);
+  void InternalSwap(S2SClusterRegisterToMasterReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -2316,7 +2316,7 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
   ::google::protobuf::uint32 port() const;
   void set_port(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterRegisterReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterRegisterToMasterReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -2330,24 +2330,24 @@ class LIBPROTOC_EXPORT S2SClusterRegisterReq : public ::google::protobuf::Messag
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterUpdateReq) */ {
+class LIBPROTOC_EXPORT S2SClusterUpdateToMasterReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterUpdateToMasterReq) */ {
  public:
-  S2SClusterUpdateReq();
-  virtual ~S2SClusterUpdateReq();
+  S2SClusterUpdateToMasterReq();
+  virtual ~S2SClusterUpdateToMasterReq();
 
-  S2SClusterUpdateReq(const S2SClusterUpdateReq& from);
+  S2SClusterUpdateToMasterReq(const S2SClusterUpdateToMasterReq& from);
 
-  inline S2SClusterUpdateReq& operator=(const S2SClusterUpdateReq& from) {
+  inline S2SClusterUpdateToMasterReq& operator=(const S2SClusterUpdateToMasterReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterUpdateReq(S2SClusterUpdateReq&& from) noexcept
-    : S2SClusterUpdateReq() {
+  S2SClusterUpdateToMasterReq(S2SClusterUpdateToMasterReq&& from) noexcept
+    : S2SClusterUpdateToMasterReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterUpdateReq& operator=(S2SClusterUpdateReq&& from) noexcept {
+  inline S2SClusterUpdateToMasterReq& operator=(S2SClusterUpdateToMasterReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2357,34 +2357,34 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterUpdateReq& default_instance();
+  static const S2SClusterUpdateToMasterReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterUpdateReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterUpdateReq*>(
-               &_S2SClusterUpdateReq_default_instance_);
+  static inline const S2SClusterUpdateToMasterReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterUpdateToMasterReq*>(
+               &_S2SClusterUpdateToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     16;
 
-  void Swap(S2SClusterUpdateReq* other);
-  friend void swap(S2SClusterUpdateReq& a, S2SClusterUpdateReq& b) {
+  void Swap(S2SClusterUpdateToMasterReq* other);
+  friend void swap(S2SClusterUpdateToMasterReq& a, S2SClusterUpdateToMasterReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterUpdateReq* New() const final {
-    return CreateMaybeMessage<S2SClusterUpdateReq>(NULL);
+  inline S2SClusterUpdateToMasterReq* New() const final {
+    return CreateMaybeMessage<S2SClusterUpdateToMasterReq>(NULL);
   }
 
-  S2SClusterUpdateReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterUpdateReq>(arena);
+  S2SClusterUpdateToMasterReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterUpdateToMasterReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterUpdateReq& from);
-  void MergeFrom(const S2SClusterUpdateReq& from);
+  void CopyFrom(const S2SClusterUpdateToMasterReq& from);
+  void MergeFrom(const S2SClusterUpdateToMasterReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -2401,7 +2401,7 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterUpdateReq* other);
+  void InternalSwap(S2SClusterUpdateToMasterReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -2477,7 +2477,7 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
   ::google::protobuf::uint32 count() const;
   void set_count(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterUpdateReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterUpdateToMasterReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -2492,24 +2492,24 @@ class LIBPROTOC_EXPORT S2SClusterUpdateReq : public ::google::protobuf::Message 
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterAuthReq) */ {
+class LIBPROTOC_EXPORT S2SClusterAuthToMasterReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterAuthToMasterReq) */ {
  public:
-  S2SClusterAuthReq();
-  virtual ~S2SClusterAuthReq();
+  S2SClusterAuthToMasterReq();
+  virtual ~S2SClusterAuthToMasterReq();
 
-  S2SClusterAuthReq(const S2SClusterAuthReq& from);
+  S2SClusterAuthToMasterReq(const S2SClusterAuthToMasterReq& from);
 
-  inline S2SClusterAuthReq& operator=(const S2SClusterAuthReq& from) {
+  inline S2SClusterAuthToMasterReq& operator=(const S2SClusterAuthToMasterReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterAuthReq(S2SClusterAuthReq&& from) noexcept
-    : S2SClusterAuthReq() {
+  S2SClusterAuthToMasterReq(S2SClusterAuthToMasterReq&& from) noexcept
+    : S2SClusterAuthToMasterReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterAuthReq& operator=(S2SClusterAuthReq&& from) noexcept {
+  inline S2SClusterAuthToMasterReq& operator=(S2SClusterAuthToMasterReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2519,34 +2519,34 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /*
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterAuthReq& default_instance();
+  static const S2SClusterAuthToMasterReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterAuthReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterAuthReq*>(
-               &_S2SClusterAuthReq_default_instance_);
+  static inline const S2SClusterAuthToMasterReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterAuthToMasterReq*>(
+               &_S2SClusterAuthToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     17;
 
-  void Swap(S2SClusterAuthReq* other);
-  friend void swap(S2SClusterAuthReq& a, S2SClusterAuthReq& b) {
+  void Swap(S2SClusterAuthToMasterReq* other);
+  friend void swap(S2SClusterAuthToMasterReq& a, S2SClusterAuthToMasterReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterAuthReq* New() const final {
-    return CreateMaybeMessage<S2SClusterAuthReq>(NULL);
+  inline S2SClusterAuthToMasterReq* New() const final {
+    return CreateMaybeMessage<S2SClusterAuthToMasterReq>(NULL);
   }
 
-  S2SClusterAuthReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterAuthReq>(arena);
+  S2SClusterAuthToMasterReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterAuthToMasterReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterAuthReq& from);
-  void MergeFrom(const S2SClusterAuthReq& from);
+  void CopyFrom(const S2SClusterAuthToMasterReq& from);
+  void MergeFrom(const S2SClusterAuthToMasterReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -2563,7 +2563,7 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /*
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterAuthReq* other);
+  void InternalSwap(S2SClusterAuthToMasterReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -2579,23 +2579,9 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /*
 
   // accessors -------------------------------------------------------
 
-  // bytes clustertype = 1;
-  void clear_clustertype();
-  static const int kClustertypeFieldNumber = 1;
-  const ::std::string& clustertype() const;
-  void set_clustertype(const ::std::string& value);
-  #if LANG_CXX11
-  void set_clustertype(::std::string&& value);
-  #endif
-  void set_clustertype(const char* value);
-  void set_clustertype(const void* value, size_t size);
-  ::std::string* mutable_clustertype();
-  ::std::string* release_clustertype();
-  void set_allocated_clustertype(::std::string* clustertype);
-
-  // bytes clusterkey = 2;
+  // bytes clusterkey = 1;
   void clear_clusterkey();
-  static const int kClusterkeyFieldNumber = 2;
+  static const int kClusterkeyFieldNumber = 1;
   const ::std::string& clusterkey() const;
   void set_clusterkey(const ::std::string& value);
   #if LANG_CXX11
@@ -2607,35 +2593,56 @@ class LIBPROTOC_EXPORT S2SClusterAuthReq : public ::google::protobuf::Message /*
   ::std::string* release_clusterkey();
   void set_allocated_clusterkey(::std::string* clusterkey);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterAuthReq)
+  // bytes clustername = 2;
+  void clear_clustername();
+  static const int kClusternameFieldNumber = 2;
+  const ::std::string& clustername() const;
+  void set_clustername(const ::std::string& value);
+  #if LANG_CXX11
+  void set_clustername(::std::string&& value);
+  #endif
+  void set_clustername(const char* value);
+  void set_clustername(const void* value, size_t size);
+  ::std::string* mutable_clustername();
+  ::std::string* release_clustername();
+  void set_allocated_clustername(::std::string* clustername);
+
+  // uint64 clientid = 3;
+  void clear_clientid();
+  static const int kClientidFieldNumber = 3;
+  ::google::protobuf::uint64 clientid() const;
+  void set_clientid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterAuthToMasterReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr clustertype_;
   ::google::protobuf::internal::ArenaStringPtr clusterkey_;
+  ::google::protobuf::internal::ArenaStringPtr clustername_;
+  ::google::protobuf::uint64 clientid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterAuthAck) */ {
+class LIBPROTOC_EXPORT S2SClusterAuthToClientAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterAuthToClientAck) */ {
  public:
-  S2SClusterAuthAck();
-  virtual ~S2SClusterAuthAck();
+  S2SClusterAuthToClientAck();
+  virtual ~S2SClusterAuthToClientAck();
 
-  S2SClusterAuthAck(const S2SClusterAuthAck& from);
+  S2SClusterAuthToClientAck(const S2SClusterAuthToClientAck& from);
 
-  inline S2SClusterAuthAck& operator=(const S2SClusterAuthAck& from) {
+  inline S2SClusterAuthToClientAck& operator=(const S2SClusterAuthToClientAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterAuthAck(S2SClusterAuthAck&& from) noexcept
-    : S2SClusterAuthAck() {
+  S2SClusterAuthToClientAck(S2SClusterAuthToClientAck&& from) noexcept
+    : S2SClusterAuthToClientAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterAuthAck& operator=(S2SClusterAuthAck&& from) noexcept {
+  inline S2SClusterAuthToClientAck& operator=(S2SClusterAuthToClientAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2645,34 +2652,34 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message /*
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterAuthAck& default_instance();
+  static const S2SClusterAuthToClientAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterAuthAck* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterAuthAck*>(
-               &_S2SClusterAuthAck_default_instance_);
+  static inline const S2SClusterAuthToClientAck* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterAuthToClientAck*>(
+               &_S2SClusterAuthToClientAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     18;
 
-  void Swap(S2SClusterAuthAck* other);
-  friend void swap(S2SClusterAuthAck& a, S2SClusterAuthAck& b) {
+  void Swap(S2SClusterAuthToClientAck* other);
+  friend void swap(S2SClusterAuthToClientAck& a, S2SClusterAuthToClientAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterAuthAck* New() const final {
-    return CreateMaybeMessage<S2SClusterAuthAck>(NULL);
+  inline S2SClusterAuthToClientAck* New() const final {
+    return CreateMaybeMessage<S2SClusterAuthToClientAck>(NULL);
   }
 
-  S2SClusterAuthAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterAuthAck>(arena);
+  S2SClusterAuthToClientAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterAuthToClientAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterAuthAck& from);
-  void MergeFrom(const S2SClusterAuthAck& from);
+  void CopyFrom(const S2SClusterAuthToClientAck& from);
+  void MergeFrom(const S2SClusterAuthToClientAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -2689,192 +2696,7 @@ class LIBPROTOC_EXPORT S2SClusterAuthAck : public ::google::protobuf::Message /*
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterAuthAck* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // bytes clustertype = 1;
-  void clear_clustertype();
-  static const int kClustertypeFieldNumber = 1;
-  const ::std::string& clustertype() const;
-  void set_clustertype(const ::std::string& value);
-  #if LANG_CXX11
-  void set_clustertype(::std::string&& value);
-  #endif
-  void set_clustertype(const char* value);
-  void set_clustertype(const void* value, size_t size);
-  ::std::string* mutable_clustertype();
-  ::std::string* release_clustertype();
-  void set_allocated_clustertype(::std::string* clustertype);
-
-  // bytes token = 2;
-  void clear_token();
-  static const int kTokenFieldNumber = 2;
-  const ::std::string& token() const;
-  void set_token(const ::std::string& value);
-  #if LANG_CXX11
-  void set_token(::std::string&& value);
-  #endif
-  void set_token(const char* value);
-  void set_token(const void* value, size_t size);
-  ::std::string* mutable_token();
-  ::std::string* release_token();
-  void set_allocated_token(::std::string* token);
-
-  // bytes type = 3;
-  void clear_type();
-  static const int kTypeFieldNumber = 3;
-  const ::std::string& type() const;
-  void set_type(const ::std::string& value);
-  #if LANG_CXX11
-  void set_type(::std::string&& value);
-  #endif
-  void set_type(const char* value);
-  void set_type(const void* value, size_t size);
-  ::std::string* mutable_type();
-  ::std::string* release_type();
-  void set_allocated_type(::std::string* type);
-
-  // bytes name = 5;
-  void clear_name();
-  static const int kNameFieldNumber = 5;
-  const ::std::string& name() const;
-  void set_name(const ::std::string& value);
-  #if LANG_CXX11
-  void set_name(::std::string&& value);
-  #endif
-  void set_name(const char* value);
-  void set_name(const void* value, size_t size);
-  ::std::string* mutable_name();
-  ::std::string* release_name();
-  void set_allocated_name(::std::string* name);
-
-  // bytes ip = 6;
-  void clear_ip();
-  static const int kIpFieldNumber = 6;
-  const ::std::string& ip() const;
-  void set_ip(const ::std::string& value);
-  #if LANG_CXX11
-  void set_ip(::std::string&& value);
-  #endif
-  void set_ip(const char* value);
-  void set_ip(const void* value, size_t size);
-  ::std::string* mutable_ip();
-  ::std::string* release_ip();
-  void set_allocated_ip(::std::string* ip);
-
-  // uint64 id = 4;
-  void clear_id();
-  static const int kIdFieldNumber = 4;
-  ::google::protobuf::uint64 id() const;
-  void set_id(::google::protobuf::uint64 value);
-
-  // uint32 port = 7;
-  void clear_port();
-  static const int kPortFieldNumber = 7;
-  ::google::protobuf::uint32 port() const;
-  void set_port(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterAuthAck)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr clustertype_;
-  ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::internal::ArenaStringPtr type_;
-  ::google::protobuf::internal::ArenaStringPtr name_;
-  ::google::protobuf::internal::ArenaStringPtr ip_;
-  ::google::protobuf::uint64 id_;
-  ::google::protobuf::uint32 port_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterTokenReq) */ {
- public:
-  S2SClusterTokenReq();
-  virtual ~S2SClusterTokenReq();
-
-  S2SClusterTokenReq(const S2SClusterTokenReq& from);
-
-  inline S2SClusterTokenReq& operator=(const S2SClusterTokenReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SClusterTokenReq(S2SClusterTokenReq&& from) noexcept
-    : S2SClusterTokenReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SClusterTokenReq& operator=(S2SClusterTokenReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterTokenReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterTokenReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterTokenReq*>(
-               &_S2SClusterTokenReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    19;
-
-  void Swap(S2SClusterTokenReq* other);
-  friend void swap(S2SClusterTokenReq& a, S2SClusterTokenReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SClusterTokenReq* New() const final {
-    return CreateMaybeMessage<S2SClusterTokenReq>(NULL);
-  }
-
-  S2SClusterTokenReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterTokenReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterTokenReq& from);
-  void MergeFrom(const S2SClusterTokenReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterTokenReq* other);
+  void InternalSwap(S2SClusterAuthToClientAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -2904,41 +2726,93 @@ class LIBPROTOC_EXPORT S2SClusterTokenReq : public ::google::protobuf::Message /
   ::std::string* release_token();
   void set_allocated_token(::std::string* token);
 
-  // uint64 gateid = 2;
-  void clear_gateid();
-  static const int kGateidFieldNumber = 2;
-  ::google::protobuf::uint64 gateid() const;
-  void set_gateid(::google::protobuf::uint64 value);
+  // bytes name = 2;
+  void clear_name();
+  static const int kNameFieldNumber = 2;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const void* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterTokenReq)
+  // bytes type = 3;
+  void clear_type();
+  static const int kTypeFieldNumber = 3;
+  const ::std::string& type() const;
+  void set_type(const ::std::string& value);
+  #if LANG_CXX11
+  void set_type(::std::string&& value);
+  #endif
+  void set_type(const char* value);
+  void set_type(const void* value, size_t size);
+  ::std::string* mutable_type();
+  ::std::string* release_type();
+  void set_allocated_type(::std::string* type);
+
+  // bytes ip = 5;
+  void clear_ip();
+  static const int kIpFieldNumber = 5;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const void* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
+  // uint64 id = 4;
+  void clear_id();
+  static const int kIdFieldNumber = 4;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // uint32 port = 6;
+  void clear_port();
+  static const int kPortFieldNumber = 6;
+  ::google::protobuf::uint32 port() const;
+  void set_port(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterAuthToClientAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::uint64 gateid_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr type_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::google::protobuf::uint64 id_;
+  ::google::protobuf::uint32 port_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterVerifyReq) */ {
+class LIBPROTOC_EXPORT S2SClusterTokenToProxyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterTokenToProxyReq) */ {
  public:
-  S2SClusterVerifyReq();
-  virtual ~S2SClusterVerifyReq();
+  S2SClusterTokenToProxyReq();
+  virtual ~S2SClusterTokenToProxyReq();
 
-  S2SClusterVerifyReq(const S2SClusterVerifyReq& from);
+  S2SClusterTokenToProxyReq(const S2SClusterTokenToProxyReq& from);
 
-  inline S2SClusterVerifyReq& operator=(const S2SClusterVerifyReq& from) {
+  inline S2SClusterTokenToProxyReq& operator=(const S2SClusterTokenToProxyReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterVerifyReq(S2SClusterVerifyReq&& from) noexcept
-    : S2SClusterVerifyReq() {
+  S2SClusterTokenToProxyReq(S2SClusterTokenToProxyReq&& from) noexcept
+    : S2SClusterTokenToProxyReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterVerifyReq& operator=(S2SClusterVerifyReq&& from) noexcept {
+  inline S2SClusterTokenToProxyReq& operator=(S2SClusterTokenToProxyReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2948,34 +2822,34 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterVerifyReq& default_instance();
+  static const S2SClusterTokenToProxyReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterVerifyReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterVerifyReq*>(
-               &_S2SClusterVerifyReq_default_instance_);
+  static inline const S2SClusterTokenToProxyReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterTokenToProxyReq*>(
+               &_S2SClusterTokenToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    19;
 
-  void Swap(S2SClusterVerifyReq* other);
-  friend void swap(S2SClusterVerifyReq& a, S2SClusterVerifyReq& b) {
+  void Swap(S2SClusterTokenToProxyReq* other);
+  friend void swap(S2SClusterTokenToProxyReq& a, S2SClusterTokenToProxyReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterVerifyReq* New() const final {
-    return CreateMaybeMessage<S2SClusterVerifyReq>(NULL);
+  inline S2SClusterTokenToProxyReq* New() const final {
+    return CreateMaybeMessage<S2SClusterTokenToProxyReq>(NULL);
   }
 
-  S2SClusterVerifyReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterVerifyReq>(arena);
+  S2SClusterTokenToProxyReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterTokenToProxyReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterVerifyReq& from);
-  void MergeFrom(const S2SClusterVerifyReq& from);
+  void CopyFrom(const S2SClusterTokenToProxyReq& from);
+  void MergeFrom(const S2SClusterTokenToProxyReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -2992,7 +2866,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterVerifyReq* other);
+  void InternalSwap(S2SClusterTokenToProxyReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -3008,23 +2882,9 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // bytes clustertype = 1;
-  void clear_clustertype();
-  static const int kClustertypeFieldNumber = 1;
-  const ::std::string& clustertype() const;
-  void set_clustertype(const ::std::string& value);
-  #if LANG_CXX11
-  void set_clustertype(::std::string&& value);
-  #endif
-  void set_clustertype(const char* value);
-  void set_clustertype(const void* value, size_t size);
-  ::std::string* mutable_clustertype();
-  ::std::string* release_clustertype();
-  void set_allocated_clustertype(::std::string* clustertype);
-
-  // bytes token = 2;
+  // bytes token = 1;
   void clear_token();
-  static const int kTokenFieldNumber = 2;
+  static const int kTokenFieldNumber = 1;
   const ::std::string& token() const;
   void set_token(const ::std::string& value);
   #if LANG_CXX11
@@ -3036,42 +2896,41 @@ class LIBPROTOC_EXPORT S2SClusterVerifyReq : public ::google::protobuf::Message 
   ::std::string* release_token();
   void set_allocated_token(::std::string* token);
 
-  // uint64 serverid = 3;
-  void clear_serverid();
-  static const int kServeridFieldNumber = 3;
-  ::google::protobuf::uint64 serverid() const;
-  void set_serverid(::google::protobuf::uint64 value);
+  // uint64 clientid = 2;
+  void clear_clientid();
+  static const int kClientidFieldNumber = 2;
+  ::google::protobuf::uint64 clientid() const;
+  void set_clientid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterTokenToProxyReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr clustertype_;
   ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 clientid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterVerifyAck) */ {
+class LIBPROTOC_EXPORT S2SClusterVerifyToProxyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterVerifyToProxyReq) */ {
  public:
-  S2SClusterVerifyAck();
-  virtual ~S2SClusterVerifyAck();
+  S2SClusterVerifyToProxyReq();
+  virtual ~S2SClusterVerifyToProxyReq();
 
-  S2SClusterVerifyAck(const S2SClusterVerifyAck& from);
+  S2SClusterVerifyToProxyReq(const S2SClusterVerifyToProxyReq& from);
 
-  inline S2SClusterVerifyAck& operator=(const S2SClusterVerifyAck& from) {
+  inline S2SClusterVerifyToProxyReq& operator=(const S2SClusterVerifyToProxyReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterVerifyAck(S2SClusterVerifyAck&& from) noexcept
-    : S2SClusterVerifyAck() {
+  S2SClusterVerifyToProxyReq(S2SClusterVerifyToProxyReq&& from) noexcept
+    : S2SClusterVerifyToProxyReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterVerifyAck& operator=(S2SClusterVerifyAck&& from) noexcept {
+  inline S2SClusterVerifyToProxyReq& operator=(S2SClusterVerifyToProxyReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3081,34 +2940,34 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterVerifyAck& default_instance();
+  static const S2SClusterVerifyToProxyReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterVerifyAck* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterVerifyAck*>(
-               &_S2SClusterVerifyAck_default_instance_);
+  static inline const S2SClusterVerifyToProxyReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterVerifyToProxyReq*>(
+               &_S2SClusterVerifyToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    20;
 
-  void Swap(S2SClusterVerifyAck* other);
-  friend void swap(S2SClusterVerifyAck& a, S2SClusterVerifyAck& b) {
+  void Swap(S2SClusterVerifyToProxyReq* other);
+  friend void swap(S2SClusterVerifyToProxyReq& a, S2SClusterVerifyToProxyReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterVerifyAck* New() const final {
-    return CreateMaybeMessage<S2SClusterVerifyAck>(NULL);
+  inline S2SClusterVerifyToProxyReq* New() const final {
+    return CreateMaybeMessage<S2SClusterVerifyToProxyReq>(NULL);
   }
 
-  S2SClusterVerifyAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterVerifyAck>(arena);
+  S2SClusterVerifyToProxyReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterVerifyToProxyReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterVerifyAck& from);
-  void MergeFrom(const S2SClusterVerifyAck& from);
+  void CopyFrom(const S2SClusterVerifyToProxyReq& from);
+  void MergeFrom(const S2SClusterVerifyToProxyReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -3125,7 +2984,7 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterVerifyAck* other);
+  void InternalSwap(S2SClusterVerifyToProxyReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -3141,19 +3000,19 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // bytes clustertype = 1;
-  void clear_clustertype();
-  static const int kClustertypeFieldNumber = 1;
-  const ::std::string& clustertype() const;
-  void set_clustertype(const ::std::string& value);
+  // bytes token = 1;
+  void clear_token();
+  static const int kTokenFieldNumber = 1;
+  const ::std::string& token() const;
+  void set_token(const ::std::string& value);
   #if LANG_CXX11
-  void set_clustertype(::std::string&& value);
+  void set_token(::std::string&& value);
   #endif
-  void set_clustertype(const char* value);
-  void set_clustertype(const void* value, size_t size);
-  ::std::string* mutable_clustertype();
-  ::std::string* release_clustertype();
-  void set_allocated_clustertype(::std::string* clustertype);
+  void set_token(const char* value);
+  void set_token(const void* value, size_t size);
+  ::std::string* mutable_token();
+  ::std::string* release_token();
+  void set_allocated_token(::std::string* token);
 
   // uint64 serverid = 2;
   void clear_serverid();
@@ -3161,35 +3020,35 @@ class LIBPROTOC_EXPORT S2SClusterVerifyAck : public ::google::protobuf::Message 
   ::google::protobuf::uint64 serverid() const;
   void set_serverid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyToProxyReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr clustertype_;
+  ::google::protobuf::internal::ArenaStringPtr token_;
   ::google::protobuf::uint64 serverid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterClientDiscoverReq) */ {
+class LIBPROTOC_EXPORT S2SClusterVerifyToClientAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterVerifyToClientAck) */ {
  public:
-  S2SClusterClientDiscoverReq();
-  virtual ~S2SClusterClientDiscoverReq();
+  S2SClusterVerifyToClientAck();
+  virtual ~S2SClusterVerifyToClientAck();
 
-  S2SClusterClientDiscoverReq(const S2SClusterClientDiscoverReq& from);
+  S2SClusterVerifyToClientAck(const S2SClusterVerifyToClientAck& from);
 
-  inline S2SClusterClientDiscoverReq& operator=(const S2SClusterClientDiscoverReq& from) {
+  inline S2SClusterVerifyToClientAck& operator=(const S2SClusterVerifyToClientAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterClientDiscoverReq(S2SClusterClientDiscoverReq&& from) noexcept
-    : S2SClusterClientDiscoverReq() {
+  S2SClusterVerifyToClientAck(S2SClusterVerifyToClientAck&& from) noexcept
+    : S2SClusterVerifyToClientAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterClientDiscoverReq& operator=(S2SClusterClientDiscoverReq&& from) noexcept {
+  inline S2SClusterVerifyToClientAck& operator=(S2SClusterVerifyToClientAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3199,34 +3058,34 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterClientDiscoverReq& default_instance();
+  static const S2SClusterVerifyToClientAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterClientDiscoverReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterClientDiscoverReq*>(
-               &_S2SClusterClientDiscoverReq_default_instance_);
+  static inline const S2SClusterVerifyToClientAck* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterVerifyToClientAck*>(
+               &_S2SClusterVerifyToClientAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    21;
 
-  void Swap(S2SClusterClientDiscoverReq* other);
-  friend void swap(S2SClusterClientDiscoverReq& a, S2SClusterClientDiscoverReq& b) {
+  void Swap(S2SClusterVerifyToClientAck* other);
+  friend void swap(S2SClusterVerifyToClientAck& a, S2SClusterVerifyToClientAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterClientDiscoverReq* New() const final {
-    return CreateMaybeMessage<S2SClusterClientDiscoverReq>(NULL);
+  inline S2SClusterVerifyToClientAck* New() const final {
+    return CreateMaybeMessage<S2SClusterVerifyToClientAck>(NULL);
   }
 
-  S2SClusterClientDiscoverReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterClientDiscoverReq>(arena);
+  S2SClusterVerifyToClientAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterVerifyToClientAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterClientDiscoverReq& from);
-  void MergeFrom(const S2SClusterClientDiscoverReq& from);
+  void CopyFrom(const S2SClusterVerifyToClientAck& from);
+  void MergeFrom(const S2SClusterVerifyToClientAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -3243,7 +3102,110 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterClientDiscoverReq* other);
+  void InternalSwap(S2SClusterVerifyToClientAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 serverid = 1;
+  void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  ::google::protobuf::uint64 serverid() const;
+  void set_serverid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterVerifyToClientAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 serverid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SClusterClientDiscoverToShardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterClientDiscoverToShardReq) */ {
+ public:
+  S2SClusterClientDiscoverToShardReq();
+  virtual ~S2SClusterClientDiscoverToShardReq();
+
+  S2SClusterClientDiscoverToShardReq(const S2SClusterClientDiscoverToShardReq& from);
+
+  inline S2SClusterClientDiscoverToShardReq& operator=(const S2SClusterClientDiscoverToShardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SClusterClientDiscoverToShardReq(S2SClusterClientDiscoverToShardReq&& from) noexcept
+    : S2SClusterClientDiscoverToShardReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SClusterClientDiscoverToShardReq& operator=(S2SClusterClientDiscoverToShardReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SClusterClientDiscoverToShardReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SClusterClientDiscoverToShardReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterClientDiscoverToShardReq*>(
+               &_S2SClusterClientDiscoverToShardReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  void Swap(S2SClusterClientDiscoverToShardReq* other);
+  friend void swap(S2SClusterClientDiscoverToShardReq& a, S2SClusterClientDiscoverToShardReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SClusterClientDiscoverToShardReq* New() const final {
+    return CreateMaybeMessage<S2SClusterClientDiscoverToShardReq>(NULL);
+  }
+
+  S2SClusterClientDiscoverToShardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterClientDiscoverToShardReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SClusterClientDiscoverToShardReq& from);
+  void MergeFrom(const S2SClusterClientDiscoverToShardReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SClusterClientDiscoverToShardReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -3271,7 +3233,7 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
   ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_clientid();
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientDiscoverReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientDiscoverToShardReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3282,24 +3244,24 @@ class LIBPROTOC_EXPORT S2SClusterClientDiscoverReq : public ::google::protobuf::
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterClientLostReq) */ {
+class LIBPROTOC_EXPORT S2SClusterClientLostToShardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SClusterClientLostToShardReq) */ {
  public:
-  S2SClusterClientLostReq();
-  virtual ~S2SClusterClientLostReq();
+  S2SClusterClientLostToShardReq();
+  virtual ~S2SClusterClientLostToShardReq();
 
-  S2SClusterClientLostReq(const S2SClusterClientLostReq& from);
+  S2SClusterClientLostToShardReq(const S2SClusterClientLostToShardReq& from);
 
-  inline S2SClusterClientLostReq& operator=(const S2SClusterClientLostReq& from) {
+  inline S2SClusterClientLostToShardReq& operator=(const S2SClusterClientLostToShardReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SClusterClientLostReq(S2SClusterClientLostReq&& from) noexcept
-    : S2SClusterClientLostReq() {
+  S2SClusterClientLostToShardReq(S2SClusterClientLostToShardReq&& from) noexcept
+    : S2SClusterClientLostToShardReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SClusterClientLostReq& operator=(S2SClusterClientLostReq&& from) noexcept {
+  inline S2SClusterClientLostToShardReq& operator=(S2SClusterClientLostToShardReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3309,34 +3271,34 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SClusterClientLostReq& default_instance();
+  static const S2SClusterClientLostToShardReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SClusterClientLostReq* internal_default_instance() {
-    return reinterpret_cast<const S2SClusterClientLostReq*>(
-               &_S2SClusterClientLostReq_default_instance_);
+  static inline const S2SClusterClientLostToShardReq* internal_default_instance() {
+    return reinterpret_cast<const S2SClusterClientLostToShardReq*>(
+               &_S2SClusterClientLostToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     23;
 
-  void Swap(S2SClusterClientLostReq* other);
-  friend void swap(S2SClusterClientLostReq& a, S2SClusterClientLostReq& b) {
+  void Swap(S2SClusterClientLostToShardReq* other);
+  friend void swap(S2SClusterClientLostToShardReq& a, S2SClusterClientLostToShardReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SClusterClientLostReq* New() const final {
-    return CreateMaybeMessage<S2SClusterClientLostReq>(NULL);
+  inline S2SClusterClientLostToShardReq* New() const final {
+    return CreateMaybeMessage<S2SClusterClientLostToShardReq>(NULL);
   }
 
-  S2SClusterClientLostReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SClusterClientLostReq>(arena);
+  S2SClusterClientLostToShardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SClusterClientLostToShardReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SClusterClientLostReq& from);
-  void MergeFrom(const S2SClusterClientLostReq& from);
+  void CopyFrom(const S2SClusterClientLostToShardReq& from);
+  void MergeFrom(const S2SClusterClientLostToShardReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -3353,7 +3315,7 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SClusterClientLostReq* other);
+  void InternalSwap(S2SClusterClientLostToShardReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -3369,24 +3331,17 @@ class LIBPROTOC_EXPORT S2SClusterClientLostReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // repeated uint64 clientid = 1;
-  int clientid_size() const;
+  // uint64 clientid = 1;
   void clear_clientid();
   static const int kClientidFieldNumber = 1;
-  ::google::protobuf::uint64 clientid(int index) const;
-  void set_clientid(int index, ::google::protobuf::uint64 value);
-  void add_clientid(::google::protobuf::uint64 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
-      clientid() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
-      mutable_clientid();
+  ::google::protobuf::uint64 clientid() const;
+  void set_clientid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientLostReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SClusterClientLostToShardReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > clientid_;
-  mutable int _clientid_cached_byte_size_;
+  ::google::protobuf::uint64 clientid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
@@ -6726,1139 +6681,978 @@ inline void S2SRemoveOnlineToDirReq::set_appid(::google::protobuf::uint64 value)
 
 // -------------------------------------------------------------------
 
-// S2SClusterRegisterReq
+// S2SClusterRegisterToMasterReq
 
 // bytes type = 1;
-inline void S2SClusterRegisterReq::clear_type() {
+inline void S2SClusterRegisterToMasterReq::clear_type() {
   type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterRegisterReq::type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterReq.type)
+inline const ::std::string& S2SClusterRegisterToMasterReq::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterToMasterReq.type)
   return type_.GetNoArena();
 }
-inline void S2SClusterRegisterReq::set_type(const ::std::string& value) {
+inline void S2SClusterRegisterToMasterReq::set_type(const ::std::string& value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterToMasterReq.type)
 }
 #if LANG_CXX11
-inline void S2SClusterRegisterReq::set_type(::std::string&& value) {
+inline void S2SClusterRegisterToMasterReq::set_type(::std::string&& value) {
   
   type_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterToMasterReq.type)
 }
 #endif
-inline void S2SClusterRegisterReq::set_type(const char* value) {
+inline void S2SClusterRegisterToMasterReq::set_type(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterToMasterReq.type)
 }
-inline void S2SClusterRegisterReq::set_type(const void* value, size_t size) {
+inline void S2SClusterRegisterToMasterReq::set_type(const void* value, size_t size) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterToMasterReq.type)
 }
-inline ::std::string* S2SClusterRegisterReq::mutable_type() {
+inline ::std::string* S2SClusterRegisterToMasterReq::mutable_type() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterToMasterReq.type)
   return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterRegisterReq::release_type() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterReq.type)
+inline ::std::string* S2SClusterRegisterToMasterReq::release_type() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterToMasterReq.type)
   
   return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterRegisterReq::set_allocated_type(::std::string* type) {
+inline void S2SClusterRegisterToMasterReq::set_allocated_type(::std::string* type) {
   if (type != NULL) {
     
   } else {
     
   }
   type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterReq.type)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterToMasterReq.type)
 }
 
 // uint64 id = 2;
-inline void S2SClusterRegisterReq::clear_id() {
+inline void S2SClusterRegisterToMasterReq::clear_id() {
   id_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SClusterRegisterReq::id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterReq.id)
+inline ::google::protobuf::uint64 S2SClusterRegisterToMasterReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterToMasterReq.id)
   return id_;
 }
-inline void S2SClusterRegisterReq::set_id(::google::protobuf::uint64 value) {
+inline void S2SClusterRegisterToMasterReq::set_id(::google::protobuf::uint64 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterReq.id)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterToMasterReq.id)
 }
 
 // bytes name = 3;
-inline void S2SClusterRegisterReq::clear_name() {
+inline void S2SClusterRegisterToMasterReq::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterRegisterReq::name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterReq.name)
+inline const ::std::string& S2SClusterRegisterToMasterReq::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterToMasterReq.name)
   return name_.GetNoArena();
 }
-inline void S2SClusterRegisterReq::set_name(const ::std::string& value) {
+inline void S2SClusterRegisterToMasterReq::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterToMasterReq.name)
 }
 #if LANG_CXX11
-inline void S2SClusterRegisterReq::set_name(::std::string&& value) {
+inline void S2SClusterRegisterToMasterReq::set_name(::std::string&& value) {
   
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterToMasterReq.name)
 }
 #endif
-inline void S2SClusterRegisterReq::set_name(const char* value) {
+inline void S2SClusterRegisterToMasterReq::set_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterToMasterReq.name)
 }
-inline void S2SClusterRegisterReq::set_name(const void* value, size_t size) {
+inline void S2SClusterRegisterToMasterReq::set_name(const void* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterToMasterReq.name)
 }
-inline ::std::string* S2SClusterRegisterReq::mutable_name() {
+inline ::std::string* S2SClusterRegisterToMasterReq::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterToMasterReq.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterRegisterReq::release_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterReq.name)
+inline ::std::string* S2SClusterRegisterToMasterReq::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterToMasterReq.name)
   
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterRegisterReq::set_allocated_name(::std::string* name) {
+inline void S2SClusterRegisterToMasterReq::set_allocated_name(::std::string* name) {
   if (name != NULL) {
     
   } else {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterReq.name)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterToMasterReq.name)
 }
 
 // bytes ip = 4;
-inline void S2SClusterRegisterReq::clear_ip() {
+inline void S2SClusterRegisterToMasterReq::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterRegisterReq::ip() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterReq.ip)
+inline const ::std::string& S2SClusterRegisterToMasterReq::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterToMasterReq.ip)
   return ip_.GetNoArena();
 }
-inline void S2SClusterRegisterReq::set_ip(const ::std::string& value) {
+inline void S2SClusterRegisterToMasterReq::set_ip(const ::std::string& value) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterToMasterReq.ip)
 }
 #if LANG_CXX11
-inline void S2SClusterRegisterReq::set_ip(::std::string&& value) {
+inline void S2SClusterRegisterToMasterReq::set_ip(::std::string&& value) {
   
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterRegisterToMasterReq.ip)
 }
 #endif
-inline void S2SClusterRegisterReq::set_ip(const char* value) {
+inline void S2SClusterRegisterToMasterReq::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterRegisterToMasterReq.ip)
 }
-inline void S2SClusterRegisterReq::set_ip(const void* value, size_t size) {
+inline void S2SClusterRegisterToMasterReq::set_ip(const void* value, size_t size) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterRegisterToMasterReq.ip)
 }
-inline ::std::string* S2SClusterRegisterReq::mutable_ip() {
+inline ::std::string* S2SClusterRegisterToMasterReq::mutable_ip() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterRegisterToMasterReq.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterRegisterReq::release_ip() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterReq.ip)
+inline ::std::string* S2SClusterRegisterToMasterReq::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterRegisterToMasterReq.ip)
   
   return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterRegisterReq::set_allocated_ip(::std::string* ip) {
+inline void S2SClusterRegisterToMasterReq::set_allocated_ip(::std::string* ip) {
   if (ip != NULL) {
     
   } else {
     
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterReq.ip)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterRegisterToMasterReq.ip)
 }
 
 // uint32 port = 5;
-inline void S2SClusterRegisterReq::clear_port() {
+inline void S2SClusterRegisterToMasterReq::clear_port() {
   port_ = 0u;
 }
-inline ::google::protobuf::uint32 S2SClusterRegisterReq::port() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterReq.port)
+inline ::google::protobuf::uint32 S2SClusterRegisterToMasterReq::port() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterRegisterToMasterReq.port)
   return port_;
 }
-inline void S2SClusterRegisterReq::set_port(::google::protobuf::uint32 value) {
+inline void S2SClusterRegisterToMasterReq::set_port(::google::protobuf::uint32 value) {
   
   port_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterReq.port)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterRegisterToMasterReq.port)
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterUpdateReq
+// S2SClusterUpdateToMasterReq
 
 // bytes type = 1;
-inline void S2SClusterUpdateReq::clear_type() {
+inline void S2SClusterUpdateToMasterReq::clear_type() {
   type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterUpdateReq::type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.type)
+inline const ::std::string& S2SClusterUpdateToMasterReq::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.type)
   return type_.GetNoArena();
 }
-inline void S2SClusterUpdateReq::set_type(const ::std::string& value) {
+inline void S2SClusterUpdateToMasterReq::set_type(const ::std::string& value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.type)
 }
 #if LANG_CXX11
-inline void S2SClusterUpdateReq::set_type(::std::string&& value) {
+inline void S2SClusterUpdateToMasterReq::set_type(::std::string&& value) {
   
   type_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateToMasterReq.type)
 }
 #endif
-inline void S2SClusterUpdateReq::set_type(const char* value) {
+inline void S2SClusterUpdateToMasterReq::set_type(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateToMasterReq.type)
 }
-inline void S2SClusterUpdateReq::set_type(const void* value, size_t size) {
+inline void S2SClusterUpdateToMasterReq::set_type(const void* value, size_t size) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateToMasterReq.type)
 }
-inline ::std::string* S2SClusterUpdateReq::mutable_type() {
+inline ::std::string* S2SClusterUpdateToMasterReq::mutable_type() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateToMasterReq.type)
   return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterUpdateReq::release_type() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateReq.type)
+inline ::std::string* S2SClusterUpdateToMasterReq::release_type() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateToMasterReq.type)
   
   return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterUpdateReq::set_allocated_type(::std::string* type) {
+inline void S2SClusterUpdateToMasterReq::set_allocated_type(::std::string* type) {
   if (type != NULL) {
     
   } else {
     
   }
   type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateReq.type)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateToMasterReq.type)
 }
 
 // uint64 id = 2;
-inline void S2SClusterUpdateReq::clear_id() {
+inline void S2SClusterUpdateToMasterReq::clear_id() {
   id_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SClusterUpdateReq::id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.id)
+inline ::google::protobuf::uint64 S2SClusterUpdateToMasterReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.id)
   return id_;
 }
-inline void S2SClusterUpdateReq::set_id(::google::protobuf::uint64 value) {
+inline void S2SClusterUpdateToMasterReq::set_id(::google::protobuf::uint64 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.id)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.id)
 }
 
 // bytes name = 3;
-inline void S2SClusterUpdateReq::clear_name() {
+inline void S2SClusterUpdateToMasterReq::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterUpdateReq::name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.name)
+inline const ::std::string& S2SClusterUpdateToMasterReq::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.name)
   return name_.GetNoArena();
 }
-inline void S2SClusterUpdateReq::set_name(const ::std::string& value) {
+inline void S2SClusterUpdateToMasterReq::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.name)
 }
 #if LANG_CXX11
-inline void S2SClusterUpdateReq::set_name(::std::string&& value) {
+inline void S2SClusterUpdateToMasterReq::set_name(::std::string&& value) {
   
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateToMasterReq.name)
 }
 #endif
-inline void S2SClusterUpdateReq::set_name(const char* value) {
+inline void S2SClusterUpdateToMasterReq::set_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateToMasterReq.name)
 }
-inline void S2SClusterUpdateReq::set_name(const void* value, size_t size) {
+inline void S2SClusterUpdateToMasterReq::set_name(const void* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateToMasterReq.name)
 }
-inline ::std::string* S2SClusterUpdateReq::mutable_name() {
+inline ::std::string* S2SClusterUpdateToMasterReq::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateToMasterReq.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterUpdateReq::release_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateReq.name)
+inline ::std::string* S2SClusterUpdateToMasterReq::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateToMasterReq.name)
   
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterUpdateReq::set_allocated_name(::std::string* name) {
+inline void S2SClusterUpdateToMasterReq::set_allocated_name(::std::string* name) {
   if (name != NULL) {
     
   } else {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateReq.name)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateToMasterReq.name)
 }
 
 // bytes ip = 4;
-inline void S2SClusterUpdateReq::clear_ip() {
+inline void S2SClusterUpdateToMasterReq::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterUpdateReq::ip() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.ip)
+inline const ::std::string& S2SClusterUpdateToMasterReq::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.ip)
   return ip_.GetNoArena();
 }
-inline void S2SClusterUpdateReq::set_ip(const ::std::string& value) {
+inline void S2SClusterUpdateToMasterReq::set_ip(const ::std::string& value) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.ip)
 }
 #if LANG_CXX11
-inline void S2SClusterUpdateReq::set_ip(::std::string&& value) {
+inline void S2SClusterUpdateToMasterReq::set_ip(::std::string&& value) {
   
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterUpdateToMasterReq.ip)
 }
 #endif
-inline void S2SClusterUpdateReq::set_ip(const char* value) {
+inline void S2SClusterUpdateToMasterReq::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterUpdateToMasterReq.ip)
 }
-inline void S2SClusterUpdateReq::set_ip(const void* value, size_t size) {
+inline void S2SClusterUpdateToMasterReq::set_ip(const void* value, size_t size) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterUpdateToMasterReq.ip)
 }
-inline ::std::string* S2SClusterUpdateReq::mutable_ip() {
+inline ::std::string* S2SClusterUpdateToMasterReq::mutable_ip() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterUpdateToMasterReq.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterUpdateReq::release_ip() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateReq.ip)
+inline ::std::string* S2SClusterUpdateToMasterReq::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterUpdateToMasterReq.ip)
   
   return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterUpdateReq::set_allocated_ip(::std::string* ip) {
+inline void S2SClusterUpdateToMasterReq::set_allocated_ip(::std::string* ip) {
   if (ip != NULL) {
     
   } else {
     
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateReq.ip)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterUpdateToMasterReq.ip)
 }
 
 // uint32 port = 5;
-inline void S2SClusterUpdateReq::clear_port() {
+inline void S2SClusterUpdateToMasterReq::clear_port() {
   port_ = 0u;
 }
-inline ::google::protobuf::uint32 S2SClusterUpdateReq::port() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.port)
+inline ::google::protobuf::uint32 S2SClusterUpdateToMasterReq::port() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.port)
   return port_;
 }
-inline void S2SClusterUpdateReq::set_port(::google::protobuf::uint32 value) {
+inline void S2SClusterUpdateToMasterReq::set_port(::google::protobuf::uint32 value) {
   
   port_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.port)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.port)
 }
 
 // uint32 count = 6;
-inline void S2SClusterUpdateReq::clear_count() {
+inline void S2SClusterUpdateToMasterReq::clear_count() {
   count_ = 0u;
 }
-inline ::google::protobuf::uint32 S2SClusterUpdateReq::count() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateReq.count)
+inline ::google::protobuf::uint32 S2SClusterUpdateToMasterReq::count() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterUpdateToMasterReq.count)
   return count_;
 }
-inline void S2SClusterUpdateReq::set_count(::google::protobuf::uint32 value) {
+inline void S2SClusterUpdateToMasterReq::set_count(::google::protobuf::uint32 value) {
   
   count_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateReq.count)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterUpdateToMasterReq.count)
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterAuthReq
+// S2SClusterAuthToMasterReq
 
-// bytes clustertype = 1;
-inline void S2SClusterAuthReq::clear_clustertype() {
-  clustertype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SClusterAuthReq::clustertype() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthReq.clustertype)
-  return clustertype_.GetNoArena();
-}
-inline void S2SClusterAuthReq::set_clustertype(const ::std::string& value) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthReq.clustertype)
-}
-#if LANG_CXX11
-inline void S2SClusterAuthReq::set_clustertype(::std::string&& value) {
-  
-  clustertype_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthReq.clustertype)
-}
-#endif
-inline void S2SClusterAuthReq::set_clustertype(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthReq.clustertype)
-}
-inline void S2SClusterAuthReq::set_clustertype(const void* value, size_t size) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthReq.clustertype)
-}
-inline ::std::string* S2SClusterAuthReq::mutable_clustertype() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthReq.clustertype)
-  return clustertype_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SClusterAuthReq::release_clustertype() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthReq.clustertype)
-  
-  return clustertype_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SClusterAuthReq::set_allocated_clustertype(::std::string* clustertype) {
-  if (clustertype != NULL) {
-    
-  } else {
-    
-  }
-  clustertype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustertype);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthReq.clustertype)
-}
-
-// bytes clusterkey = 2;
-inline void S2SClusterAuthReq::clear_clusterkey() {
+// bytes clusterkey = 1;
+inline void S2SClusterAuthToMasterReq::clear_clusterkey() {
   clusterkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterAuthReq::clusterkey() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthReq.clusterkey)
+inline const ::std::string& S2SClusterAuthToMasterReq::clusterkey() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
   return clusterkey_.GetNoArena();
 }
-inline void S2SClusterAuthReq::set_clusterkey(const ::std::string& value) {
+inline void S2SClusterAuthToMasterReq::set_clusterkey(const ::std::string& value) {
   
   clusterkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
 }
 #if LANG_CXX11
-inline void S2SClusterAuthReq::set_clusterkey(::std::string&& value) {
+inline void S2SClusterAuthToMasterReq::set_clusterkey(::std::string&& value) {
   
   clusterkey_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
 }
 #endif
-inline void S2SClusterAuthReq::set_clusterkey(const char* value) {
+inline void S2SClusterAuthToMasterReq::set_clusterkey(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   clusterkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
 }
-inline void S2SClusterAuthReq::set_clusterkey(const void* value, size_t size) {
+inline void S2SClusterAuthToMasterReq::set_clusterkey(const void* value, size_t size) {
   
   clusterkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
 }
-inline ::std::string* S2SClusterAuthReq::mutable_clusterkey() {
+inline ::std::string* S2SClusterAuthToMasterReq::mutable_clusterkey() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
   return clusterkey_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterAuthReq::release_clusterkey() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthReq.clusterkey)
+inline ::std::string* S2SClusterAuthToMasterReq::release_clusterkey() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
   
   return clusterkey_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterAuthReq::set_allocated_clusterkey(::std::string* clusterkey) {
+inline void S2SClusterAuthToMasterReq::set_allocated_clusterkey(::std::string* clusterkey) {
   if (clusterkey != NULL) {
     
   } else {
     
   }
   clusterkey_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clusterkey);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthReq.clusterkey)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToMasterReq.clusterkey)
 }
 
-// -------------------------------------------------------------------
-
-// S2SClusterAuthAck
-
-// bytes clustertype = 1;
-inline void S2SClusterAuthAck::clear_clustertype() {
-  clustertype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes clustername = 2;
+inline void S2SClusterAuthToMasterReq::clear_clustername() {
+  clustername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterAuthAck::clustertype() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.clustertype)
-  return clustertype_.GetNoArena();
+inline const ::std::string& S2SClusterAuthToMasterReq::clustername() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clustername)
+  return clustername_.GetNoArena();
 }
-inline void S2SClusterAuthAck::set_clustertype(const ::std::string& value) {
+inline void S2SClusterAuthToMasterReq::set_clustername(const ::std::string& value) {
   
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.clustertype)
+  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clustername)
 }
 #if LANG_CXX11
-inline void S2SClusterAuthAck::set_clustertype(::std::string&& value) {
+inline void S2SClusterAuthToMasterReq::set_clustername(::std::string&& value) {
   
-  clustertype_.SetNoArena(
+  clustername_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthAck.clustertype)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToMasterReq.clustername)
 }
 #endif
-inline void S2SClusterAuthAck::set_clustertype(const char* value) {
+inline void S2SClusterAuthToMasterReq::set_clustername(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthAck.clustertype)
+  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToMasterReq.clustername)
 }
-inline void S2SClusterAuthAck::set_clustertype(const void* value, size_t size) {
+inline void S2SClusterAuthToMasterReq::set_clustername(const void* value, size_t size) {
   
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  clustername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthAck.clustertype)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToMasterReq.clustername)
 }
-inline ::std::string* S2SClusterAuthAck::mutable_clustertype() {
+inline ::std::string* S2SClusterAuthToMasterReq::mutable_clustername() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthAck.clustertype)
-  return clustertype_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToMasterReq.clustername)
+  return clustername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterAuthAck::release_clustertype() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthAck.clustertype)
+inline ::std::string* S2SClusterAuthToMasterReq::release_clustername() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToMasterReq.clustername)
   
-  return clustertype_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return clustername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterAuthAck::set_allocated_clustertype(::std::string* clustertype) {
-  if (clustertype != NULL) {
+inline void S2SClusterAuthToMasterReq::set_allocated_clustername(::std::string* clustername) {
+  if (clustername != NULL) {
     
   } else {
     
   }
-  clustertype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustertype);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthAck.clustertype)
+  clustername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustername);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToMasterReq.clustername)
 }
 
-// bytes token = 2;
-inline void S2SClusterAuthAck::clear_token() {
+// uint64 clientid = 3;
+inline void S2SClusterAuthToMasterReq::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SClusterAuthToMasterReq::clientid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToMasterReq.clientid)
+  return clientid_;
+}
+inline void S2SClusterAuthToMasterReq::set_clientid(::google::protobuf::uint64 value) {
+  
+  clientid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToMasterReq.clientid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SClusterAuthToClientAck
+
+// bytes token = 1;
+inline void S2SClusterAuthToClientAck::clear_token() {
   token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterAuthAck::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.token)
+inline const ::std::string& S2SClusterAuthToClientAck::token() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.token)
   return token_.GetNoArena();
 }
-inline void S2SClusterAuthAck::set_token(const ::std::string& value) {
+inline void S2SClusterAuthToClientAck::set_token(const ::std::string& value) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.token)
 }
 #if LANG_CXX11
-inline void S2SClusterAuthAck::set_token(::std::string&& value) {
+inline void S2SClusterAuthToClientAck::set_token(::std::string&& value) {
   
   token_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToClientAck.token)
 }
 #endif
-inline void S2SClusterAuthAck::set_token(const char* value) {
+inline void S2SClusterAuthToClientAck::set_token(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToClientAck.token)
 }
-inline void S2SClusterAuthAck::set_token(const void* value, size_t size) {
+inline void S2SClusterAuthToClientAck::set_token(const void* value, size_t size) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToClientAck.token)
 }
-inline ::std::string* S2SClusterAuthAck::mutable_token() {
+inline ::std::string* S2SClusterAuthToClientAck::mutable_token() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToClientAck.token)
   return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterAuthAck::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthAck.token)
+inline ::std::string* S2SClusterAuthToClientAck::release_token() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToClientAck.token)
   
   return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterAuthAck::set_allocated_token(::std::string* token) {
+inline void S2SClusterAuthToClientAck::set_allocated_token(::std::string* token) {
   if (token != NULL) {
     
   } else {
     
   }
   token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthAck.token)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToClientAck.token)
 }
 
-// bytes type = 3;
-inline void S2SClusterAuthAck::clear_type() {
-  type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SClusterAuthAck::type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.type)
-  return type_.GetNoArena();
-}
-inline void S2SClusterAuthAck::set_type(const ::std::string& value) {
-  
-  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.type)
-}
-#if LANG_CXX11
-inline void S2SClusterAuthAck::set_type(::std::string&& value) {
-  
-  type_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthAck.type)
-}
-#endif
-inline void S2SClusterAuthAck::set_type(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthAck.type)
-}
-inline void S2SClusterAuthAck::set_type(const void* value, size_t size) {
-  
-  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthAck.type)
-}
-inline ::std::string* S2SClusterAuthAck::mutable_type() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthAck.type)
-  return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SClusterAuthAck::release_type() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthAck.type)
-  
-  return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SClusterAuthAck::set_allocated_type(::std::string* type) {
-  if (type != NULL) {
-    
-  } else {
-    
-  }
-  type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthAck.type)
-}
-
-// uint64 id = 4;
-inline void S2SClusterAuthAck::clear_id() {
-  id_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SClusterAuthAck::id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.id)
-  return id_;
-}
-inline void S2SClusterAuthAck::set_id(::google::protobuf::uint64 value) {
-  
-  id_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.id)
-}
-
-// bytes name = 5;
-inline void S2SClusterAuthAck::clear_name() {
+// bytes name = 2;
+inline void S2SClusterAuthToClientAck::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterAuthAck::name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.name)
+inline const ::std::string& S2SClusterAuthToClientAck::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.name)
   return name_.GetNoArena();
 }
-inline void S2SClusterAuthAck::set_name(const ::std::string& value) {
+inline void S2SClusterAuthToClientAck::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.name)
 }
 #if LANG_CXX11
-inline void S2SClusterAuthAck::set_name(::std::string&& value) {
+inline void S2SClusterAuthToClientAck::set_name(::std::string&& value) {
   
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToClientAck.name)
 }
 #endif
-inline void S2SClusterAuthAck::set_name(const char* value) {
+inline void S2SClusterAuthToClientAck::set_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToClientAck.name)
 }
-inline void S2SClusterAuthAck::set_name(const void* value, size_t size) {
+inline void S2SClusterAuthToClientAck::set_name(const void* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToClientAck.name)
 }
-inline ::std::string* S2SClusterAuthAck::mutable_name() {
+inline ::std::string* S2SClusterAuthToClientAck::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToClientAck.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterAuthAck::release_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthAck.name)
+inline ::std::string* S2SClusterAuthToClientAck::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToClientAck.name)
   
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterAuthAck::set_allocated_name(::std::string* name) {
+inline void S2SClusterAuthToClientAck::set_allocated_name(::std::string* name) {
   if (name != NULL) {
     
   } else {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthAck.name)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToClientAck.name)
 }
 
-// bytes ip = 6;
-inline void S2SClusterAuthAck::clear_ip() {
-  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes type = 3;
+inline void S2SClusterAuthToClientAck::clear_type() {
+  type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterAuthAck::ip() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.ip)
-  return ip_.GetNoArena();
+inline const ::std::string& S2SClusterAuthToClientAck::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.type)
+  return type_.GetNoArena();
 }
-inline void S2SClusterAuthAck::set_ip(const ::std::string& value) {
+inline void S2SClusterAuthToClientAck::set_type(const ::std::string& value) {
   
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.ip)
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.type)
 }
 #if LANG_CXX11
-inline void S2SClusterAuthAck::set_ip(::std::string&& value) {
+inline void S2SClusterAuthToClientAck::set_type(::std::string&& value) {
+  
+  type_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToClientAck.type)
+}
+#endif
+inline void S2SClusterAuthToClientAck::set_type(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToClientAck.type)
+}
+inline void S2SClusterAuthToClientAck::set_type(const void* value, size_t size) {
+  
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToClientAck.type)
+}
+inline ::std::string* S2SClusterAuthToClientAck::mutable_type() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToClientAck.type)
+  return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SClusterAuthToClientAck::release_type() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToClientAck.type)
+  
+  return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SClusterAuthToClientAck::set_allocated_type(::std::string* type) {
+  if (type != NULL) {
+    
+  } else {
+    
+  }
+  type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToClientAck.type)
+}
+
+// uint64 id = 4;
+inline void S2SClusterAuthToClientAck::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SClusterAuthToClientAck::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.id)
+  return id_;
+}
+inline void S2SClusterAuthToClientAck::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.id)
+}
+
+// bytes ip = 5;
+inline void S2SClusterAuthToClientAck::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SClusterAuthToClientAck::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.ip)
+  return ip_.GetNoArena();
+}
+inline void S2SClusterAuthToClientAck::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.ip)
+}
+#if LANG_CXX11
+inline void S2SClusterAuthToClientAck::set_ip(::std::string&& value) {
   
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthAck.ip)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterAuthToClientAck.ip)
 }
 #endif
-inline void S2SClusterAuthAck::set_ip(const char* value) {
+inline void S2SClusterAuthToClientAck::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthAck.ip)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterAuthToClientAck.ip)
 }
-inline void S2SClusterAuthAck::set_ip(const void* value, size_t size) {
+inline void S2SClusterAuthToClientAck::set_ip(const void* value, size_t size) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthAck.ip)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterAuthToClientAck.ip)
 }
-inline ::std::string* S2SClusterAuthAck::mutable_ip() {
+inline ::std::string* S2SClusterAuthToClientAck::mutable_ip() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthAck.ip)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterAuthToClientAck.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterAuthAck::release_ip() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthAck.ip)
+inline ::std::string* S2SClusterAuthToClientAck::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterAuthToClientAck.ip)
   
   return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterAuthAck::set_allocated_ip(::std::string* ip) {
+inline void S2SClusterAuthToClientAck::set_allocated_ip(::std::string* ip) {
   if (ip != NULL) {
     
   } else {
     
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthAck.ip)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterAuthToClientAck.ip)
 }
 
-// uint32 port = 7;
-inline void S2SClusterAuthAck::clear_port() {
+// uint32 port = 6;
+inline void S2SClusterAuthToClientAck::clear_port() {
   port_ = 0u;
 }
-inline ::google::protobuf::uint32 S2SClusterAuthAck::port() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthAck.port)
+inline ::google::protobuf::uint32 S2SClusterAuthToClientAck::port() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterAuthToClientAck.port)
   return port_;
 }
-inline void S2SClusterAuthAck::set_port(::google::protobuf::uint32 value) {
+inline void S2SClusterAuthToClientAck::set_port(::google::protobuf::uint32 value) {
   
   port_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthAck.port)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterAuthToClientAck.port)
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterTokenReq
+// S2SClusterTokenToProxyReq
 
 // bytes token = 1;
-inline void S2SClusterTokenReq::clear_token() {
+inline void S2SClusterTokenToProxyReq::clear_token() {
   token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterTokenReq::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterTokenReq.token)
+inline const ::std::string& S2SClusterTokenToProxyReq::token() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterTokenToProxyReq.token)
   return token_.GetNoArena();
 }
-inline void S2SClusterTokenReq::set_token(const ::std::string& value) {
+inline void S2SClusterTokenToProxyReq::set_token(const ::std::string& value) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterTokenToProxyReq.token)
 }
 #if LANG_CXX11
-inline void S2SClusterTokenReq::set_token(::std::string&& value) {
+inline void S2SClusterTokenToProxyReq::set_token(::std::string&& value) {
   
   token_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterTokenToProxyReq.token)
 }
 #endif
-inline void S2SClusterTokenReq::set_token(const char* value) {
+inline void S2SClusterTokenToProxyReq::set_token(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterTokenToProxyReq.token)
 }
-inline void S2SClusterTokenReq::set_token(const void* value, size_t size) {
+inline void S2SClusterTokenToProxyReq::set_token(const void* value, size_t size) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterTokenToProxyReq.token)
 }
-inline ::std::string* S2SClusterTokenReq::mutable_token() {
+inline ::std::string* S2SClusterTokenToProxyReq::mutable_token() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterTokenToProxyReq.token)
   return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterTokenReq::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterTokenReq.token)
+inline ::std::string* S2SClusterTokenToProxyReq::release_token() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterTokenToProxyReq.token)
   
   return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterTokenReq::set_allocated_token(::std::string* token) {
+inline void S2SClusterTokenToProxyReq::set_allocated_token(::std::string* token) {
   if (token != NULL) {
     
   } else {
     
   }
   token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterTokenReq.token)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterTokenToProxyReq.token)
 }
 
-// uint64 gateid = 2;
-inline void S2SClusterTokenReq::clear_gateid() {
-  gateid_ = GOOGLE_ULONGLONG(0);
+// uint64 clientid = 2;
+inline void S2SClusterTokenToProxyReq::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SClusterTokenReq::gateid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterTokenReq.gateid)
-  return gateid_;
+inline ::google::protobuf::uint64 S2SClusterTokenToProxyReq::clientid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterTokenToProxyReq.clientid)
+  return clientid_;
 }
-inline void S2SClusterTokenReq::set_gateid(::google::protobuf::uint64 value) {
+inline void S2SClusterTokenToProxyReq::set_clientid(::google::protobuf::uint64 value) {
   
-  gateid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterTokenReq.gateid)
+  clientid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterTokenToProxyReq.clientid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterVerifyReq
+// S2SClusterVerifyToProxyReq
 
-// bytes clustertype = 1;
-inline void S2SClusterVerifyReq::clear_clustertype() {
-  clustertype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SClusterVerifyReq::clustertype() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyReq.clustertype)
-  return clustertype_.GetNoArena();
-}
-inline void S2SClusterVerifyReq::set_clustertype(const ::std::string& value) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyReq.clustertype)
-}
-#if LANG_CXX11
-inline void S2SClusterVerifyReq::set_clustertype(::std::string&& value) {
-  
-  clustertype_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterVerifyReq.clustertype)
-}
-#endif
-inline void S2SClusterVerifyReq::set_clustertype(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterVerifyReq.clustertype)
-}
-inline void S2SClusterVerifyReq::set_clustertype(const void* value, size_t size) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterVerifyReq.clustertype)
-}
-inline ::std::string* S2SClusterVerifyReq::mutable_clustertype() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterVerifyReq.clustertype)
-  return clustertype_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SClusterVerifyReq::release_clustertype() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterVerifyReq.clustertype)
-  
-  return clustertype_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SClusterVerifyReq::set_allocated_clustertype(::std::string* clustertype) {
-  if (clustertype != NULL) {
-    
-  } else {
-    
-  }
-  clustertype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustertype);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterVerifyReq.clustertype)
-}
-
-// bytes token = 2;
-inline void S2SClusterVerifyReq::clear_token() {
+// bytes token = 1;
+inline void S2SClusterVerifyToProxyReq::clear_token() {
   token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SClusterVerifyReq::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyReq.token)
+inline const ::std::string& S2SClusterVerifyToProxyReq::token() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyToProxyReq.token)
   return token_.GetNoArena();
 }
-inline void S2SClusterVerifyReq::set_token(const ::std::string& value) {
+inline void S2SClusterVerifyToProxyReq::set_token(const ::std::string& value) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyReq.token)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyToProxyReq.token)
 }
 #if LANG_CXX11
-inline void S2SClusterVerifyReq::set_token(::std::string&& value) {
+inline void S2SClusterVerifyToProxyReq::set_token(::std::string&& value) {
   
   token_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterVerifyReq.token)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterVerifyToProxyReq.token)
 }
 #endif
-inline void S2SClusterVerifyReq::set_token(const char* value) {
+inline void S2SClusterVerifyToProxyReq::set_token(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterVerifyReq.token)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterVerifyToProxyReq.token)
 }
-inline void S2SClusterVerifyReq::set_token(const void* value, size_t size) {
+inline void S2SClusterVerifyToProxyReq::set_token(const void* value, size_t size) {
   
   token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterVerifyReq.token)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterVerifyToProxyReq.token)
 }
-inline ::std::string* S2SClusterVerifyReq::mutable_token() {
+inline ::std::string* S2SClusterVerifyToProxyReq::mutable_token() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterVerifyReq.token)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterVerifyToProxyReq.token)
   return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SClusterVerifyReq::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterVerifyReq.token)
+inline ::std::string* S2SClusterVerifyToProxyReq::release_token() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterVerifyToProxyReq.token)
   
   return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SClusterVerifyReq::set_allocated_token(::std::string* token) {
+inline void S2SClusterVerifyToProxyReq::set_allocated_token(::std::string* token) {
   if (token != NULL) {
     
   } else {
     
   }
   token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterVerifyReq.token)
-}
-
-// uint64 serverid = 3;
-inline void S2SClusterVerifyReq::clear_serverid() {
-  serverid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SClusterVerifyReq::serverid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyReq.serverid)
-  return serverid_;
-}
-inline void S2SClusterVerifyReq::set_serverid(::google::protobuf::uint64 value) {
-  
-  serverid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyReq.serverid)
-}
-
-// -------------------------------------------------------------------
-
-// S2SClusterVerifyAck
-
-// bytes clustertype = 1;
-inline void S2SClusterVerifyAck::clear_clustertype() {
-  clustertype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SClusterVerifyAck::clustertype() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyAck.clustertype)
-  return clustertype_.GetNoArena();
-}
-inline void S2SClusterVerifyAck::set_clustertype(const ::std::string& value) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyAck.clustertype)
-}
-#if LANG_CXX11
-inline void S2SClusterVerifyAck::set_clustertype(::std::string&& value) {
-  
-  clustertype_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SClusterVerifyAck.clustertype)
-}
-#endif
-inline void S2SClusterVerifyAck::set_clustertype(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SClusterVerifyAck.clustertype)
-}
-inline void S2SClusterVerifyAck::set_clustertype(const void* value, size_t size) {
-  
-  clustertype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SClusterVerifyAck.clustertype)
-}
-inline ::std::string* S2SClusterVerifyAck::mutable_clustertype() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SClusterVerifyAck.clustertype)
-  return clustertype_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SClusterVerifyAck::release_clustertype() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SClusterVerifyAck.clustertype)
-  
-  return clustertype_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SClusterVerifyAck::set_allocated_clustertype(::std::string* clustertype) {
-  if (clustertype != NULL) {
-    
-  } else {
-    
-  }
-  clustertype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), clustertype);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterVerifyAck.clustertype)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SClusterVerifyToProxyReq.token)
 }
 
 // uint64 serverid = 2;
-inline void S2SClusterVerifyAck::clear_serverid() {
+inline void S2SClusterVerifyToProxyReq::clear_serverid() {
   serverid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SClusterVerifyAck::serverid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyAck.serverid)
+inline ::google::protobuf::uint64 S2SClusterVerifyToProxyReq::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyToProxyReq.serverid)
   return serverid_;
 }
-inline void S2SClusterVerifyAck::set_serverid(::google::protobuf::uint64 value) {
+inline void S2SClusterVerifyToProxyReq::set_serverid(::google::protobuf::uint64 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyAck.serverid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyToProxyReq.serverid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterClientDiscoverReq
+// S2SClusterVerifyToClientAck
+
+// uint64 serverid = 1;
+inline void S2SClusterVerifyToClientAck::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SClusterVerifyToClientAck::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterVerifyToClientAck.serverid)
+  return serverid_;
+}
+inline void S2SClusterVerifyToClientAck::set_serverid(::google::protobuf::uint64 value) {
+  
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterVerifyToClientAck.serverid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SClusterClientDiscoverToShardReq
 
 // repeated uint64 clientid = 1;
-inline int S2SClusterClientDiscoverReq::clientid_size() const {
+inline int S2SClusterClientDiscoverToShardReq::clientid_size() const {
   return clientid_.size();
 }
-inline void S2SClusterClientDiscoverReq::clear_clientid() {
+inline void S2SClusterClientDiscoverToShardReq::clear_clientid() {
   clientid_.Clear();
 }
-inline ::google::protobuf::uint64 S2SClusterClientDiscoverReq::clientid(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterClientDiscoverReq.clientid)
+inline ::google::protobuf::uint64 S2SClusterClientDiscoverToShardReq::clientid(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterClientDiscoverToShardReq.clientid)
   return clientid_.Get(index);
 }
-inline void S2SClusterClientDiscoverReq::set_clientid(int index, ::google::protobuf::uint64 value) {
+inline void S2SClusterClientDiscoverToShardReq::set_clientid(int index, ::google::protobuf::uint64 value) {
   clientid_.Set(index, value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterClientDiscoverReq.clientid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterClientDiscoverToShardReq.clientid)
 }
-inline void S2SClusterClientDiscoverReq::add_clientid(::google::protobuf::uint64 value) {
+inline void S2SClusterClientDiscoverToShardReq::add_clientid(::google::protobuf::uint64 value) {
   clientid_.Add(value);
-  // @@protoc_insertion_point(field_add:KFMsg.S2SClusterClientDiscoverReq.clientid)
+  // @@protoc_insertion_point(field_add:KFMsg.S2SClusterClientDiscoverToShardReq.clientid)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
-S2SClusterClientDiscoverReq::clientid() const {
-  // @@protoc_insertion_point(field_list:KFMsg.S2SClusterClientDiscoverReq.clientid)
+S2SClusterClientDiscoverToShardReq::clientid() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SClusterClientDiscoverToShardReq.clientid)
   return clientid_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
-S2SClusterClientDiscoverReq::mutable_clientid() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SClusterClientDiscoverReq.clientid)
+S2SClusterClientDiscoverToShardReq::mutable_clientid() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SClusterClientDiscoverToShardReq.clientid)
   return &clientid_;
 }
 
 // -------------------------------------------------------------------
 
-// S2SClusterClientLostReq
+// S2SClusterClientLostToShardReq
 
-// repeated uint64 clientid = 1;
-inline int S2SClusterClientLostReq::clientid_size() const {
-  return clientid_.size();
+// uint64 clientid = 1;
+inline void S2SClusterClientLostToShardReq::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
 }
-inline void S2SClusterClientLostReq::clear_clientid() {
-  clientid_.Clear();
-}
-inline ::google::protobuf::uint64 S2SClusterClientLostReq::clientid(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterClientLostReq.clientid)
-  return clientid_.Get(index);
-}
-inline void S2SClusterClientLostReq::set_clientid(int index, ::google::protobuf::uint64 value) {
-  clientid_.Set(index, value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterClientLostReq.clientid)
-}
-inline void S2SClusterClientLostReq::add_clientid(::google::protobuf::uint64 value) {
-  clientid_.Add(value);
-  // @@protoc_insertion_point(field_add:KFMsg.S2SClusterClientLostReq.clientid)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
-S2SClusterClientLostReq::clientid() const {
-  // @@protoc_insertion_point(field_list:KFMsg.S2SClusterClientLostReq.clientid)
+inline ::google::protobuf::uint64 S2SClusterClientLostToShardReq::clientid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SClusterClientLostToShardReq.clientid)
   return clientid_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
-S2SClusterClientLostReq::mutable_clientid() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SClusterClientLostReq.clientid)
-  return &clientid_;
+inline void S2SClusterClientLostToShardReq::set_clientid(::google::protobuf::uint64 value) {
+  
+  clientid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SClusterClientLostToShardReq.clientid)
 }
 
 // -------------------------------------------------------------------

@@ -21,22 +21,24 @@ enum FrameProtocol
 	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// 更新登录数量到目录服务器
 	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// 删除登录数据
 
-	S2S_CLUSTER_REGISTER_REQ = 10101;			// 注册到服务器集群
-	S2S_CLUSTER_UPDATE_REQ = 10102;				// 更新集群连接器连接数量
-	S2S_CLUSTER_AUTH_REQ = 10103;				// 集群登录认证
-	S2S_CLUSTER_AUTH_ACK = 10104;				// 集群登录认证
-	S2S_CLUSTER_TOKEN_REQ = 10105;				// 集群Token
-	S2S_CLUSTER_VERIFY_REQ = 10106;				// 验证token请求
-	S2S_CLUSTER_VERIFY_ACK = 10107;				// 验证token回馈
-	S2S_CLUSTER_CLIENT_DISCOVER_REQ = 10108;	// 发现客户端列表
-	S2S_ADD_OBJECT_TO_PROXY_REQ = 10109;		// 添加对象映射
+	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101;			// 注册到服务器集群
+	S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10102;			// 更新集群连接器连接数量
+	S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10103;				// 集群登录认证
+	S2S_CLUSTER_AUTH_TO_CLIENT_ACK = 10104;				// 集群登录认证
+	S2S_CLUSTER_TOKEN_TO_PROXY_REQ = 10105;				// 集群Token
+	S2S_CLUSTER_VERIFY_TO_PROXY_REQ = 10106;			// 验证token请求
+	S2S_CLUSTER_VERIFY_TO_CLIENT_ACK = 10107;			// 验证token回馈
+	S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ = 10108;	// 发现客户端列表
+	S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ = 10109;		// 丢失客户端列表
+
+	
 	S2S_REMOVE_OBJECT_TO_PROXY_REQ = 10110;		// 删除对象映射
 	S2S_ALLOC_OBJECT_TO_MASTER_REQ = 10112;		// 请求分配shard
 	S2S_ALLOC_OBJECT_TO_PROXY_ACK = 10113;		// 请求分配shard
 	S2S_ALLOC_OBJECT_TO_SHARD_ACK = 10114;		// 请求分配shard
 	S2S_SEND_TO_STATIC_OBJECT_REQ = 10115;		// 发送到静态对象
 	S2S_SEND_TO_DYNAMIC_OBJECT_REQ = 10116;		// 发送到动态对象
-	S2S_CLUSTER_CLIENT_LOST_REQ = 10117;		// 丢失客户端列表
+	S2S_ADD_OBJECT_TO_PROXY_REQ = 10117;		// 添加对象映射
 
 
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10301;	// 注册Agent到Services
@@ -173,8 +175,8 @@ message S2SRemoveOnlineToDirReq
 
 
 // 集群注册
-// S2S_CLUSTER_REGISTER_REQ
-message S2SClusterRegisterReq
+// S2S_CLUSTER_REGISTER_TO_MASTER_REQ
+message S2SClusterRegisterToMasterReq
 {
 	bytes type = 1;
 	uint64 id = 2;
@@ -184,8 +186,8 @@ message S2SClusterRegisterReq
 }
 
 // 更新集群连接器连接数量
-// S2S_CLUSTER_UPDATE_REQ
-message S2SClusterUpdateReq
+// S2S_CLUSTER_UPDATE_TO_MASTER_REQ
+message S2SClusterUpdateToMasterReq
 {
 	bytes type = 1;
 	uint64 id = 2;
@@ -196,63 +198,60 @@ message S2SClusterUpdateReq
 }
 
 // 集群登录认证
-// S2S_CLUSTER_AUTH_REQ
-message S2SClusterAuthReq
+// S2S_CLUSTER_AUTH_TO_MASTER_REQ
+message S2SClusterAuthToMasterReq
 {
-	bytes clustertype = 1;
+	uint64 clientid = 1;
 	bytes clusterkey = 2;
 }
 
 // 集群登录认证回馈
-// S2S_CLUSTER_AUTH_ACK
-message S2SClusterAuthAck
+// S2S_CLUSTER_AUTH_TO_CLIENT_ACK
+message S2SClusterAuthToClientAck
 {
-	bytes clustertype = 1;
-	bytes token = 2;
+	bytes token = 1;
+	bytes name = 2;
 	bytes type = 3;
 	uint64 id = 4;
-	bytes name = 5;
-	bytes ip = 6;
-	uint32 port = 7;	
+	bytes ip = 5;
+	uint32 port = 6;	
 }
 
 // 更新token信息
-// S2S_CLUSTER_TOKEN_REQ
-message S2SClusterTokenReq
+// S2S_CLUSTER_TOKEN_TO_PROXY_REQ
+message S2SClusterTokenToProxyReq
 {
 	bytes token = 1;
-	uint64 gateid = 2;
+	uint64 clientid = 2;
 }
 
 // 验证token
-// S2S_CLUSTER_VERIFY_REQ
-message S2SClusterVerifyReq
+// S2S_CLUSTER_VERIFY_TO_PROXY_REQ
+message S2SClusterVerifyToProxyReq
 {
-	bytes clustertype = 1;
-	bytes token = 2;
-	uint64 serverid = 3;
+	bytes token = 1;
+	uint64 serverid = 2;
 }
 
 // 认证回馈
-// S2S_CLUSTER_VERIFY_ACK
-message S2SClusterVerifyAck
+// S2S_CLUSTER_VERIFY_TO_CLIENT_ACK
+message S2SClusterVerifyToClientAck
 {
-	bytes clustertype = 1;	// 集群类型
-	uint64 serverid = 2;		// =0 认证不成功, 重新连接集群master地址
+	uint64 serverid = 1;	// =0 认证不成功, 重新连接集群master地址
 }
 
 // 发现客户端列表
-// S2S_CLUSTER_CLIENT_DISCOVER_REQ
-message S2SClusterClientDiscoverReq
+// S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ
+message S2SClusterClientDiscoverToShardReq
 {
 	repeated uint64 clientid = 1;	// 客户端列表
 }
 
 // 丢失客户端列表
 // S2S_CLUSTER_CLIENT_LOST_REQ
-message S2SClusterClientLostReq
+message S2SClusterClientLostToShardReq
 {
-	repeated uint64 clientid = 1;	// 客户端列表
+	uint64 clientid = 1;	// 客户端列表
 }
 
 // 注册对象映射

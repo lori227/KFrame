@@ -36,15 +36,15 @@ namespace KFrame
 
         // 删除定时器
         template< class T >
-        bool UnRegisterTimer( T* object )
+        void UnRegisterTimer( T* object )
         {
-            return RemoveTimer( typeid( T ).name() );
+            RemoveTimer( typeid( T ).name() );
         }
 
         template< class T >
-        bool UnRegisterTimer( T* object, uint64 objectid )
+        void UnRegisterTimer( T* object, uint64 objectid )
         {
-            return RemoveTimer( typeid( T ).name(), objectid );
+            RemoveTimer( typeid( T ).name(), objectid );
         }
 
         // 获得定时器剩余时间
@@ -56,8 +56,8 @@ namespace KFrame
         virtual void AddLimitTimer( const std::string& module, uint64 objectid, uint32 intervaltime, uint32 count, KFTimerFunction& function ) = 0;
         virtual void AddDelayTimer( const std::string& module, uint64 objectid, uint32 intervaltime, KFTimerFunction& function ) = 0;
 
-        virtual bool RemoveTimer( const std::string& module ) = 0;
-        virtual bool RemoveTimer( const std::string& module, uint64 objectid ) = 0;
+        virtual void RemoveTimer( const std::string& module ) = 0;
+        virtual void RemoveTimer( const std::string& module, uint64 objectid ) = 0;
 
     };
 

@@ -5,36 +5,30 @@
 
 namespace KFrame
 {
-    typedef std::function< void( uint64 serverid ) > KFClusterConnectionFunction;
+    typedef std::function< void( uint64 ) > KFClusterConnectionFunction;
     class KFClusterClientInterface : public KFModule
     {
     public:
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册回调
         template< class T >
-        void RegisterConnectionFunction( const std::string& name, T* object, void ( T::*handle )( uint64 ) )
+        void RegisterConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
         {
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddConnectionFunction( name, function );
+            AddConnectionFunction( typid( T ).name(), function );
         }
 
-        void UnRegisterConnectionFunction( const std::string& name )
+        // 卸载回调
+        template< class T >
+        void UnRegisterConnectionFunction( T* object )
         {
-            RemoveConnectionFunction( name );
+            RemoveConnectionFunction( typid( T ).name() );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 发送消息到proxy
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
 
         // 发送消息
-        virtual bool SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendToShard( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message ) = 0;
-
-        // 发送到静态对象所在的分片服务器
-        virtual bool SendToStaticObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
-
-        // 发送到动态对象所在的分片服务器
-        virtual bool SendToDynamicObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
 
     protected:
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;

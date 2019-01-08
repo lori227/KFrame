@@ -1,255 +1,158 @@
 ﻿#include "KFClusterMasterModule.h"
-#include "KFClusterMasterManage.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFClusterMasterConfig.h"
 
 namespace KFrame
 {
-    void KFClusterMasterModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( _kf_cluster_master_config, true );
-    }
-
     void KFClusterMasterModule::BeforeRun()
     {
         __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterMasterModule::OnServerLostClusterProxy );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ, &KFClusterMasterModule::HandleClusterRegisterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_REQ, &KFClusterMasterModule::HandleClusterUpdateReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_REQ, &KFClusterMasterModule::HandleClusterAuthReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_MASTER_REQ, &KFClusterMasterModule::HandleAllocObjectToMasterReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterRegisterToMasterReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterUpdateToMasterReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterAuthToMasterReq );
     }
 
     void KFClusterMasterModule::BeforeShut()
     {
         __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __KF_REMOVE_CONFIG__( _kf_cluster_master_config );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ALLOC_OBJECT_TO_MASTER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_UPDATE_TO_MASTER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ );
     }
 
-    void KFClusterMasterModule::OnceRun()
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFClusterMasterModule::AddProxyServer( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port, uint32 clientcount )
     {
-        auto kfsetting = _kf_cluster_master_config->FindClusterSetting( KFGlobal::Instance()->_app_name );
-        if ( kfsetting != nullptr )
+        auto kfgate = _kf_proxy_list.Find( id );
+        if ( kfgate == nullptr )
         {
-            _cluster_key = kfsetting->_key;
+            kfgate = __KF_NEW__( KFProxyData );
+            kfgate->_id = id;
+            kfgate->_type = type;
+            kfgate->_name = name;
+            kfgate->_ip = ip;
+            kfgate->_port = port;
+            _kf_proxy_list.Insert( id, kfgate );
         }
+
+        kfgate->_client_count = clientcount;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_SERVER_LOST_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
+    void KFClusterMasterModule::UpdateProxyServer( uint64 handleid, uint32 clientcount )
     {
-        KFProxyData* kfgate = _kf_proxy_manage->FindProxyServer( handleid );
+        auto kfgate = _kf_proxy_list.Find( handleid );
         if ( kfgate == nullptr )
         {
             return;
         }
 
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost!", kfgate->_name, kfgate->_type, KFAppID::ToString( kfgate->_id ), kfgate->_ip, kfgate->_port );
-
-        _kf_proxy_manage->RemoveProxyServer( handleid );
+        kfgate->_client_count = clientcount;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterReq )
+    void KFClusterMasterModule::RemoveProxyServer( uint64 handleid )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterRegisterReq );
+        _kf_proxy_list.Remove( handleid );
+    }
 
-        SendAllocShardToProxy( kfmsg.id() );
+    KFProxyData* KFClusterMasterModule::FindProxyServer( uint64 handleid )
+    {
+        return _kf_proxy_list.Find( handleid );
+    }
+
+    KFProxyData* KFClusterMasterModule::SelectProxyServer()
+    {
+        auto maxclientcount = __MAX_UINT32__;
+        KFProxyData* kfproxydata = nullptr;
+        for ( auto& iter : _kf_proxy_list._objects )
+        {
+            auto temp = iter.second;
+            if ( temp->_client_count < maxclientcount )
+            {
+                maxclientcount = temp->_client_count;
+                kfproxydata = temp;
+            }
+        }
+
+        // 先加一个连接数量, 避免同一时间都选择同有一个服务器
+        if ( kfproxydata != nullptr )
+        {
+            ++kfproxydata->_client_count;
+        }
+
+        return kfproxydata;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_SERVER_LOST_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
+    {
+        __LOG_ERROR__( "[{}:{}:{}] lost!", handlename, handletype, KFAppID::ToString( handleid ) );
+
+        if ( handlename == __KF_STRING__( proxy ) )
+        {
+            RemoveProxyServer( handleid );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterToMasterReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SClusterRegisterToMasterReq );
+
+        // SendAllocShardToProxy( kfmsg.id() );
         __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!", kfmsg.name(), kfmsg.type(), KFAppID::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterUpdateReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterUpdateToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterUpdateReq );
+        __PROTO_PARSE__( KFMsg::S2SClusterUpdateToMasterReq );
 
-        _kf_proxy_manage->AddProxyServer( kfmsg.type(), kfmsg.id(), kfmsg.name(), kfmsg.ip(), kfmsg.port(), kfmsg.count() );
+        AddProxyServer( kfmsg.name(), kfmsg.type(), kfmsg.id(), kfmsg.ip(), kfmsg.port(), kfmsg.count() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterAuthReq );
-        uint32 handleid = __KF_HEAD_ID__( kfid );
+        __PROTO_PARSE__( KFMsg::S2SClusterAuthToMasterReq );
 
-        __LOG_DEBUG__( "cluster[{}] [{}] [{}] key req!", kfmsg.clustertype(), kfmsg.clusterkey(), KFAppID::ToString( handleid ) );
-        if ( kfmsg.clusterkey() != _cluster_key )
+        auto strclientid = KFAppID::ToString( kfmsg.clientid() );
+        __LOG_DEBUG__( "cluster client[{}:{}] auth req!", strclientid, kfmsg.clusterkey() );
+
+        static auto _option = _kf_option->FindOption( __KF_STRING__( clusterkey ) );
+        if ( kfmsg.clusterkey() != _option->_str_value )
         {
-            return __LOG_ERROR__( "[{}!={}] cluster[{}] key error!", kfmsg.clusterkey(), _cluster_key, KFAppID::ToString( handleid ) );
+            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _option->_str_value );
         }
 
-        KFMsg::S2SClusterAuthAck ack;
-        ack.set_clustertype( kfmsg.clustertype() );
-        auto kfproxy = _kf_proxy_manage->HashProxyServer( handleid );
+        auto kfproxy = SelectProxyServer();
         if ( kfproxy == nullptr )
         {
-            ack.set_token( "" );
-            ack.set_ip( "" );
-            ack.set_port( 0 );
-            ack.set_name( "" );
-            ack.set_type( "" );
-            ack.set_id( 0 );
-
-            __LOG_ERROR__( "cluster[{}] can't find proxy, handleid[{}]!", kfmsg.clustertype(), KFAppID::ToString( handleid ) );
+            return __LOG_ERROR__( "cluster client[{}] no proxy error!", strclientid );
         }
-        else
+
+        __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok!", strclientid, KFAppID::ToString( kfproxy->_id ) );
+
+        // 创建token
+        auto id = KFGlobal::Instance()->Make64Guid();
+        std::string md5source = __FORMAT__( "{}:{}", id, kfmsg.clientid() );
+        auto token = KFCrypto::Md5Encode( md5source );
+
         {
-            // 创建token
-            std::string token = MakeAuthToken( kfid );
-            ack.set_token( token );
-            ack.set_ip( kfproxy->_ip );
-            ack.set_port( kfproxy->_port );
-            ack.set_name( kfproxy->_name );
-            ack.set_type( kfproxy->_type );
-            ack.set_id( kfproxy->_id );
-
-            // Token发送给GateServer
-            KFMsg::S2SClusterTokenReq tokenreq;
-            tokenreq.set_token( token );
-            tokenreq.set_gateid( handleid );
-            _kf_tcp_server->SendNetMessage( kfproxy->_id, KFMsg::S2S_CLUSTER_TOKEN_REQ, &tokenreq );
-
-            __LOG_DEBUG__( "cluster[{}] [{}] proxy[{}] ok!", kfmsg.clustertype(), KFAppID::ToString( handleid ), KFAppID::ToString( kfproxy->_id ) );
+            // Token发送给ProxyServer
+            KFMsg::S2SClusterTokenToProxyReq req;
+            req.set_token( token );
+            req.set_clientid( kfmsg.clientid() );
+            _kf_tcp_server->SendNetMessage( kfproxy->_id, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &req );
         }
 
-        _kf_tcp_server->SendNetMessage( handleid, KFMsg::S2S_CLUSTER_AUTH_ACK, &ack );
+        KFMsg::S2SClusterAuthToClientAck ack;
+        ack.set_token( token );
+        ack.set_name( kfproxy->_name );
+        ack.set_type( kfproxy->_type );
+        ack.set_id( kfproxy->_id );
+        ack.set_ip( kfproxy->_ip );
+        ack.set_port( kfproxy->_port );
+        _kf_tcp_server->SendNetMessage( kfmsg.clientid(), KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &ack );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    }
-
-    std::string KFClusterMasterModule::MakeAuthToken( const KFId& kfid )
-    {
-        std::string headid = __TO_STRING__( kfid._head_id );
-        std::string dataid = __TO_STRING__( kfid._data_id );
-        std::string date = __TO_STRING__( KFDate::GetTimeEx() );
-
-        std::string temp = __FORMAT__( "{}:{}-{}:{}", headid, dataid, date, ++_cluster_serial );
-        return KFCrypto::Md5Encode( temp );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleAllocObjectToMasterReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SAllocObjectToMasterReq );
-
-        auto shardid = __KF_HEAD_ID__( kfid );
-
-        for ( auto i = 0; i < kfmsg.objectid_size(); ++i )
-        {
-            auto objectid = kfmsg.objectid( i );
-
-            _total_objects.insert( objectid );
-            _shard_objects[ shardid ].insert( objectid );
-        }
-
-        BalanceAllocShard( shardid );
-
-        // 发送给shard
-        SendAllocShardToShard();
-
-        // 发送给所有proxy
-        SendAllocShardToProxy( _invalid_int );
-    }
-
-    std::set< uint64 > KFClusterMasterModule::GetShardObject( uint64 shardid )
-    {
-        std::set< uint64 > outvalue;
-        for ( auto& iter : _object_to_shard )
-        {
-            if ( iter.second == shardid )
-            {
-                outvalue.insert( iter.first );
-            }
-        }
-
-        return outvalue;
-    }
-
-    void KFClusterMasterModule::BalanceAllocShard( uint64 shardid )
-    {
-        _object_to_shard.clear();
-
-        std::vector< uint64 > shardlist;
-        for ( auto iter : _shard_objects )
-        {
-            shardlist.push_back( iter.first );
-        }
-
-        auto allocindex = 0u;
-        for ( auto objectid : _total_objects )
-        {
-            if ( allocindex >= shardlist.size() )
-            {
-                allocindex = 0u;
-            }
-
-            auto shardid = shardlist[ allocindex ];
-            if ( !HaveObject( shardid, objectid ) )
-            {
-                shardid = FindShard( objectid );
-            }
-            else
-            {
-                allocindex++;
-            }
-
-            _object_to_shard[ objectid ] = shardid;
-        }
-    }
-
-    bool KFClusterMasterModule::HaveObject( uint64 shardid, uint64 objectid )
-    {
-        return _shard_objects[ shardid ].count( objectid ) > 0u;
-    }
-
-    uint64 KFClusterMasterModule::FindShard( uint64 objectid )
-    {
-        for ( auto iter : _shard_objects )
-        {
-            if ( iter.second.count( objectid ) > 0u )
-            {
-                return iter.first;
-            }
-        }
-
-        return _invalid_int;
-    }
-
-    void KFClusterMasterModule::SendAllocShardToProxy( uint64 proxyid )
-    {
-        KFMsg::S2SAllocObjectToProxyAck ack;
-
-        for ( auto iter : _object_to_shard )
-        {
-            ack.add_objectid( iter.first );
-            ack.add_shardid( iter.second );
-        }
-
-        if ( proxyid != _invalid_int )
-        {
-            _kf_tcp_server->SendNetMessage( proxyid, KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &ack );
-        }
-        else
-        {
-            _kf_tcp_server->SendMessageToType( __KF_STRING__( proxy ), KFMsg::S2S_ALLOC_OBJECT_TO_PROXY_ACK, &ack );
-        }
-    }
-
-    void KFClusterMasterModule::SendAllocShardToShard()
-    {
-        for ( auto& iter : _shard_objects )
-        {
-            auto shardid = iter.first;
-            auto objectlist = GetShardObject( shardid );
-
-            KFMsg::S2SAllocObjectToShardAck ack;
-            for ( auto objectid : objectlist )
-            {
-                ack.add_objectid( objectid );
-            }
-            _kf_tcp_server->SendNetMessage( shardid, KFMsg::S2S_ALLOC_OBJECT_TO_SHARD_ACK, &ack );
-        }
     }
 }

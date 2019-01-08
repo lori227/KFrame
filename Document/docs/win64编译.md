@@ -10,7 +10,6 @@ Win+pausebreak=>高级系统设置=>环境变量, 在系统变量下面新建:
 
 变量名:`VS150COMNTOOLS`  
 变量值: `C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\`
-
 注意:这个是默认的安装路径, 请设置你的安装路径, 路径需要\结尾,否则编译会报错
 
 ## 编译第3方库

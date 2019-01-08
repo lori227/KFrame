@@ -4,14 +4,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFClusterClientModule.cpp" />
     <ClCompile Include="KFClusterClientPlugin.cpp" />
-    <ClCompile Include="KFClusterClient.cpp" />
-    <ClCompile Include="KFClusterClientConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterClientInterface.h" />
     <ClInclude Include="KFClusterClientModule.h" />
     <ClInclude Include="KFClusterClientPlugin.h" />
-    <ClInclude Include="KFClusterClient.h" />
-    <ClInclude Include="KFClusterClientConfig.h" />
   </ItemGroup>
 </Project>

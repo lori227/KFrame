@@ -9,10 +9,7 @@
 //    @Date             :    2017-8-17
 ************************************************************************/
 
-#include "KFClusterClient.h"
-#include "KFBus/KFBusInterface.h"
 #include "KFClusterClientInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -28,35 +25,21 @@ namespace KFrame
         ~KFClusterClientModule() = default;
 
         // 初始化
-        virtual void InitModule();
         virtual void BeforeRun();
 
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 调用注册函数
-        void CallClusterConnectionFunction( uint64 serverid );
-
-        // 发送消息到proxy
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
-
         // 发送消息
-        virtual bool SendToShard( const std::string& name, uint32 msgid, google::protobuf::Message* message );
-        virtual bool SendToShard( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message );
-
-        // 发送到静态对象所在的分片服务器
-        virtual bool SendToStaticObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message );
-
-        // 发送到动态对象所在的分片服务器
-        virtual bool SendToDynamicObject( const std::string& name, uint64 objectid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 认证回馈
-        __KF_MESSAGE_FUNCTION__( HandleClusterAuthAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToClientAck );
 
         // 验证token回馈
-        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToClientAck );
 
     protected:
         // 断开服务器连接
@@ -64,18 +47,40 @@ namespace KFrame
 
         // 连接事件
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionServer );
+
+        // 发送认证消息
+        __KF_TIMER_FUNCTION__( OnTimerSendClusterAuthMessage );
+
+        // 发送Token消息
+        __KF_TIMER_FUNCTION__( OnTimerSendClusterTokenMessage );
     private:
 
         // 注册回调函数
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
         virtual void RemoveConnectionFunction( const std::string& name );
 
-        // 发送消息
-        bool SendNetMessage( const std::string& name, uint32 msgid, google::protobuf::Message* message );
-        bool SendNetMessage( const std::string& name, uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+        // 调用注册函数
+        void CallClusterConnectionFunction( uint64 serverid );
+
+        // 连接master
+        void ReconnectClusterMaster();
+
     private:
-        // 集群客户端列表
-        KFMap< std::string, const std::string&, KFClusterClient > _kf_cluster_client;
+        // cluster name
+        std::string _cluster_name;
+
+        // cluster master id
+        uint64 _cluster_master_id{ 0 };
+        std::string _str_master_id;
+
+        // token
+        std::string _auth_token;
+
+        // proxy id
+        uint64 _cluster_proxy_id{ 0 };
+
+        // 是否可以服务
+        bool _cluster_in_services{ false };
 
         // 集群认证成功的回调函数
         KFBind< std::string, const std::string&, KFClusterConnectionFunction >_kf_connection_function;
