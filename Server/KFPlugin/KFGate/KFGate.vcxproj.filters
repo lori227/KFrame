@@ -4,13 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFGateModule.cpp" />
     <ClCompile Include="KFGatePlugin.cpp" />
-    <ClCompile Include="KFRoleEx.cpp" />
+    <ClCompile Include="KFRole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGateInterface.h" />
     <ClInclude Include="KFGateModule.h" />
     <ClInclude Include="KFGatePlugin.h" />
-    <ClInclude Include="KFRoleEx.h" />
     <ClInclude Include="KFRole.h" />
   </ItemGroup>
 </Project>

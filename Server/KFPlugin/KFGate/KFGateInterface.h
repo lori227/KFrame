@@ -1,27 +1,15 @@
 ﻿#ifndef __KF_GATE_INTERFACE_H__
 #define __KF_GATE_INTERFACE_H__
 
-#include "KFRole.h"
+#include "KFrame.h"
 
 namespace KFrame
 {
-
     /////////////////////////////////////////////////////////////////////////////////////////////
     class KFGateInterface : public KFModule
     {
     public:
-        // 创建玩家
-        virtual KFRole* CreateRole( uint64 roleid ) = 0;
 
-        // 查找玩家
-        virtual KFRole* FindRole( uint64 roleid ) = 0;
-
-        // 删除玩家
-        virtual bool RemoveRole( uint64 roleid ) = 0;
-
-        // 获得玩家数量
-        virtual uint32 GetRoleCount() = 0;
-        ///////////////////////////////////////////////////////////////
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -63,14 +63,6 @@ namespace KFrame
         return _kf_role_list.Size();
     }
 
-    void KFGateModule::SendLoginFailedMessage( uint64 sessionid, uint32 result, uint64 bantime )
-    {
-        // 消息到这里的都是错误结果
-        _kf_display->SendToClient( sessionid, result, bantime );
-
-        // 2秒后主动断开游戏
-        _kf_tcp_server->CloseNetHandle( sessionid, 2000, __FUNC_LINE__ );
-    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGateModule::OnClientConnectionLogin )
     {
@@ -86,6 +78,67 @@ namespace KFrame
         {
             _kf_login_conhash.RemoveHashNode( serverid );
         }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+#define __KF_MAX_CLIENT_MSG_ID__ 10000
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendToClient )
+    {
+        auto playerid = __KF_DATA_ID__( kfid );
+        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        {
+            return false;
+        }
+
+        auto kfrole = FindRole( playerid );
+        if ( kfrole != nullptr )
+        {
+            kfrole->SendToClient( msgid, data, length );
+        }
+
+        return true;
+    }
+
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendMessageToGame )
+    {
+        auto playerid = __KF_HEAD_ID__( kfid );
+        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        {
+            return false;
+        }
+
+        auto kfrole = FindRole( playerid );
+        if ( kfrole != nullptr )
+        {
+            kfrole->SendMessageToGame( msgid, data, length );
+        }
+
+        return true;
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastMessageReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SBroadcastToGate );
+
+        auto msgid = kfmsg.msgid();
+        auto& msgdata = kfmsg.msgdata();
+
+        for ( auto& iter : _kf_role_list._objects )
+        {
+            auto kfproxy = iter.second;
+            kfproxy->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFGateModule::SendLoginFailedMessage( uint64 sessionid, uint32 result, uint64 bantime )
+    {
+        // 消息到这里的都是错误结果
+        _kf_display->SendToClient( sessionid, result, bantime );
+
+        // 2秒后主动断开游戏
+        _kf_tcp_server->CloseNetHandle( sessionid, 2000, __FUNC_LINE__ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginVerifyReq )
@@ -150,97 +203,6 @@ namespace KFrame
         SendLoginFailedMessage( kfmsg.sessionid(), kfmsg.result(), kfmsg.bantime() );
     }
 
-    __KF_SERVER_LOST_FUNCTION__( KFGateModule::OnPlayerDisconnection )
-    {
-        __LOG_DEBUG__( "client[{}] disconnection!", handleid );
-
-        auto kfrole = FindRole( handleid );
-        if ( kfrole == nullptr )
-        {
-            return;
-        }
-
-        KFMsg::S2SPlayerDisconnectionReq req;
-        req.set_playerid( handleid );
-        kfrole->SendMessageToGame( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &req );
-
-        // 删除玩家
-        RemoveRole( handleid );
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-#define __KF_MAX_CLIENT_MSG_ID__ 10000
-    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendToClient )
-    {
-        auto playerid = __KF_DATA_ID__( kfid );
-        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
-        {
-            return false;
-        }
-
-        auto kfrole = FindRole( playerid );
-        if ( kfrole != nullptr )
-        {
-            kfrole->SendToClient( msgid, data, length );
-        }
-
-        return true;
-    }
-
-    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendMessageToGame )
-    {
-        auto playerid = __KF_HEAD_ID__( kfid );
-        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
-        {
-            return false;
-        }
-
-        auto kfrole = FindRole( playerid );
-        if ( kfrole != nullptr )
-        {
-            kfrole->SendMessageToGame( msgid, data, length );
-        }
-
-        return true;
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastMessageReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToGate );
-
-        auto msgid = kfmsg.msgid();
-        auto& msgdata = kfmsg.msgdata();
-
-        for ( auto& iter : _kf_role_list._objects )
-        {
-            auto kfproxy = iter.second;
-            kfproxy->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
-        }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickGatePlayerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SKickGatePlayerReq );
-
-        auto playerid = kfmsg.playerid();
-        auto kfrole = FindRole( playerid );
-        if ( kfrole == nullptr )
-        {
-            return;
-        }
-
-        // 通知客户端你被踢了
-        KFMsg::MsgTellBeKick kick;
-        kick.set_type( kfmsg.type() );
-        kfrole->SendToClient( KFMsg::MSG_TELL_BE_KICK, &kick );
-
-        // 删除连接关系
-        _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );
-
-        // 删除内存
-        RemoveRole( playerid );
-    }
-
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginGameAck )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginGameAck );
@@ -282,16 +244,57 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginOutReq )
+    __KF_SERVER_LOST_FUNCTION__( KFGateModule::OnPlayerDisconnection )
     {
-        auto playerid = __KF_HEAD_ID__( kfid );
-        __LOG_DEBUG__( "player[{}] login out!", playerid );
+        auto kfrole = FindRole( handleid );
+        if ( kfrole == nullptr )
+        {
+            return;
+        }
 
+        __LOG_DEBUG__( "client[{}] disconnection!", handleid );
+
+        KFMsg::S2SPlayerDisconnectionReq req;
+        req.set_playerid( handleid );
+        kfrole->SendMessageToGame( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &req );
+
+        // 删除玩家
+        RemoveRole( handleid );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickGatePlayerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SKickGatePlayerReq );
+
+        auto playerid = kfmsg.playerid();
         auto kfrole = FindRole( playerid );
         if ( kfrole == nullptr )
         {
             return;
         }
+
+        // 通知客户端你被踢了
+        KFMsg::MsgTellBeKick kick;
+        kick.set_type( kfmsg.type() );
+        kfrole->SendToClient( KFMsg::MSG_TELL_BE_KICK, &kick );
+
+        // 删除连接关系
+        _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );
+
+        // 删除内存
+        RemoveRole( playerid );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginOutReq )
+    {
+        auto playerid = __KF_HEAD_ID__( kfid );
+        auto kfrole = FindRole( playerid );
+        if ( kfrole == nullptr )
+        {
+            return;
+        }
+
+        __LOG_DEBUG__( "player[{}] login out!", playerid );
 
         // 断开链接
         _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );

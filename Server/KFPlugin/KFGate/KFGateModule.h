@@ -9,7 +9,7 @@
 //    @Date             :    2017-11-1
 ************************************************************************/
 
-#include "KFRoleEx.h"
+#include "KFRole.h"
 #include "KFGateInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFTimer/KFTimerInterface.h"
@@ -36,17 +36,18 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+    protected:
         // 创建代理玩家
-        virtual KFRole* CreateRole( uint64 roleid );
+        KFRole* CreateRole( uint64 roleid );
 
         // 查找代理玩家
-        virtual KFRole* FindRole( uint64 roleid );
+        KFRole* FindRole( uint64 roleid );
 
         // 删除代理玩家
-        virtual bool RemoveRole( uint64 roleid );
+        bool RemoveRole( uint64 roleid );
 
         // 获得玩家数量
-        virtual uint32 GetRoleCount();
+        uint32 GetRoleCount();
     protected:
         // 连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionLogin );
@@ -63,12 +64,11 @@ namespace KFrame
         // 系统公告
         __KF_COMMAND_FUNCTION__( OnCommandNotice );
 
-    protected:
         // 发送消息到客户端
-        __KF_TRANSMIT_FUNCTION__( SendToClient );
+        __KF_TRANSMIT_MESSAGE_FUNCTION__( SendToClient );
 
         // 发送消息到游戏服务器
-        __KF_TRANSMIT_FUNCTION__( SendMessageToGame );
+        __KF_TRANSMIT_MESSAGE_FUNCTION__( SendMessageToGame );
 
     protected:
         // 登录验证
@@ -98,7 +98,7 @@ namespace KFrame
         KFConHash _kf_login_conhash;
 
         // 玩家列表
-        KFMap< uint64, uint64, KFRoleEx > _kf_role_list;
+        KFMap< uint64, uint64, KFRole > _kf_role_list;
     };
 }
 
