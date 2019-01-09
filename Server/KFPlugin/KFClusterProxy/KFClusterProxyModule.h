@@ -100,9 +100,6 @@ namespace KFrame
         uint64 ClusterVerifyLogin( const std::string& token, uint64 serverid );
 
     private:
-        // masterid
-        uint64 _master_server_id{ 0 };
-
         // 是否在服务中
         bool _in_service{ false };
 
@@ -111,15 +108,6 @@ namespace KFrame
 
         // hash一致性列表
         KFConHash _kf_hash;
-
-        // 对象映射列表
-        std::map< uint64, uint64 > _kf_dynamic_shard;
-
-        // 对象数量
-        std::map< uint64, uint64 > _kf_object_count;
-
-        // 分配列表
-        std::map< uint64, uint64 > _kf_static_shard;
     };
 }
 #endif

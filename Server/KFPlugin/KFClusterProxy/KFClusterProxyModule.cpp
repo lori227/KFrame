@@ -75,7 +75,6 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
     {
-        _master_server_id = serverid;
         auto kfglobal = KFGlobal::Instance();
 
         KFMsg::S2SClusterRegisterToMasterReq req;
@@ -87,7 +86,7 @@ namespace KFrame
         _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
 
         // 注册定时器
-        __REGISTER_LOOP_TIMER__( _master_server_id, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
+        __REGISTER_LOOP_TIMER__( serverid, 5000, &KFClusterProxyModule::OnTimerSendClusterUpdateMessage );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterUpdateMessage )
@@ -106,7 +105,7 @@ namespace KFrame
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         req.set_count( _kf_tcp_server->GetHandleCount() );
-        _kf_tcp_client->SendNetMessage( static_cast< uint32 >( objectid ), KFMsg::S2S_CLUSTER_UPDATE_TO_MASTER_REQ, &req );
+        _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_UPDATE_TO_MASTER_REQ, &req );
     }
 
     void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint64 serverid )
@@ -177,7 +176,6 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 serverid )
     {
-        _master_server_id = 0u;
         __UNREGISTER_OBJECT_TIMER__( serverid );
     }
 
@@ -210,7 +208,7 @@ namespace KFrame
 
         if ( serverid == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client [{}] verify failed!", KFAppID::ToString( kfmsg.serverid() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed!", KFAppID::ToString( kfmsg.serverid() ) );
         }
 
         // 删除定时器
