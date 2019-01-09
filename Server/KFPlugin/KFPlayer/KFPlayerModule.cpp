@@ -228,20 +228,22 @@ namespace KFrame
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
-        for ( auto i = 0; i < pbchanneldata->pbstring_size(); ++i )
+        for ( auto iter = pbchanneldata->begin(); iter != pbchanneldata->end(); ++iter )
         {
-            auto pbdata = &pbchanneldata->pbstring( i );
-            auto kfdata = kfobject->FindData( __KF_STRING__( basic ), pbdata->name() );
+            auto& name = iter->first;
+            auto& value = iter->second;
+
+            auto kfdata = kfobject->FindData( __KF_STRING__( basic ), name );
             if ( kfdata == nullptr )
             {
-                kfdata = kfobject->FindData( pbdata->name() );
+                kfdata = kfobject->FindData( name );
                 if ( kfdata == nullptr )
                 {
                     continue;
                 }
             }
 
-            kfdata->SetValue< std::string >( pbdata->value() );
+            kfdata->SetValue( value );
         }
 
         // 创建玩家
@@ -305,72 +307,6 @@ namespace KFrame
         return _kf_component->FindEntity( playerid );
     }
 
-    bool KFPlayerModule::SendToClient( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        auto player = FindPlayer( playerid, __FUNC_LINE__ );
-        if ( player == nullptr )
-        {
-            return false;
-        }
-
-        return SendToClient( player, msgid, message );
-    }
-
-    bool KFPlayerModule::SendToClient( uint64 playerid, uint32 msgid, const char* data, uint32 length )
-    {
-        auto player = FindPlayer( playerid, __FUNC_LINE__ );
-        if ( player == nullptr )
-        {
-            return false;
-        }
-
-        return SendToClient( player, msgid, data, length );
-    }
-
-    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        auto kfobject = player->GetData();
-        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
-        return _kf_game->SendToClient( gateid, player->GetKeyID(), msgid, message );
-    }
-
-    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length )
-    {
-        auto kfobject = player->GetData();
-        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
-        return _kf_game->SendToClient( gateid, player->GetKeyID(), msgid, data, length );
-    }
-
-    bool KFPlayerModule::SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
-        auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
-        return _kf_route->SendToRoute( serverid, playerid, msgid, message );
-    }
-
-    void KFPlayerModule::SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself )
-    {
-        // 先发送给自己
-        if ( sendself )
-        {
-            SendToClient( player, msgid, message );
-        }
-
-        auto kfobject = player->GetData();
-        auto kfmemberrecord = kfobject->FindData( __KF_STRING__( group ), __KF_STRING__( groupmember ) );
-        auto kfmember = kfmemberrecord->FirstData();
-        while ( kfmember != nullptr )
-        {
-            if ( kfmember->GetKeyID() != player->GetKeyID() )
-            {
-                auto kfbasic = kfmember->FindData( __KF_STRING__( basic ) );
-                SendToClient( kfbasic, msgid, message );
-            }
-
-            kfmember = kfmemberrecord->NextData();
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
@@ -384,7 +320,7 @@ namespace KFrame
 
         KFMsg::MsgSyncUpdateData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
+        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
     void KFPlayerModule::SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -399,7 +335,7 @@ namespace KFrame
 
         KFMsg::MsgSyncAddData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
+        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
     void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -414,14 +350,14 @@ namespace KFrame
 
         KFMsg::MsgSyncRemoveData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
+        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
     void KFPlayerModule::SendRewardAgentToClient( KFEntity* player, const std::string& reward )
     {
         KFMsg::MsgShowRewardAgent show;
         show.set_reward( reward );
-        SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
+        _kf_game->SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
     }
 
     // 判断操作频率
@@ -431,6 +367,7 @@ namespace KFrame
         auto operatetime = kfobject->GetValue( __KF_STRING__( operatetime ) );
         if ( KFGlobal::Instance()->_game_time < operatetime )
         {
+            // todo
             _kf_display->SendToClient( player, KFMsg::OperateFrequently );
             return true;
         }

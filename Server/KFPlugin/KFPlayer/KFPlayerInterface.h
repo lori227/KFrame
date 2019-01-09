@@ -137,19 +137,6 @@ namespace KFrame
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
         virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line ) = 0;
-
-        // 发送消息
-        virtual bool SendToClient( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint64 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
-
-        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( KFEntity* player, uint32 msgid, const char* data, uint32 length ) = 0;
-
-        virtual bool SendToClient( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-
-        // 发送消息到队伍客户端
-        virtual void SendToGroup( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, bool sendself = true ) = 0;
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断操作频率
         virtual bool CheckOperateFrequently( KFEntity* player, uint32 time ) = 0;
