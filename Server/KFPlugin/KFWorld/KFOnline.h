@@ -8,28 +8,22 @@ namespace KFrame
     class KFOnline
     {
     public:
-        KFOnline()
-        {
-            _game_id = 0;
-            _player_id = 0;
-            _account_id = 0;
-        }
-
-        virtual ~KFOnline() = default;
+        KFOnline() = default;
+        ~KFOnline() = default;
 
         // 发送消息到Game
-        virtual void SendToOnline( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual void SendToOnline( uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        void SendToOnline( uint32 msgid, const char* data, uint32 length );
+        void SendToOnline( uint32 msgid, ::google::protobuf::Message* message );
 
     public:
         // playerid
-        uint64 _player_id;
+        uint64 _player_id{ 0 };
 
         // gameid
-        uint64 _game_id;
+        uint64 _game_id{ 0 };
 
         // accountid
-        uint64 _account_id;
+        uint64 _account_id{ 0 };
     };
 }
 

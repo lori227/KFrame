@@ -1,5 +1,4 @@
 ﻿#include "KFWorldModule.h"
-#include "KFOnlineEx.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -41,45 +40,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ) );
     }
 
-    KFOnline* KFWorldModule::CreateOnline( uint64 playerid )
-    {
-        auto kfonline = _kf_online_list.Create( playerid );
-        kfonline->_player_id = playerid;
-        return kfonline;
-    }
-
-    KFOnline* KFWorldModule::FindOnline( uint64 playerid )
-    {
-        return _kf_online_list.Find( playerid );
-    }
-
-    bool KFWorldModule::RemoveOnline( uint64 playerid )
-    {
-        return _kf_online_list.Remove( playerid );
-    }
-
-    uint32 KFWorldModule::GetOnlineCount()
-    {
-        return _kf_online_list.Size();
-    }
-
-    bool KFWorldModule::SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        auto kfonline = FindOnline( playerid );
-        if ( kfonline == nullptr )
-        {
-            return false;
-        }
-
-        kfonline->SendToOnline( msgid, message );
-        return true;
-    }
-
-    bool KFWorldModule::SendToGame( uint64 gameid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_DISCOVER_FUNCTION__( KFWorldModule::OnServerDisCoverGame )
     {
         if ( handletype == __KF_STRING__( game ) )
@@ -95,7 +56,25 @@ namespace KFrame
             _kf_game_conhash.RemoveHashNode( handleid );
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    bool KFWorldModule::SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        auto kfonline = _kf_online_list.Find( playerid );
+        if ( kfonline == nullptr )
+        {
+            return false;
+        }
+
+        kfonline->SendToOnline( msgid, message );
+        return true;
+    }
+
+    bool KFWorldModule::SendToGame( uint64 gameid, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        return _kf_tcp_server->SendNetMessage( gameid, msgid, message );
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleLoginWorldVerifyReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginWorldVerifyReq );
@@ -105,10 +84,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}:{}:{}] login world req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         // 踢掉已经在线的玩家, 只有踢下线以后才能登陆
-        if ( KickOnline( pblogin->playerid(), __FUNC_LINE__ ) )
-        {
-            // return SendVerifyFailedToLogin( KFMsg::LoginAlreadyOnline, loginid, gateid, accountid, sessionid );
-        }
+        KickOnline( pblogin->playerid(), __FUNC_LINE__ );
 
         // 选择Game服务器
         auto gameid = _kf_game_conhash.FindHashNode( pblogin->playerid() );
@@ -121,11 +97,7 @@ namespace KFrame
         KFMsg::S2SLoginTellTokenToGameReq req;
         req.mutable_pblogin()->CopyFrom( *pblogin );
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ, &req );
-        if ( ok )
-        {
-            __LOG_DEBUG__( "player[{}:{}:{}] login game req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
-        }
-        else
+        if ( !ok )
         {
             __LOG_ERROR__( "player[{}:{}:{}] login game failed!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
         }
@@ -139,16 +111,12 @@ namespace KFrame
         ack.set_accountid( accountid );
         ack.set_sessionid( sessionid );
         auto ok = _kf_tcp_server->SendNetMessage( loginid, KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK, &ack );
-        if ( ok )
+        if ( !ok )
         {
-            __LOG_DEBUG__( "player[{}] world verify result[{}] ok!", accountid, result );
-        }
-        else
-        {
-            __LOG_ERROR__( "aplayer[{}] world verify result[{}] failed!", accountid, result );
+            __LOG_ERROR__( "player[{}] world verify result[{}] failed!", accountid, result );
         }
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleGameSyncOnlineReq )
     {
         __PROTO_PARSE__( KFMsg::S2SGameSyncOnlineReq );
@@ -158,51 +126,21 @@ namespace KFrame
         {
             auto playerid = kfmsg.playerid( i );
 
-            auto kfonline = CreateOnline( playerid );
+            auto kfonline = _kf_online_list.Create( playerid );
+
             kfonline->_game_id = serverid;
+            kfonline->_player_id = playerid;
         }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToPlayerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2STransmitToPlayer );
-
-        auto kfonline = FindOnline( kfmsg.playerid() );
-        if ( kfonline == nullptr )
-        {
-            return;
-        }
-
-        auto& msgdata = kfmsg.msgdata();
-        kfonline->SendToOnline( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToServerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2STransmitToServer );
-
-        auto& msgdata = kfmsg.msgdata();
-        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastMessageReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToWord );
-
-        KFMsg::S2SBroadcastToGame req;
-        req.set_msgid( kfmsg.msgid() );
-        req.set_msgdata( kfmsg.msgdata() );
-        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerEnterWorldReq )
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerEnterWorldReq );
 
-        auto kfonline = CreateOnline( kfmsg.playerid() );
+        auto kfonline = _kf_online_list.Create( kfmsg.playerid() );
         kfonline->_player_id = kfmsg.playerid();
-        kfonline->_game_id = __KF_HEAD_ID__( kfid );
         kfonline->_account_id = kfmsg.accountid();
+        kfonline->_game_id = __KF_HEAD_ID__( kfid );
 
         // 更新到认证服务器
         UpdateOnlineToAuth( kfmsg.accountid(), kfmsg.playerid(), true );
@@ -212,7 +150,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SPlayerLeaveWorldReq );
 
-        RemoveOnline( kfmsg.playerid() );
+        _kf_online_list.Remove( kfmsg.playerid() );
 
         // 更新到认证服务器
         UpdateOnlineToAuth( kfmsg.accountid(), kfmsg.playerid(), false );
@@ -247,7 +185,7 @@ namespace KFrame
 
     bool KFWorldModule::KickOnline( uint64 playerid, const char* function, uint32 line )
     {
-        auto kfonline = FindOnline( playerid );
+        auto kfonline = _kf_online_list.Find( playerid );
         if ( kfonline == nullptr )
         {
             return false;
@@ -263,7 +201,7 @@ namespace KFrame
         if ( ok )
         {
             // 发送成功, 先删除在线信息, 避免gameserver掉线以后,登录不正常的问题
-            RemoveOnline( playerid );
+            _kf_online_list.Remove( playerid );
         }
         return ok;
     }
@@ -278,18 +216,65 @@ namespace KFrame
         return _invalid_str;
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToPlayerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransmitToPlayer );
+
+        auto kfonline = _kf_online_list.Find( kfmsg.playerid() );
+        if ( kfonline == nullptr )
+        {
+            return;
+        }
+
+        auto& msgdata = kfmsg.msgdata();
+        kfonline->SendToOnline( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleTransmitToServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2STransmitToServer );
+
+        auto& msgdata = kfmsg.msgdata();
+        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.size() ) );
+    }
+
+    void KFWorldModule::BroadcastMessageToGame( uint32 msgid, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        BroadcastMessageToGame( msgid, strdata.data(), static_cast< uint32 >( strdata.length() ) );
+    }
+
+    void KFWorldModule::BroadcastMessageToGame( uint32 msgid, const char* data, uint32 length )
+    {
+        // 随机选择一个服务器
+        auto gameid = _kf_game_conhash.FindHashNode( msgid, true );
+
+        KFMsg::S2SBroadcastToGame req;
+        req.set_msgid( msgid );
+        req.set_msgdata( data, length );
+        _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_BROADCAST_TO_GAME, &req );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastMessageReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SBroadcastToWord );
+
+        BroadcastMessageToGame( kfmsg.msgid(), kfmsg.msgdata().data(), static_cast< uint32 >( kfmsg.msgdata().length() ) );
+    }
 
     __KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandMarquee )
     {
         KFMsg::MsgTellMarquee tell;
         tell.set_content( param );
-        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_MARQUEE, &tell );
+        BroadcastMessageToGame( KFMsg::MSG_TELL_MARQUEE, &tell );
     }
 
     __KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandNotice )
     {
         KFMsg::MsgTellSysNotcie tell;
         tell.set_content( param );
-        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
+        BroadcastMessageToGame( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
     }
 }

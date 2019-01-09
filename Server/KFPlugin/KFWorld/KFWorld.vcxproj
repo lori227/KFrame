@@ -12,13 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFOnlineEx.cpp" />
+    <ClCompile Include="KFOnline.cpp" />
     <ClCompile Include="KFWorldModule.cpp" />
     <ClCompile Include="KFWorldPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFOnline.h" />
-    <ClInclude Include="KFOnlineEx.h" />
     <ClInclude Include="KFWorldInterface.h" />
     <ClInclude Include="KFWorldModule.h" />
     <ClInclude Include="KFWorldPlugin.h" />

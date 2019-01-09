@@ -4,13 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFWorldModule.cpp" />
     <ClCompile Include="KFWorldPlugin.cpp" />
-    <ClCompile Include="KFOnlineEx.cpp" />
+    <ClCompile Include="KFOnline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFWorldInterface.h" />
     <ClInclude Include="KFWorldModule.h" />
     <ClInclude Include="KFWorldPlugin.h" />
-    <ClInclude Include="KFOnlineEx.h" />
     <ClInclude Include="KFOnline.h" />
   </ItemGroup>
 </Project>
