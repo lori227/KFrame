@@ -24,11 +24,6 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFLoginModule::IsWorldConnected()
-    {
-        return _world_server_id != _invalid_int;
-    }
-
     __KF_CLIENT_CONNECT_FUNCTION__( KFLoginModule::OnClientConnectionWorld )
     {
         if ( servertype != __KF_STRING__( world ) )
@@ -79,11 +74,7 @@ namespace KFrame
         ack.set_sessionid( sessionid );
         ack.set_bantime( bantime );
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
-        if ( ok )
-        {
-            __LOG_DEBUG__( "player[{}] login verify result[{}] ok!", accountid, result );
-        }
-        else
+        if ( !ok )
         {
             __LOG_ERROR__( "player[{}] login verify result[{}] failed!", accountid, result );
         }
@@ -102,6 +93,7 @@ namespace KFrame
 
         if ( _is_login_close )
         {
+            __LOG_ERROR__( "accountid[{}] login is close!", accountid );
             return SendLoginVerifyMessage( KFMsg::LoginIsClose, gateid, sessionid, accountid, _invalid_int );
         }
 
@@ -117,8 +109,8 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( logiczoneid ), kfzone->_logic_id );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
 
-        static auto url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
-        _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, url, sendjson );
+        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
+        _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, _url, sendjson );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )
@@ -161,25 +153,20 @@ namespace KFrame
         pblogin->set_sessionid( sessionid );
 
         // 渠道数据
-        auto pbchanneldata = pblogin->mutable_channeldata();
         if ( recvjson.HasMember( __KF_STRING__( channeldata ) ) )
         {
+            auto pbchanneldata = pblogin->mutable_channeldata();
             auto& channeldata = recvjson[ __KF_STRING__( channeldata ) ];
             for ( auto iter = channeldata.MemberBegin(); iter != channeldata.MemberEnd(); ++iter )
             {
-                auto pbdata = pbchanneldata->add_pbstring();
-                pbdata->set_name( iter->name.GetString() );
-                pbdata->set_value( iter->value.GetString() );
+                ( *pbchanneldata )[ iter->name.GetString() ] = iter->value.GetString();
             }
         }
 
         auto ok = SendToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
-        if ( ok )
+        if ( !ok )
         {
-            __LOG_DEBUG__( "player[{}:{}:{}] auth token ok!", account, accountid, playerid );
-        }
-        else
-        {
+            __LOG_ERROR__( "player[{}:{}:{}] send world failed!", account, accountid, playerid );
             SendLoginVerifyMessage( KFMsg::WorldSystemBusy, gateid, sessionid, accountid, _invalid_int );
         }
     }
@@ -187,6 +174,8 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginFailedAck )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginFailedToLoginAck );
+
+        __LOG_DEBUG__( "player[{}] login world result[{}] ack!", kfmsg.accountid(), kfmsg.result() );
 
         // 通知客户端
         SendLoginVerifyMessage( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );

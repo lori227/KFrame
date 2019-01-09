@@ -35,14 +35,12 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 是否连接到World
-        virtual bool IsWorldConnected();
-
+    protected:
         // 发送消息到世界服务器
-        virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
 
     protected:
         // 连接成功
@@ -54,6 +52,12 @@ namespace KFrame
         // 关闭回调
         __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
 
+        // 平台验证回调
+        __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
+
+        // 发送登录验证结果消息
+        void SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
+
     protected:
 
         // 登录验证请求
@@ -61,13 +65,6 @@ namespace KFrame
 
         // 登录验证结果
         __KF_MESSAGE_FUNCTION__( HandleLoginFailedAck );
-
-    protected:
-        // 平台验证回调
-        __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
-
-        // 发送登录验证结果消息
-        void SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
 
     private:
 
