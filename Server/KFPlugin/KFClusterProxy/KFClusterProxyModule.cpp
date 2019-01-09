@@ -243,7 +243,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToShard )
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFClusterProxyModule::TransmitMessageToShard )
     {
         auto clientid = __KF_HEAD_ID__( kfid );
         auto shardid = __KF_DATA_ID__( kfid );
@@ -260,7 +260,7 @@ namespace KFrame
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
     }
 
-    __KF_TRANSMIT_FUNCTION__( KFClusterProxyModule::TransmitMessageToClient )
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFClusterProxyModule::TransmitMessageToClient )
     {
         auto clientid = __KF_DATA_ID__( kfid );
         return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );

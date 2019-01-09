@@ -19,6 +19,6 @@ namespace KFrame
         __FIND_MODULE__( _kf_zone, KFZoneInterface );
         __FIND_MODULE__( _kf_gate, KFGateInterface );
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
-        __FIND_MODULE__( _kf_cluster, KFClusterClientInterface );
+        __FIND_MODULE__( _kf_route, KFRouteClientInterface );
     }
 }

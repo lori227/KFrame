@@ -170,12 +170,11 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
-    __KF_TRANSMIT_FUNCTION__( KFGateModule::SendToClient )
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendToClient )
     {
         auto playerid = __KF_DATA_ID__( kfid );
-        if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
-            __LOG_ERROR__( "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
             return false;
         }
 
@@ -188,12 +187,11 @@ namespace KFrame
         return true;
     }
 
-    __KF_TRANSMIT_FUNCTION__( KFGateModule::SendMessageToGame )
+    __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendMessageToGame )
     {
         auto playerid = __KF_HEAD_ID__( kfid );
-        if ( msgid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
-            __LOG_ERROR__( "client[{}] msgid[{}] length[{}] error!", playerid, msgid, length );
             return false;
         }
 

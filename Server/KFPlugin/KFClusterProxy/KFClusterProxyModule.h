@@ -60,10 +60,10 @@ namespace KFrame
 
     protected:
         // 转发消息到Shard
-        __KF_TRANSMIT_FUNCTION__( TransmitMessageToShard );
+        __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToShard );
 
         // 转发消息到Client
-        __KF_TRANSMIT_FUNCTION__( TransmitMessageToClient );
+        __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToClient );
 
     protected:
         // 更新

@@ -14,15 +14,15 @@
 #include "KFZone/KFZoneInterface.h"
 #include "KFGate/KFGateInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
     class KFDirClientModule : public KFDirClientInterface
     {
     public:
-        KFDirClientModule();
-        ~KFDirClientModule();
+        KFDirClientModule() = default;
+        ~KFDirClientModule() = default;
 
         // 初始化
         virtual void BeforeRun();

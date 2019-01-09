@@ -3,17 +3,9 @@
 
 namespace KFrame
 {
-    KFDirClientModule::KFDirClientModule()
-    {
-    }
-
-    KFDirClientModule::~KFDirClientModule()
-    {
-    }
-
     void KFDirClientModule::BeforeRun()
     {
-        _kf_cluster->RegisterConnectionFunction( __KF_STRING__( dir ), this, &KFDirClientModule::OnConnectionDirCluster );
+        __REGISTER_LOOP_TIMER__( 0, 5000, &KFDirClientModule::OnTimerUpdateOnlineToDir );
     }
 
     void KFDirClientModule::BeforeShut()
@@ -23,11 +15,6 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDirClientModule::OnConnectionDirCluster( uint64 serverid )
-    {
-        __REGISTER_LOOP_TIMER__( 0, 2000, &KFDirClientModule::OnTimerUpdateOnlineToDir );
-    }
-
     __KF_TIMER_FUNCTION__( KFDirClientModule::OnTimerUpdateOnlineToDir )
     {
         auto kfzone = _kf_zone->GetZone();
@@ -41,6 +28,6 @@ namespace KFrame
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         req.set_onlinecount( _kf_gate->GetRoleCount() );
-        _kf_cluster->SendToShard( __KF_STRING__( dir ), KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &req );
+        _kf_route->SendToAll( __KF_STRING__( dir ), KFMsg::S2S_UPDATE_ONLINE_TO_DIR_REQ, &req );
     }
 }

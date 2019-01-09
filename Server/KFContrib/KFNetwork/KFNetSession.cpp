@@ -17,6 +17,7 @@ namespace KFrame
         _is_recv_queue_full = false;
         _message_head_length = 0;
 
+        _object_id = _invalid_int;
         memset( _receive_buff, 0, sizeof( _receive_buff ) );
         memset( _req_recv_buffer, 0, sizeof( _req_recv_buffer ) );
         memset( _req_send_buffer, 0, sizeof( _req_send_buffer ) );
@@ -30,7 +31,6 @@ namespace KFrame
     void KFNetSession::InitSession( uint64 id, uint32 queuecount, uint32 headlength )
     {
         _session_id = id;
-        _object_id = id;
         _uv_write.data = this;
         _message_head_length = headlength;
         _send_queue.InitQueue( queuecount );
