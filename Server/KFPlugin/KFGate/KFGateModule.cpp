@@ -122,8 +122,8 @@ namespace KFrame
 
         for ( auto& iter : _kf_role_list._objects )
         {
-            auto kfproxy = iter.second;
-            kfproxy->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            auto kfrole = iter.second;
+            kfrole->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +150,7 @@ namespace KFrame
         __LOG_DEBUG__( "session[{}] accountid[{}] login gate req!", sessionid, accountid );
 
         // 注册连接器
-        auto ok = _kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int );
-        if ( !ok )
+        if ( !_kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int ) )
         {
             return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, sessionid );
         }
@@ -179,13 +178,11 @@ namespace KFrame
         req.set_token( token );
         req.set_sessionid( sessionid );
         req.set_accountid( accountid );
-        ok = _kf_tcp_client->SendNetMessage( loginserverid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
-        if ( ok )
+        auto ok = _kf_tcp_client->SendNetMessage( loginserverid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &req );
+        if ( !ok )
         {
-            __LOG_DEBUG__( "accountid[{}:{}] login verify!", accountid, ip );
-        }
-        else
-        {
+            __LOG_ERROR__( "session[{}] accountid[{}] send login failed!", sessionid, accountid );
+
             // 发送错误
             SendLoginFailedMessage( sessionid, KFMsg::LoginSystemBusy, 0 );
         }
@@ -205,7 +202,7 @@ namespace KFrame
         auto result = kfmsg.result();
         auto pblogin = &kfmsg.pblogin();
 
-        __LOG_DEBUG__( "player[{}:{}] session[{}] enter game req!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+        __LOG_DEBUG__( "player[{}:{}] session[{}] enter game!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
 
         if ( result != KFMsg::Ok )
         {
@@ -230,11 +227,7 @@ namespace KFrame
         enter.set_servertime( kfmsg.servertime() );
         enter.mutable_playerdata()->CopyFrom( kfmsg.playerdata() );
         auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ENTER_GAME, &enter );
-        if ( ok )
-        {
-            __LOG_DEBUG__( "player[{}:{}] session[{}] enter game ok!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
-        }
-        else
+        if ( !ok )
         {
             __LOG_ERROR__( "player[{}:{}] session[{}] enter game failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
         }

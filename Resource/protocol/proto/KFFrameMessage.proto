@@ -8,41 +8,40 @@ enum FrameProtocol
 	S2S_REGISTER_TO_SERVER_ACK = 10002;					// 回馈注册
 	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
 	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// 通知取消注册
+	
+	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011;			// 注册Agent到Server
+	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012;			// 部署命令
+	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10013;			// 部署命令
+	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10014;			// 部署命令
 
-	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10011;			// 注册到服务器集群
-	S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10012;			// 更新集群连接器连接数量
-	S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10013;				// 集群登录认证
-	S2S_CLUSTER_AUTH_TO_CLIENT_ACK = 10014;				// 集群登录认证
-	S2S_CLUSTER_TOKEN_TO_PROXY_REQ = 10015;				// 集群Token
-	S2S_CLUSTER_VERIFY_TO_PROXY_REQ = 10016;			// 验证token请求
-	S2S_CLUSTER_VERIFY_TO_CLIENT_ACK = 10017;			// 验证token回馈
-	S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ = 10018;	// 发现客户端列表
-	S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ = 10019;		// 丢失客户端列表
+	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101;			// 注册到服务器集群
+	S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10102;			// 更新集群连接器连接数量
+	S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10103;				// 集群登录认证
+	S2S_CLUSTER_AUTH_TO_CLIENT_ACK = 10104;				// 集群登录认证
+	S2S_CLUSTER_TOKEN_TO_PROXY_REQ = 10105;				// 集群Token
+	S2S_CLUSTER_VERIFY_TO_PROXY_REQ = 10106;			// 验证token请求
+	S2S_CLUSTER_VERIFY_TO_CLIENT_ACK = 10107;			// 验证token回馈
+	S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ = 10108;	// 发现客户端列表
+	S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ = 10109;		// 丢失客户端列表
 
-	S2S_ROUTE_MESSAGE_TO_CLIENT_ACK = 10101;			// 转发消息
-	S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ = 10102;			// 转发消息到某类型所有服务器
-	S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ = 10103;			// 转发消息到随机服务器
-	S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ = 10104;		// 转发消息到负载最小服务器
-	S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ = 10105;		// 转发消息到对象所在服务器
-	S2S_ROUTE_MESSAGE_TO_SERVER_REQ = 10106;			// 转发消息到指定服务器
-	S2S_ROUTE_MESSAGE_TO_PLAYER_REQ = 10107;			// 转发消息到指定玩家
-	S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ = 10108;			// Route客户端丢失
-	S2S_ROUTE_DISCOVER_TO_CLIENT_REQ = 10109;			// 通知客户端发现新的服务器
-	S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ = 10110;			// 同步对象列表到Proxy
-	S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ = 10111;			// 添加对象列表到Proxy
-	S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ = 10112;		// 删除对象列表到Proxy
-	S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ = 10113;			// 同步对象列表到shard
-	S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10114;			// 添加对象列表到shard
-	S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10115;		// 删除对象列表到shard
+	S2S_ROUTE_MESSAGE_TO_CLIENT_ACK = 10201;			// 转发消息
+	S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ = 10202;			// 转发消息到某类型所有服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ = 10203;			// 转发消息到随机服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ = 10204;		// 转发消息到负载最小服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ = 10205;		// 转发消息到对象所在服务器
+	S2S_ROUTE_MESSAGE_TO_SERVER_REQ = 10206;			// 转发消息到指定服务器
+	S2S_ROUTE_MESSAGE_TO_PLAYER_REQ = 10207;			// 转发消息到指定玩家
+	S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ = 10208;			// Route客户端丢失
+	S2S_ROUTE_DISCOVER_TO_CLIENT_REQ = 10209;			// 通知客户端发现新的服务器
+	S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ = 10210;			// 同步对象列表到Proxy
+	S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ = 10211;			// 添加对象列表到Proxy
+	S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ = 10212;		// 删除对象列表到Proxy
+	S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ = 10213;			// 同步对象列表到shard
+	S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10214;			// 添加对象列表到shard
+	S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10215;		// 删除对象列表到shard
 
-	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10201;			// 注册Agent到Server
-	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10202;			// 部署命令
-	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10203;			// 部署命令
-	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10204;			// 部署命令
 
 	S2S_LOG_REQ = 10021;								// 记录日志到日志服务器
-	S2S_UPDATE_ONLINE_TO_DIR_REQ = 10022;				// 更新登录数量到目录服务器
-	S2S_REMOVE_ONLINE_TO_DIR_REQ = 10023;				// 删除登录数据
  }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -334,25 +333,6 @@ message S2SLogReq
 	bytes app_type		= 4;
 	bytes app_id		= 5;
 	bytes log_info		= 6;
-}
-
-
-// S2S_UPDATE_ONLINE_TO_DIR_REQ
-message S2SUpdateOnlineToDirReq
-{
-	uint32 zoneid = 1;			// 小区id
-	bytes zonename = 2;		// 小区名字
-	uint32 zonechannel = 3;	// 小区类型
-	uint64 appid = 4;			// 服务器id
-	bytes ip = 5;				// ip
-	uint32 port = 6;			// port
-	uint32 onlinecount = 7;	// 当前在线人数
-}
-
-// S2S_REMOVE_ONLINE_TO_DIR_REQ
-message S2SRemoveOnlineToDirReq
-{
-	uint64 appid = 1;			// 服务器id
 }
 
 // 注册Agent到Services

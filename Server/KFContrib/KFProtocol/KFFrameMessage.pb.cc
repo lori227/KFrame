@@ -179,16 +179,6 @@ class S2SLogReqDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<S2SLogReq>
       _instance;
 } _S2SLogReq_default_instance_;
-class S2SUpdateOnlineToDirReqDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<S2SUpdateOnlineToDirReq>
-      _instance;
-} _S2SUpdateOnlineToDirReq_default_instance_;
-class S2SRemoveOnlineToDirReqDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<S2SRemoveOnlineToDirReq>
-      _instance;
-} _S2SRemoveOnlineToDirReq_default_instance_;
 class S2SRegisterAgentToServerReqDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<S2SRegisterAgentToServerReq>
@@ -652,34 +642,6 @@ static void InitDefaultsS2SLogReq() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SLogReq =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SLogReq}, {}};
 
-static void InitDefaultsS2SUpdateOnlineToDirReq() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::KFMsg::_S2SUpdateOnlineToDirReq_default_instance_;
-    new (ptr) ::KFMsg::S2SUpdateOnlineToDirReq();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::KFMsg::S2SUpdateOnlineToDirReq::InitAsDefaultInstance();
-}
-
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SUpdateOnlineToDirReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SUpdateOnlineToDirReq}, {}};
-
-static void InitDefaultsS2SRemoveOnlineToDirReq() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::KFMsg::_S2SRemoveOnlineToDirReq_default_instance_;
-    new (ptr) ::KFMsg::S2SRemoveOnlineToDirReq();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::KFMsg::S2SRemoveOnlineToDirReq::InitAsDefaultInstance();
-}
-
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRemoveOnlineToDirReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRemoveOnlineToDirReq}, {}};
-
 static void InitDefaultsS2SRegisterAgentToServerReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -785,8 +747,6 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteRemoveObjectToProxyReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteRemoveObjectToShardReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLogReq.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_S2SUpdateOnlineToDirReq.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_S2SRemoveOnlineToDirReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRegisterAgentToServerReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBDeployCommand.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SDeployCommandToAgentReq.base);
@@ -794,7 +754,7 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2SDeployCommandToServerReq.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[38];
+::google::protobuf::Metadata file_level_metadata[36];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -1060,24 +1020,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLogReq, app_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLogReq, log_info_),
   ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, zoneid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, zonename_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, zonechannel_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, appid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, ip_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, port_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateOnlineToDirReq, onlinecount_),
-  ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRemoveOnlineToDirReq, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRemoveOnlineToDirReq, appid_),
-  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRegisterAgentToServerReq, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -1150,13 +1092,11 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 234, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToProxyReq)},
   { 242, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
   { 250, -1, sizeof(::KFMsg::S2SLogReq)},
-  { 261, -1, sizeof(::KFMsg::S2SUpdateOnlineToDirReq)},
-  { 273, -1, sizeof(::KFMsg::S2SRemoveOnlineToDirReq)},
-  { 279, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
-  { 289, -1, sizeof(::KFMsg::PBDeployCommand)},
-  { 301, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
-  { 307, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
-  { 313, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
+  { 261, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
+  { 271, -1, sizeof(::KFMsg::PBDeployCommand)},
+  { 283, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
+  { 289, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
+  { 295, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -1191,8 +1131,6 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteRemoveObjectToProxyReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteRemoveObjectToShardReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLogReq_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SUpdateOnlineToDirReq_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRemoveOnlineToDirReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRegisterAgentToServerReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBDeployCommand_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SDeployCommandToAgentReq_default_instance_),
@@ -1215,7 +1153,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 38);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 36);
 }
 
 void AddDescriptorsImpl() {
@@ -1288,62 +1226,55 @@ void AddDescriptorsImpl() {
       "entid\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\"u\n\tS2SLogR"
       "eq\022\021\n\tlog_level\030\001 \001(\r\022\017\n\007zone_id\030\002 \001(\r\022\020"
       "\n\010app_name\030\003 \001(\014\022\020\n\010app_type\030\004 \001(\014\022\016\n\006ap"
-      "p_id\030\005 \001(\014\022\020\n\010log_info\030\006 \001(\014\"\216\001\n\027S2SUpda"
-      "teOnlineToDirReq\022\016\n\006zoneid\030\001 \001(\r\022\020\n\010zone"
-      "name\030\002 \001(\014\022\023\n\013zonechannel\030\003 \001(\r\022\r\n\005appid"
-      "\030\004 \001(\004\022\n\n\002ip\030\005 \001(\014\022\014\n\004port\030\006 \001(\r\022\023\n\013onli"
-      "necount\030\007 \001(\r\"(\n\027S2SRemoveOnlineToDirReq"
-      "\022\r\n\005appid\030\001 \001(\004\"i\n\033S2SRegisterAgentToSer"
-      "verReq\022\017\n\007agentid\030\001 \001(\014\022\017\n\007localip\030\002 \001(\014"
-      "\022\014\n\004name\030\003 \001(\014\022\014\n\004type\030\004 \001(\014\022\014\n\004port\030\005 \001"
-      "(\r\"\202\001\n\017PBDeployCommand\022\017\n\007command\030\001 \001(\014\022"
-      "\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022\r\n\005app"
-      "id\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030\006 \001(\014\022"
-      "\016\n\006logurl\030\007 \001(\014\"K\n\032S2SDeployCommandToAge"
-      "ntReq\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBD"
-      "eployCommand\"L\n\033S2SDeployCommandToMaster"
-      "Req\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBDep"
-      "loyCommand\"L\n\033S2SDeployCommandToServerRe"
-      "q\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg.PBDeplo"
-      "yCommand*\362\n\n\rFrameProtocol\022\034\n\030S2S_FRAME_"
-      "PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REGISTER_TO_SERV"
-      "ER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SERVER_ACK\020"
-      "\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVER\020\223N\022$\n\037"
-      "S2S_TELL_UNREGISTER_FROM_SERVER\020\224N\022\'\n\"S2"
-      "S_CLUSTER_REGISTER_TO_MASTER_REQ\020\233N\022%\n S"
-      "2S_CLUSTER_UPDATE_TO_MASTER_REQ\020\234N\022#\n\036S2"
-      "S_CLUSTER_AUTH_TO_MASTER_REQ\020\235N\022#\n\036S2S_C"
-      "LUSTER_AUTH_TO_CLIENT_ACK\020\236N\022#\n\036S2S_CLUS"
-      "TER_TOKEN_TO_PROXY_REQ\020\237N\022$\n\037S2S_CLUSTER"
-      "_VERIFY_TO_PROXY_REQ\020\240N\022%\n S2S_CLUSTER_V"
-      "ERIFY_TO_CLIENT_ACK\020\241N\022-\n(S2S_CLUSTER_CL"
-      "IENT_DISCOVER_TO_SHARD_REQ\020\242N\022)\n$S2S_CLU"
-      "STER_CLIENT_LOST_TO_SHARD_REQ\020\243N\022$\n\037S2S_"
-      "ROUTE_MESSAGE_TO_CLIENT_ACK\020\365N\022&\n!S2S_RO"
-      "UTE_MESSAGE_TO_NAME_ALL_REQ\020\366N\022\'\n\"S2S_RO"
-      "UTE_MESSAGE_TO_NAME_RAND_REQ\020\367N\022*\n%S2S_R"
-      "OUTE_MESSAGE_TO_NAME_BALANCE_REQ\020\370N\022)\n$S"
-      "2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ\020\371N\022$"
-      "\n\037S2S_ROUTE_MESSAGE_TO_SERVER_REQ\020\372N\022$\n\037"
-      "S2S_ROUTE_MESSAGE_TO_PLAYER_REQ\020\373N\022\'\n\"S2"
-      "S_ROUTE_CLIENT_LOST_TO_SHARD_REQ\020\374N\022%\n S"
-      "2S_ROUTE_DISCOVER_TO_CLIENT_REQ\020\375N\022\'\n\"S2"
-      "S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ\020\376N\022&\n!S"
-      "2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ\020\377N\022)\n$S"
-      "2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ\020\200O\022\'"
-      "\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ\020\201O\022"
-      "&\n!S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ\020\202O\022"
-      ")\n$S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ\020"
-      "\203O\022%\n S2S_REGISTER_AGENT_TO_SERVER_REQ\020\331"
-      "O\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020\332O\022"
-      "%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ\020\333O\022%"
-      "\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020\334O\022\020\n"
-      "\013S2S_LOG_REQ\020\245N\022!\n\034S2S_UPDATE_ONLINE_TO_"
-      "DIR_REQ\020\246N\022!\n\034S2S_REMOVE_ONLINE_TO_DIR_R"
-      "EQ\020\247Nb\006proto3"
+      "p_id\030\005 \001(\014\022\020\n\010log_info\030\006 \001(\014\"i\n\033S2SRegis"
+      "terAgentToServerReq\022\017\n\007agentid\030\001 \001(\014\022\017\n\007"
+      "localip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014\n\004type\030\004 \001("
+      "\014\022\014\n\004port\030\005 \001(\r\"\202\001\n\017PBDeployCommand\022\017\n\007c"
+      "ommand\030\001 \001(\014\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype"
+      "\030\003 \001(\014\022\r\n\005appid\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n"
+      "\005value\030\006 \001(\014\022\016\n\006logurl\030\007 \001(\014\"K\n\032S2SDeplo"
+      "yCommandToAgentReq\022-\n\rdeploycommand\030\001 \001("
+      "\0132\026.KFMsg.PBDeployCommand\"L\n\033S2SDeployCo"
+      "mmandToMasterReq\022-\n\rdeploycommand\030\001 \001(\0132"
+      "\026.KFMsg.PBDeployCommand\"L\n\033S2SDeployComm"
+      "andToServerReq\022-\n\rdeploycommand\030\001 \001(\0132\026."
+      "KFMsg.PBDeployCommand*\254\n\n\rFrameProtocol\022"
+      "\034\n\030S2S_FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REG"
+      "ISTER_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_T"
+      "O_SERVER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_"
+      "SERVER\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SE"
+      "RVER\020\224N\022%\n S2S_REGISTER_AGENT_TO_SERVER_"
+      "REQ\020\233N\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_RE"
+      "Q\020\234N\022%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ"
+      "\020\235N\022%\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020"
+      "\236N\022\'\n\"S2S_CLUSTER_REGISTER_TO_MASTER_REQ"
+      "\020\365N\022%\n S2S_CLUSTER_UPDATE_TO_MASTER_REQ\020"
+      "\366N\022#\n\036S2S_CLUSTER_AUTH_TO_MASTER_REQ\020\367N\022"
+      "#\n\036S2S_CLUSTER_AUTH_TO_CLIENT_ACK\020\370N\022#\n\036"
+      "S2S_CLUSTER_TOKEN_TO_PROXY_REQ\020\371N\022$\n\037S2S"
+      "_CLUSTER_VERIFY_TO_PROXY_REQ\020\372N\022%\n S2S_C"
+      "LUSTER_VERIFY_TO_CLIENT_ACK\020\373N\022-\n(S2S_CL"
+      "USTER_CLIENT_DISCOVER_TO_SHARD_REQ\020\374N\022)\n"
+      "$S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ\020\375N"
+      "\022$\n\037S2S_ROUTE_MESSAGE_TO_CLIENT_ACK\020\331O\022&"
+      "\n!S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ\020\332O\022\'"
+      "\n\"S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ\020\333O\022"
+      "*\n%S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ"
+      "\020\334O\022)\n$S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_"
+      "REQ\020\335O\022$\n\037S2S_ROUTE_MESSAGE_TO_SERVER_RE"
+      "Q\020\336O\022$\n\037S2S_ROUTE_MESSAGE_TO_PLAYER_REQ\020"
+      "\337O\022\'\n\"S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ"
+      "\020\340O\022%\n S2S_ROUTE_DISCOVER_TO_CLIENT_REQ\020"
+      "\341O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ"
+      "\020\342O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ"
+      "\020\343O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_"
+      "REQ\020\344O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHARD"
+      "_REQ\020\345O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_SHARD"
+      "_REQ\020\346O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_SH"
+      "ARD_REQ\020\347O\022\020\n\013S2S_LOG_REQ\020\245Nb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4773);
+      descriptor, 4516);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFFrameMessage.proto", &protobuf_RegisterTypes);
 }
@@ -1375,14 +1306,7 @@ bool FrameProtocol_IsValid(int value) {
     case 10012:
     case 10013:
     case 10014:
-    case 10015:
-    case 10016:
-    case 10017:
-    case 10018:
-    case 10019:
     case 10021:
-    case 10022:
-    case 10023:
     case 10101:
     case 10102:
     case 10103:
@@ -1392,16 +1316,21 @@ bool FrameProtocol_IsValid(int value) {
     case 10107:
     case 10108:
     case 10109:
-    case 10110:
-    case 10111:
-    case 10112:
-    case 10113:
-    case 10114:
-    case 10115:
     case 10201:
     case 10202:
     case 10203:
     case 10204:
+    case 10205:
+    case 10206:
+    case 10207:
+    case 10208:
+    case 10209:
+    case 10210:
+    case 10211:
+    case 10212:
+    case 10213:
+    case 10214:
+    case 10215:
       return true;
     default:
       return false;
@@ -11695,694 +11624,6 @@ void S2SLogReq::InternalSwap(S2SLogReq* other) {
 
 // ===================================================================
 
-void S2SUpdateOnlineToDirReq::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SUpdateOnlineToDirReq::kZoneidFieldNumber;
-const int S2SUpdateOnlineToDirReq::kZonenameFieldNumber;
-const int S2SUpdateOnlineToDirReq::kZonechannelFieldNumber;
-const int S2SUpdateOnlineToDirReq::kAppidFieldNumber;
-const int S2SUpdateOnlineToDirReq::kIpFieldNumber;
-const int S2SUpdateOnlineToDirReq::kPortFieldNumber;
-const int S2SUpdateOnlineToDirReq::kOnlinecountFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-S2SUpdateOnlineToDirReq::S2SUpdateOnlineToDirReq()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  ::google::protobuf::internal::InitSCC(
-      &protobuf_KFFrameMessage_2eproto::scc_info_S2SUpdateOnlineToDirReq.base);
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:KFMsg.S2SUpdateOnlineToDirReq)
-}
-S2SUpdateOnlineToDirReq::S2SUpdateOnlineToDirReq(const S2SUpdateOnlineToDirReq& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  zonename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.zonename().size() > 0) {
-    zonename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.zonename_);
-  }
-  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.ip().size() > 0) {
-    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
-  }
-  ::memcpy(&zoneid_, &from.zoneid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&onlinecount_) -
-    reinterpret_cast<char*>(&zoneid_)) + sizeof(onlinecount_));
-  // @@protoc_insertion_point(copy_constructor:KFMsg.S2SUpdateOnlineToDirReq)
-}
-
-void S2SUpdateOnlineToDirReq::SharedCtor() {
-  zonename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&zoneid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&onlinecount_) -
-      reinterpret_cast<char*>(&zoneid_)) + sizeof(onlinecount_));
-}
-
-S2SUpdateOnlineToDirReq::~S2SUpdateOnlineToDirReq() {
-  // @@protoc_insertion_point(destructor:KFMsg.S2SUpdateOnlineToDirReq)
-  SharedDtor();
-}
-
-void S2SUpdateOnlineToDirReq::SharedDtor() {
-  zonename_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-
-void S2SUpdateOnlineToDirReq::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const ::google::protobuf::Descriptor* S2SUpdateOnlineToDirReq::descriptor() {
-  ::protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const S2SUpdateOnlineToDirReq& S2SUpdateOnlineToDirReq::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_KFFrameMessage_2eproto::scc_info_S2SUpdateOnlineToDirReq.base);
-  return *internal_default_instance();
-}
-
-
-void S2SUpdateOnlineToDirReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:KFMsg.S2SUpdateOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  zonename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&zoneid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&onlinecount_) -
-      reinterpret_cast<char*>(&zoneid_)) + sizeof(onlinecount_));
-  _internal_metadata_.Clear();
-}
-
-bool S2SUpdateOnlineToDirReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:KFMsg.S2SUpdateOnlineToDirReq)
-  for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 zoneid = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zoneid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes zonename = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_zonename()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 zonechannel = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &zonechannel_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 appid = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &appid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes ip = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_ip()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 port = 6;
-      case 6: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &port_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 onlinecount = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &onlinecount_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:KFMsg.S2SUpdateOnlineToDirReq)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.S2SUpdateOnlineToDirReq)
-  return false;
-#undef DO_
-}
-
-void S2SUpdateOnlineToDirReq::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.S2SUpdateOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint32 zoneid = 1;
-  if (this->zoneid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->zoneid(), output);
-  }
-
-  // bytes zonename = 2;
-  if (this->zonename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      2, this->zonename(), output);
-  }
-
-  // uint32 zonechannel = 3;
-  if (this->zonechannel() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->zonechannel(), output);
-  }
-
-  // uint64 appid = 4;
-  if (this->appid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->appid(), output);
-  }
-
-  // bytes ip = 5;
-  if (this->ip().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->ip(), output);
-  }
-
-  // uint32 port = 6;
-  if (this->port() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->port(), output);
-  }
-
-  // uint32 onlinecount = 7;
-  if (this->onlinecount() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->onlinecount(), output);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
-  }
-  // @@protoc_insertion_point(serialize_end:KFMsg.S2SUpdateOnlineToDirReq)
-}
-
-::google::protobuf::uint8* S2SUpdateOnlineToDirReq::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SUpdateOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint32 zoneid = 1;
-  if (this->zoneid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->zoneid(), target);
-  }
-
-  // bytes zonename = 2;
-  if (this->zonename().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        2, this->zonename(), target);
-  }
-
-  // uint32 zonechannel = 3;
-  if (this->zonechannel() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->zonechannel(), target);
-  }
-
-  // uint64 appid = 4;
-  if (this->appid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->appid(), target);
-  }
-
-  // bytes ip = 5;
-  if (this->ip().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        5, this->ip(), target);
-  }
-
-  // uint32 port = 6;
-  if (this->port() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->port(), target);
-  }
-
-  // uint32 onlinecount = 7;
-  if (this->onlinecount() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->onlinecount(), target);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SUpdateOnlineToDirReq)
-  return target;
-}
-
-size_t S2SUpdateOnlineToDirReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SUpdateOnlineToDirReq)
-  size_t total_size = 0;
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
-  }
-  // bytes zonename = 2;
-  if (this->zonename().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->zonename());
-  }
-
-  // bytes ip = 5;
-  if (this->ip().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->ip());
-  }
-
-  // uint32 zoneid = 1;
-  if (this->zoneid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->zoneid());
-  }
-
-  // uint32 zonechannel = 3;
-  if (this->zonechannel() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->zonechannel());
-  }
-
-  // uint64 appid = 4;
-  if (this->appid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->appid());
-  }
-
-  // uint32 port = 6;
-  if (this->port() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->port());
-  }
-
-  // uint32 onlinecount = 7;
-  if (this->onlinecount() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->onlinecount());
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void S2SUpdateOnlineToDirReq::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SUpdateOnlineToDirReq)
-  GOOGLE_DCHECK_NE(&from, this);
-  const S2SUpdateOnlineToDirReq* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const S2SUpdateOnlineToDirReq>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SUpdateOnlineToDirReq)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SUpdateOnlineToDirReq)
-    MergeFrom(*source);
-  }
-}
-
-void S2SUpdateOnlineToDirReq::MergeFrom(const S2SUpdateOnlineToDirReq& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SUpdateOnlineToDirReq)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.zonename().size() > 0) {
-
-    zonename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.zonename_);
-  }
-  if (from.ip().size() > 0) {
-
-    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
-  }
-  if (from.zoneid() != 0) {
-    set_zoneid(from.zoneid());
-  }
-  if (from.zonechannel() != 0) {
-    set_zonechannel(from.zonechannel());
-  }
-  if (from.appid() != 0) {
-    set_appid(from.appid());
-  }
-  if (from.port() != 0) {
-    set_port(from.port());
-  }
-  if (from.onlinecount() != 0) {
-    set_onlinecount(from.onlinecount());
-  }
-}
-
-void S2SUpdateOnlineToDirReq::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SUpdateOnlineToDirReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SUpdateOnlineToDirReq::CopyFrom(const S2SUpdateOnlineToDirReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SUpdateOnlineToDirReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SUpdateOnlineToDirReq::IsInitialized() const {
-  return true;
-}
-
-void S2SUpdateOnlineToDirReq::Swap(S2SUpdateOnlineToDirReq* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void S2SUpdateOnlineToDirReq::InternalSwap(S2SUpdateOnlineToDirReq* other) {
-  using std::swap;
-  zonename_.Swap(&other->zonename_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  ip_.Swap(&other->ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(zoneid_, other->zoneid_);
-  swap(zonechannel_, other->zonechannel_);
-  swap(appid_, other->appid_);
-  swap(port_, other->port_);
-  swap(onlinecount_, other->onlinecount_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-}
-
-::google::protobuf::Metadata S2SUpdateOnlineToDirReq::GetMetadata() const {
-  protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
-void S2SRemoveOnlineToDirReq::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRemoveOnlineToDirReq::kAppidFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-S2SRemoveOnlineToDirReq::S2SRemoveOnlineToDirReq()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  ::google::protobuf::internal::InitSCC(
-      &protobuf_KFFrameMessage_2eproto::scc_info_S2SRemoveOnlineToDirReq.base);
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:KFMsg.S2SRemoveOnlineToDirReq)
-}
-S2SRemoveOnlineToDirReq::S2SRemoveOnlineToDirReq(const S2SRemoveOnlineToDirReq& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  appid_ = from.appid_;
-  // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRemoveOnlineToDirReq)
-}
-
-void S2SRemoveOnlineToDirReq::SharedCtor() {
-  appid_ = GOOGLE_ULONGLONG(0);
-}
-
-S2SRemoveOnlineToDirReq::~S2SRemoveOnlineToDirReq() {
-  // @@protoc_insertion_point(destructor:KFMsg.S2SRemoveOnlineToDirReq)
-  SharedDtor();
-}
-
-void S2SRemoveOnlineToDirReq::SharedDtor() {
-}
-
-void S2SRemoveOnlineToDirReq::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const ::google::protobuf::Descriptor* S2SRemoveOnlineToDirReq::descriptor() {
-  ::protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const S2SRemoveOnlineToDirReq& S2SRemoveOnlineToDirReq::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_KFFrameMessage_2eproto::scc_info_S2SRemoveOnlineToDirReq.base);
-  return *internal_default_instance();
-}
-
-
-void S2SRemoveOnlineToDirReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:KFMsg.S2SRemoveOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  appid_ = GOOGLE_ULONGLONG(0);
-  _internal_metadata_.Clear();
-}
-
-bool S2SRemoveOnlineToDirReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:KFMsg.S2SRemoveOnlineToDirReq)
-  for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 appid = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &appid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:KFMsg.S2SRemoveOnlineToDirReq)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRemoveOnlineToDirReq)
-  return false;
-#undef DO_
-}
-
-void S2SRemoveOnlineToDirReq::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRemoveOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint64 appid = 1;
-  if (this->appid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->appid(), output);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
-  }
-  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRemoveOnlineToDirReq)
-}
-
-::google::protobuf::uint8* S2SRemoveOnlineToDirReq::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRemoveOnlineToDirReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint64 appid = 1;
-  if (this->appid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->appid(), target);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRemoveOnlineToDirReq)
-  return target;
-}
-
-size_t S2SRemoveOnlineToDirReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRemoveOnlineToDirReq)
-  size_t total_size = 0;
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
-  }
-  // uint64 appid = 1;
-  if (this->appid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->appid());
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void S2SRemoveOnlineToDirReq::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRemoveOnlineToDirReq)
-  GOOGLE_DCHECK_NE(&from, this);
-  const S2SRemoveOnlineToDirReq* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRemoveOnlineToDirReq>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRemoveOnlineToDirReq)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRemoveOnlineToDirReq)
-    MergeFrom(*source);
-  }
-}
-
-void S2SRemoveOnlineToDirReq::MergeFrom(const S2SRemoveOnlineToDirReq& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRemoveOnlineToDirReq)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.appid() != 0) {
-    set_appid(from.appid());
-  }
-}
-
-void S2SRemoveOnlineToDirReq::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRemoveOnlineToDirReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SRemoveOnlineToDirReq::CopyFrom(const S2SRemoveOnlineToDirReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRemoveOnlineToDirReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SRemoveOnlineToDirReq::IsInitialized() const {
-  return true;
-}
-
-void S2SRemoveOnlineToDirReq::Swap(S2SRemoveOnlineToDirReq* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void S2SRemoveOnlineToDirReq::InternalSwap(S2SRemoveOnlineToDirReq* other) {
-  using std::swap;
-  swap(appid_, other->appid_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-}
-
-::google::protobuf::Metadata S2SRemoveOnlineToDirReq::GetMetadata() const {
-  protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
 void S2SRegisterAgentToServerReq::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -14085,12 +13326,6 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteRemoveObjectToSha
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SLogReq* Arena::CreateMaybeMessage< ::KFMsg::S2SLogReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SLogReq >(arena);
-}
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SUpdateOnlineToDirReq* Arena::CreateMaybeMessage< ::KFMsg::S2SUpdateOnlineToDirReq >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::S2SUpdateOnlineToDirReq >(arena);
-}
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRemoveOnlineToDirReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRemoveOnlineToDirReq >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::S2SRemoveOnlineToDirReq >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRegisterAgentToServerReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRegisterAgentToServerReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SRegisterAgentToServerReq >(arena);
