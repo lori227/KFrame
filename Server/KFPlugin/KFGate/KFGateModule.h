@@ -15,11 +15,10 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -34,20 +33,7 @@ namespace KFrame
 
         // 关闭
         virtual void BeforeShut();
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-    protected:
-        // 创建代理玩家
-        KFRole* CreateRole( uint64 roleid );
 
-        // 查找代理玩家
-        KFRole* FindRole( uint64 roleid );
-
-        // 删除代理玩家
-        bool RemoveRole( uint64 roleid );
-
-        // 获得玩家数量
-        uint32 GetRoleCount();
     protected:
         // 连接成功
         __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionLogin );
@@ -58,18 +44,14 @@ namespace KFrame
         // 玩家掉线
         __KF_SERVER_LOST_FUNCTION__( OnPlayerDisconnection );
 
-        // 走马灯
-        __KF_COMMAND_FUNCTION__( OnCommandMarquee );
-
-        // 系统公告
-        __KF_COMMAND_FUNCTION__( OnCommandNotice );
-
         // 发送消息到客户端
         __KF_TRANSMIT_MESSAGE_FUNCTION__( SendToClient );
 
         // 发送消息到游戏服务器
         __KF_TRANSMIT_MESSAGE_FUNCTION__( SendMessageToGame );
 
+        // 更新在线玩家数量
+        __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToAuth );
     protected:
         // 登录验证
         __KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );

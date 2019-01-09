@@ -18,6 +18,7 @@
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFDeployCommand/KFDeployCommandInterface.h"
 #include "KFOnlineEx.h"
 
 namespace KFrame
@@ -65,6 +66,11 @@ namespace KFrame
         // 发现Game
         __KF_SERVER_DISCOVER_FUNCTION__( OnServerDisCoverGame );
 
+        // 走马灯
+        __KF_COMMAND_FUNCTION__( OnCommandMarquee );
+
+        // 系统公告
+        __KF_COMMAND_FUNCTION__( OnCommandNotice );
     protected:
         // 验证登录
         __KF_MESSAGE_FUNCTION__( HandleLoginWorldVerifyReq );

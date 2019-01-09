@@ -16,6 +16,9 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD, &KFWorldModule::HandleBroadcastMessageReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &KFWorldModule::HandlePlayerEnterWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &KFWorldModule::HandlePlayerLeaveWorldReq );
+
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFWorldModule::OnCommandNotice );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFWorldModule::OnCommandMarquee );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
     }
@@ -24,6 +27,9 @@ namespace KFrame
     {
         __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ) );
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_TRANSMIT_TO_PLAYER );
@@ -270,5 +276,20 @@ namespace KFrame
         KickOnline( playerid, __FUNC_LINE__ );
 
         return _invalid_str;
+    }
+
+
+    __KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandMarquee )
+    {
+        KFMsg::MsgTellMarquee tell;
+        tell.set_content( param );
+        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_MARQUEE, &tell );
+    }
+
+    __KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandNotice )
+    {
+        KFMsg::MsgTellSysNotcie tell;
+        tell.set_content( param );
+        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
     }
 }

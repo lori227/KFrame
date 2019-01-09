@@ -5,13 +5,14 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
+        __REGISTER_LOOP_TIMER__( 0, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
+
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostLogin );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionLogin );
         __REGISTER_SERVER_LOST_FUNCTION__( &KFGateModule::OnPlayerDisconnection );
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendToClient );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFGateModule::OnCommandMarquee );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFGateModule::OnCommandNotice );
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ, &KFGateModule::HandleLoginVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &KFGateModule::HandleLoginVerifyAck );
@@ -24,12 +25,13 @@ namespace KFrame
 
     void KFGateModule::BeforeShut()
     {
+        __UNREGISTER_TIMER__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_GATE_PLAYER_REQ );
@@ -39,28 +41,22 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRole* KFGateModule::CreateRole( uint64 roleid )
-    {
-        auto kfrole = _kf_role_list.Create( roleid );
-        kfrole->_role_id = roleid;
 
-        return kfrole;
-    }
-
-    KFRole* KFGateModule::FindRole( uint64 roleid )
+    __KF_TIMER_FUNCTION__( KFGateModule::OnTimerUpdateOnlineToAuth )
     {
-        return _kf_role_list.Find( roleid );
-    }
+        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( dirupdate );
 
-    bool KFGateModule::RemoveRole( uint64 roleid )
-    {
-        return _kf_role_list.Remove( roleid );
-    }
+        // 更新gate的负载信息
+        auto kfzone = _kf_zone->GetZone();
+        auto kfglobal = KFGlobal::Instance();
 
-    uint32 KFGateModule::GetRoleCount()
-    {
-        return _kf_role_list.Size();
+        __JSON_DOCUMENT__( kfjson );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), kfzone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), kfzone->_name );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), kfglobal->_interanet_ip );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), kfglobal->_listen_port );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _kf_role_list.Size() );
+        _kf_http_client->StartMTHttpClient( _url, kfjson );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +87,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfrole = FindRole( playerid );
+        auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole != nullptr )
         {
             kfrole->SendToClient( msgid, data, length );
@@ -108,7 +104,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfrole = FindRole( playerid );
+        auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole != nullptr )
         {
             kfrole->SendMessageToGame( msgid, data, length );
@@ -224,7 +220,7 @@ namespace KFrame
         }
 
         // 创建角色
-        auto kfrole = CreateRole( pblogin->playerid() );
+        auto kfrole = _kf_role_list.Create( pblogin->playerid() );
         kfrole->_game_id = __KF_HEAD_ID__( kfid );
         kfrole->_role_id = pblogin->playerid();
         kfrole->_session_id = pblogin->sessionid();
@@ -246,7 +242,7 @@ namespace KFrame
 
     __KF_SERVER_LOST_FUNCTION__( KFGateModule::OnPlayerDisconnection )
     {
-        auto kfrole = FindRole( handleid );
+        auto kfrole = _kf_role_list.Find( handleid );
         if ( kfrole == nullptr )
         {
             return;
@@ -259,7 +255,7 @@ namespace KFrame
         kfrole->SendMessageToGame( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &req );
 
         // 删除玩家
-        RemoveRole( handleid );
+        _kf_role_list.Remove( handleid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickGatePlayerReq )
@@ -267,7 +263,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SKickGatePlayerReq );
 
         auto playerid = kfmsg.playerid();
-        auto kfrole = FindRole( playerid );
+        auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole == nullptr )
         {
             return;
@@ -281,14 +277,14 @@ namespace KFrame
         // 删除连接关系
         _kf_tcp_server->CloseNetHandle( kfrole->_session_id, 1000, __FUNC_LINE__ );
 
-        // 删除内存
-        RemoveRole( playerid );
+        // 删除玩家
+        _kf_role_list.Remove( playerid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginOutReq )
     {
         auto playerid = __KF_HEAD_ID__( kfid );
-        auto kfrole = FindRole( playerid );
+        auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole == nullptr )
         {
             return;
@@ -304,20 +300,7 @@ namespace KFrame
         kfrole->SendMessageToGame( KFMsg::S2S_LOGIN_OUT_REQ, &req );
 
         // 删除玩家
-        RemoveRole( playerid );
+        _kf_role_list.Remove( playerid );
     }
 
-    __KF_COMMAND_FUNCTION__( KFGateModule::OnCommandMarquee )
-    {
-        KFMsg::MsgTellMarquee tell;
-        tell.set_content( param );
-        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_MARQUEE, &tell );
-    }
-
-    __KF_COMMAND_FUNCTION__( KFGateModule::OnCommandNotice )
-    {
-        KFMsg::MsgTellSysNotcie tell;
-        tell.set_content( param );
-        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SYS_NOTICE, &tell );
-    }
 }

@@ -54,6 +54,7 @@ namespace KFrame
         __STRING_DEFINE__( dir );
         __STRING_DEFINE__( dirurl );
         __STRING_DEFINE__( dirlist );
+        __STRING_DEFINE__( dirupdate );
         __STRING_DEFINE__( updatezone );
         __STRING_DEFINE__( lostzone );
         __STRING_DEFINE__( zonelist );
