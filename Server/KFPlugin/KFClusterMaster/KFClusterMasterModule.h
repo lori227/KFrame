@@ -84,10 +84,6 @@ namespace KFrame
 
         // 选择ProxyServer
         KFProxyData* SelectProxyServer();
-        KFProxyData* HashProxyServer( uint64 clientid );
-
-        // 查找代理服务器
-        KFProxyData* FindProxyServer( uint64 handleid );
 
     private:
         // gate连接列表

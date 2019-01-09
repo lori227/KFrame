@@ -57,11 +57,6 @@ namespace KFrame
         _kf_proxy_list.Remove( handleid );
     }
 
-    KFProxyData* KFClusterMasterModule::FindProxyServer( uint64 handleid )
-    {
-        return _kf_proxy_list.Find( handleid );
-    }
-
     KFProxyData* KFClusterMasterModule::SelectProxyServer()
     {
         auto maxclientcount = __MAX_UINT32__;
