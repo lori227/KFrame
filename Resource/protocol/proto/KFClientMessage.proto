@@ -58,7 +58,7 @@ enum ClientProtocol
 	MSG_REMOVE_DATA_REQ = 147;					// 请求删除属性
 	MSG_DRESS_CLOTHES_REQ = 148;				// 穿戴时装
 	MSG_CHANGE_MODEL_REQ = 149;					// 修改模型
-	MSG_SHOW_REWARD_AGENT = 150;				// 显示奖励
+	MSG_SHOW_REWARD_ELEMENT = 150;				// 显示奖励
 	MSG_INVITE_MATCH_GROUP_REQ = 151;			// 邀请加入队伍
 	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// 回复邀请组队
 	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// 离开队伍
@@ -522,8 +522,8 @@ message MsgDebugCommandReq
 }
 
 // 显示奖励的物品
-// MSG_SHOW_REWARD_AGENT
-message MsgShowRewardAgent
+// MSG_SHOW_REWARD_ELEMENT
+message MsgShowRewardElement
 {
 	bytes reward = 1;	// 奖励字串( 客户端需要解析 )
 }

@@ -17,7 +17,7 @@ namespace KFrame
         _kf_component->RegisterSyncAddFunction( this, &KFPlayerModule::SendAddDataToClient );
         _kf_component->RegisterSyncRemoveFunction( this, &KFPlayerModule::SendRemoveDataToClient );
         _kf_component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
-        _kf_component->RegisterShowRewardFunction( this, &KFPlayerModule::SendRewardAgentToClient );
+        _kf_component->RegisterShowRewardFunction( this, &KFPlayerModule::SendRewardElementToClient );
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         _kf_data->BindLoadPlayerFunction( this, &KFPlayerModule::OnLoadPlayerData );
@@ -172,7 +172,8 @@ namespace KFrame
             auto kffunction = iter.second;
             kffunction->_function( kfentity );
         }
-    }    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFPlayerModule::LoadPlayer( const KFMsg::PBLoginData* pblogin )
     {
@@ -356,11 +357,11 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendRewardAgentToClient( KFEntity* player, const std::string& reward )
+    void KFPlayerModule::SendRewardElementToClient( KFEntity* player, const std::string& reward )
     {
-        KFMsg::MsgShowRewardAgent show;
+        KFMsg::MsgShowRewardElement show;
         show.set_reward( reward );
-        _kf_game->SendToClient( player, KFMsg::MSG_SHOW_REWARD_AGENT, &show );
+        _kf_game->SendToClient( player, KFMsg::MSG_SHOW_REWARD_ELEMENT, &show );
     }
 
     // 判断操作频率

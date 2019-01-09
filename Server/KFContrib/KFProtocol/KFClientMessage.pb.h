@@ -327,9 +327,9 @@ LIBPROTOC_EXPORT extern MsgSetWishOrderReqDefaultTypeInternal _MsgSetWishOrderRe
 class MsgSevenSignInRewardReq;
 class MsgSevenSignInRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSevenSignInRewardReqDefaultTypeInternal _MsgSevenSignInRewardReq_default_instance_;
-class MsgShowRewardAgent;
-class MsgShowRewardAgentDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgShowRewardAgentDefaultTypeInternal _MsgShowRewardAgent_default_instance_;
+class MsgShowRewardElement;
+class MsgShowRewardElementDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgShowRewardElementDefaultTypeInternal _MsgShowRewardElement_default_instance_;
 class MsgStartMatchAck;
 class MsgStartMatchAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgStartMatchAckDefaultTypeInternal _MsgStartMatchAck_default_instance_;
@@ -494,7 +494,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetModelDefaultClothesReq* Arena::Create
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetRefuseFriendInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetRefuseFriendInviteReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetWishOrderReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetWishOrderReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSevenSignInRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgSevenSignInRewardReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgShowRewardAgent* Arena::CreateMaybeMessage<::KFMsg::MsgShowRewardAgent>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgShowRewardElement* Arena::CreateMaybeMessage<::KFMsg::MsgShowRewardElement>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgStartMatchAck* Arena::CreateMaybeMessage<::KFMsg::MsgStartMatchAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgStartMatchReq* Arena::CreateMaybeMessage<::KFMsg::MsgStartMatchReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncAddData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncAddData>(Arena*);
@@ -573,7 +573,7 @@ enum ClientProtocol {
   MSG_REMOVE_DATA_REQ = 147,
   MSG_DRESS_CLOTHES_REQ = 148,
   MSG_CHANGE_MODEL_REQ = 149,
-  MSG_SHOW_REWARD_AGENT = 150,
+  MSG_SHOW_REWARD_ELEMENT = 150,
   MSG_INVITE_MATCH_GROUP_REQ = 151,
   MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153,
   MSG_LEAVE_MATCH_GROUP_REQ = 154,
@@ -5967,24 +5967,24 @@ class LIBPROTOC_EXPORT MsgDebugCommandReq : public ::google::protobuf::Message /
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT MsgShowRewardAgent : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgShowRewardAgent) */ {
+class LIBPROTOC_EXPORT MsgShowRewardElement : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgShowRewardElement) */ {
  public:
-  MsgShowRewardAgent();
-  virtual ~MsgShowRewardAgent();
+  MsgShowRewardElement();
+  virtual ~MsgShowRewardElement();
 
-  MsgShowRewardAgent(const MsgShowRewardAgent& from);
+  MsgShowRewardElement(const MsgShowRewardElement& from);
 
-  inline MsgShowRewardAgent& operator=(const MsgShowRewardAgent& from) {
+  inline MsgShowRewardElement& operator=(const MsgShowRewardElement& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  MsgShowRewardAgent(MsgShowRewardAgent&& from) noexcept
-    : MsgShowRewardAgent() {
+  MsgShowRewardElement(MsgShowRewardElement&& from) noexcept
+    : MsgShowRewardElement() {
     *this = ::std::move(from);
   }
 
-  inline MsgShowRewardAgent& operator=(MsgShowRewardAgent&& from) noexcept {
+  inline MsgShowRewardElement& operator=(MsgShowRewardElement&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -5994,34 +5994,34 @@ class LIBPROTOC_EXPORT MsgShowRewardAgent : public ::google::protobuf::Message /
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgShowRewardAgent& default_instance();
+  static const MsgShowRewardElement& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgShowRewardAgent* internal_default_instance() {
-    return reinterpret_cast<const MsgShowRewardAgent*>(
-               &_MsgShowRewardAgent_default_instance_);
+  static inline const MsgShowRewardElement* internal_default_instance() {
+    return reinterpret_cast<const MsgShowRewardElement*>(
+               &_MsgShowRewardElement_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     46;
 
-  void Swap(MsgShowRewardAgent* other);
-  friend void swap(MsgShowRewardAgent& a, MsgShowRewardAgent& b) {
+  void Swap(MsgShowRewardElement* other);
+  friend void swap(MsgShowRewardElement& a, MsgShowRewardElement& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MsgShowRewardAgent* New() const final {
-    return CreateMaybeMessage<MsgShowRewardAgent>(NULL);
+  inline MsgShowRewardElement* New() const final {
+    return CreateMaybeMessage<MsgShowRewardElement>(NULL);
   }
 
-  MsgShowRewardAgent* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgShowRewardAgent>(arena);
+  MsgShowRewardElement* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgShowRewardElement>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgShowRewardAgent& from);
-  void MergeFrom(const MsgShowRewardAgent& from);
+  void CopyFrom(const MsgShowRewardElement& from);
+  void MergeFrom(const MsgShowRewardElement& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -6038,7 +6038,7 @@ class LIBPROTOC_EXPORT MsgShowRewardAgent : public ::google::protobuf::Message /
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MsgShowRewardAgent* other);
+  void InternalSwap(MsgShowRewardElement* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -6068,7 +6068,7 @@ class LIBPROTOC_EXPORT MsgShowRewardAgent : public ::google::protobuf::Message /
   ::std::string* release_reward();
   void set_allocated_reward(::std::string* reward);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgShowRewardAgent)
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgShowRewardElement)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -16359,59 +16359,59 @@ MsgDebugCommandReq::mutable_params() {
 
 // -------------------------------------------------------------------
 
-// MsgShowRewardAgent
+// MsgShowRewardElement
 
 // bytes reward = 1;
-inline void MsgShowRewardAgent::clear_reward() {
+inline void MsgShowRewardElement::clear_reward() {
   reward_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgShowRewardAgent::reward() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgShowRewardAgent.reward)
+inline const ::std::string& MsgShowRewardElement::reward() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgShowRewardElement.reward)
   return reward_.GetNoArena();
 }
-inline void MsgShowRewardAgent::set_reward(const ::std::string& value) {
+inline void MsgShowRewardElement::set_reward(const ::std::string& value) {
   
   reward_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgShowRewardElement.reward)
 }
 #if LANG_CXX11
-inline void MsgShowRewardAgent::set_reward(::std::string&& value) {
+inline void MsgShowRewardElement::set_reward(::std::string&& value) {
   
   reward_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgShowRewardElement.reward)
 }
 #endif
-inline void MsgShowRewardAgent::set_reward(const char* value) {
+inline void MsgShowRewardElement::set_reward(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   reward_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgShowRewardElement.reward)
 }
-inline void MsgShowRewardAgent::set_reward(const void* value, size_t size) {
+inline void MsgShowRewardElement::set_reward(const void* value, size_t size) {
   
   reward_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgShowRewardElement.reward)
 }
-inline ::std::string* MsgShowRewardAgent::mutable_reward() {
+inline ::std::string* MsgShowRewardElement::mutable_reward() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgShowRewardElement.reward)
   return reward_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgShowRewardAgent::release_reward() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgShowRewardAgent.reward)
+inline ::std::string* MsgShowRewardElement::release_reward() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgShowRewardElement.reward)
   
   return reward_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgShowRewardAgent::set_allocated_reward(::std::string* reward) {
+inline void MsgShowRewardElement::set_allocated_reward(::std::string* reward) {
   if (reward != NULL) {
     
   } else {
     
   }
   reward_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), reward);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgShowRewardAgent.reward)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgShowRewardElement.reward)
 }
 
 // -------------------------------------------------------------------
