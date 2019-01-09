@@ -188,7 +188,10 @@ namespace KFrame
             return;
         }
 
-        auto ok = _kf_data->SavePlayerData( player );
+        // 保存数据库
+        KFMsg::PBObject pbplayerdata;
+        _kf_kernel->SerializeToData( player->GetData(), &pbplayerdata );
+        auto ok = _kf_data->SavePlayerData( player->GetKeyID(), &pbplayerdata );
         if ( !ok )
         {
             __LOG_ERROR__( "player[{}] save send failed!", player->GetKeyID() );

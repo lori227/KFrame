@@ -36,14 +36,11 @@ namespace KFrame
         _load_player_function( kfmsg.result(), &kfmsg.pblogin(), kfmsg.mutable_playerdata() );
     }
 
-    bool KFDataClientModule::SavePlayerData( KFEntity* player )
+    bool KFDataClientModule::SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata )
     {
-        auto kfobject = player->GetData();
-        //auto zoneid = KFUtility::CalcZoneId( kfobject->GetKeyID() );
-
         KFMsg::S2SSavePlayerReq req;
-        req.set_id( kfobject->GetKeyID() );
-        _kf_kernel->SerializeToData( kfobject, req.mutable_data() );
+        req.set_id( playerid );
+        req.mutable_data()->CopyFrom( *pbplayerdata );
         return _kf_route->SendToRand( __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_REQ, &req );
     }
 }

@@ -5,7 +5,6 @@
 
 namespace KFrame
 {
-    class KFEntity;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFDataClientInterface : public KFModule
     {
@@ -31,7 +30,7 @@ namespace KFrame
         virtual bool LoadPlayerData( const KFMsg::PBLoginData* pblogin ) = 0;
 
         // 保存玩家数据
-        virtual bool SavePlayerData( KFEntity* player ) = 0;
+        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata ) = 0;
 
     protected:
         // 设置回调函数

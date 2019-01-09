@@ -11,7 +11,6 @@
 
 #include "KFrame.h"
 #include "KFDataClientInterface.h"
-#include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 
@@ -34,7 +33,7 @@ namespace KFrame
         virtual bool LoadPlayerData( const KFMsg::PBLoginData* pblogin );
 
         // 保存玩家数据
-        virtual bool SavePlayerData( KFEntity* player );
+        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata );
 
     protected:
         // 设置回调函数
