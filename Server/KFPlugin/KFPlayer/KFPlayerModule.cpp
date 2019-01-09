@@ -137,18 +137,6 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::RunPlayer( KFEntity* kfentity )
-    {
-        // 逻辑更新
-        for ( auto iter : _player_run_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( kfentity );
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )
     {
         // 初始化个模块数据
@@ -176,6 +164,16 @@ namespace KFrame
         }
     }
 
+    void KFPlayerModule::RunPlayer( KFEntity* kfentity )
+    {
+        // 逻辑更新
+        for ( auto iter : _player_run_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( kfentity );
+        }
+    }    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFPlayerModule::LoadPlayer( const KFMsg::PBLoginData* pblogin )
     {
         return _kf_data->LoadPlayerData( pblogin );
@@ -189,7 +187,7 @@ namespace KFrame
         }
 
         // 保存数据库
-        KFMsg::PBObject pbplayerdata;
+        static KFMsg::PBObject pbplayerdata;
         _kf_kernel->SerializeToData( player->GetData(), &pbplayerdata );
         auto ok = _kf_data->SavePlayerData( player->GetKeyID(), &pbplayerdata );
         if ( !ok )
@@ -293,12 +291,14 @@ namespace KFrame
 
         kfbasic->SetValue( __KF_STRING__( id ), playerid );
         kfobject->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
+
         for ( auto iter : _new_player_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
         }
     }
+
 
     KFEntity* KFPlayerModule::FindPlayer( uint64 playerid, const char* function, uint32 line )
     {
