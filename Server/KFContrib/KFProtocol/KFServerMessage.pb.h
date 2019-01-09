@@ -921,7 +921,6 @@ enum ServerProtocol {
   S2S_ALLOC_BATTLE_ID_ACK = 11248,
   S2S_TRANSMIT_MESSAGE_REQ = 21001,
   S2S_BROADCAST_MESSAGE_REQ = 21002,
-  S2S_SAVE_PLAYER_REQ = 21003,
   S2S_DELETE_PLAYER_REQ = 21004,
   S2S_UPDATE_PUBLIC_DATA_REQ = 21005,
   S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006,
@@ -942,6 +941,7 @@ enum ServerProtocol {
   S2S_LOGIN_GAME_ACK = 21115,
   S2S_LOGIN_LOAD_PLAYER_REQ = 21116,
   S2S_LOGIN_LOAD_PLAYER_ACK = 21117,
+  S2S_SAVE_PLAYER_REQ = 21118,
   S2S_LOGIN_OUT_REQ = 21119,
   S2S_PLAYER_ENTER_WORLD_REQ = 21120,
   S2S_PLAYER_LEAVE_WORLD_REQ = 21121,
@@ -2134,129 +2134,6 @@ class LIBPROTOC_EXPORT S2STransmitToDataShardReq : public ::google::protobuf::Me
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SSavePlayerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SSavePlayerReq) */ {
- public:
-  S2SSavePlayerReq();
-  virtual ~S2SSavePlayerReq();
-
-  S2SSavePlayerReq(const S2SSavePlayerReq& from);
-
-  inline S2SSavePlayerReq& operator=(const S2SSavePlayerReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SSavePlayerReq(S2SSavePlayerReq&& from) noexcept
-    : S2SSavePlayerReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SSavePlayerReq& operator=(S2SSavePlayerReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SSavePlayerReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SSavePlayerReq* internal_default_instance() {
-    return reinterpret_cast<const S2SSavePlayerReq*>(
-               &_S2SSavePlayerReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    9;
-
-  void Swap(S2SSavePlayerReq* other);
-  friend void swap(S2SSavePlayerReq& a, S2SSavePlayerReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SSavePlayerReq* New() const final {
-    return CreateMaybeMessage<S2SSavePlayerReq>(NULL);
-  }
-
-  S2SSavePlayerReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SSavePlayerReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SSavePlayerReq& from);
-  void MergeFrom(const S2SSavePlayerReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SSavePlayerReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // .KFMsg.PBObject data = 3;
-  bool has_data() const;
-  void clear_data();
-  static const int kDataFieldNumber = 3;
-  private:
-  const ::KFMsg::PBObject& _internal_data() const;
-  public:
-  const ::KFMsg::PBObject& data() const;
-  ::KFMsg::PBObject* release_data();
-  ::KFMsg::PBObject* mutable_data();
-  void set_allocated_data(::KFMsg::PBObject* data);
-
-  // uint64 id = 1;
-  void clear_id();
-  static const int kIdFieldNumber = 1;
-  ::google::protobuf::uint64 id() const;
-  void set_id(::google::protobuf::uint64 value);
-
-  // uint32 zoneid = 2;
-  void clear_zoneid();
-  static const int kZoneidFieldNumber = 2;
-  ::google::protobuf::uint32 zoneid() const;
-  void set_zoneid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SSavePlayerReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBObject* data_;
-  ::google::protobuf::uint64 id_;
-  ::google::protobuf::uint32 zoneid_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
 class LIBPROTOC_EXPORT S2SDeletePlayerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDeletePlayerReq) */ {
  public:
   S2SDeletePlayerReq();
@@ -2292,7 +2169,7 @@ class LIBPROTOC_EXPORT S2SDeletePlayerReq : public ::google::protobuf::Message /
                &_S2SDeletePlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    9;
 
   void Swap(S2SDeletePlayerReq* other);
   friend void swap(S2SDeletePlayerReq& a, S2SDeletePlayerReq& b) {
@@ -2423,7 +2300,7 @@ class LIBPROTOC_EXPORT S2SUpdatePublicDataReq : public ::google::protobuf::Messa
                &_S2SUpdatePublicDataReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    11;
 
   void Swap(S2SUpdatePublicDataReq* other);
   friend void swap(S2SUpdatePublicDataReq& a, S2SUpdatePublicDataReq& b) {
@@ -2542,7 +2419,7 @@ class LIBPROTOC_EXPORT S2SKickGamePlayerReq : public ::google::protobuf::Message
                &_S2SKickGamePlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    12;
 
   void Swap(S2SKickGamePlayerReq* other);
   friend void swap(S2SKickGamePlayerReq& a, S2SKickGamePlayerReq& b) {
@@ -2652,7 +2529,7 @@ class LIBPROTOC_EXPORT S2SKickGatePlayerReq : public ::google::protobuf::Message
                &_S2SKickGatePlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    13;
 
   void Swap(S2SKickGatePlayerReq* other);
   friend void swap(S2SKickGatePlayerReq& a, S2SKickGatePlayerReq& b) {
@@ -2762,7 +2639,7 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyReq : public ::google::protobuf::Messa
                &_S2SLoginLoginVerifyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    14;
 
   void Swap(S2SLoginLoginVerifyReq* other);
   friend void swap(S2SLoginLoginVerifyReq& a, S2SLoginLoginVerifyReq& b) {
@@ -2902,7 +2779,7 @@ class LIBPROTOC_EXPORT S2SLoginLoginVerifyAck : public ::google::protobuf::Messa
                &_S2SLoginLoginVerifyAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    15;
 
   void Swap(S2SLoginLoginVerifyAck* other);
   friend void swap(S2SLoginLoginVerifyAck& a, S2SLoginLoginVerifyAck& b) {
@@ -3047,7 +2924,7 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
                &_PBLoginData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    17;
 
   void Swap(PBLoginData* other);
   friend void swap(PBLoginData& a, PBLoginData& b) {
@@ -3224,7 +3101,7 @@ class LIBPROTOC_EXPORT S2SLoginWorldVerifyReq : public ::google::protobuf::Messa
                &_S2SLoginWorldVerifyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    18;
 
   void Swap(S2SLoginWorldVerifyReq* other);
   friend void swap(S2SLoginWorldVerifyReq& a, S2SLoginWorldVerifyReq& b) {
@@ -3333,7 +3210,7 @@ class LIBPROTOC_EXPORT S2SLoginFailedToLoginAck : public ::google::protobuf::Mes
                &_S2SLoginFailedToLoginAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    19;
 
   void Swap(S2SLoginFailedToLoginAck* other);
   friend void swap(S2SLoginFailedToLoginAck& a, S2SLoginFailedToLoginAck& b) {
@@ -3457,7 +3334,7 @@ class LIBPROTOC_EXPORT S2SLoginTellTokenToGameReq : public ::google::protobuf::M
                &_S2SLoginTellTokenToGameReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    20;
 
   void Swap(S2SLoginTellTokenToGameReq* other);
   friend void swap(S2SLoginTellTokenToGameReq& a, S2SLoginTellTokenToGameReq& b) {
@@ -3566,7 +3443,7 @@ class LIBPROTOC_EXPORT S2SLoginGameAck : public ::google::protobuf::Message /* @
                &_S2SLoginGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    21;
 
   void Swap(S2SLoginGameAck* other);
   friend void swap(S2SLoginGameAck& a, S2SLoginGameAck& b) {
@@ -3702,7 +3579,7 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
                &_S2SLoginLoadPlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    22;
 
   void Swap(S2SLoginLoadPlayerReq* other);
   friend void swap(S2SLoginLoadPlayerReq& a, S2SLoginLoadPlayerReq& b) {
@@ -3766,18 +3643,11 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerReq : public ::google::protobuf::Messag
   ::KFMsg::PBLoginData* mutable_pblogin();
   void set_allocated_pblogin(::KFMsg::PBLoginData* pblogin);
 
-  // uint32 zoneid = 2;
-  void clear_zoneid();
-  static const int kZoneidFieldNumber = 2;
-  ::google::protobuf::uint32 zoneid() const;
-  void set_zoneid(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:KFMsg.S2SLoginLoadPlayerReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBLoginData* pblogin_;
-  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
 };
@@ -3818,7 +3688,7 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
                &_S2SLoginLoadPlayerAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    23;
 
   void Swap(S2SLoginLoadPlayerAck* other);
   friend void swap(S2SLoginLoadPlayerAck& a, S2SLoginLoadPlayerAck& b) {
@@ -3870,10 +3740,10 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBLoginData pblogin = 1;
+  // .KFMsg.PBLoginData pblogin = 2;
   bool has_pblogin() const;
   void clear_pblogin();
-  static const int kPbloginFieldNumber = 1;
+  static const int kPbloginFieldNumber = 2;
   private:
   const ::KFMsg::PBLoginData& _internal_pblogin() const;
   public:
@@ -3894,9 +3764,9 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   ::KFMsg::PBObject* mutable_playerdata();
   void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
 
-  // uint32 result = 2;
+  // uint32 result = 1;
   void clear_result();
-  static const int kResultFieldNumber = 2;
+  static const int kResultFieldNumber = 1;
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
@@ -3907,6 +3777,122 @@ class LIBPROTOC_EXPORT S2SLoginLoadPlayerAck : public ::google::protobuf::Messag
   ::KFMsg::PBLoginData* pblogin_;
   ::KFMsg::PBObject* playerdata_;
   ::google::protobuf::uint32 result_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SSavePlayerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SSavePlayerReq) */ {
+ public:
+  S2SSavePlayerReq();
+  virtual ~S2SSavePlayerReq();
+
+  S2SSavePlayerReq(const S2SSavePlayerReq& from);
+
+  inline S2SSavePlayerReq& operator=(const S2SSavePlayerReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SSavePlayerReq(S2SSavePlayerReq&& from) noexcept
+    : S2SSavePlayerReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SSavePlayerReq& operator=(S2SSavePlayerReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SSavePlayerReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SSavePlayerReq* internal_default_instance() {
+    return reinterpret_cast<const S2SSavePlayerReq*>(
+               &_S2SSavePlayerReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  void Swap(S2SSavePlayerReq* other);
+  friend void swap(S2SSavePlayerReq& a, S2SSavePlayerReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SSavePlayerReq* New() const final {
+    return CreateMaybeMessage<S2SSavePlayerReq>(NULL);
+  }
+
+  S2SSavePlayerReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SSavePlayerReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SSavePlayerReq& from);
+  void MergeFrom(const S2SSavePlayerReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SSavePlayerReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject data = 3;
+  bool has_data() const;
+  void clear_data();
+  static const int kDataFieldNumber = 3;
+  private:
+  const ::KFMsg::PBObject& _internal_data() const;
+  public:
+  const ::KFMsg::PBObject& data() const;
+  ::KFMsg::PBObject* release_data();
+  ::KFMsg::PBObject* mutable_data();
+  void set_allocated_data(::KFMsg::PBObject* data);
+
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SSavePlayerReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* data_;
+  ::google::protobuf::uint64 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
 };
@@ -24746,86 +24732,6 @@ inline void S2STransmitToDataShardReq::set_allocated_msgdata(::std::string* msgd
 
 // -------------------------------------------------------------------
 
-// S2SSavePlayerReq
-
-// uint64 id = 1;
-inline void S2SSavePlayerReq::clear_id() {
-  id_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SSavePlayerReq::id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerReq.id)
-  return id_;
-}
-inline void S2SSavePlayerReq::set_id(::google::protobuf::uint64 value) {
-  
-  id_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerReq.id)
-}
-
-// uint32 zoneid = 2;
-inline void S2SSavePlayerReq::clear_zoneid() {
-  zoneid_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SSavePlayerReq::zoneid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerReq.zoneid)
-  return zoneid_;
-}
-inline void S2SSavePlayerReq::set_zoneid(::google::protobuf::uint32 value) {
-  
-  zoneid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerReq.zoneid)
-}
-
-// .KFMsg.PBObject data = 3;
-inline bool S2SSavePlayerReq::has_data() const {
-  return this != internal_default_instance() && data_ != NULL;
-}
-inline const ::KFMsg::PBObject& S2SSavePlayerReq::_internal_data() const {
-  return *data_;
-}
-inline const ::KFMsg::PBObject& S2SSavePlayerReq::data() const {
-  const ::KFMsg::PBObject* p = data_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerReq.data)
-  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
-      &::KFMsg::_PBObject_default_instance_);
-}
-inline ::KFMsg::PBObject* S2SSavePlayerReq::release_data() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SSavePlayerReq.data)
-  
-  ::KFMsg::PBObject* temp = data_;
-  data_ = NULL;
-  return temp;
-}
-inline ::KFMsg::PBObject* S2SSavePlayerReq::mutable_data() {
-  
-  if (data_ == NULL) {
-    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
-    data_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SSavePlayerReq.data)
-  return data_;
-}
-inline void S2SSavePlayerReq::set_allocated_data(::KFMsg::PBObject* data) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete reinterpret_cast< ::google::protobuf::MessageLite*>(data_);
-  }
-  if (data) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      data = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, data, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  data_ = data;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSavePlayerReq.data)
-}
-
-// -------------------------------------------------------------------
-
 // S2SDeletePlayerReq
 
 // uint64 id = 1;
@@ -25724,25 +25630,25 @@ inline void S2SLoginLoadPlayerReq::set_allocated_pblogin(::KFMsg::PBLoginData* p
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLoginLoadPlayerReq.pblogin)
 }
 
-// uint32 zoneid = 2;
-inline void S2SLoginLoadPlayerReq::clear_zoneid() {
-  zoneid_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SLoginLoadPlayerReq::zoneid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLoginLoadPlayerReq.zoneid)
-  return zoneid_;
-}
-inline void S2SLoginLoadPlayerReq::set_zoneid(::google::protobuf::uint32 value) {
-  
-  zoneid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLoginLoadPlayerReq.zoneid)
-}
-
 // -------------------------------------------------------------------
 
 // S2SLoginLoadPlayerAck
 
-// .KFMsg.PBLoginData pblogin = 1;
+// uint32 result = 1;
+inline void S2SLoginLoadPlayerAck::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SLoginLoadPlayerAck::result() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SLoginLoadPlayerAck.result)
+  return result_;
+}
+inline void S2SLoginLoadPlayerAck::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SLoginLoadPlayerAck.result)
+}
+
+// .KFMsg.PBLoginData pblogin = 2;
 inline bool S2SLoginLoadPlayerAck::has_pblogin() const {
   return this != internal_default_instance() && pblogin_ != NULL;
 }
@@ -25796,20 +25702,6 @@ inline void S2SLoginLoadPlayerAck::set_allocated_pblogin(::KFMsg::PBLoginData* p
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLoginLoadPlayerAck.pblogin)
 }
 
-// uint32 result = 2;
-inline void S2SLoginLoadPlayerAck::clear_result() {
-  result_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SLoginLoadPlayerAck::result() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLoginLoadPlayerAck.result)
-  return result_;
-}
-inline void S2SLoginLoadPlayerAck::set_result(::google::protobuf::uint32 value) {
-  
-  result_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLoginLoadPlayerAck.result)
-}
-
 // .KFMsg.PBObject playerdata = 3;
 inline bool S2SLoginLoadPlayerAck::has_playerdata() const {
   return this != internal_default_instance() && playerdata_ != NULL;
@@ -25856,6 +25748,72 @@ inline void S2SLoginLoadPlayerAck::set_allocated_playerdata(::KFMsg::PBObject* p
   }
   playerdata_ = playerdata;
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLoginLoadPlayerAck.playerdata)
+}
+
+// -------------------------------------------------------------------
+
+// S2SSavePlayerReq
+
+// uint64 id = 1;
+inline void S2SSavePlayerReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SSavePlayerReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerReq.id)
+  return id_;
+}
+inline void S2SSavePlayerReq::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerReq.id)
+}
+
+// .KFMsg.PBObject data = 3;
+inline bool S2SSavePlayerReq::has_data() const {
+  return this != internal_default_instance() && data_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2SSavePlayerReq::_internal_data() const {
+  return *data_;
+}
+inline const ::KFMsg::PBObject& S2SSavePlayerReq::data() const {
+  const ::KFMsg::PBObject* p = data_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerReq.data)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2SSavePlayerReq::release_data() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SSavePlayerReq.data)
+  
+  ::KFMsg::PBObject* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2SSavePlayerReq::mutable_data() {
+  
+  if (data_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    data_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SSavePlayerReq.data)
+  return data_;
+}
+inline void S2SSavePlayerReq::set_allocated_data(::KFMsg::PBObject* data) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(data_);
+  }
+  if (data) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      data = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, data, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  data_ = data;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSavePlayerReq.data)
 }
 
 // -------------------------------------------------------------------

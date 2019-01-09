@@ -5,6 +5,8 @@
 
 namespace KFrame
 {
+    class KFData;
+    class KFEntity;
     /////////////////////////////////////////////////////////////////////////////////////////////
     class KFGameInterface : public KFModule
     {
@@ -18,8 +20,12 @@ namespace KFrame
 
         // 发送消息到客户端
         virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
+        // 发送到玩家
+        virtual bool SendToPlayer( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToPlayer( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////
         // 广播消息到客户端
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;
         virtual bool BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message ) = 0;
@@ -29,6 +35,10 @@ namespace KFrame
 
         // 转发给玩家
         virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // 踢掉角色
+        virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -35,7 +35,7 @@ namespace KFrame
 #define __KF_MESSAGE_FUNCTION__( function ) \
     void function( const KFId& kfid, const char* data, uint32 length )
 
-#define __KF_TRANSMIT_FUNCTION__( function ) \
+#define __KF_TRANSMIT_MESSAGE_FUNCTION__( function ) \
     bool function( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
 
 #define __REGISTER_MESSAGE__( msgid, function ) \

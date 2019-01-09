@@ -9,6 +9,23 @@ namespace KFrame
     class KFPlayerInterface : public KFModule
     {
     public:
+        // 绑定加载玩家数据回调函数
+        template< class T >
+        void BindAfterLoadFunction( T* object, void ( T::*handle )( uint32, const KFMsg::PBLoginData*, KFMsg::PBObject* ) )
+        {
+            KFLoadPlayerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            SetAfterLoadFunction( function );
+        }
+
+        // 取消绑定
+        template< class T >
+        void UnBindAfterLoadFunction( T* object )
+        {
+            KFLoadPlayerFunction function = nullptr;
+            SetAfterLoadFunction( function );
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         template< class T >
         void RegisterInitDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
@@ -94,21 +111,6 @@ namespace KFrame
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 离开函数
-        template< class T >
-        void RegisterLogoutFunction( T* object, void ( T::*handle )( KFEntity* player ) )
-        {
-            KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddLogoutFunction( typeid( T ).name(), function );
-        }
-
-        template< class T >
-        void UnRegisterLogoutFunction( T* object )
-        {
-            RemoveLogoutFunction( typeid( T ).name() );
-        }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 新玩家首次登陆函数
         template< class T >
         void RegisterNewPlayerFunction( T* object, void ( T::*handle )( KFEntity* player ) )
@@ -122,15 +124,15 @@ namespace KFrame
         {
             RemoveNewPlayerFunction( typeid( T ).name() );
         }
-
-        // 玩家数量
-        virtual uint32 GetPlayerCount() = 0;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        // 加载玩家数据
+        virtual bool LoadPlayer( const KFMsg::PBLoginData* pblogin ) = 0;
 
         // 保存玩家
         virtual void SavePlayer( KFEntity* player ) = 0;
 
-        // 踢掉角色
-        virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line ) = 0;
+        // 玩家数量
+        virtual uint32 GetPlayerCount() = 0;
 
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
@@ -153,6 +155,8 @@ namespace KFrame
         virtual bool CheckOperateFrequently( KFEntity* player, uint32 time ) = 0;
 
     protected:
+        virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function ) = 0;
+
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveInitDataFunction( const std::string& moudle ) = 0;
 
@@ -171,12 +175,8 @@ namespace KFrame
         virtual void AddLeaveFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveLeaveFunction( const std::string& moudle ) = 0;
 
-        virtual void AddLogoutFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
-        virtual void RemoveLogoutFunction( const std::string& moudle ) = 0;
-
         virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveNewPlayerFunction( const std::string& moudle ) = 0;
-
     };
 
 

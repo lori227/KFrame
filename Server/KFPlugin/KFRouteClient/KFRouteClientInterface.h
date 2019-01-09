@@ -42,14 +42,14 @@ namespace KFrame
         void RegisterRouteConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
         {
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddRouteConnectionFunction( typid( T ).name(), function );
+            AddRouteConnectionFunction( typeid( T ).name(), function );
         }
 
         // 卸载回调
         template< class T >
         void UnRegisterRouteConnectionFunction( T* object )
         {
-            RemoveRouteConnectionFunction( typid( T ).name() );
+            RemoveRouteConnectionFunction( typeid( T ).name() );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +78,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_route, KFRouteClientInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // 连接回调
 #define __KF_ROUTE_CONNECTION_FUNCTION__( function )\
     void function( uint64 serverid )
 
@@ -88,6 +88,11 @@ namespace KFrame
 #define __UNREGISTER_ROUTE_CONNECTION_FUNCTION__()\
     _kf_route->UnRegisterRouteConnectionFunction( this )
 
+#define __REGISTER_ROUTE_MESSAGE_FUNCTION__( function )\
+    _kf_route->RegisterTransmitFunction( this, function )
+
+#define __UNREGISTER_ROUTE_MESSAGE_FUNCTION__()\
+    _kf_route->UnRegisterTransmitFunction( this )
 }
 
 

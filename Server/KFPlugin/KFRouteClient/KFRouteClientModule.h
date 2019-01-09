@@ -12,6 +12,8 @@
 #include "KFrame.h"
 #include "KFRouteClientInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame
@@ -24,6 +26,7 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
+        virtual void AfterRun();
 
         // 关闭
         virtual void BeforeShut();

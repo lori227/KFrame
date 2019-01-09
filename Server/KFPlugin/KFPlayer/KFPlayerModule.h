@@ -12,15 +12,9 @@
 #include "KFPlayerInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFGame/KFGameInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFMessage/KFMessageInterface.h"
-#include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
-#include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFPublicClient/KFPublicClientInterface.h"
-#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -38,22 +32,15 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 初始化
-        void InitPlayer( KFEntity* player );
-        void UnInitPlayer( KFEntity* player );
-
-        // 逻辑刷新
-        void RunPlayer( KFEntity* player );
-
-        ////////////////////////////////////////////////////////////////////////////
-        // 玩家数量
-        virtual uint32 GetPlayerCount();
+        // 加载玩家数据
+        virtual bool LoadPlayer( const KFMsg::PBLoginData* pblogin );
 
         // 保存玩家
         virtual void SavePlayer( KFEntity* player );
 
-        // 踢掉角色
-        virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line );
+        // 玩家数量
+        virtual uint32 GetPlayerCount();
+
 
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid );
@@ -74,6 +61,8 @@ namespace KFrame
         virtual bool CheckOperateFrequently( KFEntity* player, uint32 time );
 
     protected:
+        virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function );
+
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveInitDataFunction( const std::string& moudle );
 
@@ -98,44 +87,22 @@ namespace KFrame
         virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveNewPlayerFunction( const std::string& moudle );
 
-    protected:
-        // 连接World服务器
-        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectionWorld );
-
-        // 转发消息到玩家
-        __KF_TRANSMIT_FUNCTION__( TransmitMessageToPlayer );
-
-        // 部署服务器关闭
-        __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
-
-    protected:
-        // 登录token
-        __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
-
-        // 处理加载玩家数据请求
-        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerAck );
-
-        // 处理登出游戏
-        __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
-
-        // 处理玩家掉线
-        __KF_MESSAGE_FUNCTION__( HandlePlayerDisconnectionReq );
-
-        // 处理踢人消息
-        __KF_MESSAGE_FUNCTION__( HandleKickGamePlayerReq );
-
     private:
+        // 初始化
+        void InitPlayer( KFEntity* player );
+        void UnInitPlayer( KFEntity* player );
+
+        // 逻辑刷新
+        void RunPlayer( KFEntity* player );
+
+        // 加载玩家数据
+        void OnLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
+
         // 创建角色
         KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 创建角色
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
-
-        // 进入游戏世界
-        void SendEnterMessageToWorld( KFEntity* player );
-
-        // 离开游戏世界
-        void SendLeaveMessageToWord( KFEntity* player );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
@@ -154,6 +121,9 @@ namespace KFrame
     private:
         // 玩家组件
         KFComponent* _kf_component{ nullptr };
+
+        // 加载玩家函数
+        KFLoadPlayerFunction _after_load_function{ nullptr };
 
         // 更新函数
         KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;

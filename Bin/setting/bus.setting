@@ -10,73 +10,15 @@
 
 	<Bus>
 		<Connection AppName="*" AppType="agent" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
-		<Connection AppName="auth" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="data" AppType="*" AppId="*" ConnectName="data" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="data" AppType="proxy" AppId="*" ConnectName="data" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="data" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 	
-		<Connection AppName="public" AppType="*" AppId="*" ConnectName="public" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="public" AppType="proxy" AppId="*" ConnectName="public" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="public" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
 		<Connection AppName="route" AppType="*" AppId="*" ConnectName="route" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="route" AppType="proxy" AppId="*" ConnectName="route" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="route" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-	
-		<Connection AppName="match" AppType="*" AppId="*" ConnectName="match" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="match" AppType="proxy" AppId="*" ConnectName="match" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="match" AppType="shard" AppId="*" ConnectName="battle" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="match" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 
-		<Connection AppName="battle" AppType="*" AppId="*" ConnectName="battle" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="battle" AppType="proxy" AppId="*" ConnectName="battle" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="battle" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="log" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="log" AppType="proxy" AppId="*" ConnectName="log" ConnectType="shard" ConnectId="*"/>
-		
-		<Connection AppName="mail" AppType="*" AppId="*" ConnectName="mail" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="mail" AppType="proxy" AppId="*" ConnectName="mail" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="mail" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="relation" AppType="*" AppId="*" ConnectName="relation" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="relation" AppType="proxy" AppId="*" ConnectName="relation" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="relation" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-		
-		<Connection AppName="guild" AppType="*" AppId="*" ConnectName="guild" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="guild" AppType="proxy" AppId="*" ConnectName="guild" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="guild" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="group" AppType="*" AppId="*" ConnectName="group" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="group" AppType="proxy" AppId="*" ConnectName="group" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="group" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-		
-		<Connection AppName="rank" AppType="*" AppId="*" ConnectName="rank" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="rank" AppType="proxy" AppId="*" ConnectName="rank" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="rank" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="dir" AppType="proxy" AppId="*" ConnectName="dir" ConnectType="shard" ConnectId="*"/>
-		<Connection AppName="dir" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
-
-		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="log" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="login" ConnectId="*"/>
 		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="game" ConnectId="*"/>
-		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="dir" ConnectType="master" ConnectId="*"/>	
 		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
 		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="data" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="public" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="route" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="match" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="battle" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="mail" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="relation" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="group" ConnectType="master" ConnectId="*"/>
-		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="rank" ConnectType="master" ConnectId="*"/>
-
 	</Bus>	
 </Config>
 

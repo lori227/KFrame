@@ -79,7 +79,6 @@ enum ServerProtocol
 
 	S2S_TRANSMIT_MESSAGE_REQ = 21001;				// 转发消息
 	S2S_BROADCAST_MESSAGE_REQ = 21002;				// 广播消息
-	S2S_SAVE_PLAYER_REQ = 21003;					// 保存数据
 	S2S_DELETE_PLAYER_REQ = 21004;					// 删除数据
 	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// 更新公共数据
 	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// 更新zone信息到proxy
@@ -101,6 +100,7 @@ enum ServerProtocol
 	S2S_LOGIN_GAME_ACK = 21115;						// 请求登录游戏服务器
 	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// 请求加载玩家数据
 	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// 加载玩家数据回馈
+	S2S_SAVE_PLAYER_REQ = 21118;					// 保存玩家数据
 	S2S_LOGIN_OUT_REQ = 21119;						// 登出游戏
 	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// 游戏玩家进入游戏
 	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// 游戏玩家离开游戏
@@ -273,13 +273,6 @@ message S2STransmitToDataShardReq
 	bytes msgdata = 3;
 }
 
-// S2S_SAVE_PLAYER_REQ
-message S2SSavePlayerReq
-{
-	uint64 id = 1;
-	uint32 zoneid = 2;	
-	PBObject data = 3;
-}
 
 // S2S_DELETE_PLAYER_REQ
 message S2SDeletePlayerReq
@@ -385,15 +378,23 @@ message S2SLoginGameAck
 message S2SLoginLoadPlayerReq
 {
 	PBLoginData pblogin = 1;	
-	uint32 zoneid = 2;
 }
 
+// 加载游戏数据结果
 // S2S_LOGIN_LOAD_PLAYER_ACK
 message S2SLoginLoadPlayerAck
 {
-	PBLoginData pblogin = 1;
-	uint32 result = 2;
+	uint32 result = 1;
+	PBLoginData pblogin = 2;
 	PBObject playerdata = 3;	
+}
+
+// 保存玩家数据
+// S2S_SAVE_PLAYER_REQ
+message S2SSavePlayerReq
+{
+	uint64 id = 1;
+	PBObject data = 3;
 }
 
 // S2S_LOGIN_OUT_REQ

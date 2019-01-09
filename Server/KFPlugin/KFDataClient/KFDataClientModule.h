@@ -11,19 +11,17 @@
 
 #include "KFrame.h"
 #include "KFDataClientInterface.h"
+#include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
     class KFDataClientModule : public KFDataClientInterface
     {
     public:
-        KFDataClientModule();
-        ~KFDataClientModule();
-
-        // 初始化
-        virtual void InitModule();
+        KFDataClientModule() = default;
+        ~KFDataClientModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -32,11 +30,25 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 加载玩家数据
+        virtual bool LoadPlayerData( const KFMsg::PBLoginData* pblogin );
 
-        // 发送消息到数据库
-        virtual bool SendMessageToData( uint32 zoneid, uint32 msgid, ::google::protobuf::Message* message );
+        // 保存玩家数据
+        virtual bool SavePlayerData( KFEntity* player );
 
+    protected:
+        // 设置回调函数
+        virtual void SetLoadPlayerFunction( KFLoadPlayerFunction& function );
+
+    protected:
+        // 处理加载玩家数据
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerAck );
+
+    private:
+        KFLoadPlayerFunction _load_player_function{ nullptr };
     };
+
+
 }
 
 #endif

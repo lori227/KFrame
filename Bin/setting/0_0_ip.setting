@@ -10,41 +10,8 @@
 		<!-- 部署服务器 -->
 		<Server AppName="deploy" AppType="server" AppId="0.1.0.1" Ip="127.0.0.1" Type="0" Port="10000"/>
 
-		<!-- data服务器 -->
-		<Server AppName="data" AppType="master" AppId="0.11.0.1" Ip="127.0.0.1" Type="0" Port="10001"/>
-
-		<!-- public服务器 -->
-		<Server AppName="public" AppType="master" AppId="0.14.0.1" Ip="127.0.0.1" Type="0" Port="10002"/>
-
 		<!-- route服务器 -->
 		<Server AppName="route" AppType="master" AppId="0.17.0.1" Ip="127.0.0.1" Type="0" Port="10003"/>
-
-		<!-- match服务器 -->
-		<Server AppName="match" AppType="master" AppId="0.21.0.1" Ip="127.0.0.1" Type="0" Port="10004"/>	
-
-		<!-- battle服务器 -->
-		<Server AppName="battle" AppType="master" AppId="0.24.0.1" Ip="127.0.0.1" Type="0" Port="10005"/>
-
-		<!-- mail服务器 -->
-		<Server AppName="mail" AppType="master" AppId="0.27.0.1" Ip="127.0.0.1" Type="0" Port="10006"/>
-
-		<!-- relation服务器 -->
-		<Server AppName="relation" AppType="master" AppId="0.31.0.1" Ip="127.0.0.1" Type="0" Port="10007"/>
-
-		<!-- group服务器 -->
-		<Server AppName="group" AppType="master" AppId="0.34.0.1" Ip="127.0.0.1" Type="0" Port="10008"/>
-
-		<!-- rank服务器 -->
-		<Server AppName="rank" AppType="master" AppId="0.37.0.1" Ip="127.0.0.1" Type="0" Port="10009"/>
-
-		<!-- guild服务器 -->
-		<Server AppName="guild" AppType="master" AppId="0.41.0.1" Ip="127.0.0.1" Type="0" Port="10010"/>
-
-		<!-- log服务器 -->
-		<Server AppName="log" AppType="master" AppId="0.44.0.1" Ip="127.0.0.1" Type="0" Port="10011"/>
-
-		<!-- dir服务器 -->
-		<Server AppName="dir" AppType="master" AppId="0.47.0.1" Ip="127.0.0.1" Type="0" Port="10012"/>
 
 		<!-- zone master 根据zone.setting动态更新-->
 		<Server AppName="zone" AppType="master" AppId="0.91.0.1" Ip="127.0.0.1" Type="0" Port="11000"/>
