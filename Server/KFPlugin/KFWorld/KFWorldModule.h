@@ -12,6 +12,7 @@
 #include "KFrame.h"
 #include "KFWorldInterface.h"
 #include "KFZone/KFZoneInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -50,6 +51,9 @@ namespace KFrame
 
         // 处理踢人
         __KF_HTTP_FUNCTION__( HandleHttpKickOnline );
+
+        // 注册小区信息
+        __KF_TIMER_FUNCTION__( OnTimerZoneRegister );
 
     protected:
         // 验证登录

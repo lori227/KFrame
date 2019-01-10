@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( 0, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
+        __REGISTER_LOOP_TIMER__( 0, 10000, &KFGateModule::OnTimerUpdateOnlineToAuth );
 
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostLogin );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionLogin );
@@ -44,7 +44,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerUpdateOnlineToAuth )
     {
-        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( dirupdate );
+        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneupdate );
 
         // 更新gate的负载信息
         auto kfzone = _kf_zone->GetZone();
@@ -52,7 +52,6 @@ namespace KFrame
 
         __JSON_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), kfzone->_id );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), kfzone->_name );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), kfglobal->_interanet_ip );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), kfglobal->_listen_port );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _kf_role_list.Size() );

@@ -3,10 +3,13 @@
 
 namespace KFrame
 {
+#define __ZONE_TIMER_ID__ 1
+
     void KFWorldModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFWorldModule::OnServerDisCoverGame );
+        __REGISTER_LOOP_TIMER__( __ZONE_TIMER_ID__, 5000, &KFWorldModule::OnTimerZoneRegister );
         __REGISTER_SERVER_LOST_FUNCTION__( &KFWorldModule::OnServerLostGame );
+        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFWorldModule::OnServerDisCoverGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &KFWorldModule::HandleLoginWorldVerifyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &KFWorldModule::HandleGameSyncOnlineReq );
@@ -24,8 +27,9 @@ namespace KFrame
 
     void KFWorldModule::BeforeShut()
     {
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        __UNREGISTER_TIMER__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
+        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ) );
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
 
@@ -56,8 +60,27 @@ namespace KFrame
             _kf_game_conhash.RemoveHashNode( handleid );
         }
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    __KF_TIMER_FUNCTION__( KFWorldModule::OnTimerZoneRegister )
+    {
+        auto zone = _kf_zone->GetZone();
+        auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneregister );
+
+        // 注册小区信息
+        __JSON_DOCUMENT__( kfjson );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), zone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), zone->_name );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
+
+        auto recvdata = _kf_http_client->StartSTHttpClient( _url, kfjson );
+        __JSON_PARSE_STRING__( kfresult, recvdata );
+        auto retcode = _kf_http_client->GetResponseCode( kfresult );
+        if ( retcode == KFMsg::Ok )
+        {
+            __UNREGISTER_OBJECT_TIMER__( __ZONE_TIMER_ID__ );
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFWorldModule::SendToOnline( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto kfonline = _kf_online_list.Find( playerid );
@@ -158,19 +181,17 @@ namespace KFrame
 
     void KFWorldModule::UpdateOnlineToAuth( uint64 accountid, uint64 playerid, bool online )
     {
-        static auto _world_url = _kf_http_server->GetHttpUrl();
-        static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( onlinezone );
+        static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( onlinedata );
 
-        // 在线服务器
+        // 在线信息
         __JSON_DOCUMENT__( sendjson );
-
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), accountid );
+
         if ( online )
         {
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( online ), 1 );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zonehttp ), _world_url );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
         }
         else
         {

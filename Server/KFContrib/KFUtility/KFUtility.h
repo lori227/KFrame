@@ -21,14 +21,14 @@ namespace KFrame
         template< class T = uint64 > static bool CheckOperate( T basevalue, uint32 operate, T operatevalue );
 
         // 转换成字符串
-        template< class T = uint32 > static std::string ToString( const T& value );
+        template< class T = uint64 > static std::string ToString( const T& value );
 
         // 转换成数值
-        template< class T = uint32 > static T ToValue( const char* srcstring );
-        template< class T = uint32 > static T ToValue( const std::string& srcstring );
+        template< class T = uint64 > static T ToValue( const char* srcstring );
+        template< class T = uint64 > static T ToValue( const std::string& srcstring );
 
         // 切割字符串
-        template< class T = uint32 > static T SplitValue( std::string& srcstring, std::string split );
+        template< class T = uint64 > static T SplitValue( std::string& srcstring, std::string split );
 
         // 标记
         template< class T = uint32 > static bool HaveBitMask( T value, T bitmask );

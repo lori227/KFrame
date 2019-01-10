@@ -18,7 +18,7 @@ namespace KFrame
     bool KFHttpCommon::VerifySignature( KFJson& json )
     {
         auto sign = __JSON_GET_STRING__( json, __KF_STRING__( sign ) );
-        json.RemoveMember( __KF_STRING__( sign ) );
+        __JOSN_REMOVE__( json, __KF_STRING__( sign ) );
 
         auto data = __JSON_SERIALIZE__( json );
         auto temp = __FORMAT__( "{}:{}", data, _crypto_key );
@@ -35,12 +35,17 @@ namespace KFrame
 
     uint32 KFHttpCommon::GetResponseCode( KFJson& json )
     {
+        if ( !__JSON_HAS_MEMBER__( json, __KF_STRING__( retcode ) ) )
+        {
+            return _invalid_int;
+        }
+
         return __JSON_GET_UINT32__( json, __KF_STRING__( retcode ) );
     }
 
     std::string KFHttpCommon::SendResponse( KFJson& json )
     {
-        if ( !json.HasMember( __KF_STRING__( retcode ) ) )
+        if ( !__JSON_HAS_MEMBER__( json, __KF_STRING__( retcode ) ) )
         {
             json.AddMember( rapidjson::StringRef( __KF_STRING__( retcode ).c_str() ), KFEnum::Ok, json.GetAllocator() );
         }

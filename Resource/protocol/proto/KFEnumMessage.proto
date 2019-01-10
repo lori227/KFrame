@@ -137,7 +137,7 @@ enum CodeEnum
 	LoadDataFailed 				= 17;		// 加载失败
 	HttpDataError 				= 18;		// http内部数据错误
 	LoginDatabaseError 			= 19;		// 登录数据库错误
-	CreatePlayerError 			= 20;		// 创建角色失败
+	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	SexSetOK					= 21;		// 设置性别成功
 	NameAlreadySet				= 22;		// 不能重复设置名字
 	NameAlreadyExist			= 23;		// <Text>%s</Text>名字已经存在
@@ -278,7 +278,7 @@ enum CodeEnum
 	SignInNotDay				= 161;		// 还没有签到
 	SignInDataError				= 162;		// 签到配置错误
 	SignInRewardAlready			= 163;		// 已经领取签到奖励
-	DirServerBusy				= 164;		// 目录服务器忙
+	ZoneServerBusy				= 164;		// 目录服务器忙
 	GroupTargetInMatch			= 165;		// <Text>%s</Text>正在匹配中!
 	GroupInMatch				= 166;		// 已经在匹配中不能加入队伍!
 	GroupKickInMatch			= 167;		// 已经在匹配中不能踢人

@@ -9,7 +9,7 @@
 	<!--MaxLogicId 最大逻辑id -->
 
 	<!--保存服务器列表信息-->
-	<Module Name="dir">
+	<Module Name="zone">
 		<Redis MinLogicId="0" MaxLogicId="0">
 			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>

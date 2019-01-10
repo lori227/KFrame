@@ -36,6 +36,18 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
+        // 小区信息注册
+        __KF_HTTP_FUNCTION__( HandleZoneRegister );
+
+        // 小区信息更新
+        __KF_HTTP_FUNCTION__( HandleZoneUpdate );
+
+        // 查询小区列表
+        __KF_HTTP_FUNCTION__( HandleQueryZoneList );
+
+        // 查询小区ip
+        __KF_HTTP_FUNCTION__( HandleQueryZoneIp );
+
         // 处理登录请求
         __KF_HTTP_FUNCTION__( HandleAuthLogin );
 
@@ -46,7 +58,7 @@ namespace KFrame
         __KF_HTTP_FUNCTION__( HandleVerifyToken );
 
         // 更新在线信息
-        __KF_HTTP_FUNCTION__( HandleUpdateOnline );
+        __KF_HTTP_FUNCTION__( HandleOnlineData );
 
         // ban人禁止游戏
         __KF_HTTP_FUNCTION__( HandleBanLogin );
@@ -73,8 +85,11 @@ namespace KFrame
         // 踢人下线
         bool KickAccountOffline( MapString& accountdata );
 
-        // 获得目录服务器列表
-        std::string QueryDirList( uint64 accountid, const std::string& token, MapString& accountdata );
+        // 获得小区信息
+        std::string QueryZoneData( uint64 accountid, const std::string& token, MapString& accountdata );
+
+        // 分配一个新小区
+        uint32 BalanceAllocZoneId();
 
         // 创建小区的玩家id
         uint64 QueryCreatePlayerId( uint32 channel, uint64 accountid, uint32 zoneid, uint32 logiczoneid );

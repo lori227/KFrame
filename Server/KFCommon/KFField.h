@@ -19,8 +19,8 @@ namespace KFrame
         __STRING_DEFINE__( client );
         __STRING_DEFINE__( world );
         __STRING_DEFINE__( login );
-        __STRING_DEFINE__( retcode );
         __STRING_DEFINE__( sign );
+        __STRING_DEFINE__( retcode );
         __STRING_DEFINE__( password );
         __STRING_DEFINE__( account );
         __STRING_DEFINE__( accountflag );
@@ -55,11 +55,12 @@ namespace KFrame
         __STRING_DEFINE__( dirurl );
         __STRING_DEFINE__( dirlist );
         __STRING_DEFINE__( dirupdate );
-        __STRING_DEFINE__( updatezone );
+        __STRING_DEFINE__( zoneupdate );
+        __STRING_DEFINE__( zoneregister );
         __STRING_DEFINE__( lostzone );
         __STRING_DEFINE__( zonelist );
-        __STRING_DEFINE__( zonehttp );
-        __STRING_DEFINE__( zonelistversion );
+        __STRING_DEFINE__( zoneurl );
+        __STRING_DEFINE__( zoneip );
         __STRING_DEFINE__( zonestatus );
         __STRING_DEFINE__( name );
         __STRING_DEFINE__( sex );
@@ -231,7 +232,7 @@ namespace KFrame
         __STRING_DEFINE__( doublescore );
         __STRING_DEFINE__( fourscore );
         __STRING_DEFINE__( usecount );
-        __STRING_DEFINE__( onlinezone );
+        __STRING_DEFINE__( onlinedata );
         __STRING_DEFINE__( online );
         __STRING_DEFINE__( kick );
         __STRING_DEFINE__( kickonline );

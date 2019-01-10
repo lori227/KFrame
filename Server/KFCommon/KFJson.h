@@ -99,7 +99,7 @@ namespace KFrame
 #define  __JSON_ADD_VALUE__( kfjson, value ) kfjson.PushBack( value, allocator );
 #define  __JSON_ADD_STRING__( kfjson, value ) kfjson.PushBack( rapidjson::StringRef( value.c_str() ), allocator )
 
-#define __JSON_HAS_MEMBER( kfjson, name ) kfjson.HasMember( name )
+#define __JSON_HAS_MEMBER__( kfjson, name ) kfjson.HasMember( name )
 #define __JOSN_REMOVE__( kfjson, name ) kfjson.RemoveMember( name )
 
 #define  __JSON_ARRAY_SIZE__( kfjson ) kfjson.Size()
