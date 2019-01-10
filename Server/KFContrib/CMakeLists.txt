@@ -31,14 +31,9 @@ endmacro()
 #################################################################################
 #################################################################################
 
-add_subdirectory(KFConHash)
-add_subdirectory(KFCore)
-#add_subdirectory(KFExcel)
-add_subdirectory(KFHttp)
-add_subdirectory(KFGlobal)
-add_subdirectory(KFMath3D)
-add_subdirectory(KFMemory)
-add_subdirectory(KFNetwork)
-add_subdirectory(KFPlugin)
-add_subdirectory(KFProtocol)
-add_subdirectory(KFUtility)
+#sub dir
+SUBDIRLIST(SUBDIRS ${MY_CURRENT_DIR})
+
+FOREACH(subdir ${SUBDIRS})
+  ADD_SUBDIRECTORY(${subdir})
+ENDFOREACH()
