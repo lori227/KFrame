@@ -32,7 +32,7 @@ endmacro()
 #################################################################################
 
 #sub dir
-SUBDIRLIST(SUBDIRS ${MY_CURRENT_DIR})
+SUBDIRLIST(SUBDIRS "KFContrib")
 
 FOREACH(subdir ${SUBDIRS})
   ADD_SUBDIRECTORY(${subdir})
