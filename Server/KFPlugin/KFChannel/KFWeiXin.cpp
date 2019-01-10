@@ -35,7 +35,7 @@ namespace KFrame
             __JSON_PARSE_STRING__( accessjson, accessdata );
 
             // 如果出错, 返回错误码
-            if ( accessjson.HasMember( __KF_STRING__( errcode ) ) )
+            if ( __JSON_HAS_MEMBER__( accessjson, __KF_STRING__( errcode ) ) )
             {
                 return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinCodeError );
             }
@@ -96,7 +96,7 @@ namespace KFrame
                 }
 
                 __JSON_PARSE_STRING__( accessjson, accessdata );
-                if ( accessjson.HasMember( __KF_STRING__( errcode ) ) )
+                if ( __JSON_HAS_MEMBER__( accessjson, __KF_STRING__( errcode ) ) )
                 {
                     return _kf_http_server->SendResponse( accessjson, KFMsg::WeiXinTokenError );
                 }
@@ -122,7 +122,7 @@ namespace KFrame
         }
 
         __JSON_PARSE_STRING__( userjson, userdata );
-        if ( userjson.HasMember( __KF_STRING__( errcode ) ) )
+        if ( __JSON_HAS_MEMBER__( userjson, __KF_STRING__( errcode ) ) )
         {
             return _kf_http_server->SendResponse( userjson, KFMsg::WeiXinUserError );
         }

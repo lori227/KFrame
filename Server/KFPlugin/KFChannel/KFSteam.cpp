@@ -18,26 +18,26 @@ namespace KFrame
         }
 
         __JSON_PARSE_STRING__( kfresult, resultdata );
-        if ( !kfresult.HasMember( __KF_STRING__( response ) ) )
+        if ( !__JSON_HAS_MEMBER__( kfresult, __KF_STRING__( response ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }
 
         // {"response":{"error":{"errorcode":101,"errordesc":"Invalid ticket"}}}
         auto& kfdata = kfresult[ __KF_STRING__( response ) ];
-        if ( kfdata.HasMember( __KF_STRING__( error ) ) )
+        if ( __JSON_HAS_MEMBER__( kfdata, __KF_STRING__( error ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamAuthError );
         }
 
         //{"response":{"params":{"result":"OK","steamid":"76561198859198521","ownersteamid":"76561198859198521","vacbanned":false,"publisherbanned":false}}}
-        if ( !kfdata.HasMember( __KF_STRING__( params ) ) )
+        if ( !__JSON_HAS_MEMBER__( kfdata, __KF_STRING__( params ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }
 
         auto& kfparams = kfdata[ __KF_STRING__( params ) ];
-        if ( !kfparams.HasMember( __KF_STRING__( steamid ) ) )
+        if ( !__JSON_HAS_MEMBER__( kfparams, __KF_STRING__( steamid ) ) )
         {
             return _kf_http_server->SendResponseCode( KFMsg::SteamDataError );
         }

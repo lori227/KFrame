@@ -153,7 +153,7 @@ namespace KFrame
         pblogin->set_sessionid( sessionid );
 
         // 渠道数据
-        if ( recvjson.HasMember( __KF_STRING__( channeldata ) ) )
+        if ( __JSON_HAS_MEMBER__( recvjson, __KF_STRING__( channeldata ) ) )
         {
             auto pbchanneldata = pblogin->mutable_channeldata();
             auto& channeldata = recvjson[ __KF_STRING__( channeldata ) ];
