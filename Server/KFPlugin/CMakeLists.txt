@@ -37,7 +37,7 @@ LINK_SDK_MACRO(${project_name})
 endmacro(BUILD_PLUGIN_MACRO project_name)
 
 #sub dir
-SUBDIRLIST(SUBDIRS ${MY_CURRENT_DIR})
+SUBDIRLIST(SUBDIRS "KFPlugin")
 
 FOREACH(subdir ${SUBDIRS})
   ADD_SUBDIRECTORY(${subdir})
