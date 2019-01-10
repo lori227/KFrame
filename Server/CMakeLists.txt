@@ -72,6 +72,17 @@ if(UNIX)
     SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
 
+# child dir
+MACRO(SUBDIRLIST result curdir)
+  SET(dirlist "")
+  FOREACH(child ${children})
+    IF(IS_DIRECTORY ${curdir}/${child})
+      LIST(APPEND dirlist ${child})
+    ENDIF()
+  ENDFOREACH()
+  SET(${result} ${dirlist})
+ENDMACRO()
+
 #log
 message("root dir=${ROOT_DIR}")
 message("lib dir=${LIB_DIR}")
