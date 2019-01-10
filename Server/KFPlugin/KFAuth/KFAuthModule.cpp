@@ -365,8 +365,8 @@ namespace KFrame
         }
 
         __JSON_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
         __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
+        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
 
         __JSON_OBJECT__( kfzone );
         __JSON_FROM_MAP__( kfzone, kfzonemap->_value );
