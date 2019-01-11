@@ -13,7 +13,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFGame/KFGameInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFDisplay/KFDisplayInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 
 namespace KFrame
@@ -32,6 +31,9 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
+        // 查找玩家
+        virtual KFEntity* FindPlayer( uint64 playerid );
+        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line );
         ////////////////////////////////////////////////////////////////////////////////
         // 加载玩家数据
         virtual bool LoadPlayer( const KFMsg::PBLoginData* pblogin );
@@ -40,14 +42,10 @@ namespace KFrame
         virtual void SavePlayer( KFEntity* player );
 
         // 查询玩家
-        virtual void QueryPlayer( uint64 sendid, uint64 playerid );
-
-        // 玩家数量
-        virtual uint32 GetPlayerCount();
-
-        // 查找玩家
-        virtual KFEntity* FindPlayer( uint64 playerid );
-        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line );
+        virtual bool QueryPlayer( uint64 sendid, uint64 playerid );
+        ////////////////////////////////////////////////////////////////////////////////
+        // 设置名字
+        virtual bool SetName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid );
 
         // 判断操作频率
         virtual bool CheckOperateFrequently( KFEntity* player, uint32 time );
@@ -55,6 +53,7 @@ namespace KFrame
     protected:
         virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function );
         virtual void SetAfterQueryFunction( KFQueryPlayerFunction& function );
+        virtual void SetAfterSetNameFunction( KFAfterSetNameFunction& function );
 
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveInitDataFunction( const std::string& moudle );
@@ -100,6 +99,9 @@ namespace KFrame
 
         // 查询玩家回调
         void OnQueryPlayerData( uint32 result, uint64 sendid, KFMsg::PBObject* pbplayerdata );
+
+        // 设置名字回调
+        void OnSetName( uint32 result, uint64 playerid, const std::string& name, uint64 itemguid );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
         void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
@@ -124,6 +126,7 @@ namespace KFrame
         // 加载玩家函数
         KFLoadPlayerFunction _after_load_function{ nullptr };
         KFQueryPlayerFunction _after_query_function{ nullptr };
+        KFAfterSetNameFunction _after_set_name_function{ nullptr };
 
         // 更新函数
         KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;

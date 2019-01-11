@@ -20,9 +20,8 @@ enum ClientProtocol
 	MSG_LOGIN_VERIFY_ACK = 102;					// 客户端登录验证结果
 	MSG_LOGIN_GAME_REQ = 103;					// 客户端登录游戏请求
 	MSG_LOGIN_OUT_REQ = 105;					// 客户端请求登出游戏
-	MSG_CREATE_ROLE_REQ = 107;					// 创建角色
-	MSG_CHANGE_NAME_REQ = 108;					// 修改名字
-	MSG_CHANGE_SEX_REQ = 109;					// 修改性别
+	MSG_SET_NAME_REQ = 107;						// 设置名字
+	MSG_SET_SEX_REQ = 109;						// 设置性别
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
 	MSG_RECEIVE_TASK_REWARD_REQ = 111;			// 领取任务奖励
 	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// 领取成就奖励
@@ -70,8 +69,9 @@ enum ClientProtocol
 	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// 回应申请队伍
 	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// 请求准备
 	MSG_CHANGE_ICON_BOX_REQ = 161;				// 修改头像框请求
-	MSG_QUERY_GUEST_REQ = 162;					// 查询访客信息请求
-	MSG_QUERY_GUEST_ACK = 163;					// 查询访客信息回馈
+
+
+
 	MSG_CANCEL_MATCH_ACK = 164;					// 取消匹配回应
 	MSG_USE_ITEM_REQ = 165;						// 使用道具
 	MSG_QUERY_TOAST_COUNT_REQ = 166;			// 查询总的被敬酒次数请求
@@ -176,9 +176,6 @@ message MsgTellQueryBasic
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 // 通知被踢下线
 // MSG_TELL_BE_KICK
 message MsgTellBeKick
@@ -220,19 +217,9 @@ message MsgLoginOutReq
 
 }
 
-// 创建角色
-// MSG_CREATE_ROLE_REQ
-message MsgCreateRoleReq
-{
-	bytes name = 1;		// 名字
-	uint32 sex = 2;		// 性别
-	uint32 model = 3;		// 模型id
-	uint64 inviterid = 4;	// 邀请人
-}
-
-// 修改名字
-// MSG_CHANGE_NAME_REQ
-message MsgChangeNameReq
+// 设置名字
+// MSG_SET_NAME_REQ
+message MsgSetNameReq
 {
 	bytes name = 1;
 }
@@ -695,23 +682,6 @@ message MsgUpdateGroupMatchReq
 	uint32 matchid = 1;	// 模式id
 }
 
-/////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
-// 查询访客信息请求
-// MSG_QUERY_GUEST_REQ
-message MsgQueryGuestReq
-{
-	uint64 playerid = 1;
-}
-
-// 查询访客信息回馈
-// MSG_QUERY_GUEST_ACK
-message MsgQueryGuestAck
-{
-	uint64 playerid = 1;
-	uint32 guestcount = 2;		//本月访客数量
-	repeated PBGuestData guestdata = 3;	//最近访客信息
-}
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 // 使用道具

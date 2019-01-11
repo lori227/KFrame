@@ -17,7 +17,6 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_game, KFGameInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
-        __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_data, KFDataClientInterface );
     }
 

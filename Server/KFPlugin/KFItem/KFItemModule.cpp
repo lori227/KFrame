@@ -210,7 +210,7 @@ namespace KFrame
             return;
         }
 
-        auto playerid = static_cast<uint32>( player->GetKeyID() );
+        auto playerid = player->GetKeyID();
         _kf_lua->Call( kfsetting->_lua_file, luafunction, playerid, kfsetting->_id );
     }
 

@@ -44,8 +44,6 @@ namespace KFrame
         // 处理创建角色
         __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
 
-        // 处理设置名字
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameReq );
 
         // 处理更新访客列表请求
         __KF_MESSAGE_FUNCTION__( HandleUpdateGuestListReq );

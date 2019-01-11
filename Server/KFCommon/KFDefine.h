@@ -62,6 +62,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////
     typedef std::function< void( uint32, const KFMsg::PBLoginData*, KFMsg::PBObject* ) > KFLoadPlayerFunction;
     typedef std::function< void( uint32, uint64, KFMsg::PBObject* ) > KFQueryPlayerFunction;
+    typedef std::function< void( uint32, uint64, const std::string&, uint64 ) > KFSetPlayerNameFunction;
     //////////////////////////////////////////////////////////////////////////////
 
 

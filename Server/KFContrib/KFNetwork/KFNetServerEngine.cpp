@@ -266,8 +266,8 @@ namespace KFrame
 
     void KFNetServerEngine::RunTrusteeMessage( uint64 nowtime )
     {
-        // 每次取10个消息, 防止占用过多的cpu
-        static const uint32 _max_message_count = 10;
+        // 每次取1个消息, 只处理认证消息
+        static const uint32 _max_message_count = 1;
 
         for ( auto& iter : _trustee_handles._objects )
         {

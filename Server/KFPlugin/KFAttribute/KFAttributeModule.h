@@ -11,14 +11,14 @@
 
 #include "KFProtocol/KFProtocol.h"
 #include "KFAttributeInterface.h"
+#include "KFGame/KFGameInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFFilter/KFFilterInterface.h"
 #include "KFDebug/KFDebugInterface.h"
-#include "KFDataClient/KFDataClientInterface.h"
-#include "KFPublicClient/KFPublicClientInterface.h"
+#include "KFOption/KFOptionInterface.h"
 
 namespace KFrame
 {
@@ -50,20 +50,11 @@ namespace KFrame
         // 查询玩家所有数据
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
-        // 处理创建角色
-        __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
-
-        // 处理创建角色
-        __KF_MESSAGE_FUNCTION__( HandleCreateRoleAck );
-
-        // 处理修改名字请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeNameReq );
+        // 处理设置名字请求
+        __KF_MESSAGE_FUNCTION__( HandleSetNameReq );
 
         // 处理设置性别请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeSexReq );
-
-        // 处理设置名字回馈
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameAck );
+        __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
 
         // 请求修改人物头像
         __KF_MESSAGE_FUNCTION__( HandleChangeIconReq );
@@ -77,12 +68,6 @@ namespace KFrame
         // 删除属性请求
         __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
 
-        // 查询访客信息
-        __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
-
-        // 查询访客信息回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryGuestAck );
-
         // 查询玩家设置请求
         __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );
 
@@ -93,11 +78,14 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleTitleChangeReq );
 
     protected:
-        // 检查名字的有效性
-        bool CheckNameValid( const std::string& name );
-
         // 查询玩家数据
-        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* pbplayerdata );
+        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* playerdata );
+
+        // 检查名字的有效性
+        uint32 CheckNameValid( const std::string& name );
+
+        // 设置名字回调
+        void OnAfterSetPlayerName( uint32 result, KFEntity* player, const std::string& name, uint64 itemguid );
     };
 }
 

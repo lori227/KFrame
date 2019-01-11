@@ -63,6 +63,7 @@ namespace KFrame
         __STRING_DEFINE__( zoneip );
         __STRING_DEFINE__( zonestatus );
         __STRING_DEFINE__( name );
+        __STRING_DEFINE__( playernamelength );
         __STRING_DEFINE__( sex );
         __STRING_DEFINE__( serverlist );
         __STRING_DEFINE__( serverlisttype );

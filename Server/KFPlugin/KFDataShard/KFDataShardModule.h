@@ -46,6 +46,7 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -68,6 +69,9 @@ namespace KFrame
         // 查询玩家属性
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
+        // 处理设置名字
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameReq );
+
     protected:
         // 加载数据
         bool LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject );
@@ -75,9 +79,15 @@ namespace KFrame
         // 保存数据
         bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject );
 
+        // 设置名字
+        uint32 SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
+
     private:
         // 数据保存
         KFMap< uint64, uint64, KFDataKeeper > _kf_data_keeper;
+
+        // 名字数据库
+        KFRedisDriver* _name_redis_driver{ nullptr };
     };
 }
 

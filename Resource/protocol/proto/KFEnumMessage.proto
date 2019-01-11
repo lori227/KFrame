@@ -137,22 +137,28 @@ enum CodeEnum
 	HttpDataError 				= 18;		// http内部数据错误
 	LoginDatabaseError 			= 19;		// 登录数据库错误
 
-	LoadDataFailed 				= 10001;	// 加载玩家数据失败
-    QueryPlayerFailed 			= 10002;	// 查询玩家数据失败
+	RouteServerBusy			    = 10001;	// 路由服务器出错
+	NameDatabaseBusy			= 10002;	// 名字数据库出错
+	
+	LoadDataFailed 				= 20001;	// 加载玩家数据失败
+	QueryPlayerFailed 			= 20002;	// 查询玩家数据失败
+	NameEmpty 					= 20101;	// 名字不能为空
+	NameAlreadySet				= 20102;	// 不能重复设置名字
+	NameAlreadyExist			= 20103;	// <Text>%s</Text>名字已经存在
+	NameSetOK					= 20104;	// 名字设置成功
+	NameLengthError				= 20105;	// 超过名字最大长度
+	NameFilterError				= 20106;	// 名字含有屏蔽字符
+
 
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	SexSetOK					= 21;		// 设置性别成功
-	NameAlreadySet				= 22;		// 不能重复设置名字
-	NameAlreadyExist			= 23;		// <Text>%s</Text>名字已经存在
 	PublicDatabaseError			= 24;		// 公共数据库错误
-	NameSetOK					= 25;		// 名字设置成功
 	AccountIsEmpty         		= 26;		// 账号不能为空
 	CreateRoleAlready			= 27;		// 不能重复创建角色
 	CreateRoleOK				= 28;		// 创建角色成功
 	LoginAlreadyOnline      	= 29;		// 已经在线
 	ChangeIconOK            	= 30;		// 修改头像成功
-	NameEmpty 					= 31;		// 名字不能为空
 	ChangeMottoOK				= 32;		// 修改个性签名成功
 	ModuleIdNotFind				= 33;		// 你未获得该模型
 	SetModelClothesOK			= 34;		// 模型的默认时装设置成功
@@ -290,7 +296,6 @@ enum CodeEnum
 	MatchCancelInBattle			= 169;		// 已经战斗中不能取消匹配
 	MailServerBusy				= 170;		// 邮件服务器繁忙
 	RelationDatabaseBusy		= 171;		// 关系数据库繁忙
-	InvalidFilter				= 172;		// 含有非法字符
 	SteamError				 	= 173;		// Steam登录访问错误
 	SteamDataError				= 174;		// Steam返回数据错误
 	SteamAuthError				= 175;		// Steam验证错误

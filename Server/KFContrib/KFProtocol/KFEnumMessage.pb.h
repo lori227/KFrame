@@ -367,20 +367,24 @@ enum CodeEnum {
   LoginTokenError = 16,
   HttpDataError = 18,
   LoginDatabaseError = 19,
-  LoadDataFailed = 10001,
-  QueryPlayerFailed = 10002,
+  RouteServerBusy = 10001,
+  NameDatabaseBusy = 10002,
+  LoadDataFailed = 20001,
+  QueryPlayerFailed = 20002,
+  NameEmpty = 20101,
+  NameAlreadySet = 20102,
+  NameAlreadyExist = 20103,
+  NameSetOK = 20104,
+  NameLengthError = 20105,
+  NameFilterError = 20106,
   ZoneDatabaseBusy = 20,
   SexSetOK = 21,
-  NameAlreadySet = 22,
-  NameAlreadyExist = 23,
   PublicDatabaseError = 24,
-  NameSetOK = 25,
   AccountIsEmpty = 26,
   CreateRoleAlready = 27,
   CreateRoleOK = 28,
   LoginAlreadyOnline = 29,
   ChangeIconOK = 30,
-  NameEmpty = 31,
   ChangeMottoOK = 32,
   ModuleIdNotFind = 33,
   SetModelClothesOK = 34,
@@ -518,7 +522,6 @@ enum CodeEnum {
   MatchCancelInBattle = 169,
   MailServerBusy = 170,
   RelationDatabaseBusy = 171,
-  InvalidFilter = 172,
   SteamError = 173,
   SteamDataError = 174,
   SteamAuthError = 175,
@@ -543,7 +546,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = QueryPlayerFailed;
+const CodeEnum CodeEnum_MAX = NameFilterError;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

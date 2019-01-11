@@ -10,7 +10,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ, &KFPublicShardModule::HandleCreateRoleReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &KFPublicShardModule::HandleUpdatePublicDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ, &KFPublicShardModule::HandleQueryBasicDataReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ, &KFPublicShardModule::HandleSetPlayerNameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &KFPublicShardModule::HandleUpdateGuestListReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ, &KFPublicShardModule::HandleQueryGuestReq );
     }
@@ -20,7 +19,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_CREATE_ROLE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_GUEST_LIST_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_GUEST_REQ );
     }

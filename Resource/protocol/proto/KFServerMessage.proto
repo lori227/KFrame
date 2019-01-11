@@ -411,11 +411,6 @@ message S2SQueryPlayerAck
 	uint32 result = 1;
 	PBObject playerdata = 2;
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 // S2S_SET_PLAYER_NAME_REQ
 message S2SSetPlayerNameReq
@@ -423,38 +418,16 @@ message S2SSetPlayerNameReq
 	uint64 playerid = 1;
 	bytes oldname = 2;
 	bytes newname = 3;
+	uint64 itemguid = 4;
 }
 
 // S2S_SET_PLAYER_NAME_ACK
 message S2SSetPlayerNameAck
 {
-	uint64 playerid = 1;
-	bytes oldname = 2;
-	bytes newname = 3;
-	uint32 result = 4;
-}
-
-// 创建角色
-// S2S_CREATE_ROLE_REQ
-message S2SCreateRoleReq
-{
-	uint64 playerid = 1;
-	bytes newname = 2;
-	uint32 modleid = 3;
-	uint32 sex = 4;
-	uint32 inviterid = 5;
-}
-
-// 创建角色
-// S2S_CREATE_ROLE_ACK
-message S2SCreateRoleAck
-{
-	uint64 playerid = 1;
-	bytes newname = 2;
-	uint32 modleid = 3;
-	uint32 sex = 4;
-	uint32 inviterid = 5;
-	uint32 result = 6;	
+	uint32 result = 1;
+	uint64 playerid = 2;
+	bytes name = 3;
+	uint64 itemguid = 4;
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////

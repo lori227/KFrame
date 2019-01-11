@@ -65,6 +65,11 @@ namespace KFrame
         _after_query_function = function;
     }
 
+    void KFPlayerModule::SetAfterSetNameFunction( KFAfterSetNameFunction& function )
+    {
+        _after_set_name_function = function;
+    }
+
     void KFPlayerModule::AddInitDataFunction( const std::string& moudle, KFEntityFunction& function )
     {
         auto kffunction = _player_init_function.Create( moudle );
@@ -191,16 +196,27 @@ namespace KFrame
             kffunction->_function( kfentity );
         }
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid, const char* function, uint32 line )
+    {
+        return _kf_component->FindEntity( playerid, function, line );
+    }
+
+    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid )
+    {
+        return _kf_component->FindEntity( playerid );
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFPlayerModule::LoadPlayer( const KFMsg::PBLoginData* pblogin )
     {
         return _kf_data->LoadPlayerData( pblogin );
     }
 
-    void KFPlayerModule::QueryPlayer( uint64 sendid, uint64 playerid )
+    bool KFPlayerModule::QueryPlayer( uint64 sendid, uint64 playerid )
     {
-        _kf_data->QueryPlayerData( sendid, playerid );
+        return _kf_data->QueryPlayerData( sendid, playerid );
     }
 
     void KFPlayerModule::SavePlayer( KFEntity* player )
@@ -233,7 +249,10 @@ namespace KFrame
             _kf_kernel->SerializeToOnline( player->GetData(), pbplayerdata );
         }
 
-        _after_load_function( result, pblogin, pbplayerdata );
+        if ( _after_load_function != nullptr )
+        {
+            _after_load_function( result, pblogin, pbplayerdata );
+        }
     }
 
     void KFPlayerModule::OnQueryPlayerData( uint32 result, uint64 sendid, KFMsg::PBObject* pbplayerdata )
@@ -245,12 +264,10 @@ namespace KFrame
             _kf_kernel->SerializeToView( _query_player_data, pbplayerdata );
         }
 
-        _after_query_function( result, sendid, pbplayerdata );
-    }
-
-    uint32 KFPlayerModule::GetPlayerCount()
-    {
-        return _kf_component->GetEntityCount();
+        if ( _after_query_function != nullptr )
+        {
+            _after_query_function( result, sendid, pbplayerdata );
+        }
     }
 
     KFEntity* KFPlayerModule::CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
@@ -334,18 +351,6 @@ namespace KFrame
             kffunction->_function( player );
         }
     }
-
-
-    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid, const char* function, uint32 line )
-    {
-        return _kf_component->FindEntity( playerid, function, line );
-    }
-
-    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid )
-    {
-        return _kf_component->FindEntity( playerid );
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
     {
@@ -406,12 +411,39 @@ namespace KFrame
         auto operatetime = kfobject->GetValue( __KF_STRING__( operatetime ) );
         if ( KFGlobal::Instance()->_game_time < operatetime )
         {
-            // todo
-            _kf_display->SendToClient( player, KFMsg::OperateFrequently );
             return true;
         }
 
         kfobject->SetValue( __KF_STRING__( operatetime ), KFGlobal::Instance()->_game_time + time );
         return false;
+    }
+
+    bool KFPlayerModule::SetName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid )
+    {
+        return _kf_data->SetPlayerName( playerid, oldname, newname, itemguid );
+    }
+
+    void KFPlayerModule::OnSetName( uint32 result, uint64 playerid, const std::string& name, uint64 itemguid )
+    {
+        auto player = FindPlayer( playerid );
+        if ( player == nullptr )
+        {
+            if ( result == KFMsg::NameSetOK )
+            {
+                __LOG_ERROR__( "player={} set name={} itemguid={} failed!", playerid, name, itemguid );
+            }
+
+            return;
+        }
+
+        auto asciiname = KFConvert::ToAscii( name );
+        player->SetName( asciiname );
+
+        // 更新名字
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), name );
+        if ( _after_set_name_function != nullptr )
+        {
+            _after_set_name_function( result, player, name, itemguid );
+        }
     }
 }

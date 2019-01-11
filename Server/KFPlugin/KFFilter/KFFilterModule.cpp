@@ -15,6 +15,13 @@ namespace KFrame
 
     bool KFFilterModule::CheckFilter( const std::string& source )
     {
+        // 不能有 空格 %
+        if ( source.find( " " ) != std::string::npos ||
+                source.find( "%" ) != std::string::npos )
+        {
+            return true;
+        }
+
         auto data = source.data();
         auto length = static_cast< uint32 >( source.size() );
 

@@ -6,6 +6,7 @@
 
 namespace KFrame
 {
+    typedef std::function< void( uint32, KFEntity*, const std::string&, uint64 ) > KFAfterSetNameFunction;
     class KFPlayerInterface : public KFModule
     {
     public:
@@ -40,7 +41,21 @@ namespace KFrame
             SetAfterQueryFunction( function );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void BindAfterSetNameFunction( T* object, void ( T::*handle )( uint32, KFEntity*, const std::string&, uint64 ) )
+        {
+            KFAfterSetNameFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            SetAfterSetNameFunction( function );
+        }
 
+        // 取消绑定
+        template< class T >
+        void UnBindAfterSetNameFunction( T* object )
+        {
+            KFAfterSetNameFunction function = nullptr;
+            SetAfterSetNameFunction( function );
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
         void RegisterInitDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
@@ -140,6 +155,10 @@ namespace KFrame
             RemoveNewPlayerFunction( typeid( T ).name() );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////
+        // 查找玩家
+        virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
+        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line ) = 0;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         // 加载玩家数据
         virtual bool LoadPlayer( const KFMsg::PBLoginData* pblogin ) = 0;
 
@@ -147,21 +166,18 @@ namespace KFrame
         virtual void SavePlayer( KFEntity* player ) = 0;
 
         // 查询玩家
-        virtual void QueryPlayer( uint64 sendid, uint64 playerid ) = 0;
-
-        // 玩家数量
-        virtual uint32 GetPlayerCount() = 0;
-
-        // 查找玩家
-        virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
-        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line ) = 0;
+        virtual bool QueryPlayer( uint64 sendid, uint64 playerid ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////
+        // 设置名字
+        virtual bool SetName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid ) = 0;
+
         // 判断操作频率
         virtual bool CheckOperateFrequently( KFEntity* player, uint32 time ) = 0;
 
     protected:
         virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function ) = 0;
         virtual void SetAfterQueryFunction( KFQueryPlayerFunction& function ) = 0;
+        virtual void SetAfterSetNameFunction( KFAfterSetNameFunction& function ) = 0;
 
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveInitDataFunction( const std::string& moudle ) = 0;
