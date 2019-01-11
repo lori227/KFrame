@@ -119,6 +119,8 @@ enum CodeEnum
 {
 	Error						= 0;		// 失败	
 	Ok 							= 1;		// 成功
+
+
 	SignError					= 2;		// 签名错误
 	WeiXinError 				= 3;		// 访问微信错误
 	WeiXinCodeError 			= 4;		// 微信code错误
@@ -148,17 +150,16 @@ enum CodeEnum
 	NameSetOK					= 20104;	// 名字设置成功
 	NameLengthError				= 20105;	// 超过名字最大长度
 	NameFilterError				= 20106;	// 名字含有屏蔽字符
-
+	SexSetOK					= 20107;	// 设置性别成功
+	ChangeIconOK            	= 20108;	// 修改头像成功
 
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
-	SexSetOK					= 21;		// 设置性别成功
 	PublicDatabaseError			= 24;		// 公共数据库错误
 	AccountIsEmpty         		= 26;		// 账号不能为空
 	CreateRoleAlready			= 27;		// 不能重复创建角色
 	CreateRoleOK				= 28;		// 创建角色成功
 	LoginAlreadyOnline      	= 29;		// 已经在线
-	ChangeIconOK            	= 30;		// 修改头像成功
 	ChangeMottoOK				= 32;		// 修改个性签名成功
 	ModuleIdNotFind				= 33;		// 你未获得该模型
 	SetModelClothesOK			= 34;		// 模型的默认时装设置成功

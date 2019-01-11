@@ -49,14 +49,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_TITLE_CHANGE_REQ );
     }
 
-
-    //if ( kfmsg.result() == KFMsg::Ok )
-    //{
-    //	kfmsg.set_result( KFMsg::NameSetOK );
-    //	player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.newname() );
-    //}
-
-    //_kf_display->SendToClient( player, kfmsg.result(), kfmsg.newname() );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleQueryPlayerReq )
