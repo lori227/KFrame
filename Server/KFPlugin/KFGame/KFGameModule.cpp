@@ -126,15 +126,15 @@ namespace KFrame
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 sendid, KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
         auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
-        return SendToPlayer( serverid, playerid, msgid, message );
+        return SendToPlayer( sendid, serverid, playerid, msgid, message );
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         // 本服务器
         if ( serverid == KFGlobal::Instance()->_app_id._union._id )
@@ -156,7 +156,7 @@ namespace KFrame
         }
 
         // 转发到别的小区
-        return _kf_route->SendToPlayer( serverid, playerid, msgid, message );
+        return _kf_route->SendToPlayer( sendid, serverid, playerid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ namespace KFrame
 
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGameModule::TransmitMessageToPlayer )
     {
-        auto playerid = __KF_DATA_ID__( kfid );
+        auto playerid = __ROUTE_RECV_ID__;
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {

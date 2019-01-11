@@ -13,7 +13,7 @@ enum ServerProtocol
 	S2S_TRANSMIT_TO_PLAYER = 20004;					// 转发消息
 	S2S_TRANSMIT_TO_SERVER = 20005;					// 转发消息
 
-	// login
+	// player
 	S2S_KICK_GAME_PLAYER_REQ = 20011;				// 踢掉在线玩家
 	S2S_KICK_GATE_PLAYER_REQ = 20012;				// 踢掉在线玩家
 	S2S_LOGIN_LOGIN_VERIFY_REQ = 20013;				// 登录验证请求	
@@ -29,6 +29,10 @@ enum ServerProtocol
 	S2S_PLAYER_ENTER_WORLD_REQ = 20023;				// 游戏玩家进入游戏
 	S2S_PLAYER_LEAVE_WORLD_REQ = 20024;				// 游戏玩家离开游戏
 	S2S_LOGIN_OUT_REQ = 20025;						// 登出游戏
+	S2S_QUERY_PLAYER_REQ = 20026;					// 查询玩家数据
+	S2S_QUERY_PLAYER_ACK = 20027;					// 查询玩家数据
+
+	// attribute
 
 
 	// public
@@ -130,9 +134,8 @@ enum ServerProtocol
 	S2S_NOTICE_NEW_MAIL_REQ = 21142;				// 通知新邮件
 	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// 更新好友度
 	S2S_QUERY_BASIC_REQ = 21144;					// 查询好友基础数据
-	S2S_QUERY_PLAYER_REQ = 21145;					// 查询好友数据
+
 	S2S_QUERY_BASIC_ACK = 21146;					// 查询好友基础数据
-	S2S_QUERY_PLAYER_ACK = 21147;					// 查询好友数据
 	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
 	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
 	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
@@ -157,6 +160,8 @@ enum ServerProtocol
 	S2S_UPDATE_GROUP_MEMBER_REQ = 21172;			// 更新玩家基础信息
 	S2S_OFFLINE_UPDATE_MATCH_GROUP_REQ = 21173;		// 离线更新队伍信息
 	S2S_CREATE_MATCH_GROUP_TO_SHARD_REQ = 21174;	// 创建队伍
+	
+	
 	S2S_UPDATE_GUEST_LIST_REQ = 21175;				// 更新访客列表
 	S2S_QUERY_GUEST_REQ = 21176;					// 查询访客信息请求
 	S2S_QUERY_GUEST_ACK = 21177;					// 查询访客信息回馈
@@ -264,20 +269,6 @@ message S2STransmitToServer
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// S2S_UPDATE_ZONE_TO_PROXY_REQ
-message S2SUpdateZoneToProxyReq
-{
-	repeated uint32 zoneid = 1;
-}
-
-// S2S_TRANSMIT_TO_DATA_SHARD_REQ
-message S2STransmitToDataShardReq
-{
-	uint32 zoneid = 1;
-	uint32 msgid = 2;
-	bytes msgdata = 3;
-}
-
 // 更新公共数据
 // S2S_UPDATE_PUBLIC_DATA_REQ
 message S2SUpdatePublicDataReq
@@ -405,6 +396,26 @@ message S2SPlayerDisconnectionReq
 {
 	uint64 playerid = 1; 
 }
+
+// 查询属性
+// S2S_QUERY_PLAYER_REQ
+message S2SQueryPlayerReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询属性
+// S2S_QUERY_PLAYER_ACK
+message S2SQueryPlayerAck
+{
+	uint32 result = 1;
+	PBObject playerdata = 2;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // S2S_SET_PLAYER_NAME_REQ
 message S2SSetPlayerNameReq
@@ -665,22 +676,7 @@ message S2SQueryBasicAck
 	PBObject pbobject = 3;
 }
 
-// 查询属性
-// S2S_QUERY_PLAYER_REQ
-message S2SQueryPlayerReq
-{
-	uint32 zoneid = 1;
-	uint64 playerid = 2;
-	uint64 queryid = 3;
-}
 
-// 查询属性
-// S2S_QUERY_PLAYER_ACK
-message S2SQueryPlayerAck
-{
-	uint64 playerid = 1;
-	PBObject pbobject = 2;
-}
 
 // 设置邮件状态请求
 // S2S_UPDATE_MAIL_FLAG_REQ

@@ -23,8 +23,8 @@ namespace KFrame
         virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送到玩家
-        virtual bool SendToPlayer( KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToPlayer( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToPlayer( uint64 sendid, KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 广播消息到客户端
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;

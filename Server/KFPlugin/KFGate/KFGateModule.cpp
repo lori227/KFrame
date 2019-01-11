@@ -80,7 +80,7 @@ namespace KFrame
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendToClient )
     {
-        auto playerid = __KF_DATA_ID__( kfid );
+        auto playerid = __ROUTE_RECV_ID__;
         if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
@@ -97,7 +97,7 @@ namespace KFrame
 
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGateModule::SendMessageToGame )
     {
-        auto playerid = __KF_HEAD_ID__( kfid );
+        auto playerid = __ROUTE_SEND_ID__;
         if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
@@ -138,10 +138,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginVerifyReq )
     {
+        auto sessionid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::MsgLoginVerifyReq );
-
-        // 连接id
-        auto sessionid = __KF_HEAD_ID__( kfid );
 
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
@@ -217,7 +215,7 @@ namespace KFrame
 
         // 创建角色
         auto kfrole = _kf_role_list.Create( pblogin->playerid() );
-        kfrole->_game_id = __KF_HEAD_ID__( kfid );
+        kfrole->_game_id = __ROUTE_SERVER_ID__;
         kfrole->_role_id = pblogin->playerid();
         kfrole->_session_id = pblogin->sessionid();
 
@@ -275,7 +273,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginOutReq )
     {
-        auto playerid = __KF_HEAD_ID__( kfid );
+        auto playerid = __ROUTE_SEND_ID__;
         auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole == nullptr )
         {

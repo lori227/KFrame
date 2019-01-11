@@ -7,7 +7,7 @@ namespace KFrame
 
     void KFDataShardModule::BeforeRun()
     {
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( OnRouteConnection );
+        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFDataShardModule::OnRouteConnection );
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
@@ -140,7 +140,7 @@ namespace KFrame
             ack.set_result( KFMsg::LoadDataFailed );
         }
 
-        _kf_route->SendToPlayer( __KF_HEAD_ID__( kfid ), pblogin->playerid(), KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &ack );
+        _kf_route->SendToRoute( route, KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerReq )
@@ -167,11 +167,20 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerReq );
 
-        KFMsg::S2SQueryPlayerAck ack;
-        ack.set_playerid( kfmsg.playerid() );
+        auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
 
-        LoadPlayerData( kfmsg.zoneid(), kfmsg.queryid(), ack.mutable_pbobject() );
-        _kf_route->SendToPlayer( __KF_HEAD_ID__( kfid ), kfmsg.playerid(), KFMsg::S2S_QUERY_PLAYER_ACK, &ack );
+        KFMsg::S2SQueryPlayerAck ack;
+        auto ok = LoadPlayerData( zoneid, kfmsg.playerid(), ack.mutable_playerdata() );
+        if ( ok )
+        {
+            ack.set_result( KFMsg::Ok );
+        }
+        else
+        {
+            ack.set_result( KFMsg::QueryPlayerFailed );
+        }
+
+        _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_PLAYER_ACK, &ack );
     }
 
 }

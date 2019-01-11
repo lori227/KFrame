@@ -13,7 +13,6 @@ enum ClientProtocol
  	MSG_SYNC_UPDATE_DATA = 11;				// 同步更新属性
 	MSG_SYNC_ADD_DATA = 12;					// 同步增加属性
 	MSG_SYNC_REMOVE_DATA = 13;				// 同步删除属性
-	MSG_TELL_QUERY_PLAYER = 14;				// 查询玩家数据
 	MSG_TELL_QUERY_BASIC = 15;				// 查询基础数据
 
 	MSG_TELL_BE_KICK = 100;						// 被踢下线了
@@ -45,7 +44,11 @@ enum ClientProtocol
 	MSG_LEAVE_CHAT_REQ = 129;					// 客户端离开江湖聊天室请求
 	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// 设置拒绝添加好友
 	MSG_QUERY_BASIC_REQ = 131;					// 查询玩家基本数据
-	MSG_QUERY_PLAYER_REQ = 132;					// 查询玩家所有数据
+
+	MSG_QUERY_PLAYER_REQ = 132;					// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 14;				    // 查询玩家数据
+
+
 	MSG_BUY_STORE_REQ = 133;					// 客户端购买商品请求
 	MSG_GIVE_STORE_REQ = 134;					// 客户端赠送请求
 	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// 客户端发送一对一聊天请求
@@ -163,13 +166,6 @@ message MsgSyncRemoveData
 	PBObject pbdata = 1;	
 }
 
-// 查询玩家信息
-// 如果key为0, 说明没有查询角色
-// MSG_TELL_QUERY_PLAYER
-message MsgTellQueryPlayer
-{
-	PBObject player = 1;
-}
 
 // 玩家基础信息
 // MSG_TELL_QUERY_BASIC
@@ -282,6 +278,14 @@ message MsgQueryPlayerReq
 {
 	uint64 playerid = 1;
 }
+
+// 查询玩家信息
+// MSG_QUERY_PLAYER_ACK
+message MsgQueryPlayerAck
+{
+	PBObject player = 1;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

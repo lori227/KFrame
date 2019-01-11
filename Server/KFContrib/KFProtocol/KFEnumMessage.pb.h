@@ -365,9 +365,10 @@ enum CodeEnum {
   AuthDatabaseBusy = 14,
   CanNotFindGame = 15,
   LoginTokenError = 16,
-  LoadDataFailed = 17,
   HttpDataError = 18,
   LoginDatabaseError = 19,
+  LoadDataFailed = 10001,
+  QueryPlayerFailed = 10002,
   ZoneDatabaseBusy = 20,
   SexSetOK = 21,
   NameAlreadySet = 22,
@@ -542,7 +543,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = ServerBusy;
+const CodeEnum CodeEnum_MAX = QueryPlayerFailed;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

@@ -134,9 +134,13 @@ enum CodeEnum
 	AuthDatabaseBusy			= 14;		// 平台数据库出错了 
 	CanNotFindGame 				= 15;		// 没有可登录的游戏服务器
 	LoginTokenError 			= 16;		// 登录token错误
-	LoadDataFailed 				= 17;		// 加载失败
 	HttpDataError 				= 18;		// http内部数据错误
 	LoginDatabaseError 			= 19;		// 登录数据库错误
+
+	LoadDataFailed 				= 10001;	// 加载玩家数据失败
+    QueryPlayerFailed 			= 10002;	// 查询玩家数据失败
+
+
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	SexSetOK					= 21;		// 设置性别成功
 	NameAlreadySet				= 22;		// 不能重复设置名字

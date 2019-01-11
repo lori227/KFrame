@@ -25,6 +25,21 @@ namespace KFrame
             SetAfterLoadFunction( function );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void BindAfterQueryFunction( T* object, void ( T::*handle )( uint32, uint64, KFMsg::PBObject* ) )
+        {
+            KFQueryPlayerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            SetAfterQueryFunction( function );
+        }
+
+        // 取消绑定
+        template< class T >
+        void UnBindAfterQueryFunction( T* object )
+        {
+            KFQueryPlayerFunction function = nullptr;
+            SetAfterQueryFunction( function );
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template< class T >
         void RegisterInitDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
@@ -131,6 +146,9 @@ namespace KFrame
         // 保存玩家
         virtual void SavePlayer( KFEntity* player ) = 0;
 
+        // 查询玩家
+        virtual void QueryPlayer( uint64 sendid, uint64 playerid ) = 0;
+
         // 玩家数量
         virtual uint32 GetPlayerCount() = 0;
 
@@ -143,6 +161,7 @@ namespace KFrame
 
     protected:
         virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function ) = 0;
+        virtual void SetAfterQueryFunction( KFQueryPlayerFunction& function ) = 0;
 
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveInitDataFunction( const std::string& moudle ) = 0;
@@ -172,7 +191,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __CLIENT_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto playerid = __KF_DATA_ID__( kfid ); \
+    auto playerid = __ROUTE_RECV_ID__; \
     auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );\
     if ( player == nullptr )\
     {\
@@ -189,7 +208,7 @@ namespace KFrame
 
 #define __ROUTE_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto playerid = __KF_DATA_ID__( kfid ); \
+    auto playerid = __ROUTE_RECV_ID__; \
     auto player = _kf_player->FindPlayer( playerid );\
     if ( player == nullptr )\
     {\

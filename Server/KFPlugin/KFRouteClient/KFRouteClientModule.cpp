@@ -132,6 +132,15 @@ namespace KFrame
         return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &req );
     }
 
+    bool KFRouteClientModule::SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        auto serverid = __ROUTE_SERVER_ID__;
+        auto sendid = __ROUTE_RECV_ID__;
+        auto recvid = __ROUTE_SEND_ID__;
+
+        return SendToPlayer( sendid, serverid, recvid, msgid, message );
+    }
+
     __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageToClientAck )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToClientAck );

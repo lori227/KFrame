@@ -50,9 +50,6 @@ namespace KFrame
         // 查询玩家所有数据
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
-        // 处理查询玩家所有数据回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerAck );
-
         // 处理创建角色
         __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
 
@@ -99,9 +96,8 @@ namespace KFrame
         // 检查名字的有效性
         bool CheckNameValid( const std::string& name );
 
-    private:
-        // 玩家数据
-        KFData* _kf_player_data{ nullptr };
+        // 查询玩家数据
+        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* pbplayerdata );
     };
 }
 

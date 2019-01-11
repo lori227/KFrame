@@ -21,6 +21,8 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         _kf_data->BindLoadPlayerFunction( this, &KFPlayerModule::OnLoadPlayerData );
+        _kf_data->BindQueryPlayerFunction( this, &KFPlayerModule::OnQueryPlayerData );
+        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFPlayerModule::BeforeShut()
@@ -39,12 +41,28 @@ namespace KFrame
         _kf_component->UnRegisterShowRewardFunction();
         ////////////////////////////////////////////////////////////////////////////
         _kf_data->UnBindLoadPlayerFunction( this );
+        _kf_data->UnBindQueryPlayerFunction( this );
+
+        ////////////////////////////////////////////////////////////////////////////
+        _kf_kernel->ReleaseObject( _query_player_data );
     }
+
+    void KFPlayerModule::OnceRun()
+    {
+        // 创建查询玩家公共数据
+        _query_player_data = _kf_kernel->CreateObject( __KF_STRING__( player ) );
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::SetAfterLoadFunction( KFLoadPlayerFunction& function )
     {
         _after_load_function = function;
+    }
+
+    void KFPlayerModule::SetAfterQueryFunction( KFQueryPlayerFunction& function )
+    {
+        _after_query_function = function;
     }
 
     void KFPlayerModule::AddInitDataFunction( const std::string& moudle, KFEntityFunction& function )
@@ -180,6 +198,11 @@ namespace KFrame
         return _kf_data->LoadPlayerData( pblogin );
     }
 
+    void KFPlayerModule::QueryPlayer( uint64 sendid, uint64 playerid )
+    {
+        _kf_data->QueryPlayerData( sendid, playerid );
+    }
+
     void KFPlayerModule::SavePlayer( KFEntity* player )
     {
         if ( !player->IsInited() )
@@ -211,6 +234,18 @@ namespace KFrame
         }
 
         _after_load_function( result, pblogin, pbplayerdata );
+    }
+
+    void KFPlayerModule::OnQueryPlayerData( uint32 result, uint64 sendid, KFMsg::PBObject* pbplayerdata )
+    {
+        if ( result == KFMsg::Ok )
+        {
+            _query_player_data->Reset();
+            _kf_kernel->ParseFromProto( _query_player_data, pbplayerdata );
+            _kf_kernel->SerializeToView( _query_player_data, pbplayerdata );
+        }
+
+        _after_query_function( result, sendid, pbplayerdata );
     }
 
     uint32 KFPlayerModule::GetPlayerCount()

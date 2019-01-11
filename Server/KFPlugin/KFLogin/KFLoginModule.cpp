@@ -82,9 +82,9 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginVerifyReq )
     {
+        auto gateid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyReq );
 
-        auto gateid = __KF_HEAD_ID__( kfid );
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();

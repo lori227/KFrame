@@ -26,6 +26,9 @@ namespace KFrame
 
         // 发送到指定玩家
         virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+
+        // 发送到路由
+        virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步所有对象到Route Shard

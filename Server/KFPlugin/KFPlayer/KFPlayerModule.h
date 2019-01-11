@@ -27,6 +27,7 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -37,6 +38,9 @@ namespace KFrame
 
         // 保存玩家
         virtual void SavePlayer( KFEntity* player );
+
+        // 查询玩家
+        virtual void QueryPlayer( uint64 sendid, uint64 playerid );
 
         // 玩家数量
         virtual uint32 GetPlayerCount();
@@ -50,6 +54,7 @@ namespace KFrame
 
     protected:
         virtual void SetAfterLoadFunction( KFLoadPlayerFunction& function );
+        virtual void SetAfterQueryFunction( KFQueryPlayerFunction& function );
 
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveInitDataFunction( const std::string& moudle );
@@ -83,15 +88,18 @@ namespace KFrame
         // 逻辑刷新
         void RunPlayer( KFEntity* player );
 
-        // 加载玩家数据
-        void OnLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
-
         // 创建角色
         KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 创建角色
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 加载玩家数据
+        void OnLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
+
+        // 查询玩家回调
+        void OnQueryPlayerData( uint32 result, uint64 sendid, KFMsg::PBObject* pbplayerdata );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
         void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
@@ -110,8 +118,12 @@ namespace KFrame
         // 玩家组件
         KFComponent* _kf_component{ nullptr };
 
+        // 玩家数据
+        KFData* _query_player_data{ nullptr };
+
         // 加载玩家函数
         KFLoadPlayerFunction _after_load_function{ nullptr };
+        KFQueryPlayerFunction _after_query_function{ nullptr };
 
         // 更新函数
         KFBind< std::string, const std::string&, KFEntityFunction  > _player_run_function;

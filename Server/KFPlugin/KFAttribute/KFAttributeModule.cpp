@@ -4,17 +4,15 @@ namespace KFrame
 {
     void KFAttributeModule::BeforeRun()
     {
-        // 创建公用玩家数据
-        _kf_player_data = _kf_kernel->CreateObject( __KF_STRING__( player ) );
-
         // 注册Debug函数
         __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ), &KFAttributeModule::DebugAddData );
         __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ), &KFAttributeModule::DebugSetData );
         __REGISTER_DEBUG_FUNCTION__( __KF_STRING__( decdata ), &KFAttributeModule::DebugDecData );
+
+        _kf_player->BindAfterQueryFunction( this, &KFAttributeModule::OnAfterQueryPlayerData );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ, &KFAttributeModule::HandleQueryPlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_ACK, &KFAttributeModule::HandleQueryPlayerAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_CHANGE_SEX_REQ, &KFAttributeModule::HandleChangeSexReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_CHANGE_NAME_REQ, &KFAttributeModule::HandleChangeNameReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_CREATE_ROLE_REQ, &KFAttributeModule::HandleCreateRoleReq );
@@ -33,17 +31,16 @@ namespace KFrame
 
     void KFAttributeModule::BeforeShut()
     {
-        _kf_kernel->ReleaseObject( _kf_player_data );
-
 
         // 取消注册debug函数
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ) );
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ) );
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( decdata ) );
+
+        _kf_player->UnBindAfterQueryFunction( this );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CHANGE_SEX_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CHANGE_NAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_CREATE_ROLE_REQ );
@@ -66,47 +63,36 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryPlayerReq );
 
-        //不能查询自己的数据，客户端本地可以获取到
+        // 不能查询自己的数据，客户端本地可以获取到
         if ( playerid == kfmsg.playerid() )
         {
-            return _kf_display->SendToClient( player, KFMsg::CanNotInquireSelf );
+            return;
         }
-
-        auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
 
         //查询玩家数据
         KFMsg::S2SQueryPlayerReq req;
         req.set_playerid( playerid );
-        req.set_zoneid( zoneid );
-        req.set_queryid( kfmsg.playerid() );
-        _kf_data->SendMessageToData( zoneid, KFMsg::S2S_QUERY_PLAYER_REQ, &req );
+        _kf_player->QueryPlayer( playerid, kfmsg.playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleQueryPlayerAck )
+    void KFAttributeModule::OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* pbplayerdata )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryPlayerAck );
-
-        KFMsg::MsgTellQueryPlayer ack;
-        auto pbplayer = ack.mutable_player();
-
-        //从数据库获取到的数据
-        auto pbobject = &kfmsg.pbobject();
-        if ( pbobject->key() != _invalid_int )
+        auto player = _kf_player->FindPlayer( playerid );
+        if ( player == nullptr )
         {
-            //格式化数据
-            _kf_player_data->Reset();
-            _kf_kernel->ParseFromProto( _kf_player_data, pbobject );
-            _kf_kernel->SerializeToView( _kf_player_data, pbplayer );
-
-            //更新访客信息
-            KFMsg::S2SUpdateGuestListReq req;
-            req.set_playerid( pbobject->key() );
-            req.set_guestid( player->GetKeyID() );
-            req.set_guesttime( KFGlobal::Instance()->_real_time );
-            _kf_public->SendMessageToPublic( KFMsg::S2S_UPDATE_GUEST_LIST_REQ, &req );
+            return;
         }
 
-        _kf_player->SendToClient( player, KFMsg::MSG_TELL_QUERY_PLAYER, &ack );
+        if ( result != KFMsg::Ok )
+        {
+            return _kf_display->SendToClient( playerid, result );
+        }
+
+        KFMsg::MsgQueryPlayerAck ack;
+        ack.mutable_player()->CopyFrom( *pbplayerdata );
+        _kf_game->SendToClient( player, KFMsg::MSG_QUERY_PLAYER_ACK, &ack );
+
+        // 更新访客信息
     }
 
     __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleCreateRoleReq )
