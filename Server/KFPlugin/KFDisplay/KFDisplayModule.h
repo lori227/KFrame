@@ -10,10 +10,9 @@
 ************************************************************************/
 
 #include "KFDisplayInterface.h"
+#include "KFGame/KFGameInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
-#include "KFPlayer/KFPlayerInterface.h"
 
 namespace KFrame
 {
@@ -32,15 +31,12 @@ namespace KFrame
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
 
-        // Game ==> Client
-        virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );
-
-        // Cluster ==> Game
-        virtual void SendToGame( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
-
-        // Game ==> Route ==> Game
+        // Route ==> Player
         virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );
+
+        // Game ==> Client
+        virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );
 
     };
 }

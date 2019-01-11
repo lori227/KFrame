@@ -31,17 +31,7 @@ namespace KFrame
         }
 
         // 发送结果提示到客户端
-        // Cluster ==> Game
-        template< class...Args >
-        inline void SendToGame( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
-        {
-            ListString params;
-            FormatParam( params, std::forward< Args >( args )... );
-            SendToGame( serverid, playerid, result, params );
-        }
-
-        // 发送结果提示到客户端
-        // Game ==> Route ==> Game
+        // Route ==> Player
         template< class...Args >
         inline void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
         {
@@ -51,7 +41,7 @@ namespace KFrame
         }
 
         // 发送结果提示到客户端
-        // Game ==> Route ==> Game
+        // Game ==> Player
         template< class...Args >
         inline void SendToPlayer( KFData* kfbasic, uint32 result, Args&& ... args )
         {
@@ -90,9 +80,6 @@ namespace KFrame
 
         // Game ==> Client
         virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params ) = 0;
-
-        // Cluster ==> Game
-        virtual void SendToGame( uint64 serverid, uint64 playerid, uint32 result, ListString& params ) = 0;
 
         // Game ==> Route ==> Game
         virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params ) = 0;

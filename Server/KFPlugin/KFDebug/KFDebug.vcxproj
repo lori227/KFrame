@@ -21,7 +21,7 @@
     <ClCompile Include="KFDebugPlugin.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9E26FF59-E639-446B-95A2-0C33F7EDD233}</ProjectGuid>
+    <ProjectGuid>{4CF47821-4CD5-4F4A-A4ED-129C8B179C40}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
     <ProjectName>KFDebug</ProjectName>

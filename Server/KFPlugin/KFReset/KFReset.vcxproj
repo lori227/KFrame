@@ -23,7 +23,7 @@
     <ClInclude Include="KFResetPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9BFD08E3-34E0-40C4-BAE6-2774BFDD7F7D}</ProjectGuid>
+    <ProjectGuid>{FB1E7479-DA5D-4E9B-9EFB-56C66949B495}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
     <ProjectName>KFReset</ProjectName>
