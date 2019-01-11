@@ -11,10 +11,10 @@ namespace KFrame
         KFWorkerMessage( );
         ~KFWorkerMessage();
 
-        void CopyFrom( const KFId& kfid, uint32 msgid, const char* data, uint32 length );
+        void CopyFrom( const Route& route, uint32 msgid, const char* data, uint32 length );
 
     public:
-        KFId _kfid;
+        Route _route;
         uint32 _msgid;
         char* _data;
         uint32 _length;

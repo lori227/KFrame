@@ -53,6 +53,9 @@ LIBPROTOC_EXPORT extern ListenDataDefaultTypeInternal _ListenData_default_instan
 class PBDeployCommand;
 class PBDeployCommandDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBDeployCommandDefaultTypeInternal _PBDeployCommand_default_instance_;
+class PBRoute;
+class PBRouteDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBRouteDefaultTypeInternal _PBRoute_default_instance_;
 class RegisterToServerAck;
 class RegisterToServerAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern RegisterToServerAckDefaultTypeInternal _RegisterToServerAck_default_instance_;
@@ -113,9 +116,6 @@ LIBPROTOC_EXPORT extern S2SRouteClientLostToShardReqDefaultTypeInternal _S2SRout
 class S2SRouteDiscoverToClientReq;
 class S2SRouteDiscoverToClientReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRouteDiscoverToClientReqDefaultTypeInternal _S2SRouteDiscoverToClientReq_default_instance_;
-class S2SRouteMessageToAllReq;
-class S2SRouteMessageToAllReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SRouteMessageToAllReqDefaultTypeInternal _S2SRouteMessageToAllReq_default_instance_;
 class S2SRouteMessageToClientAck;
 class S2SRouteMessageToClientAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRouteMessageToClientAckDefaultTypeInternal _S2SRouteMessageToClientAck_default_instance_;
@@ -160,6 +160,7 @@ namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::ListenData* Arena::CreateMaybeMessage<::KFMsg::ListenData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBDeployCommand* Arena::CreateMaybeMessage<::KFMsg::PBDeployCommand>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBRoute* Arena::CreateMaybeMessage<::KFMsg::PBRoute>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerAck* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerReq* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterAuthToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterAuthToClientAck>(Arena*);
@@ -180,7 +181,6 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToProxyReq* Arena::CreateM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteAddObjectToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteClientLostToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteClientLostToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteDiscoverToClientReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteDiscoverToClientReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToAllReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToAllReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToClientAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToNameAllReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToNameAllReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToNameBalanceReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToNameBalanceReq>(Arena*);
@@ -2107,6 +2107,123 @@ class LIBPROTOC_EXPORT S2SClusterClientLostToShardReq : public ::google::protobu
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT PBRoute : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBRoute) */ {
+ public:
+  PBRoute();
+  virtual ~PBRoute();
+
+  PBRoute(const PBRoute& from);
+
+  inline PBRoute& operator=(const PBRoute& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBRoute(PBRoute&& from) noexcept
+    : PBRoute() {
+    *this = ::std::move(from);
+  }
+
+  inline PBRoute& operator=(PBRoute&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBRoute& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBRoute* internal_default_instance() {
+    return reinterpret_cast<const PBRoute*>(
+               &_PBRoute_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  void Swap(PBRoute* other);
+  friend void swap(PBRoute& a, PBRoute& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBRoute* New() const final {
+    return CreateMaybeMessage<PBRoute>(NULL);
+  }
+
+  PBRoute* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBRoute>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBRoute& from);
+  void MergeFrom(const PBRoute& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBRoute* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 serverid = 1;
+  void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  ::google::protobuf::uint64 serverid() const;
+  void set_serverid(::google::protobuf::uint64 value);
+
+  // uint64 sendid = 2;
+  void clear_sendid();
+  static const int kSendidFieldNumber = 2;
+  ::google::protobuf::uint64 sendid() const;
+  void set_sendid(::google::protobuf::uint64 value);
+
+  // uint64 recvid = 3;
+  void clear_recvid();
+  static const int kRecvidFieldNumber = 3;
+  ::google::protobuf::uint64 recvid() const;
+  void set_recvid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBRoute)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 sendid_;
+  ::google::protobuf::uint64 recvid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT S2SRouteMessageToClientAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRouteMessageToClientAck) */ {
  public:
   S2SRouteMessageToClientAck();
@@ -2142,7 +2259,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToClientAck : public ::google::protobuf::M
                &_S2SRouteMessageToClientAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   void Swap(S2SRouteMessageToClientAck* other);
   friend void swap(S2SRouteMessageToClientAck& a, S2SRouteMessageToClientAck& b) {
@@ -2194,138 +2311,6 @@ class LIBPROTOC_EXPORT S2SRouteMessageToClientAck : public ::google::protobuf::M
 
   // accessors -------------------------------------------------------
 
-  // bytes msgdata = 4;
-  void clear_msgdata();
-  static const int kMsgdataFieldNumber = 4;
-  const ::std::string& msgdata() const;
-  void set_msgdata(const ::std::string& value);
-  #if LANG_CXX11
-  void set_msgdata(::std::string&& value);
-  #endif
-  void set_msgdata(const char* value);
-  void set_msgdata(const void* value, size_t size);
-  ::std::string* mutable_msgdata();
-  ::std::string* release_msgdata();
-  void set_allocated_msgdata(::std::string* msgdata);
-
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
-
-  // uint64 playerid = 2;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 2;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // uint32 msgid = 3;
-  void clear_msgid();
-  static const int kMsgidFieldNumber = 3;
-  ::google::protobuf::uint32 msgid() const;
-  void set_msgid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SRouteMessageToClientAck)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
-  ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint32 msgid_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SRouteMessageToAllReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRouteMessageToAllReq) */ {
- public:
-  S2SRouteMessageToAllReq();
-  virtual ~S2SRouteMessageToAllReq();
-
-  S2SRouteMessageToAllReq(const S2SRouteMessageToAllReq& from);
-
-  inline S2SRouteMessageToAllReq& operator=(const S2SRouteMessageToAllReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SRouteMessageToAllReq(S2SRouteMessageToAllReq&& from) noexcept
-    : S2SRouteMessageToAllReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SRouteMessageToAllReq& operator=(S2SRouteMessageToAllReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SRouteMessageToAllReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SRouteMessageToAllReq* internal_default_instance() {
-    return reinterpret_cast<const S2SRouteMessageToAllReq*>(
-               &_S2SRouteMessageToAllReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    15;
-
-  void Swap(S2SRouteMessageToAllReq* other);
-  friend void swap(S2SRouteMessageToAllReq& a, S2SRouteMessageToAllReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SRouteMessageToAllReq* New() const final {
-    return CreateMaybeMessage<S2SRouteMessageToAllReq>(NULL);
-  }
-
-  S2SRouteMessageToAllReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SRouteMessageToAllReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SRouteMessageToAllReq& from);
-  void MergeFrom(const S2SRouteMessageToAllReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SRouteMessageToAllReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
   // bytes msgdata = 3;
   void clear_msgdata();
   static const int kMsgdataFieldNumber = 3;
@@ -2340,11 +2325,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToAllReq : public ::google::protobuf::Mess
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint32 msgid = 2;
   void clear_msgid();
@@ -2352,12 +2343,12 @@ class LIBPROTOC_EXPORT S2SRouteMessageToAllReq : public ::google::protobuf::Mess
   ::google::protobuf::uint32 msgid() const;
   void set_msgid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRouteMessageToClientAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -2479,11 +2470,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameAllReq : public ::google::protobuf::
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint32 msgid = 3;
   void clear_msgid();
@@ -2497,7 +2494,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameAllReq : public ::google::protobuf::
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -2619,11 +2616,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameRandReq : public ::google::protobuf:
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint32 msgid = 3;
   void clear_msgid();
@@ -2637,7 +2640,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameRandReq : public ::google::protobuf:
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -2759,11 +2762,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameBalanceReq : public ::google::protob
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint32 msgid = 3;
   void clear_msgid();
@@ -2777,7 +2786,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameBalanceReq : public ::google::protob
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -2885,9 +2894,9 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameObjectReq : public ::google::protobu
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   void clear_msgdata();
-  static const int kMsgdataFieldNumber = 5;
+  static const int kMsgdataFieldNumber = 4;
   const ::std::string& msgdata() const;
   void set_msgdata(const ::std::string& value);
   #if LANG_CXX11
@@ -2899,21 +2908,21 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameObjectReq : public ::google::protobu
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
-  // uint64 objectid = 3;
-  void clear_objectid();
-  static const int kObjectidFieldNumber = 3;
-  ::google::protobuf::uint64 objectid() const;
-  void set_objectid(::google::protobuf::uint64 value);
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   void clear_msgid();
-  static const int kMsgidFieldNumber = 4;
+  static const int kMsgidFieldNumber = 3;
   ::google::protobuf::uint32 msgid() const;
   void set_msgid(::google::protobuf::uint32 value);
 
@@ -2923,8 +2932,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameObjectReq : public ::google::protobu
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
-  ::google::protobuf::uint64 objectid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -3032,11 +3040,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToServerReq : public ::google::protobuf::M
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint64 targetid = 2;
   void clear_targetid();
@@ -3055,7 +3069,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToServerReq : public ::google::protobuf::M
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint64 targetid_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -3150,9 +3164,9 @@ class LIBPROTOC_EXPORT S2SRouteMessageToPlayerReq : public ::google::protobuf::M
 
   // accessors -------------------------------------------------------
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   void clear_msgdata();
-  static const int kMsgdataFieldNumber = 5;
+  static const int kMsgdataFieldNumber = 4;
   const ::std::string& msgdata() const;
   void set_msgdata(const ::std::string& value);
   #if LANG_CXX11
@@ -3164,11 +3178,17 @@ class LIBPROTOC_EXPORT S2SRouteMessageToPlayerReq : public ::google::protobuf::M
   ::std::string* release_msgdata();
   void set_allocated_msgdata(::std::string* msgdata);
 
-  // uint64 sourceid = 1;
-  void clear_sourceid();
-  static const int kSourceidFieldNumber = 1;
-  ::google::protobuf::uint64 sourceid() const;
-  void set_sourceid(::google::protobuf::uint64 value);
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
 
   // uint64 targetid = 2;
   void clear_targetid();
@@ -3176,15 +3196,9 @@ class LIBPROTOC_EXPORT S2SRouteMessageToPlayerReq : public ::google::protobuf::M
   ::google::protobuf::uint64 targetid() const;
   void set_targetid(::google::protobuf::uint64 value);
 
-  // uint64 playerid = 3;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 3;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   void clear_msgid();
-  static const int kMsgidFieldNumber = 4;
+  static const int kMsgidFieldNumber = 3;
   ::google::protobuf::uint32 msgid() const;
   void set_msgid(::google::protobuf::uint32 value);
 
@@ -3193,9 +3207,8 @@ class LIBPROTOC_EXPORT S2SRouteMessageToPlayerReq : public ::google::protobuf::M
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr msgdata_;
-  ::google::protobuf::uint64 sourceid_;
+  ::KFMsg::PBRoute* pbroute_;
   ::google::protobuf::uint64 targetid_;
-  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 msgid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
@@ -6694,37 +6707,109 @@ inline void S2SClusterClientLostToShardReq::set_clientid(::google::protobuf::uin
 
 // -------------------------------------------------------------------
 
+// PBRoute
+
+// uint64 serverid = 1;
+inline void PBRoute::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBRoute::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRoute.serverid)
+  return serverid_;
+}
+inline void PBRoute::set_serverid(::google::protobuf::uint64 value) {
+  
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBRoute.serverid)
+}
+
+// uint64 sendid = 2;
+inline void PBRoute::clear_sendid() {
+  sendid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBRoute::sendid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRoute.sendid)
+  return sendid_;
+}
+inline void PBRoute::set_sendid(::google::protobuf::uint64 value) {
+  
+  sendid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBRoute.sendid)
+}
+
+// uint64 recvid = 3;
+inline void PBRoute::clear_recvid() {
+  recvid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBRoute::recvid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRoute.recvid)
+  return recvid_;
+}
+inline void PBRoute::set_recvid(::google::protobuf::uint64 value) {
+  
+  recvid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBRoute.recvid)
+}
+
+// -------------------------------------------------------------------
+
 // S2SRouteMessageToClientAck
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToClientAck::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToClientAck::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToClientAck::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToClientAck.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToClientAck::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToClientAck::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToClientAck::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToClientAck::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToClientAck.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToClientAck::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToClientAck.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToClientAck.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToClientAck::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToClientAck.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToClientAck::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToClientAck.pbroute)
 }
 
-// uint64 playerid = 2;
-inline void S2SRouteMessageToClientAck::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SRouteMessageToClientAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToClientAck.playerid)
-  return playerid_;
-}
-inline void S2SRouteMessageToClientAck::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToClientAck.playerid)
-}
-
-// uint32 msgid = 3;
+// uint32 msgid = 2;
 inline void S2SRouteMessageToClientAck::clear_msgid() {
   msgid_ = 0u;
 }
@@ -6738,7 +6823,7 @@ inline void S2SRouteMessageToClientAck::set_msgid(::google::protobuf::uint32 val
   // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToClientAck.msgid)
 }
 
-// bytes msgdata = 4;
+// bytes msgdata = 3;
 inline void S2SRouteMessageToClientAck::clear_msgdata() {
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -6793,105 +6878,60 @@ inline void S2SRouteMessageToClientAck::set_allocated_msgdata(::std::string* msg
 
 // -------------------------------------------------------------------
 
-// S2SRouteMessageToAllReq
+// S2SRouteMessageToNameAllReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToAllReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToNameAllReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToAllReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToAllReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToNameAllReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToAllReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameAllReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameAllReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameAllReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameAllReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToNameAllReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToAllReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
 }
-
-// uint32 msgid = 2;
-inline void S2SRouteMessageToAllReq::clear_msgid() {
-  msgid_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SRouteMessageToAllReq::msgid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToAllReq.msgid)
-  return msgid_;
-}
-inline void S2SRouteMessageToAllReq::set_msgid(::google::protobuf::uint32 value) {
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameAllReq::mutable_pbroute() {
   
-  msgid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToAllReq.msgid)
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToNameAllReq.pbroute)
+  return pbroute_;
 }
-
-// bytes msgdata = 3;
-inline void S2SRouteMessageToAllReq::clear_msgdata() {
-  msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SRouteMessageToAllReq::msgdata() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToAllReq.msgdata)
-  return msgdata_.GetNoArena();
-}
-inline void S2SRouteMessageToAllReq::set_msgdata(const ::std::string& value) {
-  
-  msgdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToAllReq.msgdata)
-}
-#if LANG_CXX11
-inline void S2SRouteMessageToAllReq::set_msgdata(::std::string&& value) {
-  
-  msgdata_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SRouteMessageToAllReq.msgdata)
-}
-#endif
-inline void S2SRouteMessageToAllReq::set_msgdata(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  msgdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SRouteMessageToAllReq.msgdata)
-}
-inline void S2SRouteMessageToAllReq::set_msgdata(const void* value, size_t size) {
-  
-  msgdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SRouteMessageToAllReq.msgdata)
-}
-inline ::std::string* S2SRouteMessageToAllReq::mutable_msgdata() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToAllReq.msgdata)
-  return msgdata_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SRouteMessageToAllReq::release_msgdata() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToAllReq.msgdata)
-  
-  return msgdata_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SRouteMessageToAllReq::set_allocated_msgdata(::std::string* msgdata) {
-  if (msgdata != NULL) {
+inline void S2SRouteMessageToNameAllReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
     
   } else {
     
   }
-  msgdata_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), msgdata);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToAllReq.msgdata)
-}
-
-// -------------------------------------------------------------------
-
-// S2SRouteMessageToNameAllReq
-
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToNameAllReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SRouteMessageToNameAllReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameAllReq.sourceid)
-  return sourceid_;
-}
-inline void S2SRouteMessageToNameAllReq::set_sourceid(::google::protobuf::uint64 value) {
-  
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameAllReq.sourceid)
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToNameAllReq.pbroute)
 }
 
 // bytes name = 2;
@@ -7018,18 +7058,58 @@ inline void S2SRouteMessageToNameAllReq::set_allocated_msgdata(::std::string* ms
 
 // S2SRouteMessageToNameRandReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToNameRandReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToNameRandReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToNameRandReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameRandReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToNameRandReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToNameRandReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameRandReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameRandReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameRandReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameRandReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToNameRandReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameRandReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameRandReq::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToNameRandReq.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToNameRandReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToNameRandReq.pbroute)
 }
 
 // bytes name = 2;
@@ -7156,18 +7236,58 @@ inline void S2SRouteMessageToNameRandReq::set_allocated_msgdata(::std::string* m
 
 // S2SRouteMessageToNameBalanceReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToNameBalanceReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToNameBalanceReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToNameBalanceReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameBalanceReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToNameBalanceReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToNameBalanceReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameBalanceReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameBalanceReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameBalanceReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameBalanceReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToNameBalanceReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameBalanceReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameBalanceReq::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToNameBalanceReq.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToNameBalanceReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToNameBalanceReq.pbroute)
 }
 
 // bytes name = 2;
@@ -7294,18 +7414,58 @@ inline void S2SRouteMessageToNameBalanceReq::set_allocated_msgdata(::std::string
 
 // S2SRouteMessageToNameObjectReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToNameObjectReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToNameObjectReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToNameObjectReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameObjectReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToNameObjectReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToNameObjectReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameObjectReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToNameObjectReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameObjectReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameObjectReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToNameObjectReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameObjectReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToNameObjectReq::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToNameObjectReq.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToNameObjectReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToNameObjectReq.pbroute)
 }
 
 // bytes name = 2;
@@ -7361,21 +7521,7 @@ inline void S2SRouteMessageToNameObjectReq::set_allocated_name(::std::string* na
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToNameObjectReq.name)
 }
 
-// uint64 objectid = 3;
-inline void S2SRouteMessageToNameObjectReq::clear_objectid() {
-  objectid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SRouteMessageToNameObjectReq::objectid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToNameObjectReq.objectid)
-  return objectid_;
-}
-inline void S2SRouteMessageToNameObjectReq::set_objectid(::google::protobuf::uint64 value) {
-  
-  objectid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameObjectReq.objectid)
-}
-
-// uint32 msgid = 4;
+// uint32 msgid = 3;
 inline void S2SRouteMessageToNameObjectReq::clear_msgid() {
   msgid_ = 0u;
 }
@@ -7389,7 +7535,7 @@ inline void S2SRouteMessageToNameObjectReq::set_msgid(::google::protobuf::uint32
   // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToNameObjectReq.msgid)
 }
 
-// bytes msgdata = 5;
+// bytes msgdata = 4;
 inline void S2SRouteMessageToNameObjectReq::clear_msgdata() {
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -7446,18 +7592,58 @@ inline void S2SRouteMessageToNameObjectReq::set_allocated_msgdata(::std::string*
 
 // S2SRouteMessageToServerReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToServerReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToServerReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToServerReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToServerReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToServerReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToServerReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToServerReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToServerReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToServerReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToServerReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToServerReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToServerReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToServerReq::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToServerReq.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToServerReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToServerReq.pbroute)
 }
 
 // uint64 targetid = 2;
@@ -7545,18 +7731,58 @@ inline void S2SRouteMessageToServerReq::set_allocated_msgdata(::std::string* msg
 
 // S2SRouteMessageToPlayerReq
 
-// uint64 sourceid = 1;
-inline void S2SRouteMessageToPlayerReq::clear_sourceid() {
-  sourceid_ = GOOGLE_ULONGLONG(0);
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageToPlayerReq::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
 }
-inline ::google::protobuf::uint64 S2SRouteMessageToPlayerReq::sourceid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToPlayerReq.sourceid)
-  return sourceid_;
+inline void S2SRouteMessageToPlayerReq::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
 }
-inline void S2SRouteMessageToPlayerReq::set_sourceid(::google::protobuf::uint64 value) {
+inline const ::KFMsg::PBRoute& S2SRouteMessageToPlayerReq::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageToPlayerReq::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToPlayerReq.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToPlayerReq::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageToPlayerReq.pbroute)
   
-  sourceid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToPlayerReq.sourceid)
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageToPlayerReq::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageToPlayerReq.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageToPlayerReq::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageToPlayerReq.pbroute)
 }
 
 // uint64 targetid = 2;
@@ -7573,21 +7799,7 @@ inline void S2SRouteMessageToPlayerReq::set_targetid(::google::protobuf::uint64 
   // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToPlayerReq.targetid)
 }
 
-// uint64 playerid = 3;
-inline void S2SRouteMessageToPlayerReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SRouteMessageToPlayerReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageToPlayerReq.playerid)
-  return playerid_;
-}
-inline void S2SRouteMessageToPlayerReq::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToPlayerReq.playerid)
-}
-
-// uint32 msgid = 4;
+// uint32 msgid = 3;
 inline void S2SRouteMessageToPlayerReq::clear_msgid() {
   msgid_ = 0u;
 }
@@ -7601,7 +7813,7 @@ inline void S2SRouteMessageToPlayerReq::set_msgid(::google::protobuf::uint32 val
   // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageToPlayerReq.msgid)
 }
 
-// bytes msgdata = 5;
+// bytes msgdata = 4;
 inline void S2SRouteMessageToPlayerReq::clear_msgdata() {
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

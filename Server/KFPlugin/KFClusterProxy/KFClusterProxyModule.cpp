@@ -198,13 +198,14 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq )
     {
+        auto clientid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::S2SClusterVerifyToProxyReq );
 
         auto serverid = ClusterVerifyLogin( kfmsg.token(), kfmsg.serverid() );
 
         KFMsg::S2SClusterVerifyToClientAck ack;
         ack.set_serverid( serverid );
-        _kf_tcp_server->SendNetMessage( __KF_HEAD_ID__( kfid ), KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &ack );
+        _kf_tcp_server->SendNetMessage( clientid, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &ack );
 
         if ( serverid == _invalid_int )
         {
@@ -243,8 +244,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFClusterProxyModule::TransmitMessageToShard )
     {
-        auto clientid = __KF_HEAD_ID__( kfid );
-        auto shardid = __KF_DATA_ID__( kfid );
+        auto clientid = __ROUTE_SERVER_ID__;
+        auto shardid = __ROUTE_RECV_ID__;
         if ( shardid == _invalid_int )
         {
             shardid = _kf_hash.FindHashNode( clientid, true );
@@ -260,7 +261,7 @@ namespace KFrame
 
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFClusterProxyModule::TransmitMessageToClient )
     {
-        auto clientid = __KF_DATA_ID__( kfid );
+        auto clientid = __ROUTE_RECV_ID__;
         return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );
     }
 }

@@ -67,18 +67,18 @@ namespace KFrame
             }
             else
             {
-                _kf_guid = message->_kfid;
+                _route = message->_route;
 
-                auto* kfactor = reinterpret_cast< uint64* >( &message->_kfid );
+                auto* kfactor = reinterpret_cast< uint64* >( &message->_route );
                 *kfactor = reinterpret_cast< uint64 >( this );
 
-                _kf_worker_moduler->CallFunction( message->_kfid, message->_msgid, message->_data, message->_length );
+                _kf_worker_moduler->CallFunction( message->_route, message->_msgid, message->_data, message->_length );
                 __KF_DELETE__( KFWorkerMessage, message );
             }
         }
     }
 
-    bool KFActor::PushReqMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
+    bool KFActor::PushReqMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         if ( _req_message_queue.IsFull() )
         {
@@ -86,12 +86,12 @@ namespace KFrame
         }
 
         auto message = __KF_NEW__( KFWorkerMessage );
-        message->CopyFrom( kfid, msgid, data, length );
+        message->CopyFrom( route, msgid, data, length );
         _req_message_queue.PushObject( message );
         return true;
     }
 
-    bool KFActor::PushAckMessage( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {
@@ -101,7 +101,7 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( _kf_guid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( _route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage );
         return true;
     }
@@ -114,14 +114,11 @@ namespace KFrame
             return false;
         }
 
-        KFId kfid;
-        kfid._head_id = _invalid_int;
-        kfid._data_id = serverid;
-
+        Route route( 0, 0, serverid );
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( kfid, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage );
         return true;
     }

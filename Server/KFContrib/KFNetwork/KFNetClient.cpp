@@ -10,6 +10,8 @@ namespace KFrame
         // 连接配置
         _net_setting = netsetting;
         _net_services = netservices;
+        _session_id = netsetting._id;
+        _object_id = netsetting._id;
 
         // 初始化客户端
         _uv_client.data = this;

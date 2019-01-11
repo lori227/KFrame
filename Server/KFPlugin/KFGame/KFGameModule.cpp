@@ -78,7 +78,7 @@ namespace KFrame
 
     __KF_ROUTE_CONNECTION_FUNCTION__( KFGameModule::OnConnectionRoute )
     {
-        std::unordered_set< uint64 > playerlist;
+        RouteObjectList playerlist;
         auto kfentity = _kf_component->FirstEntity();
         while ( kfentity != nullptr )
         {

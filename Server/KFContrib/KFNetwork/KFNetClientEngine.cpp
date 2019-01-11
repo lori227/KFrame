@@ -204,7 +204,7 @@ namespace KFrame
         return netclient->SendNetMessage( msgid, data, length );
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
@@ -213,7 +213,7 @@ namespace KFrame
             return false;
         }
 
-        return netclient->SendNetMessage( objectid, msgid, data, length );
+        return netclient->SendNetMessage( recvid, msgid, data, length );
     }
 
     void KFNetClientEngine::SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length )

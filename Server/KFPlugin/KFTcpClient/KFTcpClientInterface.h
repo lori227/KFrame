@@ -18,11 +18,11 @@ namespace KFrame
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message ) = 0;
         virtual bool SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length ) = 0;
         virtual bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
         virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;
@@ -69,7 +69,7 @@ namespace KFrame
 
         // 注册转发
         template< class T >
-        void RegisterTransmitFunction( T* object, bool ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTransmitFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             KFTransmitFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTransmitFunction( typeid( T ).name(), function );
@@ -83,16 +83,16 @@ namespace KFrame
 
     protected:
         // 添加注册回调函数
-        virtual void AddConnectionFunction( const char* name, KFClientConnectionFunction& function ) = 0;
-        virtual void RemoveConnectionFunction( const char* name ) = 0;
+        virtual void AddConnectionFunction( const std::string& name, KFClientConnectionFunction& function ) = 0;
+        virtual void RemoveConnectionFunction( const std::string& name ) = 0;
 
         // 添加断线函数
-        virtual void AddLostFunction( const char* name, KFClientLostFunction& function ) = 0;
-        virtual void RemoveLostFunction( const char* name ) = 0;
+        virtual void AddLostFunction( const std::string& name, KFClientLostFunction& function ) = 0;
+        virtual void RemoveLostFunction( const std::string& name ) = 0;
 
         // 转发函数
-        virtual void AddTransmitFunction( const char* name, KFTransmitFunction& function ) = 0;
-        virtual void RemoveTransmitFunction( const char* name ) = 0;
+        virtual void AddTransmitFunction( const std::string& name, KFTransmitFunction& function ) = 0;
+        virtual void RemoveTransmitFunction( const std::string& name ) = 0;
 
     };
 

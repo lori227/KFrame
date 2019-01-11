@@ -301,22 +301,19 @@ namespace KFrame
     {
         _is_connected = false;
         __LOG_DEBUG_FUNCTION__( function, line, "session[{}:{}:{}] disconnect[{}:{}]!",
-                                _session_id, _object_id, KFAppID::ToString( _session_id ),
-                                code, uv_err_name( code ) );
+                                _session_id, _object_id, KFAppID::ToString( _session_id ), code, uv_err_name( code ) );
     }
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
     {
-        message->_kfid._head_id = _object_id;
         bool ok = _send_queue.PushObject( message );
         if ( !ok )
         {
             if ( !_is_send_queue_full )
             {
                 _is_send_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] id[{}:{}] failed!",
-                                  _session_id, _object_id, KFAppID::ToString( _session_id ),
-                                  message->_msgid, __KF_HEAD_ID__( message->_kfid ), __KF_DATA_ID__( message->_kfid ) );
+                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] failed!",
+                                  _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
             }
         }
         else
@@ -329,16 +326,16 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        message->_kfid._head_id = _object_id;
+        message->_route._send_id = _object_id;
+        message->_route._server_id = _session_id;
         auto ok = _recv_queue.PushObject( message );
         if ( !ok )
         {
             if ( !_is_recv_queue_full )
             {
                 _is_recv_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] id[{}:{}] failed!",
-                                  _session_id, _object_id, KFAppID::ToString( _session_id ),
-                                  message->_msgid, __KF_HEAD_ID__( message->_kfid ), __KF_DATA_ID__( message->_kfid ) );
+                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] failed!",
+                                  _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
             }
         }
         else

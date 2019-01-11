@@ -83,10 +83,10 @@ namespace KFrame
         return _kf_client_engine->SendNetMessage( serverid, msgid, strdata.data(), strdata.size() );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return _kf_client_engine->SendNetMessage( serverid, objectid, msgid, strdata.data(), strdata.size() );
+        return _kf_client_engine->SendNetMessage( serverid, recvid, msgid, strdata.data(), strdata.size() );
     }
 
     void KFTcpClientModule::SendNetMessage( uint32 msgid, const char* data, uint32 length )
@@ -99,9 +99,9 @@ namespace KFrame
         return _kf_client_engine->SendNetMessage( serverid, msgid, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
-        return _kf_client_engine->SendNetMessage( serverid, objectid, msgid, data, length );
+        return _kf_client_engine->SendNetMessage( serverid, recvid, msgid, data, length );
     }
 
     // 给某一类型服务器发送消息
@@ -138,9 +138,9 @@ namespace KFrame
         _kf_client_engine->SendMessageToServer( servername, servertype, msgid, data, length );
     }
 
-    void KFTcpClientModule::HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        bool handleresult = _kf_message->CallFunction( kfid, msgid, data, length );
+        bool handleresult = _kf_message->CallFunction( route, msgid, data, length );
         if ( handleresult )
         {
             return;
@@ -148,7 +148,7 @@ namespace KFrame
 
         if ( _kf_transmit_function != nullptr )
         {
-            auto ok = _kf_transmit_function( kfid, msgid, data, length );
+            auto ok = _kf_transmit_function( route, msgid, data, length );
             if ( !ok )
             {
                 __LOG_ERROR__( "tcp client transmit msgid[{}] failed!", msgid );
@@ -196,13 +196,13 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpClientModule::AddConnectionFunction( const char* name, KFClientConnectionFunction& function )
+    void KFTcpClientModule::AddConnectionFunction( const std::string& name, KFClientConnectionFunction& function )
     {
         auto kffunction = _kf_connection_function.Create( name );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveConnectionFunction( const char* name )
+    void KFTcpClientModule::RemoveConnectionFunction( const std::string& name )
     {
         _kf_connection_function.Remove( name );
     }
@@ -216,13 +216,13 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::AddLostFunction( const char* name, KFClientLostFunction& function )
+    void KFTcpClientModule::AddLostFunction( const std::string& name, KFClientLostFunction& function )
     {
         auto kffunction = _kf_lost_function.Create( name );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveLostFunction( const char* name )
+    void KFTcpClientModule::RemoveLostFunction( const std::string& name )
     {
         _kf_lost_function.Remove( name );
     }
@@ -236,12 +236,12 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::RemoveTransmitFunction( const char* name )
+    void KFTcpClientModule::RemoveTransmitFunction( const std::string& name )
     {
         _kf_transmit_function = nullptr;
     }
 
-    void KFTcpClientModule::AddTransmitFunction( const char* name, KFTransmitFunction& function )
+    void KFTcpClientModule::AddTransmitFunction( const std::string& name, KFTransmitFunction& function )
     {
         _kf_transmit_function = function;
     }

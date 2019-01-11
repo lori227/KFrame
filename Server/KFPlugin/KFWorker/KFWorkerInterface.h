@@ -14,7 +14,7 @@ namespace KFrame
     public:
         // 添加消息函数
         template<typename T>
-        void RegisterFunction( uint32 msgid, T* object, void ( T::*handle )( const KFId& kfid, const char* data, uint32 length ) )
+        void RegisterFunction( uint32 msgid, T* object, void ( T::*handle )( const Route& route, const char* data, uint32 length ) )
         {
             KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             AddFunction( msgid, function );
@@ -26,8 +26,8 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
-        virtual void SendToClient( const KFId& kfid, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendToClient( const KFId& kfid, uint64 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToClient( const Route& route, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToClient( const Route& route, uint64 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
 
     protected:
 

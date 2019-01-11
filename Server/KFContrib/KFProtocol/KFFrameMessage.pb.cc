@@ -22,6 +22,7 @@
 namespace protobuf_KFFrameMessage_2eproto {
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFFrameMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_ListenData;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFFrameMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBDeployCommand;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFFrameMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBRoute;
 }  // namespace protobuf_KFFrameMessage_2eproto
 namespace KFMsg {
 class ListenDataDefaultTypeInternal {
@@ -94,16 +95,16 @@ class S2SClusterClientLostToShardReqDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<S2SClusterClientLostToShardReq>
       _instance;
 } _S2SClusterClientLostToShardReq_default_instance_;
+class PBRouteDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<PBRoute>
+      _instance;
+} _PBRoute_default_instance_;
 class S2SRouteMessageToClientAckDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToClientAck>
       _instance;
 } _S2SRouteMessageToClientAck_default_instance_;
-class S2SRouteMessageToAllReqDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToAllReq>
-      _instance;
-} _S2SRouteMessageToAllReq_default_instance_;
 class S2SRouteMessageToNameAllReqDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToNameAllReq>
@@ -404,6 +405,20 @@ static void InitDefaultsS2SClusterClientLostToShardReq() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SClusterClientLostToShardReq =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SClusterClientLostToShardReq}, {}};
 
+static void InitDefaultsPBRoute() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_PBRoute_default_instance_;
+    new (ptr) ::KFMsg::PBRoute();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::PBRoute::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_PBRoute =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPBRoute}, {}};
+
 static void InitDefaultsS2SRouteMessageToClientAck() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -415,22 +430,9 @@ static void InitDefaultsS2SRouteMessageToClientAck() {
   ::KFMsg::S2SRouteMessageToClientAck::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToClientAck =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToClientAck}, {}};
-
-static void InitDefaultsS2SRouteMessageToAllReq() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::KFMsg::_S2SRouteMessageToAllReq_default_instance_;
-    new (ptr) ::KFMsg::S2SRouteMessageToAllReq();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::KFMsg::S2SRouteMessageToAllReq::InitAsDefaultInstance();
-}
-
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToAllReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToAllReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToClientAck =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToClientAck}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToNameAllReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -443,8 +445,9 @@ static void InitDefaultsS2SRouteMessageToNameAllReq() {
   ::KFMsg::S2SRouteMessageToNameAllReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToNameAllReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToNameAllReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToNameAllReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToNameAllReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToNameRandReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -457,8 +460,9 @@ static void InitDefaultsS2SRouteMessageToNameRandReq() {
   ::KFMsg::S2SRouteMessageToNameRandReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToNameRandReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToNameRandReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToNameRandReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToNameRandReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToNameBalanceReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -471,8 +475,9 @@ static void InitDefaultsS2SRouteMessageToNameBalanceReq() {
   ::KFMsg::S2SRouteMessageToNameBalanceReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToNameBalanceReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToNameBalanceReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToNameBalanceReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToNameBalanceReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToNameObjectReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -485,8 +490,9 @@ static void InitDefaultsS2SRouteMessageToNameObjectReq() {
   ::KFMsg::S2SRouteMessageToNameObjectReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToNameObjectReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToNameObjectReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToNameObjectReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToNameObjectReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToServerReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -499,8 +505,9 @@ static void InitDefaultsS2SRouteMessageToServerReq() {
   ::KFMsg::S2SRouteMessageToServerReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToServerReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToServerReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToServerReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToServerReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteMessageToPlayerReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -513,8 +520,9 @@ static void InitDefaultsS2SRouteMessageToPlayerReq() {
   ::KFMsg::S2SRouteMessageToPlayerReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SRouteMessageToPlayerReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SRouteMessageToPlayerReq}, {}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToPlayerReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToPlayerReq}, {
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteClientLostToShardReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -730,8 +738,8 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2SClusterVerifyToClientAck.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SClusterClientDiscoverToShardReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SClusterClientLostToShardReq.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PBRoute.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToClientAck.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToAllReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToNameAllReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToNameRandReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToNameBalanceReq.base);
@@ -874,28 +882,27 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SClusterClientLostToShardReq, clientid_),
   ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRoute, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRoute, serverid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRoute, sendid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRoute, recvid_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, sourceid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, playerid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToClientAck, msgdata_),
-  ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToAllReq, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToAllReq, sourceid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToAllReq, msgid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToAllReq, msgdata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameAllReq, msgdata_),
@@ -904,7 +911,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameRandReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameRandReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameRandReq, name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameRandReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameRandReq, msgdata_),
@@ -913,7 +920,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameBalanceReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameBalanceReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameBalanceReq, name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameBalanceReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameBalanceReq, msgdata_),
@@ -922,9 +929,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, name_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, objectid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToNameObjectReq, msgdata_),
   ~0u,  // no _has_bits_
@@ -932,7 +938,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, targetid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, msgdata_),
@@ -941,9 +947,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, sourceid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, pbroute_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, targetid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, playerid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, msgdata_),
   ~0u,  // no _has_bits_
@@ -1075,28 +1080,28 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 97, -1, sizeof(::KFMsg::S2SClusterVerifyToClientAck)},
   { 103, -1, sizeof(::KFMsg::S2SClusterClientDiscoverToShardReq)},
   { 109, -1, sizeof(::KFMsg::S2SClusterClientLostToShardReq)},
-  { 115, -1, sizeof(::KFMsg::S2SRouteMessageToClientAck)},
-  { 124, -1, sizeof(::KFMsg::S2SRouteMessageToAllReq)},
-  { 132, -1, sizeof(::KFMsg::S2SRouteMessageToNameAllReq)},
-  { 141, -1, sizeof(::KFMsg::S2SRouteMessageToNameRandReq)},
-  { 150, -1, sizeof(::KFMsg::S2SRouteMessageToNameBalanceReq)},
-  { 159, -1, sizeof(::KFMsg::S2SRouteMessageToNameObjectReq)},
-  { 169, -1, sizeof(::KFMsg::S2SRouteMessageToServerReq)},
-  { 178, -1, sizeof(::KFMsg::S2SRouteMessageToPlayerReq)},
-  { 188, -1, sizeof(::KFMsg::S2SRouteClientLostToShardReq)},
-  { 195, -1, sizeof(::KFMsg::S2SRouteDiscoverToClientReq)},
-  { 201, -1, sizeof(::KFMsg::S2SRouteSyncObjectToProxyReq)},
-  { 210, -1, sizeof(::KFMsg::S2SRouteSyncObjectToShardReq)},
-  { 218, -1, sizeof(::KFMsg::S2SRouteAddObjectToProxyReq)},
-  { 226, -1, sizeof(::KFMsg::S2SRouteAddObjectToShardReq)},
-  { 234, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToProxyReq)},
-  { 242, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
-  { 250, -1, sizeof(::KFMsg::S2SLogReq)},
-  { 261, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
-  { 271, -1, sizeof(::KFMsg::PBDeployCommand)},
-  { 283, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
-  { 289, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
-  { 295, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
+  { 115, -1, sizeof(::KFMsg::PBRoute)},
+  { 123, -1, sizeof(::KFMsg::S2SRouteMessageToClientAck)},
+  { 131, -1, sizeof(::KFMsg::S2SRouteMessageToNameAllReq)},
+  { 140, -1, sizeof(::KFMsg::S2SRouteMessageToNameRandReq)},
+  { 149, -1, sizeof(::KFMsg::S2SRouteMessageToNameBalanceReq)},
+  { 158, -1, sizeof(::KFMsg::S2SRouteMessageToNameObjectReq)},
+  { 167, -1, sizeof(::KFMsg::S2SRouteMessageToServerReq)},
+  { 176, -1, sizeof(::KFMsg::S2SRouteMessageToPlayerReq)},
+  { 185, -1, sizeof(::KFMsg::S2SRouteClientLostToShardReq)},
+  { 192, -1, sizeof(::KFMsg::S2SRouteDiscoverToClientReq)},
+  { 198, -1, sizeof(::KFMsg::S2SRouteSyncObjectToProxyReq)},
+  { 207, -1, sizeof(::KFMsg::S2SRouteSyncObjectToShardReq)},
+  { 215, -1, sizeof(::KFMsg::S2SRouteAddObjectToProxyReq)},
+  { 223, -1, sizeof(::KFMsg::S2SRouteAddObjectToShardReq)},
+  { 231, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToProxyReq)},
+  { 239, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
+  { 247, -1, sizeof(::KFMsg::S2SLogReq)},
+  { 258, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
+  { 268, -1, sizeof(::KFMsg::PBDeployCommand)},
+  { 280, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
+  { 286, -1, sizeof(::KFMsg::S2SDeployCommandToMasterReq)},
+  { 292, -1, sizeof(::KFMsg::S2SDeployCommandToServerReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -1114,8 +1119,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SClusterVerifyToClientAck_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SClusterClientDiscoverToShardReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SClusterClientLostToShardReq_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRoute_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToClientAck_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToAllReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToNameAllReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToNameRandReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToNameBalanceReq_default_instance_),
@@ -1188,93 +1193,94 @@ void AddDescriptorsImpl() {
       "ntAck\022\020\n\010serverid\030\001 \001(\004\"6\n\"S2SClusterCli"
       "entDiscoverToShardReq\022\020\n\010clientid\030\001 \003(\004\""
       "2\n\036S2SClusterClientLostToShardReq\022\020\n\010cli"
-      "entid\030\001 \001(\004\"`\n\032S2SRouteMessageToClientAc"
-      "k\022\020\n\010sourceid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022\r\n"
-      "\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"K\n\027S2SRout"
-      "eMessageToAllReq\022\020\n\010sourceid\030\001 \001(\004\022\r\n\005ms"
-      "gid\030\002 \001(\r\022\017\n\007msgdata\030\003 \001(\014\"]\n\033S2SRouteMe"
-      "ssageToNameAllReq\022\020\n\010sourceid\030\001 \001(\004\022\014\n\004n"
-      "ame\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001("
-      "\014\"^\n\034S2SRouteMessageToNameRandReq\022\020\n\010sou"
-      "rceid\030\001 \001(\004\022\014\n\004name\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r"
-      "\022\017\n\007msgdata\030\004 \001(\014\"a\n\037S2SRouteMessageToNa"
-      "meBalanceReq\022\020\n\010sourceid\030\001 \001(\004\022\014\n\004name\030\002"
-      " \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"r\n\036"
-      "S2SRouteMessageToNameObjectReq\022\020\n\010source"
-      "id\030\001 \001(\004\022\014\n\004name\030\002 \001(\014\022\020\n\010objectid\030\003 \001(\004"
-      "\022\r\n\005msgid\030\004 \001(\r\022\017\n\007msgdata\030\005 \001(\014\"`\n\032S2SR"
-      "outeMessageToServerReq\022\020\n\010sourceid\030\001 \001(\004"
-      "\022\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msg"
-      "data\030\004 \001(\014\"r\n\032S2SRouteMessageToPlayerReq"
-      "\022\020\n\010sourceid\030\001 \001(\004\022\020\n\010targetid\030\002 \001(\004\022\020\n\010"
-      "playerid\030\003 \001(\004\022\r\n\005msgid\030\004 \001(\r\022\017\n\007msgdata"
-      "\030\005 \001(\014\">\n\034S2SRouteClientLostToShardReq\022\014"
-      "\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\".\n\033S2SRou"
-      "teDiscoverToClientReq\022\017\n\007shardid\030\001 \001(\004\"a"
-      "\n\034S2SRouteSyncObjectToProxyReq\022\014\n\004name\030\001"
-      " \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007shardid\030\003 \001(\004\022"
-      "\020\n\010objectid\030\004 \003(\004\"P\n\034S2SRouteSyncObjectT"
-      "oShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001("
-      "\004\022\020\n\010objectid\030\003 \003(\004\"O\n\033S2SRouteAddObject"
+      "entid\030\001 \001(\004\";\n\007PBRoute\022\020\n\010serverid\030\001 \001(\004"
+      "\022\016\n\006sendid\030\002 \001(\004\022\016\n\006recvid\030\003 \001(\004\"]\n\032S2SR"
+      "outeMessageToClientAck\022\037\n\007pbroute\030\001 \001(\0132"
+      "\016.KFMsg.PBRoute\022\r\n\005msgid\030\002 \001(\r\022\017\n\007msgdat"
+      "a\030\003 \001(\014\"l\n\033S2SRouteMessageToNameAllReq\022\037"
+      "\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004name\030"
+      "\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"m\n"
+      "\034S2SRouteMessageToNameRandReq\022\037\n\007pbroute"
+      "\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004name\030\002 \001(\014\022\r\n\005"
+      "msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"p\n\037S2SRoute"
+      "MessageToNameBalanceReq\022\037\n\007pbroute\030\001 \001(\013"
+      "2\016.KFMsg.PBRoute\022\014\n\004name\030\002 \001(\014\022\r\n\005msgid\030"
+      "\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\036S2SRouteMessag"
+      "eToNameObjectReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMs"
+      "g.PBRoute\022\014\n\004name\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017"
+      "\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessageToServ"
+      "erReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\020"
+      "\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgda"
+      "ta\030\004 \001(\014\"o\n\032S2SRouteMessageToPlayerReq\022\037"
+      "\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\020\n\010targe"
+      "tid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001("
+      "\014\">\n\034S2SRouteClientLostToShardReq\022\014\n\004nam"
+      "e\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\".\n\033S2SRouteDis"
+      "coverToClientReq\022\017\n\007shardid\030\001 \001(\004\"a\n\034S2S"
+      "RouteSyncObjectToProxyReq\022\014\n\004name\030\001 \001(\014\022"
+      "\020\n\010clientid\030\002 \001(\004\022\017\n\007shardid\030\003 \001(\004\022\020\n\010ob"
+      "jectid\030\004 \003(\004\"P\n\034S2SRouteSyncObjectToShar"
+      "dReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n\010"
+      "objectid\030\003 \003(\004\"O\n\033S2SRouteAddObjectToPro"
+      "xyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n"
+      "\010objectid\030\003 \001(\004\"O\n\033S2SRouteAddObjectToSh"
+      "ardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020"
+      "\n\010objectid\030\003 \001(\004\"R\n\036S2SRouteRemoveObject"
       "ToProxyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001"
-      "(\004\022\020\n\010objectid\030\003 \001(\004\"O\n\033S2SRouteAddObjec"
-      "tToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 "
-      "\001(\004\022\020\n\010objectid\030\003 \001(\004\"R\n\036S2SRouteRemoveO"
-      "bjectToProxyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clienti"
-      "d\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\"R\n\036S2SRouteRem"
-      "oveObjectToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010cli"
-      "entid\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\"u\n\tS2SLogR"
-      "eq\022\021\n\tlog_level\030\001 \001(\r\022\017\n\007zone_id\030\002 \001(\r\022\020"
-      "\n\010app_name\030\003 \001(\014\022\020\n\010app_type\030\004 \001(\014\022\016\n\006ap"
-      "p_id\030\005 \001(\014\022\020\n\010log_info\030\006 \001(\014\"i\n\033S2SRegis"
-      "terAgentToServerReq\022\017\n\007agentid\030\001 \001(\014\022\017\n\007"
-      "localip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014\n\004type\030\004 \001("
-      "\014\022\014\n\004port\030\005 \001(\r\"\202\001\n\017PBDeployCommand\022\017\n\007c"
-      "ommand\030\001 \001(\014\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype"
-      "\030\003 \001(\014\022\r\n\005appid\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n"
-      "\005value\030\006 \001(\014\022\016\n\006logurl\030\007 \001(\014\"K\n\032S2SDeplo"
-      "yCommandToAgentReq\022-\n\rdeploycommand\030\001 \001("
-      "\0132\026.KFMsg.PBDeployCommand\"L\n\033S2SDeployCo"
-      "mmandToMasterReq\022-\n\rdeploycommand\030\001 \001(\0132"
-      "\026.KFMsg.PBDeployCommand\"L\n\033S2SDeployComm"
-      "andToServerReq\022-\n\rdeploycommand\030\001 \001(\0132\026."
-      "KFMsg.PBDeployCommand*\254\n\n\rFrameProtocol\022"
-      "\034\n\030S2S_FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REG"
-      "ISTER_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_T"
-      "O_SERVER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_"
-      "SERVER\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SE"
-      "RVER\020\224N\022%\n S2S_REGISTER_AGENT_TO_SERVER_"
-      "REQ\020\233N\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_RE"
-      "Q\020\234N\022%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ"
-      "\020\235N\022%\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020"
-      "\236N\022\'\n\"S2S_CLUSTER_REGISTER_TO_MASTER_REQ"
-      "\020\365N\022%\n S2S_CLUSTER_UPDATE_TO_MASTER_REQ\020"
-      "\366N\022#\n\036S2S_CLUSTER_AUTH_TO_MASTER_REQ\020\367N\022"
-      "#\n\036S2S_CLUSTER_AUTH_TO_CLIENT_ACK\020\370N\022#\n\036"
-      "S2S_CLUSTER_TOKEN_TO_PROXY_REQ\020\371N\022$\n\037S2S"
-      "_CLUSTER_VERIFY_TO_PROXY_REQ\020\372N\022%\n S2S_C"
-      "LUSTER_VERIFY_TO_CLIENT_ACK\020\373N\022-\n(S2S_CL"
-      "USTER_CLIENT_DISCOVER_TO_SHARD_REQ\020\374N\022)\n"
-      "$S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ\020\375N"
-      "\022$\n\037S2S_ROUTE_MESSAGE_TO_CLIENT_ACK\020\331O\022&"
-      "\n!S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ\020\332O\022\'"
-      "\n\"S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ\020\333O\022"
-      "*\n%S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ"
-      "\020\334O\022)\n$S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_"
-      "REQ\020\335O\022$\n\037S2S_ROUTE_MESSAGE_TO_SERVER_RE"
-      "Q\020\336O\022$\n\037S2S_ROUTE_MESSAGE_TO_PLAYER_REQ\020"
-      "\337O\022\'\n\"S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ"
-      "\020\340O\022%\n S2S_ROUTE_DISCOVER_TO_CLIENT_REQ\020"
-      "\341O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ"
-      "\020\342O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ"
-      "\020\343O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_"
-      "REQ\020\344O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHARD"
-      "_REQ\020\345O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_SHARD"
-      "_REQ\020\346O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_SH"
-      "ARD_REQ\020\347O\022\020\n\013S2S_LOG_REQ\020\245Nb\006proto3"
+      "(\004\022\020\n\010objectid\030\003 \001(\004\"R\n\036S2SRouteRemoveOb"
+      "jectToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid"
+      "\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\"u\n\tS2SLogReq\022\021\n"
+      "\tlog_level\030\001 \001(\r\022\017\n\007zone_id\030\002 \001(\r\022\020\n\010app"
+      "_name\030\003 \001(\014\022\020\n\010app_type\030\004 \001(\014\022\016\n\006app_id\030"
+      "\005 \001(\014\022\020\n\010log_info\030\006 \001(\014\"i\n\033S2SRegisterAg"
+      "entToServerReq\022\017\n\007agentid\030\001 \001(\014\022\017\n\007local"
+      "ip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014\n\004type\030\004 \001(\014\022\014\n\004"
+      "port\030\005 \001(\r\"\202\001\n\017PBDeployCommand\022\017\n\007comman"
+      "d\030\001 \001(\014\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001("
+      "\014\022\r\n\005appid\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005valu"
+      "e\030\006 \001(\014\022\016\n\006logurl\030\007 \001(\014\"K\n\032S2SDeployComm"
+      "andToAgentReq\022-\n\rdeploycommand\030\001 \001(\0132\026.K"
+      "FMsg.PBDeployCommand\"L\n\033S2SDeployCommand"
+      "ToMasterReq\022-\n\rdeploycommand\030\001 \001(\0132\026.KFM"
+      "sg.PBDeployCommand\"L\n\033S2SDeployCommandTo"
+      "ServerReq\022-\n\rdeploycommand\030\001 \001(\0132\026.KFMsg"
+      ".PBDeployCommand*\254\n\n\rFrameProtocol\022\034\n\030S2"
+      "S_FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REGISTER"
+      "_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SER"
+      "VER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVE"
+      "R\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SERVER\020"
+      "\224N\022%\n S2S_REGISTER_AGENT_TO_SERVER_REQ\020\233"
+      "N\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020\234N\022"
+      "%\n S2S_DEPLOY_COMMAND_TO_MASTER_REQ\020\235N\022%"
+      "\n S2S_DEPLOY_COMMAND_TO_SERVER_REQ\020\236N\022\'\n"
+      "\"S2S_CLUSTER_REGISTER_TO_MASTER_REQ\020\365N\022%"
+      "\n S2S_CLUSTER_UPDATE_TO_MASTER_REQ\020\366N\022#\n"
+      "\036S2S_CLUSTER_AUTH_TO_MASTER_REQ\020\367N\022#\n\036S2"
+      "S_CLUSTER_AUTH_TO_CLIENT_ACK\020\370N\022#\n\036S2S_C"
+      "LUSTER_TOKEN_TO_PROXY_REQ\020\371N\022$\n\037S2S_CLUS"
+      "TER_VERIFY_TO_PROXY_REQ\020\372N\022%\n S2S_CLUSTE"
+      "R_VERIFY_TO_CLIENT_ACK\020\373N\022-\n(S2S_CLUSTER"
+      "_CLIENT_DISCOVER_TO_SHARD_REQ\020\374N\022)\n$S2S_"
+      "CLUSTER_CLIENT_LOST_TO_SHARD_REQ\020\375N\022$\n\037S"
+      "2S_ROUTE_MESSAGE_TO_CLIENT_ACK\020\331O\022&\n!S2S"
+      "_ROUTE_MESSAGE_TO_NAME_ALL_REQ\020\332O\022\'\n\"S2S"
+      "_ROUTE_MESSAGE_TO_NAME_RAND_REQ\020\333O\022*\n%S2"
+      "S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ\020\334O\022)"
+      "\n$S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ\020\335"
+      "O\022$\n\037S2S_ROUTE_MESSAGE_TO_SERVER_REQ\020\336O\022"
+      "$\n\037S2S_ROUTE_MESSAGE_TO_PLAYER_REQ\020\337O\022\'\n"
+      "\"S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ\020\340O\022%"
+      "\n S2S_ROUTE_DISCOVER_TO_CLIENT_REQ\020\341O\022\'\n"
+      "\"S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ\020\342O\022&"
+      "\n!S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ\020\343O\022)"
+      "\n$S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ\020\344"
+      "O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ\020"
+      "\345O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ\020"
+      "\346O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_R"
+      "EQ\020\347O\022\020\n\013S2S_LOG_REQ\020\245Nb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4516);
+      descriptor, 4551);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFFrameMessage.proto", &protobuf_RegisterTypes);
 }
@@ -5879,11 +5885,313 @@ void S2SClusterClientLostToShardReq::InternalSwap(S2SClusterClientLostToShardReq
 
 // ===================================================================
 
-void S2SRouteMessageToClientAck::InitAsDefaultInstance() {
+void PBRoute::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToClientAck::kSourceidFieldNumber;
-const int S2SRouteMessageToClientAck::kPlayeridFieldNumber;
+const int PBRoute::kServeridFieldNumber;
+const int PBRoute::kSendidFieldNumber;
+const int PBRoute::kRecvidFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBRoute::PBRoute()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.PBRoute)
+}
+PBRoute::PBRoute(const PBRoute& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&serverid_, &from.serverid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&recvid_) -
+    reinterpret_cast<char*>(&serverid_)) + sizeof(recvid_));
+  // @@protoc_insertion_point(copy_constructor:KFMsg.PBRoute)
+}
+
+void PBRoute::SharedCtor() {
+  ::memset(&serverid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&recvid_) -
+      reinterpret_cast<char*>(&serverid_)) + sizeof(recvid_));
+}
+
+PBRoute::~PBRoute() {
+  // @@protoc_insertion_point(destructor:KFMsg.PBRoute)
+  SharedDtor();
+}
+
+void PBRoute::SharedDtor() {
+}
+
+void PBRoute::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* PBRoute::descriptor() {
+  ::protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const PBRoute& PBRoute::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_KFFrameMessage_2eproto::scc_info_PBRoute.base);
+  return *internal_default_instance();
+}
+
+
+void PBRoute::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.PBRoute)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&serverid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&recvid_) -
+      reinterpret_cast<char*>(&serverid_)) + sizeof(recvid_));
+  _internal_metadata_.Clear();
+}
+
+bool PBRoute::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.PBRoute)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint64 serverid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &serverid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 sendid = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &sendid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 recvid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &recvid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.PBRoute)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.PBRoute)
+  return false;
+#undef DO_
+}
+
+void PBRoute::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.PBRoute)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 serverid = 1;
+  if (this->serverid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->serverid(), output);
+  }
+
+  // uint64 sendid = 2;
+  if (this->sendid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->sendid(), output);
+  }
+
+  // uint64 recvid = 3;
+  if (this->recvid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->recvid(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.PBRoute)
+}
+
+::google::protobuf::uint8* PBRoute::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.PBRoute)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 serverid = 1;
+  if (this->serverid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->serverid(), target);
+  }
+
+  // uint64 sendid = 2;
+  if (this->sendid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->sendid(), target);
+  }
+
+  // uint64 recvid = 3;
+  if (this->recvid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->recvid(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.PBRoute)
+  return target;
+}
+
+size_t PBRoute::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.PBRoute)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint64 serverid = 1;
+  if (this->serverid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->serverid());
+  }
+
+  // uint64 sendid = 2;
+  if (this->sendid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->sendid());
+  }
+
+  // uint64 recvid = 3;
+  if (this->recvid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->recvid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void PBRoute::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.PBRoute)
+  GOOGLE_DCHECK_NE(&from, this);
+  const PBRoute* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBRoute>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.PBRoute)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.PBRoute)
+    MergeFrom(*source);
+  }
+}
+
+void PBRoute::MergeFrom(const PBRoute& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.PBRoute)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.serverid() != 0) {
+    set_serverid(from.serverid());
+  }
+  if (from.sendid() != 0) {
+    set_sendid(from.sendid());
+  }
+  if (from.recvid() != 0) {
+    set_recvid(from.recvid());
+  }
+}
+
+void PBRoute::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.PBRoute)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBRoute::CopyFrom(const PBRoute& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.PBRoute)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBRoute::IsInitialized() const {
+  return true;
+}
+
+void PBRoute::Swap(PBRoute* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBRoute::InternalSwap(PBRoute* other) {
+  using std::swap;
+  swap(serverid_, other->serverid_);
+  swap(sendid_, other->sendid_);
+  swap(recvid_, other->recvid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata PBRoute::GetMetadata() const {
+  protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void S2SRouteMessageToClientAck::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToClientAck_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int S2SRouteMessageToClientAck::kPbrouteFieldNumber;
 const int S2SRouteMessageToClientAck::kMsgidFieldNumber;
 const int S2SRouteMessageToClientAck::kMsgdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -5903,17 +6211,20 @@ S2SRouteMessageToClientAck::S2SRouteMessageToClientAck(const S2SRouteMessageToCl
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  msgid_ = from.msgid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToClientAck)
 }
 
 void S2SRouteMessageToClientAck::SharedCtor() {
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToClientAck::~S2SRouteMessageToClientAck() {
@@ -5923,6 +6234,7 @@ S2SRouteMessageToClientAck::~S2SRouteMessageToClientAck() {
 
 void S2SRouteMessageToClientAck::SharedDtor() {
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToClientAck::SetCachedSize(int size) const {
@@ -5946,9 +6258,11 @@ void S2SRouteMessageToClientAck::Clear() {
   (void) cached_has_bits;
 
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  msgid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -5962,360 +6276,12 @@ bool S2SRouteMessageToClientAck::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 playerid = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &playerid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 msgid = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &msgid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes msgdata = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_msgdata()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:KFMsg.S2SRouteMessageToClientAck)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRouteMessageToClientAck)
-  return false;
-#undef DO_
-}
-
-void S2SRouteMessageToClientAck::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRouteMessageToClientAck)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
-  }
-
-  // uint64 playerid = 2;
-  if (this->playerid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->playerid(), output);
-  }
-
-  // uint32 msgid = 3;
-  if (this->msgid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msgid(), output);
-  }
-
-  // bytes msgdata = 4;
-  if (this->msgdata().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      4, this->msgdata(), output);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
-  }
-  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRouteMessageToClientAck)
-}
-
-::google::protobuf::uint8* S2SRouteMessageToClientAck::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRouteMessageToClientAck)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
-  }
-
-  // uint64 playerid = 2;
-  if (this->playerid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->playerid(), target);
-  }
-
-  // uint32 msgid = 3;
-  if (this->msgid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msgid(), target);
-  }
-
-  // bytes msgdata = 4;
-  if (this->msgdata().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        4, this->msgdata(), target);
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRouteMessageToClientAck)
-  return target;
-}
-
-size_t S2SRouteMessageToClientAck::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRouteMessageToClientAck)
-  size_t total_size = 0;
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
-  }
-  // bytes msgdata = 4;
-  if (this->msgdata().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->msgdata());
-  }
-
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
-  }
-
-  // uint64 playerid = 2;
-  if (this->playerid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->playerid());
-  }
-
-  // uint32 msgid = 3;
-  if (this->msgid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->msgid());
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void S2SRouteMessageToClientAck::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRouteMessageToClientAck)
-  GOOGLE_DCHECK_NE(&from, this);
-  const S2SRouteMessageToClientAck* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRouteMessageToClientAck>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRouteMessageToClientAck)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRouteMessageToClientAck)
-    MergeFrom(*source);
-  }
-}
-
-void S2SRouteMessageToClientAck::MergeFrom(const S2SRouteMessageToClientAck& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRouteMessageToClientAck)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.msgdata().size() > 0) {
-
-    msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
-  }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
-  }
-  if (from.playerid() != 0) {
-    set_playerid(from.playerid());
-  }
-  if (from.msgid() != 0) {
-    set_msgid(from.msgid());
-  }
-}
-
-void S2SRouteMessageToClientAck::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRouteMessageToClientAck)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void S2SRouteMessageToClientAck::CopyFrom(const S2SRouteMessageToClientAck& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRouteMessageToClientAck)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool S2SRouteMessageToClientAck::IsInitialized() const {
-  return true;
-}
-
-void S2SRouteMessageToClientAck::Swap(S2SRouteMessageToClientAck* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void S2SRouteMessageToClientAck::InternalSwap(S2SRouteMessageToClientAck* other) {
-  using std::swap;
-  msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
-  swap(playerid_, other->playerid_);
-  swap(msgid_, other->msgid_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-}
-
-::google::protobuf::Metadata S2SRouteMessageToClientAck::GetMetadata() const {
-  protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
-void S2SRouteMessageToAllReq::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToAllReq::kSourceidFieldNumber;
-const int S2SRouteMessageToAllReq::kMsgidFieldNumber;
-const int S2SRouteMessageToAllReq::kMsgdataFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-S2SRouteMessageToAllReq::S2SRouteMessageToAllReq()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  ::google::protobuf::internal::InitSCC(
-      &protobuf_KFFrameMessage_2eproto::scc_info_S2SRouteMessageToAllReq.base);
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:KFMsg.S2SRouteMessageToAllReq)
-}
-S2SRouteMessageToAllReq::S2SRouteMessageToAllReq(const S2SRouteMessageToAllReq& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.msgdata().size() > 0) {
-    msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
-  }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
-  // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToAllReq)
-}
-
-void S2SRouteMessageToAllReq::SharedCtor() {
-  msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
-}
-
-S2SRouteMessageToAllReq::~S2SRouteMessageToAllReq() {
-  // @@protoc_insertion_point(destructor:KFMsg.S2SRouteMessageToAllReq)
-  SharedDtor();
-}
-
-void S2SRouteMessageToAllReq::SharedDtor() {
-  msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-
-void S2SRouteMessageToAllReq::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const ::google::protobuf::Descriptor* S2SRouteMessageToAllReq::descriptor() {
-  ::protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const S2SRouteMessageToAllReq& S2SRouteMessageToAllReq::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_KFFrameMessage_2eproto::scc_info_S2SRouteMessageToAllReq.base);
-  return *internal_default_instance();
-}
-
-
-void S2SRouteMessageToAllReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:KFMsg.S2SRouteMessageToAllReq)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
-  _internal_metadata_.Clear();
-}
-
-bool S2SRouteMessageToAllReq::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:KFMsg.S2SRouteMessageToAllReq)
-  for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -6360,23 +6326,24 @@ bool S2SRouteMessageToAllReq::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(parse_success:KFMsg.S2SRouteMessageToClientAck)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRouteMessageToClientAck)
   return false;
 #undef DO_
 }
 
-void S2SRouteMessageToAllReq::SerializeWithCachedSizes(
+void S2SRouteMessageToClientAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRouteMessageToClientAck)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // uint32 msgid = 2;
@@ -6394,19 +6361,21 @@ void S2SRouteMessageToAllReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
-  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRouteMessageToClientAck)
 }
 
-::google::protobuf::uint8* S2SRouteMessageToAllReq::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SRouteMessageToClientAck::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRouteMessageToClientAck)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // uint32 msgid = 2;
@@ -6425,12 +6394,12 @@ void S2SRouteMessageToAllReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRouteMessageToClientAck)
   return target;
 }
 
-size_t S2SRouteMessageToAllReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRouteMessageToAllReq)
+size_t S2SRouteMessageToClientAck::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRouteMessageToClientAck)
   size_t total_size = 0;
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -6445,11 +6414,11 @@ size_t S2SRouteMessageToAllReq::ByteSizeLong() const {
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint32 msgid = 2;
@@ -6464,23 +6433,23 @@ size_t S2SRouteMessageToAllReq::ByteSizeLong() const {
   return total_size;
 }
 
-void S2SRouteMessageToAllReq::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRouteMessageToAllReq)
+void S2SRouteMessageToClientAck::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRouteMessageToClientAck)
   GOOGLE_DCHECK_NE(&from, this);
-  const S2SRouteMessageToAllReq* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRouteMessageToAllReq>(
+  const S2SRouteMessageToClientAck* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRouteMessageToClientAck>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRouteMessageToClientAck)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRouteMessageToAllReq)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRouteMessageToClientAck)
     MergeFrom(*source);
   }
 }
 
-void S2SRouteMessageToAllReq::MergeFrom(const S2SRouteMessageToAllReq& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRouteMessageToAllReq)
+void S2SRouteMessageToClientAck::MergeFrom(const S2SRouteMessageToClientAck& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRouteMessageToClientAck)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -6490,46 +6459,46 @@ void S2SRouteMessageToAllReq::MergeFrom(const S2SRouteMessageToAllReq& from) {
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
   }
 }
 
-void S2SRouteMessageToAllReq::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRouteMessageToAllReq)
+void S2SRouteMessageToClientAck::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRouteMessageToClientAck)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SRouteMessageToAllReq::CopyFrom(const S2SRouteMessageToAllReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRouteMessageToAllReq)
+void S2SRouteMessageToClientAck::CopyFrom(const S2SRouteMessageToClientAck& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRouteMessageToClientAck)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SRouteMessageToAllReq::IsInitialized() const {
+bool S2SRouteMessageToClientAck::IsInitialized() const {
   return true;
 }
 
-void S2SRouteMessageToAllReq::Swap(S2SRouteMessageToAllReq* other) {
+void S2SRouteMessageToClientAck::Swap(S2SRouteMessageToClientAck* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void S2SRouteMessageToAllReq::InternalSwap(S2SRouteMessageToAllReq* other) {
+void S2SRouteMessageToClientAck::InternalSwap(S2SRouteMessageToClientAck* other) {
   using std::swap;
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata S2SRouteMessageToAllReq::GetMetadata() const {
+::google::protobuf::Metadata S2SRouteMessageToClientAck::GetMetadata() const {
   protobuf_KFFrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_KFFrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -6538,9 +6507,11 @@ void S2SRouteMessageToAllReq::InternalSwap(S2SRouteMessageToAllReq* other) {
 // ===================================================================
 
 void S2SRouteMessageToNameAllReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToNameAllReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToNameAllReq::kSourceidFieldNumber;
+const int S2SRouteMessageToNameAllReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToNameAllReq::kNameFieldNumber;
 const int S2SRouteMessageToNameAllReq::kMsgidFieldNumber;
 const int S2SRouteMessageToNameAllReq::kMsgdataFieldNumber;
@@ -6565,18 +6536,21 @@ S2SRouteMessageToNameAllReq::S2SRouteMessageToNameAllReq(const S2SRouteMessageTo
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  msgid_ = from.msgid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToNameAllReq)
 }
 
 void S2SRouteMessageToNameAllReq::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToNameAllReq::~S2SRouteMessageToNameAllReq() {
@@ -6587,6 +6561,7 @@ S2SRouteMessageToNameAllReq::~S2SRouteMessageToNameAllReq() {
 void S2SRouteMessageToNameAllReq::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToNameAllReq::SetCachedSize(int size) const {
@@ -6611,9 +6586,11 @@ void S2SRouteMessageToNameAllReq::Clear() {
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  msgid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -6627,14 +6604,12 @@ bool S2SRouteMessageToNameAllReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -6705,9 +6680,10 @@ void S2SRouteMessageToNameAllReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // bytes name = 2;
@@ -6741,9 +6717,11 @@ void S2SRouteMessageToNameAllReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // bytes name = 2;
@@ -6796,11 +6774,11 @@ size_t S2SRouteMessageToNameAllReq::ByteSizeLong() const {
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint32 msgid = 3;
@@ -6845,8 +6823,8 @@ void S2SRouteMessageToNameAllReq::MergeFrom(const S2SRouteMessageToNameAllReq& f
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
@@ -6881,7 +6859,7 @@ void S2SRouteMessageToNameAllReq::InternalSwap(S2SRouteMessageToNameAllReq* othe
     GetArenaNoVirtual());
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -6895,9 +6873,11 @@ void S2SRouteMessageToNameAllReq::InternalSwap(S2SRouteMessageToNameAllReq* othe
 // ===================================================================
 
 void S2SRouteMessageToNameRandReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToNameRandReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToNameRandReq::kSourceidFieldNumber;
+const int S2SRouteMessageToNameRandReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToNameRandReq::kNameFieldNumber;
 const int S2SRouteMessageToNameRandReq::kMsgidFieldNumber;
 const int S2SRouteMessageToNameRandReq::kMsgdataFieldNumber;
@@ -6922,18 +6902,21 @@ S2SRouteMessageToNameRandReq::S2SRouteMessageToNameRandReq(const S2SRouteMessage
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  msgid_ = from.msgid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToNameRandReq)
 }
 
 void S2SRouteMessageToNameRandReq::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToNameRandReq::~S2SRouteMessageToNameRandReq() {
@@ -6944,6 +6927,7 @@ S2SRouteMessageToNameRandReq::~S2SRouteMessageToNameRandReq() {
 void S2SRouteMessageToNameRandReq::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToNameRandReq::SetCachedSize(int size) const {
@@ -6968,9 +6952,11 @@ void S2SRouteMessageToNameRandReq::Clear() {
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  msgid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -6984,14 +6970,12 @@ bool S2SRouteMessageToNameRandReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -7062,9 +7046,10 @@ void S2SRouteMessageToNameRandReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // bytes name = 2;
@@ -7098,9 +7083,11 @@ void S2SRouteMessageToNameRandReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // bytes name = 2;
@@ -7153,11 +7140,11 @@ size_t S2SRouteMessageToNameRandReq::ByteSizeLong() const {
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint32 msgid = 3;
@@ -7202,8 +7189,8 @@ void S2SRouteMessageToNameRandReq::MergeFrom(const S2SRouteMessageToNameRandReq&
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
@@ -7238,7 +7225,7 @@ void S2SRouteMessageToNameRandReq::InternalSwap(S2SRouteMessageToNameRandReq* ot
     GetArenaNoVirtual());
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -7252,9 +7239,11 @@ void S2SRouteMessageToNameRandReq::InternalSwap(S2SRouteMessageToNameRandReq* ot
 // ===================================================================
 
 void S2SRouteMessageToNameBalanceReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToNameBalanceReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToNameBalanceReq::kSourceidFieldNumber;
+const int S2SRouteMessageToNameBalanceReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToNameBalanceReq::kNameFieldNumber;
 const int S2SRouteMessageToNameBalanceReq::kMsgidFieldNumber;
 const int S2SRouteMessageToNameBalanceReq::kMsgdataFieldNumber;
@@ -7279,18 +7268,21 @@ S2SRouteMessageToNameBalanceReq::S2SRouteMessageToNameBalanceReq(const S2SRouteM
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  msgid_ = from.msgid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToNameBalanceReq)
 }
 
 void S2SRouteMessageToNameBalanceReq::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToNameBalanceReq::~S2SRouteMessageToNameBalanceReq() {
@@ -7301,6 +7293,7 @@ S2SRouteMessageToNameBalanceReq::~S2SRouteMessageToNameBalanceReq() {
 void S2SRouteMessageToNameBalanceReq::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToNameBalanceReq::SetCachedSize(int size) const {
@@ -7325,9 +7318,11 @@ void S2SRouteMessageToNameBalanceReq::Clear() {
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  msgid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -7341,14 +7336,12 @@ bool S2SRouteMessageToNameBalanceReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -7419,9 +7412,10 @@ void S2SRouteMessageToNameBalanceReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // bytes name = 2;
@@ -7455,9 +7449,11 @@ void S2SRouteMessageToNameBalanceReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // bytes name = 2;
@@ -7510,11 +7506,11 @@ size_t S2SRouteMessageToNameBalanceReq::ByteSizeLong() const {
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint32 msgid = 3;
@@ -7559,8 +7555,8 @@ void S2SRouteMessageToNameBalanceReq::MergeFrom(const S2SRouteMessageToNameBalan
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
@@ -7595,7 +7591,7 @@ void S2SRouteMessageToNameBalanceReq::InternalSwap(S2SRouteMessageToNameBalanceR
     GetArenaNoVirtual());
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -7609,11 +7605,12 @@ void S2SRouteMessageToNameBalanceReq::InternalSwap(S2SRouteMessageToNameBalanceR
 // ===================================================================
 
 void S2SRouteMessageToNameObjectReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToNameObjectReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToNameObjectReq::kSourceidFieldNumber;
+const int S2SRouteMessageToNameObjectReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToNameObjectReq::kNameFieldNumber;
-const int S2SRouteMessageToNameObjectReq::kObjectidFieldNumber;
 const int S2SRouteMessageToNameObjectReq::kMsgidFieldNumber;
 const int S2SRouteMessageToNameObjectReq::kMsgdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -7637,18 +7634,21 @@ S2SRouteMessageToNameObjectReq::S2SRouteMessageToNameObjectReq(const S2SRouteMes
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  msgid_ = from.msgid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToNameObjectReq)
 }
 
 void S2SRouteMessageToNameObjectReq::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToNameObjectReq::~S2SRouteMessageToNameObjectReq() {
@@ -7659,6 +7659,7 @@ S2SRouteMessageToNameObjectReq::~S2SRouteMessageToNameObjectReq() {
 void S2SRouteMessageToNameObjectReq::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToNameObjectReq::SetCachedSize(int size) const {
@@ -7683,9 +7684,11 @@ void S2SRouteMessageToNameObjectReq::Clear() {
 
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  msgid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -7699,14 +7702,12 @@ bool S2SRouteMessageToNameObjectReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -7725,24 +7726,10 @@ bool S2SRouteMessageToNameObjectReq::MergePartialFromCodedStream(
         break;
       }
 
-      // uint64 objectid = 3;
+      // uint32 msgid = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &objectid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 msgid = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -7753,10 +7740,10 @@ bool S2SRouteMessageToNameObjectReq::MergePartialFromCodedStream(
         break;
       }
 
-      // bytes msgdata = 5;
-      case 5: {
+      // bytes msgdata = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_msgdata()));
         } else {
@@ -7791,9 +7778,10 @@ void S2SRouteMessageToNameObjectReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // bytes name = 2;
@@ -7802,20 +7790,15 @@ void S2SRouteMessageToNameObjectReq::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // uint64 objectid = 3;
-  if (this->objectid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->objectid(), output);
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->msgid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msgid(), output);
   }
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->msgdata(), output);
+      4, this->msgdata(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -7832,9 +7815,11 @@ void S2SRouteMessageToNameObjectReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // bytes name = 2;
@@ -7844,21 +7829,16 @@ void S2SRouteMessageToNameObjectReq::SerializeWithCachedSizes(
         2, this->name(), target);
   }
 
-  // uint64 objectid = 3;
-  if (this->objectid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->objectid(), target);
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->msgid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msgid(), target);
   }
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        5, this->msgdata(), target);
+        4, this->msgdata(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -7885,28 +7865,21 @@ size_t S2SRouteMessageToNameObjectReq::ByteSizeLong() const {
         this->name());
   }
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
-  // uint64 objectid = 3;
-  if (this->objectid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->objectid());
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -7948,11 +7921,8 @@ void S2SRouteMessageToNameObjectReq::MergeFrom(const S2SRouteMessageToNameObject
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
-  }
-  if (from.objectid() != 0) {
-    set_objectid(from.objectid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
@@ -7987,8 +7957,7 @@ void S2SRouteMessageToNameObjectReq::InternalSwap(S2SRouteMessageToNameObjectReq
     GetArenaNoVirtual());
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
-  swap(objectid_, other->objectid_);
+  swap(pbroute_, other->pbroute_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -8002,9 +7971,11 @@ void S2SRouteMessageToNameObjectReq::InternalSwap(S2SRouteMessageToNameObjectReq
 // ===================================================================
 
 void S2SRouteMessageToServerReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToServerReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToServerReq::kSourceidFieldNumber;
+const int S2SRouteMessageToServerReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToServerReq::kTargetidFieldNumber;
 const int S2SRouteMessageToServerReq::kMsgidFieldNumber;
 const int S2SRouteMessageToServerReq::kMsgdataFieldNumber;
@@ -8025,17 +7996,22 @@ S2SRouteMessageToServerReq::S2SRouteMessageToServerReq(const S2SRouteMessageToSe
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  ::memcpy(&targetid_, &from.targetid_,
     static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+    reinterpret_cast<char*>(&targetid_)) + sizeof(msgid_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToServerReq)
 }
 
 void S2SRouteMessageToServerReq::SharedCtor() {
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToServerReq::~S2SRouteMessageToServerReq() {
@@ -8045,6 +8021,7 @@ S2SRouteMessageToServerReq::~S2SRouteMessageToServerReq() {
 
 void S2SRouteMessageToServerReq::SharedDtor() {
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToServerReq::SetCachedSize(int size) const {
@@ -8068,9 +8045,13 @@ void S2SRouteMessageToServerReq::Clear() {
   (void) cached_has_bits;
 
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  ::memset(&targetid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&targetid_)) + sizeof(msgid_));
   _internal_metadata_.Clear();
 }
 
@@ -8084,14 +8065,12 @@ bool S2SRouteMessageToServerReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -8164,9 +8143,10 @@ void S2SRouteMessageToServerReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // uint64 targetid = 2;
@@ -8199,9 +8179,11 @@ void S2SRouteMessageToServerReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // uint64 targetid = 2;
@@ -8245,11 +8227,11 @@ size_t S2SRouteMessageToServerReq::ByteSizeLong() const {
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint64 targetid = 2;
@@ -8297,8 +8279,8 @@ void S2SRouteMessageToServerReq::MergeFrom(const S2SRouteMessageToServerReq& fro
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.targetid() != 0) {
     set_targetid(from.targetid());
@@ -8334,7 +8316,7 @@ void S2SRouteMessageToServerReq::InternalSwap(S2SRouteMessageToServerReq* other)
   using std::swap;
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(targetid_, other->targetid_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -8349,11 +8331,12 @@ void S2SRouteMessageToServerReq::InternalSwap(S2SRouteMessageToServerReq* other)
 // ===================================================================
 
 void S2SRouteMessageToPlayerReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToPlayerReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+      ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToPlayerReq::kSourceidFieldNumber;
+const int S2SRouteMessageToPlayerReq::kPbrouteFieldNumber;
 const int S2SRouteMessageToPlayerReq::kTargetidFieldNumber;
-const int S2SRouteMessageToPlayerReq::kPlayeridFieldNumber;
 const int S2SRouteMessageToPlayerReq::kMsgidFieldNumber;
 const int S2SRouteMessageToPlayerReq::kMsgdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -8373,17 +8356,22 @@ S2SRouteMessageToPlayerReq::S2SRouteMessageToPlayerReq(const S2SRouteMessageToPl
   if (from.msgdata().size() > 0) {
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  ::memcpy(&sourceid_, &from.sourceid_,
+  if (from.has_pbroute()) {
+    pbroute_ = new ::KFMsg::PBRoute(*from.pbroute_);
+  } else {
+    pbroute_ = NULL;
+  }
+  ::memcpy(&targetid_, &from.targetid_,
     static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
-    reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+    reinterpret_cast<char*>(&targetid_)) + sizeof(msgid_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToPlayerReq)
 }
 
 void S2SRouteMessageToPlayerReq::SharedCtor() {
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
 S2SRouteMessageToPlayerReq::~S2SRouteMessageToPlayerReq() {
@@ -8393,6 +8381,7 @@ S2SRouteMessageToPlayerReq::~S2SRouteMessageToPlayerReq() {
 
 void S2SRouteMessageToPlayerReq::SharedDtor() {
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete pbroute_;
 }
 
 void S2SRouteMessageToPlayerReq::SetCachedSize(int size) const {
@@ -8416,9 +8405,13 @@ void S2SRouteMessageToPlayerReq::Clear() {
   (void) cached_has_bits;
 
   msgdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&sourceid_, 0, static_cast<size_t>(
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+  ::memset(&targetid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
-      reinterpret_cast<char*>(&sourceid_)) + sizeof(msgid_));
+      reinterpret_cast<char*>(&targetid_)) + sizeof(msgid_));
   _internal_metadata_.Clear();
 }
 
@@ -8432,14 +8425,12 @@ bool S2SRouteMessageToPlayerReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 sourceid = 1;
+      // .KFMsg.PBRoute pbroute = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sourceid_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_pbroute()));
         } else {
           goto handle_unusual;
         }
@@ -8460,24 +8451,10 @@ bool S2SRouteMessageToPlayerReq::MergePartialFromCodedStream(
         break;
       }
 
-      // uint64 playerid = 3;
+      // uint32 msgid = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &playerid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 msgid = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -8488,10 +8465,10 @@ bool S2SRouteMessageToPlayerReq::MergePartialFromCodedStream(
         break;
       }
 
-      // bytes msgdata = 5;
-      case 5: {
+      // bytes msgdata = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_msgdata()));
         } else {
@@ -8526,9 +8503,10 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->sourceid(), output);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->_internal_pbroute(), output);
   }
 
   // uint64 targetid = 2;
@@ -8536,20 +8514,15 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->targetid(), output);
   }
 
-  // uint64 playerid = 3;
-  if (this->playerid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->playerid(), output);
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->msgid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msgid(), output);
   }
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->msgdata(), output);
+      4, this->msgdata(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -8566,9 +8539,11 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->sourceid(), target);
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->_internal_pbroute(), deterministic, target);
   }
 
   // uint64 targetid = 2;
@@ -8576,21 +8551,16 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->targetid(), target);
   }
 
-  // uint64 playerid = 3;
-  if (this->playerid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->playerid(), target);
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->msgid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msgid(), target);
   }
 
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        5, this->msgdata(), target);
+        4, this->msgdata(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -8610,18 +8580,18 @@ size_t S2SRouteMessageToPlayerReq::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes msgdata = 5;
+  // bytes msgdata = 4;
   if (this->msgdata().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->msgdata());
   }
 
-  // uint64 sourceid = 1;
-  if (this->sourceid() != 0) {
+  // .KFMsg.PBRoute pbroute = 1;
+  if (this->has_pbroute()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sourceid());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *pbroute_);
   }
 
   // uint64 targetid = 2;
@@ -8631,14 +8601,7 @@ size_t S2SRouteMessageToPlayerReq::ByteSizeLong() const {
         this->targetid());
   }
 
-  // uint64 playerid = 3;
-  if (this->playerid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->playerid());
-  }
-
-  // uint32 msgid = 4;
+  // uint32 msgid = 3;
   if (this->msgid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -8676,14 +8639,11 @@ void S2SRouteMessageToPlayerReq::MergeFrom(const S2SRouteMessageToPlayerReq& fro
 
     msgdata_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.msgdata_);
   }
-  if (from.sourceid() != 0) {
-    set_sourceid(from.sourceid());
+  if (from.has_pbroute()) {
+    mutable_pbroute()->::KFMsg::PBRoute::MergeFrom(from.pbroute());
   }
   if (from.targetid() != 0) {
     set_targetid(from.targetid());
-  }
-  if (from.playerid() != 0) {
-    set_playerid(from.playerid());
   }
   if (from.msgid() != 0) {
     set_msgid(from.msgid());
@@ -8716,9 +8676,8 @@ void S2SRouteMessageToPlayerReq::InternalSwap(S2SRouteMessageToPlayerReq* other)
   using std::swap;
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(sourceid_, other->sourceid_);
+  swap(pbroute_, other->pbroute_);
   swap(targetid_, other->targetid_);
-  swap(playerid_, other->playerid_);
   swap(msgid_, other->msgid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -13276,11 +13235,11 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SClusterClientDiscoverT
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SClusterClientLostToShardReq* Arena::CreateMaybeMessage< ::KFMsg::S2SClusterClientLostToShardReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SClusterClientLostToShardReq >(arena);
 }
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRoute* Arena::CreateMaybeMessage< ::KFMsg::PBRoute >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::PBRoute >(arena);
+}
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToClientAck* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToClientAck >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToClientAck >(arena);
-}
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToAllReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToAllReq >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToAllReq >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToNameAllReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToNameAllReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToNameAllReq >(arena);

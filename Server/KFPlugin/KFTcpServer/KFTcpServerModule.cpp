@@ -203,9 +203,9 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpServerModule::HandleNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
+    void KFTcpServerModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        bool result = _kf_message->CallFunction( kfid, msgid, data, length );
+        bool result = _kf_message->CallFunction( route, msgid, data, length );
         if ( result )
         {
             return;
@@ -213,7 +213,7 @@ namespace KFrame
 
         if ( _kf_transmit_function != nullptr )
         {
-            auto ok = _kf_transmit_function( kfid, msgid, data, length );
+            auto ok = _kf_transmit_function( route, msgid, data, length );
             if ( !ok )
             {
                 __LOG_ERROR__( "tcp server transmit msgid[{}] failed!", msgid );
@@ -227,8 +227,8 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTcpServerModule::HandleRegisterReq )
     {
+        auto sessionid = __ROUTE_SEND_ID__;
         __PROTO_PARSE__( KFMsg::RegisterToServerReq );
-        auto sessionid = __KF_HEAD_ID__( kfid );
 
         auto listendata = &kfmsg.listen();
         auto handlid = listendata->appid();
@@ -361,29 +361,15 @@ namespace KFrame
         return _kf_server_engine->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
-        return _kf_server_engine->SendNetMessage( handleid, objectid, msgid, data, length );
+        return _kf_server_engine->SendNetMessage( handleid, recvid, msgid, data, length );
     }
 
-    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpServerModule::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return _kf_server_engine->SendNetMessage( handleid, objectid, msgid, strdata.data(), strdata.size() );
-    }
-
-    bool KFTcpServerModule::SendNetMessage( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
-    {
-        auto handleid = __KF_HEAD_ID__( kfid );
-        auto objectid = __KF_DATA_ID__( kfid );
-        return SendNetMessage( handleid, objectid, msgid, data, length );
-    }
-
-    bool KFTcpServerModule::SendNetMessage( const KFId& kfid, uint32 msgid, google::protobuf::Message* message )
-    {
-        auto handleid = __KF_HEAD_ID__( kfid );
-        auto objectid = __KF_DATA_ID__( kfid );
-        return SendNetMessage( handleid, objectid, msgid, message );
+        return _kf_server_engine->SendNetMessage( handleid, recvid, msgid, strdata.data(), strdata.size() );
     }
 
     void KFTcpServerModule::SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message )

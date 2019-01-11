@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_MESSAGE_H__
 #define __NET_MESSAGE_H__
 
-#include "KFId.h"
+#include "KFRouter.h"
 
 #pragma pack( 1 )
 
@@ -27,7 +27,7 @@ namespace KFrame
     class KFServerHead : public KFNetHead
     {
     public:
-        KFId _kfid;		// 数据id
+        Route _route;		// 路由信息
     };
     ///////////////////////////////////////////////////////////////////////////////////////////
     // 消息基类
@@ -50,7 +50,7 @@ namespace KFrame
 
         // 复制消息
         void CopyFrom( KFNetMessage* message );
-        void CopyFrom( const KFId& kfid, uint32 msgid, const int8* data, uint32 length );
+        void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length );
         ///////////////////////////////////////////////////////////////////////////////
 
     protected:

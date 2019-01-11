@@ -11,6 +11,7 @@
 
 #include "KFrame.h"
 #include "KFRouteService.h"
+#include "KFProtocol/KFProtocol.h"
 #include "KFRouteShardInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
@@ -63,7 +64,7 @@ namespace KFrame
 
     protected:
         // 转发消息
-        void SendRouteMessage( uint64 clientid, uint32 msgid, const std::string& msgdata, uint64 sourceid, uint64 playerid = _invalid_int );
+        void SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata );
 
     private:
         // 注册的转发服务

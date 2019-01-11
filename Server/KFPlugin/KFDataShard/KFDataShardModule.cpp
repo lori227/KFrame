@@ -4,32 +4,35 @@
 namespace KFrame
 {
 #define __DATA_REDIS_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), _invalid_int )
-#define __SEND_MESSAGE_TO_CLIENT__( msgid, message ) _kf_cluster_shard->SendToClient( kfid, msgid, message )
 
     void KFDataShardModule::BeforeRun()
     {
+        __REGISTER_ROUTE_CONNECTION_FUNCTION__( OnRouteConnection );
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ, &KFDataShardModule::HandleDeletePlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &KFDataShardModule::HandleLoginLoadPlayerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ, &KFDataShardModule::HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &KFDataShardModule::HandleLoginLoadPlayerReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFDataShardModule::BeforeShut()
     {
         __UNREGISTER_TIMER__();
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
+        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DELETE_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ );
+    }
+
+    __KF_ROUTE_CONNECTION_FUNCTION__( KFDataShardModule::OnRouteConnection )
+    {
+        RouteObjectList objectlist;
+        _kf_route->SyncObject( __KF_STRING__( data ), objectlist );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject )
     {
         // 先判断在keeper中是否存在
@@ -114,25 +117,6 @@ namespace KFrame
         }
     }
 
-    void KFDataShardModule::DeletePlayerData( uint32 zoneid, uint64 playerid )
-    {
-#ifndef __KF_DEBUG__
-        return;
-#endif
-        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
-        if ( redisdriver == nullptr )
-        {
-            return;
-        }
-
-        redisdriver->Append( "del {}:{}", __KF_STRING__( player ), playerid );
-        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( playerlist ), zoneid, playerid );
-        redisdriver->Pipeline();
-
-        __LOG_DEBUG__( "player[{}:{}] delete ok!", zoneid, playerid );
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoginLoadPlayerReq )
@@ -142,9 +126,11 @@ namespace KFrame
         auto pblogin = &kfmsg.pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] loaddata!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
+        auto zoneid = KFUtility::CalcZoneId( pblogin->playerid() );
+
         KFMsg::S2SLoginLoadPlayerAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
-        bool ok = LoadPlayerData( kfmsg.zoneid(), pblogin->playerid(), ack.mutable_playerdata() );
+        bool ok = LoadPlayerData( zoneid, pblogin->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -153,14 +139,16 @@ namespace KFrame
         {
             ack.set_result( KFMsg::LoadDataFailed );
         }
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &ack );
+
+        _kf_route->SendToPlayer( __KF_HEAD_ID__( kfid ), pblogin->playerid(), KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SSavePlayerReq );
 
-        auto ok = SavePlayerData( kfmsg.zoneid(), kfmsg.id(), &kfmsg.data() );
+        auto zoneid = KFUtility::CalcZoneId( kfmsg.id() );
+        auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data() );
         if ( ok )
         {
             _kf_data_keeper.Remove( kfmsg.id() );
@@ -170,16 +158,9 @@ namespace KFrame
             // 保存失败 先缓存下来
             auto kfkeeper = _kf_data_keeper.Create( kfmsg.id() );
             kfkeeper->_player_id = kfmsg.id();
-            kfkeeper->_zone_id = kfmsg.zoneid();
+            kfkeeper->_zone_id = zoneid;
             kfkeeper->_pb_object.CopyFrom( kfmsg.data() );
         }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleDeletePlayerReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SDeletePlayerReq );
-
-        DeletePlayerData( kfmsg.zoneid(), kfmsg.id() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerReq )
@@ -190,7 +171,7 @@ namespace KFrame
         ack.set_playerid( kfmsg.playerid() );
 
         LoadPlayerData( kfmsg.zoneid(), kfmsg.queryid(), ack.mutable_pbobject() );
-        __SEND_MESSAGE_TO_CLIENT__( KFMsg::S2S_QUERY_PLAYER_ACK, &ack );
+        _kf_route->SendToPlayer( __KF_HEAD_ID__( kfid ), kfmsg.playerid(), KFMsg::S2S_QUERY_PLAYER_ACK, &ack );
     }
 
 }

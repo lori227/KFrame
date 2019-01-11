@@ -6,6 +6,36 @@ enum ServerProtocol
 {	
 	S2S_SERVER_PROTOCOL_UNKNOW = 0;					// pb3 0 开始
 
+	// server
+	S2S_BROADCAST_TO_WORLD = 20001;					// 广播消息
+	S2S_BROADCAST_TO_GAME = 20002;					// 广播消息
+	S2S_BROADCAST_TO_GATE = 20003;					// 广播消息
+	S2S_TRANSMIT_TO_PLAYER = 20004;					// 转发消息
+	S2S_TRANSMIT_TO_SERVER = 20005;					// 转发消息
+
+	// login
+	S2S_KICK_GAME_PLAYER_REQ = 20011;				// 踢掉在线玩家
+	S2S_KICK_GATE_PLAYER_REQ = 20012;				// 踢掉在线玩家
+	S2S_LOGIN_LOGIN_VERIFY_REQ = 20013;				// 登录验证请求	
+	S2S_LOGIN_LOGIN_VERIFY_ACK = 20014;				// 登录验证结果
+	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 20015;		// 通知登录Token信息
+	S2S_LOGIN_WORLD_VERIFY_REQ = 20016;				// 登录验证请求
+	S2S_LOGIN_FAILED_TO_LOGIN_ACK = 20017;			// 登录失败结果
+	S2S_LOGIN_GAME_ACK = 20018;						// 请求登录游戏服务器
+	S2S_LOGIN_LOAD_PLAYER_REQ = 20019;				// 请求加载玩家数据
+	S2S_LOGIN_LOAD_PLAYER_ACK = 20020;				// 加载玩家数据回馈
+	S2S_SAVE_PLAYER_REQ = 20021;					// 保存玩家数据
+	S2S_GAME_SYNC_ONLINE_REQ = 20022;				// 同步在线人家
+	S2S_PLAYER_ENTER_WORLD_REQ = 20023;				// 游戏玩家进入游戏
+	S2S_PLAYER_LEAVE_WORLD_REQ = 20024;				// 游戏玩家离开游戏
+	S2S_LOGIN_OUT_REQ = 20025;						// 登出游戏
+
+
+	// public
+	S2S_UPDATE_PUBLIC_DATA_REQ = 21001;				// 更新公共数据
+
+
+
 
 	S2S_REGISTER_MATCH_REQ = 11101;					// 注册匹配
 	S2S_MATCH_TO_PROXY_REQ = 11102;					// 请求匹配
@@ -26,7 +56,7 @@ enum ServerProtocol
 	S2S_NOTICE_MATCH_STATE_REQ = 11121;				// 匹配状态
 	S2S_RESET_MATCH_ROOM_REQ = 11122;				// 重置房间
 
-		S2S_REGISTER_BATTLE_SERVER_REQ = 11200;				// 注册战斗服务器
+	S2S_REGISTER_BATTLE_SERVER_REQ = 11200;				// 注册战斗服务器
 	S2S_REGISTER_BATTLE_SERVER_ACK = 11201;				// 注册战斗服务器
 	S2S_DISCONNECT_SERVER_TO_BATTLE_SHARD_REQ = 11202;	// 战后服务器断开连接
 	S2S_REGISTER_SERVER_TO_BATTLE_SHARD_REQ = 11203;	// 注册战斗服务器
@@ -77,33 +107,8 @@ enum ServerProtocol
 	S2S_ALLOC_BATTLE_ID_ACK = 11248;					// 申请分配战场id
 
 
-	S2S_TRANSMIT_MESSAGE_REQ = 21001;				// 转发消息
-	S2S_BROADCAST_MESSAGE_REQ = 21002;				// 广播消息
-	S2S_DELETE_PLAYER_REQ = 21004;					// 删除数据
-	S2S_UPDATE_PUBLIC_DATA_REQ = 21005;				// 更新公共数据
-	S2S_UPDATE_ZONE_TO_PROXY_REQ = 21006;			// 更新zone信息到proxy
-	S2S_TRANSMIT_TO_DATA_SHARD_REQ = 21007;			// 转发消息到数据库
-	S2S_BROADCAST_TO_WORLD = 21008;					// 广播消息
-	S2S_BROADCAST_TO_GAME = 21009;					// 广播消息
-	S2S_BROADCAST_TO_GATE = 21010;					// 广播消息
-	S2S_TRANSMIT_TO_PLAYER = 21011;					// 转发消息
-	S2S_TRANSMIT_TO_SERVER = 21012;					// 转发消息
-	
-	S2S_KICK_GAME_PLAYER_REQ = 21101;				// 踢掉在线玩家
-	S2S_KICK_GATE_PLAYER_REQ = 21102;				// 踢掉在线玩家
-	S2S_LOGIN_LOGIN_VERIFY_REQ = 21104;				// 登录验证请求	
-	S2S_LOGIN_LOGIN_VERIFY_ACK = 21105;				// 登录验证结果
-	S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ = 21106;		// 通知登录Token信息
-	S2S_LOGIN_WORLD_VERIFY_REQ = 21108;				// 登录验证请求
-	S2S_LOGIN_FAILED_TO_LOGIN_ACK = 21109;			// 登录失败结果
-	S2S_GAME_SYNC_ONLINE_REQ = 21113;				// 同步在线人家
-	S2S_LOGIN_GAME_ACK = 21115;						// 请求登录游戏服务器
-	S2S_LOGIN_LOAD_PLAYER_REQ = 21116;				// 请求加载玩家数据
-	S2S_LOGIN_LOAD_PLAYER_ACK = 21117;				// 加载玩家数据回馈
-	S2S_SAVE_PLAYER_REQ = 21118;					// 保存玩家数据
-	S2S_LOGIN_OUT_REQ = 21119;						// 登出游戏
-	S2S_PLAYER_ENTER_WORLD_REQ = 21120;				// 游戏玩家进入游戏
-	S2S_PLAYER_LEAVE_WORLD_REQ = 21121;				// 游戏玩家离开游戏
+
+
 	S2S_SET_PLAYER_NAME_REQ = 21124;				// 设置名字请求
 	S2S_SET_PLAYER_NAME_ACK = 21125;				// 设置名字回应
 	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// 玩家掉线
@@ -273,14 +278,6 @@ message S2STransmitToDataShardReq
 	bytes msgdata = 3;
 }
 
-
-// S2S_DELETE_PLAYER_REQ
-message S2SDeletePlayerReq
-{
-	uint64 id = 1;
-	uint32 zoneid = 2;
-}
-
 // 更新公共数据
 // S2S_UPDATE_PUBLIC_DATA_REQ
 message S2SUpdatePublicDataReq
@@ -333,8 +330,8 @@ message PBLoginData
 	bytes token = 1;		// token
 	uint64 gateid = 2;		// 服务器id
 	uint64 sessionid = 3;	// sessionid
-	uint32 channel = 4;	// 渠道id
-	bytes account = 5;	// 账号
+	uint32 channel = 4;		// 渠道id
+	bytes account = 5;		// 账号
 	uint64 accountid = 6;	// 账号id
 	uint64 playerid = 7;	// 角色id
 	map<string, bytes> channeldata = 8;	// 渠道数据	

@@ -92,7 +92,8 @@ namespace KFrame
                     }
                 }
 
-                retmessage->_kfid._head_id = _object_id;
+                retmessage->_route._send_id = _object_id;
+                retmessage->_route._server_id = _session_id;
             }
             else
             {
@@ -127,16 +128,16 @@ namespace KFrame
     }
 
     // 添加一个发送消息
-    bool KFNetConnector::SendSingleMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
         auto netmessage = KFNetMessage::Create( length );
 
-        KFId kfid( 0, objectid );
-        netmessage->CopyFrom( kfid, msgid, data, length );
+        Route route( 0, 0, recvid );
+        netmessage->CopyFrom( route, msgid, data, length );
         return AddSendMessage( netmessage );
     }
 
-    bool KFNetConnector::SendMultiMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
         auto ok = true;
 
@@ -145,14 +146,14 @@ namespace KFrame
         uint32 messagecount = ( datalength + KFNetDefine::MaxMessageLength - 1 ) / KFNetDefine::MaxMessageLength;
 
         // 消息头
-        KFId kfid( 0, objectid );
+        Route route( 0, 0, recvid );
         auto message = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
-        message->CopyFrom( kfid, msgid, nullptr, length );
+        message->CopyFrom( route, msgid, nullptr, length );
 
         // 子消息头
         auto headmessage = KFNetMessage::Create( KFNetMessage::HeadLength() );
         headmessage->_child = messagecount;
-        headmessage->CopyFrom( kfid, KFNetDefine::CUT_MSGCHILDBEGIN, _net_services->_buff_address, KFNetMessage::HeadLength() );
+        headmessage->CopyFrom( route, KFNetDefine::CUT_MSGCHILDBEGIN, _net_services->_buff_address, KFNetMessage::HeadLength() );
         if ( !AddSendMessage( headmessage ) )
         {
             ok = false;
@@ -168,7 +169,7 @@ namespace KFrame
             // 消息拷贝
             auto childmessage = KFNetMessage::Create( sendlength );
             childmessage->_child = i + 1;
-            childmessage->CopyFrom( kfid, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
+            childmessage->CopyFrom( route, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
             if ( !AddSendMessage( childmessage ) )
             {
                 ok = false;
@@ -198,18 +199,18 @@ namespace KFrame
         return SendNetMessage( 0, msgid, data, length );
     }
 
-    bool KFNetConnector::SendNetMessage( uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
         bool ok = false;
 
         // 小于发送的最大buff, 直接添加消息
         if ( length <= KFNetDefine::MaxMessageLength )
         {
-            ok = SendSingleMessage( objectid, msgid, data, length );
+            ok = SendSingleMessage( recvid, msgid, data, length );
         }
         else
         {
-            ok = SendMultiMessage( objectid, msgid, data, length );
+            ok = SendMultiMessage( recvid, msgid, data, length );
         }
 
         // 发送消息
@@ -252,7 +253,7 @@ namespace KFrame
         while ( message != nullptr )
         {
             // 处理回调函数
-            netfunction( message->_kfid, message->_msgid, message->_data, message->_length );
+            netfunction( message->_route, message->_msgid, message->_data, message->_length );
 
             // 每次处理200个消息
             ++messagecount;

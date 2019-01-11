@@ -50,7 +50,7 @@ namespace KFrame
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 excludeid = 0 );
         bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length );
 
         void SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length );
         void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
@@ -58,7 +58,7 @@ namespace KFrame
     public:
         // 绑定消息事件
         template< class T >
-        void BindNetFunction( T* object, void ( T::*handle )( const KFId& kfid, uint32 msgid, const char* data, uint32 length ) )
+        void BindNetFunction( T* object, void ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             _net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
         }

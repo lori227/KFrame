@@ -18,10 +18,10 @@ namespace KFrame
         }
     }
 
-    bool KFMessageModule::CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
+    bool KFMessageModule::CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         // ping 消息不处理
-        if ( msgid == 0 )
+        if ( msgid == 0u )
         {
             return true;
         }
@@ -32,7 +32,7 @@ namespace KFrame
             return false;
         }
 
-        kffunction->_function( kfid, data, length );
+        kffunction->_function( route, data, length );
         return true;
     }
 

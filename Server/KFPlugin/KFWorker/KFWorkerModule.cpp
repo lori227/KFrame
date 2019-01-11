@@ -47,7 +47,7 @@ namespace KFrame
         kffunction->_function = function;
     }
 
-    bool KFWorkerModule::CallFunction( const KFId& kfid, uint32 msgid, const char* data, uint32 length )
+    bool KFWorkerModule::CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         auto kffunction = _kf_message_function.Find( msgid );
         if ( kffunction == nullptr )
@@ -55,7 +55,7 @@ namespace KFrame
             return false;
         }
 
-        kffunction->_function( kfid, data, length );
+        kffunction->_function( route, data, length );
         return true;
     }
 
@@ -100,22 +100,22 @@ namespace KFrame
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFWorkerModule::SendMessageToWorker )
     {
         auto kfactor = FindWorkActor();
-        kfactor->PushReqMessage( kfid, msgid, data, length );
+        kfactor->PushReqMessage( route, msgid, data, length );
         return true;
     }
 
-    void KFWorkerModule::SendToClient( const KFId& kfid, uint32 msgid, ::google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto kftemp = const_cast< KFId* >( &kfid );
+        auto kftemp = const_cast< Route* >( &route );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );
         auto kfactor = reinterpret_cast< KFActor* >( *kfuint64 );
 
-        kfactor->PushAckMessage( kfid, msgid, message );
+        kfactor->PushAckMessage( route, msgid, message );
     }
 
-    void KFWorkerModule::SendToClient( const KFId& kfid, uint64 serverid, uint32 msgid, google::protobuf::Message* message )
+    void KFWorkerModule::SendToClient( const Route& route, uint64 serverid, uint32 msgid, google::protobuf::Message* message )
     {
-        auto kftemp = const_cast< KFId* >( &kfid );
+        auto kftemp = const_cast< Route* >( &route );
         auto kfuint64 = reinterpret_cast< uint64* >( kftemp );
         auto kfactor = reinterpret_cast< KFActor* >( *kfuint64 );
 

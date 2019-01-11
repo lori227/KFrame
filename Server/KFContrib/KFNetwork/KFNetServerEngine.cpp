@@ -344,7 +344,7 @@ namespace KFrame
         return handle->SendNetMessage( handleid, msgid, data, length );
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 objectid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
@@ -353,6 +353,6 @@ namespace KFrame
             return false;
         }
 
-        return handle->SendNetMessage( objectid, msgid, data, length );
+        return handle->SendNetMessage( recvid, msgid, data, length );
     }
 }

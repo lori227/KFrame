@@ -13,12 +13,10 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFDataShardInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFWorker/KFWorkerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -58,15 +56,15 @@ namespace KFrame
         // 定时保存数据
         __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
 
+        // route 连接
+        __KF_ROUTE_CONNECTION_FUNCTION__( OnRouteConnection );
+
     protected:
         // 玩家登陆
         __KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );
 
         // 保存数据
         __KF_MESSAGE_FUNCTION__( HandleSavePlayerReq );
-
-        // 删除数据
-        __KF_MESSAGE_FUNCTION__( HandleDeletePlayerReq );
 
         // 查询玩家属性
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
@@ -77,9 +75,6 @@ namespace KFrame
 
         // 保存数据
         bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject );
-
-        // 删除数据
-        void DeletePlayerData( uint32 zoneid, uint64 playerid );
 
     private:
         // 数据保存

@@ -1,5 +1,4 @@
 ﻿#include "KFRouteShardModule.h"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -46,10 +45,12 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameAllReq );
 
+        auto pbroute = kfmsg.mutable_pbroute();
+
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
         for ( auto& iter : routeservice->_server_object_count_list )
         {
-            SendRouteMessage( iter.first, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid() );
+            SendRouteMessage( iter.first, pbroute, kfmsg.msgid(), kfmsg.msgdata() );
         }
     }
 
@@ -57,14 +58,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameRandReq );
 
+        auto pbroute = kfmsg.mutable_pbroute();
+
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
-        auto serverid = routeservice->RandServer( kfmsg.sourceid() );
+        auto serverid = routeservice->RandServer( pbroute->serverid() );
         if ( serverid == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server!", kfmsg.name() );
         }
 
-        SendRouteMessage( serverid, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid() );
+        SendRouteMessage( serverid, pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameBalanceReq )
@@ -78,44 +81,47 @@ namespace KFrame
             return __LOG_ERROR__( "service[{}] no server!", kfmsg.name() );
         }
 
-        SendRouteMessage( serverid, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid() );
+        auto pbroute = kfmsg.mutable_pbroute();
+        SendRouteMessage( serverid, pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameObjectReq );
+        auto pbroute = kfmsg.mutable_pbroute();
 
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
-        auto serverid = routeservice->ObjectServer( kfmsg.objectid() );
+        auto serverid = routeservice->ObjectServer( pbroute->recvid() );
         if ( serverid == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server!", kfmsg.name() );
         }
 
-        SendRouteMessage( serverid, kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid(), kfmsg.objectid() );
+        SendRouteMessage( serverid, pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToServerReq );
+        auto pbroute = kfmsg.mutable_pbroute();
 
-        SendRouteMessage( kfmsg.targetid(), kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid() );
+        SendRouteMessage( kfmsg.targetid(), pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToPlayerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToPlayerReq );
+        auto pbroute = kfmsg.mutable_pbroute();
 
-        SendRouteMessage( kfmsg.targetid(), kfmsg.msgid(), kfmsg.msgdata(), kfmsg.sourceid(), kfmsg.playerid() );
+        SendRouteMessage( kfmsg.targetid(), pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
-    void KFRouteShardModule::SendRouteMessage( uint64 clientid, uint32 msgid, const std::string& msgdata, uint64 sourceid, uint64 playerid /* = _invalid_int */ )
+    void KFRouteShardModule::SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata )
     {
         KFMsg::S2SRouteMessageToClientAck ack;
-        ack.set_sourceid( sourceid );
-        ack.set_playerid( playerid );
         ack.set_msgid( msgid );
         ack.set_msgdata( msgdata );
+        ack.mutable_pbroute()->CopyFrom( *pbroute );
         _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
     }
 

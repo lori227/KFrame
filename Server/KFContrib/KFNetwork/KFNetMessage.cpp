@@ -42,7 +42,7 @@ namespace KFrame
 
     void KFNetMessage::CopyFrom( KFNetMessage* message )
     {
-        _kfid = message->_kfid;
+        _route = message->_route;
         _msgid = message->_msgid;
         _length = message->_length;
         _child = message->_child;
@@ -52,9 +52,9 @@ namespace KFrame
         }
     }
 
-    void KFNetMessage::CopyFrom( const KFId& kfid, uint32 msgid, const int8* data, uint32 length )
+    void KFNetMessage::CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length )
     {
-        _kfid = kfid;
+        _route = route;
         _msgid = msgid;
         CopyData( data, length );
     }

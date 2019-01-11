@@ -34,26 +34,26 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
 
         // 转给给指定类型的所有
-        virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
 
         // 转发给随机服务器
-        virtual bool SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
 
         // 转发到负载最小的服务器
-        virtual bool SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送到对象所在的服务器
-        virtual bool SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 转发给指定服务器
-        virtual bool SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送到指定玩家
-        virtual bool SendToPlayer( uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 同步所有对象到Route Shard
-        virtual void SyncObject( const std::string& name, std::unordered_set< uint64 >& objectlist );
+        virtual void SyncObject( const std::string& name, RouteObjectList& objectlist );
 
         // 添加对象到Route Shard
         virtual void AddObject( const std::string& name, uint64 objectid );
@@ -80,7 +80,7 @@ namespace KFrame
         KFTransmitFunction _kf_transmit_function{ nullptr };
 
         // 对象列表
-        std::map< std::string, std::unordered_set< uint64 > > _service_object_list;
+        std::map< std::string, RouteObjectList > _service_object_list;
     };
 }
 

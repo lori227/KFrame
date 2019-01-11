@@ -21,9 +21,9 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientDiscoverToShardReq )
     {
+        auto proxyid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverToShardReq );
 
-        auto proxyid = __KF_HEAD_ID__( kfid );
         for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
         {
             auto clientid = kfmsg.clientid( i );
