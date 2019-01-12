@@ -16,6 +16,8 @@ list(REMOVE_ITEM KFSTARTUP_SRC "./KFDump.cpp")
 
 add_executable(KFStartup ${KFSTARTUP_SRC})
 add_dependencies(KFStartup KFUtility)
+add_dependencies(KFStartup KFLogger)
+add_dependencies(KFStartup KFGlobal)
 
 set_target_properties(KFStartup PROPERTIES OUTPUT_NAME_DEBUG "KFStartupd")
 set_target_properties(KFStartup PROPERTIES
@@ -30,7 +32,7 @@ add_definitions(
 
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    target_link_libraries(KFStartup dl rt pthread iconv PocoJSONd PocoXMLd PocoUtild PocoFoundationd PocoJSONd KFGlobald KFPlugind KFMemoryd KFUtilityd tcmalloc_minimal)
+    target_link_libraries(KFStartup dl rt pthread iconv PocoJSONd PocoXMLd PocoUtild PocoFoundationd PocoJSONd KFGlobald KFLoggerd KFPlugind KFMemoryd KFUtilityd tcmalloc_minimal)
 else()
-    target_link_libraries(KFStartup dl rt pthread iconv PocoJSON PocoXML PocoUtil PocoFoundation PocoJSON  KFGlobal KFPlugin KFMemory KFUtility tcmalloc_minimal)  
+    target_link_libraries(KFStartup dl rt pthread iconv PocoJSON PocoXML PocoUtil PocoFoundation PocoJSON  KFGlobal KFLogger KFPlugin KFMemory KFUtility tcmalloc_minimal)  
 endif()

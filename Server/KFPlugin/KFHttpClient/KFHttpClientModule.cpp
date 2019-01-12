@@ -99,7 +99,7 @@ namespace KFrame
         return KFHttpCommon::SendResponse( json );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, const std::string& data )
+    std::string KFHttpClientModule::StartSTClient( const std::string& url, const std::string& data )
     {
         if ( IsHttpsClient( url ) )
         {
@@ -111,31 +111,31 @@ namespace KFrame
         return httpclient.RunHttp( url, data );
     }
 
-    std::string KFHttpClientModule::StartSTHttpClient( const std::string& url, KFJson& json )
+    std::string KFHttpClientModule::StartSTClient( const std::string& url, KFJson& json )
     {
         auto data = __JSON_SERIALIZE__( json );
-        return StartSTHttpClient( url, data );
+        return StartSTClient( url, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFHttpClientModule::StartMTHttpClient( const std::string& url, const std::string& data )
+    void KFHttpClientModule::StartMTClient( const std::string& url, const std::string& data )
     {
         static KFHttpClientFunction _null_function = nullptr;
-        StartMTHttpClient( _null_function, url, data, _invalid_str );
+        StartMTClient( _null_function, url, data, _invalid_str );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( const std::string& url, KFJson& json )
+    void KFHttpClientModule::StartMTClient( const std::string& url, KFJson& json )
     {
         static KFHttpClientFunction _null_function = nullptr;
-        StartMTHttpClient( _null_function, url, json, _invalid_str );
+        StartMTClient( _null_function, url, json, _invalid_str );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
+    void KFHttpClientModule::StartMTClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback )
     {
         auto data = __JSON_SERIALIZE__( json );
-        StartMTHttpClient( function, url, data, callback );
+        StartMTClient( function, url, data, callback );
     }
 
-    void KFHttpClientModule::StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
+    void KFHttpClientModule::StartMTClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback )
     {
         auto httpdata = __KF_NEW__( KFHttpData );
         httpdata->_url = url;

@@ -377,14 +377,14 @@ enum CodeEnum {
   NameSetOK = 20104,
   NameLengthError = 20105,
   NameFilterError = 20106,
+  SexSetOK = 20107,
+  ChangeIconOK = 20108,
   ZoneDatabaseBusy = 20,
-  SexSetOK = 21,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
   CreateRoleAlready = 27,
   CreateRoleOK = 28,
   LoginAlreadyOnline = 29,
-  ChangeIconOK = 30,
   ChangeMottoOK = 32,
   ModuleIdNotFind = 33,
   SetModelClothesOK = 34,
@@ -546,7 +546,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = NameFilterError;
+const CodeEnum CodeEnum_MAX = ChangeIconOK;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

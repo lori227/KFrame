@@ -9,6 +9,7 @@ enum FrameProtocol
 	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
 	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// 通知取消注册
 	
+	S2S_REMOTE_LOG_TO_SERVER_REQ = 10010;				// 记录日志到日志服务器
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011;			// 注册Agent到Server
 	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012;			// 部署命令
 	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10013;			// 部署命令
@@ -40,8 +41,6 @@ enum FrameProtocol
 	S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10214;			// 添加对象列表到shard
 	S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10215;		// 删除对象列表到shard
 
-
-	S2S_LOG_REQ = 10021;								// 记录日志到日志服务器
  }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -319,17 +318,6 @@ message S2SRouteRemoveObjectToShardReq
 	uint64 objectid = 3;
 }
 //////////////////////////////////////////////////////////////////////////////////
-// S2S_LOG_REQ
-message S2SLogReq
-{
-	uint32 log_level	= 1;
-	uint32 zone_id		= 2;
-	bytes app_name		= 3;
-	bytes app_type		= 4;
-	bytes app_id		= 5;
-	bytes log_info		= 6;
-}
-
 // 注册Agent到Services
 // S2S_REGISTER_AGENT_TO_SERVER_REQ
 message S2SRegisterAgentToServerReq
@@ -369,4 +357,25 @@ message S2SDeployCommandToMasterReq
 message S2SDeployCommandToServerReq
 {
 	PBDeployCommand deploycommand = 1;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+message PBRemoteLog
+{
+	uint32 level	= 1;
+	bytes content	= 2;
+}
+
+// 记录log到服务器
+// S2S_REMOTE_LOG_TO_SERVER_REQ
+message S2SRemoteLogToServerReq
+{
+	bytes appname	= 1;
+	bytes apptype	= 2;
+	bytes strappid	= 3;
+	uint64 appid	= 4;
+	uint32 zoneid	= 5;
+
+	repeated PBRemoteLog logdata = 6;
 }

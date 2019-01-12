@@ -1,15 +1,13 @@
 ﻿#ifndef __KF_GOLBAL_H__
 #define __KF_GOLBAL_H__
 
-#include "KFSpdLog.h"
-#include "spdlog/spdlog.h"
-#include "KFVersion.h"
+#include "KFAppID.h"
 
 namespace KFrame
 {
     class KFRand;
-    class KFLogger;
     class KFGuid;
+    class KFVersion;
 
     class KFGlobal
     {
@@ -24,9 +22,6 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 全局更新
-        void RunUpdate();
-
         // 加载版本
         bool LoadVersion( const std::string& file );
 
@@ -48,51 +43,16 @@ namespace KFrame
         // 打印guid
         void Print64Guid( uint64 guid );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 初始化日志
-        void InitLogger( std::string& strtype );
-
         // 初始化类型
         void InitNetService( std::string& strtype );
 
         // 判断渠道和服务类型
         bool CheckChannelService( uint32 channel, uint32 service );
 
-        // 设置日志登录
-        void SetLogLevel( uint32 level );
-
-        template< class T >
-        void RegisterRemoteLogFunction( T* object, bool ( T::*handle )( uint32, const std::string& ) )
-        {
-            KFLogFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            SetRemoteLogFunction( function );
-        }
-
-        // 打印日志
-        template<typename... P>
-        void Log( uint32 level, const char* function, uint32 line, const std::string& myfmt, P&& ... args )
-        {
-            if ( _kf_logger == nullptr || level < _log_level )
-            {
-                return;
-            }
-
-            static const std::string _function_line_fmt = "[{}:{}] ";
-
-            auto newfmt = _function_line_fmt + myfmt;
-            auto content = __FORMAT__( newfmt, function, line, std::forward<P>( args )... );
-            Log( level, content );
-        }
-
     protected:
         KFGlobal();
         // 接口
         static KFGlobal* _kf_global;
-
-        // 打印日志
-        void Log( uint32 level, const std::string& content );
-
-        // 设置远程日志函数
-        void SetRemoteLogFunction( KFLogFunction& function );
 
     public:
         // 程序运行
@@ -139,12 +99,6 @@ namespace KFrame
         // 版本
         KFVersion* _kf_version;
 
-        // log 指针
-        KFLogger* _kf_logger;
-
-        // log打印级别
-        uint32 _log_level;
-
         // 单线程随机类
         KFRand* _kf_rand;
 
@@ -152,42 +106,6 @@ namespace KFrame
         KFGuid* _kf_guid;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////
-#define __LOG_TRACE__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::trace, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_TRACE_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::trace, function, line, myfmt, ##__VA_ARGS__ )
-
-#define __LOG_DEBUG__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::debug, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_DEBUG_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::debug, function, line, myfmt, ##__VA_ARGS__ )
-
-#define __LOG_INFO__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::info, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_INFO_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::info, function, line, myfmt, ##__VA_ARGS__ )
-
-#define __LOG_WARN__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::warn, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_WARN_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::warn, function, line, myfmt, ##__VA_ARGS__ )
-
-#define __LOG_ERROR__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::err, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_ERROR_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::err, function, line, myfmt, ##__VA_ARGS__ )
-
-#define __LOG_CRITICAL__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::critical, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_CRITICAL_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::critical, function, line, myfmt, ##__VA_ARGS__ )
-
-    // 本地日志
-#define __LOG_LOCAL__( myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::off, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
-#define __LOG_LOCAL_FUNCTION__( function, line, myfmt, ...) \
-    KFGlobal::Instance()->Log( spdlog::level::off, function, line, myfmt, ##__VA_ARGS__ )
 
 }
 

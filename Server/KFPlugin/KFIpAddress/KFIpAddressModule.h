@@ -49,6 +49,9 @@ namespace KFrame
 
         // 获得auth地址
         virtual const std::string& GetAuthUrl();
+
+        // 获得log地址
+        virtual const std::string& GetLogUrl();
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();

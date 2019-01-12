@@ -110,7 +110,7 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
 
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
-        _kf_http_client->StartMTHttpClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, _url, sendjson );
+        _kf_http_client->StartMTClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, _url, sendjson );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )

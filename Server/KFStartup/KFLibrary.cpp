@@ -26,14 +26,14 @@ namespace KFrame
         _instance = LoadLibraryEx( _path.c_str(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH );
         if ( _instance == nullptr )
         {
-            __LOG_LOCAL__( "load dll - {}", GetLastError() );
+            __LOG_ERROR__( "load dll - {}", GetLastError() );
         }
 #else
         _path = path + name + ".so";
         _instance = dlopen( _path.c_str(), RTLD_GLOBAL | RTLD_LAZY );
         if ( _instance == nullptr )
         {
-            __LOG_LOCAL__( "dlopen - {}", dlerror() );
+            __LOG_ERROR__( "dlopen - {}", dlerror() );
         }
 #endif
 

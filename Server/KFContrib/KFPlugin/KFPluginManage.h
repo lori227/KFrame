@@ -5,10 +5,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_PLUGIN_ENRTY__( classname )\
-    KFrame::KFPlugin* DllPluginEntry( KFrame::KFPluginManage* pluginmanage, KFrame::KFGlobal* kfglobal, KFrame::KFMalloc* kfmalloc )\
+    KFrame::KFPlugin* DllPluginEntry( KFrame::KFPluginManage* pluginmanage, KFrame::KFGlobal* kfglobal, KFrame::KFMalloc* kfmalloc, KFrame::KFLogger* kflogger )\
     {\
         KFrame::KFGlobal::Initialize( kfglobal );\
         KFrame::KFMalloc::Initialize( kfmalloc );\
+        KFrame::KFLogger::Initialize( kflogger );\
         return pluginmanage->RegistPlugin< classname >();\
     }\
 

@@ -314,7 +314,7 @@ namespace KFrame
 
         __JSON_DOCUMENT__( kfkickjson );
         __JSON_SET_VALUE__( kfkickjson, __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
-        _kf_http_client->StartMTHttpClient( kickurl, kfkickjson );
+        _kf_http_client->StartMTClient( kickurl, kfkickjson );
 
         return true;
     }
@@ -437,7 +437,7 @@ namespace KFrame
         __JSON_SET_VALUE__( postjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
 
         //去平台通过激活码激活
-        auto result = _kf_http_client->StartSTHttpClient( apiurl, postjson );
+        auto result = _kf_http_client->StartSTClient( apiurl, postjson );
         __JSON_PARSE_STRING__( resp, result );
 
         if ( !__JSON_HAS_MEMBER__( resp, __KF_STRING__( code ) ) )

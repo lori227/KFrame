@@ -28,6 +28,7 @@
 #include "KFUtility/KFDecode.h"
 #include "KFUtility/KFCompress.h"
 #include "KFGlobal/KFGlobal.h"
+#include "KFLogger/KFLogger.h"
 #include "KFPlugin/KFPlugin.h"
 #include "KFConHash/KFConHash.h"
 #include "KFPlugin/KFPluginManage.h"

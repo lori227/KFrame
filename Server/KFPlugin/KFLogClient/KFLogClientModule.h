@@ -1,32 +1,53 @@
-﻿/*------------------------------------
-// Module:
-// Author: NickYang
-// Mail: NickYang1988@qq.com
-// Date: 2018/07/10
-------------------------------------*/
-#ifndef __KF_LOG_CLIENT_MODULE__
+﻿#ifndef __KF_LOG_CLIENT_MODULE__
 #define __KF_LOG_CLIENT_MODULE__
 
 #include "KFLogClientInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
 {
+    class KFLogData
+    {
+    public:
+        uint32 _level = { 0 };
+        std::string _content;
+    };
+
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
     class KFLogClientModule : public KFLogClientInterface
     {
     public :
         KFLogClientModule() = default;
         ~KFLogClientModule() = default;
 
+        // 初始化
         virtual void BeforeRun();
+        virtual void OnceRun();
+
         virtual void BeforeShut();
 
+        // run
+        virtual void Run();
+
         // 远程日志
-        bool LogRemote( uint32 loglevel, const std::string& loginfo );
+        void LogRemote( uint32 level, const std::string& content );
 
     protected:
-        // 连接到LogProxy
-        void OnConnectionLogCluster( uint64 serverid );
+        // 连接日志服务器成功
+        __KF_CLIENT_CONNECT_FUNCTION__( OnClientConnectLogServer );
+
+    private:
+        // log服务器id
+        uint64 _log_server_id = 0;
+
+        // 线程锁
+        KFMutex _kf_mutex;
+
+        // 缓存的log队列
+        std::list< KFLogData* > _log_data_list;
     };
 }
 

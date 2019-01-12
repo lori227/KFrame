@@ -39,7 +39,7 @@ namespace protobuf_KFFrameMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[36];
+  static const ::google::protobuf::internal::ParseTable schema[37];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -53,6 +53,9 @@ LIBPROTOC_EXPORT extern ListenDataDefaultTypeInternal _ListenData_default_instan
 class PBDeployCommand;
 class PBDeployCommandDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBDeployCommandDefaultTypeInternal _PBDeployCommand_default_instance_;
+class PBRemoteLog;
+class PBRemoteLogDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBRemoteLogDefaultTypeInternal _PBRemoteLog_default_instance_;
 class PBRoute;
 class PBRouteDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBRouteDefaultTypeInternal _PBRoute_default_instance_;
@@ -98,12 +101,12 @@ LIBPROTOC_EXPORT extern S2SDeployCommandToMasterReqDefaultTypeInternal _S2SDeplo
 class S2SDeployCommandToServerReq;
 class S2SDeployCommandToServerReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SDeployCommandToServerReqDefaultTypeInternal _S2SDeployCommandToServerReq_default_instance_;
-class S2SLogReq;
-class S2SLogReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SLogReqDefaultTypeInternal _S2SLogReq_default_instance_;
 class S2SRegisterAgentToServerReq;
 class S2SRegisterAgentToServerReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRegisterAgentToServerReqDefaultTypeInternal _S2SRegisterAgentToServerReq_default_instance_;
+class S2SRemoteLogToServerReq;
+class S2SRemoteLogToServerReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRemoteLogToServerReqDefaultTypeInternal _S2SRemoteLogToServerReq_default_instance_;
 class S2SRouteAddObjectToProxyReq;
 class S2SRouteAddObjectToProxyReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRouteAddObjectToProxyReqDefaultTypeInternal _S2SRouteAddObjectToProxyReq_default_instance_;
@@ -160,6 +163,7 @@ namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::ListenData* Arena::CreateMaybeMessage<::KFMsg::ListenData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBDeployCommand* Arena::CreateMaybeMessage<::KFMsg::PBDeployCommand>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBRemoteLog* Arena::CreateMaybeMessage<::KFMsg::PBRemoteLog>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRoute* Arena::CreateMaybeMessage<::KFMsg::PBRoute>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerAck* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::RegisterToServerReq* Arena::CreateMaybeMessage<::KFMsg::RegisterToServerReq>(Arena*);
@@ -175,8 +179,8 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyToProxyReq* Arena::CreateMa
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToAgentReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToAgentReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToMasterReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToServerReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SLogReq* Arena::CreateMaybeMessage<::KFMsg::S2SLogReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterAgentToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterAgentToServerReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRemoteLogToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SRemoteLogToServerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteAddObjectToProxyReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteAddObjectToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteClientLostToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteClientLostToShardReq>(Arena*);
@@ -204,6 +208,7 @@ enum FrameProtocol {
   S2S_REGISTER_TO_SERVER_ACK = 10002,
   S2S_TELL_REGISTER_TO_SERVER = 10003,
   S2S_TELL_UNREGISTER_FROM_SERVER = 10004,
+  S2S_REMOTE_LOG_TO_SERVER_REQ = 10010,
   S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011,
   S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012,
   S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10013,
@@ -232,7 +237,6 @@ enum FrameProtocol {
   S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ = 10213,
   S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10214,
   S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10215,
-  S2S_LOG_REQ = 10021,
   FrameProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -4207,176 +4211,6 @@ class LIBPROTOC_EXPORT S2SRouteRemoveObjectToShardReq : public ::google::protobu
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SLogReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SLogReq) */ {
- public:
-  S2SLogReq();
-  virtual ~S2SLogReq();
-
-  S2SLogReq(const S2SLogReq& from);
-
-  inline S2SLogReq& operator=(const S2SLogReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SLogReq(S2SLogReq&& from) noexcept
-    : S2SLogReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SLogReq& operator=(S2SLogReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SLogReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SLogReq* internal_default_instance() {
-    return reinterpret_cast<const S2SLogReq*>(
-               &_S2SLogReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    30;
-
-  void Swap(S2SLogReq* other);
-  friend void swap(S2SLogReq& a, S2SLogReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SLogReq* New() const final {
-    return CreateMaybeMessage<S2SLogReq>(NULL);
-  }
-
-  S2SLogReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SLogReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SLogReq& from);
-  void MergeFrom(const S2SLogReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SLogReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // bytes app_name = 3;
-  void clear_app_name();
-  static const int kAppNameFieldNumber = 3;
-  const ::std::string& app_name() const;
-  void set_app_name(const ::std::string& value);
-  #if LANG_CXX11
-  void set_app_name(::std::string&& value);
-  #endif
-  void set_app_name(const char* value);
-  void set_app_name(const void* value, size_t size);
-  ::std::string* mutable_app_name();
-  ::std::string* release_app_name();
-  void set_allocated_app_name(::std::string* app_name);
-
-  // bytes app_type = 4;
-  void clear_app_type();
-  static const int kAppTypeFieldNumber = 4;
-  const ::std::string& app_type() const;
-  void set_app_type(const ::std::string& value);
-  #if LANG_CXX11
-  void set_app_type(::std::string&& value);
-  #endif
-  void set_app_type(const char* value);
-  void set_app_type(const void* value, size_t size);
-  ::std::string* mutable_app_type();
-  ::std::string* release_app_type();
-  void set_allocated_app_type(::std::string* app_type);
-
-  // bytes app_id = 5;
-  void clear_app_id();
-  static const int kAppIdFieldNumber = 5;
-  const ::std::string& app_id() const;
-  void set_app_id(const ::std::string& value);
-  #if LANG_CXX11
-  void set_app_id(::std::string&& value);
-  #endif
-  void set_app_id(const char* value);
-  void set_app_id(const void* value, size_t size);
-  ::std::string* mutable_app_id();
-  ::std::string* release_app_id();
-  void set_allocated_app_id(::std::string* app_id);
-
-  // bytes log_info = 6;
-  void clear_log_info();
-  static const int kLogInfoFieldNumber = 6;
-  const ::std::string& log_info() const;
-  void set_log_info(const ::std::string& value);
-  #if LANG_CXX11
-  void set_log_info(::std::string&& value);
-  #endif
-  void set_log_info(const char* value);
-  void set_log_info(const void* value, size_t size);
-  ::std::string* mutable_log_info();
-  ::std::string* release_log_info();
-  void set_allocated_log_info(::std::string* log_info);
-
-  // uint32 log_level = 1;
-  void clear_log_level();
-  static const int kLogLevelFieldNumber = 1;
-  ::google::protobuf::uint32 log_level() const;
-  void set_log_level(::google::protobuf::uint32 value);
-
-  // uint32 zone_id = 2;
-  void clear_zone_id();
-  static const int kZoneIdFieldNumber = 2;
-  ::google::protobuf::uint32 zone_id() const;
-  void set_zone_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SLogReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr app_name_;
-  ::google::protobuf::internal::ArenaStringPtr app_type_;
-  ::google::protobuf::internal::ArenaStringPtr app_id_;
-  ::google::protobuf::internal::ArenaStringPtr log_info_;
-  ::google::protobuf::uint32 log_level_;
-  ::google::protobuf::uint32 zone_id_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
 class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRegisterAgentToServerReq) */ {
  public:
   S2SRegisterAgentToServerReq();
@@ -4412,7 +4246,7 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
                &_S2SRegisterAgentToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    30;
 
   void Swap(S2SRegisterAgentToServerReq* other);
   friend void swap(S2SRegisterAgentToServerReq& a, S2SRegisterAgentToServerReq& b) {
@@ -4575,7 +4409,7 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message /* @
                &_PBDeployCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    31;
 
   void Swap(PBDeployCommand* other);
   friend void swap(PBDeployCommand& a, PBDeployCommand& b) {
@@ -4768,7 +4602,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToAgentReq : public ::google::protobuf::M
                &_S2SDeployCommandToAgentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    32;
 
   void Swap(S2SDeployCommandToAgentReq* other);
   friend void swap(S2SDeployCommandToAgentReq& a, S2SDeployCommandToAgentReq& b) {
@@ -4877,7 +4711,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::
                &_S2SDeployCommandToMasterReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    33;
 
   void Swap(S2SDeployCommandToMasterReq* other);
   friend void swap(S2SDeployCommandToMasterReq& a, S2SDeployCommandToMasterReq& b) {
@@ -4986,7 +4820,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::
                &_S2SDeployCommandToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    34;
 
   void Swap(S2SDeployCommandToServerReq* other);
   friend void swap(S2SDeployCommandToServerReq& a, S2SDeployCommandToServerReq& b) {
@@ -5055,6 +4889,292 @@ class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBDeployCommand* deploycommand_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBRemoteLog : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBRemoteLog) */ {
+ public:
+  PBRemoteLog();
+  virtual ~PBRemoteLog();
+
+  PBRemoteLog(const PBRemoteLog& from);
+
+  inline PBRemoteLog& operator=(const PBRemoteLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBRemoteLog(PBRemoteLog&& from) noexcept
+    : PBRemoteLog() {
+    *this = ::std::move(from);
+  }
+
+  inline PBRemoteLog& operator=(PBRemoteLog&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBRemoteLog& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBRemoteLog* internal_default_instance() {
+    return reinterpret_cast<const PBRemoteLog*>(
+               &_PBRemoteLog_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  void Swap(PBRemoteLog* other);
+  friend void swap(PBRemoteLog& a, PBRemoteLog& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBRemoteLog* New() const final {
+    return CreateMaybeMessage<PBRemoteLog>(NULL);
+  }
+
+  PBRemoteLog* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBRemoteLog>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBRemoteLog& from);
+  void MergeFrom(const PBRemoteLog& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBRemoteLog* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes content = 2;
+  void clear_content();
+  static const int kContentFieldNumber = 2;
+  const ::std::string& content() const;
+  void set_content(const ::std::string& value);
+  #if LANG_CXX11
+  void set_content(::std::string&& value);
+  #endif
+  void set_content(const char* value);
+  void set_content(const void* value, size_t size);
+  ::std::string* mutable_content();
+  ::std::string* release_content();
+  void set_allocated_content(::std::string* content);
+
+  // uint32 level = 1;
+  void clear_level();
+  static const int kLevelFieldNumber = 1;
+  ::google::protobuf::uint32 level() const;
+  void set_level(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBRemoteLog)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr content_;
+  ::google::protobuf::uint32 level_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SRemoteLogToServerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRemoteLogToServerReq) */ {
+ public:
+  S2SRemoteLogToServerReq();
+  virtual ~S2SRemoteLogToServerReq();
+
+  S2SRemoteLogToServerReq(const S2SRemoteLogToServerReq& from);
+
+  inline S2SRemoteLogToServerReq& operator=(const S2SRemoteLogToServerReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SRemoteLogToServerReq(S2SRemoteLogToServerReq&& from) noexcept
+    : S2SRemoteLogToServerReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SRemoteLogToServerReq& operator=(S2SRemoteLogToServerReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SRemoteLogToServerReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SRemoteLogToServerReq* internal_default_instance() {
+    return reinterpret_cast<const S2SRemoteLogToServerReq*>(
+               &_S2SRemoteLogToServerReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
+
+  void Swap(S2SRemoteLogToServerReq* other);
+  friend void swap(S2SRemoteLogToServerReq& a, S2SRemoteLogToServerReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SRemoteLogToServerReq* New() const final {
+    return CreateMaybeMessage<S2SRemoteLogToServerReq>(NULL);
+  }
+
+  S2SRemoteLogToServerReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRemoteLogToServerReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SRemoteLogToServerReq& from);
+  void MergeFrom(const S2SRemoteLogToServerReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SRemoteLogToServerReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBRemoteLog logdata = 6;
+  int logdata_size() const;
+  void clear_logdata();
+  static const int kLogdataFieldNumber = 6;
+  ::KFMsg::PBRemoteLog* mutable_logdata(int index);
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRemoteLog >*
+      mutable_logdata();
+  const ::KFMsg::PBRemoteLog& logdata(int index) const;
+  ::KFMsg::PBRemoteLog* add_logdata();
+  const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRemoteLog >&
+      logdata() const;
+
+  // bytes appname = 1;
+  void clear_appname();
+  static const int kAppnameFieldNumber = 1;
+  const ::std::string& appname() const;
+  void set_appname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_appname(::std::string&& value);
+  #endif
+  void set_appname(const char* value);
+  void set_appname(const void* value, size_t size);
+  ::std::string* mutable_appname();
+  ::std::string* release_appname();
+  void set_allocated_appname(::std::string* appname);
+
+  // bytes apptype = 2;
+  void clear_apptype();
+  static const int kApptypeFieldNumber = 2;
+  const ::std::string& apptype() const;
+  void set_apptype(const ::std::string& value);
+  #if LANG_CXX11
+  void set_apptype(::std::string&& value);
+  #endif
+  void set_apptype(const char* value);
+  void set_apptype(const void* value, size_t size);
+  ::std::string* mutable_apptype();
+  ::std::string* release_apptype();
+  void set_allocated_apptype(::std::string* apptype);
+
+  // bytes strappid = 3;
+  void clear_strappid();
+  static const int kStrappidFieldNumber = 3;
+  const ::std::string& strappid() const;
+  void set_strappid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_strappid(::std::string&& value);
+  #endif
+  void set_strappid(const char* value);
+  void set_strappid(const void* value, size_t size);
+  ::std::string* mutable_strappid();
+  ::std::string* release_strappid();
+  void set_allocated_strappid(::std::string* strappid);
+
+  // uint64 appid = 4;
+  void clear_appid();
+  static const int kAppidFieldNumber = 4;
+  ::google::protobuf::uint64 appid() const;
+  void set_appid(::google::protobuf::uint64 value);
+
+  // uint32 zoneid = 5;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 5;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRemoteLogToServerReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRemoteLog > logdata_;
+  ::google::protobuf::internal::ArenaStringPtr appname_;
+  ::google::protobuf::internal::ArenaStringPtr apptype_;
+  ::google::protobuf::internal::ArenaStringPtr strappid_;
+  ::google::protobuf::uint64 appid_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
 };
@@ -8513,250 +8633,6 @@ inline void S2SRouteRemoveObjectToShardReq::set_objectid(::google::protobuf::uin
 
 // -------------------------------------------------------------------
 
-// S2SLogReq
-
-// uint32 log_level = 1;
-inline void S2SLogReq::clear_log_level() {
-  log_level_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SLogReq::log_level() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.log_level)
-  return log_level_;
-}
-inline void S2SLogReq::set_log_level(::google::protobuf::uint32 value) {
-  
-  log_level_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.log_level)
-}
-
-// uint32 zone_id = 2;
-inline void S2SLogReq::clear_zone_id() {
-  zone_id_ = 0u;
-}
-inline ::google::protobuf::uint32 S2SLogReq::zone_id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.zone_id)
-  return zone_id_;
-}
-inline void S2SLogReq::set_zone_id(::google::protobuf::uint32 value) {
-  
-  zone_id_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.zone_id)
-}
-
-// bytes app_name = 3;
-inline void S2SLogReq::clear_app_name() {
-  app_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SLogReq::app_name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.app_name)
-  return app_name_.GetNoArena();
-}
-inline void S2SLogReq::set_app_name(const ::std::string& value) {
-  
-  app_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.app_name)
-}
-#if LANG_CXX11
-inline void S2SLogReq::set_app_name(::std::string&& value) {
-  
-  app_name_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SLogReq.app_name)
-}
-#endif
-inline void S2SLogReq::set_app_name(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  app_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SLogReq.app_name)
-}
-inline void S2SLogReq::set_app_name(const void* value, size_t size) {
-  
-  app_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SLogReq.app_name)
-}
-inline ::std::string* S2SLogReq::mutable_app_name() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SLogReq.app_name)
-  return app_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SLogReq::release_app_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SLogReq.app_name)
-  
-  return app_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SLogReq::set_allocated_app_name(::std::string* app_name) {
-  if (app_name != NULL) {
-    
-  } else {
-    
-  }
-  app_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), app_name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLogReq.app_name)
-}
-
-// bytes app_type = 4;
-inline void S2SLogReq::clear_app_type() {
-  app_type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SLogReq::app_type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.app_type)
-  return app_type_.GetNoArena();
-}
-inline void S2SLogReq::set_app_type(const ::std::string& value) {
-  
-  app_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.app_type)
-}
-#if LANG_CXX11
-inline void S2SLogReq::set_app_type(::std::string&& value) {
-  
-  app_type_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SLogReq.app_type)
-}
-#endif
-inline void S2SLogReq::set_app_type(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  app_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SLogReq.app_type)
-}
-inline void S2SLogReq::set_app_type(const void* value, size_t size) {
-  
-  app_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SLogReq.app_type)
-}
-inline ::std::string* S2SLogReq::mutable_app_type() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SLogReq.app_type)
-  return app_type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SLogReq::release_app_type() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SLogReq.app_type)
-  
-  return app_type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SLogReq::set_allocated_app_type(::std::string* app_type) {
-  if (app_type != NULL) {
-    
-  } else {
-    
-  }
-  app_type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), app_type);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLogReq.app_type)
-}
-
-// bytes app_id = 5;
-inline void S2SLogReq::clear_app_id() {
-  app_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SLogReq::app_id() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.app_id)
-  return app_id_.GetNoArena();
-}
-inline void S2SLogReq::set_app_id(const ::std::string& value) {
-  
-  app_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.app_id)
-}
-#if LANG_CXX11
-inline void S2SLogReq::set_app_id(::std::string&& value) {
-  
-  app_id_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SLogReq.app_id)
-}
-#endif
-inline void S2SLogReq::set_app_id(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  app_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SLogReq.app_id)
-}
-inline void S2SLogReq::set_app_id(const void* value, size_t size) {
-  
-  app_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SLogReq.app_id)
-}
-inline ::std::string* S2SLogReq::mutable_app_id() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SLogReq.app_id)
-  return app_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SLogReq::release_app_id() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SLogReq.app_id)
-  
-  return app_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SLogReq::set_allocated_app_id(::std::string* app_id) {
-  if (app_id != NULL) {
-    
-  } else {
-    
-  }
-  app_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), app_id);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLogReq.app_id)
-}
-
-// bytes log_info = 6;
-inline void S2SLogReq::clear_log_info() {
-  log_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SLogReq::log_info() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SLogReq.log_info)
-  return log_info_.GetNoArena();
-}
-inline void S2SLogReq::set_log_info(const ::std::string& value) {
-  
-  log_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SLogReq.log_info)
-}
-#if LANG_CXX11
-inline void S2SLogReq::set_log_info(::std::string&& value) {
-  
-  log_info_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SLogReq.log_info)
-}
-#endif
-inline void S2SLogReq::set_log_info(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  log_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SLogReq.log_info)
-}
-inline void S2SLogReq::set_log_info(const void* value, size_t size) {
-  
-  log_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SLogReq.log_info)
-}
-inline ::std::string* S2SLogReq::mutable_log_info() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SLogReq.log_info)
-  return log_info_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* S2SLogReq::release_log_info() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SLogReq.log_info)
-  
-  return log_info_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void S2SLogReq::set_allocated_log_info(::std::string* log_info) {
-  if (log_info != NULL) {
-    
-  } else {
-    
-  }
-  log_info_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), log_info);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SLogReq.log_info)
-}
-
-// -------------------------------------------------------------------
-
 // S2SRegisterAgentToServerReq
 
 // bytes agentid = 1;
@@ -9495,9 +9371,303 @@ inline void S2SDeployCommandToServerReq::set_allocated_deploycommand(::KFMsg::PB
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployCommandToServerReq.deploycommand)
 }
 
+// -------------------------------------------------------------------
+
+// PBRemoteLog
+
+// uint32 level = 1;
+inline void PBRemoteLog::clear_level() {
+  level_ = 0u;
+}
+inline ::google::protobuf::uint32 PBRemoteLog::level() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRemoteLog.level)
+  return level_;
+}
+inline void PBRemoteLog::set_level(::google::protobuf::uint32 value) {
+  
+  level_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBRemoteLog.level)
+}
+
+// bytes content = 2;
+inline void PBRemoteLog::clear_content() {
+  content_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBRemoteLog::content() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRemoteLog.content)
+  return content_.GetNoArena();
+}
+inline void PBRemoteLog::set_content(const ::std::string& value) {
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBRemoteLog.content)
+}
+#if LANG_CXX11
+inline void PBRemoteLog::set_content(::std::string&& value) {
+  
+  content_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBRemoteLog.content)
+}
+#endif
+inline void PBRemoteLog::set_content(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBRemoteLog.content)
+}
+inline void PBRemoteLog::set_content(const void* value, size_t size) {
+  
+  content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBRemoteLog.content)
+}
+inline ::std::string* PBRemoteLog::mutable_content() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBRemoteLog.content)
+  return content_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBRemoteLog::release_content() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBRemoteLog.content)
+  
+  return content_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBRemoteLog::set_allocated_content(::std::string* content) {
+  if (content != NULL) {
+    
+  } else {
+    
+  }
+  content_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), content);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBRemoteLog.content)
+}
+
+// -------------------------------------------------------------------
+
+// S2SRemoteLogToServerReq
+
+// bytes appname = 1;
+inline void S2SRemoteLogToServerReq::clear_appname() {
+  appname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SRemoteLogToServerReq::appname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.appname)
+  return appname_.GetNoArena();
+}
+inline void S2SRemoteLogToServerReq::set_appname(const ::std::string& value) {
+  
+  appname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRemoteLogToServerReq.appname)
+}
+#if LANG_CXX11
+inline void S2SRemoteLogToServerReq::set_appname(::std::string&& value) {
+  
+  appname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SRemoteLogToServerReq.appname)
+}
+#endif
+inline void S2SRemoteLogToServerReq::set_appname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  appname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SRemoteLogToServerReq.appname)
+}
+inline void S2SRemoteLogToServerReq::set_appname(const void* value, size_t size) {
+  
+  appname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SRemoteLogToServerReq.appname)
+}
+inline ::std::string* S2SRemoteLogToServerReq::mutable_appname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRemoteLogToServerReq.appname)
+  return appname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SRemoteLogToServerReq::release_appname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRemoteLogToServerReq.appname)
+  
+  return appname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SRemoteLogToServerReq::set_allocated_appname(::std::string* appname) {
+  if (appname != NULL) {
+    
+  } else {
+    
+  }
+  appname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), appname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRemoteLogToServerReq.appname)
+}
+
+// bytes apptype = 2;
+inline void S2SRemoteLogToServerReq::clear_apptype() {
+  apptype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SRemoteLogToServerReq::apptype() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.apptype)
+  return apptype_.GetNoArena();
+}
+inline void S2SRemoteLogToServerReq::set_apptype(const ::std::string& value) {
+  
+  apptype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRemoteLogToServerReq.apptype)
+}
+#if LANG_CXX11
+inline void S2SRemoteLogToServerReq::set_apptype(::std::string&& value) {
+  
+  apptype_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SRemoteLogToServerReq.apptype)
+}
+#endif
+inline void S2SRemoteLogToServerReq::set_apptype(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  apptype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SRemoteLogToServerReq.apptype)
+}
+inline void S2SRemoteLogToServerReq::set_apptype(const void* value, size_t size) {
+  
+  apptype_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SRemoteLogToServerReq.apptype)
+}
+inline ::std::string* S2SRemoteLogToServerReq::mutable_apptype() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRemoteLogToServerReq.apptype)
+  return apptype_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SRemoteLogToServerReq::release_apptype() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRemoteLogToServerReq.apptype)
+  
+  return apptype_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SRemoteLogToServerReq::set_allocated_apptype(::std::string* apptype) {
+  if (apptype != NULL) {
+    
+  } else {
+    
+  }
+  apptype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), apptype);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRemoteLogToServerReq.apptype)
+}
+
+// bytes strappid = 3;
+inline void S2SRemoteLogToServerReq::clear_strappid() {
+  strappid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SRemoteLogToServerReq::strappid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.strappid)
+  return strappid_.GetNoArena();
+}
+inline void S2SRemoteLogToServerReq::set_strappid(const ::std::string& value) {
+  
+  strappid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRemoteLogToServerReq.strappid)
+}
+#if LANG_CXX11
+inline void S2SRemoteLogToServerReq::set_strappid(::std::string&& value) {
+  
+  strappid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SRemoteLogToServerReq.strappid)
+}
+#endif
+inline void S2SRemoteLogToServerReq::set_strappid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  strappid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SRemoteLogToServerReq.strappid)
+}
+inline void S2SRemoteLogToServerReq::set_strappid(const void* value, size_t size) {
+  
+  strappid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SRemoteLogToServerReq.strappid)
+}
+inline ::std::string* S2SRemoteLogToServerReq::mutable_strappid() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRemoteLogToServerReq.strappid)
+  return strappid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SRemoteLogToServerReq::release_strappid() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRemoteLogToServerReq.strappid)
+  
+  return strappid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SRemoteLogToServerReq::set_allocated_strappid(::std::string* strappid) {
+  if (strappid != NULL) {
+    
+  } else {
+    
+  }
+  strappid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), strappid);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRemoteLogToServerReq.strappid)
+}
+
+// uint64 appid = 4;
+inline void S2SRemoteLogToServerReq::clear_appid() {
+  appid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SRemoteLogToServerReq::appid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.appid)
+  return appid_;
+}
+inline void S2SRemoteLogToServerReq::set_appid(::google::protobuf::uint64 value) {
+  
+  appid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRemoteLogToServerReq.appid)
+}
+
+// uint32 zoneid = 5;
+inline void S2SRemoteLogToServerReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SRemoteLogToServerReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.zoneid)
+  return zoneid_;
+}
+inline void S2SRemoteLogToServerReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRemoteLogToServerReq.zoneid)
+}
+
+// repeated .KFMsg.PBRemoteLog logdata = 6;
+inline int S2SRemoteLogToServerReq::logdata_size() const {
+  return logdata_.size();
+}
+inline void S2SRemoteLogToServerReq::clear_logdata() {
+  logdata_.Clear();
+}
+inline ::KFMsg::PBRemoteLog* S2SRemoteLogToServerReq::mutable_logdata(int index) {
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRemoteLogToServerReq.logdata)
+  return logdata_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRemoteLog >*
+S2SRemoteLogToServerReq::mutable_logdata() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SRemoteLogToServerReq.logdata)
+  return &logdata_;
+}
+inline const ::KFMsg::PBRemoteLog& S2SRemoteLogToServerReq::logdata(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRemoteLogToServerReq.logdata)
+  return logdata_.Get(index);
+}
+inline ::KFMsg::PBRemoteLog* S2SRemoteLogToServerReq::add_logdata() {
+  // @@protoc_insertion_point(field_add:KFMsg.S2SRemoteLogToServerReq.logdata)
+  return logdata_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRemoteLog >&
+S2SRemoteLogToServerReq::logdata() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SRemoteLogToServerReq.logdata)
+  return logdata_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

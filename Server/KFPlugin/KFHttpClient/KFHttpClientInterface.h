@@ -9,27 +9,27 @@ namespace KFrame
     {
     public:
         // 单线程
-        virtual std::string StartSTHttpClient( const std::string& url, const std::string& data ) = 0;
-        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json ) = 0;
+        virtual std::string StartSTClient( const std::string& url, const std::string& data ) = 0;
+        virtual std::string StartSTClient( const std::string& url, KFJson& json ) = 0;
 
         // 多线程
-        virtual void StartMTHttpClient( const std::string& url, const std::string& data ) = 0;
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json ) = 0;
+        virtual void StartMTClient( const std::string& url, const std::string& data ) = 0;
+        virtual void StartMTClient( const std::string& url, KFJson& json ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void StartMTHttpClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
-                                const std::string& url, const std::string& data, const std::string& callback = _invalid_str )
+        void StartMTClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                            const std::string& url, const std::string& data, const std::string& callback = _invalid_str )
         {
             KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            StartMTHttpClient( function, url, data,  callback );
+            StartMTClient( function, url, data,  callback );
         }
 
         template< class T >
-        void StartMTHttpClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
-                                const std::string& url, KFJson& json, const std::string& callback = _invalid_str )
+        void StartMTClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
+                            const std::string& url, KFJson& json, const std::string& callback = _invalid_str )
         {
             KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            StartMTHttpClient( function, url, json, callback );
+            StartMTClient( function, url, json, callback );
         }
 
         /////////////////////////////////////////////////////////////////////////
@@ -44,8 +44,8 @@ namespace KFrame
 
     protected:
         // http
-        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback ) = 0;
-        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback ) = 0;
+        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback ) = 0;
+        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

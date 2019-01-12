@@ -41,25 +41,25 @@ namespace KFrame
         _kf_library.Clear();
     }
 
-    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc );
+    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc, KFLogger* kflogger );
     bool KFStartup::LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting )
     {
         auto library = _kf_library.Create( appsetting->_name );
         if ( !library->Load( _app_config->_plugin_path, file ) )
         {
-            __LOG_LOCAL__( "load [{}] failed!", library->_path );
+            __LOG_ERROR__( "load [{}] failed!", library->_path );
             return false;
         }
 
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
-            __LOG_LOCAL__( "entry [{}] failed!", library->_path );
+            __LOG_ERROR__( "entry [{}] failed!", library->_path );
             return false;
         }
 
         // 设置插件信息
-        auto plugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance() );
+        auto plugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
         plugin->_sort = appsetting->_sort;
         plugin->_plugin_name = appsetting->_name;
         plugin->_config = appsetting->_config_file;

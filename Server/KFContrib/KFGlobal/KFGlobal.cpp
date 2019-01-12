@@ -1,7 +1,7 @@
 ﻿#include "KFrame.h"
 #include "KFRand.h"
 #include "KFGuid.h"
-#include "KFLogger.h"
+#include "KFVersion.h"
 
 namespace KFrame
 {
@@ -14,8 +14,6 @@ namespace KFrame
         _game_time = 0;
         _real_time = 0;
         _listen_port = 0;
-        _log_level = 0;
-        _kf_logger = nullptr;
         _kf_rand = new KFRand();
         _kf_version = new KFVersion();
         _kf_guid = new KFGuid( 29, 14, 8, 12 );
@@ -24,9 +22,8 @@ namespace KFrame
     KFGlobal::~KFGlobal()
     {
         __DELETE_OBJECT__( _kf_rand );
-        __DELETE_OBJECT__( _kf_logger );
-        __DELETE_OBJECT__( _kf_version );
         __DELETE_OBJECT__( _kf_guid );
+        __DELETE_OBJECT__( _kf_version );
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -42,14 +39,6 @@ namespace KFrame
     KFGlobal* KFGlobal::Instance()
     {
         return KFGlobal::_kf_global;
-    }
-
-    void KFGlobal::RunUpdate()
-    {
-        if ( _kf_logger != nullptr )
-        {
-            _kf_logger->RunUpdate();
-        }
     }
 
     bool KFGlobal::LoadVersion( const std::string& file )
@@ -141,56 +130,4 @@ namespace KFrame
 
         return true;
     }
-
-    void KFGlobal::InitLogger( std::string& strtype )
-    {
-        auto logtype = KFUtility::SplitValue< uint32 >( strtype, "." );
-        switch ( logtype )
-        {
-        case KFLogTypeEnum::Local:
-            _kf_logger = new KFLocalLogger();
-            break;
-        case KFLogTypeEnum::Remote:
-            _kf_logger = new KFRemoteLogger();
-            break;
-        default:
-            break;
-        }
-
-        if ( _kf_logger != nullptr )
-        {
-            _kf_logger->Initialize( _app_name, _app_type, _str_app_id );
-            SetLogLevel( KFUtility::SplitValue< uint32 >( strtype, "." ) );
-        }
-    }
-
-    void KFGlobal::SetLogLevel( uint32 level )
-    {
-        _log_level = level;
-        if ( _log_level == 0 )
-        {
-            KFMalloc::Instance()->SetLogOpen( true );
-        }
-        else
-        {
-            KFMalloc::Instance()->SetLogOpen( false );
-        }
-    }
-
-    void KFGlobal::Log( uint32 level, const std::string& content )
-    {
-        if ( _kf_logger != nullptr )
-        {
-            _kf_logger->Log( level, content );
-        }
-    }
-
-    void KFGlobal::SetRemoteLogFunction( KFLogFunction& function )
-    {
-        if ( _kf_logger != nullptr )
-        {
-            _kf_logger->SetRemoteLogFunction( function );
-        }
-    }
-
 }

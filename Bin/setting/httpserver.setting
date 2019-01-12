@@ -10,10 +10,10 @@
 	<!-- http服务器配置 -->
 	<HttpServer KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000">
 		<!-- 认证服务器 -->
-		<Server AppName="auth" AppType="auth" Type="1" Port="7776" />
+		<Server AppName="auth" AppType="auth" Type="1" Port="7000" />
 		
-		<!-- 目录服务器 -->
-		<Server AppName="dir" AppType="shard" Type="1" Port="8000"/>
+		<!-- 日志服务器 -->
+		<Server AppName="log" AppType="shard" Type="1" Port="8000"/>
 
 		<!-- world服务器 -->
 		<Server AppName="zone" AppType="world" Type="1" Port="9000"/>	

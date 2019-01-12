@@ -129,7 +129,7 @@ namespace KFrame
         {
             __JSON_DOCUMENT__( response );
             __JSON_SET_VALUE__( response, __KF_STRING__( msg ), msg );
-            _kf_http_client->StartMTHttpClient( url, response );
+            _kf_http_client->StartMTClient( url, response );
         }
     }
 }

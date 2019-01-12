@@ -72,7 +72,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), zone->_name );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
 
-        auto recvdata = _kf_http_client->StartSTHttpClient( _url, kfjson );
+        auto recvdata = _kf_http_client->StartSTClient( _url, kfjson );
         __JSON_PARSE_STRING__( kfresult, recvdata );
         auto retcode = _kf_http_client->GetResponseCode( kfresult );
         if ( retcode == KFMsg::Ok )
@@ -198,7 +198,7 @@ namespace KFrame
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( online ), 0 );
         }
 
-        _kf_http_client->StartMTHttpClient( _update_url, sendjson );
+        _kf_http_client->StartMTClient( _update_url, sendjson );
 
         // 记录在线玩家数量
         __LOG_DEBUG__( "online player count=[{}]", _kf_online_list.Size() );

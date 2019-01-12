@@ -31,11 +31,11 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
 
-        virtual std::string StartSTHttpClient( const std::string& url, const std::string& data );
-        virtual std::string StartSTHttpClient( const std::string& url, KFJson& json );
+        virtual std::string StartSTClient( const std::string& url, const std::string& data );
+        virtual std::string StartSTClient( const std::string& url, KFJson& json );
 
-        virtual void StartMTHttpClient( const std::string& url, const std::string& data );
-        virtual void StartMTHttpClient( const std::string& url, KFJson& json );
+        virtual void StartMTClient( const std::string& url, const std::string& data );
+        virtual void StartMTClient( const std::string& url, KFJson& json );
 
         /////////////////////////////////////////////////////////////////////
         // 返回错误
@@ -49,8 +49,8 @@ namespace KFrame
 
     protected:
         // http
-        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback );
-        virtual void StartMTHttpClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback );
+        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback );
+        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback );
 
     private:
         // 添加异步请求

@@ -1,6 +1,5 @@
-﻿#include "KFGuid.h"
-#include "KFGlobal.h"
-#include "KFUtility/KFDate.h"
+﻿#include "KFrame.h"
+#include "KFGuid.h"
 
 namespace KFrame
 {

@@ -1,17 +1,10 @@
-﻿/* ------------------------------------
-// Module:
-// Author: NickYang
-// Mail: NickYang1988@qq.com
-// Date: 2018/07/10
-------------------------------------*/
-#ifndef __KF_LOG_CLIENT_INTERFACE__
+﻿#ifndef __KF_LOG_CLIENT_INTERFACE__
 #define __KF_LOG_CLIENT_INTERFACE__
 
 #include "KFrame.h"
 
 namespace KFrame
 {
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFLogClientInterface : public KFModule
     {

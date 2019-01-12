@@ -107,7 +107,7 @@ namespace KFrame
         if ( _interane_ip.empty() )
         {
             // 获得外网地址
-            auto interanetip = _kf_http_client->StartSTHttpClient( _dns_url, _invalid_str );
+            auto interanetip = _kf_http_client->StartSTClient( _dns_url, _invalid_str );
             if ( interanetip.empty() )
             {
                 // 获得内网地址
@@ -188,4 +188,8 @@ namespace KFrame
         return _kf_ip_config->_auth_url;
     }
 
+    const std::string& KFIpAddressModule::GetLogUrl()
+    {
+        return _kf_ip_config->_log_url;
+    }
 }

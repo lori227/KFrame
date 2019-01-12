@@ -65,6 +65,9 @@ namespace KFrame
 
         // 获得auth地址
         virtual const std::string& GetAuthUrl() = 0;
+
+        // 获得log地址
+        virtual const std::string& GetLogUrl() = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

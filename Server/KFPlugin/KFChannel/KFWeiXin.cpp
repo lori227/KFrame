@@ -26,7 +26,7 @@ namespace KFrame
             auto urldata = __FORMAT__( "{}/sns/oauth2/access_token?appid={}&secret={}&code={}&grant_type=authorization_code",
                                        kfsetting->_login_url, kfsetting->_app_id, kfsetting->_app_key, weixincode );
 
-            auto accessdata = _kf_http_client->StartSTHttpClient( urldata, _invalid_str );
+            auto accessdata = _kf_http_client->StartSTClient( urldata, _invalid_str );
             if ( accessdata.empty() )
             {
                 return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );
@@ -89,7 +89,7 @@ namespace KFrame
                 auto urldata = __FORMAT__( "{}/sns/oauth2/refresh_token?grant_type=refresh_token&appid={}&refresh_token={}",
                                            kfsetting->_login_url, kfsetting->_app_id, refreshtoken->_value );
 
-                auto accessdata = _kf_http_client->StartSTHttpClient( urldata, _invalid_str );
+                auto accessdata = _kf_http_client->StartSTClient( urldata, _invalid_str );
                 if ( accessdata.empty() )
                 {
                     return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );
@@ -115,7 +115,7 @@ namespace KFrame
 
         // 获取用户资料
         auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", kfsetting->_login_url, accesstoken, openid );
-        auto userdata = _kf_http_client->StartSTHttpClient( urldata, _invalid_str );
+        auto userdata = _kf_http_client->StartSTClient( urldata, _invalid_str );
         if ( userdata.empty() )
         {
             return _kf_http_server->SendResponseCode( KFMsg::WeiXinError );

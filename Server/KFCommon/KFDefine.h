@@ -56,9 +56,6 @@ namespace KFrame
     // 集群连接
     typedef std::function< void( uint64 ) > KFClusterConnectionFunction;
     //////////////////////////////////////////////////////////////////////////////
-    // 日志函数
-    typedef std::function< bool( uint32, const std::string& ) > KFLogFunction;
-
     //////////////////////////////////////////////////////////////////////////////
     typedef std::function< void( uint32, const KFMsg::PBLoginData*, KFMsg::PBObject* ) > KFLoadPlayerFunction;
     typedef std::function< void( uint32, uint64, KFMsg::PBObject* ) > KFQueryPlayerFunction;

@@ -64,6 +64,9 @@ namespace KFrame
         // 对象池
         KFMalloc::Initialize( nullptr );
 
+        // 日志
+        KFLogger::Initialize( nullptr );
+
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_startup_params = params;
@@ -79,14 +82,14 @@ namespace KFrame
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
 #endif
 
-        // 初始化log
-        kfglobal->InitLogger( params[ __KF_STRING__( log ) ] );
-
         // 初始化服务类型
         kfglobal->InitNetService( params[ __KF_STRING__( service ) ] );
 
         // 版本号
         kfglobal->LoadVersion( "version" );
+
+        // 初始化logger
+        KFLogger::Instance()->InitLogger();
 
         // 读取启动配置
         std::string startupfile = "";
@@ -139,9 +142,6 @@ namespace KFrame
 
         // 打印内存信息
         PrintLogMemory();
-
-        // 全局逻辑
-        KFGlobal::Instance()->RunUpdate();
     }
 
     void KFServices::ShutDown()

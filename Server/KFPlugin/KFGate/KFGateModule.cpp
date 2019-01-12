@@ -55,7 +55,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), kfglobal->_interanet_ip );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), kfglobal->_listen_port );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _kf_role_list.Size() );
-        _kf_http_client->StartMTHttpClient( _url, kfjson );
+        _kf_http_client->StartMTClient( _url, kfjson );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

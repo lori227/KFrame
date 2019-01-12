@@ -2,6 +2,7 @@
 #define __KF_APPID_H__
 
 #include "KFInclude.h"
+#include "KFMacros.h"
 #include "KFUtility/KFUtility.h"
 
 namespace KFrame

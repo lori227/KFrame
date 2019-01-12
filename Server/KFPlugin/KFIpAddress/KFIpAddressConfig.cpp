@@ -13,6 +13,9 @@ namespace KFrame
         auto authnode = config.FindNode( "AuthServer" );
         _auth_url = authnode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
+        auto lognode = config.FindNode( "LogServer" );
+        _log_url = lognode.GetString( "Url" );
+        //////////////////////////////////////////////////////////////////
 
         auto tcpnode = config.FindNode( "TcpServer" );
         if ( tcpnode.IsValid() )

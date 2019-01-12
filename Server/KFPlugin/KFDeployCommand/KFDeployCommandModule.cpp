@@ -106,7 +106,7 @@ namespace KFrame
         else if ( command == __KF_STRING__( log ) )
         {
             auto level = KFUtility::ToValue< uint32 >( value );
-            return KFGlobal::Instance()->SetLogLevel( level );
+            return KFLogger::Instance()->SetLogLevel( level );
         }
 
         auto kfcommand = _command_data.Find( command );

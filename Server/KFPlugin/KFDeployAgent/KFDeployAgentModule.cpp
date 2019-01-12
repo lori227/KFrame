@@ -22,7 +22,7 @@ namespace KFrame
         _deploy_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
         if ( _deploy_driver == nullptr )
         {
-            return __LOG_CRITICAL__( "deploy mysql is nullprt" );
+            return __LOG_ERROR__( "deploy mysql is nullprt" );
         }
 
         _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
@@ -101,7 +101,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( "load launch exception!" );
+            __LOG_ERROR__( "load launch exception!" );
         }
 
         // 启动计划任务
@@ -197,11 +197,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( "startup exception={}!", exception.what() );
+            __LOG_ERROR__( "startup exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( "startup exception unknown!" );
+            __LOG_ERROR__( "startup exception unknown!" );
         }
     }
 
@@ -287,11 +287,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( "kill exception={}!", exception.what() );
+            __LOG_ERROR__( "kill exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( "kill exception unknown!" );
+            __LOG_ERROR__( "kill exception unknown!" );
         }
     }
 
@@ -595,7 +595,7 @@ namespace KFrame
 
             __JSON_DOCUMENT__( response );
             __JSON_SET_VALUE__( response, __KF_STRING__( msg ), strmsg );
-            _kf_http_client->StartMTHttpClient( url, response );
+            _kf_http_client->StartMTClient( url, response );
         }
     }
 
@@ -714,11 +714,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_CRITICAL__( "check finish exception={}!", exception.what() );
+            __LOG_ERROR__( "check finish exception={}!", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_CRITICAL__( "check finish exception unknown!" );
+            __LOG_ERROR__( "check finish exception unknown!" );
         }
     }
 

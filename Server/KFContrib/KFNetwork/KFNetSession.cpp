@@ -170,8 +170,8 @@ namespace KFrame
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
-            __LOG_CRITICAL__( "session[{}:{}:{}] recv length[{}:{}] error",
-                              _session_id, _object_id, KFAppID::ToString( _session_id ), _receive_length, length );
+            __LOG_ERROR__( "session[{}:{}:{}] recv length[{}:{}] error",
+                           _session_id, _object_id, KFAppID::ToString( _session_id ), _receive_length, length );
             _receive_length = 0;
         }
 
@@ -236,9 +236,9 @@ namespace KFrame
         // 收到的消息长度有错误
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
         {
-            __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] totallength[{}] error",
-                              _session_id, _object_id, KFAppID::ToString( _session_id ),
-                              nethead->_msgid, nethead->_length, position, _receive_length );
+            __LOG_ERROR__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] totallength[{}] error",
+                           _session_id, _object_id, KFAppID::ToString( _session_id ),
+                           nethead->_msgid, nethead->_length, position, _receive_length );
             _receive_length = 0;
             return nullptr;
         }
@@ -312,8 +312,8 @@ namespace KFrame
             if ( !_is_send_queue_full )
             {
                 _is_send_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] send msgid[{}] failed!",
-                                  _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
+                __LOG_ERROR__( "session[{}:{}:{}] send msgid[{}] failed!",
+                               _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
             }
         }
         else
@@ -334,8 +334,8 @@ namespace KFrame
             if ( !_is_recv_queue_full )
             {
                 _is_recv_queue_full = true;
-                __LOG_CRITICAL__( "session[{}:{}:{}] recv msgid[{}] failed!",
-                                  _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
+                __LOG_ERROR__( "session[{}:{}:{}] recv msgid[{}] failed!",
+                               _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
             }
         }
         else
