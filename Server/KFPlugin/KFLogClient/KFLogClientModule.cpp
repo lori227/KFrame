@@ -93,7 +93,11 @@ namespace KFrame
             __KF_DELETE__( KFLogData, kfdata );
         }
 
-        _kf_tcp_client->SendNetMessage( _log_server_id, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &req );
+        auto ok = _kf_tcp_client->SendNetMessage( _log_server_id, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &req );
+        if ( !ok )
+        {
+            KFLogger::Instance()->UnRegisterLogFunction( this );
+        }
     }
 }
 
