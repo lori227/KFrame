@@ -1,25 +1,14 @@
-﻿/*------------------------------------
-// Module:
-// Author: NickYang
-// Mail: NickYang1988@qq.com
-// Date: 2018/06/28
-------------------------------------*/
-#ifndef __KF_LOG_SHARD_MODULE__
+﻿#ifndef __KF_LOG_SHARD_MODULE__
 #define __KF_LOG_SHARD_MODULE__
 
 #include "KFrame.h"
 #include "KFLogShardInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFWorker/KFWorkerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFOption/KFOptionInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
-#include "spdlog/spdlog.h"
+#include "KFHttpServer/KFHttpServerInterface.h"
 
 namespace KFrame
 {
-
     class KFLogShardModule : public KFLogShardInterface
     {
     public:
@@ -31,16 +20,18 @@ namespace KFrame
 
     protected:
 
-        void Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid, const std::string& loginfo );
-
-        void CreateLogger( const std::string& loggername );
-        const std::shared_ptr<spdlog::logger>& GetLogger( const std::string& appname, const std::string& apptype, const std::string& strappid );
+        KFSpdLog* FindRemoteLog( uint64 appid, const std::string& appname, const std::string& apptype, const std::string& strappid );
 
     protected:
-        __KF_MESSAGE_FUNCTION__( HandleRemoteLogReq );
 
+        // 请求连接地址
+        __KF_HTTP_FUNCTION__( HandleRequestLogAddressReq );
+
+        // 远程日志
+        __KF_MESSAGE_FUNCTION__( HandleRemoteLogToServerReq );
     private:
-        std::unordered_map< std::string, std::shared_ptr<spdlog::logger> > _loggers;
+        // 远程日志
+        std::unordered_map< uint64, KFSpdLog* > _log_list;
     };
 
 }

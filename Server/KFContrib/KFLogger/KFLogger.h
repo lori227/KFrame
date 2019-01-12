@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_LOGGER_H__
 #define __KF_LOGGER_H__
 
-#include "spdlog/spdlog.h"
+#include "KFSpdLog.h"
 
 namespace KFrame
 {
@@ -58,6 +58,8 @@ namespace KFrame
             auto content = __FORMAT__( newfmt, function, line, std::forward<P>( args )... );
             _log_function( level, content );
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected:
         KFLogger() = default;
@@ -81,7 +83,6 @@ namespace KFrame
         // 远程日志
         KFLogFunction _log_function = nullptr;
 
-        // 远程日志
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////

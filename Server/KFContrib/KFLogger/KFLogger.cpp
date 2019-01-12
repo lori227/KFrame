@@ -1,5 +1,4 @@
 ﻿#include "KFrame.h"
-#include "KFSpdLog.h"
 
 namespace KFrame
 {

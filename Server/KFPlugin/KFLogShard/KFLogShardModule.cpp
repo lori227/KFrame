@@ -1,90 +1,65 @@
 ﻿#include "KFLogShardModule.h"
-#include "spdlog/contrib/sinks/date_and_hour_file_sink.h"
 
 namespace KFrame
 {
-
-#ifdef __USE_WORKER__
-    #define __REGISTER_LOG_MESSAGE__ __REGISTER_WORKER_MESSAGE__
-    #define __UNREGISTER_LOG_MESSAGE__ __UNREGISTER_WORKER_MESSAGE__
-#else
-    #define __REGISTER_LOG_MESSAGE__ __REGISTER_MESSAGE__
-    #define __UNREGISTER_LOG_MESSAGE__ __UNREGISTER_MESSAGE__
-#endif
-
     KFLogShardModule::~KFLogShardModule()
     {
-        spdlog::drop_all();
+        for ( auto iter : _log_list )
+        {
+            delete iter.second;
+        }
+        _log_list.clear();
     }
 
     void KFLogShardModule::BeforeRun()
     {
-        __REGISTER_LOG_MESSAGE__( KFMsg::S2S_LOG_REQ, &KFLogShardModule::HandleRemoteLogReq );
+
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
+        //////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &KFLogShardModule::HandleRemoteLogToServerReq );
     }
 
     void KFLogShardModule::BeforeShut()
     {
-        __UNREGISTER_LOG_MESSAGE__( KFMsg::S2S_LOG_REQ );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( address ) );
+        //////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFLogShardModule::HandleRequestLogAddressReq )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto appname = __JSON_GET_STRING__( request, __KF_STRING__( appname ) );
+        auto apptype = __JSON_GET_STRING__( request, __KF_STRING__( apptype ) );
+        auto appid = __JSON_GET_STRING__( request, __KF_STRING__( appid ) );
+
+        __LOG_INFO__( "[{}:{}:{}] request address req!", appname, apptype, appid );
+
+        auto kfglobal = KFGlobal::Instance();
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( appname ), kfglobal->_app_name );
+        __JSON_SET_VALUE__( response, __KF_STRING__( apptype ), kfglobal->_app_type );
+        __JSON_SET_VALUE__( response, __KF_STRING__( appid ), kfglobal->_app_id._union._id );
+        __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfglobal->_interanet_ip );
+        __JSON_SET_VALUE__( response, __KF_STRING__( port ), kfglobal->_listen_port );
+        return _kf_http_server->SendResponse( response );
     }
 
-    //////////////////////////////////////////////////////////////////////////
-
-    void KFLogShardModule::Log( uint32 level, uint32 zoneid, const std::string& appname, const std::string& apptype, const std::string& strappid, const std::string& loginfo )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFSpdLog* KFLogShardModule::FindRemoteLog( uint64 appid, const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        if ( level < spdlog::level::trace || level >= spdlog::level::off )
+
+        auto iter = _log_list.find( appid );
+        if ( iter == _log_list.end() )
         {
-            assert( 0 );
-            return;
-        }
-
-        auto& logger = GetLogger( appname, apptype, strappid );
-        if ( logger == nullptr )
-        {
-            return;
-        }
-
-        logger->log( ( spdlog::level::level_enum )level, loginfo.c_str() );
-    }
-
-    void KFLogShardModule::CreateLogger( const std::string& loggername )
-    {
-        std::vector<spdlog::sink_ptr> sinks_vec;
-
-#if __KF_SYSTEM__ == __KF_WIN__
-        auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
-#else
-        auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
-#endif
-
-        sinks_vec.push_back( color_sink );
-        sinks_vec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( loggername ) );
-        auto remote_logger = std::make_shared<spdlog::async_logger>( loggername, std::begin( sinks_vec ), std::end( sinks_vec ), 1024 );
-
-#if defined(__KF_DEBUG__)
-        remote_logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
-#else
-        remote_logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
-#endif
-        remote_logger->set_level( spdlog::level::level_enum::trace );
-        remote_logger->flush_on( spdlog::level::trace );
-
-        spdlog::register_logger( remote_logger );
-
-        _loggers.insert( std::make_pair( loggername, remote_logger ) );
-    }
-
-    const std::shared_ptr<spdlog::logger>& KFLogShardModule::GetLogger( const std::string& appname, const std::string& apptype, const std::string& strappid )
-    {
-#if __KF_SYSTEM__ == __KF_WIN__
-        std::string loggername = __FORMAT__( "..\\binlog\\{}-{}-{}.log", appname, apptype, strappid );
-#else
-        std::string loggername = __FORMAT__( "../binlog/{}-{}-{}.log", appname, apptype, strappid );
-#endif
-        auto iter = _loggers.find( loggername );
-        if ( iter == _loggers.end() )
-        {
-            CreateLogger( loggername );
-            iter = _loggers.find( loggername );
+            auto spdlog = new KFSpdLog();
+            std::string path = __FORMAT__( "..{}binlog", spdlog::details::os::folder_sep );
+            spdlog->Initialize( path, appname, apptype, strappid );
+            iter = _log_list.insert( std::make_pair( appid, spdlog ) ).first;
         }
 
         return iter->second;
@@ -92,10 +67,15 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////
 
-    __KF_MESSAGE_FUNCTION__( KFLogShardModule::HandleRemoteLogReq )
+    __KF_MESSAGE_FUNCTION__( KFLogShardModule::HandleRemoteLogToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLogReq );
+        __PROTO_PARSE__( KFMsg::S2SRemoteLogToServerReq );
 
-        Log( kfmsg.log_level(), kfmsg.zone_id(), kfmsg.app_name(), kfmsg.app_type(), kfmsg.app_id(), kfmsg.log_info() );
+        auto spdlog = FindRemoteLog( kfmsg.appid(), kfmsg.appname(), kfmsg.apptype(), kfmsg.strappid() );
+        for ( auto i = 0; i < kfmsg.logdata_size(); ++i )
+        {
+            auto logdata = &kfmsg.logdata( i );
+            spdlog->Log( logdata->level(), logdata->content() );
+        }
     }
 }
