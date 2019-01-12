@@ -13,7 +13,6 @@ namespace KFrame
 
     void KFLogShardModule::BeforeRun()
     {
-
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
         //////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &KFLogShardModule::HandleRemoteLogToServerReq );
