@@ -30,7 +30,7 @@ namespace KFrame
         auto retcode = _kf_http_client->GetResponseCode( response );
         if ( retcode != KFMsg::Ok )
         {
-            return __LOG_ERROR__( " request log address error={}!", retcode );
+            return __LOG_ERROR__( "request log address error={}!", retcode );
         }
 
         auto ip = __JSON_GET_STRING__( response, __KF_STRING__( ip ) );
