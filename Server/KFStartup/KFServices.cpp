@@ -89,7 +89,8 @@ namespace KFrame
         kfglobal->LoadVersion( "version" );
 
         // 初始化logger
-        KFLogger::Instance()->InitLogger();
+        auto strlog = params[ __KF_STRING__( log ) ];
+        KFLogger::Instance()->InitLogger( strlog );
 
         // 读取启动配置
         std::string startupfile = "";

@@ -24,15 +24,10 @@ namespace KFrame
         return KFLogger::_kf_logger;
     }
 
-    void KFLogger::InitLogger()
+    void KFLogger::InitLogger( std::string& strlog )
     {
-#ifdef __KF_DEBUG__
-        SetLogLevel( spdlog::level::debug );
-#else
-        SetLogLevel( spdlog::level::info );
-#endif
-
         _local_log = new KFSpdLog();
+        SetLogLevel( KFUtility::ToValue< uint32 >( strlog ) );
 
         auto kfglobal = KFGlobal::Instance();
         std::string outpath = __FORMAT__( ".{}_output", spdlog::details::os::folder_sep );
