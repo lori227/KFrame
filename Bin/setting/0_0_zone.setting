@@ -12,9 +12,10 @@
 	<!--Ip Master服务器ip-->
 	<Zones>
 		<!-- 内部调试 -->
-		<Zone Id="2" LogicId="1" Name="鹏博封测服" Ip="192.168.1.44"/>
-		<Zone Id="3" LogicId="1" Name="小兵封测服" Ip="192.168.1.58"/>
-		<Zone Id="4" LogicId="1" Name="昭展封测服" Ip="192.168.1.57"/>
+		<!--
+			<Zone Id="1" LogicId="1" Name="公共封测服"/>
+			<Zone Id="2" LogicId="1" Name="鹏博封测服"/>
+		-->
 	</Zones>
 </Config>
 

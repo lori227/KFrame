@@ -10,14 +10,11 @@
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 3=小区计算-->
 	<!-- tcp服务器配置 -->
 	<TcpServer>
-		<!-- 部署服务器 -->
-		<Server AppName="deploy" AppType="server" AppId="0.1.0.1" Ip="127.0.0.1" Type="0" Port="10000"/>
-
 		<!-- route服务器 -->
-		<Server AppName="route" AppType="master" AppId="0.17.0.1" Ip="127.0.0.1" Type="0" Port="10003"/>
+		<Server AppName="route" AppType="master" AppId="0.22.0.1" Ip="127.0.0.1" Type="0" Port="10003"/>
 
-		<!-- zone master 根据zone.setting动态更新-->
-		<Server AppName="zone" AppType="master" AppId="0.91.0.1" Ip="127.0.0.1" Type="0" Port="11000"/>
+		<!-- zone master, 每个小区一条 -->
+		<Server AppName="zone" AppType="master" AppId="0.1.1.1" Ip="127.0.0.1" Type="0" Port="11000"/>
 	</TcpServer>
 
 

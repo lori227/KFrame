@@ -60,9 +60,6 @@ namespace KFrame
         // 计算监听端口
         virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid ) = 0;
 
-        // 修改小区master地址
-        virtual void SetZoneIpAddress( const std::string& ip ) = 0;
-
         // 获得auth地址
         virtual const std::string& GetAuthUrl() = 0;
 

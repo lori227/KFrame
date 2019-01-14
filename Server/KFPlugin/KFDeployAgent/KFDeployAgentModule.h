@@ -95,6 +95,8 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
 
     protected:
+        // 连接deployserver
+        void StartConnectDeployServer();
 
         // 判断是否agent进程
         bool IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );

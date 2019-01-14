@@ -44,9 +44,6 @@ namespace KFrame
         virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
         virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
-        // 修改小区master地址
-        virtual void SetZoneIpAddress( const std::string& ip );
-
         // 获得auth地址
         virtual const std::string& GetAuthUrl();
 

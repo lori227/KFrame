@@ -41,9 +41,6 @@ namespace KFrame
             kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
 
-        // 修改appid
-        _kf_ip_config->SetMasterAppId( kfglobal->_app_id._union._app_data._channel_id, kfglobal->_app_id._union._app_data._zone_id );
-
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
@@ -93,11 +90,6 @@ namespace KFrame
     void KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist )
     {
         _kf_ip_config->FindIpAddress( appname, apptype, appid, outlist );
-    }
-
-    void KFIpAddressModule::SetZoneIpAddress( const std::string& ip )
-    {
-        _kf_ip_config->SetZoneIpAddress( ip );
     }
 
     const std::string& KFIpAddressModule::GetInteranetIp()

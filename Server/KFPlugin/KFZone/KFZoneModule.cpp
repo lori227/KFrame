@@ -24,12 +24,6 @@ namespace KFrame
             // 名字
             kfzone->_name = __FORMAT__( kfzone->_name, kfzone->_id );
         }
-
-        // 修改服务器ip
-        if ( !kfzone->_ip.empty() )
-        {
-            _kf_ip_address->SetZoneIpAddress( kfzone->_ip );
-        }
     }
 
     void KFZoneModule::BeforeShut()

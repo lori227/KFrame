@@ -20,12 +20,6 @@ namespace KFrame
         const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
         void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
-        // 修改Zone
-        void SetZoneIpAddress( const std::string& ip );
-
-        // 修改appid
-        void SetMasterAppId( uint32 appchannel, uint32 zoneid );
-
     public:
         // 配置的连接地址
         std::vector< KFIpAddress > _ip_address_list;

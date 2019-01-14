@@ -109,6 +109,9 @@ namespace KFrame
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, 5 );
         kfsetting->SetData( _invalid_int, nullptr, _invalid_int );
         __REGISTER_SCHEDULE_FUNCTION__( kfsetting, &KFDeployAgentModule::OnScheduleRemoveVersion );
+
+        // 启动连接deployserver
+        StartConnectDeployServer();
     }
 
     __KF_SCHEDULE_FUNCTION__( KFDeployAgentModule::OnScheduleRemoveVersion )
@@ -121,6 +124,23 @@ namespace KFrame
         ExecuteShell( "rm -rf ./version/" );
 #endif
     }
+
+    void KFDeployAgentModule::StartConnectDeployServer()
+    {
+        auto deploydata = KFGlobal::Instance()->_startup_params[ __KF_STRING__( deploy ) ];
+        if ( deploydata.empty() )
+        {
+            return;
+        }
+
+        auto serverid = KFUtility::SplitString( deploydata, "|" );
+        auto ip = KFUtility::SplitString( deploydata, "|" );
+        auto port = KFUtility::SplitValue< uint32 >( deploydata, "|" );
+
+        auto appid = KFAppID::ToUInt64( serverid );
+        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), appid, ip, port );
+    }
+
 
     void KFDeployAgentModule::LoadTotalLaunchData()
     {
