@@ -71,7 +71,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
         if ( player == nullptr )
         {
-            return;
+            return __UNREGISTER_OBJECT_TIMER__( objectid );
         }
 
         SendQueryMailMessage( player );
