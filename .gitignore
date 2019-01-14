@@ -75,6 +75,8 @@ Server/_lib/win64/KFProtocol.lib
 Server/_lib/win64/KFUtility.lib
 Server/_lib/win64/KFCore.lib
 Server/_lib/win64/KFNetwork.lib
+Server/_lib/win64/KFLogger.lib
+Server/_lib/win64/KFLoggerd.lib
 Bin/*/setting/
 Bin/*/plugin/
 Bin/*/config/
@@ -82,4 +84,4 @@ Bin/*/*.dll
 Bin/*/*.exe
 Server/KFLibrary/google/protobuf/vsbuild/Debug
 Server/KFLibrary/google/protobuf/vsbuild/Release
-Server/_lib/win64/KFLoggerd.lib
+
