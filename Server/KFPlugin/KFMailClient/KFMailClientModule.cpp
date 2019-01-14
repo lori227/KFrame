@@ -242,16 +242,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailTimeOut );
         }
 
-        auto mailtype = kfmail->GetValue( __KF_STRING__( type ) );
-        auto deltype = _kf_option->GetUInt32( __KF_STRING__( mailreceiveremove ), mailtype );
-        if ( deltype == 1 )
-        {
-            UpdateFlagToMail( player, kfmail, KFMsg::ReceiveRemove );
-        }
-        else
-        {
-            UpdateFlagToMail( player, kfmail, KFMsg::Received );
-        }
+        UpdateFlagToMail( player, kfmail, KFMsg::ReceiveRemove );
     }
 
     void KFMailClientModule::UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 flag )
