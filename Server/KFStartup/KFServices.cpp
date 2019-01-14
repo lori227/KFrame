@@ -66,7 +66,8 @@ namespace KFrame
 
         // 日志
         KFLogger::Initialize( nullptr );
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置时间
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_startup_params = params;
@@ -74,9 +75,10 @@ namespace KFrame
         kfglobal->_real_time = KFDate::GetTimeEx();
         kfglobal->_app_name = params[ __KF_STRING__( appname ) ];
         kfglobal->_app_type = params[ __KF_STRING__( apptype ) ];
+        kfglobal->_str_app_id = params[ __KF_STRING__( appid ) ];
 
-        // 初始化appid
-        ParseAppId( params[ __KF_STRING__( appid ) ] );
+        KFAppID kfappid( kfglobal->_str_app_id );
+        kfglobal->_app_id = kfappid;
 
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
@@ -91,6 +93,12 @@ namespace KFrame
         // 初始化logger
         auto strlog = params[ __KF_STRING__( log ) ];
         KFLogger::Instance()->InitLogger( strlog );
+
+#ifdef __KF_DEBUG__
+        KFMalloc::Instance()->SetLogOpen( true );
+#else
+        KFMalloc::Instance()->SetLogOpen( false );
+#endif
 
         // 读取启动配置
         std::string startupfile = "";
@@ -123,18 +131,6 @@ namespace KFrame
         // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
         return true;
-    }
-
-    void KFServices::ParseAppId( std::string strappid )
-    {
-        // cluster 101.0.xxxx.1
-        // game    101.1.xxxx.1
-
-        auto kfglobal = KFGlobal::Instance();
-
-        KFAppID kfappid( strappid );
-        kfglobal->_app_id = kfappid;
-        kfglobal->_str_app_id = strappid;
     }
 
     void KFServices::RunUpdate()

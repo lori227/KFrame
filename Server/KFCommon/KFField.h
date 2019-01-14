@@ -68,6 +68,7 @@ namespace KFrame
         __STRING_DEFINE__( serverlist );
         __STRING_DEFINE__( serverlisttype );
         __STRING_DEFINE__( token );
+        __STRING_DEFINE__( memory );
         __STRING_DEFINE__( verify );
         __STRING_DEFINE__( type );
         __STRING_DEFINE__( ip );

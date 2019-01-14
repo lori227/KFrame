@@ -40,14 +40,6 @@ namespace KFrame
     void KFLogger::SetLogLevel( uint32 level )
     {
         _log_level = level;
-        if ( _log_level == 0 )
-        {
-            KFMalloc::Instance()->SetLogOpen( true );
-        }
-        else
-        {
-            KFMalloc::Instance()->SetLogOpen( false );
-        }
     }
 
     void KFLogger::SetLogFunction( KFLogFunction& function )

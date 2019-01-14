@@ -108,6 +108,11 @@ namespace KFrame
             auto level = KFUtility::ToValue< uint32 >( value );
             return KFLogger::Instance()->SetLogLevel( level );
         }
+        else if ( command == __KF_STRING__( memory ) )
+        {
+            auto memory = KFUtility::ToValue< uint32 >( value );
+            KFMalloc::Instance()->SetLogOpen( memory == 1 ? true : false );
+        }
 
         auto kfcommand = _command_data.Find( command );
         if ( kfcommand == nullptr )
