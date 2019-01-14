@@ -13,12 +13,12 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFWorker/KFWorkerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -35,9 +35,18 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut ();
         ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 计划清理过期的全局邮件
+        __KF_SCHEDULE_FUNCTION__( OnScheduleClearWholeOverdueMail );
 
-        ////////////////////////////////////////////////////////////////////////////////////
+        // 连接route
+        __KF_ROUTE_CONNECTION_FUNCTION__( OnConnectRoute );
+
+        // 增加邮件
+        __KF_HTTP_FUNCTION__( HandleGMAddMailReq );
+
+        // 删除邮件
+        __KF_HTTP_FUNCTION__( HandleGMDeleteMailReq );
 
     protected:
         // 删除邮件
@@ -53,19 +62,12 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateMailFlagReq );
 
         // 新玩家登陆邮件处理
-        __KF_MESSAGE_FUNCTION__( HandleNewPlayerLoginMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleNewPlayerMailReq );
 
         ///////////////////////////////////////////////////////////////////////////////
-        //GM增加邮件
-        // 新玩家登陆邮件处理
-        __KF_MESSAGE_FUNCTION__( HandleGMAddMailReq );
-
     protected:
-        // 计划清理过期的全局邮件
-        __KF_SCHEDULE_FUNCTION__( OnScheduleClearWholeOverdueMail );
-
-        // 重载GM全局邮件
-        void LoadWholeMailToPerson( uint32 playerid );
+        // 处理全局邮件到个人邮件
+        void LoadGlobalMailToPerson( uint64 playerid );
 
         // 根据邮件类型获取redis键名
         std::string FormatMailKeyName( uint32 playerid, uint32 mailtype, const char* function, uint32 line );

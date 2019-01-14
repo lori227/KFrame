@@ -6,7 +6,10 @@ namespace KFrame
 
     void KFMailShardModule::BeforeRun()
     {
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ), &KFMailMasterModule::OnCommandAddMail );
+        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFMailShardModule::OnConnectRoute );
+
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), false, &KFMailShardModule::HandleGMAddMailReq );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ), false, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
@@ -21,8 +24,10 @@ namespace KFrame
     void KFMailShardModule::BeforeShut()
     {
         __UNREGISTER_SCHEDULE_FUNCTION__();
+        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ) );
 
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ) );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
@@ -47,7 +52,22 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_ROUTE_CONNECTION_FUNCTION__( KFMailShardModule::OnConnectRoute )
+    {
+        RouteObjectList objectlist;
+        _kf_route->SyncObject( __KF_STRING__( mail ), objectlist );
+    }
+
+    __KF_HTTP_FUNCTION__( KFMailShardModule::HandleGMAddMailReq )
+    {
+
+    }
+
+    __KF_HTTP_FUNCTION__( KFMailShardModule::HandleGMDeleteMailReq )
+    {
+
+    }
+
     __KF_SCHEDULE_FUNCTION__( KFMailShardModule::OnScheduleClearWholeOverdueMail )
     {
         auto kfresult = _mail_redis_driver->QueryList( "zrangebyscore {} -inf +inf", __KF_STRING__( wholemail ) );
@@ -71,7 +91,7 @@ namespace KFrame
             _mail_redis_driver->Update( overduelist, "zrem {}", __KF_STRING__( wholemail ) );
         }
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFMailShardModule::FormatMailKeyName( uint32 playerid, uint32 mailtype, const char* function, uint32 line )
     {
         switch ( mailtype )
@@ -89,15 +109,43 @@ namespace KFrame
         return __FORMAT__( "{}:{}", __KF_STRING__( unknownmail ), playerid );
     }
 
+    void KFMailShardModule::LoadGlobalMailToPerson( uint64 playerid )
+    {
+        // 获取玩家已经加载的最近一封GM邮件id
+        auto kfmailid = _mail_redis_driver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( mailinfo ), playerid, __KF_STRING__( gmmailid ) );
+        if ( !kfmailid->IsOk() )
+        {
+            return;
+        }
+
+        // 查询全局邮件列表
+        auto listresult = _mail_redis_driver->QueryList( "zrangebyscore {} ({} +inf", __KF_STRING__( globalmail ), kfmailid->_value );
+        if ( listresult->_value.empty() )
+        {
+            return;
+        }
+
+        // 添加到个人邮件列表中
+        for ( auto& strmailid : listresult->_value )
+        {
+            _mail_redis_driver->Append( "hset {}:{} {} {}", __KF_STRING__( maillist ), playerid, strmailid, KFMsg::Init );
+        }
+
+        auto& newmaxmailid = listresult->_value.back();
+        _mail_redis_driver->Append( "hset {}:{} {} {}", __KF_STRING__( mailinfo ), playerid, __KF_STRING__( gmmailid ), newmaxmailid );
+        auto kfresult = _mail_redis_driver->Pipeline();
+        if ( !kfresult->IsOk() )
+        {
+            __LOG_ERROR__( "reload gm mail[{}] failed!", playerid );
+        }
+    }
+
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryMailReq );
 
         // 计算玩家的全局邮件信息
-        if ( kfmsg.mailtype() == KFMsg::MailEnum::WholeMail )
-        {
-            LoadWholeMailToPerson( kfmsg.playerid() );
-        }
+        LoadGlobalMailToPerson( kfmsg.playerid() );
 
         // 查询邮件列表
         auto maillistkey = FormatMailKeyName( kfmsg.playerid(), kfmsg.mailtype(), __FUNC_LINE__ );
@@ -264,42 +312,7 @@ namespace KFrame
         return true;
     }
 
-    void KFMailShardModule::LoadWholeMailToPerson( uint32 playerid )
-    {
-        // 获取玩家已经加载的最近一封GM邮件id
-        auto stringresult = _mail_redis_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ) );
-        if ( !stringresult->IsOk() )
-        {
-            return;
-        }
 
-        uint64 maxmailid = _invalid_int;
-        if ( !stringresult->_value.empty() )
-        {
-            maxmailid = KFUtility::ToValue< uint64 >( stringresult->_value );
-        }
-
-        // 从全局GM邮件列表中取出玩家未获取的
-        auto listresult = _mail_redis_driver->QueryList( "zrangebyscore {} ({} +inf", __KF_STRING__( wholemail ), maxmailid );
-        if ( listresult->_value.empty() )
-        {
-            return;
-        }
-
-        auto maillistkey = FormatMailKeyName( playerid, KFMsg::MailEnum::WholeMail, __FUNC_LINE__ );
-        for ( auto& strmailid : listresult->_value )
-        {
-            _mail_redis_driver->Append( "hset {} {} {}", maillistkey, strmailid, KFMsg::FlagEnum::Init );
-        }
-
-        auto& newmaxmailid = listresult->_value.back();
-        _mail_redis_driver->Append( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), playerid, __KF_STRING__( gmemaillastid ), newmaxmailid );
-        auto kfresult = _mail_redis_driver->Pipeline();
-        if ( !kfresult->IsOk() )
-        {
-            __LOG_ERROR__( "reload gm mail[{}] failed!", playerid );
-        }
-    }
 
     bool KFMailShardModule::UpdateMailFlag( uint32 playerid, uint64 mailid, uint32 mailtype, uint32 flag )
     {
@@ -371,7 +384,7 @@ namespace KFrame
         }
 
         auto& strmaxmailid = listresult->_value.front();
-        auto kfresult = _mail_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( mailsendinfo ), kfmsg.playerid(), __KF_STRING__( gmemaillastid ), strmaxmailid );
+        auto kfresult = _mail_redis_driver->Execute( "hset {}:{} {} {}", __KF_STRING__( mailinfo ), kfmsg.playerid(), __KF_STRING__( gmemaillastid ), strmaxmailid );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "playerid[{}] mail[{}] failed!", kfmsg.playerid(), strmaxmailid );
