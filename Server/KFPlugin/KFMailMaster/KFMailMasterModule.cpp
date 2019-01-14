@@ -13,7 +13,6 @@ namespace KFrame
         __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFMailMasterModule::OnServerDiscoverClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //__REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailMasterModule::HandleAddMail );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ), &KFMailMasterModule::OnCommandAddMail );
     }
 
     void KFMailMasterModule::BeforeShut()
@@ -22,7 +21,6 @@ namespace KFrame
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //__UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ) );
     }
 
     __KF_SERVER_DISCOVER_FUNCTION__( KFMailMasterModule::OnServerDiscoverClient )

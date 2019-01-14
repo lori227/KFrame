@@ -334,28 +334,28 @@ message MsgReceiveGiftRewardReq
 // MSG_RECEIVE_MAIL_REWARD_REQ
 message MsgReceiveMailRewardReq
 {
-	uint64 mailid = 1;
+	uint64 id = 1;
 }
 
 // 查看邮件
 // MSG_VIEW_MAIL_REQ
 message MsgViewMailReq
 {
-	uint64 mailid = 1;
+	uint64 id = 1;
 }
 
 // 删除邮件
 // MSG_DELETE_MAIL_REQ
 message MsgDeleteMailReq
 {
-	uint64 mailid =1;	// 邮件id
+	uint64 id =1;	// 邮件id
 }
 
 // 查询邮件
 // MSG_QUERY_MAIL_REQ
 message MsgQueryMailReq
 {
-	uint32 mailtype = 1;	//邮件类型 0代表查询所有邮件
+
 }
 
 

@@ -12,11 +12,11 @@
 #include "KFrame.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailClientInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFTimer/KFTimerInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
@@ -40,19 +40,14 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 发送邮件
-        virtual bool SendMail( KFEntity* player, uint32 mailconfigid, const KFElements* kfelements );
-
         // 发送邮件到对方
-        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const KFElements* kfelements );
-
-        // 发送邮件到对方
-        virtual bool SendMail( KFEntity* player, uint64 toplayerid, uint32 mailconfigid, const std::string& extend );
+        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 mailconfigid, const KFElements* kfelements );
 
     protected:
 
         // 客户端请求查询邮件
         __KF_MESSAGE_FUNCTION__( HandleQueryMailReq );
+
         // 新邮件通知
         __KF_MESSAGE_FUNCTION__( HandleNoticeNewMailReq );
 
@@ -82,38 +77,32 @@ namespace KFrame
         void OnLeaveQueryMail( KFEntity* player );
 
         // 新玩家首次登陆处理
-        void OnNewPlayerHandleGMMail( KFEntity* player );
+        void OnNewPlayerMail( KFEntity* player );
 
         //////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到邮件
-        bool SendMessageToMail( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送查询邮件消息
-        void SendQueryMailMessage( uint64 playerid, uint32 mailtype, uint64 maxmailid );
-
-        // 获得最大邮件id
-        uint64 FindMaxMailId( KFEntity* player, uint32 mailtype );
-
-        // 获得最小邮件id
-        uint64 FindMinMailId( KFEntity* player, uint32 mailtype );
+        void SendQueryMailMessage( KFEntity* player );
 
         // 判断邮件过期
         bool CheckMailTimeOut( KFData* kfmail );
 
         // 更新状态到邮件
-        bool UpdateFlagToMail( uint64 playerid, KFData* kfmail, uint32 flag );
+        void UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 flag );
 
         // 领取邮件奖励
-        void ReceiveMailReward( KFEntity* player, uint64 mailid );
+        void ReceiveMailReward( KFEntity* player, uint64 id );
 
         // 序列化邮件
         KFData* ParsePBMailToData( const KFMsg::PBMail* pbmail, const KFDataSetting* kfsetting );
 
         // 格式化邮件内容
-        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements, const std::string& extend );
+        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements );
 
         // 发送添加邮件
-        bool SendAddMailToCluster( uint64 playerid, uint32 mailtype, const MapString& maildata );
+        bool SendAddMailToShard( uint64 sendid, uint64 recvid, const MapString& maildata );
     };
 }
 

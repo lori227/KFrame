@@ -40,7 +40,6 @@ namespace KFrame
         // 连接断开
         __KF_SERVER_LOST_FUNCTION__( OnServerLostClient );
 
-        __KF_COMMAND_FUNCTION__( OnCommandAddMail );
     private:
         // hash一致性列表
         KFConHash _kf_hash;

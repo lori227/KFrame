@@ -6,6 +6,9 @@ namespace KFrame
 
     void KFMailShardModule::BeforeRun()
     {
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ), &KFMailMasterModule::OnCommandAddMail );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ, &KFMailShardModule::HandleAddMailReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ, &KFMailShardModule::HandleDeleteMailReq );
@@ -18,6 +21,8 @@ namespace KFrame
     void KFMailShardModule::BeforeShut()
     {
         __UNREGISTER_SCHEDULE_FUNCTION__();
+
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( addmail ) );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DELETE_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );

@@ -144,6 +144,7 @@ namespace KFrame
         __STRING_DEFINE__( mail );
         __STRING_DEFINE__( mailidcreater );
         __STRING_DEFINE__( maillist );
+        __STRING_DEFINE__( maxmailid );
         __STRING_DEFINE__( battle );
         __STRING_DEFINE__( battleid );
         __STRING_DEFINE__( battlelist );

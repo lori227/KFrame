@@ -36,16 +36,6 @@ enum FlagEnum
 	ReceiveRemove 	= 4;		// 领取并删除
 }
 //////////////////////////////////////////////////////////////////////////////////
-
-enum MailEnum
-{
-	UnknowMail = 0;			// 无效
-	WholeMail = 1;			// 系统全体邮件
-	FriendMail = 2;			// 好友邮件
-	GiftMail = 3;			// 礼物邮件		
-}
-//////////////////////////////////////////////////////////////////////////////////
-
 enum StatusEnum
 {
 	UnknowStatus = 0;		// 无效
@@ -152,6 +142,14 @@ enum CodeEnum
 	NameFilterError				= 20106;	// 名字含有屏蔽字符
 	SexSetOK					= 20107;	// 设置性别成功
 	ChangeIconOK            	= 20108;	// 修改头像成功
+	
+	// mail 
+	MailNotExist				= 20200;	// 邮件不存在
+	MailAlreadyReceived			= 20201;	// 邮件奖励已经领取
+	MailNotHaveReward			= 20202;	// 邮件没有奖励
+	MailDeleteFailed			= 20204;	// 还有奖励没有领取, 删除邮件失败
+	MailTimeOut					= 20205;	// 邮件已经过期
+
 
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
@@ -188,11 +186,7 @@ enum CodeEnum
 	AchieveReceiveRewardOK 		= 57;		// 领取成就奖励成功
 	ReceiveGiftOK 				= 58;		// 领取礼包成功
 	ReceiveGiftFailed 			= 59;		// 领取礼包失败, 错误码:<Text>%s</Text>	
-	MailNotExist				= 60;		// 邮件不存在
-	MailAlreadyReceived			= 61;		// 邮件奖励已经领取
-	MailNotHaveReward			= 62;		// 邮件没有奖励
-	MailDeleteFailed			= 63;		// 还有奖励没有领取, 删除邮件失败
-	MailTimeOut					= 64;		// 邮件已经过期
+	
 	ToastSendCountOver			= 65;		// 每日敬酒次数已用完
 	ToastCanNotRepeat			= 66;		// 不能重复敬酒
 	ToastGetCountOver			= 67;		// 每日被敬酒次数已用完

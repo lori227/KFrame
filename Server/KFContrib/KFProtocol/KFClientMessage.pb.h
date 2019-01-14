@@ -3293,17 +3293,17 @@ class LIBPROTOC_EXPORT MsgReceiveMailRewardReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // uint64 mailid = 1;
-  void clear_mailid();
-  static const int kMailidFieldNumber = 1;
-  ::google::protobuf::uint64 mailid() const;
-  void set_mailid(::google::protobuf::uint64 value);
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgReceiveMailRewardReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 mailid_;
+  ::google::protobuf::uint64 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFClientMessage_2eproto::TableStruct;
 };
@@ -3396,17 +3396,17 @@ class LIBPROTOC_EXPORT MsgViewMailReq : public ::google::protobuf::Message /* @@
 
   // accessors -------------------------------------------------------
 
-  // uint64 mailid = 1;
-  void clear_mailid();
-  static const int kMailidFieldNumber = 1;
-  ::google::protobuf::uint64 mailid() const;
-  void set_mailid(::google::protobuf::uint64 value);
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgViewMailReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 mailid_;
+  ::google::protobuf::uint64 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFClientMessage_2eproto::TableStruct;
 };
@@ -3499,17 +3499,17 @@ class LIBPROTOC_EXPORT MsgDeleteMailReq : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // uint64 mailid = 1;
-  void clear_mailid();
-  static const int kMailidFieldNumber = 1;
-  ::google::protobuf::uint64 mailid() const;
-  void set_mailid(::google::protobuf::uint64 value);
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgDeleteMailReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 mailid_;
+  ::google::protobuf::uint64 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFClientMessage_2eproto::TableStruct;
 };
@@ -3602,17 +3602,10 @@ class LIBPROTOC_EXPORT MsgQueryMailReq : public ::google::protobuf::Message /* @
 
   // accessors -------------------------------------------------------
 
-  // uint32 mailtype = 1;
-  void clear_mailtype();
-  static const int kMailtypeFieldNumber = 1;
-  ::google::protobuf::uint32 mailtype() const;
-  void set_mailtype(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryMailReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 mailtype_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFClientMessage_2eproto::TableStruct;
 };
@@ -14383,73 +14376,59 @@ inline void MsgReceiveGiftRewardReq::set_allocated_giftkey(::std::string* giftke
 
 // MsgReceiveMailRewardReq
 
-// uint64 mailid = 1;
-inline void MsgReceiveMailRewardReq::clear_mailid() {
-  mailid_ = GOOGLE_ULONGLONG(0);
+// uint64 id = 1;
+inline void MsgReceiveMailRewardReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 MsgReceiveMailRewardReq::mailid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgReceiveMailRewardReq.mailid)
-  return mailid_;
+inline ::google::protobuf::uint64 MsgReceiveMailRewardReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgReceiveMailRewardReq.id)
+  return id_;
 }
-inline void MsgReceiveMailRewardReq::set_mailid(::google::protobuf::uint64 value) {
+inline void MsgReceiveMailRewardReq::set_id(::google::protobuf::uint64 value) {
   
-  mailid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgReceiveMailRewardReq.mailid)
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgReceiveMailRewardReq.id)
 }
 
 // -------------------------------------------------------------------
 
 // MsgViewMailReq
 
-// uint64 mailid = 1;
-inline void MsgViewMailReq::clear_mailid() {
-  mailid_ = GOOGLE_ULONGLONG(0);
+// uint64 id = 1;
+inline void MsgViewMailReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 MsgViewMailReq::mailid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgViewMailReq.mailid)
-  return mailid_;
+inline ::google::protobuf::uint64 MsgViewMailReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgViewMailReq.id)
+  return id_;
 }
-inline void MsgViewMailReq::set_mailid(::google::protobuf::uint64 value) {
+inline void MsgViewMailReq::set_id(::google::protobuf::uint64 value) {
   
-  mailid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgViewMailReq.mailid)
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgViewMailReq.id)
 }
 
 // -------------------------------------------------------------------
 
 // MsgDeleteMailReq
 
-// uint64 mailid = 1;
-inline void MsgDeleteMailReq::clear_mailid() {
-  mailid_ = GOOGLE_ULONGLONG(0);
+// uint64 id = 1;
+inline void MsgDeleteMailReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 MsgDeleteMailReq::mailid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgDeleteMailReq.mailid)
-  return mailid_;
+inline ::google::protobuf::uint64 MsgDeleteMailReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgDeleteMailReq.id)
+  return id_;
 }
-inline void MsgDeleteMailReq::set_mailid(::google::protobuf::uint64 value) {
+inline void MsgDeleteMailReq::set_id(::google::protobuf::uint64 value) {
   
-  mailid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgDeleteMailReq.mailid)
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgDeleteMailReq.id)
 }
 
 // -------------------------------------------------------------------
 
 // MsgQueryMailReq
-
-// uint32 mailtype = 1;
-inline void MsgQueryMailReq::clear_mailtype() {
-  mailtype_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgQueryMailReq::mailtype() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryMailReq.mailtype)
-  return mailtype_;
-}
-inline void MsgQueryMailReq::set_mailtype(::google::protobuf::uint32 value) {
-  
-  mailtype_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryMailReq.mailtype)
-}
 
 // -------------------------------------------------------------------
 

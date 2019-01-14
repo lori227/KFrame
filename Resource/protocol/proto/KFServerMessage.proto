@@ -34,12 +34,22 @@ enum ServerProtocol
 
 	// attribute
 
-
 	// public
 	S2S_UPDATE_PUBLIC_DATA_REQ = 21001;				// 更新公共数据
 
+	// mail
+	S2S_NEW_PLAYER_MAIL_REQ = 21101;				// 新玩家登陆邮件服务
+	S2S_QUERY_MAIL_REQ = 21102;						// 查询邮件
+	S2S_QUERY_MAIL_ACK = 21103;						// 查询邮件
+	S2S_DELETE_MAIL_REQ = 21104;					// 删除邮件
+	S2S_ADD_MAIL_REQ = 21105;						// 添加邮件
+	S2S_NOTICE_NEW_MAIL_REQ = 21106;				// 通知新邮件
+	S2S_UPDATE_MAIL_FLAG_REQ = 21107;				// 设置邮件状态请求
+	S2S_UPDATE_MAIL_FLAG_ACK = 21108;				// 设置邮件状态响应
 
 
+
+	S2S_QUERY_FRIEND_REQ = 21130;					// 查询好友信息
 
 	S2S_REGISTER_MATCH_REQ = 11101;					// 注册匹配
 	S2S_MATCH_TO_PROXY_REQ = 11102;					// 请求匹配
@@ -116,10 +126,7 @@ enum ServerProtocol
 	S2S_SET_PLAYER_NAME_REQ = 21124;				// 设置名字请求
 	S2S_SET_PLAYER_NAME_ACK = 21125;				// 设置名字回应
 	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// 玩家掉线
-	S2S_QUERY_MAIL_REQ = 21127;						// 查询邮件
-	S2S_QUERY_MAIL_ACK = 21128;						// 查询邮件
-	S2S_DELETE_MAIL_REQ = 21129;					// 删除邮件
-	S2S_QUERY_FRIEND_REQ = 21130;					// 查询好友信息
+
 	S2S_ADD_FRIEND_INVITE_REQ = 21131;				// 添加好友请求
 	S2S_DEL_FRIEND_REQ = 21132;						// 删除好友请求
 	S2S_QUERY_FRIEND_ACK = 21133;					// 查询好友信息
@@ -130,8 +137,7 @@ enum ServerProtocol
 	S2S_DEL_FRIEND_ACK = 21138;						// 删除好友
 	S2S_ADD_FRIEND_ACK = 21139;						// 添加好友
 	S2S_UPDATE_FRIEND_REQ = 21140;					// 更新好友
-	S2S_ADD_MAIL_REQ = 21141;						// 添加邮件
-	S2S_NOTICE_NEW_MAIL_REQ = 21142;				// 通知新邮件
+
 	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// 更新好友度
 	S2S_QUERY_BASIC_REQ = 21144;					// 查询好友基础数据
 
@@ -139,8 +145,7 @@ enum ServerProtocol
 	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
 	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
 	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
-	S2S_UPDATE_MAIL_FLAG_REQ = 21152;				// 设置邮件状态请求
-	S2S_UPDATE_MAIL_FLAG_ACK = 21153;				// 设置邮件状态响应
+
 	S2S_PLAYER_TOAST_REQ = 21156;					// 玩家敬酒请求
 	S2S_PLAYER_TOAST_ACK = 21157;					// 玩家敬酒回馈
 	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// 更新好友度反馈
@@ -170,7 +175,6 @@ enum ServerProtocol
 	S2S_QUERY_TOAST_COUNT_REQ = 21180;				// 查询总的敬酒次数请求
 	S2S_QUERY_TOAST_COUNT_ACK = 21181;				// 查询总的敬酒次数回馈
 	S2S_UPDATE_GROUP_MATCH_REQ = 21182;				// 更新队伍匹配模式
-	S2S_NEW_PLAYER_LOGIN_MAIL_REQ = 21184;			// 新玩家登陆邮件服务
 	S2S_QUERY_RANK_LIST_REQ = 21187;				// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
@@ -207,7 +211,6 @@ enum ServerProtocol
 	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// 登录请求guildid返回
 	S2S_QUERY_GUILD_LOG_REQ = 21223;				// 查询帮派日志
 	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// 增加帮派活跃度
-	S2S_GM_ADD_MAIL_REQ = 21300;					// GM增加邮件
 	S2S_SEND_CHAT_TO_SERVER = 21301;				// 发送聊天内容
 
  }
@@ -454,33 +457,27 @@ message S2SGameSyncOnlineReq
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-// 查询邮件请求
-// S2S_QUERY_MAIL_REQ
-message S2SQueryMailReq
-{
-	uint64 playerid = 1;		//  角色id
-	uint32 mailtype = 2;		//  邮件类型
-	uint64 maxmailid = 3;			// 最大的邮件id
-}
-
 // 邮件信息
 message PBMail
 {
 	map<string, bytes> data = 1;
 }
 
-message PBMails
+// 查询邮件请求
+// S2S_QUERY_MAIL_REQ
+message S2SQueryMailReq
 {
-	repeated PBMail mail = 1;	// 邮件信息
+	uint64 playerid = 1;		//  角色id
+	uint32 zoneid = 2;			//  小区id
+	uint64 maxid = 3;			//  最大的邮件id
 }
 
 // 查询邮件请求
 // S2S_QUERY_MAIL_ACK
 message S2SQueryMailAck
 {
-	uint64 playerid = 1;	//  角色id
-	PBMails mails = 2;	// 邮件信息
-	uint32 mailtype = 3;	// 邮件类型
+	uint64 playerid = 1;		// 角色id
+	repeated PBMail mail = 2;	// 邮件信息
 }
 
 // 删除邮件
@@ -497,8 +494,8 @@ message S2SDeleteMailReq
 message S2SAddMailReq
 {
 	uint64 playerid = 1;		// 角色id
-	uint32 mailtype = 3;		// 邮件类型
-	PBMail pbmail = 5;			// 邮件信息
+	uint32 mailtype = 2;		// 邮件类型
+	PBMail pbmail = 3;			// 邮件信息
 }
 
 // 通知有新邮件
@@ -507,6 +504,33 @@ message S2SNoticeNewMailReq
 {
 	uint64 playerid = 1;	// 角色id	
 	uint32 mailtype = 2;	// 邮件类型	
+}
+
+// 新玩家登陆邮件服务
+// S2S_NEW_PLAYER_MAIL_REQ
+message S2SNewPlayerMailReq
+{
+	uint64 playerid = 1;		// 玩家id
+}
+
+// 设置邮件状态请求
+// S2S_UPDATE_MAIL_FLAG_REQ
+message S2SUpdateMailFlagReq
+{
+	uint64 playerid = 1;
+	uint64 id = 2;
+	uint32 mailtype = 3;
+	uint32 flag = 4;
+}
+
+// 设置邮件状态响应
+// S2S_UPDATE_MAIL_FLAG_ACK
+message S2SUpdateMailFlagAck
+{
+	uint64 playerid = 1;
+	uint64 id = 2;
+	uint32 mailtype = 3;
+	uint32 flag = 4;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -650,26 +674,6 @@ message S2SQueryBasicAck
 }
 
 
-
-// 设置邮件状态请求
-// S2S_UPDATE_MAIL_FLAG_REQ
-message S2SUpdateMailFlagReq
-{
-	uint64 playerid = 1;
-	uint64 mailid = 2;
-	uint32 mailtype = 3;
-	uint32 flag = 4;
-}
-
-// 设置邮件状态响应
-// S2S_UPDATE_MAIL_FLAG_ACK
-message S2SUpdateMailFlagAck
-{
-	uint64 playerid = 1;
-	uint64 mailid = 2;
-	uint32 mailtype = 3;
-	uint32 flag = 4;
-}
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -931,13 +935,6 @@ message S2SQueryGuestAck
 	uint64 queryid = 2;		// 被查询的玩家id
 	uint32 guestcount = 3;		// 本月访客数量
 	repeated PBGuestData guestdata = 4;	// 最近访客信息
-}
-
-// 新玩家登陆邮件服务
-// S2S_NEW_PLAYER_LOGIN_MAIL_REQ
-message S2SNewPlayerLoginMailReq
-{
-	uint64 playerid = 1;		// 玩家id
 }
 
 // 更新排行榜数据
@@ -1268,14 +1265,7 @@ message S2SAddGuildActivenessReq
 	uint32 activeness = 3;		// 活跃度
 }
 
-// GM增加邮件
-// S2S_GM_ADD_MAIL_REQ
-message S2SGMAddMailReq
-{
-	repeated uint64 playerids = 1;		// 角色id
-	uint32 mailtype = 2;			// 邮件类型
-	PBMail pbmail = 3;			// 邮件信息
-}
+
 
 // 聊天消息
 // S2S_SEND_CHAT_TO_SERVER

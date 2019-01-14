@@ -139,29 +139,6 @@ inline bool FlagEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<FlagEnum>(
     FlagEnum_descriptor(), name, value);
 }
-enum MailEnum {
-  UnknowMail = 0,
-  WholeMail = 1,
-  FriendMail = 2,
-  GiftMail = 3,
-  MailEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  MailEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-LIBPROTOC_EXPORT bool MailEnum_IsValid(int value);
-const MailEnum MailEnum_MIN = UnknowMail;
-const MailEnum MailEnum_MAX = GiftMail;
-const int MailEnum_ARRAYSIZE = MailEnum_MAX + 1;
-
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MailEnum_descriptor();
-inline const ::std::string& MailEnum_Name(MailEnum value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    MailEnum_descriptor(), value);
-}
-inline bool MailEnum_Parse(
-    const ::std::string& name, MailEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MailEnum>(
-    MailEnum_descriptor(), name, value);
-}
 enum StatusEnum {
   UnknowStatus = 0,
   OnlineStatus = 1,
@@ -379,6 +356,11 @@ enum CodeEnum {
   NameFilterError = 20106,
   SexSetOK = 20107,
   ChangeIconOK = 20108,
+  MailNotExist = 20200,
+  MailAlreadyReceived = 20201,
+  MailNotHaveReward = 20202,
+  MailDeleteFailed = 20204,
+  MailTimeOut = 20205,
   ZoneDatabaseBusy = 20,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
@@ -413,11 +395,6 @@ enum CodeEnum {
   AchieveReceiveRewardOK = 57,
   ReceiveGiftOK = 58,
   ReceiveGiftFailed = 59,
-  MailNotExist = 60,
-  MailAlreadyReceived = 61,
-  MailNotHaveReward = 62,
-  MailDeleteFailed = 63,
-  MailTimeOut = 64,
   ToastSendCountOver = 65,
   ToastCanNotRepeat = 66,
   ToastGetCountOver = 67,
@@ -546,7 +523,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = ChangeIconOK;
+const CodeEnum CodeEnum_MAX = MailTimeOut;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();
@@ -601,11 +578,6 @@ template <> struct is_proto_enum< ::KFMsg::FlagEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FlagEnum>() {
   return ::KFMsg::FlagEnum_descriptor();
-}
-template <> struct is_proto_enum< ::KFMsg::MailEnum> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::MailEnum>() {
-  return ::KFMsg::MailEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::StatusEnum> : ::std::true_type {};
 template <>
