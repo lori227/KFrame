@@ -6,30 +6,47 @@ package KFMsg;
 enum ClientProtocol
  {
 	MSG_CLIENT_PROTOCOL_UNKNOW = 0;			// pb3 需要0
+
+	// common
 	MSG_RESULT_DISPLAY = 1;					// 结果提示回馈
+		
+	// login
+	MSG_TELL_BE_KICK = 10;					// 被踢下线了
+	MSG_LOGIN_VERIFY_REQ = 11;				// 客户端登录验证请求
+	MSG_LOGIN_VERIFY_ACK = 12;				// 客户端登录验证结果
+	MSG_LOGIN_GAME_REQ = 13;				// 客户端登录游戏请求
+	MSG_LOGIN_OUT_REQ = 14;					// 客户端请求登出游戏
 
-	// 更新数据消息
-	MSG_LOGIN_ENTER_GAME = 10;				// 通知进入游戏
- 	MSG_SYNC_UPDATE_DATA = 11;				// 同步更新属性
-	MSG_SYNC_ADD_DATA = 12;					// 同步增加属性
-	MSG_SYNC_REMOVE_DATA = 13;				// 同步删除属性
-	MSG_TELL_QUERY_BASIC = 15;				// 查询基础数据
+	// data
+	MSG_LOGIN_ENTER_GAME = 20;				// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 21;				// 同步更新属性
+	MSG_SYNC_ADD_DATA = 22;					// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 23;				// 同步删除属性
+	MSG_TELL_QUERY_BASIC = 25;				// 查询基础数据
+	MSG_REMOVE_DATA_REQ = 26;				// 请求删除属性
+	MSG_QUERY_PLAYER_REQ = 27;				// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 28;			    // 查询玩家数据
 
-	MSG_TELL_BE_KICK = 100;						// 被踢下线了
-	MSG_LOGIN_VERIFY_REQ = 101;					// 客户端登录验证请求
-	MSG_LOGIN_VERIFY_ACK = 102;					// 客户端登录验证结果
-	MSG_LOGIN_GAME_REQ = 103;					// 客户端登录游戏请求
-	MSG_LOGIN_OUT_REQ = 105;					// 客户端请求登出游戏
-	MSG_SET_NAME_REQ = 107;						// 设置名字
-	MSG_SET_SEX_REQ = 109;						// 设置性别
+	// attribute
+	MSG_DEBUG_COMMAND_REQ = 50;				// 客户端发送GM指令请求
+	MSG_SET_NAME_REQ = 51;					// 设置名字
+	MSG_SET_SEX_REQ = 52;					// 设置性别
+
+	// mail
+	MSG_VIEW_MAIL_REQ = 101;				// 查看邮件
+	MSG_DELETE_MAIL_REQ = 102;				// 删除邮件
+	MSG_QUERY_MAIL_REQ = 103;				// 请求查询邮件
+	MSG_RECEIVE_MAIL_REWARD_REQ = 104;		// 领取邮件奖励
+
+
+
+
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
 	MSG_RECEIVE_TASK_REWARD_REQ = 111;			// 领取任务奖励
 	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// 领取成就奖励
 	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// 领取礼包奖励
-	MSG_RECEIVE_MAIL_REWARD_REQ = 114;			// 领取邮件奖励
-	MSG_VIEW_MAIL_REQ = 115;					// 查看邮件
-	MSG_DELETE_MAIL_REQ = 116;					// 删除邮件
-	MSG_QUERY_MAIL_REQ = 117;					// 请求查询邮件
+
+
 	MSG_START_MATCH_REQ = 118;					// 请求个人匹配
 	MSG_START_MATCH_ACK = 119;					// 匹配回馈
 	MSG_CANCEL_MATCH_REQ = 120;					// 取消匹配
@@ -44,8 +61,6 @@ enum ClientProtocol
 	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// 设置拒绝添加好友
 	MSG_QUERY_BASIC_REQ = 131;					// 查询玩家基本数据
 
-	MSG_QUERY_PLAYER_REQ = 132;					// 查询玩家数据
-	MSG_QUERY_PLAYER_ACK = 14;				    // 查询玩家数据
 
 
 	MSG_BUY_STORE_REQ = 133;					// 客户端购买商品请求
@@ -53,11 +68,9 @@ enum ClientProtocol
 	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// 客户端发送一对一聊天请求
 	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// 服务器通知一对一聊天信息
 	MSG_CHANGE_ICON_REQ = 137;					// 修改头像请求
-	MSG_DEBUG_COMMAND_REQ = 143;				// 客户端发送GM指令请求
 	MSG_CHANGE_MOTTO_REQ = 144;					// 客户端修改个性签名请求
 	MSG_SET_MODEL_DEFAULT_CLOTHES_REQ = 145;	// 设置模型的默认时装id
 	MSG_PLAYER_TOAST_REQ =	146;				// 客户端敬酒请求
-	MSG_REMOVE_DATA_REQ = 147;					// 请求删除属性
 	MSG_DRESS_CLOTHES_REQ = 148;				// 穿戴时装
 	MSG_CHANGE_MODEL_REQ = 149;					// 修改模型
 	MSG_SHOW_REWARD_ELEMENT = 150;				// 显示奖励

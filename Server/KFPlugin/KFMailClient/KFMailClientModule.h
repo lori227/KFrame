@@ -10,17 +10,16 @@
 ************************************************************************/
 
 #include "KFrame.h"
+#include "KFProtocol/KFProtocol.h"
 #include "KFMailClientInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
-#include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
