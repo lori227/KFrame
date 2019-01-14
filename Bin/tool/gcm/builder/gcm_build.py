@@ -67,30 +67,31 @@ else:
     shell_ext = '.bat'
 
 def write_file(run_file, kill_file, node):
-    func_name = node.get('FuncName')
-    func_id = node.get('FuncID')
+    func_id = node.get('ID')
+    func_name = node.get('Name')
+    func_type = node.get('Type')
 
     channel_id = args['channel']
     zone_id = args['zone']
     log_type = args['log']
     service_type = args['service']
-    if func_name in g_proc_config.cluster_procs:
+    if func_name != 'zone':
         zone_id = 0
 
     execute_file = default_startup + default_mode_suffix + platform_exe
-    run_file.write('echo Starting [%s] server\n' % func_name)
-    kill_file.write('echo Killing  [%s] server\n' % func_name)
+    run_file.write('echo Starting [%s.%s] server\n' % (func_name, func_type) )
     if is_linux():
-        run_file.write('./bin/%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
-                       (execute_file, channel_id, int(func_id), zone_id, 1, log_type, service_type, func_name))
+        run_file.write('./bin/%s appname=%s apptype=%s appid=%d.%d.%d.%d log=%s service=%s\n\n' %
+                       (execute_file, func_name, func_type, channel_id, int(func_id), zone_id, 1, log_type, service_type ))
 
-        kill_file.write('ps -ef|grep "%s appid=%d.%d" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
-                        (execute_file, channel_id, int(func_id)))
+        kill_file.write('ps -ef|grep "%s appname=%s apptype=%s" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
+                        (execute_file, func_name, func_type))
     else:
-        run_file.write('start "%s" bin\\%s appid=%d.%d.%d.%d log=%s service=%s startup=./startup/%s.startup\n\n' %
-                       (func_name, execute_file, channel_id, int(func_id), zone_id, 1, log_type, service_type,func_name))
+        run_file.write('start "%s" bin\\%s appname=%s apptype=%s appid=%d.%d.%d.%d log=%s service=%s\n\n' %
+                       (func_name, execute_file, func_name, func_type, channel_id, int(func_id), zone_id, 1, log_type, service_type ))
 
-        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.*"\n\n' % func_name)
+        kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.%s*"\n\n' % (func_name, func_type))
+
 
 def copy_version():
     shutil.copytree(base_path + bin_path, os.path.join(output_folder, bin_path))
@@ -139,9 +140,9 @@ def gen_shell():
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
-    parser.add_argument('-c', '--channel', type=int, default=100, help="channel id")
+    parser.add_argument('-c', '--channel', type=int, default=1, help="channel id")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
-    parser.add_argument('-l', '--log', type=str, default='1.1', help="log type")
+    parser.add_argument('-l', '--log', type=str, default='1', help="log type")
     parser.add_argument('-n', '--service', type=str, default='1.1', help="service type")
     parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")

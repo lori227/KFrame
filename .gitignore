@@ -85,3 +85,9 @@ Bin/*/*.exe
 Server/KFLibrary/google/protobuf/vsbuild/Debug
 Server/KFLibrary/google/protobuf/vsbuild/Release
 
+Bin/tool/gcm/builder/build/
+Bin/tool/gcm/builder/dist/
+Bin/tool/gcm/conf_output/
+Bin/tool/gcm/builder/gcm_build.spec
+Bin/tool/gcm/builder/*.pyc
+Bin/tool/gcm/builder/gcm_build.spec

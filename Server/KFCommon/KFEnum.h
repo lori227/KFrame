@@ -38,78 +38,48 @@ namespace KFrame
         {
             TotalServerList = 1,	// 所有服务器列表
             SelectServerData = 2,	// 选择服务器登录
-            ///////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
 
             Local = 1,			// 内网
             Internet = 2,		// 外网
-            ///////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
 
             Debug = 1,			// 调试
             Develop = 2,		// 研发
             Beta = 3,			// 测试
             Audit = 4,			// 审核
             Online = 8,			// 正式
-            ///////////////////////////////////////////
-            ///////////////////////////////////////////
-            DeployServer = 1,			// 部署server
-            DeployAgent = 2,			// 部署Agent
-            BattleServer = 3,			// 战斗服务器( gs )
+            /////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
+            ZoneMaster = 1,				// 小区服务器master
+            ZoneWorld = 2,				// 小区服务器world
+            ZoneGate = 3,				// 小区服务器gate
+            ZoneLogin = 4,				// 小区服务器login
+            ZoneGame = 5,				// 小区服务器game
+            /////////////////////////////////////////////////////////////////////
 
-            Auth = 10,					// 认证服务器
+            DeployServer = 11,			// 部署server
+            DeployAgent = 12,			// 部署Agent
 
-            DataMaster = 11,			// 数据服务器master
-            DataProxy = 12,				// 数据服务器proxy
-            DataShard = 13,				// 数据服务器shard
+            LogShard = 20,				// 日志服务器
+            Auth = 21,					// 认证服务器
 
-            PublicMaster = 14,			// 公共属性服务器master
-            PublicProxy = 15,			// 公共属性服务器proxy
-            PublicShard = 16,			// 公共属性服务器shard
+            RouteMaster = 22,			// 转发服务器master
+            RouteProxy = 23,			// 转发服务器proxy
+            RouteShard = 24,			// 转发服务器shard
 
-            RouteMaster = 17,			// 转发服务器master
-            RouteProxy = 18,			// 转发服务器proxy
-            RouteShard = 19,			// 转发服务器shard
-
-            MatchMaster = 21,			// 匹配服务器master
-            MatchProxy = 22,			// 匹配服务器proxy
-            MatchShard = 23,			// 匹配服务器shard
-
-            BattleMaster = 24,			// 战斗服务器master
-            BattleProxy = 25,			// 战斗服务器proxy
-            BattleShard = 26,			// 战斗服务器shard
-
-            MailMaster = 27,			// 邮件服务器master
-            MaileProxy = 28,			// 邮件服务器proxy
-            MailShard = 29,				// 邮件服务器shard
-
-            RelationMaster = 31,		// 关系服务器master
-            RelationProxy = 32,			// 关系服务器proxy
+            //////////////////////////////////////////////////////////////////////
+            DataShard = 31,				// 数据服务器
+            PublicShard = 32,			// 公共属性服务器
             RelationShard = 33,			// 关系服务器shard
-
-            GroupMaster = 34,			// 组队服务器master
-            GroupProxy = 35,			// 组队服务器proxy
+            MailShard = 34,				// 邮件服务器shard
+            RankShard = 35,				// 排行榜服务器shard
             GroupShard = 36,			// 组队服务器shard
+            GuildShard = 37,			// 公会服务器shard
+            MatchShard = 38,			// 匹配服务器shard
+            BattleShard = 39,			// 战斗服务器shard
+            BattleServer = 40,			// 战斗服务器
 
-            RankMaster = 37,			// 排行榜服务器master
-            RankProxy = 38,				// 排行榜服务器proxy
-            RankShard = 39,				// 排行榜服务器shard
-
-            GuildMaster = 41,			// 公会服务器master
-            GuildProxy = 42,			// 公会服务器proxy
-            GuildShard = 43,			// 公会服务器shard
-
-            LogMaster = 44,				// 日志服务器master
-            LogProxy = 45,				// 日志服务器proxy
-            LogShard = 46,				// 日志服务器shard
-
-            DirMaster = 47,				// 目录服务器master
-            DirProxy = 48,				// 目录服务器proxy
-            DirShard = 49,				// 目录服务器shard
-
-            ZoneMaster = 91,			// 小区服务器master
-            ZoneWorld = 92,				// 小区服务器world
-            ZoneGate = 93,				// 小区服务器gate
-            ZoneLogin = 94,				// 小区服务器login
-            ZoneGame = 95,				// 小区服务器game
         };
     }
 

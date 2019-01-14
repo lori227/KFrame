@@ -5,66 +5,52 @@
   <!-- NOTE: more info please see TCM docs for more info -->
 
     <!-- CLUSTER -->    
-    <cluster WorkPath="/data/home/user00/sghome">
-        <!-- cluster auth -->
-		<Proc FuncName="auth"           FuncID="10"  ProcName="authserver" seq="0" WorkPath="auth" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/auth.startup"/>
-		
-		<!-- cluster data -->
-		<Proc FuncName="data.master"    FuncID="11"  ProcName="dataserver" seq="0" WorkPath="data" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/data.master.startup"/>
-		<Proc FuncName="data.proxy"     FuncID="12"  ProcName="dataserver" seq="0" WorkPath="data" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/data.proxy.startup"/>
-		<Proc FuncName="data.shard"     FuncID="13"  ProcName="dataserver" seq="0" WorkPath="data" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/data.shard.startup"/>
-        <!-- cluster public -->
-		<Proc FuncName="public.master"  FuncID="14"  ProcName="publicserver" seq="0" WorkPath="public" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/public.master.startup"/>
-		<Proc FuncName="public.proxy"   FuncID="15"  ProcName="publicserver" seq="0" WorkPath="public" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/public.proxy.startup"/>
-		<Proc FuncName="public.shard"   FuncID="16"  ProcName="publicserver" seq="0" WorkPath="public" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/public.shard.startup"/>
-        <!-- cluster route -->
-		<Proc FuncName="route.master"   FuncID="17"  ProcName="routeserver" seq="0" WorkPath="route" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/route.master.startup"/>
-		<Proc FuncName="route.proxy"    FuncID="18"  ProcName="routeserver" seq="0" WorkPath="route" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/route.proxy.startup"/>
-		<Proc FuncName="route.shard"    FuncID="19"  ProcName="routeserver" seq="0" WorkPath="route" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/route.shard.startup"/>
-        <!-- cluster match -->
-		<Proc FuncName="match.master"   FuncID="21"  ProcName="matchserver" seq="0" WorkPath="match" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/match.master.startup"/>
-		<Proc FuncName="match.proxy"    FuncID="22"  ProcName="matchserver" seq="0" WorkPath="match" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/match.proxy.startup"/>
-		<Proc FuncName="match.shard"    FuncID="23"  ProcName="matchserver" seq="0" WorkPath="match" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/match.shard.startup"/>
-        <!-- cluster battle -->
-		<Proc FuncName="battle.master"  FuncID="24"  ProcName="battleserver" seq="0" WorkPath="battle" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/battle.master.startup"/>
-		<Proc FuncName="battle.proxy"   FuncID="25"  ProcName="battleserver" seq="0" WorkPath="battle" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/battle.proxy.startup"/>
-		<Proc FuncName="battle.shard"   FuncID="26"  ProcName="battleserver" seq="0" WorkPath="battle" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/battle.shard.startup"/>
-        <!-- cluster mail -->
-		<Proc FuncName="mail.master"    FuncID="27"  ProcName="mailserver" seq="0" WorkPath="mail" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/mail.master.startup"/>
-		<Proc FuncName="mail.proxy"     FuncID="28"  ProcName="mailserver" seq="0" WorkPath="mail" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/mail.proxy.startup"/>
-		<Proc FuncName="mail.shard"     FuncID="29"  ProcName="mailserver" seq="0" WorkPath="mail" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/mail.shard.startup"/>
-        <!-- cluster relation -->
-		<Proc FuncName="relation.master" FuncID="31"  ProcName="relationserver" seq="0" WorkPath="relation" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/relation.master.startup"/>
-		<Proc FuncName="relation.proxy"  FuncID="32"  ProcName="relationserver" seq="0" WorkPath="relation" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/relation.proxy.startup"/>
-		<Proc FuncName="relation.shard"  FuncID="33"  ProcName="relationserver" seq="0" WorkPath="relation" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/relation.shard.startup"/>
-        <!-- cluster group -->
-		<Proc FuncName="group.master"   FuncID="34"  ProcName="groupserver" seq="0" WorkPath="group" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/group.master.startup"/>
-		<Proc FuncName="group.proxy"    FuncID="35"  ProcName="groupserver" seq="0" WorkPath="group" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/group.proxy.startup"/>
-		<Proc FuncName="group.shard"    FuncID="36"  ProcName="groupserver" seq="0" WorkPath="group" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/group.shard.startup"/>
-        <!-- cluster rank -->
-		<Proc FuncName="rank.master"    FuncID="37"  ProcName="rankserver" seq="0" WorkPath="rank" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/rank.master.startup"/>
-		<Proc FuncName="rank.proxy"     FuncID="38"  ProcName="rankserver" seq="0" WorkPath="rank" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/rank.proxy.startup"/>
-		<Proc FuncName="rank.shard"     FuncID="39"  ProcName="rankserver" seq="0" WorkPath="rank" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/rank.shard.startup"/>
-        <!-- cluster guild -->
-		<Proc FuncName="guild.master"   FuncID="41"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/guild.master.startup"/>
-		<Proc FuncName="guild.proxy"    FuncID="42"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/guild.proxy.startup"/>
-		<Proc FuncName="guild.shard"    FuncID="43"  ProcName="guildserver" seq="0" WorkPath="guild" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/guild.shard.startup"/>
-        <!-- cluster log -->
-		<Proc FuncName="log.master"     FuncID="44"  ProcName="logserver" seq="0" WorkPath="log" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/log.master.startup"/>
-		<Proc FuncName="log.proxy"      FuncID="45"  ProcName="logserver" seq="0" WorkPath="log" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/log.proxy.startup"/>
-		<Proc FuncName="log.shard"      FuncID="46"  ProcName="logserver" seq="0" WorkPath="log" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/log.shard.startup"/>
-        <!-- cluster dir -->
-		<Proc FuncName="dir.master"     FuncID="47"  ProcName="dirserver" seq="0" WorkPath="dir" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/dir.master.startup"/>
-		<Proc FuncName="dir.proxy"      FuncID="48"  ProcName="dirserver" seq="0" WorkPath="dir" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/dir.proxy.startup"/>
-		<Proc FuncName="dir.shard"      FuncID="49"  ProcName="dirserver" seq="0" WorkPath="dir" ConfigPath="./" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/dir.shard.startup"/>
+    <cluster>
+		<!-- cluster log -->
+		<Proc ID="20" Name="log" Type="shard" seq="0"/>
 
-        <!-- ZONE -->    
-        <zone>
-            <Proc FuncName="zone.master"    FuncID="91" ProcName="zoneserver" Seq="241" WorkPath="zone" ConfigPath="../" AutoScript="/data/home/user00/sghome/tools/auto_start_alarm.sh" Flag="start|stop|check|auto|reload|resume" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/zone.master.startup"/>
-            <Proc FuncName="zone.world"     FuncID="92" ProcName="zoneserver" Seq="242" WorkPath="zone" ConfigPath="../" AutoScript="/data/home/user00/sghome/tools/auto_start_alarm.sh" Flag="start|stop|check|auto|reload|resume" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/zone.world.startup"/>
-            <Proc FuncName="zone.gate"      FuncID="93" ProcName="zoneserver" Seq="243" WorkPath="zone" ConfigPath="../" AutoScript="/data/home/user00/sghome/tools/auto_start_alarm.sh" Flag="start|stop|check|auto|reload|resume" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/zone.gate.startup"/>
-            <Proc FuncName="zone.login"     FuncID="94" ProcName="zoneserver" Seq="244" WorkPath="zone" ConfigPath="../" AutoScript="/data/home/user00/sghome/tools/auto_start_alarm.sh" Flag="start|stop|check|auto|reload|resume" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/zone.login.startup"/>
-            <Proc FuncName="zone.game"      FuncID="95" ProcName="zoneserver" Seq="245" WorkPath="zone" ConfigPath="../" AutoScript="/data/home/user00/sghome/tools/auto_start_alarm.sh" Flag="start|stop|check|auto|reload|resume" Agrs="appid=$channel.$function.$zone.$instance log=1 startup=./setting/zone.game.startup"/>
-        </zone>
+        <!-- cluster auth -->
+		<Proc ID="21" Name="auth" Type="auth" seq="0"/>
+
+		<!-- cluster route -->
+		<Proc ID="22" Name="route" Type="master" seq="0"/>
+		<Proc ID="23" Name="route" Type="proxy" seq="0"/>
+		<Proc ID="24" Name="route" Type="shard" seq="0"/>
+
+		<!-- cluster data -->
+		<Proc ID="31" Name="data" Type="shard" seq="0"/>
+		
+		<!-- public data -->
+		<Proc ID="32" Name="public" Type="shard" seq="0"/>
+
+		<!-- relation data -->
+		<Proc ID="33" Name="relation" Type="shard" seq="0"/>
+
+		<!-- mail data -->
+		<Proc ID="34" Name="mail" Type="shard" seq="0"/>
+
+		<!-- rank data -->
+		<Proc ID="35" Name="rank" Type="shard" seq="0"/>
+
+		<!-- group data -->
+		<Proc ID="36" Name="group" Type="shard" seq="0"/>
+
+		<!-- guild data -->
+		<Proc ID="37" Name="guild" Type="shard" seq="0"/>
+
+		<!-- match data -->
+		<Proc ID="38" Name="match" Type="shard" seq="0"/>
+
+		<!-- battle data -->
+		<Proc ID="39" Name="battle" Type="shard" seq="0"/>
+
+		<!-- zone -->
+		<zone>
+			<Proc ID="1" Name="zone" Type="master" seq="0"/>
+			<Proc ID="2" Name="zone" Type="world" seq="0"/>
+			<Proc ID="3" Name="zone" Type="gate" seq="0"/>
+			<Proc ID="4" Name="zone" Type="login" seq="0"/>
+			<Proc ID="5" Name="zone" Type="game" seq="0"/>
+		</zone>
     </cluster>
 </gcm>

@@ -92,9 +92,7 @@ def load_host_config(file_name):
 
 class ProcConfig:
     def __init__(self):
-        self.cluster_attrs = dict()
         self.cluster_procs = dict()
-        #self.zone_attrs     = dict()
         self.zone_procs = dict()
 
 
@@ -102,13 +100,12 @@ def load_proc_config(file_name):
     proc_config = ProcConfig()
     tree = gcm_xml.read_xml(file_name)
     cluster_nodes = gcm_xml.find_nodes(tree, 'cluster')
-    proc_config.cluster_attrs = dict(cluster_nodes[0].attrib)
     cluster_proc_nodes = gcm_xml.find_nodes(tree, 'cluster/Proc')
     for node in cluster_proc_nodes:
-        proc_config.cluster_procs[node.get('FuncName')] = node
+        proc_config.cluster_procs[node.get('ID')] = node
 
     zone_proc_nodes = gcm_xml.find_nodes(tree, 'cluster/zone/Proc')
     for node in zone_proc_nodes:
-        proc_config.zone_procs[node.get('FuncName')] = node
+        proc_config.zone_procs[node.get('ID')] = node
 
     return proc_config
