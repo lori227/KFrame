@@ -12,11 +12,6 @@ namespace KFrame
         __KF_ADD_CONFIG__( _kf_kernel_config, true );
     }
 
-    void KFKernelModule::AfterLoad()
-    {
-
-    }
-
     void KFKernelModule::Run()
     {
         for ( auto& iter : _kf_component._objects )

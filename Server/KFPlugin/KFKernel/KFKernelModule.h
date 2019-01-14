@@ -25,7 +25,6 @@ namespace KFrame
         ~KFKernelModule() = default;
 
         virtual void InitModule();
-        virtual void AfterLoad();
         virtual void Run();
         virtual void AfterRun();
         virtual void ShutDown();
