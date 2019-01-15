@@ -378,18 +378,6 @@ namespace KFrame
         return _mail_data;
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 mailconfigid, const KFElements* kfelements )
-    {
-        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
-        if ( kfsetting == nullptr )
-        {
-            return false;
-        }
-
-        auto& maildata = FormatMailData( player, kfsetting, kfelements );
-        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recvid, maildata );
-    }
-
     bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const MapString& maildata )
     {
         KFMsg::S2SAddMailReq req;
@@ -409,6 +397,45 @@ namespace KFrame
         }
 
         return ok;
+    }
+
+    bool KFMailClientModule::SendMail( uint32 mailconfigid, const KFElements* kfelements )
+    {
+        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        if ( kfsetting == nullptr )
+        {
+            return false;
+        }
+
+        auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+
+        auto& maildata = FormatMailData( nullptr, kfsetting, kfelements );
+        return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zoneid, maildata );
+    }
+
+
+    bool KFMailClientModule::SendMail( uint64 recvid, uint32 mailconfigid, const KFElements* kfelements )
+    {
+        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        if ( kfsetting == nullptr )
+        {
+            return false;
+        }
+
+        auto& maildata = FormatMailData( nullptr, kfsetting, kfelements );
+        return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recvid, maildata );
+    }
+
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 mailconfigid, const KFElements* kfelements )
+    {
+        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        if ( kfsetting == nullptr )
+        {
+            return false;
+        }
+
+        auto& maildata = FormatMailData( player, kfsetting, kfelements );
+        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recvid, maildata );
     }
 }
 
