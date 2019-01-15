@@ -49,7 +49,7 @@ namespace KFrame
 
         // 任务标记更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskValueCallBack );
-        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskFlagCallBack );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateTaskStatusCallBack );
 
         // 更新任务
         void UpdateDataTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );

@@ -17,10 +17,9 @@ namespace KFrame
     void KFMailShardPlugin::LoadModule ()
     {
         __FIND_MODULE__( _kf_redis, KFRedisInterface );
-        __FIND_MODULE__( _kf_option, KFOptionInterface );
-        __FIND_MODULE__( _kf_worker, KFWorkerInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
-        __FIND_MODULE__( _kf_cluster_shard, KFClusterShardInterface );
+        __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
     }
 }

@@ -92,6 +92,7 @@ namespace KFrame
 #define __JSON_GET_FLOAT__( kfjson, name ) GetJsonNumber< float >( kfjson, name )
 #define __JSON_GET_DOUBLE__( kfjson, name ) GetJsonNumber< double >( kfjson, name )
 #define __JSON_GET_STRING__( kfjson, name ) GetJsonString( kfjson, name )
+#define __JSON_GET_OBJECT__( kfjson, name ) kfjson[ name ]
 #define __JSON_GET_ARRRY__( kfjson, name ) kfjson[ name ].GetArray()
 
 #define __JSON_SET_VALUE__( kfjson, name, value ) kfjson.AddMember( rapidjson::StringRef( name.c_str() ), value, allocator )

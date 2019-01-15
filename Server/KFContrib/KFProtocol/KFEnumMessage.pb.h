@@ -115,43 +115,18 @@ inline bool KickEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<KickEnum>(
     KickEnum_descriptor(), name, value);
 }
-enum FlagEnum {
-  Init = 0,
-  Done = 1,
-  Received = 2,
+enum StatusEnum {
+  InitStatus = 0,
+  DoneStatus = 1,
+  ReceiveStatus = 2,
   Remove = 3,
   ReceiveRemove = 4,
-  FlagEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  FlagEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-LIBPROTOC_EXPORT bool FlagEnum_IsValid(int value);
-const FlagEnum FlagEnum_MIN = Init;
-const FlagEnum FlagEnum_MAX = ReceiveRemove;
-const int FlagEnum_ARRAYSIZE = FlagEnum_MAX + 1;
-
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FlagEnum_descriptor();
-inline const ::std::string& FlagEnum_Name(FlagEnum value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    FlagEnum_descriptor(), value);
-}
-inline bool FlagEnum_Parse(
-    const ::std::string& name, FlagEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<FlagEnum>(
-    FlagEnum_descriptor(), name, value);
-}
-enum StatusEnum {
-  UnknowStatus = 0,
-  OnlineStatus = 1,
-  GroupStatus = 2,
-  MatchStatus = 3,
-  PlayingStatus = 4,
-  OfflineStatus = 5,
   StatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   StatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool StatusEnum_IsValid(int value);
-const StatusEnum StatusEnum_MIN = UnknowStatus;
-const StatusEnum StatusEnum_MAX = OfflineStatus;
+const StatusEnum StatusEnum_MIN = InitStatus;
+const StatusEnum StatusEnum_MAX = ReceiveRemove;
 const int StatusEnum_ARRAYSIZE = StatusEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StatusEnum_descriptor();
@@ -163,6 +138,53 @@ inline bool StatusEnum_Parse(
     const ::std::string& name, StatusEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<StatusEnum>(
     StatusEnum_descriptor(), name, value);
+}
+enum MailEnum {
+  UnknowMail = 0,
+  GlobalMail = 1,
+  PersonMail = 2,
+  MailEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  MailEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool MailEnum_IsValid(int value);
+const MailEnum MailEnum_MIN = UnknowMail;
+const MailEnum MailEnum_MAX = PersonMail;
+const int MailEnum_ARRAYSIZE = MailEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MailEnum_descriptor();
+inline const ::std::string& MailEnum_Name(MailEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MailEnum_descriptor(), value);
+}
+inline bool MailEnum_Parse(
+    const ::std::string& name, MailEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MailEnum>(
+    MailEnum_descriptor(), name, value);
+}
+enum StateEnum {
+  UnknowStatus = 0,
+  OnlineStatus = 1,
+  GroupStatus = 2,
+  MatchStatus = 3,
+  PlayingStatus = 4,
+  OfflineStatus = 5,
+  StateEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StateEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool StateEnum_IsValid(int value);
+const StateEnum StateEnum_MIN = UnknowStatus;
+const StateEnum StateEnum_MAX = OfflineStatus;
+const int StateEnum_ARRAYSIZE = StateEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StateEnum_descriptor();
+inline const ::std::string& StateEnum_Name(StateEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StateEnum_descriptor(), value);
+}
+inline bool StateEnum_Parse(
+    const ::std::string& name, StateEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StateEnum>(
+    StateEnum_descriptor(), name, value);
 }
 enum InviteEnum {
   UnknowInvite = 0,
@@ -574,15 +596,20 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::KickEnum>() {
   return ::KFMsg::KickEnum_descriptor();
 }
-template <> struct is_proto_enum< ::KFMsg::FlagEnum> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FlagEnum>() {
-  return ::KFMsg::FlagEnum_descriptor();
-}
 template <> struct is_proto_enum< ::KFMsg::StatusEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StatusEnum>() {
   return ::KFMsg::StatusEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::MailEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::MailEnum>() {
+  return ::KFMsg::MailEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::StateEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StateEnum>() {
+  return ::KFMsg::StateEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::InviteEnum> : ::std::true_type {};
 template <>

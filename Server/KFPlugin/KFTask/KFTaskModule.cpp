@@ -16,7 +16,7 @@ namespace KFrame
         _kf_component->RegisterRemoveDataModule( this, &KFTaskModule::OnRemoveDataCallBack );
         _kf_component->RegisterUpdateDataModule( this, &KFTaskModule::OnUpdateDataCallBack );
         _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ), this, &KFTaskModule::OnUpdateTaskValueCallBack );
-        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( flag ), this, &KFTaskModule::OnUpdateTaskFlagCallBack );
+        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( status ), this, &KFTaskModule::OnUpdateTaskStatusCallBack );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ, &KFTaskModule::HandleReceiveTaskRewardReq );
@@ -30,7 +30,7 @@ namespace KFrame
         _kf_component->UnRegisterRemoveDataModule( this );
         _kf_component->UnRegisterUpdateDataModule( this );
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( value ) );
-        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( flag ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( status ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_TASK_REWARD_REQ );
@@ -63,19 +63,19 @@ namespace KFrame
         }
 
         // 不是完成状态
-        auto taskflag = kftask->GetValue<uint32>( __KF_STRING__( flag ) );
-        if ( taskflag == KFMsg::FlagEnum::Init )
+        auto taskstatus = kftask->GetValue<uint32>( __KF_STRING__( status ) );
+        if ( taskstatus == KFMsg::InitStatus )
         {
             return KFMsg::TaskNotDone;
         }
 
-        if ( taskflag == KFMsg::FlagEnum::Received )
+        if ( taskstatus == KFMsg::ReceiveStatus )
         {
             return KFMsg::TaskAlreadyReceived;
         }
 
         // 更新标记
-        player->UpdateData( kftask, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( kftask, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
         player->AddElement( &tasksetting->_rewards, true, __FUNC_LINE__ );
@@ -145,8 +145,8 @@ namespace KFrame
             }
 
             // 已经完成
-            auto taskflag = kftaskrecord->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( flag ) );
-            if ( taskflag != KFMsg::FlagEnum::Init )
+            auto taskstatus = kftaskrecord->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
+            if ( taskstatus != KFMsg::InitStatus )
             {
                 continue;
             }
@@ -172,14 +172,14 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto taskflag = kfparent->GetValue<uint32>( __KF_STRING__( flag ) );
-        if ( taskflag != KFMsg::FlagEnum::Init )
+        auto status = kfparent->GetValue<uint32>( __KF_STRING__( status ) );
+        if ( status != KFMsg::InitStatus )
         {
             return;
         }
 
         // 设置任务完成
-        player->UpdateData( kfparent, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+        player->UpdateData( kfparent, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::DoneStatus );
 
         // 更新下一个任务
         if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
@@ -189,7 +189,7 @@ namespace KFrame
         }
     }
 
-    __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskFlagCallBack )
+    __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskStatusCallBack )
     {
         auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )
@@ -197,7 +197,7 @@ namespace KFrame
             return;
         }
 
-        if ( newvalue == KFMsg::FlagEnum::Init )
+        if ( newvalue == KFMsg::InitStatus )
         {
             // 更新数值
             player->UpdateData( __KF_STRING__( task ), key, __KF_STRING__( value ), KFOperateEnum::Set, 0 );

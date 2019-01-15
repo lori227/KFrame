@@ -19,7 +19,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ, &KFMailClientModule::HandleViewMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ, &KFMailClientModule::HandleDeleteMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ, &KFMailClientModule::HandleReceiveMailReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_ACK, &KFMailClientModule::HandleUpdateMailFlagAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &KFMailClientModule::HandleUpdateMailStatusAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &KFMailClientModule::HandleNoticeNewMailReq );
     }
 
@@ -37,7 +37,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_FLAG_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ );
     }
 
@@ -63,6 +63,7 @@ namespace KFrame
     {
         KFMsg::S2SNewPlayerMailReq req;
         req.set_playerid( player->GetKeyID() );
+        req.set_zoneid( KFGlobal::Instance()->_app_id._union._app_data._zone_id );
         SendMessageToMail( player->GetKeyID(), KFMsg::S2S_NEW_PLAYER_MAIL_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,14 +182,14 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailTimeOut );
         }
 
-        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
-        if ( flag != KFMsg::FlagEnum::Init )
+        auto status = kfmail->GetValue( __KF_STRING__( status ) );
+        if ( status != KFMsg::InitStatus )
         {
             return;
         }
 
         // 更新状态
-        UpdateFlagToMail( player, kfmail, KFMsg::FlagEnum::Done );
+        UpdateFlagToMail( player, kfmail, KFMsg::DoneStatus );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleDeleteMailReq )
@@ -203,9 +204,9 @@ namespace KFrame
         }
 
         // 如果有奖励, 并且没有领取
-        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
+        auto status = kfmail->GetValue( __KF_STRING__( status ) );
         auto reward = kfmail->GetValue< std::string >( __KF_STRING__( reward ) );
-        if ( flag != KFMsg::FlagEnum::Received && !reward.empty() )
+        if ( status != KFMsg::ReceiveStatus && !reward.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::MailDeleteFailed );
         }
@@ -225,8 +226,8 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailNotExist );
         }
 
-        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
-        if ( flag == KFMsg::FlagEnum::Received )
+        auto status = kfmail->GetValue( __KF_STRING__( status ) );
+        if ( status == KFMsg::ReceiveStatus )
         {
             return _kf_display->SendToClient( player, KFMsg::MailAlreadyReceived );
         }
@@ -245,45 +246,45 @@ namespace KFrame
         UpdateFlagToMail( player, kfmail, KFMsg::ReceiveRemove );
     }
 
-    void KFMailClientModule::UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 flag )
+    void KFMailClientModule::UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 status )
     {
         auto mailid = kfmail->GetKeyID();
-        auto mailtype = kfmail->GetValue( __KF_STRING__( type ) );
+        auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
 
-        KFMsg::S2SUpdateMailFlagReq req;
-        req.set_flag( flag );
+        KFMsg::S2SUpdateMailStatusReq req;
         req.set_id( mailid );
-        req.set_mailtype( mailtype );
+        req.set_flag( flag );
+        req.set_status( status );
         req.set_playerid( player->GetKeyID() );
-        auto ok = SendMessageToMail( player->GetKeyID(), KFMsg::S2S_UPDATE_MAIL_FLAG_REQ, &req );
+        auto ok = SendMessageToMail( player->GetKeyID(), KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleUpdateMailFlagAck )
+    __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleUpdateMailStatusAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateMailFlagAck );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateMailStatusAck );
 
-        switch ( kfmsg.flag() )
+        switch ( kfmsg.status() )
         {
-        case KFMsg::FlagEnum::Done:
+        case KFMsg::DoneStatus:
         {
-            player->UpdateData( __KF_STRING__( mail ), kfmsg.id(), __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::Done );
+            player->UpdateData( __KF_STRING__( mail ), kfmsg.id(), __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::DoneStatus );
         }
         break;
-        case KFMsg::FlagEnum::Remove:
+        case KFMsg::Remove:
         {
             player->RemoveData( __KF_STRING__( mail ), kfmsg.id() );
         }
         break;
-        case KFMsg::FlagEnum::Received:
+        case KFMsg::ReceiveStatus:
         {
             ReceiveMailReward( player, kfmsg.id() );
         }
         break;
-        case KFMsg::FlagEnum::ReceiveRemove:
+        case KFMsg::ReceiveRemove:
         {
             ReceiveMailReward( player, kfmsg.id() );
             player->RemoveData( __KF_STRING__( mail ), kfmsg.id() );
@@ -316,7 +317,7 @@ namespace KFrame
             return __LOG_ERROR__( "player={} mail={} reward={} error!", player->GetKeyID(), id, reward );
         }
 
-        player->UpdateData( kfmail, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( kfmail, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
         player->AddElement( &kfelements, true, __FUNC_LINE__ );
     }
 
@@ -334,7 +335,7 @@ namespace KFrame
         _mail_data.insert( std::make_pair( __KF_STRING__( type ), __TO_STRING__( kfsetting->_type ) ) );
 
         // 标识
-        _mail_data.insert( std::make_pair( __KF_STRING__( flag ), "0" ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( flag ), __TO_STRING__( KFMsg::PersonMail ) ) );
 
         // 标题
         _mail_data.insert( std::make_pair( __KF_STRING__( title ), kfsetting->_title ) );
@@ -396,6 +397,7 @@ namespace KFrame
     {
         KFMsg::S2SAddMailReq req;
         req.set_playerid( recvid );
+        req.set_flag( KFMsg::PersonMail );
 
         auto pbdata = req.mutable_pbmail()->mutable_data();
         for ( auto& iter : maildata )

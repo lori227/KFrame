@@ -41,11 +41,10 @@ enum ServerProtocol
 	S2S_NEW_PLAYER_MAIL_REQ = 21101;				// 新玩家登陆邮件服务
 	S2S_QUERY_MAIL_REQ = 21102;						// 查询邮件
 	S2S_QUERY_MAIL_ACK = 21103;						// 查询邮件
-	S2S_DELETE_MAIL_REQ = 21104;					// 删除邮件
-	S2S_ADD_MAIL_REQ = 21105;						// 添加邮件
-	S2S_NOTICE_NEW_MAIL_REQ = 21106;				// 通知新邮件
-	S2S_UPDATE_MAIL_FLAG_REQ = 21107;				// 设置邮件状态请求
-	S2S_UPDATE_MAIL_FLAG_ACK = 21108;				// 设置邮件状态响应
+	S2S_ADD_MAIL_REQ = 21104;						// 添加邮件
+	S2S_NOTICE_NEW_MAIL_REQ = 21105;				// 通知新邮件
+	S2S_UPDATE_MAIL_STATUS_REQ = 21106;				// 设置邮件状态请求
+	S2S_UPDATE_MAIL_STATUS_ACK = 21107;				// 设置邮件状态响应
 
 
 
@@ -480,21 +479,12 @@ message S2SQueryMailAck
 	repeated PBMail mail = 2;	// 邮件信息
 }
 
-// 删除邮件
-// S2S_DELETE_MAIL_REQ
-message S2SDeleteMailReq
-{
-	uint64 playerid = 1;		// 角色id
-	uint64 mailid = 2;			// 邮件id
-	uint32 mailtype = 3;		// 邮件类型
-}
-
 // 添加邮件
 // S2S_ADD_MAIL_REQ
 message S2SAddMailReq
 {
 	uint64 playerid = 1;		// 角色id
-	uint32 mailtype = 2;		// 邮件类型
+	uint32 flag = 2;
 	PBMail pbmail = 3;			// 邮件信息
 }
 
@@ -503,7 +493,6 @@ message S2SAddMailReq
 message S2SNoticeNewMailReq
 {
 	uint64 playerid = 1;	// 角色id	
-	uint32 mailtype = 2;	// 邮件类型	
 }
 
 // 新玩家登陆邮件服务
@@ -511,26 +500,26 @@ message S2SNoticeNewMailReq
 message S2SNewPlayerMailReq
 {
 	uint64 playerid = 1;		// 玩家id
+	uint32 zoneid = 2;			// 小区id
 }
 
 // 设置邮件状态请求
-// S2S_UPDATE_MAIL_FLAG_REQ
-message S2SUpdateMailFlagReq
+// S2S_UPDATE_MAIL_STATUS_REQ
+message S2SUpdateMailStatusReq
 {
 	uint64 playerid = 1;
 	uint64 id = 2;
-	uint32 mailtype = 3;
-	uint32 flag = 4;
+	uint32 flag = 3;
+	uint32 status = 4;
 }
 
 // 设置邮件状态响应
-// S2S_UPDATE_MAIL_FLAG_ACK
-message S2SUpdateMailFlagAck
+// S2S_UPDATE_MAIL_STATUS_ACK
+message S2SUpdateMailStatusAck
 {
 	uint64 playerid = 1;
 	uint64 id = 2;
-	uint32 mailtype = 3;
-	uint32 flag = 4;
+	uint32 status = 3;
 }
 
 ////////////////////////////////////////////////////////////////////////

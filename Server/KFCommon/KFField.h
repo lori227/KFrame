@@ -142,9 +142,15 @@ namespace KFrame
         __STRING_DEFINE__( unknownmail );
         __STRING_DEFINE__( personmailtime );
         __STRING_DEFINE__( mail );
+        __STRING_DEFINE__( mailid );
         __STRING_DEFINE__( mailidcreater );
         __STRING_DEFINE__( maillist );
         __STRING_DEFINE__( maxmailid );
+        __STRING_DEFINE__( mailinfo );
+        __STRING_DEFINE__( gmmailid );
+        __STRING_DEFINE__( guildid );
+        __STRING_DEFINE__( addmail );
+        __STRING_DEFINE__( delmail );
         __STRING_DEFINE__( battle );
         __STRING_DEFINE__( battleid );
         __STRING_DEFINE__( battlelist );
@@ -185,9 +191,7 @@ namespace KFrame
         __STRING_DEFINE__( modelid );
         __STRING_DEFINE__( skin );
         __STRING_DEFINE__( skinid );
-        __STRING_DEFINE__( mailinfo );
-        __STRING_DEFINE__( gmmailid );
-        __STRING_DEFINE__( maillist );
+
         __STRING_DEFINE__( gmemailnum );
         __STRING_DEFINE__( friendemailnum );
         __STRING_DEFINE__( giftemailnum );
@@ -299,11 +303,6 @@ namespace KFrame
         __STRING_DEFINE__( guildmember );
         __STRING_DEFINE__( memberlist );
         __STRING_DEFINE__( jointime );
-        __STRING_DEFINE__( guildid );
-        __STRING_DEFINE__( addmail );
-        __STRING_DEFINE__( delmail );
-
-        __STRING_DEFINE__( playerids );
         __STRING_DEFINE__( version );
         __STRING_DEFINE__( wget );
         __STRING_DEFINE__( debug );

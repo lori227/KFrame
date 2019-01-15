@@ -27,16 +27,27 @@ enum KickEnum
 	PlatformBeKick = 2;		// 被平台踢下线
 }
 //////////////////////////////////////////////////////////////////////////////////
-enum FlagEnum
+// 系统状态
+enum StatusEnum
 {
-	Init 			= 0;		// 初始状态
-	Done 			= 1;		// 已经完成
-	Received		= 2;		// 已经领取奖励
+	InitStatus		= 0;		// 初始状态
+	DoneStatus 		= 1;		// 已经完成
+	ReceiveStatus	= 2;		// 已经领取奖励
+
+	
 	Remove			= 3;		// 删除	
 	ReceiveRemove 	= 4;		// 领取并删除
 }
 //////////////////////////////////////////////////////////////////////////////////
-enum StatusEnum
+enum MailEnum
+{
+	UnknowMail = 0;		// 未知邮件
+	GlobalMail = 1;		// 全局邮件
+	PersonMail = 2;		// 个人邮件
+}
+//////////////////////////////////////////////////////////////////////////////////
+// 游戏状态
+enum StateEnum
 {
 	UnknowStatus = 0;		// 无效
 	OnlineStatus = 1;		// 在线状态

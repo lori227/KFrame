@@ -63,7 +63,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleDeleteMailReq );
 
         // 处理邮件状态重置反馈
-        __KF_MESSAGE_FUNCTION__( HandleUpdateMailFlagAck );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateMailStatusAck );
 
         // 定时查询邮件变化
         __KF_TIMER_FUNCTION__( OnTimerQueryMail );
@@ -89,7 +89,7 @@ namespace KFrame
         bool CheckMailTimeOut( KFData* kfmail );
 
         // 更新状态到邮件
-        void UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 flag );
+        void UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 status );
 
         // 领取邮件奖励
         void ReceiveMailReward( KFEntity* player, uint64 id );
