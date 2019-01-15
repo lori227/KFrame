@@ -137,6 +137,7 @@ namespace KFrame
         __STRING_DEFINE__( matchid );
         __STRING_DEFINE__( source );
         __STRING_DEFINE__( globalmail );
+        __STRING_DEFINE__( mailzonelist );
         __STRING_DEFINE__( wholemailtime );
         __STRING_DEFINE__( personmail );
         __STRING_DEFINE__( unknownmail );

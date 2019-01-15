@@ -130,25 +130,38 @@ namespace KFrame
 
     __KF_SCHEDULE_FUNCTION__( KFMailShardModule::OnScheduleClearWholeOverdueMail )
     {
-        auto kfresult = _mail_driver->QueryList( "zrangebyscore {} -inf +inf", __KF_STRING__( globalmail ) );
-        if ( kfresult->_value.empty() )
+        // 查询列表
+        auto kflist = _mail_driver->QueryList( "smembers {}", __KF_STRING__( mailzonelist ) );
+        if ( kflist->_value.empty() )
         {
             return;
         }
 
-        ListString overduelist;
-        for ( auto& strmailid : kfresult->_value )
+        // 清空过期的全局邮件列表
+        for ( auto zoneid : kflist->_value )
         {
-            auto stringresult = _mail_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
-            if ( stringresult->IsOk() && stringresult->_value == _invalid_str )
-            {
-                overduelist.push_back( strmailid );
-            }
-        }
+            auto globalmailkey = __FORMAT__( "{}:{}", __KF_STRING__( globalmail ), zoneid );
 
-        if ( !overduelist.empty() )
-        {
-            _mail_driver->Update( overduelist, "zrem {}", __KF_STRING__( globalmail ) );
+            auto kfresult = _mail_driver->QueryList( "zrangebyscore {} -inf +inf", globalmailkey );
+            if ( kfresult->_value.empty() )
+            {
+                continue;
+            }
+
+            ListString overduelist;
+            for ( auto& strmailid : kfresult->_value )
+            {
+                auto stringresult = _mail_driver->QueryString( "hget {}:{} {}", __KF_STRING__( mail ), strmailid, __KF_STRING__( id ) );
+                if ( stringresult->IsOk() && stringresult->_value == _invalid_str )
+                {
+                    overduelist.push_back( strmailid );
+                }
+            }
+
+            if ( !overduelist.empty() )
+            {
+                _mail_driver->Update( overduelist, "zrem {}", globalmailkey );
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -312,6 +325,7 @@ namespace KFrame
         {
         case KFMsg::GlobalMail: // 全局邮件
             _mail_driver->Append( "zadd {}:{} {} {}", __KF_STRING__( globalmail ), objectid, mailid, mailid );
+            _mail_driver->Append( "sadd {} {}", __KF_STRING__( mailzonelist ), objectid );
             break;
         case KFMsg::PersonMail:	// 个人邮件
             _mail_driver->Append( "hset {}:{} {} {}", __KF_STRING__( maillist ), objectid, mailid, KFMsg::InitStatus );

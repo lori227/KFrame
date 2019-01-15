@@ -252,8 +252,8 @@ namespace KFrame
         auto flag = kfmail->GetValue( __KF_STRING__( flag ) );
 
         KFMsg::S2SUpdateMailStatusReq req;
-        req.set_id( mailid );
         req.set_flag( flag );
+        req.set_id( mailid );
         req.set_status( status );
         req.set_playerid( player->GetKeyID() );
         auto ok = SendMessageToMail( player->GetKeyID(), KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, &req );
@@ -333,9 +333,6 @@ namespace KFrame
 
         // 类型
         _mail_data.insert( std::make_pair( __KF_STRING__( type ), __TO_STRING__( kfsetting->_type ) ) );
-
-        // 标识
-        _mail_data.insert( std::make_pair( __KF_STRING__( flag ), __TO_STRING__( KFMsg::PersonMail ) ) );
 
         // 标题
         _mail_data.insert( std::make_pair( __KF_STRING__( title ), kfsetting->_title ) );
