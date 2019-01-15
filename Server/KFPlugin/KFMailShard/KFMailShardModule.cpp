@@ -280,18 +280,21 @@ namespace KFrame
         }
 
         // 添加邮件
-        auto mailid = AddMail( kfmsg.flag(), kfmsg.playerid(),  maildata );
+        auto mailid = AddMail( kfmsg.flag(), kfmsg.objectid(), maildata );
         if ( mailid != _invalid_int )
         {
-            // 通知有新邮件
-            KFMsg::S2SNoticeNewMailReq notice;
-            notice.set_playerid( kfmsg.playerid() );
-            _kf_route->SendToObject( kfmsg.playerid(), __KF_STRING__( player ), kfmsg.playerid(), KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+            if ( kfmsg.flag() == KFMsg::PersonMail )
+            {
+                // 通知有新邮件
+                KFMsg::S2SNoticeNewMailReq notice;
+                notice.set_playerid( kfmsg.objectid() );
+                _kf_route->SendToObject( kfmsg.objectid(), __KF_STRING__( player ), kfmsg.objectid(), KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+            }
         }
         else
         {
             auto strmaildata = kfmsg.DebugString();
-            __LOG_ERROR__( "player[{}] add mail[{}] failed!", kfmsg.playerid(), strmaildata );
+            __LOG_ERROR__( "objectid[{}] add mail[{}] failed!", kfmsg.objectid(), strmaildata );
         }
     }
 

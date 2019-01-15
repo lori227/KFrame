@@ -387,14 +387,14 @@ namespace KFrame
         }
 
         auto& maildata = FormatMailData( player, kfsetting, kfelements );
-        return SendAddMailToShard( player->GetKeyID(), recvid, maildata );
+        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recvid, maildata );
     }
 
-    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint64 recvid, const MapString& maildata )
+    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const MapString& maildata )
     {
         KFMsg::S2SAddMailReq req;
-        req.set_playerid( recvid );
-        req.set_flag( KFMsg::PersonMail );
+        req.set_flag( flag );
+        req.set_objectid( recvid );
 
         auto pbdata = req.mutable_pbmail()->mutable_data();
         for ( auto& iter : maildata )

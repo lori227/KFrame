@@ -101,7 +101,7 @@ namespace KFrame
         MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements );
 
         // 发送添加邮件
-        bool SendAddMailToShard( uint64 sendid, uint64 recvid, const MapString& maildata );
+        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const MapString& maildata );
     };
 }
 

@@ -483,8 +483,8 @@ message S2SQueryMailAck
 // S2S_ADD_MAIL_REQ
 message S2SAddMailReq
 {
-	uint64 playerid = 1;		// 角色id
-	uint32 flag = 2;
+	uint32 flag = 1;
+	uint64 objectid = 2;		// id
 	PBMail pbmail = 3;			// 邮件信息
 }
 

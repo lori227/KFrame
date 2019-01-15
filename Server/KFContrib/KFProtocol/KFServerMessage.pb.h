@@ -5006,15 +5006,15 @@ class LIBPROTOC_EXPORT S2SAddMailReq : public ::google::protobuf::Message /* @@p
   ::KFMsg::PBMail* mutable_pbmail();
   void set_allocated_pbmail(::KFMsg::PBMail* pbmail);
 
-  // uint64 playerid = 1;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
+  // uint64 objectid = 2;
+  void clear_objectid();
+  static const int kObjectidFieldNumber = 2;
+  ::google::protobuf::uint64 objectid() const;
+  void set_objectid(::google::protobuf::uint64 value);
 
-  // uint32 flag = 2;
+  // uint32 flag = 1;
   void clear_flag();
-  static const int kFlagFieldNumber = 2;
+  static const int kFlagFieldNumber = 1;
   ::google::protobuf::uint32 flag() const;
   void set_flag(::google::protobuf::uint32 value);
 
@@ -5023,7 +5023,7 @@ class LIBPROTOC_EXPORT S2SAddMailReq : public ::google::protobuf::Message /* @@p
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBMail* pbmail_;
-  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 objectid_;
   ::google::protobuf::uint32 flag_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFServerMessage_2eproto::TableStruct;
@@ -25188,21 +25188,7 @@ S2SQueryMailAck::mail() const {
 
 // S2SAddMailReq
 
-// uint64 playerid = 1;
-inline void S2SAddMailReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SAddMailReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddMailReq.playerid)
-  return playerid_;
-}
-inline void S2SAddMailReq::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddMailReq.playerid)
-}
-
-// uint32 flag = 2;
+// uint32 flag = 1;
 inline void S2SAddMailReq::clear_flag() {
   flag_ = 0u;
 }
@@ -25214,6 +25200,20 @@ inline void S2SAddMailReq::set_flag(::google::protobuf::uint32 value) {
   
   flag_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.S2SAddMailReq.flag)
+}
+
+// uint64 objectid = 2;
+inline void S2SAddMailReq::clear_objectid() {
+  objectid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SAddMailReq::objectid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddMailReq.objectid)
+  return objectid_;
+}
+inline void S2SAddMailReq::set_objectid(::google::protobuf::uint64 value) {
+  
+  objectid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddMailReq.objectid)
 }
 
 // .KFMsg.PBMail pbmail = 3;

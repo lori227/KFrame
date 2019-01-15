@@ -4161,8 +4161,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddMailReq, playerid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddMailReq, flag_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddMailReq, objectid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddMailReq, pbmail_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SNoticeNewMailReq, _internal_metadata_),
@@ -5916,7 +5916,7 @@ void AddDescriptorsImpl() {
       "id\030\001 \001(\004\022\016\n\006zoneid\030\002 \001(\r\022\r\n\005maxid\030\003 \001(\004\""
       "@\n\017S2SQueryMailAck\022\020\n\010playerid\030\001 \001(\004\022\033\n\004"
       "mail\030\002 \003(\0132\r.KFMsg.PBMail\"N\n\rS2SAddMailR"
-      "eq\022\020\n\010playerid\030\001 \001(\004\022\014\n\004flag\030\002 \001(\r\022\035\n\006pb"
+      "eq\022\014\n\004flag\030\001 \001(\r\022\020\n\010objectid\030\002 \001(\004\022\035\n\006pb"
       "mail\030\003 \001(\0132\r.KFMsg.PBMail\"\'\n\023S2SNoticeNe"
       "wMailReq\022\020\n\010playerid\030\001 \001(\004\"7\n\023S2SNewPlay"
       "erMailReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006zoneid\030\002 "
@@ -16199,8 +16199,8 @@ void S2SAddMailReq::InitAsDefaultInstance() {
       ::KFMsg::PBMail::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SAddMailReq::kPlayeridFieldNumber;
 const int S2SAddMailReq::kFlagFieldNumber;
+const int S2SAddMailReq::kObjectidFieldNumber;
 const int S2SAddMailReq::kPbmailFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -16220,9 +16220,9 @@ S2SAddMailReq::S2SAddMailReq(const S2SAddMailReq& from)
   } else {
     pbmail_ = NULL;
   }
-  ::memcpy(&playerid_, &from.playerid_,
+  ::memcpy(&objectid_, &from.objectid_,
     static_cast<size_t>(reinterpret_cast<char*>(&flag_) -
-    reinterpret_cast<char*>(&playerid_)) + sizeof(flag_));
+    reinterpret_cast<char*>(&objectid_)) + sizeof(flag_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SAddMailReq)
 }
 
@@ -16265,9 +16265,9 @@ void S2SAddMailReq::Clear() {
     delete pbmail_;
   }
   pbmail_ = NULL;
-  ::memset(&playerid_, 0, static_cast<size_t>(
+  ::memset(&objectid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&flag_) -
-      reinterpret_cast<char*>(&playerid_)) + sizeof(flag_));
+      reinterpret_cast<char*>(&objectid_)) + sizeof(flag_));
   _internal_metadata_.Clear();
 }
 
@@ -16281,28 +16281,28 @@ bool S2SAddMailReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 playerid = 1;
+      // uint32 flag = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &playerid_)));
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &flag_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // uint32 flag = 2;
+      // uint64 objectid = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &flag_)));
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &objectid_)));
         } else {
           goto handle_unusual;
         }
@@ -16347,14 +16347,14 @@ void S2SAddMailReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 playerid = 1;
-  if (this->playerid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
+  // uint32 flag = 1;
+  if (this->flag() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->flag(), output);
   }
 
-  // uint32 flag = 2;
-  if (this->flag() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->flag(), output);
+  // uint64 objectid = 2;
+  if (this->objectid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->objectid(), output);
   }
 
   // .KFMsg.PBMail pbmail = 3;
@@ -16377,14 +16377,14 @@ void S2SAddMailReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 playerid = 1;
-  if (this->playerid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
+  // uint32 flag = 1;
+  if (this->flag() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->flag(), target);
   }
 
-  // uint32 flag = 2;
-  if (this->flag() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->flag(), target);
+  // uint64 objectid = 2;
+  if (this->objectid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->objectid(), target);
   }
 
   // .KFMsg.PBMail pbmail = 3;
@@ -16418,14 +16418,14 @@ size_t S2SAddMailReq::ByteSizeLong() const {
         *pbmail_);
   }
 
-  // uint64 playerid = 1;
-  if (this->playerid() != 0) {
+  // uint64 objectid = 2;
+  if (this->objectid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->playerid());
+        this->objectid());
   }
 
-  // uint32 flag = 2;
+  // uint32 flag = 1;
   if (this->flag() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -16462,8 +16462,8 @@ void S2SAddMailReq::MergeFrom(const S2SAddMailReq& from) {
   if (from.has_pbmail()) {
     mutable_pbmail()->::KFMsg::PBMail::MergeFrom(from.pbmail());
   }
-  if (from.playerid() != 0) {
-    set_playerid(from.playerid());
+  if (from.objectid() != 0) {
+    set_objectid(from.objectid());
   }
   if (from.flag() != 0) {
     set_flag(from.flag());
@@ -16495,7 +16495,7 @@ void S2SAddMailReq::Swap(S2SAddMailReq* other) {
 void S2SAddMailReq::InternalSwap(S2SAddMailReq* other) {
   using std::swap;
   swap(pbmail_, other->pbmail_);
-  swap(playerid_, other->playerid_);
+  swap(objectid_, other->objectid_);
   swap(flag_, other->flag_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
