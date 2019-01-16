@@ -14,7 +14,6 @@
 #include "KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFOption/KFOptionInterface.h"
-#include "KFPlatform/KFPlatformInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDeployCommand/KFDeployCommandInterface.h"
 
@@ -77,9 +76,7 @@ namespace KFrame
         // 日志记录
         void LuaLogDebug( const char* data );
         void LuaLogInfo( const char* data );
-        void LuaLogWarn( const char* data );
         void LuaLogError( const char* data );
-        void LuaLogCritical( const char* data );
 
         // 获得基础属性
         uint64 LuaGetValue( uint64 objectid, const char* dataname );
@@ -127,9 +124,6 @@ namespace KFrame
         // 获得配置变量
         const char* LuaGetOptionString( const char* name, const char* logicid );
         uint32 LuaGetOptionUint32( const char* name, const char* logicid );
-
-        // 创建平台地址
-        const char* LuaMakePlatformUrl( const char* path );
 
     protected:
         // 重新加载脚本文件

@@ -143,9 +143,7 @@ namespace KFrame
 
         metatableobject.RegisterObjectDirect( "LogDebug", this, &KFLuaModule::LuaLogDebug );
         metatableobject.RegisterObjectDirect( "LogInfo", this, &KFLuaModule::LuaLogInfo );
-        metatableobject.RegisterObjectDirect( "LogWarn", this, &KFLuaModule::LuaLogWarn );
         metatableobject.RegisterObjectDirect( "LogError", this, &KFLuaModule::LuaLogError );
-        metatableobject.RegisterObjectDirect( "LogCritical", this, &KFLuaModule::LuaLogCritical );
         metatableobject.RegisterObjectDirect( "Md5Encode", this, &KFLuaModule::LuaMd5Encode );
         metatableobject.RegisterObjectDirect( "GetValue", this, &KFLuaModule::LuaGetValue );
         metatableobject.RegisterObjectDirect( "OperateValue", this, &KFLuaModule::LuaOperateValue );
@@ -164,7 +162,6 @@ namespace KFrame
         metatableobject.RegisterObjectDirect( "MTHttpClient", this, &KFLuaModule::LuaMTHttpClient );
         metatableobject.RegisterObjectDirect( "GetOptionString", this, &KFLuaModule::LuaGetOptionString );
         metatableobject.RegisterObjectDirect( "GetOptionUint32", this, &KFLuaModule::LuaGetOptionUint32 );
-        metatableobject.RegisterObjectDirect( "MakePlatformUrl", this, &KFLuaModule::LuaMakePlatformUrl );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );
@@ -182,19 +179,9 @@ namespace KFrame
         __LOG_INFO__( "{}", data );
     }
 
-    void KFLuaModule::LuaLogWarn( const char* data )
-    {
-        __LOG_WARN__( "{}", data );
-    }
-
     void KFLuaModule::LuaLogError( const char* data )
     {
         __LOG_ERROR__( "{}", data );
-    }
-
-    void KFLuaModule::LuaLogCritical( const char* data )
-    {
-        __LOG_CRITICAL__( "{}", data );
     }
 
     const char* KFLuaModule::LuaMd5Encode( const char* data )
@@ -350,13 +337,13 @@ namespace KFrame
     const char* KFLuaModule::LuaSTHttpClient( const char* url, const char* data )
     {
         static std::string _result = "";
-        _result = _kf_http_client->StartSTHttpClient( url, data );
+        _result = _kf_http_client->StartSTClient( url, data );
         return _result.c_str();
     }
 
     void KFLuaModule::LuaMTHttpClient( const char* url, const char* data, const char* callback )
     {
-        _kf_http_client->StartMTHttpClient( this, &KFLuaModule::OnLuaHttpCallBack, url, data, callback );
+        _kf_http_client->StartMTClient( this, &KFLuaModule::OnLuaHttpCallBack, url, data, callback );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLuaModule::OnLuaHttpCallBack )
@@ -383,11 +370,5 @@ namespace KFrame
     uint32 KFLuaModule::LuaGetOptionUint32( const char* name, const char* logicid )
     {
         return _kf_option->GetUInt32( name, logicid );
-    }
-
-    const char* KFLuaModule::LuaMakePlatformUrl( const char* path )
-    {
-        auto& strurl = _kf_platform->MakePlatformUrl( path );
-        return strurl.c_str();
     }
 }
