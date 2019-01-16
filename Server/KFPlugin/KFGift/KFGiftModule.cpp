@@ -32,7 +32,7 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( name ), kfmsg.name() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( alipay ), kfmsg.alipay() );
-        _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnBindAlipayCallBack, apiurl, sendjson );
+        _kf_http_client->StartMTClient( this, &KFGiftModule::OnBindAlipayCallBack, apiurl, sendjson );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFGiftModule::OnBindAlipayCallBack )
@@ -71,7 +71,7 @@ namespace KFrame
         __JSON_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), playerid );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
-        _kf_http_client->StartMTHttpClient( this, &KFGiftModule::OnQueryInviteScoreCallBack, apiurl, sendjson );
+        _kf_http_client->StartMTClient( this, &KFGiftModule::OnQueryInviteScoreCallBack, apiurl, sendjson );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFGiftModule::OnQueryInviteScoreCallBack )
