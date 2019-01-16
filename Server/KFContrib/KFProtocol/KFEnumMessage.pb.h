@@ -383,6 +383,12 @@ enum CodeEnum {
   MailNotHaveReward = 20202,
   MailDeleteFailed = 20204,
   MailTimeOut = 20205,
+  TaskIdCanNotFind = 20301,
+  TaskNotInValidTime = 20302,
+  CanNotFindTaskData = 20303,
+  TaskNotDone = 20304,
+  TaskAlreadyReceived = 20305,
+  TaskReceiveRewardOK = 20306,
   ZoneDatabaseBusy = 20,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
@@ -397,13 +403,7 @@ enum CodeEnum {
   ActivationAccount = 37,
   ActivationCodeError = 38,
   LoginCanNotFindGate = 39,
-  TaskIdCanNotFind = 40,
-  TaskNotInValidTime = 41,
   CanNotFindPlayer = 42,
-  CanNotFindTaskData = 43,
-  TaskNotDone = 44,
-  TaskAlreadyReceived = 45,
-  TaskReceiveRewardOK = 46,
   CanNotInquireSelf = 47,
   ActivityIdCanNotFind = 48,
   CanNotFindActivityType = 49,
@@ -545,7 +545,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = MailTimeOut;
+const CodeEnum CodeEnum_MAX = TaskReceiveRewardOK;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

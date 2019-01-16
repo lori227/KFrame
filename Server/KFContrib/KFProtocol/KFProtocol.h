@@ -1,13 +1,13 @@
 ﻿#ifndef __KF_PROTOCOL_H__
 #define __KF_PROTOCOL_H__
 #include "KFInclude.h"
+#include "google/protobuf/util/json_util.h"
 
 #include "KFEnumMessage.pb.h"
 #include "KFDefineMessage.pb.h"
 #include "KFFrameMessage.pb.h"
 #include "KFServerMessage.pb.h"
 #include "KFClientMessage.pb.h"
-#include "google/protobuf/util/json_util.h"
 
 ////////////////////////////////////////////////////////////////////
 

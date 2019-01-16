@@ -48,22 +48,22 @@ namespace KFrame
 
     uint32 KFTaskModule::ReceiveTaskReward( KFEntity* player, uint32 taskid )
     {
-        auto tasksetting = _kf_task_config->FindTaskSetting( taskid );
-        if ( tasksetting == nullptr )
+        auto kfsetting = _kf_task_config->FindTaskSetting( taskid );
+        if ( kfsetting == nullptr )
         {
             return KFMsg::TaskIdCanNotFind;
         }
 
         // 获得任务属性
         auto kfobject = player->GetData();
-        auto kftask = kfobject->FindData( __KF_STRING__( task ), tasksetting->_id );
+        auto kftask = kfobject->FindData( __KF_STRING__( task ), kfsetting->_id );
         if ( kftask == nullptr )
         {
             return KFMsg::CanNotFindTaskData;
         }
 
         // 不是完成状态
-        auto taskstatus = kftask->GetValue<uint32>( __KF_STRING__( status ) );
+        auto taskstatus = kftask->GetValue( __KF_STRING__( status ) );
         if ( taskstatus == KFMsg::InitStatus )
         {
             return KFMsg::TaskNotDone;
@@ -78,7 +78,7 @@ namespace KFrame
         player->UpdateData( kftask, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
-        player->AddElement( &tasksetting->_rewards, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
         return KFMsg::TaskReceiveRewardOK;
     }
 
@@ -128,7 +128,7 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kftaskrecord = kfobject->FindData( __KF_STRING__( task ) );
-        auto level = kfobject->GetValue< uint64 >( __KF_STRING__( basic ), __KF_STRING__( level ) );
+        auto level = kfobject->GetValue( __KF_STRING__( basic ), __KF_STRING__( level ) );
 
         for ( auto kfsetting : kftasktypelist->_task_type )
         {
@@ -145,7 +145,7 @@ namespace KFrame
             }
 
             // 已经完成
-            auto taskstatus = kftaskrecord->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
+            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
             if ( taskstatus != KFMsg::InitStatus )
             {
                 continue;
@@ -172,8 +172,8 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto status = kfparent->GetValue<uint32>( __KF_STRING__( status ) );
-        if ( status != KFMsg::InitStatus )
+        auto taskstatus = kfparent->GetValue( __KF_STRING__( status ) );
+        if ( taskstatus != KFMsg::InitStatus )
         {
             return;
         }
@@ -184,7 +184,7 @@ namespace KFrame
         // 更新下一个任务
         if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
         {
-            auto taskvalue = kfparent->GetValue< uint32 >( __KF_STRING__( value ) );
+            auto taskvalue = kfparent->GetValue( __KF_STRING__( value ) );
             player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFOperateEnum::Set, taskvalue );
         }
     }

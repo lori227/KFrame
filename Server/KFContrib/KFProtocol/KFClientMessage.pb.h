@@ -533,14 +533,14 @@ enum ClientProtocol {
   MSG_DELETE_MAIL_REQ = 102,
   MSG_QUERY_MAIL_REQ = 103,
   MSG_RECEIVE_MAIL_REWARD_REQ = 104,
+  MSG_RECEIVE_TASK_REWARD_REQ = 121,
   MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110,
-  MSG_RECEIVE_TASK_REWARD_REQ = 111,
   MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112,
   MSG_RECEIVE_GIFT_REWARD_REQ = 113,
   MSG_START_MATCH_REQ = 118,
   MSG_START_MATCH_ACK = 119,
   MSG_CANCEL_MATCH_REQ = 120,
-  MSG_MATCH_RESULT_ACK = 121,
+  MSG_MATCH_RESULT_ACK = 1121,
   MSG_ADD_FRIEND_INVITE_REQ = 122,
   MSG_REPLY_FRIEND_INVITE_REQ = 123,
   MSG_DEL_FRIEND_REQ = 124,
@@ -626,7 +626,7 @@ enum ClientProtocol {
 };
 LIBPROTOC_EXPORT bool ClientProtocol_IsValid(int value);
 const ClientProtocol ClientProtocol_MIN = MSG_CLIENT_PROTOCOL_UNKNOW;
-const ClientProtocol ClientProtocol_MAX = MSG_TITLE_CHANGE_REQ;
+const ClientProtocol ClientProtocol_MAX = MSG_MATCH_RESULT_ACK;
 const int ClientProtocol_ARRAYSIZE = ClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ClientProtocol_descriptor();

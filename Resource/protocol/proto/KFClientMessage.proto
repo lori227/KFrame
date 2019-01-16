@@ -38,11 +38,12 @@ enum ClientProtocol
 	MSG_QUERY_MAIL_REQ = 103;				// 请求查询邮件
 	MSG_RECEIVE_MAIL_REWARD_REQ = 104;		// 领取邮件奖励
 
+	// task
+	MSG_RECEIVE_TASK_REWARD_REQ = 121;		// 领取任务奖励
 
 
 
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
-	MSG_RECEIVE_TASK_REWARD_REQ = 111;			// 领取任务奖励
 	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// 领取成就奖励
 	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// 领取礼包奖励
 
@@ -50,7 +51,8 @@ enum ClientProtocol
 	MSG_START_MATCH_REQ = 118;					// 请求个人匹配
 	MSG_START_MATCH_ACK = 119;					// 匹配回馈
 	MSG_CANCEL_MATCH_REQ = 120;					// 取消匹配
-	MSG_MATCH_RESULT_ACK = 121;					// 匹配结果
+
+	MSG_MATCH_RESULT_ACK = 1121;					// 匹配结果
 	MSG_ADD_FRIEND_INVITE_REQ = 122;			// 申请添加好友
 	MSG_REPLY_FRIEND_INVITE_REQ = 123;			// 回复好友申请
 	MSG_DEL_FRIEND_REQ = 124;					// 删除好友
@@ -108,6 +110,7 @@ enum ClientProtocol
 	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
+	
 	MSG_CREATE_GUILD_REQ = 200;					// 创建帮派
 	MSG_INVITE_GUILD_REQ = 201;					// 邀请加入帮派
 	MSG_APPLY_GUILD_REQ = 202;					// 申请加入帮派
