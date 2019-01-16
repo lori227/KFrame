@@ -7,6 +7,7 @@
 #include "KFFrameMessage.pb.h"
 #include "KFServerMessage.pb.h"
 #include "KFClientMessage.pb.h"
+#include "google/protobuf/util/json_util.h"
 
 ////////////////////////////////////////////////////////////////////
 

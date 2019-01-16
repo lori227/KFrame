@@ -293,8 +293,9 @@ namespace KFrame
         }
         else
         {
-            auto strmaildata = kfmsg.DebugString();
-            __LOG_ERROR__( "objectid[{}] add mail[{}] failed!", kfmsg.objectid(), strmaildata );
+            std::string strdata;
+            google::protobuf::util::MessageToJsonString( kfmsg, &strdata );
+            __LOG_ERROR__( "objectid[{}] add mail[{}] failed!", kfmsg.objectid(), strdata );
         }
     }
 

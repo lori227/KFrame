@@ -393,7 +393,9 @@ namespace KFrame
         auto ok = SendMessageToMail( sendid, KFMsg::S2S_ADD_MAIL_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "sendid={} mail={} failed!", sendid, req.DebugString() );
+            std::string strdata;
+            google::protobuf::util::MessageToJsonString( req, &strdata );
+            __LOG_ERROR__( "sendid={} mail={} failed!", sendid, strdata );
         }
 
         return ok;
