@@ -399,9 +399,9 @@ namespace KFrame
         return ok;
     }
 
-    bool KFMailClientModule::SendMail( uint32 mailconfigid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -414,9 +414,9 @@ namespace KFrame
     }
 
 
-    bool KFMailClientModule::SendMail( uint64 recvid, uint32 mailconfigid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -426,9 +426,9 @@ namespace KFrame
         return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recvid, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 mailconfigid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( mailconfigid );
+        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;

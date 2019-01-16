@@ -41,13 +41,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
         // 发送全局邮件
-        virtual bool SendMail( uint32 mailconfigid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( uint32 configid, const KFElements* kfelements = nullptr );
 
         // 系统给某人发送邮件
-        virtual bool SendMail( uint64 recvid, uint32 mailconfigid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements = nullptr );
 
         // 某人给某人发送邮件
-        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 mailconfigid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements = nullptr );
 
     protected:
 
