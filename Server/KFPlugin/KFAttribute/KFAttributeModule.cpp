@@ -27,7 +27,6 @@ namespace KFrame
 
     void KFAttributeModule::BeforeShut()
     {
-
         // 取消注册debug函数
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( adddata ) );
         __UNREGISTER_DEBUG_FUNCTION__( __KF_STRING__( setdata ) );
