@@ -210,28 +210,29 @@ inline bool InviteEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<InviteEnum>(
     InviteEnum_descriptor(), name, value);
 }
-enum StoreWishEnum {
-  UnknowStore = 0,
-  Add = 1,
-  Del = 2,
-  Modify = 3,
-  StoreWishEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  StoreWishEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+enum StoreEnum {
+  NoneLimit = 0,
+  DailyLimit = 1,
+  WeeklyLimit = 2,
+  MonthLimit = 3,
+  ForeverLimit = 4,
+  StoreEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StoreEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
-LIBPROTOC_EXPORT bool StoreWishEnum_IsValid(int value);
-const StoreWishEnum StoreWishEnum_MIN = UnknowStore;
-const StoreWishEnum StoreWishEnum_MAX = Modify;
-const int StoreWishEnum_ARRAYSIZE = StoreWishEnum_MAX + 1;
+LIBPROTOC_EXPORT bool StoreEnum_IsValid(int value);
+const StoreEnum StoreEnum_MIN = NoneLimit;
+const StoreEnum StoreEnum_MAX = ForeverLimit;
+const int StoreEnum_ARRAYSIZE = StoreEnum_MAX + 1;
 
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StoreWishEnum_descriptor();
-inline const ::std::string& StoreWishEnum_Name(StoreWishEnum value) {
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StoreEnum_descriptor();
+inline const ::std::string& StoreEnum_Name(StoreEnum value) {
   return ::google::protobuf::internal::NameOfEnum(
-    StoreWishEnum_descriptor(), value);
+    StoreEnum_descriptor(), value);
 }
-inline bool StoreWishEnum_Parse(
-    const ::std::string& name, StoreWishEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<StoreWishEnum>(
-    StoreWishEnum_descriptor(), name, value);
+inline bool StoreEnum_Parse(
+    const ::std::string& name, StoreEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StoreEnum>(
+    StoreEnum_descriptor(), name, value);
 }
 enum WishStateEnum {
   AllWatch = 0,
@@ -616,10 +617,10 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::InviteEnum>() {
   return ::KFMsg::InviteEnum_descriptor();
 }
-template <> struct is_proto_enum< ::KFMsg::StoreWishEnum> : ::std::true_type {};
+template <> struct is_proto_enum< ::KFMsg::StoreEnum> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StoreWishEnum>() {
-  return ::KFMsg::StoreWishEnum_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StoreEnum>() {
+  return ::KFMsg::StoreEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::WishStateEnum> : ::std::true_type {};
 template <>

@@ -25,6 +25,18 @@ namespace KFrame
         return _file.c_str();
     }
 
+    const char* KFXml::Data()
+    {
+        auto xmlfile = reinterpret_cast< rapidxml::file<>* >( _data );
+        return xmlfile->data();
+    }
+
+    uint32 KFXml::Size()
+    {
+        auto xmlfile = reinterpret_cast< rapidxml::file<>* >( _data );
+        return xmlfile->size();
+    }
+
     void KFXml::Parse()
     {
         auto xmlfile = reinterpret_cast<rapidxml::file<>*>( _data );

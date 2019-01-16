@@ -452,7 +452,7 @@ namespace KFrame
 
         // 必须按照格式来填写时间
         int32 year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
-        sscanf( ymd.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second );
+        sscanf( ymd.c_str(), "%d/%d/%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second );
 
         KFDate kfdate( year, month, day, hour, minute, second );
         return kfdate.GetTime();

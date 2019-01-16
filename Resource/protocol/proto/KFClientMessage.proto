@@ -44,10 +44,15 @@ enum ClientProtocol
 	// achieve
 	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 141;	// 领取成就奖励
 
+	// store
+	MSG_BUY_STORE_REQ = 161;				// 购买商品请求
+	MSG_QUERY_STORE_REQ = 162;				// 请求商城信息
+	MSG_QUERY_STORE_ACK = 163;				// 请求商城信息反馈
+
+
 
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
 	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// 领取礼包奖励
-
 
 	MSG_START_MATCH_REQ = 118;					// 请求个人匹配
 	MSG_START_MATCH_ACK = 119;					// 匹配回馈
@@ -66,8 +71,8 @@ enum ClientProtocol
 
 
 
-	MSG_BUY_STORE_REQ = 133;					// 客户端购买商品请求
-	MSG_GIVE_STORE_REQ = 134;					// 客户端赠送请求
+
+
 	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// 客户端发送一对一聊天请求
 	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// 服务器通知一对一聊天信息
 	MSG_CHANGE_ICON_REQ = 137;					// 修改头像请求
@@ -84,17 +89,15 @@ enum ClientProtocol
 	MSG_APPLY_MATCH_GROUP_REQ = 156;			// 申请加入队伍
 	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// 回应申请队伍
 	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// 请求准备
-	MSG_CHANGE_ICON_BOX_REQ = 161;				// 修改头像框请求
+	MSG_CHANGE_ICON_BOX_REQ = 1161;				// 修改头像框请求
 
 
 
-	MSG_CANCEL_MATCH_ACK = 164;					// 取消匹配回应
-	MSG_USE_ITEM_REQ = 165;						// 使用道具
+	MSG_CANCEL_MATCH_ACK = 1164;					// 取消匹配回应
+	MSG_USE_ITEM_REQ = 1165;						// 使用道具
 	MSG_QUERY_TOAST_COUNT_REQ = 166;			// 查询总的被敬酒次数请求
 	MSG_QUERY_TOAST_COUNT_ACK = 167;			// 查询总的被敬酒次数回馈
-	MSG_QUERY_STORE_INFO_REQ = 170;				// 请求商城信息
-	MSG_QUERY_STORE_INFO_ACK = 171;				// 请求商城信息反馈
-	MSG_BUY_STORE_ACK= 173;						// 购买商品反馈
+
 	MSG_UPDATE_GROUP_MATCH_REQ = 174;			// 修改匹配模式请求
 	MSG_SEND_GROUPCHAT_REQ = 175;				// 客户端发送大厅组队聊天消息请求
 	MSG_SEND_GROUPCHAT_INFO = 176;				// 服务器通知大厅组队聊天消息
@@ -555,22 +558,29 @@ message MsgSendGroupChatInfo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//客户端请求购买物品
-//	MSG_BUY_STORE_REQ = 1350;
+// 客户端请求购买物品
+//	MSG_BUY_STORE_REQ;
 message MsgBuyStoreReq
 {
-	bytes buytype = 1;	//购买类型
-	uint32 shopid = 2;		//商城道具id
-	uint32 num = 3;		//道具数量
+	bytes version = 1;		// 版本号
+	bytes buytype = 2;		// 使用什么购买
+	uint32 id = 3;			// 商品id
+	uint32 count = 4;		// 购买数量
 }
 
-//客户端请求赠送物品
-//MSG_GIVE_STORE_REQ = 1351
-message MsgGiveStoreReq
+// 请求商城信息
+// MSG_QUERY_STORE_REQ
+message MsgQueryStoreReq
 {
-	uint64 toplayerid = 1;	//赠予玩家的id	
-	uint32 shopid = 2;		//商城id
+	bytes version = 1;		// 版本号
+}
+
+// 请求商城信息反馈
+// MSG_QUERY_STORE_INFO_ACK
+message MsgQueryStoreInfoAck
+{
+	bytes version = 1;		// 版本号
+	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -709,44 +719,6 @@ message MsgUseItemReq
 }
 
 
-//商城信息
-message PBStores
-{
-	map<string, bytes > store = 1; //商城信息
-}
-
-// 请求商城信息
-// MSG_QUERY_STORE_INFO_REQ
-message MsgQueryStoreInfoReq
-{
-	uint32 version = 1;		// 版本号
-}
-
-
-// 请求商城信息反馈
-// MSG_QUERY_STORE_INFO_ACK
-message MsgQueryStoreInfoAck
-{
-	uint32 version = 1;		// 版本号
-	PBStores stores = 2;		
-}
-
-// 购买商品反馈
-// MSG_BUY_STORE_ACK
-message MsgBuyStoreAck
-{
-	uint32 storeid = 1;
-	uint32 code = 2; // 成功返回:1
-}
-
-// 操作心愿单请求
-// MSG_SET_WISH_ORDER_REQ
-message MsgSetWishOrderReq
-{
-	uint32 type = 1;		// 操作类型 1:增加 2：删除 3：修改
-	uint32 storeid = 2;		// 商品id
-	uint32 status = 3;		// 设置心愿单可见状态
-}
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////

@@ -2,218 +2,79 @@
 
 namespace KFrame
 {
-    KFStoreConfig::KFStoreConfig()
-    {
-
-    }
-
-    KFStoreConfig::~KFStoreConfig()
-    {
-
-    }
-
     bool KFStoreConfig::LoadConfig()
     {
-        _version = 0;
-        _store_setting.Clear();
-        _client_show.Clear();
-        //////////////////////////////////////////////////////////////////
+        if ( _store_xml != nullptr )
+        {
+            delete _store_xml;
+            _store_xml = nullptr;
+        }
 
-        KFXml kfxml( _file );
-        auto config = kfxml.RootNode();
+        _version.clear();
+        _store_list.Clear();
+        //////////////////////////////////////////////////////////////////
+        _store_xml = new KFXml( _file );
+        auto config = _store_xml->RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )
         {
             auto id = xmlnode.GetUInt32( "Id" );
-            auto kfsetting = _store_setting.Create( id );
+            auto kfsetting = _store_list.Create( id );
 
             kfsetting->_id = id;
-            kfsetting->_type = xmlnode.GetUInt32( "Type" );
-            kfsetting->_item_type = xmlnode.GetUInt32( "ItemType" );
-            kfsetting->_buy_max_num = xmlnode.GetUInt32( "BuyMaxNum" );
+            kfsetting->_store_type = xmlnode.GetUInt32( "StoreType" );
+            kfsetting->_data_name = xmlnode.GetString( "DataName" );
 
-            auto strbuyitem = xmlnode.GetString( "BuyItem" );
-            kfsetting->_buy_item.Parse( strbuyitem, __FUNC_LINE__ );
+            auto strbuyelement = xmlnode.GetString( "BuyElement" );
+            kfsetting->_buy_elements.Parse( strbuyelement, __FUNC_LINE__ );
 
-            StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Money" ), "money" );
-            StringSplit( kfsetting->_cost_item, xmlnode.GetString( "Diamond" ), "diamond" );
-            StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountMoney" ), "money" );
-            StringSplit( kfsetting->_discount_item, xmlnode.GetString( "DiscountDiamond" ), "diamond" );
+            kfsetting->_buy_max_count = xmlnode.GetUInt32( "BuyMaxCount" );
 
+            // 消耗花费
+            auto strcostelement = xmlnode.GetString( "CostElement" );
+            while ( strcostelement.empty() )
+            {
+                auto costelement = KFUtility::SplitString( strcostelement, "|" );
+
+                auto name = KFUtility::SplitString( costelement, "=" );
+                auto elements = kfsetting->_cost_elements.Create( name );
+                elements->Parse( costelement, __FUNC_LINE__ );
+            }
+
+            // 折扣时间
             kfsetting->_start_discount_time = KFDate::FromString( xmlnode.GetString( "StartDiscountTime" ) );
             kfsetting->_end_discount_time = KFDate::FromString( xmlnode.GetString( "EndDiscountTime" ) );
-            kfsetting->_start_buy_time = KFDate::FromString( xmlnode.GetString( "StartBuyTime" ) );
-            kfsetting->_end_buy_time = KFDate::FromString( xmlnode.GetString( "EndBuyTime" ) );
-            kfsetting->_limit_type = xmlnode.GetUInt32( "LimitType" );
-            kfsetting->_limit_count = xmlnode.GetUInt32( "LimitCount" );
-            kfsetting->_cost_give = xmlnode.GetString( "CostGive" );
-            kfsetting->_max_owm_ = xmlnode.GetUInt32( "MaxOwn" );
-            kfsetting->_give_mail_id = xmlnode.GetUInt32( "GiveMailid" );
-            kfsetting->_return_mail_id = xmlnode.GetUInt32( "ReturnMailId" );
-            kfsetting->_give_friend_liness = xmlnode.GetUInt32( "GiveFriendLiness" );
 
-            _version = xmlnode.GetUInt32( "Version" );
+            // 折扣花费
+            auto strdiscountelement = xmlnode.GetString( "CostElement" );
+            while ( strdiscountelement.empty() )
+            {
+                auto costelement = KFUtility::SplitString( strdiscountelement, "|" );
 
-            // 热更新消息包
-            MakePBStore( xmlnode );
+                auto name = KFUtility::SplitString( costelement, "=" );
+                auto elements = kfsetting->_discount_elements.Create( name );
+                elements->Parse( costelement, __FUNC_LINE__ );
+            }
+
+            auto strbuylimit = xmlnode.GetString( "BuyLimit" );
+            kfsetting->_buy_limit_type = KFUtility::SplitValue< uint32 >( strbuylimit, "," );
+            kfsetting->_buy_limit_count = KFUtility::SplitValue< uint32 >( strbuylimit, "," );
+            kfsetting->_max_own_count = xmlnode.GetUInt32( "MaxOwnCount" );
 
             xmlnode.NextNode();
         }
-        _client_show.set_version( _version );
         //////////////////////////////////////////////////////////////////
 
         return true;
     }
 
-    void KFStoreConfig::MakePBStore( KFNode& xmlnode )
-    {
-        static const char* _keys[] =
-        {
-            "Id",
-            "Money",
-            "Diamond",
-            "DiscountMoney",
-            "DiscountDiamond",
-            "StartDiscountTime",
-            "EndDiscountTime",
-            "StartBuyTime",
-            "EndBuyTime",
-            "LimitType",
-            "LimitCount",
-            "MaxOwn",
-        };
-        static uint32 _count = std::extent<decltype( _keys )>::value;
-
-        /////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////
-        auto pbstore = _client_show.mutable_stores()->add_store();
-        for ( auto i = 0u; i < _count; ++i )
-        {
-            auto name = _keys[ i ];
-            auto value = xmlnode.GetString( _keys[ i ] );
-
-            auto pbdata = pbstore->add_data();
-            pbdata->set_name( name );
-            pbdata->set_value( value );
-        }
-    }
-
-    bool KFStoreConfig::StringSplit( KFMap< std::string, const std::string&, KFElements >& des, std::string src, std::string key )
-    {
-        if ( src.empty() )
-        {
-            return true;
-        }
-
-        auto kfagents = des.Create( key );
-        if ( !kfagents->Parse( src, __FUNC_LINE__ ) )
-        {
-            __LOG_ERROR__( "Parse StoreConfig Error key:{},src:{}", key, src );
-            return false;
-        }
-
-        return true;
-    }
-
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
     const KFStoreSetting* KFStoreConfig::FindStoreSetting( uint32 id ) const
     {
-        return _store_setting.Find( id );
-    }
-
-    const KFMsg::MsgQueryStoreInfoAck* KFStoreConfig::GetStoreClientShowInfo() const
-    {
-        return &_client_show;
+        return _store_list.Find( id );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-    bool KFStoreSetting::CheckDiscount( uint64 nowtime ) const
-    {
-        if ( _invalid_int == _start_discount_time || _invalid_int == _end_discount_time )
-        {
-            return false;
-        }
-
-        return KFDate::CheckInTime( _start_discount_time, _end_discount_time, nowtime );
-    }
-
-    bool KFStoreSetting::CheckGive() const
-    {
-        return !_cost_give.empty();
-    }
-
-
-    bool KFStoreSetting::CheckParam( const std::string& buytype, KFStoreEnum::StoreOperaType operatype, uint32 num, uint64 nowtime ) const
-    {
-        if ( num > _buy_max_num )
-        {
-            return false;
-        }
-
-        switch ( operatype )
-        {
-        case KFrame::KFStoreEnum::Buy: {
-            return CheckCostParam( buytype, nowtime );
-        }
-        break;
-        case KFrame::KFStoreEnum::Give:
-        {
-            if ( !CheckGive() || _cost_give != buytype )
-            {
-                return false;
-            }
-            return CheckCostParam( buytype, nowtime );
-        }
-        break;
-        default:
-            return false;
-            break;
-        }
-        return false;
-    }
-
-
-    const KFElements* KFStoreSetting::FindBuyCostAgents( const std::string& buytype, uint64 nowtime, uint32 num ) const
-    {
-        if ( CheckDiscount( nowtime ) )
-        {
-
-            return _discount_item.Find( buytype );
-        }
-
-        return _cost_item.Find( buytype );
-    }
-
-    const KFElements* KFStoreSetting::FindGiveCostAgents( uint64 nowtime ) const
-    {
-        if ( CheckDiscount( nowtime ) )
-        {
-            return _discount_item.Find( _cost_give );
-        }
-
-        return _cost_item.Find( _cost_give );
-    }
-
-    bool KFStoreSetting::CheckCostParam( const std::string& buytype, uint64 nowtime ) const
-    {
-        if ( CheckDiscount( nowtime ) )
-        {
-            return _discount_item.Find( buytype ) != nullptr;
-        }
-        else
-        {
-            return _cost_item.Find( buytype ) != nullptr;
-        }
-    }
-
-    bool KFStoreSetting::CheckOutOfData( uint64 nowtime ) const
-    {
-        if ( _invalid_int == _start_buy_time || _invalid_int == _end_buy_time )
-        {
-            return true;
-        }
-
-        return KFDate::CheckInTime( _start_buy_time, _end_buy_time, nowtime );
-    }
 }

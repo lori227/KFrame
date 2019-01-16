@@ -11,42 +11,20 @@ namespace KFrame
 
     void KFStoreModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( player ), __KF_STRING__( discount ), this, &KFStoreModule::OnDiscountUpdateCallBack );
-
         __REGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ, &KFStoreModule::HandleBuyStoreReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_GIVE_STORE_REQ, &KFStoreModule::HandleGiveStoreReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_INFO_REQ, &KFStoreModule::HandleQueryStoreInfoReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_WISH_ORDER_REQ, &KFStoreModule::HandleSetWishOrderReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_REQ, &KFStoreModule::HandleQueryStoreReq );
     }
 
     void KFStoreModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__( _kf_store_config );
-        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( player ), __KF_STRING__( discount ) );
-
+        //////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_GIVE_STORE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_INFO_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_WISH_ORDER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_REQ );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_UPDATE_DATA_FUNCTION__( KFStoreModule::OnDiscountUpdateCallBack )
-    {
-        if ( oldvalue == 0 )
-        {
-            oldvalue = 100;
-        }
-
-        // 取最小的折扣, 但不能为0
-        if ( newvalue == 0 || newvalue > oldvalue )
-        {
-            player->UpdateData( kfdata, key, KFOperateEnum::Set, oldvalue );
-        }
-    }
-
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleBuyStoreReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgBuyStoreReq );

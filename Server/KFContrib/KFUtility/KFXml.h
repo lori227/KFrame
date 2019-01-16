@@ -19,6 +19,10 @@ namespace KFrame
 
         const char* GetFileName() const;
 
+        // 文件数据
+        const char* Data();
+        uint32 Size();
+
     protected:
         // 解析文件
         void Parse();

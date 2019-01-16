@@ -66,12 +66,13 @@ enum InviteEnum
 	RefuseMinute = 4;	// 5分内拒绝
 }
 //////////////////////////////////////////////////////////////////////////////////
-enum StoreWishEnum
+enum StoreEnum
 {
-	UnknowStore = 0;
-	Add = 1;		// 增加心愿单物品操作
-	Del = 2;		// 删除心愿单物品操作
-	Modify = 3;		// 修改心愿单可见状态
+	NoneLimit = 0;		// 不限购
+	DailyLimit = 1;		// 每日限购
+	WeeklyLimit = 2;	// 每周限购
+	MonthLimit = 3;		// 每月限购
+	ForeverLimit = 4;	// 永久限购
 }
 //////////////////////////////////////////////////////////////////////////////////
 
