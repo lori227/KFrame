@@ -389,6 +389,11 @@ enum CodeEnum {
   TaskNotDone = 20304,
   TaskAlreadyReceived = 20305,
   TaskReceiveRewardOK = 20306,
+  AchieveIdCanNotFind = 20401,
+  CanNotFindAchieveData = 20402,
+  AchieveAlreadyReceived = 20403,
+  AchieveNotDone = 20404,
+  AchieveReceiveRewardOK = 20405,
   ZoneDatabaseBusy = 20,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
@@ -410,11 +415,6 @@ enum CodeEnum {
   ActivityAlreadyReceived = 50,
   ActivityNotDone = 51,
   ActivityReceiveRewardOK = 52,
-  AchieveIdCanNotFind = 53,
-  CanNotFindAchieveData = 54,
-  AchieveAlreadyReceived = 55,
-  AchieveNotDone = 56,
-  AchieveReceiveRewardOK = 57,
   ReceiveGiftOK = 58,
   ReceiveGiftFailed = 59,
   ToastSendCountOver = 65,
@@ -545,7 +545,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = TaskReceiveRewardOK;
+const CodeEnum CodeEnum_MAX = AchieveReceiveRewardOK;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

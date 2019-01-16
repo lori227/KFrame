@@ -41,10 +41,11 @@ enum ClientProtocol
 	// task
 	MSG_RECEIVE_TASK_REWARD_REQ = 121;		// 领取任务奖励
 
+	// achieve
+	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 141;	// 领取成就奖励
 
 
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
-	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 112;		// 领取成就奖励
 	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// 领取礼包奖励
 
 
@@ -52,7 +53,7 @@ enum ClientProtocol
 	MSG_START_MATCH_ACK = 119;					// 匹配回馈
 	MSG_CANCEL_MATCH_REQ = 120;					// 取消匹配
 
-	MSG_MATCH_RESULT_ACK = 1121;					// 匹配结果
+	MSG_MATCH_RESULT_ACK = 1121;				// 匹配结果
 	MSG_ADD_FRIEND_INVITE_REQ = 122;			// 申请添加好友
 	MSG_REPLY_FRIEND_INVITE_REQ = 123;			// 回复好友申请
 	MSG_DEL_FRIEND_REQ = 124;					// 删除好友

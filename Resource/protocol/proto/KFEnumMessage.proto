@@ -169,6 +169,13 @@ enum CodeEnum
 	TaskAlreadyReceived 		= 20305;	// 你已经领取任务奖励
 	TaskReceiveRewardOK 		= 20306;	// 领取任务奖励成功
 
+	// achieve
+	AchieveIdCanNotFind 		= 20401;	// 成就<Text>%s</Text>配置错误
+	CanNotFindAchieveData 		= 20402;	// 你还没有完成成就
+	AchieveAlreadyReceived 		= 20403;	// 你已经领取成就奖励
+	AchieveNotDone 				= 20404;	// 请先完成成就
+	AchieveReceiveRewardOK 		= 20405;	// 领取成就奖励成功
+
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	PublicDatabaseError			= 24;		// 公共数据库错误
@@ -192,11 +199,7 @@ enum CodeEnum
 	ActivityAlreadyReceived 	= 50;		// 你已经领取活动奖励
 	ActivityNotDone 			= 51;		// 请先完成活动内容
 	ActivityReceiveRewardOK 	= 52;		// 领取活动奖励成功
-	AchieveIdCanNotFind 		= 53;		// 成就<Text>%s</Text>配置错误
-	CanNotFindAchieveData 		= 54;		// 你还没有完成成就
-	AchieveAlreadyReceived 		= 55;		// 你已经领取成就奖励
-	AchieveNotDone 				= 56;		// 请先完成成就
-	AchieveReceiveRewardOK 		= 57;		// 领取成就奖励成功
+
 	ReceiveGiftOK 				= 58;		// 领取礼包成功
 	ReceiveGiftFailed 			= 59;		// 领取礼包失败, 错误码:<Text>%s</Text>	
 	

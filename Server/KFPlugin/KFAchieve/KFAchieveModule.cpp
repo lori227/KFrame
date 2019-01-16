@@ -58,19 +58,19 @@ namespace KFrame
             return KFMsg::CanNotFindAchieveData;
         }
 
-        auto achieveflag = kfachieve->GetValue( __KF_STRING__( flag ) );
-        if ( achieveflag == KFMsg::FlagEnum::Init )
+        auto achievestatus = kfachieve->GetValue( __KF_STRING__( status ) );
+        if ( achievestatus == KFMsg::InitStatus )
         {
             return KFMsg::AchieveNotDone;
         }
 
-        if ( achieveflag == KFMsg::FlagEnum::Received )
+        if ( achievestatus == KFMsg::ReceiveStatus )
         {
             return KFMsg::AchieveAlreadyReceived;
         }
 
         // 设置已经领取
-        player->UpdateData( kfachieve, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Received );
+        player->UpdateData( kfachieve, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
         player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
@@ -88,13 +88,13 @@ namespace KFrame
             return;
         }
 
-        bool doneachieve = KFUtility::CheckOperate<uint64>( newvalue, achievesetting->_done_type, achievesetting->_done_value );
+        bool doneachieve = KFUtility::CheckOperate< uint64 >( newvalue, achievesetting->_done_type, achievesetting->_done_value );
         if ( !doneachieve )
         {
             return;
         }
 
-        player->UpdateData( __KF_STRING__( achieve ), key, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::FlagEnum::Done );
+        player->UpdateData( __KF_STRING__( achieve ), key, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::DoneStatus );
         if ( newvalue > achievesetting->_done_value )
         {
             kfdata->OperateValue< uint64 >( KFOperateEnum::Set, achievesetting->_done_value );
@@ -154,7 +154,7 @@ namespace KFrame
             return;
         }
 
-        auto level = kfobject->GetValue< uint64 >( __KF_STRING__( level ) );
+        auto level = kfobject->GetValue( __KF_STRING__( level ) );
         for ( auto achievesetting : kfachievetypesetting->_achieve_type )
         {
             if ( !achievesetting->CheckCanUpdate( key, level, operate ) )
@@ -173,7 +173,7 @@ namespace KFrame
             if ( kfachieve != nullptr )
             {
                 auto flag = kfachieve->GetValue( __KF_STRING__( flag ) );
-                if ( flag != KFMsg::FlagEnum::Init )
+                if ( flag != KFMsg::InitStatus )
                 {
                     continue;
                 }
@@ -182,45 +182,6 @@ namespace KFrame
             // 获得使用的数值
             auto usevalue = achievesetting->GetUseValue( operatevalue );
             player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( value ), achievesetting->_operate, usevalue );
-            // player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( type ), KFOperateEnum::Set, KFAchieveEnum::lobby );
-
         }
-    }
-
-    void KFAchieveModule::FormatBattleAchieve( KFData* kfobject, KFMsg::PBTaskDatas* pbachieve )
-    {
-        auto battlecfg  = _kf_achieve_config->GetBattleAchieveCfg();
-        if ( battlecfg.empty() )
-        {
-            return;
-        }
-
-        for ( auto iter : battlecfg )
-        {
-            auto kfachieve = kfobject->FindData( iter.first );
-            if ( nullptr == kfachieve )
-            {
-                auto achievedata =  pbachieve->add_taskdata();
-                achievedata->set_id( iter.first );
-                achievedata->set_value( _invalid_int );
-            }
-
-            else
-            {
-                if ( KFMsg::FlagEnum::Init != kfachieve->GetValue<uint32 >( __KF_STRING__( flag ) ) )
-                {
-                    continue;
-                }
-
-                else
-                {
-                    auto achievedata = pbachieve->add_taskdata();
-                    achievedata->set_id( iter.first );
-                    achievedata->set_value( kfachieve->GetValue<uint32 >( __KF_STRING__( value ) ) );
-                }
-            }
-
-        }
-
     }
 }
