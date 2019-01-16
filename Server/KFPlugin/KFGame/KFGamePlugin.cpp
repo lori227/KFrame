@@ -16,7 +16,6 @@ namespace KFrame
     void KFGamePlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
-        __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );

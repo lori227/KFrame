@@ -106,9 +106,6 @@ namespace KFrame
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
 
     private:
-        // 玩家组件
-        KFComponent* _kf_component{ nullptr };
-
         // 世界服务器id
         uint64 _world_server_id{ _invalid_int };
     };

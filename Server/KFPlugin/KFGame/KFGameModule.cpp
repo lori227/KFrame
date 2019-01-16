@@ -13,7 +13,6 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
 
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_player->BindAfterLoadFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
@@ -59,11 +58,11 @@ namespace KFrame
 
         // 同步当前在线玩家到World服务器
         KFMsg::S2SGameSyncOnlineReq req;
-        auto kfentity = _kf_component->FirstEntity();
-        while ( kfentity != nullptr )
+        auto player = _kf_player->FirstPlayer();
+        while ( player != nullptr )
         {
-            req.add_playerid( kfentity->GetKeyID() );
-            kfentity = _kf_component->NextEntity();
+            req.add_playerid( player->GetKeyID() );
+            player = _kf_player->NextPlayer();
         }
         SendToWorld( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &req );
     }
@@ -79,11 +78,11 @@ namespace KFrame
     __KF_ROUTE_CONNECTION_FUNCTION__( KFGameModule::OnConnectionRoute )
     {
         RouteObjectList playerlist;
-        auto kfentity = _kf_component->FirstEntity();
-        while ( kfentity != nullptr )
+        auto player = _kf_player->FirstPlayer();
+        while ( player != nullptr )
         {
-            playerlist.insert( kfentity->GetKeyID() );
-            kfentity = _kf_component->NextEntity();
+            playerlist.insert( player->GetKeyID() );
+            player = _kf_player->NextPlayer();
         }
 
         _kf_route->SyncObject( __KF_STRING__( player ), playerlist );
@@ -223,11 +222,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_COMMAND_FUNCTION__( KFGameModule::OnDeployShutDownServer )
     {
-        auto player = _kf_component->FirstEntity();
+        auto player = _kf_player->FirstPlayer();
         while ( player != nullptr )
         {
             _kf_player->SavePlayer( player );
-            player = _kf_component->NextEntity();
+            player = _kf_player->NextPlayer();
         }
     }
 
@@ -311,7 +310,7 @@ namespace KFrame
 
         __LOG_DEBUG__( "player[{}] disconnection!", kfmsg.playerid() );
 
-        _kf_component->RemoveEntity( kfmsg.playerid() );
+        _kf_player->RemovePlayer( kfmsg.playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginOutReq )
@@ -321,7 +320,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}] logout!", kfmsg.playerid() );
 
         // 删除玩家
-        _kf_component->RemoveEntity( kfmsg.playerid() );
+        _kf_player->RemovePlayer( kfmsg.playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickGamePlayerReq )
@@ -334,7 +333,7 @@ namespace KFrame
 
     void KFGameModule::KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line )
     {
-        auto player = _kf_component->FindEntity( playerid );
+        auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {
             return;
@@ -349,6 +348,6 @@ namespace KFrame
         SendToClient( player, KFMsg::S2S_KICK_GATE_PLAYER_REQ, &req );
 
         // 删除玩家
-        _kf_component->RemoveEntity( playerid );
+        _kf_player->RemovePlayer( playerid );
     }
 }

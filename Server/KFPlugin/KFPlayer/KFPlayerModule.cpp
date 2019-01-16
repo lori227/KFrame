@@ -158,7 +158,21 @@ namespace KFrame
         _new_player_function.Remove( moudle );
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////3
+    KFEntity* KFPlayerModule::FirstPlayer()
+    {
+        return _kf_component->FirstEntity();
+    }
+
+    KFEntity* KFPlayerModule::NextPlayer()
+    {
+        return _kf_component->NextEntity();
+    }
+
+    void KFPlayerModule::RemovePlayer( uint64 playerid )
+    {
+        _kf_component->RemoveEntity( playerid );
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )
     {

@@ -167,6 +167,13 @@ namespace KFrame
 
         // 查询玩家
         virtual bool QueryPlayer( uint64 sendid, uint64 playerid ) = 0;
+
+        // 遍历玩家
+        virtual KFEntity* FirstPlayer() = 0;
+        virtual KFEntity* NextPlayer() = 0;
+
+        // 删除玩家
+        virtual void RemovePlayer( uint64 playerid ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置名字
         virtual bool SetName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid ) = 0;
