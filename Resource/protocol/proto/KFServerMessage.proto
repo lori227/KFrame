@@ -32,8 +32,6 @@ enum ServerProtocol
 	S2S_QUERY_PLAYER_REQ = 20026;					// 查询玩家数据
 	S2S_QUERY_PLAYER_ACK = 20027;					// 查询玩家数据
 
-	// attribute
-
 	// public
 	S2S_UPDATE_PUBLIC_DATA_REQ = 21001;				// 更新公共数据
 

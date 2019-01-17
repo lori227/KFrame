@@ -14,9 +14,11 @@ namespace KFrame
 
         // md5
         static std::string Md5Encode( const std::string& source );
+        static std::string Md5Encode( const char* data, uint32 length );
 
         // sha1
         static std::string Sha1Encode( const std::string& source );
+        static std::string Sha1Encode( const char* data, uint32 length );
 
     };
 }

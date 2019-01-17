@@ -64,7 +64,7 @@ namespace KFrame
             xmlnode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
-
+        _version = KFCrypto::Md5Encode( _store_xml->Data(), _store_xml->Size() );
         return true;
     }
 
