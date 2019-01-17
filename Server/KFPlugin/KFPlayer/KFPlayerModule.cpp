@@ -173,6 +173,12 @@ namespace KFrame
     {
         _kf_component->RemoveEntity( playerid );
     }
+
+    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
+    {
+        return _kf_game->SendToClient( player, msgid, message );
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )
     {

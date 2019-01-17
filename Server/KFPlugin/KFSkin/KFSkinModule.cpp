@@ -167,7 +167,7 @@ namespace KFrame
             kfskin = _kf_kernel->CreateObject( kfskinrecord->GetDataSetting() );
 
             // 设置时间
-            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
+            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ), multiple );
             if ( elementtime != _invalid_int )
             {
                 kfskin->OperateValue( __KF_STRING__( time ), kfelementobject->_operate, KFGlobal::Instance()->_real_time + elementtime );
@@ -180,7 +180,7 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto datatime = kfskin->GetValue( __KF_STRING__( time ) );
-            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
+            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
                 // 时限皮肤

@@ -35,7 +35,7 @@ namespace KFrame
         KFMap< std::string, const std::string&, KFElements > _discount_elements;
         /////////////////////////////////////////////////////////////////////////////////////////////////
         // 购买限制类型
-        uint32 _buy_limit_type = 0u;
+        std::string _buy_limit_type;
 
         // 购买限制数量
         uint32 _buy_limit_count = 0u;
@@ -49,6 +49,14 @@ namespace KFrame
         // 最大拥有限制数( 比如皮肤之类, 拥有就不能再次购买 )
         uint32 _max_own_count = 0u;
         /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public:
+        // 查找商品价格
+        const KFElements* FindCostElements( const std::string& buytype, uint64 nowtime ) const;
+
+        // 判断是否在折扣时间内
+        bool CheckInDiscount( uint64 nowtime ) const;
+
     };
 
     class KFStoreConfig : public KFConfig, public KFSingleton< KFStoreConfig >
@@ -63,10 +71,10 @@ namespace KFrame
         // 查找商品配置
         const KFStoreSetting* FindStoreSetting( uint32 id ) const;
 
-    private:
+    public:
+
         KFXml* _store_xml = nullptr;
 
-    public:
         // 商店版本号
         std::string _version;
 

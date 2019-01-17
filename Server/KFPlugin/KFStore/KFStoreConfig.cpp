@@ -57,7 +57,7 @@ namespace KFrame
             }
 
             auto strbuylimit = xmlnode.GetString( "BuyLimit" );
-            kfsetting->_buy_limit_type = KFUtility::SplitValue< uint32 >( strbuylimit, "," );
+            kfsetting->_buy_limit_type = KFUtility::SplitString( strbuylimit, "," );
             kfsetting->_buy_limit_count = KFUtility::SplitValue< uint32 >( strbuylimit, "," );
             kfsetting->_max_own_count = xmlnode.GetUInt32( "MaxOwnCount" );
 
@@ -76,5 +76,24 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    const KFElements* KFStoreSetting::FindCostElements( const std::string& buytype, uint64 nowtime ) const
+    {
+        // 判断是否在折扣时间内 返回折扣价
+        if ( CheckInDiscount( nowtime ) )
+        {
+            return _discount_elements.Find( buytype );
+        }
+
+        return _cost_elements.Find( buytype );
+    }
+
+    bool KFStoreSetting::CheckInDiscount( uint64 nowtime ) const
+    {
+        if ( _start_discount_time == _invalid_int || _end_discount_time == _invalid_int )
+        {
+            return false;
+        }
+
+        return KFDate::CheckInTime( _start_discount_time, _end_discount_time, nowtime );
+    }
 }

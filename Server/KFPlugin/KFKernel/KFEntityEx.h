@@ -72,13 +72,13 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line );
+        virtual void AddElement( const char* function, uint32 line, const KFElements* kfelements, bool showclient, float multiple = 1.0f );
 
         // 判断元数据是否满足条件
-        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line );
+        virtual bool CheckElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f );
 
         // 删除元数据
-        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line );
+        virtual void RemoveElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f );
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -99,22 +99,22 @@ namespace KFrame
 
     protected:
         // 添加元数据
-        void AddElement( const KFElement* kfelement, const char* function, uint32 line );
-        void AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        void AddObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        void AddRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
+        void AddElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
+        void AddNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        void AddObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        void AddRecordElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
 
         // 判断元数据
-        bool CheckElement( const KFElement* kfelement, const char* function, uint32 line );
-        bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        bool CheckObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line );
+        bool CheckElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
+        bool CheckNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        bool CheckObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        bool CheckRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple );
 
         // 删除元数据
-        void RemoveElement( const KFElement* kfelement, const char* function, uint32 line );
-        void RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        void RemoveRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line );
-        void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line );
+        void RemoveElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
+        void RemoveNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        void RemoveObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        void RemoveRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple );
 
     protected:
         // 同步添加数据

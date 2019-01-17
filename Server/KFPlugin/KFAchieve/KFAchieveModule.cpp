@@ -73,7 +73,7 @@ namespace KFrame
         player->UpdateData( kfachieve, __KF_STRING__( flag ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
-        player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
+        player->AddElement( __FUNC_LINE__, &kfsetting->_rewards, true );
 
         return KFMsg::AchieveReceiveRewardOK;
     }

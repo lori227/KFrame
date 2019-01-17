@@ -358,21 +358,20 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const char* function, uint32 line, const KFElements* kfelements, bool showclient, float multiple /* = 1.0f */ )
     {
         if ( kfelements->_element_list.empty() )
         {
             return;
         }
 
-        const_cast < KFElements* >( kfelements )->_is_change_value = false;
         for ( auto& kfelement : kfelements->_element_list )
         {
-            AddElement( kfelement, function, line );
+            AddElement( function, line, kfelement, multiple );
         }
 
-        auto& strdata = kfelements->Serialize();
-        __LOG_INFO_FUNCTION__( function, line, "entity={} add element=[{}]!", GetKeyID(), strdata );
+        auto& strdata = kfelements->Serialize( multiple );
+        __LOG_INFO_FUNCTION__( function, line, "entity={} add element=[{}][{}]!", GetKeyID(), multiple, strdata );
 
         // 显示给客户端
         if ( _kf_component->_show_reward_function != nullptr && showclient )
@@ -382,7 +381,7 @@ namespace KFrame
     }
 
     // 添加元数据
-    void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -394,29 +393,29 @@ namespace KFrame
         auto kffunction = _kf_component->_add_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple );
         }
 
         // 没有注册的函数
         switch ( kfdata->GetType() )
         {
         case KFDataDefine::Type_Object:
-            AddObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            AddObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Record:
-            AddRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            AddRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Int32:
         case KFDataDefine::Type_UInt32:
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         case KFDataDefine::Type_Double:
-            AddNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            AddNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         }
     }
 
-    void KFEntityEx::AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::AddNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
@@ -424,16 +423,13 @@ namespace KFrame
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
-
-        // todo:计算倍数
-        float multiple = 1.0f;
         auto value = kfelementvalue->CalcValue( multiple );
 
         // 更新数据
         UpdateData( kfdata, 0, kfelementvalue->_operate, value );
     }
 
-    void KFEntityEx::AddObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::AddObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -445,12 +441,12 @@ namespace KFrame
         for ( auto& iter : kfelementobject->_values._objects )
         {
             auto& name = iter.first;
-            auto value = iter.second->GetValue();
+            auto value = iter.second->CalcValue( multiple );
             UpdateData( kfdata, name, kfelementobject->_operate, value );
         }
     }
 
-    void KFEntityEx::AddRecordElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::AddRecordElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -471,7 +467,7 @@ namespace KFrame
             for ( auto& iter : kfelementobject->_values._objects )
             {
                 auto& name = iter.first;
-                auto value = iter.second->CalcValue();
+                auto value = iter.second->CalcValue( multiple );
                 kfchild->OperateValue( name, kfelementobject->_operate, value );
             }
 
@@ -483,7 +479,7 @@ namespace KFrame
             for ( auto& iter : kfelementobject->_values._objects )
             {
                 auto& name = iter.first;
-                auto value = iter.second->CalcValue();
+                auto value = iter.second->CalcValue( multiple );
                 UpdateData( kfchild, name, kfelementobject->_operate, value );
             }
         }
@@ -493,11 +489,11 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 判断元数据是否满足条件
-    bool KFEntityEx::CheckElement( const KFElements* kfelements, const char* function, uint32 line )
+    bool KFEntityEx::CheckElement( const char* function, uint32 line, const KFElements* kfelements, float multiple /* = 1.0f */ )
     {
         for ( auto& kfelement : kfelements->_element_list )
         {
-            if ( !CheckElement( kfelement, function, line ) )
+            if ( !CheckElement( function, line, kfelement, multiple ) )
             {
                 return false;
             }
@@ -506,7 +502,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckElement( const KFElement* kfelement, const char* function, uint32 line )
+    bool KFEntityEx::CheckElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -519,31 +515,31 @@ namespace KFrame
         auto kffunction = _kf_component->_check_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple  );
         }
 
         // 找不到处理函数, 用基础函数来处理
         switch ( kfdata->GetType() )
         {
         case KFDataDefine::Type_Record:
-            return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return CheckRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Object:
-            return CheckObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return CheckObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Int32:
         case KFDataDefine::Type_UInt32:
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         case KFDataDefine::Type_Double:
-            return CheckNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return CheckNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         }
 
         return false;
     }
 
-    bool KFEntityEx::CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    bool KFEntityEx::CheckNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
@@ -554,11 +550,11 @@ namespace KFrame
         auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
 
         auto datavalue = kfdata->GetValue();
-        auto elementvalue = kfelementvalue->_value.GetValue();
+        auto elementvalue = kfelementvalue->_value.CalcValue( multiple );
         return datavalue >= elementvalue;
     }
 
-    bool KFEntityEx::CheckObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    bool KFEntityEx::CheckObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -577,7 +573,7 @@ namespace KFrame
             }
 
             auto datavalue = kfchild->GetValue();
-            auto elementvalue = iter.second->GetValue();
+            auto elementvalue = iter.second->CalcValue( multiple );
             if ( datavalue < elementvalue )
             {
                 return false;
@@ -587,7 +583,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line )
+    bool KFEntityEx::CheckRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -617,7 +613,7 @@ namespace KFrame
             }
 
             auto datavalue = kfchild->GetValue();
-            auto elementvalue = iter.second->GetValue();
+            auto elementvalue = iter.second->CalcValue( multiple );
             if ( datavalue < elementvalue )
             {
                 return false;
@@ -631,19 +627,19 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::RemoveElement( const KFElements* kfelements, const char* function, uint32 line )
+    void KFEntityEx::RemoveElement( const char* function, uint32 line, const KFElements* kfelements, float multiple /* = 1.0f */ )
     {
         for ( auto& kfelement : kfelements->_element_list )
         {
-            RemoveElement( kfelement, function, line );
+            RemoveElement( function, line, kfelement, multiple );
         }
 
-        auto& strdata = kfelements->Serialize();
-        __LOG_INFO_FUNCTION__( function, line, "entity={} remove element=[{}]!", GetKeyID(), strdata );
+        auto& strdata = kfelements->Serialize( multiple );
+        __LOG_INFO_FUNCTION__( function, line, "entity={} remove element=[{}][{}]!", GetKeyID(), multiple, strdata );
     }
 
     // 删除元数据
-    void KFEntityEx::RemoveElement( const KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::RemoveElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -655,29 +651,29 @@ namespace KFrame
         auto kffunction = _kf_component->_remove_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple );
         }
 
         // 找不到处理函数, 用基础函数来处理
         switch ( kfdata->GetType() )
         {
         case KFDataDefine::Type_Record:
-            RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            RemoveRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Object:
-            RemoveObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            RemoveObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         case KFDataDefine::Type_Int32:
         case KFDataDefine::Type_UInt32:
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         case KFDataDefine::Type_Double:
-            RemoveNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line );
+            RemoveNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
             break;
         }
     }
 
-    void KFEntityEx::RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::RemoveNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
@@ -685,11 +681,11 @@ namespace KFrame
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementVale* >( kfelement );
-        auto value = kfelementvalue->_value.GetValue();
+        auto value = kfelementvalue->_value.CalcValue( multiple );
         UpdateData( kfdata, 0, KFOperateEnum::Dec, value );
     }
 
-    void KFEntityEx::RemoveObjectElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::RemoveObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -700,12 +696,12 @@ namespace KFrame
         for ( auto& iter : kfelementobject->_values._objects )
         {
             auto& name = iter.first;
-            auto value = iter.second->GetValue();
+            auto value = iter.second->GetValue( multiple );
             UpdateData( kfdata, name, KFOperateEnum::Dec, value );
         }
     }
 
-    void KFEntityEx::RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line )
+    void KFEntityEx::RemoveRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
@@ -727,7 +723,7 @@ namespace KFrame
         for ( auto& iter : kfelementobject->_values._objects )
         {
             auto& name = iter.first;
-            auto value = iter.second->GetValue();
+            auto value = iter.second->GetValue( multiple );
             UpdateData( kfdata, name, KFOperateEnum::Dec, value );
         }
     }

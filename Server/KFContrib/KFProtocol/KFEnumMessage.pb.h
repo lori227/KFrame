@@ -210,30 +210,6 @@ inline bool InviteEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<InviteEnum>(
     InviteEnum_descriptor(), name, value);
 }
-enum StoreEnum {
-  NoneLimit = 0,
-  DailyLimit = 1,
-  WeeklyLimit = 2,
-  MonthLimit = 3,
-  ForeverLimit = 4,
-  StoreEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  StoreEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-LIBPROTOC_EXPORT bool StoreEnum_IsValid(int value);
-const StoreEnum StoreEnum_MIN = NoneLimit;
-const StoreEnum StoreEnum_MAX = ForeverLimit;
-const int StoreEnum_ARRAYSIZE = StoreEnum_MAX + 1;
-
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StoreEnum_descriptor();
-inline const ::std::string& StoreEnum_Name(StoreEnum value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    StoreEnum_descriptor(), value);
-}
-inline bool StoreEnum_Parse(
-    const ::std::string& name, StoreEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<StoreEnum>(
-    StoreEnum_descriptor(), name, value);
-}
 enum WishStateEnum {
   AllWatch = 0,
   NoneWatch = 1,
@@ -395,6 +371,12 @@ enum CodeEnum {
   AchieveAlreadyReceived = 20403,
   AchieveNotDone = 20404,
   AchieveReceiveRewardOK = 20405,
+  StoreNotFind = 20501,
+  StoreOutOfLimitOwm = 20502,
+  StoreBuyTypeError = 20503,
+  StoreLackCost = 20504,
+  StoreOutOfLimits = 20505,
+  StoreBuyCountError = 20506,
   ZoneDatabaseBusy = 20,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
@@ -442,10 +424,6 @@ enum CodeEnum {
   MatchNotInMatch = 86,
   FriendInviteAlready = 87,
   MatchMustPrepare = 88,
-  StoreParamError = 89,
-  StoreLackCost = 90,
-  StoreOutOfLimits = 91,
-  StoreOutOfLimitOwm = 92,
   StoreOutOfLimitDate = 93,
   WishOrderEmpty = 94,
   WishOrderNoExist = 95,
@@ -546,7 +524,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = AchieveReceiveRewardOK;
+const CodeEnum CodeEnum_MAX = StoreBuyCountError;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();
@@ -616,11 +594,6 @@ template <> struct is_proto_enum< ::KFMsg::InviteEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::InviteEnum>() {
   return ::KFMsg::InviteEnum_descriptor();
-}
-template <> struct is_proto_enum< ::KFMsg::StoreEnum> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StoreEnum>() {
-  return ::KFMsg::StoreEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::WishStateEnum> : ::std::true_type {};
 template <>

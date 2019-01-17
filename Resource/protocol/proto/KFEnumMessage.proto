@@ -66,15 +66,6 @@ enum InviteEnum
 	RefuseMinute = 4;	// 5分内拒绝
 }
 //////////////////////////////////////////////////////////////////////////////////
-enum StoreEnum
-{
-	NoneLimit = 0;		// 不限购
-	DailyLimit = 1;		// 每日限购
-	WeeklyLimit = 2;	// 每周限购
-	MonthLimit = 3;		// 每月限购
-	ForeverLimit = 4;	// 永久限购
-}
-//////////////////////////////////////////////////////////////////////////////////
 
 enum WishStateEnum
 {
@@ -177,6 +168,14 @@ enum CodeEnum
 	AchieveNotDone 				= 20404;	// 请先完成成就
 	AchieveReceiveRewardOK 		= 20405;	// 领取成就奖励成功
 
+	// stroe
+	StoreNotFind				= 20501;	// 找不到商品<Text>%s</Text>配置
+	StoreOutOfLimitOwm			= 20502;	// 已经拥有物品, 不能购买
+	StoreBuyTypeError			= 20503;	// 购买类型错误
+	StoreLackCost				= 20504;	// 商城购买消耗品花费不足
+	StoreOutOfLimits			= 20505;	// 超过商品限购次数
+	StoreBuyCountError		    = 20506;	// 购买数量错误
+
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	PublicDatabaseError			= 24;		// 公共数据库错误
@@ -228,10 +227,8 @@ enum CodeEnum
 	MatchNotInMatch				= 86;		// 你已经不在匹配
 	FriendInviteAlready			= 87;		// 已经向<Text>%s</Text>申请添加好友了
 	MatchMustPrepare			= 88;		// 队员全部准备才能开始匹配
-	StoreParamError				= 89;		// 商品<Text>%s</Text>配置错误
-	StoreLackCost				= 90;		// 商城购买消耗品花费不足
-	StoreOutOfLimits			= 91;		// 已经超过商品限购次数
-	StoreOutOfLimitOwm			= 92;		// 已经拥有物品, 不能购买
+
+
 	StoreOutOfLimitDate			= 93;		// 商品限购不在指定日期内
 	WishOrderEmpty				= 94;		// 心愿单为空
 	WishOrderNoExist			= 95;		// 心愿单中不存在该物品

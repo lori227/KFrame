@@ -25,7 +25,7 @@ namespace protobuf_KFEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[14];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[13];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -64,130 +64,129 @@ void AddDescriptorsImpl() {
       "tchStatus\020\003\022\021\n\rPlayingStatus\020\004\022\021\n\rOfflin"
       "eStatus\020\005*U\n\nInviteEnum\022\020\n\014UnknowInvite\020"
       "\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020"
-      "\n\014RefuseMinute\020\004*]\n\tStoreEnum\022\r\n\tNoneLim"
-      "it\020\000\022\016\n\nDailyLimit\020\001\022\017\n\013WeeklyLimit\020\002\022\016\n"
-      "\nMonthLimit\020\003\022\020\n\014ForeverLimit\020\004*L\n\rWishS"
-      "tateEnum\022\014\n\010AllWatch\020\000\022\r\n\tNoneWatch\020\001\022\017\n"
-      "\013FriendWatch\020\002\022\r\n\tTeamWatch\020\003*L\n\020FriendL"
-      "inessEnum\022\020\n\014UnKnowFriend\020\000\022\010\n\004Team\020\001\022\007\n"
-      "\003Win\020\002\022\t\n\005Toast\020\003\022\010\n\004Give\020\004*:\n\tGuildEnum"
-      "\022\017\n\013UnKnowGuild\020\000\022\r\n\tJoinGuild\020\001\022\r\n\tExit"
-      "Guild\020\002*I\n\017GuildReviewEnum\022\025\n\021UnknowGuil"
-      "dReview\020\000\022\016\n\nAgreeApply\020\001\022\017\n\013RefuseApply"
-      "\020\002*\?\n\nBattleEnum\022\020\n\014BattleUnknow\020\000\022\017\n\013Op"
-      "enSuccess\020\001\022\016\n\nOpenFailed\020\002*\201\"\n\010CodeEnum"
-      "\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\r\n\tSignError\020\002\022\017\n\013We"
-      "iXinError\020\003\022\023\n\017WeiXinCodeError\020\004\022\026\n\022WeiX"
-      "inTokenTimeout\020\005\022\024\n\020WeiXinTokenError\020\006\022\023"
-      "\n\017WeiXinUserError\020\007\022\020\n\014ChannelError\020\010\022\022\n"
-      "\016ChannelNotOpen\020\t\022\023\n\017WorldSystemBusy\020\n\022\023"
-      "\n\017LoginSystemBusy\020\013\022\023\n\017CanNotFindProxy\020\014"
-      "\022\022\n\016AuthServerBusy\020\r\022\024\n\020AuthDatabaseBusy"
-      "\020\016\022\022\n\016CanNotFindGame\020\017\022\023\n\017LoginTokenErro"
-      "r\020\020\022\021\n\rHttpDataError\020\022\022\026\n\022LoginDatabaseE"
-      "rror\020\023\022\024\n\017RouteServerBusy\020\221N\022\025\n\020NameData"
-      "baseBusy\020\222N\022\024\n\016LoadDataFailed\020\241\234\001\022\027\n\021Que"
-      "ryPlayerFailed\020\242\234\001\022\017\n\tNameEmpty\020\205\235\001\022\024\n\016N"
-      "ameAlreadySet\020\206\235\001\022\026\n\020NameAlreadyExist\020\207\235"
-      "\001\022\017\n\tNameSetOK\020\210\235\001\022\025\n\017NameLengthError\020\211\235"
-      "\001\022\025\n\017NameFilterError\020\212\235\001\022\016\n\010SexSetOK\020\213\235\001"
-      "\022\022\n\014ChangeIconOK\020\214\235\001\022\022\n\014MailNotExist\020\350\235\001"
-      "\022\031\n\023MailAlreadyReceived\020\351\235\001\022\027\n\021MailNotHa"
-      "veReward\020\352\235\001\022\026\n\020MailDeleteFailed\020\354\235\001\022\021\n\013"
-      "MailTimeOut\020\355\235\001\022\026\n\020TaskIdCanNotFind\020\315\236\001\022"
-      "\030\n\022TaskNotInValidTime\020\316\236\001\022\030\n\022CanNotFindT"
-      "askData\020\317\236\001\022\021\n\013TaskNotDone\020\320\236\001\022\031\n\023TaskAl"
-      "readyReceived\020\321\236\001\022\031\n\023TaskReceiveRewardOK"
-      "\020\322\236\001\022\031\n\023AchieveIdCanNotFind\020\261\237\001\022\033\n\025CanNo"
-      "tFindAchieveData\020\262\237\001\022\034\n\026AchieveAlreadyRe"
-      "ceived\020\263\237\001\022\024\n\016AchieveNotDone\020\264\237\001\022\034\n\026Achi"
-      "eveReceiveRewardOK\020\265\237\001\022\024\n\020ZoneDatabaseBu"
-      "sy\020\024\022\027\n\023PublicDatabaseError\020\030\022\022\n\016Account"
-      "IsEmpty\020\032\022\025\n\021CreateRoleAlready\020\033\022\020\n\014Crea"
-      "teRoleOK\020\034\022\026\n\022LoginAlreadyOnline\020\035\022\021\n\rCh"
-      "angeMottoOK\020 \022\023\n\017ModuleIdNotFind\020!\022\025\n\021Se"
-      "tModelClothesOK\020\"\022\023\n\017ChangeIconBoxOK\020#\022\022"
-      "\n\016DataSystemBusy\020$\022\025\n\021ActivationAccount\020"
-      "%\022\027\n\023ActivationCodeError\020&\022\027\n\023LoginCanNo"
-      "tFindGate\020\'\022\024\n\020CanNotFindPlayer\020*\022\025\n\021Can"
-      "NotInquireSelf\020/\022\030\n\024ActivityIdCanNotFind"
-      "\0200\022\032\n\026CanNotFindActivityType\0201\022\033\n\027Activi"
-      "tyAlreadyReceived\0202\022\023\n\017ActivityNotDone\0203"
-      "\022\033\n\027ActivityReceiveRewardOK\0204\022\021\n\rReceive"
-      "GiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\026\n\022Toast"
-      "SendCountOver\020A\022\025\n\021ToastCanNotRepeat\020B\022\025"
-      "\n\021ToastGetCountOver\020C\022\017\n\013ToastFailed\020D\022\013"
-      "\n\007ToastOK\020E\022\024\n\020MatchAlreadyWait\020F\022\024\n\020Mat"
-      "chClusterBusy\020G\022\031\n\025MatchCanNotFindServer"
-      "\020H\022\030\n\024MatchCanNotFindMatch\020I\022\031\n\025MatchGro"
-      "upPlayerLimit\020J\022\027\n\023MatchRequestSuccess\020K"
-      "\022\026\n\022MatchCancelSuccess\020L\022\022\n\016FriendInvite"
-      "OK\020M\022\026\n\022FriendRefuseInvite\020N\022\025\n\021FriendTa"
-      "rgetLimit\020O\022\023\n\017FriendSelfLimit\020P\022\021\n\rFrie"
-      "ndAlready\020Q\022\022\n\016FriendNotExist\020R\022\017\n\013Frien"
-      "dDelOK\020S\022\025\n\021FriendInviteLimit\020T\022\030\n\024Frien"
-      "dInviteNotExist\020U\022\023\n\017MatchNotInMatch\020V\022\027"
-      "\n\023FriendInviteAlready\020W\022\024\n\020MatchMustPrep"
-      "are\020X\022\023\n\017StoreParamError\020Y\022\021\n\rStoreLackC"
-      "ost\020Z\022\024\n\020StoreOutOfLimits\020[\022\026\n\022StoreOutO"
-      "fLimitOwm\020\\\022\027\n\023StoreOutOfLimitDate\020]\022\022\n\016"
-      "WishOrderEmpty\020^\022\024\n\020WishOrderNoExist\020_\022\026"
-      "\n\022WishOrderNoStoreId\020`\022\027\n\023WishOrderHadSt"
-      "oreId\020a\022\024\n\020WishOrderMaxSize\020b\022\033\n\027WishOrd"
-      "erStateRepeatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n\017"
-      "ClothesNotExist\020e\022\024\n\020ClothesDataError\020f\022"
-      "\030\n\024ClothesModleNotMatch\020g\022\022\n\016ClothesDres"
-      "sOK\020h\022\021\n\rModelNotExist\020i\022\021\n\rModelChangeO"
-      "K\020j\022\023\n\017ChatByteTooLong\020k\022\025\n\021ChatNotFindP"
-      "layer\020l\022\025\n\021ChatIntervalError\020m\022\025\n\021ChatFr"
-      "iendIdError\020n\022\026\n\022InviteMatchGroupOK\020o\022\020\n"
-      "\014GroupLeaveOK\020p\022\025\n\021GroupMemberIsFull\020q\022\023"
-      "\n\017GroupServerBusy\020r\022\027\n\023GroupInviteNotExi"
-      "st\020s\022\027\n\023GroupCanNotKickSelf\020t\022\020\n\014GroupIn"
-      "Group\020u\022\026\n\022GroupApplyNotExist\020v\022\023\n\017Group"
-      "NotInGroup\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemDa"
-      "taError\020y\022\021\n\rItemCanNotUse\020z\022\021\n\rGroupNot"
-      "Exist\020{\022\016\n\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022\026"
-      "\n\022GroupPlayerOffline\020~\022\027\n\023GroupAlreadyIn"
-      "Group\020\177\022\026\n\021GroupRefuseInvite\020\200\001\022\032\n\025Group"
-      "RefuseYourInvite\020\201\001\022\025\n\020GroupMemberLeave\020"
-      "\202\001\022\025\n\020GroupRefuseApply\020\203\001\022\030\n\023GroupCaptai"
-      "nOffline\020\204\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017Grou"
-      "pNotCaption\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033\n"
-      "\026FriendRefuseYourInvite\020\210\001\022\020\n\013FriendAddO"
-      "K\020\211\001\022\024\n\017FriendInviteReq\020\212\001\022\020\n\013GroupJoinO"
-      "K\020\213\001\022\024\n\017GroupMemberJoin\020\214\001\022\026\n\021GroupIsNew"
-      "Caption\020\215\001\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024Frie"
-      "ndLinessAddLimit\020\217\001\022\035\n\030FriendLinessAddBy"
-      "WinGame\020\220\001\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032\n"
-      "\025WishPanelAddSuccessed\020\222\001\022\027\n\022GroupInvite"
-      "InMatch\020\223\001\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022Gr"
-      "oupInviteTimeOut\020\225\001\022\032\n\025GroupInviteMatchE"
-      "rror\020\226\001\022\026\n\021GroupApplyTimeOut\020\227\001\022\026\n\021Opera"
-      "teFrequently\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020C"
-      "ompoundNotExist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021\n"
-      "\014RankNotExist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021\n"
-      "\014SignInNotDay\020\241\001\022\024\n\017SignInDataError\020\242\001\022\030"
-      "\n\023SignInRewardAlready\020\243\001\022\023\n\016ZoneServerBu"
-      "sy\020\244\001\022\027\n\022GroupTargetInMatch\020\245\001\022\021\n\014GroupI"
-      "nMatch\020\246\001\022\025\n\020GroupKickInMatch\020\247\001\022\026\n\021Grou"
-      "pLeaveInMatch\020\250\001\022\030\n\023MatchCancelInBattle\020"
-      "\251\001\022\023\n\016MailServerBusy\020\252\001\022\031\n\024RelationDatab"
-      "aseBusy\020\253\001\022\017\n\nSteamError\020\255\001\022\023\n\016SteamData"
-      "Error\020\256\001\022\023\n\016SteamAuthError\020\257\001\022\032\n\025Invalid"
-      "ActivationCode\020\260\001\022\030\n\023CanNotFindLoginNode"
-      "\020\261\001\022\026\n\021ChannelNotSupport\020\262\001\022\020\n\013HaveNotIc"
-      "on\020\263\001\022\032\n\025QueryInviteScoreError\020\264\001\022\027\n\022Pla"
-      "tformServerBusy\020\265\001\022\021\n\014BindAlipayOk\020\266\001\022\025\n"
-      "\020BindAlipayFailed\020\267\001\022\035\n\030ExchangeInviteSc"
-      "oreError\020\270\001\022\036\n\031ExchangeInviteRecordError"
-      "\020\271\001\022\034\n\027VersionNotCompatibility\020\272\001\022\033\n\026Bat"
-      "tleNotCompatibility\020\273\001\022\025\n\020BattleNotPrepa"
-      "re\020\274\001\022\023\n\016BanForbidLogin\020\275\001\022\022\n\rTitleNotEx"
-      "ist\020\276\001\022\017\n\nServerBusy\020\350\007b\006proto3"
+      "\n\014RefuseMinute\020\004*L\n\rWishStateEnum\022\014\n\010All"
+      "Watch\020\000\022\r\n\tNoneWatch\020\001\022\017\n\013FriendWatch\020\002\022"
+      "\r\n\tTeamWatch\020\003*L\n\020FriendLinessEnum\022\020\n\014Un"
+      "KnowFriend\020\000\022\010\n\004Team\020\001\022\007\n\003Win\020\002\022\t\n\005Toast"
+      "\020\003\022\010\n\004Give\020\004*:\n\tGuildEnum\022\017\n\013UnKnowGuild"
+      "\020\000\022\r\n\tJoinGuild\020\001\022\r\n\tExitGuild\020\002*I\n\017Guil"
+      "dReviewEnum\022\025\n\021UnknowGuildReview\020\000\022\016\n\nAg"
+      "reeApply\020\001\022\017\n\013RefuseApply\020\002*\?\n\nBattleEnu"
+      "m\022\020\n\014BattleUnknow\020\000\022\017\n\013OpenSuccess\020\001\022\016\n\n"
+      "OpenFailed\020\002*\271\"\n\010CodeEnum\022\t\n\005Error\020\000\022\006\n\002"
+      "Ok\020\001\022\r\n\tSignError\020\002\022\017\n\013WeiXinError\020\003\022\023\n\017"
+      "WeiXinCodeError\020\004\022\026\n\022WeiXinTokenTimeout\020"
+      "\005\022\024\n\020WeiXinTokenError\020\006\022\023\n\017WeiXinUserErr"
+      "or\020\007\022\020\n\014ChannelError\020\010\022\022\n\016ChannelNotOpen"
+      "\020\t\022\023\n\017WorldSystemBusy\020\n\022\023\n\017LoginSystemBu"
+      "sy\020\013\022\023\n\017CanNotFindProxy\020\014\022\022\n\016AuthServerB"
+      "usy\020\r\022\024\n\020AuthDatabaseBusy\020\016\022\022\n\016CanNotFin"
+      "dGame\020\017\022\023\n\017LoginTokenError\020\020\022\021\n\rHttpData"
+      "Error\020\022\022\026\n\022LoginDatabaseError\020\023\022\024\n\017Route"
+      "ServerBusy\020\221N\022\025\n\020NameDatabaseBusy\020\222N\022\024\n\016"
+      "LoadDataFailed\020\241\234\001\022\027\n\021QueryPlayerFailed\020"
+      "\242\234\001\022\017\n\tNameEmpty\020\205\235\001\022\024\n\016NameAlreadySet\020\206"
+      "\235\001\022\026\n\020NameAlreadyExist\020\207\235\001\022\017\n\tNameSetOK\020"
+      "\210\235\001\022\025\n\017NameLengthError\020\211\235\001\022\025\n\017NameFilter"
+      "Error\020\212\235\001\022\016\n\010SexSetOK\020\213\235\001\022\022\n\014ChangeIconO"
+      "K\020\214\235\001\022\022\n\014MailNotExist\020\350\235\001\022\031\n\023MailAlready"
+      "Received\020\351\235\001\022\027\n\021MailNotHaveReward\020\352\235\001\022\026\n"
+      "\020MailDeleteFailed\020\354\235\001\022\021\n\013MailTimeOut\020\355\235\001"
+      "\022\026\n\020TaskIdCanNotFind\020\315\236\001\022\030\n\022TaskNotInVal"
+      "idTime\020\316\236\001\022\030\n\022CanNotFindTaskData\020\317\236\001\022\021\n\013"
+      "TaskNotDone\020\320\236\001\022\031\n\023TaskAlreadyReceived\020\321"
+      "\236\001\022\031\n\023TaskReceiveRewardOK\020\322\236\001\022\031\n\023Achieve"
+      "IdCanNotFind\020\261\237\001\022\033\n\025CanNotFindAchieveDat"
+      "a\020\262\237\001\022\034\n\026AchieveAlreadyReceived\020\263\237\001\022\024\n\016A"
+      "chieveNotDone\020\264\237\001\022\034\n\026AchieveReceiveRewar"
+      "dOK\020\265\237\001\022\022\n\014StoreNotFind\020\225\240\001\022\030\n\022StoreOutO"
+      "fLimitOwm\020\226\240\001\022\027\n\021StoreBuyTypeError\020\227\240\001\022\023"
+      "\n\rStoreLackCost\020\230\240\001\022\026\n\020StoreOutOfLimits\020"
+      "\231\240\001\022\030\n\022StoreBuyCountError\020\232\240\001\022\024\n\020ZoneDat"
+      "abaseBusy\020\024\022\027\n\023PublicDatabaseError\020\030\022\022\n\016"
+      "AccountIsEmpty\020\032\022\025\n\021CreateRoleAlready\020\033\022"
+      "\020\n\014CreateRoleOK\020\034\022\026\n\022LoginAlreadyOnline\020"
+      "\035\022\021\n\rChangeMottoOK\020 \022\023\n\017ModuleIdNotFind\020"
+      "!\022\025\n\021SetModelClothesOK\020\"\022\023\n\017ChangeIconBo"
+      "xOK\020#\022\022\n\016DataSystemBusy\020$\022\025\n\021ActivationA"
+      "ccount\020%\022\027\n\023ActivationCodeError\020&\022\027\n\023Log"
+      "inCanNotFindGate\020\'\022\024\n\020CanNotFindPlayer\020*"
+      "\022\025\n\021CanNotInquireSelf\020/\022\030\n\024ActivityIdCan"
+      "NotFind\0200\022\032\n\026CanNotFindActivityType\0201\022\033\n"
+      "\027ActivityAlreadyReceived\0202\022\023\n\017ActivityNo"
+      "tDone\0203\022\033\n\027ActivityReceiveRewardOK\0204\022\021\n\r"
+      "ReceiveGiftOK\020:\022\025\n\021ReceiveGiftFailed\020;\022\026"
+      "\n\022ToastSendCountOver\020A\022\025\n\021ToastCanNotRep"
+      "eat\020B\022\025\n\021ToastGetCountOver\020C\022\017\n\013ToastFai"
+      "led\020D\022\013\n\007ToastOK\020E\022\024\n\020MatchAlreadyWait\020F"
+      "\022\024\n\020MatchClusterBusy\020G\022\031\n\025MatchCanNotFin"
+      "dServer\020H\022\030\n\024MatchCanNotFindMatch\020I\022\031\n\025M"
+      "atchGroupPlayerLimit\020J\022\027\n\023MatchRequestSu"
+      "ccess\020K\022\026\n\022MatchCancelSuccess\020L\022\022\n\016Frien"
+      "dInviteOK\020M\022\026\n\022FriendRefuseInvite\020N\022\025\n\021F"
+      "riendTargetLimit\020O\022\023\n\017FriendSelfLimit\020P\022"
+      "\021\n\rFriendAlready\020Q\022\022\n\016FriendNotExist\020R\022\017"
+      "\n\013FriendDelOK\020S\022\025\n\021FriendInviteLimit\020T\022\030"
+      "\n\024FriendInviteNotExist\020U\022\023\n\017MatchNotInMa"
+      "tch\020V\022\027\n\023FriendInviteAlready\020W\022\024\n\020MatchM"
+      "ustPrepare\020X\022\027\n\023StoreOutOfLimitDate\020]\022\022\n"
+      "\016WishOrderEmpty\020^\022\024\n\020WishOrderNoExist\020_\022"
+      "\026\n\022WishOrderNoStoreId\020`\022\027\n\023WishOrderHadS"
+      "toreId\020a\022\024\n\020WishOrderMaxSize\020b\022\033\n\027WishOr"
+      "derStateRepeatSet\020c\022\020\n\014GiveLackCost\020d\022\023\n"
+      "\017ClothesNotExist\020e\022\024\n\020ClothesDataError\020f"
+      "\022\030\n\024ClothesModleNotMatch\020g\022\022\n\016ClothesDre"
+      "ssOK\020h\022\021\n\rModelNotExist\020i\022\021\n\rModelChange"
+      "OK\020j\022\023\n\017ChatByteTooLong\020k\022\025\n\021ChatNotFind"
+      "Player\020l\022\025\n\021ChatIntervalError\020m\022\025\n\021ChatF"
+      "riendIdError\020n\022\026\n\022InviteMatchGroupOK\020o\022\020"
+      "\n\014GroupLeaveOK\020p\022\025\n\021GroupMemberIsFull\020q\022"
+      "\023\n\017GroupServerBusy\020r\022\027\n\023GroupInviteNotEx"
+      "ist\020s\022\027\n\023GroupCanNotKickSelf\020t\022\020\n\014GroupI"
+      "nGroup\020u\022\026\n\022GroupApplyNotExist\020v\022\023\n\017Grou"
+      "pNotInGroup\020w\022\020\n\014ItemNotExist\020x\022\021\n\rItemD"
+      "ataError\020y\022\021\n\rItemCanNotUse\020z\022\021\n\rGroupNo"
+      "tExist\020{\022\016\n\nStoreBuyOK\020|\022\r\n\tGiveBuyOK\020}\022"
+      "\026\n\022GroupPlayerOffline\020~\022\027\n\023GroupAlreadyI"
+      "nGroup\020\177\022\026\n\021GroupRefuseInvite\020\200\001\022\032\n\025Grou"
+      "pRefuseYourInvite\020\201\001\022\025\n\020GroupMemberLeave"
+      "\020\202\001\022\025\n\020GroupRefuseApply\020\203\001\022\030\n\023GroupCapta"
+      "inOffline\020\204\001\022\023\n\016GroupNoCaption\020\205\001\022\024\n\017Gro"
+      "upNotCaption\020\206\001\022\025\n\020FriendServerBusy\020\207\001\022\033"
+      "\n\026FriendRefuseYourInvite\020\210\001\022\020\n\013FriendAdd"
+      "OK\020\211\001\022\024\n\017FriendInviteReq\020\212\001\022\020\n\013GroupJoin"
+      "OK\020\213\001\022\024\n\017GroupMemberJoin\020\214\001\022\026\n\021GroupIsNe"
+      "wCaption\020\215\001\022\024\n\017FriendLinessAdd\020\216\001\022\031\n\024Fri"
+      "endLinessAddLimit\020\217\001\022\035\n\030FriendLinessAddB"
+      "yWinGame\020\220\001\022\031\n\024FriendLinessMaxLimit\020\221\001\022\032"
+      "\n\025WishPanelAddSuccessed\020\222\001\022\027\n\022GroupInvit"
+      "eInMatch\020\223\001\022\026\n\021GroupApplyInMatch\020\224\001\022\027\n\022G"
+      "roupInviteTimeOut\020\225\001\022\032\n\025GroupInviteMatch"
+      "Error\020\226\001\022\026\n\021GroupApplyTimeOut\020\227\001\022\026\n\021Oper"
+      "ateFrequently\020\230\001\022\022\n\rDataNotEnough\020\231\001\022\025\n\020"
+      "CompoundNotExist\020\232\001\022\021\n\014LoginIsClose\020\233\001\022\021"
+      "\n\014RankNotExist\020\234\001\022\023\n\016RankServerBusy\020\235\001\022\021"
+      "\n\014SignInNotDay\020\241\001\022\024\n\017SignInDataError\020\242\001\022"
+      "\030\n\023SignInRewardAlready\020\243\001\022\023\n\016ZoneServerB"
+      "usy\020\244\001\022\027\n\022GroupTargetInMatch\020\245\001\022\021\n\014Group"
+      "InMatch\020\246\001\022\025\n\020GroupKickInMatch\020\247\001\022\026\n\021Gro"
+      "upLeaveInMatch\020\250\001\022\030\n\023MatchCancelInBattle"
+      "\020\251\001\022\023\n\016MailServerBusy\020\252\001\022\031\n\024RelationData"
+      "baseBusy\020\253\001\022\017\n\nSteamError\020\255\001\022\023\n\016SteamDat"
+      "aError\020\256\001\022\023\n\016SteamAuthError\020\257\001\022\032\n\025Invali"
+      "dActivationCode\020\260\001\022\030\n\023CanNotFindLoginNod"
+      "e\020\261\001\022\026\n\021ChannelNotSupport\020\262\001\022\020\n\013HaveNotI"
+      "con\020\263\001\022\032\n\025QueryInviteScoreError\020\264\001\022\027\n\022Pl"
+      "atformServerBusy\020\265\001\022\021\n\014BindAlipayOk\020\266\001\022\025"
+      "\n\020BindAlipayFailed\020\267\001\022\035\n\030ExchangeInviteS"
+      "coreError\020\270\001\022\036\n\031ExchangeInviteRecordErro"
+      "r\020\271\001\022\034\n\027VersionNotCompatibility\020\272\001\022\033\n\026Ba"
+      "ttleNotCompatibility\020\273\001\022\025\n\020BattleNotPrep"
+      "are\020\274\001\022\023\n\016BanForbidLogin\020\275\001\022\022\n\rTitleNotE"
+      "xist\020\276\001\022\017\n\nServerBusy\020\350\007b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 5391);
+      descriptor, 5352);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -317,26 +316,9 @@ bool InviteEnum_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* StoreEnum_descriptor() {
-  protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[7];
-}
-bool StoreEnum_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-      return true;
-    default:
-      return false;
-  }
-}
-
 const ::google::protobuf::EnumDescriptor* WishStateEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[8];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[7];
 }
 bool WishStateEnum_IsValid(int value) {
   switch (value) {
@@ -352,7 +334,7 @@ bool WishStateEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* FriendLinessEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[9];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[8];
 }
 bool FriendLinessEnum_IsValid(int value) {
   switch (value) {
@@ -369,7 +351,7 @@ bool FriendLinessEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* GuildEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[10];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[9];
 }
 bool GuildEnum_IsValid(int value) {
   switch (value) {
@@ -384,7 +366,7 @@ bool GuildEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* GuildReviewEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[11];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[10];
 }
 bool GuildReviewEnum_IsValid(int value) {
   switch (value) {
@@ -399,7 +381,7 @@ bool GuildReviewEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* BattleEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[12];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[11];
 }
 bool BattleEnum_IsValid(int value) {
   switch (value) {
@@ -414,7 +396,7 @@ bool BattleEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor() {
   protobuf_KFEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[13];
+  return protobuf_KFEnumMessage_2eproto::file_level_enum_descriptors[12];
 }
 bool CodeEnum_IsValid(int value) {
   switch (value) {
@@ -484,10 +466,6 @@ bool CodeEnum_IsValid(int value) {
     case 86:
     case 87:
     case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
     case 93:
     case 94:
     case 95:
@@ -611,6 +589,12 @@ bool CodeEnum_IsValid(int value) {
     case 20403:
     case 20404:
     case 20405:
+    case 20501:
+    case 20502:
+    case 20503:
+    case 20504:
+    case 20505:
+    case 20506:
       return true;
     default:
       return false;

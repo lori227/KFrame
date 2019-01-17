@@ -165,7 +165,7 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto datatime = kfhero->GetValue( __KF_STRING__( time ) );
-            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ) );
+            auto elementtime = kfelementobject->CalcValue( __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
                 if ( elementtime == _invalid_int )

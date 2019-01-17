@@ -13,10 +13,10 @@ namespace KFrame
         bool SetValue( std::string value );
 
         // 计算数值
-        uint64 CalcValue( float multiple = 1.0f );
+        uint64 CalcValue( float multiple );
 
         // 获得使用的数值
-        uint64 GetValue();
+        uint64 GetValue( float multiple );
 
     public:
         uint64 _min_value{ 0 };
@@ -79,7 +79,7 @@ namespace KFrame
         }
 
         // 计算数值
-        virtual uint64 CalcValue( float multiple = 1.0f );
+        virtual uint64 CalcValue( float multiple );
 
     public:
         // 属性值
@@ -96,7 +96,7 @@ namespace KFrame
         }
 
         // 计算数值
-        uint64 CalcValue( const std::string& name );
+        uint64 CalcValue( const std::string& name, float multiple );
 
     public:
 
@@ -129,7 +129,7 @@ namespace KFrame
         bool Parse( const std::string& strdata, const char* function, uint32 line );
 
         // 格式化字串
-        const std::string& Serialize() const;
+        const std::string& Serialize( float multiple = 1.0f ) const;
 
         // 设置操作
         void SetOperate( uint32 operate );
@@ -140,9 +140,6 @@ namespace KFrame
 
         // 是否有随机奖励
         bool _is_rand_value;
-
-        // 是否有改变属性
-        bool _is_change_value;
 
         // 元素列表
         std::vector< KFElement* > _element_list;

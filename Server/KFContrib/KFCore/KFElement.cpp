@@ -25,27 +25,21 @@ namespace KFrame
             _use_value = KFGlobal::Instance()->RandInRange( static_cast< uint32 >( _min_value ), static_cast< uint32 >( _max_value ), 1 );
         }
 
-        _use_value = static_cast< uint64 >( _use_value * multiple );
-        return _use_value;
+        return static_cast< uint64 >( _use_value * multiple );
     }
 
-    uint64 KFValue::GetValue()
+    uint64 KFValue::GetValue( float multiple )
     {
-        return _use_value;
+        return static_cast< uint64 >( _use_value * multiple );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
-    uint64 KFElementVale::CalcValue( float multiple /* = 1.0f */ )
+    uint64 KFElementVale::CalcValue( float multiple )
     {
-        if ( multiple != 1.0f )
-        {
-            _parent->_is_change_value = true;
-        }
-
         return _value.CalcValue( multiple );
     }
 
-    uint64 KFElementObject::CalcValue( const std::string& name )
+    uint64 KFElementObject::CalcValue( const std::string& name, float multiple )
     {
         auto kfvalue = _values.Find( name );
         if ( kfvalue == nullptr )
@@ -53,13 +47,12 @@ namespace KFrame
             return 0u;
         }
 
-        return kfvalue->CalcValue();
+        return kfvalue->CalcValue( multiple );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
     KFElements::KFElements()
     {
-        _is_change_value = false;
         _is_rand_value = false;
     }
 
@@ -165,9 +158,9 @@ namespace KFrame
         }
     }
 
-    const std::string& KFElements::Serialize() const
+    const std::string& KFElements::Serialize( float multiple ) const
     {
-        if ( !_is_rand_value && !_is_change_value )
+        if ( !_is_rand_value && multiple == 1.0f )
         {
             return _data;
         }
@@ -184,10 +177,10 @@ namespace KFrame
             if ( kfelement->IsValue() )
             {
                 auto kfelementvalue = static_cast< KFElementVale* >( kfelement );
-                auto strvalue = __TO_STRING__( kfelementvalue->_value.GetValue() );
+                auto usevalue = __TO_STRING__( kfelementvalue->_value.GetValue( multiple ) );
 
                 __JSON_OBJECT__( kfdata );
-                __JSON_SET_VALUE__( kfdata, kfelementvalue->_data_name, strvalue );
+                __JSON_SET_VALUE__( kfdata, kfelementvalue->_data_name, usevalue );
                 __JSON_ADD_VALUE__( kfjson, kfdata );
             }
             else if ( kfelement->IsObject() )
@@ -203,8 +196,8 @@ namespace KFrame
 
                 for ( auto& iter : kfelementobject->_values._objects )
                 {
-                    auto strvalue = __TO_STRING__( iter.second->GetValue() );
-                    __JSON_SET_VALUE__( kfchild, iter.first, strvalue );
+                    auto usevalue = __TO_STRING__( iter.second->GetValue( multiple ) );
+                    __JSON_SET_VALUE__( kfchild, iter.first, usevalue );
                 }
 
                 __JSON_OBJECT__( kfdata );

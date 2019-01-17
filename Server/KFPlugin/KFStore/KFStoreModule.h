@@ -2,6 +2,7 @@
 #define __KF_STORE__MODULE_H__
 
 #include "KFrame.h"
+#include "KFStoreConfig.h"
 #include "KFStoreInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -31,11 +32,21 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleBuyStoreReq );
 
         // 请求商城信息
-        __KF_MESSAGE_FUNCTION__( HandleQueryStoreInfoReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryStoreReq );
 
     private:
         // 购买商品
-        uint32 BuyStoreResult( KFEntity* player, const std::string& buytype, uint32 shopid, uint32 num );
+        uint32 ProcessBuyStore( KFEntity* player, const std::string& buytype, uint32 pid, uint32 count );
+
+        // 判断自己是否拥有此商品
+        bool CheckOwnLimit( KFEntity* player, const KFStoreSetting* kfsetting );
+
+        // 判断物品限购次数
+        bool CheckBuyLimit( KFEntity* player, const KFStoreSetting* kfsetting, uint32 count );
+
+        // 保存物品购买次数
+        void SaveBuyLimit( KFEntity* player, const KFStoreSetting* kfsetting, uint32 count );
+
         bool CheckLimitItem( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime, uint32 buylimits );
         bool CheckOwnLimit( KFEntity* player, uint32 maxowns, uint32 num, const KFElements* kfagents );
         void SetLimitInfo( KFEntity* player, uint32 shopid, uint32 num, uint64 startbuytime );

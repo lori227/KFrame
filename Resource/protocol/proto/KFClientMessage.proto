@@ -576,8 +576,8 @@ message MsgQueryStoreReq
 }
 
 // 请求商城信息反馈
-// MSG_QUERY_STORE_INFO_ACK
-message MsgQueryStoreInfoAck
+// MSG_QUERY_STORE_ACK
+message MsgQueryStoreAck
 {
 	bytes version = 1;		// 版本号
 	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )

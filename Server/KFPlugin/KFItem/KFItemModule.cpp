@@ -60,7 +60,7 @@ namespace KFrame
         if ( kfsetting->IsRealItem() )
         {
             // 计算物品数量
-            auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+            auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ), multiple );
             if ( itemcount == _invalid_int )
             {
                 return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemcount = null!", kfelement->_parent->_data );
@@ -131,7 +131,7 @@ namespace KFrame
                 continue;
             }
 
-            auto value = iter.second->GetValue();
+            auto value = iter.second->GetValue( 1.0f );
             kfitem->SetValue( name, value );
         }
 
@@ -230,7 +230,7 @@ namespace KFrame
         }
 
         // 判断数量
-        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
@@ -272,7 +272,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
         }
 
-        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ) );
+        auto itemcount = kfelementobject->CalcValue( __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
@@ -331,7 +331,7 @@ namespace KFrame
         // 添加奖励
         if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
         {
-            player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
+            player->AddElement( __FUNC_LINE__, &kfsetting->_rewards, true );
         }
 
         // 调用lua脚本
