@@ -114,7 +114,6 @@ namespace KFrame
                     value = kfvalue->_value;
                 }
 
-                KFUtility::ReplaceString( value, " ", "" );
                 KFUtility::ReplaceString( value, "\"", "&quot;" );
                 data.AddData( j, value );
             }
