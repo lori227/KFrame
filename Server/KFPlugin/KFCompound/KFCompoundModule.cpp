@@ -37,7 +37,7 @@ namespace KFrame
         // 判断是否足够
         if ( player->CheckElement( __FUNC_LINE__, &kfsetting->_cost_data ) )
         {
-            return _kf_display->SendToClient( player, KFMsg::DataNotEnough );
+            return _kf_display->SendToClient( player, KFMsg::CompoundDataNotEnough );
         }
 
         // 扣除材料
