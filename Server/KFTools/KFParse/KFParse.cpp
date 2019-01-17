@@ -60,7 +60,7 @@ namespace KFrame
         }
 
         // 第1行属性名
-        static auto _begin_col = 2;
+        static auto _begin_col = 1;
         static auto _begin_row = 1;
         std::map< int32, std::string > _names;
         for ( auto i = _begin_col; i <= sheet->_dimension._last_col; ++i )
