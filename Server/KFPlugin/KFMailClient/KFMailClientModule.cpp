@@ -318,7 +318,7 @@ namespace KFrame
         }
 
         player->UpdateData( kfmail, __KF_STRING__( status ), KFOperateEnum::Set, KFMsg::ReceiveStatus );
-        player->AddElement( &kfelements, true, __FUNC_LINE__ );
+        player->AddElement( __FUNC_LINE__, &kfelements, true );
     }
 
     MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
