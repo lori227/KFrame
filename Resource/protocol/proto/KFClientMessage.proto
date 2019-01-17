@@ -49,6 +49,8 @@ enum ClientProtocol
 	MSG_QUERY_STORE_REQ = 162;				// 请求商城信息
 	MSG_QUERY_STORE_ACK = 163;				// 请求商城信息反馈
 
+	// compound
+	MSG_COMPOUND_DATA_REQ = 181;			// 合成属性
 
 
 	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
@@ -105,13 +107,12 @@ enum ClientProtocol
 	MSG_QUERY_SETTING_REQ = 178;				// 查询设置请求
 	MSG_QUERY_SETTING_ACK = 179;				// 查询设置回馈
 	MSG_UPDATE_SETTING_REQ = 180;				// 更新设置请求
-	MSG_QUERY_RECENT_LIST_REQ = 181;			// 查询最近列表申请
+	MSG_QUERY_RECENT_LIST_REQ = 1181;			// 查询最近列表申请
 	MSG_QUERY_RECENT_LIST_ACK = 182;			// 查询最近列表回馈
 	MSG_QUERY_RANK_LIST_REQ = 183;				// 查询全服排行榜
 	MSG_QUERY_RANK_LIST_ACK	 = 184;				// 查询排行榜反馈
 	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// 查询好友排行榜
 	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// 查询好友排行榜
-	MSG_COMPOUND_DATA_REQ = 187;				// 合成属性
 	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
 	

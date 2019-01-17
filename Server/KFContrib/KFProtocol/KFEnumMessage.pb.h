@@ -377,6 +377,8 @@ enum CodeEnum {
   StoreLackCost = 20504,
   StoreOutOfLimits = 20505,
   StoreBuyCountError = 20506,
+  CompoundDataNotEnough = 20601,
+  CompoundNotExist = 20602,
   ZoneDatabaseBusy = 20,
   PublicDatabaseError = 24,
   AccountIsEmpty = 26,
@@ -484,8 +486,6 @@ enum CodeEnum {
   GroupInviteMatchError = 150,
   GroupApplyTimeOut = 151,
   OperateFrequently = 152,
-  DataNotEnough = 153,
-  CompoundNotExist = 154,
   LoginIsClose = 155,
   RankNotExist = 156,
   RankServerBusy = 157,
@@ -524,7 +524,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = StoreBuyCountError;
+const CodeEnum CodeEnum_MAX = CompoundNotExist;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();
