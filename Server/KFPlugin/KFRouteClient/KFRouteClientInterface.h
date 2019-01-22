@@ -31,6 +31,9 @@ namespace KFrame
         virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册服务
+        virtual void RegisterService( const std::string& name ) = 0;
+
         // 同步所有对象到Route Shard
         virtual void SyncObject( const std::string& name, RouteObjectList& objectlist ) = 0;
 
@@ -39,22 +42,6 @@ namespace KFrame
 
         // 删除对象到Route Shard
         virtual void RemoveObject( const std::string& name, uint64 objectid ) = 0;
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 注册回调
-        template< class T >
-        void RegisterRouteConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
-        {
-            KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddRouteConnectionFunction( typeid( T ).name(), function );
-        }
-
-        // 卸载回调
-        template< class T >
-        void UnRegisterRouteConnectionFunction( T* object )
-        {
-            RemoveRouteConnectionFunction( typeid( T ).name() );
-        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发消息
@@ -74,24 +61,12 @@ namespace KFrame
         }
 
     protected:
-        virtual void AddRouteConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;
-        virtual void RemoveRouteConnectionFunction( const std::string& name ) = 0;
         virtual void SetTransmitFunction( KFTransmitFunction& function ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_route, KFRouteClientInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 连接回调
-#define __KF_ROUTE_CONNECTION_FUNCTION__( function )\
-    void function( uint64 serverid )
-
-#define __REGISTER_ROUTE_CONNECTION_FUNCTION__( function )\
-    _kf_route->RegisterRouteConnectionFunction( this, function )
-
-#define __UNREGISTER_ROUTE_CONNECTION_FUNCTION__()\
-    _kf_route->UnRegisterRouteConnectionFunction( this )
-
 #define __REGISTER_ROUTE_MESSAGE_FUNCTION__( function )\
     _kf_route->RegisterTransmitFunction( this, function )
 

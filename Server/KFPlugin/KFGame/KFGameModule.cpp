@@ -9,7 +9,6 @@ namespace KFrame
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGameModule::OnClientConnectionServer );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFGameModule::OnConnectionRoute );
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
 
@@ -31,7 +30,6 @@ namespace KFrame
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         __UNREGISTER_ROUTE_MESSAGE_FUNCTION__();
-        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
 
         _kf_player->UnBindAfterLoadFunction( this );
@@ -44,6 +42,12 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    void KFGameModule::OnceRun()
+    {
+        // 注册玩家转发服务
+        _kf_route->RegisterService( __KF_STRING__( player ) );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,19 +77,6 @@ namespace KFrame
         {
             _world_server_id = _invalid_int;
         }
-    }
-
-    __KF_ROUTE_CONNECTION_FUNCTION__( KFGameModule::OnConnectionRoute )
-    {
-        RouteObjectList playerlist;
-        auto player = _kf_player->FirstPlayer();
-        while ( player != nullptr )
-        {
-            playerlist.insert( player->GetKeyID() );
-            player = _kf_player->NextPlayer();
-        }
-
-        _kf_route->SyncObject( __KF_STRING__( player ), playerlist );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

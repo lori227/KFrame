@@ -346,7 +346,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        kfbasic->SetValue( __KF_STRING__( status ), KFMsg::OnlineStatus );
+        kfbasic->SetValue( __KF_STRING__( status ), KFMsg::OnlineState );
         kfbasic->SetValue( __KF_STRING__( statustime ), kfglobal->_real_time );
         kfbasic->SetValue( __KF_STRING__( serverid ), kfglobal->_app_id._union._id );
 

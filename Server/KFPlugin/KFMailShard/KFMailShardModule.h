@@ -37,9 +37,6 @@ namespace KFrame
         // 计划清理过期的全局邮件
         __KF_SCHEDULE_FUNCTION__( OnScheduleClearWholeOverdueMail );
 
-        // 连接route
-        __KF_ROUTE_CONNECTION_FUNCTION__( OnConnectRouteCluster );
-
         // 增加邮件
         __KF_HTTP_FUNCTION__( HandleGMAddMailReq );
 

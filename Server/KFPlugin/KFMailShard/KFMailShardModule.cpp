@@ -4,8 +4,6 @@ namespace KFrame
 {
     void KFMailShardModule::BeforeRun()
     {
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFMailShardModule::OnConnectRouteCluster );
-
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailShardModule::HandleGMAddMailReq );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +18,6 @@ namespace KFrame
     void KFMailShardModule::BeforeShut()
     {
         __UNREGISTER_SCHEDULE_FUNCTION__();
-        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ) );
 
@@ -33,6 +30,9 @@ namespace KFrame
 
     void KFMailShardModule::OnceRun()
     {
+        // 注册转发服务
+        _kf_route->RegisterService( __KF_STRING__( mail ) );
+
         // 初始化redis
         _mail_driver = _kf_redis->Create( __KF_STRING__( mail ) );
 
@@ -44,12 +44,6 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ROUTE_CONNECTION_FUNCTION__( KFMailShardModule::OnConnectRouteCluster )
-    {
-        RouteObjectList objectlist;
-        _kf_route->SyncObject( __KF_STRING__( mail ), objectlist );
-    }
-
     __KF_HTTP_FUNCTION__( KFMailShardModule::HandleGMAddMailReq )
     {
         auto strdata = data;

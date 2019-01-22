@@ -29,6 +29,7 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -85,9 +86,6 @@ namespace KFrame
 
         // 断开连接
         __KF_CLIENT_LOST_FUNCTION__( OnClientLostServer );
-
-        // route连接成功
-        __KF_ROUTE_CONNECTION_FUNCTION__( OnConnectionRoute );
 
         // 转发消息到玩家
         __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToPlayer );

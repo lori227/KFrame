@@ -5,6 +5,7 @@ namespace KFrame
 {
     void KFRouteClientModule::BeforeRun()
     {
+        _kf_cluster_client->RegisterConnectionFunction( this, &KFRouteClientModule::OnRouteConnectCluster );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, &KFRouteClientModule::HandleRouteDiscoverToClientReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &KFRouteClientModule::HandleRouteMessageToClientAck );
@@ -12,6 +13,7 @@ namespace KFrame
 
     void KFRouteClientModule::BeforeShut()
     {
+        _kf_cluster_client->UnRegisterConnectionFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK );
@@ -35,14 +37,12 @@ namespace KFrame
         _kf_transmit_function = function;
     }
 
-    void KFRouteClientModule::AddRouteConnectionFunction( const std::string& name, KFClusterConnectionFunction& function )
+    void KFRouteClientModule::OnRouteConnectCluster( uint64 serverid )
     {
-        _kf_cluster_client->AddConnectionFunction( name, function );
-    }
-
-    void KFRouteClientModule::RemoveRouteConnectionFunction( const std::string& name )
-    {
-        _kf_cluster_client->RemoveConnectionFunction( name );
+        for ( auto& iter : _service_object_list )
+        {
+            RouteSyncObjectToProxy( iter.first, iter.second );
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,18 +172,33 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRouteClientModule::SyncObject( const std::string& name, std::unordered_set<uint64>& objectlist )
+    void KFRouteClientModule::RegisterService( const std::string& name )
+    {
+        RouteObjectList temp;
+        SyncObject( name, temp );
+    }
+
+    void KFRouteClientModule::SyncObject( const std::string& name, RouteObjectList& objectlist )
     {
         auto& savelist = _service_object_list[ name ];
         savelist.swap( objectlist );
 
+        // 如果在服务中, 同步给转发集群
+        if ( _kf_cluster_client->IsInService() )
+        {
+            RouteSyncObjectToProxy( name, savelist );
+        }
+    }
+
+    void KFRouteClientModule::RouteSyncObjectToProxy( const std::string& name, RouteObjectList& objectlist )
+    {
         // 发送给shard
         KFMsg::S2SRouteSyncObjectToProxyReq req;
         req.set_name( name );
         req.set_shardid( _invalid_int );
         req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
 
-        for ( auto objectid : savelist )
+        for ( auto objectid : objectlist )
         {
             req.add_objectid( objectid );
         }
@@ -191,7 +206,7 @@ namespace KFrame
         auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "service[{}] sync object failed!", name );
+            __LOG_ERROR__( "service=[{}] sync object list failed!", name );
         }
     }
 

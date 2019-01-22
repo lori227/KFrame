@@ -7,7 +7,6 @@ namespace KFrame
 
     void KFDataShardModule::BeforeRun()
     {
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFDataShardModule::OnRouteConnection );
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
@@ -21,7 +20,6 @@ namespace KFrame
     void KFDataShardModule::BeforeShut()
     {
         __UNREGISTER_TIMER__();
-        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ );
@@ -31,13 +29,8 @@ namespace KFrame
 
     void KFDataShardModule::OnceRun()
     {
+        _kf_route->RegisterService( __KF_STRING__( data ) );
         _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
-    }
-
-    __KF_ROUTE_CONNECTION_FUNCTION__( KFDataShardModule::OnRouteConnection )
-    {
-        RouteObjectList objectlist;
-        _kf_route->SyncObject( __KF_STRING__( data ), objectlist );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

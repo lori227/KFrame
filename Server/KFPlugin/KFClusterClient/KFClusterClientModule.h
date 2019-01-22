@@ -31,6 +31,9 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 是否在服务中
+        virtual bool IsInService();
+
         // 发送消息
         virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
         virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );

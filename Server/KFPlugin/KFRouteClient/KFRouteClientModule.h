@@ -55,6 +55,9 @@ namespace KFrame
         virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 注册服务
+        virtual void RegisterService( const std::string& name );
+
         // 同步所有对象到Route Shard
         virtual void SyncObject( const std::string& name, RouteObjectList& objectlist );
 
@@ -65,13 +68,16 @@ namespace KFrame
         virtual void RemoveObject( const std::string& name, uint64 objectid );
 
     protected:
-        virtual void AddRouteConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
-        virtual void RemoveRouteConnectionFunction( const std::string& name );
-
         // 注册
         virtual void SetTransmitFunction( KFTransmitFunction& function );
 
     protected:
+        // 连接成功
+        void OnRouteConnectCluster( uint64 serverid );
+
+        // 发送同步对象消息
+        void RouteSyncObjectToProxy( const std::string& name, RouteObjectList& objectlist );
+
         // 转发消息
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToClientAck );
 

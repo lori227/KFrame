@@ -56,9 +56,6 @@ namespace KFrame
         // 定时保存数据
         __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
 
-        // route 连接
-        __KF_ROUTE_CONNECTION_FUNCTION__( OnRouteConnection );
-
     protected:
         // 玩家登陆
         __KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );

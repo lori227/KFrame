@@ -180,6 +180,11 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    bool KFClusterClientModule::IsInService()
+    {
+        return _cluster_in_services;
+    }
+
     bool KFClusterClientModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
     {
         return SendToProxy( _invalid_int, msgid, message );

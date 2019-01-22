@@ -5,7 +5,6 @@ namespace KFrame
 {
     void KFPublicShardModule::BeforeRun()
     {
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFPublicShardModule::OnConnectRouteCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &KFPublicShardModule::HandleUpdateDataToPublicReq );
@@ -14,7 +13,6 @@ namespace KFrame
 
     void KFPublicShardModule::BeforeShut()
     {
-        __UNREGISTER_ROUTE_CONNECTION_FUNCTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
@@ -22,14 +20,11 @@ namespace KFrame
 
     void KFPublicShardModule::OnceRun()
     {
+        _kf_route->RegisterService( __KF_STRING__( public ) );
+
+
         _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
-    }
-
-    __KF_ROUTE_CONNECTION_FUNCTION__( KFPublicShardModule::OnConnectRouteCluster )
-    {
-        RouteObjectList objectlist;
-        _kf_route->SyncObject( __KF_STRING__( public ), objectlist );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
