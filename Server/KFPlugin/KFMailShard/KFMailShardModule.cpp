@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFMailShardModule::BeforeRun()
     {
-        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFMailShardModule::OnConnectRoute );
+        __REGISTER_ROUTE_CONNECTION_FUNCTION__( &KFMailShardModule::OnConnectRouteCluster );
 
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailShardModule::HandleGMAddMailReq );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
@@ -44,7 +44,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ROUTE_CONNECTION_FUNCTION__( KFMailShardModule::OnConnectRoute )
+    __KF_ROUTE_CONNECTION_FUNCTION__( KFMailShardModule::OnConnectRouteCluster )
     {
         RouteObjectList objectlist;
         _kf_route->SyncObject( __KF_STRING__( mail ), objectlist );

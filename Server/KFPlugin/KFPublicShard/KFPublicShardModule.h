@@ -9,13 +9,10 @@
 //    @Date             :    2017-11-30
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFPublicShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFWorker/KFWorkerInterface.h"
-#include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -33,34 +30,23 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
     protected:
+
+        // 连接route
+        __KF_ROUTE_CONNECTION_FUNCTION__( OnConnectRouteCluster );
+        ///////////////////////////////////////////////////////////
         // 更新公共数据
-        __KF_MESSAGE_FUNCTION__( HandleUpdatePublicDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateDataToPublicReq );
 
         // 查询基础数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryBasicDataReq );
-
-        // 处理创建角色
-        __KF_MESSAGE_FUNCTION__( HandleCreateRoleReq );
-
-
-        // 处理更新访客列表请求
-        __KF_MESSAGE_FUNCTION__( HandleUpdateGuestListReq );
-
-        // 处理查询访客请求
-        __KF_MESSAGE_FUNCTION__( HandleQueryGuestReq );
-
-    protected:
-        // 设置玩家名字
-        uint32 ProcessSetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicToPublicReq );
 
     private:
         // 名字数据库
-        KFRedisDriver* _name_redis_driver{ nullptr };
+        KFRedisDriver* _name_redis_driver = nullptr;
 
         // 公共属性
-        KFRedisDriver* _public_redis_driver{ nullptr };
+        KFRedisDriver* _public_redis_driver = nullptr;
     };
 }
 

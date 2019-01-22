@@ -18,6 +18,9 @@ namespace KFrame
             _type = KFDatabaseEnum::Write;
         }
 
+        // 名字
+        std::string _name;
+
         // 类型
         uint32 _type;
 

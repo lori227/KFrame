@@ -14,7 +14,7 @@ namespace KFrame
         virtual ~KFRedisExecute();
 
         // 初始化
-        int32 Initialize( const std::string& ip, uint32 port, const std::string& password );
+        int32 Initialize( const std::string& name, const std::string& ip, uint32 port, const std::string& password );
 
         // 关闭
         void ShutDown();
@@ -35,6 +35,9 @@ namespace KFrame
         redisReply* TryExecute( KFBaseResult* kfresult, const std::string& strsql );
 
     protected:
+        // 名字
+        std::string _name;
+
         // ip
         std::string _ip;
 

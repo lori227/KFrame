@@ -9,13 +9,13 @@
 //    @Date             :    2018-3-8
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFPublicClientInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFZone/KFZoneInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFFilter/KFFilterInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -37,13 +37,13 @@ namespace KFrame
         virtual bool UpdatePublicData( uint64 playerid, MapString& values );
         virtual bool UpdatePublicData( KFEntity* player, MapString& values );
 
-        // 发送消息到Public
-        virtual bool SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message );
     protected:
+
         // 更新属性回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
+        // 更新数据
         void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
 
         // 上线更新公共数据
@@ -57,7 +57,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
 
         // 查询玩家基本数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryBasicAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicToGameAck );
     private:
         // 组件
         KFComponent* _kf_component{ nullptr };

@@ -208,7 +208,7 @@ namespace KFrame
 
     uint32 KFDataShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
     {
-        auto kfplayerid = _name_redis_driver->QueryUInt64( "get {}:{}", __KF_STRING__( name ), newname );
+        auto kfplayerid = _name_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), newname );
         if ( !kfplayerid->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
@@ -218,7 +218,7 @@ namespace KFrame
         if ( kfplayerid->_value == _invalid_int )
         {
             // 保存名字
-            auto kfresult = _name_redis_driver->Execute( "set {}:{} {}", __KF_STRING__( name ), newname, playerid );
+            auto kfresult = _name_redis_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( player ), __KF_STRING__( name ), newname, playerid );
             if ( !kfresult->IsOk() )
             {
                 return KFMsg::NameDatabaseBusy;
@@ -227,7 +227,7 @@ namespace KFrame
             // 删除旧的名字关联
             if ( !oldname.empty() )
             {
-                _name_redis_driver->Execute( "del {}:{}", __KF_STRING__( name ), oldname );
+                _name_redis_driver->Execute( "del {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), oldname );
             }
         }
         else if ( kfplayerid->_value != playerid )

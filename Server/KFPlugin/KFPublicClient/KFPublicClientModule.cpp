@@ -14,7 +14,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_ACK, &KFPublicClientModule::HandleQueryBasicAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK, &KFPublicClientModule::HandleQueryBasicToGameAck );
     }
 
     void KFPublicClientModule::BeforeShut()
@@ -27,7 +27,7 @@ namespace KFrame
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK );
     }
 
     void KFPublicClientModule::OnceRun()
@@ -36,11 +36,6 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFPublicClientModule::SendMessageToPublic( uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_cluster->SendToShard( __KF_STRING__( public ), msgid, message );
-    }
-
     bool KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
     {
         return UpdatePublicData( player->GetKeyID(), values );
@@ -48,23 +43,17 @@ namespace KFrame
 
     bool KFPublicClientModule::UpdatePublicData( uint64 playerid, MapString& values )
     {
-        KFMsg::S2SUpdatePublicDataReq req;
-        req.set_playerid( playerid );
+        KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        return SendMessageToPublic( KFMsg::S2S_UPDATE_PUBLIC_DATA_REQ, &req );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPublicClientModule::OnUpdateDataToPublic( KFEntity* player, KFData* kfdata )
     {
-        // 还没有初始化
-        if ( !player->IsInited() )
-        {
-            return;
-        }
-
         // 只有公共属性才更新
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Public_Data ) ||
+        if ( !player->IsInited() ||
+                !kfdata->HaveFlagMask( KFDataDefine::Mask_Public_Data ) ||
                 !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Public_Data ) )
         {
             return;
@@ -92,7 +81,7 @@ namespace KFrame
 
         MapString values;
         values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineState );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
         values[ __KF_STRING__( serverid ) ] = __TO_STRING__( kfglobal->_app_id._union._id );
         UpdatePublicData( player, values );
@@ -102,8 +91,7 @@ namespace KFrame
     {
         MapString values;
         values[ __KF_STRING__( serverid ) ] = "0";
-        values[ __KF_STRING__( groupid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }
@@ -112,46 +100,41 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryBasicReq );
 
-        KFMsg::S2SQueryBasicReq req;
-        req.set_playerid( playerid );
+        // 屏蔽字检查
+        auto filter = _kf_filter->CheckFilter( kfmsg.name() );
+        if ( filter )
+        {
+            return _kf_display->SendToClient( player, KFMsg::NameFilterError );
+        }
+
+        // 发送到public
+        KFMsg::S2SQueryBasicToPublicReq req;
         req.set_name( kfmsg.name() );
-        SendMessageToPublic( KFMsg::S2S_QUERY_BASIC_REQ, &req );
+        _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPublicClientModule::HandleQueryBasicAck )
+    __KF_MESSAGE_FUNCTION__( KFPublicClientModule::HandleQueryBasicToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryBasicAck );
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SQueryBasicToGameAck );
 
-        // todo
-        KFMsg::MsgTellQueryBasic ack;
-        auto pbbasic = ack.mutable_player();
+        if ( kfmsg.result() != KFMsg::Ok )
+        {
+            _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );
+        }
 
-        //auto pboject = &kfmsg.pbobject();
-        //if ( pboject->key() == _invalid_int )
-        //{
-        //    pbbasic->set_key( _invalid_int );
-        //    pbbasic->set_name( _kf_basic->GetName() );
-        //}
-        //else
-        //{
-        //    // 有数据的话 转换一下
-        //    _kf_basic->Reset();
-        //    _kf_basic->SetKeyID( pboject->key() );
+        _kf_basic->Reset();
+        for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
+        {
+            auto kfdata = _kf_basic->FindData( iter->first );
+            if ( kfdata != nullptr )
+            {
+                kfdata->SetValue< std::string >( iter->second );
+            }
+        }
 
-        //    for ( auto i = 0; i < pboject->pbstring_size(); ++i )
-        //    {
-        //        auto pbstring = &pboject->pbstring( i );
-
-        //        auto kfdata = _kf_basic->FindData( pbstring->name() );
-        //        if ( kfdata != nullptr )
-        //        {
-        //            kfdata->SetValue< std::string >( pbstring->value() );
-        //        }
-        //    }
-
-        //    _kf_kernel->SerializeToView( _kf_basic, pbbasic );
-        //}
-
-        _kf_player->SendToClient( player, KFMsg::MSG_TELL_QUERY_BASIC, &ack );
+        // 发送给客户端
+        KFMsg::MsgQueryBasicAck ack;
+        _kf_kernel->SerializeToView( _kf_basic, ack.mutable_player() );
+        _kf_player->SendToClient( player, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
     }
 }

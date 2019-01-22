@@ -73,6 +73,8 @@ namespace KFrame
                     while ( writenode.IsValid() )
                     {
                         KFRedisSetting kfsetting;
+
+                        kfsetting._name = name;
                         kfsetting._type = KFDatabaseEnum::Write;
                         kfsetting._ip = writenode.GetString( "IP" );
                         kfsetting._port = writenode.GetUInt32( "Port" );
@@ -90,6 +92,7 @@ namespace KFrame
                     {
 
                         KFRedisSetting kfsetting;
+                        kfsetting._name = name;
                         kfsetting._type = KFDatabaseEnum::Read;
                         kfsetting._ip = readnode.GetString( "IP" );
                         kfsetting._port = readnode.GetUInt32( "Port" );

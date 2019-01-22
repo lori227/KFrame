@@ -16,8 +16,9 @@ namespace KFrame
         ShutDown();
     }
 
-    int32 KFRedisExecute::Initialize( const std::string& ip, uint32 port, const std::string& password )
+    int32 KFRedisExecute::Initialize( const std::string& name, const std::string& ip, uint32 port, const std::string& password )
     {
+        _name = name;
         _ip = ip;
         _port = port;
         _password = password;
@@ -49,7 +50,7 @@ namespace KFrame
             __FREE_REPLY__( reply );
         }
 
-        __LOG_INFO__( "redis connect [{}:{}] ok!", _ip, _port );
+        __LOG_INFO__( "redis connect[module={} ip={}:{}] ok!", _name, _ip, _port );
         return KFEnum::Ok;
     }
 

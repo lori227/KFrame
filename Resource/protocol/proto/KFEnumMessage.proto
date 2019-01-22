@@ -49,12 +49,12 @@ enum MailEnum
 // 游戏状态
 enum StateEnum
 {
-	UnknowStatus = 0;		// 无效
-	OnlineStatus = 1;		// 在线状态
-	GroupStatus = 2;		// 组队状态
-	MatchStatus = 3;		// 匹配状态
-	PlayingStatus = 4;		// 游戏中
-	OfflineStatus = 5;		// 离线
+	UnknowState = 0;	// 无效
+	OnlineState = 1;	// 在线状态
+	GroupState = 2;		// 组队状态
+	MatchState = 3;		// 匹配状态
+	PlayingState = 4;	// 游戏中
+	OfflineState = 5;	// 离线
 }
 //////////////////////////////////////////////////////////////////////////////////
 enum InviteEnum
@@ -134,6 +134,8 @@ enum CodeEnum
 
 	RouteServerBusy			    = 10001;	// 路由服务器出错
 	NameDatabaseBusy			= 10002;	// 名字数据库出错
+	PublicDatabaseError			= 10003;	// 公共数据库错误
+
 	
 	LoadDataFailed 				= 20001;	// 加载玩家数据失败
 	QueryPlayerFailed 			= 20002;	// 查询玩家数据失败
@@ -145,6 +147,7 @@ enum CodeEnum
 	NameFilterError				= 20106;	// 名字含有屏蔽字符
 	SexSetOK					= 20107;	// 设置性别成功
 	ChangeIconOK            	= 20108;	// 修改头像成功
+	QueryBasicNotExist			= 20109;	// 查询不到该玩家
 	
 	// mail 
 	MailNotExist				= 20200;	// 邮件不存在
@@ -181,7 +184,6 @@ enum CodeEnum
 	CompoundNotExist			= 20602;		// 合成配置不存在
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
-	PublicDatabaseError			= 24;		// 公共数据库错误
 	AccountIsEmpty         		= 26;		// 账号不能为空
 	CreateRoleAlready			= 27;		// 不能重复创建角色
 	CreateRoleOK				= 28;		// 创建角色成功

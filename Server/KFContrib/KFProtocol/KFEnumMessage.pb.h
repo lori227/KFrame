@@ -162,18 +162,18 @@ inline bool MailEnum_Parse(
     MailEnum_descriptor(), name, value);
 }
 enum StateEnum {
-  UnknowStatus = 0,
-  OnlineStatus = 1,
-  GroupStatus = 2,
-  MatchStatus = 3,
-  PlayingStatus = 4,
-  OfflineStatus = 5,
+  UnknowState = 0,
+  OnlineState = 1,
+  GroupState = 2,
+  MatchState = 3,
+  PlayingState = 4,
+  OfflineState = 5,
   StateEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   StateEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool StateEnum_IsValid(int value);
-const StateEnum StateEnum_MIN = UnknowStatus;
-const StateEnum StateEnum_MAX = OfflineStatus;
+const StateEnum StateEnum_MIN = UnknowState;
+const StateEnum StateEnum_MAX = OfflineState;
 const int StateEnum_ARRAYSIZE = StateEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StateEnum_descriptor();
@@ -345,6 +345,7 @@ enum CodeEnum {
   LoginDatabaseError = 19,
   RouteServerBusy = 10001,
   NameDatabaseBusy = 10002,
+  PublicDatabaseError = 10003,
   LoadDataFailed = 20001,
   QueryPlayerFailed = 20002,
   NameEmpty = 20101,
@@ -355,6 +356,7 @@ enum CodeEnum {
   NameFilterError = 20106,
   SexSetOK = 20107,
   ChangeIconOK = 20108,
+  QueryBasicNotExist = 20109,
   MailNotExist = 20200,
   MailAlreadyReceived = 20201,
   MailNotHaveReward = 20202,
@@ -380,7 +382,6 @@ enum CodeEnum {
   CompoundDataNotEnough = 20601,
   CompoundNotExist = 20602,
   ZoneDatabaseBusy = 20,
-  PublicDatabaseError = 24,
   AccountIsEmpty = 26,
   CreateRoleAlready = 27,
   CreateRoleOK = 28,

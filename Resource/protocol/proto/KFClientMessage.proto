@@ -22,10 +22,12 @@ enum ClientProtocol
  	MSG_SYNC_UPDATE_DATA = 21;				// 同步更新属性
 	MSG_SYNC_ADD_DATA = 22;					// 同步增加属性
 	MSG_SYNC_REMOVE_DATA = 23;				// 同步删除属性
-	MSG_TELL_QUERY_BASIC = 25;				// 查询基础数据
-	MSG_REMOVE_DATA_REQ = 26;				// 请求删除属性
-	MSG_QUERY_PLAYER_REQ = 27;				// 查询玩家数据
-	MSG_QUERY_PLAYER_ACK = 28;			    // 查询玩家数据
+	MSG_REMOVE_DATA_REQ = 24;				// 请求删除属性
+	MSG_QUERY_PLAYER_REQ = 25;				// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 26;			    // 查询玩家数据
+	MSG_QUERY_BASIC_REQ = 27;				// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK = 28;				// 查询基础数据
+
 
 	// attribute
 	MSG_DEBUG_COMMAND_REQ = 50;				// 客户端发送GM指令请求
@@ -69,7 +71,6 @@ enum ClientProtocol
 	MSG_SEND_CHAT_INFO = 128;					// 服务器通知江湖聊天消息
 	MSG_LEAVE_CHAT_REQ = 129;					// 客户端离开江湖聊天室请求
 	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// 设置拒绝添加好友
-	MSG_QUERY_BASIC_REQ = 131;					// 查询玩家基本数据
 
 
 
@@ -186,17 +187,38 @@ message MsgSyncRemoveData
 {
 	PBObject pbdata = 1;	
 }
-
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询玩家
+// MSG_QUERY_BASIC_REQ
+message MsgQueryBasicReq
+{
+	bytes name = 1;
+}
 
 // 玩家基础信息
-// MSG_TELL_QUERY_BASIC
-message MsgTellQueryBasic
+// MSG_QUERY_BASIC_ACK
+message MsgQueryBasicAck
 {
 	PBObject player = 1;	
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 查询其他玩家数据，不能查询自己的数据
+// MSG_QUERY_PLAYER_REQ
+message MsgQueryPlayerReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询玩家信息
+// MSG_QUERY_PLAYER_ACK
+message MsgQueryPlayerAck
+{
+	PBObject player = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 // 通知被踢下线
 // MSG_TELL_BE_KICK
 message MsgTellBeKick
@@ -271,27 +293,6 @@ message MsgChangeIconBoxReq
 message MsgChangeMottoReq
 {
 	bytes motto = 1;	//个性签名
-}
-
-// 查询玩家
-// MSG_QUERY_BASIC_REQ
-message MsgQueryBasicReq
-{
-	bytes name = 1;
-}
-
-// 查询其他玩家数据，不能查询自己的数据
-// MSG_QUERY_PLAYER_REQ
-message MsgQueryPlayerReq
-{
-	uint64 playerid = 1;
-}
-
-// 查询玩家信息
-// MSG_QUERY_PLAYER_ACK
-message MsgQueryPlayerAck
-{
-	PBObject player = 1;
 }
 
 

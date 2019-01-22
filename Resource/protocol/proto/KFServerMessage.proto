@@ -33,7 +33,9 @@ enum ServerProtocol
 	S2S_QUERY_PLAYER_ACK = 20027;					// 查询玩家数据
 
 	// public
-	S2S_UPDATE_PUBLIC_DATA_REQ = 21001;				// 更新公共数据
+	S2S_UPDATE_DATA_TO_PUBLIC_REQ = 21001;			// 更新公共数据
+	S2S_QUERY_BASIC_TO_PUBLIC_REQ = 21002;			// 查询玩家基础数据
+	S2S_QUERY_BASIC_TO_GAME_ACK = 21003;			// 查询玩家基础数据
 
 	// mail
 	S2S_NEW_PLAYER_MAIL_REQ = 21101;				// 新玩家登陆邮件服务
@@ -136,9 +138,7 @@ enum ServerProtocol
 	S2S_UPDATE_FRIEND_REQ = 21140;					// 更新好友
 
 	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// 更新好友度
-	S2S_QUERY_BASIC_REQ = 21144;					// 查询好友基础数据
 
-	S2S_QUERY_BASIC_ACK = 21146;					// 查询好友基础数据
 	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
 	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
 	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
@@ -270,12 +270,28 @@ message S2STransmitToServer
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 更新公共数据
-// S2S_UPDATE_PUBLIC_DATA_REQ
-message S2SUpdatePublicDataReq
+// S2S_UPDATE_DATA_TO_PUBLIC_REQ
+message S2SUpdateDataToPublicReq
 {
-	uint64 playerid = 1;		// 玩家id
-	map<string, bytes> pbdata = 4;		// 属性
+	map<string, bytes> pbdata = 1;	// 属性
 }
+
+// 查询基础数据
+// S2S_QUERY_BASIC_TO_PUBLIC_REQ
+message S2SQueryBasicToPublicReq
+{
+	bytes name = 1;
+}
+
+// 查询基础数据
+// S2S_QUERY_BASIC_TO_GAME_ACK
+message S2SQueryBasicToGameAck
+{
+	bytes name = 1;
+	uint32 result = 2;
+	map<string, bytes> pbdata = 3;	// 属性
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -643,22 +659,6 @@ message S2SUpdateFriendLinessReq
 	//optional bytes targetname = 6;		// 对方名字
 }
 
-// 查询基础数据
-// S2S_QUERY_BASIC_REQ
-message S2SQueryBasicReq
-{
-	uint64 playerid = 1;
-	bytes name = 2;
-}
-
-// 查询基础数据
-// S2S_QUERY_BASIC_ACK
-message S2SQueryBasicAck
-{
-	uint64 playerid = 1;
-	uint32 result = 2;
-	PBObject pbobject = 3;
-}
 
 
 
