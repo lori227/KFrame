@@ -41,7 +41,7 @@ namespace KFrame
     {
         for ( auto& iter : _service_object_list )
         {
-            RouteSyncObjectToProxy( iter.first, iter.second );
+            RouteSyncObjectToProxy( _invalid_int, iter.first, iter.second );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,16 +186,16 @@ namespace KFrame
         // 如果在服务中, 同步给转发集群
         if ( _kf_cluster_client->IsInService() )
         {
-            RouteSyncObjectToProxy( name, savelist );
+            RouteSyncObjectToProxy( _invalid_int, name, savelist );
         }
     }
 
-    void KFRouteClientModule::RouteSyncObjectToProxy( const std::string& name, RouteObjectList& objectlist )
+    void KFRouteClientModule::RouteSyncObjectToProxy( uint64 shardid, const std::string& name, RouteObjectList& objectlist )
     {
         // 发送给shard
         KFMsg::S2SRouteSyncObjectToProxyReq req;
         req.set_name( name );
-        req.set_shardid( _invalid_int );
+        req.set_shardid( shardid );
         req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
 
         for ( auto objectid : objectlist )
@@ -255,22 +255,7 @@ namespace KFrame
         // 把所有对象列表同步到shard
         for ( auto& iter : _service_object_list )
         {
-            // 发送给shard
-            KFMsg::S2SRouteSyncObjectToProxyReq req;
-            req.set_name( iter.first );
-            req.set_shardid( kfmsg.shardid() );
-            req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
-
-            for ( auto objectid : iter.second )
-            {
-                req.add_objectid( objectid );
-            }
-
-            auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, &req );
-            if ( !ok )
-            {
-                __LOG_ERROR__( "service[{}] sync object failed!", iter.first );
-            }
+            RouteSyncObjectToProxy( kfmsg.shardid(), iter.first, iter.second );
         }
     }
 }

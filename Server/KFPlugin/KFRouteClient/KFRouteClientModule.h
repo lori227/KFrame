@@ -76,7 +76,7 @@ namespace KFrame
         void OnRouteConnectCluster( uint64 serverid );
 
         // 发送同步对象消息
-        void RouteSyncObjectToProxy( const std::string& name, RouteObjectList& objectlist );
+        void RouteSyncObjectToProxy( uint64 shardid, const std::string& name, RouteObjectList& objectlist );
 
         // 转发消息
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToClientAck );
