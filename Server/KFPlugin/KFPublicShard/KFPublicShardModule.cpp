@@ -5,24 +5,22 @@ namespace KFrame
 {
     void KFPublicShardModule::BeforeRun()
     {
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &KFPublicShardModule::HandleUpdateDataToPublicReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &KFPublicShardModule::HandleQueryBasicToPublicReq );
     }
 
     void KFPublicShardModule::BeforeShut()
     {
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
     }
 
     void KFPublicShardModule::OnceRun()
     {
+        // 注册服务
         _kf_route->RegisterService( __KF_STRING__( public ) );
 
-
+        // 初始化redis
         _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
     }
@@ -64,7 +62,6 @@ namespace KFrame
                 if ( !querydata->IsOk() )
                 {
                     ack.set_result( KFMsg::PublicDatabaseError );
-
                 }
                 else
                 {
