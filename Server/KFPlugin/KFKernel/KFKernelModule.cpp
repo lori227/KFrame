@@ -120,7 +120,7 @@ namespace KFrame
 
 #define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \
     {\
-        auto pbdata = &proto->##pbdata##();\
+        auto pbdata = &(proto->##pbdata##());\
         for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
         {\
             auto kfchild = kfdata->FindData( iter->first );\
@@ -210,7 +210,7 @@ namespace KFrame
 #define __SAVE_TO_PROTO__( datatype, pbdata, type )\
 case datatype:\
     {\
-        auto& pbdata = *proto->mutable_##pbdata##(); \
+        auto& pbdata = *(proto->mutable_##pbdata##()); \
         pbdata[ datasetting->_name ] = kfchild->GetValue<type>();\
         break; \
     }\
