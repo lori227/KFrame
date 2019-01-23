@@ -210,7 +210,7 @@ namespace KFrame
 #define __SAVE_TO_PROTO__( datatype, pbdata, type )\
 case datatype:\
     {\
-        auto& pbdata = *(proto->mutable_##pbdata##()); \
+        auto& pbdata = *(proto->mutable_##pbdata()); \
         pbdata[ datasetting->_name ] = kfchild->GetValue<type>();\
         break; \
     }\
