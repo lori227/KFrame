@@ -12,17 +12,17 @@ namespace KFrame
         _kf_player->RegisterEnterFunction( this, &KFRelationClientModule::OnEnterQueryFriend );
         _kf_player->RegisterLeaveFunction( this, &KFRelationClientModule::OnLeaveUpdateFriend );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleAddFriendInviteReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleReplyInviteReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ, &KFRelationClientModule::HandleDelFriendReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseFriendInviteReq );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleQueryFriendToGameAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleQueryFriendInviteToGameAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ, &KFRelationClientModule::HandleUpdateDataToFriendReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleAddFriendInviteReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleAddFriendInviteToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleReplyInviteReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleAddFriendToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ, &KFRelationClientModule::HandleDelFriendReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleDelFriendToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseFriendInviteReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &KFRelationClientModule::HandleUpdateFriendLinessToGameAck );
     }
 
@@ -34,16 +34,17 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ );
+
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK );
     }
 
@@ -251,12 +252,12 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
 
-        for ( auto i = 0; i < kfmsg.pbfriend_size(); ++i )
+        for ( auto i = 0; i < kfmsg.pbinvite_size(); ++i )
         {
-            auto pbfriend = &kfmsg.pbfriend( i );
+            auto pbinvite = &kfmsg.pbinvite( i );
             auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
 
-            PBRelationToKFData( pbfriend, kfinvite );
+            PBRelationToKFData( pbinvite, kfinvite );
             player->AddData( kfinviterecord, kfinvite );
         }
     }

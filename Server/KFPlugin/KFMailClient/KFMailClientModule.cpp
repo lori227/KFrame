@@ -15,12 +15,14 @@ namespace KFrame
         _kf_player->RegisterNewPlayerFunction( this, &KFMailClientModule::OnNewPlayerMail );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ, &KFMailClientModule::HandleQueryMailReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK, &KFMailClientModule::HandleQueryMailAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ, &KFMailClientModule::HandleViewMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ, &KFMailClientModule::HandleDeleteMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ, &KFMailClientModule::HandleReceiveMailReq );
+
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK, &KFMailClientModule::HandleQueryMailAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &KFMailClientModule::HandleUpdateMailStatusAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &KFMailClientModule::HandleNoticeNewMailReq );
+
     }
 
     void KFMailClientModule::BeforeShut()
@@ -33,10 +35,11 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_RECEIVE_MAIL_REWARD_REQ );
+
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ );
     }

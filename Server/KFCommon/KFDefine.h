@@ -20,7 +20,7 @@ namespace KFMsg
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////
-    static const uint64 _invalid_int = 0;
+    static const uint64 _invalid_int = 0u;
     static const std::string _invalid_str = "";
     static const std::string _globbing_str = "*";
     /////////////////////////////////////////////////////////////////////////

@@ -389,6 +389,12 @@ enum CodeEnum {
   FriendAddOk = 20706,
   FriendNotExist = 20707,
   FriendDelOk = 20708,
+  FriendLinessAdd = 20709,
+  FriendRefuseInvite = 20710,
+  FriendTargetLimit = 20711,
+  FriendInviteAlready = 20712,
+  FriendInviteLimit = 20713,
+  FriendInviteOk = 20714,
   ZoneDatabaseBusy = 20,
   AccountIsEmpty = 26,
   CreateRoleAlready = 27,
@@ -423,13 +429,8 @@ enum CodeEnum {
   MatchGroupPlayerLimit = 74,
   MatchRequestSuccess = 75,
   MatchCancelSuccess = 76,
-  FriendInviteOK = 77,
-  FriendRefuseInvite = 78,
-  FriendTargetLimit = 79,
-  FriendInviteLimit = 84,
   FriendInviteNotExist = 85,
   MatchNotInMatch = 86,
-  FriendInviteAlready = 87,
   MatchMustPrepare = 88,
   StoreOutOfLimitDate = 93,
   WishOrderEmpty = 94,
@@ -476,7 +477,6 @@ enum CodeEnum {
   GroupJoinOK = 139,
   GroupMemberJoin = 140,
   GroupIsNewCaption = 141,
-  FriendLinessAdd = 142,
   FriendLinessAddLimit = 143,
   FriendLinessAddByWinGame = 144,
   FriendLinessMaxLimit = 145,
@@ -525,7 +525,7 @@ enum CodeEnum {
 };
 LIBPROTOC_EXPORT bool CodeEnum_IsValid(int value);
 const CodeEnum CodeEnum_MIN = Error;
-const CodeEnum CodeEnum_MAX = FriendDelOk;
+const CodeEnum CodeEnum_MAX = FriendInviteOk;
 const int CodeEnum_ARRAYSIZE = CodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* CodeEnum_descriptor();

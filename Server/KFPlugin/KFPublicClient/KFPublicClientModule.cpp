@@ -14,6 +14,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
+
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK, &KFPublicClientModule::HandleQueryBasicToGameAck );
     }
 
@@ -27,6 +28,7 @@ namespace KFrame
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
+
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK );
     }
 

@@ -193,7 +193,11 @@ enum CodeEnum
 	FriendNotExist				= 20707;	// 好友不存在
 	FriendDelOk					= 20708;	// 你与<Player id=%s>%s</Player>不再是好友了
 	FriendLinessAdd				= 20709;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
-
+	FriendRefuseInvite			= 20710;	// <Text>%s</Text>设置拒绝添加好友
+	FriendTargetLimit			= 20711;	// <Text>%s</Text>的好友数量已经超过最大限制
+	FriendInviteAlready			= 20712;	// 已经向<Text>%s</Text>申请添加好友了
+	FriendInviteLimit			= 20713;	// <Text>%s</Text>的好友申请列表满了
+	FriendInviteOk				= 20714;	// 向<Text>%s</Text>发送好友申请成功
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	AccountIsEmpty         		= 26;		// 账号不能为空
@@ -232,13 +236,8 @@ enum CodeEnum
 	MatchGroupPlayerLimit 		= 74;		// 超过组队最大人数
 	MatchRequestSuccess 		= 75;		// 申请匹配成功,请等待
 	MatchCancelSuccess 			= 76;		// 取消匹配成功
-	FriendInviteOK				= 77;		// 向<Text>%s</Text>发送好友申请成功
-	FriendRefuseInvite			= 78;		// <Text>%s</Text>设置拒绝添加好友
-	FriendTargetLimit			= 79;		// <Text>%s</Text>的好友数量已经超过最大限制
-	FriendInviteLimit			= 84;		// <Text>%s</Text>的好友申请列表满了
 	FriendInviteNotExist    	= 85;		// 好友邀请信息不存在
 	MatchNotInMatch				= 86;		// 你已经不在匹配
-	FriendInviteAlready			= 87;		// 已经向<Text>%s</Text>申请添加好友了
 	MatchMustPrepare			= 88;		// 队员全部准备才能开始匹配
 
 

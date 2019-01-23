@@ -32,8 +32,9 @@ namespace KFrame
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
 
         // Route ==> Player
-        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );
+        virtual void SendToPlayer( const Route& route, uint32 result, ListString& params );
+        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params );
 
         // Game ==> Client
         virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params );

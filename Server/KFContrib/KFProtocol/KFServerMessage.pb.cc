@@ -4287,7 +4287,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryFriendInviteToGameAck, playerid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryFriendInviteToGameAck, pbfriend_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SQueryFriendInviteToGameAck, pbinvite_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -4318,7 +4318,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddFriendInviteToGameAck, playerid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddFriendInviteToGameAck, pbfriend_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SAddFriendInviteToGameAck, pbinvite_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDelFriendInviteToRelationReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -5962,7 +5962,7 @@ void AddDescriptorsImpl() {
       "Msg.PBRelation\"5\n!S2SQueryFriendInviteTo"
       "RelationReq\022\020\n\010playerid\030\001 \001(\004\"V\n\035S2SQuer"
       "yFriendInviteToGameAck\022\020\n\010playerid\030\001 \001(\004"
-      "\022#\n\010pbfriend\030\002 \003(\0132\021.KFMsg.PBRelation\"\230\001"
+      "\022#\n\010pbinvite\030\002 \003(\0132\021.KFMsg.PBRelation\"\230\001"
       "\n\030S2SUpdateDataToFriendReq\022\020\n\010playerid\030\001"
       " \001(\004\022;\n\006pbdata\030\003 \003(\0132+.KFMsg.S2SUpdateDa"
       "taToFriendReq.PbdataEntry\032-\n\013PbdataEntry"
@@ -5970,7 +5970,7 @@ void AddDescriptorsImpl() {
       "ddFriendInviteToRelationReq\022\014\n\004name\030\001 \001("
       "\014\022\020\n\010playerid\030\002 \001(\004\022\017\n\007message\030\003 \001(\014\"T\n\033"
       "S2SAddFriendInviteToGameAck\022\020\n\010playerid\030"
-      "\001 \001(\004\022#\n\010pbfriend\030\002 \001(\0132\021.KFMsg.PBRelati"
+      "\001 \001(\004\022#\n\010pbinvite\030\002 \001(\0132\021.KFMsg.PBRelati"
       "on\"O\n\037S2SDelFriendInviteToRelationReq\022\024\n"
       "\014selfplayerid\030\001 \001(\004\022\026\n\016targetplayerid\030\002 "
       "\001(\004\";\n\031S2SAddFriendToRelationReq\022\014\n\004name"
@@ -5984,7 +5984,7 @@ void AddDescriptorsImpl() {
       "\030\002 \001(\004\022\026\n\016targetplayerid\030\003 \001(\004\022\024\n\014friend"
       "liness\030\004 \001(\r\"`\n\036S2SUpdateFriendLinessToG"
       "ameAck\022\020\n\010playerid\030\001 \001(\004\022\026\n\016targetplayer"
-      "id\030\002 \001(\004\022\024\n\014friendliness\030\003 \001(\004\"S\n\021S2SPla"
+      "id\030\002 \001(\004\022\024\n\014friendliness\030\003 \001(\r\"S\n\021S2SPla"
       "yerToastReq\022\024\n\014selfplayerid\030\001 \001(\004\022\026\n\016tar"
       "getplayerid\030\002 \001(\004\022\020\n\010serverid\030\003 \001(\004\"e\n\021S"
       "2SPlayerToastAck\022\016\n\006result\030\001 \001(\r\022\020\n\010play"
@@ -19539,7 +19539,7 @@ void S2SQueryFriendInviteToGameAck::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SQueryFriendInviteToGameAck::kPlayeridFieldNumber;
-const int S2SQueryFriendInviteToGameAck::kPbfriendFieldNumber;
+const int S2SQueryFriendInviteToGameAck::kPbinviteFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 S2SQueryFriendInviteToGameAck::S2SQueryFriendInviteToGameAck()
@@ -19552,7 +19552,7 @@ S2SQueryFriendInviteToGameAck::S2SQueryFriendInviteToGameAck()
 S2SQueryFriendInviteToGameAck::S2SQueryFriendInviteToGameAck(const S2SQueryFriendInviteToGameAck& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      pbfriend_(from.pbfriend_) {
+      pbinvite_(from.pbinvite_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   playerid_ = from.playerid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SQueryFriendInviteToGameAck)
@@ -19590,7 +19590,7 @@ void S2SQueryFriendInviteToGameAck::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  pbfriend_.Clear();
+  pbinvite_.Clear();
   playerid_ = GOOGLE_ULONGLONG(0);
   _internal_metadata_.Clear();
 }
@@ -19619,12 +19619,12 @@ bool S2SQueryFriendInviteToGameAck::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .KFMsg.PBRelation pbfriend = 2;
+      // repeated .KFMsg.PBRelation pbinvite = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-                input, add_pbfriend()));
+                input, add_pbinvite()));
         } else {
           goto handle_unusual;
         }
@@ -19662,12 +19662,12 @@ void S2SQueryFriendInviteToGameAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
-  // repeated .KFMsg.PBRelation pbfriend = 2;
+  // repeated .KFMsg.PBRelation pbinvite = 2;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->pbfriend_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->pbinvite_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2,
-      this->pbfriend(static_cast<int>(i)),
+      this->pbinvite(static_cast<int>(i)),
       output);
   }
 
@@ -19690,12 +19690,12 @@ void S2SQueryFriendInviteToGameAck::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
-  // repeated .KFMsg.PBRelation pbfriend = 2;
+  // repeated .KFMsg.PBRelation pbinvite = 2;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->pbfriend_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->pbinvite_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, this->pbfriend(static_cast<int>(i)), deterministic, target);
+        2, this->pbinvite(static_cast<int>(i)), deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -19715,14 +19715,14 @@ size_t S2SQueryFriendInviteToGameAck::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // repeated .KFMsg.PBRelation pbfriend = 2;
+  // repeated .KFMsg.PBRelation pbinvite = 2;
   {
-    unsigned int count = static_cast<unsigned int>(this->pbfriend_size());
+    unsigned int count = static_cast<unsigned int>(this->pbinvite_size());
     total_size += 1UL * count;
     for (unsigned int i = 0; i < count; i++) {
       total_size +=
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          this->pbfriend(static_cast<int>(i)));
+          this->pbinvite(static_cast<int>(i)));
     }
   }
 
@@ -19760,7 +19760,7 @@ void S2SQueryFriendInviteToGameAck::MergeFrom(const S2SQueryFriendInviteToGameAc
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  pbfriend_.MergeFrom(from.pbfriend_);
+  pbinvite_.MergeFrom(from.pbinvite_);
   if (from.playerid() != 0) {
     set_playerid(from.playerid());
   }
@@ -19790,7 +19790,7 @@ void S2SQueryFriendInviteToGameAck::Swap(S2SQueryFriendInviteToGameAck* other) {
 }
 void S2SQueryFriendInviteToGameAck::InternalSwap(S2SQueryFriendInviteToGameAck* other) {
   using std::swap;
-  CastToBase(&pbfriend_)->InternalSwap(CastToBase(&other->pbfriend_));
+  CastToBase(&pbinvite_)->InternalSwap(CastToBase(&other->pbinvite_));
   swap(playerid_, other->playerid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -20503,12 +20503,12 @@ void S2SAddFriendInviteToRelationReq::InternalSwap(S2SAddFriendInviteToRelationR
 // ===================================================================
 
 void S2SAddFriendInviteToGameAck::InitAsDefaultInstance() {
-  ::KFMsg::_S2SAddFriendInviteToGameAck_default_instance_._instance.get_mutable()->pbfriend_ = const_cast< ::KFMsg::PBRelation*>(
+  ::KFMsg::_S2SAddFriendInviteToGameAck_default_instance_._instance.get_mutable()->pbinvite_ = const_cast< ::KFMsg::PBRelation*>(
       ::KFMsg::PBRelation::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SAddFriendInviteToGameAck::kPlayeridFieldNumber;
-const int S2SAddFriendInviteToGameAck::kPbfriendFieldNumber;
+const int S2SAddFriendInviteToGameAck::kPbinviteFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 S2SAddFriendInviteToGameAck::S2SAddFriendInviteToGameAck()
@@ -20522,19 +20522,19 @@ S2SAddFriendInviteToGameAck::S2SAddFriendInviteToGameAck(const S2SAddFriendInvit
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_pbfriend()) {
-    pbfriend_ = new ::KFMsg::PBRelation(*from.pbfriend_);
+  if (from.has_pbinvite()) {
+    pbinvite_ = new ::KFMsg::PBRelation(*from.pbinvite_);
   } else {
-    pbfriend_ = NULL;
+    pbinvite_ = NULL;
   }
   playerid_ = from.playerid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SAddFriendInviteToGameAck)
 }
 
 void S2SAddFriendInviteToGameAck::SharedCtor() {
-  ::memset(&pbfriend_, 0, static_cast<size_t>(
+  ::memset(&pbinvite_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&playerid_) -
-      reinterpret_cast<char*>(&pbfriend_)) + sizeof(playerid_));
+      reinterpret_cast<char*>(&pbinvite_)) + sizeof(playerid_));
 }
 
 S2SAddFriendInviteToGameAck::~S2SAddFriendInviteToGameAck() {
@@ -20543,7 +20543,7 @@ S2SAddFriendInviteToGameAck::~S2SAddFriendInviteToGameAck() {
 }
 
 void S2SAddFriendInviteToGameAck::SharedDtor() {
-  if (this != internal_default_instance()) delete pbfriend_;
+  if (this != internal_default_instance()) delete pbinvite_;
 }
 
 void S2SAddFriendInviteToGameAck::SetCachedSize(int size) const {
@@ -20566,10 +20566,10 @@ void S2SAddFriendInviteToGameAck::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaNoVirtual() == NULL && pbfriend_ != NULL) {
-    delete pbfriend_;
+  if (GetArenaNoVirtual() == NULL && pbinvite_ != NULL) {
+    delete pbinvite_;
   }
-  pbfriend_ = NULL;
+  pbinvite_ = NULL;
   playerid_ = GOOGLE_ULONGLONG(0);
   _internal_metadata_.Clear();
 }
@@ -20598,12 +20598,12 @@ bool S2SAddFriendInviteToGameAck::MergePartialFromCodedStream(
         break;
       }
 
-      // .KFMsg.PBRelation pbfriend = 2;
+      // .KFMsg.PBRelation pbinvite = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_pbfriend()));
+               input, mutable_pbinvite()));
         } else {
           goto handle_unusual;
         }
@@ -20641,10 +20641,10 @@ void S2SAddFriendInviteToGameAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->playerid(), output);
   }
 
-  // .KFMsg.PBRelation pbfriend = 2;
-  if (this->has_pbfriend()) {
+  // .KFMsg.PBRelation pbinvite = 2;
+  if (this->has_pbinvite()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->_internal_pbfriend(), output);
+      2, this->_internal_pbinvite(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -20666,11 +20666,11 @@ void S2SAddFriendInviteToGameAck::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->playerid(), target);
   }
 
-  // .KFMsg.PBRelation pbfriend = 2;
-  if (this->has_pbfriend()) {
+  // .KFMsg.PBRelation pbinvite = 2;
+  if (this->has_pbinvite()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, this->_internal_pbfriend(), deterministic, target);
+        2, this->_internal_pbinvite(), deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -20690,11 +20690,11 @@ size_t S2SAddFriendInviteToGameAck::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // .KFMsg.PBRelation pbfriend = 2;
-  if (this->has_pbfriend()) {
+  // .KFMsg.PBRelation pbinvite = 2;
+  if (this->has_pbinvite()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *pbfriend_);
+        *pbinvite_);
   }
 
   // uint64 playerid = 1;
@@ -20731,8 +20731,8 @@ void S2SAddFriendInviteToGameAck::MergeFrom(const S2SAddFriendInviteToGameAck& f
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_pbfriend()) {
-    mutable_pbfriend()->::KFMsg::PBRelation::MergeFrom(from.pbfriend());
+  if (from.has_pbinvite()) {
+    mutable_pbinvite()->::KFMsg::PBRelation::MergeFrom(from.pbinvite());
   }
   if (from.playerid() != 0) {
     set_playerid(from.playerid());
@@ -20763,7 +20763,7 @@ void S2SAddFriendInviteToGameAck::Swap(S2SAddFriendInviteToGameAck* other) {
 }
 void S2SAddFriendInviteToGameAck::InternalSwap(S2SAddFriendInviteToGameAck* other) {
   using std::swap;
-  swap(pbfriend_, other->pbfriend_);
+  swap(pbinvite_, other->pbinvite_);
   swap(playerid_, other->playerid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -22512,13 +22512,13 @@ bool S2SUpdateFriendLinessToGameAck::MergePartialFromCodedStream(
         break;
       }
 
-      // uint64 friendliness = 3;
+      // uint32 friendliness = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &friendliness_)));
         } else {
           goto handle_unusual;
@@ -22562,9 +22562,9 @@ void S2SUpdateFriendLinessToGameAck::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->targetplayerid(), output);
   }
 
-  // uint64 friendliness = 3;
+  // uint32 friendliness = 3;
   if (this->friendliness() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->friendliness(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->friendliness(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -22591,9 +22591,9 @@ void S2SUpdateFriendLinessToGameAck::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->targetplayerid(), target);
   }
 
-  // uint64 friendliness = 3;
+  // uint32 friendliness = 3;
   if (this->friendliness() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->friendliness(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->friendliness(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -22627,10 +22627,10 @@ size_t S2SUpdateFriendLinessToGameAck::ByteSizeLong() const {
         this->targetplayerid());
   }
 
-  // uint64 friendliness = 3;
+  // uint32 friendliness = 3;
   if (this->friendliness() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->friendliness());
   }
 

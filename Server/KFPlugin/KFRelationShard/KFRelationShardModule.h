@@ -9,18 +9,14 @@
 //    @Date             :    2018-3-8
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRelationShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFConfig/KFConfigInterface.h"
-#include "KFWorker/KFWorkerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFOption/KFOptionInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -39,37 +35,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 查询玩家好友信息
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendToRelationReq );
 
         // 查询好友申请
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendInviteToRelationReq );
 
         // 申请添加好友
-        __KF_MESSAGE_FUNCTION__( HandleAddFriendInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddFriendInviteToRelationReq );
 
         // 删除好友邀请
-        __KF_MESSAGE_FUNCTION__( HandleDelInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelInviteToRelationReq );
 
         // 添加好友
-        __KF_MESSAGE_FUNCTION__( HandleAddFriendReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddFriendToRelationReq );
 
         // 删除好友
-        __KF_MESSAGE_FUNCTION__( HandleDelFriendReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelFriendToRelationReq );
 
         // 更新好友度
-        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessReq );
-
-        // 添加最近的人
-        __KF_MESSAGE_FUNCTION__( HandleAddRecentPlayerDataReq );
-
-        // 查询最近的玩家列表
-        __KF_MESSAGE_FUNCTION__( HandleQueryRecentListReq );
-
-        // 处理玩家敬酒请求(被敬酒次数判断)
-        __KF_MESSAGE_FUNCTION__( HandlePlayerToastReq );
-
-        // 处理查询总的被敬酒次数请求
-        __KF_MESSAGE_FUNCTION__( HandleQueryToastCountReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToRelationReq );
 
     protected:
         // 计划清理数据库
@@ -81,24 +65,27 @@ namespace KFrame
         void MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd );
 
         // 格式化好友key
-        std::string FormatFriendKey( const std::string& key, uint64 firstid, uint64 secondid );
+        std::string FormatFriendKey( uint64 firstid, uint64 secondid );
         std::string FormatFriendLimitKey( uint64 firstid, uint64 secondid, uint32 type );
 
         // 发送添加好友消息
-        void SendAddFriendToClient( uint64 serverid, MapString& values, uint64 friendid, uint64 playerid );
+        void SendAddFriendToPlayer( uint64 serverid, MapString& values, uint64 playerid, uint64 friendid );
+
+        // 发送删除好友消息
+        void SendDelFriendToPlayer( uint64 serverid, uint64 playerid, uint64 friendid );
 
         // 发送更新好友度
-        void SendAddFriendLinessToClient( uint64 selfid, uint64 targetid, uint32 friendliness );
+        void SendAddFriendLinessToPlayer( uint64 selfid, uint64 targetid, uint32 friendliness );
 
         // 更新好友度
         void UpdateFriendLiness( uint64 selfplayerid, uint64 targetplayerid, uint32 type, uint32 addvalue );
 
     private:
         // 关系数据库
-        KFRedisDriver* _relation_redis_driver{ nullptr };
+        KFRedisDriver* _relation_redis_driver = nullptr;
 
         // 公共数据数据库
-        KFRedisDriver* _public_redis_driver{ nullptr };
+        KFRedisDriver* _public_redis_driver = nullptr;
     };
 }
 

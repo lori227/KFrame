@@ -66,6 +66,22 @@ namespace KFrame
         _kf_game->SendToPlayer( 0u, kfbasic, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
+    void KFDisplayModule::SendToPlayer( const Route& route, uint32 result, ListString& params )
+    {
+        if ( _kf_route == nullptr )
+        {
+            return;
+        }
+
+        KFMsg::MsgResultDisplay display;
+        display.set_result( result );
+        for ( auto& param : params )
+        {
+            display.add_param( param );
+        }
+        _kf_route->SendToRoute( route, KFMsg::MSG_RESULT_DISPLAY, &display );
+    }
+
 
     void KFDisplayModule::SendToGroup( KFEntity* player, uint32 result, ListString& params )
     {

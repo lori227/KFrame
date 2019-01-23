@@ -571,7 +571,7 @@ message S2SQueryFriendInviteToRelationReq
 message S2SQueryFriendInviteToGameAck
 {
 	uint64 playerid = 1;				// 玩家id
-	repeated PBRelation pbfriend = 2;	// 好友数据	
+	repeated PBRelation pbinvite = 2;	// 邀请数据	
 }
 
 // 更新好友属性
@@ -596,7 +596,7 @@ message S2SAddFriendInviteToRelationReq
 message S2SAddFriendInviteToGameAck
 {
 	uint64 playerid = 1;		// 玩家id
-	PBRelation pbfriend = 2;	// 好友数据	
+	PBRelation pbinvite = 2;	// 好友数据	
 }
 
 // 删除好友请求

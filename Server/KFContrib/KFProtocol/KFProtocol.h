@@ -32,8 +32,9 @@ namespace KFrame
 
         // 解析
         static bool Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 mask );
-    };
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
+    };
 }
 
 #endif
