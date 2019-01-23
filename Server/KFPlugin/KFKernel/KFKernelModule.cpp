@@ -120,7 +120,7 @@ namespace KFrame
 
 #define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \
     {\
-        auto pbdata = &(proto->pbdata##());\
+        auto pbdata = &(proto->pbdata());\
         for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
         {\
             auto kfchild = kfdata->FindData( iter->first );\
