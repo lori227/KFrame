@@ -176,7 +176,9 @@ namespace KFrame
 
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_game->SendToClient( player, msgid, message );
+        auto kfobject = player->GetData();
+        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
+        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -384,7 +386,7 @@ namespace KFrame
 
         KFMsg::MsgSyncUpdateData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
     void KFPlayerModule::SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -399,7 +401,7 @@ namespace KFrame
 
         KFMsg::MsgSyncAddData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
     void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
@@ -414,14 +416,14 @@ namespace KFrame
 
         KFMsg::MsgSyncRemoveData sync;
         sync.mutable_pbdata()->CopyFrom( pbobect );
-        _kf_game->SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
+        SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
     void KFPlayerModule::SendRewardElementToClient( KFEntity* player, const std::string& reward )
     {
         KFMsg::MsgShowRewardElement show;
         show.set_reward( reward );
-        _kf_game->SendToClient( player, KFMsg::MSG_SHOW_REWARD_ELEMENT, &show );
+        SendToClient( player, KFMsg::MSG_SHOW_REWARD_ELEMENT, &show );
     }
 
     // 判断操作频率

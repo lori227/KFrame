@@ -11,8 +11,8 @@
 
 #include "KFPlayerInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFGame/KFGameInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 
 namespace KFrame

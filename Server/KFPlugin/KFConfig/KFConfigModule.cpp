@@ -38,8 +38,8 @@ namespace KFrame
         auto key = reinterpret_cast< uint64 >( config );
         auto kfdata = _kf_config_data.Create( key );
 
-        kfdata->_config = config;
         kfdata->_file = file;
+        kfdata->_config = config;
         kfdata->_can_reload = canreload;
     }
 
