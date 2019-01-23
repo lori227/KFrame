@@ -42,7 +42,6 @@ namespace KFrame
 
     __KF_SCHEDULE_FUNCTION__( KFRelationShardModule::OnScheduleClearFriendLiness )
     {
-        _relation_redis_driver->Append( "del {}", __KF_STRING__( dailytoast ) );
         _relation_redis_driver->Append( "del {}", __KF_STRING__( friendlinesslimit ) );
         _relation_redis_driver->Pipeline();
     }
