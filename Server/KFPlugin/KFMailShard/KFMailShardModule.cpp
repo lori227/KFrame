@@ -110,7 +110,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto& maillist = __JSON_GET_ARRRY__( request, __KF_STRING__( mailid ) );
+        const auto& maillist = __JSON_GET_ARRRY__( request, __KF_STRING__( mailid ) );
         auto count = __JSON_ARRAY_SIZE__( maillist );
         for ( auto i = 0u; i < count; ++i )
         {
