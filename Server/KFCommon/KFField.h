@@ -173,7 +173,7 @@ namespace KFrame
         __STRING_DEFINE__( friendliness );
         __STRING_DEFINE__( friendinvite );
         __STRING_DEFINE__( friendlinesslimit );
-        __STRING_DEFINE__( refuseinvite );
+        __STRING_DEFINE__( refusefriend );
         __STRING_DEFINE__( friendlist );
         __STRING_DEFINE__( invitelist );
         __STRING_DEFINE__( invite );

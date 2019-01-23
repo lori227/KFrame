@@ -120,6 +120,11 @@ namespace KFrame
     {
         auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
         auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
+        if ( serverid == _invalid_int || playerid == _invalid_int )
+        {
+            return false;
+        }
+
         return SendToPlayer( sendid, serverid, playerid, msgid, message );
     }
 

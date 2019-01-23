@@ -180,8 +180,20 @@ enum CodeEnum
 	StoreBuyCountError		    = 20506;	// 购买数量错误
 
 	// compound
-	CompoundDataNotEnough		= 20601;		// 没有足够的数据
-	CompoundNotExist			= 20602;		// 合成配置不存在
+	CompoundDataNotEnough		= 20601;	// 没有足够的数据
+	CompoundNotExist			= 20602;	// 合成配置不存在
+
+	// relation
+	MessageFilterError		 	= 20701;	// 留言内有屏蔽字符
+	FriendAlready				= 20702;	// 与<Text>%s</Text>已经是好友关系, 不能重复申请
+	FriendSelfLimit				= 20703;	// 你的好友数量已经达到上限<Text>%s</Text>个
+	FriendInviteReq				= 20704;	// <Text>%s</Text>向你发送了好友申请
+	FriendRefuseYourInvite		= 20705;	// <Text>%s</Text>拒绝了你的好友请求
+	FriendAddOk					= 20706;	// 与<Text>%s</Text>已为知交
+	FriendNotExist				= 20707;	// 好友不存在
+	FriendDelOk					= 20708;	// 你与<Player id=%s>%s</Player>不再是好友了
+	FriendLinessAdd				= 20709;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
+
 
 	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
 	AccountIsEmpty         		= 26;		// 账号不能为空
@@ -223,10 +235,6 @@ enum CodeEnum
 	FriendInviteOK				= 77;		// 向<Text>%s</Text>发送好友申请成功
 	FriendRefuseInvite			= 78;		// <Text>%s</Text>设置拒绝添加好友
 	FriendTargetLimit			= 79;		// <Text>%s</Text>的好友数量已经超过最大限制
-	FriendSelfLimit				= 80;		// 你的好友数量已经达到<Text>%s</Text>个
-	FriendAlready				= 81;		// 与<Text>%s</Text>已经是好友关系
-	FriendNotExist				= 82;		// 对方不是你的好友
-	FriendDelOK					= 83;		// 你与<Player id=%s>%s</Player>不再是好友了
 	FriendInviteLimit			= 84;		// <Text>%s</Text>的好友申请列表满了
 	FriendInviteNotExist    	= 85;		// 好友邀请信息不存在
 	MatchNotInMatch				= 86;		// 你已经不在匹配
@@ -276,14 +284,10 @@ enum CodeEnum
 	GroupCaptainOffline			= 132;		// 队长不在线
 	GroupNoCaption				= 133;		// 没有队长数据
 	GroupNotCaption				= 134;		// 你不是队长
-	FriendServerBusy			= 135;		// 好友服务器繁忙, 请稍后再试
-	FriendRefuseYourInvite		= 136;		// <Text>%s</Text>拒绝了你的好友请求
-	FriendAddOK					= 137;		// 与<Text>%s</Text>已为知交
-	FriendInviteReq				= 138;		// <Text>%s</Text>向你发送了好友申请
 	GroupJoinOK					= 139;		// 已经加入队伍
 	GroupMemberJoin				= 140;		// <Text>%s</Text>加入了队伍
 	GroupIsNewCaption			= 141;		// 你已经成为队长
-	FriendLinessAdd				= 142;		// 与<Text>%s</Text>情义小涨<Text>%s</Text>
+	
 	FriendLinessAddLimit		= 143;		// 今日与<Text>%s</Text>情义已满
 	FriendLinessAddByWinGame	= 144;		// 拔得头筹，与<Text>%s</Text>情义另涨<Text>%s</Text>
 	FriendLinessMaxLimit		= 145;		// 与<Text>%s</Text>已是刎颈之交

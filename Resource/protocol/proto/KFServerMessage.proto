@@ -46,9 +46,24 @@ enum ServerProtocol
 	S2S_UPDATE_MAIL_STATUS_REQ = 21106;				// 设置邮件状态请求
 	S2S_UPDATE_MAIL_STATUS_ACK = 21107;				// 设置邮件状态响应
 
+	// relation
+	S2S_QUERY_FRIEND_TO_RELATION_REQ = 21201;		// 查询好友信息
+	S2S_QUERY_FRIEND_TO_GAME_ACK = 21202;			// 查询好友信息
+	S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ = 21203;// 查询好友申请信息
+	S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK = 21204;	// 查询好友申请信息
+	S2S_UPDATE_DATA_TO_FRIEND_REQ = 21205;			// 更新好友属性
+	S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ = 21206;	// 添加好友请求
+	S2S_ADD_FRIEND_INVITE_TO_GAME_ACK = 21207;		// 添加好友请求
+	S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ = 21208;	// 删除好友邀请
+	S2S_ADD_FRIEND_TO_RELATION_REQ = 21209;			// 添加好友请求
+	S2S_ADD_FRIEND_TO_GAME_ACK = 21210;				// 添加好友回应
+	S2S_DEL_FRIEND_TO_RELATION_REQ = 21211;			// 删除好友请求
+	S2S_DEL_FRIEND_TO_GAME_ACK = 21212;				// 删除好友回应
+	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ = 21213;// 更新好友度
+	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK = 21214;	// 更新好友度反馈
 
 
-	S2S_QUERY_FRIEND_REQ = 21130;					// 查询好友信息
+
 
 	S2S_REGISTER_MATCH_REQ = 11101;					// 注册匹配
 	S2S_MATCH_TO_PROXY_REQ = 11102;					// 请求匹配
@@ -126,26 +141,10 @@ enum ServerProtocol
 	S2S_SET_PLAYER_NAME_ACK = 21125;				// 设置名字回应
 	S2S_PLAYER_DISCONNECTION_REQ  = 21126;			// 玩家掉线
 
-	S2S_ADD_FRIEND_INVITE_REQ = 21131;				// 添加好友请求
-	S2S_DEL_FRIEND_REQ = 21132;						// 删除好友请求
-	S2S_QUERY_FRIEND_ACK = 21133;					// 查询好友信息
-	S2S_QUERY_FRIEND_INVITE_ACK = 21134;			// 查询好友申请信息
-	S2S_ADD_FRIEND_INVITE_ACK = 21135;				// 添加好友请求
-	S2S_DEL_FRIEND_INVITE_REQ = 21136;				// 删除好友邀请
-	S2S_ADD_FRIEND_REQ = 21137;						// 添加好友
-	S2S_DEL_FRIEND_ACK = 21138;						// 删除好友
-	S2S_ADD_FRIEND_ACK = 21139;						// 添加好友
-	S2S_UPDATE_FRIEND_REQ = 21140;					// 更新好友
 
-	S2S_UPDATE_FRIEND_LINESS_REQ = 21143;			// 更新好友度
-
-	S2S_QUERY_FRIEND_INVITE_REQ = 21148;			// 查询好友申请信息
 	S2S_CREATE_ROLE_REQ = 21150;					// 创建角色
 	S2S_CREATE_ROLE_ACK = 21151;					// 创建角色
 
-	S2S_PLAYER_TOAST_REQ = 21156;					// 玩家敬酒请求
-	S2S_PLAYER_TOAST_ACK = 21157;					// 玩家敬酒回馈
-	S2S_UPDATE_FRIENDLINESS_ACK = 21158;			// 更新好友度反馈
 	S2S_CREATE_MATCH_GROUP_REQ = 21159;				// 创建匹配队伍
 	S2S_RECEIVE_INVITE_MATCH_GROUP_REQ = 21160;		// 接收到组队邀请
 	S2S_CONSENT_INVITE_MATCH_GROUP_REQ = 21161;		// 回复邀请操作
@@ -184,31 +183,31 @@ enum ServerProtocol
 	S2S_CREATE_GUILD_TO_SHARD_REQ = 21198;			// 创建帮派请求发送到shard
 	S2S_CREATE_GUILD_ACK = 21199;					// 创建帮派返回
 	S2S_UPDATE_MEMBER_BASIC_DATA_REQ = 21200;		// 更新帮派成员基础信息
-	S2S_INVITE_GUILD_REQ = 21201;					// 邀请好友加入帮派请求
-	S2S_INVITE_GUILD_ACK = 21202;					// 邀请好友加入帮派反馈
-	S2S_APPLY_GUILD_REQ = 21203;					// 申请加入帮派请求
-	S2S_APPLY_GUILD_ACK = 21204;					// 申请加入帮派反馈
-	S2S_PLAYER_GUILD_CHANGE_REQ = 21205;			// 玩家帮派状态变化guild->zone	
-	S2S_EXIT_GUILD_REQ = 21206;						// 玩家退出帮派
-	S2S_TRANSFER_MASTER_REQ = 21207;				// 转让帮派请求
-	S2S_REVIEW_APPLY_REQ = 21208;					// 审核帮派成员加入	
-	S2S_DISSOLVE_GUILD_REQ = 21209;					// 解散帮派
-	S2S_MODIFY_MEDAL_REQ = 21210;					// 修改帮派徽章
-	S2S_QUERY_GUILD_LIST_REQ = 21211;				// 请求帮派列表
-	S2S_KICK_MEMBER_REQ = 21212;					// 请求踢人
-	S2S_LOGIN_QUERY_GUILD_REQ = 21213;				// 登录请求自身帮派数据
-	S2S_LOGIN_QUERY_GUILD_ACK = 21214;				// 请求帮派数据返回
-	S2S_UPDATE_GUILD_DATA_REQ = 21215;				// 更新帮派成员数据
-	S2S_UPGRADE_GUILD_REQ = 21216;					// 帮派升级
-	S2S_UPGRADE_GUILD_ACK = 21217;					// 帮派升级反馈
-	S2S_APPOINT_GUILD_MEMBER_REQ = 21218;			// 任命帮派成员请求
-	S2S_SEARCH_GUILD_BY_NAME_REQ = 21219;			// 根据帮派名字搜索帮派信息
-	S2S_SET_GUILD_SWITCH_REQ = 21220;				// 设置帮派管理开关
-	S2S_LOGIN_QUERY_GUILDID_REQ = 21221;			// 登录请求guildid
-	S2S_LOGIN_QUERY_GUILDID_ACK = 21222;			// 登录请求guildid返回
-	S2S_QUERY_GUILD_LOG_REQ = 21223;				// 查询帮派日志
-	S2S_ADD_GUILD_ACTIVENESS_REQ = 21224;			// 增加帮派活跃度
-	S2S_SEND_CHAT_TO_SERVER = 21301;				// 发送聊天内容
+	S2S_INVITE_GUILD_REQ = 212011;					// 邀请好友加入帮派请求
+	S2S_INVITE_GUILD_ACK = 31202;					// 邀请好友加入帮派反馈
+	S2S_APPLY_GUILD_REQ = 31203;					// 申请加入帮派请求
+	S2S_APPLY_GUILD_ACK = 31204;					// 申请加入帮派反馈
+	S2S_PLAYER_GUILD_CHANGE_REQ = 31205;			// 玩家帮派状态变化guild->zone	
+	S2S_EXIT_GUILD_REQ = 31206;						// 玩家退出帮派
+	S2S_TRANSFER_MASTER_REQ = 31207;				// 转让帮派请求
+	S2S_REVIEW_APPLY_REQ = 31208;					// 审核帮派成员加入	
+	S2S_DISSOLVE_GUILD_REQ = 31209;					// 解散帮派
+	S2S_MODIFY_MEDAL_REQ = 31210;					// 修改帮派徽章
+	S2S_QUERY_GUILD_LIST_REQ = 31211;				// 请求帮派列表
+	S2S_KICK_MEMBER_REQ = 31212;					// 请求踢人
+	S2S_LOGIN_QUERY_GUILD_REQ = 31213;				// 登录请求自身帮派数据
+	S2S_LOGIN_QUERY_GUILD_ACK = 31214;				// 请求帮派数据返回
+	S2S_UPDATE_GUILD_DATA_REQ = 31215;				// 更新帮派成员数据
+	S2S_UPGRADE_GUILD_REQ = 31216;					// 帮派升级
+	S2S_UPGRADE_GUILD_ACK = 31217;					// 帮派升级反馈
+	S2S_APPOINT_GUILD_MEMBER_REQ = 31218;			// 任命帮派成员请求
+	S2S_SEARCH_GUILD_BY_NAME_REQ = 31219;			// 根据帮派名字搜索帮派信息
+	S2S_SET_GUILD_SWITCH_REQ = 31220;				// 设置帮派管理开关
+	S2S_LOGIN_QUERY_GUILDID_REQ = 31221;			// 登录请求guildid
+	S2S_LOGIN_QUERY_GUILDID_ACK = 31222;			// 登录请求guildid返回
+	S2S_QUERY_GUILD_LOG_REQ = 31223;				// 查询帮派日志
+	S2S_ADD_GUILD_ACTIVENESS_REQ = 31224;			// 增加帮派活跃度
+	S2S_SEND_CHAT_TO_SERVER = 31301;				// 发送聊天内容
 
  }
 
@@ -546,121 +545,117 @@ message PBRelation
 }
 
 // 查询好友信息
-// S2S_QUERY_FRIEND_REQ
-message S2SQueryFriendReq
+// S2S_QUERY_FRIEND_TO_RELATION_REQ
+message S2SQueryFriendToRelationReq
 {
 	uint64 playerid = 1;	// 玩家id
-	uint64 serverid = 2;
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_TO_GAME_ACK
+message S2SQueryFriendToGameAck
+{
+	uint64 playerid = 1;				// 玩家id
+	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
 // 查询好友申请信息
-// S2S_QUERY_FRIEND_INVITE_REQ
-message S2SQueryFriendInviteReq
+// S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ
+message S2SQueryFriendInviteToRelationReq
 {
 	uint64 playerid = 1;	// 玩家id
-	uint64 serverid = 2;
 }
 
 // 查询好友信息
-// S2S_QUERY_FRIEND_ACK
-message S2SQueryFriendAck
+// S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK
+message S2SQueryFriendInviteToGameAck
 {
-	uint64 playerid = 1;	// 玩家id
+	uint64 playerid = 1;				// 玩家id
 	repeated PBRelation pbfriend = 2;	// 好友数据	
 }
 
-// 查询好友信息
-// S2S_QUERY_FRIEND_INVITE_ACK
-message S2SQueryFriendInviteAck
+// 更新好友属性
+// S2S_UPDATE_DATA_TO_FRIEND_REQ
+message S2SUpdateDataToFriendReq
 {
-	uint64 playerid = 1;	// 玩家id
-	repeated PBRelation pbfriend = 2;	// 好友数据	
+	uint64 playerid = 1;
+	map<string, bytes> pbdata = 3;
 }
 
 // 添加好友请求
-// S2S_ADD_FRIEND_INVITE_REQ
-message S2SAddFriendInviteReq
+// S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ
+message S2SAddFriendInviteToRelationReq
 {
-	uint64 selfplayerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
+	bytes name = 1;			// 对方名字
+	uint64 playerid = 2;	// 对方id
 	bytes message = 3;		// 留言	
-	uint64 serverid = 4;
-	bytes targetname = 5;		// 对方名字
 }
 
 // 添加好友申请
-// S2S_ADD_FRIEND_INVITE_ACK
-message S2SAddFriendInviteAck
+// S2S_ADD_FRIEND_INVITE_TO_GAME_ACK
+message S2SAddFriendInviteToGameAck
 {
-	uint64 playerid = 1;	// 玩家id
+	uint64 playerid = 1;		// 玩家id
 	PBRelation pbfriend = 2;	// 好友数据	
 }
 
 // 删除好友请求
-// S2S_DEL_FRIEND_REQ
-message S2SDelFriendReq
+// S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ
+message S2SDelFriendInviteToRelationReq
 {
 	uint64 selfplayerid = 1;	// 申请id
 	uint64 targetplayerid = 2;	// 对方id
 }
 
-// 删除好友
-// S2S_DEL_FRIEND_ACK
-message S2SDelFriendAck
+// 添加好友
+// S2S_ADD_FRIEND_TO_RELATION_REQ
+message S2SAddFriendToRelationReq
 {
-	uint64 playerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
+	bytes name = 1;			// 对方名字
+	uint64 playerid = 2;	// 对方id
+}
+
+// 添加好友
+// S2S_ADD_FRIEND_TO_GAME_ACK
+message S2SAddFriendToGameAck
+{
+	uint64 playerid = 1;		// 玩家id
+	PBRelation pbfriend = 2;	// 好友信息
 }
 
 // 删除好友请求
-// S2S_DEL_FRIEND_INVITE_REQ
-message S2SDelFriendInviteReq
+// S2S_DEL_FRIEND_TO_RELATION_REQ
+message S2SDelFriendToRelationReq
 {
-	uint64 selfplayerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
+	uint64 playerid = 1;	// 好友id
 }
 
-// 添加好友
-// S2S_ADD_FRIEND_REQ
-message S2SAddFriendReq
+// 删除好友
+// S2S_DEL_FRIEND_TO_GAME_ACK
+message S2SDelFriendToGameAck
 {
-	uint64 selfplayerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
-	uint64 serverid = 3;
-	bytes targetname = 4;		// 对方名字
-}
-
-// 添加好友
-// S2S_ADD_FRIEND_ACK
-message S2SAddFriendAck
-{
-	uint64 playerid = 1;		// 玩家id
-	PBRelation pbfriend = 2;		// 好友信息
-}
-
-// 更新好友属性
-// S2S_UPDATE_FRIEND_REQ
-message S2SUpdateFriendReq
-{
-	uint64 friendid = 1;
-	uint64 serverid = 2;
-	map<string, bytes> pbdata = 3;
+	uint64 playerid = 1;	// 申请id
+	uint64 friendid = 2;	// 对方id
 }
 
 // 更新好友度
-// S2S_UPDATE_FRIEND_LINESS_REQ
-message S2SUpdateFriendLinessReq
+// S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ
+message S2SUpdateFriendLinessToRelationReq
 {
-	uint64 selfplayerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
-	uint32 friendliness = 3;	// 好友度
-	uint32 type = 4;			// 类型
-	//optional uint32 serverid = 5;		// 申请服务器id
-	//optional bytes targetname = 6;		// 对方名字
+	uint32 type = 1;			// 类型
+	uint64 selfplayerid = 2;	// 申请id
+	uint64 targetplayerid = 3;	// 对方id
+	uint32 friendliness = 4;	// 好友度
 }
 
-
-
+// 更新好友度反馈
+// S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK
+message S2SUpdateFriendLinessToGameAck
+{
+	uint64 playerid = 1;		// 申请id
+	uint64 targetplayerid = 2;	// 对方id
+	uint32 friendliness = 3;	// 好友度
+}
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -695,14 +690,7 @@ message S2SQueryToastCountReq
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-// 更新好友度反馈
-// S2S_UPDATE_FRIENDLINESS_ACK
-message S2SUpdateFriendLinessAck
-{
-	uint64 playerid = 1;	// 申请id
-	uint64 targetplayerid = 2;	// 对方id
-	uint64 friendliness = 3;	// 好友度
-}
+
 
 // 创建匹配小组
 // S2S_CREATE_MATCH_GROUP_REQ

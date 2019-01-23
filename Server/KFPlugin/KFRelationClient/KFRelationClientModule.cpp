@@ -13,22 +13,17 @@ namespace KFrame
         _kf_player->RegisterLeaveFunction( this, &KFRelationClientModule::OnLeaveUpdateFriend );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_ACK, &KFRelationClientModule::HandleQueryFriendAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_ACK, &KFRelationClientModule::HandleQueryInviteAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleQueryFriendToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleQueryFriendInviteToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ, &KFRelationClientModule::HandleUpdateDataToFriendReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleAddFriendInviteReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_ACK, &KFRelationClientModule::HandleAddFriendInviteAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ, &KFRelationClientModule::HandleDelFriendReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_ACK, &KFRelationClientModule::HandleDelFriendAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_ACK, &KFRelationClientModule::HandleAddFriendAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIEND_REQ, &KFRelationClientModule::HandleUpdateFriendReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleAddFriendInviteToGameAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleReplyInviteReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleAddFriendToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ, &KFRelationClientModule::HandleDelFriendReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_TO_GAME_ACK, &KFRelationClientModule::HandleDelFriendToGameAck );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseFriendInviteReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK, &KFRelationClientModule::HandleUpdateFriendLinessAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RECENT_LIST_ACK, &KFRelationClientModule::HandleQueryRecentListAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RECENT_LIST_REQ, &KFRelationClientModule::HandleQueryRecentListReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_PLAYER_TOAST_REQ, &KFRelationClientModule::HandlePlayerToastReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_ACK, &KFRelationClientModule::HandlePlayerToastAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_TOAST_COUNT_REQ, &KFRelationClientModule::HandleQueryToastCountReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &KFRelationClientModule::HandleUpdateFriendLinessToGameAck );
     }
 
     void KFRelationClientModule::BeforeShut()
@@ -39,61 +34,65 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_TO_GAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_ADD_FRIEND_INVITE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIEND_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_INVITE_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_FRIEND_INVITE_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_FRIEND_TO_GAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_DEL_FRIEND_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEL_FRIEND_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_FRIEND_INVITE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RECENT_LIST_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_RECENT_LIST_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_PLAYER_TOAST_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_TOAST_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_TOAST_COUNT_REQ );
-    }
-
-    void KFRelationClientModule::OnceRun()
-    {
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRelationClientModule::SendMessageToRelation( uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRelationClientModule::SendMessageToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_cluster->SendToShard( __KF_STRING__( relation ), msgid, message );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( relation ), msgid, message );
     }
 
-    bool KFRelationClientModule::SendMessageToRelation( KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
+    bool KFRelationClientModule::SendMessageToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
     {
-        auto serverid = kfrelation->GetValue< uint32 >( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
-        if ( serverid == _invalid_int )
+        auto kfbasic = kfrelation->FindData( __KF_STRING__( basic ) );
+        return _kf_game->SendToPlayer( playerid, kfbasic, msgid, message );
+    }
+
+    void KFRelationClientModule::SendMessageToFriend( KFEntity* player, uint32 msgid, google::protobuf::Message* message )
+    {
+        auto kfobject = player->GetData();
+        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
+
+        auto kffriend = kffriendrecord->FirstData();
+        while ( kffriend != nullptr )
         {
-            return false;
+            SendMessageToRelation( player->GetKeyID(), kffriend, msgid, message );
+            kffriend = kffriendrecord->NextData();
         }
-
-        auto playerid = kfrelation->GetKeyID();
-        return _kf_route->SendToRoute( serverid, playerid, msgid, message );
     }
 
+    uint32 KFRelationClientModule::GetMaxFriendCount()
+    {
+        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
+        return _max_friend_count->_uint32_value;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFRelationClientModule::OnEnterQueryFriend( KFEntity* player )
     {
         {
-            KFMsg::S2SQueryFriendReq req;
+            // 查询好友列表
+            KFMsg::S2SQueryFriendToRelationReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-            SendMessageToRelation( KFMsg::S2S_QUERY_FRIEND_REQ, &req );
+            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_TO_RELATION_REQ, &req );
         }
 
         {
-            KFMsg::S2SQueryFriendInviteReq req;
+            // 查询好友申请列表
+            KFMsg::S2SQueryFriendInviteToRelationReq req;
             req.set_playerid( player->GetKeyID() );
-            req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-            SendMessageToRelation( KFMsg::S2S_QUERY_FRIEND_INVITE_REQ, &req );
+            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ, &req );
         }
     }
 
@@ -101,8 +100,7 @@ namespace KFrame
     {
         // 通知所有好友,我下线了
         MapString values;
-        values[ __KF_STRING__( groupid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         SendUpdateToFriend( player, values );
     }
@@ -137,114 +135,66 @@ namespace KFrame
 
     void KFRelationClientModule::SendUpdateToFriend( KFEntity* player, MapString& values )
     {
-        auto kfobject = player->GetData();
-        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-        if ( kffriendrecord == nullptr )
+        KFMsg::S2SUpdateDataToFriendReq req;
+        req.set_playerid( player->GetKeyID() );
+
+        auto pbdata = req.mutable_pbdata();
+        for ( auto& iter : values )
         {
-            return;
+            ( *pbdata )[ iter.first ] = iter.second;
         }
 
-        KFMsg::S2SUpdateFriendReq req;
-        req.set_friendid( player->GetKeyID() );
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-
-        for ( auto iter : values )
-        {
-            auto pbdata = req.add_pbdata();
-            pbdata->set_name( iter.first );
-            pbdata->set_value( iter.second );
-        }
-
-        auto kffriend = kffriendrecord->FirstData();
-        while ( kffriend != nullptr )
-        {
-            SendMessageToRelation( kffriend, KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
-            kffriend = kffriendrecord->NextData();
-        }
+        SendMessageToFriend( player, KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ, &req );
     }
 
-    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateDataToFriendReq )
     {
-        kfrelation->SetKeyID( pbrelation->playerid() );
+        __PROTO_PARSE__( KFMsg::S2SUpdateDataToFriendReq );
 
-        auto kfbasic = kfrelation->FindData( __KF_STRING__( basic ) );
-
-        auto pbplayerdata = &pbrelation->playerdata();
-        for ( auto i = 0; i < pbplayerdata->pbstring_size(); ++i )
-        {
-            auto pbdata = &pbplayerdata->pbstring( i );
-
-            auto kfdata = kfbasic->FindData( pbdata->name() );
-            if ( kfdata != nullptr )
-            {
-                kfdata->SetValue< std::string >( pbdata->value() );
-            }
-        }
-
-        auto pbrelationdata = &pbrelation->relationdata();
-        for ( auto i = 0; i < pbrelationdata->pbstring_size(); ++i )
-        {
-            auto pbdata = &pbrelationdata->pbstring( i );
-
-            auto kfdata = kfrelation->FindData( pbdata->name() );
-            if ( kfdata != nullptr )
-            {
-                kfdata->SetValue< std::string >( pbdata->value() );
-            }
-        }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SUpdateFriendReq );
-
-        auto playerid = __KF_DATA_ID__( kfid );
+        auto playerid = __ROUTE_RECV_ID__;
         auto player = _kf_player->FindPlayer( playerid );
-        if ( player == nullptr )
+        if ( player != nullptr )
+        {
+            // 玩家存在, 就更新好友属性
+            auto kfobject = player->GetData();
+            auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.playerid(), __KF_STRING__( basic ) );
+            if ( kfbasic != nullptr )
+            {
+                auto pbdata = &kfmsg.pbdata();
+                for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
+                {
+                    player->UpdateData( kfbasic, iter->first, iter->second );
+                }
+            }
+        }
+        else
         {
             // 信息不同步时候, 设置玩家不在线
             // 如果game宕机, 不会发送下线消息, 然后该玩家不在上线, 状态会一直显示在线
             MapString values;
             values[ __KF_STRING__( serverid ) ] = "0";
-            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
+            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
             values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
             _kf_public->UpdatePublicData( playerid, values );
 
-            // 同步给好友, 避免每次都更新消息过来
-            if ( kfmsg.serverid() != _invalid_int )
+            if ( route._send_id != _invalid_int )
             {
-                KFMsg::S2SUpdateFriendReq req;
-                req.set_friendid( playerid );
-                req.set_serverid( _invalid_int );
-                for ( auto iter : values )
+                // 同步给好友, 避免每次都更新消息过来
+                KFMsg::S2SUpdateDataToFriendReq req;
+                req.set_playerid( playerid );
+                auto pbdata = req.mutable_pbdata();
+                for ( auto& iter : values )
                 {
-                    auto pbdata = req.add_pbdata();
-                    pbdata->set_name( iter.first );
-                    pbdata->set_value( iter.second );
+                    ( *pbdata )[ iter.first ] = iter.second;
                 }
-                _kf_route->SendToRoute( kfmsg.serverid(), kfmsg.friendid(), KFMsg::S2S_UPDATE_FRIEND_REQ, &req );
-            }
-        }
-        else
-        {
-            auto kfobject = player->GetData();
-            auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.friendid(), __KF_STRING__( basic ) );
-            if ( kfbasic == nullptr )
-            {
-                return;
-            }
-
-            for ( auto i = 0; i < kfmsg.pbdata_size(); ++i )
-            {
-                auto pbdata = &kfmsg.pbdata( i );
-                player->UpdateData( kfbasic, pbdata->name(), pbdata->value() );
+                _kf_game->SendToPlayer( _invalid_int, route._server_id, route._send_id, KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ, &req );
             }
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryFriendAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryFriendToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryFriendAck );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryFriendToGameAck );
 
         auto kfobject = player->GetData();
         auto kffreindrecord = kfobject->FindData( __KF_STRING__( friend ) );
@@ -253,10 +203,6 @@ namespace KFrame
         {
             auto pbfriend = &kfmsg.pbfriend( i );
             auto kffriend = _kf_kernel->CreateObject( kffreindrecord->GetDataSetting() );
-            if ( kffriend == nullptr )
-            {
-                continue;
-            }
 
             PBRelationToKFData( pbfriend, kffriend );
             player->AddData( kffreindrecord, kffriend );
@@ -264,16 +210,43 @@ namespace KFrame
 
         // 通知所有好友,我上线了
         MapString values;
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineStatus );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineState );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id._union._id );
-
         SendUpdateToFriend( player, values );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryInviteAck )
+    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryFriendInviteAck );
+        kfrelation->SetKeyID( pbrelation->playerid() );
+
+        // 玩家基础属性
+        auto kfbasic = kfrelation->FindData( __KF_STRING__( basic ) );
+        auto pbplayerdata = &pbrelation->playerdata();
+        for ( auto iter = pbplayerdata->begin(); iter != pbplayerdata->end(); ++iter )
+        {
+            auto kfdata = kfbasic->FindData( iter->first );
+            if ( kfdata != nullptr )
+            {
+                kfdata->SetValue< std::string >( iter->second );
+            }
+        }
+
+        // 好友关系属性
+        auto pbrelationdata = &pbrelation->relationdata();
+        for ( auto iter = pbrelationdata->begin(); iter != pbrelationdata->end(); ++iter )
+        {
+            auto kfdata = kfrelation->FindData( iter->first );
+            if ( kfdata != nullptr )
+            {
+                kfdata->SetValue< std::string >( iter->second );
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryFriendInviteToGameAck )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryFriendInviteToGameAck );
 
         auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
@@ -282,10 +255,6 @@ namespace KFrame
         {
             auto pbfriend = &kfmsg.pbfriend( i );
             auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
-            if ( kfinvite == nullptr )
-            {
-                continue;
-            }
 
             PBRelationToKFData( pbfriend, kfinvite );
             player->AddData( kfinviterecord, kfinvite );
@@ -304,49 +273,48 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
+
+        // 已经是好友, 不能申请
         auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
         if ( kffriend != nullptr )
         {
-            // 已经是好友, 不能申请
             return _kf_display->SendToClient( player, KFMsg::FriendAlready, kfmsg.name() );
         }
 
         // 判断自己好友数量
-        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
-        if ( kffriendrecord->Size() >= _max_friend_count->_uint32_value )
+        auto maxfriendcount = GetMaxFriendCount();
+        if ( kffriendrecord->Size() >= maxfriendcount )
         {
-            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count->_uint32_value );
+            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, maxfriendcount );
         }
 
+        // 检查屏蔽字
         auto message = kfmsg.message();
         KFUtility::ReplaceString( message, " ", "" );
+        if ( _kf_filter->CheckFilter( message ) )
+        {
+            return _kf_display->SendToClient( player, KFMsg::MessageFilterError );
+        }
 
         // 发送好友集群处理
-        KFMsg::S2SAddFriendInviteReq req;
-        req.set_selfplayerid( playerid );
-        req.set_targetplayerid( kfmsg.playerid() );
-        req.set_targetname( kfmsg.name() );
+        KFMsg::S2SAddFriendInviteToRelationReq req;
+        req.set_name( kfmsg.name() );
+        req.set_playerid( kfmsg.playerid() );
         req.set_message( message );
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-        auto ok = SendMessageToRelation( KFMsg::S2S_ADD_FRIEND_INVITE_REQ, &req );
-
+        auto ok = SendMessageToRelation( playerid, KFMsg::S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddFriendInviteAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddFriendInviteToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SAddFriendInviteAck );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SAddFriendInviteToGameAck );
 
         auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
         auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
-        if ( kfinvite == nullptr )
-        {
-            return;
-        }
 
         PBRelationToKFData( &kfmsg.pbfriend(), kfinvite );
         player->AddData( kfinviterecord, kfinvite );
@@ -355,59 +323,11 @@ namespace KFrame
         _kf_display->SendToClient( player, KFMsg::FriendInviteReq, name );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelFriendReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgDelFriendReq );
-
-        auto kfobject = player->GetData();
-        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-        auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
-        if ( kffriend == nullptr )
-        {
-            return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
-        }
-
-        // 发送好友集群处理
-        KFMsg::S2SDelFriendReq req;
-        req.set_selfplayerid( playerid );
-        req.set_targetplayerid( kfmsg.playerid() );
-        auto ok = SendMessageToRelation( KFMsg::S2S_DEL_FRIEND_REQ, &req );
-        if ( ok )
-        {
-            auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
-            _kf_display->SendToClient( player, KFMsg::FriendDelOK, name, kfmsg.playerid() );
-
-            player->RemoveData( kffriendrecord, kfmsg.playerid() );
-        }
-        else
-        {
-            _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
-        }
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelFriendAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SDelFriendAck );
-
-        auto kfobject = player->GetData();
-        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-        auto kffriend = kffriendrecord->FindData( kfmsg.targetplayerid() );
-        if ( kffriend == nullptr )
-        {
-            return;
-        }
-
-        auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
-        _kf_display->SendToClient( player, KFMsg::FriendDelOK, kfmsg.targetplayerid(), name );
-
-        // 直接删除好友
-        player->RemoveData( __KF_STRING__( friend ), kfmsg.targetplayerid() );
-    }
-
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleReplyInviteReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgReplyFriendInviteReq );
 
+        // playerid 为0, 代表全部操作
         if ( kfmsg.playerid() == _invalid_int )
         {
             ReplyFriendInvite( player, kfmsg.operate() );
@@ -423,14 +343,13 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
 
-        std::vector<uint64> removelist;
+        std::list< uint64 > removelist;
 
         auto kfinvite = kfinviterecord->FirstData();
         while ( kfinvite != nullptr )
         {
             auto removeid = ReplyFriendInvite( player, kfinvite, operate );
-
-            if ( _invalid_int != removeid )
+            if ( removeid != _invalid_int  )
             {
                 removelist.push_back( removeid );
             }
@@ -465,30 +384,30 @@ namespace KFrame
     uint64 KFRelationClientModule::ReplyFriendInvite( KFEntity* player, KFData* kfinvite, uint32 operate )
     {
         auto removeid = _invalid_int;
-
         switch ( operate )
         {
-        case KFMsg::InviteEnum::Consent:
+        case KFMsg::Consent:	// 同意申请
         {
-            AddFriend( player, kfinvite );
+            ProcessAddFriend( player, kfinvite );
         }
         break;
-        case KFMsg::InviteEnum::Refuse:
+        case KFMsg::Refuse:		// 拒绝, 通知对方
         {
             auto kfobject = player->GetData();
             auto selfname = kfobject->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
             auto targetserverid = kfinvite->GetValue( __KF_STRING__( basic ), __KF_STRING__( serverid ) );
             _kf_display->SendToPlayer( targetserverid, kfinvite->GetKeyID(), KFMsg::FriendRefuseYourInvite, selfname );
-        }//break; 注释break, 执行下次发送删除消息操作
-        case  KFMsg::InviteEnum::Delete:
+        }
+        //break; 注释break, 执行下次发送删除消息操作
+        case KFMsg::Delete:	// 删除, 不通知对方
         {
             removeid = kfinvite->GetKeyID();
 
             // 发送到好友集群
-            KFMsg::S2SDelFriendInviteReq req;
+            KFMsg::S2SDelFriendInviteToRelationReq req;
             req.set_selfplayerid( player->GetKeyID() );
             req.set_targetplayerid( kfinvite->GetKeyID() );
-            SendMessageToRelation( KFMsg::S2S_DEL_FRIEND_INVITE_REQ, &req );
+            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ, &req );
         }
         break;
         default:
@@ -498,35 +417,32 @@ namespace KFrame
         return removeid;
     }
 
-    void KFRelationClientModule::AddFriend( KFEntity* player, KFData* kfinvite )
+    void KFRelationClientModule::ProcessAddFriend( KFEntity* player, KFData* kfinvite )
     {
-        static auto _max_friend_count = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
-
         // 判断自己的好友数量
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-        auto friendcount = kffriendrecord->Size();
-        if ( friendcount >= _max_friend_count->_uint32_value )
+
+        auto maxfreidncount = GetMaxFriendCount();
+        if ( kffriendrecord->Size() >= maxfreidncount )
         {
-            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, _max_friend_count->_uint32_value );
+            return _kf_display->SendToClient( player, KFMsg::FriendSelfLimit, maxfreidncount );
         }
 
         // 发送消息到好友集群
-        KFMsg::S2SAddFriendReq req;
-        req.set_selfplayerid( player->GetKeyID() );
-        req.set_targetplayerid( kfinvite->GetKeyID() );
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-        req.set_targetname( kfinvite->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
-        auto ok = SendMessageToRelation( KFMsg::S2S_ADD_FRIEND_REQ, &req );
+        KFMsg::S2SAddFriendToRelationReq req;
+        req.set_playerid( kfinvite->GetKeyID() );
+        req.set_name( kfinvite->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
+        auto ok = SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_ADD_FRIEND_TO_RELATION_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::FriendServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddFriendAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddFriendToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SAddFriendAck );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SAddFriendToGameAck );
 
         auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
@@ -540,14 +456,55 @@ namespace KFrame
         player->RemoveData( __KF_STRING__( friendinvite ), kffriend->GetKeyID() );
 
         auto friendname = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
-        _kf_display->SendToClient( player, KFMsg::FriendAddOK, friendname );
+        _kf_display->SendToClient( player, KFMsg::FriendAddOk, friendname );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelFriendReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgDelFriendReq );
+
+        auto kfobject = player->GetData();
+        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
+        auto kffriend = kffriendrecord->FindData( kfmsg.playerid() );
+        if ( kffriend == nullptr )
+        {
+            return _kf_display->SendToClient( player, KFMsg::FriendNotExist );
+        }
+
+        // 发送好友集群处理
+        KFMsg::S2SDelFriendToRelationReq req;
+        req.set_playerid( kfmsg.playerid() );
+        auto ok = SendMessageToRelation( playerid, KFMsg::S2S_DEL_FRIEND_TO_RELATION_REQ, &req );
+        if ( !ok )
+        {
+            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelFriendToGameAck )
+    {
+        __SERVER_PROTO_PARSE__( KFMsg::S2SDelFriendToGameAck );
+
+        auto kfobject = player->GetData();
+        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
+        auto kffriend = kffriendrecord->FindData( kfmsg.friendid() );
+        if ( kffriend == nullptr )
+        {
+            return;
+        }
+
+        auto name = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        _kf_display->SendToClient( player, KFMsg::FriendDelOk, kfmsg.friendid(), name );
+
+        // 直接删除好友
+        player->RemoveData( kffriendrecord, kfmsg.friendid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseFriendInviteReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetRefuseFriendInviteReq );
 
-        player->UpdateData( __KF_STRING__( refuseinvite ), KFOperateEnum::Set, kfmsg.refuse() );
+        player->UpdateData( __KF_STRING__( refusefriend ), KFOperateEnum::Set, kfmsg.refuse() );
     }
 
     void KFRelationClientModule::AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value )
@@ -559,15 +516,20 @@ namespace KFrame
             return;
         }
 
-        // 获得最大好友度
-        static auto _max_friend_liness_option = _kf_option->FindOption( __KF_STRING__( freindmaxcount ) );
+        // 最大好友度限制
+        static auto _max_friend_liness_option = _kf_option->FindOption( __KF_STRING__( freindlinessmax ) );
+        auto friendliness = kffriend->GetValue( __KF_STRING__( friendliness ) );
+        if ( friendliness >= _max_friend_liness_option->_uint32_value )
+        {
+            return;
+        }
 
-        KFMsg::S2SUpdateFriendLinessReq req;
+        KFMsg::S2SUpdateFriendLinessToRelationReq req;
         req.set_type( type );
         req.set_friendliness( value );
         req.set_targetplayerid( friendid );
         req.set_selfplayerid( player->GetKeyID() );
-        SendMessageToRelation( KFMsg::S2S_UPDATE_FRIEND_LINESS_REQ, &req );
+        SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &req );
     }
 
     void KFRelationClientModule::AddFriendLinessOnce( KFEntity* player, uint64 friendid, uint32 type, uint32 value )
@@ -581,9 +543,9 @@ namespace KFrame
         AddFriendLiness( player, friendid, type, value );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendLinessAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendLinessToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateFriendLinessAck );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateFriendLinessToGameAck );
 
         auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( __KF_STRING__( friend ), kfmsg.targetplayerid() );
@@ -599,164 +561,78 @@ namespace KFrame
         _kf_display->SendToClient( player, KFMsg::FriendLinessAdd, friendname, kfmsg.friendliness() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandlePlayerToastReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgPlayerToastReq );
-
-        auto kfobject = player->GetData();
-        auto toastrecord = kfobject->FindData( __KF_STRING__( toast ) );
-
-        //判断每日敬酒次数
-        static auto _daily_send_limit = _kf_option->FindOption( __KF_STRING__( toastsendlimitcount ) );
-        if ( toastrecord->Size() >= _daily_send_limit->_uint32_value )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ToastSendCountOver );
-        }
-
-        //判断是否重复敬酒
-        auto toastplayer = toastrecord->FindData( kfmsg.playerid() );
-        if ( toastplayer != nullptr )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ToastCanNotRepeat );
-        }
-
-        //发送到public判断被敬酒次数
-        KFMsg::S2SPlayerToastReq req;
-        req.set_selfplayerid( playerid );
-        req.set_targetplayerid( kfmsg.playerid() );
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
-        SendMessageToRelation( KFMsg::S2S_PLAYER_TOAST_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandlePlayerToastAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SPlayerToastAck );
-
-        _kf_display->SendToClient( player, kfmsg.result() );
-        if ( kfmsg.result() != KFMsg::ToastOK )
-        {
-            return;
-        }
-
-        // 添加敬酒列表
-        player->UpdateData( __KF_STRING__( toast ), kfmsg.targetplayerid(), __KF_STRING__( id ), KFOperateEnum::Set, kfmsg.targetplayerid() );
-
-        // 添加好友度
-        static auto _toast_friend_liness = _kf_option->FindOption( __KF_STRING__( toastfriendliness ) );
-        AddFriendLiness( player, kfmsg.targetplayerid(), KFMsg::Toast, _toast_friend_liness->_uint32_value );
-
-        // 发送敬酒邮件
-        static auto _toast_mail_id = _kf_option->FindOption( __KF_STRING__( toastmailid ) );
-        _kf_mail->SendMail( player, kfmsg.targetplayerid(), _toast_mail_id->_uint32_value, nullptr );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryToastCountReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryToastCountReq );
-
-        KFMsg::S2SQueryToastCountReq req;
-        req.set_selfplayerid( playerid );
-        req.set_targetplayerid( kfmsg.playerid() );
-        SendMessageToRelation( KFMsg::S2S_QUERY_TOAST_COUNT_REQ, &req );
-    }
-
-    void KFRelationClientModule::BalanceBattleRelation( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
-    {
-        // 结算好友度
-        BalanceFriendLiness( player, pbscore );
-
-        // 添加最近游戏的人
-        AddRecentPlayer( player, roomid, pbscore );
-    }
-
-    void KFRelationClientModule::BalanceFriendLiness( KFEntity* player, const KFMsg::PBBattleScore* pbscore )
-    {
-        static auto _team_friend_liness = _kf_option->FindOption( __KF_STRING__( teamfriendliness ) );
-        static auto _win_friend_liness = _kf_option->FindOption( __KF_STRING__( winfriendliness ) );
-
-        for ( auto i = 0; i < pbscore->members_size(); ++i )
-        {
-            auto playerid = pbscore->members( i );
-            _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Team, _team_friend_liness->_uint32_value );
-            if ( pbscore->ranking() == __TOP_ONE__ )
-            {
-                _kf_relation->AddFriendLinessOnce( player, playerid, KFMsg::Win, _win_friend_liness->_uint32_value );
-            }
-        }
-    }
-
-    void KFRelationClientModule::AddRecentPlayer( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
-    {
-#define __ADD_PB_STRING__( name, value ) \
-    {\
-        auto pbstring = pbstrings->add_pbstring();\
-        pbstring->set_name( name );\
-        pbstring->set_value( value );\
-    }
-
-        // 单人模式
-        if ( pbscore->members_size() == 0 )
-        {
-            return;
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // 格式化最近玩家战绩数据
-        KFMsg::S2SAddRecentPlayerDataReq req;
-        req.set_roomid( roomid );
-        req.set_playerid( pbscore->playerid() );
-        req.mutable_members()->CopyFrom( pbscore->members() );
-
-        auto pbstrings = req.mutable_pbdata();
-        __ADD_PB_STRING__( __KF_STRING__( id ), __TO_STRING__( pbscore->playerid() ) );
-        __ADD_PB_STRING__( __KF_STRING__( score ), __TO_STRING__( pbscore->score() ) );
-        __ADD_PB_STRING__( __KF_STRING__( rank ), __TO_STRING__( pbscore->ranking() ) );
-        __ADD_PB_STRING__( __KF_STRING__( totalcount ), __TO_STRING__( pbscore->playercount() ) );
-        __ADD_PB_STRING__( __KF_STRING__( time ), __TO_STRING__( KFGlobal::Instance()->_real_time ) );
-
-        // 其他战斗数据属性
-        auto kfobject = player->GetData();
-        auto kfrecentrecord = kfobject->FindData( __KF_STRING__( recentplayer ) );
-        auto kfclasssetting = kfrecentrecord->GetClassSetting();
-        for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
-        {
-            auto pbdata = &pbscore->pbdata( i );
-            if ( kfclasssetting->IsChildData( pbdata->name() ) )
-            {
-                __ADD_PB_STRING__( pbdata->name(), __TO_STRING__( pbdata->value() ) );
-            }
-        }
-
-        // 添加到关系逻辑服务器
-        SendMessageToRelation( KFMsg::S2S_ADD_RECENT_PLAYER_DATA_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRecentListReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRecentListReq );
-
-        // 先删除最近玩家列表
-        player->RemoveData( __KF_STRING__( recentplayer ) );
-
-        KFMsg::S2SQueryRecentListReq req;
-        req.set_playerid( playerid );
-        SendMessageToRelation( KFMsg::S2S_QUERY_RECENT_LIST_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRecentListAck )
-    {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRecentListAck );
-
-        auto kfobject = player->GetData();
-        auto kfrecentplayer = kfobject->FindData( __KF_STRING__( recentplayer ) );
-
-        for ( auto i = 0; i < kfmsg.pbrelation_size(); ++i )
-        {
-            auto pbrelation = &kfmsg.pbrelation( i );
-
-            auto kfrelation = _kf_kernel->CreateObject( kfrecentplayer->GetDataSetting() );
-            PBRelationToKFData( pbrelation, kfrelation );
-            player->AddData( kfrecentplayer, kfrelation );
-        }
-    }
+    //    void KFRelationClientModule::AddRecentPlayer( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
+    //    {
+    //#define __ADD_PB_STRING__( name, value ) \
+    //    {\
+    //        auto pbstring = pbstrings->add_pbstring();\
+    //        pbstring->set_name( name );\
+    //        pbstring->set_value( value );\
+    //    }
+    //
+    //        // 单人模式
+    //        if ( pbscore->members_size() == 0 )
+    //        {
+    //            return;
+    //        }
+    //        /////////////////////////////////////////////////////////////////////////////////////////////
+    //        /////////////////////////////////////////////////////////////////////////////////////////////
+    //        // 格式化最近玩家战绩数据
+    //        KFMsg::S2SAddRecentPlayerDataReq req;
+    //        req.set_roomid( roomid );
+    //        req.set_playerid( pbscore->playerid() );
+    //        req.mutable_members()->CopyFrom( pbscore->members() );
+    //
+    //        auto pbstrings = req.mutable_pbdata();
+    //        __ADD_PB_STRING__( __KF_STRING__( id ), __TO_STRING__( pbscore->playerid() ) );
+    //        __ADD_PB_STRING__( __KF_STRING__( score ), __TO_STRING__( pbscore->score() ) );
+    //        __ADD_PB_STRING__( __KF_STRING__( rank ), __TO_STRING__( pbscore->ranking() ) );
+    //        __ADD_PB_STRING__( __KF_STRING__( totalcount ), __TO_STRING__( pbscore->playercount() ) );
+    //        __ADD_PB_STRING__( __KF_STRING__( time ), __TO_STRING__( KFGlobal::Instance()->_real_time ) );
+    //
+    //        // 其他战斗数据属性
+    //        auto kfobject = player->GetData();
+    //        auto kfrecentrecord = kfobject->FindData( __KF_STRING__( recentplayer ) );
+    //        auto kfclasssetting = kfrecentrecord->GetClassSetting();
+    //        for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
+    //        {
+    //            auto pbdata = &pbscore->pbdata( i );
+    //            if ( kfclasssetting->IsChildData( pbdata->name() ) )
+    //            {
+    //                __ADD_PB_STRING__( pbdata->name(), __TO_STRING__( pbdata->value() ) );
+    //            }
+    //        }
+    //
+    //        // 添加到关系逻辑服务器
+    //        SendMessageToRelation( KFMsg::S2S_ADD_RECENT_PLAYER_DATA_REQ, &req );
+    //    }
+    //
+    //    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRecentListReq )
+    //    {
+    //        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRecentListReq );
+    //
+    //        // 先删除最近玩家列表
+    //        player->RemoveData( __KF_STRING__( recentplayer ) );
+    //
+    //        KFMsg::S2SQueryRecentListReq req;
+    //        req.set_playerid( playerid );
+    //        SendMessageToRelation( KFMsg::S2S_QUERY_RECENT_LIST_REQ, &req );
+    //    }
+    //
+    //    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRecentListAck )
+    //    {
+    //        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRecentListAck );
+    //
+    //        auto kfobject = player->GetData();
+    //        auto kfrecentplayer = kfobject->FindData( __KF_STRING__( recentplayer ) );
+    //
+    //        for ( auto i = 0; i < kfmsg.pbrelation_size(); ++i )
+    //        {
+    //            auto pbrelation = &kfmsg.pbrelation( i );
+    //
+    //            auto kfrelation = _kf_kernel->CreateObject( kfrecentplayer->GetDataSetting() );
+    //            PBRelationToKFData( pbrelation, kfrelation );
+    //            player->AddData( kfrecentplayer, kfrelation );
+    //        }
+    //    }
 }
