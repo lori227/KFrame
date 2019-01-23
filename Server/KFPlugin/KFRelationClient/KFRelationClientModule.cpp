@@ -317,7 +317,7 @@ namespace KFrame
         auto kfinviterecord = kfobject->FindData( __KF_STRING__( friendinvite ) );
         auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
 
-        PBRelationToKFData( &kfmsg.pbfriend(), kfinvite );
+        PBRelationToKFData( &kfmsg.pbinvite(), kfinvite );
         player->AddData( kfinviterecord, kfinvite );
 
         auto name = kfinvite->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
