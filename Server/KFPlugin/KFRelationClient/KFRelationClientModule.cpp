@@ -557,6 +557,7 @@ namespace KFrame
         // 更新好友度
         player->UpdateData( kffriend, __KF_STRING__( friendliness ), KFOperateEnum::Add, kfmsg.friendliness() );
 
+        // 显示提示
         auto friendname = kffriend->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) );
         _kf_display->SendToClient( player, KFMsg::FriendLinessAdd, friendname, kfmsg.friendliness() );
     }
