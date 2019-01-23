@@ -50,6 +50,9 @@ public class DataConfig
         // 属性名字
         public string _name;
 
+        // 是否是对象
+        public bool _isobject;
+
         // 子属性列表
         public List<DataValue> _child_list;
 
@@ -110,11 +113,14 @@ public class DataConfig
                         var containclass = item.Attribute("ContainClass").Value;
                         if (containclass != "")
                         {
+                            datastting._isobject = true;
+
                             FindDataSetting(ref classlist, containclass, out childstting);
                             datastting._child_list = childstting._child_list;
                         }
                         else
                         {
+                            datastting._isobject = false;
                             datastting.AddDataValue(datatext, dataname, "0");
                         }
                     }

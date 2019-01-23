@@ -30,6 +30,7 @@ namespace KFAgent
 
         protected string _select_text = "";
         protected string _select_name = "";
+        protected bool _select_object = false;
         protected List<DataSetting> _agent_array = new List<DataSetting>();
 
         public MainWindow()
@@ -164,6 +165,7 @@ namespace KFAgent
 
             _select_text = datasetting._text;
             _select_name = datasetting._name;
+            _select_object = datasetting._isobject;
             gridData.ItemsSource = infoList;
         }
 
@@ -198,6 +200,7 @@ namespace KFAgent
             var addsetting = new DataSetting();
             addsetting._text = _select_text;
             addsetting._name = _select_name;
+            addsetting._isobject = _select_object;
             foreach (var datavalue in datalist)
             {
                 if (datavalue._value != "0")
@@ -224,26 +227,50 @@ namespace KFAgent
             foreach( var datasetting in _agent_array )
             {
                 string strdata = "";
-                strdata += datasetting._text;
-                strdata += ":";
-                // 名字
-                strdata += "{";
-                bool first = true;
-                foreach( var datavalue in datasetting._child_list)
+
+                if ( datasetting._isobject )
                 {
-                    if (first)
+                    strdata += datasetting._text;
+                    strdata += ":";
+
+                    // 名字
+                    strdata += "{";
+
+                    bool first = true;
+                    foreach (var datavalue in datasetting._child_list)
                     {
-                        first = false;
-                    }
-                    else
-                    {
-                        strdata += ",";
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            strdata += ",";
+                        }
+
+                        strdata += datavalue._text + ":" + datavalue._value.ToString();
                     }
 
-                    strdata += datavalue._text + ":" + datavalue._value.ToString();
+                    strdata += "}";
                 }
+                else
+                {
+                    bool first = true;
+                    foreach (var datavalue in datasetting._child_list)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            strdata += ",";
+                        }
 
-                strdata += "}";
+                        strdata += datavalue._text + ":" + datavalue._value.ToString();
+                    }
+                }
+                
                 agenglist.Add(strdata);
             }
             agentList.ItemsSource = agenglist;
@@ -277,7 +304,7 @@ namespace KFAgent
                 return;
             }
 
-            string strsplit = "|";
+            string strsplit = ",";
             string stragent = "";
 
             bool issettingfirst = true;
@@ -296,24 +323,46 @@ namespace KFAgent
 
                 // 名字
                 stragent += "{";
-                stragent += "\"" + datasetting._name + "\":{";
-
-                bool isdatafirst = true;
-                foreach (var datavalue in datasetting._child_list)
+                if ( datasetting._isobject )
                 {
-                    if (isdatafirst)
+                    stragent += "\"" + datasetting._name + "\":{";
+
+                    bool isdatafirst = true;
+                    foreach (var datavalue in datasetting._child_list)
                     {
-                        isdatafirst = false;
-                    }
-                    else
-                    {
-                        stragent += strsplit;
+                        if (isdatafirst)
+                        {
+                            isdatafirst = false;
+                        }
+                        else
+                        {
+                            stragent += strsplit;
+                        }
+
+                        stragent += "\"" + datavalue._name + "\":\"" + datavalue._value.ToString() + "\"";
                     }
 
-                    stragent += "\"" + datavalue._name + "\":\"" + datavalue._value.ToString() + "\"";
+                    stragent += "}";
+                }
+                else
+                {
+                    bool isdatafirst = true;
+                    foreach (var datavalue in datasetting._child_list)
+                    {
+                        if (isdatafirst)
+                        {
+                            isdatafirst = false;
+                        }
+                        else
+                        {
+                            stragent += strsplit;
+                        }
+
+                        stragent += "\"" + datavalue._name + "\":\"" + datavalue._value.ToString() + "\"";
+                    }
                 }
 
-                stragent += "}}";
+                stragent += "}";
             }
 
             stragent += "]";

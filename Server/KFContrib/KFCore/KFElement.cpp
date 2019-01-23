@@ -76,7 +76,7 @@ namespace KFrame
         _element_list.push_back( kfelement );
     }
 
-    //[{ "money":"1111"}, {"diamon":"2222-3333"}, {"item":{"id":1,"count":2 }} ]
+    //[{"money":"1111"}, {"diamon":"2222-3333"}, {"item":{"id":1,"count":2 }} ]
     bool KFElements::Parse( const std::string& data, const char* function, uint32 line )
     {
         if ( data.empty() )

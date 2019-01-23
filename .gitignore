@@ -91,3 +91,5 @@ Bin/tool/gcm/conf_output/
 Bin/tool/gcm/builder/gcm_build.spec
 Bin/tool/gcm/builder/*.pyc
 Bin/tool/gcm/builder/gcm_build.spec
+Server/KFTools/KFAgent/bin/
+Server/KFTools/KFAgent/obj/
