@@ -93,3 +93,4 @@ Bin/tool/gcm/builder/*.pyc
 Bin/tool/gcm/builder/gcm_build.spec
 Server/KFTools/KFAgent/bin/
 Server/KFTools/KFAgent/obj/
+Resource/setting.xml
