@@ -29,7 +29,6 @@ namespace KFrame
 
     void KFDataShardModule::OnceRun()
     {
-        _kf_route->RegisterService( __KF_STRING__( data ) );
         _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

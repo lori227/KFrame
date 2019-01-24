@@ -55,28 +55,29 @@ namespace KFrame
         virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 注册服务
-        virtual void RegisterService( const std::string& name );
 
         // 同步所有对象到Route Shard
-        virtual void SyncObject( const std::string& name, RouteObjectList& objectlist );
+        virtual void SyncObject( RouteObjectList& objectlist );
 
         // 添加对象到Route Shard
-        virtual void AddObject( const std::string& name, uint64 objectid );
+        virtual void AddObject( uint64 objectid );
 
         // 删除对象到Route Shard
-        virtual void RemoveObject( const std::string& name, uint64 objectid );
+        virtual void RemoveObject( uint64 objectid );
 
     protected:
         // 注册
         virtual void SetTransmitFunction( KFTransmitFunction& function );
+
+        // 注册服务
+        void RegisterService();
 
     protected:
         // 连接成功
         void OnRouteConnectCluster( uint64 serverid );
 
         // 发送同步对象消息
-        void RouteSyncObjectToProxy( uint64 shardid, const std::string& name, RouteObjectList& objectlist );
+        void RouteSyncObjectToProxy( uint64 shardid );
 
         // 转发消息
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToClientAck );
@@ -88,8 +89,12 @@ namespace KFrame
         // 转发函数
         KFTransmitFunction _kf_transmit_function{ nullptr };
 
-        // 对象列表
-        std::map< std::string, RouteObjectList > _service_object_list;
+        // 服务器名字
+        std::string _service_name;
+
+        // 对象列表, 一个进程只挂载一种服务
+        RouteObjectList _service_object_list;
+        //std::map< std::string, RouteObjectList > _service_object_list;
     };
 }
 

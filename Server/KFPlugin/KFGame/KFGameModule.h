@@ -29,7 +29,6 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();

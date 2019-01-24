@@ -44,11 +44,6 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    void KFGameModule::OnceRun()
-    {
-        // 注册玩家转发服务
-        _kf_route->RegisterService( __KF_STRING__( player ) );
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGameModule::OnClientConnectionServer )
@@ -239,7 +234,7 @@ namespace KFrame
         }
 
         // 添加对象
-        _kf_route->AddObject( __KF_STRING__( player ), playerid );
+        _kf_route->AddObject( playerid );
     }
 
     void KFGameModule::OnLeaveGame( KFEntity* player )
@@ -255,7 +250,7 @@ namespace KFrame
         }
 
         // 删除对象
-        _kf_route->RemoveObject( __KF_STRING__( player ), playerid );
+        _kf_route->RemoveObject( playerid );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginTellTokenToGameReq )

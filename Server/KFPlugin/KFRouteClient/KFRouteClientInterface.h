@@ -31,17 +31,14 @@ namespace KFrame
         virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 注册服务
-        virtual void RegisterService( const std::string& name ) = 0;
-
         // 同步所有对象到Route Shard
-        virtual void SyncObject( const std::string& name, RouteObjectList& objectlist ) = 0;
+        virtual void SyncObject( RouteObjectList& objectlist ) = 0;
 
         // 添加对象到Route Shard
-        virtual void AddObject( const std::string& name, uint64 objectid ) = 0;
+        virtual void AddObject( uint64 objectid ) = 0;
 
         // 删除对象到Route Shard
-        virtual void RemoveObject( const std::string& name, uint64 objectid ) = 0;
+        virtual void RemoveObject( uint64 objectid ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发消息

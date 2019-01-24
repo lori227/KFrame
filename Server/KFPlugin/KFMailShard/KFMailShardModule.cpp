@@ -30,9 +30,6 @@ namespace KFrame
 
     void KFMailShardModule::OnceRun()
     {
-        // 注册转发服务
-        _kf_route->RegisterService( __KF_STRING__( mail ) );
-
         // 初始化redis
         _mail_driver = _kf_redis->Create( __KF_STRING__( mail ) );
 
@@ -282,7 +279,7 @@ namespace KFrame
                 // 通知有新邮件
                 KFMsg::S2SNoticeNewMailReq notice;
                 notice.set_playerid( kfmsg.objectid() );
-                _kf_route->SendToObject( kfmsg.objectid(), __KF_STRING__( player ), kfmsg.objectid(), KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                _kf_route->SendToObject( kfmsg.objectid(), __KF_STRING__( zone ), kfmsg.objectid(), KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
             }
         }
         else

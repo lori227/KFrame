@@ -29,9 +29,6 @@ namespace KFrame
 
     void KFRelationShardModule::OnceRun()
     {
-        // 注册服务
-        _kf_route->RegisterService( __KF_STRING__( relation ) );
-
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
         _relation_redis_driver = _kf_redis->Create( __KF_STRING__( relation ) );
 

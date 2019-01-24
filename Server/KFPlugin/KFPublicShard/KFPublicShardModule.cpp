@@ -17,9 +17,6 @@ namespace KFrame
 
     void KFPublicShardModule::OnceRun()
     {
-        // 注册服务
-        _kf_route->RegisterService( __KF_STRING__( public ) );
-
         // 初始化redis
         _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
