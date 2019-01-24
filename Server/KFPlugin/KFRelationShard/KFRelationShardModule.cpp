@@ -230,7 +230,6 @@ namespace KFrame
         auto serverid = KFUtility::ToValue< uint64 >( querytargetdata->_value[ __KF_STRING__( serverid ) ] );
         if ( serverid != _invalid_int )
         {
-
             // 查找自己的数据
             auto queryselfdata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), selfid );
             if ( !queryselfdata->_value.empty() )

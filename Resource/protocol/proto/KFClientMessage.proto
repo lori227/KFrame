@@ -5,79 +5,87 @@ package KFMsg;
 
 enum ClientProtocol
  {
-	MSG_CLIENT_PROTOCOL_UNKNOW = 0;			// pb3 需要0
+	MSG_CLIENT_PROTOCOL_UNKNOW = 0;				// pb3 需要0
 
 	// common
-	MSG_RESULT_DISPLAY = 1;					// 结果提示回馈
+	MSG_RESULT_DISPLAY = 1;						// 结果提示回馈
 		
 	// login
-	MSG_TELL_BE_KICK = 10;					// 被踢下线了
-	MSG_LOGIN_VERIFY_REQ = 11;				// 客户端登录验证请求
-	MSG_LOGIN_VERIFY_ACK = 12;				// 客户端登录验证结果
-	MSG_LOGIN_GAME_REQ = 13;				// 客户端登录游戏请求
-	MSG_LOGIN_OUT_REQ = 14;					// 客户端请求登出游戏
+	MSG_TELL_BE_KICK = 10;						// 被踢下线了
+	MSG_LOGIN_VERIFY_REQ = 11;					// 客户端登录验证请求
+	MSG_LOGIN_VERIFY_ACK = 12;					// 客户端登录验证结果
+	MSG_LOGIN_GAME_REQ = 13;					// 客户端登录游戏请求
+	MSG_LOGIN_OUT_REQ = 14;						// 客户端请求登出游戏
 
 	// data
-	MSG_LOGIN_ENTER_GAME = 20;				// 通知进入游戏
- 	MSG_SYNC_UPDATE_DATA = 21;				// 同步更新属性
-	MSG_SYNC_ADD_DATA = 22;					// 同步增加属性
-	MSG_SYNC_REMOVE_DATA = 23;				// 同步删除属性
-	MSG_REMOVE_DATA_REQ = 24;				// 请求删除属性
-	MSG_QUERY_PLAYER_REQ = 25;				// 查询玩家数据
-	MSG_QUERY_PLAYER_ACK = 26;			    // 查询玩家数据
-	MSG_QUERY_BASIC_REQ = 27;				// 查询玩家基本数据
-	MSG_QUERY_BASIC_ACK = 28;				// 查询基础数据
-
+	MSG_LOGIN_ENTER_GAME = 20;					// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 21;					// 同步更新属性
+	MSG_SYNC_ADD_DATA = 22;						// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 23;					// 同步删除属性
+	MSG_REMOVE_DATA_REQ = 24;					// 请求删除属性
+	MSG_QUERY_PLAYER_REQ = 25;					// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 26;			    	// 查询玩家数据
+	MSG_QUERY_BASIC_REQ = 27;					// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK = 28;					// 查询基础数据
+	MSG_SHOW_REWARD_ELEMENT = 29;				// 显示奖励
 
 	// attribute
-	MSG_DEBUG_COMMAND_REQ = 50;				// 客户端发送GM指令请求
-	MSG_SET_NAME_REQ = 51;					// 设置名字
-	MSG_SET_SEX_REQ = 52;					// 设置性别
+	MSG_DEBUG_COMMAND_REQ = 50;					// 客户端发送GM指令请求
+	MSG_SET_NAME_REQ = 51;						// 设置名字
+	MSG_SET_SEX_REQ = 52;						// 设置性别
 
 	// mail
-	MSG_VIEW_MAIL_REQ = 101;				// 查看邮件
-	MSG_DELETE_MAIL_REQ = 102;				// 删除邮件
-	MSG_QUERY_MAIL_REQ = 103;				// 请求查询邮件
-	MSG_RECEIVE_MAIL_REWARD_REQ = 104;		// 领取邮件奖励
+	MSG_VIEW_MAIL_REQ = 101;					// 查看邮件
+	MSG_DELETE_MAIL_REQ = 102;					// 删除邮件
+	MSG_QUERY_MAIL_REQ = 103;					// 请求查询邮件
+	MSG_RECEIVE_MAIL_REWARD_REQ = 104;			// 领取邮件奖励
 
 	// task
-	MSG_RECEIVE_TASK_REWARD_REQ = 121;		// 领取任务奖励
+	MSG_RECEIVE_TASK_REWARD_REQ = 121;			// 领取任务奖励
 
 	// achieve
-	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 141;	// 领取成就奖励
+	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 141;		// 领取成就奖励
 
 	// store
-	MSG_BUY_STORE_REQ = 161;				// 购买商品请求
-	MSG_QUERY_STORE_REQ = 162;				// 请求商城信息
-	MSG_QUERY_STORE_ACK = 163;				// 请求商城信息反馈
+	MSG_BUY_STORE_REQ = 161;					// 购买商品请求
+	MSG_QUERY_STORE_REQ = 162;					// 请求商城信息
+	MSG_QUERY_STORE_ACK = 163;					// 请求商城信息反馈
 
 	// compound
-	MSG_COMPOUND_DATA_REQ = 181;			// 合成属性
+	MSG_COMPOUND_DATA_REQ = 181;				// 合成属性
+
+	// activity
+	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 201;		// 领取活动奖励
+
+	// gift
+	MSG_RECEIVE_GIFT_REWARD_REQ = 211;			// 领取礼包奖励
 
 	// relation
-	MSG_ADD_FRIEND_INVITE_REQ = 1001;		// 申请添加好友
+	MSG_ADD_FRIEND_INVITE_REQ = 1001;			// 申请添加好友
+	MSG_REPLY_FRIEND_INVITE_REQ = 1002;			// 回复好友申请
+	MSG_DEL_FRIEND_REQ = 1003;					// 删除好友
+	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 1004;	// 设置拒绝添加好友
 
-
-
-	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 110;		// 领取活动奖励
-	MSG_RECEIVE_GIFT_REWARD_REQ = 113;			// 领取礼包奖励
-
+	// group
+	MSG_INVITE_MATCH_GROUP_REQ = 151;			// 邀请加入队伍
+	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// 回复邀请组队
+	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// 离开队伍
+	MSG_KICK_MATCH_GROUP_REQ = 155;				// 踢出成员
+	MSG_APPLY_MATCH_GROUP_REQ = 156;			// 申请加入队伍
+	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// 回应申请队伍
+	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// 请求准备
+	MSG_CHANGE_ICON_BOX_REQ = 1161;				// 修改头像框请求
+	
+	
 	MSG_START_MATCH_REQ = 118;					// 请求个人匹配
 	MSG_START_MATCH_ACK = 119;					// 匹配回馈
 	MSG_CANCEL_MATCH_REQ = 120;					// 取消匹配
 
 	MSG_MATCH_RESULT_ACK = 1121;				// 匹配结果
-	MSG_REPLY_FRIEND_INVITE_REQ = 123;			// 回复好友申请
-	MSG_DEL_FRIEND_REQ = 124;					// 删除好友
 	MSG_ENTER_CHAT_REQ = 126;					// 客户端加入江湖聊天室请求
 	MSG_SEND_CHAT_REQ = 127;					// 客户端发送江湖聊天消息请求
 	MSG_SEND_CHAT_INFO = 128;					// 服务器通知江湖聊天消息
 	MSG_LEAVE_CHAT_REQ = 129;					// 客户端离开江湖聊天室请求
-	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 130;		// 设置拒绝添加好友
-
-
-
-
 
 	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// 客户端发送一对一聊天请求
 	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// 服务器通知一对一聊天信息
@@ -87,17 +95,6 @@ enum ClientProtocol
 
 	MSG_DRESS_CLOTHES_REQ = 148;				// 穿戴时装
 	MSG_CHANGE_MODEL_REQ = 149;					// 修改模型
-	MSG_SHOW_REWARD_ELEMENT = 150;				// 显示奖励
-	MSG_INVITE_MATCH_GROUP_REQ = 151;			// 邀请加入队伍
-	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// 回复邀请组队
-	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// 离开队伍
-	MSG_KICK_MATCH_GROUP_REQ = 155;				// 踢出成员
-	MSG_APPLY_MATCH_GROUP_REQ = 156;			// 申请加入队伍
-	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// 回应申请队伍
-	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// 请求准备
-	MSG_CHANGE_ICON_BOX_REQ = 1161;				// 修改头像框请求
-
-
 
 	MSG_CANCEL_MATCH_ACK = 1164;					// 取消匹配回应
 	MSG_USE_ITEM_REQ = 1165;						// 使用道具
@@ -119,7 +116,7 @@ enum ClientProtocol
 	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
 	
 	MSG_CREATE_GUILD_REQ = 200;					// 创建帮派
-	MSG_INVITE_GUILD_REQ = 201;					// 邀请加入帮派
+	MSG_INVITE_GUILD_REQ = 2201;					// 邀请加入帮派
 	MSG_APPLY_GUILD_REQ = 202;					// 申请加入帮派
 	MSG_TELL_MATCH_WAIT_TIME = 203;				// 通知匹配预计等待时间
 	MSG_EXIT_GUILD_REQ = 204;					// 离开帮派
@@ -129,7 +126,7 @@ enum ClientProtocol
 	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// 修改帮派徽章
 	MSG_QUERY_GUILD_LIST_REQ = 209;				// 请求帮派列表
 	MSG_QUERY_GUILD_LIST_ACK = 210;				// 帮派列表返回
-	MSG_KICK_MEMBER_REQ = 211;					// 踢掉帮派成员
+	MSG_KICK_MEMBER_REQ = 2111;					// 踢掉帮派成员
 	MSG_UPGRADE_GUILD_REQ = 212;				// 升级帮派
 	MSG_APPOINT_GUILD_MEMBER_REQ = 213;			// 任命帮派成员
 	MSG_SEARCH_GUILD_BY_NAME_REQ = 214;			// 根据名字搜索帮派信息
