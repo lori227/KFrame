@@ -344,7 +344,7 @@ namespace KFrame
 
             if ( timerdata->_rotation == 0 )
             {
-                _done_data.push_back( timerdata );
+                _done_data.push_front( timerdata );
             }
 
             timerdata = timerdata->_next;
