@@ -1,0 +1,19 @@
+﻿#ifndef __KF_CLUSTER_PROXY_INTERFACE_H__
+#define __KF_CLUSTER_PROXY_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFClusterProxyInterface : public KFModule
+    {
+    public:
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_cluster_proxy, KFClusterProxyInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+#endif
