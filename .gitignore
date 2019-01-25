@@ -1,0 +1,6 @@
+
+1.Server/1.Frame/_bin/_gcm/conf_output/
+1.Server/1.Frame/_bin/_gcm/builder/build/
+1.Server/1.Frame/_bin/_gcm/builder/dist/
+1.Server/1.Frame/_bin/_gcm/builder/gcm_build.spec
+*.pyc
