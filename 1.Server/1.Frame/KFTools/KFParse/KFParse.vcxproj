@@ -61,8 +61,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\_out\$(ProjectName)\$(Configuration)\</OutDir>
-    <IntDir>..\..\..\_out\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>..\..\_out\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir>..\..\_out\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -83,7 +83,8 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy/y "$(TargetPath)" "..\..\..\Resource\excel\_parse.exe"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -112,7 +113,8 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy/y "$(TargetPath)" "..\..\..\Resource\excel\_parse.exe"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
