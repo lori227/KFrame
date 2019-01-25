@@ -72,9 +72,16 @@ if not exist %releaseepath%\%libpath%\linux (mkdir %releaseepath%\%libpath%\linu
 xcopy /y %localpath%\%libpath%\linux\*.a %releaseepath%\%libpath%\linux
 del %releaseepath%\%libpath%\linux\KFProtocol*.a
 
+
+
 if not exist %releaseepath%\%libpath%\win64 (mkdir %releaseepath%\%libpath%\win64 )
 xcopy /y %localpath%\%libpath%\win64\*.lib %releaseepath%\%libpath%\win64
 del %releaseepath%\%libpath%\win64\KFProtocol*.lib
+
+if not exist %releaseepath%\%libpath%\win64\3rd (mkdir %releaseepath%\%libpath%\win64\3rd )
+copy /y %localpath%\%libpath%\win64\3rd\libprotobuf.lib %releaseepath%\%libpath%\win64\3rd\
+copy /y %localpath%\%libpath%\win64\3rd\libprotobufd.lib %releaseepath%\%libpath%\win64\3rd\
+
 echo "release _lib path end"
 rem ===========================================================================
 rem ===========================================================================
