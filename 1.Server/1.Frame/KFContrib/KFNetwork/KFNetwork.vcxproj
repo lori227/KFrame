@@ -104,7 +104,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuvd.lib;Psapi.lib;Iphlpapi.lib;zlibd.lib;userenv.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuvd.lib;Psapi.lib;Iphlpapi.lib;zlibd.lib;userenv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
