@@ -157,10 +157,6 @@ if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%
 xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releaseepath%\%contribpath%\%subcontribpath%
 xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releaseepath%\%contribpath%\%subcontribpath%
 
-set subcontribpath=KFCrypto
-if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFCrypto.h %releaseepath%\%contribpath%\%subcontribpath%
-
 set subcontribpath=KFProtocol
 if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%\%contribpath%\%subcontribpath% )
 xcopy /y %localpath%\%contribpath%\%subcontribpath%\* %releaseepath%\%contribpath%\%subcontribpath%
