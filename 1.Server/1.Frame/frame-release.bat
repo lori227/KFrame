@@ -105,6 +105,16 @@ rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
+echo "release _tool path begin"
+set toolpath=_tool
+if not exist %releaseepath%\%toolpath% (mkdir %releaseepath%\%toolpath% )
+xcopy /y %localpath%\%toolpath%\* %releaseepath%\%toolpath%\
+echo "release _tool path end"
+rem ===========================================================================
+rem ===========================================================================
+rem ===========================================================================
+rem ===========================================================================
+
 echo "release KFCommon path begin"
 set commonpath=KFCommon
 if not exist %releaseepath%\%commonpath% (mkdir %releaseepath%\%commonpath% )
