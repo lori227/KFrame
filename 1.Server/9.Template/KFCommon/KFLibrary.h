@@ -5,7 +5,6 @@
 #if __KF_SYSTEM__ == __KF_WIN__
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_DEBUG__
-        #pragma comment( lib, "libprotobufd.lib" )
 
         #pragma comment( lib, "KFPlugind.lib" )
         #pragma comment( lib, "KFMemoryd.lib" )
@@ -21,7 +20,6 @@
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_RELEASE__
-        #pragma comment( lib, "libprotobuf.lib" )
 
         #pragma comment( lib, "KFPlugin.lib" )
         #pragma comment( lib, "KFMemory.lib" )

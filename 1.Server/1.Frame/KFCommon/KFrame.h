@@ -17,7 +17,6 @@
 #include "KFInterfaces.h"
 #include "KFSingleton.h"
 #include "KFProto/KFProto.h"
-#include "KFCrypto/KFCrypto.h"
 #include "KFUtility/KFXml.h"
 #include "KFUtility/KFClock.h"
 #include "KFUtility/KFDate.h"
@@ -25,15 +24,16 @@
 #include "KFUtility/KFConvert.h"
 #include "KFUtility/KFThread.h"
 #include "KFUtility/KFMutex.h"
+#include "KFUtility/KFCrypto.h"
 #include "KFUtility/KFUtility.h"
 #include "KFUtility/KFDecode.h"
 #include "KFUtility/KFCompress.h"
+#include "KFUtility/KFConHash.h"
 #include "KFGlobal/KFGlobal.h"
 #include "KFLogger/KFLogger.h"
-#include "KFPlugin/KFPlugin.h"
-#include "KFConHash/KFConHash.h"
-#include "KFPlugin/KFPluginManage.h"
 #include "KFMemory/KFMalloc.h"
+#include "KFPlugin/KFPlugin.h"
+#include "KFPlugin/KFPluginManage.h"
 
 
 #endif

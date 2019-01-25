@@ -110,11 +110,6 @@ set commonpath=KFCommon
 if not exist %releaseepath%\%commonpath% (mkdir %releaseepath%\%commonpath% )
 xcopy /y %localpath%\%commonpath%\* %releaseepath%\%commonpath%\
 
-del %releaseepath%\%commonpath%\KFLibrary.h
-del %releaseepath%\%commonpath%\KFLibrary_Template.h
-
-copy /y %localpath%\%commonpath%\KFLibrary_Template.h %releaseepath%\%commonpath%\KFLibrary.h
-
 echo "release KFCommon path end"
 rem ===========================================================================
 rem ===========================================================================
@@ -161,6 +156,10 @@ set subcontribpath=KFUtility
 if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%\%contribpath%\%subcontribpath% )
 xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releaseepath%\%contribpath%\%subcontribpath%
 xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releaseepath%\%contribpath%\%subcontribpath%
+
+set subcontribpath=KFCrypto
+if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%\%contribpath%\%subcontribpath% )
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFCrypto.h %releaseepath%\%contribpath%\%subcontribpath%
 
 set subcontribpath=KFProtocol
 if not exist %releaseepath%\%contribpath%\%subcontribpath% (mkdir %releaseepath%\%contribpath%\%subcontribpath% )

@@ -31,7 +31,6 @@ endmacro()
 #################################################################################
 #################################################################################
 
-add_subdirectory(KFConHash)
 add_subdirectory(KFCore)
 add_subdirectory(KFHttp)
 add_subdirectory(KFLogger)

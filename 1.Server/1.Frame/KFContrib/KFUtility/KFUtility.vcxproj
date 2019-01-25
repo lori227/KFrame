@@ -13,9 +13,14 @@
   <ItemGroup>
     <ClCompile Include="KFClock.cpp" />
     <ClCompile Include="KFCompress.cpp" />
+    <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFConvert.cpp" />
+    <ClCompile Include="KFCrypto.cpp" />
     <ClCompile Include="KFDate.cpp" />
     <ClCompile Include="KFDecode.cpp" />
+    <ClCompile Include="KFHashData.cpp" />
+    <ClCompile Include="KFHashFunction.cpp" />
+    <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFMutex.cpp" />
     <ClCompile Include="KFNode.cpp" />
     <ClCompile Include="KFRunable.cpp" />
@@ -26,9 +31,14 @@
   <ItemGroup>
     <ClInclude Include="KFClock.h" />
     <ClInclude Include="KFCompress.h" />
+    <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFConvert.h" />
+    <ClInclude Include="KFCrypto.h" />
     <ClInclude Include="KFDate.h" />
     <ClInclude Include="KFDecode.h" />
+    <ClInclude Include="KFHashData.hpp" />
+    <ClInclude Include="KFHashFunction.hpp" />
+    <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFMutex.h" />
     <ClInclude Include="KFNode.h" />
     <ClInclude Include="KFRunable.hpp" />
@@ -101,7 +111,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconvd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconvd.lib;zlibd.lib;libssl.lib;libcrypto.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -131,7 +141,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconv.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconv.lib;zlib.lib;zlibd.lib;libssl.lib;libcrypto.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
