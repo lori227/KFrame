@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins>
+		<Plugin Sort="1" Name="KFDeployCommand" Config=""/>
+		<Plugin Sort="10" Name="KFConfig" Config=""/>
+		<Plugin Sort="20" Name="KFOption" Config="./config/option.config"/>
+		<Plugin Sort="30" Name="KFMessage" Config=""/>
+		<Plugin Sort="40" Name="KFTimer" Config=""/> 
+		<Plugin Sort="50" Name="KFKernel" Config="./config/class.config"/>
+		<Plugin Sort="60" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="70" Name="KFRobot" Config="./config/robot.config"/>
+	</Plugins>
+</Setting>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--HttpServer -->
+	<!--LocalIp 内网ip -->
+	<!--InteranetIp 外网ip -->
+	<!--Port 端口-->
+	<!--KeepAlive 是否保持连接-->
+	<!--MaxThread 最大线程数量-->
+	<!--MaxQueue 最大队列数量-->
+	<!--IdleTime 空闲时间-->
+	<HttpServer LocalIp="0.0.0.0" InteranetIp="127.0.0.1" Port="7777" KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000"/>
+
+	<!-- Connections 需要连接的配置 -->
+	<!-- Name 连接目标服务器名字 -->
+	<!-- Type 服务器类型 -->
+	<Connections>
+	</Connections>
+
+	<!--Cluster 集群类型-->
+	<ClusterClients>
+	</ClusterClients>
+</Config>
+

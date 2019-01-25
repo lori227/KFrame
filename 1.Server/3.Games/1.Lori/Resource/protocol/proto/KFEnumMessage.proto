@@ -1,0 +1,336 @@
+syntax = "proto3";
+package KFMsg;
+
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+// 渠道
+enum ChannelEnum
+{
+	UnknowChannel = 0;	// 无效
+	Internal = 1;		// 内部测试
+	WeiXin = 2;			// 微信
+	Steam = 3;			// steam
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+enum SexEnum
+{
+	UnknowSex = 0;		// 无效
+	Male = 1;			// 男性
+	Female = 2;			// 女性
+}
+//////////////////////////////////////////////////////////////////////////////////
+enum KickEnum
+{
+	UnknowKick = 0;			// 无效
+	LoginBeKick = 1;		// 被登录踢下线
+	PlatformBeKick = 2;		// 被平台踢下线
+}
+//////////////////////////////////////////////////////////////////////////////////
+// 系统状态
+enum StatusEnum
+{
+	InitStatus		= 0;		// 初始状态
+	DoneStatus 		= 1;		// 已经完成
+	ReceiveStatus	= 2;		// 已经领取奖励
+
+
+	Remove			= 3;		// 删除	
+	ReceiveRemove 	= 4;		// 领取并删除
+}
+//////////////////////////////////////////////////////////////////////////////////
+enum MailEnum
+{
+	UnknowMail = 0;		// 未知邮件
+	GlobalMail = 1;		// 全局邮件
+	PersonMail = 2;		// 个人邮件
+}
+//////////////////////////////////////////////////////////////////////////////////
+// 游戏状态
+enum StateEnum
+{
+	UnknowState = 0;	// 无效
+	OnlineState = 1;	// 在线状态
+	GroupState = 2;		// 组队状态
+	MatchState = 3;		// 匹配状态
+	PlayingState = 4;	// 游戏中
+	OfflineState = 5;	// 离线
+}
+//////////////////////////////////////////////////////////////////////////////////
+enum InviteEnum
+{
+	UnknowInvite = 0;	// 无效
+	Consent = 1;		// 同意邀请
+	Refuse = 2;			// 拒绝邀请
+	Delete = 3;			// 直接删除
+	RefuseMinute = 4;	// 5分内拒绝
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+enum WishStateEnum
+{
+	AllWatch = 0;		// 心愿单所有人可见
+	NoneWatch = 1;		// 心愿单仅自己可见
+	FriendWatch = 2;	// 心愿单仅好友可见
+	TeamWatch = 3;		// 心愿单仅战队成员可见
+}
+//////////////////////////////////////////////////////////////////////////////////
+enum FriendLinessEnum
+{
+	UnKnowFriend = 0;
+	Team = 1;		// 组队
+	Win = 2;		// 胜利
+	Toast = 3;		// 敬酒
+	Give = 4;		// 送礼
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+enum GuildEnum
+{
+	UnKnowGuild = 0;
+	JoinGuild =1;		// 加入帮派
+	ExitGuild = 2;		// 离开帮派
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+enum GuildReviewEnum
+{
+	UnknowGuildReview = 0;
+	AgreeApply = 1;		// 同意加入帮派
+	RefuseApply = 2;	// 拒绝加入帮派
+}
+
+enum BattleEnum
+{
+	BattleUnknow = 0;
+	OpenSuccess = 1;	// 开启成功
+	OpenFailed = 2;		// 开启失败
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+enum CodeEnum
+{
+	Error						= 0;		// 失败	
+	Ok 							= 1;		// 成功
+
+
+	SignError					= 2;		// 签名错误
+	WeiXinError 				= 3;		// 访问微信错误
+	WeiXinCodeError 			= 4;		// 微信code错误
+	WeiXinTokenTimeout 			= 5;		// 微信Token过期
+	WeiXinTokenError 			= 6;		// 微信Token错误
+	WeiXinUserError 			= 7;		// 微信读取用户数据错误
+	ChannelError				= 8;		// 错误的渠道信息
+	ChannelNotOpen				= 9;		// 渠道没有开放
+	WorldSystemBusy 			= 10;		// 世界服务器出错了
+	LoginSystemBusy 			= 11;		// 登录服务器出错了
+	CanNotFindProxy 			= 12;		// 没有可登录的节点
+	AuthServerBusy 				= 13;		// 认证服务器出错了
+	AuthDatabaseBusy			= 14;		// 平台数据库出错了 
+	CanNotFindGame 				= 15;		// 没有可登录的游戏服务器
+	LoginTokenError 			= 16;		// 登录token错误
+	HttpDataError 				= 18;		// http内部数据错误
+	LoginDatabaseError 			= 19;		// 登录数据库错误
+
+	RouteServerBusy			    = 10001;	// 路由服务器出错
+	NameDatabaseBusy			= 10002;	// 名字数据库出错
+	PublicDatabaseError			= 10003;	// 公共数据库错误
+
+	
+	LoadDataFailed 				= 20001;	// 加载玩家数据失败
+	QueryPlayerFailed 			= 20002;	// 查询玩家数据失败
+	NameEmpty 					= 20101;	// 名字不能为空
+	NameAlreadySet				= 20102;	// 不能重复设置名字
+	NameAlreadyExist			= 20103;	// <Text>%s</Text>名字已经存在
+	NameSetOK					= 20104;	// 名字设置成功
+	NameLengthError				= 20105;	// 超过名字最大长度
+	NameFilterError				= 20106;	// 名字含有屏蔽字符
+	SexSetOK					= 20107;	// 设置性别成功
+	ChangeIconOK            	= 20108;	// 修改头像成功
+	QueryBasicNotExist			= 20109;	// 查询不到该玩家
+	
+	// mail 
+	MailNotExist				= 20200;	// 邮件不存在
+	MailAlreadyReceived			= 20201;	// 邮件奖励已经领取
+	MailNotHaveReward			= 20202;	// 邮件没有奖励
+	MailDeleteFailed			= 20204;	// 还有奖励没有领取, 删除邮件失败
+	MailTimeOut					= 20205;	// 邮件已经过期
+
+	// task
+	TaskIdCanNotFind 			= 20301;	// 任务<Text>%s</Text>配置错误
+	TaskNotInValidTime 			= 20302;	// 任务不在有效时间范围内
+	CanNotFindTaskData 			= 20303;	// 你还没有完成该任务
+	TaskNotDone 				= 20304;	// 请先完成任务
+	TaskAlreadyReceived 		= 20305;	// 你已经领取任务奖励
+	TaskReceiveRewardOK 		= 20306;	// 领取任务奖励成功
+
+	// achieve
+	AchieveIdCanNotFind 		= 20401;	// 成就<Text>%s</Text>配置错误
+	CanNotFindAchieveData 		= 20402;	// 你还没有完成成就
+	AchieveAlreadyReceived 		= 20403;	// 你已经领取成就奖励
+	AchieveNotDone 				= 20404;	// 请先完成成就
+	AchieveReceiveRewardOK 		= 20405;	// 领取成就奖励成功
+
+	// stroe
+	StoreNotFind				= 20501;	// 找不到商品<Text>%s</Text>配置
+	StoreOutOfLimitOwm			= 20502;	// 已经拥有物品, 不能购买
+	StoreBuyTypeError			= 20503;	// 购买类型错误
+	StoreLackCost				= 20504;	// 商城购买消耗品花费不足
+	StoreOutOfLimits			= 20505;	// 超过商品限购次数
+	StoreBuyCountError		    = 20506;	// 购买数量错误
+
+	// compound
+	CompoundDataNotEnough		= 20601;	// 没有足够的数据
+	CompoundNotExist			= 20602;	// 合成配置不存在
+
+	// relation
+	MessageFilterError		 	= 20701;	// 留言内有屏蔽字符
+	FriendAlready				= 20702;	// 与<Text>%s</Text>已经是好友关系, 不能重复申请
+	FriendSelfLimit				= 20703;	// 你的好友数量已经达到上限<Text>%s</Text>个
+	FriendInviteReq				= 20704;	// <Text>%s</Text>向你发送了好友申请
+	FriendRefuseYourInvite		= 20705;	// <Text>%s</Text>拒绝了你的好友请求
+	FriendAddOk					= 20706;	// 与<Text>%s</Text>已为知交
+	FriendNotExist				= 20707;	// 好友不存在
+	FriendDelOk					= 20708;	// 你与<Player id=%s>%s</Player>不再是好友了
+	FriendLinessAdd				= 20709;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
+	FriendRefuseInvite			= 20710;	// <Text>%s</Text>设置拒绝添加好友
+	FriendTargetLimit			= 20711;	// <Text>%s</Text>的好友数量已经超过最大限制
+	FriendInviteAlready			= 20712;	// 已经向<Text>%s</Text>申请添加好友了
+	FriendInviteLimit			= 20713;	// <Text>%s</Text>的好友申请列表满了
+	FriendInviteOk				= 20714;	// 向<Text>%s</Text>发送好友申请成功
+
+	ZoneDatabaseBusy 			= 20;		// 小区数据库错误
+	AccountIsEmpty         		= 26;		// 账号不能为空
+	CreateRoleAlready			= 27;		// 不能重复创建角色
+	CreateRoleOK				= 28;		// 创建角色成功
+	LoginAlreadyOnline      	= 29;		// 已经在线
+	ChangeMottoOK				= 32;		// 修改个性签名成功
+	ModuleIdNotFind				= 33;		// 你未获得该模型
+	SetModelClothesOK			= 34;		// 模型的默认时装设置成功
+	ChangeIconBoxOK				= 35;		// 修改头像框成功
+	DataSystemBusy				= 36;		// 数据服务器出错, 请稍后登录
+	ActivationAccount 			= 37;		// 请先激活账号
+	ActivationCodeError			= 38;		// 激活码错误
+	LoginCanNotFindGate 		= 39;		// 找不到可登录的服务器
+
+	CanNotFindPlayer 			= 42;		// 玩家数据错误, 请重新登录
+	CanNotInquireSelf			= 47;		// 不能查询自己的数据
+	ActivityIdCanNotFind 		= 48;		// 活动配置错误
+	CanNotFindActivityType 		= 49;		// 还没有完成活动
+	ActivityAlreadyReceived 	= 50;		// 你已经领取活动奖励
+	ActivityNotDone 			= 51;		// 请先完成活动内容
+	ActivityReceiveRewardOK 	= 52;		// 领取活动奖励成功
+
+	ReceiveGiftOK 				= 58;		// 领取礼包成功
+	ReceiveGiftFailed 			= 59;		// 领取礼包失败, 错误码:<Text>%s</Text>	
+	
+	ToastSendCountOver			= 65;		// 每日敬酒次数已用完
+	ToastCanNotRepeat			= 66;		// 不能重复敬酒
+	ToastGetCountOver			= 67;		// 每日被敬酒次数已用完
+	ToastFailed					= 68;		// 敬酒失败
+	ToastOK						= 69;		// 敬酒成功
+	MatchAlreadyWait       		= 70;		// 正在等待匹配中, 不能重复申请
+	MatchClusterBusy			= 71;		// 申请匹配失败, 请重试
+	MatchCanNotFindServer  		= 72;		// 找不到可以匹配的服务器
+	MatchCanNotFindMatch		= 73;		// 匹配模式错误
+	MatchGroupPlayerLimit 		= 74;		// 超过组队最大人数
+	MatchRequestSuccess 		= 75;		// 申请匹配成功,请等待
+	MatchCancelSuccess 			= 76;		// 取消匹配成功
+	FriendInviteNotExist    	= 85;		// 好友邀请信息不存在
+	MatchNotInMatch				= 86;		// 你已经不在匹配
+	MatchMustPrepare			= 88;		// 队员全部准备才能开始匹配
+
+
+	StoreOutOfLimitDate			= 93;		// 商品限购不在指定日期内
+	WishOrderEmpty				= 94;		// 心愿单为空
+	WishOrderNoExist			= 95;		// 心愿单中不存在该物品
+	WishOrderNoStoreId			= 96;		// 添加心愿单失败，未找到该商品
+	WishOrderHadStoreId			= 97;		// 心愿单中已经存在该商品	
+	WishOrderMaxSize			= 98;		// 心愿单已满
+	WishOrderStateRepeatSet		= 99;		// 心愿单状态重复设置
+	GiveLackCost				= 100;		// 赠送消耗品花费不足
+	ClothesNotExist 			= 101;		// 时装不存在
+	ClothesDataError			= 102;		// 时装<Text>%s</Text>配置错误
+	ClothesModleNotMatch    	= 103;		// 时装和模型不匹配
+	ClothesDressOK				= 104;		// 时装穿戴成功
+	ModelNotExist				= 105;		// 模型不存在
+	ModelChangeOK				= 106;		// 模型修改成功
+	ChatByteTooLong				= 107;		// 聊天内容超长
+	ChatNotFindPlayer			= 108;		// 你不在聊天室中
+	ChatIntervalError			= 109;		// 请不要频繁发言
+	ChatFriendIdError			= 110;		// 好友聊天好友id错误
+	InviteMatchGroupOK 			= 111;		// 已经向<Text>%s</Text>发送组队邀请
+	GroupLeaveOK				= 112;		// 你已经离开队伍
+	GroupMemberIsFull      		= 113;		// 队伍成员满了
+	GroupServerBusy				= 114;		// 队伍服务器错误, 请稍后重试
+	GroupInviteNotExist 		= 115;		// 邀请不存在
+	GroupCanNotKickSelf			= 116;		// 不能踢自己
+	GroupInGroup				= 117;		// 你已经在队伍中
+	GroupApplyNotExist     	    = 118;		// 组队申请不存在
+	GroupNotInGroup				= 119;		// 你不在队伍中
+	ItemNotExist				= 120;		// 你没有该道具
+	ItemDataError				= 121;		// 道具<Text>%s</Text>配置错误
+	ItemCanNotUse				= 122;		// 道具不能使用
+	GroupNotExist				= 123;		// 队伍已经解散
+	StoreBuyOK					= 124;		// 购买商品成功
+	GiveBuyOK					= 125;		// 赠送商品成功
+	GroupPlayerOffline			= 126;		// <Text>%s</Text>已经离线
+	GroupAlreadyInGroup			= 127;		// <Text>%s</Text>已经在队伍中
+	GroupRefuseInvite			= 128;		// <Text>%s</Text>设置拒绝组队邀请
+	GroupRefuseYourInvite		= 129;		// <Text>%s</Text>拒绝你的组队邀请!
+	GroupMemberLeave			= 130;		// <Text>%s</Text>离开了队伍
+	GroupRefuseApply			= 131;		// <Text>%s</Text>拒绝你的组队申请!
+	GroupCaptainOffline			= 132;		// 队长不在线
+	GroupNoCaption				= 133;		// 没有队长数据
+	GroupNotCaption				= 134;		// 你不是队长
+	GroupJoinOK					= 139;		// 已经加入队伍
+	GroupMemberJoin				= 140;		// <Text>%s</Text>加入了队伍
+	GroupIsNewCaption			= 141;		// 你已经成为队长
+	
+	FriendLinessAddLimit		= 143;		// 今日与<Text>%s</Text>情义已满
+	FriendLinessAddByWinGame	= 144;		// 拔得头筹，与<Text>%s</Text>情义另涨<Text>%s</Text>
+	FriendLinessMaxLimit		= 145;		// 与<Text>%s</Text>已是刎颈之交
+	WishPanelAddSuccessed		= 146;		// 添加心愿单成功
+	GroupInviteInMatch			= 147;		// 已经在匹配中不能邀请入队
+	GroupApplyInMatch			= 148;		// 已经在匹配中不能申请入队
+	GroupInviteTimeOut			= 149;		// 邀请已经超时, 无法加入队伍
+	GroupInviteMatchError		= 150;		// 该模式下不能组队
+	GroupApplyTimeOut			= 151;		// 申请已经超时, 无法加入队伍
+	OperateFrequently			= 152;		// 操作太频繁, 稍后再试
+
+	LoginIsClose				= 155;		// 登录已经关闭
+	RankNotExist				= 156;		// 排行榜不存在
+	RankServerBusy				= 157;		// 排行榜服务器忙
+	SignInNotDay				= 161;		// 还没有签到
+	SignInDataError				= 162;		// 签到配置错误
+	SignInRewardAlready			= 163;		// 已经领取签到奖励
+	ZoneServerBusy				= 164;		// 目录服务器忙
+	GroupTargetInMatch			= 165;		// <Text>%s</Text>正在匹配中!
+	GroupInMatch				= 166;		// 已经在匹配中不能加入队伍!
+	GroupKickInMatch			= 167;		// 已经在匹配中不能踢人
+	GroupLeaveInMatch			= 168;		// 已经在匹配中不能离开队伍
+	MatchCancelInBattle			= 169;		// 已经战斗中不能取消匹配
+	MailServerBusy				= 170;		// 邮件服务器繁忙
+	RelationDatabaseBusy		= 171;		// 关系数据库繁忙
+	SteamError				 	= 173;		// Steam登录访问错误
+	SteamDataError				= 174;		// Steam返回数据错误
+	SteamAuthError				= 175;		// Steam验证错误
+	InvalidActivationCode		= 176;		// 非法激活码
+	CanNotFindLoginNode			= 177;		// 没有可登录的节点
+	ChannelNotSupport			= 178;		// 不支持的渠道
+	HaveNotIcon					= 179;		// 没有拥有头像
+	QueryInviteScoreError		= 180;		// 查询邀请码积分出错, 错误码<Text>%s</Text>
+	PlatformServerBusy			= 181;		// 平台服务器繁忙
+	BindAlipayOk				= 182;		// 绑定支付宝成功
+	BindAlipayFailed			= 183;		// 绑定支付宝失败, 错误码<Text>%s</Text>
+	ExchangeInviteScoreError 	= 184;		// 兑换邀请码积分出错, 错误码<Text>%s</Text>
+	ExchangeInviteRecordError 	= 185;		// 查询邀请码兑换记录出错, 错误码<Text>%s</Text>
+	VersionNotCompatibility 	= 186;		// 版本不兼容, 请升级客户端
+	BattleNotCompatibility 		= 187;		// 战斗服版本不兼容, 请升级客户端
+	BattleNotPrepare			= 188;		// 战斗服还没有准备好
+	BanForbidLogin				= 189;		// 你被禁止游戏到<Text>%s</Text>时间.
+	TitleNotExist				= 190;		// 你没有获得此称号
+
+	ServerBusy = 1000;	// 服务器忙
+	
+}

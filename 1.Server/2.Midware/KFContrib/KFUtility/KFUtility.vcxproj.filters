@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="KFUtility.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFUtility.h" />
+    <ClInclude Include="KFClock.h" />
+    <ClInclude Include="KFCompress.h" />
+    <ClInclude Include="KFConvert.h" />
+    <ClInclude Include="KFDate.h" />
+    <ClInclude Include="KFDecode.h" />
+    <ClInclude Include="KFMutex.h" />
+    <ClInclude Include="KFNode.h" />
+    <ClInclude Include="KFRunable.hpp" />
+    <ClInclude Include="KFThread.h" />
+    <ClInclude Include="KFTimer.h" />
+    <ClInclude Include="KFXml.h" />
+    <ClInclude Include="KFCrypto.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFUtility.cpp" />
+    <ClCompile Include="KFClock.cpp" />
+    <ClCompile Include="KFCompress.cpp" />
+    <ClCompile Include="KFConvert.cpp" />
+    <ClCompile Include="KFDate.cpp" />
+    <ClCompile Include="KFDecode.cpp" />
+    <ClCompile Include="KFMutex.cpp" />
+    <ClCompile Include="KFNode.cpp" />
+    <ClCompile Include="KFRunable.cpp" />
+    <ClCompile Include="KFThread.cpp" />
+    <ClCompile Include="KFXml.cpp" />
+    <ClCompile Include="KFCrypto.cpp" />
+  </ItemGroup>
+</Project>

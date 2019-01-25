@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{248FE340-3ED2-3E69-9F59-86ACD39CC0F6}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>protoc</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">protoc.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">protoc</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">protoc.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">protoc</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">protoc.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">protoc</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">protoc.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">protoc</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>Debug\libprotobufd.lib;Debug\libprotocd.lib;Debug\libprotobufd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/Debug/protoc.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/Debug/protoc.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>Release\libprotobuf.lib;Release\libprotoc.lib;Release\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/Release/protoc.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/Release/protoc.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>MinSizeRel\libprotobuf.lib;MinSizeRel\libprotoc.lib;MinSizeRel\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/MinSizeRel/protoc.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/MinSizeRel/protoc.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild;E:\KFrame\Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>RelWithDebInfo\libprotobuf.lib;RelWithDebInfo\libprotoc.lib;RelWithDebInfo\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/RelWithDebInfo/protoc.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/RelWithDebInfo/protoc.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/Server/KFLibrary/google/protobuf/vsbuild --check-stamp-file E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/Server/KFLibrary/google/protobuf/vsbuild --check-stamp-file E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/Server/KFLibrary/google/protobuf/vsbuild --check-stamp-file E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/Server/KFLibrary/google/protobuf/vsbuild --check-stamp-file E:/KFrame/Server/KFLibrary/google/protobuf/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/KFrame/Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="E:\KFrame\Server\KFLibrary\google\protobuf\src\google\protobuf\compiler\main.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{5EFC7FF0-249B-3502-9601-DDF03CC41844}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\libprotobuf.vcxproj">
+      <Project>{EF99656A-3C3B-3C71-A5AC-C25BD4533E05}</Project>
+      <Name>libprotobuf</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\KFrame\Server\KFLibrary\google\protobuf\vsbuild\libprotoc.vcxproj">
+      <Project>{A8CE0B9E-57E3-3E2C-B3E1-4EE2E0919811}</Project>
+      <Name>libprotoc</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

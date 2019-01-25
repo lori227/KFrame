@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{ce94fc9a-c2dc-40f5-8e94-f213dd32d535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{fea5ea44-2646-4e0e-a699-dbe20aba98ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AffineTransform2D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AffineTransform3D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearTransform2D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearTransform3D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AffineTransform2D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="AffineTransform3D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearTransform2D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearTransform3D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Math3D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

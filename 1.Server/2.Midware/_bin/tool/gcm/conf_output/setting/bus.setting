@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--AppName 服务器名字 * 表示所有服务器名字-->
+	<!--AppType 服务器类型 * 表示所有服务器类型-->
+	<!--AppId 指定服务器id -->
+
+	<!--ConnectName 连接目标服务器名字 -->
+	<!--ConnectType 连接目标服务器类型-->
+	<!--ConnectId 指定连接目标服务器id -->
+
+	<Bus>
+		<Connection AppName="*" AppType="agent" AppId="*" ConnectName="deploy" ConnectType="server" ConnectId="*"/>	
+	
+		<Connection AppName="route" AppType="*" AppId="*" ConnectName="route" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="route" AppType="proxy" AppId="*" ConnectName="route" ConnectType="shard" ConnectId="*"/>
+
+		<Connection AppName="zone" AppType="*" AppId="*" ConnectName="zone" ConnectType="master" ConnectId="*"/>
+		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="login" ConnectId="*"/>
+		<Connection AppName="zone" AppType="gate" AppId="*" ConnectName="zone" ConnectType="game" ConnectId="*"/>
+		<Connection AppName="zone" AppType="login" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
+		<Connection AppName="zone" AppType="game" AppId="*" ConnectName="zone" ConnectType="world" ConnectId="*"/>
+	</Bus>	
+</Config>
+

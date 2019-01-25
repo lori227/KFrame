@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- 内部渠道 -->
+	<Platform Channel="1" AppId="10001" AppKey="cHPNaYS27Ct4JZVF" AppUrl="http://apitest.laywoodgames.com/v1/server/"/>
+</Config>
+

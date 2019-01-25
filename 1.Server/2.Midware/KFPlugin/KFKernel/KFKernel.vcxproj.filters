@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFKernelPlugin.cpp" />
+    <ClCompile Include="KFKernelModule.cpp" />
+    <ClCompile Include="KFEntityEx.cpp" />
+    <ClCompile Include="KFComponentEx.cpp" />
+    <ClCompile Include="KFKernelConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFKernelPlugin.h" />
+    <ClInclude Include="KFKernelModule.h" />
+    <ClInclude Include="KFKernelInterface.h" />
+    <ClInclude Include="KFEntityEx.h" />
+    <ClInclude Include="KFEntity.h" />
+    <ClInclude Include="KFComponent.h" />
+    <ClInclude Include="KFComponentEx.h" />
+    <ClInclude Include="KFKernelConfig.h" />
+  </ItemGroup>
+</Project>

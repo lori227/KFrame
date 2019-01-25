@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins Common="./startup/common.startup">
+		<Plugin Sort="110" Name="KFTcpServer" Config="./setting/tcpserver.setting"/>
+    		<Plugin Sort="120" Name="KFClusterProxy" Config=""/>
+   		<Plugin Sort="130" Name="KFGuildProxy" Config=""/>
+	</Plugins>
+</Setting>
