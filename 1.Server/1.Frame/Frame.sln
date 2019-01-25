@@ -99,6 +99,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFProtocol", "KFContrib\KFP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFProto", "KFContrib\KFProto\KFProto.vcxproj", "{283CE2B2-5434-48BF-8593-598EF8408144}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFCrypto", "KFContrib\KFCrypto\KFCrypto.vcxproj", "{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -255,6 +257,10 @@ Global
 		{283CE2B2-5434-48BF-8593-598EF8408144}.Debug|x64.Build.0 = Debug|x64
 		{283CE2B2-5434-48BF-8593-598EF8408144}.Release|x64.ActiveCfg = Release|x64
 		{283CE2B2-5434-48BF-8593-598EF8408144}.Release|x64.Build.0 = Release|x64
+		{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D}.Debug|x64.ActiveCfg = Debug|x64
+		{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D}.Debug|x64.Build.0 = Debug|x64
+		{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D}.Release|x64.ActiveCfg = Release|x64
+		{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -304,9 +310,10 @@ Global
 		{AC7BB0E3-FA01-4217-A8E3-A6BE5F407411} = {334B53D0-39AA-444C-AFC2-FA4B090C41C4}
 		{765DAD02-89F0-4AD0-B083-6847D4EB505D} = {334B53D0-39AA-444C-AFC2-FA4B090C41C4}
 		{283CE2B2-5434-48BF-8593-598EF8408144} = {334B53D0-39AA-444C-AFC2-FA4B090C41C4}
+		{28BDDCD6-878C-4FAC-9035-9AF9C7F63B4D} = {334B53D0-39AA-444C-AFC2-FA4B090C41C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = msvc2015_86
 		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
+		Qt5Version = msvc2015_86
 	EndGlobalSection
 EndGlobal

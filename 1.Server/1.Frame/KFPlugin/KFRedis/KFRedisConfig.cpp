@@ -16,21 +16,19 @@ namespace KFrame
     void KFRedisList::Reset()
     {
         _redis_list.clear();
-        _redis_hash.ClearHashNode();
         _kfseting = nullptr;
     }
 
     void KFRedisList::AddSetting( KFRedisSetting& kfsetting )
     {
         _redis_list.push_back( kfsetting );
-        _redis_hash.AddHashNode( "redis", _redis_list.size() - 1, 100 );
     }
 
     const KFRedisSetting* KFRedisList::FindSetting()
     {
         if ( _kfseting == nullptr )
         {
-            auto index = _redis_hash.FindHashNode( KFGlobal::Instance()->_app_id._union._id );
+            auto index = KFGlobal::Instance()->_app_id._union._id % static_cast< uint32 >( _redis_list.size() );
             _kfseting = &_redis_list[ index ];
         }
 

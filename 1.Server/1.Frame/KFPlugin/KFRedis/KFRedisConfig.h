@@ -2,7 +2,6 @@
 #define __KF_REDIS_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFConHash/KFConHash.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -44,7 +43,6 @@ namespace KFrame
         void AddSetting( KFRedisSetting& kfsetting );
 
     private:
-        KFConHash _redis_hash;
         std::vector< KFRedisSetting > _redis_list;
 
         // 返回的连接设置

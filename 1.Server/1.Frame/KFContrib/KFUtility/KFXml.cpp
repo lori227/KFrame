@@ -34,7 +34,7 @@ namespace KFrame
     uint32 KFXml::Size()
     {
         auto xmlfile = reinterpret_cast< rapidxml::file<>* >( _data );
-        return xmlfile->size();
+        return static_cast< uint32 >( xmlfile->size() );
     }
 
     void KFXml::Parse()

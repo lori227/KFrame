@@ -1,5 +1,5 @@
 ﻿#include "KFHashFunction.hpp"
-#include "KFUtility/KFCrypto.h"
+#include "KFCrypto/KFCrypto.h"
 
 namespace KFrame
 {

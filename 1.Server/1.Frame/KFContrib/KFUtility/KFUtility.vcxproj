@@ -14,7 +14,6 @@
     <ClCompile Include="KFClock.cpp" />
     <ClCompile Include="KFCompress.cpp" />
     <ClCompile Include="KFConvert.cpp" />
-    <ClCompile Include="KFCrypto.cpp" />
     <ClCompile Include="KFDate.cpp" />
     <ClCompile Include="KFDecode.cpp" />
     <ClCompile Include="KFMutex.cpp" />
@@ -28,7 +27,6 @@
     <ClInclude Include="KFClock.h" />
     <ClInclude Include="KFCompress.h" />
     <ClInclude Include="KFConvert.h" />
-    <ClInclude Include="KFCrypto.h" />
     <ClInclude Include="KFDate.h" />
     <ClInclude Include="KFDecode.h" />
     <ClInclude Include="KFMutex.h" />
@@ -103,7 +101,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconvd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconvd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -133,7 +131,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconv.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>

@@ -16,7 +16,6 @@
     <ClInclude Include="KFThread.h" />
     <ClInclude Include="KFTimer.h" />
     <ClInclude Include="KFXml.h" />
-    <ClInclude Include="KFCrypto.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFUtility.cpp" />
@@ -30,6 +29,5 @@
     <ClCompile Include="KFRunable.cpp" />
     <ClCompile Include="KFThread.cpp" />
     <ClCompile Include="KFXml.cpp" />
-    <ClCompile Include="KFCrypto.cpp" />
   </ItemGroup>
 </Project>
