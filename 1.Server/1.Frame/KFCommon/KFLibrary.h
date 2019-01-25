@@ -3,7 +3,6 @@
 #include "KFSystem.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
-    #pragma warning(disable:4099)
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_DEBUG__
         #pragma comment( lib, "iphlpapi.lib" )
