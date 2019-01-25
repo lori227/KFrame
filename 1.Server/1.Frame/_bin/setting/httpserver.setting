@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
+	<!--Port 端口-->
+	<!--KeepAlive 是否保持连接-->
+	<!--MaxThread 最大线程数量-->
+	<!--MaxQueue 最大队列数量-->
+	<!--IdleTime 空闲时间-->
+
+	<!-- http服务器配置 -->
+	<HttpServer KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000">
+		<!-- deploy 服务器 -->
+		<Server AppName="deploy" AppType="server" Type="0" Port="9999"/>
+
+		<!-- 日志服务器 -->
+		<Server AppName="log" AppType="shard" Type="1" Port="6000"/>
+
+		<!-- 认证服务器 -->
+		<Server AppName="auth" AppType="auth" Type="1" Port="7000" />
+
+		<!-- 邮件服务器 -->
+		<Server AppName="mail" AppType="shard" Type="1" Port="8000"/>
+
+		<!-- world服务器 -->
+		<Server AppName="zone" AppType="world" Type="1" Port="9000"/>	
+	</HttpServer>
+</Config>
+
