@@ -47,6 +47,8 @@ namespace KFrame
     {
         if ( servername == __KF_STRING__( log ) )
         {
+            __LOG_INFO__( "remote log[{}] ok!", KFAppID::ToString( serverid ) );
+
             _log_server_id = serverid;
             KFLogger::Instance()->RegisterLogFunction( this, &KFLogClientModule::LogRemote );
         }
@@ -97,6 +99,7 @@ namespace KFrame
         if ( !ok )
         {
             KFLogger::Instance()->UnRegisterLogFunction( this );
+            __LOG_INFO__( "remote log[{}] failed!", KFAppID::ToString( _log_server_id ) );
         }
     }
 }
