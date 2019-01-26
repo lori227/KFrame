@@ -30,6 +30,8 @@ namespace KFrame
     {
         ShutDown();
 
+        __LOG_INFO__( "redis connect[module={} ip={}:{}] start!", _name, _ip, _port );
+
         _redis_context = redisConnect( _ip.c_str(), _port );
         if ( _redis_context == nullptr || _redis_context->err != REDIS_OK )
         {
