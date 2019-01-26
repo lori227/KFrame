@@ -1,2 +1,0 @@
-BUILD_CONTRIB_MACRO(KFNetwork)
-
