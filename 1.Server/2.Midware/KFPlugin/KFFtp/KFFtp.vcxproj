@@ -106,7 +106,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -134,7 +134,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

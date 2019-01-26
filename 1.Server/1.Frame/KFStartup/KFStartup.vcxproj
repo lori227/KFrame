@@ -92,7 +92,7 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -123,7 +123,7 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

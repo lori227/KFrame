@@ -108,7 +108,7 @@
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -138,7 +138,7 @@
       <IgnoreSpecificDefaultLibraries>LIBC.lib LIBCMT.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy/AEFRSY "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
