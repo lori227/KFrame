@@ -9,16 +9,10 @@ namespace KFrame
     class KFAppSetting
     {
     public:
-        KFAppSetting()
-        {
-            _sort = 0;
-        }
+        uint32 _sort = 0;
 
         // 名字
         std::string _name;
-
-        // 排序
-        uint32 _sort;
 
         // 配置路径
         std::string _config_file;
@@ -36,13 +30,7 @@ namespace KFrame
         bool LoadStartupConfig( const std::string& file );
 
     protected:
-
-        // 读取插件配置
-        void LoadStarupConfig( const std::string& file, std::string& includefile );
-        void ReadPluginSetting( KFNode& root, std::string& includefile );
-
-        // 查找配置
-        KFAppSetting* GetStartupSetting( const std::string& name );
+        void ReadStartupConfig( const std::string& file );
 
         // 添加配置
         void AddStartupSetting( KFAppSetting& setting );
@@ -52,7 +40,7 @@ namespace KFrame
         std::string _plugin_path;
 
         // 配置
-        std::unordered_map< std::string, KFAppSetting > _startups;
+        std::list< KFAppSetting > _startups;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

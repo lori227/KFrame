@@ -3,20 +3,18 @@
 
 namespace KFrame
 {
-    KFAppSetting* KFAppConfig::GetStartupSetting( const std::string& name )
-    {
-        auto iter = _startups.find( name );
-        if ( iter == _startups.end() )
-        {
-            return nullptr;
-        }
-
-        return &iter->second;
-    }
-
     void KFAppConfig::AddStartupSetting( KFAppSetting& setting )
     {
-        _startups[ setting._name ] = setting;
+        for ( auto& startup : _startups )
+        {
+            if ( startup._name == setting._name )
+            {
+                return;
+            }
+        }
+
+        setting._sort = static_cast< uint32 >( _startups.size() + 1 );
+        _startups.push_back( setting );
     }
 
     bool KFAppConfig::LoadStartupConfig( const std::string& file )
@@ -27,29 +25,29 @@ namespace KFrame
         _plugin_path = "./bin/";
 #endif
 
-        std::string includefile;
-        LoadStarupConfig( file, includefile );
+        ReadStartupConfig( file );
         return true;
     }
 
-    void KFAppConfig::LoadStarupConfig( const std::string& file, std::string& includefile )
+    void KFAppConfig::ReadStartupConfig( const std::string& file )
     {
         KFXml kfxml( file );
         auto root = kfxml.FindNode( "Setting" );
         //////////////////////////////////////////////////////////////////////////
-        ReadPluginSetting( root, includefile );
-        if ( !includefile.empty() )
+        auto includesnode = root.FindNode( "Includes" );
+        if ( includesnode.IsValid() )
         {
-            std::string subincludefile;
-            LoadStarupConfig( includefile, subincludefile );
+            auto includenode = includesnode.FindNode( "Include" );
+            while ( includenode.IsValid() )
+            {
+                auto filename = includenode.GetString( "File" );
+                ReadStartupConfig( filename );
+                includenode.NextNode();
+            }
         }
-    }
-
-    void KFAppConfig::ReadPluginSetting( KFNode& root, std::string& includefile )
-    {
+        //////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
         auto plugins = root.FindNode( "Plugins" );
-        includefile = plugins.GetString( "Include", true );
-
         auto kfglobal = KFGlobal::Instance();
 
         auto node = plugins.FindNode( "Plugin" );
@@ -59,7 +57,6 @@ namespace KFrame
             if ( kfglobal->CheckChannelService( channel, _invalid_int ) )
             {
                 KFAppSetting setting;
-                setting._sort = node.GetUInt32( "Sort" );
                 setting._name = node.GetString( "Name" );
                 setting._config_file = node.GetString( "Config" );
                 if ( !setting._config_file.empty() )
@@ -87,5 +84,4 @@ namespace KFrame
             node.NextNode();
         }
     }
-
 }

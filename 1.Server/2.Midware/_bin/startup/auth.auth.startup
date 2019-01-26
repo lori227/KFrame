@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins Include="./startup/remotelogframe.startup">
-		<Plugin Sort="110" Name="KFHttpServer" Config="./setting/httpserver.setting"/>
-		<Plugin Sort="120" Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
-		<Plugin Sort="130" Name="KFChannel" Config="./setting/channel.setting"/>
-		<Plugin Sort="140" Name="KFAuth" Config=""/>	
+	<Includes>
+		<Include File="./startup/httpserver.startup"/>
+		<Include File="./startup/remotelog.startup"/>
+	</Includes>
+
+	<Plugins>
+		<Plugin Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
+		<Plugin Name="KFChannel" Config="./setting/channel.setting"/>
+		<Plugin Name="KFAuth" Config=""/>	
 	</Plugins>
 </Setting>
