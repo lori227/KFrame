@@ -18,7 +18,6 @@
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
-#include "KFPlatform/KFPlatformInterface.h"
 
 namespace KFrame
 {

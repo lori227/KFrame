@@ -6,6 +6,8 @@
 		<Plugin Sort="130" Name="KFChannel" Config="./setting/channel.setting"/>
 		<Plugin Sort="140" Name="KFAuth" Config=""/>	
 		<Plugin Sort="170" Name="KFTcpClient" Config=""/>
-		<Plugin Sort="180" Name="KFLogClient" Config=""/>
+		<Plugin Sort="180" Name="KFLogClient" Config=""/>	
+		<Plugin Sort="7" Name="KFMessage" Config=""/>
+
 	</Plugins>
 </Setting>

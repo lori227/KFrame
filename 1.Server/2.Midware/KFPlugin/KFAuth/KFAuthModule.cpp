@@ -174,18 +174,18 @@ namespace KFrame
             return _kf_http_server->SendResponseCode( KFMsg::AuthServerBusy );
         }
 
-        // 判断是否需要激活
-        static auto _open_activation_option = _kf_option->FindOption( __KF_STRING__( openactivation ) );
-        if ( _open_activation_option->_uint32_value == 1 )
-        {
-            auto activation = accountdata[ __KF_STRING__( activation ) ];
-            if ( activation.empty() )
-            {
-                __JSON_DOCUMENT__( response );
-                __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
-                return _kf_http_server->SendResponse( response, KFMsg::ActivationAccount );
-            }
-        }
+        //// 判断是否需要激活
+        //static auto _open_activation_option = _kf_option->FindOption( __KF_STRING__( openactivation ) );
+        //if ( _open_activation_option->_uint32_value == 1 )
+        //{
+        //    auto activation = accountdata[ __KF_STRING__( activation ) ];
+        //    if ( activation.empty() )
+        //    {
+        //        __JSON_DOCUMENT__( response );
+        //        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
+        //        return _kf_http_server->SendResponse( response, KFMsg::ActivationAccount );
+        //    }
+        //}
 
         // 判断是否已经在线, 在线需要踢人下线
         KickAccountOffline( accountdata );
@@ -275,7 +275,8 @@ namespace KFrame
 
     std::string KFAuthModule::CreateLoginToken( uint64 accountid, MapString& accountdata )
     {
-        static auto _token_expire_time_option = _kf_option->FindOption( __KF_STRING__( tokenexpiretime ) );
+        // token 有效期保存一周
+        static auto _token_expire_time = 604800;
 
         // 创建token
         auto md5temp = __FORMAT__( "{}-{}", accountid, KFGlobal::Instance()->_game_time );
@@ -287,7 +288,7 @@ namespace KFrame
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Append( "hmset {} {} {} {} {} {} {}", tokenkey, __KF_STRING__( account ), account, __KF_STRING__( accountid ), accountid, __KF_STRING__( channel ), channel );
-        redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time_option->_str_value );
+        redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time );
         redisdriver->Pipeline();
 
         return token;
@@ -425,7 +426,7 @@ namespace KFrame
 
     std::string KFAuthModule::VerifyActivationCode( MapString& accountdata, uint64 accountid, const std::string& activationcode )
     {
-        auto apiurl = _kf_platform->MakePlatformUrl( __KF_STRING__( verifyactivationcode ) );
+        auto apiurl = "";//_kf_platform->MakePlatformUrl( __KF_STRING__( verifyactivationcode ) );
 
         auto account = accountdata[ __KF_STRING__( account ) ];
 
