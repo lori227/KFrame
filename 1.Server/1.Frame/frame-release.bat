@@ -169,8 +169,9 @@ xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contrib
 
 set subcontribpath=KFProtocol
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\* %releasepath%\%contribpath%\%subcontribpath%
-
+copy /y %localpath%\%contribpath%\%subcontribpath%\CMakeLists.txt %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.h %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.cc %releasepath%\%contribpath%\%subcontribpath%
 echo "release KFContrib path end"
 rem ===========================================================================
 rem ===========================================================================
