@@ -22,4 +22,7 @@ rd /Q /S %localpath%\_bin\_gcm\conf_input1
 
 copy /y %localpath%\KFCommon\KFField.h1 %localpath%\KFCommon\KFField.h
 del %localpath%\KFCommon\KFField.h1
+
+if not exist %localpath%\_bin\startup (mkdir %localpath%\_bin\startup )
+
 rem ===========================================================================

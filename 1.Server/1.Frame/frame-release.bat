@@ -107,11 +107,12 @@ rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
-echo "release _tool path begin"
-set toolpath=_tool
+echo "release _excel path begin"
+set toolpath=_excel
 if not exist %releasepath%\%toolpath% (mkdir %releasepath%\%toolpath% )
-copy /y %localpath%\%toolpath%\_parse.exe %releasepath%\%toolpath%\
-echo "release _tool path end"
+del %localpath%\%toolpath%\_parsed.exe
+xcopy /y %localpath%\%toolpath% %releasepath%\%toolpath%\
+echo "release _excel path end"
 rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
