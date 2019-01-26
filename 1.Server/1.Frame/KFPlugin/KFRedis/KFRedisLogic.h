@@ -16,9 +16,6 @@ namespace KFrame
         KFRedisLogic();
         virtual ~KFRedisLogic();
 
-        // 逻辑
-        void Run();
-
         // 关闭
         void ShutDown();
 
@@ -31,24 +28,24 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
 
         // 写操作
-        virtual KFResult< voidptr >* VoidExecute( const std::string& strsql );
-        virtual KFResult< uint64 >* UpdateExecute( const std::string& strsql );
+        virtual KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
+        virtual KFResult< uint64 >::UniqueType UpdateExecute( const std::string& strsql );
 
         // 批量写
-        virtual KFResult< voidptr >* Pipeline();
+        virtual KFResult< voidptr >::UniqueType Pipeline();
 
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 读操作
         // 查询数据库
-        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql );
-        virtual KFResult< std::string >* StringExecute( const std::string& strsql );
-        virtual KFResult< MapString >* MapExecute( const std::string& strsql );
-        virtual KFResult< ListString >* ListExecute( const std::string& strsql );
-        virtual KFResult< VectorString >* VectorExecute( const std::string& strsql );
+        virtual KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
+        virtual KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
+        virtual KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
+        virtual KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
+        virtual KFResult< VectorString >::UniqueType VectorExecute( const std::string& strsql );
 
         // 添加执行命令
-        virtual KFResult< ListString >* ListPipelineExecute();
-        virtual KFResult< std::list< MapString > >* ListMapPipelineExecute();
+        virtual KFResult< ListString >::UniqueType ListPipelineExecute();
+        virtual KFResult< std::list< MapString > >::UniqueType ListMapPipelineExecute();
 
     private:
         // 需要执行的命令集

@@ -21,16 +21,6 @@ namespace KFrame
         __KF_REMOVE_CONFIG__( _kf_redis_config );
     }
 
-    void KFRedisModule::AfterRun()
-    {
-        {
-            KFLocker lock( _mt_mutex );
-            for ( auto& iter : _redis_logic._objects )
-            {
-                iter.second->Run();
-            }
-        }
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFRedisDriver* KFRedisModule::Create( const std::string& module, uint32 logicid /* = 0 */ )

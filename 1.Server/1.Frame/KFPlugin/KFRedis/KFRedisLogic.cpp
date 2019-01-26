@@ -23,12 +23,6 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFRedisLogic::Run()
-    {
-        _read_execute->Run();
-        _write_execute->Run();
-    }
-
     void KFRedisLogic::Initialize( KFRedisType* kfredistype )
     {
         {
@@ -69,17 +63,17 @@ namespace KFrame
         _commands.push_back( strsql );
     }
 
-    KFResult< voidptr >* KFRedisLogic::VoidExecute( const std::string& strsql )
+    KFResult< voidptr >::UniqueType KFRedisLogic::VoidExecute( const std::string& strsql )
     {
         return _write_execute->VoidExecute( strsql );
     }
 
-    KFResult< uint64 >* KFRedisLogic::UpdateExecute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFRedisLogic::UpdateExecute( const std::string& strsql )
     {
         return _write_execute->UpdateExecute( strsql );
     }
 
-    KFResult< voidptr >* KFRedisLogic::Pipeline()
+    KFResult< voidptr >::UniqueType KFRedisLogic::Pipeline()
     {
         auto kfresult = _write_execute->Pipeline( _commands );
         _commands.clear();
@@ -87,32 +81,32 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::string >* KFRedisLogic::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFRedisLogic::StringExecute( const std::string& strsql )
     {
         return _read_execute->StringExecute( strsql );
     }
 
-    KFResult< uint64 >* KFRedisLogic::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFRedisLogic::UInt64Execute( const std::string& strsql )
     {
         return _read_execute->UInt64Execute( strsql );
     }
 
-    KFResult< MapString >* KFRedisLogic::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFRedisLogic::MapExecute( const std::string& strsql )
     {
         return _read_execute->MapExecute( strsql );
     }
 
-    KFResult< VectorString >* KFRedisLogic::VectorExecute( const std::string& strsql )
+    KFResult< VectorString >::UniqueType KFRedisLogic::VectorExecute( const std::string& strsql )
     {
         return _read_execute->VectorExecute( strsql );
     }
 
-    KFResult< ListString >* KFRedisLogic::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFRedisLogic::ListExecute( const std::string& strsql )
     {
         return _read_execute->ListExecute( strsql );
     }
 
-    KFResult< ListString >* KFRedisLogic::ListPipelineExecute()
+    KFResult< ListString >::UniqueType KFRedisLogic::ListPipelineExecute()
     {
         auto kfresult = _read_execute->ListPipelineExecute( _commands );
         _commands.clear();
@@ -120,7 +114,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >* KFRedisLogic::ListMapPipelineExecute()
+    KFResult< std::list< MapString > >::UniqueType KFRedisLogic::ListMapPipelineExecute()
     {
         auto kfresult = _read_execute->ListMapPipelineExecute( _commands );
         _commands.clear();

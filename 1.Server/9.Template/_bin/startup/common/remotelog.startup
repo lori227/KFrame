@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Setting>
-	<Plugins>
-		<Plugin Sort="50" Name="KFTcpClient" Config=""/>
-		<Plugin Sort="51" Name="KFLogClient" Config=""/>	
-		<Plugin Sort="52" Name="KFMessage" Config=""/>
-	</Plugins>
-</Setting>

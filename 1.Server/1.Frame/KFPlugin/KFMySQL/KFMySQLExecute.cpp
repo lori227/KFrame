@@ -3,33 +3,6 @@
 
 namespace KFrame
 {
-    /////////////////////////////////////////////////////////////////////////////
-    KFMySQLExecute::KFMySQLExecute()
-    {
-        _result_queue_list.push_back( &_void_result_queue );
-        _result_queue_list.push_back( &_uint32_result_queue );
-        _result_queue_list.push_back( &_uint64_result_queue );
-        _result_queue_list.push_back( &_string_result_queue );
-        _result_queue_list.push_back( &_map_result_queue );
-        _result_queue_list.push_back( &_list_result_queue );
-        _result_queue_list.push_back( &_list_map_result_queue );
-    }
-
-    KFMySQLExecute::~KFMySQLExecute()
-    {
-
-    }
-
-    void KFMySQLExecute::Run()
-    {
-        // 释放结果内存
-        for ( auto kfresultqueue : _result_queue_list )
-        {
-            kfresultqueue->Free();
-        }
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     bool KFMySQLExecute::CheckDisconnected( int32 code )
     {
         switch ( code )
@@ -262,7 +235,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table )
     {
         static MapString _empty_key;
         static ListString _empty_field;
@@ -270,13 +243,13 @@ namespace KFrame
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const ListString& fields )
     {
         static MapString _empty_key;
         return Select( table, _empty_key, fields );
     }
 
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const std::string& key )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const std::string& key )
     {
         static ListString _empty_field;
 
@@ -285,22 +258,22 @@ namespace KFrame
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
     {
         MapString keyvalue;
         keyvalue[ __KF_STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue )
     {
         static ListString _empty_field;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >* KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
     {
-        auto kfresult = _list_map_result_queue.Alloc();
+        __NEW_RESULT__( std::list< MapString > );
 
         std::string sql = "";
         auto strfield = FormatFieldString( fields );
@@ -358,9 +331,9 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< voidptr >* KFMySQLExecute::VoidExecute( const std::string& strsql )
+    KFResult< voidptr >::UniqueType KFMySQLExecute::VoidExecute( const std::string& strsql )
     {
-        auto kfresult = _void_result_queue.Alloc();
+        __NEW_RESULT__( voidptr );
 
         Statement statement( *_session );
         statement << strsql;
@@ -377,9 +350,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint32 >*  KFMySQLExecute::UInt32Execute( const std::string& strsql )
+    KFResult< uint32 >::UniqueType KFMySQLExecute::UInt32Execute( const std::string& strsql )
     {
-        auto kfresult = _uint32_result_queue.Alloc();
+        __NEW_RESULT__( uint32 );
 
         Statement statement( *_session );
         statement << strsql;
@@ -400,9 +373,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >*  KFMySQLExecute::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFMySQLExecute::UInt64Execute( const std::string& strsql )
     {
-        auto kfresult = _uint64_result_queue.Alloc();
+        __NEW_RESULT__( uint64 );
 
         Statement statement( *_session );
         statement << strsql;
@@ -423,9 +396,10 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::string >*  KFMySQLExecute::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFMySQLExecute::StringExecute( const std::string& strsql )
     {
-        auto kfresult = _string_result_queue.Alloc();
+        __NEW_RESULT__( std::string );
+
         Statement statement( *_session );
         statement << strsql;
         auto ok = ExecuteSql( statement );
@@ -445,9 +419,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >*  KFMySQLExecute::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFMySQLExecute::MapExecute( const std::string& strsql )
     {
-        auto kfresult = _map_result_queue.Alloc();
+        __NEW_RESULT__( MapString );
 
         Statement statement( *_session );
         statement << strsql;
@@ -477,9 +451,9 @@ namespace KFrame
     }
 
 
-    KFResult< ListString >*  KFMySQLExecute::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFMySQLExecute::ListExecute( const std::string& strsql )
     {
-        auto kfresult = _list_result_queue.Alloc();
+        __NEW_RESULT__( ListString );
 
         Statement statement( *_session );
         statement << strsql;
@@ -503,9 +477,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >*  KFMySQLExecute::ListMapExecute( const std::string& strsql )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::ListMapExecute( const std::string& strsql )
     {
-        auto kfresult = _list_map_result_queue.Alloc();
+        __NEW_RESULT__( std::list< MapString > );
 
         Statement statement( *_session );
         statement << strsql;

@@ -46,61 +46,61 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////
         template< typename... P >
-        KFResult< voidptr >* Execute( const char* myfmt, P&& ... args )
+        KFResult< voidptr >::UniqueType Execute( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return VoidExecute( strsql );
         }
 
         template< typename... P >
-        KFResult< uint32 >* QueryUInt32( const char* myfmt, P&& ... args )
+        KFResult< uint32 >::UniqueType QueryUInt32( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return UInt32Execute( strsql );
         }
 
         template< typename... P >
-        KFResult< uint64 >* QueryUint64( const char* myfmt, P&& ... args )
+        KFResult< uint64 >::UniqueType QueryUint64( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return UInt64Execute( strsql );
         }
 
         template< typename... P >
-        KFResult< std::string >* QueryString( const char* myfmt, P&& ... args )
+        KFResult< std::string >::UniqueType QueryString( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return StringExecute( strsql );
         }
 
         template< typename... P >
-        KFResult< ListString >* QueryList( const char* myfmt, P&& ... args )
+        KFResult< ListString >::UniqueType QueryList( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return ListExecute( strsql );
         }
 
         template< typename... P >
-        KFResult< MapString >* QueryMap( const char* myfmt, P&& ... args )
+        KFResult< MapString >::UniqueType QueryMap( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return MapExecute( strsql );
         }
 
         template< typename... P >
-        KFResult< std::list< MapString > >* QueryListMap( const char* myfmt, P&& ... args )
+        KFResult< std::list< MapString > >::UniqueType QueryListMap( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return ListMapExecute( strsql );
         }
 
         // ²éÑ¯ËùÓÐ
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table ) = 0;
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const ListString& fields ) = 0;
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const std::string& key ) = 0;
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const std::string& key, const ListString& fields ) = 0;
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const MapString& key ) = 0;
-        virtual KFResult< std::list< MapString > >* Select( const std::string& table, const MapString& key, const ListString& fields ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const ListString& fields ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key, const ListString& fields ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -108,13 +108,13 @@ namespace KFrame
         virtual void Pipeline( const ListString& commands ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
-        virtual KFResult< voidptr >* VoidExecute( const std::string& strsql ) = 0;
-        virtual KFResult< uint32 >* UInt32Execute( const std::string& strsql ) = 0;
-        virtual KFResult< uint64 >* UInt64Execute( const std::string& strsql ) = 0;
-        virtual KFResult< std::string >* StringExecute( const std::string& strsql ) = 0;
-        virtual KFResult< MapString >* MapExecute( const std::string& strsql ) = 0;
-        virtual KFResult< ListString >* ListExecute( const std::string& strsql ) = 0;
-        virtual KFResult< std::list< MapString > >* ListMapExecute( const std::string& strsql ) = 0;
+        virtual KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql ) = 0;
+        virtual KFResult< uint32 >::UniqueType UInt32Execute( const std::string& strsql ) = 0;
+        virtual KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql ) = 0;
+        virtual KFResult< std::string >::UniqueType StringExecute( const std::string& strsql ) = 0;
+        virtual KFResult< MapString >::UniqueType MapExecute( const std::string& strsql ) = 0;
+        virtual KFResult< ListString >::UniqueType ListExecute( const std::string& strsql ) = 0;
+        virtual KFResult< std::list< MapString > >::UniqueType ListMapExecute( const std::string& strsql ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////

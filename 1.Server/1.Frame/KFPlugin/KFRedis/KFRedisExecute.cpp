@@ -77,15 +77,6 @@ namespace KFrame
         }
     }
 
-    void KFRedisExecute::Run()
-    {
-        // 释放结果内存
-        for ( auto kfresultqueue : _result_queue_list )
-        {
-            kfresultqueue->Free();
-        }
-    }
-
     redisReply* KFRedisExecute::Execute( const std::string& strsql )
     {
         if ( _redis_context == nullptr )
@@ -149,29 +140,19 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFWriteExecute::KFWriteExecute()
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFResult< voidptr >::UniqueType KFWriteExecute::VoidExecute( const std::string& strsql )
     {
-        _result_queue_list.push_back( &_void_result_queue );
-        _result_queue_list.push_back( &_uint64_result_queue );
-    }
-
-    KFWriteExecute::~KFWriteExecute()
-    {
-
-    }
-
-    KFResult< voidptr >* KFWriteExecute::VoidExecute( const std::string& strsql )
-    {
-        auto kfresult = _void_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( voidptr );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         __FREE_REPLY__( redisreply );
         return kfresult;
     }
 
-    KFResult< uint64 >* KFWriteExecute::UpdateExecute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFWriteExecute::UpdateExecute( const std::string& strsql )
     {
-        auto kfresult = _uint64_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( uint64 );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             kfresult->_value = redisreply->integer;
@@ -181,9 +162,9 @@ namespace KFrame
     }
 
     // todo: 发生错误是否需要回滚
-    KFResult< voidptr >* KFWriteExecute::Pipeline( const ListString& commands )
+    KFResult< voidptr >::UniqueType KFWriteExecute::Pipeline( const ListString& commands )
     {
-        auto kfresult = _void_result_queue.Alloc();
+        __NEW_RESULT__( voidptr );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );
@@ -227,26 +208,10 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFReadExecute::KFReadExecute()
+    KFResult< std::string >::UniqueType KFReadExecute::StringExecute( const std::string& strsql )
     {
-        _result_queue_list.push_back( &_uint32_result_queue );
-        _result_queue_list.push_back( &_uint64_result_queue );
-        _result_queue_list.push_back( &_string_result_queue );
-        _result_queue_list.push_back( &_map_result_queue );
-        _result_queue_list.push_back( &_vector_result_queue );
-        _result_queue_list.push_back( &_list_result_queue );
-        _result_queue_list.push_back( &_list_map_result_queue );
-    }
-
-    KFReadExecute::~KFReadExecute()
-    {
-
-    }
-
-    KFResult< std::string >* KFReadExecute::StringExecute( const std::string& strsql )
-    {
-        auto kfresult = _string_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( std::string );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             kfresult->_value = ( redisreply->str == nullptr ? _invalid_str : redisreply->str );
@@ -256,10 +221,10 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >* KFReadExecute::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFReadExecute::UInt64Execute( const std::string& strsql )
     {
-        auto kfresult = _uint64_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( uint64 );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             if ( redisreply->integer != _invalid_int )
@@ -276,10 +241,10 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >* KFReadExecute::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFReadExecute::MapExecute( const std::string& strsql )
     {
-        auto kfresult = _map_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( MapString );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0u; i < redisreply->elements; i += 2 )
@@ -297,10 +262,10 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< VectorString >* KFReadExecute::VectorExecute( const std::string& strsql )
+    KFResult< VectorString >::UniqueType KFReadExecute::VectorExecute( const std::string& strsql )
     {
-        auto kfresult = _vector_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( VectorString );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
@@ -314,10 +279,10 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >* KFReadExecute::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFReadExecute::ListExecute( const std::string& strsql )
     {
-        auto kfresult = _list_result_queue.Alloc();
-        auto redisreply = TryExecute( kfresult, strsql );
+        __NEW_RESULT__( ListString );
+        auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
             for ( size_t i = 0; i < redisreply->elements; ++i )
@@ -331,9 +296,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >* KFReadExecute::ListPipelineExecute( const ListString& commands )
+    KFResult< ListString >::UniqueType KFReadExecute::ListPipelineExecute( const ListString& commands )
     {
-        auto kfresult = _list_result_queue.Alloc();
+        __NEW_RESULT__( ListString );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );
@@ -376,9 +341,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >* KFReadExecute::ListMapPipelineExecute( const ListString& commands )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::ListMapPipelineExecute( const ListString& commands )
     {
-        auto kfresult = _list_map_result_queue.Alloc();
+        __NEW_RESULT__( std::list< MapString > );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );

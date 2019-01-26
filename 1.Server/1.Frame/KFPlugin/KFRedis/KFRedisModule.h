@@ -23,7 +23,6 @@ namespace KFrame
 
         // 加载配置
         virtual void InitModule();
-        virtual void AfterRun();
 
         // 关闭
         virtual void ShutDown();

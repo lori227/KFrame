@@ -14,7 +14,6 @@ namespace KFrame
         {
             _result = KFEnum::Ok;
         }
-
         virtual ~KFBaseResult() = default;
 
         inline bool IsOk() const
@@ -48,6 +47,9 @@ namespace KFrame
     class KFResult : public KFBaseResult
     {
     public:
+        typedef std::unique_ptr< KFResult< T > > UniqueType;
+    public:
+
         KFResult()
         {
             _value = T();
@@ -64,6 +66,14 @@ namespace KFrame
         T _value;
     };
 
+    template< class T >
+    struct KFUniqueResult
+    {
+        typedef std::unique_ptr< KFResult< T > > Type;
+    };
+
+#define __NEW_RESULT__( type ) \
+    KFResult< type >::UniqueType  kfresult( new KFResult< type >() );
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
     class KFBaseResultQueue
