@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
-	<Plugins>
+	<Plugins Include="./startup/frame.startup">
 		<Plugin Sort="1" Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>
 		<Plugin Sort="2" Name="KFOption" Config="./config/option.config"/>	
 		<Plugin Sort="3" Name="KFBus" Config="./setting/bus.setting"/>

@@ -6,6 +6,7 @@ rem ===========================================================================
 set releasepath=..\9.Template
 set localpath=.
 
+rd /Q /S %releasepath%
 if not exist %releasepath% (mkdir %releasepath% )
 rem ===========================================================================
 
@@ -43,8 +44,16 @@ rem setting=================================
 echo "release setting begin"
 set settingpath=_bin\setting
 if not exist %releasepath%\%settingpath% (mkdir %releasepath%\%settingpath% )
-xcopy /y %localpath%\%settingpath%\*.setting %releasepath%\%settingpath%\
+xcopy /y %localpath%\%settingpath%\* %releasepath%\%settingpath%\
 echo "release setting end"
+rem ====================================
+
+rem startup=================================
+echo "release startup begin"
+set startuppath=_bin\startup
+if not exist %releasepath%\%startuppath% (mkdir %releasepath%\%startuppath% )
+xcopy /y %localpath%\%startuppath%\* %releasepath%\%startuppath%\
+echo "release startup end"
 rem ====================================
 
 echo "release _bin path end"

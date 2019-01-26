@@ -7,7 +7,6 @@ xcopy *.pb.* ..\KFContrib\KFProtocol\ /y
 del *.pb.*
 
 cd ..\KFContrib\KFProtocol
-
-"%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Debug|X64"
-"%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Release|X64"
+"%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Debug|X64"  /project KFProtocol
+"%VS150COMNTOOLS%..\IDE\Devenv" KFProtocol.vcxproj /build "Release|X64" /project KFProtocol
 cd ..\..\_proto

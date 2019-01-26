@@ -37,21 +37,15 @@ namespace KFrame
 
     protected:
 
-        bool LoadServerConfig( const std::string& file );
-        bool LoadCommonConfig( const std::string& file );
-
         // 读取插件配置
-        void ReadPluginSetting( KFNode& root );
+        void LoadStarupConfig( const std::string& file, std::string& includefile );
+        void ReadPluginSetting( KFNode& root, std::string& includefile );
 
         // 查找配置
         KFAppSetting* GetStartupSetting( const std::string& name );
 
         // 添加配置
         void AddStartupSetting( KFAppSetting& setting );
-
-    protected:
-        // 公共的插件文件
-        std::string _common_startup_file;
 
     public:
         // Plugin path

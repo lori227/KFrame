@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins>
+		<Plugin Sort="1" Name="KFConfig" Config=""/>
+		<Plugin Sort="2" Name="KFHttpClient" Config=""/>
+		<Plugin Sort="3" Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>
+	</Plugins>
+</Setting>

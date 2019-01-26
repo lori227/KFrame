@@ -14,6 +14,7 @@
 #include "KFField.h"
 #include "KFResult.h"
 #include "KFAppID.h"
+#include "KF"
 #include "KFInterfaces.h"
 #include "KFSingleton.h"
 #include "KFProto/KFProto.h"

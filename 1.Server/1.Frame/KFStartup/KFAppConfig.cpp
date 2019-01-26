@@ -27,58 +27,28 @@ namespace KFrame
         _plugin_path = "./bin/";
 #endif
 
-        auto ok = LoadServerConfig( file );
-        if ( ok )
-        {
-            if ( !_common_startup_file.empty() )
-            {
-                ok = LoadCommonConfig( _common_startup_file );
-            }
-        }
-
-        return ok;
-    }
-
-    bool KFAppConfig::LoadServerConfig( const std::string& file )
-    {
-        try
-        {
-            KFXml kfxml( file );
-            auto root = kfxml.FindNode( "Setting" );
-            //////////////////////////////////////////////////////////////////////////
-            ReadPluginSetting( root );
-        }
-        catch ( ... )
-        {
-            return false;
-        }
-
+        std::string includefile;
+        LoadStarupConfig( file, includefile );
         return true;
     }
 
-    bool KFAppConfig::LoadCommonConfig( const std::string& file )
+    void KFAppConfig::LoadStarupConfig( const std::string& file, std::string& includefile )
     {
-        try
+        KFXml kfxml( file );
+        auto root = kfxml.FindNode( "Setting" );
+        //////////////////////////////////////////////////////////////////////////
+        ReadPluginSetting( root, includefile );
+        if ( !includefile.empty() )
         {
-            KFXml kfxml( file );
-            auto root = kfxml.FindNode( "Setting" );
-            ReadPluginSetting( root );
+            std::string subincludefile;
+            LoadStarupConfig( includefile, subincludefile );
         }
-        catch ( ... )
-        {
-            return false;
-        }
-
-        return true;
     }
 
-    void KFAppConfig::ReadPluginSetting( KFNode& root )
+    void KFAppConfig::ReadPluginSetting( KFNode& root, std::string& includefile )
     {
         auto plugins = root.FindNode( "Plugins" );
-        if ( _common_startup_file.empty() )
-        {
-            _common_startup_file = plugins.GetString( "Common", true );
-        }
+        includefile = plugins.GetString( "Include", true );
 
         auto kfglobal = KFGlobal::Instance();
 

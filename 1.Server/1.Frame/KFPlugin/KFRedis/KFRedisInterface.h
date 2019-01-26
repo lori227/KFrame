@@ -2,7 +2,6 @@
 #define __KF_REDIS_INTERFACE_H__
 
 #include "KFrame.h"
-#include "KFRedisFormat.h"
 
 namespace KFrame
 {
