@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Includes>
-		<Include File="./startup/httpserver.startup"/>
-		<Include File="./startup/remotelog.startup"/>
+		<Include File="./startup/common/httpserver.startup"/>
+		<Include File="./startup/common/remotelog.startup"/>
 	</Includes>
 
 	<Plugins>
