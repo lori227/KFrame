@@ -15,7 +15,6 @@
         #pragma comment( lib, "KFUtilityd.lib" )
         #pragma comment( lib, "KFGlobald.lib" )
         #pragma comment( lib, "KFProtod.lib" )
-        #pragma comment( lib, "LuaPlusd.lib" )
         #pragma comment( lib, "KFMath3Dd.lib" )
         #pragma comment( lib, "KFProtocold.lib" )
     #endif
@@ -31,7 +30,6 @@
         #pragma comment( lib, "KFUtility.lib" )
         #pragma comment( lib, "KFGlobal.lib" )
         #pragma comment( lib, "KFProto.lib" )
-        #pragma comment( lib, "LuaPlus.lib" )
         #pragma comment( lib, "KFMath3D.lib" )
         #pragma comment( lib, "KFProtocol.lib" )
     #endif

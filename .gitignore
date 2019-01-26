@@ -40,5 +40,8 @@ _output
 1.Server/1.Frame/_lib/win64/KFUtility.lib
 1.Server/1.Frame/KFLibrary/poco/lib64/
 1.Server/1.Frame/_tool/
-1.Server/2.Midware/_lib/win64/
 1.Server/2.Midware/_bin/bin/
+1.Server/2.Midware/_lib/win64/
+1.Server/2.Midware/_lib/linux/
+1.Server/2.Midware/_lib/win64/3rd/
+1.Server/2.Midware/_lib/linux/3rd/

@@ -20,5 +20,6 @@ rd /Q /S %localpath%\_bin\setting1
 xcopy /y /S %localpath%\_bin\_gcm\conf_input1\* %localpath%\_bin\_gcm\conf_input\
 rd /Q /S %localpath%\_bin\_gcm\conf_input1
 
-ren %localpath%\KFCommon\KFField.h1 KFField.h
+copy /y %localpath%\KFCommon\KFField.h1 %localpath%\KFCommon\KFField.h
+del %localpath%\KFCommon\KFField.h1
 rem ===========================================================================

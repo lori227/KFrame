@@ -2,8 +2,8 @@
 #define __KF_PROTOCOL_H__
 
 
+#include "KFMidwareCodeMessage.pb.h"
 #include "KFDefineMessage.pb.h"
-#include "KFFrameMessage.pb.h"
 
 
 #endif

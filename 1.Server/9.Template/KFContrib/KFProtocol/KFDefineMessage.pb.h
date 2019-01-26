@@ -114,139 +114,6 @@ namespace KFMsg {
 
 // ===================================================================
 
-class PBArray_Pbuint64Entry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
-    ::google::protobuf::uint32, ::google::protobuf::uint64,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
-    0 > {
-public:
-  typedef ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
-    ::google::protobuf::uint32, ::google::protobuf::uint64,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
-    0 > SuperType;
-  PBArray_Pbuint64Entry_DoNotUse();
-  PBArray_Pbuint64Entry_DoNotUse(::google::protobuf::Arena* arena);
-  void MergeFrom(const PBArray_Pbuint64Entry_DoNotUse& other);
-  static const PBArray_Pbuint64Entry_DoNotUse* internal_default_instance() { return reinterpret_cast<const PBArray_Pbuint64Entry_DoNotUse*>(&_PBArray_Pbuint64Entry_DoNotUse_default_instance_); }
-  void MergeFrom(const ::google::protobuf::Message& other) final;
-  ::google::protobuf::Metadata GetMetadata() const;
-};
-
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBArray) */ {
- public:
-  PBArray();
-  virtual ~PBArray();
-
-  PBArray(const PBArray& from);
-
-  inline PBArray& operator=(const PBArray& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  PBArray(PBArray&& from) noexcept
-    : PBArray() {
-    *this = ::std::move(from);
-  }
-
-  inline PBArray& operator=(PBArray&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBArray& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PBArray* internal_default_instance() {
-    return reinterpret_cast<const PBArray*>(
-               &_PBArray_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    1;
-
-  void Swap(PBArray* other);
-  friend void swap(PBArray& a, PBArray& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline PBArray* New() const final {
-    return CreateMaybeMessage<PBArray>(NULL);
-  }
-
-  PBArray* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<PBArray>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const PBArray& from);
-  void MergeFrom(const PBArray& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(PBArray* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-
-  // accessors -------------------------------------------------------
-
-  // map<uint32, uint64> pbuint64 = 1;
-  int pbuint64_size() const;
-  void clear_pbuint64();
-  static const int kPbuint64FieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
-      pbuint64() const;
-  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
-      mutable_pbuint64();
-
-  // @@protoc_insertion_point(class_scope:KFMsg.PBArray)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::MapField<
-      PBArray_Pbuint64Entry_DoNotUse,
-      ::google::protobuf::uint32, ::google::protobuf::uint64,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
-      0 > pbuint64_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFDefineMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
 class PBObject_Pbint32Entry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBObject_Pbint32Entry_DoNotUse, 
     ::std::string, ::google::protobuf::int32,
     ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
@@ -471,7 +338,7 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message /* @@protoc
                &_PBObject_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    9;
 
   void Swap(PBObject* other);
   friend void swap(PBObject& a, PBObject& b) {
@@ -668,6 +535,139 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message /* @@protoc
 };
 // -------------------------------------------------------------------
 
+class PBArray_Pbuint64Entry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
+    ::google::protobuf::uint32, ::google::protobuf::uint64,
+    ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+    0 > {
+public:
+  typedef ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
+    ::google::protobuf::uint32, ::google::protobuf::uint64,
+    ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+    0 > SuperType;
+  PBArray_Pbuint64Entry_DoNotUse();
+  PBArray_Pbuint64Entry_DoNotUse(::google::protobuf::Arena* arena);
+  void MergeFrom(const PBArray_Pbuint64Entry_DoNotUse& other);
+  static const PBArray_Pbuint64Entry_DoNotUse* internal_default_instance() { return reinterpret_cast<const PBArray_Pbuint64Entry_DoNotUse*>(&_PBArray_Pbuint64Entry_DoNotUse_default_instance_); }
+  void MergeFrom(const ::google::protobuf::Message& other) final;
+  ::google::protobuf::Metadata GetMetadata() const;
+};
+
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBArray) */ {
+ public:
+  PBArray();
+  virtual ~PBArray();
+
+  PBArray(const PBArray& from);
+
+  inline PBArray& operator=(const PBArray& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBArray(PBArray&& from) noexcept
+    : PBArray() {
+    *this = ::std::move(from);
+  }
+
+  inline PBArray& operator=(PBArray&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBArray& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBArray* internal_default_instance() {
+    return reinterpret_cast<const PBArray*>(
+               &_PBArray_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  void Swap(PBArray* other);
+  friend void swap(PBArray& a, PBArray& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBArray* New() const final {
+    return CreateMaybeMessage<PBArray>(NULL);
+  }
+
+  PBArray* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBArray>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBArray& from);
+  void MergeFrom(const PBArray& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBArray* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  // map<uint32, uint64> pbuint64 = 1;
+  int pbuint64_size() const;
+  void clear_pbuint64();
+  static const int kPbuint64FieldNumber = 1;
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
+      pbuint64() const;
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
+      mutable_pbuint64();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBArray)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::MapField<
+      PBArray_Pbuint64Entry_DoNotUse,
+      ::google::protobuf::uint32, ::google::protobuf::uint64,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+      0 > pbuint64_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFDefineMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class PBRecord_PbobjectEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBRecord_PbobjectEntry_DoNotUse, 
     ::google::protobuf::uint64, ::KFMsg::PBObject,
     ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
@@ -808,30 +808,6 @@ class LIBPROTOC_EXPORT PBRecord : public ::google::protobuf::Message /* @@protoc
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// PBArray
-
-// map<uint32, uint64> pbuint64 = 1;
-inline int PBArray::pbuint64_size() const {
-  return pbuint64_.size();
-}
-inline void PBArray::clear_pbuint64() {
-  pbuint64_.Clear();
-}
-inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
-PBArray::pbuint64() const {
-  // @@protoc_insertion_point(field_map:KFMsg.PBArray.pbuint64)
-  return pbuint64_.GetMap();
-}
-inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
-PBArray::mutable_pbuint64() {
-  // @@protoc_insertion_point(field_mutable_map:KFMsg.PBArray.pbuint64)
-  return pbuint64_.MutableMap();
-}
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -1012,6 +988,30 @@ inline ::google::protobuf::Map< ::std::string, ::KFMsg::PBRecord >*
 PBObject::mutable_pbrecord() {
   // @@protoc_insertion_point(field_mutable_map:KFMsg.PBObject.pbrecord)
   return pbrecord_.MutableMap();
+}
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// PBArray
+
+// map<uint32, uint64> pbuint64 = 1;
+inline int PBArray::pbuint64_size() const {
+  return pbuint64_.size();
+}
+inline void PBArray::clear_pbuint64() {
+  pbuint64_.Clear();
+}
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
+PBArray::pbuint64() const {
+  // @@protoc_insertion_point(field_map:KFMsg.PBArray.pbuint64)
+  return pbuint64_.GetMap();
+}
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
+PBArray::mutable_pbuint64() {
+  // @@protoc_insertion_point(field_mutable_map:KFMsg.PBArray.pbuint64)
+  return pbuint64_.MutableMap();
 }
 
 // -------------------------------------------------------------------

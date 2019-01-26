@@ -88,7 +88,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,7 +115,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -72,13 +72,15 @@ if not exist %releasepath%\%libpath%\linux (mkdir %releasepath%\%libpath%\linux 
 xcopy /y %localpath%\%libpath%\linux\*.a %releasepath%\%libpath%\linux
 del %releasepath%\%libpath%\linux\KFProtocol*.a
 
+if not exist %releasepath%\%libpath%\linux\3rd (mkdir %releasepath%\%libpath%\linux\3rd )
+xcopy /y /S %localpath%\%libpath%\linux\3rd %releasepath%\%libpath%\linux\3rd\
+
 if not exist %releasepath%\%libpath%\win64 (mkdir %releasepath%\%libpath%\win64 )
 xcopy /y %localpath%\%libpath%\win64\*.lib %releasepath%\%libpath%\win64
 del %releasepath%\%libpath%\win64\KFProtocol*.lib
 
 if not exist %releasepath%\%libpath%\win64\3rd (mkdir %releasepath%\%libpath%\win64\3rd )
-copy /y %localpath%\%libpath%\win64\3rd\libprotobuf.lib %releasepath%\%libpath%\win64\3rd\
-copy /y %localpath%\%libpath%\win64\3rd\libprotobufd.lib %releasepath%\%libpath%\win64\3rd\
+xcopy /y /S %localpath%\%libpath%\win64\3rd %releasepath%\%libpath%\win64\3rd\
 
 echo "release _lib path end"
 rem ===========================================================================
@@ -108,7 +110,7 @@ rem ===========================================================================
 echo "release _tool path begin"
 set toolpath=_tool
 if not exist %releasepath%\%toolpath% (mkdir %releasepath%\%toolpath% )
-xcopy /y %localpath%\%toolpath%\* %releasepath%\%toolpath%\
+copy /y %localpath%\%toolpath%\_parse.exe %releasepath%\%toolpath%\
 echo "release _tool path end"
 rem ===========================================================================
 rem ===========================================================================

@@ -61,5 +61,6 @@ message("bin dir=${BIN_DIR}")
 
 ##################################################################
 message("start to build all...")
+add_subdirectory(KFContrib)
 add_subdirectory(KFPlugin)
 
