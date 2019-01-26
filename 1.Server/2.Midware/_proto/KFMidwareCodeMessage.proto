@@ -22,4 +22,15 @@ enum MidwareCodeEnum
 	ActivationCodeError		= 11004;		// 激活码错误
 	LoginTokenError			= 11005;		// 登录token错误
 	BanForbidLogin			= 11006;		// 黑名单禁止登录
+	ChannelNotSupport		= 11007;		// 不支持的渠道
+	ChannelNotOpen			= 11008;		// 渠道未开放
+	ChannelError			= 11009;		// 渠道错误
+	WeiXinError				= 11010;		// 查询微信渠道错误
+	WeiXinUserError			= 11011;		// 查询微信玩家数据错误
+	WeiXinTokenError		= 11012;		// 微信token错误
+	WeiXinCodeError			= 11013;		// 微信code错误
+	WeiXinTokenTimeout		= 11014;		// 微信token过期
+	SteamError				= 11015;		// 查询Steam错误
+	SteamDataError			= 11016;		// 查询Steam数据错误
+	SteamAuthError			= 11017;		// Steam认证错误
 }

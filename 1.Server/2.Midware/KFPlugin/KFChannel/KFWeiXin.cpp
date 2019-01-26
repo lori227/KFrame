@@ -63,7 +63,7 @@ namespace KFrame
             auto weixindata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( access_token ), machinecode );
             if ( !weixindata->IsOk() )
             {
-                return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
+                return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
             }
 
             if ( !weixindata->_value.empty() )
@@ -77,7 +77,7 @@ namespace KFrame
                 auto refreshtoken = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( refresh_token ), machinecode, __KF_STRING__( refresh_token ) );
                 if ( !refreshtoken->IsOk() )
                 {
-                    return _kf_http_server->SendResponseCode( KFMsg::LoginDatabaseError );
+                    return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
                 }
 
                 if ( refreshtoken->_value.empty() )

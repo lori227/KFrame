@@ -70,6 +70,17 @@ namespace KFrame
         __STRING_DEFINE__( kickonline );
         __STRING_DEFINE__( accountlist );
         __STRING_DEFINE__( accountmake );
+        __STRING_DEFINE__( access_token );
+        __STRING_DEFINE__( expires_in );
+        __STRING_DEFINE__( scope );
+        __STRING_DEFINE__( errcode );
+        __STRING_DEFINE__( refresh_token );
+        __STRING_DEFINE__( response );
+        __STRING_DEFINE__( error );
+        __STRING_DEFINE__( params );
+        __STRING_DEFINE__( steamid );
+        __STRING_DEFINE__( machine );
+
 
 
     }

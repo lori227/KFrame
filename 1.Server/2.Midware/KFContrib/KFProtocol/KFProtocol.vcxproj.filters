@@ -3,10 +3,12 @@
   <ItemGroup>
     <ClCompile Include="KFDefineMessage.pb.cc" />
     <ClCompile Include="KFMidwareCodeMessage.pb.cc" />
+    <ClCompile Include="KFMidwareEnumMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFProtocol.h" />
     <ClInclude Include="KFDefineMessage.pb.h" />
     <ClInclude Include="KFMidwareCodeMessage.pb.h" />
+    <ClInclude Include="KFMidwareEnumMessage.pb.h" />
   </ItemGroup>
 </Project>
