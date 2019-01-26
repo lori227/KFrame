@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFSkinConfig.cpp" />
+    <ClCompile Include="KFSkinModule.cpp" />
+    <ClCompile Include="KFSkinPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFSkinConfig.h" />
+    <ClInclude Include="KFSkinInterface.h" />
+    <ClInclude Include="KFSkinModule.h" />
+    <ClInclude Include="KFSkinPlugin.h" />
+  </ItemGroup>
+</Project>

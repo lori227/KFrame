@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KFPlugin", "KFPlugin", "{85F208C1-96A0-4D9A-8582-A348FF5F3B41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KFPlayer", "KFPlayer", "{CC34363F-FF7F-4907-93F1-610CB368B7B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{2CE2872D-8E76-4044-BE40-7EFEEE47E0B8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFAuth", "KFPlugin\KFAuth\KFAuth.vcxproj", "{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}.Debug|x64.ActiveCfg = Debug|x64
+		{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}.Debug|x64.Build.0 = Debug|x64
+		{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}.Release|x64.ActiveCfg = Release|x64
+		{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC34363F-FF7F-4907-93F1-610CB368B7B1} = {85F208C1-96A0-4D9A-8582-A348FF5F3B41}
+		{2CE2872D-8E76-4044-BE40-7EFEEE47E0B8} = {85F208C1-96A0-4D9A-8582-A348FF5F3B41}
+		{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782} = {2CE2872D-8E76-4044-BE40-7EFEEE47E0B8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
+	EndGlobalSection
+EndGlobal

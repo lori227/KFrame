@@ -1,0 +1,22 @@
+#ifndef __KF_ENTER_INTERFACE_H__
+#define __KF_ENTER_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFEnterInterface : public KFModule
+    {
+    public:
+
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_enter, KFEnterInterface );
+    //////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+
+
+#endif

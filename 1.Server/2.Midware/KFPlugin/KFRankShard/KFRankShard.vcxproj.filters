@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRankShardModule.cpp" />
+    <ClCompile Include="KFRankShardPlugin.cpp" />
+    <ClCompile Include="KFRankShardConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFRankShardInterface.h" />
+    <ClInclude Include="KFRankShardModule.h" />
+    <ClInclude Include="KFRankShardPlugin.h" />
+    <ClInclude Include="KFRankShardConfig.h" />
+  </ItemGroup>
+</Project>

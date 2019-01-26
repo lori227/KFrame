@@ -2,6 +2,7 @@
 #define __KF_DATA_H__
 
 #include "KFrame.h"
+#include "KFDataDefine.h"
 #include "KFDataSetting.h"
 #include "KFClassSetting.h"
 #include "KFMath3D/Math3D.h"

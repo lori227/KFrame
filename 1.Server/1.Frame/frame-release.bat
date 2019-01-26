@@ -131,47 +131,50 @@ if not exist %releasepath%\%contribpath% (mkdir %releasepath%\%contribpath% )
 
 set subcontribpath=KFConHash
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contribpath%\%subcontribpath%
+xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%\
+xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFCore
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFData.h %releasepath%\%contribpath%\%subcontribpath%\
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFData.inl %releasepath%\%contribpath%\%subcontribpath%\
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFDataSetting.h %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFGlobal
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFGlobal.h %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFGlobal.h %releasepath%\%contribpath%\%subcontribpath%\
+
+set subcontribpath=KFMath3D
+if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
+copy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFLogger
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFLogger.h %releasepath%\%contribpath%\%subcontribpath%
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFSpdLog.h %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFLogger.h %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFSpdLog.h %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFMemory
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFMalloc.h %releasepath%\%contribpath%\%subcontribpath%
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFMemoryDefine.h %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFMalloc.h %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFMemoryDefine.h %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFPlugin
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%
+xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFProto
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFProto.h %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFProto.h %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFUtility
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%
-xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contribpath%\%subcontribpath%
+xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.h %releasepath%\%contribpath%\%subcontribpath%\
+xcopy /y %localpath%\%contribpath%\%subcontribpath%\*.inl %releasepath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFProtocol
 if not exist %releasepath%\%contribpath%\%subcontribpath% (mkdir %releasepath%\%contribpath%\%subcontribpath% )
-copy /y %localpath%\%contribpath%\%subcontribpath%\CMakeLists.txt %releasepath%\%contribpath%\%subcontribpath%
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.h %releasepath%\%contribpath%\%subcontribpath%
-copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.cc %releasepath%\%contribpath%\%subcontribpath%
+copy /y %localpath%\%contribpath%\%subcontribpath%\CMakeLists.txt %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.h %releasepath%\%contribpath%\%subcontribpath%\
+copy /y %localpath%\%contribpath%\%subcontribpath%\KFDefineMessage.pb.cc %releasepath%\%contribpath%\%subcontribpath%\
 echo "release KFContrib path end"
 rem ===========================================================================
 rem ===========================================================================
@@ -183,24 +186,28 @@ if not exist %releasepath%\%librarypath% (mkdir %releasepath%\%librarypath% )
 
 set sublibrarypath=lua\lua53
 if not exist %releasepath%\%librarypath%\%sublibrarypath% (mkdir %releasepath%\%librarypath%\%sublibrarypath% )
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.h %releasepath%\%librarypath%\%sublibrarypath%
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.inl %releasepath%\%librarypath%\%sublibrarypath%
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.h %releasepath%\%librarypath%\%sublibrarypath%\
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.inl %releasepath%\%librarypath%\%sublibrarypath%\
 
 set sublibrarypath=luaplus
 if not exist %releasepath%\%librarypath%\%sublibrarypath% (mkdir %releasepath%\%librarypath%\%sublibrarypath% )
 if not exist %releasepath%\%librarypath%\%sublibrarypath%\tilde (mkdir %releasepath%\%librarypath%\%sublibrarypath%\tilde )
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.h %releasepath%\%librarypath%\%sublibrarypath%
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.inl %releasepath%\%librarypath%\%sublibrarypath%
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\tilde\*.h %releasepath%\%librarypath%\%sublibrarypath%\tilde
-xcopy /y %localpath%\%librarypath%\%sublibrarypath%\tilde\*.inl %releasepath%\%librarypath%\%sublibrarypath%\tilde
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.h %releasepath%\%librarypath%\%sublibrarypath%\
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\*.inl %releasepath%\%librarypath%\%sublibrarypath%\
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\tilde\*.h %releasepath%\%librarypath%\%sublibrarypath%\tilde\
+xcopy /y %localpath%\%librarypath%\%sublibrarypath%\tilde\*.inl %releasepath%\%librarypath%\%sublibrarypath%\tilde\
 
 set sublibrarypath=rapidjson
 if not exist %releasepath%\%librarypath%\%sublibrarypath% (mkdir %releasepath%\%librarypath%\%sublibrarypath% )
-xcopy /y /S %localpath%\%librarypath%\%sublibrarypath%\* %releasepath%\%librarypath%\%sublibrarypath%
+xcopy /y /S %localpath%\%librarypath%\%sublibrarypath%\* %releasepath%\%librarypath%\%sublibrarypath%\
+
+set sublibrarypath=spdlog
+if not exist %releasepath%\%librarypath%\%sublibrarypath% (mkdir %releasepath%\%librarypath%\%sublibrarypath% )
+xcopy /y /S %localpath%\%librarypath%\%sublibrarypath%\* %releasepath%\%librarypath%\%sublibrarypath%\
 
 set sublibrarypath=google
 if not exist %releasepath%\%librarypath%\%sublibrarypath% (mkdir %releasepath%\%librarypath%\%sublibrarypath% )
-xcopy /y /S %localpath%\%librarypath%\%sublibrarypath%\protobuf\src\google\* %releasepath%\%librarypath%\%sublibrarypath%
+xcopy /y /S %localpath%\%librarypath%\%sublibrarypath%\protobuf\src\google\* %releasepath%\%librarypath%\%sublibrarypath%\
 
 echo "release KFLibrary path end"
 rem ===========================================================================
@@ -213,7 +220,8 @@ if not exist %releasepath%\%pluginpath% (mkdir %releasepath%\%pluginpath% )
 
 cd KFPlugin
 for /d %%i in (*) do (
-	copy /y %%i\*Interface.h ..\%releasepath%\%pluginpath%\
+	if not exist ..\%releasepath%\%pluginpath%\%%i (mkdir ..\%releasepath%\%pluginpath%\%%i )
+	copy /y %%i\*Interface.h ..\%releasepath%\%pluginpath%\%%i\
 )
 cd ..\
 echo "release KFPlugin path end"

@@ -2,7 +2,6 @@
 #define __KF_DATA_SETTING_H__
 
 #include "KFrame.h"
-#include "KFDataDefine.h"
 
 namespace KFrame
 {

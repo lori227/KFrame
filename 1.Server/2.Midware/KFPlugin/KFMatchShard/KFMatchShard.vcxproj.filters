@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFMatchShardModule.cpp" />
+    <ClCompile Include="KFMatchShardPlugin.cpp" />
+    <ClCompile Include="KFMatchPlayer.cpp">
+      <Filter>KFMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMatchCamp.cpp">
+      <Filter>KFMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMatchRoom.cpp">
+      <Filter>KFMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMatchQueue.cpp">
+      <Filter>KFMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMatchGroup.cpp">
+      <Filter>KFMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMatchShardConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFMatchShardInterface.h" />
+    <ClInclude Include="KFMatchShardModule.h" />
+    <ClInclude Include="KFMatchShardPlugin.h" />
+    <ClInclude Include="KFMatchPlayer.h">
+      <Filter>KFMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMatchCamp.h">
+      <Filter>KFMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMatchRoom.h">
+      <Filter>KFMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMatchQueue.h">
+      <Filter>KFMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMatchGroup.h">
+      <Filter>KFMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMatchShardConfig.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="KFMatch">
+      <UniqueIdentifier>{bb2b2417-4aca-480a-84ec-37520c101d83}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

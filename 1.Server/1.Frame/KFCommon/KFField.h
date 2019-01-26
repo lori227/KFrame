@@ -21,6 +21,7 @@ namespace KFrame
         __STRING_DEFINE__( appid );
         __STRING_DEFINE__( service );
         __STRING_DEFINE__( log );
+        __STRING_DEFINE__( address );
 
     }
 }

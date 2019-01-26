@@ -1,0 +1,21 @@
+#ifndef __KF_BATTLE_PROXY_INTERFACE_H__
+#define __KF_BATTLE_PROXY_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFBattleProxyInterface : public KFModule
+    {
+    public:
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_battle_proxy, KFBattleProxyInterface );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+
+
+#endif

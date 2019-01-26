@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFMailClientModule.cpp" />
+    <ClCompile Include="KFMailClientPlugin.cpp" />
+    <ClCompile Include="KFMailConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFMailClientInterface.h" />
+    <ClInclude Include="KFMailClientModule.h" />
+    <ClInclude Include="KFMailClientPlugin.h" />
+    <ClInclude Include="KFMailConfig.h" />
+  </ItemGroup>
+</Project>
