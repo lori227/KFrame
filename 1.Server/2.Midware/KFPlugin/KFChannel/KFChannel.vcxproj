@@ -20,14 +20,14 @@
     <ClCompile Include="KFWeiXin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFChannel.h" />
-    <ClInclude Include="KFChannelConfig.h" />
+    <ClInclude Include="KFChannel.hpp" />
+    <ClInclude Include="KFChannelConfig.hpp" />
     <ClInclude Include="KFChannelInterface.h" />
-    <ClInclude Include="KFChannelModule.h" />
-    <ClInclude Include="KFChannelPlugin.h" />
-    <ClInclude Include="KFInternal.h" />
-    <ClInclude Include="KFSteam.h" />
-    <ClInclude Include="KFWeiXin.h" />
+    <ClInclude Include="KFChannelModule.hpp" />
+    <ClInclude Include="KFChannelPlugin.hpp" />
+    <ClInclude Include="KFInternal.hpp" />
+    <ClInclude Include="KFSteam.hpp" />
+    <ClInclude Include="KFWeiXin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{80A2C153-C550-41CF-8101-45ECAD490620}</ProjectGuid>

@@ -1,5 +1,5 @@
-﻿#include "KFZonePlugin.h"
-#include "KFZoneModule.h"
+﻿#include "KFZonePlugin.hpp"
+#include "KFZoneModule.hpp"
 
 namespace KFrame
 {

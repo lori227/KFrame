@@ -1,5 +1,5 @@
-﻿#include "KFDisplayPlugin.h"
-#include "KFDisplayModule.h"
+﻿#include "KFDisplayPlugin.hpp"
+#include "KFDisplayModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

@@ -7,9 +7,9 @@
     <ClCompile Include="KFZonePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFZoneConfig.h" />
     <ClInclude Include="KFZoneInterface.h" />
-    <ClInclude Include="KFZoneModule.h" />
-    <ClInclude Include="KFZonePlugin.h" />
+    <ClInclude Include="KFZoneConfig.hpp" />
+    <ClInclude Include="KFZoneModule.hpp" />
+    <ClInclude Include="KFZonePlugin.hpp" />
   </ItemGroup>
 </Project>

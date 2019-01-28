@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGameInterface.h" />
-    <ClInclude Include="KFGameModule.h" />
-    <ClInclude Include="KFGamePlugin.h" />
+    <ClInclude Include="KFGameModule.hpp" />
+    <ClInclude Include="KFGamePlugin.hpp" />
   </ItemGroup>
 </Project>

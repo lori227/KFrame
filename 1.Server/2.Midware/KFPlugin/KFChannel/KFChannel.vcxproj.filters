@@ -21,20 +21,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFInternal.h">
-      <Filter>Channel</Filter>
-    </ClInclude>
-    <ClInclude Include="KFChannel.h">
-      <Filter>Channel</Filter>
-    </ClInclude>
-    <ClInclude Include="KFChannelConfig.h" />
     <ClInclude Include="KFChannelInterface.h" />
-    <ClInclude Include="KFChannelModule.h" />
-    <ClInclude Include="KFChannelPlugin.h" />
-    <ClInclude Include="KFWeiXin.h">
+    <ClInclude Include="KFChannelConfig.hpp" />
+    <ClInclude Include="KFChannelModule.hpp" />
+    <ClInclude Include="KFChannelPlugin.hpp" />
+    <ClInclude Include="KFChannel.hpp">
       <Filter>Channel</Filter>
     </ClInclude>
-    <ClInclude Include="KFSteam.h">
+    <ClInclude Include="KFInternal.hpp">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSteam.hpp">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFWeiXin.hpp">
       <Filter>Channel</Filter>
     </ClInclude>
   </ItemGroup>

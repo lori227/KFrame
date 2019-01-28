@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDisplayInterface.h" />
-    <ClInclude Include="KFDisplayModule.h" />
-    <ClInclude Include="KFDisplayPlugin.h" />
+    <ClInclude Include="KFDisplayModule.hpp" />
+    <ClInclude Include="KFDisplayPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{70C2747E-200A-4612-BD17-E6628E4A14B0}</ProjectGuid>

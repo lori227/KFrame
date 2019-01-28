@@ -18,9 +18,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGateInterface.h" />
-    <ClInclude Include="KFGateModule.h" />
-    <ClInclude Include="KFGatePlugin.h" />
-    <ClInclude Include="KFRole.h" />
+    <ClInclude Include="KFGateModule.hpp" />
+    <ClInclude Include="KFGatePlugin.hpp" />
+    <ClInclude Include="KFRole.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CCADD5D0-E5C8-4F35-874C-1E7A312B8923}</ProjectGuid>

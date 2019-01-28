@@ -1,15 +1,15 @@
-﻿#ifndef __KF_INTERNAL_H__
-#define __KF_INTERNAL_H__
+﻿#ifndef __KF_WEI_XIN__H__
+#define __KF_WEI_XIN__H__
 
-#include "KFChannel.h"
+#include "KFChannel.hpp"
 
 namespace KFrame
 {
-    class KFInternal : public KFChannel
+    class KFWeiXin : public KFChannel
     {
     public:
-        KFInternal() = default;
-        virtual ~KFInternal() = default;
+        KFWeiXin() = default;
+        virtual ~KFWeiXin() = default;
 
         // 登录请求
         std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting );

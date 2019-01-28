@@ -2,7 +2,7 @@
 #define __KF_CHANNEL_H__
 
 #include "KFrame.h"
-#include "KFChannelConfig.h"
+#include "KFChannelConfig.hpp"
 #include "KFHttpServer/KFHttpServerInterface.h"
 
 namespace KFrame

@@ -9,7 +9,7 @@
 //    @Date             :    2017-11-1
 ************************************************************************/
 
-#include "KFRole.h"
+#include "KFRole.hpp"
 #include "KFGateInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFTimer/KFTimerInterface.h"

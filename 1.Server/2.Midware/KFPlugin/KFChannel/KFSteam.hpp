@@ -1,15 +1,15 @@
-﻿#ifndef __KF_WEI_XIN__H__
-#define __KF_WEI_XIN__H__
+﻿#ifndef __KF_STEAM__H__
+#define __KF_STEAM__H__
 
-#include "KFChannel.h"
+#include "KFChannel.hpp"
 
 namespace KFrame
 {
-    class KFWeiXin : public KFChannel
+    class KFSteam : public KFChannel
     {
     public:
-        KFWeiXin() = default;
-        virtual ~KFWeiXin() = default;
+        KFSteam() = default;
+        virtual ~KFSteam() = default;
 
         // 登录请求
         std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting );

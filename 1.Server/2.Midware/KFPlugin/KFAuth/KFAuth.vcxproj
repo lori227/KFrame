@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFAuthInterface.h" />
-    <ClInclude Include="KFAuthModule.h" />
-    <ClInclude Include="KFAuthPlugin.h" />
+    <ClInclude Include="KFAuthModule.hpp" />
+    <ClInclude Include="KFAuthPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}</ProjectGuid>

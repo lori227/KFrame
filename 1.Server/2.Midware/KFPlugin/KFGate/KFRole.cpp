@@ -1,4 +1,4 @@
-﻿#include "KFRole.h"
+﻿#include "KFRole.hpp"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 

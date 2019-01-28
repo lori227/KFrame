@@ -1,5 +1,5 @@
-﻿#include "KFAuthPlugin.h"
-#include "KFAuthModule.h"
+﻿#include "KFAuthPlugin.hpp"
+#include "KFAuthModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

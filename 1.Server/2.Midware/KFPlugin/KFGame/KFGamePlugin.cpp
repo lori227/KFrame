@@ -1,5 +1,5 @@
-﻿#include "KFGamePlugin.h"
-#include "KFGameModule.h"
+﻿#include "KFGamePlugin.hpp"
+#include "KFGameModule.hpp"
 
 namespace KFrame
 {

@@ -8,8 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGateInterface.h" />
-    <ClInclude Include="KFGateModule.h" />
-    <ClInclude Include="KFGatePlugin.h" />
-    <ClInclude Include="KFRole.h" />
+    <ClInclude Include="KFGateModule.hpp" />
+    <ClInclude Include="KFGatePlugin.hpp" />
+    <ClInclude Include="KFRole.hpp" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿#include "KFChannelConfig.h"
+﻿#include "KFChannelConfig.hpp"
 
 namespace KFrame
 {

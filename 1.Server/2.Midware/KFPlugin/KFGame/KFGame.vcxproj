@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFGameInterface.h" />
-    <ClInclude Include="KFGameModule.h" />
-    <ClInclude Include="KFGamePlugin.h" />
+    <ClInclude Include="KFGameModule.hpp" />
+    <ClInclude Include="KFGamePlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2E9856CD-46E6-4138-B089-93ED2A19D4D4}</ProjectGuid>

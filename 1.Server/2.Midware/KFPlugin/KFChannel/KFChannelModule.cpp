@@ -1,8 +1,8 @@
-﻿#include "KFChannelModule.h"
-#include "KFChannelConfig.h"
-#include "KFInternal.h"
-#include "KFWeiXin.h"
-#include "KFSteam.h"
+﻿#include "KFChannelModule.hpp"
+#include "KFChannelConfig.hpp"
+#include "KFInternal.hpp"
+#include "KFWeiXin.hpp"
+#include "KFSteam.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame

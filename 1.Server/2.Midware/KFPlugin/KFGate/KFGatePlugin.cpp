@@ -1,5 +1,5 @@
-﻿#include "KFGatePlugin.h"
-#include "KFGateModule.h"
+﻿#include "KFGatePlugin.hpp"
+#include "KFGateModule.hpp"
 
 namespace KFrame
 {

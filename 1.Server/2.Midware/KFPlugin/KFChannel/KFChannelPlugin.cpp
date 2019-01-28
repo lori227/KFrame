@@ -1,5 +1,5 @@
-﻿#include "KFChannelPlugin.h"
-#include "KFChannelModule.h"
+﻿#include "KFChannelPlugin.hpp"
+#include "KFChannelModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

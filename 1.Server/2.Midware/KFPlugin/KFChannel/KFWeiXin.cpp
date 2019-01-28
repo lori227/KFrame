@@ -1,4 +1,4 @@
-﻿#include "KFWeiXin.h"
+﻿#include "KFWeiXin.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
