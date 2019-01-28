@@ -25,7 +25,7 @@ namespace protobuf_KFMidwareEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[2];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -52,10 +52,12 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\032KFMidwareEnumMessage.proto\022\005KFMsg*E\n\013C"
       "hannelEnum\022\021\n\rUnknowChannel\020\000\022\014\n\010Interna"
-      "l\020\001\022\n\n\006WeiXin\020\002\022\t\n\005Steam\020\003b\006proto3"
+      "l\020\001\022\n\n\006WeiXin\020\002\022\t\n\005Steam\020\003*\?\n\010KickEnum\022\016"
+      "\n\nUnknowKick\020\000\022\017\n\013KickByLogin\020\001\022\022\n\016KickB"
+      "yPlatform\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 114);
+      descriptor, 179);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -82,6 +84,21 @@ bool ChannelEnum_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* KickEnum_descriptor() {
+  protobuf_KFMidwareEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_KFMidwareEnumMessage_2eproto::file_level_enum_descriptors[1];
+}
+bool KickEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
       return true;
     default:
       return false;

@@ -12,6 +12,7 @@ namespace KFrame
     public:
         using spdlogger = std::shared_ptr<spdlog::logger>;
 
+        KFSpdLog( bool console = true );
         ~KFSpdLog();
 
         // 初始化
@@ -26,6 +27,8 @@ namespace KFrame
         void CreateLogger();
 
     private:
+        // 是否在Console上显示
+        bool _console;
         // 名字
         std::string _log_name;
 

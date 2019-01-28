@@ -8,23 +8,35 @@ enum MidwareServerProtocol
 	S2S_MIDWARE_SERVER_PROTOCOL_BEGIN = 0;			// pb3 0 开始
 
 	// zone
-	S2S_UPDATE_ZONE_TO_LOGIN_REQ = 20001;			// 更新小区到login服务器
-	S2S_UPDATE_ZONE_TO_WORLD_REQ = 20002;			// 更新小区到world服务器
+	S2S_UPDATE_ZONE_TO_LOGIN_REQ 		= 20001;	// 更新小区到login服务器
+	S2S_UPDATE_ZONE_TO_WORLD_REQ 		= 20002;	// 更新小区到world服务器
+	S2S_DISCONNECT_ZONE_TO_WORLD_REQ 	= 20003;	// 断开小区到world服务器
 
+	// login
+	S2S_LOGIN_TO_LOGIN_REQ				= 20101;	// 登录请求到login服务器
+	S2S_LOGIN_TO_GATE_ACK				= 20102;	// 登录回应道gate服务器
+	S2S_LOGIN_TO_WORLD_REQ				= 20103;	// 登录请求到world服务器
+	S2S_LOGIN_TO_LOGIN_ACK				= 20104;	// 登录回应到login服务器
+	S2S_LOGIN_TO_GAME_REQ				= 20105;	// 登录请求到game服务器
+
+	// world
+	S2S_PLAYER_SYNC_TO_WORLD_REQ		= 20201;	// 同步在线人家
+	S2S_PLAYER_ENTER_TO_WORLD_REQ 		= 20202;	// 游戏玩家进入游戏
+	S2S_PLAYER_LEAVE_TO_WORLD_REQ 		= 20203;	// 游戏玩家离开游戏
+	S2S_KICK_PLAYER_TO_GAME_REQ			= 20204;	// 踢人请求到game服务器
+	S2S_KICK_PLAYER_TO_GATE_REQ			= 20205;	// 踢人请求到gate服务器
 
 	// server
-	S2S_BROADCAST_TO_WORLD = 21001;					// 广播消息
-	S2S_BROADCAST_TO_GAME = 21002;					// 广播消息
-	S2S_BROADCAST_TO_GATE = 21003;					// 广播消息
-	S2S_TRANSMIT_TO_PLAYER = 21004;					// 转发消息
-	S2S_TRANSMIT_TO_SERVER = 21005;					// 转发消息
+	S2S_BROADCAST_TO_GAME 				= 20301;	// 广播消息
+	S2S_BROADCAST_TO_GATE				= 20302;	// 广播消息
+	S2S_TRANSMIT_TO_PLAYER 				= 20303;	// 转发消息
 
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 message PBZoneData
 {
-	uint32 id = 1;
+	uint64 appid = 1;	// appid
 	bytes ip = 2;		// ip
 	uint32 port = 3;	// port
 	uint32 count = 4;	// 当前在线人数
@@ -43,30 +55,109 @@ message S2SUpdateZoneToWorldReq
 {
 	PBZoneData zonedata = 1;
 }
+
+// 断开gate
+// S2S_DISCONNECT_ZONE_TO_WORLD_REQ
+message S2SDisconnectZoneToWorldReq
+{
+	uint64 appid = 1;	// appid
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// S2S_TRANSMIT_MESSAGE_REQ
-message S2STransmitMessageReq
+// 登录验证请求
+// S2S_LOGIN_TO_LOGIN_REQ
+message S2SLoginToLoginReq
 {
-	uint64 playerid = 1;
-	uint32 msgid = 2;
-	bytes msgdata = 3;
+	bytes ip = 1;			// 登录ip
+	bytes token = 2;		// token
+	uint64 accountid = 3;	// 账号id
+	uint64 sessionid = 4;	// sessionid
 }
 
-// S2S_BROADCAST_MESSAGE_REQ
-message S2SBroadcastMessageReq
+// S2S_LOGIN_TO_GATE_ACK
+message S2SLoginToGateAck
 {
-	uint32 msgid = 1;			// 消息id
-	bytes msgdata = 2;		// 消息内容
+	uint32 result = 1;		// 结果
+	uint64 accountid = 2;	// 账号id
+	uint64 sessionid = 3;	// sessionid
+	uint64 bantime = 4;		// 禁止游戏的时间
 }
 
-// S2S_BROADCAST_TO_WORLD
-message S2SBroadcastToWord
+// 登录信息
+message PBLoginData
 {
-	uint32 msgid = 1;			// 消息id
-	bytes msgdata = 2;		// 消息内容
+	bytes token = 1;		// token
+	uint64 gateid = 2;		// 服务器id
+	uint64 sessionid = 3;	// sessionid
+	uint32 channel = 4;		// 渠道id
+	bytes account = 5;		// 账号
+	uint64 accountid = 6;	// 账号id
+	uint64 playerid = 7;	// 角色id
+	map<string, bytes> channeldata = 8;	// 渠道数据	
 }
 
+// 登录请求到world服务器
+// S2S_LOGIN_TO_WORLD_REQ
+message S2SLoginToWorldReq
+{
+	PBLoginData pblogin = 1;
+}
+
+// 登录失败到login服务器
+// S2S_LOGIN_TO_LOGIN_ACK
+message S2SLoginToLoginAck
+{
+	uint32 result = 1;		// 结果
+	uint64 gateid = 2;		// 服务器id
+	uint64 accountid = 3;	// 账号id
+	uint64 sessionid = 4;	// sessionid
+}
+
+// 登录请求到game服务器
+// S2S_LOGIN_TO_GAME_REQ
+message S2SLoginToGameReq
+{
+	PBLoginData pblogin = 1;
+}
+/////////////////////////////////////////////////////////////////////
+// 查询角色id请求
+// S2S_PLAYER_ENTER_TO_WORLD_REQ
+message S2SPlayerEnterToWorldReq
+{
+	uint64 playerid = 1;		// 角色id	
+	uint64 accountid = 2;		// 账号id
+}
+
+// S2S_PLAYER_LEAVE_WORLD_TO_REQ
+message S2SPlayerLeaveToWorldReq
+{
+	uint64 playerid = 1;		// 角色id
+	uint64 accountid = 2;		// 账号id
+}
+
+// 同步在线玩家
+// S2S_PLAYER_SYNC_TO_WORLD_REQ
+message S2SPlayerSyncToWorldReq
+{
+	repeated uint64 playerid = 1;
+}
+////////////////////////////////////////////////////////////////////
+// 踢人请求到game服务器
+// S2S_KICK_PLAYER_TO_GAME_REQ
+message S2SKickPlayerToGameReq
+{
+	uint32 type = 1;		// 踢人类型
+	uint64 playerid = 2;	// 角色id
+}
+
+// 踢人请求到gate服务器
+// S2S_KICK_PLAYER_TO_GATE_REQ
+message S2SKickPlayerToGateReq
+{
+	uint32 type = 1;		// 踢人类型
+	uint64 playerid = 2;	// 角色id
+
+}
+////////////////////////////////////////////////////////////////////
 // S2S_BROADCAST_TO_GAME
 message S2SBroadcastToGame
 {
@@ -85,13 +176,6 @@ message S2SBroadcastToGate
 message S2STransmitToPlayer
 {
 	uint64 playerid = 1;		// 玩家id
-	uint32 msgid = 2;			// 消息id
-	bytes msgdata = 3;		// 消息内容
-}
-
-// S2S_TRANSMIT_TO_SERVER
-message S2STransmitToServer
-{
 	uint32 msgid = 2;			// 消息id
 	bytes msgdata = 3;		// 消息内容
 }

@@ -6,17 +6,16 @@ package KFMsg;
 // 协议号区间 : 1-1000
 enum MidwareClientProtocol
  {
-	MSG_MIDWARE_CLIENT_PROTOCOL_BEGIN = 0;		// pb3 需要0
+	MSG_MIDWARE_CLIENT_BEGIN = 0;				// pb3 需要0
 
 	// display
 	MSG_RESULT_DISPLAY = 1;						// 提示显示
-		
+
 	// login
+	MSG_LOGIN_REQ = 100;						// 客户端登录验证请求
+	MSG_LOGIN_ACK = 101;						// 客户端登录验证结果
+	MSG_LOGOUT_REQ = 102;						// 客户端请求登出游戏
 	MSG_TELL_BE_KICK = 10;						// 被踢下线了
-	MSG_LOGIN_VERIFY_REQ = 11;					// 客户端登录验证请求
-	MSG_LOGIN_VERIFY_ACK = 12;					// 客户端登录验证结果
-	MSG_LOGIN_GAME_REQ = 13;					// 客户端登录游戏请求
-	MSG_LOGIN_OUT_REQ = 14;						// 客户端请求登出游戏
 
 	// data
 	MSG_LOGIN_ENTER_GAME = 20;					// 通知进入游戏
@@ -42,6 +41,29 @@ message MsgResultDisplay
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 登录请求
+// MSG_LOGIN_REQ
+message MsgLoginReq
+{
+	bytes token = 1;		// token
+	uint64 accountid = 2;	// 账号id
+	bytes version = 3;		// 客户端版本号
+}
+
+// 登出游戏
+// MSG_LOGOUT_REQ
+message MsgLogoutReq
+{
+
+}
+
+// 通知被踢下线
+// MSG_TELL_BE_KICK
+message MsgTellBeKick
+{
+	uint32 type = 1;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 通知进入游戏世界
@@ -102,43 +124,3 @@ message MsgQueryPlayerAck
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-// 通知被踢下线
-// MSG_TELL_BE_KICK
-message MsgTellBeKick
-{
-	uint32 type = 1;
-}
-
-// 登录验证请求
-// MSG_LOGIN_VERIFY_REQ
-message MsgLoginVerifyReq
-{
-	uint64 accountid = 1;	// 账号id
-	bytes token = 2;		// token
-	bytes version = 3;	// 客户端版本号
-}
-
-// 登录验证结果
-// MSG_LOGIN_VERIFY_ACK
-message MsgLoginVerifyAck
-{
-	uint64 playerid = 1;
-	bytes token = 2;
-	bytes ip = 3;
-	uint32 port = 4;
-}
-
-// 登录游戏请求
-// MSG_LOGIN_GAME_REQ
-message MsgLoginGameReq
-{
-	uint64 playerid = 1;
-	bytes token = 2;
-}
-
-// 登出游戏
-// MSG_LOGIN_OUT_REQ
-message MsgLoginOutReq
-{
-
-}

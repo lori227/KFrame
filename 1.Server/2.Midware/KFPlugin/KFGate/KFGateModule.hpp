@@ -19,6 +19,7 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFDeployClient/KFDeployClientInterface.h"
 
 namespace KFrame
 {
@@ -52,12 +53,20 @@ namespace KFrame
 
         // 更新在线玩家数量
         __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToAuth );
+
+        // 服务器关闭命令
+        __KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
     protected:
         // 登录验证
-        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginReq );
 
+        // 登出游戏
+        __KF_MESSAGE_FUNCTION__( HandleLogoutReq );
+
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
         // 验证结果
-        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToGateAck );
 
         // 处理消息广播
         __KF_MESSAGE_FUNCTION__( HandleBroadcastMessageReq );
@@ -68,14 +77,16 @@ namespace KFrame
         // 处理登录回馈
         __KF_MESSAGE_FUNCTION__( HandleLoginGameAck );
 
-        // 登出游戏
-        __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
+
 
     protected:
         // 发送登录失败消息
-        void SendLoginFailedMessage( uint64 sessionid, uint32 result, uint64 bantime );
+        void SendLoginAckMessage( uint64 sessionid, uint32 result, uint64 bantime );
 
     private:
+        // 关闭登录
+        bool _is_login_close = false;
+
         // login服务器列表
         KFConHash _kf_login_conhash;
 

@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\207\004\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\264\005\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
@@ -63,11 +63,15 @@ void AddDescriptorsImpl() {
       "ror\020\202V\022\024\n\017WeiXinUserError\020\203V\022\025\n\020WeiXinTo"
       "kenError\020\204V\022\024\n\017WeiXinCodeError\020\205V\022\027\n\022Wei"
       "XinTokenTimeout\020\206V\022\017\n\nSteamError\020\207V\022\023\n\016S"
-      "teamDataError\020\210V\022\023\n\016SteamAuthError\020\211Vb\006p"
-      "roto3"
+      "teamDataError\020\210V\022\023\n\016SteamAuthError\020\211V\022\034\n"
+      "\027VersionNotCompatibility\020\341]\022\021\n\014LoginIsCl"
+      "ose\020\342]\022\027\n\022LoginNoLoginServer\020\343]\022\024\n\017Login"
+      "SystemBusy\020\344]\022\031\n\024LoginWorldSystemBusy\020\345]"
+      "\022\026\n\021LoginNoGameServer\020\346]\022\030\n\023LoginGameSer"
+      "verBusy\020\347]b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 565);
+      descriptor, 738);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -114,6 +118,13 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 11015:
     case 11016:
     case 11017:
+    case 12001:
+    case 12002:
+    case 12003:
+    case 12004:
+    case 12005:
+    case 12006:
+    case 12007:
       return true;
     default:
       return false;

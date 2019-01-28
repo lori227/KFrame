@@ -71,6 +71,28 @@ inline bool ChannelEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<ChannelEnum>(
     ChannelEnum_descriptor(), name, value);
 }
+enum KickEnum {
+  UnknowKick = 0,
+  KickByLogin = 1,
+  KickByPlatform = 2,
+  KickEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  KickEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool KickEnum_IsValid(int value);
+const KickEnum KickEnum_MIN = UnknowKick;
+const KickEnum KickEnum_MAX = KickByPlatform;
+const int KickEnum_ARRAYSIZE = KickEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* KickEnum_descriptor();
+inline const ::std::string& KickEnum_Name(KickEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    KickEnum_descriptor(), value);
+}
+inline bool KickEnum_Parse(
+    const ::std::string& name, KickEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<KickEnum>(
+    KickEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -98,6 +120,11 @@ template <> struct is_proto_enum< ::KFMsg::ChannelEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ChannelEnum>() {
   return ::KFMsg::ChannelEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::KickEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::KickEnum>() {
+  return ::KFMsg::KickEnum_descriptor();
 }
 
 }  // namespace protobuf

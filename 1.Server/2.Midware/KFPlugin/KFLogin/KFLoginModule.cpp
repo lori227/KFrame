@@ -5,26 +5,30 @@ namespace KFrame
 {
     void KFLoginModule::BeforeRun()
     {
+        __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginModule::OnServerLostGate );
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLoginModule::OnClientConnectionWorld );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFLoginModule::OnDeployShutDownServer );
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ, &KFLoginModule::HandleUpdateZoneToLoginReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ, &KFLoginModule::HandleLoginVerifyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK, &KFLoginModule::HandleLoginFailedAck );
+
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ, &KFLoginModule::HandleLoginToLoginReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &KFLoginModule::HandleLoginToLoginAck );
     }
 
     void KFLoginModule::BeforeShut()
     {
+        __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
+
         //////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_FAILED_TO_LOGIN_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFLoginModule::OnClientConnectionWorld )
     {
@@ -62,10 +66,7 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
     }
 
-    __KF_COMMAND_FUNCTION__( KFLoginModule::OnDeployShutDownServer )
-    {
-        _is_login_close = true;
-    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleUpdateZoneToLoginReq )
     {
@@ -76,37 +77,26 @@ namespace KFrame
         SendToWorld( KFMsg::S2S_UPDATE_ZONE_TO_WORLD_REQ, &req );
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFLoginModule::SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime )
+    __KF_SERVER_LOST_FUNCTION__( KFLoginModule::OnServerLostGate )
     {
-        KFMsg::S2SLoginLoginVerifyAck ack;
-        ack.set_result( result );
-        ack.set_accountid( accountid );
-        ack.set_sessionid( sessionid );
-        ack.set_bantime( bantime );
-        auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &ack );
-        if ( !ok )
+        if ( handletype == __KF_STRING__( gate ) )
         {
-            __LOG_ERROR__( "player[{}] login verify result[{}] failed!", accountid, result );
+            KFMsg::S2SDisconnectZoneToWorldReq req;
+            req.set_appid( handleid );
+            SendToWorld( KFMsg::S2S_DISCONNECT_ZONE_TO_WORLD_REQ, &req );
         }
     }
-
-    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginVerifyReq )
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginReq )
     {
         auto gateid = __ROUTE_SERVER_ID__;
-        __PROTO_PARSE__( KFMsg::S2SLoginLoginVerifyReq );
+        __PROTO_PARSE__( KFMsg::S2SLoginToLoginReq );
 
         auto& token = kfmsg.token();
         auto accountid = kfmsg.accountid();
         auto sessionid = kfmsg.sessionid();
 
         __LOG_DEBUG__( "accountid[{}] login verify", accountid );
-
-        if ( _is_login_close )
-        {
-            __LOG_ERROR__( "accountid[{}] login is close!", accountid );
-            return SendLoginVerifyMessage( KFMsg::LoginIsClose, gateid, sessionid, accountid, _invalid_int );
-        }
 
         auto kfzone = _kf_zone->GetZone();
 
@@ -117,11 +107,11 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), kfmsg.accountid() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( ip ), kfmsg.ip() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( logiczoneid ), kfzone->_logic_id );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zonelogicid ), kfzone->_logic_id );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
 
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
-        _kf_http_client->StartMTClient( this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack, _url, sendjson );
+        _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )
@@ -135,11 +125,11 @@ namespace KFrame
         auto sessionid = __JSON_GET_UINT64__( sendjson, __KF_STRING__( sessionid ) );
 
         // 验证失败
-        auto retcode = _kf_http_client->GetResponseCode( recvjson );
+        auto retcode = _kf_http_client->GetCode( recvjson );
         if ( retcode != KFMsg::Ok )
         {
             auto bantime = __JSON_GET_UINT64__( recvjson, __KF_STRING__( bantime ) );
-            return SendLoginVerifyMessage( retcode, gateid, sessionid, accountid, bantime );
+            return SendLoginAckToGate( retcode, gateid, sessionid, accountid, bantime );
         }
 
         auto token = __JSON_GET_STRING__( recvjson, __KF_STRING__( token ) );
@@ -148,11 +138,12 @@ namespace KFrame
         auto playerid = __JSON_GET_UINT64__( recvjson, __KF_STRING__( playerid ) );
         if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
         {
-            return SendLoginVerifyMessage( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );
+            return SendLoginAckToGate( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );
         }
-
-        // 通知worldserver
-        KFMsg::S2SLoginWorldVerifyReq req;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 发送到world服务器
+        KFMsg::S2SLoginToWorldReq req;
         auto pblogin = req.mutable_pblogin();
 
         pblogin->set_token( token );
@@ -174,22 +165,37 @@ namespace KFrame
             }
         }
 
-        auto ok = SendToWorld( KFMsg::S2S_LOGIN_WORLD_VERIFY_REQ, &req );
+        auto ok = SendToWorld( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "player[{}:{}:{}] send world failed!", account, accountid, playerid );
-            SendLoginVerifyMessage( KFMsg::WorldSystemBusy, gateid, sessionid, accountid, _invalid_int );
+            SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, gateid, sessionid, accountid, _invalid_int );
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginFailedAck )
+    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginFailedToLoginAck );
+        __PROTO_PARSE__( KFMsg::S2SLoginToLoginAck );
 
-        __LOG_DEBUG__( "player[{}] login world result[{}] ack!", kfmsg.accountid(), kfmsg.result() );
+        __LOG_DEBUG__( "player[{}] login result[{}] ack!", kfmsg.accountid(), kfmsg.result() );
 
         // 通知客户端
-        SendLoginVerifyMessage( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );
+        SendLoginAckToGate( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );
     }
 
+    void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime )
+    {
+        KFMsg::S2SLoginToGateAck ack;
+        ack.set_result( result );
+        ack.set_accountid( accountid );
+        ack.set_sessionid( sessionid );
+        ack.set_bantime( bantime );
+        auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
+        if ( !ok )
+        {
+            __LOG_ERROR__( "player[{}] login verify result[{}] failed!", accountid, result );
+        }
+    }
 }

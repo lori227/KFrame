@@ -9,7 +9,6 @@
 //    @Date             :    2017-12-4
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFLoginInterface.h"
 #include "KFZone/KFZoneInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -17,7 +16,6 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFDeployCommand/KFDeployCommandInterface.h"
 
 namespace KFrame
 {
@@ -48,33 +46,29 @@ namespace KFrame
         // 断开连接
         __KF_CLIENT_LOST_FUNCTION__( OnClientLostWorld );
 
-        // 关闭回调
-        __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
+        // gate断开
+        __KF_SERVER_LOST_FUNCTION__( OnServerLostGate );
 
         // 平台验证回调
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
-
-        // 发送登录验证结果消息
-        void SendLoginVerifyMessage( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
 
     protected:
         // 更新小区登录信息
         __KF_MESSAGE_FUNCTION__( HandleUpdateZoneToLoginReq );
 
-
         // 登录验证请求
-        __KF_MESSAGE_FUNCTION__( HandleLoginVerifyReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginReq );
 
         // 登录验证结果
-        __KF_MESSAGE_FUNCTION__( HandleLoginFailedAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginAck );
+
+    protected:
+        // 发送登录验证结果消息
+        void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
 
     private:
-
         // 世界服务器id
-        uint64 _world_server_id{ _invalid_int };
-
-        // 关闭登录
-        bool _is_login_close{ false };
+        uint64 _world_server_id = _invalid_int;
     };
 }
 

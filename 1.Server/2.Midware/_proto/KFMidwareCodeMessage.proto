@@ -16,6 +16,7 @@ enum MidwareCodeEnum
 	ZoneServerBusy			= 10003;		// 小区服务器繁忙
 	ZoneDatabaseBusy		= 10004;		// 小区数据库错误
 
+	// auth
 	AccountIsEmpty 			= 11001;		// 账号不能为空
 	ActivationAccount		= 11002;		// 请先激活账号
 	InvalidActivationCode 	= 11003;		// 无效的激活码
@@ -33,4 +34,13 @@ enum MidwareCodeEnum
 	SteamError				= 11015;		// 查询Steam错误
 	SteamDataError			= 11016;		// 查询Steam数据错误
 	SteamAuthError			= 11017;		// Steam认证错误
+
+	// login
+	VersionNotCompatibility = 12001;		// 版本号不兼容
+	LoginIsClose			= 12002;		// 服务器登录已经关闭
+	LoginNoLoginServer		= 12003;		// 没有可用的登录服务器
+	LoginSystemBusy			= 12004;		// Login服务器出错了
+	LoginWorldSystemBusy	= 12005;		// World服务器出错了
+	LoginNoGameServer		= 12006;		// 没有可用的游戏服务器
+	LoginGameServerBusy		= 12007;		// 游戏服务器出错了
 }

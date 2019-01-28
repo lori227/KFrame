@@ -51,13 +51,10 @@ namespace KFrame
 
         // 广播消息到客户端
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message );
 
         // 消息转发
         virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
-
-        // 转发服务器
-        virtual bool TransmitToServer( uint32 msgid, ::google::protobuf::Message* message );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 踢掉角色

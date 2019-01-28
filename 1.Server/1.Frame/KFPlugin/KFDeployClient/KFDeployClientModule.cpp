@@ -58,16 +58,12 @@ namespace KFrame
     void KFDeployClientModule::DeployCommand( const std::string& command, const std::string& value,
             const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req!", command, value, appname, apptype, appid, zoneid );
-
         // 判断是不是自己
         auto ok = IsSelfServer( appname, apptype, appid, zoneid );
         if ( !ok )
         {
             return;
         }
-
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command start!", command, value, appname, apptype, appid, zoneid );
 
         if ( command == __KF_STRING__( shutdown ) )
         {

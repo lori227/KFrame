@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[14];
+  static const ::google::protobuf::internal::ParseTable schema[12];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -51,18 +51,12 @@ namespace KFMsg {
 class MsgEnterGame;
 class MsgEnterGameDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgEnterGameDefaultTypeInternal _MsgEnterGame_default_instance_;
-class MsgLoginGameReq;
-class MsgLoginGameReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgLoginGameReqDefaultTypeInternal _MsgLoginGameReq_default_instance_;
-class MsgLoginOutReq;
-class MsgLoginOutReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgLoginOutReqDefaultTypeInternal _MsgLoginOutReq_default_instance_;
-class MsgLoginVerifyAck;
-class MsgLoginVerifyAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgLoginVerifyAckDefaultTypeInternal _MsgLoginVerifyAck_default_instance_;
-class MsgLoginVerifyReq;
-class MsgLoginVerifyReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgLoginVerifyReqDefaultTypeInternal _MsgLoginVerifyReq_default_instance_;
+class MsgLoginReq;
+class MsgLoginReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgLoginReqDefaultTypeInternal _MsgLoginReq_default_instance_;
+class MsgLogoutReq;
+class MsgLogoutReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgLogoutReqDefaultTypeInternal _MsgLogoutReq_default_instance_;
 class MsgQueryBasicAck;
 class MsgQueryBasicAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryBasicAckDefaultTypeInternal _MsgQueryBasicAck_default_instance_;
@@ -94,10 +88,8 @@ LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_
 namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgEnterGame* Arena::CreateMaybeMessage<::KFMsg::MsgEnterGame>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginGameReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginGameReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginOutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginOutReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginVerifyAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginVerifyAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginVerifyReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginVerifyReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerAck>(Arena*);
@@ -112,13 +104,12 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellBeKick* Arena::CreateMaybeMessage<::
 namespace KFMsg {
 
 enum MidwareClientProtocol {
-  MSG_MIDWARE_CLIENT_PROTOCOL_BEGIN = 0,
+  MSG_MIDWARE_CLIENT_BEGIN = 0,
   MSG_RESULT_DISPLAY = 1,
+  MSG_LOGIN_REQ = 100,
+  MSG_LOGIN_ACK = 101,
+  MSG_LOGOUT_REQ = 102,
   MSG_TELL_BE_KICK = 10,
-  MSG_LOGIN_VERIFY_REQ = 11,
-  MSG_LOGIN_VERIFY_ACK = 12,
-  MSG_LOGIN_GAME_REQ = 13,
-  MSG_LOGIN_OUT_REQ = 14,
   MSG_LOGIN_ENTER_GAME = 20,
   MSG_SYNC_UPDATE_DATA = 21,
   MSG_SYNC_ADD_DATA = 22,
@@ -133,8 +124,8 @@ enum MidwareClientProtocol {
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
-const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_PROTOCOL_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_SHOW_REWARD_ELEMENT;
+const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_LOGOUT_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -275,6 +266,338 @@ class LIBPROTOC_EXPORT MsgResultDisplay : public ::google::protobuf::Message /* 
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgLoginReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginReq) */ {
+ public:
+  MsgLoginReq();
+  virtual ~MsgLoginReq();
+
+  MsgLoginReq(const MsgLoginReq& from);
+
+  inline MsgLoginReq& operator=(const MsgLoginReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgLoginReq(MsgLoginReq&& from) noexcept
+    : MsgLoginReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgLoginReq& operator=(MsgLoginReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLoginReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgLoginReq* internal_default_instance() {
+    return reinterpret_cast<const MsgLoginReq*>(
+               &_MsgLoginReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  void Swap(MsgLoginReq* other);
+  friend void swap(MsgLoginReq& a, MsgLoginReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgLoginReq* New() const final {
+    return CreateMaybeMessage<MsgLoginReq>(NULL);
+  }
+
+  MsgLoginReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgLoginReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgLoginReq& from);
+  void MergeFrom(const MsgLoginReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgLoginReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes token = 1;
+  void clear_token();
+  static const int kTokenFieldNumber = 1;
+  const ::std::string& token() const;
+  void set_token(const ::std::string& value);
+  #if LANG_CXX11
+  void set_token(::std::string&& value);
+  #endif
+  void set_token(const char* value);
+  void set_token(const void* value, size_t size);
+  ::std::string* mutable_token();
+  ::std::string* release_token();
+  void set_allocated_token(::std::string* token);
+
+  // bytes version = 3;
+  void clear_version();
+  static const int kVersionFieldNumber = 3;
+  const ::std::string& version() const;
+  void set_version(const ::std::string& value);
+  #if LANG_CXX11
+  void set_version(::std::string&& value);
+  #endif
+  void set_version(const char* value);
+  void set_version(const void* value, size_t size);
+  ::std::string* mutable_version();
+  ::std::string* release_version();
+  void set_allocated_version(::std::string* version);
+
+  // uint64 accountid = 2;
+  void clear_accountid();
+  static const int kAccountidFieldNumber = 2;
+  ::google::protobuf::uint64 accountid() const;
+  void set_accountid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr token_;
+  ::google::protobuf::internal::ArenaStringPtr version_;
+  ::google::protobuf::uint64 accountid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgLogoutReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLogoutReq) */ {
+ public:
+  MsgLogoutReq();
+  virtual ~MsgLogoutReq();
+
+  MsgLogoutReq(const MsgLogoutReq& from);
+
+  inline MsgLogoutReq& operator=(const MsgLogoutReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgLogoutReq(MsgLogoutReq&& from) noexcept
+    : MsgLogoutReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgLogoutReq& operator=(MsgLogoutReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLogoutReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgLogoutReq* internal_default_instance() {
+    return reinterpret_cast<const MsgLogoutReq*>(
+               &_MsgLogoutReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(MsgLogoutReq* other);
+  friend void swap(MsgLogoutReq& a, MsgLogoutReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgLogoutReq* New() const final {
+    return CreateMaybeMessage<MsgLogoutReq>(NULL);
+  }
+
+  MsgLogoutReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgLogoutReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgLogoutReq& from);
+  void MergeFrom(const MsgLogoutReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgLogoutReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgLogoutReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTellBeKick : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTellBeKick) */ {
+ public:
+  MsgTellBeKick();
+  virtual ~MsgTellBeKick();
+
+  MsgTellBeKick(const MsgTellBeKick& from);
+
+  inline MsgTellBeKick& operator=(const MsgTellBeKick& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTellBeKick(MsgTellBeKick&& from) noexcept
+    : MsgTellBeKick() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTellBeKick& operator=(MsgTellBeKick&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellBeKick& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTellBeKick* internal_default_instance() {
+    return reinterpret_cast<const MsgTellBeKick*>(
+               &_MsgTellBeKick_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(MsgTellBeKick* other);
+  friend void swap(MsgTellBeKick& a, MsgTellBeKick& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTellBeKick* New() const final {
+    return CreateMaybeMessage<MsgTellBeKick>(NULL);
+  }
+
+  MsgTellBeKick* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTellBeKick>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTellBeKick& from);
+  void MergeFrom(const MsgTellBeKick& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTellBeKick* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::google::protobuf::uint32 type() const;
+  void set_type(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellBeKick)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 type_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgEnterGame : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgEnterGame) */ {
  public:
   MsgEnterGame();
@@ -310,7 +633,7 @@ class LIBPROTOC_EXPORT MsgEnterGame : public ::google::protobuf::Message /* @@pr
                &_MsgEnterGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    4;
 
   void Swap(MsgEnterGame* other);
   friend void swap(MsgEnterGame& a, MsgEnterGame& b) {
@@ -426,7 +749,7 @@ class LIBPROTOC_EXPORT MsgSyncUpdateData : public ::google::protobuf::Message /*
                &_MsgSyncUpdateData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    5;
 
   void Swap(MsgSyncUpdateData* other);
   friend void swap(MsgSyncUpdateData& a, MsgSyncUpdateData& b) {
@@ -535,7 +858,7 @@ class LIBPROTOC_EXPORT MsgSyncAddData : public ::google::protobuf::Message /* @@
                &_MsgSyncAddData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    6;
 
   void Swap(MsgSyncAddData* other);
   friend void swap(MsgSyncAddData& a, MsgSyncAddData& b) {
@@ -644,7 +967,7 @@ class LIBPROTOC_EXPORT MsgSyncRemoveData : public ::google::protobuf::Message /*
                &_MsgSyncRemoveData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    7;
 
   void Swap(MsgSyncRemoveData* other);
   friend void swap(MsgSyncRemoveData& a, MsgSyncRemoveData& b) {
@@ -753,7 +1076,7 @@ class LIBPROTOC_EXPORT MsgQueryBasicReq : public ::google::protobuf::Message /* 
                &_MsgQueryBasicReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    8;
 
   void Swap(MsgQueryBasicReq* other);
   friend void swap(MsgQueryBasicReq& a, MsgQueryBasicReq& b) {
@@ -864,7 +1187,7 @@ class LIBPROTOC_EXPORT MsgQueryBasicAck : public ::google::protobuf::Message /* 
                &_MsgQueryBasicAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    9;
 
   void Swap(MsgQueryBasicAck* other);
   friend void swap(MsgQueryBasicAck& a, MsgQueryBasicAck& b) {
@@ -973,7 +1296,7 @@ class LIBPROTOC_EXPORT MsgQueryPlayerReq : public ::google::protobuf::Message /*
                &_MsgQueryPlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    10;
 
   void Swap(MsgQueryPlayerReq* other);
   friend void swap(MsgQueryPlayerReq& a, MsgQueryPlayerReq& b) {
@@ -1076,7 +1399,7 @@ class LIBPROTOC_EXPORT MsgQueryPlayerAck : public ::google::protobuf::Message /*
                &_MsgQueryPlayerAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    11;
 
   void Swap(MsgQueryPlayerAck* other);
   friend void swap(MsgQueryPlayerAck& a, MsgQueryPlayerAck& b) {
@@ -1145,596 +1468,6 @@ class LIBPROTOC_EXPORT MsgQueryPlayerAck : public ::google::protobuf::Message /*
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBObject* player_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgTellBeKick : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTellBeKick) */ {
- public:
-  MsgTellBeKick();
-  virtual ~MsgTellBeKick();
-
-  MsgTellBeKick(const MsgTellBeKick& from);
-
-  inline MsgTellBeKick& operator=(const MsgTellBeKick& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgTellBeKick(MsgTellBeKick&& from) noexcept
-    : MsgTellBeKick() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgTellBeKick& operator=(MsgTellBeKick&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgTellBeKick& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgTellBeKick* internal_default_instance() {
-    return reinterpret_cast<const MsgTellBeKick*>(
-               &_MsgTellBeKick_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    9;
-
-  void Swap(MsgTellBeKick* other);
-  friend void swap(MsgTellBeKick& a, MsgTellBeKick& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgTellBeKick* New() const final {
-    return CreateMaybeMessage<MsgTellBeKick>(NULL);
-  }
-
-  MsgTellBeKick* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgTellBeKick>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgTellBeKick& from);
-  void MergeFrom(const MsgTellBeKick& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgTellBeKick* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // uint32 type = 1;
-  void clear_type();
-  static const int kTypeFieldNumber = 1;
-  ::google::protobuf::uint32 type() const;
-  void set_type(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellBeKick)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 type_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgLoginVerifyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginVerifyReq) */ {
- public:
-  MsgLoginVerifyReq();
-  virtual ~MsgLoginVerifyReq();
-
-  MsgLoginVerifyReq(const MsgLoginVerifyReq& from);
-
-  inline MsgLoginVerifyReq& operator=(const MsgLoginVerifyReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgLoginVerifyReq(MsgLoginVerifyReq&& from) noexcept
-    : MsgLoginVerifyReq() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgLoginVerifyReq& operator=(MsgLoginVerifyReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLoginVerifyReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgLoginVerifyReq* internal_default_instance() {
-    return reinterpret_cast<const MsgLoginVerifyReq*>(
-               &_MsgLoginVerifyReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    10;
-
-  void Swap(MsgLoginVerifyReq* other);
-  friend void swap(MsgLoginVerifyReq& a, MsgLoginVerifyReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgLoginVerifyReq* New() const final {
-    return CreateMaybeMessage<MsgLoginVerifyReq>(NULL);
-  }
-
-  MsgLoginVerifyReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgLoginVerifyReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgLoginVerifyReq& from);
-  void MergeFrom(const MsgLoginVerifyReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgLoginVerifyReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // bytes token = 2;
-  void clear_token();
-  static const int kTokenFieldNumber = 2;
-  const ::std::string& token() const;
-  void set_token(const ::std::string& value);
-  #if LANG_CXX11
-  void set_token(::std::string&& value);
-  #endif
-  void set_token(const char* value);
-  void set_token(const void* value, size_t size);
-  ::std::string* mutable_token();
-  ::std::string* release_token();
-  void set_allocated_token(::std::string* token);
-
-  // bytes version = 3;
-  void clear_version();
-  static const int kVersionFieldNumber = 3;
-  const ::std::string& version() const;
-  void set_version(const ::std::string& value);
-  #if LANG_CXX11
-  void set_version(::std::string&& value);
-  #endif
-  void set_version(const char* value);
-  void set_version(const void* value, size_t size);
-  ::std::string* mutable_version();
-  ::std::string* release_version();
-  void set_allocated_version(::std::string* version);
-
-  // uint64 accountid = 1;
-  void clear_accountid();
-  static const int kAccountidFieldNumber = 1;
-  ::google::protobuf::uint64 accountid() const;
-  void set_accountid(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginVerifyReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::internal::ArenaStringPtr version_;
-  ::google::protobuf::uint64 accountid_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgLoginVerifyAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginVerifyAck) */ {
- public:
-  MsgLoginVerifyAck();
-  virtual ~MsgLoginVerifyAck();
-
-  MsgLoginVerifyAck(const MsgLoginVerifyAck& from);
-
-  inline MsgLoginVerifyAck& operator=(const MsgLoginVerifyAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgLoginVerifyAck(MsgLoginVerifyAck&& from) noexcept
-    : MsgLoginVerifyAck() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgLoginVerifyAck& operator=(MsgLoginVerifyAck&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLoginVerifyAck& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgLoginVerifyAck* internal_default_instance() {
-    return reinterpret_cast<const MsgLoginVerifyAck*>(
-               &_MsgLoginVerifyAck_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    11;
-
-  void Swap(MsgLoginVerifyAck* other);
-  friend void swap(MsgLoginVerifyAck& a, MsgLoginVerifyAck& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgLoginVerifyAck* New() const final {
-    return CreateMaybeMessage<MsgLoginVerifyAck>(NULL);
-  }
-
-  MsgLoginVerifyAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgLoginVerifyAck>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgLoginVerifyAck& from);
-  void MergeFrom(const MsgLoginVerifyAck& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgLoginVerifyAck* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // bytes token = 2;
-  void clear_token();
-  static const int kTokenFieldNumber = 2;
-  const ::std::string& token() const;
-  void set_token(const ::std::string& value);
-  #if LANG_CXX11
-  void set_token(::std::string&& value);
-  #endif
-  void set_token(const char* value);
-  void set_token(const void* value, size_t size);
-  ::std::string* mutable_token();
-  ::std::string* release_token();
-  void set_allocated_token(::std::string* token);
-
-  // bytes ip = 3;
-  void clear_ip();
-  static const int kIpFieldNumber = 3;
-  const ::std::string& ip() const;
-  void set_ip(const ::std::string& value);
-  #if LANG_CXX11
-  void set_ip(::std::string&& value);
-  #endif
-  void set_ip(const char* value);
-  void set_ip(const void* value, size_t size);
-  ::std::string* mutable_ip();
-  ::std::string* release_ip();
-  void set_allocated_ip(::std::string* ip);
-
-  // uint64 playerid = 1;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // uint32 port = 4;
-  void clear_port();
-  static const int kPortFieldNumber = 4;
-  ::google::protobuf::uint32 port() const;
-  void set_port(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginVerifyAck)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::internal::ArenaStringPtr ip_;
-  ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint32 port_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgLoginGameReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginGameReq) */ {
- public:
-  MsgLoginGameReq();
-  virtual ~MsgLoginGameReq();
-
-  MsgLoginGameReq(const MsgLoginGameReq& from);
-
-  inline MsgLoginGameReq& operator=(const MsgLoginGameReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgLoginGameReq(MsgLoginGameReq&& from) noexcept
-    : MsgLoginGameReq() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgLoginGameReq& operator=(MsgLoginGameReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLoginGameReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgLoginGameReq* internal_default_instance() {
-    return reinterpret_cast<const MsgLoginGameReq*>(
-               &_MsgLoginGameReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    12;
-
-  void Swap(MsgLoginGameReq* other);
-  friend void swap(MsgLoginGameReq& a, MsgLoginGameReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgLoginGameReq* New() const final {
-    return CreateMaybeMessage<MsgLoginGameReq>(NULL);
-  }
-
-  MsgLoginGameReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgLoginGameReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgLoginGameReq& from);
-  void MergeFrom(const MsgLoginGameReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgLoginGameReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // bytes token = 2;
-  void clear_token();
-  static const int kTokenFieldNumber = 2;
-  const ::std::string& token() const;
-  void set_token(const ::std::string& value);
-  #if LANG_CXX11
-  void set_token(::std::string&& value);
-  #endif
-  void set_token(const char* value);
-  void set_token(const void* value, size_t size);
-  ::std::string* mutable_token();
-  ::std::string* release_token();
-  void set_allocated_token(::std::string* token);
-
-  // uint64 playerid = 1;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginGameReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr token_;
-  ::google::protobuf::uint64 playerid_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgLoginOutReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginOutReq) */ {
- public:
-  MsgLoginOutReq();
-  virtual ~MsgLoginOutReq();
-
-  MsgLoginOutReq(const MsgLoginOutReq& from);
-
-  inline MsgLoginOutReq& operator=(const MsgLoginOutReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgLoginOutReq(MsgLoginOutReq&& from) noexcept
-    : MsgLoginOutReq() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgLoginOutReq& operator=(MsgLoginOutReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLoginOutReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgLoginOutReq* internal_default_instance() {
-    return reinterpret_cast<const MsgLoginOutReq*>(
-               &_MsgLoginOutReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    13;
-
-  void Swap(MsgLoginOutReq* other);
-  friend void swap(MsgLoginOutReq& a, MsgLoginOutReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgLoginOutReq* New() const final {
-    return CreateMaybeMessage<MsgLoginOutReq>(NULL);
-  }
-
-  MsgLoginOutReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgLoginOutReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgLoginOutReq& from);
-  void MergeFrom(const MsgLoginOutReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgLoginOutReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginOutReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
@@ -1830,6 +1563,152 @@ inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 MsgResultDisplay::mutable_param() {
   // @@protoc_insertion_point(field_mutable_list:KFMsg.MsgResultDisplay.param)
   return &param_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgLoginReq
+
+// bytes token = 1;
+inline void MsgLoginReq::clear_token() {
+  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgLoginReq::token() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginReq.token)
+  return token_.GetNoArena();
+}
+inline void MsgLoginReq::set_token(const ::std::string& value) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginReq.token)
+}
+#if LANG_CXX11
+inline void MsgLoginReq::set_token(::std::string&& value) {
+  
+  token_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginReq.token)
+}
+#endif
+inline void MsgLoginReq::set_token(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginReq.token)
+}
+inline void MsgLoginReq::set_token(const void* value, size_t size) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginReq.token)
+}
+inline ::std::string* MsgLoginReq::mutable_token() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginReq.token)
+  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgLoginReq::release_token() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginReq.token)
+  
+  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgLoginReq::set_allocated_token(::std::string* token) {
+  if (token != NULL) {
+    
+  } else {
+    
+  }
+  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginReq.token)
+}
+
+// uint64 accountid = 2;
+inline void MsgLoginReq::clear_accountid() {
+  accountid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgLoginReq::accountid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginReq.accountid)
+  return accountid_;
+}
+inline void MsgLoginReq::set_accountid(::google::protobuf::uint64 value) {
+  
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginReq.accountid)
+}
+
+// bytes version = 3;
+inline void MsgLoginReq::clear_version() {
+  version_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgLoginReq::version() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginReq.version)
+  return version_.GetNoArena();
+}
+inline void MsgLoginReq::set_version(const ::std::string& value) {
+  
+  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginReq.version)
+}
+#if LANG_CXX11
+inline void MsgLoginReq::set_version(::std::string&& value) {
+  
+  version_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginReq.version)
+}
+#endif
+inline void MsgLoginReq::set_version(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginReq.version)
+}
+inline void MsgLoginReq::set_version(const void* value, size_t size) {
+  
+  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginReq.version)
+}
+inline ::std::string* MsgLoginReq::mutable_version() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginReq.version)
+  return version_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgLoginReq::release_version() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginReq.version)
+  
+  return version_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgLoginReq::set_allocated_version(::std::string* version) {
+  if (version != NULL) {
+    
+  } else {
+    
+  }
+  version_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), version);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginReq.version)
+}
+
+// -------------------------------------------------------------------
+
+// MsgLogoutReq
+
+// -------------------------------------------------------------------
+
+// MsgTellBeKick
+
+// uint32 type = 1;
+inline void MsgTellBeKick::clear_type() {
+  type_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgTellBeKick::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTellBeKick.type)
+  return type_;
+}
+inline void MsgTellBeKick::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTellBeKick.type)
 }
 
 // -------------------------------------------------------------------
@@ -2233,368 +2112,9 @@ inline void MsgQueryPlayerAck::set_allocated_player(::KFMsg::PBObject* player) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryPlayerAck.player)
 }
 
-// -------------------------------------------------------------------
-
-// MsgTellBeKick
-
-// uint32 type = 1;
-inline void MsgTellBeKick::clear_type() {
-  type_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgTellBeKick::type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgTellBeKick.type)
-  return type_;
-}
-inline void MsgTellBeKick::set_type(::google::protobuf::uint32 value) {
-  
-  type_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgTellBeKick.type)
-}
-
-// -------------------------------------------------------------------
-
-// MsgLoginVerifyReq
-
-// uint64 accountid = 1;
-inline void MsgLoginVerifyReq::clear_accountid() {
-  accountid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 MsgLoginVerifyReq::accountid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyReq.accountid)
-  return accountid_;
-}
-inline void MsgLoginVerifyReq::set_accountid(::google::protobuf::uint64 value) {
-  
-  accountid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyReq.accountid)
-}
-
-// bytes token = 2;
-inline void MsgLoginVerifyReq::clear_token() {
-  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgLoginVerifyReq::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyReq.token)
-  return token_.GetNoArena();
-}
-inline void MsgLoginVerifyReq::set_token(const ::std::string& value) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyReq.token)
-}
-#if LANG_CXX11
-inline void MsgLoginVerifyReq::set_token(::std::string&& value) {
-  
-  token_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginVerifyReq.token)
-}
-#endif
-inline void MsgLoginVerifyReq::set_token(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginVerifyReq.token)
-}
-inline void MsgLoginVerifyReq::set_token(const void* value, size_t size) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginVerifyReq.token)
-}
-inline ::std::string* MsgLoginVerifyReq::mutable_token() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginVerifyReq.token)
-  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgLoginVerifyReq::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginVerifyReq.token)
-  
-  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgLoginVerifyReq::set_allocated_token(::std::string* token) {
-  if (token != NULL) {
-    
-  } else {
-    
-  }
-  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginVerifyReq.token)
-}
-
-// bytes version = 3;
-inline void MsgLoginVerifyReq::clear_version() {
-  version_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgLoginVerifyReq::version() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyReq.version)
-  return version_.GetNoArena();
-}
-inline void MsgLoginVerifyReq::set_version(const ::std::string& value) {
-  
-  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyReq.version)
-}
-#if LANG_CXX11
-inline void MsgLoginVerifyReq::set_version(::std::string&& value) {
-  
-  version_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginVerifyReq.version)
-}
-#endif
-inline void MsgLoginVerifyReq::set_version(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginVerifyReq.version)
-}
-inline void MsgLoginVerifyReq::set_version(const void* value, size_t size) {
-  
-  version_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginVerifyReq.version)
-}
-inline ::std::string* MsgLoginVerifyReq::mutable_version() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginVerifyReq.version)
-  return version_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgLoginVerifyReq::release_version() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginVerifyReq.version)
-  
-  return version_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgLoginVerifyReq::set_allocated_version(::std::string* version) {
-  if (version != NULL) {
-    
-  } else {
-    
-  }
-  version_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), version);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginVerifyReq.version)
-}
-
-// -------------------------------------------------------------------
-
-// MsgLoginVerifyAck
-
-// uint64 playerid = 1;
-inline void MsgLoginVerifyAck::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 MsgLoginVerifyAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyAck.playerid)
-  return playerid_;
-}
-inline void MsgLoginVerifyAck::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyAck.playerid)
-}
-
-// bytes token = 2;
-inline void MsgLoginVerifyAck::clear_token() {
-  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgLoginVerifyAck::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyAck.token)
-  return token_.GetNoArena();
-}
-inline void MsgLoginVerifyAck::set_token(const ::std::string& value) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyAck.token)
-}
-#if LANG_CXX11
-inline void MsgLoginVerifyAck::set_token(::std::string&& value) {
-  
-  token_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginVerifyAck.token)
-}
-#endif
-inline void MsgLoginVerifyAck::set_token(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginVerifyAck.token)
-}
-inline void MsgLoginVerifyAck::set_token(const void* value, size_t size) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginVerifyAck.token)
-}
-inline ::std::string* MsgLoginVerifyAck::mutable_token() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginVerifyAck.token)
-  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgLoginVerifyAck::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginVerifyAck.token)
-  
-  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgLoginVerifyAck::set_allocated_token(::std::string* token) {
-  if (token != NULL) {
-    
-  } else {
-    
-  }
-  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginVerifyAck.token)
-}
-
-// bytes ip = 3;
-inline void MsgLoginVerifyAck::clear_ip() {
-  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgLoginVerifyAck::ip() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyAck.ip)
-  return ip_.GetNoArena();
-}
-inline void MsgLoginVerifyAck::set_ip(const ::std::string& value) {
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyAck.ip)
-}
-#if LANG_CXX11
-inline void MsgLoginVerifyAck::set_ip(::std::string&& value) {
-  
-  ip_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginVerifyAck.ip)
-}
-#endif
-inline void MsgLoginVerifyAck::set_ip(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginVerifyAck.ip)
-}
-inline void MsgLoginVerifyAck::set_ip(const void* value, size_t size) {
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginVerifyAck.ip)
-}
-inline ::std::string* MsgLoginVerifyAck::mutable_ip() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginVerifyAck.ip)
-  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgLoginVerifyAck::release_ip() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginVerifyAck.ip)
-  
-  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgLoginVerifyAck::set_allocated_ip(::std::string* ip) {
-  if (ip != NULL) {
-    
-  } else {
-    
-  }
-  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginVerifyAck.ip)
-}
-
-// uint32 port = 4;
-inline void MsgLoginVerifyAck::clear_port() {
-  port_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgLoginVerifyAck::port() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginVerifyAck.port)
-  return port_;
-}
-inline void MsgLoginVerifyAck::set_port(::google::protobuf::uint32 value) {
-  
-  port_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginVerifyAck.port)
-}
-
-// -------------------------------------------------------------------
-
-// MsgLoginGameReq
-
-// uint64 playerid = 1;
-inline void MsgLoginGameReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 MsgLoginGameReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginGameReq.playerid)
-  return playerid_;
-}
-inline void MsgLoginGameReq::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginGameReq.playerid)
-}
-
-// bytes token = 2;
-inline void MsgLoginGameReq::clear_token() {
-  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgLoginGameReq::token() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginGameReq.token)
-  return token_.GetNoArena();
-}
-inline void MsgLoginGameReq::set_token(const ::std::string& value) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginGameReq.token)
-}
-#if LANG_CXX11
-inline void MsgLoginGameReq::set_token(::std::string&& value) {
-  
-  token_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgLoginGameReq.token)
-}
-#endif
-inline void MsgLoginGameReq::set_token(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgLoginGameReq.token)
-}
-inline void MsgLoginGameReq::set_token(const void* value, size_t size) {
-  
-  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgLoginGameReq.token)
-}
-inline ::std::string* MsgLoginGameReq::mutable_token() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginGameReq.token)
-  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgLoginGameReq::release_token() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginGameReq.token)
-  
-  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgLoginGameReq::set_allocated_token(::std::string* token) {
-  if (token != NULL) {
-    
-  } else {
-    
-  }
-  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginGameReq.token)
-}
-
-// -------------------------------------------------------------------
-
-// MsgLoginOutReq
-
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -98,27 +98,12 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto id = __JSON_GET_UINT32__( request, __KF_STRING__( id ) );
-        auto count = __JSON_GET_UINT32__( request, __KF_STRING__( count ) );
-
         auto redisdriver = __ZONE_REDIS_DRIVER__;
+        auto id = __JSON_GET_UINT32__( request, __KF_STRING__( id ) );
 
-        // 先读取数量
-        auto kfcount = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( zoneip ), id, __KF_STRING__( count ) );
-        if ( !kfcount->IsOk() )
-        {
-            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
-        }
-
-        // 更新比较小的
-        if ( kfcount->_value == _invalid_int || kfcount->_value > count )
-        {
-            MapString values;
-            __JSON_TO_MAP__( request, values );
-            redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( zoneip ), id );
-        }
-
-        redisdriver->Execute( "expire {}:{} {}", __KF_STRING__( zoneip ), id, 30 );
+        MapString values;
+        __JSON_TO_MAP__( request, values );
+        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( zoneip ), id );
         return _kf_http_client->SendCode( KFMsg::Ok );
     }
 

@@ -73,12 +73,19 @@ enum MidwareCodeEnum {
   SteamError = 11015,
   SteamDataError = 11016,
   SteamAuthError = 11017,
+  VersionNotCompatibility = 12001,
+  LoginIsClose = 12002,
+  LoginNoLoginServer = 12003,
+  LoginSystemBusy = 12004,
+  LoginWorldSystemBusy = 12005,
+  LoginNoGameServer = 12006,
+  LoginGameServerBusy = 12007,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = SteamAuthError;
+const MidwareCodeEnum MidwareCodeEnum_MAX = LoginGameServerBusy;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

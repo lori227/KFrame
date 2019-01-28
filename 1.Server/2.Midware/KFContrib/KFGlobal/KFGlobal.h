@@ -6,7 +6,7 @@
 namespace KFrame
 {
     class KFRand;
-    class KFGuid;
+    class KFUUID;
     class KFVersion;
 
     class KFGlobal
@@ -38,10 +38,7 @@ namespace KFrame
         uint32 RandInRange( uint32 min, uint32 max, uint32 base );
 
         // 创建guid
-        uint64 Make64Guid();
-
-        // 打印guid
-        void Print64Guid( uint64 guid );
+        uint64 MakeUUID( uint32 type );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化类型
         void InitNetService( std::string& strtype );
@@ -103,7 +100,7 @@ namespace KFrame
         KFRand* _kf_rand;
 
         // guid
-        KFGuid* _kf_guid;
+        std::unordered_map< uint32, KFUUID*> _kf_uuid;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
 

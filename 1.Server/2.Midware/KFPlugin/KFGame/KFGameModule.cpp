@@ -159,23 +159,13 @@ namespace KFrame
         return true;
     }
 
-    bool KFGameModule::BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message )
+    // 转发服务器
+    bool KFGameModule::BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message )
     {
-        KFMsg::S2SBroadcastToWord req;
+        KFMsg::S2SBroadcastToGame req;
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        SendToWorld( KFMsg::S2S_BROADCAST_TO_WORLD, &req );
-        return true;
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleBroadcastMessageReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToGame );
-
-        KFMsg::S2SBroadcastToGate req;
-        req.set_msgid( kfmsg.msgid() );
-        req.set_msgdata( kfmsg.msgdata() );
-        _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE, &req );
+        return SendToWorld( KFMsg::S2S_BROADCAST_TO_GAME, &req );
     }
 
     bool KFGameModule::TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
@@ -185,15 +175,6 @@ namespace KFrame
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return SendToWorld( KFMsg::S2S_TRANSMIT_TO_PLAYER, &req );
-    }
-
-    // 转发服务器
-    bool KFGameModule::TransmitToServer( uint32 msgid, ::google::protobuf::Message* message )
-    {
-        KFMsg::S2STransmitToServer req;
-        req.set_msgid( msgid );
-        req.set_msgdata( message->SerializeAsString() );
-        return SendToWorld( KFMsg::S2S_TRANSMIT_TO_SERVER, &req );
     }
 
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGameModule::TransmitMessageToPlayer )

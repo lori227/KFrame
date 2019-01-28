@@ -10,3 +10,11 @@ enum ChannelEnum
 	WeiXin = 2;			// 微信
 	Steam = 3;			// steam
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+enum KickEnum
+{
+	UnknowKick = 0;			// 无效
+	KickByLogin = 1;		// 被登录踢下线
+	KickByPlatform = 2;		// 被平台踢下线
+}
