@@ -12,19 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFAuthModule.cpp" />
-    <ClCompile Include="KFAuthPlugin.cpp" />
+    <ClCompile Include="KFLoginModule.cpp" />
+    <ClCompile Include="KFLoginPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFAuthInterface.h" />
-    <ClInclude Include="KFAuthModule.hpp" />
-    <ClInclude Include="KFAuthPlugin.hpp" />
+    <ClInclude Include="KFLoginInterface.h" />
+    <ClInclude Include="KFLoginModule.h" />
+    <ClInclude Include="KFLoginPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8F9F6C0F-6B0D-4D24-AAF4-8643FFFC0782}</ProjectGuid>
+    <ProjectGuid>{7D237610-8032-4EAB-9411-24A77277E625}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFAuth</ProjectName>
+    <ProjectName>KFLogin</ProjectName>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,11 +69,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
-      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,9 +91,6 @@
     <PostBuildEvent>
       <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
-    <BuildLog>
-      <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
-    </BuildLog>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -102,10 +99,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN;POCO_STATIC;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -123,9 +120,6 @@
     <PostBuildEvent>
       <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
-    <BuildLog>
-      <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
-    </BuildLog>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

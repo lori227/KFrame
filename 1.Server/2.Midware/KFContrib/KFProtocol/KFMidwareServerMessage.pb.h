@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareServerMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[10];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -48,6 +48,9 @@ struct LIBPROTOC_EXPORT TableStruct {
 void LIBPROTOC_EXPORT AddDescriptors();
 }  // namespace protobuf_KFMidwareServerMessage_2eproto
 namespace KFMsg {
+class PBZoneData;
+class PBZoneDataDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBZoneDataDefaultTypeInternal _PBZoneData_default_instance_;
 class S2SBroadcastMessageReq;
 class S2SBroadcastMessageReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SBroadcastMessageReqDefaultTypeInternal _S2SBroadcastMessageReq_default_instance_;
@@ -69,9 +72,16 @@ LIBPROTOC_EXPORT extern S2STransmitToPlayerDefaultTypeInternal _S2STransmitToPla
 class S2STransmitToServer;
 class S2STransmitToServerDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2STransmitToServerDefaultTypeInternal _S2STransmitToServer_default_instance_;
+class S2SUpdateZoneToLoginReq;
+class S2SUpdateZoneToLoginReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateZoneToLoginReqDefaultTypeInternal _S2SUpdateZoneToLoginReq_default_instance_;
+class S2SUpdateZoneToWorldReq;
+class S2SUpdateZoneToWorldReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateZoneToWorldReqDefaultTypeInternal _S2SUpdateZoneToWorldReq_default_instance_;
 }  // namespace KFMsg
 namespace google {
 namespace protobuf {
+template<> LIBPROTOC_EXPORT ::KFMsg::PBZoneData* Arena::CreateMaybeMessage<::KFMsg::PBZoneData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastMessageReq* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastMessageReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGame* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGame>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGate* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGate>(Arena*);
@@ -79,17 +89,21 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToWord* Arena::CreateMaybeMessa
 template<> LIBPROTOC_EXPORT ::KFMsg::S2STransmitMessageReq* Arena::CreateMaybeMessage<::KFMsg::S2STransmitMessageReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2STransmitToPlayer* Arena::CreateMaybeMessage<::KFMsg::S2STransmitToPlayer>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2STransmitToServer* Arena::CreateMaybeMessage<::KFMsg::S2STransmitToServer>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateZoneToLoginReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateZoneToLoginReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateZoneToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateZoneToWorldReq>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace KFMsg {
 
 enum MidwareServerProtocol {
   S2S_MIDWARE_SERVER_PROTOCOL_BEGIN = 0,
-  S2S_BROADCAST_TO_WORLD = 20001,
-  S2S_BROADCAST_TO_GAME = 20002,
-  S2S_BROADCAST_TO_GATE = 20003,
-  S2S_TRANSMIT_TO_PLAYER = 20004,
-  S2S_TRANSMIT_TO_SERVER = 20005,
+  S2S_UPDATE_ZONE_TO_LOGIN_REQ = 20001,
+  S2S_UPDATE_ZONE_TO_WORLD_REQ = 20002,
+  S2S_BROADCAST_TO_WORLD = 21001,
+  S2S_BROADCAST_TO_GAME = 21002,
+  S2S_BROADCAST_TO_GATE = 21003,
+  S2S_TRANSMIT_TO_PLAYER = 21004,
+  S2S_TRANSMIT_TO_SERVER = 21005,
   MidwareServerProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareServerProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -109,6 +123,349 @@ inline bool MidwareServerProtocol_Parse(
     MidwareServerProtocol_descriptor(), name, value);
 }
 // ===================================================================
+
+class LIBPROTOC_EXPORT PBZoneData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBZoneData) */ {
+ public:
+  PBZoneData();
+  virtual ~PBZoneData();
+
+  PBZoneData(const PBZoneData& from);
+
+  inline PBZoneData& operator=(const PBZoneData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBZoneData(PBZoneData&& from) noexcept
+    : PBZoneData() {
+    *this = ::std::move(from);
+  }
+
+  inline PBZoneData& operator=(PBZoneData&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBZoneData& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBZoneData* internal_default_instance() {
+    return reinterpret_cast<const PBZoneData*>(
+               &_PBZoneData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  void Swap(PBZoneData* other);
+  friend void swap(PBZoneData& a, PBZoneData& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBZoneData* New() const final {
+    return CreateMaybeMessage<PBZoneData>(NULL);
+  }
+
+  PBZoneData* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBZoneData>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBZoneData& from);
+  void MergeFrom(const PBZoneData& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBZoneData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes ip = 1;
+  void clear_ip();
+  static const int kIpFieldNumber = 1;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const void* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
+  // uint32 port = 2;
+  void clear_port();
+  static const int kPortFieldNumber = 2;
+  ::google::protobuf::uint32 port() const;
+  void set_port(::google::protobuf::uint32 value);
+
+  // uint32 count = 3;
+  void clear_count();
+  static const int kCountFieldNumber = 3;
+  ::google::protobuf::uint32 count() const;
+  void set_count(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBZoneData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::google::protobuf::uint32 port_;
+  ::google::protobuf::uint32 count_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SUpdateZoneToLoginReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateZoneToLoginReq) */ {
+ public:
+  S2SUpdateZoneToLoginReq();
+  virtual ~S2SUpdateZoneToLoginReq();
+
+  S2SUpdateZoneToLoginReq(const S2SUpdateZoneToLoginReq& from);
+
+  inline S2SUpdateZoneToLoginReq& operator=(const S2SUpdateZoneToLoginReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SUpdateZoneToLoginReq(S2SUpdateZoneToLoginReq&& from) noexcept
+    : S2SUpdateZoneToLoginReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SUpdateZoneToLoginReq& operator=(S2SUpdateZoneToLoginReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SUpdateZoneToLoginReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SUpdateZoneToLoginReq* internal_default_instance() {
+    return reinterpret_cast<const S2SUpdateZoneToLoginReq*>(
+               &_S2SUpdateZoneToLoginReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  void Swap(S2SUpdateZoneToLoginReq* other);
+  friend void swap(S2SUpdateZoneToLoginReq& a, S2SUpdateZoneToLoginReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SUpdateZoneToLoginReq* New() const final {
+    return CreateMaybeMessage<S2SUpdateZoneToLoginReq>(NULL);
+  }
+
+  S2SUpdateZoneToLoginReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SUpdateZoneToLoginReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SUpdateZoneToLoginReq& from);
+  void MergeFrom(const S2SUpdateZoneToLoginReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SUpdateZoneToLoginReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBZoneData zonedata = 1;
+  bool has_zonedata() const;
+  void clear_zonedata();
+  static const int kZonedataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBZoneData& _internal_zonedata() const;
+  public:
+  const ::KFMsg::PBZoneData& zonedata() const;
+  ::KFMsg::PBZoneData* release_zonedata();
+  ::KFMsg::PBZoneData* mutable_zonedata();
+  void set_allocated_zonedata(::KFMsg::PBZoneData* zonedata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateZoneToLoginReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBZoneData* zonedata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SUpdateZoneToWorldReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateZoneToWorldReq) */ {
+ public:
+  S2SUpdateZoneToWorldReq();
+  virtual ~S2SUpdateZoneToWorldReq();
+
+  S2SUpdateZoneToWorldReq(const S2SUpdateZoneToWorldReq& from);
+
+  inline S2SUpdateZoneToWorldReq& operator=(const S2SUpdateZoneToWorldReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SUpdateZoneToWorldReq(S2SUpdateZoneToWorldReq&& from) noexcept
+    : S2SUpdateZoneToWorldReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SUpdateZoneToWorldReq& operator=(S2SUpdateZoneToWorldReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SUpdateZoneToWorldReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SUpdateZoneToWorldReq* internal_default_instance() {
+    return reinterpret_cast<const S2SUpdateZoneToWorldReq*>(
+               &_S2SUpdateZoneToWorldReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(S2SUpdateZoneToWorldReq* other);
+  friend void swap(S2SUpdateZoneToWorldReq& a, S2SUpdateZoneToWorldReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SUpdateZoneToWorldReq* New() const final {
+    return CreateMaybeMessage<S2SUpdateZoneToWorldReq>(NULL);
+  }
+
+  S2SUpdateZoneToWorldReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SUpdateZoneToWorldReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SUpdateZoneToWorldReq& from);
+  void MergeFrom(const S2SUpdateZoneToWorldReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SUpdateZoneToWorldReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBZoneData zonedata = 1;
+  bool has_zonedata() const;
+  void clear_zonedata();
+  static const int kZonedataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBZoneData& _internal_zonedata() const;
+  public:
+  const ::KFMsg::PBZoneData& zonedata() const;
+  ::KFMsg::PBZoneData* release_zonedata();
+  ::KFMsg::PBZoneData* mutable_zonedata();
+  void set_allocated_zonedata(::KFMsg::PBZoneData* zonedata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateZoneToWorldReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBZoneData* zonedata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
 
 class LIBPROTOC_EXPORT S2STransmitMessageReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STransmitMessageReq) */ {
  public:
@@ -145,7 +502,7 @@ class LIBPROTOC_EXPORT S2STransmitMessageReq : public ::google::protobuf::Messag
                &_S2STransmitMessageReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    3;
 
   void Swap(S2STransmitMessageReq* other);
   friend void swap(S2STransmitMessageReq& a, S2STransmitMessageReq& b) {
@@ -270,7 +627,7 @@ class LIBPROTOC_EXPORT S2SBroadcastMessageReq : public ::google::protobuf::Messa
                &_S2SBroadcastMessageReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    4;
 
   void Swap(S2SBroadcastMessageReq* other);
   friend void swap(S2SBroadcastMessageReq& a, S2SBroadcastMessageReq& b) {
@@ -388,7 +745,7 @@ class LIBPROTOC_EXPORT S2SBroadcastToWord : public ::google::protobuf::Message /
                &_S2SBroadcastToWord_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    5;
 
   void Swap(S2SBroadcastToWord* other);
   friend void swap(S2SBroadcastToWord& a, S2SBroadcastToWord& b) {
@@ -506,7 +863,7 @@ class LIBPROTOC_EXPORT S2SBroadcastToGame : public ::google::protobuf::Message /
                &_S2SBroadcastToGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    6;
 
   void Swap(S2SBroadcastToGame* other);
   friend void swap(S2SBroadcastToGame& a, S2SBroadcastToGame& b) {
@@ -624,7 +981,7 @@ class LIBPROTOC_EXPORT S2SBroadcastToGate : public ::google::protobuf::Message /
                &_S2SBroadcastToGate_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    7;
 
   void Swap(S2SBroadcastToGate* other);
   friend void swap(S2SBroadcastToGate& a, S2SBroadcastToGate& b) {
@@ -742,7 +1099,7 @@ class LIBPROTOC_EXPORT S2STransmitToPlayer : public ::google::protobuf::Message 
                &_S2STransmitToPlayer_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    8;
 
   void Swap(S2STransmitToPlayer* other);
   friend void swap(S2STransmitToPlayer& a, S2STransmitToPlayer& b) {
@@ -867,7 +1224,7 @@ class LIBPROTOC_EXPORT S2STransmitToServer : public ::google::protobuf::Message 
                &_S2STransmitToServer_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    9;
 
   void Swap(S2STransmitToServer* other);
   friend void swap(S2STransmitToServer& a, S2STransmitToServer& b) {
@@ -957,6 +1314,207 @@ class LIBPROTOC_EXPORT S2STransmitToServer : public ::google::protobuf::Message 
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// PBZoneData
+
+// bytes ip = 1;
+inline void PBZoneData::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBZoneData::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBZoneData.ip)
+  return ip_.GetNoArena();
+}
+inline void PBZoneData::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBZoneData.ip)
+}
+#if LANG_CXX11
+inline void PBZoneData::set_ip(::std::string&& value) {
+  
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBZoneData.ip)
+}
+#endif
+inline void PBZoneData::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBZoneData.ip)
+}
+inline void PBZoneData::set_ip(const void* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBZoneData.ip)
+}
+inline ::std::string* PBZoneData::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBZoneData.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBZoneData::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBZoneData.ip)
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBZoneData::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBZoneData.ip)
+}
+
+// uint32 port = 2;
+inline void PBZoneData::clear_port() {
+  port_ = 0u;
+}
+inline ::google::protobuf::uint32 PBZoneData::port() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBZoneData.port)
+  return port_;
+}
+inline void PBZoneData::set_port(::google::protobuf::uint32 value) {
+  
+  port_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBZoneData.port)
+}
+
+// uint32 count = 3;
+inline void PBZoneData::clear_count() {
+  count_ = 0u;
+}
+inline ::google::protobuf::uint32 PBZoneData::count() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBZoneData.count)
+  return count_;
+}
+inline void PBZoneData::set_count(::google::protobuf::uint32 value) {
+  
+  count_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBZoneData.count)
+}
+
+// -------------------------------------------------------------------
+
+// S2SUpdateZoneToLoginReq
+
+// .KFMsg.PBZoneData zonedata = 1;
+inline bool S2SUpdateZoneToLoginReq::has_zonedata() const {
+  return this != internal_default_instance() && zonedata_ != NULL;
+}
+inline void S2SUpdateZoneToLoginReq::clear_zonedata() {
+  if (GetArenaNoVirtual() == NULL && zonedata_ != NULL) {
+    delete zonedata_;
+  }
+  zonedata_ = NULL;
+}
+inline const ::KFMsg::PBZoneData& S2SUpdateZoneToLoginReq::_internal_zonedata() const {
+  return *zonedata_;
+}
+inline const ::KFMsg::PBZoneData& S2SUpdateZoneToLoginReq::zonedata() const {
+  const ::KFMsg::PBZoneData* p = zonedata_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateZoneToLoginReq.zonedata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBZoneData*>(
+      &::KFMsg::_PBZoneData_default_instance_);
+}
+inline ::KFMsg::PBZoneData* S2SUpdateZoneToLoginReq::release_zonedata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SUpdateZoneToLoginReq.zonedata)
+  
+  ::KFMsg::PBZoneData* temp = zonedata_;
+  zonedata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBZoneData* S2SUpdateZoneToLoginReq::mutable_zonedata() {
+  
+  if (zonedata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBZoneData>(GetArenaNoVirtual());
+    zonedata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SUpdateZoneToLoginReq.zonedata)
+  return zonedata_;
+}
+inline void S2SUpdateZoneToLoginReq::set_allocated_zonedata(::KFMsg::PBZoneData* zonedata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete zonedata_;
+  }
+  if (zonedata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      zonedata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, zonedata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  zonedata_ = zonedata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SUpdateZoneToLoginReq.zonedata)
+}
+
+// -------------------------------------------------------------------
+
+// S2SUpdateZoneToWorldReq
+
+// .KFMsg.PBZoneData zonedata = 1;
+inline bool S2SUpdateZoneToWorldReq::has_zonedata() const {
+  return this != internal_default_instance() && zonedata_ != NULL;
+}
+inline void S2SUpdateZoneToWorldReq::clear_zonedata() {
+  if (GetArenaNoVirtual() == NULL && zonedata_ != NULL) {
+    delete zonedata_;
+  }
+  zonedata_ = NULL;
+}
+inline const ::KFMsg::PBZoneData& S2SUpdateZoneToWorldReq::_internal_zonedata() const {
+  return *zonedata_;
+}
+inline const ::KFMsg::PBZoneData& S2SUpdateZoneToWorldReq::zonedata() const {
+  const ::KFMsg::PBZoneData* p = zonedata_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateZoneToWorldReq.zonedata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBZoneData*>(
+      &::KFMsg::_PBZoneData_default_instance_);
+}
+inline ::KFMsg::PBZoneData* S2SUpdateZoneToWorldReq::release_zonedata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SUpdateZoneToWorldReq.zonedata)
+  
+  ::KFMsg::PBZoneData* temp = zonedata_;
+  zonedata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBZoneData* S2SUpdateZoneToWorldReq::mutable_zonedata() {
+  
+  if (zonedata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBZoneData>(GetArenaNoVirtual());
+    zonedata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SUpdateZoneToWorldReq.zonedata)
+  return zonedata_;
+}
+inline void S2SUpdateZoneToWorldReq::set_allocated_zonedata(::KFMsg::PBZoneData* zonedata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete zonedata_;
+  }
+  if (zonedata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      zonedata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, zonedata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  zonedata_ = zonedata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SUpdateZoneToWorldReq.zonedata)
+}
+
+// -------------------------------------------------------------------
+
 // S2STransmitMessageReq
 
 // uint64 playerid = 1;
@@ -1483,6 +2041,12 @@ inline void S2STransmitToServer::set_allocated_msgdata(::std::string* msgdata) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

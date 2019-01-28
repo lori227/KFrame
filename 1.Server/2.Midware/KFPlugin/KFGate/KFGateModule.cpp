@@ -36,28 +36,30 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
+
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_GATE_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerUpdateOnlineToAuth )
     {
-        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneupdate );
-
-        // 更新gate的负载信息
-        auto kfzone = _kf_zone->GetZone();
         auto kfglobal = KFGlobal::Instance();
 
-        __JSON_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), kfzone->_id );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), kfglobal->_interanet_ip );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), kfglobal->_listen_port );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _kf_role_list.Size() );
-        _kf_http_client->StartMTClient( _url, kfjson );
+        auto loginid = _kf_login_conhash.FindHashNode( kfglobal->_app_id._union._id );
+        if ( loginid == _invalid_int )
+        {
+            return;
+        }
+
+        KFMsg::S2SUpdateZoneToLoginReq req;
+        auto pbzone = req.mutable_zonedata();
+        pbzone->set_ip( kfglobal->_interanet_ip );
+        pbzone->set_port( kfglobal->_listen_port );
+        pbzone->set_count( _kf_role_list.Size() );
+        _kf_tcp_client->SendNetMessage( loginid, KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ, &req );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

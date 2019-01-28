@@ -12,8 +12,7 @@ enum FrameProtocol
 	S2S_REMOTE_LOG_TO_SERVER_REQ = 10010;				// 记录日志到日志服务器
 	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011;			// 注册Agent到Server
 	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012;			// 部署命令
-	S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10013;			// 部署命令
-	S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10014;			// 部署命令
+	S2S_DEPLOY_COMMAND_TO_CLIENT_REQ = 10013;			// 部署命令
 
 	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101;			// 注册到服务器集群
 	S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10102;			// 更新集群连接器连接数量
@@ -347,14 +346,8 @@ message S2SDeployCommandToAgentReq
 	PBDeployCommand deploycommand = 1;
 }
 
-// S2S_DEPLOY_COMMAND_TO_MASTER_REQ
-message S2SDeployCommandToMasterReq
-{
-	PBDeployCommand deploycommand = 1;
-}
-
-// S2S_DEPLOY_COMMAND_TO_SERVER_REQ
-message S2SDeployCommandToServerReq
+// S2S_DEPLOY_COMMAND_TO_CLIENT_REQ
+message S2SDeployCommandToClientReq
 {
 	PBDeployCommand deploycommand = 1;
 }

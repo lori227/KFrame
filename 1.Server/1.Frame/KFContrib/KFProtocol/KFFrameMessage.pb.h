@@ -39,7 +39,7 @@ namespace protobuf_KFFrameMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[37];
+  static const ::google::protobuf::internal::ParseTable schema[36];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -95,12 +95,9 @@ LIBPROTOC_EXPORT extern S2SClusterVerifyToProxyReqDefaultTypeInternal _S2SCluste
 class S2SDeployCommandToAgentReq;
 class S2SDeployCommandToAgentReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SDeployCommandToAgentReqDefaultTypeInternal _S2SDeployCommandToAgentReq_default_instance_;
-class S2SDeployCommandToMasterReq;
-class S2SDeployCommandToMasterReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SDeployCommandToMasterReqDefaultTypeInternal _S2SDeployCommandToMasterReq_default_instance_;
-class S2SDeployCommandToServerReq;
-class S2SDeployCommandToServerReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SDeployCommandToServerReqDefaultTypeInternal _S2SDeployCommandToServerReq_default_instance_;
+class S2SDeployCommandToClientReq;
+class S2SDeployCommandToClientReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SDeployCommandToClientReqDefaultTypeInternal _S2SDeployCommandToClientReq_default_instance_;
 class S2SRegisterAgentToServerReq;
 class S2SRegisterAgentToServerReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRegisterAgentToServerReqDefaultTypeInternal _S2SRegisterAgentToServerReq_default_instance_;
@@ -177,8 +174,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterUpdateToMasterReq* Arena::CreateM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyToClientAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SClusterVerifyToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SClusterVerifyToProxyReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToAgentReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToAgentReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToMasterReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToMasterReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToServerReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SDeployCommandToClientReq* Arena::CreateMaybeMessage<::KFMsg::S2SDeployCommandToClientReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRegisterAgentToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SRegisterAgentToServerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRemoteLogToServerReq* Arena::CreateMaybeMessage<::KFMsg::S2SRemoteLogToServerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToProxyReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteAddObjectToProxyReq>(Arena*);
@@ -211,8 +207,7 @@ enum FrameProtocol {
   S2S_REMOTE_LOG_TO_SERVER_REQ = 10010,
   S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011,
   S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012,
-  S2S_DEPLOY_COMMAND_TO_MASTER_REQ = 10013,
-  S2S_DEPLOY_COMMAND_TO_SERVER_REQ = 10014,
+  S2S_DEPLOY_COMMAND_TO_CLIENT_REQ = 10013,
   S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101,
   S2S_CLUSTER_UPDATE_TO_MASTER_REQ = 10102,
   S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10103,
@@ -4676,24 +4671,24 @@ class LIBPROTOC_EXPORT S2SDeployCommandToAgentReq : public ::google::protobuf::M
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDeployCommandToMasterReq) */ {
+class LIBPROTOC_EXPORT S2SDeployCommandToClientReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDeployCommandToClientReq) */ {
  public:
-  S2SDeployCommandToMasterReq();
-  virtual ~S2SDeployCommandToMasterReq();
+  S2SDeployCommandToClientReq();
+  virtual ~S2SDeployCommandToClientReq();
 
-  S2SDeployCommandToMasterReq(const S2SDeployCommandToMasterReq& from);
+  S2SDeployCommandToClientReq(const S2SDeployCommandToClientReq& from);
 
-  inline S2SDeployCommandToMasterReq& operator=(const S2SDeployCommandToMasterReq& from) {
+  inline S2SDeployCommandToClientReq& operator=(const S2SDeployCommandToClientReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SDeployCommandToMasterReq(S2SDeployCommandToMasterReq&& from) noexcept
-    : S2SDeployCommandToMasterReq() {
+  S2SDeployCommandToClientReq(S2SDeployCommandToClientReq&& from) noexcept
+    : S2SDeployCommandToClientReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SDeployCommandToMasterReq& operator=(S2SDeployCommandToMasterReq&& from) noexcept {
+  inline S2SDeployCommandToClientReq& operator=(S2SDeployCommandToClientReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -4703,34 +4698,34 @@ class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SDeployCommandToMasterReq& default_instance();
+  static const S2SDeployCommandToClientReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SDeployCommandToMasterReq* internal_default_instance() {
-    return reinterpret_cast<const S2SDeployCommandToMasterReq*>(
-               &_S2SDeployCommandToMasterReq_default_instance_);
+  static inline const S2SDeployCommandToClientReq* internal_default_instance() {
+    return reinterpret_cast<const S2SDeployCommandToClientReq*>(
+               &_S2SDeployCommandToClientReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     33;
 
-  void Swap(S2SDeployCommandToMasterReq* other);
-  friend void swap(S2SDeployCommandToMasterReq& a, S2SDeployCommandToMasterReq& b) {
+  void Swap(S2SDeployCommandToClientReq* other);
+  friend void swap(S2SDeployCommandToClientReq& a, S2SDeployCommandToClientReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SDeployCommandToMasterReq* New() const final {
-    return CreateMaybeMessage<S2SDeployCommandToMasterReq>(NULL);
+  inline S2SDeployCommandToClientReq* New() const final {
+    return CreateMaybeMessage<S2SDeployCommandToClientReq>(NULL);
   }
 
-  S2SDeployCommandToMasterReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SDeployCommandToMasterReq>(arena);
+  S2SDeployCommandToClientReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SDeployCommandToClientReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SDeployCommandToMasterReq& from);
-  void MergeFrom(const S2SDeployCommandToMasterReq& from);
+  void CopyFrom(const S2SDeployCommandToClientReq& from);
+  void MergeFrom(const S2SDeployCommandToClientReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -4747,7 +4742,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SDeployCommandToMasterReq* other);
+  void InternalSwap(S2SDeployCommandToClientReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -4775,116 +4770,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToMasterReq : public ::google::protobuf::
   ::KFMsg::PBDeployCommand* mutable_deploycommand();
   void set_allocated_deploycommand(::KFMsg::PBDeployCommand* deploycommand);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SDeployCommandToMasterReq)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBDeployCommand* deploycommand_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFFrameMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT S2SDeployCommandToServerReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDeployCommandToServerReq) */ {
- public:
-  S2SDeployCommandToServerReq();
-  virtual ~S2SDeployCommandToServerReq();
-
-  S2SDeployCommandToServerReq(const S2SDeployCommandToServerReq& from);
-
-  inline S2SDeployCommandToServerReq& operator=(const S2SDeployCommandToServerReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  S2SDeployCommandToServerReq(S2SDeployCommandToServerReq&& from) noexcept
-    : S2SDeployCommandToServerReq() {
-    *this = ::std::move(from);
-  }
-
-  inline S2SDeployCommandToServerReq& operator=(S2SDeployCommandToServerReq&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SDeployCommandToServerReq& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SDeployCommandToServerReq* internal_default_instance() {
-    return reinterpret_cast<const S2SDeployCommandToServerReq*>(
-               &_S2SDeployCommandToServerReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    34;
-
-  void Swap(S2SDeployCommandToServerReq* other);
-  friend void swap(S2SDeployCommandToServerReq& a, S2SDeployCommandToServerReq& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline S2SDeployCommandToServerReq* New() const final {
-    return CreateMaybeMessage<S2SDeployCommandToServerReq>(NULL);
-  }
-
-  S2SDeployCommandToServerReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SDeployCommandToServerReq>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SDeployCommandToServerReq& from);
-  void MergeFrom(const S2SDeployCommandToServerReq& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(S2SDeployCommandToServerReq* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // .KFMsg.PBDeployCommand deploycommand = 1;
-  bool has_deploycommand() const;
-  void clear_deploycommand();
-  static const int kDeploycommandFieldNumber = 1;
-  private:
-  const ::KFMsg::PBDeployCommand& _internal_deploycommand() const;
-  public:
-  const ::KFMsg::PBDeployCommand& deploycommand() const;
-  ::KFMsg::PBDeployCommand* release_deploycommand();
-  ::KFMsg::PBDeployCommand* mutable_deploycommand();
-  void set_allocated_deploycommand(::KFMsg::PBDeployCommand* deploycommand);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SDeployCommandToServerReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SDeployCommandToClientReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -4929,7 +4815,7 @@ class LIBPROTOC_EXPORT PBRemoteLog : public ::google::protobuf::Message /* @@pro
                &_PBRemoteLog_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    34;
 
   void Swap(PBRemoteLog* other);
   friend void swap(PBRemoteLog& a, PBRemoteLog& b) {
@@ -5047,7 +4933,7 @@ class LIBPROTOC_EXPORT S2SRemoteLogToServerReq : public ::google::protobuf::Mess
                &_S2SRemoteLogToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    35;
 
   void Swap(S2SRemoteLogToServerReq* other);
   friend void swap(S2SRemoteLogToServerReq& a, S2SRemoteLogToServerReq& b) {
@@ -9257,44 +9143,44 @@ inline void S2SDeployCommandToAgentReq::set_allocated_deploycommand(::KFMsg::PBD
 
 // -------------------------------------------------------------------
 
-// S2SDeployCommandToMasterReq
+// S2SDeployCommandToClientReq
 
 // .KFMsg.PBDeployCommand deploycommand = 1;
-inline bool S2SDeployCommandToMasterReq::has_deploycommand() const {
+inline bool S2SDeployCommandToClientReq::has_deploycommand() const {
   return this != internal_default_instance() && deploycommand_ != NULL;
 }
-inline void S2SDeployCommandToMasterReq::clear_deploycommand() {
+inline void S2SDeployCommandToClientReq::clear_deploycommand() {
   if (GetArenaNoVirtual() == NULL && deploycommand_ != NULL) {
     delete deploycommand_;
   }
   deploycommand_ = NULL;
 }
-inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToMasterReq::_internal_deploycommand() const {
+inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToClientReq::_internal_deploycommand() const {
   return *deploycommand_;
 }
-inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToMasterReq::deploycommand() const {
+inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToClientReq::deploycommand() const {
   const ::KFMsg::PBDeployCommand* p = deploycommand_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployCommandToMasterReq.deploycommand)
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployCommandToClientReq.deploycommand)
   return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBDeployCommand*>(
       &::KFMsg::_PBDeployCommand_default_instance_);
 }
-inline ::KFMsg::PBDeployCommand* S2SDeployCommandToMasterReq::release_deploycommand() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SDeployCommandToMasterReq.deploycommand)
+inline ::KFMsg::PBDeployCommand* S2SDeployCommandToClientReq::release_deploycommand() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDeployCommandToClientReq.deploycommand)
   
   ::KFMsg::PBDeployCommand* temp = deploycommand_;
   deploycommand_ = NULL;
   return temp;
 }
-inline ::KFMsg::PBDeployCommand* S2SDeployCommandToMasterReq::mutable_deploycommand() {
+inline ::KFMsg::PBDeployCommand* S2SDeployCommandToClientReq::mutable_deploycommand() {
   
   if (deploycommand_ == NULL) {
     auto* p = CreateMaybeMessage<::KFMsg::PBDeployCommand>(GetArenaNoVirtual());
     deploycommand_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDeployCommandToMasterReq.deploycommand)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDeployCommandToClientReq.deploycommand)
   return deploycommand_;
 }
-inline void S2SDeployCommandToMasterReq::set_allocated_deploycommand(::KFMsg::PBDeployCommand* deploycommand) {
+inline void S2SDeployCommandToClientReq::set_allocated_deploycommand(::KFMsg::PBDeployCommand* deploycommand) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete deploycommand_;
@@ -9310,65 +9196,7 @@ inline void S2SDeployCommandToMasterReq::set_allocated_deploycommand(::KFMsg::PB
     
   }
   deploycommand_ = deploycommand;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployCommandToMasterReq.deploycommand)
-}
-
-// -------------------------------------------------------------------
-
-// S2SDeployCommandToServerReq
-
-// .KFMsg.PBDeployCommand deploycommand = 1;
-inline bool S2SDeployCommandToServerReq::has_deploycommand() const {
-  return this != internal_default_instance() && deploycommand_ != NULL;
-}
-inline void S2SDeployCommandToServerReq::clear_deploycommand() {
-  if (GetArenaNoVirtual() == NULL && deploycommand_ != NULL) {
-    delete deploycommand_;
-  }
-  deploycommand_ = NULL;
-}
-inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToServerReq::_internal_deploycommand() const {
-  return *deploycommand_;
-}
-inline const ::KFMsg::PBDeployCommand& S2SDeployCommandToServerReq::deploycommand() const {
-  const ::KFMsg::PBDeployCommand* p = deploycommand_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployCommandToServerReq.deploycommand)
-  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBDeployCommand*>(
-      &::KFMsg::_PBDeployCommand_default_instance_);
-}
-inline ::KFMsg::PBDeployCommand* S2SDeployCommandToServerReq::release_deploycommand() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SDeployCommandToServerReq.deploycommand)
-  
-  ::KFMsg::PBDeployCommand* temp = deploycommand_;
-  deploycommand_ = NULL;
-  return temp;
-}
-inline ::KFMsg::PBDeployCommand* S2SDeployCommandToServerReq::mutable_deploycommand() {
-  
-  if (deploycommand_ == NULL) {
-    auto* p = CreateMaybeMessage<::KFMsg::PBDeployCommand>(GetArenaNoVirtual());
-    deploycommand_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDeployCommandToServerReq.deploycommand)
-  return deploycommand_;
-}
-inline void S2SDeployCommandToServerReq::set_allocated_deploycommand(::KFMsg::PBDeployCommand* deploycommand) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete deploycommand_;
-  }
-  if (deploycommand) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      deploycommand = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, deploycommand, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  deploycommand_ = deploycommand;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployCommandToServerReq.deploycommand)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployCommandToClientReq.deploycommand)
 }
 
 // -------------------------------------------------------------------
@@ -9666,8 +9494,6 @@ S2SRemoteLogToServerReq::logdata() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

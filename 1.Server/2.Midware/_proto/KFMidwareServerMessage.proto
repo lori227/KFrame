@@ -7,16 +7,42 @@ enum MidwareServerProtocol
 {	
 	S2S_MIDWARE_SERVER_PROTOCOL_BEGIN = 0;			// pb3 0 开始
 
+	// zone
+	S2S_UPDATE_ZONE_TO_LOGIN_REQ = 20001;			// 更新小区到login服务器
+	S2S_UPDATE_ZONE_TO_WORLD_REQ = 20002;			// 更新小区到world服务器
+
+
 	// server
-	S2S_BROADCAST_TO_WORLD = 20001;					// 广播消息
-	S2S_BROADCAST_TO_GAME = 20002;					// 广播消息
-	S2S_BROADCAST_TO_GATE = 20003;					// 广播消息
-	S2S_TRANSMIT_TO_PLAYER = 20004;					// 转发消息
-	S2S_TRANSMIT_TO_SERVER = 20005;					// 转发消息
+	S2S_BROADCAST_TO_WORLD = 21001;					// 广播消息
+	S2S_BROADCAST_TO_GAME = 21002;					// 广播消息
+	S2S_BROADCAST_TO_GATE = 21003;					// 广播消息
+	S2S_TRANSMIT_TO_PLAYER = 21004;					// 转发消息
+	S2S_TRANSMIT_TO_SERVER = 21005;					// 转发消息
 
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message PBZoneData
+{
+	uint32 id = 1;
+	bytes ip = 2;		// ip
+	uint32 port = 3;	// port
+	uint32 count = 4;	// 当前在线人数
+}
+
+// 更新小区到login服务器
+// S2S_UPDATE_ZONE_TO_LOGIN_REQ
+message S2SUpdateZoneToLoginReq
+{
+	PBZoneData zonedata = 1;
+}
+
+// 更新小区到world服务器
+// S2S_UPDATE_ZONE_TO_WORLD_REQ
+message S2SUpdateZoneToWorldReq
+{
+	PBZoneData zonedata = 1;
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // S2S_TRANSMIT_MESSAGE_REQ
