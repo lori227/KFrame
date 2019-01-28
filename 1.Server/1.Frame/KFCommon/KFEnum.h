@@ -38,13 +38,13 @@ namespace KFrame
     {
         enum MyEnum
         {
-            UUIDLogic = 0,		// 通用逻辑( 无指定时使用 )
-            UUIDAccount = 1,	// 账号
-            UUIDPlayer = 2,		// 玩家角色
-            UUIDItem = 3,		// 道具
-            UUIDGroup = 4,		// 组队
-            UUIDGuild = 5,		// 帮派
-            UUIDBattle = 6,		// 战场
+            Logic = 0,		// 通用逻辑( 无指定时使用 )
+            Account = 1,	// 账号
+            Player = 2,		// 玩家角色
+            Item = 3,		// 道具
+            Group = 4,		// 组队
+            Guild = 5,		// 帮派
+            Battle = 6,		// 战场
         };
     }
     ////////////////////////////////////////////////////////////////
