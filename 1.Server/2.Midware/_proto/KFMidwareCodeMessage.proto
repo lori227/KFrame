@@ -43,4 +43,5 @@ enum MidwareCodeEnum
 	LoginWorldSystemBusy	= 12005;		// World服务器出错了
 	LoginNoGameServer		= 12006;		// 没有可用的游戏服务器
 	LoginGameServerBusy		= 12007;		// 游戏服务器出错了
+	LoginBindPlayerError	= 12008;		// 绑定角色出错了
 }

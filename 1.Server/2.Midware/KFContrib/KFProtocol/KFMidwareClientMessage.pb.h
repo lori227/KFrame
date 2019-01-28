@@ -48,9 +48,9 @@ struct LIBPROTOC_EXPORT TableStruct {
 void LIBPROTOC_EXPORT AddDescriptors();
 }  // namespace protobuf_KFMidwareClientMessage_2eproto
 namespace KFMsg {
-class MsgEnterGame;
-class MsgEnterGameDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgEnterGameDefaultTypeInternal _MsgEnterGame_default_instance_;
+class MsgLoginAck;
+class MsgLoginAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgLoginAckDefaultTypeInternal _MsgLoginAck_default_instance_;
 class MsgLoginReq;
 class MsgLoginReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgLoginReqDefaultTypeInternal _MsgLoginReq_default_instance_;
@@ -87,7 +87,7 @@ LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_
 }  // namespace KFMsg
 namespace google {
 namespace protobuf {
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgEnterGame* Arena::CreateMaybeMessage<::KFMsg::MsgEnterGame>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
@@ -109,7 +109,7 @@ enum MidwareClientProtocol {
   MSG_LOGIN_REQ = 100,
   MSG_LOGIN_ACK = 101,
   MSG_LOGOUT_REQ = 102,
-  MSG_TELL_BE_KICK = 10,
+  MSG_TELL_BE_KICK = 103,
   MSG_LOGIN_ENTER_GAME = 20,
   MSG_SYNC_UPDATE_DATA = 21,
   MSG_SYNC_ADD_DATA = 22,
@@ -125,7 +125,7 @@ enum MidwareClientProtocol {
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_LOGOUT_REQ;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_TELL_BE_KICK;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -399,6 +399,122 @@ class LIBPROTOC_EXPORT MsgLoginReq : public ::google::protobuf::Message /* @@pro
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgLoginAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLoginAck) */ {
+ public:
+  MsgLoginAck();
+  virtual ~MsgLoginAck();
+
+  MsgLoginAck(const MsgLoginAck& from);
+
+  inline MsgLoginAck& operator=(const MsgLoginAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgLoginAck(MsgLoginAck&& from) noexcept
+    : MsgLoginAck() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgLoginAck& operator=(MsgLoginAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLoginAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgLoginAck* internal_default_instance() {
+    return reinterpret_cast<const MsgLoginAck*>(
+               &_MsgLoginAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(MsgLoginAck* other);
+  friend void swap(MsgLoginAck& a, MsgLoginAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgLoginAck* New() const final {
+    return CreateMaybeMessage<MsgLoginAck>(NULL);
+  }
+
+  MsgLoginAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgLoginAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgLoginAck& from);
+  void MergeFrom(const MsgLoginAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgLoginAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject playerdata = 1;
+  bool has_playerdata() const;
+  void clear_playerdata();
+  static const int kPlayerdataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_playerdata() const;
+  public:
+  const ::KFMsg::PBObject& playerdata() const;
+  ::KFMsg::PBObject* release_playerdata();
+  ::KFMsg::PBObject* mutable_playerdata();
+  void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
+
+  // uint64 servertime = 2;
+  void clear_servertime();
+  static const int kServertimeFieldNumber = 2;
+  ::google::protobuf::uint64 servertime() const;
+  void set_servertime(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgLoginAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* playerdata_;
+  ::google::protobuf::uint64 servertime_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgLogoutReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgLogoutReq) */ {
  public:
   MsgLogoutReq();
@@ -434,7 +550,7 @@ class LIBPROTOC_EXPORT MsgLogoutReq : public ::google::protobuf::Message /* @@pr
                &_MsgLogoutReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(MsgLogoutReq* other);
   friend void swap(MsgLogoutReq& a, MsgLogoutReq& b) {
@@ -530,7 +646,7 @@ class LIBPROTOC_EXPORT MsgTellBeKick : public ::google::protobuf::Message /* @@p
                &_MsgTellBeKick_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(MsgTellBeKick* other);
   friend void swap(MsgTellBeKick& a, MsgTellBeKick& b) {
@@ -593,122 +709,6 @@ class LIBPROTOC_EXPORT MsgTellBeKick : public ::google::protobuf::Message /* @@p
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 type_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class LIBPROTOC_EXPORT MsgEnterGame : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgEnterGame) */ {
- public:
-  MsgEnterGame();
-  virtual ~MsgEnterGame();
-
-  MsgEnterGame(const MsgEnterGame& from);
-
-  inline MsgEnterGame& operator=(const MsgEnterGame& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  MsgEnterGame(MsgEnterGame&& from) noexcept
-    : MsgEnterGame() {
-    *this = ::std::move(from);
-  }
-
-  inline MsgEnterGame& operator=(MsgEnterGame&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgEnterGame& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgEnterGame* internal_default_instance() {
-    return reinterpret_cast<const MsgEnterGame*>(
-               &_MsgEnterGame_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  void Swap(MsgEnterGame* other);
-  friend void swap(MsgEnterGame& a, MsgEnterGame& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MsgEnterGame* New() const final {
-    return CreateMaybeMessage<MsgEnterGame>(NULL);
-  }
-
-  MsgEnterGame* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgEnterGame>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgEnterGame& from);
-  void MergeFrom(const MsgEnterGame& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MsgEnterGame* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // .KFMsg.PBObject playerdata = 1;
-  bool has_playerdata() const;
-  void clear_playerdata();
-  static const int kPlayerdataFieldNumber = 1;
-  private:
-  const ::KFMsg::PBObject& _internal_playerdata() const;
-  public:
-  const ::KFMsg::PBObject& playerdata() const;
-  ::KFMsg::PBObject* release_playerdata();
-  ::KFMsg::PBObject* mutable_playerdata();
-  void set_allocated_playerdata(::KFMsg::PBObject* playerdata);
-
-  // uint64 servertime = 2;
-  void clear_servertime();
-  static const int kServertimeFieldNumber = 2;
-  ::google::protobuf::uint64 servertime() const;
-  void set_servertime(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgEnterGame)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBObject* playerdata_;
-  ::google::protobuf::uint64 servertime_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
@@ -1691,6 +1691,72 @@ inline void MsgLoginReq::set_allocated_version(::std::string* version) {
 
 // -------------------------------------------------------------------
 
+// MsgLoginAck
+
+// .KFMsg.PBObject playerdata = 1;
+inline bool MsgLoginAck::has_playerdata() const {
+  return this != internal_default_instance() && playerdata_ != NULL;
+}
+inline const ::KFMsg::PBObject& MsgLoginAck::_internal_playerdata() const {
+  return *playerdata_;
+}
+inline const ::KFMsg::PBObject& MsgLoginAck::playerdata() const {
+  const ::KFMsg::PBObject* p = playerdata_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginAck.playerdata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* MsgLoginAck::release_playerdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgLoginAck.playerdata)
+  
+  ::KFMsg::PBObject* temp = playerdata_;
+  playerdata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* MsgLoginAck::mutable_playerdata() {
+  
+  if (playerdata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    playerdata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgLoginAck.playerdata)
+  return playerdata_;
+}
+inline void MsgLoginAck::set_allocated_playerdata(::KFMsg::PBObject* playerdata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(playerdata_);
+  }
+  if (playerdata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      playerdata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, playerdata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  playerdata_ = playerdata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgLoginAck.playerdata)
+}
+
+// uint64 servertime = 2;
+inline void MsgLoginAck::clear_servertime() {
+  servertime_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgLoginAck::servertime() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgLoginAck.servertime)
+  return servertime_;
+}
+inline void MsgLoginAck::set_servertime(::google::protobuf::uint64 value) {
+  
+  servertime_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgLoginAck.servertime)
+}
+
+// -------------------------------------------------------------------
+
 // MsgLogoutReq
 
 // -------------------------------------------------------------------
@@ -1709,72 +1775,6 @@ inline void MsgTellBeKick::set_type(::google::protobuf::uint32 value) {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.MsgTellBeKick.type)
-}
-
-// -------------------------------------------------------------------
-
-// MsgEnterGame
-
-// .KFMsg.PBObject playerdata = 1;
-inline bool MsgEnterGame::has_playerdata() const {
-  return this != internal_default_instance() && playerdata_ != NULL;
-}
-inline const ::KFMsg::PBObject& MsgEnterGame::_internal_playerdata() const {
-  return *playerdata_;
-}
-inline const ::KFMsg::PBObject& MsgEnterGame::playerdata() const {
-  const ::KFMsg::PBObject* p = playerdata_;
-  // @@protoc_insertion_point(field_get:KFMsg.MsgEnterGame.playerdata)
-  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
-      &::KFMsg::_PBObject_default_instance_);
-}
-inline ::KFMsg::PBObject* MsgEnterGame::release_playerdata() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgEnterGame.playerdata)
-  
-  ::KFMsg::PBObject* temp = playerdata_;
-  playerdata_ = NULL;
-  return temp;
-}
-inline ::KFMsg::PBObject* MsgEnterGame::mutable_playerdata() {
-  
-  if (playerdata_ == NULL) {
-    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
-    playerdata_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgEnterGame.playerdata)
-  return playerdata_;
-}
-inline void MsgEnterGame::set_allocated_playerdata(::KFMsg::PBObject* playerdata) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete reinterpret_cast< ::google::protobuf::MessageLite*>(playerdata_);
-  }
-  if (playerdata) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      playerdata = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, playerdata, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  playerdata_ = playerdata;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgEnterGame.playerdata)
-}
-
-// uint64 servertime = 2;
-inline void MsgEnterGame::clear_servertime() {
-  servertime_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 MsgEnterGame::servertime() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgEnterGame.servertime)
-  return servertime_;
-}
-inline void MsgEnterGame::set_servertime(::google::protobuf::uint64 value) {
-  
-  servertime_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgEnterGame.servertime)
 }
 
 // -------------------------------------------------------------------

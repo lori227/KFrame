@@ -72,10 +72,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleBroadcastMessageReq );
 
         // 踢出玩家
-        __KF_MESSAGE_FUNCTION__( HandleKickGatePlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGateReq );
 
         // 处理登录回馈
-        __KF_MESSAGE_FUNCTION__( HandleLoginGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleEnterToGateAck );
 
 
 

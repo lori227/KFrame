@@ -18,6 +18,9 @@ enum MidwareServerProtocol
 	S2S_LOGIN_TO_WORLD_REQ				= 20103;	// 登录请求到world服务器
 	S2S_LOGIN_TO_LOGIN_ACK				= 20104;	// 登录回应到login服务器
 	S2S_LOGIN_TO_GAME_REQ				= 20105;	// 登录请求到game服务器
+	S2S_LOGOUT_TO_GAME_REQ				= 20106;	// 登出游戏到game服务器
+	S2S_DISCONNEC_TO_GAME_REQ			= 20107;	// 断线到gate服务器
+	S2S_ENTER_TO_GATE_ACK				= 20108;	// 进入游戏到gate服务器
 
 	// world
 	S2S_PLAYER_SYNC_TO_WORLD_REQ		= 20201;	// 同步在线人家
@@ -117,6 +120,28 @@ message S2SLoginToLoginAck
 message S2SLoginToGameReq
 {
 	PBLoginData pblogin = 1;
+}
+
+// S2S_ENTER_TO_GATE_ACK
+message S2SEnterToGateAck
+{
+	PBLoginData pblogin = 1;
+	PBObject playerdata = 2;
+	uint64 servertime = 3;
+}
+
+// 请求登出到game服务器
+// S2S_LOGOUT_TO_GAME_REQ
+message S2SLogoutToGameReq
+{
+	uint64 playerid = 1; 
+}
+
+// 玩家断线到game服务器
+// S2S_DISCONNEC_TO_GAME_REQ
+message S2SDisconnectToGameReq
+{
+	uint64 playerid = 1; 
 }
 /////////////////////////////////////////////////////////////////////
 // 查询角色id请求

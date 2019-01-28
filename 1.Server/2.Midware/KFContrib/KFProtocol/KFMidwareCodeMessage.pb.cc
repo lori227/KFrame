@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\264\005\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\317\005\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
@@ -68,10 +68,11 @@ void AddDescriptorsImpl() {
       "ose\020\342]\022\027\n\022LoginNoLoginServer\020\343]\022\024\n\017Login"
       "SystemBusy\020\344]\022\031\n\024LoginWorldSystemBusy\020\345]"
       "\022\026\n\021LoginNoGameServer\020\346]\022\030\n\023LoginGameSer"
-      "verBusy\020\347]b\006proto3"
+      "verBusy\020\347]\022\031\n\024LoginBindPlayerError\020\350]b\006p"
+      "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 738);
+      descriptor, 765);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -125,6 +126,7 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12005:
     case 12006:
     case 12007:
+    case 12008:
       return true;
     default:
       return false;
