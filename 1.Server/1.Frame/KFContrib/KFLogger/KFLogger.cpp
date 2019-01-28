@@ -26,7 +26,7 @@ namespace KFrame
 
     void KFLogger::InitLogger( std::string& strlog )
     {
-        _local_log = new KFSpdLog();
+        _local_log = new KFSpdLog( true );
         SetLogLevel( KFUtility::ToValue< uint32 >( strlog ) );
 
         auto kfglobal = KFGlobal::Instance();

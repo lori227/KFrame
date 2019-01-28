@@ -55,7 +55,7 @@ namespace KFrame
         auto iter = _log_list.find( appid );
         if ( iter == _log_list.end() )
         {
-            auto spdlog = new KFSpdLog();
+            auto spdlog = new KFSpdLog( false );
             std::string path = __FORMAT__( "..{}binlog", spdlog::details::os::folder_sep );
             spdlog->Initialize( path, appname, apptype, strappid );
             iter = _log_list.insert( std::make_pair( appid, spdlog ) ).first;

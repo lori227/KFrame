@@ -8,6 +8,11 @@
 
 namespace KFrame
 {
+    KFSpdLog::KFSpdLog( bool console )
+    {
+        _console = console;
+    }
+
     KFSpdLog::~KFSpdLog()
     {
         spdlog::drop( _log_name );
@@ -33,13 +38,16 @@ namespace KFrame
     void KFSpdLog::CreateLogger()
     {
         std::vector<spdlog::sink_ptr> sinksvec;
-
+        if ( _console )
+        {
 #if __KF_SYSTEM__ == __KF_WIN__
-        auto colorsink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
+            auto colorsink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 #else
-        auto colorsink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
+            auto colorsink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 #endif
-        sinksvec.push_back( colorsink );
+            sinksvec.push_back( colorsink );
+        }
+
         sinksvec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name ) );
         _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), 1024 );
 
