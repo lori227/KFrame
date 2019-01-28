@@ -24,11 +24,11 @@ namespace KFrame
         __DELETE_OBJECT__( _kf_rand );
         __DELETE_OBJECT__( _kf_version );
 
-        for ( auto& iter : _kf_uuid )
+        for ( auto& iter : _kf_uuids )
         {
             delete iter.second;
         }
-        _kf_uuid.clear();
+        _kf_uuids.clear();
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -95,13 +95,18 @@ namespace KFrame
         return min + index;
     }
 
+    uint64 KFGlobal::MakeUUID()
+    {
+        return MakeUUID( 0 );
+    }
+
     uint64 KFGlobal::MakeUUID( uint32 type )
     {
-        auto iter = _kf_uuid.find( type );
-        if ( iter == _kf_uuid.end() )
+        auto iter = _kf_uuids.find( type );
+        if ( iter == _kf_uuids.end() )
         {
             auto uuid = new KFUUID( 29, 14, 8, 12 );
-            iter = _kf_uuid.insert( std::make_pair( type, uuid ) ).first;
+            iter = _kf_uuids.insert( std::make_pair( type, uuid ) ).first;
         }
 
         auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;

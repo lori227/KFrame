@@ -9,7 +9,6 @@
 //    @Date             :    2017-11-1
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFGameInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -17,7 +16,7 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFDeployCommand/KFDeployCommandInterface.h"
+#include "KFDeployClient/KFDeployClientInterface.h"
 
 namespace KFrame
 {
@@ -61,11 +60,8 @@ namespace KFrame
         virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line );
 
     protected:
-        // 处理消息广播
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastMessageReq );
-
         // 登录token
-        __KF_MESSAGE_FUNCTION__( HandleLoginTellTokenToGameReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToGameReq );
 
         // 处理登出游戏
         __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );

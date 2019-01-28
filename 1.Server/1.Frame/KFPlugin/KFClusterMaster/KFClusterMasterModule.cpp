@@ -128,7 +128,7 @@ namespace KFrame
         __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok!", strclientid, KFAppID::ToString( kfproxy->_id ) );
 
         // 创建token
-        auto id = KFGlobal::Instance()->MakeUUID( KFUUIDEnum::Logic );
+        auto id = KFGlobal::Instance()->MakeUUID();
         std::string md5source = __FORMAT__( "{}:{}", id, kfmsg.clientid() );
         auto token = KFCrypto::Md5Encode( md5source );
 

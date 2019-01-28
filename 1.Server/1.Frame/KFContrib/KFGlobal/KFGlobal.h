@@ -38,6 +38,7 @@ namespace KFrame
         uint32 RandInRange( uint32 min, uint32 max, uint32 base );
 
         // 创建guid
+        uint64 MakeUUID();
         uint64 MakeUUID( uint32 type );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化类型
@@ -100,7 +101,7 @@ namespace KFrame
         KFRand* _kf_rand;
 
         // guid
-        std::unordered_map< uint32, KFUUID*> _kf_uuid;
+        std::unordered_map< uint32, KFUUID*> _kf_uuids;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
 

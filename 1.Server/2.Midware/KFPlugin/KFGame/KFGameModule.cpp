@@ -7,7 +7,6 @@ namespace KFrame
     {
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGameModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGameModule::OnClientConnectionServer );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
@@ -15,12 +14,17 @@ namespace KFrame
         _kf_player->BindAfterLoadFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
+
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
+
+
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME, &KFGameModule::HandleBroadcastMessageReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_KICK_GAME_PLAYER_REQ, &KFGameModule::HandleKickGamePlayerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &KFGameModule::HandlePlayerDisconnectionReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ, &KFGameModule::HandleLoginOutReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ, &KFGameModule::HandleLoginTellTokenToGameReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -28,19 +32,21 @@ namespace KFrame
     {
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         __UNREGISTER_ROUTE_MESSAGE_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
 
         _kf_player->UnBindAfterLoadFunction( this );
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
+
+        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
+
         __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_GAME_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_DISCONNECTION_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TELL_TOKEN_TO_GAME_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -234,15 +240,15 @@ namespace KFrame
         _kf_route->RemoveObject( playerid );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginTellTokenToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginTellTokenToGameReq );
+        __PROTO_PARSE__( KFMsg::S2SLoginToGameReq );
 
         auto pblogin = &kfmsg.pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] login game req!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         // 踢掉在线玩家
-        KickPlayer( pblogin->playerid(), KFMsg::KickEnum::LoginBeKick, __FUNC_LINE__ );
+        KickPlayer( pblogin->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
 
         // 加载玩家数据
         auto ok = _kf_player->LoadPlayer( pblogin );
@@ -260,7 +266,7 @@ namespace KFrame
     {
         __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack!", pblogin->account(), pblogin->accountid(), pblogin->playerid(), result );
 
-        KFMsg::S2SLoginGameAck ack;
+        KFMsg::S2SLoginToGateAck ack;
         ack.set_result( result );
         ack.mutable_pblogin()->CopyFrom( *pblogin );
         ack.mutable_playerdata()->CopyFrom( *pbplayerdata );
