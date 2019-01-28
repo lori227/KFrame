@@ -38,7 +38,7 @@ namespace KFrame
         uint32 RandInRange( uint32 min, uint32 max, uint32 base );
 
         // 创建guid
-        uint64 Make64Guid( uint32 type );
+        uint64 MakeUUID( uint32 type );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化类型
         void InitNetService( std::string& strtype );

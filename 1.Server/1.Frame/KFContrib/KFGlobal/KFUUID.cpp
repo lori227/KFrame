@@ -23,7 +23,7 @@ namespace KFrame
         _time_shift = _zone_shift + _zone_bits;
     }
 
-    uint64 KFUUID::Make64Guid( uint32 zoneid, uint32 workerid, uint64 nowtime )
+    uint64 KFUUID::Make( uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
         // time
         auto time = nowtime - __START_TIME__;
@@ -45,7 +45,7 @@ namespace KFrame
         return ( time << _time_shift ) | ( zoneid << _zone_shift ) | ( workerid << _worker_shift ) | _sequence;
     }
 
-    void KFUUID::Print64Guid( uint64 guid )
+    void KFUUID::Print( uint64 guid )
     {
         auto sequence = ( guid & _max_seq );
         auto workerid = ( ( guid >> _worker_shift ) & _max_worker );

@@ -95,7 +95,7 @@ namespace KFrame
         return min + index;
     }
 
-    uint64 KFGlobal::Make64Guid( uint32 type )
+    uint64 KFGlobal::MakeUUID( uint32 type )
     {
         auto iter = _kf_uuid.find( type );
         if ( iter == _kf_uuid.end() )
@@ -107,7 +107,7 @@ namespace KFrame
         auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
         auto workerid = KFGlobal::Instance()->_app_id._union._app_data._worker_id;
 
-        return iter->second->Make64Guid( zoneid, workerid, _real_time );
+        return iter->second->Make( zoneid, workerid, _real_time );
     }
 
     void KFGlobal::InitNetService( std::string& strtype )

@@ -28,10 +28,10 @@ namespace KFrame
         KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
 
         // 生产guid
-        uint64 Make64Guid( uint32 zoneid, uint32 workerid, uint64 nowtime );
+        uint64 Make( uint32 zoneid, uint32 workerid, uint64 nowtime );
 
         // 打印guid
-        void Print64Guid( uint64 guid );
+        void Print( uint64 guid );
     private:
         // 上一次时间
         uint64 _last_time{ 0 };
