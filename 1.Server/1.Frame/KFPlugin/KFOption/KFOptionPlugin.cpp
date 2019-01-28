@@ -1,5 +1,5 @@
-﻿#include "KFOptionPlugin.h"
-#include "KFOptionModule.h"
+﻿#include "KFOptionPlugin.hpp"
+#include "KFOptionModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

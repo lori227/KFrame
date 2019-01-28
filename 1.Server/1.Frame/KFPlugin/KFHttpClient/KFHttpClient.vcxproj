@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttpClientInterface.h" />
-    <ClInclude Include="KFHttpClientModule.h" />
-    <ClInclude Include="KFHttpClientPlugin.h" />
+    <ClInclude Include="KFHttpClientModule.hpp" />
+    <ClInclude Include="KFHttpClientPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E966C3FF-3ACB-40BE-BBBC-4B7FBB6EB8E7}</ProjectGuid>

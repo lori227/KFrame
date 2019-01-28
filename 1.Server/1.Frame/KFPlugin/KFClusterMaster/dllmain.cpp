@@ -1,4 +1,4 @@
-﻿#include "KFClusterMasterPlugin.h"
+﻿#include "KFClusterMasterPlugin.hpp"
 #include "KFLibrary.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFClusterMasterPlugin );

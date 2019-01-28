@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_MYSQL_EXECUTE_H__
 #define __KF_MYSQL_EXECUTE_H__
 
-#include "KFMySQL.h"
+#include "KFMySQL.hpp"
 #include "Poco/SharedPtr.h"
 #include "Poco/Data/Statement.h"
 #include "Poco/Data/Extraction.h"

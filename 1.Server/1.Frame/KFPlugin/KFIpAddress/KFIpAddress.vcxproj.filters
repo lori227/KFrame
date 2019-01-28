@@ -8,10 +8,10 @@
     <ClCompile Include="KFPort.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFIpAddressConfig.h" />
     <ClInclude Include="KFIpAddressInterface.h" />
-    <ClInclude Include="KFIpAddressModule.h" />
-    <ClInclude Include="KFIpAddressPlugin.h" />
-    <ClInclude Include="KFPort.h" />
+    <ClInclude Include="KFIpAddressConfig.hpp" />
+    <ClInclude Include="KFIpAddressModule.hpp" />
+    <ClInclude Include="KFIpAddressPlugin.hpp" />
+    <ClInclude Include="KFPort.hpp" />
   </ItemGroup>
 </Project>

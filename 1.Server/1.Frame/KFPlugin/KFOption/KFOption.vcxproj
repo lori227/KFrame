@@ -17,10 +17,10 @@
     <ClCompile Include="KFOptionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFOptionConfig.h" />
+    <ClInclude Include="KFOptionConfig.hpp" />
     <ClInclude Include="KFOptionInterface.h" />
-    <ClInclude Include="KFOptionModule.h" />
-    <ClInclude Include="KFOptionPlugin.h" />
+    <ClInclude Include="KFOptionModule.hpp" />
+    <ClInclude Include="KFOptionPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9E26FF59-E639-446B-95A2-0C33F7EDD233}</ProjectGuid>

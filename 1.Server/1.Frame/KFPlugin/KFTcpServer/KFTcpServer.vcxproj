@@ -17,10 +17,10 @@
     <ClCompile Include="KFTcpServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTcpServerConfig.h" />
+    <ClInclude Include="KFTcpServerConfig.hpp" />
     <ClInclude Include="KFTcpServerInterface.h" />
-    <ClInclude Include="KFTcpServerModule.h" />
-    <ClInclude Include="KFTcpServerPlugin.h" />
+    <ClInclude Include="KFTcpServerModule.hpp" />
+    <ClInclude Include="KFTcpServerPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F7184B09-1086-4ECF-A833-4088389468B1}</ProjectGuid>

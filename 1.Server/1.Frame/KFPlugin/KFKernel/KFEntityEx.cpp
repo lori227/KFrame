@@ -1,7 +1,7 @@
-﻿#include "KFEntityEx.h"
-#include "KFComponentEx.h"
-#include "KFKernelConfig.h"
-#include "KFKernelModule.h"
+﻿#include "KFEntityEx.hpp"
+#include "KFComponentEx.hpp"
+#include "KFKernelConfig.hpp"
+#include "KFKernelModule.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFCore/KFDataFactory.h"
 //////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
-﻿#include "KFClusterMasterPlugin.h"
-#include "KFClusterMasterModule.h"
+﻿#include "KFClusterMasterPlugin.hpp"
+#include "KFClusterMasterModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

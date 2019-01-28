@@ -7,9 +7,9 @@
     <ClCompile Include="KFTcpServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTcpServerConfig.h" />
     <ClInclude Include="KFTcpServerInterface.h" />
-    <ClInclude Include="KFTcpServerModule.h" />
-    <ClInclude Include="KFTcpServerPlugin.h" />
+    <ClInclude Include="KFTcpServerConfig.hpp" />
+    <ClInclude Include="KFTcpServerModule.hpp" />
+    <ClInclude Include="KFTcpServerPlugin.hpp" />
   </ItemGroup>
 </Project>

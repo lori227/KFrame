@@ -7,9 +7,9 @@
     <ClCompile Include="KFHttpServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFHttpServerConfig.h" />
     <ClInclude Include="KFHttpServerInterface.h" />
-    <ClInclude Include="KFHttpServerModule.h" />
-    <ClInclude Include="KFHttpServerPlugin.h" />
+    <ClInclude Include="KFHttpServerConfig.hpp" />
+    <ClInclude Include="KFHttpServerModule.hpp" />
+    <ClInclude Include="KFHttpServerPlugin.hpp" />
   </ItemGroup>
 </Project>

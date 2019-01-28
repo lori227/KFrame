@@ -1,4 +1,4 @@
-﻿#include "KFClusterProxyModule.h"
+﻿#include "KFClusterProxyModule.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame

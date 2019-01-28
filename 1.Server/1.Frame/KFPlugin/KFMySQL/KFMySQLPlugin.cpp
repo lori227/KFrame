@@ -1,5 +1,5 @@
-﻿#include "KFMySQLPlugin.h"
-#include "KFMySQLModule.h"
+﻿#include "KFMySQLPlugin.hpp"
+#include "KFMySQLModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

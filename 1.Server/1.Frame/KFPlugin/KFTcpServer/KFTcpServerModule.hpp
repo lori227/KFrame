@@ -12,6 +12,7 @@
 #include "KFrame.h"
 #include "KFTcpServerInterface.h"
 #include "KFNetwork/KFNetServerEngine.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"

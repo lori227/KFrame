@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFConfigInterface.h" />
-    <ClInclude Include="KFConfigModule.h" />
-    <ClInclude Include="KFConfigPlugin.h" />
+    <ClInclude Include="KFConfigModule.hpp" />
+    <ClInclude Include="KFConfigPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

@@ -1,5 +1,5 @@
-﻿#include "KFTimerPlugin.h"
-#include "KFTimerModule.h"
+﻿#include "KFTimerPlugin.hpp"
+#include "KFTimerModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

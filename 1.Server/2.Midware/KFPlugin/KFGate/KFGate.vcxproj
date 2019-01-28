@@ -72,7 +72,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
@@ -90,7 +90,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,7 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\google\protobuf\src\;..\..\KFLibrary\lua\lua53\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <BrowseInformation>false</BrowseInformation>
@@ -118,7 +118,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetPath)" "..\..\..\Bin\bin\"</Command>
+      <Command>xcopy /Y "$(TargetPath)" "..\..\_bin\bin\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

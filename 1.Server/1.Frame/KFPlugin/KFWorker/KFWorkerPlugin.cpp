@@ -1,5 +1,5 @@
-﻿#include "KFWorkerPlugin.h"
-#include "KFWorkerModule.h"
+﻿#include "KFWorkerPlugin.hpp"
+#include "KFWorkerModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

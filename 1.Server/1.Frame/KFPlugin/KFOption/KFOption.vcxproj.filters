@@ -7,9 +7,9 @@
     <ClCompile Include="KFOptionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFOptionConfig.h" />
     <ClInclude Include="KFOptionInterface.h" />
-    <ClInclude Include="KFOptionModule.h" />
-    <ClInclude Include="KFOptionPlugin.h" />
+    <ClInclude Include="KFOptionConfig.hpp" />
+    <ClInclude Include="KFOptionModule.hpp" />
+    <ClInclude Include="KFOptionPlugin.hpp" />
   </ItemGroup>
 </Project>

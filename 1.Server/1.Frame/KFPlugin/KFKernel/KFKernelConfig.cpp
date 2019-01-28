@@ -1,4 +1,4 @@
-﻿#include "KFKernelConfig.h"
+﻿#include "KFKernelConfig.hpp"
 #include "KFCore/KFDataConfig.h"
 
 namespace KFrame

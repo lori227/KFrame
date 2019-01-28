@@ -7,9 +7,9 @@
     <ClCompile Include="KFFilterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFFilterConfig.h" />
     <ClInclude Include="KFFilterInterface.h" />
-    <ClInclude Include="KFFilterModule.h" />
-    <ClInclude Include="KFFilterPlugin.h" />
+    <ClInclude Include="KFFilterConfig.hpp" />
+    <ClInclude Include="KFFilterModule.hpp" />
+    <ClInclude Include="KFFilterPlugin.hpp" />
   </ItemGroup>
 </Project>

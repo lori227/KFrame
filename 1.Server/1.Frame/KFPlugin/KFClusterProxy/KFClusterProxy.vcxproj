@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterProxyInterface.h" />
-    <ClInclude Include="KFClusterProxyModule.h" />
-    <ClInclude Include="KFClusterProxyPlugin.h" />
+    <ClInclude Include="KFClusterProxyModule.hpp" />
+    <ClInclude Include="KFClusterProxyPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

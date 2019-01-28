@@ -1,5 +1,5 @@
-﻿#include "KFFilterPlugin.h"
-#include "KFFilterModule.h"
+﻿#include "KFFilterPlugin.hpp"
+#include "KFFilterModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

@@ -1,4 +1,4 @@
-﻿#include "KFHttpServerPlugin.h"
+﻿#include "KFHttpServerPlugin.hpp"
 #include "KFLibrary.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFHttpServerPlugin );

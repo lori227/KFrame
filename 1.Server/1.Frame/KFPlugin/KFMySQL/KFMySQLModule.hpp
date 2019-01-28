@@ -11,7 +11,7 @@
 
 #include "KFrame.h"
 #include "KFMySQLInterface.h"
-#include "KFMySQLExecute.h"
+#include "KFMySQLExecute.hpp"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame

@@ -18,11 +18,11 @@
     <ClCompile Include="KFWorkerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFActor.h" />
+    <ClInclude Include="KFActor.hpp" />
     <ClInclude Include="KFWorkerInterface.h" />
-    <ClInclude Include="KFWorkerMessage.h" />
-    <ClInclude Include="KFWorkerModule.h" />
-    <ClInclude Include="KFWorkerPlugin.h" />
+    <ClInclude Include="KFWorkerMessage.hpp" />
+    <ClInclude Include="KFWorkerModule.hpp" />
+    <ClInclude Include="KFWorkerPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BA2640D3-1EED-4E6B-8DC3-B5A88D100AA5}</ProjectGuid>

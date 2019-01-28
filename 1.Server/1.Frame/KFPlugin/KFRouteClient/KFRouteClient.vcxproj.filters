@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRouteClientInterface.h" />
-    <ClInclude Include="KFRouteClientModule.h" />
-    <ClInclude Include="KFRouteClientPlugin.h" />
+    <ClInclude Include="KFRouteClientModule.hpp" />
+    <ClInclude Include="KFRouteClientPlugin.hpp" />
   </ItemGroup>
 </Project>

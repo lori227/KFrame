@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterClientInterface.h" />
-    <ClInclude Include="KFClusterClientModule.h" />
-    <ClInclude Include="KFClusterClientPlugin.h" />
+    <ClInclude Include="KFClusterClientModule.hpp" />
+    <ClInclude Include="KFClusterClientPlugin.hpp" />
   </ItemGroup>
 </Project>

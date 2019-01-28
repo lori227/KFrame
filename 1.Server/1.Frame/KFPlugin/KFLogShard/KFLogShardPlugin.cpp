@@ -1,5 +1,5 @@
-﻿#include "KFLogShardPlugin.h"
-#include "KFLogShardModule.h"
+﻿#include "KFLogShardPlugin.hpp"
+#include "KFLogShardModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

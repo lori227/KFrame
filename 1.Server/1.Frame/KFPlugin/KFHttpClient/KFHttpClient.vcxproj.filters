@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttpClientInterface.h" />
-    <ClInclude Include="KFHttpClientModule.h" />
-    <ClInclude Include="KFHttpClientPlugin.h" />
+    <ClInclude Include="KFHttpClientPlugin.hpp" />
+    <ClInclude Include="KFHttpClientModule.hpp" />
   </ItemGroup>
 </Project>

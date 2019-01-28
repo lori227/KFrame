@@ -17,10 +17,10 @@
     <ClCompile Include="KFRouteShardPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFRouteService.h" />
+    <ClInclude Include="KFRouteService.hpp" />
     <ClInclude Include="KFRouteShardInterface.h" />
-    <ClInclude Include="KFRouteShardModule.h" />
-    <ClInclude Include="KFRouteShardPlugin.h" />
+    <ClInclude Include="KFRouteShardModule.hpp" />
+    <ClInclude Include="KFRouteShardPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D2957860-FC83-4563-8961-0B215F88D69F}</ProjectGuid>

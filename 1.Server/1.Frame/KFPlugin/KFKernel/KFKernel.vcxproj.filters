@@ -9,13 +9,13 @@
     <ClCompile Include="KFKernelConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFKernelPlugin.h" />
-    <ClInclude Include="KFKernelModule.h" />
     <ClInclude Include="KFKernelInterface.h" />
-    <ClInclude Include="KFEntityEx.h" />
     <ClInclude Include="KFEntity.h" />
     <ClInclude Include="KFComponent.h" />
-    <ClInclude Include="KFComponentEx.h" />
-    <ClInclude Include="KFKernelConfig.h" />
+    <ClInclude Include="KFComponentEx.hpp" />
+    <ClInclude Include="KFEntityEx.hpp" />
+    <ClInclude Include="KFKernelConfig.hpp" />
+    <ClInclude Include="KFKernelModule.hpp" />
+    <ClInclude Include="KFKernelPlugin.hpp" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
-﻿#include "KFHttpClientPlugin.h"
-#include "KFHttpClientModule.h"
+﻿#include "KFHttpClientPlugin.hpp"
+#include "KFHttpClientModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

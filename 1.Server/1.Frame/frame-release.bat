@@ -233,7 +233,7 @@ if not exist %releasepath%\%pluginpath% (mkdir %releasepath%\%pluginpath% )
 cd KFPlugin
 for /d %%i in (*) do (
 	if not exist ..\%releasepath%\%pluginpath%\%%i (mkdir ..\%releasepath%\%pluginpath%\%%i )
-	copy /y %%i\*Interface.h ..\%releasepath%\%pluginpath%\%%i\
+	copy /y %%i\*.h ..\%releasepath%\%pluginpath%\%%i\
 )
 cd ..\
 echo "release KFPlugin path end"

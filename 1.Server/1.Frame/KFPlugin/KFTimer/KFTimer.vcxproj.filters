@@ -7,9 +7,9 @@
     <ClCompile Include="KFTimerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTimerPlugin.h" />
-    <ClInclude Include="KFTimerData.h" />
     <ClInclude Include="KFTimerInterface.h" />
-    <ClInclude Include="KFTimerModule.h" />
+    <ClInclude Include="KFTimerData.hpp" />
+    <ClInclude Include="KFTimerModule.hpp" />
+    <ClInclude Include="KFTimerPlugin.hpp" />
   </ItemGroup>
 </Project>

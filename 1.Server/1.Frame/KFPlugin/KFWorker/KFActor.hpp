@@ -2,7 +2,7 @@
 #define __KF_ACTOR_H__
 
 #include "KFrame.h"
-#include "KFWorkerMessage.h"
+#include "KFWorkerMessage.hpp"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 

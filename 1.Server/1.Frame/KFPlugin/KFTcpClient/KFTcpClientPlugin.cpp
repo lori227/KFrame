@@ -1,5 +1,5 @@
-﻿#include "KFTcpClientPlugin.h"
-#include "KFTcpClientModule.h"
+﻿#include "KFTcpClientPlugin.hpp"
+#include "KFTcpClientModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

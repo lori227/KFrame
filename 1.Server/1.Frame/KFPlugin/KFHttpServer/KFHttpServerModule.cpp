@@ -1,5 +1,5 @@
-﻿#include "KFHttpServerModule.h"
-#include "KFHttpServerConfig.h"
+﻿#include "KFHttpServerModule.hpp"
+#include "KFHttpServerConfig.hpp"
 #include "KFHttp/KFHttpServer.h"
 #include "KFHttp/KFHttpCommon.h"
 

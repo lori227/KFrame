@@ -1,7 +1,5 @@
-﻿#include "KFTcpServerPlugin.h"
-#include "KFTcpServerModule.h"
-#include "KFConfig/KFConfigInterface.h"
-#include "KFMessage/KFMessageInterface.h"
+﻿#include "KFTcpServerPlugin.hpp"
+#include "KFTcpServerModule.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 

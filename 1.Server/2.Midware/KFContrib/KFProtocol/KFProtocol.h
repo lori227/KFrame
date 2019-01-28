@@ -5,6 +5,8 @@
 #include "KFDefineMessage.pb.h"
 #include "KFMidwareCodeMessage.pb.h"
 #include "KFMidwareEnumMessage.pb.h"
+#include "KFMidwareClientMessage.pb.h"
+#include "KFMidwareServerMessage.pb.h"
 
 
 #endif

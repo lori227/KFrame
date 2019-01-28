@@ -1,4 +1,4 @@
-﻿#include "KFClusterShardPlugin.h"
+﻿#include "KFClusterShardPlugin.hpp"
 #include "KFLibrary.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFClusterShardPlugin );

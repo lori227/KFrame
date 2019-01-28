@@ -17,10 +17,10 @@
     <ClCompile Include="KFHttpServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFHttpServerConfig.h" />
+    <ClInclude Include="KFHttpServerConfig.hpp" />
     <ClInclude Include="KFHttpServerInterface.h" />
-    <ClInclude Include="KFHttpServerModule.h" />
-    <ClInclude Include="KFHttpServerPlugin.h" />
+    <ClInclude Include="KFHttpServerModule.hpp" />
+    <ClInclude Include="KFHttpServerPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B185C125-6907-4CBA-BF80-BA8613C18C66}</ProjectGuid>

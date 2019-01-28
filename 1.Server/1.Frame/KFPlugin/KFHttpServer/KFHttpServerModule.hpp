@@ -11,6 +11,7 @@
 
 #include "KFrame.h"
 #include "KFHttpServerInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame

@@ -9,9 +9,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFWorkerInterface.h" />
-    <ClInclude Include="KFWorkerModule.h" />
-    <ClInclude Include="KFWorkerPlugin.h" />
-    <ClInclude Include="KFWorkerMessage.h" />
-    <ClInclude Include="KFActor.h" />
+    <ClInclude Include="KFActor.hpp" />
+    <ClInclude Include="KFWorkerMessage.hpp" />
+    <ClInclude Include="KFWorkerModule.hpp" />
+    <ClInclude Include="KFWorkerPlugin.hpp" />
   </ItemGroup>
 </Project>

@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFLogClientInterface.h" />
-    <ClInclude Include="KFLogClientModule.h" />
-    <ClInclude Include="KFLogClientPlugin.h" />
+    <ClInclude Include="KFLogClientModule.hpp" />
+    <ClInclude Include="KFLogClientPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

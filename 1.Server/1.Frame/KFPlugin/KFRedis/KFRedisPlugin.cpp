@@ -1,6 +1,5 @@
-﻿#include "KFRedisPlugin.h"
-#include "KFRedisModule.h"
-#include "KFConfig/KFConfigInterface.h"
+﻿#include "KFRedisPlugin.hpp"
+#include "KFRedisModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

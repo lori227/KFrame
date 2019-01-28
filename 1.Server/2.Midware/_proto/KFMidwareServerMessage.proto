@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "KFDefineMessage.proto";
+
 package KFMsg;
 
 enum MidwareServerProtocol

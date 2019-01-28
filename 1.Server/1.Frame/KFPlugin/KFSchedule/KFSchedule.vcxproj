@@ -18,11 +18,11 @@
     <ClCompile Include="KFScheduleTime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFScheduleData.h" />
+    <ClInclude Include="KFScheduleData.hpp" />
     <ClInclude Include="KFScheduleInterface.h" />
-    <ClInclude Include="KFScheduleModule.h" />
-    <ClInclude Include="KFSchedulePlugin.h" />
-    <ClInclude Include="KFScheduleTime.h" />
+    <ClInclude Include="KFScheduleModule.hpp" />
+    <ClInclude Include="KFSchedulePlugin.hpp" />
+    <ClInclude Include="KFScheduleTime.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{426BA182-20AE-4977-8963-EA26E6D11438}</ProjectGuid>

@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterShardInterface.h" />
-    <ClInclude Include="KFClusterShardModule.h" />
-    <ClInclude Include="KFClusterShardPlugin.h" />
+    <ClInclude Include="KFClusterShardModule.hpp" />
+    <ClInclude Include="KFClusterShardPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

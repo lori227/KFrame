@@ -1,5 +1,5 @@
-﻿#include "KFClusterProxyPlugin.h"
-#include "KFClusterProxyModule.h"
+﻿#include "KFClusterProxyPlugin.hpp"
+#include "KFClusterProxyModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

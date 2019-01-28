@@ -1,5 +1,5 @@
-﻿#include "KFClusterShardPlugin.h"
-#include "KFClusterShardModule.h"
+﻿#include "KFClusterShardPlugin.hpp"
+#include "KFClusterShardModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

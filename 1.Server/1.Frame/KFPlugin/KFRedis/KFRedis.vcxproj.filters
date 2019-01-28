@@ -9,12 +9,11 @@
     <ClCompile Include="KFRedisLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFRedisConfig.h" />
-    <ClInclude Include="KFRedisExecute.h" />
-    <ClInclude Include="KFRedisFormat.h" />
     <ClInclude Include="KFRedisInterface.h" />
-    <ClInclude Include="KFRedisModule.h" />
-    <ClInclude Include="KFRedisPlugin.h" />
-    <ClInclude Include="KFRedisLogic.h" />
+    <ClInclude Include="KFRedisConfig.hpp" />
+    <ClInclude Include="KFRedisExecute.hpp" />
+    <ClInclude Include="KFRedisLogic.hpp" />
+    <ClInclude Include="KFRedisModule.hpp" />
+    <ClInclude Include="KFRedisPlugin.hpp" />
   </ItemGroup>
 </Project>

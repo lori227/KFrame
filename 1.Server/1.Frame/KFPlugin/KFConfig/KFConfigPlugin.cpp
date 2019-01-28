@@ -1,5 +1,5 @@
-﻿#include "KFConfigPlugin.h"
-#include "KFConfigModule.h"
+﻿#include "KFConfigPlugin.hpp"
+#include "KFConfigModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

@@ -17,10 +17,10 @@
     <ClCompile Include="KFFilterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFFilterConfig.h" />
+    <ClInclude Include="KFFilterConfig.hpp" />
     <ClInclude Include="KFFilterInterface.h" />
-    <ClInclude Include="KFFilterModule.h" />
-    <ClInclude Include="KFFilterPlugin.h" />
+    <ClInclude Include="KFFilterModule.hpp" />
+    <ClInclude Include="KFFilterPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{07A323FB-D1A9-419A-A691-0AA8555D3D99}</ProjectGuid>

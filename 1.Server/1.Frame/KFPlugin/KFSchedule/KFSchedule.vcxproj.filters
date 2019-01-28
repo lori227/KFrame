@@ -8,10 +8,10 @@
     <ClCompile Include="KFScheduleTime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFScheduleData.h" />
     <ClInclude Include="KFScheduleInterface.h" />
-    <ClInclude Include="KFScheduleModule.h" />
-    <ClInclude Include="KFSchedulePlugin.h" />
-    <ClInclude Include="KFScheduleTime.h" />
+    <ClInclude Include="KFScheduleData.hpp" />
+    <ClInclude Include="KFScheduleModule.hpp" />
+    <ClInclude Include="KFSchedulePlugin.hpp" />
+    <ClInclude Include="KFScheduleTime.hpp" />
   </ItemGroup>
 </Project>

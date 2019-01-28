@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFClusterClientInterface.h" />
-    <ClInclude Include="KFClusterClientModule.h" />
-    <ClInclude Include="KFClusterClientPlugin.h" />
+    <ClInclude Include="KFClusterClientModule.hpp" />
+    <ClInclude Include="KFClusterClientPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1AD3AF15-9A74-4084-8109-2C03192AED2A}</ProjectGuid>

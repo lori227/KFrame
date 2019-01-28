@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRouteProxyInterface.h" />
-    <ClInclude Include="KFRouteProxyModule.h" />
-    <ClInclude Include="KFRouteProxyPlugin.h" />
+    <ClInclude Include="KFRouteProxyModule.hpp" />
+    <ClInclude Include="KFRouteProxyPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{486EC377-6819-4D99-8E47-E83B3551D5E5}</ProjectGuid>

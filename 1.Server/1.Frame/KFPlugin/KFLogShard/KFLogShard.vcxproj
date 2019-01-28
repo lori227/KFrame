@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFLogShardInterface.h" />
-    <ClInclude Include="KFLogShardModule.h" />
-    <ClInclude Include="KFLogShardPlugin.h" />
+    <ClInclude Include="KFLogShardModule.hpp" />
+    <ClInclude Include="KFLogShardPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

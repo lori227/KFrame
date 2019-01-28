@@ -1,5 +1,5 @@
-﻿#include "KFMessagePlugin.h"
-#include "KFMessageModule.h"
+﻿#include "KFMessagePlugin.hpp"
+#include "KFMessageModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMessageInterface.h" />
-    <ClInclude Include="KFMessageModule.h" />
-    <ClInclude Include="KFMessagePlugin.h" />
+    <ClInclude Include="KFMessageModule.hpp" />
+    <ClInclude Include="KFMessagePlugin.hpp" />
   </ItemGroup>
 </Project>

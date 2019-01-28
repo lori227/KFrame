@@ -10,7 +10,7 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFRouteService.h"
+#include "KFRouteService.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRouteShardInterface.h"
 #include "KFMessage/KFMessageInterface.h"

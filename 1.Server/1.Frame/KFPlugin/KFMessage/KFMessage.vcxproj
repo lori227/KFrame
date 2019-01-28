@@ -17,8 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMessageInterface.h" />
-    <ClInclude Include="KFMessageModule.h" />
-    <ClInclude Include="KFMessagePlugin.h" />
+    <ClInclude Include="KFMessageModule.hpp" />
+    <ClInclude Include="KFMessagePlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{18EE2076-531E-4F97-8C7E-A5467DB0F1FF}</ProjectGuid>

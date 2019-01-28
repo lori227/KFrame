@@ -21,12 +21,12 @@
   <ItemGroup>
     <ClInclude Include="KFComponent.h" />
     <ClInclude Include="KFEntity.h" />
-    <ClInclude Include="KFEntityEx.h" />
-    <ClInclude Include="KFComponentEx.h" />
-    <ClInclude Include="KFKernelConfig.h" />
+    <ClInclude Include="KFEntityEx.hpp" />
+    <ClInclude Include="KFComponentEx.hpp" />
+    <ClInclude Include="KFKernelConfig.hpp" />
     <ClInclude Include="KFKernelInterface.h" />
-    <ClInclude Include="KFKernelModule.h" />
-    <ClInclude Include="KFKernelPlugin.h" />
+    <ClInclude Include="KFKernelModule.hpp" />
+    <ClInclude Include="KFKernelPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D4761370-1C06-4177-9384-2EEDA7122985}</ProjectGuid>

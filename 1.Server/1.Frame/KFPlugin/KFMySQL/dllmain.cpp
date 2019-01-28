@@ -1,4 +1,4 @@
-﻿#include "KFMySQLPlugin.h"
+﻿#include "KFMySQLPlugin.hpp"
 #include "KFLibrary.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFMySQLPlugin );

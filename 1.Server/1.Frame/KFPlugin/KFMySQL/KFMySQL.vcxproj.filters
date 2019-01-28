@@ -9,11 +9,11 @@
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFMySQL.h" />
-    <ClInclude Include="KFMySQLConfig.h" />
-    <ClInclude Include="KFMySQLExecute.h" />
     <ClInclude Include="KFMySQLInterface.h" />
-    <ClInclude Include="KFMySQLModule.h" />
-    <ClInclude Include="KFMySQLPlugin.h" />
+    <ClInclude Include="KFMySQL.hpp" />
+    <ClInclude Include="KFMySQLConfig.hpp" />
+    <ClInclude Include="KFMySQLExecute.hpp" />
+    <ClInclude Include="KFMySQLModule.hpp" />
+    <ClInclude Include="KFMySQLPlugin.hpp" />
   </ItemGroup>
 </Project>

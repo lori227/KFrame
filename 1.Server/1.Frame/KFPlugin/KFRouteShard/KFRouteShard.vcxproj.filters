@@ -8,8 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRouteShardInterface.h" />
-    <ClInclude Include="KFRouteShardModule.h" />
-    <ClInclude Include="KFRouteShardPlugin.h" />
-    <ClInclude Include="KFRouteService.h" />
+    <ClInclude Include="KFRouteService.hpp" />
+    <ClInclude Include="KFRouteShardModule.hpp" />
+    <ClInclude Include="KFRouteShardPlugin.hpp" />
   </ItemGroup>
 </Project>

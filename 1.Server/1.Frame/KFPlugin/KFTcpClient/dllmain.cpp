@@ -1,5 +1,4 @@
-﻿#include "KFTcpClientPlugin.h"
-#include "KFPlugin/KFPluginManage.h"
+﻿#include "KFTcpClientPlugin.hpp"
 #include "KFLibrary.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFTcpClientPlugin );

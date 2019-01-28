@@ -1,6 +1,6 @@
-﻿#include "KFIpAddressModule.h"
-#include "KFIpAddressConfig.h"
-#include "KFPort.h"
+﻿#include "KFIpAddressModule.hpp"
+#include "KFIpAddressConfig.hpp"
+#include "KFPort.hpp"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <winsock2.h>

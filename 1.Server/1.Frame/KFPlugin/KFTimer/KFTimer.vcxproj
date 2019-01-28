@@ -17,10 +17,10 @@
     <ClCompile Include="KFTimerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTimerData.h" />
+    <ClInclude Include="KFTimerData.hpp" />
     <ClInclude Include="KFTimerInterface.h" />
-    <ClInclude Include="KFTimerModule.h" />
-    <ClInclude Include="KFTimerPlugin.h" />
+    <ClInclude Include="KFTimerModule.hpp" />
+    <ClInclude Include="KFTimerPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F4E6E7D2-8A00-46C1-80C2-273665F7E96A}</ProjectGuid>

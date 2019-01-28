@@ -1,4 +1,4 @@
-﻿#include "KFFilterConfig.h"
+﻿#include "KFFilterConfig.hpp"
 
 namespace KFrame
 {

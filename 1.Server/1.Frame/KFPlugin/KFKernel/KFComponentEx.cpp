@@ -1,7 +1,7 @@
-﻿#include "KFComponentEx.h"
-#include "KFEntityEx.h"
-#include "KFKernelModule.h"
-#include "KFKernelConfig.h"
+﻿#include "KFComponentEx.hpp"
+#include "KFEntityEx.hpp"
+#include "KFKernelModule.hpp"
+#include "KFKernelConfig.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

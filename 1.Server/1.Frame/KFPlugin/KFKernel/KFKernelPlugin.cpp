@@ -1,5 +1,5 @@
-﻿#include "KFKernelPlugin.h"
-#include "KFKernelModule.h"
+﻿#include "KFKernelPlugin.hpp"
+#include "KFKernelModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

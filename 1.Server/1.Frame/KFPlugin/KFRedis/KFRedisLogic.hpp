@@ -2,8 +2,8 @@
 #define __KF_REDIS_LOGIC_H__
 
 #include "KFRedisInterface.h"
-#include "KFRedisExecute.h"
-#include "KFRedisConfig.h"
+#include "KFRedisExecute.hpp"
+#include "KFRedisConfig.hpp"
 
 namespace KFrame
 {

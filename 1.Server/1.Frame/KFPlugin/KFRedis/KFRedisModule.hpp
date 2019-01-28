@@ -11,7 +11,7 @@
 
 #include "KFrame.h"
 #include "KFRedisInterface.h"
-#include "KFRedisLogic.h"
+#include "KFRedisLogic.hpp"
 
 namespace KFrame
 {

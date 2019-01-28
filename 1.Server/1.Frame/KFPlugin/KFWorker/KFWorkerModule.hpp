@@ -10,9 +10,9 @@
 ************************************************************************/
 
 #include "KFrame.h"
-#include "KFActor.h"
+#include "KFActor.hpp"
 #include "KFWorkerInterface.h"
-#include "KFWorkerMessage.h"
+#include "KFWorkerMessage.hpp"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"

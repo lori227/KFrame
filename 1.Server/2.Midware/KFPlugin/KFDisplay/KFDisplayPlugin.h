@@ -1,11 +1,10 @@
-﻿#ifndef __KF_CLIENT_PLUGIN_H__
-#define __KF_CLIENT_PLUGIN_H__
-
-#include "KFPlugin/KFPlugin.h"
+﻿#ifndef __KF_DISPLAY_PLUGIN_H__
+#define __KF_DISPLAY_PLUGIN_H__
+#include "KFrame.h"
 
 namespace KFrame
 {
-    class KFTcpClientPlugin : public KFPlugin
+    class KFDisplayPlugin : public KFPlugin
     {
     public:
         // 注册
