@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFHttpData::Request()
     {
-        _result = _http->RunHttp( _url, _data );
+        _result = _http->RunHttp( _type, _url, _data );
     }
 
     void KFHttpData::Response()
@@ -26,7 +26,7 @@ namespace KFrame
         {
             try
             {
-                _function( _data, _result, _callback );
+                _function( _data, _result, _args );
             }
             catch ( ... )
             {

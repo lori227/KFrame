@@ -42,10 +42,10 @@ namespace KFrame
         virtual const std::string& GetHttpUrl();
 
         // 返回错误
-        virtual std::string SendResponseCode( uint32 code );
+        virtual std::string SendCode( uint32 code );
 
         // 获得错误码
-        virtual uint32 GetResponseCode( KFJson& json );
+        virtual uint32 GetCode( KFJson& json );
 
         // 发送json
         virtual std::string SendResponse( KFJson& json );

@@ -15,11 +15,17 @@ namespace KFrame
     class KFHttp
     {
     public:
+        enum HttpEnum
+        {
+            Get = 1,
+            Post = 2,
+        };
+    public:
         KFHttp() = default;
         virtual ~KFHttp() = default;
 
         // 执行http访问
-        virtual std::string RunHttp( const std::string& url, const std::string& data );
+        virtual std::string RunHttp( uint32 type, const std::string& url, const std::string& data );
 
     protected:
         // 获得访问路径

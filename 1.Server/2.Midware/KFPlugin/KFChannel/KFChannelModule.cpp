@@ -47,21 +47,21 @@ namespace KFrame
         auto channel = __JSON_GET_UINT32__( request, __KF_STRING__( channel ) );
         if ( !_kf_channel_config->IsChannelOpen( channel ) )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::ChannelNotSupport );
+            return _kf_http_server->SendCode( KFMsg::ChannelNotSupport );
         }
 
         // 渠道是否开启
         auto kfsetting = _kf_channel_config->FindChannelSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::ChannelNotOpen );
+            return _kf_http_server->SendCode( KFMsg::ChannelNotOpen );
         }
 
         // 查找回调函数
         auto kffunction = _kf_login_function.Find( channel );
         if ( kffunction == nullptr )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::ChannelError );
+            return _kf_http_server->SendCode( KFMsg::ChannelError );
         }
 
         // 执行回调

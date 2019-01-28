@@ -5,47 +5,95 @@
 
 namespace KFrame
 {
+    // ST 单线程http请求
+    // MT 多线程http请求
     class KFHttpClientInterface : public KFModule
     {
     public:
         // 单线程
-        virtual std::string StartSTClient( const std::string& url, const std::string& data ) = 0;
-        virtual std::string StartSTClient( const std::string& url, KFJson& json ) = 0;
+        virtual std::string STGet( const std::string& url, KFJson& json ) = 0;
+        virtual std::string STGet( const std::string& url, const std::string& data ) = 0;
 
-        // 多线程
-        virtual void StartMTClient( const std::string& url, const std::string& data ) = 0;
-        virtual void StartMTClient( const std::string& url, KFJson& json ) = 0;
+        virtual std::string STPost( const std::string& url, KFJson& json ) = 0;
+        virtual std::string STPost( const std::string& url, const std::string& data ) = 0;
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 多线程 string
         template< class T >
-        void StartMTClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
-                            const std::string& url, const std::string& data, const std::string& callback = _invalid_str )
+        void MTGet( const std::string& url, const std::string& data,
+                    T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                    const std::string& args = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            StartMTClient( function, url, data,  callback );
+            KFHttpClientFunction function = nullptr;
+            if ( object != nullptr )
+            {
+                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            }
+
+            MTGet( url, data, function, args );
         }
 
         template< class T >
-        void StartMTClient( T* object, void ( T::*handle )( std::string&, std::string&, std::string& ),
-                            const std::string& url, KFJson& json, const std::string& callback = _invalid_str )
+        void MTPost( const std::string& url, const std::string& data,
+                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                     const std::string& args = _invalid_str )
         {
-            KFHttpClientFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            StartMTClient( function, url, json, callback );
+            KFHttpClientFunction function = nullptr;
+            if ( object != nullptr )
+            {
+                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            }
+
+            MTPost( url, data, function, args );
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 多线程 json
+        template< class T >
+        void MTGet( const std::string& url, KFJson& json,
+                    T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                    const std::string& args = _invalid_str )
+        {
+            KFHttpClientFunction function = nullptr;
+            if ( object != nullptr )
+            {
+                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            }
+
+            MTGet( function, url, json, args );
         }
 
-        /////////////////////////////////////////////////////////////////////////
-        // 返回错误
-        virtual std::string SendResponseCode( uint32 code ) = 0;
+        template< class T >
+        void MTPost( const std::string& url, KFJson& json,
+                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                     const std::string& args = _invalid_str )
+        {
+            KFHttpClientFunction function = nullptr;
+            if ( object != nullptr )
+            {
+                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            }
+
+            MTPost( function, url, json, args );
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 发送错误
+        virtual std::string SendCode( uint32 code ) = 0;
 
         // 获得错误码
-        virtual uint32 GetResponseCode( KFJson& json ) = 0;
+        virtual uint32 GetCode( KFJson& json ) = 0;
 
         // 发送json
         virtual std::string SendResponse( KFJson& json ) = 0;
 
     protected:
-        // http
-        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback ) = 0;
-        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback ) = 0;
+        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
+        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
+
+        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
+        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +101,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_HTTP_CALL_BACK_FUNCTION__( function )\
-    void function( std::string& senddata, std::string& recvdata, std::string& callback )
+    void function( std::string& senddata, std::string& recvdata, std::string& args )
 
 }
 

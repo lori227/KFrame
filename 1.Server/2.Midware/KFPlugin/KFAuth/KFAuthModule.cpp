@@ -62,10 +62,10 @@ namespace KFrame
         auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::Error );
+            return _kf_http_server->SendCode( KFMsg::Error );
         }
 
-        return _kf_http_server->SendResponseCode( KFMsg::Ok );
+        return _kf_http_server->SendCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneList )
@@ -74,7 +74,7 @@ namespace KFrame
         auto kflist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
         if ( !kflist->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         __JSON_DOCUMENT__( response );
@@ -107,7 +107,7 @@ namespace KFrame
         auto kfcount = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( zoneip ), id, __KF_STRING__( count ) );
         if ( !kfcount->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         // 更新比较小的
@@ -119,7 +119,7 @@ namespace KFrame
         }
 
         redisdriver->Execute( "expire {}:{} {}", __KF_STRING__( zoneip ), id, 30 );
-        return _kf_http_client->SendResponseCode( KFMsg::Ok );
+        return _kf_http_client->SendCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneIp )
@@ -133,7 +133,7 @@ namespace KFrame
         auto kfmap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zoneip ), id );
         if ( !kfmap->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         __JSON_DOCUMENT__( response );
@@ -151,17 +151,17 @@ namespace KFrame
         auto authdata = _kf_channel->AuthChannelLogin( data );
 
         __JSON_PARSE_STRING__( authjson, authdata );
-        auto retcode = _kf_http_server->GetResponseCode( authjson );
+        auto retcode = _kf_http_server->GetCode( authjson );
         if ( retcode != KFMsg::Ok )
         {
-            return _kf_http_server->SendResponseCode( retcode );
+            return _kf_http_server->SendCode( retcode );
         }
 
         auto account = __JSON_GET_STRING__( authjson, __KF_STRING__( account ) );
         auto channel = __JSON_GET_UINT32__( authjson, __KF_STRING__( channel ) );
         if ( account.empty() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
+            return _kf_http_server->SendCode( KFMsg::AccountIsEmpty );
         }
 
         __LOG_DEBUG__( "account[{}] channel[{}] auth login!", account, channel );
@@ -171,7 +171,7 @@ namespace KFrame
         auto accountid = KFUtility::ToValue( accountdata[ __KF_STRING__( accountid ) ] );
         if ( accountid == 0 )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthServerBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthServerBusy );
         }
 
         //// 判断是否需要激活
@@ -314,7 +314,7 @@ namespace KFrame
 
         __JSON_DOCUMENT__( kfkickjson );
         __JSON_SET_VALUE__( kfkickjson, __KF_STRING__( playerid ), accountdata[ __KF_STRING__( playerid ) ] );
-        _kf_http_client->StartMTClient( kickurl, kfkickjson );
+        _kf_http_client->MTGet< KFAuthModule >( kickurl, kfkickjson );
 
         return true;
     }
@@ -351,7 +351,7 @@ namespace KFrame
             zoneid = BalanceAllocZoneId();
             if ( zoneid == _invalid_int )
             {
-                return _kf_http_server->SendResponseCode( KFMsg::ZoneServerBusy );
+                return _kf_http_server->SendCode( KFMsg::ZoneServerBusy );
             }
         }
 
@@ -361,7 +361,7 @@ namespace KFrame
         auto kfzonemap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
         if ( !kfzonemap->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::ZoneDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::ZoneDatabaseBusy );
         }
 
         __JSON_DOCUMENT__( response );
@@ -387,7 +387,7 @@ namespace KFrame
         auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
         if ( accountid == _invalid_int )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AccountIsEmpty );
+            return _kf_http_server->SendCode( KFMsg::AccountIsEmpty );
         }
 
         // 查询创建账号
@@ -395,13 +395,13 @@ namespace KFrame
         auto accountdata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
         if ( !accountdata->IsOk() || accountdata->_value.empty() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         auto activation = accountdata->_value[ __KF_STRING__( activation ) ];
         if ( activation.empty() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::InvalidActivationCode );
+            return _kf_http_server->SendCode( KFMsg::InvalidActivationCode );
         }
 
         // 保存激活码
@@ -411,12 +411,12 @@ namespace KFrame
         //auto isexist = redisdriver->QueryUInt64( "sismember {} {}", __KF_STRING__( activationcode ), code );
         //if ( !isexist->IsOk() )
         //{
-        //    return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+        //    return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         //}
 
         //if ( isexist->_value == _invalid_int )
         //{
-        //    return _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+        //    return _kf_http_server->SendCode( KFMsg::ActivationCodeError );
         //}
 
         //redisdriver->Append( "srem {} {}", __KF_STRING__( activationcode ), code );
@@ -437,13 +437,13 @@ namespace KFrame
         __JSON_SET_VALUE__( postjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
 
         //去平台通过激活码激活
-        auto result = _kf_http_client->StartSTClient( apiurl, postjson );
+        auto result = _kf_http_client->STGet( apiurl, postjson );
         __JSON_PARSE_STRING__( resp, result );
 
         if ( !__JSON_HAS_MEMBER__( resp, __KF_STRING__( code ) ) )
         {
             __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
-            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+            _kf_http_server->SendCode( KFMsg::ActivationCodeError );
             return _invalid_str;
         }
 
@@ -451,7 +451,7 @@ namespace KFrame
         if ( code != 0 )
         {
             __LOG_ERROR__( "Activate code failed, account={} accountid={} info={}", account, accountid, result );
-            _kf_http_server->SendResponseCode( KFMsg::ActivationCodeError );
+            _kf_http_server->SendCode( KFMsg::ActivationCodeError );
             return _invalid_str;
         }
 
@@ -473,7 +473,7 @@ namespace KFrame
         auto zonelogicid = __JSON_GET_UINT32__( request, __KF_STRING__( zonelogicid ) );
         if ( zoneid == _invalid_int || zonelogicid == _invalid_int )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::HttpDataError );
+            return _kf_http_server->SendCode( KFMsg::HttpDataError );
         }
 
         // 判断token是否正确
@@ -483,7 +483,7 @@ namespace KFrame
         auto querytoken = redisdriver->QueryMap( "hgetall {}", loginkey );
         if ( !querytoken->IsOk() )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         // 获得账号和渠道
@@ -492,13 +492,13 @@ namespace KFrame
         auto queryaccountid = KFUtility::ToValue( querytoken->_value[ __KF_STRING__( accountid ) ] );
         if ( queryaccountid == _invalid_int || channel == _invalid_int || queryaccountid != accountid )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::LoginTokenError );
+            return _kf_http_server->SendCode( KFMsg::LoginTokenError );
         }
 
         auto playerid = QueryCreatePlayerId( channel, accountid, zoneid, zonelogicid );
         if ( playerid == _invalid_int )
         {
-            return _kf_http_server->SendResponseCode( KFMsg::AuthDatabaseBusy );
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
         // 判断黑名单
@@ -588,7 +588,7 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
 
-        return _kf_http_server->SendResponseCode( KFMsg::Ok );
+        return _kf_http_server->SendCode( KFMsg::Ok );
     }
 
     uint64 KFAuthModule::CheckLoginBlackList( const std::string& ip, uint64 accountid, uint64 playerid )
@@ -683,7 +683,7 @@ namespace KFrame
             KickAccountOffline( accountdata->_value );
         }
 
-        return _kf_http_server->SendResponseCode( KFMsg::Ok );
+        return _kf_http_server->SendCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleUnBanLogin )
@@ -712,7 +712,7 @@ namespace KFrame
             redisdriver->Execute( "hset {} {}", __KF_STRING__( banip ), banip );
         }
 
-        return _kf_http_server->SendResponseCode( KFMsg::Ok );
+        return _kf_http_server->SendCode( KFMsg::Ok );
     }
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryBanLogin )

@@ -30,27 +30,28 @@ namespace KFrame
         virtual void BeforeShut();
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
+        // 单线程
+        virtual std::string STGet( const std::string& url, KFJson& json );
+        virtual std::string STGet( const std::string& url, const std::string& data );
 
-        virtual std::string StartSTClient( const std::string& url, const std::string& data );
-        virtual std::string StartSTClient( const std::string& url, KFJson& json );
-
-        virtual void StartMTClient( const std::string& url, const std::string& data );
-        virtual void StartMTClient( const std::string& url, KFJson& json );
-
+        virtual std::string STPost( const std::string& url, KFJson& json );
+        virtual std::string STPost( const std::string& url, const std::string& data );
         /////////////////////////////////////////////////////////////////////
         // 返回错误
-        virtual std::string SendResponseCode( uint32 code );
+        virtual std::string SendCode( uint32 code );
 
         // 获得错误码
-        virtual uint32 GetResponseCode( KFJson& json );
+        virtual uint32 GetCode( KFJson& json );
 
         // 发送json
         virtual std::string SendResponse( KFJson& json );
 
     protected:
-        // http
-        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& callback );
-        virtual void StartMTClient( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& callback );
+        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+
+        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
+        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
 
     private:
         // 添加异步请求
@@ -61,6 +62,10 @@ namespace KFrame
 
         // 判断是否是https
         bool IsHttpsClient( const std::string& url );
+        /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+        std::string STRequest( uint32 type, const std::string& url, const std::string& data );
+        void MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
 
     private:
 

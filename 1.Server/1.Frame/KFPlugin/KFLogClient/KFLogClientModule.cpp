@@ -24,10 +24,10 @@ namespace KFrame
         __JSON_SET_VALUE__( request, __KF_STRING__( appid ), KFGlobal::Instance()->_str_app_id );
 
         auto data = __JSON_SERIALIZE__( request );
-        auto recvdata = _kf_http_client->StartSTClient( url, _invalid_str );
+        auto recvdata = _kf_http_client->STGet( url, _invalid_str );
 
         __JSON_PARSE_STRING__( response, recvdata );
-        auto retcode = _kf_http_client->GetResponseCode( response );
+        auto retcode = _kf_http_client->GetCode( response );
         if ( retcode != KFEnum::Ok )
         {
             return __LOG_ERROR__( "request log address error={}!", retcode );

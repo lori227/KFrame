@@ -1,0 +1,70 @@
+syntax = "proto3";
+import "KFDefineMessage.proto";
+package KFMsg;
+
+enum MidwareServerProtocol
+{	
+	S2S_MIDWARE_SERVER_PROTOCOL_BEGIN = 0;			// pb3 0 开始
+
+	// server
+	S2S_BROADCAST_TO_WORLD = 20001;					// 广播消息
+	S2S_BROADCAST_TO_GAME = 20002;					// 广播消息
+	S2S_BROADCAST_TO_GATE = 20003;					// 广播消息
+	S2S_TRANSMIT_TO_PLAYER = 20004;					// 转发消息
+	S2S_TRANSMIT_TO_SERVER = 20005;					// 转发消息
+
+ }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// S2S_TRANSMIT_MESSAGE_REQ
+message S2STransmitMessageReq
+{
+	uint64 playerid = 1;
+	uint32 msgid = 2;
+	bytes msgdata = 3;
+}
+
+// S2S_BROADCAST_MESSAGE_REQ
+message S2SBroadcastMessageReq
+{
+	uint32 msgid = 1;			// 消息id
+	bytes msgdata = 2;		// 消息内容
+}
+
+// S2S_BROADCAST_TO_WORLD
+message S2SBroadcastToWord
+{
+	uint32 msgid = 1;			// 消息id
+	bytes msgdata = 2;		// 消息内容
+}
+
+// S2S_BROADCAST_TO_GAME
+message S2SBroadcastToGame
+{
+	uint32 msgid = 1;			// 消息id
+	bytes msgdata = 2;		// 消息内容
+}
+
+// S2S_BROADCAST_TO_GATE
+message S2SBroadcastToGate
+{
+	uint32 msgid = 1;			// 消息id
+	bytes msgdata = 2;		// 消息内容
+}
+
+// S2S_TRANSMIT_TO_PLAYER
+message S2STransmitToPlayer
+{
+	uint64 playerid = 1;		// 玩家id
+	uint32 msgid = 2;			// 消息id
+	bytes msgdata = 3;		// 消息内容
+}
+
+// S2S_TRANSMIT_TO_SERVER
+message S2STransmitToServer
+{
+	uint32 msgid = 2;			// 消息id
+	bytes msgdata = 3;		// 消息内容
+}

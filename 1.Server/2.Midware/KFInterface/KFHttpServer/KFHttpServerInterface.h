@@ -19,15 +19,17 @@ namespace KFrame
 
         // 卸载
         virtual void UnRegisterFunction( const std::string& url ) = 0;
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
         // 获得完整路径
         virtual const std::string& GetHttpUrl() = 0;
 
         // 返回错误
-        virtual std::string SendResponseCode( uint32 code ) = 0;
+        virtual std::string SendCode( uint32 code ) = 0;
 
         // 获得错误码
-        virtual uint32 GetResponseCode( KFJson& json ) = 0;
+        virtual uint32 GetCode( KFJson& json ) = 0;
 
         // 发送json
         virtual std::string SendResponse( KFJson& json ) = 0;

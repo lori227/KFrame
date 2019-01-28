@@ -70,12 +70,12 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    std::string KFHttpServerModule::SendResponseCode( uint32 code )
+    std::string KFHttpServerModule::SendCode( uint32 code )
     {
         return KFHttpCommon::SendResponseCode( code );
     }
 
-    uint32 KFHttpServerModule::GetResponseCode( KFJson& json )
+    uint32 KFHttpServerModule::GetCode( KFJson& json )
     {
         return KFHttpCommon::GetResponseCode( json );
     }

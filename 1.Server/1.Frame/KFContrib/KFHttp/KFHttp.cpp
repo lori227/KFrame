@@ -18,7 +18,7 @@ namespace KFrame
 
 #define MAX_EXCEPTION 3
 
-    std::string KFHttp::RunHttp( const std::string& url, const std::string& data )
+    std::string KFHttp::RunHttp( uint32 type, const std::string& url, const std::string& data )
     {
         __LOG_DEBUG__( "http url={}", url );
         if ( !data.empty() )
@@ -29,7 +29,14 @@ namespace KFrame
         Poco::Net::HTTPRequest request;
         request.setContentType( "application/json" );
         request.setVersion( Poco::Net::HTTPRequest::HTTP_1_1 );
-        request.setMethod( Poco::Net::HTTPRequest::HTTP_GET );
+        if ( type == KFHttp::Post )
+        {
+            request.setMethod( Poco::Net::HTTPRequest::HTTP_POST );
+        }
+        else
+        {
+            request.setMethod( Poco::Net::HTTPRequest::HTTP_GET );
+        }
 
         Poco::URI verifyuri( url );
         request.setURI( GetURI( url, verifyuri ) );

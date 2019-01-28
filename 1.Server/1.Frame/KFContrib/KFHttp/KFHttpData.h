@@ -21,11 +21,14 @@ namespace KFrame
         // 访问地址
         std::string _url;
 
+        // 访问类型
+        uint32 _type;
+
         // 发送数据
         std::string _data;
 
         // 回传数据
-        std::string _callback;
+        std::string _args;
 
         // 接受数据
         std::string _result;
