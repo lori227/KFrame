@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFLoginInterface.h" />
-    <ClInclude Include="KFLoginModule.h" />
-    <ClInclude Include="KFLoginPlugin.h" />
+    <ClInclude Include="KFLoginModule.hpp" />
+    <ClInclude Include="KFLoginPlugin.hpp" />
   </ItemGroup>
 </Project>

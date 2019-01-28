@@ -8,8 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFWorldInterface.h" />
-    <ClInclude Include="KFWorldModule.h" />
-    <ClInclude Include="KFWorldPlugin.h" />
-    <ClInclude Include="KFOnline.h" />
+    <ClInclude Include="KFOnline.hpp" />
+    <ClInclude Include="KFWorldModule.hpp" />
+    <ClInclude Include="KFWorldPlugin.hpp" />
   </ItemGroup>
 </Project>

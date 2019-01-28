@@ -17,10 +17,10 @@
     <ClCompile Include="KFWorldPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFOnline.h" />
+    <ClInclude Include="KFOnline.hpp" />
     <ClInclude Include="KFWorldInterface.h" />
-    <ClInclude Include="KFWorldModule.h" />
-    <ClInclude Include="KFWorldPlugin.h" />
+    <ClInclude Include="KFWorldModule.hpp" />
+    <ClInclude Include="KFWorldPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6DF6E868-A2B4-401B-8814-09440E18DD9A}</ProjectGuid>
