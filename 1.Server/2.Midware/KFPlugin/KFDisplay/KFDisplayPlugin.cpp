@@ -17,8 +17,8 @@ namespace KFrame
 
     void KFDisplayPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE_NO_LOG__( _kf_game, KFGameInterface );
         __FIND_MODULE_NO_LOG__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE_NO_LOG__( _kf_tcp_server, KFTcpServerInterface );
     }
 }

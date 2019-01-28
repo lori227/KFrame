@@ -15,11 +15,13 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_VERIFY_REQ, &KFGateModule::HandleLoginVerifyReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ, &KFGateModule::HandleLoginOutReq );
+
+
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOGIN_VERIFY_ACK, &KFGateModule::HandleLoginVerifyAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_KICK_GATE_PLAYER_REQ, &KFGateModule::HandleKickGatePlayerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE, &KFGateModule::HandleBroadcastMessageReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_GAME_ACK, &KFGateModule::HandleLoginGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ, &KFGateModule::HandleLoginOutReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

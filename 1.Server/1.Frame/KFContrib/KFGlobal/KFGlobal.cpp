@@ -1,7 +1,8 @@
 ﻿#include "KFrame.h"
 #include "KFRand.h"
-#include "KFGuid.h"
+#include "KFUUID.h"
 #include "KFVersion.h"
+
 
 namespace KFrame
 {
@@ -16,14 +17,18 @@ namespace KFrame
         _listen_port = 0;
         _kf_rand = new KFRand();
         _kf_version = new KFVersion();
-        _kf_guid = new KFGuid( 29, 14, 8, 12 );
     }
 
     KFGlobal::~KFGlobal()
     {
         __DELETE_OBJECT__( _kf_rand );
-        __DELETE_OBJECT__( _kf_guid );
         __DELETE_OBJECT__( _kf_version );
+
+        for ( auto& iter : _kf_uuid )
+        {
+            delete iter.second;
+        }
+        _kf_uuid.clear();
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -90,14 +95,19 @@ namespace KFrame
         return min + index;
     }
 
-    uint64 KFGlobal::Make64Guid()
+    uint64 KFGlobal::Make64Guid( uint32 type )
     {
-        return _kf_guid->Make64Guid();
-    }
+        auto iter = _kf_uuid.find( type );
+        if ( iter == _kf_uuid.end() )
+        {
+            auto uuid = new KFUUID( 29, 14, 8, 12 );
+            iter = _kf_uuid.insert( std::make_pair( type, uuid ) ).first;
+        }
 
-    void KFGlobal::Print64Guid( uint64 guid )
-    {
-        _kf_guid->Print64Guid( guid );
+        auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+        auto workerid = KFGlobal::Instance()->_app_id._union._app_data._worker_id;
+
+        return iter->second->Make64Guid( zoneid, workerid, _real_time );
     }
 
     void KFGlobal::InitNetService( std::string& strtype )

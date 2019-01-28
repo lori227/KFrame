@@ -3,11 +3,11 @@
   <ItemGroup>
     <ClInclude Include="KFGlobal.h" />
     <ClInclude Include="KFRand.h" />
-    <ClInclude Include="KFGuid.h" />
+    <ClInclude Include="KFUUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGlobal.cpp" />
     <ClCompile Include="KFRand.cpp" />
-    <ClCompile Include="KFGuid.cpp" />
+    <ClCompile Include="KFUUID.cpp" />
   </ItemGroup>
 </Project>

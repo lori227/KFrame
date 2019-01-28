@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDefineMessage.pb.cc" />
+    <ClCompile Include="KFMidwareClientMessage.pb.cc" />
     <ClCompile Include="KFMidwareCodeMessage.pb.cc" />
     <ClCompile Include="KFMidwareEnumMessage.pb.cc" />
     <ClCompile Include="KFMidwareServerMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDefineMessage.pb.h" />
+    <ClInclude Include="KFMidwareClientMessage.pb.h" />
     <ClInclude Include="KFMidwareCodeMessage.pb.h" />
     <ClInclude Include="KFMidwareEnumMessage.pb.h" />
     <ClInclude Include="KFMidwareServerMessage.pb.h" />

@@ -1,11 +1,11 @@
 ﻿#include "KFrame.h"
-#include "KFGuid.h"
+#include "KFUUID.h"
 
 namespace KFrame
 {
 #define __START_TIME__ 1542902400	// 项目开始时间 2018-11-23 0:0:0
 
-    KFGuid::KFGuid( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    KFUUID::KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
         _seq_bits = seqbits;
         _max_seq = ~( -1L << _seq_bits );
@@ -23,10 +23,10 @@ namespace KFrame
         _time_shift = _zone_shift + _zone_bits;
     }
 
-    uint64 KFGuid::Make64Guid()
+    uint64 KFUUID::Make64Guid( uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
         // time
-        auto time = KFGlobal::Instance()->_real_time - __START_TIME__;
+        auto time = nowtime - __START_TIME__;
         time &= _max_time;
 
         if ( time != _last_time )
@@ -40,14 +40,12 @@ namespace KFrame
         _sequence = ( _sequence + 1 ) & _max_seq;
 
         // appid
-        KFAppID kfappid( KFGlobal::Instance()->_app_id );
-        auto zoneid = kfappid._union._app_data._zone_id & _max_zone;
-        auto workid = kfappid._union._app_data._worker_id & _max_seq;
-
-        return ( time << _time_shift ) | ( zoneid << _zone_shift ) | ( workid << _worker_shift ) | _sequence;
+        zoneid &= _max_zone;
+        workerid &= _max_seq;
+        return ( time << _time_shift ) | ( zoneid << _zone_shift ) | ( workerid << _worker_shift ) | _sequence;
     }
 
-    void KFGuid::Print64Guid( uint64 guid )
+    void KFUUID::Print64Guid( uint64 guid )
     {
         auto sequence = ( guid & _max_seq );
         auto workerid = ( ( guid >> _worker_shift ) & _max_worker );

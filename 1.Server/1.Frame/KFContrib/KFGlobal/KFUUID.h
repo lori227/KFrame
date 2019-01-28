@@ -1,5 +1,5 @@
-﻿#ifndef __KF_GUID_H__
-#define __KF_GUID_H__
+﻿#ifndef __KF_UUID_H__
+#define __KF_UUID_H__
 
 #include "KFInclude.h"
 
@@ -21,14 +21,14 @@ namespace KFrame
     // 12	序列号 同一进程1秒钟内超过4095个就会重复 -- 应该不可能, 除非你要疯
     // 可以保证同一模块生成的guid不相同, 不同模块可能会一样
 
-    class KFGuid
+    class KFUUID
     {
     public:
-        KFGuid() = default;
-        KFGuid( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        KFUUID() = default;
+        KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
 
         // 生产guid
-        uint64 Make64Guid();
+        uint64 Make64Guid( uint32 zoneid, uint32 workerid, uint64 nowtime );
 
         // 打印guid
         void Print64Guid( uint64 guid );

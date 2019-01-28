@@ -3,12 +3,13 @@ import "KFDefineMessage.proto";
 
 package KFMsg;
 
+// 协议号区间 : 1-1000
 enum MidwareClientProtocol
  {
 	MSG_MIDWARE_CLIENT_PROTOCOL_BEGIN = 0;		// pb3 需要0
 
 	// display
-	MSG_RESULT_DISPLAY = 1;						// 结果提示回馈
+	MSG_RESULT_DISPLAY = 1;						// 提示显示
 		
 	// login
 	MSG_TELL_BE_KICK = 10;						// 被踢下线了

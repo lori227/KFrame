@@ -7,6 +7,11 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////
     void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, ListString& params )
     {
+        if ( _kf_tcp_server == nullptr )
+        {
+            return;
+        }
+
         KFMsg::MsgResultDisplay display;
         display.set_result( result );
         for ( auto& param : params )
