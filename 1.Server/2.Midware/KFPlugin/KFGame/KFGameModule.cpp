@@ -11,20 +11,18 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
 
-        _kf_player->BindAfterLoadFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
+        _kf_data->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
 
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
+        // __REGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &KFGameModule::HandleKickPlayerToGameReq );
 
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME, &KFGameModule::HandleBroadcastMessageReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_KICK_GAME_PLAYER_REQ, &KFGameModule::HandleKickGamePlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_DISCONNECTION_REQ, &KFGameModule::HandlePlayerDisconnectionReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ, &KFGameModule::HandleLoginOutReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ, &KFGameModule::HandleDisconnectToGameReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &KFGameModule::HandleLogoutToGameReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -35,41 +33,66 @@ namespace KFrame
         __UNREGISTER_ROUTE_MESSAGE_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
 
-        _kf_player->UnBindAfterLoadFunction( this );
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
+        _kf_data->UnBindLoadPlayerFunction( this );
 
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
+        //__UNREGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
-
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_GAME_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_DISCONNECTION_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_OUT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //__KF_DEPLOY_COMMAND_FUNCTION__( KFGameModule::OnDeployShutDownServer )
+    //{
+    //    auto player = _kf_player->FirstPlayer();
+    //    while ( player != nullptr )
+    //    {
+    //        SavePlayer( player );
+    //        player = _kf_player->NextPlayer();
+    //    }
+    //}
+
+    //void KFGameModule::SavePlayer( KFEntity* player )
+    //{
+    //    if ( !player->IsInited() )
+    //    {
+    //        return;
+    //    }
+
+    //    // 保存数据库
+    //    static KFMsg::PBObject pbplayerdata;
+    //    _kf_kernel->SerializeToData( player->GetData(), &pbplayerdata );
+    //    auto ok = _kf_data->SavePlayerData( player->GetKeyID(), &pbplayerdata );
+    //    if ( !ok )
+    //    {
+    //        __LOG_ERROR__( "player[{}] save send failed!", player->GetKeyID() );
+    //    }
+
+    //    player->SetNeetToSave( !ok );
+    //}
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGameModule::OnClientConnectionServer )
     {
-        if ( servertype != __KF_STRING__( world ) )
+        if ( servertype == __KF_STRING__( world ) )
         {
-            return;
-        }
+            _world_server_id = serverid;
 
-        _world_server_id = serverid;
-
-        // 同步当前在线玩家到World服务器
-        KFMsg::S2SGameSyncOnlineReq req;
-        auto player = _kf_player->FirstPlayer();
-        while ( player != nullptr )
-        {
-            req.add_playerid( player->GetKeyID() );
-            player = _kf_player->NextPlayer();
+            // 同步当前在线玩家到World服务器
+            KFMsg::S2SPlayerSyncToWorldReq req;
+            auto player = _kf_player->FirstPlayer();
+            while ( player != nullptr )
+            {
+                req.add_playerid( player->GetKeyID() );
+                player = _kf_player->NextPlayer();
+            }
+            SendToWorld( KFMsg::S2S_PLAYER_SYNC_TO_WORLD_REQ, &req );
         }
-        SendToWorld( KFMsg::S2S_GAME_SYNC_ONLINE_REQ, &req );
     }
 
     __KF_CLIENT_LOST_FUNCTION__( KFGameModule::OnClientLostServer )
@@ -198,26 +221,15 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_COMMAND_FUNCTION__( KFGameModule::OnDeployShutDownServer )
-    {
-        auto player = _kf_player->FirstPlayer();
-        while ( player != nullptr )
-        {
-            _kf_player->SavePlayer( player );
-            player = _kf_player->NextPlayer();
-        }
-    }
-
     void KFGameModule::OnEnterGame( KFEntity* player )
     {
-        auto kfobject = player->GetData();
         auto playerid = player->GetKeyID();
         {
             // 发送消息到世界服务器
-            KFMsg::S2SPlayerEnterWorldReq req;
+            KFMsg::S2SPlayerEnterToWorldReq req;
             req.set_playerid( playerid );
-            req.set_accountid( kfobject->GetValue( __KF_STRING__( accountid ) ) );
-            SendToWorld( KFMsg::S2S_PLAYER_ENTER_WORLD_REQ, &req );
+            req.set_accountid( player->GetData()->GetValue( __KF_STRING__( accountid ) ) );
+            SendToWorld( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, &req );
         }
 
         // 添加对象
@@ -230,10 +242,10 @@ namespace KFrame
         auto playerid = player->GetKeyID();
         {
             // 发送消息到世界服务器
-            KFMsg::S2SPlayerLeaveWorldReq req;
+            KFMsg::S2SPlayerLeaveToWorldReq req;
             req.set_playerid( playerid );
             req.set_accountid( kfobject->GetValue( __KF_STRING__( accountid ) ) );
-            SendToWorld( KFMsg::S2S_PLAYER_LEAVE_WORLD_REQ, &req );
+            SendToWorld( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, &req );
         }
 
         // 删除对象
@@ -251,7 +263,7 @@ namespace KFrame
         KickPlayer( pblogin->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
 
         // 加载玩家数据
-        auto ok = _kf_player->LoadPlayer( pblogin );
+        auto ok = _kf_data->LoadPlayerData( pblogin );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}:{}:{}] login game ok!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
@@ -266,34 +278,49 @@ namespace KFrame
     {
         __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack!", pblogin->account(), pblogin->accountid(), pblogin->playerid(), result );
 
-        KFMsg::S2SLoginToGateAck ack;
-        ack.set_result( result );
-        ack.mutable_pblogin()->CopyFrom( *pblogin );
-        ack.mutable_playerdata()->CopyFrom( *pbplayerdata );
-        ack.set_servertime( KFGlobal::Instance()->_real_time );
-        auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_GAME_ACK, &ack );
-        if ( ok )
+        if ( result != KFMsg::Ok )
         {
-            __LOG_DEBUG__( "player[{}:{}] load game ok!", pblogin->accountid(), pblogin->playerid() );
+            KFMsg::S2SLoginToGateAck ack;
+            ack.set_result( result );
+            ack.set_accountid( pblogin->accountid() );
+            ack.set_sessionid( pblogin->sessionid() );
+            auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "player[{}:{}] load [{}] failed!", pblogin->accountid(), pblogin->playerid(), result );
+            }
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}] load game[{}] failed!", pblogin->accountid(), pblogin->playerid(), result );
+            auto player = _kf_player->CreatePlayer( pblogin, pbplayerdata );
+
+            // 同步给客户端
+            _kf_kernel->SerializeToClient( player->GetData(), pbplayerdata );
+
+            KFMsg::S2SEnterToGateAck ack;
+            ack.mutable_pblogin()->CopyFrom( *pblogin );
+            ack.mutable_playerdata()->CopyFrom( *pbplayerdata );
+            ack.set_servertime( KFGlobal::Instance()->_real_time );
+            auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "player[{}:{}] send failed!", pblogin->accountid(), pblogin->playerid(), result );
+            }
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandlePlayerDisconnectionReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SPlayerDisconnectionReq );
+        __PROTO_PARSE__( KFMsg::S2SDisconnectToGameReq );
 
-        __LOG_DEBUG__( "player[{}] disconnection!", kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}] disconnect!", kfmsg.playerid() );
 
         _kf_player->RemovePlayer( kfmsg.playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginOutReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SLoginOutReq );
+        __SERVER_PROTO_PARSE__( KFMsg::S2SLogoutToGameReq );
 
         __LOG_DEBUG__( "player[{}] logout!", kfmsg.playerid() );
 
@@ -301,9 +328,9 @@ namespace KFrame
         _kf_player->RemovePlayer( kfmsg.playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickGamePlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SKickGamePlayerReq );
+        __PROTO_PARSE__( KFMsg::S2SKickPlayerToGameReq );
 
         auto playerid = kfmsg.playerid();
         KickPlayer( playerid, kfmsg.type(), __FUNC_LINE__ );
@@ -319,11 +346,11 @@ namespace KFrame
 
         __LOG_DEBUG_FUNCTION__( function, line, "kick player[{}] by type[{}]!", playerid, type );
 
-        // 发送消息到proxy
-        KFMsg::S2SKickGatePlayerReq req;
-        req.set_playerid( playerid );
+        // 发送消息到gate服务器
+        KFMsg::S2SKickPlayerToGateReq req;
         req.set_type( type );
-        SendToClient( player, KFMsg::S2S_KICK_GATE_PLAYER_REQ, &req );
+        req.set_playerid( playerid );
+        SendToClient( player, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, &req );
 
         // 删除玩家
         _kf_player->RemovePlayer( playerid );

@@ -256,7 +256,7 @@ namespace KFrame
 
         KFMsg::S2SDisconnectToGameReq req;
         req.set_playerid( handleid );
-        kfrole->SendMessageToGame( KFMsg::S2S_DISCONNEC_TO_GAME_REQ, &req );
+        kfrole->SendMessageToGame( KFMsg::S2S_DISCONNECT_TO_GAME_REQ, &req );
 
         // 删除玩家
         _kf_role_list.Remove( handleid );
@@ -287,6 +287,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLogoutReq )
     {
+        __PROTO_PARSE__( KFMsg::MsgLogoutReq );
+
         auto playerid = __ROUTE_SEND_ID__;
         auto kfrole = _kf_role_list.Find( playerid );
         if ( kfrole == nullptr )

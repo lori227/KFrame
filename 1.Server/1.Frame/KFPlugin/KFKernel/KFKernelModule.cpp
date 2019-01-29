@@ -110,12 +110,6 @@ namespace KFrame
         SaveToObject( kfdata, proto, KFDataDefine::Mask_Sync_View );
     }
 
-    void KFKernelModule::SerializeToOnline( KFData* kfdata, KFMsg::PBObject* proto )
-    {
-        proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Online_Data );
-    }
-
 #define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \
     {\
         auto pbdata = &(proto->pbdata());\

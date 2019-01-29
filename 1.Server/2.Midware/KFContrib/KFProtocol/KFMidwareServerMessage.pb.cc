@@ -20,12 +20,11 @@
 // @@protoc_insertion_point(includes)
 
 namespace protobuf_KFDefineMessage_2eproto {
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBLoginData;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<7> scc_info_PBObject;
 }  // namespace protobuf_KFDefineMessage_2eproto
 namespace protobuf_KFMidwareServerMessage_2eproto {
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFMidwareServerMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBLoginData_ChanneldataEntry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFMidwareServerMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBZoneData;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFMidwareServerMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBLoginData;
 }  // namespace protobuf_KFMidwareServerMessage_2eproto
 namespace KFMsg {
 class PBZoneDataDefaultTypeInternal {
@@ -58,16 +57,6 @@ class S2SLoginToGateAckDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<S2SLoginToGateAck>
       _instance;
 } _S2SLoginToGateAck_default_instance_;
-class PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<PBLoginData_ChanneldataEntry_DoNotUse>
-      _instance;
-} _PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
-class PBLoginDataDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<PBLoginData>
-      _instance;
-} _PBLoginData_default_instance_;
 class S2SLoginToWorldReqDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<S2SLoginToWorldReq>
@@ -226,34 +215,6 @@ static void InitDefaultsS2SLoginToGateAck() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_S2SLoginToGateAck =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsS2SLoginToGateAck}, {}};
 
-static void InitDefaultsPBLoginData_ChanneldataEntry_DoNotUse() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::KFMsg::_PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
-    new (ptr) ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse();
-  }
-  ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse::InitAsDefaultInstance();
-}
-
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_PBLoginData_ChanneldataEntry_DoNotUse =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPBLoginData_ChanneldataEntry_DoNotUse}, {}};
-
-static void InitDefaultsPBLoginData() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::KFMsg::_PBLoginData_default_instance_;
-    new (ptr) ::KFMsg::PBLoginData();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::KFMsg::PBLoginData::InitAsDefaultInstance();
-}
-
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_PBLoginData =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsPBLoginData}, {
-      &protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData_ChanneldataEntry_DoNotUse.base,}};
-
 static void InitDefaultsS2SLoginToWorldReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -267,7 +228,7 @@ static void InitDefaultsS2SLoginToWorldReq() {
 
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SLoginToWorldReq =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SLoginToWorldReq}, {
-      &protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData.base,}};
+      &protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData.base,}};
 
 static void InitDefaultsS2SLoginToLoginAck() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -296,7 +257,7 @@ static void InitDefaultsS2SLoginToGameReq() {
 
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SLoginToGameReq =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SLoginToGameReq}, {
-      &protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData.base,}};
+      &protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData.base,}};
 
 static void InitDefaultsS2SEnterToGateAck() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -311,7 +272,7 @@ static void InitDefaultsS2SEnterToGateAck() {
 
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<2> scc_info_S2SEnterToGateAck =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsS2SEnterToGateAck}, {
-      &protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData.base,
+      &protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData.base,
       &protobuf_KFDefineMessage_2eproto::scc_info_PBObject.base,}};
 
 static void InitDefaultsS2SLogoutToGameReq() {
@@ -461,8 +422,6 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2SDisconnectZoneToWorldReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLoginToLoginReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLoginToGateAck.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_PBLoginData_ChanneldataEntry_DoNotUse.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_PBLoginData.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLoginToWorldReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLoginToLoginAck.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SLoginToGameReq.base);
@@ -479,7 +438,7 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2STransmitToPlayer.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[22];
+::google::protobuf::Metadata file_level_metadata[20];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -528,28 +487,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLoginToGateAck, accountid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLoginToGateAck, sessionid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLoginToGateAck, bantime_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, key_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, value_),
-  0,
-  1,
-  ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, token_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, gateid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, sessionid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, channel_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, account_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, accountid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, playerid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, channeldata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SLoginToWorldReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -655,22 +592,20 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 21, -1, sizeof(::KFMsg::S2SDisconnectZoneToWorldReq)},
   { 27, -1, sizeof(::KFMsg::S2SLoginToLoginReq)},
   { 36, -1, sizeof(::KFMsg::S2SLoginToGateAck)},
-  { 45, 52, sizeof(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse)},
-  { 54, -1, sizeof(::KFMsg::PBLoginData)},
-  { 67, -1, sizeof(::KFMsg::S2SLoginToWorldReq)},
-  { 73, -1, sizeof(::KFMsg::S2SLoginToLoginAck)},
-  { 82, -1, sizeof(::KFMsg::S2SLoginToGameReq)},
-  { 88, -1, sizeof(::KFMsg::S2SEnterToGateAck)},
-  { 96, -1, sizeof(::KFMsg::S2SLogoutToGameReq)},
-  { 102, -1, sizeof(::KFMsg::S2SDisconnectToGameReq)},
-  { 108, -1, sizeof(::KFMsg::S2SPlayerEnterToWorldReq)},
-  { 115, -1, sizeof(::KFMsg::S2SPlayerLeaveToWorldReq)},
-  { 122, -1, sizeof(::KFMsg::S2SPlayerSyncToWorldReq)},
-  { 128, -1, sizeof(::KFMsg::S2SKickPlayerToGameReq)},
-  { 135, -1, sizeof(::KFMsg::S2SKickPlayerToGateReq)},
-  { 142, -1, sizeof(::KFMsg::S2SBroadcastToGame)},
-  { 149, -1, sizeof(::KFMsg::S2SBroadcastToGate)},
-  { 156, -1, sizeof(::KFMsg::S2STransmitToPlayer)},
+  { 45, -1, sizeof(::KFMsg::S2SLoginToWorldReq)},
+  { 51, -1, sizeof(::KFMsg::S2SLoginToLoginAck)},
+  { 60, -1, sizeof(::KFMsg::S2SLoginToGameReq)},
+  { 66, -1, sizeof(::KFMsg::S2SEnterToGateAck)},
+  { 74, -1, sizeof(::KFMsg::S2SLogoutToGameReq)},
+  { 80, -1, sizeof(::KFMsg::S2SDisconnectToGameReq)},
+  { 86, -1, sizeof(::KFMsg::S2SPlayerEnterToWorldReq)},
+  { 93, -1, sizeof(::KFMsg::S2SPlayerLeaveToWorldReq)},
+  { 100, -1, sizeof(::KFMsg::S2SPlayerSyncToWorldReq)},
+  { 106, -1, sizeof(::KFMsg::S2SKickPlayerToGameReq)},
+  { 113, -1, sizeof(::KFMsg::S2SKickPlayerToGateReq)},
+  { 120, -1, sizeof(::KFMsg::S2SBroadcastToGame)},
+  { 127, -1, sizeof(::KFMsg::S2SBroadcastToGate)},
+  { 134, -1, sizeof(::KFMsg::S2STransmitToPlayer)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -680,8 +615,6 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SDisconnectZoneToWorldReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLoginToLoginReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLoginToGateAck_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBLoginData_ChanneldataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBLoginData_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLoginToWorldReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLoginToLoginAck_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SLoginToGameReq_default_instance_),
@@ -713,7 +646,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 22);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 20);
 }
 
 void AddDescriptorsImpl() {
@@ -731,55 +664,49 @@ void AddDescriptorsImpl() {
       "ountid\030\003 \001(\004\022\021\n\tsessionid\030\004 \001(\004\"Z\n\021S2SLo"
       "ginToGateAck\022\016\n\006result\030\001 \001(\r\022\021\n\taccounti"
       "d\030\002 \001(\004\022\021\n\tsessionid\030\003 \001(\004\022\017\n\007bantime\030\004 "
-      "\001(\004\"\364\001\n\013PBLoginData\022\r\n\005token\030\001 \001(\014\022\016\n\006ga"
-      "teid\030\002 \001(\004\022\021\n\tsessionid\030\003 \001(\004\022\017\n\007channel"
-      "\030\004 \001(\r\022\017\n\007account\030\005 \001(\014\022\021\n\taccountid\030\006 \001"
-      "(\004\022\020\n\010playerid\030\007 \001(\004\0228\n\013channeldata\030\010 \003("
-      "\0132#.KFMsg.PBLoginData.ChanneldataEntry\0322"
-      "\n\020ChanneldataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value"
-      "\030\002 \001(\014:\0028\001\"9\n\022S2SLoginToWorldReq\022#\n\007pblo"
-      "gin\030\001 \001(\0132\022.KFMsg.PBLoginData\"Z\n\022S2SLogi"
-      "nToLoginAck\022\016\n\006result\030\001 \001(\r\022\016\n\006gateid\030\002 "
-      "\001(\004\022\021\n\taccountid\030\003 \001(\004\022\021\n\tsessionid\030\004 \001("
-      "\004\"8\n\021S2SLoginToGameReq\022#\n\007pblogin\030\001 \001(\0132"
-      "\022.KFMsg.PBLoginData\"q\n\021S2SEnterToGateAck"
-      "\022#\n\007pblogin\030\001 \001(\0132\022.KFMsg.PBLoginData\022#\n"
-      "\nplayerdata\030\002 \001(\0132\017.KFMsg.PBObject\022\022\n\nse"
-      "rvertime\030\003 \001(\004\"&\n\022S2SLogoutToGameReq\022\020\n\010"
-      "playerid\030\001 \001(\004\"*\n\026S2SDisconnectToGameReq"
-      "\022\020\n\010playerid\030\001 \001(\004\"\?\n\030S2SPlayerEnterToWo"
-      "rldReq\022\020\n\010playerid\030\001 \001(\004\022\021\n\taccountid\030\002 "
-      "\001(\004\"\?\n\030S2SPlayerLeaveToWorldReq\022\020\n\010playe"
-      "rid\030\001 \001(\004\022\021\n\taccountid\030\002 \001(\004\"+\n\027S2SPlaye"
-      "rSyncToWorldReq\022\020\n\010playerid\030\001 \003(\004\"8\n\026S2S"
-      "KickPlayerToGameReq\022\014\n\004type\030\001 \001(\r\022\020\n\010pla"
-      "yerid\030\002 \001(\004\"8\n\026S2SKickPlayerToGateReq\022\014\n"
-      "\004type\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"4\n\022S2SBroa"
-      "dcastToGame\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 "
-      "\001(\014\"4\n\022S2SBroadcastToGate\022\r\n\005msgid\030\001 \001(\r"
-      "\022\017\n\007msgdata\030\002 \001(\014\"G\n\023S2STransmitToPlayer"
-      "\022\020\n\010playerid\030\001 \001(\004\022\r\n\005msgid\030\002 \001(\r\022\017\n\007msg"
-      "data\030\003 \001(\014*\252\005\n\025MidwareServerProtocol\022%\n!"
-      "S2S_MIDWARE_SERVER_PROTOCOL_BEGIN\020\000\022\"\n\034S"
-      "2S_UPDATE_ZONE_TO_LOGIN_REQ\020\241\234\001\022\"\n\034S2S_U"
-      "PDATE_ZONE_TO_WORLD_REQ\020\242\234\001\022&\n S2S_DISCO"
-      "NNECT_ZONE_TO_WORLD_REQ\020\243\234\001\022\034\n\026S2S_LOGIN"
-      "_TO_LOGIN_REQ\020\205\235\001\022\033\n\025S2S_LOGIN_TO_GATE_A"
-      "CK\020\206\235\001\022\034\n\026S2S_LOGIN_TO_WORLD_REQ\020\207\235\001\022\034\n\026"
-      "S2S_LOGIN_TO_LOGIN_ACK\020\210\235\001\022\033\n\025S2S_LOGIN_"
-      "TO_GAME_REQ\020\211\235\001\022\034\n\026S2S_LOGOUT_TO_GAME_RE"
-      "Q\020\212\235\001\022\037\n\031S2S_DISCONNEC_TO_GAME_REQ\020\213\235\001\022\033"
-      "\n\025S2S_ENTER_TO_GATE_ACK\020\214\235\001\022\"\n\034S2S_PLAYE"
-      "R_SYNC_TO_WORLD_REQ\020\351\235\001\022#\n\035S2S_PLAYER_EN"
-      "TER_TO_WORLD_REQ\020\352\235\001\022#\n\035S2S_PLAYER_LEAVE"
-      "_TO_WORLD_REQ\020\353\235\001\022!\n\033S2S_KICK_PLAYER_TO_"
-      "GAME_REQ\020\354\235\001\022!\n\033S2S_KICK_PLAYER_TO_GATE_"
-      "REQ\020\355\235\001\022\033\n\025S2S_BROADCAST_TO_GAME\020\315\236\001\022\033\n\025"
-      "S2S_BROADCAST_TO_GATE\020\316\236\001\022\034\n\026S2S_TRANSMI"
-      "T_TO_PLAYER\020\317\236\001b\006proto3"
+      "\001(\004\"9\n\022S2SLoginToWorldReq\022#\n\007pblogin\030\001 \001"
+      "(\0132\022.KFMsg.PBLoginData\"Z\n\022S2SLoginToLogi"
+      "nAck\022\016\n\006result\030\001 \001(\r\022\016\n\006gateid\030\002 \001(\004\022\021\n\t"
+      "accountid\030\003 \001(\004\022\021\n\tsessionid\030\004 \001(\004\"8\n\021S2"
+      "SLoginToGameReq\022#\n\007pblogin\030\001 \001(\0132\022.KFMsg"
+      ".PBLoginData\"q\n\021S2SEnterToGateAck\022#\n\007pbl"
+      "ogin\030\001 \001(\0132\022.KFMsg.PBLoginData\022#\n\nplayer"
+      "data\030\002 \001(\0132\017.KFMsg.PBObject\022\022\n\nservertim"
+      "e\030\003 \001(\004\"&\n\022S2SLogoutToGameReq\022\020\n\010playeri"
+      "d\030\001 \001(\004\"*\n\026S2SDisconnectToGameReq\022\020\n\010pla"
+      "yerid\030\001 \001(\004\"\?\n\030S2SPlayerEnterToWorldReq\022"
+      "\020\n\010playerid\030\001 \001(\004\022\021\n\taccountid\030\002 \001(\004\"\?\n\030"
+      "S2SPlayerLeaveToWorldReq\022\020\n\010playerid\030\001 \001"
+      "(\004\022\021\n\taccountid\030\002 \001(\004\"+\n\027S2SPlayerSyncTo"
+      "WorldReq\022\020\n\010playerid\030\001 \003(\004\"8\n\026S2SKickPla"
+      "yerToGameReq\022\014\n\004type\030\001 \001(\r\022\020\n\010playerid\030\002"
+      " \001(\004\"8\n\026S2SKickPlayerToGateReq\022\014\n\004type\030\001"
+      " \001(\r\022\020\n\010playerid\030\002 \001(\004\"4\n\022S2SBroadcastTo"
+      "Game\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\"4\n\022"
+      "S2SBroadcastToGate\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msg"
+      "data\030\002 \001(\014\"G\n\023S2STransmitToPlayer\022\020\n\010pla"
+      "yerid\030\001 \001(\004\022\r\n\005msgid\030\002 \001(\r\022\017\n\007msgdata\030\003 "
+      "\001(\014*\253\005\n\025MidwareServerProtocol\022%\n!S2S_MID"
+      "WARE_SERVER_PROTOCOL_BEGIN\020\000\022\"\n\034S2S_UPDA"
+      "TE_ZONE_TO_LOGIN_REQ\020\241\234\001\022\"\n\034S2S_UPDATE_Z"
+      "ONE_TO_WORLD_REQ\020\242\234\001\022&\n S2S_DISCONNECT_Z"
+      "ONE_TO_WORLD_REQ\020\243\234\001\022\034\n\026S2S_LOGIN_TO_LOG"
+      "IN_REQ\020\205\235\001\022\033\n\025S2S_LOGIN_TO_GATE_ACK\020\206\235\001\022"
+      "\034\n\026S2S_LOGIN_TO_WORLD_REQ\020\207\235\001\022\034\n\026S2S_LOG"
+      "IN_TO_LOGIN_ACK\020\210\235\001\022\033\n\025S2S_LOGIN_TO_GAME"
+      "_REQ\020\211\235\001\022\034\n\026S2S_LOGOUT_TO_GAME_REQ\020\212\235\001\022 "
+      "\n\032S2S_DISCONNECT_TO_GAME_REQ\020\213\235\001\022\033\n\025S2S_"
+      "ENTER_TO_GATE_ACK\020\214\235\001\022\"\n\034S2S_PLAYER_SYNC"
+      "_TO_WORLD_REQ\020\351\235\001\022#\n\035S2S_PLAYER_ENTER_TO"
+      "_WORLD_REQ\020\352\235\001\022#\n\035S2S_PLAYER_LEAVE_TO_WO"
+      "RLD_REQ\020\353\235\001\022!\n\033S2S_KICK_PLAYER_TO_GAME_R"
+      "EQ\020\354\235\001\022!\n\033S2S_KICK_PLAYER_TO_GATE_REQ\020\355\235"
+      "\001\022\033\n\025S2S_BROADCAST_TO_GAME\020\315\236\001\022\033\n\025S2S_BR"
+      "OADCAST_TO_GATE\020\316\236\001\022\034\n\026S2S_TRANSMIT_TO_P"
+      "LAYER\020\317\236\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2303);
+      descriptor, 2057);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareServerMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_KFDefineMessage_2eproto::AddDescriptors();
@@ -2564,635 +2491,15 @@ void S2SLoginToGateAck::InternalSwap(S2SLoginToGateAck* other) {
 
 // ===================================================================
 
-PBLoginData_ChanneldataEntry_DoNotUse::PBLoginData_ChanneldataEntry_DoNotUse() {}
-PBLoginData_ChanneldataEntry_DoNotUse::PBLoginData_ChanneldataEntry_DoNotUse(::google::protobuf::Arena* arena) : SuperType(arena) {}
-void PBLoginData_ChanneldataEntry_DoNotUse::MergeFrom(const PBLoginData_ChanneldataEntry_DoNotUse& other) {
-  MergeFromInternal(other);
-}
-::google::protobuf::Metadata PBLoginData_ChanneldataEntry_DoNotUse::GetMetadata() const {
-  ::protobuf_KFMidwareServerMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFMidwareServerMessage_2eproto::file_level_metadata[6];
-}
-void PBLoginData_ChanneldataEntry_DoNotUse::MergeFrom(
-    const ::google::protobuf::Message& other) {
-  ::google::protobuf::Message::MergeFrom(other);
-}
-
-
-// ===================================================================
-
-void PBLoginData::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int PBLoginData::kTokenFieldNumber;
-const int PBLoginData::kGateidFieldNumber;
-const int PBLoginData::kSessionidFieldNumber;
-const int PBLoginData::kChannelFieldNumber;
-const int PBLoginData::kAccountFieldNumber;
-const int PBLoginData::kAccountidFieldNumber;
-const int PBLoginData::kPlayeridFieldNumber;
-const int PBLoginData::kChanneldataFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-PBLoginData::PBLoginData()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  ::google::protobuf::internal::InitSCC(
-      &protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData.base);
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:KFMsg.PBLoginData)
-}
-PBLoginData::PBLoginData(const PBLoginData& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  channeldata_.MergeFrom(from.channeldata_);
-  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.token().size() > 0) {
-    token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
-  }
-  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.account().size() > 0) {
-    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
-  }
-  ::memcpy(&gateid_, &from.gateid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&channel_) -
-    reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
-  // @@protoc_insertion_point(copy_constructor:KFMsg.PBLoginData)
-}
-
-void PBLoginData::SharedCtor() {
-  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&gateid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&channel_) -
-      reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
-}
-
-PBLoginData::~PBLoginData() {
-  // @@protoc_insertion_point(destructor:KFMsg.PBLoginData)
-  SharedDtor();
-}
-
-void PBLoginData::SharedDtor() {
-  token_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-
-void PBLoginData::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const ::google::protobuf::Descriptor* PBLoginData::descriptor() {
-  ::protobuf_KFMidwareServerMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFMidwareServerMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const PBLoginData& PBLoginData::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_KFMidwareServerMessage_2eproto::scc_info_PBLoginData.base);
-  return *internal_default_instance();
-}
-
-
-void PBLoginData::Clear() {
-// @@protoc_insertion_point(message_clear_start:KFMsg.PBLoginData)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  channeldata_.Clear();
-  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&gateid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&channel_) -
-      reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
-  _internal_metadata_.Clear();
-}
-
-bool PBLoginData::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:KFMsg.PBLoginData)
-  for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes token = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_token()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 gateid = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &gateid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 sessionid = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &sessionid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 channel = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &channel_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes account = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_account()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 accountid = 6;
-      case 6: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &accountid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 playerid = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &playerid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // map<string, bytes> channeldata = 8;
-      case 8: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
-          PBLoginData_ChanneldataEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
-              PBLoginData_ChanneldataEntry_DoNotUse,
-              ::std::string, ::std::string,
-              ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-              ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
-              0 >,
-            ::google::protobuf::Map< ::std::string, ::std::string > > parser(&channeldata_);
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-              input, &parser));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            parser.key().data(), static_cast<int>(parser.key().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "KFMsg.PBLoginData.ChanneldataEntry.key"));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:KFMsg.PBLoginData)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.PBLoginData)
-  return false;
-#undef DO_
-}
-
-void PBLoginData::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.PBLoginData)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bytes token = 1;
-  if (this->token().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->token(), output);
-  }
-
-  // uint64 gateid = 2;
-  if (this->gateid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->gateid(), output);
-  }
-
-  // uint64 sessionid = 3;
-  if (this->sessionid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->sessionid(), output);
-  }
-
-  // uint32 channel = 4;
-  if (this->channel() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->channel(), output);
-  }
-
-  // bytes account = 5;
-  if (this->account().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->account(), output);
-  }
-
-  // uint64 accountid = 6;
-  if (this->accountid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(6, this->accountid(), output);
-  }
-
-  // uint64 playerid = 7;
-  if (this->playerid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(7, this->playerid(), output);
-  }
-
-  // map<string, bytes> channeldata = 8;
-  if (!this->channeldata().empty()) {
-    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
-        ConstPtr;
-    typedef ConstPtr SortItem;
-    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
-    struct Utf8Check {
-      static void Check(ConstPtr p) {
-        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          p->first.data(), static_cast<int>(p->first.length()),
-          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-          "KFMsg.PBLoginData.ChanneldataEntry.key");
-      }
-    };
-
-    if (output->IsSerializationDeterministic() &&
-        this->channeldata().size() > 1) {
-      ::std::unique_ptr<SortItem[]> items(
-          new SortItem[this->channeldata().size()]);
-      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
-      size_type n = 0;
-      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
-          it = this->channeldata().begin();
-          it != this->channeldata().end(); ++it, ++n) {
-        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
-      }
-      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
-      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
-      for (size_type i = 0; i < n; i++) {
-        entry.reset(channeldata_.NewEntryWrapper(
-            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
-        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            8, *entry, output);
-        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
-      }
-    } else {
-      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
-      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
-          it = this->channeldata().begin();
-          it != this->channeldata().end(); ++it) {
-        entry.reset(channeldata_.NewEntryWrapper(
-            it->first, it->second));
-        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            8, *entry, output);
-        Utf8Check::Check(&*it);
-      }
-    }
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
-  }
-  // @@protoc_insertion_point(serialize_end:KFMsg.PBLoginData)
-}
-
-::google::protobuf::uint8* PBLoginData::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.PBLoginData)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bytes token = 1;
-  if (this->token().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->token(), target);
-  }
-
-  // uint64 gateid = 2;
-  if (this->gateid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->gateid(), target);
-  }
-
-  // uint64 sessionid = 3;
-  if (this->sessionid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->sessionid(), target);
-  }
-
-  // uint32 channel = 4;
-  if (this->channel() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->channel(), target);
-  }
-
-  // bytes account = 5;
-  if (this->account().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        5, this->account(), target);
-  }
-
-  // uint64 accountid = 6;
-  if (this->accountid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(6, this->accountid(), target);
-  }
-
-  // uint64 playerid = 7;
-  if (this->playerid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(7, this->playerid(), target);
-  }
-
-  // map<string, bytes> channeldata = 8;
-  if (!this->channeldata().empty()) {
-    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
-        ConstPtr;
-    typedef ConstPtr SortItem;
-    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
-    struct Utf8Check {
-      static void Check(ConstPtr p) {
-        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          p->first.data(), static_cast<int>(p->first.length()),
-          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-          "KFMsg.PBLoginData.ChanneldataEntry.key");
-      }
-    };
-
-    if (deterministic &&
-        this->channeldata().size() > 1) {
-      ::std::unique_ptr<SortItem[]> items(
-          new SortItem[this->channeldata().size()]);
-      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
-      size_type n = 0;
-      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
-          it = this->channeldata().begin();
-          it != this->channeldata().end(); ++it, ++n) {
-        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
-      }
-      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
-      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
-      for (size_type i = 0; i < n; i++) {
-        entry.reset(channeldata_.NewEntryWrapper(
-            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
-        target = ::google::protobuf::internal::WireFormatLite::
-                   InternalWriteMessageNoVirtualToArray(
-                       8, *entry, deterministic, target);
-;
-        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
-      }
-    } else {
-      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
-      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
-          it = this->channeldata().begin();
-          it != this->channeldata().end(); ++it) {
-        entry.reset(channeldata_.NewEntryWrapper(
-            it->first, it->second));
-        target = ::google::protobuf::internal::WireFormatLite::
-                   InternalWriteMessageNoVirtualToArray(
-                       8, *entry, deterministic, target);
-;
-        Utf8Check::Check(&*it);
-      }
-    }
-  }
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.PBLoginData)
-  return target;
-}
-
-size_t PBLoginData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.PBLoginData)
-  size_t total_size = 0;
-
-  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
-  }
-  // map<string, bytes> channeldata = 8;
-  total_size += 1 *
-      ::google::protobuf::internal::FromIntSize(this->channeldata_size());
-  {
-    ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
-    for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
-        it = this->channeldata().begin();
-        it != this->channeldata().end(); ++it) {
-      entry.reset(channeldata_.NewEntryWrapper(it->first, it->second));
-      total_size += ::google::protobuf::internal::WireFormatLite::
-          MessageSizeNoVirtual(*entry);
-    }
-  }
-
-  // bytes token = 1;
-  if (this->token().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->token());
-  }
-
-  // bytes account = 5;
-  if (this->account().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->account());
-  }
-
-  // uint64 gateid = 2;
-  if (this->gateid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->gateid());
-  }
-
-  // uint64 sessionid = 3;
-  if (this->sessionid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->sessionid());
-  }
-
-  // uint64 accountid = 6;
-  if (this->accountid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->accountid());
-  }
-
-  // uint64 playerid = 7;
-  if (this->playerid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->playerid());
-  }
-
-  // uint32 channel = 4;
-  if (this->channel() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->channel());
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void PBLoginData::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.PBLoginData)
-  GOOGLE_DCHECK_NE(&from, this);
-  const PBLoginData* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const PBLoginData>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.PBLoginData)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.PBLoginData)
-    MergeFrom(*source);
-  }
-}
-
-void PBLoginData::MergeFrom(const PBLoginData& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.PBLoginData)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  channeldata_.MergeFrom(from.channeldata_);
-  if (from.token().size() > 0) {
-
-    token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
-  }
-  if (from.account().size() > 0) {
-
-    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
-  }
-  if (from.gateid() != 0) {
-    set_gateid(from.gateid());
-  }
-  if (from.sessionid() != 0) {
-    set_sessionid(from.sessionid());
-  }
-  if (from.accountid() != 0) {
-    set_accountid(from.accountid());
-  }
-  if (from.playerid() != 0) {
-    set_playerid(from.playerid());
-  }
-  if (from.channel() != 0) {
-    set_channel(from.channel());
-  }
-}
-
-void PBLoginData::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.PBLoginData)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void PBLoginData::CopyFrom(const PBLoginData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.PBLoginData)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool PBLoginData::IsInitialized() const {
-  return true;
-}
-
-void PBLoginData::Swap(PBLoginData* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void PBLoginData::InternalSwap(PBLoginData* other) {
-  using std::swap;
-  channeldata_.Swap(&other->channeldata_);
-  token_.Swap(&other->token_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(gateid_, other->gateid_);
-  swap(sessionid_, other->sessionid_);
-  swap(accountid_, other->accountid_);
-  swap(playerid_, other->playerid_);
-  swap(channel_, other->channel_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-}
-
-::google::protobuf::Metadata PBLoginData::GetMetadata() const {
-  protobuf_KFMidwareServerMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_KFMidwareServerMessage_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
 void S2SLoginToWorldReq::InitAsDefaultInstance() {
   ::KFMsg::_S2SLoginToWorldReq_default_instance_._instance.get_mutable()->pblogin_ = const_cast< ::KFMsg::PBLoginData*>(
       ::KFMsg::PBLoginData::internal_default_instance());
+}
+void S2SLoginToWorldReq::clear_pblogin() {
+  if (GetArenaNoVirtual() == NULL && pblogin_ != NULL) {
+    delete pblogin_;
+  }
+  pblogin_ = NULL;
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SLoginToWorldReq::kPbloginFieldNumber;
@@ -3765,6 +3072,12 @@ void S2SLoginToGameReq::InitAsDefaultInstance() {
   ::KFMsg::_S2SLoginToGameReq_default_instance_._instance.get_mutable()->pblogin_ = const_cast< ::KFMsg::PBLoginData*>(
       ::KFMsg::PBLoginData::internal_default_instance());
 }
+void S2SLoginToGameReq::clear_pblogin() {
+  if (GetArenaNoVirtual() == NULL && pblogin_ != NULL) {
+    delete pblogin_;
+  }
+  pblogin_ = NULL;
+}
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SLoginToGameReq::kPbloginFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -4000,6 +3313,12 @@ void S2SEnterToGateAck::InitAsDefaultInstance() {
       ::KFMsg::PBLoginData::internal_default_instance());
   ::KFMsg::_S2SEnterToGateAck_default_instance_._instance.get_mutable()->playerdata_ = const_cast< ::KFMsg::PBObject*>(
       ::KFMsg::PBObject::internal_default_instance());
+}
+void S2SEnterToGateAck::clear_pblogin() {
+  if (GetArenaNoVirtual() == NULL && pblogin_ != NULL) {
+    delete pblogin_;
+  }
+  pblogin_ = NULL;
 }
 void S2SEnterToGateAck::clear_playerdata() {
   if (GetArenaNoVirtual() == NULL && playerdata_ != NULL) {
@@ -6946,12 +6265,6 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SLoginToLoginReq* Arena
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SLoginToGateAck* Arena::CreateMaybeMessage< ::KFMsg::S2SLoginToGateAck >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SLoginToGateAck >(arena);
-}
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse* Arena::CreateMaybeMessage< ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse >(arena);
-}
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBLoginData* Arena::CreateMaybeMessage< ::KFMsg::PBLoginData >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::PBLoginData >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SLoginToWorldReq* Arena::CreateMaybeMessage< ::KFMsg::S2SLoginToWorldReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SLoginToWorldReq >(arena);

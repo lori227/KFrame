@@ -29,6 +29,9 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
+        // 创建玩家
+        virtual KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+
         // 遍历玩家
         virtual KFEntity* FirstPlayer();
         virtual KFEntity* NextPlayer();
@@ -75,9 +78,6 @@ namespace KFrame
         // 逻辑刷新
         void RunPlayer( KFEntity* player );
         void AfterRunPlayer( KFEntity* player );
-
-        // 创建角色
-        KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 创建角色
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );

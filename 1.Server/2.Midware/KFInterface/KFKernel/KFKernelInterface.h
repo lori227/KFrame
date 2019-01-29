@@ -36,7 +36,6 @@ namespace KFrame
         virtual void SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
         virtual void SerializeToData( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
         virtual void SerializeToView( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
-        virtual void SerializeToOnline( KFData* kfdata, KFMsg::PBObject* proto ) = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_kernel, KFKernelInterface );

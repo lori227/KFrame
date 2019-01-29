@@ -15,8 +15,8 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFDeployClient/KFDeployClientInterface.h"
 
 namespace KFrame
 {
@@ -64,13 +64,13 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleLoginToGameReq );
 
         // 处理登出游戏
-        __KF_MESSAGE_FUNCTION__( HandleLoginOutReq );
+        __KF_MESSAGE_FUNCTION__( HandleLogoutToGameReq );
 
         // 处理玩家掉线
-        __KF_MESSAGE_FUNCTION__( HandlePlayerDisconnectionReq );
+        __KF_MESSAGE_FUNCTION__( HandleDisconnectToGameReq );
 
         // 处理踢人消息
-        __KF_MESSAGE_FUNCTION__( HandleKickGamePlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGameReq );
 
     protected:
         // 连接成功
@@ -82,8 +82,8 @@ namespace KFrame
         // 转发消息到玩家
         __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToPlayer );
 
-        // 部署服务器关闭
-        __KF_COMMAND_FUNCTION__( OnDeployShutDownServer );
+        // 服务器关闭命令
+        //__KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
 
     protected:
         // 进入游戏世界
@@ -91,6 +91,9 @@ namespace KFrame
 
         // 离开游戏世界
         void OnLeaveGame( KFEntity* player );
+
+        // 保存玩家
+        void SavePlayer( KFEntity* player );
 
         // 加载玩家数据
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );

@@ -41,7 +41,7 @@ namespace protobuf_KFDefineMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[14];
+  static const ::google::protobuf::internal::ParseTable schema[16];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -55,6 +55,12 @@ LIBPROTOC_EXPORT extern PBArrayDefaultTypeInternal _PBArray_default_instance_;
 class PBArray_Pbuint64Entry_DoNotUse;
 class PBArray_Pbuint64Entry_DoNotUseDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBArray_Pbuint64Entry_DoNotUseDefaultTypeInternal _PBArray_Pbuint64Entry_DoNotUse_default_instance_;
+class PBLoginData;
+class PBLoginDataDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBLoginDataDefaultTypeInternal _PBLoginData_default_instance_;
+class PBLoginData_ChanneldataEntry_DoNotUse;
+class PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal _PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
 class PBObject;
 class PBObjectDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBObjectDefaultTypeInternal _PBObject_default_instance_;
@@ -96,6 +102,8 @@ namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::PBArray* Arena::CreateMaybeMessage<::KFMsg::PBArray>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBArray_Pbuint64Entry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBArray_Pbuint64Entry_DoNotUse>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBLoginData* Arena::CreateMaybeMessage<::KFMsg::PBLoginData>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject* Arena::CreateMaybeMessage<::KFMsg::PBObject>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_PbarrayEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBObject_PbarrayEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_PbdoubleEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBObject_PbdoubleEntry_DoNotUse>(Arena*);
@@ -799,6 +807,204 @@ class LIBPROTOC_EXPORT PBRecord : public ::google::protobuf::Message /* @@protoc
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFDefineMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class PBLoginData_ChanneldataEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBLoginData_ChanneldataEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > {
+public:
+  typedef ::google::protobuf::internal::MapEntry<PBLoginData_ChanneldataEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > SuperType;
+  PBLoginData_ChanneldataEntry_DoNotUse();
+  PBLoginData_ChanneldataEntry_DoNotUse(::google::protobuf::Arena* arena);
+  void MergeFrom(const PBLoginData_ChanneldataEntry_DoNotUse& other);
+  static const PBLoginData_ChanneldataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const PBLoginData_ChanneldataEntry_DoNotUse*>(&_PBLoginData_ChanneldataEntry_DoNotUse_default_instance_); }
+  void MergeFrom(const ::google::protobuf::Message& other) final;
+  ::google::protobuf::Metadata GetMetadata() const;
+};
+
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBLoginData) */ {
+ public:
+  PBLoginData();
+  virtual ~PBLoginData();
+
+  PBLoginData(const PBLoginData& from);
+
+  inline PBLoginData& operator=(const PBLoginData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBLoginData(PBLoginData&& from) noexcept
+    : PBLoginData() {
+    *this = ::std::move(from);
+  }
+
+  inline PBLoginData& operator=(PBLoginData&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBLoginData& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBLoginData* internal_default_instance() {
+    return reinterpret_cast<const PBLoginData*>(
+               &_PBLoginData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  void Swap(PBLoginData* other);
+  friend void swap(PBLoginData& a, PBLoginData& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBLoginData* New() const final {
+    return CreateMaybeMessage<PBLoginData>(NULL);
+  }
+
+  PBLoginData* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBLoginData>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBLoginData& from);
+  void MergeFrom(const PBLoginData& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBLoginData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  // map<string, bytes> channeldata = 8;
+  int channeldata_size() const;
+  void clear_channeldata();
+  static const int kChanneldataFieldNumber = 8;
+  const ::google::protobuf::Map< ::std::string, ::std::string >&
+      channeldata() const;
+  ::google::protobuf::Map< ::std::string, ::std::string >*
+      mutable_channeldata();
+
+  // bytes token = 1;
+  void clear_token();
+  static const int kTokenFieldNumber = 1;
+  const ::std::string& token() const;
+  void set_token(const ::std::string& value);
+  #if LANG_CXX11
+  void set_token(::std::string&& value);
+  #endif
+  void set_token(const char* value);
+  void set_token(const void* value, size_t size);
+  ::std::string* mutable_token();
+  ::std::string* release_token();
+  void set_allocated_token(::std::string* token);
+
+  // bytes account = 5;
+  void clear_account();
+  static const int kAccountFieldNumber = 5;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const void* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
+  // uint64 gateid = 2;
+  void clear_gateid();
+  static const int kGateidFieldNumber = 2;
+  ::google::protobuf::uint64 gateid() const;
+  void set_gateid(::google::protobuf::uint64 value);
+
+  // uint64 sessionid = 3;
+  void clear_sessionid();
+  static const int kSessionidFieldNumber = 3;
+  ::google::protobuf::uint64 sessionid() const;
+  void set_sessionid(::google::protobuf::uint64 value);
+
+  // uint64 accountid = 6;
+  void clear_accountid();
+  static const int kAccountidFieldNumber = 6;
+  ::google::protobuf::uint64 accountid() const;
+  void set_accountid(::google::protobuf::uint64 value);
+
+  // uint64 playerid = 7;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 7;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint32 channel = 4;
+  void clear_channel();
+  static const int kChannelFieldNumber = 4;
+  ::google::protobuf::uint32 channel() const;
+  void set_channel(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBLoginData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::MapField<
+      PBLoginData_ChanneldataEntry_DoNotUse,
+      ::std::string, ::std::string,
+      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+      ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+      0 > channeldata_;
+  ::google::protobuf::internal::ArenaStringPtr token_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::uint64 gateid_;
+  ::google::protobuf::uint64 sessionid_;
+  ::google::protobuf::uint64 accountid_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 channel_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFDefineMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -1038,9 +1244,213 @@ PBRecord::mutable_pbobject() {
   return pbobject_.MutableMap();
 }
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// PBLoginData
+
+// bytes token = 1;
+inline void PBLoginData::clear_token() {
+  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBLoginData::token() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.token)
+  return token_.GetNoArena();
+}
+inline void PBLoginData::set_token(const ::std::string& value) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.token)
+}
+#if LANG_CXX11
+inline void PBLoginData::set_token(::std::string&& value) {
+  
+  token_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBLoginData.token)
+}
+#endif
+inline void PBLoginData::set_token(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBLoginData.token)
+}
+inline void PBLoginData::set_token(const void* value, size_t size) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBLoginData.token)
+}
+inline ::std::string* PBLoginData::mutable_token() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBLoginData.token)
+  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBLoginData::release_token() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBLoginData.token)
+  
+  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBLoginData::set_allocated_token(::std::string* token) {
+  if (token != NULL) {
+    
+  } else {
+    
+  }
+  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBLoginData.token)
+}
+
+// uint64 gateid = 2;
+inline void PBLoginData::clear_gateid() {
+  gateid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBLoginData::gateid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.gateid)
+  return gateid_;
+}
+inline void PBLoginData::set_gateid(::google::protobuf::uint64 value) {
+  
+  gateid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.gateid)
+}
+
+// uint64 sessionid = 3;
+inline void PBLoginData::clear_sessionid() {
+  sessionid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBLoginData::sessionid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.sessionid)
+  return sessionid_;
+}
+inline void PBLoginData::set_sessionid(::google::protobuf::uint64 value) {
+  
+  sessionid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.sessionid)
+}
+
+// uint32 channel = 4;
+inline void PBLoginData::clear_channel() {
+  channel_ = 0u;
+}
+inline ::google::protobuf::uint32 PBLoginData::channel() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.channel)
+  return channel_;
+}
+inline void PBLoginData::set_channel(::google::protobuf::uint32 value) {
+  
+  channel_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.channel)
+}
+
+// bytes account = 5;
+inline void PBLoginData::clear_account() {
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBLoginData::account() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.account)
+  return account_.GetNoArena();
+}
+inline void PBLoginData::set_account(const ::std::string& value) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.account)
+}
+#if LANG_CXX11
+inline void PBLoginData::set_account(::std::string&& value) {
+  
+  account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBLoginData.account)
+}
+#endif
+inline void PBLoginData::set_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBLoginData.account)
+}
+inline void PBLoginData::set_account(const void* value, size_t size) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBLoginData.account)
+}
+inline ::std::string* PBLoginData::mutable_account() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBLoginData.account)
+  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBLoginData::release_account() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBLoginData.account)
+  
+  return account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBLoginData::set_allocated_account(::std::string* account) {
+  if (account != NULL) {
+    
+  } else {
+    
+  }
+  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBLoginData.account)
+}
+
+// uint64 accountid = 6;
+inline void PBLoginData::clear_accountid() {
+  accountid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBLoginData::accountid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.accountid)
+  return accountid_;
+}
+inline void PBLoginData::set_accountid(::google::protobuf::uint64 value) {
+  
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.accountid)
+}
+
+// uint64 playerid = 7;
+inline void PBLoginData::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBLoginData::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.playerid)
+  return playerid_;
+}
+inline void PBLoginData::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.playerid)
+}
+
+// map<string, bytes> channeldata = 8;
+inline int PBLoginData::channeldata_size() const {
+  return channeldata_.size();
+}
+inline void PBLoginData::clear_channeldata() {
+  channeldata_.Clear();
+}
+inline const ::google::protobuf::Map< ::std::string, ::std::string >&
+PBLoginData::channeldata() const {
+  // @@protoc_insertion_point(field_map:KFMsg.PBLoginData.channeldata)
+  return channeldata_.GetMap();
+}
+inline ::google::protobuf::Map< ::std::string, ::std::string >*
+PBLoginData::mutable_channeldata() {
+  // @@protoc_insertion_point(field_mutable_map:KFMsg.PBLoginData.channeldata)
+  return channeldata_.MutableMap();
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

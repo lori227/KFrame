@@ -61,6 +61,18 @@ namespace KFrame
         __STRING_DEFINE__( cleantask );
         __STRING_DEFINE__( loglevel );
         __STRING_DEFINE__( logmemory );
+        __STRING_DEFINE__( player );
+        __STRING_DEFINE__( gateid );
+        __STRING_DEFINE__( channel );
+        __STRING_DEFINE__( account );
+        __STRING_DEFINE__( accountid );
+        __STRING_DEFINE__( basic );
+        __STRING_DEFINE__( serverid );
+        __STRING_DEFINE__( name );
+        __STRING_DEFINE__( onlinetime );
+        __STRING_DEFINE__( offlinetime );
+        __STRING_DEFINE__( totaltime );
+        __STRING_DEFINE__( birthday );
 
 
         // midware
@@ -83,18 +95,12 @@ namespace KFrame
         __STRING_DEFINE__( queryban );
         __STRING_DEFINE__( queryaccount );
         __STRING_DEFINE__( extend );
-        __STRING_DEFINE__( account );
-        __STRING_DEFINE__( accountid );
-        __STRING_DEFINE__( player );
-        __STRING_DEFINE__( playerid );
-        __STRING_DEFINE__( name );
         __STRING_DEFINE__( user );
         __STRING_DEFINE__( playeridcreate );
         __STRING_DEFINE__( url );
         __STRING_DEFINE__( tokenexpiretime );
         __STRING_DEFINE__( token );
         __STRING_DEFINE__( openid );
-        __STRING_DEFINE__( channel );
         __STRING_DEFINE__( channeldata );
         __STRING_DEFINE__( count );
         __STRING_DEFINE__( code );
@@ -119,8 +125,8 @@ namespace KFrame
         __STRING_DEFINE__( world );
         __STRING_DEFINE__( game );
         __STRING_DEFINE__( login );
-        __STRING_DEFINE__( gateid );
         __STRING_DEFINE__( sessionid );
+        __STRING_DEFINE__( playerid );
 
 
 

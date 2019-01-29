@@ -52,8 +52,6 @@ namespace KFrame
         virtual void SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto );
         virtual void SerializeToData( KFData* kfdata, KFMsg::PBObject* proto );
         virtual void SerializeToView( KFData* kfdata, KFMsg::PBObject* proto );
-        virtual void SerializeToOnline( KFData* kfdata, KFMsg::PBObject* proto );
-
     public:
         // 初始化
         void CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto );

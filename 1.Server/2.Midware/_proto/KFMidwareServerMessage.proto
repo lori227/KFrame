@@ -19,7 +19,7 @@ enum MidwareServerProtocol
 	S2S_LOGIN_TO_LOGIN_ACK				= 20104;	// 登录回应到login服务器
 	S2S_LOGIN_TO_GAME_REQ				= 20105;	// 登录请求到game服务器
 	S2S_LOGOUT_TO_GAME_REQ				= 20106;	// 登出游戏到game服务器
-	S2S_DISCONNEC_TO_GAME_REQ			= 20107;	// 断线到gate服务器
+	S2S_DISCONNECT_TO_GAME_REQ			= 20107;	// 断线到gate服务器
 	S2S_ENTER_TO_GATE_ACK				= 20108;	// 进入游戏到gate服务器
 
 	// world
@@ -125,7 +125,7 @@ message S2SLogoutToGameReq
 }
 
 // 玩家断线到game服务器
-// S2S_DISCONNEC_TO_GAME_REQ
+// S2S_DISCONNECT_TO_GAME_REQ
 message S2SDisconnectToGameReq
 {
 	uint64 playerid = 1; 
