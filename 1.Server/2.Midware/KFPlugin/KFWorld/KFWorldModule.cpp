@@ -12,8 +12,8 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_WORLD_REQ, &KFWorldModule::HandleUpdateZoneToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_ZONE_TO_WORLD_REQ, &KFWorldModule::HandleDisconnectZoneToWorldReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &KFWorldModule::HandleLoginToWorldReq );
 
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &KFWorldModule::HandleLoginToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_SYNC_TO_WORLD_REQ, &KFWorldModule::HandlePlayerSyncToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, &KFWorldModule::HandlePlayerEnterToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, &KFWorldModule::HandlePlayerLeaveToWorldReq );
@@ -33,8 +33,8 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_ZONE_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ );
 
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_SYNC_TO_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ );
