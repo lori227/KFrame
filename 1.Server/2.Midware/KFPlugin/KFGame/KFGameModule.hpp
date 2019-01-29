@@ -17,6 +17,7 @@
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFDeployClient/KFDeployClientInterface.h"
 
 namespace KFrame
 {
@@ -81,7 +82,7 @@ namespace KFrame
         __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToPlayer );
 
         // 服务器关闭命令
-        //__KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
+        __KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
 
     protected:
         // 进入游戏世界
@@ -93,9 +94,15 @@ namespace KFrame
         // 加载玩家数据
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
 
+        // 保存玩家
+        void SavePlayer( KFEntity* player );
+
     private:
         // 世界服务器id
         uint64 _world_server_id = _invalid_int;
+
+        // 玩家组建
+        KFComponent* _kf_component = nullptr;
     };
 }
 

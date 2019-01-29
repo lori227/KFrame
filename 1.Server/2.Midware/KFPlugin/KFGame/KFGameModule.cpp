@@ -11,11 +11,15 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGameModule::TransmitMessageToPlayer );
 
+        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component->SetEntityDataMask( __NEED_TO_SAVE__ | __DELETE_AND_SAVE__, 120000 );
+        _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
+
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
         _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
 
-        // __REGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
+        __REGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
@@ -36,8 +40,9 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         _kf_data_client->UnBindLoadPlayerFunction( this );
+        _kf_component->UnRegisterEntitySaveFunction();
 
-        //__UNREGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UNREGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
@@ -47,34 +52,34 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //__KF_DEPLOY_COMMAND_FUNCTION__( KFGameModule::OnDeployShutDownServer )
-    //{
-    //    auto player = _kf_player->FirstPlayer();
-    //    while ( player != nullptr )
-    //    {
-    //        SavePlayer( player );
-    //        player = _kf_player->NextPlayer();
-    //    }
-    //}
+    __KF_DEPLOY_COMMAND_FUNCTION__( KFGameModule::OnDeployShutDownServer )
+    {
+        auto player = _kf_player->FirstPlayer();
+        while ( player != nullptr )
+        {
+            SavePlayer( player );
+            player = _kf_player->NextPlayer();
+        }
+    }
 
-    //void KFGameModule::SavePlayer( KFEntity* player )
-    //{
-    //    if ( !player->IsInited() )
-    //    {
-    //        return;
-    //    }
+    void KFGameModule::SavePlayer( KFEntity* player )
+    {
+        if ( !player->IsInited() )
+        {
+            return;
+        }
 
-    //    // 保存数据库
-    //    static KFMsg::PBObject pbplayerdata;
-    //    _kf_kernel->SerializeToData( player->GetData(), &pbplayerdata );
-    //    auto ok = _kf_data->SavePlayerData( player->GetKeyID(), &pbplayerdata );
-    //    if ( !ok )
-    //    {
-    //        __LOG_ERROR__( "player[{}] save send failed!", player->GetKeyID() );
-    //    }
+        // 保存数据库
+        static KFMsg::PBObject pbplayerdata;
+        _kf_kernel->SerializeToData( player->GetData(), &pbplayerdata );
+        auto ok = _kf_data_client->SavePlayerData( player->GetKeyID(), &pbplayerdata );
+        if ( !ok )
+        {
+            __LOG_ERROR__( "player[{}] save send failed!", player->GetKeyID() );
+        }
 
-    //    player->SetNeetToSave( !ok );
-    //}
+        player->SetNeetToSave( !ok );
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_CLIENT_CONNECT_FUNCTION__( KFGameModule::OnClientConnectionServer )
