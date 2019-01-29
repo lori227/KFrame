@@ -30,9 +30,6 @@ namespace KFrame
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;
         virtual bool BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
-        // 转发给玩家
-        virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 踢掉角色
         virtual void KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line ) = 0;

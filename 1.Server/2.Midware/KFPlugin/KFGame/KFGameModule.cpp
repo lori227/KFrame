@@ -171,7 +171,11 @@ namespace KFrame
         KFAppID appid( serverid );
         if ( appid._union._app_data._zone_id == KFGlobal::Instance()->_app_id._union._app_data._zone_id )
         {
-            return TransmitToPlayer( playerid, msgid, message );
+            KFMsg::S2STransmitToPlayer req;
+            req.set_playerid( playerid );
+            req.set_msgid( msgid );
+            req.set_msgdata( message->SerializeAsString() );
+            return SendToWorld( KFMsg::S2S_TRANSMIT_TO_PLAYER, &req );
         }
 
         // 转发到别的小区
@@ -195,15 +199,6 @@ namespace KFrame
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return SendToWorld( KFMsg::S2S_BROADCAST_TO_GAME, &req );
-    }
-
-    bool KFGameModule::TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        KFMsg::S2STransmitToPlayer req;
-        req.set_playerid( playerid );
-        req.set_msgid( msgid );
-        req.set_msgdata( message->SerializeAsString() );
-        return SendToWorld( KFMsg::S2S_TRANSMIT_TO_PLAYER, &req );
     }
 
     __KF_TRANSMIT_MESSAGE_FUNCTION__( KFGameModule::TransmitMessageToPlayer )
@@ -292,6 +287,7 @@ namespace KFrame
         }
         else
         {
+            // 创建玩家
             auto player = _kf_player->CreatePlayer( pblogin, pbplayerdata );
 
             // 同步给客户端

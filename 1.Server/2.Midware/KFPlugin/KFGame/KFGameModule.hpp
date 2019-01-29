@@ -52,8 +52,6 @@ namespace KFrame
         virtual bool BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
         virtual bool BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message );
 
-        // 消息转发
-        virtual bool TransmitToPlayer( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 踢掉角色
@@ -92,15 +90,12 @@ namespace KFrame
         // 离开游戏世界
         void OnLeaveGame( KFEntity* player );
 
-        // 保存玩家
-        void SavePlayer( KFEntity* player );
-
         // 加载玩家数据
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
 
     private:
         // 世界服务器id
-        uint64 _world_server_id{ _invalid_int };
+        uint64 _world_server_id = _invalid_int;
     };
 }
 
