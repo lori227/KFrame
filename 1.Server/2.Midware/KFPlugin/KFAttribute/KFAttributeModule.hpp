@@ -19,6 +19,7 @@
 #include "KFFilter/KFFilterInterface.h"
 #include "KFDebug/KFDebugInterface.h"
 #include "KFOption/KFOptionInterface.h"
+#include "KFDataClient/KFDataClientInterface.h"
 
 namespace KFrame
 {

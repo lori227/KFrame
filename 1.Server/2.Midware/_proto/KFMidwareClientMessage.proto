@@ -10,6 +10,7 @@ enum MidwareClientProtocol
 
 	// display
 	MSG_RESULT_DISPLAY = 1;						// 提示显示
+	MSG_COMMAND_REQ = 2;						// 客户端发送GM指令请求
 
 	// login
 	MSG_LOGIN_REQ = 100;						// 客户端登录验证请求
@@ -40,6 +41,13 @@ message MsgResultDisplay
 	repeated bytes param = 2;
 }
 
+// 客户端发送GM指令请求
+// MSG_COMMAND_REQ
+message MsgCommandReq
+{
+	bytes command = 1;				// 命令
+	repeated bytes params = 2;		// 参数列表
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 登录请求
 // MSG_LOGIN_REQ

@@ -82,7 +82,7 @@ namespace KFrame
         __KF_TRANSMIT_MESSAGE_FUNCTION__( TransmitMessageToPlayer );
 
         // 服务器关闭命令
-        __KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
+        __KF_DEPLOY_FUNCTION__( OnDeployShutDownServer );
 
     protected:
         // 进入游戏世界

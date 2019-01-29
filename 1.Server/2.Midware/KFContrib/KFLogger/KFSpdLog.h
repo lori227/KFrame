@@ -12,7 +12,7 @@ namespace KFrame
     public:
         using spdlogger = std::shared_ptr<spdlog::logger>;
 
-        KFSpdLog( bool console = true );
+        KFSpdLog( bool console = true, uint32 queuecount = 1024 );
         ~KFSpdLog();
 
         // 初始化
@@ -29,6 +29,10 @@ namespace KFrame
     private:
         // 是否在Console上显示
         bool _console;
+
+        // 队列数量
+        uint32 _queue_count;
+
         // 名字
         std::string _log_name;
 

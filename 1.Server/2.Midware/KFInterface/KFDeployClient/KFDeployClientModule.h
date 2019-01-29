@@ -19,6 +19,13 @@
 
 namespace KFrame
 {
+    // 命令属性
+    class KFDeployCommand
+    {
+    public:
+        KFBind< std::string, const std::string&, KFDeployFunction > _functions;
+    };
+
     class KFDeployClientModule : public KFDeployClientInterface
     {
     public:
@@ -34,8 +41,8 @@ namespace KFrame
 
 
     protected:
-        virtual void AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function );
-        virtual void RemoveComandFunction( const std::string& command, const std::string& module );
+        virtual void AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function );
+        virtual void RemoveFunction( const std::string& command, const std::string& module );
 
         // 判断是不是自己
         bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
@@ -59,7 +66,7 @@ namespace KFrame
     private:
 
         // 命令回调函数
-        KFMap< std::string, const std::string&, KFCommand > _command_data;
+        KFMap< std::string, const std::string&, KFDeployCommand > _command_data;
     };
 }
 

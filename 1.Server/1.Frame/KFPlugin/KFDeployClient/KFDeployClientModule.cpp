@@ -31,17 +31,17 @@ namespace KFrame
         _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), appid, ip, port );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDeployClientModule::AddCommandFunction( const std::string& command, const std::string& module, KFCommandFunction& function )
+    void KFDeployClientModule::AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function )
     {
         auto kfcommand = _command_data.Create( command );
-        auto kffunction = kfcommand->_command_function.Create( module );
+        auto kffunction = kfcommand->_functions.Create( module );
         kffunction->_function = function;
     }
 
-    void KFDeployClientModule::RemoveComandFunction( const std::string& command, const std::string& module )
+    void KFDeployClientModule::RemoveFunction( const std::string& command, const std::string& module )
     {
         auto kfcommand = _command_data.Create( command );
-        kfcommand->_command_function.Remove( module );
+        kfcommand->_functions.Remove( module );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleDeployCommandToClientReq )
@@ -93,7 +93,7 @@ namespace KFrame
 
         __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command process!", command, value, appname, apptype, appid, zoneid );
 
-        for ( auto& iter : kfcommand->_command_function._objects )
+        for ( auto& iter : kfcommand->_functions._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( value );
@@ -171,7 +171,7 @@ namespace KFrame
         auto kfcommand = _command_data.Find( __KF_STRING__( shutdown ) );
         if ( kfcommand != nullptr )
         {
-            for ( auto& iter : kfcommand->_command_function._objects )
+            for ( auto& iter : kfcommand->_functions._objects )
             {
                 auto kffunction = iter.second;
                 kffunction->_function( _invalid_str );
