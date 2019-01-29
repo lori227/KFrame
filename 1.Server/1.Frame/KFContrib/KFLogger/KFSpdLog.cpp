@@ -8,9 +8,10 @@
 
 namespace KFrame
 {
-    KFSpdLog::KFSpdLog( bool console )
+    KFSpdLog::KFSpdLog( bool console /* = true */, uint32 queuecount /* = 1024 */ )
     {
         _console = console;
+        _queue_count = queuecount;
     }
 
     KFSpdLog::~KFSpdLog()
@@ -49,7 +50,15 @@ namespace KFrame
         }
 
         sinksvec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( _log_name ) );
-        _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), 1024 );
+
+        if ( _queue_count == 0 )
+        {
+            _logger = std::make_shared<spdlog::logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ) );
+        }
+        else
+        {
+            _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), _queue_count );
+        }
 
 #if defined(__KF_DEBUG__)
         _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
