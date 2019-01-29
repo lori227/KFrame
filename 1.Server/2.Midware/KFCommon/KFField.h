@@ -73,7 +73,8 @@ namespace KFrame
         __STRING_DEFINE__( offlinetime );
         __STRING_DEFINE__( totaltime );
         __STRING_DEFINE__( birthday );
-
+        __STRING_DEFINE__( clusterkey );
+        __STRING_DEFINE__( clustername );
 
         // midware
         __STRING_DEFINE__( zoneregister );
@@ -128,8 +129,12 @@ namespace KFrame
         __STRING_DEFINE__( data );
         __STRING_DEFINE__( sessionid );
         __STRING_DEFINE__( playerid );
-
-
+        __STRING_DEFINE__( adddata );
+        __STRING_DEFINE__( setdata );
+        __STRING_DEFINE__( decdata );
+        __STRING_DEFINE__( item );
+        __STRING_DEFINE__( playernamelength );
+        __STRING_DEFINE__( sex );
 
     }
 }

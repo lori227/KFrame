@@ -16,6 +16,8 @@ enum MidwareCodeEnum
 	ZoneServerBusy			= 10003;		// 小区服务器繁忙
 	ZoneDatabaseBusy		= 10004;		// 小区数据库错误
 	NameDatabaseBusy		= 10005;		// 名字数据库错误
+	DataServerBusy			= 10006;		// 数据服务器繁忙
+
 
 	// auth
 	AccountIsEmpty 			= 11001;		// 账号不能为空
@@ -47,8 +49,13 @@ enum MidwareCodeEnum
 	LoginBindPlayerError	= 12008;		// 绑定角色出错了
 	LoginLoadDataFailed		= 12009;		// 加载角色数据出错了
 
-	// data
+	// attribute
 	QueryPlayerFailed		= 12101;		// 查询角色数据出错了
 	NameAlreadyExist		= 12102;		// 名字已经存在
-
+	NameSetOk				= 12103;		// 名字设置成功
+	NameLengthError			= 12104;		// 名字长度超过限制
+	NameFilterError			= 12105;		// 名字含有非法字符
+	NameEmpty				= 12106;		// 名字不能为空
+	NameAlreadySet			= 12107;		// 不能重复设定名字
+	SexSetOK				= 12108;		// 性别设置成功
 }

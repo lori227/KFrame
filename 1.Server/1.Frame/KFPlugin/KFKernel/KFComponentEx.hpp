@@ -132,8 +132,8 @@ namespace KFrame
         virtual void UnRegisterSyncRemoveFunction();
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindShowRewardFunction( KFShowRewardFunction& function );
-        virtual void UnRegisterShowRewardFunction();
+        virtual void BindShowElementFunction( KFShowElementFunction& function );
+        virtual void UnRegisterShowElementFunction();
 
     protected:
         // 保存
@@ -192,7 +192,7 @@ namespace KFrame
         KFSyncFunction _entity_sync_remove_function;
 
         // 显示奖励函数
-        KFShowRewardFunction _show_reward_function;
+        KFShowElementFunction _show_element_function;
 
     private:
         // 组件名称

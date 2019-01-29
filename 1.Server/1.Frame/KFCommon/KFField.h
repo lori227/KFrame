@@ -72,6 +72,8 @@ namespace KFrame
         __STRING_DEFINE__( offlinetime );
         __STRING_DEFINE__( totaltime );
         __STRING_DEFINE__( birthday );
+        __STRING_DEFINE__( clusterkey );
+        __STRING_DEFINE__( clustername );
 
 
     }

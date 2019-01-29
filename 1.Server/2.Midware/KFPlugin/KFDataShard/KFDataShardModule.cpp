@@ -228,6 +228,6 @@ namespace KFrame
             return KFMsg::NameAlreadyExist;
         }
 
-        return KFMsg::Ok;
+        return KFMsg::NameSetOk;
     }
 }

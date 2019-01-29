@@ -45,7 +45,7 @@ namespace KFrame
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void BindSetNameFunction( T* object, void ( T::*handle )( uint64, uint32, const std::string&, uint64 ) )
+        void BindSetNameFunction( T* object, void ( T::*handle )( uint32, uint64, const std::string&, uint64 ) )
         {
             KFSetPlayerNameFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             SetPlayerNameFunction( function );

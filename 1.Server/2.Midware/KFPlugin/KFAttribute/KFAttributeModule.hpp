@@ -9,15 +9,14 @@
 //    @Date             :    2018-12-27
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFAttributeInterface.h"
-#include "KFGame/KFGameInterface.h"
+#include "KFProtocol/KFProtocol.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFFilter/KFFilterInterface.h"
-#include "KFDebug/KFDebugInterface.h"
+#include "KFCommand/KFCommandInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
 
@@ -38,14 +37,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加属性
-        __KF_DEBUG_FUNCTION__( DebugAddData );
+        __KF_COMMAND_FUNCTION__( OnCommandAddData );
 
         // 减少属性
-        __KF_DEBUG_FUNCTION__( DebugDecData );
+        __KF_COMMAND_FUNCTION__( OnCommandDecData );
 
         // 设置属性
-        __KF_DEBUG_FUNCTION__( DebugSetData );
-
+        __KF_COMMAND_FUNCTION__( OnCommandSetData );
 
     protected:
         // 查询玩家所有数据
@@ -57,26 +55,8 @@ namespace KFrame
         // 处理设置性别请求
         __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
 
-        // 请求修改人物头像
-        __KF_MESSAGE_FUNCTION__( HandleChangeIconReq );
-
-        // 处理修改头像框请求
-        __KF_MESSAGE_FUNCTION__( HandleChangeIconBoxReq );
-
-        // 请求修改个性签名
-        __KF_MESSAGE_FUNCTION__( HandleChangeMottoReq );
-
         // 删除属性请求
         __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
-
-        // 查询玩家设置请求
-        __KF_MESSAGE_FUNCTION__( HandleQuerySettingReq );
-
-        // 玩家更新设置请求
-        __KF_MESSAGE_FUNCTION__( HandleUpdateSettingReq );
-
-        // 更换称号
-        __KF_MESSAGE_FUNCTION__( HandleTitleChangeReq );
 
     protected:
         // 查询玩家数据
@@ -86,7 +66,22 @@ namespace KFrame
         uint32 CheckNameValid( const std::string& name );
 
         // 设置名字回调
-        void OnAfterSetPlayerName( uint32 result, KFEntity* player, const std::string& name, uint64 itemguid );
+        void OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemguid );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 同步更新属性到客户端
+        void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+
+        // 同步添加属性到客户端
+        void SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+
+        // 同步删除属性到客户端
+        void SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+
+        // 显示添加奖励消息
+        void SendElementToClient( KFEntity* player, const std::string& element );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private:
+        KFComponent* _kf_component = nullptr;
     };
 }
 

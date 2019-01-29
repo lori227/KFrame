@@ -57,6 +57,7 @@ enum MidwareCodeEnum {
   ZoneServerBusy = 10003,
   ZoneDatabaseBusy = 10004,
   NameDatabaseBusy = 10005,
+  DataServerBusy = 10006,
   AccountIsEmpty = 11001,
   ActivationAccount = 11002,
   InvalidActivationCode = 11003,
@@ -85,12 +86,18 @@ enum MidwareCodeEnum {
   LoginLoadDataFailed = 12009,
   QueryPlayerFailed = 12101,
   NameAlreadyExist = 12102,
+  NameSetOk = 12103,
+  NameLengthError = 12104,
+  NameFilterError = 12105,
+  NameEmpty = 12106,
+  NameAlreadySet = 12107,
+  SexSetOK = 12108,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = NameAlreadyExist;
+const MidwareCodeEnum MidwareCodeEnum_MAX = SexSetOK;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

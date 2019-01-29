@@ -371,9 +371,9 @@ namespace KFrame
         __LOG_INFO_FUNCTION__( function, line, "entity={} add element=[{}][{}]!", GetKeyID(), multiple, strdata );
 
         // 显示给客户端
-        if ( _kf_component->_show_reward_function != nullptr && showclient )
+        if ( _kf_component->_show_element_function != nullptr && showclient )
         {
-            _kf_component->_show_reward_function( this, strdata );
+            _kf_component->_show_element_function( this, strdata );
         }
     }
 

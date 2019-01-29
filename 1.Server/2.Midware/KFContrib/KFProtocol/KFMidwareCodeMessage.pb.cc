@@ -50,31 +50,34 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\257\006\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\264\007\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
       "\025\n\020ZoneDatabaseBusy\020\224N\022\025\n\020NameDatabaseBu"
-      "sy\020\225N\022\023\n\016AccountIsEmpty\020\371U\022\026\n\021Activation"
-      "Account\020\372U\022\032\n\025InvalidActivationCode\020\373U\022\030"
-      "\n\023ActivationCodeError\020\374U\022\024\n\017LoginTokenEr"
-      "ror\020\375U\022\023\n\016BanForbidLogin\020\376U\022\026\n\021ChannelNo"
-      "tSupport\020\377U\022\023\n\016ChannelNotOpen\020\200V\022\021\n\014Chan"
-      "nelError\020\201V\022\020\n\013WeiXinError\020\202V\022\024\n\017WeiXinU"
-      "serError\020\203V\022\025\n\020WeiXinTokenError\020\204V\022\024\n\017We"
-      "iXinCodeError\020\205V\022\027\n\022WeiXinTokenTimeout\020\206"
-      "V\022\017\n\nSteamError\020\207V\022\023\n\016SteamDataError\020\210V\022"
-      "\023\n\016SteamAuthError\020\211V\022\034\n\027VersionNotCompat"
-      "ibility\020\341]\022\021\n\014LoginIsClose\020\342]\022\027\n\022LoginNo"
-      "LoginServer\020\343]\022\024\n\017LoginSystemBusy\020\344]\022\031\n\024"
-      "LoginWorldSystemBusy\020\345]\022\026\n\021LoginNoGameSe"
-      "rver\020\346]\022\030\n\023LoginGameServerBusy\020\347]\022\031\n\024Log"
-      "inBindPlayerError\020\350]\022\030\n\023LoginLoadDataFai"
-      "led\020\351]\022\026\n\021QueryPlayerFailed\020\305^\022\025\n\020NameAl"
-      "readyExist\020\306^b\006proto3"
+      "sy\020\225N\022\023\n\016DataServerBusy\020\226N\022\023\n\016AccountIsE"
+      "mpty\020\371U\022\026\n\021ActivationAccount\020\372U\022\032\n\025Inval"
+      "idActivationCode\020\373U\022\030\n\023ActivationCodeErr"
+      "or\020\374U\022\024\n\017LoginTokenError\020\375U\022\023\n\016BanForbid"
+      "Login\020\376U\022\026\n\021ChannelNotSupport\020\377U\022\023\n\016Chan"
+      "nelNotOpen\020\200V\022\021\n\014ChannelError\020\201V\022\020\n\013WeiX"
+      "inError\020\202V\022\024\n\017WeiXinUserError\020\203V\022\025\n\020WeiX"
+      "inTokenError\020\204V\022\024\n\017WeiXinCodeError\020\205V\022\027\n"
+      "\022WeiXinTokenTimeout\020\206V\022\017\n\nSteamError\020\207V\022"
+      "\023\n\016SteamDataError\020\210V\022\023\n\016SteamAuthError\020\211"
+      "V\022\034\n\027VersionNotCompatibility\020\341]\022\021\n\014Login"
+      "IsClose\020\342]\022\027\n\022LoginNoLoginServer\020\343]\022\024\n\017L"
+      "oginSystemBusy\020\344]\022\031\n\024LoginWorldSystemBus"
+      "y\020\345]\022\026\n\021LoginNoGameServer\020\346]\022\030\n\023LoginGam"
+      "eServerBusy\020\347]\022\031\n\024LoginBindPlayerError\020\350"
+      "]\022\030\n\023LoginLoadDataFailed\020\351]\022\026\n\021QueryPlay"
+      "erFailed\020\305^\022\025\n\020NameAlreadyExist\020\306^\022\016\n\tNa"
+      "meSetOk\020\307^\022\024\n\017NameLengthError\020\310^\022\024\n\017Name"
+      "FilterError\020\311^\022\016\n\tNameEmpty\020\312^\022\023\n\016NameAl"
+      "readySet\020\313^\022\r\n\010SexSetOK\020\314^b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 861);
+      descriptor, 994);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -105,6 +108,7 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 10003:
     case 10004:
     case 10005:
+    case 10006:
     case 11001:
     case 11002:
     case 11003:
@@ -133,6 +137,12 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12009:
     case 12101:
     case 12102:
+    case 12103:
+    case 12104:
+    case 12105:
+    case 12106:
+    case 12107:
+    case 12108:
       return true;
     default:
       return false;

@@ -23,7 +23,7 @@ namespace KFrame
 
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
     typedef std::function< void( KFEntity*, const KFMsg::PBObject&  ) > KFSyncFunction;
-    typedef std::function< void( KFEntity*, const std::string& ) > KFShowRewardFunction;
+    typedef std::function< void( KFEntity*, const std::string& ) > KFShowElementFunction;
 
 
 #define __KF_ADD_ELEMENT_FUNCTION__( addfunction ) \
@@ -312,12 +312,12 @@ namespace KFrame
         virtual void UnRegisterSyncRemoveFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterShowRewardFunction( T* object, void ( T::*handle )( KFEntity*, const std::string& ) )
+        void RegisterShowElementFunction( T* object, void ( T::*handle )( KFEntity*, const std::string& ) )
         {
-            KFShowRewardFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
-            BindShowRewardFunction( function );
+            KFShowElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
+            BindShowElementFunction( function );
         }
-        virtual void UnRegisterShowRewardFunction() = 0;
+        virtual void UnRegisterShowElementFunction() = 0;
 
     protected:
         virtual void BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function ) = 0;
@@ -352,7 +352,7 @@ namespace KFrame
         virtual void BindSyncUpdateFunction( KFSyncFunction& function ) = 0;
         virtual void BindSyncAddFunction( KFSyncFunction& function ) = 0;
         virtual void BindSyncRemoveFunction( KFSyncFunction& function ) = 0;
-        virtual void BindShowRewardFunction( KFShowRewardFunction& function ) = 0;
+        virtual void BindShowElementFunction( KFShowElementFunction& function ) = 0;
         virtual void BindEntitySaveFunction( KFEntityFunction& function ) = 0;
     };
 }

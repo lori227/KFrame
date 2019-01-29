@@ -20,7 +20,7 @@ namespace KFrame
         _entity_sync_add_function = nullptr;
         _entity_sync_update_function = nullptr;
         _entity_sync_remove_function = nullptr;
-        _show_reward_function = nullptr;
+        _show_element_function = nullptr;
 
         _entity_data_mask = 0;
         _entity_delay_save_time = 0;
@@ -401,14 +401,14 @@ namespace KFrame
         _entity_sync_update_function = nullptr;
     }
 
-    void KFComponentEx::BindShowRewardFunction( KFShowRewardFunction& function )
+    void KFComponentEx::BindShowElementFunction( KFShowElementFunction& function )
     {
-        _show_reward_function = function;
+        _show_element_function = function;
     }
 
-    void KFComponentEx::UnRegisterShowRewardFunction()
+    void KFComponentEx::UnRegisterShowElementFunction()
     {
-        _show_reward_function = nullptr;
+        _show_element_function = nullptr;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, uint64 key, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )

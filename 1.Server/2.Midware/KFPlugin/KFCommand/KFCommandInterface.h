@@ -35,10 +35,10 @@ namespace KFrame
     void function( KFEntity* player, const VectorString& params )
 
 #define  __REGISTER_COMMAND_FUNCTION__( command, function ) \
-    _kf_debug->RegisterFunction( command, this, function )
+    _kf_command->RegisterFunction( command, this, function )
 
 #define  __UNREGISTER_COMMAND_FUNCTION__( command ) \
-    _kf_debug->UnRegisterFunction( command )
+    _kf_command->UnRegisterFunction( command )
 }
 
 

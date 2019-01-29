@@ -19,16 +19,20 @@ enum MidwareClientProtocol
 	MSG_TELL_BE_KICK = 103;						// 被踢下线了
 
 	// data
-	MSG_LOGIN_ENTER_GAME = 20;					// 通知进入游戏
- 	MSG_SYNC_UPDATE_DATA = 21;					// 同步更新属性
-	MSG_SYNC_ADD_DATA = 22;						// 同步增加属性
-	MSG_SYNC_REMOVE_DATA = 23;					// 同步删除属性
-	MSG_REMOVE_DATA_REQ = 24;					// 请求删除属性
-	MSG_QUERY_PLAYER_REQ = 25;					// 查询玩家数据
-	MSG_QUERY_PLAYER_ACK = 26;			    	// 查询玩家数据
-	MSG_QUERY_BASIC_REQ = 27;					// 查询玩家基本数据
-	MSG_QUERY_BASIC_ACK = 28;					// 查询基础数据
-	MSG_SHOW_REWARD_ELEMENT = 29;				// 显示奖励
+	MSG_LOGIN_ENTER_GAME = 200;					// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 201;					// 同步更新属性
+	MSG_SYNC_ADD_DATA = 202;					// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 203;					// 同步删除属性
+	MSG_REMOVE_DATA_REQ = 204;					// 请求删除属性
+	MSG_QUERY_PLAYER_REQ = 205;					// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 206;			    	// 查询玩家数据
+	MSG_QUERY_BASIC_REQ = 207;					// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK = 208;					// 查询基础数据
+	MSG_SHOW_ELEMENT = 209;						// 显示奖励
+
+	// attribute
+	MSG_SET_NAME_REQ = 300;						// 设置名字
+	MSG_SET_SEX_REQ = 301;						// 设置性别
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +105,22 @@ message MsgSyncRemoveData
 {
 	PBObject pbdata = 1;	
 }
+
+// 显示奖励的物品
+// MSG_SHOW_ELEMENT
+message MsgShowElement
+{
+	bytes element = 1;	// 奖励字串( 客户端需要解析 )
+}
+
+// 删除属性
+// MSG_REMOVE_DATA_REQ
+message MsgRemoveDataReq
+{
+	bytes dataname = 1;		// 属性名称
+	uint64 key = 2;			// id
+	uint32 count = 3;		// 数量
+}
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 // 查询玩家
@@ -132,4 +152,17 @@ message MsgQueryPlayerAck
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
+// 设置名字
+// MSG_SET_NAME_REQ
+message MsgSetNameReq
+{
+	bytes name = 1;
+}
+
+// 设置性别
+// MSG_SET_SEX_REQ
+message MsgSetSexReq
+{
+	uint32 sex = 1;
+}
 ////////////////////////////////////////////////////////////////////
