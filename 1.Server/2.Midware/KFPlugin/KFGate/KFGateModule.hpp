@@ -55,7 +55,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToAuth );
 
         // 服务器关闭命令
-        __KF_DEPLOY_COMMAND_FUNCTION__( OnDeployShutDownServer );
+        __KF_DEPLOY_FUNCTION__( OnDeployShutDownServer );
     protected:
         // 登录验证
         __KF_MESSAGE_FUNCTION__( HandleLoginReq );

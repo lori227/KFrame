@@ -13,7 +13,7 @@ namespace KFrame
         __REGISTER_SERVER_TRANSMIT_FUNCTION__( &KFGateModule::SendMessageToGame );
         __REGISTER_CLIENT_TRANSMIT_FUNCTION__( &KFGateModule::SendToClient );
 
-        __REGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
+        __REGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_REQ, &KFGateModule::HandleLoginReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGOUT_REQ, &KFGateModule::HandleLogoutReq );
@@ -35,7 +35,7 @@ namespace KFrame
         __UNREGISTER_SERVER_TRANSMIT_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSMIT_FUNCTION__();
 
-        __UNREGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UNREGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGOUT_REQ );
@@ -47,7 +47,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_DEPLOY_COMMAND_FUNCTION__( KFGateModule::OnDeployShutDownServer )
+    __KF_DEPLOY_FUNCTION__( KFGateModule::OnDeployShutDownServer )
     {
         _is_login_close = true;
     }
