@@ -13,7 +13,7 @@ namespace KFrame
 
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
-        _kf_data->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
+        _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
 
         // __REGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
@@ -35,7 +35,7 @@ namespace KFrame
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
-        _kf_data->UnBindLoadPlayerFunction( this );
+        _kf_data_client->UnBindLoadPlayerFunction( this );
 
         //__UNREGISTER_DEPLOY_COMMAND_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +258,7 @@ namespace KFrame
         KickPlayer( pblogin->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
 
         // 加载玩家数据
-        auto ok = _kf_data->LoadPlayerData( pblogin );
+        auto ok = _kf_data_client->LoadPlayerData( pblogin );
         if ( ok )
         {
             __LOG_DEBUG__( "player[{}:{}:{}] login game ok!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );

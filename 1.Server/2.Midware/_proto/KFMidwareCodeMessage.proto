@@ -15,6 +15,7 @@ enum MidwareCodeEnum
 	AuthServerBusy			= 10002;		// 认证服务器繁忙
 	ZoneServerBusy			= 10003;		// 小区服务器繁忙
 	ZoneDatabaseBusy		= 10004;		// 小区数据库错误
+	NameDatabaseBusy		= 10005;		// 名字数据库错误
 
 	// auth
 	AccountIsEmpty 			= 11001;		// 账号不能为空
@@ -44,4 +45,10 @@ enum MidwareCodeEnum
 	LoginNoGameServer		= 12006;		// 没有可用的游戏服务器
 	LoginGameServerBusy		= 12007;		// 游戏服务器出错了
 	LoginBindPlayerError	= 12008;		// 绑定角色出错了
+	LoginLoadDataFailed		= 12009;		// 加载角色数据出错了
+
+	// data
+	QueryPlayerFailed		= 12101;		// 查询角色数据出错了
+	NameAlreadyExist		= 12102;		// 名字已经存在
+
 }

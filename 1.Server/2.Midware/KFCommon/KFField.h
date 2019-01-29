@@ -125,6 +125,7 @@ namespace KFrame
         __STRING_DEFINE__( world );
         __STRING_DEFINE__( game );
         __STRING_DEFINE__( login );
+        __STRING_DEFINE__( data );
         __STRING_DEFINE__( sessionid );
         __STRING_DEFINE__( playerid );
 

@@ -7,7 +7,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDataShardInterface.h" />
-    <ClInclude Include="KFDataShardModule.h" />
-    <ClInclude Include="KFDataShardPlugin.h" />
+    <ClInclude Include="KFDataShardModule.hpp" />
+    <ClInclude Include="KFDataShardPlugin.hpp" />
   </ItemGroup>
 </Project>

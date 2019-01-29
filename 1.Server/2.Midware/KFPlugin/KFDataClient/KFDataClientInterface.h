@@ -5,6 +5,9 @@
 
 namespace KFrame
 {
+    typedef std::function< void( uint32, uint64, KFMsg::PBObject* ) > KFQueryPlayerFunction;
+    typedef std::function< void( uint32, uint64, const std::string&, uint64 ) > KFSetPlayerNameFunction;
+    typedef std::function< void( uint32, const KFMsg::PBLoginData*, KFMsg::PBObject* ) > KFLoadPlayerFunction;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFDataClientInterface : public KFModule
     {
@@ -76,7 +79,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_INTERFACE__( _kf_data, KFDataClientInterface );
+    __KF_INTERFACE__( _kf_data_client, KFDataClientInterface );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

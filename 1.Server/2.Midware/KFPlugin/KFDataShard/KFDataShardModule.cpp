@@ -1,4 +1,4 @@
-﻿#include "KFDataShardModule.h"
+﻿#include "KFDataShardModule.hpp"
 #include "KFUtility/KFCompress.h"
 
 namespace KFrame
@@ -9,10 +9,10 @@ namespace KFrame
     {
         __REGISTER_LOOP_TIMER__( 1, 10000, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ, &KFDataShardModule::HandleSavePlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ, &KFDataShardModule::HandleQueryPlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &KFDataShardModule::HandleLoginLoadPlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ, &KFDataShardModule::HandleSetPlayerNameReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleLoadPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleSavePlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleQueryPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &KFDataShardModule::HandleSetPlayerNameToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -21,10 +21,10 @@ namespace KFrame
     {
         __UNREGISTER_TIMER__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
     }
 
     void KFDataShardModule::OnceRun()
@@ -119,16 +119,16 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoginLoadPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerReq );
+        __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
 
         auto pblogin = &kfmsg.pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] loaddata!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         auto zoneid = KFUtility::CalcZoneId( pblogin->playerid() );
 
-        KFMsg::S2SLoginLoadPlayerAck ack;
+        KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
         bool ok = LoadPlayerData( zoneid, pblogin->playerid(), ack.mutable_playerdata() );
         if ( ok )
@@ -137,15 +137,15 @@ namespace KFrame
         }
         else
         {
-            ack.set_result( KFMsg::LoadDataFailed );
+            ack.set_result( KFMsg::LoginLoadDataFailed );
         }
 
-        _kf_route->SendToRoute( route, KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &ack );
+        _kf_route->SendToRoute( route, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SSavePlayerReq );
+        __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
 
         auto zoneid = KFUtility::CalcZoneId( kfmsg.id() );
         auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data() );
@@ -163,13 +163,13 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryPlayerReq );
+        __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
 
         auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
 
-        KFMsg::S2SQueryPlayerAck ack;
+        KFMsg::S2SQueryPlayerToGameAck ack;
         auto ok = LoadPlayerData( zoneid, kfmsg.playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
@@ -180,22 +180,22 @@ namespace KFrame
             ack.set_result( KFMsg::QueryPlayerFailed );
         }
 
-        _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_PLAYER_ACK, &ack );
+        _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSetPlayerNameReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSetPlayerNameToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameReq );
+        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToDataReq );
 
         // 先查询名字
         uint32 result = SetPlayerName( kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
 
-        KFMsg::S2SSetPlayerNameAck ack;
+        KFMsg::S2SSetPlayerNameToGameAck ack;
         ack.set_result( result );
         ack.set_name( kfmsg.newname() );
         ack.set_playerid( kfmsg.playerid() );
         ack.set_itemguid( kfmsg.itemguid() );
-        _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYER_NAME_ACK, &ack );
+        _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &ack );
     }
 
     uint32 KFDataShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
@@ -228,6 +228,6 @@ namespace KFrame
             return KFMsg::NameAlreadyExist;
         }
 
-        return KFMsg::NameSetOK;
+        return KFMsg::Ok;
     }
 }

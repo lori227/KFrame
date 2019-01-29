@@ -5,16 +5,16 @@ namespace KFrame
 {
     void KFDataClientModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK, &KFDataClientModule::HandleLoadPlayerAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_ACK, &KFDataClientModule::HandleQueryPlayerAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_ACK, &KFDataClientModule::HandleSetPlayerNameAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleLoadPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleQueryPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFDataClientModule::HandleSetPlayerNameToGameAck );
     }
 
     void KFDataClientModule::BeforeShut()
     {
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_LOAD_PLAYER_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
     }
 
     void KFDataClientModule::SetLoadPlayerFunction( KFLoadPlayerFunction& function )
@@ -36,17 +36,15 @@ namespace KFrame
 
     bool KFDataClientModule::LoadPlayerData( const KFMsg::PBLoginData* pblogin )
     {
-        //auto zoneid = KFUtility::CalcZoneId( pblogin->playerid() );
-
         // 加载玩家数据
-        KFMsg::S2SLoginLoadPlayerReq req;
+        KFMsg::S2SLoadPlayerToDataReq req;
         req.mutable_pblogin()->CopyFrom( *pblogin );
-        return _kf_route->SendToRand( pblogin->playerid(), __KF_STRING__( data ), KFMsg::S2S_LOGIN_LOAD_PLAYER_REQ, &req );
+        return _kf_route->SendToRand( pblogin->playerid(), __KF_STRING__( data ), KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleLoadPlayerAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleLoadPlayerToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginLoadPlayerAck );
+        __PROTO_PARSE__( KFMsg::S2SLoadPlayerToGameAck );
 
         // 回调函数
         _load_player_function( kfmsg.result(), &kfmsg.pblogin(), kfmsg.mutable_playerdata() );
@@ -56,24 +54,24 @@ namespace KFrame
 
     bool KFDataClientModule::SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata )
     {
-        KFMsg::S2SSavePlayerReq req;
+        KFMsg::S2SSavePlayerToDataReq req;
         req.set_id( playerid );
         req.mutable_data()->CopyFrom( *pbplayerdata );
-        return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_REQ, &req );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDataClientModule::QueryPlayerData( uint64 sendid, uint64 playerid )
     {
-        KFMsg::S2SQueryPlayerReq req;
+        KFMsg::S2SQueryPlayerToDataReq req;
         req.set_playerid( playerid );
-        return _kf_route->SendToRand( sendid, __KF_STRING__( data ), KFMsg::S2S_QUERY_PLAYER_REQ, &req );
+        return _kf_route->SendToRand( sendid, __KF_STRING__( data ), KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleQueryPlayerAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleQueryPlayerToGameAck )
     {
         auto playerid = __ROUTE_RECV_ID__;
-        __PROTO_PARSE__( KFMsg::S2SQueryPlayerAck );
+        __PROTO_PARSE__( KFMsg::S2SQueryPlayerToGameAck );
 
         // 回调函数
         _query_player_function( kfmsg.result(), playerid, kfmsg.mutable_playerdata() );
@@ -83,17 +81,17 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDataClientModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid )
     {
-        KFMsg::S2SSetPlayerNameReq req;
+        KFMsg::S2SSetPlayerNameToDataReq req;
         req.set_playerid( playerid );
         req.set_oldname( oldname );
         req.set_newname( newname );
         req.set_itemguid( itemguid );
-        return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SET_PLAYER_NAME_REQ, &req );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleSetPlayerNameAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleSetPlayerNameToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameAck );
+        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
 
         _set_player_name_function( kfmsg.result(), kfmsg.playerid(), kfmsg.name(), kfmsg.itemguid() );
     }

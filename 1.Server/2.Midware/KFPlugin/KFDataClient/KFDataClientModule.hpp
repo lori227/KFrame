@@ -48,18 +48,18 @@ namespace KFrame
 
     protected:
         // 处理加载玩家数据
-        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToGameAck );
 
         // 查询玩家数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToGameAck );
 
         // 处理设置名字回馈
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameAck );
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck );
 
     private:
-        KFLoadPlayerFunction _load_player_function{ nullptr };
-        KFQueryPlayerFunction _query_player_function{ nullptr };
-        KFSetPlayerNameFunction _set_player_name_function{ nullptr };
+        KFLoadPlayerFunction _load_player_function = nullptr;
+        KFQueryPlayerFunction _query_player_function = nullptr;
+        KFSetPlayerNameFunction _set_player_name_function = nullptr;
     };
 
 

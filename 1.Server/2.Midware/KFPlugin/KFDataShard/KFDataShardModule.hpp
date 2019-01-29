@@ -9,7 +9,6 @@
 //    @Date             :    2017-11-30
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFDataShardInterface.h"
 #include "KFTimer/KFTimerInterface.h"
@@ -58,16 +57,16 @@ namespace KFrame
 
     protected:
         // 玩家登陆
-        __KF_MESSAGE_FUNCTION__( HandleLoginLoadPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToDataReq );
 
         // 保存数据
-        __KF_MESSAGE_FUNCTION__( HandleSavePlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleSavePlayerToDataReq );
 
         // 查询玩家属性
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToDataReq );
 
         // 处理设置名字
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToDataReq );
 
     protected:
         // 加载数据

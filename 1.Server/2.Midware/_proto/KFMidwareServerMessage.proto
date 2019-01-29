@@ -33,7 +33,15 @@ enum MidwareServerProtocol
 	S2S_BROADCAST_TO_GAME 				= 20301;	// 广播消息
 	S2S_BROADCAST_TO_GATE				= 20302;	// 广播消息
 	S2S_TRANSMIT_TO_PLAYER 				= 20303;	// 转发消息
-
+	
+	// data
+	S2S_LOAD_PLAYER_TO_DATA_REQ			= 20401;	// 加载玩家数据
+	S2S_LOAD_PLAYER_TO_GAME_ACK			= 20402;	// 加载玩家数据
+	S2S_SAVE_PLAYER_TO_DATA_REQ			= 20403;	// 保存玩家数据
+	S2S_QUERY_PLAYER_TO_DATA_REQ		= 20404;	// 查询玩家
+	S2S_QUERY_PLAYER_TO_GAME_ACK		= 20405;	// 查询玩家
+	S2S_SET_PLAYERNAME_TO_DATA_REQ 		= 20406;	// 设置玩家名字
+	S2S_SET_PLAYERNAME_TO_GAME_ACK		= 20407;	// 设置玩家名字
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +139,68 @@ message S2SDisconnectToGameReq
 	uint64 playerid = 1; 
 }
 /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+// 加载玩家数据
+// S2S_LOAD_PLAYER_TO_DATA_REQ
+message S2SLoadPlayerToDataReq
+{
+	PBLoginData pblogin = 1;	
+}
+
+// 加载游戏数据结果
+// S2S_LOAD_PLAYER_TO_GAME_ACK
+message S2SLoadPlayerToGameAck
+{
+	uint32 result = 1;
+	PBLoginData pblogin = 2;
+	PBObject playerdata = 3;	
+}
+
+// 保存玩家数据
+// S2S_SAVE_PLAYER_TO_DATA_REQ
+message S2SSavePlayerToDataReq
+{
+	uint64 id = 1;
+	PBObject data = 3;
+}
+
+// 查询属性
+// S2S_QUERY_PLAYER_TO_DATA_REQ
+message S2SQueryPlayerToDataReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询属性
+// S2S_QUERY_PLAYER_TO_GAME_ACK
+message S2SQueryPlayerToGameAck
+{
+	uint32 result = 1;
+	PBObject playerdata = 2;
+}
+
+// S2S_SET_PLAYERNAME_TO_DATA_REQ
+message S2SSetPlayerNameToDataReq
+{
+	uint64 playerid = 1;
+	bytes oldname = 2;
+	bytes newname = 3;
+	uint64 itemguid = 4;
+}
+
+// S2S_SET_PLAYERNAME_TO_GAME_ACK
+message S2SSetPlayerNameToGameAck
+{
+	uint32 result = 1;
+	uint64 playerid = 2;
+	bytes name = 3;
+	uint64 itemguid = 4;
+}
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+
+
 // 查询角色id请求
 // S2S_PLAYER_ENTER_TO_WORLD_REQ
 message S2SPlayerEnterToWorldReq
