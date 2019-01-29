@@ -21,6 +21,7 @@
 
 namespace protobuf_KFDefineMessage_2eproto {
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBArray_Pbuint64Entry_DoNotUse;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBLoginData_ChanneldataEntry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBObject_PbdoubleEntry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBObject_Pbint32Entry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_KFDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBObject_Pbint64Entry_DoNotUse;
@@ -102,6 +103,16 @@ class PBRecordDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<PBRecord>
       _instance;
 } _PBRecord_default_instance_;
+class PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<PBLoginData_ChanneldataEntry_DoNotUse>
+      _instance;
+} _PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
+class PBLoginDataDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<PBLoginData>
+      _instance;
+} _PBLoginData_default_instance_;
 }  // namespace KFMsg
 namespace protobuf_KFDefineMessage_2eproto {
 static void InitDefaultsPBObject_Pbint32Entry_DoNotUse() {
@@ -266,6 +277,34 @@ LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_PBArray =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsPBArray}, {
       &protobuf_KFDefineMessage_2eproto::scc_info_PBArray_Pbuint64Entry_DoNotUse.base,}};
 
+static void InitDefaultsPBLoginData_ChanneldataEntry_DoNotUse() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
+    new (ptr) ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse();
+  }
+  ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_PBLoginData_ChanneldataEntry_DoNotUse =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPBLoginData_ChanneldataEntry_DoNotUse}, {}};
+
+static void InitDefaultsPBLoginData() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_PBLoginData_default_instance_;
+    new (ptr) ::KFMsg::PBLoginData();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::PBLoginData::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_PBLoginData =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsPBLoginData}, {
+      &protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData_ChanneldataEntry_DoNotUse.base,}};
+
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_PBObject_Pbint32Entry_DoNotUse.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBObject_Pbuint32Entry_DoNotUse.base);
@@ -277,9 +316,11 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_PBObject.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBArray_Pbuint64Entry_DoNotUse.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBArray.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PBLoginData_ChanneldataEntry_DoNotUse.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PBLoginData.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[14];
+::google::protobuf::Metadata file_level_metadata[16];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject_Pbint32Entry_DoNotUse, _has_bits_),
@@ -407,6 +448,28 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRecord, pbobject_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, key_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse, value_),
+  0,
+  1,
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, token_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, gateid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, sessionid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, channel_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, account_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, accountid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, playerid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, channeldata_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::KFMsg::PBObject_Pbint32Entry_DoNotUse)},
@@ -423,6 +486,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 104, -1, sizeof(::KFMsg::PBArray)},
   { 110, 117, sizeof(::KFMsg::PBRecord_PbobjectEntry_DoNotUse)},
   { 119, -1, sizeof(::KFMsg::PBRecord)},
+  { 125, 132, sizeof(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse)},
+  { 134, -1, sizeof(::KFMsg::PBLoginData)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -440,6 +505,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBArray_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRecord_PbobjectEntry_DoNotUse_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRecord_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBLoginData_ChanneldataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBLoginData_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -457,7 +524,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 14);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 16);
 }
 
 void AddDescriptorsImpl() {
@@ -493,10 +560,16 @@ void AddDescriptorsImpl() {
       "Record\022/\n\010pbobject\030\001 \003(\0132\035.KFMsg.PBRecor"
       "d.PbobjectEntry\032@\n\rPbobjectEntry\022\013\n\003key\030"
       "\001 \001(\004\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBObject:\0028"
-      "\001b\006proto3"
+      "\001\"\364\001\n\013PBLoginData\022\r\n\005token\030\001 \001(\014\022\016\n\006gate"
+      "id\030\002 \001(\004\022\021\n\tsessionid\030\003 \001(\004\022\017\n\007channel\030\004"
+      " \001(\r\022\017\n\007account\030\005 \001(\014\022\021\n\taccountid\030\006 \001(\004"
+      "\022\020\n\010playerid\030\007 \001(\004\0228\n\013channeldata\030\010 \003(\0132"
+      "#.KFMsg.PBLoginData.ChanneldataEntry\0322\n\020"
+      "ChanneldataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002"
+      " \001(\014:\0028\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1209);
+      descriptor, 1456);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFDefineMessage.proto", &protobuf_RegisterTypes);
 }
@@ -2789,6 +2862,632 @@ void PBRecord::InternalSwap(PBRecord* other) {
 }
 
 
+// ===================================================================
+
+PBLoginData_ChanneldataEntry_DoNotUse::PBLoginData_ChanneldataEntry_DoNotUse() {}
+PBLoginData_ChanneldataEntry_DoNotUse::PBLoginData_ChanneldataEntry_DoNotUse(::google::protobuf::Arena* arena) : SuperType(arena) {}
+void PBLoginData_ChanneldataEntry_DoNotUse::MergeFrom(const PBLoginData_ChanneldataEntry_DoNotUse& other) {
+  MergeFromInternal(other);
+}
+::google::protobuf::Metadata PBLoginData_ChanneldataEntry_DoNotUse::GetMetadata() const {
+  ::protobuf_KFDefineMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFDefineMessage_2eproto::file_level_metadata[14];
+}
+void PBLoginData_ChanneldataEntry_DoNotUse::MergeFrom(
+    const ::google::protobuf::Message& other) {
+  ::google::protobuf::Message::MergeFrom(other);
+}
+
+
+// ===================================================================
+
+void PBLoginData::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBLoginData::kTokenFieldNumber;
+const int PBLoginData::kGateidFieldNumber;
+const int PBLoginData::kSessionidFieldNumber;
+const int PBLoginData::kChannelFieldNumber;
+const int PBLoginData::kAccountFieldNumber;
+const int PBLoginData::kAccountidFieldNumber;
+const int PBLoginData::kPlayeridFieldNumber;
+const int PBLoginData::kChanneldataFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBLoginData::PBLoginData()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.PBLoginData)
+}
+PBLoginData::PBLoginData(const PBLoginData& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  channeldata_.MergeFrom(from.channeldata_);
+  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.token().size() > 0) {
+    token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
+  }
+  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.account().size() > 0) {
+    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+  }
+  ::memcpy(&gateid_, &from.gateid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&channel_) -
+    reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
+  // @@protoc_insertion_point(copy_constructor:KFMsg.PBLoginData)
+}
+
+void PBLoginData::SharedCtor() {
+  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&gateid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&channel_) -
+      reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
+}
+
+PBLoginData::~PBLoginData() {
+  // @@protoc_insertion_point(destructor:KFMsg.PBLoginData)
+  SharedDtor();
+}
+
+void PBLoginData::SharedDtor() {
+  token_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void PBLoginData::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* PBLoginData::descriptor() {
+  ::protobuf_KFDefineMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFDefineMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const PBLoginData& PBLoginData::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_KFDefineMessage_2eproto::scc_info_PBLoginData.base);
+  return *internal_default_instance();
+}
+
+
+void PBLoginData::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.PBLoginData)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  channeldata_.Clear();
+  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&gateid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&channel_) -
+      reinterpret_cast<char*>(&gateid_)) + sizeof(channel_));
+  _internal_metadata_.Clear();
+}
+
+bool PBLoginData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.PBLoginData)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // bytes token = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_token()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 gateid = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &gateid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 sessionid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &sessionid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 channel = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &channel_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes account = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_account()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 accountid = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &accountid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 playerid = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &playerid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // map<string, bytes> channeldata = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+          PBLoginData_ChanneldataEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
+              PBLoginData_ChanneldataEntry_DoNotUse,
+              ::std::string, ::std::string,
+              ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+              ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+              0 >,
+            ::google::protobuf::Map< ::std::string, ::std::string > > parser(&channeldata_);
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, &parser));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            parser.key().data(), static_cast<int>(parser.key().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.PBLoginData.ChanneldataEntry.key"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.PBLoginData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.PBLoginData)
+  return false;
+#undef DO_
+}
+
+void PBLoginData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.PBLoginData)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes token = 1;
+  if (this->token().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      1, this->token(), output);
+  }
+
+  // uint64 gateid = 2;
+  if (this->gateid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->gateid(), output);
+  }
+
+  // uint64 sessionid = 3;
+  if (this->sessionid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->sessionid(), output);
+  }
+
+  // uint32 channel = 4;
+  if (this->channel() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->channel(), output);
+  }
+
+  // bytes account = 5;
+  if (this->account().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      5, this->account(), output);
+  }
+
+  // uint64 accountid = 6;
+  if (this->accountid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(6, this->accountid(), output);
+  }
+
+  // uint64 playerid = 7;
+  if (this->playerid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(7, this->playerid(), output);
+  }
+
+  // map<string, bytes> channeldata = 8;
+  if (!this->channeldata().empty()) {
+    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
+        ConstPtr;
+    typedef ConstPtr SortItem;
+    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
+    struct Utf8Check {
+      static void Check(ConstPtr p) {
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          p->first.data(), static_cast<int>(p->first.length()),
+          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+          "KFMsg.PBLoginData.ChanneldataEntry.key");
+      }
+    };
+
+    if (output->IsSerializationDeterministic() &&
+        this->channeldata().size() > 1) {
+      ::std::unique_ptr<SortItem[]> items(
+          new SortItem[this->channeldata().size()]);
+      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
+      size_type n = 0;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->channeldata().begin();
+          it != this->channeldata().end(); ++it, ++n) {
+        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
+      }
+      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
+      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
+      for (size_type i = 0; i < n; i++) {
+        entry.reset(channeldata_.NewEntryWrapper(
+            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
+        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+            8, *entry, output);
+        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
+      }
+    } else {
+      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->channeldata().begin();
+          it != this->channeldata().end(); ++it) {
+        entry.reset(channeldata_.NewEntryWrapper(
+            it->first, it->second));
+        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+            8, *entry, output);
+        Utf8Check::Check(&*it);
+      }
+    }
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.PBLoginData)
+}
+
+::google::protobuf::uint8* PBLoginData::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.PBLoginData)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes token = 1;
+  if (this->token().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        1, this->token(), target);
+  }
+
+  // uint64 gateid = 2;
+  if (this->gateid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->gateid(), target);
+  }
+
+  // uint64 sessionid = 3;
+  if (this->sessionid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->sessionid(), target);
+  }
+
+  // uint32 channel = 4;
+  if (this->channel() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->channel(), target);
+  }
+
+  // bytes account = 5;
+  if (this->account().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        5, this->account(), target);
+  }
+
+  // uint64 accountid = 6;
+  if (this->accountid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(6, this->accountid(), target);
+  }
+
+  // uint64 playerid = 7;
+  if (this->playerid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(7, this->playerid(), target);
+  }
+
+  // map<string, bytes> channeldata = 8;
+  if (!this->channeldata().empty()) {
+    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
+        ConstPtr;
+    typedef ConstPtr SortItem;
+    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
+    struct Utf8Check {
+      static void Check(ConstPtr p) {
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          p->first.data(), static_cast<int>(p->first.length()),
+          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+          "KFMsg.PBLoginData.ChanneldataEntry.key");
+      }
+    };
+
+    if (deterministic &&
+        this->channeldata().size() > 1) {
+      ::std::unique_ptr<SortItem[]> items(
+          new SortItem[this->channeldata().size()]);
+      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
+      size_type n = 0;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->channeldata().begin();
+          it != this->channeldata().end(); ++it, ++n) {
+        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
+      }
+      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
+      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
+      for (size_type i = 0; i < n; i++) {
+        entry.reset(channeldata_.NewEntryWrapper(
+            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
+        target = ::google::protobuf::internal::WireFormatLite::
+                   InternalWriteMessageNoVirtualToArray(
+                       8, *entry, deterministic, target);
+;
+        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
+      }
+    } else {
+      ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->channeldata().begin();
+          it != this->channeldata().end(); ++it) {
+        entry.reset(channeldata_.NewEntryWrapper(
+            it->first, it->second));
+        target = ::google::protobuf::internal::WireFormatLite::
+                   InternalWriteMessageNoVirtualToArray(
+                       8, *entry, deterministic, target);
+;
+        Utf8Check::Check(&*it);
+      }
+    }
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.PBLoginData)
+  return target;
+}
+
+size_t PBLoginData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.PBLoginData)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // map<string, bytes> channeldata = 8;
+  total_size += 1 *
+      ::google::protobuf::internal::FromIntSize(this->channeldata_size());
+  {
+    ::std::unique_ptr<PBLoginData_ChanneldataEntry_DoNotUse> entry;
+    for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+        it = this->channeldata().begin();
+        it != this->channeldata().end(); ++it) {
+      entry.reset(channeldata_.NewEntryWrapper(it->first, it->second));
+      total_size += ::google::protobuf::internal::WireFormatLite::
+          MessageSizeNoVirtual(*entry);
+    }
+  }
+
+  // bytes token = 1;
+  if (this->token().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->token());
+  }
+
+  // bytes account = 5;
+  if (this->account().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->account());
+  }
+
+  // uint64 gateid = 2;
+  if (this->gateid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->gateid());
+  }
+
+  // uint64 sessionid = 3;
+  if (this->sessionid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->sessionid());
+  }
+
+  // uint64 accountid = 6;
+  if (this->accountid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->accountid());
+  }
+
+  // uint64 playerid = 7;
+  if (this->playerid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->playerid());
+  }
+
+  // uint32 channel = 4;
+  if (this->channel() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->channel());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void PBLoginData::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.PBLoginData)
+  GOOGLE_DCHECK_NE(&from, this);
+  const PBLoginData* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBLoginData>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.PBLoginData)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.PBLoginData)
+    MergeFrom(*source);
+  }
+}
+
+void PBLoginData::MergeFrom(const PBLoginData& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.PBLoginData)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  channeldata_.MergeFrom(from.channeldata_);
+  if (from.token().size() > 0) {
+
+    token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
+  }
+  if (from.account().size() > 0) {
+
+    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+  }
+  if (from.gateid() != 0) {
+    set_gateid(from.gateid());
+  }
+  if (from.sessionid() != 0) {
+    set_sessionid(from.sessionid());
+  }
+  if (from.accountid() != 0) {
+    set_accountid(from.accountid());
+  }
+  if (from.playerid() != 0) {
+    set_playerid(from.playerid());
+  }
+  if (from.channel() != 0) {
+    set_channel(from.channel());
+  }
+}
+
+void PBLoginData::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.PBLoginData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBLoginData::CopyFrom(const PBLoginData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.PBLoginData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBLoginData::IsInitialized() const {
+  return true;
+}
+
+void PBLoginData::Swap(PBLoginData* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBLoginData::InternalSwap(PBLoginData* other) {
+  using std::swap;
+  channeldata_.Swap(&other->channeldata_);
+  token_.Swap(&other->token_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(gateid_, other->gateid_);
+  swap(sessionid_, other->sessionid_);
+  swap(accountid_, other->accountid_);
+  swap(playerid_, other->playerid_);
+  swap(channel_, other->channel_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata PBLoginData::GetMetadata() const {
+  protobuf_KFDefineMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFDefineMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace KFMsg
 namespace google {
@@ -2834,6 +3533,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRecord_PbobjectEntry_Do
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRecord* Arena::CreateMaybeMessage< ::KFMsg::PBRecord >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::PBRecord >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse* Arena::CreateMaybeMessage< ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBLoginData* Arena::CreateMaybeMessage< ::KFMsg::PBLoginData >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::PBLoginData >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

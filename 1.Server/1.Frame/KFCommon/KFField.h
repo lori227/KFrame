@@ -60,6 +60,18 @@ namespace KFrame
         __STRING_DEFINE__( cleantask );
         __STRING_DEFINE__( loglevel );
         __STRING_DEFINE__( logmemory );
+        __STRING_DEFINE__( player );
+        __STRING_DEFINE__( gateid );
+        __STRING_DEFINE__( channel );
+        __STRING_DEFINE__( account );
+        __STRING_DEFINE__( accountid );
+        __STRING_DEFINE__( basic );
+        __STRING_DEFINE__( serverid );
+        __STRING_DEFINE__( name );
+        __STRING_DEFINE__( onlinetime );
+        __STRING_DEFINE__( offlinetime );
+        __STRING_DEFINE__( totaltime );
+        __STRING_DEFINE__( birthday );
 
 
     }

@@ -65,10 +65,6 @@ namespace KFrame
             {
                 KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Public_Data );
             }
-            if ( xmlnode.GetString( "Online" ) == "1" )
-            {
-                KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Online_Data );
-            }
             if ( xmlnode.GetString( "Relation" ) == "1" )
             {
                 KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Relation_Data );

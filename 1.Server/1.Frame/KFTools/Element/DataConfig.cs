@@ -83,7 +83,7 @@ public class DataConfig
             {
                 var classname = item.Attribute("Class").Value;
                 var dataname = item.Attribute("Name").Value;
-                var datatext = item.Attribute("Agent").Value;
+                var datatext = item.Attribute("Element").Value;
 
                 if (datatext != "" && classname != "Player")
                 {
@@ -100,7 +100,7 @@ public class DataConfig
             {
                 var classname = item.Attribute("Class").Value;
                 var dataname = item.Attribute("Name").Value;
-                var datatext = item.Attribute("Agent").Value;
+                var datatext = item.Attribute("Element").Value;
 
                 if (datatext != "" && classname == "Player")
                 {

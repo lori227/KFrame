@@ -85,19 +85,6 @@ message S2SLoginToGateAck
 	uint64 bantime = 4;		// 禁止游戏的时间
 }
 
-// 登录信息
-message PBLoginData
-{
-	bytes token = 1;		// token
-	uint64 gateid = 2;		// 服务器id
-	uint64 sessionid = 3;	// sessionid
-	uint32 channel = 4;		// 渠道id
-	bytes account = 5;		// 账号
-	uint64 accountid = 6;	// 账号id
-	uint64 playerid = 7;	// 角色id
-	map<string, bytes> channeldata = 8;	// 渠道数据	
-}
-
 // 登录请求到world服务器
 // S2S_LOGIN_TO_WORLD_REQ
 message S2SLoginToWorldReq

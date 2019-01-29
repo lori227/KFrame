@@ -69,7 +69,6 @@ namespace KFrame
         for ( auto& iter : _entitys._objects )
         {
             auto kfentity = static_cast< KFEntityEx* >( iter.second );
-
             if ( _entity_after_run_function != nullptr )
             {
                 _entity_after_run_function( kfentity );

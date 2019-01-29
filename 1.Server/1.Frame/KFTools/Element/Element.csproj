@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8CCEBE83-F413-44D3-BBBA-007F72056C9E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KFAgent</RootNamespace>
-    <AssemblyName>KFAgent</AssemblyName>
+    <RootNamespace>Element</RootNamespace>
+    <AssemblyName>elementtool</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -97,9 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="agent.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="128x128.ico" />
