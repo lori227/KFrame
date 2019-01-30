@@ -3,7 +3,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 rem ===========================================================================
-set framepath=..\..\..\1.Frame\9.Template
+set framepath=..\..\..\1.Frame\9.Template\1.Server
 set localpath=.
 
 mkdir %localpath%\_bin\setting1
