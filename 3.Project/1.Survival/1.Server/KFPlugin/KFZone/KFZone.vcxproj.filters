@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFZoneConfig.cpp" />
+    <ClCompile Include="KFZoneModule.cpp" />
+    <ClCompile Include="KFZonePlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFZoneInterface.h" />
+    <ClInclude Include="KFZoneConfig.hpp" />
+    <ClInclude Include="KFZoneModule.hpp" />
+    <ClInclude Include="KFZonePlugin.hpp" />
+  </ItemGroup>
+</Project>

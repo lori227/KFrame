@@ -8,6 +8,7 @@ namespace KFrame
 
     namespace KFField
     {
+        // frame
         __STRING_DEFINE__( id );
         __STRING_DEFINE__( master );
         __STRING_DEFINE__( proxy );
@@ -74,6 +75,100 @@ namespace KFrame
         __STRING_DEFINE__( birthday );
         __STRING_DEFINE__( clusterkey );
         __STRING_DEFINE__( clustername );
+
+        // midware
+        __STRING_DEFINE__( zoneregister );
+        __STRING_DEFINE__( zoneupdate );
+        __STRING_DEFINE__( zonelist );
+        __STRING_DEFINE__( zoneip );
+        __STRING_DEFINE__( zoneurl );
+        __STRING_DEFINE__( zonelogicid );
+        __STRING_DEFINE__( auth );
+        __STRING_DEFINE__( verify );
+        __STRING_DEFINE__( activation );
+        __STRING_DEFINE__( onlinedata );
+        __STRING_DEFINE__( ban );
+        __STRING_DEFINE__( banip );
+        __STRING_DEFINE__( banplayerid );
+        __STRING_DEFINE__( banaccountid );
+        __STRING_DEFINE__( bantime );
+        __STRING_DEFINE__( unban );
+        __STRING_DEFINE__( queryban );
+        __STRING_DEFINE__( queryaccount );
+        __STRING_DEFINE__( extend );
+        __STRING_DEFINE__( user );
+        __STRING_DEFINE__( playeridcreate );
+        __STRING_DEFINE__( url );
+        __STRING_DEFINE__( tokenexpiretime );
+        __STRING_DEFINE__( token );
+        __STRING_DEFINE__( openid );
+        __STRING_DEFINE__( channeldata );
+        __STRING_DEFINE__( count );
+        __STRING_DEFINE__( code );
+        __STRING_DEFINE__( verifyactivationcode );
+        __STRING_DEFINE__( public );
+        __STRING_DEFINE__( openactivation );
+        __STRING_DEFINE__( activationcode );
+        __STRING_DEFINE__( online );
+        __STRING_DEFINE__( kickonline );
+        __STRING_DEFINE__( accountlist );
+        __STRING_DEFINE__( accountmake );
+        __STRING_DEFINE__( access_token );
+        __STRING_DEFINE__( expires_in );
+        __STRING_DEFINE__( scope );
+        __STRING_DEFINE__( errcode );
+        __STRING_DEFINE__( refresh_token );
+        __STRING_DEFINE__( response );
+        __STRING_DEFINE__( error );
+        __STRING_DEFINE__( params );
+        __STRING_DEFINE__( steamid );
+        __STRING_DEFINE__( gate );
+        __STRING_DEFINE__( world );
+        __STRING_DEFINE__( game );
+        __STRING_DEFINE__( login );
+        __STRING_DEFINE__( data );
+        __STRING_DEFINE__( sessionid );
+        __STRING_DEFINE__( playerid );
+        __STRING_DEFINE__( adddata );
+        __STRING_DEFINE__( setdata );
+        __STRING_DEFINE__( decdata );
+        __STRING_DEFINE__( item );
+        __STRING_DEFINE__( playernamelength );
+        __STRING_DEFINE__( sex );
+        __STRING_DEFINE__( achieve );
+        __STRING_DEFINE__( level );
+        __STRING_DEFINE__( task );
+        __STRING_DEFINE__( activity );
+        __STRING_DEFINE__( received );
+        __STRING_DEFINE__( hero );
+        __STRING_DEFINE__( skin );
+        __STRING_DEFINE__( signin );
+        __STRING_DEFINE__( sevenday );
+        __STRING_DEFINE__( sevenreward );
+        __STRING_DEFINE__( note );
+        __STRING_DEFINE__( luafile );
+        __STRING_DEFINE__( luafunction );
+        __STRING_DEFINE__( mail );
+        __STRING_DEFINE__( reward );
+        __STRING_DEFINE__( validtime );
+        __STRING_DEFINE__( configid );
+        __STRING_DEFINE__( content );
+        __STRING_DEFINE__( title );
+        __STRING_DEFINE__( type );
+        __STRING_DEFINE__( flag );
+        __STRING_DEFINE__( sendid );
+        __STRING_DEFINE__( sendname );
+        __STRING_DEFINE__( maxmailid );
+        __STRING_DEFINE__( sendtime );
+        __STRING_DEFINE__( globalmail );
+        __STRING_DEFINE__( mailinfo );
+        __STRING_DEFINE__( gmmailid );
+        __STRING_DEFINE__( mailzonelist );
+        __STRING_DEFINE__( maillist );
+        __STRING_DEFINE__( mailidcreater );
+        __STRING_DEFINE__( mailid );
+        __STRING_DEFINE__( addmail );
+        __STRING_DEFINE__( delmail );
 
 
     }

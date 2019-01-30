@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFWorldModule.cpp" />
+    <ClCompile Include="KFWorldPlugin.cpp" />
+    <ClCompile Include="KFOnline.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFWorldInterface.h" />
+    <ClInclude Include="KFOnline.hpp" />
+    <ClInclude Include="KFWorldModule.hpp" />
+    <ClInclude Include="KFWorldPlugin.hpp" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,22 @@
+﻿#ifndef __KF_LEAVE_INTERFACE_H__
+#define __KF_LEAVE_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFLeaveInterface : public KFModule
+    {
+    public:
+
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_leave, KFLeaveInterface );
+    //////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+
+
+#endif
