@@ -104,4 +104,12 @@ enum MidwareCodeEnum
 	MailAlreadyReceived		= 12203;		// 邮件附件已经领取
 	MailNotHaveReward		= 12204;		// 邮件没有附件
 
+	// store
+	StoreNotFind			= 12300;		// 找不到商品配置
+	StoreBuyCountError		= 12301;		// 购买数量错误
+	StoreOutOfLimitOwm		= 12302;		// 商品拥有购买限制
+	StoreOutOfLimits		= 12303;		// 购买次数限制
+	StoreLackCost			= 12304;		// 没有足够的资源购买
+	StoreBuyTypeError		= 12305;		// 购买类型错误
+	StoreBuyOK				= 12306;		// 购买成功
 }

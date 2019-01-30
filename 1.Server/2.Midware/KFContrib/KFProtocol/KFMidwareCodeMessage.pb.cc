@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\201\r\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\232\016\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
@@ -92,10 +92,14 @@ void AddDescriptorsImpl() {
       "rdAlready\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014Mai"
       "lNotExist\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDe"
       "leteFailed\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022"
-      "\026\n\021MailNotHaveReward\020\254_b\006proto3"
+      "\026\n\021MailNotHaveReward\020\254_\022\021\n\014StoreNotFind\020"
+      "\214`\022\027\n\022StoreBuyCountError\020\215`\022\027\n\022StoreOutO"
+      "fLimitOwm\020\216`\022\025\n\020StoreOutOfLimits\020\217`\022\022\n\rS"
+      "toreLackCost\020\220`\022\026\n\021StoreBuyTypeError\020\221`\022"
+      "\017\n\nStoreBuyOK\020\222`b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1711);
+      descriptor, 1864);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -192,6 +196,13 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12202:
     case 12203:
     case 12204:
+    case 12300:
+    case 12301:
+    case 12302:
+    case 12303:
+    case 12304:
+    case 12305:
+    case 12306:
       return true;
     default:
       return false;

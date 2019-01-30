@@ -45,6 +45,11 @@ enum MidwareClientProtocol
 	MSG_DELETE_MAIL_REQ 		= 402;				// 删除邮件
 	MSG_QUERY_MAIL_REQ 			= 403;				// 请求查询邮件
 	MSG_MAIL_REWARD_REQ 		= 404;				// 领取邮件奖励
+
+	// store
+	MSG_BUY_STORE_REQ 			= 411;					// 购买商品请求
+	MSG_QUERY_STORE_REQ 		= 412;					// 请求商城信息
+	MSG_QUERY_STORE_ACK 		= 413;					// 请求商城信息反馈
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,4 +256,30 @@ message MsgQueryMailReq
 message MsgMailRewardReq
 {
 	uint64 id = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 客户端请求购买物品
+//	MSG_BUY_STORE_REQ;
+message MsgBuyStoreReq
+{
+	bytes version = 1;		// 版本号
+	bytes buytype = 2;		// 使用什么购买
+	uint32 id = 3;			// 商品id
+	uint32 count = 4;		// 购买数量
+}
+
+// 请求商城信息
+// MSG_QUERY_STORE_REQ
+message MsgQueryStoreReq
+{
+	bytes version = 1;		// 版本号
+}
+
+// 请求商城信息反馈
+// MSG_QUERY_STORE_ACK
+message MsgQueryStoreAck
+{
+	bytes version = 1;		// 版本号
+	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
 }

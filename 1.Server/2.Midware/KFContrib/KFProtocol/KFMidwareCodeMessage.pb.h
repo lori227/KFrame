@@ -123,12 +123,19 @@ enum MidwareCodeEnum {
   MailDeleteFailed = 12202,
   MailAlreadyReceived = 12203,
   MailNotHaveReward = 12204,
+  StoreNotFind = 12300,
+  StoreBuyCountError = 12301,
+  StoreOutOfLimitOwm = 12302,
+  StoreOutOfLimits = 12303,
+  StoreLackCost = 12304,
+  StoreBuyTypeError = 12305,
+  StoreBuyOK = 12306,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = MailNotHaveReward;
+const MidwareCodeEnum MidwareCodeEnum_MAX = StoreBuyOK;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

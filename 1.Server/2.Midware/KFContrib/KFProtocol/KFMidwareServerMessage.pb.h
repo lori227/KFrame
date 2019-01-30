@@ -2345,11 +2345,11 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // uint64 itemguid = 4;
-  void clear_itemguid();
-  static const int kItemguidFieldNumber = 4;
-  ::google::protobuf::uint64 itemguid() const;
-  void set_itemguid(::google::protobuf::uint64 value);
+  // uint64 itemuuid = 4;
+  void clear_itemuuid();
+  static const int kItemuuidFieldNumber = 4;
+  ::google::protobuf::uint64 itemuuid() const;
+  void set_itemuuid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSetPlayerNameToDataReq)
  private:
@@ -2358,7 +2358,7 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::google::protobuf::internal::ArenaStringPtr oldname_;
   ::google::protobuf::internal::ArenaStringPtr newname_;
   ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint64 itemguid_;
+  ::google::protobuf::uint64 itemuuid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
 };
@@ -5540,18 +5540,18 @@ inline void S2SSetPlayerNameToDataReq::set_allocated_newname(::std::string* newn
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToDataReq.newname)
 }
 
-// uint64 itemguid = 4;
-inline void S2SSetPlayerNameToDataReq::clear_itemguid() {
-  itemguid_ = GOOGLE_ULONGLONG(0);
+// uint64 itemuuid = 4;
+inline void S2SSetPlayerNameToDataReq::clear_itemuuid() {
+  itemuuid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SSetPlayerNameToDataReq::itemguid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToDataReq.itemguid)
-  return itemguid_;
+inline ::google::protobuf::uint64 S2SSetPlayerNameToDataReq::itemuuid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToDataReq.itemuuid)
+  return itemuuid_;
 }
-inline void S2SSetPlayerNameToDataReq::set_itemguid(::google::protobuf::uint64 value) {
+inline void S2SSetPlayerNameToDataReq::set_itemuuid(::google::protobuf::uint64 value) {
   
-  itemguid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.itemguid)
+  itemuuid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.itemuuid)
 }
 
 // -------------------------------------------------------------------

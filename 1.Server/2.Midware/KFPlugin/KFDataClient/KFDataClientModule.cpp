@@ -85,7 +85,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_oldname( oldname );
         req.set_newname( newname );
-        req.set_itemguid( itemuuid );
+        req.set_itemuuid( itemuuid );
         return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
     }
 
