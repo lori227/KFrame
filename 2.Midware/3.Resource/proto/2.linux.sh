@@ -9,5 +9,5 @@ do
   ./4.protoc -I=./ --cpp_out=dllexport_decl=LIBPROTOC_EXPORT:./ $file
 done  
 
-\cp *.pb.* ../KFContrib/KFProtocol/
+\cp *.pb.* ../../1.Server/KFContrib/KFProtocol/
 rm -f *.pb.*
