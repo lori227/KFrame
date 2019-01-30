@@ -93,6 +93,30 @@ inline bool KickEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<KickEnum>(
     KickEnum_descriptor(), name, value);
 }
+enum StatusEnum {
+  InitStatus = 0,
+  DoneStatus = 1,
+  ReceiveStatus = 2,
+  Remove = 3,
+  ReceiveRemove = 4,
+  StatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool StatusEnum_IsValid(int value);
+const StatusEnum StatusEnum_MIN = InitStatus;
+const StatusEnum StatusEnum_MAX = ReceiveRemove;
+const int StatusEnum_ARRAYSIZE = StatusEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StatusEnum_descriptor();
+inline const ::std::string& StatusEnum_Name(StatusEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StatusEnum_descriptor(), value);
+}
+inline bool StatusEnum_Parse(
+    const ::std::string& name, StatusEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StatusEnum>(
+    StatusEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -125,6 +149,11 @@ template <> struct is_proto_enum< ::KFMsg::KickEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::KickEnum>() {
   return ::KFMsg::KickEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::StatusEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StatusEnum>() {
+  return ::KFMsg::StatusEnum_descriptor();
 }
 
 }  // namespace protobuf

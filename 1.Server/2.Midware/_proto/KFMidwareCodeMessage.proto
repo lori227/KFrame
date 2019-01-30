@@ -58,4 +58,17 @@ enum MidwareCodeEnum
 	NameEmpty				= 12106;		// 名字不能为空
 	NameAlreadySet			= 12107;		// 不能重复设定名字
 	SexSetOK				= 12108;		// 性别设置成功
+	// achieve
+	AchieveCanNotFind		= 12110;		// 找不到该成就配置
+	AchieveCanNotFindData	= 12111;		// 没有该成就数据
+	AchieveNotDone			= 12112;		// 没有完成该成就
+	AchieveAlreadyReceived	= 12113;		// 已经领取成就
+	AchieveReceiveOk  		= 12114;		// 领取成就奖励成功
+
+	// task
+	TaskCanNotFind			= 12120;		// 找不到任务配置
+	TaskCanNotFindData		= 12121;		// 没有任务数据
+	TaskNotDone				= 12122;		// 任务还没有完成
+	TaskAlreadyReceived		= 12123;		// 已经领取任务奖励
+	TaskRewardOk			= 12124;		// 领取任务奖励成功
 }

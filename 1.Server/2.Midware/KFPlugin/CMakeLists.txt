@@ -30,7 +30,6 @@ endmacro(BUILD_PLUGIN_MACRO project_name)
 
 add_subdirectory(KFAuth)
 add_subdirectory(KFChannel)
-add_subdirectory(KFAttribute)
 add_subdirectory(KFCommand)
 add_subdirectory(KFDataClient)
 add_subdirectory(KFDataShard)
@@ -40,3 +39,7 @@ add_subdirectory(KFGate)
 add_subdirectory(KFLogin)
 add_subdirectory(KFWorld)
 add_subdirectory(KFZone)
+
+add_subdirectory(KFAttribute)
+add_subdirectory(KFAchieve)
+

@@ -135,6 +135,9 @@ namespace KFrame
         __STRING_DEFINE__( item );
         __STRING_DEFINE__( playernamelength );
         __STRING_DEFINE__( sex );
+        __STRING_DEFINE__( achieve );
+        __STRING_DEFINE__( level );
+        __STRING_DEFINE__( task );
 
     }
 }
