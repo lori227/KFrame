@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[22];
+  static const ::google::protobuf::internal::ParseTable schema[23];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -93,6 +93,9 @@ LIBPROTOC_EXPORT extern MsgSetNameReqDefaultTypeInternal _MsgSetNameReq_default_
 class MsgSetSexReq;
 class MsgSetSexReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSetSexReqDefaultTypeInternal _MsgSetSexReq_default_instance_;
+class MsgSevenSignInRewardReq;
+class MsgSevenSignInRewardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgSevenSignInRewardReqDefaultTypeInternal _MsgSevenSignInRewardReq_default_instance_;
 class MsgShowElement;
 class MsgShowElementDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgShowElementDefaultTypeInternal _MsgShowElement_default_instance_;
@@ -132,6 +135,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgRemoveDataReq* Arena::CreateMaybeMessage
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgResultDisplay* Arena::CreateMaybeMessage<::KFMsg::MsgResultDisplay>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetNameReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetNameReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetSexReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetSexReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgSevenSignInRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgSevenSignInRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgShowElement* Arena::CreateMaybeMessage<::KFMsg::MsgShowElement>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncAddData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncAddData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncRemoveData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncRemoveData>(Arena*);
@@ -168,12 +172,13 @@ enum MidwareClientProtocol {
   MSG_ACTIVITY_REWARD_REQ = 304,
   MSG_COMPOUND_REQ = 305,
   MSG_USE_ITEM_REQ = 306,
+  MSG_SEVEN_SIGNIN_REWARD_REQ = 307,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_USE_ITEM_REQ;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_SEVEN_SIGNIN_REWARD_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -2640,6 +2645,109 @@ class LIBPROTOC_EXPORT MsgUseItemReq : public ::google::protobuf::Message /* @@p
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgSevenSignInRewardReq) */ {
+ public:
+  MsgSevenSignInRewardReq();
+  virtual ~MsgSevenSignInRewardReq();
+
+  MsgSevenSignInRewardReq(const MsgSevenSignInRewardReq& from);
+
+  inline MsgSevenSignInRewardReq& operator=(const MsgSevenSignInRewardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgSevenSignInRewardReq(MsgSevenSignInRewardReq&& from) noexcept
+    : MsgSevenSignInRewardReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgSevenSignInRewardReq& operator=(MsgSevenSignInRewardReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSevenSignInRewardReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgSevenSignInRewardReq* internal_default_instance() {
+    return reinterpret_cast<const MsgSevenSignInRewardReq*>(
+               &_MsgSevenSignInRewardReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  void Swap(MsgSevenSignInRewardReq* other);
+  friend void swap(MsgSevenSignInRewardReq& a, MsgSevenSignInRewardReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgSevenSignInRewardReq* New() const final {
+    return CreateMaybeMessage<MsgSevenSignInRewardReq>(NULL);
+  }
+
+  MsgSevenSignInRewardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgSevenSignInRewardReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgSevenSignInRewardReq& from);
+  void MergeFrom(const MsgSevenSignInRewardReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgSevenSignInRewardReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 day = 1;
+  void clear_day();
+  static const int kDayFieldNumber = 1;
+  ::google::protobuf::uint32 day() const;
+  void set_day(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgSevenSignInRewardReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 day_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -3781,9 +3889,29 @@ inline void MsgUseItemReq::set_uuid(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgUseItemReq.uuid)
 }
 
+// -------------------------------------------------------------------
+
+// MsgSevenSignInRewardReq
+
+// uint32 day = 1;
+inline void MsgSevenSignInRewardReq::clear_day() {
+  day_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgSevenSignInRewardReq::day() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSevenSignInRewardReq.day)
+  return day_;
+}
+inline void MsgSevenSignInRewardReq::set_day(::google::protobuf::uint32 value) {
+  
+  day_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSevenSignInRewardReq.day)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -141,6 +141,10 @@ namespace KFrame
         __STRING_DEFINE__( activity );
         __STRING_DEFINE__( received );
         __STRING_DEFINE__( hero );
+        __STRING_DEFINE__( skin );
+        __STRING_DEFINE__( signin );
+        __STRING_DEFINE__( sevenday );
+        __STRING_DEFINE__( sevenreward );
 
 
     }

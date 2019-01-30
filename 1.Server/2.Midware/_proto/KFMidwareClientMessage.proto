@@ -38,6 +38,7 @@ enum MidwareClientProtocol
 	MSG_ACTIVITY_REWARD_REQ 	= 304;				// 领取活动奖励
 	MSG_COMPOUND_REQ			= 305;				// 属性合成请求
 	MSG_USE_ITEM_REQ			= 306;				// 使用道具
+	MSG_SEVEN_SIGNIN_REWARD_REQ	= 307;				// 领取7天签到奖励
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,4 +208,11 @@ message MsgActivityRewardReq
 message MsgUseItemReq
 {
 	uint64 uuid = 1;
+}
+
+// 领取7天签到奖励
+// MSG_SEVEN_SIGNIN_REWARD_REQ
+message MsgSevenSignInRewardReq
+{
+	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
 }

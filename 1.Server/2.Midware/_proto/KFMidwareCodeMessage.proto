@@ -89,4 +89,10 @@ enum MidwareCodeEnum
 	ItemCanNotFind			= 12150;		// 找不到道具配置
 	ItemCanNotFindData		= 12151;		// 找不到道具数据
 	ItemCanNotUse			= 12152;		// 该道具不能使用
+
+	// signin
+	SignInNotDay			= 12170;		// 没有签到数据
+	SignInCanNotFind		= 12171;		// 找不到签到配置
+	SignInRewardAlready		= 12172;		// 已经领取签到奖励
+	SignInRewardOk			= 12173;		// 领取签到奖励成功
 }
