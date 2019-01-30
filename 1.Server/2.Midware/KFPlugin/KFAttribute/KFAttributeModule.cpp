@@ -244,12 +244,12 @@ namespace KFrame
         }
     }
 
-    void KFAttributeModule::OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemguid )
+    void KFAttributeModule::OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemuuid )
     {
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {
-            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed!", playerid, name, itemguid );
+            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed!", playerid, name, itemuuid );
         }
 
         _kf_display->SendToClient( player, result, name );
@@ -258,10 +258,10 @@ namespace KFrame
             return;
         }
 
-        if ( itemguid != _invalid_int )
+        if ( itemuuid != _invalid_int )
         {
             // 删除改名卡
-            player->RemoveData( __KF_STRING__( item ), itemguid );
+            player->RemoveData( __KF_STRING__( item ), itemuuid );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

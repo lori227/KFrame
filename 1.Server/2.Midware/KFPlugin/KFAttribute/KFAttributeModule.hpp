@@ -66,7 +66,7 @@ namespace KFrame
         uint32 CheckNameValid( const std::string& name );
 
         // 设置名字回调
-        void OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemguid );
+        void OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemuuid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
         void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );

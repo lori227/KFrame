@@ -110,12 +110,15 @@ enum MidwareCodeEnum {
   CompoundNotExist = 12140,
   CompoundNotEnoughData = 12141,
   CompoundOk = 12142,
+  ItemCanNotFind = 12150,
+  ItemCanNotFindData = 12151,
+  ItemCanNotUse = 12152,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = CompoundOk;
+const MidwareCodeEnum MidwareCodeEnum_MAX = ItemCanNotUse;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

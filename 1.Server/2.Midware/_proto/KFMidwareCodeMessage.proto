@@ -74,7 +74,7 @@ enum MidwareCodeEnum
 	TaskRewardOk			= 12124;		// 领取任务奖励成功
 
 	//activity
-	ActivityCanNotFind		= 12130;		// 招不到活动配置
+	ActivityCanNotFind		= 12130;		// 找不到活动配置
 	ActivityCanNotFindData	= 12131;		// 没有活动数据
 	ActivityAlreadyReceived = 12132;		// 已经领取活动奖励
 	ActivityNotDone			= 12133;		// 活动还没完成
@@ -84,4 +84,9 @@ enum MidwareCodeEnum
 	CompoundNotExist		= 12140;		// 合成配置不存在
 	CompoundNotEnoughData	= 12141;		// 没有足够的合成材料
 	CompoundOk				= 12142;		// 合成成功
+
+	// item
+	ItemCanNotFind			= 12150;		// 找不到道具配置
+	ItemCanNotFindData		= 12151;		// 找不到道具数据
+	ItemCanNotUse			= 12152;		// 该道具不能使用
 }

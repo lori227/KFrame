@@ -194,7 +194,7 @@ namespace KFrame
         ack.set_result( result );
         ack.set_name( kfmsg.newname() );
         ack.set_playerid( kfmsg.playerid() );
-        ack.set_itemguid( kfmsg.itemguid() );
+        ack.set_itemguid( kfmsg.itemuuid() );
         _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &ack );
     }
 

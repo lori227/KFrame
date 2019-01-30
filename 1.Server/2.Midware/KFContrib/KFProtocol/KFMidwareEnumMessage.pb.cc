@@ -25,7 +25,7 @@ namespace protobuf_KFMidwareEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[3];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[4];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -56,10 +56,13 @@ void AddDescriptorsImpl() {
       "\n\nUnknowKick\020\000\022\017\n\013KickByLogin\020\001\022\022\n\016KickB"
       "yPlatform\020\002*^\n\nStatusEnum\022\016\n\nInitStatus\020"
       "\000\022\016\n\nDoneStatus\020\001\022\021\n\rReceiveStatus\020\002\022\n\n\006"
-      "Remove\020\003\022\021\n\rReceiveRemove\020\004b\006proto3"
+      "Remove\020\003\022\021\n\rReceiveRemove\020\004*v\n\010UUIDEnum\022"
+      "\r\n\tUUidLogic\020\000\022\017\n\013UUidAccount\020\001\022\016\n\nUUidP"
+      "layer\020\002\022\014\n\010UUidItem\020\003\022\r\n\tUUidGroup\020\004\022\r\n\t"
+      "UUidGuild\020\005\022\016\n\nUUidBattle\020\006b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 275);
+      descriptor, 395);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -118,6 +121,25 @@ bool StatusEnum_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* UUIDEnum_descriptor() {
+  protobuf_KFMidwareEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_KFMidwareEnumMessage_2eproto::file_level_enum_descriptors[3];
+}
+bool UUIDEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;

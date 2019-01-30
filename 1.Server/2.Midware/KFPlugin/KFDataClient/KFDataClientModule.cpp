@@ -79,13 +79,13 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataClientModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid )
+    bool KFDataClientModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemuuid )
     {
         KFMsg::S2SSetPlayerNameToDataReq req;
         req.set_playerid( playerid );
         req.set_oldname( oldname );
         req.set_newname( newname );
-        req.set_itemguid( itemguid );
+        req.set_itemguid( itemuuid );
         return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
     }
 
@@ -93,6 +93,6 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
 
-        _set_player_name_function( kfmsg.result(), kfmsg.playerid(), kfmsg.name(), kfmsg.itemguid() );
+        _set_player_name_function( kfmsg.result(), kfmsg.playerid(), kfmsg.name(), kfmsg.itemuuid() );
     }
 }

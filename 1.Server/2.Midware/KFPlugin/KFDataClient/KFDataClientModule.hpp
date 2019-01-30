@@ -39,7 +39,7 @@ namespace KFrame
         virtual bool QueryPlayerData( uint64 sendid, uint64 playerid );
 
         // 设置名字
-        virtual bool SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemguid );
+        virtual bool SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemuuid );
     protected:
         // 设置回调函数
         virtual void SetLoadPlayerFunction( KFLoadPlayerFunction& function );

@@ -2425,11 +2425,11 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToGameAck : public ::google::protobuf::Me
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // uint64 itemguid = 4;
-  void clear_itemguid();
-  static const int kItemguidFieldNumber = 4;
-  ::google::protobuf::uint64 itemguid() const;
-  void set_itemguid(::google::protobuf::uint64 value);
+  // uint64 itemuuid = 4;
+  void clear_itemuuid();
+  static const int kItemuuidFieldNumber = 4;
+  ::google::protobuf::uint64 itemuuid() const;
+  void set_itemuuid(::google::protobuf::uint64 value);
 
   // uint32 result = 1;
   void clear_result();
@@ -2443,7 +2443,7 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToGameAck : public ::google::protobuf::Me
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint64 itemguid_;
+  ::google::protobuf::uint64 itemuuid_;
   ::google::protobuf::uint32 result_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
@@ -4650,18 +4650,18 @@ inline void S2SSetPlayerNameToGameAck::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToGameAck.name)
 }
 
-// uint64 itemguid = 4;
-inline void S2SSetPlayerNameToGameAck::clear_itemguid() {
-  itemguid_ = GOOGLE_ULONGLONG(0);
+// uint64 itemuuid = 4;
+inline void S2SSetPlayerNameToGameAck::clear_itemuuid() {
+  itemuuid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SSetPlayerNameToGameAck::itemguid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToGameAck.itemguid)
-  return itemguid_;
+inline ::google::protobuf::uint64 S2SSetPlayerNameToGameAck::itemuuid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToGameAck.itemuuid)
+  return itemuuid_;
 }
-inline void S2SSetPlayerNameToGameAck::set_itemguid(::google::protobuf::uint64 value) {
+inline void S2SSetPlayerNameToGameAck::set_itemuuid(::google::protobuf::uint64 value) {
   
-  itemguid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToGameAck.itemguid)
+  itemuuid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToGameAck.itemuuid)
 }
 
 // -------------------------------------------------------------------

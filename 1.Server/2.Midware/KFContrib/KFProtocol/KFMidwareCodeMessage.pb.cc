@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\343\n\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\245\013\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
@@ -85,10 +85,12 @@ void AddDescriptorsImpl() {
       "tivityAlreadyReceived\020\344^\022\024\n\017ActivityNotD"
       "one\020\345^\022\025\n\020ActivityRewardOk\020\346^\022\025\n\020Compoun"
       "dNotExist\020\354^\022\032\n\025CompoundNotEnoughData\020\355^"
-      "\022\017\n\nCompoundOk\020\356^b\006proto3"
+      "\022\017\n\nCompoundOk\020\356^\022\023\n\016ItemCanNotFind\020\366^\022\027"
+      "\n\022ItemCanNotFindData\020\367^\022\022\n\rItemCanNotUse"
+      "\020\370^b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1425);
+      descriptor, 1491);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -172,6 +174,9 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12140:
     case 12141:
     case 12142:
+    case 12150:
+    case 12151:
+    case 12152:
       return true;
     default:
       return false;
