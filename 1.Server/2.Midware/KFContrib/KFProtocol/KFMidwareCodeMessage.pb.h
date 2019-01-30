@@ -102,12 +102,17 @@ enum MidwareCodeEnum {
   TaskNotDone = 12122,
   TaskAlreadyReceived = 12123,
   TaskRewardOk = 12124,
+  ActivityCanNotFind = 12130,
+  ActivityCanNotFindData = 12131,
+  ActivityAlreadyReceived = 12132,
+  ActivityNotDone = 12133,
+  ActivityRewardOk = 12134,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = TaskRewardOk;
+const MidwareCodeEnum MidwareCodeEnum_MAX = ActivityRewardOk;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

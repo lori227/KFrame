@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\236\t\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\237\n\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
@@ -80,10 +80,13 @@ void AddDescriptorsImpl() {
       "eived\020\321^\022\025\n\020AchieveReceiveOk\020\322^\022\023\n\016TaskC"
       "anNotFind\020\330^\022\027\n\022TaskCanNotFindData\020\331^\022\020\n"
       "\013TaskNotDone\020\332^\022\030\n\023TaskAlreadyReceived\020\333"
-      "^\022\021\n\014TaskRewardOk\020\334^b\006proto3"
+      "^\022\021\n\014TaskRewardOk\020\334^\022\027\n\022ActivityCanNotFi"
+      "nd\020\342^\022\033\n\026ActivityCanNotFindData\020\343^\022\034\n\027Ac"
+      "tivityAlreadyReceived\020\344^\022\024\n\017ActivityNotD"
+      "one\020\345^\022\025\n\020ActivityRewardOk\020\346^b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1228);
+      descriptor, 1357);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -159,6 +162,11 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12122:
     case 12123:
     case 12124:
+    case 12130:
+    case 12131:
+    case 12132:
+    case 12133:
+    case 12134:
       return true;
     default:
       return false;

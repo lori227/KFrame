@@ -138,6 +138,9 @@ namespace KFrame
         __STRING_DEFINE__( achieve );
         __STRING_DEFINE__( level );
         __STRING_DEFINE__( task );
+        __STRING_DEFINE__( activity );
+        __STRING_DEFINE__( received );
+
 
     }
 }

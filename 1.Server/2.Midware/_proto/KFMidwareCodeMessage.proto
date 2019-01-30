@@ -71,4 +71,11 @@ enum MidwareCodeEnum
 	TaskNotDone				= 12122;		// 任务还没有完成
 	TaskAlreadyReceived		= 12123;		// 已经领取任务奖励
 	TaskRewardOk			= 12124;		// 领取任务奖励成功
+
+	//activity
+	ActivityCanNotFind		= 12130;		// 招不到活动配置
+	ActivityCanNotFindData	= 12131;		// 没有活动数据
+	ActivityAlreadyReceived = 12132;		// 已经领取活动奖励
+	ActivityNotDone			= 12133;		// 活动还没完成
+	ActivityRewardOk		= 12134;		// 领取活动奖励成功
 }

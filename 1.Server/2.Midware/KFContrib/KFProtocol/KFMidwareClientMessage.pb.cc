@@ -118,6 +118,11 @@ class MsgTaskRewardReqDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<MsgTaskRewardReq>
       _instance;
 } _MsgTaskRewardReq_default_instance_;
+class MsgActivityRewardReqDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MsgActivityRewardReq>
+      _instance;
+} _MsgActivityRewardReq_default_instance_;
 }  // namespace KFMsg
 namespace protobuf_KFMidwareClientMessage_2eproto {
 static void InitDefaultsMsgResultDisplay() {
@@ -392,6 +397,20 @@ static void InitDefaultsMsgTaskRewardReq() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgTaskRewardReq =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgTaskRewardReq}, {}};
 
+static void InitDefaultsMsgActivityRewardReq() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_MsgActivityRewardReq_default_instance_;
+    new (ptr) ::KFMsg::MsgActivityRewardReq();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::MsgActivityRewardReq::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgActivityRewardReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgActivityRewardReq}, {}};
+
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_MsgResultDisplay.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgCommandReq.base);
@@ -412,9 +431,10 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_MsgSetSexReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgAchieveRewardReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgTaskRewardReq.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MsgActivityRewardReq.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[19];
+::google::protobuf::Metadata file_level_metadata[20];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -538,6 +558,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgTaskRewardReq, id_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgActivityRewardReq, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgActivityRewardReq, type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgActivityRewardReq, id_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::KFMsg::MsgResultDisplay)},
@@ -559,6 +586,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 102, -1, sizeof(::KFMsg::MsgSetSexReq)},
   { 108, -1, sizeof(::KFMsg::MsgAchieveRewardReq)},
   { 114, -1, sizeof(::KFMsg::MsgTaskRewardReq)},
+  { 120, -1, sizeof(::KFMsg::MsgActivityRewardReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -581,6 +609,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgSetSexReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgAchieveRewardReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgTaskRewardReq_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgActivityRewardReq_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -598,7 +627,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 19);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 20);
 }
 
 void AddDescriptorsImpl() {
@@ -626,24 +655,26 @@ void AddDescriptorsImpl() {
       "yer\030\001 \001(\0132\017.KFMsg.PBObject\"\035\n\rMsgSetName"
       "Req\022\014\n\004name\030\001 \001(\014\"\033\n\014MsgSetSexReq\022\013\n\003sex"
       "\030\001 \001(\r\"!\n\023MsgAchieveRewardReq\022\n\n\002id\030\001 \001("
-      "\r\"\036\n\020MsgTaskRewardReq\022\n\n\002id\030\001 \001(\r*\231\004\n\025Mi"
-      "dwareClientProtocol\022\034\n\030MSG_MIDWARE_CLIEN"
-      "T_BEGIN\020\000\022\026\n\022MSG_RESULT_DISPLAY\020\001\022\023\n\017MSG"
-      "_COMMAND_REQ\020\002\022\021\n\rMSG_LOGIN_REQ\020d\022\021\n\rMSG"
-      "_LOGIN_ACK\020e\022\022\n\016MSG_LOGOUT_REQ\020f\022\024\n\020MSG_"
-      "TELL_BE_KICK\020g\022\031\n\024MSG_LOGIN_ENTER_GAME\020\310"
-      "\001\022\031\n\024MSG_SYNC_UPDATE_DATA\020\311\001\022\026\n\021MSG_SYNC"
-      "_ADD_DATA\020\312\001\022\031\n\024MSG_SYNC_REMOVE_DATA\020\313\001\022"
-      "\030\n\023MSG_REMOVE_DATA_REQ\020\314\001\022\031\n\024MSG_QUERY_P"
-      "LAYER_REQ\020\315\001\022\031\n\024MSG_QUERY_PLAYER_ACK\020\316\001\022"
-      "\030\n\023MSG_QUERY_BASIC_REQ\020\317\001\022\030\n\023MSG_QUERY_B"
-      "ASIC_ACK\020\320\001\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022\025\n\020MS"
-      "G_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_SEX_REQ\020\255\002\022"
-      "\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022\027\n\023MSG_TASK"
-      "_REWARD_REQ\020yb\006proto3"
+      "\r\"\036\n\020MsgTaskRewardReq\022\n\n\002id\030\001 \001(\r\"0\n\024Msg"
+      "ActivityRewardReq\022\014\n\004type\030\001 \001(\r\022\n\n\002id\030\002 "
+      "\001(\r*\270\004\n\025MidwareClientProtocol\022\034\n\030MSG_MID"
+      "WARE_CLIENT_BEGIN\020\000\022\026\n\022MSG_RESULT_DISPLA"
+      "Y\020\001\022\023\n\017MSG_COMMAND_REQ\020\002\022\021\n\rMSG_LOGIN_RE"
+      "Q\020d\022\021\n\rMSG_LOGIN_ACK\020e\022\022\n\016MSG_LOGOUT_REQ"
+      "\020f\022\024\n\020MSG_TELL_BE_KICK\020g\022\031\n\024MSG_LOGIN_EN"
+      "TER_GAME\020\310\001\022\031\n\024MSG_SYNC_UPDATE_DATA\020\311\001\022\026"
+      "\n\021MSG_SYNC_ADD_DATA\020\312\001\022\031\n\024MSG_SYNC_REMOV"
+      "E_DATA\020\313\001\022\030\n\023MSG_REMOVE_DATA_REQ\020\314\001\022\031\n\024M"
+      "SG_QUERY_PLAYER_REQ\020\315\001\022\031\n\024MSG_QUERY_PLAY"
+      "ER_ACK\020\316\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\317\001\022\030\n\023M"
+      "SG_QUERY_BASIC_ACK\020\320\001\022\025\n\020MSG_SHOW_ELEMEN"
+      "T\020\321\001\022\025\n\020MSG_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_S"
+      "EX_REQ\020\255\002\022\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022\030"
+      "\n\023MSG_TASK_REWARD_REQ\020\257\002\022\034\n\027MSG_ACTIVITY"
+      "_REWARD_REQ\020\260\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1461);
+      descriptor, 1542);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareClientMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_KFDefineMessage_2eproto::AddDescriptors();
@@ -674,7 +705,6 @@ bool MidwareClientProtocol_IsValid(int value) {
     case 101:
     case 102:
     case 103:
-    case 121:
     case 200:
     case 201:
     case 202:
@@ -688,6 +718,8 @@ bool MidwareClientProtocol_IsValid(int value) {
     case 300:
     case 301:
     case 302:
+    case 303:
+    case 304:
       return true;
     default:
       return false;
@@ -5312,6 +5344,271 @@ void MsgTaskRewardReq::InternalSwap(MsgTaskRewardReq* other) {
 }
 
 
+// ===================================================================
+
+void MsgActivityRewardReq::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgActivityRewardReq::kTypeFieldNumber;
+const int MsgActivityRewardReq::kIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgActivityRewardReq::MsgActivityRewardReq()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_KFMidwareClientMessage_2eproto::scc_info_MsgActivityRewardReq.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.MsgActivityRewardReq)
+}
+MsgActivityRewardReq::MsgActivityRewardReq(const MsgActivityRewardReq& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&type_, &from.type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&type_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:KFMsg.MsgActivityRewardReq)
+}
+
+void MsgActivityRewardReq::SharedCtor() {
+  ::memset(&type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&id_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+}
+
+MsgActivityRewardReq::~MsgActivityRewardReq() {
+  // @@protoc_insertion_point(destructor:KFMsg.MsgActivityRewardReq)
+  SharedDtor();
+}
+
+void MsgActivityRewardReq::SharedDtor() {
+}
+
+void MsgActivityRewardReq::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* MsgActivityRewardReq::descriptor() {
+  ::protobuf_KFMidwareClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFMidwareClientMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MsgActivityRewardReq& MsgActivityRewardReq::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_KFMidwareClientMessage_2eproto::scc_info_MsgActivityRewardReq.base);
+  return *internal_default_instance();
+}
+
+
+void MsgActivityRewardReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.MsgActivityRewardReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&id_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(id_));
+  _internal_metadata_.Clear();
+}
+
+bool MsgActivityRewardReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.MsgActivityRewardReq)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 type = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &type_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.MsgActivityRewardReq)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.MsgActivityRewardReq)
+  return false;
+#undef DO_
+}
+
+void MsgActivityRewardReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.MsgActivityRewardReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->type(), output);
+  }
+
+  // uint32 id = 2;
+  if (this->id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->id(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.MsgActivityRewardReq)
+}
+
+::google::protobuf::uint8* MsgActivityRewardReq::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.MsgActivityRewardReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->type(), target);
+  }
+
+  // uint32 id = 2;
+  if (this->id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->id(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.MsgActivityRewardReq)
+  return target;
+}
+
+size_t MsgActivityRewardReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.MsgActivityRewardReq)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 type = 1;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->type());
+  }
+
+  // uint32 id = 2;
+  if (this->id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MsgActivityRewardReq::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.MsgActivityRewardReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MsgActivityRewardReq* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MsgActivityRewardReq>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.MsgActivityRewardReq)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.MsgActivityRewardReq)
+    MergeFrom(*source);
+  }
+}
+
+void MsgActivityRewardReq::MergeFrom(const MsgActivityRewardReq& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.MsgActivityRewardReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.type() != 0) {
+    set_type(from.type());
+  }
+  if (from.id() != 0) {
+    set_id(from.id());
+  }
+}
+
+void MsgActivityRewardReq::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.MsgActivityRewardReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgActivityRewardReq::CopyFrom(const MsgActivityRewardReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.MsgActivityRewardReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgActivityRewardReq::IsInitialized() const {
+  return true;
+}
+
+void MsgActivityRewardReq::Swap(MsgActivityRewardReq* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgActivityRewardReq::InternalSwap(MsgActivityRewardReq* other) {
+  using std::swap;
+  swap(type_, other->type_);
+  swap(id_, other->id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata MsgActivityRewardReq::GetMetadata() const {
+  protobuf_KFMidwareClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_KFMidwareClientMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace KFMsg
 namespace google {
@@ -5372,6 +5669,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgAchieveRewardReq* Aren
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage< ::KFMsg::MsgTaskRewardReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::MsgTaskRewardReq >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage< ::KFMsg::MsgActivityRewardReq >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::MsgActivityRewardReq >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

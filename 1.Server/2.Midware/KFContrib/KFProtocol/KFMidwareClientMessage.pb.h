@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[19];
+  static const ::google::protobuf::internal::ParseTable schema[20];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -51,6 +51,9 @@ namespace KFMsg {
 class MsgAchieveRewardReq;
 class MsgAchieveRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgAchieveRewardReqDefaultTypeInternal _MsgAchieveRewardReq_default_instance_;
+class MsgActivityRewardReq;
+class MsgActivityRewardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgActivityRewardReqDefaultTypeInternal _MsgActivityRewardReq_default_instance_;
 class MsgCommandReq;
 class MsgCommandReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgCommandReqDefaultTypeInternal _MsgCommandReq_default_instance_;
@@ -109,6 +112,7 @@ LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_
 namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgAchieveRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgAchieveRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgActivityRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCommandReq* Arena::CreateMaybeMessage<::KFMsg::MsgCommandReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
@@ -152,13 +156,14 @@ enum MidwareClientProtocol {
   MSG_SET_NAME_REQ = 300,
   MSG_SET_SEX_REQ = 301,
   MSG_ACHIEVE_REWARD_REQ = 302,
-  MSG_TASK_REWARD_REQ = 121,
+  MSG_TASK_REWARD_REQ = 303,
+  MSG_ACTIVITY_REWARD_REQ = 304,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_ACHIEVE_REWARD_REQ;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_ACTIVITY_REWARD_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -2294,6 +2299,116 @@ class LIBPROTOC_EXPORT MsgTaskRewardReq : public ::google::protobuf::Message /* 
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgActivityRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgActivityRewardReq) */ {
+ public:
+  MsgActivityRewardReq();
+  virtual ~MsgActivityRewardReq();
+
+  MsgActivityRewardReq(const MsgActivityRewardReq& from);
+
+  inline MsgActivityRewardReq& operator=(const MsgActivityRewardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgActivityRewardReq(MsgActivityRewardReq&& from) noexcept
+    : MsgActivityRewardReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgActivityRewardReq& operator=(MsgActivityRewardReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgActivityRewardReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgActivityRewardReq* internal_default_instance() {
+    return reinterpret_cast<const MsgActivityRewardReq*>(
+               &_MsgActivityRewardReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  void Swap(MsgActivityRewardReq* other);
+  friend void swap(MsgActivityRewardReq& a, MsgActivityRewardReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgActivityRewardReq* New() const final {
+    return CreateMaybeMessage<MsgActivityRewardReq>(NULL);
+  }
+
+  MsgActivityRewardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgActivityRewardReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgActivityRewardReq& from);
+  void MergeFrom(const MsgActivityRewardReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgActivityRewardReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::google::protobuf::uint32 type() const;
+  void set_type(::google::protobuf::uint32 value);
+
+  // uint32 id = 2;
+  void clear_id();
+  static const int kIdFieldNumber = 2;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgActivityRewardReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 type_;
+  ::google::protobuf::uint32 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -3314,9 +3429,43 @@ inline void MsgTaskRewardReq::set_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgTaskRewardReq.id)
 }
 
+// -------------------------------------------------------------------
+
+// MsgActivityRewardReq
+
+// uint32 type = 1;
+inline void MsgActivityRewardReq::clear_type() {
+  type_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgActivityRewardReq::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgActivityRewardReq.type)
+  return type_;
+}
+inline void MsgActivityRewardReq::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgActivityRewardReq.type)
+}
+
+// uint32 id = 2;
+inline void MsgActivityRewardReq::clear_id() {
+  id_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgActivityRewardReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgActivityRewardReq.id)
+  return id_;
+}
+inline void MsgActivityRewardReq::set_id(::google::protobuf::uint32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgActivityRewardReq.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
