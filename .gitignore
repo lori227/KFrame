@@ -40,12 +40,12 @@ _output
 1.Frame/1.Server/_lib/win64/KFUtility.lib
 1.Frame/1.Server/KFLibrary/poco/lib64/
 1.Frame/1.Server/_tool/
+1.Frame/1.Server/_excel/_parsed.exe
+1.Frame/1.Server/KFTools/Element/bin/
+1.Frame/1.Server/KFTools/Element/obj/
+1.Frame/1.Server/9.Template/
 2.Midware/1.Server/_bin/bin/
 2.Midware/1.Server/_lib/win64/
 2.Midware/1.Server/_lib/linux/
 2.Midware/1.Server/_lib/win64/3rd/
 2.Midware/1.Server/_lib/linux/3rd/
-1.Frame/1.Server/_excel/_parsed.exe
-1.Frame/1.Server/KFTools/Element/bin/
-1.Frame/1.Server/KFTools/Element/obj/
-1.Server/9.Template/
