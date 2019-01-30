@@ -1,0 +1,1024 @@
+syntax = "proto3";
+import "KFDefineMessage.proto";
+
+package KFMsg;
+
+enum ClientProtocol
+ {
+	MSG_CLIENT_PROTOCOL_UNKNOW = 0;				// pb3 需要0
+
+	// common
+	MSG_RESULT_DISPLAY = 1;						// 结果提示回馈
+		
+	// login
+	MSG_TELL_BE_KICK = 10;						// 被踢下线了
+	MSG_LOGIN_VERIFY_REQ = 11;					// 客户端登录验证请求
+	MSG_LOGIN_VERIFY_ACK = 12;					// 客户端登录验证结果
+	MSG_LOGIN_GAME_REQ = 13;					// 客户端登录游戏请求
+	MSG_LOGIN_OUT_REQ = 14;						// 客户端请求登出游戏
+
+	// data
+	MSG_LOGIN_ENTER_GAME = 20;					// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA = 21;					// 同步更新属性
+	MSG_SYNC_ADD_DATA = 22;						// 同步增加属性
+	MSG_SYNC_REMOVE_DATA = 23;					// 同步删除属性
+	MSG_REMOVE_DATA_REQ = 24;					// 请求删除属性
+	MSG_QUERY_PLAYER_REQ = 25;					// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK = 26;			    	// 查询玩家数据
+	MSG_QUERY_BASIC_REQ = 27;					// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK = 28;					// 查询基础数据
+	MSG_SHOW_REWARD_ELEMENT = 29;				// 显示奖励
+
+	// attribute
+	MSG_DEBUG_COMMAND_REQ = 50;					// 客户端发送GM指令请求
+	MSG_SET_NAME_REQ = 51;						// 设置名字
+	MSG_SET_SEX_REQ = 52;						// 设置性别
+
+	// mail
+	MSG_VIEW_MAIL_REQ = 101;					// 查看邮件
+	MSG_DELETE_MAIL_REQ = 102;					// 删除邮件
+	MSG_QUERY_MAIL_REQ = 103;					// 请求查询邮件
+	MSG_RECEIVE_MAIL_REWARD_REQ = 104;			// 领取邮件奖励
+
+	// task
+	MSG_RECEIVE_TASK_REWARD_REQ = 121;			// 领取任务奖励
+
+	// achieve
+	MSG_RECEIVE_ACHIEVE_REWARD_REQ = 141;		// 领取成就奖励
+
+	// store
+	MSG_BUY_STORE_REQ = 161;					// 购买商品请求
+	MSG_QUERY_STORE_REQ = 162;					// 请求商城信息
+	MSG_QUERY_STORE_ACK = 163;					// 请求商城信息反馈
+
+	// compound
+	MSG_COMPOUND_DATA_REQ = 181;				// 合成属性
+
+	// activity
+	MSG_RECEIVE_ACTIVITY_REWARD_REQ = 201;		// 领取活动奖励
+
+	// gift
+	MSG_RECEIVE_GIFT_REWARD_REQ = 211;			// 领取礼包奖励
+
+	// relation
+	MSG_ADD_FRIEND_INVITE_REQ = 1001;			// 申请添加好友
+	MSG_REPLY_FRIEND_INVITE_REQ = 1002;			// 回复好友申请
+	MSG_DEL_FRIEND_REQ = 1003;					// 删除好友
+	MSG_SET_REFUSE_FRIEND_INVITE_REQ = 1004;	// 设置拒绝添加好友
+
+	// group
+	MSG_INVITE_MATCH_GROUP_REQ = 151;			// 邀请加入队伍
+	MSG_REPLY_INVITE_MATCH_GROUP_REQ = 153;		// 回复邀请组队
+	MSG_LEAVE_MATCH_GROUP_REQ = 154;			// 离开队伍
+	MSG_KICK_MATCH_GROUP_REQ = 155;				// 踢出成员
+	MSG_APPLY_MATCH_GROUP_REQ = 156;			// 申请加入队伍
+	MSG_REPLY_APPLY_MATCH_GROUP_REQ = 157;		// 回应申请队伍
+	MSG_MATCH_GROUP_PREPARE_REQ = 160;			// 请求准备
+	MSG_CHANGE_ICON_BOX_REQ = 1161;				// 修改头像框请求
+	
+	
+	MSG_START_MATCH_REQ = 118;					// 请求个人匹配
+	MSG_START_MATCH_ACK = 119;					// 匹配回馈
+	MSG_CANCEL_MATCH_REQ = 120;					// 取消匹配
+
+	MSG_MATCH_RESULT_ACK = 1121;				// 匹配结果
+	MSG_ENTER_CHAT_REQ = 126;					// 客户端加入江湖聊天室请求
+	MSG_SEND_CHAT_REQ = 127;					// 客户端发送江湖聊天消息请求
+	MSG_SEND_CHAT_INFO = 128;					// 服务器通知江湖聊天消息
+	MSG_LEAVE_CHAT_REQ = 129;					// 客户端离开江湖聊天室请求
+
+	MSG_SEND_ONEBYONE_CHAT_REQ = 135;			// 客户端发送一对一聊天请求
+	MSG_SEND_ONEBYONE_CHAT_INFO = 136;			// 服务器通知一对一聊天信息
+	MSG_CHANGE_ICON_REQ = 137;					// 修改头像请求
+	MSG_CHANGE_MOTTO_REQ = 144;					// 客户端修改个性签名请求
+	MSG_SET_MODEL_DEFAULT_CLOTHES_REQ = 145;	// 设置模型的默认时装id
+
+	MSG_DRESS_CLOTHES_REQ = 148;				// 穿戴时装
+	MSG_CHANGE_MODEL_REQ = 149;					// 修改模型
+
+	MSG_CANCEL_MATCH_ACK = 1164;					// 取消匹配回应
+	MSG_USE_ITEM_REQ = 1165;						// 使用道具
+
+	MSG_UPDATE_GROUP_MATCH_REQ = 174;			// 修改匹配模式请求
+	MSG_SEND_GROUPCHAT_REQ = 175;				// 客户端发送大厅组队聊天消息请求
+	MSG_SEND_GROUPCHAT_INFO = 176;				// 服务器通知大厅组队聊天消息
+	MSG_SET_WISH_ORDER_REQ = 177;				// 操作心愿单请求
+	MSG_QUERY_SETTING_REQ = 178;				// 查询设置请求
+	MSG_QUERY_SETTING_ACK = 179;				// 查询设置回馈
+	MSG_UPDATE_SETTING_REQ = 180;				// 更新设置请求
+	
+
+	MSG_QUERY_RANK_LIST_REQ = 183;				// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 = 184;				// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ = 185;		// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK = 186;		// 查询好友排行榜
+	MSG_SEVEN_SIGNIN_REWARD_REQ = 198;			// 领取7天签到奖励
+	MSG_TELL_SEVEN_EXTEND_REWARD = 199;			// 广播额外的奖励
+	
+	MSG_CREATE_GUILD_REQ = 200;					// 创建帮派
+	MSG_INVITE_GUILD_REQ = 2201;					// 邀请加入帮派
+	MSG_APPLY_GUILD_REQ = 202;					// 申请加入帮派
+	MSG_TELL_MATCH_WAIT_TIME = 203;				// 通知匹配预计等待时间
+	MSG_EXIT_GUILD_REQ = 204;					// 离开帮派
+	MSG_TRANSFER_MASTER_REQ = 205;				// 转让帮主
+	MSG_REVIEW_APPLY_REQ = 206;					// 审批申请列表
+	MSG_DISSOLVE_GUILD_REQ = 207;				// 解散帮派
+	MSG_MODIFY_GUILD_MEDAL_REQ = 208;			// 修改帮派徽章
+	MSG_QUERY_GUILD_LIST_REQ = 209;				// 请求帮派列表
+	MSG_QUERY_GUILD_LIST_ACK = 210;				// 帮派列表返回
+	MSG_KICK_MEMBER_REQ = 2111;					// 踢掉帮派成员
+	MSG_UPGRADE_GUILD_REQ = 212;				// 升级帮派
+	MSG_APPOINT_GUILD_MEMBER_REQ = 213;			// 任命帮派成员
+	MSG_SEARCH_GUILD_BY_NAME_REQ = 214;			// 根据名字搜索帮派信息
+	MSG_SET_GUILD_SWITCH_REQ = 215;				// 设置帮派管理开关
+	MSG_QUERY_GUILD_LOG_REQ = 216;				// 查询帮派日志
+	MSG_QUERY_GUILD_LOG_ACK = 217;				// 查询帮派日志返回
+	MSG_TELL_MARQUEE = 300;						// 走马灯消息
+	MSG_TELL_SYS_NOTICE = 301;					// 系统公告
+	MSG_BIND_ALIPAY_REQ = 302;					// 绑定支付宝
+	MSG_QUERY_INVITE_SCORE_REQ = 303;			// 查询邀请码积分
+	MSG_QUERY_INVITE_SCORE_ACK = 304;			// 查询邀请码积分
+	MSG_EXCHANGE_INVITE_SCORE_REQ = 305;		// 兑换邀请码积分
+	MSG_EXCHANGE_INVITE_SCORE_ACK = 306;		// 兑换邀请码积分
+	MSG_EXCHANGE_INVITE_RECORD_REQ = 307;		// 兑换记录
+	MSG_EXCHANGE_INVITE_RECORD_ACK = 308;		// 兑换记录
+	MSG_TELL_MATCH_PLAYER_COUNT = 309;			// 通知正在匹配人数
+	MSG_TITLE_CHANGE_REQ = 310;					// 请求更换称号
+ }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 结果提示
+// MSG_RESULT_DISPLAY
+message MsgResultDisplay
+{
+	uint32 result = 1;
+	repeated bytes param = 2;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 通知进入游戏世界
+// MSG_LOGIN_ENTER_GAME
+message MsgEnterGame
+{
+	PBObject playerdata = 1;
+	uint64 servertime = 2;
+}
+
+// 所有的游戏属性同通过这3个消息来完成同步
+// MSG_SYNC_UPDATE_DATA
+message MsgSyncUpdateData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_ADD_DATA
+message MsgSyncAddData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_REMOVE_DATA
+message MsgSyncRemoveData
+{
+	PBObject pbdata = 1;	
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询玩家
+// MSG_QUERY_BASIC_REQ
+message MsgQueryBasicReq
+{
+	bytes name = 1;
+}
+
+// 玩家基础信息
+// MSG_QUERY_BASIC_ACK
+message MsgQueryBasicAck
+{
+	PBObject player = 1;	
+}
+
+// 查询其他玩家数据，不能查询自己的数据
+// MSG_QUERY_PLAYER_REQ
+message MsgQueryPlayerReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询玩家信息
+// MSG_QUERY_PLAYER_ACK
+message MsgQueryPlayerAck
+{
+	PBObject player = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 通知被踢下线
+// MSG_TELL_BE_KICK
+message MsgTellBeKick
+{
+	uint32 type = 1;
+}
+
+// 登录验证请求
+// MSG_LOGIN_VERIFY_REQ
+message MsgLoginVerifyReq
+{
+	uint64 accountid = 1;	// 账号id
+	bytes token = 2;		// token
+	bytes version = 3;	// 客户端版本号
+}
+
+// 登录验证结果
+// MSG_LOGIN_VERIFY_ACK
+message MsgLoginVerifyAck
+{
+	uint64 playerid = 1;
+	bytes token = 2;
+	bytes ip = 3;
+	uint32 port = 4;
+}
+
+// 登录游戏请求
+// MSG_LOGIN_GAME_REQ
+message MsgLoginGameReq
+{
+	uint64 playerid = 1;
+	bytes token = 2;
+}
+
+// 登出游戏
+// MSG_LOGIN_OUT_REQ
+message MsgLoginOutReq
+{
+
+}
+
+// 设置名字
+// MSG_SET_NAME_REQ
+message MsgSetNameReq
+{
+	bytes name = 1;
+}
+
+// 设置性别
+// MSG_CHANGE_SEX_REQ
+message MsgChangeSexReq
+{
+	uint32 sex = 1;
+}
+
+// 修改头像
+// MSG_CHANGE_ICON_REQ
+message MsgChangeIconReq
+{
+	bytes icon = 1;	// 头像路径
+}
+
+// 修改头像框请求
+//MSG_CHANGE_ICON_BOX_REQ
+message MsgChangeIconBoxReq
+{
+	bytes iconbox = 1;
+}
+
+// 客户端修改个性签名请求
+//MSG_CHANGE_MOTTO_REQ
+message MsgChangeMottoReq
+{
+	bytes motto = 1;	//个性签名
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 领取任务奖励
+// MSG_RECEIVE_TASK_REWARD_REQ
+message MsgReceiveTaskRewardReq
+{
+	uint32 taskid = 1;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 领取活动奖励
+// MSG_RECEIVE_ACTIVITY_REWARD_REQ
+message MsgReceiveActivityRewardReq
+{
+	uint32 type = 1;	// 活动类型
+	uint32 id = 2;		// 活动子id
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 领取成就奖励
+// MSG_RECEIVE_ACHIEVE_REWARD_REQ
+message MsgReceiveAchieveRewardReq
+{
+	uint32 achieveid = 1;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 领取礼包奖励
+// MSG_RECEIVE_GIFT_REWARD_REQ
+message MsgReceiveGiftRewardReq
+{
+	bytes giftkey = 1;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 领取邮件奖励
+// MSG_RECEIVE_MAIL_REWARD_REQ
+message MsgReceiveMailRewardReq
+{
+	uint64 id = 1;
+}
+
+// 查看邮件
+// MSG_VIEW_MAIL_REQ
+message MsgViewMailReq
+{
+	uint64 id = 1;
+}
+
+// 删除邮件
+// MSG_DELETE_MAIL_REQ
+message MsgDeleteMailReq
+{
+	uint64 id =1;	// 邮件id
+}
+
+// 查询邮件
+// MSG_QUERY_MAIL_REQ
+message MsgQueryMailReq
+{
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 申请添加好友
+// MSG_ADD_FRIEND_INVITE_REQ
+message MsgAddFriendInviteReq
+{
+	bytes name = 1;			// 玩家名字
+	uint64 playerid = 2;	// 玩家id
+	bytes message = 3;		// 留言
+
+}
+
+// 回复添加好友请求
+// MSG_REPLY_FRIEND_INVITE_REQ
+message MsgReplyFriendInviteReq
+{
+	uint64 playerid = 1;	// 玩家id 0 表示所有
+	uint32 operate = 2;	// 1=同意 2=拒绝 3=直接删除请求 
+}
+
+// 删除好友
+// MSG_DEL_FRIEND_REQ
+message MsgDelFriendReq
+{
+	uint64 playerid = 1;	// 玩家id
+}
+
+// 设置拒绝添加好友
+// MSG_SET_REFUSE_FRIEND_INVITE_REQ
+message MsgSetRefuseFriendInviteReq
+{
+	uint32 refuse = 1;	 // 1=拒绝申请 0=同意接受
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 开始匹配匹配
+// MSG_START_MATCH_REQ
+message MsgStartMatchReq
+{
+	uint32 matchid = 1;			// matchid
+	bool allowgroup = 2;			// 是否允许组队
+	uint32 battleserverid = 3;		// 测试需要匹配的battleid
+	bytes version = 4;			// 客户端版本
+}
+
+// 开始匹配回应
+// MSG_START_MATCH_ACK
+message MsgStartMatchAck
+{
+	uint32 matchid = 1;
+}
+
+// 取消匹配
+// MSG_CANCEL_MATCH_REQ
+message MsgCancelMatchReq
+{
+
+}
+
+// 取消匹配
+// MSG_CANCEL_MATCH_ACK
+message MsgCancelMatchAck
+{
+	uint32 matchid = 1;
+}
+
+// 匹配的结果
+// MSG_MATCH_RESULT_ACK
+message MsgMatchResultAck
+{
+	uint32 matchid = 1;
+	uint64 roomid = 2;
+	uint32 serverid = 3;
+	bytes ip = 4;
+	uint32 port = 5;
+	bytes token = 6;
+}
+
+// 通知匹配预计等待时间( 在没有战斗服情况下 )
+// MSG_TELL_MATCH_WAIT_TIME
+message MsgTellMatchWaitTime
+{
+	uint32 waittime = 1;	// 等待时间( 秒 )
+}
+
+// 通知正在匹配的人数
+// MSG_TELL_MATCH_PLAYER_COUNT
+message MsgTellMatchPlayerCount
+{
+	uint32 count = 1;	// 正在匹配的人数
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//客户端加入江湖聊天室请求
+//	MSG_ENTER_CHAT_REQ
+message MsgEnterChatReq
+{
+
+}
+
+//客户端发送江湖聊天消息请求
+//	MSG_SEND_CHAT_REQ
+message MsgSendChatReq
+{
+	bytes chatinfo = 1;	//聊天内容
+	uint32 isvoice = 2;	//是否是语音消息
+}
+
+//服务器通知客户端江湖聊天消息			
+//	MSG_SEND_CHAT_INFO
+message MsgSendChatInfo
+{
+	bytes chatinfo = 1;		//聊天内容
+	uint32 isvoice = 2;		//是否是语音消息
+	bytes playername = 3;		//发送聊天的玩家名字
+	uint64 playerid = 4;		//发送聊天的玩家id
+	bytes playericon = 5;		//发送聊天的玩家头像
+	uint32 playergrade = 6;	//发送聊天的玩家评分等级
+	uint32 playersex = 7;		//发送聊天的玩家性别
+	bytes playericonbox = 8;	//发送聊天的玩家头像框
+	uint64 playerserverid = 9;	//发送聊天的玩家服务器id
+}
+
+//客户端离开江湖聊天室请求
+//	MSG_LEAVE_CHAT_REQ
+message MsgLeaveChatReq
+{
+
+}
+
+//客户端发送一对一聊天请求
+//MSG_SEND_ONEBYONE_CHAT_REQ
+message MsgSendOneByOneChatReq
+{
+	bytes chatinfo = 1;		//聊天内容
+	uint32 isvoice = 2;		//是否是语音消息
+	uint64 playerid = 3;		//玩家id
+	bytes chattype = 4;
+	bytes selfinfo = 5;		//本人信息
+	uint64 serverid = 6;
+}
+
+//服务器通知一对一聊天信息
+//MSG_SEND_ONEBYONE_CHAT_INFO
+message MsgSendOneByOneChatInfo
+{
+	bytes chatinfo = 1;		//聊天内容
+	uint32 isvoice = 2;		//是否是语音消息
+	uint64 playerid = 3;		//发送聊天的玩家id
+	bytes chattype = 4;
+	bytes playerinfo = 5;		//发送聊天的玩家信息
+	uint64 serverid = 6;
+}
+
+// 客户端发送GM指令请求
+// MSG_DEBUG_COMMAND_REQ
+message MsgDebugCommandReq
+{
+	bytes command = 1;	// 命令
+	repeated bytes params = 2;		// 参数列表
+}
+
+// 显示奖励的物品
+// MSG_SHOW_REWARD_ELEMENT
+message MsgShowRewardElement
+{
+	bytes reward = 1;	// 奖励字串( 客户端需要解析 )
+}
+
+// 客户端发送大厅组队聊天消息请求
+// MSG_SEND_GROUPCHAT_REQ
+message MsgSendGroupChatReq
+{
+	bytes chatinfo = 1;		//聊天内容
+	uint32 isvoice = 2;		//是否是语音消息
+}
+
+// 服务器通知大厅组队聊天消息
+// MSG_SEND_GROUPCHAT_INFO
+message MsgSendGroupChatInfo
+{
+	bytes chatinfo = 1;		//聊天内容
+	uint32 isvoice = 2;		//是否是语音消息
+	uint64 playerid = 3;		//发送聊天的玩家id
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 客户端请求购买物品
+//	MSG_BUY_STORE_REQ;
+message MsgBuyStoreReq
+{
+	bytes version = 1;		// 版本号
+	bytes buytype = 2;		// 使用什么购买
+	uint32 id = 3;			// 商品id
+	uint32 count = 4;		// 购买数量
+}
+
+// 请求商城信息
+// MSG_QUERY_STORE_REQ
+message MsgQueryStoreReq
+{
+	bytes version = 1;		// 版本号
+}
+
+// 请求商城信息反馈
+// MSG_QUERY_STORE_ACK
+message MsgQueryStoreAck
+{
+	bytes version = 1;		// 版本号
+	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 客户端敬酒请求
+//MSG_PLAYER_TOAST_REQ
+message MsgPlayerToastReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询总的被敬酒次数请求
+//MSG_QUERY_TOAST_COUNT_REQ
+message MsgQueryToastCountReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询总的被敬酒次数回馈
+//MSG_QUERY_TOAST_COUNT_ACK
+message MsgQueryToastCountAck
+{
+	uint64 playerid = 1;
+	uint32 toastcount = 2;
+}
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 删除属性
+// MSG_REMOVE_DATA_REQ
+message MsgRemoveDataReq
+{
+	bytes dataname = 1;	// 属性名称
+	uint64 key = 2;		// id
+	uint32 count = 3;		// 数量
+}
+
+
+// 设置角色的当前模型和时装
+// MSG_CHANGE_MODEL_REQ
+message MsgChangeModelReq
+{
+	uint32 modelid = 1;        // 模型id
+}
+
+// 设置模型的默认时装id
+// MSG_SET_MODEL_DEFAULT_CLOTHES_REQ
+message MsgSetModelDefaultClothesReq
+{
+	uint32 modelid = 1;
+	uint32 clothesid = 2;
+}
+
+// 穿戴时装
+// MSG_DRESS_CLOTHES_REQ
+message MsgDressClothesReq
+{
+	uint32 clothesid = 1;	// 时装id
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 邀请玩家加入队伍
+// MSG_INVITE_MATCH_GROUP_REQ
+message MsgInviteMatchGroupReq
+{
+	uint64 serverid = 1;		// 游戏内服务器id
+	uint64 playerid = 2;		// 玩家id
+	bytes source = 3;			// 从哪里邀请
+	uint32 matchid = 4;		// 匹配模式
+	bytes playername = 5;		// 被邀请玩家名字
+}
+
+// 同意/拒绝玩家邀请
+// MSG_REPLY_INVITE_MATCH_GROUP_REQ
+message MsgReplyInviteMatchGroupReq
+{
+	uint64 groupid = 1;		// 队伍id
+	uint64 inviterid = 2;		// 邀请者id
+	uint32 operate = 3;		// 操作	对应InviteEnum
+}
+
+// 离开队伍
+// MSG_LEAVE_MATCH_GROUP_REQ
+message MsgLeaveMatchGroupReq
+{
+
+}
+
+// 踢出队员
+// MSG_KICK_MATCH_GROUP_REQ
+message MsgKickMatchGroupReq
+{
+	uint64 memberid = 1;
+}
+
+// 申请加入队伍
+// MSG_APPLY_MATCH_GROUP_REQ
+message MsgApplyMatchGroupReq
+{
+	uint64 groupid = 1;		// 队伍id
+}
+
+// 回复申请组队
+// MSG_REPLY_APPLY_MATCH_GROUP_REQ
+message MsgReplyApplyMatchGroupReq
+{
+	uint64 applyid = 1;		// 申请人id
+	uint32 operate = 3;		// 操作	对应InviteEnum
+}
+
+// 队员准备
+// MSG_MATCH_GROUP_PREPARE_REQ
+message MsgMatchGroupPrepareReq
+{
+	uint32 prepare = 1;		// 准备  1 准备   0 取消准备
+}
+
+
+// 更改匹配模式
+// MSG_UPDATE_GROUP_MATCH_REQ
+message MsgUpdateGroupMatchReq
+{
+	uint32 matchid = 1;	// 模式id
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+// 使用道具
+// MSG_USE_ITEM_REQ
+message MsgUseItemReq
+{
+	uint64 itemguid = 1;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+// 查询设置请求
+// MSG_QUERY_SETTING_REQ
+message MsgQuerySettingReq
+{
+}
+
+// 查询设置回馈
+// MSG_QUERY_SETTING_ACK
+message MsgQuerySettingAck
+{
+	PBObject pbsetting = 1; 
+}
+
+// 更新设置请求
+// MSG_UPDATE_SETTING_REQ
+message MsgUpdateSettingReq
+{
+	bytes settingkey = 1;
+	bytes settingvalue = 2;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+// 查询最近列表申请
+// MSG_QUERY_RECENT_LIST_REQ
+message MsgQueryRecentListReq
+{
+}
+
+// 查询最近列表回馈
+// MSG_QUERY_RECENT_LIST_ACK
+message MsgQueryRecentListAck
+{
+	PBRecord recentlist = 1;
+}
+
+// 合成属性
+// MSG_COMPOUND_DATA_REQ
+message MsgCompoundDataReq
+{
+	bytes dataname = 1;	// 属性名称( 在class中 )
+	uint32 key = 2;		// 属性id
+}
+
+// 查询全服排行榜
+// MSG_QUERY_RANK_LIST_REQ	
+message MsgQueryRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询排行榜反馈
+// MSG_QUERY_RANK_LIST_ACK
+message MsgQueryRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+
+// 查询好友排行榜
+// MSG_QUERY_FRIEND_RANK_LIST_REQ
+message MsgQueryFriendRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询好友排行榜反馈
+// MSG_QUERY_FRIEND_RANK_LIST_ACK
+message MsgQueryFriendRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+
+// 领取7天签到奖励
+// MSG_SEVEN_SIGNIN_REWARD_REQ
+message MsgSevenSignInRewardReq
+{
+	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
+}
+
+// 广播获得额外奖励
+// MSG_TELL_SEVEN_EXTEND_REWARD
+message MsgTellSevenExtendReward
+{
+	bytes playername = 1;		// 玩家名字
+	bytes reward = 2;		// 奖励内容
+}
+
+// 创建帮派
+// MSG_CREATE_GUILD_REQ
+message MsgCreateGuildReq
+{
+	bytes guildname = 1;		// 帮派名字
+	uint32 medal = 2;		// 帮派勋章
+	bytes manifesto = 3;		// 帮派宣言 
+}
+
+// 邀请加入帮派
+// MSG_INVITE_GUILD_REQ
+message MsgInviteGuildReq
+{
+	uint64 inviterid = 1;		// 被邀请人id
+	
+}
+
+// 申请加入帮派
+// MSG_APPLY_GUILD_REQ
+message MsgApplyGuildReq
+{
+	uint64 guildid = 1;		// 帮派id
+	uint64 invitor = 2;		// 邀请id
+}
+
+// 离开帮派
+// MSG_EXIT_GUILD_REQ
+message MsgExitGuildReq
+{
+}
+
+// 转让帮主
+// MSG_TRANSFER_MASTER_REQ
+message MsgTransferMasterReq
+{
+	uint64 newmasterid = 1;	// 接受者id
+}
+
+// 审批申请列表
+// MSG_REVIEW_APPLY_REQ
+message MsgReviewApplyReq
+{
+	uint64 playerid = 1;		// 被审核玩家(一键操作不填)
+	uint32 operatortype =2;	// 操作类型 (1:同意,2:拒绝)
+	
+}
+
+// 解散帮派
+// MSG_DISSOLVE_GUILD_REQ
+message MsgDissolveGuildReq
+{
+}
+
+// 修改帮派徽章
+// MSG_MODIFY_GUILD_MEDAL_REQ
+message MsgModifyGuildMedalReq
+{
+	uint32 newmedal = 1;		// 新的徽章id
+}
+
+// 请求帮派列表
+// MSG_QUERY_GUILD_LIST_REQ
+message MsgQueryGuildListReq
+{
+	repeated uint64 guilds = 1;	// 要查询的帮派id
+	uint32 cursor = 2;		// 查询的游标（从0开始）
+}
+
+// 帮派列表返回
+// MSG_QUERY_GUILD_LIST_ACK
+message MsgQueryGuildListAck
+{
+	map<string, bytes> guilddatas = 1;	// 帮派信息
+}
+
+// 踢掉帮派成员
+// MSG_KICK_MEMBER_REQ
+message MsgKickMemberReq
+{
+	uint64 toplayerid = 1;		// 被踢掉的玩家id
+}
+
+// 升级帮派
+// MSG_UPGRADE_GUILD_REQ
+message MsgUpgradeGuildReq
+{
+}
+
+// 任命帮派成员
+// MSG_APPOINT_GUILD_MEMBER_REQ
+message MsgAppointGuildMemberReq
+{
+	uint64 toplayerid = 1;		// 被任命人的id
+	uint32 title = 2;		// 任命的职位
+}
+
+// 根据名字搜索帮派信息
+// MSG_SEARCH_GUILD_BY_NAME_REQ
+message MsgSearchGuildByNameReq
+{
+	bytes guildname = 1;		// 帮派名字
+}
+
+
+// 设置帮派管理开关
+// MSG_SET_GUILD_SWITCH_REQ
+message MsgSetGuildSwitchReq
+{
+	bytes type = 1;		// 设置类型
+	uint32 flag = 2;		// 设置数值	
+}
+
+// 查询帮派日志
+// MSG_QUERY_GUILD_LOG_REQ
+message MsgQueryGuildLogReq
+{
+	uint32 page = 1;		// 页数(0代表第一页)
+}
+
+// 查询帮派日志返回
+// MSG_QUERY_GUILD_LOG_ACK
+message MsgQueryGuildLogAck
+{
+	uint32 page = 1;		// 页数
+	repeated bytes guildlog = 2;		// 帮派日志
+}
+
+// 走马灯消息
+// MSG_TELL_MARQUEE
+message MsgTellMarquee
+{
+	bytes content = 1;	// 显示内容
+}
+
+// 系统公告
+// MSG_TELL_SYS_NOTICE
+message MsgTellSysNotcie
+{
+	bytes content = 1;	// 显示内容
+}
+
+// 绑定支付宝
+// MSG_BIND_ALIPAY_REQ
+message MsgBindAlipayReq
+{
+	bytes name = 1;		// 支付宝姓名
+	bytes alipay = 2;		// 支付宝账号
+}
+
+// 申请提现
+// MSG_EXCHANGE_INVITE_SCORE_REQ
+message MsgExChangeInviteScoreReq
+{
+	bytes name = 1;		// 支付宝姓名
+	bytes alipay = 2;		// 支付宝账号
+}
+
+// 申请提现
+// MSG_EXCHANGE_INVITE_SCORE_ACK
+message MsgExChangeInviteScoreAck
+{
+	uint32 exchangescore = 1;	// 兑换积分
+	uint32 leftscore = 2;		// 剩余积分
+}
+
+// 查询邀请积分
+// MSG_QUERY_INVITE_SCORE_REQ
+message MsgQueryInviteScoreReq
+{
+
+}
+
+// 查询邀请积分
+// MSG_QUERY_INVITE_SCORE_ACK
+message MsgQueryInviteScoreAck
+{
+	uint32 exchangescore = 1;	// 已兑换积分
+	uint32 leftscore = 2;		// 剩余积分
+}
+
+// 查询兑换记录
+// MSG_EXCHANGE_INVITE_RECORD_REQ
+message MsgExChangeInviteRecordReq
+{
+
+}
+
+message PBExChangeInviteRecord
+{
+	bytes name = 1;		// 支付宝姓名
+	bytes alipay = 2;		// 支付宝账号
+	uint32 score = 3;		// 积分
+	uint64 time = 4;		// 时间
+}
+
+// 查询兑换记录
+// MSG_EXCHANGE_INVITE_RECORD_ACK
+message MsgExChangeInviteRecordAck
+{
+	repeated PBExChangeInviteRecord record = 1;
+}
+
+// 请求更换称号
+// MSG_TITLE_CHANGE_REQ
+message MsgTitleChangeReq
+{
+	uint32 titleid = 1;	// 称号id
+}

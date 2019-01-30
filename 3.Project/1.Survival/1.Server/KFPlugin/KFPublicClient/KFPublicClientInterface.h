@@ -1,0 +1,24 @@
+﻿#ifndef __KF_PUBLIC_CLIENT_INTERFACE_H__
+#define __KF_PUBLIC_CLIENT_INTERFACE_H__
+
+#include "KFKernel/KFEntity.h"
+
+namespace KFrame
+{
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFPublicClientInterface : public KFModule
+    {
+    public:
+        // 更新公共数据
+        virtual bool UpdatePublicData( uint64 playerid, MapString& values ) = 0;
+        virtual bool UpdatePublicData( KFEntity* player, MapString& values ) = 0;
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_public, KFPublicClientInterface );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+
+
+#endif
