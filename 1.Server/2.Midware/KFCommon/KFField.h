@@ -140,6 +140,7 @@ namespace KFrame
         __STRING_DEFINE__( task );
         __STRING_DEFINE__( activity );
         __STRING_DEFINE__( received );
+        __STRING_DEFINE__( hero );
 
 
     }

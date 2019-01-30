@@ -45,5 +45,8 @@ add_subdirectory(KFAchieve)
 add_subdirectory(KFTask)
 add_subdirectory(KFActivity)
 add_subdirectory(KFCompound)
+add_subdirectory(KFItem)
+add_subdirectory(KFHero)
+add_subdirectory(KFSkin)
 
 
