@@ -170,6 +170,7 @@ namespace KFrame
         __STRING_DEFINE__( addmail );
         __STRING_DEFINE__( delmail );
 
+        // survival
 
     }
 }
