@@ -145,6 +145,30 @@ namespace KFrame
         __STRING_DEFINE__( signin );
         __STRING_DEFINE__( sevenday );
         __STRING_DEFINE__( sevenreward );
+        __STRING_DEFINE__( note );
+        __STRING_DEFINE__( luafile );
+        __STRING_DEFINE__( luafunction );
+        __STRING_DEFINE__( mail );
+        __STRING_DEFINE__( reward );
+        __STRING_DEFINE__( validtime );
+        __STRING_DEFINE__( configid );
+        __STRING_DEFINE__( content );
+        __STRING_DEFINE__( title );
+        __STRING_DEFINE__( type );
+        __STRING_DEFINE__( flag );
+        __STRING_DEFINE__( sendid );
+        __STRING_DEFINE__( sendname );
+        __STRING_DEFINE__( maxmailid );
+        __STRING_DEFINE__( sendtime );
+        __STRING_DEFINE__( globalmail );
+        __STRING_DEFINE__( mailinfo );
+        __STRING_DEFINE__( gmmailid );
+        __STRING_DEFINE__( mailzonelist );
+        __STRING_DEFINE__( maillist );
+        __STRING_DEFINE__( mailidcreater );
+        __STRING_DEFINE__( mailid );
+        __STRING_DEFINE__( addmail );
+        __STRING_DEFINE__( delmail );
 
 
     }

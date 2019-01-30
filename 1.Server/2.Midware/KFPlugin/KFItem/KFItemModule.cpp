@@ -211,7 +211,7 @@ namespace KFrame
         }
 
         auto playerid = player->GetKeyID();
-        //_kf_lua->Call( kfsetting->_lua_file, luafunction, playerid, kfsetting->_id );
+        _kf_lua->Call( kfsetting->_lua_file, luafunction, playerid, kfsetting->_id );
     }
 
     __KF_CHECK_ELEMENT_FUNCTION__( KFItemModule::CheckItemElement )

@@ -17,6 +17,7 @@ enum MidwareCodeEnum
 	ZoneDatabaseBusy		= 10004;		// 小区数据库错误
 	NameDatabaseBusy		= 10005;		// 名字数据库错误
 	DataServerBusy			= 10006;		// 数据服务器繁忙
+	MailServerBusy			= 10007;		// 邮件服务器繁忙
 
 
 	// auth
@@ -95,4 +96,12 @@ enum MidwareCodeEnum
 	SignInCanNotFind		= 12171;		// 找不到签到配置
 	SignInRewardAlready		= 12172;		// 已经领取签到奖励
 	SignInRewardOk			= 12173;		// 领取签到奖励成功
+
+	// mail
+	MailNotExist			= 12200;		// 找不到邮件信息
+	MailTimeOut				= 12201;		// 邮件已经过期
+	MailDeleteFailed		= 12202;		// 还有附件未领取
+	MailAlreadyReceived		= 12203;		// 邮件附件已经领取
+	MailNotHaveReward		= 12204;		// 邮件没有附件
+
 }

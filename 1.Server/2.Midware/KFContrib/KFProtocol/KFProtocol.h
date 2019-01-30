@@ -1,6 +1,7 @@
 ﻿#ifndef __KF_PROTOCOL_H__
 #define __KF_PROTOCOL_H__
 
+#include "google/protobuf/util/json_util.h"
 
 #include "KFDefineMessage.pb.h"
 #include "KFMidwareCodeMessage.pb.h"

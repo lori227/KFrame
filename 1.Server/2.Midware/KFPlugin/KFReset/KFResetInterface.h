@@ -1,0 +1,22 @@
+#ifndef __KF_RESET_INTERFACE_H__
+#define __KF_RESET_INTERFACE_H__
+
+#include "KFrame.h"
+
+namespace KFrame
+{
+    class KFResetInterface : public KFModule
+    {
+    public:
+
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_reset, KFResetInterface );
+    //////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+
+
+#endif

@@ -164,14 +164,14 @@ namespace KFrame
         _req_http_data.push_back( httpdata );
     }
 
-    void KFHttpClientModule::MTGet( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
     {
         static KFHttpClientFunction _null_function = nullptr;
 
         MTRequest( KFHttp::Get, _null_function, url, data, _invalid_str );
     }
 
-    void KFHttpClientModule::MTGet( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
     {
         static KFHttpClientFunction _null_function = nullptr;
 
@@ -179,12 +179,12 @@ namespace KFrame
         MTRequest( KFHttp::Get, _null_function, url, data, _invalid_str );
     }
 
-    void KFHttpClientModule::MTPost( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
     {
         MTRequest( KFHttp::Post, function, url, data, args );
     }
 
-    void KFHttpClientModule::MTPost( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
     {
         auto data = __JSON_SERIALIZE__( json );
         MTRequest( KFHttp::Post, function, url, data, args );

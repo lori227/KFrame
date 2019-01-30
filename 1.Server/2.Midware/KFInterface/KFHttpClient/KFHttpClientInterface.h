@@ -31,7 +31,7 @@ namespace KFrame
                 function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
-            MTGet( url, data, function, args );
+            MTGetRequest( function, url, data, args );
         }
 
         template< class T >
@@ -45,7 +45,7 @@ namespace KFrame
                 function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
-            MTPost( url, data, function, args );
+            MTPostRequest( function, url, data, args );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ namespace KFrame
                 function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
-            MTGet( function, url, json, args );
+            MTGetRequest( function, url, json, args );
         }
 
         template< class T >
@@ -75,7 +75,7 @@ namespace KFrame
                 function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
-            MTPost( function, url, json, args );
+            MTPostRequest( function, url, json, args );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,11 +89,11 @@ namespace KFrame
         virtual std::string SendResponse( KFJson& json ) = 0;
 
     protected:
-        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
-        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args ) = 0;
 
-        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
-        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

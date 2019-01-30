@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[23];
+  static const ::google::protobuf::internal::ParseTable schema[27];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -60,6 +60,9 @@ LIBPROTOC_EXPORT extern MsgCommandReqDefaultTypeInternal _MsgCommandReq_default_
 class MsgCompoundReq;
 class MsgCompoundReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgCompoundReqDefaultTypeInternal _MsgCompoundReq_default_instance_;
+class MsgDeleteMailReq;
+class MsgDeleteMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgDeleteMailReqDefaultTypeInternal _MsgDeleteMailReq_default_instance_;
 class MsgLoginAck;
 class MsgLoginAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgLoginAckDefaultTypeInternal _MsgLoginAck_default_instance_;
@@ -69,12 +72,18 @@ LIBPROTOC_EXPORT extern MsgLoginReqDefaultTypeInternal _MsgLoginReq_default_inst
 class MsgLogoutReq;
 class MsgLogoutReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgLogoutReqDefaultTypeInternal _MsgLogoutReq_default_instance_;
+class MsgMailRewardReq;
+class MsgMailRewardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgMailRewardReqDefaultTypeInternal _MsgMailRewardReq_default_instance_;
 class MsgQueryBasicAck;
 class MsgQueryBasicAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryBasicAckDefaultTypeInternal _MsgQueryBasicAck_default_instance_;
 class MsgQueryBasicReq;
 class MsgQueryBasicReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryBasicReqDefaultTypeInternal _MsgQueryBasicReq_default_instance_;
+class MsgQueryMailReq;
+class MsgQueryMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryMailReqDefaultTypeInternal _MsgQueryMailReq_default_instance_;
 class MsgQueryPlayerAck;
 class MsgQueryPlayerAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryPlayerAckDefaultTypeInternal _MsgQueryPlayerAck_default_instance_;
@@ -117,6 +126,9 @@ LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_
 class MsgUseItemReq;
 class MsgUseItemReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgUseItemReqDefaultTypeInternal _MsgUseItemReq_default_instance_;
+class MsgViewMailReq;
+class MsgViewMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgViewMailReqDefaultTypeInternal _MsgViewMailReq_default_instance_;
 }  // namespace KFMsg
 namespace google {
 namespace protobuf {
@@ -124,11 +136,14 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgAchieveRewardReq* Arena::CreateMaybeMess
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgActivityRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCommandReq* Arena::CreateMaybeMessage<::KFMsg::MsgCommandReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCompoundReq* Arena::CreateMaybeMessage<::KFMsg::MsgCompoundReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgDeleteMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgDeleteMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgMailRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgMailRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgRemoveDataReq* Arena::CreateMaybeMessage<::KFMsg::MsgRemoveDataReq>(Arena*);
@@ -143,6 +158,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncUpdateData* Arena::CreateMaybeMessag
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellBeKick* Arena::CreateMaybeMessage<::KFMsg::MsgTellBeKick>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgUseItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgUseItemReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgViewMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgViewMailReq>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace KFMsg {
@@ -173,12 +189,16 @@ enum MidwareClientProtocol {
   MSG_COMPOUND_REQ = 305,
   MSG_USE_ITEM_REQ = 306,
   MSG_SEVEN_SIGNIN_REWARD_REQ = 307,
+  MSG_VIEW_MAIL_REQ = 401,
+  MSG_DELETE_MAIL_REQ = 402,
+  MSG_QUERY_MAIL_REQ = 403,
+  MSG_MAIL_REWARD_REQ = 404,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_SEVEN_SIGNIN_REWARD_REQ;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_MAIL_REWARD_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -2748,6 +2768,411 @@ class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Mess
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgViewMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgViewMailReq) */ {
+ public:
+  MsgViewMailReq();
+  virtual ~MsgViewMailReq();
+
+  MsgViewMailReq(const MsgViewMailReq& from);
+
+  inline MsgViewMailReq& operator=(const MsgViewMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgViewMailReq(MsgViewMailReq&& from) noexcept
+    : MsgViewMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgViewMailReq& operator=(MsgViewMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgViewMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgViewMailReq* internal_default_instance() {
+    return reinterpret_cast<const MsgViewMailReq*>(
+               &_MsgViewMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  void Swap(MsgViewMailReq* other);
+  friend void swap(MsgViewMailReq& a, MsgViewMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgViewMailReq* New() const final {
+    return CreateMaybeMessage<MsgViewMailReq>(NULL);
+  }
+
+  MsgViewMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgViewMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgViewMailReq& from);
+  void MergeFrom(const MsgViewMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgViewMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgViewMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgDeleteMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgDeleteMailReq) */ {
+ public:
+  MsgDeleteMailReq();
+  virtual ~MsgDeleteMailReq();
+
+  MsgDeleteMailReq(const MsgDeleteMailReq& from);
+
+  inline MsgDeleteMailReq& operator=(const MsgDeleteMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgDeleteMailReq(MsgDeleteMailReq&& from) noexcept
+    : MsgDeleteMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgDeleteMailReq& operator=(MsgDeleteMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgDeleteMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgDeleteMailReq* internal_default_instance() {
+    return reinterpret_cast<const MsgDeleteMailReq*>(
+               &_MsgDeleteMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  void Swap(MsgDeleteMailReq* other);
+  friend void swap(MsgDeleteMailReq& a, MsgDeleteMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgDeleteMailReq* New() const final {
+    return CreateMaybeMessage<MsgDeleteMailReq>(NULL);
+  }
+
+  MsgDeleteMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgDeleteMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgDeleteMailReq& from);
+  void MergeFrom(const MsgDeleteMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgDeleteMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgDeleteMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryMailReq) */ {
+ public:
+  MsgQueryMailReq();
+  virtual ~MsgQueryMailReq();
+
+  MsgQueryMailReq(const MsgQueryMailReq& from);
+
+  inline MsgQueryMailReq& operator=(const MsgQueryMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryMailReq(MsgQueryMailReq&& from) noexcept
+    : MsgQueryMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryMailReq& operator=(MsgQueryMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryMailReq* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryMailReq*>(
+               &_MsgQueryMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  void Swap(MsgQueryMailReq* other);
+  friend void swap(MsgQueryMailReq& a, MsgQueryMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryMailReq* New() const final {
+    return CreateMaybeMessage<MsgQueryMailReq>(NULL);
+  }
+
+  MsgQueryMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryMailReq& from);
+  void MergeFrom(const MsgQueryMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgMailRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgMailRewardReq) */ {
+ public:
+  MsgMailRewardReq();
+  virtual ~MsgMailRewardReq();
+
+  MsgMailRewardReq(const MsgMailRewardReq& from);
+
+  inline MsgMailRewardReq& operator=(const MsgMailRewardReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgMailRewardReq(MsgMailRewardReq&& from) noexcept
+    : MsgMailRewardReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgMailRewardReq& operator=(MsgMailRewardReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMailRewardReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgMailRewardReq* internal_default_instance() {
+    return reinterpret_cast<const MsgMailRewardReq*>(
+               &_MsgMailRewardReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  void Swap(MsgMailRewardReq* other);
+  friend void swap(MsgMailRewardReq& a, MsgMailRewardReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgMailRewardReq* New() const final {
+    return CreateMaybeMessage<MsgMailRewardReq>(NULL);
+  }
+
+  MsgMailRewardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgMailRewardReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgMailRewardReq& from);
+  void MergeFrom(const MsgMailRewardReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgMailRewardReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgMailRewardReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -3907,9 +4332,75 @@ inline void MsgSevenSignInRewardReq::set_day(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgSevenSignInRewardReq.day)
 }
 
+// -------------------------------------------------------------------
+
+// MsgViewMailReq
+
+// uint64 id = 1;
+inline void MsgViewMailReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgViewMailReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgViewMailReq.id)
+  return id_;
+}
+inline void MsgViewMailReq::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgViewMailReq.id)
+}
+
+// -------------------------------------------------------------------
+
+// MsgDeleteMailReq
+
+// uint64 id = 1;
+inline void MsgDeleteMailReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgDeleteMailReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgDeleteMailReq.id)
+  return id_;
+}
+inline void MsgDeleteMailReq::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgDeleteMailReq.id)
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryMailReq
+
+// -------------------------------------------------------------------
+
+// MsgMailRewardReq
+
+// uint64 id = 1;
+inline void MsgMailRewardReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgMailRewardReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMailRewardReq.id)
+  return id_;
+}
+inline void MsgMailRewardReq::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMailRewardReq.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

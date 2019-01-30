@@ -29,6 +29,9 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/map.h>  // IWYU pragma: export
+#include <google/protobuf/map_entry.h>
+#include <google/protobuf/map_field_inl.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "KFDefineMessage.pb.h"
@@ -40,7 +43,7 @@ namespace protobuf_KFMidwareServerMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[27];
+  static const ::google::protobuf::internal::ParseTable schema[36];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -48,9 +51,18 @@ struct LIBPROTOC_EXPORT TableStruct {
 void LIBPROTOC_EXPORT AddDescriptors();
 }  // namespace protobuf_KFMidwareServerMessage_2eproto
 namespace KFMsg {
+class PBMail;
+class PBMailDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBMailDefaultTypeInternal _PBMail_default_instance_;
+class PBMail_DataEntry_DoNotUse;
+class PBMail_DataEntry_DoNotUseDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBMail_DataEntry_DoNotUseDefaultTypeInternal _PBMail_DataEntry_DoNotUse_default_instance_;
 class PBZoneData;
 class PBZoneDataDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBZoneDataDefaultTypeInternal _PBZoneData_default_instance_;
+class S2SAddMailReq;
+class S2SAddMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SAddMailReqDefaultTypeInternal _S2SAddMailReq_default_instance_;
 class S2SBroadcastToGame;
 class S2SBroadcastToGameDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SBroadcastToGameDefaultTypeInternal _S2SBroadcastToGame_default_instance_;
@@ -96,6 +108,12 @@ LIBPROTOC_EXPORT extern S2SLoginToWorldReqDefaultTypeInternal _S2SLoginToWorldRe
 class S2SLogoutToGameReq;
 class S2SLogoutToGameReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SLogoutToGameReqDefaultTypeInternal _S2SLogoutToGameReq_default_instance_;
+class S2SNewPlayerMailReq;
+class S2SNewPlayerMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SNewPlayerMailReqDefaultTypeInternal _S2SNewPlayerMailReq_default_instance_;
+class S2SNoticeNewMailReq;
+class S2SNoticeNewMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SNoticeNewMailReqDefaultTypeInternal _S2SNoticeNewMailReq_default_instance_;
 class S2SPlayerEnterToWorldReq;
 class S2SPlayerEnterToWorldReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SPlayerEnterToWorldReqDefaultTypeInternal _S2SPlayerEnterToWorldReq_default_instance_;
@@ -105,6 +123,12 @@ LIBPROTOC_EXPORT extern S2SPlayerLeaveToWorldReqDefaultTypeInternal _S2SPlayerLe
 class S2SPlayerSyncToWorldReq;
 class S2SPlayerSyncToWorldReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SPlayerSyncToWorldReqDefaultTypeInternal _S2SPlayerSyncToWorldReq_default_instance_;
+class S2SQueryMailAck;
+class S2SQueryMailAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryMailAckDefaultTypeInternal _S2SQueryMailAck_default_instance_;
+class S2SQueryMailReq;
+class S2SQueryMailReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryMailReqDefaultTypeInternal _S2SQueryMailReq_default_instance_;
 class S2SQueryPlayerToDataReq;
 class S2SQueryPlayerToDataReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryPlayerToDataReqDefaultTypeInternal _S2SQueryPlayerToDataReq_default_instance_;
@@ -123,6 +147,12 @@ LIBPROTOC_EXPORT extern S2SSetPlayerNameToGameAckDefaultTypeInternal _S2SSetPlay
 class S2STransmitToPlayer;
 class S2STransmitToPlayerDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2STransmitToPlayerDefaultTypeInternal _S2STransmitToPlayer_default_instance_;
+class S2SUpdateMailStatusAck;
+class S2SUpdateMailStatusAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateMailStatusAckDefaultTypeInternal _S2SUpdateMailStatusAck_default_instance_;
+class S2SUpdateMailStatusReq;
+class S2SUpdateMailStatusReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateMailStatusReqDefaultTypeInternal _S2SUpdateMailStatusReq_default_instance_;
 class S2SUpdateZoneToLoginReq;
 class S2SUpdateZoneToLoginReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SUpdateZoneToLoginReqDefaultTypeInternal _S2SUpdateZoneToLoginReq_default_instance_;
@@ -132,7 +162,10 @@ LIBPROTOC_EXPORT extern S2SUpdateZoneToWorldReqDefaultTypeInternal _S2SUpdateZon
 }  // namespace KFMsg
 namespace google {
 namespace protobuf {
+template<> LIBPROTOC_EXPORT ::KFMsg::PBMail* Arena::CreateMaybeMessage<::KFMsg::PBMail>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBMail_DataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBMail_DataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBZoneData* Arena::CreateMaybeMessage<::KFMsg::PBZoneData>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGame* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGame>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGate* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGate>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDisconnectToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SDisconnectToGameReq>(Arena*);
@@ -148,15 +181,21 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SLoginToLoginAck* Arena::CreateMaybeMessa
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SLoginToLoginReq* Arena::CreateMaybeMessage<::KFMsg::S2SLoginToLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SLoginToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SLoginToWorldReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SLogoutToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SLogoutToGameReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SNewPlayerMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SNewPlayerMailReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SNoticeNewMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SNoticeNewMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SPlayerEnterToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SPlayerEnterToWorldReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SPlayerLeaveToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SPlayerLeaveToWorldReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SPlayerSyncToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SPlayerSyncToWorldReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryMailAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryMailAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSavePlayerToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SSavePlayerToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2STransmitToPlayer* Arena::CreateMaybeMessage<::KFMsg::S2STransmitToPlayer>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateMailStatusAck* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateMailStatusAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateMailStatusReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateMailStatusReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateZoneToLoginReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateZoneToLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateZoneToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateZoneToWorldReq>(Arena*);
 }  // namespace protobuf
@@ -191,12 +230,19 @@ enum MidwareServerProtocol {
   S2S_QUERY_PLAYER_TO_GAME_ACK = 20405,
   S2S_SET_PLAYERNAME_TO_DATA_REQ = 20406,
   S2S_SET_PLAYERNAME_TO_GAME_ACK = 20407,
+  S2S_NEW_PLAYER_MAIL_REQ = 20501,
+  S2S_QUERY_MAIL_REQ = 20502,
+  S2S_QUERY_MAIL_ACK = 20503,
+  S2S_ADD_MAIL_REQ = 20504,
+  S2S_NOTICE_NEW_MAIL_REQ = 20505,
+  S2S_UPDATE_MAIL_STATUS_REQ = 20506,
+  S2S_UPDATE_MAIL_STATUS_ACK = 20507,
   MidwareServerProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareServerProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareServerProtocol_IsValid(int value);
 const MidwareServerProtocol MidwareServerProtocol_MIN = S2S_MIDWARE_SERVER_PROTOCOL_BEGIN;
-const MidwareServerProtocol MidwareServerProtocol_MAX = S2S_SET_PLAYERNAME_TO_GAME_ACK;
+const MidwareServerProtocol MidwareServerProtocol_MAX = S2S_UPDATE_MAIL_STATUS_ACK;
 const int MidwareServerProtocol_ARRAYSIZE = MidwareServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareServerProtocol_descriptor();
@@ -3359,6 +3405,949 @@ class LIBPROTOC_EXPORT S2STransmitToPlayer : public ::google::protobuf::Message 
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class PBMail_DataEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBMail_DataEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > {
+public:
+  typedef ::google::protobuf::internal::MapEntry<PBMail_DataEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > SuperType;
+  PBMail_DataEntry_DoNotUse();
+  PBMail_DataEntry_DoNotUse(::google::protobuf::Arena* arena);
+  void MergeFrom(const PBMail_DataEntry_DoNotUse& other);
+  static const PBMail_DataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const PBMail_DataEntry_DoNotUse*>(&_PBMail_DataEntry_DoNotUse_default_instance_); }
+  void MergeFrom(const ::google::protobuf::Message& other) final;
+  ::google::protobuf::Metadata GetMetadata() const;
+};
+
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT PBMail : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBMail) */ {
+ public:
+  PBMail();
+  virtual ~PBMail();
+
+  PBMail(const PBMail& from);
+
+  inline PBMail& operator=(const PBMail& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBMail(PBMail&& from) noexcept
+    : PBMail() {
+    *this = ::std::move(from);
+  }
+
+  inline PBMail& operator=(PBMail&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBMail& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBMail* internal_default_instance() {
+    return reinterpret_cast<const PBMail*>(
+               &_PBMail_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  void Swap(PBMail* other);
+  friend void swap(PBMail& a, PBMail& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBMail* New() const final {
+    return CreateMaybeMessage<PBMail>(NULL);
+  }
+
+  PBMail* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBMail>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBMail& from);
+  void MergeFrom(const PBMail& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBMail* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  // map<string, bytes> data = 1;
+  int data_size() const;
+  void clear_data();
+  static const int kDataFieldNumber = 1;
+  const ::google::protobuf::Map< ::std::string, ::std::string >&
+      data() const;
+  ::google::protobuf::Map< ::std::string, ::std::string >*
+      mutable_data();
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBMail)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::MapField<
+      PBMail_DataEntry_DoNotUse,
+      ::std::string, ::std::string,
+      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+      ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+      0 > data_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SQueryMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryMailReq) */ {
+ public:
+  S2SQueryMailReq();
+  virtual ~S2SQueryMailReq();
+
+  S2SQueryMailReq(const S2SQueryMailReq& from);
+
+  inline S2SQueryMailReq& operator=(const S2SQueryMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SQueryMailReq(S2SQueryMailReq&& from) noexcept
+    : S2SQueryMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SQueryMailReq& operator=(S2SQueryMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SQueryMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SQueryMailReq* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryMailReq*>(
+               &_S2SQueryMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  void Swap(S2SQueryMailReq* other);
+  friend void swap(S2SQueryMailReq& a, S2SQueryMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SQueryMailReq* New() const final {
+    return CreateMaybeMessage<S2SQueryMailReq>(NULL);
+  }
+
+  S2SQueryMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SQueryMailReq& from);
+  void MergeFrom(const S2SQueryMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SQueryMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint64 maxid = 3;
+  void clear_maxid();
+  static const int kMaxidFieldNumber = 3;
+  ::google::protobuf::uint64 maxid() const;
+  void set_maxid(::google::protobuf::uint64 value);
+
+  // uint32 zoneid = 2;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 2;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 maxid_;
+  ::google::protobuf::uint32 zoneid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SQueryMailAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryMailAck) */ {
+ public:
+  S2SQueryMailAck();
+  virtual ~S2SQueryMailAck();
+
+  S2SQueryMailAck(const S2SQueryMailAck& from);
+
+  inline S2SQueryMailAck& operator=(const S2SQueryMailAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SQueryMailAck(S2SQueryMailAck&& from) noexcept
+    : S2SQueryMailAck() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SQueryMailAck& operator=(S2SQueryMailAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SQueryMailAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SQueryMailAck* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryMailAck*>(
+               &_S2SQueryMailAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  void Swap(S2SQueryMailAck* other);
+  friend void swap(S2SQueryMailAck& a, S2SQueryMailAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SQueryMailAck* New() const final {
+    return CreateMaybeMessage<S2SQueryMailAck>(NULL);
+  }
+
+  S2SQueryMailAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryMailAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SQueryMailAck& from);
+  void MergeFrom(const S2SQueryMailAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SQueryMailAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBMail mail = 2;
+  int mail_size() const;
+  void clear_mail();
+  static const int kMailFieldNumber = 2;
+  ::KFMsg::PBMail* mutable_mail(int index);
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBMail >*
+      mutable_mail();
+  const ::KFMsg::PBMail& mail(int index) const;
+  ::KFMsg::PBMail* add_mail();
+  const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBMail >&
+      mail() const;
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryMailAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBMail > mail_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SAddMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddMailReq) */ {
+ public:
+  S2SAddMailReq();
+  virtual ~S2SAddMailReq();
+
+  S2SAddMailReq(const S2SAddMailReq& from);
+
+  inline S2SAddMailReq& operator=(const S2SAddMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SAddMailReq(S2SAddMailReq&& from) noexcept
+    : S2SAddMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SAddMailReq& operator=(S2SAddMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SAddMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SAddMailReq* internal_default_instance() {
+    return reinterpret_cast<const S2SAddMailReq*>(
+               &_S2SAddMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  void Swap(S2SAddMailReq* other);
+  friend void swap(S2SAddMailReq& a, S2SAddMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SAddMailReq* New() const final {
+    return CreateMaybeMessage<S2SAddMailReq>(NULL);
+  }
+
+  S2SAddMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SAddMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SAddMailReq& from);
+  void MergeFrom(const S2SAddMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SAddMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBMail pbmail = 3;
+  bool has_pbmail() const;
+  void clear_pbmail();
+  static const int kPbmailFieldNumber = 3;
+  private:
+  const ::KFMsg::PBMail& _internal_pbmail() const;
+  public:
+  const ::KFMsg::PBMail& pbmail() const;
+  ::KFMsg::PBMail* release_pbmail();
+  ::KFMsg::PBMail* mutable_pbmail();
+  void set_allocated_pbmail(::KFMsg::PBMail* pbmail);
+
+  // uint64 objectid = 2;
+  void clear_objectid();
+  static const int kObjectidFieldNumber = 2;
+  ::google::protobuf::uint64 objectid() const;
+  void set_objectid(::google::protobuf::uint64 value);
+
+  // uint32 flag = 1;
+  void clear_flag();
+  static const int kFlagFieldNumber = 1;
+  ::google::protobuf::uint32 flag() const;
+  void set_flag(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBMail* pbmail_;
+  ::google::protobuf::uint64 objectid_;
+  ::google::protobuf::uint32 flag_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SNoticeNewMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SNoticeNewMailReq) */ {
+ public:
+  S2SNoticeNewMailReq();
+  virtual ~S2SNoticeNewMailReq();
+
+  S2SNoticeNewMailReq(const S2SNoticeNewMailReq& from);
+
+  inline S2SNoticeNewMailReq& operator=(const S2SNoticeNewMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SNoticeNewMailReq(S2SNoticeNewMailReq&& from) noexcept
+    : S2SNoticeNewMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SNoticeNewMailReq& operator=(S2SNoticeNewMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SNoticeNewMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SNoticeNewMailReq* internal_default_instance() {
+    return reinterpret_cast<const S2SNoticeNewMailReq*>(
+               &_S2SNoticeNewMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  void Swap(S2SNoticeNewMailReq* other);
+  friend void swap(S2SNoticeNewMailReq& a, S2SNoticeNewMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SNoticeNewMailReq* New() const final {
+    return CreateMaybeMessage<S2SNoticeNewMailReq>(NULL);
+  }
+
+  S2SNoticeNewMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SNoticeNewMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SNoticeNewMailReq& from);
+  void MergeFrom(const S2SNoticeNewMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SNoticeNewMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SNoticeNewMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SNewPlayerMailReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SNewPlayerMailReq) */ {
+ public:
+  S2SNewPlayerMailReq();
+  virtual ~S2SNewPlayerMailReq();
+
+  S2SNewPlayerMailReq(const S2SNewPlayerMailReq& from);
+
+  inline S2SNewPlayerMailReq& operator=(const S2SNewPlayerMailReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SNewPlayerMailReq(S2SNewPlayerMailReq&& from) noexcept
+    : S2SNewPlayerMailReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SNewPlayerMailReq& operator=(S2SNewPlayerMailReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SNewPlayerMailReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SNewPlayerMailReq* internal_default_instance() {
+    return reinterpret_cast<const S2SNewPlayerMailReq*>(
+               &_S2SNewPlayerMailReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  void Swap(S2SNewPlayerMailReq* other);
+  friend void swap(S2SNewPlayerMailReq& a, S2SNewPlayerMailReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SNewPlayerMailReq* New() const final {
+    return CreateMaybeMessage<S2SNewPlayerMailReq>(NULL);
+  }
+
+  S2SNewPlayerMailReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SNewPlayerMailReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SNewPlayerMailReq& from);
+  void MergeFrom(const S2SNewPlayerMailReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SNewPlayerMailReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint32 zoneid = 2;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 2;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SNewPlayerMailReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 zoneid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SUpdateMailStatusReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateMailStatusReq) */ {
+ public:
+  S2SUpdateMailStatusReq();
+  virtual ~S2SUpdateMailStatusReq();
+
+  S2SUpdateMailStatusReq(const S2SUpdateMailStatusReq& from);
+
+  inline S2SUpdateMailStatusReq& operator=(const S2SUpdateMailStatusReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SUpdateMailStatusReq(S2SUpdateMailStatusReq&& from) noexcept
+    : S2SUpdateMailStatusReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SUpdateMailStatusReq& operator=(S2SUpdateMailStatusReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SUpdateMailStatusReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SUpdateMailStatusReq* internal_default_instance() {
+    return reinterpret_cast<const S2SUpdateMailStatusReq*>(
+               &_S2SUpdateMailStatusReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
+
+  void Swap(S2SUpdateMailStatusReq* other);
+  friend void swap(S2SUpdateMailStatusReq& a, S2SUpdateMailStatusReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SUpdateMailStatusReq* New() const final {
+    return CreateMaybeMessage<S2SUpdateMailStatusReq>(NULL);
+  }
+
+  S2SUpdateMailStatusReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SUpdateMailStatusReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SUpdateMailStatusReq& from);
+  void MergeFrom(const S2SUpdateMailStatusReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SUpdateMailStatusReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint64 id = 2;
+  void clear_id();
+  static const int kIdFieldNumber = 2;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // uint32 flag = 3;
+  void clear_flag();
+  static const int kFlagFieldNumber = 3;
+  ::google::protobuf::uint32 flag() const;
+  void set_flag(::google::protobuf::uint32 value);
+
+  // uint32 status = 4;
+  void clear_status();
+  static const int kStatusFieldNumber = 4;
+  ::google::protobuf::uint32 status() const;
+  void set_status(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateMailStatusReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 id_;
+  ::google::protobuf::uint32 flag_;
+  ::google::protobuf::uint32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SUpdateMailStatusAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateMailStatusAck) */ {
+ public:
+  S2SUpdateMailStatusAck();
+  virtual ~S2SUpdateMailStatusAck();
+
+  S2SUpdateMailStatusAck(const S2SUpdateMailStatusAck& from);
+
+  inline S2SUpdateMailStatusAck& operator=(const S2SUpdateMailStatusAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SUpdateMailStatusAck(S2SUpdateMailStatusAck&& from) noexcept
+    : S2SUpdateMailStatusAck() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SUpdateMailStatusAck& operator=(S2SUpdateMailStatusAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SUpdateMailStatusAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SUpdateMailStatusAck* internal_default_instance() {
+    return reinterpret_cast<const S2SUpdateMailStatusAck*>(
+               &_S2SUpdateMailStatusAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  void Swap(S2SUpdateMailStatusAck* other);
+  friend void swap(S2SUpdateMailStatusAck& a, S2SUpdateMailStatusAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SUpdateMailStatusAck* New() const final {
+    return CreateMaybeMessage<S2SUpdateMailStatusAck>(NULL);
+  }
+
+  S2SUpdateMailStatusAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SUpdateMailStatusAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SUpdateMailStatusAck& from);
+  void MergeFrom(const S2SUpdateMailStatusAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SUpdateMailStatusAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint64 id = 2;
+  void clear_id();
+  static const int kIdFieldNumber = 2;
+  ::google::protobuf::uint64 id() const;
+  void set_id(::google::protobuf::uint64 value);
+
+  // uint32 status = 3;
+  void clear_status();
+  static const int kStatusFieldNumber = 3;
+  ::google::protobuf::uint32 status() const;
+  void set_status(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateMailStatusAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint64 id_;
+  ::google::protobuf::uint32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -5053,9 +6042,387 @@ inline void S2STransmitToPlayer::set_allocated_msgdata(::std::string* msgdata) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STransmitToPlayer.msgdata)
 }
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// PBMail
+
+// map<string, bytes> data = 1;
+inline int PBMail::data_size() const {
+  return data_.size();
+}
+inline void PBMail::clear_data() {
+  data_.Clear();
+}
+inline const ::google::protobuf::Map< ::std::string, ::std::string >&
+PBMail::data() const {
+  // @@protoc_insertion_point(field_map:KFMsg.PBMail.data)
+  return data_.GetMap();
+}
+inline ::google::protobuf::Map< ::std::string, ::std::string >*
+PBMail::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_map:KFMsg.PBMail.data)
+  return data_.MutableMap();
+}
+
+// -------------------------------------------------------------------
+
+// S2SQueryMailReq
+
+// uint64 playerid = 1;
+inline void S2SQueryMailReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SQueryMailReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryMailReq.playerid)
+  return playerid_;
+}
+inline void S2SQueryMailReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryMailReq.playerid)
+}
+
+// uint32 zoneid = 2;
+inline void S2SQueryMailReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryMailReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryMailReq.zoneid)
+  return zoneid_;
+}
+inline void S2SQueryMailReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryMailReq.zoneid)
+}
+
+// uint64 maxid = 3;
+inline void S2SQueryMailReq::clear_maxid() {
+  maxid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SQueryMailReq::maxid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryMailReq.maxid)
+  return maxid_;
+}
+inline void S2SQueryMailReq::set_maxid(::google::protobuf::uint64 value) {
+  
+  maxid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryMailReq.maxid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SQueryMailAck
+
+// uint64 playerid = 1;
+inline void S2SQueryMailAck::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SQueryMailAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryMailAck.playerid)
+  return playerid_;
+}
+inline void S2SQueryMailAck::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryMailAck.playerid)
+}
+
+// repeated .KFMsg.PBMail mail = 2;
+inline int S2SQueryMailAck::mail_size() const {
+  return mail_.size();
+}
+inline void S2SQueryMailAck::clear_mail() {
+  mail_.Clear();
+}
+inline ::KFMsg::PBMail* S2SQueryMailAck::mutable_mail(int index) {
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryMailAck.mail)
+  return mail_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBMail >*
+S2SQueryMailAck::mutable_mail() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SQueryMailAck.mail)
+  return &mail_;
+}
+inline const ::KFMsg::PBMail& S2SQueryMailAck::mail(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryMailAck.mail)
+  return mail_.Get(index);
+}
+inline ::KFMsg::PBMail* S2SQueryMailAck::add_mail() {
+  // @@protoc_insertion_point(field_add:KFMsg.S2SQueryMailAck.mail)
+  return mail_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBMail >&
+S2SQueryMailAck::mail() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SQueryMailAck.mail)
+  return mail_;
+}
+
+// -------------------------------------------------------------------
+
+// S2SAddMailReq
+
+// uint32 flag = 1;
+inline void S2SAddMailReq::clear_flag() {
+  flag_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SAddMailReq::flag() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddMailReq.flag)
+  return flag_;
+}
+inline void S2SAddMailReq::set_flag(::google::protobuf::uint32 value) {
+  
+  flag_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddMailReq.flag)
+}
+
+// uint64 objectid = 2;
+inline void S2SAddMailReq::clear_objectid() {
+  objectid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SAddMailReq::objectid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddMailReq.objectid)
+  return objectid_;
+}
+inline void S2SAddMailReq::set_objectid(::google::protobuf::uint64 value) {
+  
+  objectid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddMailReq.objectid)
+}
+
+// .KFMsg.PBMail pbmail = 3;
+inline bool S2SAddMailReq::has_pbmail() const {
+  return this != internal_default_instance() && pbmail_ != NULL;
+}
+inline void S2SAddMailReq::clear_pbmail() {
+  if (GetArenaNoVirtual() == NULL && pbmail_ != NULL) {
+    delete pbmail_;
+  }
+  pbmail_ = NULL;
+}
+inline const ::KFMsg::PBMail& S2SAddMailReq::_internal_pbmail() const {
+  return *pbmail_;
+}
+inline const ::KFMsg::PBMail& S2SAddMailReq::pbmail() const {
+  const ::KFMsg::PBMail* p = pbmail_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddMailReq.pbmail)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBMail*>(
+      &::KFMsg::_PBMail_default_instance_);
+}
+inline ::KFMsg::PBMail* S2SAddMailReq::release_pbmail() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SAddMailReq.pbmail)
+  
+  ::KFMsg::PBMail* temp = pbmail_;
+  pbmail_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBMail* S2SAddMailReq::mutable_pbmail() {
+  
+  if (pbmail_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBMail>(GetArenaNoVirtual());
+    pbmail_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddMailReq.pbmail)
+  return pbmail_;
+}
+inline void S2SAddMailReq::set_allocated_pbmail(::KFMsg::PBMail* pbmail) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbmail_;
+  }
+  if (pbmail) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbmail = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbmail, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbmail_ = pbmail;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddMailReq.pbmail)
+}
+
+// -------------------------------------------------------------------
+
+// S2SNoticeNewMailReq
+
+// uint64 playerid = 1;
+inline void S2SNoticeNewMailReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SNoticeNewMailReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SNoticeNewMailReq.playerid)
+  return playerid_;
+}
+inline void S2SNoticeNewMailReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SNoticeNewMailReq.playerid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SNewPlayerMailReq
+
+// uint64 playerid = 1;
+inline void S2SNewPlayerMailReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SNewPlayerMailReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SNewPlayerMailReq.playerid)
+  return playerid_;
+}
+inline void S2SNewPlayerMailReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SNewPlayerMailReq.playerid)
+}
+
+// uint32 zoneid = 2;
+inline void S2SNewPlayerMailReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SNewPlayerMailReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SNewPlayerMailReq.zoneid)
+  return zoneid_;
+}
+inline void S2SNewPlayerMailReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SNewPlayerMailReq.zoneid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SUpdateMailStatusReq
+
+// uint64 playerid = 1;
+inline void S2SUpdateMailStatusReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SUpdateMailStatusReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusReq.playerid)
+  return playerid_;
+}
+inline void S2SUpdateMailStatusReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusReq.playerid)
+}
+
+// uint64 id = 2;
+inline void S2SUpdateMailStatusReq::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SUpdateMailStatusReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusReq.id)
+  return id_;
+}
+inline void S2SUpdateMailStatusReq::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusReq.id)
+}
+
+// uint32 flag = 3;
+inline void S2SUpdateMailStatusReq::clear_flag() {
+  flag_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SUpdateMailStatusReq::flag() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusReq.flag)
+  return flag_;
+}
+inline void S2SUpdateMailStatusReq::set_flag(::google::protobuf::uint32 value) {
+  
+  flag_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusReq.flag)
+}
+
+// uint32 status = 4;
+inline void S2SUpdateMailStatusReq::clear_status() {
+  status_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SUpdateMailStatusReq::status() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusReq.status)
+  return status_;
+}
+inline void S2SUpdateMailStatusReq::set_status(::google::protobuf::uint32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusReq.status)
+}
+
+// -------------------------------------------------------------------
+
+// S2SUpdateMailStatusAck
+
+// uint64 playerid = 1;
+inline void S2SUpdateMailStatusAck::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SUpdateMailStatusAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusAck.playerid)
+  return playerid_;
+}
+inline void S2SUpdateMailStatusAck::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusAck.playerid)
+}
+
+// uint64 id = 2;
+inline void S2SUpdateMailStatusAck::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SUpdateMailStatusAck::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusAck.id)
+  return id_;
+}
+inline void S2SUpdateMailStatusAck::set_id(::google::protobuf::uint64 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusAck.id)
+}
+
+// uint32 status = 3;
+inline void S2SUpdateMailStatusAck::clear_status() {
+  status_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SUpdateMailStatusAck::status() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateMailStatusAck.status)
+  return status_;
+}
+inline void S2SUpdateMailStatusAck::set_status(::google::protobuf::uint32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateMailStatusAck.status)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

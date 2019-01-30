@@ -39,6 +39,12 @@ enum MidwareClientProtocol
 	MSG_COMPOUND_REQ			= 305;				// 属性合成请求
 	MSG_USE_ITEM_REQ			= 306;				// 使用道具
 	MSG_SEVEN_SIGNIN_REWARD_REQ	= 307;				// 领取7天签到奖励
+
+	// mail
+	MSG_VIEW_MAIL_REQ 			= 401;				// 查看邮件
+	MSG_DELETE_MAIL_REQ 		= 402;				// 删除邮件
+	MSG_QUERY_MAIL_REQ 			= 403;				// 请求查询邮件
+	MSG_MAIL_REWARD_REQ 		= 404;				// 领取邮件奖励
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,4 +221,34 @@ message MsgUseItemReq
 message MsgSevenSignInRewardReq
 {
 	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查看邮件
+// MSG_VIEW_MAIL_REQ
+message MsgViewMailReq
+{
+	uint64 id = 1;
+}
+
+// 删除邮件
+// MSG_DELETE_MAIL_REQ
+message MsgDeleteMailReq
+{
+	uint64 id =1;	// 邮件id
+}
+
+// 查询邮件
+// MSG_QUERY_MAIL_REQ
+message MsgQueryMailReq
+{
+
+}
+
+// 领取邮件奖励
+// MSG_MAIL_REWARD_REQ
+message MsgMailRewardReq
+{
+	uint64 id = 1;
 }

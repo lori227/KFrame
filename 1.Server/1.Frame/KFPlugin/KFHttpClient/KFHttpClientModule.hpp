@@ -47,11 +47,11 @@ namespace KFrame
         virtual std::string SendResponse( KFJson& json );
 
     protected:
-        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
-        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
 
-        virtual void MTGet( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
-        virtual void MTPost( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
 
     private:
         // 添加异步请求

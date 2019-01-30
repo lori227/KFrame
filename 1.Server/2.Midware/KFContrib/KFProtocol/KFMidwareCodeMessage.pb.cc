@@ -50,49 +50,52 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\376\013\n\017"
+      "\n\032KFMidwareCodeMessage.proto\022\005KFMsg*\201\r\n\017"
       "MidwareCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHt"
       "tpDataError\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n"
       "\016AuthServerBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022"
       "\025\n\020ZoneDatabaseBusy\020\224N\022\025\n\020NameDatabaseBu"
-      "sy\020\225N\022\023\n\016DataServerBusy\020\226N\022\023\n\016AccountIsE"
-      "mpty\020\371U\022\026\n\021ActivationAccount\020\372U\022\032\n\025Inval"
-      "idActivationCode\020\373U\022\030\n\023ActivationCodeErr"
-      "or\020\374U\022\024\n\017LoginTokenError\020\375U\022\023\n\016BanForbid"
-      "Login\020\376U\022\026\n\021ChannelNotSupport\020\377U\022\023\n\016Chan"
-      "nelNotOpen\020\200V\022\021\n\014ChannelError\020\201V\022\020\n\013WeiX"
-      "inError\020\202V\022\024\n\017WeiXinUserError\020\203V\022\025\n\020WeiX"
-      "inTokenError\020\204V\022\024\n\017WeiXinCodeError\020\205V\022\027\n"
-      "\022WeiXinTokenTimeout\020\206V\022\017\n\nSteamError\020\207V\022"
-      "\023\n\016SteamDataError\020\210V\022\023\n\016SteamAuthError\020\211"
-      "V\022\034\n\027VersionNotCompatibility\020\341]\022\021\n\014Login"
-      "IsClose\020\342]\022\027\n\022LoginNoLoginServer\020\343]\022\024\n\017L"
-      "oginSystemBusy\020\344]\022\031\n\024LoginWorldSystemBus"
-      "y\020\345]\022\026\n\021LoginNoGameServer\020\346]\022\030\n\023LoginGam"
-      "eServerBusy\020\347]\022\031\n\024LoginBindPlayerError\020\350"
-      "]\022\030\n\023LoginLoadDataFailed\020\351]\022\026\n\021QueryPlay"
-      "erFailed\020\305^\022\025\n\020NameAlreadyExist\020\306^\022\016\n\tNa"
-      "meSetOk\020\307^\022\024\n\017NameLengthError\020\310^\022\024\n\017Name"
-      "FilterError\020\311^\022\016\n\tNameEmpty\020\312^\022\023\n\016NameAl"
-      "readySet\020\313^\022\r\n\010SexSetOK\020\314^\022\026\n\021AchieveCan"
-      "NotFind\020\316^\022\032\n\025AchieveCanNotFindData\020\317^\022\023"
-      "\n\016AchieveNotDone\020\320^\022\033\n\026AchieveAlreadyRec"
-      "eived\020\321^\022\025\n\020AchieveReceiveOk\020\322^\022\023\n\016TaskC"
-      "anNotFind\020\330^\022\027\n\022TaskCanNotFindData\020\331^\022\020\n"
-      "\013TaskNotDone\020\332^\022\030\n\023TaskAlreadyReceived\020\333"
-      "^\022\021\n\014TaskRewardOk\020\334^\022\027\n\022ActivityCanNotFi"
-      "nd\020\342^\022\033\n\026ActivityCanNotFindData\020\343^\022\034\n\027Ac"
-      "tivityAlreadyReceived\020\344^\022\024\n\017ActivityNotD"
-      "one\020\345^\022\025\n\020ActivityRewardOk\020\346^\022\025\n\020Compoun"
-      "dNotExist\020\354^\022\032\n\025CompoundNotEnoughData\020\355^"
-      "\022\017\n\nCompoundOk\020\356^\022\023\n\016ItemCanNotFind\020\366^\022\027"
-      "\n\022ItemCanNotFindData\020\367^\022\022\n\rItemCanNotUse"
-      "\020\370^\022\021\n\014SignInNotDay\020\212_\022\025\n\020SignInCanNotFi"
-      "nd\020\213_\022\030\n\023SignInRewardAlready\020\214_\022\023\n\016SignI"
-      "nRewardOk\020\215_b\006proto3"
+      "sy\020\225N\022\023\n\016DataServerBusy\020\226N\022\023\n\016MailServer"
+      "Busy\020\227N\022\023\n\016AccountIsEmpty\020\371U\022\026\n\021Activati"
+      "onAccount\020\372U\022\032\n\025InvalidActivationCode\020\373U"
+      "\022\030\n\023ActivationCodeError\020\374U\022\024\n\017LoginToken"
+      "Error\020\375U\022\023\n\016BanForbidLogin\020\376U\022\026\n\021Channel"
+      "NotSupport\020\377U\022\023\n\016ChannelNotOpen\020\200V\022\021\n\014Ch"
+      "annelError\020\201V\022\020\n\013WeiXinError\020\202V\022\024\n\017WeiXi"
+      "nUserError\020\203V\022\025\n\020WeiXinTokenError\020\204V\022\024\n\017"
+      "WeiXinCodeError\020\205V\022\027\n\022WeiXinTokenTimeout"
+      "\020\206V\022\017\n\nSteamError\020\207V\022\023\n\016SteamDataError\020\210"
+      "V\022\023\n\016SteamAuthError\020\211V\022\034\n\027VersionNotComp"
+      "atibility\020\341]\022\021\n\014LoginIsClose\020\342]\022\027\n\022Login"
+      "NoLoginServer\020\343]\022\024\n\017LoginSystemBusy\020\344]\022\031"
+      "\n\024LoginWorldSystemBusy\020\345]\022\026\n\021LoginNoGame"
+      "Server\020\346]\022\030\n\023LoginGameServerBusy\020\347]\022\031\n\024L"
+      "oginBindPlayerError\020\350]\022\030\n\023LoginLoadDataF"
+      "ailed\020\351]\022\026\n\021QueryPlayerFailed\020\305^\022\025\n\020Name"
+      "AlreadyExist\020\306^\022\016\n\tNameSetOk\020\307^\022\024\n\017NameL"
+      "engthError\020\310^\022\024\n\017NameFilterError\020\311^\022\016\n\tN"
+      "ameEmpty\020\312^\022\023\n\016NameAlreadySet\020\313^\022\r\n\010SexS"
+      "etOK\020\314^\022\026\n\021AchieveCanNotFind\020\316^\022\032\n\025Achie"
+      "veCanNotFindData\020\317^\022\023\n\016AchieveNotDone\020\320^"
+      "\022\033\n\026AchieveAlreadyReceived\020\321^\022\025\n\020Achieve"
+      "ReceiveOk\020\322^\022\023\n\016TaskCanNotFind\020\330^\022\027\n\022Tas"
+      "kCanNotFindData\020\331^\022\020\n\013TaskNotDone\020\332^\022\030\n\023"
+      "TaskAlreadyReceived\020\333^\022\021\n\014TaskRewardOk\020\334"
+      "^\022\027\n\022ActivityCanNotFind\020\342^\022\033\n\026ActivityCa"
+      "nNotFindData\020\343^\022\034\n\027ActivityAlreadyReceiv"
+      "ed\020\344^\022\024\n\017ActivityNotDone\020\345^\022\025\n\020ActivityR"
+      "ewardOk\020\346^\022\025\n\020CompoundNotExist\020\354^\022\032\n\025Com"
+      "poundNotEnoughData\020\355^\022\017\n\nCompoundOk\020\356^\022\023"
+      "\n\016ItemCanNotFind\020\366^\022\027\n\022ItemCanNotFindDat"
+      "a\020\367^\022\022\n\rItemCanNotUse\020\370^\022\021\n\014SignInNotDay"
+      "\020\212_\022\025\n\020SignInCanNotFind\020\213_\022\030\n\023SignInRewa"
+      "rdAlready\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014Mai"
+      "lNotExist\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDe"
+      "leteFailed\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022"
+      "\026\n\021MailNotHaveReward\020\254_b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1580);
+      descriptor, 1711);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -124,6 +127,7 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 10004:
     case 10005:
     case 10006:
+    case 10007:
     case 11001:
     case 11002:
     case 11003:
@@ -183,6 +187,11 @@ bool MidwareCodeEnum_IsValid(int value) {
     case 12171:
     case 12172:
     case 12173:
+    case 12200:
+    case 12201:
+    case 12202:
+    case 12203:
+    case 12204:
       return true;
     default:
       return false;

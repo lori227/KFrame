@@ -11,7 +11,7 @@
 
 #include "KFrame.h"
 #include "KFItemInterface.h"
-//#include "KFLua/KFLuaInterface.h"
+#include "KFLua/KFLuaInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"

@@ -48,5 +48,9 @@ add_subdirectory(KFCompound)
 add_subdirectory(KFItem)
 add_subdirectory(KFHero)
 add_subdirectory(KFSkin)
+add_subdirectory(KFSignIn)
+add_subdirectory(KFReset)
+add_subdirectory(KFEnter)
+add_subdirectory(KFLeave)
 
 

@@ -58,6 +58,7 @@ enum MidwareCodeEnum {
   ZoneDatabaseBusy = 10004,
   NameDatabaseBusy = 10005,
   DataServerBusy = 10006,
+  MailServerBusy = 10007,
   AccountIsEmpty = 11001,
   ActivationAccount = 11002,
   InvalidActivationCode = 11003,
@@ -117,12 +118,17 @@ enum MidwareCodeEnum {
   SignInCanNotFind = 12171,
   SignInRewardAlready = 12172,
   SignInRewardOk = 12173,
+  MailNotExist = 12200,
+  MailTimeOut = 12201,
+  MailDeleteFailed = 12202,
+  MailAlreadyReceived = 12203,
+  MailNotHaveReward = 12204,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = SignInRewardOk;
+const MidwareCodeEnum MidwareCodeEnum_MAX = MailNotHaveReward;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

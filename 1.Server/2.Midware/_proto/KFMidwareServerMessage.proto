@@ -42,6 +42,15 @@ enum MidwareServerProtocol
 	S2S_QUERY_PLAYER_TO_GAME_ACK		= 20405;	// 查询玩家
 	S2S_SET_PLAYERNAME_TO_DATA_REQ 		= 20406;	// 设置玩家名字
 	S2S_SET_PLAYERNAME_TO_GAME_ACK		= 20407;	// 设置玩家名字
+
+	// mail
+	S2S_NEW_PLAYER_MAIL_REQ 			= 20501;	// 新玩家登陆邮件服务
+	S2S_QUERY_MAIL_REQ 					= 20502;	// 查询邮件
+	S2S_QUERY_MAIL_ACK 					= 20503;	// 查询邮件
+	S2S_ADD_MAIL_REQ 					= 20504;	// 添加邮件
+	S2S_NOTICE_NEW_MAIL_REQ 			= 20505;	// 通知新邮件
+	S2S_UPDATE_MAIL_STATUS_REQ 			= 20506;	// 设置邮件状态请求
+	S2S_UPDATE_MAIL_STATUS_ACK 			= 20507;	// 设置邮件状态响应
  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,4 +269,74 @@ message S2STransmitToPlayer
 	uint64 playerid = 1;		// 玩家id
 	uint32 msgid = 2;			// 消息id
 	bytes msgdata = 3;		// 消息内容
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 邮件信息
+message PBMail
+{
+	map<string, bytes> data = 1;
+}
+
+// 查询邮件请求
+// S2S_QUERY_MAIL_REQ
+message S2SQueryMailReq
+{
+	uint64 playerid = 1;		//  角色id
+	uint32 zoneid = 2;			//  小区id
+	uint64 maxid = 3;			//  最大的邮件id
+}
+
+// 查询邮件请求
+// S2S_QUERY_MAIL_ACK
+message S2SQueryMailAck
+{
+	uint64 playerid = 1;		// 角色id
+	repeated PBMail mail = 2;	// 邮件信息
+}
+
+// 添加邮件
+// S2S_ADD_MAIL_REQ
+message S2SAddMailReq
+{
+	uint32 flag = 1;
+	uint64 objectid = 2;		// id
+	PBMail pbmail = 3;			// 邮件信息
+}
+
+// 通知有新邮件
+// S2S_NOTICE_NEW_MAIL_REQ
+message S2SNoticeNewMailReq
+{
+	uint64 playerid = 1;	// 角色id	
+}
+
+// 新玩家登陆邮件服务
+// S2S_NEW_PLAYER_MAIL_REQ
+message S2SNewPlayerMailReq
+{
+	uint64 playerid = 1;		// 玩家id
+	uint32 zoneid = 2;			// 小区id
+}
+
+// 设置邮件状态请求
+// S2S_UPDATE_MAIL_STATUS_REQ
+message S2SUpdateMailStatusReq
+{
+	uint64 playerid = 1;
+	uint64 id = 2;
+	uint32 flag = 3;
+	uint32 status = 4;
+}
+
+// 设置邮件状态响应
+// S2S_UPDATE_MAIL_STATUS_ACK
+message S2SUpdateMailStatusAck
+{
+	uint64 playerid = 1;
+	uint64 id = 2;
+	uint32 status = 3;
 }

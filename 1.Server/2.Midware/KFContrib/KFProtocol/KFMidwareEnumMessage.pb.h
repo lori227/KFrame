@@ -143,6 +143,28 @@ inline bool UUIDEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<UUIDEnum>(
     UUIDEnum_descriptor(), name, value);
 }
+enum MailEnum {
+  UnknowMail = 0,
+  GlobalMail = 1,
+  PersonMail = 2,
+  MailEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  MailEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool MailEnum_IsValid(int value);
+const MailEnum MailEnum_MIN = UnknowMail;
+const MailEnum MailEnum_MAX = PersonMail;
+const int MailEnum_ARRAYSIZE = MailEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MailEnum_descriptor();
+inline const ::std::string& MailEnum_Name(MailEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MailEnum_descriptor(), value);
+}
+inline bool MailEnum_Parse(
+    const ::std::string& name, MailEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MailEnum>(
+    MailEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -185,6 +207,11 @@ template <> struct is_proto_enum< ::KFMsg::UUIDEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::UUIDEnum>() {
   return ::KFMsg::UUIDEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::MailEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::MailEnum>() {
+  return ::KFMsg::MailEnum_descriptor();
 }
 
 }  // namespace protobuf
