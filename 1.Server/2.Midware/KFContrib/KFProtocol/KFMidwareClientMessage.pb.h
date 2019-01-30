@@ -40,7 +40,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[20];
+  static const ::google::protobuf::internal::ParseTable schema[21];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -57,6 +57,9 @@ LIBPROTOC_EXPORT extern MsgActivityRewardReqDefaultTypeInternal _MsgActivityRewa
 class MsgCommandReq;
 class MsgCommandReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgCommandReqDefaultTypeInternal _MsgCommandReq_default_instance_;
+class MsgCompoundReq;
+class MsgCompoundReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgCompoundReqDefaultTypeInternal _MsgCompoundReq_default_instance_;
 class MsgLoginAck;
 class MsgLoginAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgLoginAckDefaultTypeInternal _MsgLoginAck_default_instance_;
@@ -114,6 +117,7 @@ namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgAchieveRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgAchieveRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgActivityRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCommandReq* Arena::CreateMaybeMessage<::KFMsg::MsgCommandReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgCompoundReq* Arena::CreateMaybeMessage<::KFMsg::MsgCompoundReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
@@ -158,12 +162,13 @@ enum MidwareClientProtocol {
   MSG_ACHIEVE_REWARD_REQ = 302,
   MSG_TASK_REWARD_REQ = 303,
   MSG_ACTIVITY_REWARD_REQ = 304,
+  MSG_COMPOUND_REQ = 305,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_ACTIVITY_REWARD_REQ;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_COMPOUND_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -2095,6 +2100,124 @@ class LIBPROTOC_EXPORT MsgSetSexReq : public ::google::protobuf::Message /* @@pr
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgCompoundReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgCompoundReq) */ {
+ public:
+  MsgCompoundReq();
+  virtual ~MsgCompoundReq();
+
+  MsgCompoundReq(const MsgCompoundReq& from);
+
+  inline MsgCompoundReq& operator=(const MsgCompoundReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgCompoundReq(MsgCompoundReq&& from) noexcept
+    : MsgCompoundReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgCompoundReq& operator=(MsgCompoundReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgCompoundReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgCompoundReq* internal_default_instance() {
+    return reinterpret_cast<const MsgCompoundReq*>(
+               &_MsgCompoundReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  void Swap(MsgCompoundReq* other);
+  friend void swap(MsgCompoundReq& a, MsgCompoundReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCompoundReq* New() const final {
+    return CreateMaybeMessage<MsgCompoundReq>(NULL);
+  }
+
+  MsgCompoundReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgCompoundReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgCompoundReq& from);
+  void MergeFrom(const MsgCompoundReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgCompoundReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint32 key = 2;
+  void clear_key();
+  static const int kKeyFieldNumber = 2;
+  ::google::protobuf::uint32 key() const;
+  void set_key(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgCompoundReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::uint32 key_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgAchieveRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgAchieveRewardReq) */ {
  public:
   MsgAchieveRewardReq();
@@ -2130,7 +2253,7 @@ class LIBPROTOC_EXPORT MsgAchieveRewardReq : public ::google::protobuf::Message 
                &_MsgAchieveRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   void Swap(MsgAchieveRewardReq* other);
   friend void swap(MsgAchieveRewardReq& a, MsgAchieveRewardReq& b) {
@@ -2233,7 +2356,7 @@ class LIBPROTOC_EXPORT MsgTaskRewardReq : public ::google::protobuf::Message /* 
                &_MsgTaskRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   void Swap(MsgTaskRewardReq* other);
   friend void swap(MsgTaskRewardReq& a, MsgTaskRewardReq& b) {
@@ -2336,7 +2459,7 @@ class LIBPROTOC_EXPORT MsgActivityRewardReq : public ::google::protobuf::Message
                &_MsgActivityRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   void Swap(MsgActivityRewardReq* other);
   friend void swap(MsgActivityRewardReq& a, MsgActivityRewardReq& b) {
@@ -3395,6 +3518,77 @@ inline void MsgSetSexReq::set_sex(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// MsgCompoundReq
+
+// bytes dataname = 1;
+inline void MsgCompoundReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCompoundReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgCompoundReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void MsgCompoundReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgCompoundReq.dataname)
+}
+#if LANG_CXX11
+inline void MsgCompoundReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgCompoundReq.dataname)
+}
+#endif
+inline void MsgCompoundReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgCompoundReq.dataname)
+}
+inline void MsgCompoundReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgCompoundReq.dataname)
+}
+inline ::std::string* MsgCompoundReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgCompoundReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCompoundReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgCompoundReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCompoundReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgCompoundReq.dataname)
+}
+
+// uint32 key = 2;
+inline void MsgCompoundReq::clear_key() {
+  key_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgCompoundReq::key() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgCompoundReq.key)
+  return key_;
+}
+inline void MsgCompoundReq::set_key(::google::protobuf::uint32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgCompoundReq.key)
+}
+
+// -------------------------------------------------------------------
+
 // MsgAchieveRewardReq
 
 // uint32 id = 1;
@@ -3464,6 +3658,8 @@ inline void MsgActivityRewardReq::set_id(::google::protobuf::uint32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

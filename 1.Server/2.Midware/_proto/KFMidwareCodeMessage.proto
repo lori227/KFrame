@@ -58,6 +58,7 @@ enum MidwareCodeEnum
 	NameEmpty				= 12106;		// 名字不能为空
 	NameAlreadySet			= 12107;		// 不能重复设定名字
 	SexSetOK				= 12108;		// 性别设置成功
+
 	// achieve
 	AchieveCanNotFind		= 12110;		// 找不到该成就配置
 	AchieveCanNotFindData	= 12111;		// 没有该成就数据
@@ -78,4 +79,9 @@ enum MidwareCodeEnum
 	ActivityAlreadyReceived = 12132;		// 已经领取活动奖励
 	ActivityNotDone			= 12133;		// 活动还没完成
 	ActivityRewardOk		= 12134;		// 领取活动奖励成功
+
+	// compound
+	CompoundNotExist		= 12140;		// 合成配置不存在
+	CompoundNotEnoughData	= 12141;		// 没有足够的合成材料
+	CompoundOk				= 12142;		// 合成成功
 }

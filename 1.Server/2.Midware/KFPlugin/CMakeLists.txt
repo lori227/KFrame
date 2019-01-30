@@ -44,5 +44,6 @@ add_subdirectory(KFAttribute)
 add_subdirectory(KFAchieve)
 add_subdirectory(KFTask)
 add_subdirectory(KFActivity)
+add_subdirectory(KFCompound)
 
 
