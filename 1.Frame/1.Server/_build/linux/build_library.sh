@@ -50,6 +50,18 @@ yum install -y autoconf automake libtool
 cd ../../KFLibrary
 libpath=_lib/linux/3rd/
 #-----------------------------------------------------
+blue "start building zlib"
+
+cd zlib
+bash ./configure --prefix=/usr/local
+make -j 4
+cp -R -f *.so* ../../$libpath
+cd ../
+
+blue "end building zlib"
+
+#pause
+#-----------------------------------------------------
 blue "start building libunwind"
 
 cd libunwind
@@ -139,18 +151,7 @@ cd ../../../../
 blue "end building redis"
 
 #pause
-#-----------------------------------------------------
-blue "start building zlib"
 
-cd zlib
-bash ./configure --prefix=/usr/local
-make -j 4
-cp -R -f *.so* ../../$libpath
-cd ../
-
-blue "end building zlib"
-
-#pause
 #-----------------------------------------------------
 blue "start building poco"
 
