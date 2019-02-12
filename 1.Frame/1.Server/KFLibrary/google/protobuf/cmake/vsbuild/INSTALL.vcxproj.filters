@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Tools\protobuf-master\cmake\vsbuild\CMakeFiles\8fb09077478ff3fd740279f74749b934\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{29B3E1F6-0227-35A9-BD71-3F076DE00E5C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
