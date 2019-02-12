@@ -9,10 +9,10 @@ cd KFLibrary
 :================================================================
 :  build protobuf
 
-cd google/protobuf/vsbuild
+cd google/protobuf/cmake/vsbuild
 call build150-protobuf-x64.bat
 
-cd ../../../
+cd ../../../../
 :================================================================
 
 :  build libuv
@@ -53,14 +53,6 @@ cd luaplus/projects
 call build150-luaplus-x64.bat
 
 cd ../../
-:================================================================
-
-:  build json
-
-cd json/makefiles/msvc2010
-call build150-json-x64.bat
-
-cd ../../../
 :================================================================
 
 :  build poco
