@@ -1,7 +1,0 @@
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/protoc.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/libprotobuf-lite.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/libprotoc.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/libprotobuf.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/INSTALL.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/ALL_BUILD.dir
-D:/Tools/protobuf-master/cmake/vsbuild/CMakeFiles/ZERO_CHECK.dir

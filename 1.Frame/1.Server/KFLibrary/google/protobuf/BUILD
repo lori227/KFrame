@@ -54,7 +54,6 @@ COPTS = select({
         "-Wno-sign-compare",
         "-Wno-unused-function",
         # Prevents ISO C++ const string assignment warnings for pyext sources.
-        "-Wno-writable-strings",
         "-Wno-write-strings",
     ],
 })
@@ -94,7 +93,6 @@ cc_library(
     srcs = [
         # AUTOGEN(protobuf_lite_srcs)
         "src/google/protobuf/arena.cc",
-        "src/google/protobuf/arenastring.cc",
         "src/google/protobuf/extension_set.cc",
         "src/google/protobuf/generated_message_table_driven_lite.cc",
         "src/google/protobuf/generated_message_util.cc",
