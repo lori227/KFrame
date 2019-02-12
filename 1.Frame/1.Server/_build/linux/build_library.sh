@@ -42,7 +42,9 @@ function red(){
 function yellow(){
     echo -e "\033[33m\033[01m[ $1 ]\033[0m"
 }
-
+#-----------------------------------------------------
+yum install -y gcc-c++
+yum install -y autoconf automake libtool
 #-----------------------------------------------------
 
 cd ../../KFLibrary
@@ -67,6 +69,7 @@ bash ./autogen.sh
 bash ./configure --prefix=/usr/local
 make clean
 make -j 4
+make install
 cp -R -f /usr/local/lib/libtcmalloc* ../../$libpath
 cd ../
 
@@ -158,7 +161,7 @@ make -j 4
 cp -R -f lib/Linux/x86_64/*.a ../../$libpath
 cd ../
 
-blue "start building poco"
+blue "end building poco"
 
 #pause
 #-----------------------------------------------------
