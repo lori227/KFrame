@@ -2,26 +2,11 @@ cd ../../
 
 mkdir _lib
 mkdir _lib\win64
-
-mkdir _bin
-mkdir _bin\win64
+mkdir _lib\win64\3rd
 :================================================================
 
 cd KFLibrary
 :================================================================
-
-: openssl
-
-copy /y openssl\lib\*.lib ..\_lib\win64\
-copy /y openssl\bin\*.dll ..\_bin\win64\
-:================================================================
-
-:mysql
-
-copy /y mysql\lib\*.lib ..\_lib\win64\
-copy /y mysql\lib\*.dll ..\_bin\win64\
-:================================================================
-
 :  build protobuf
 
 cd google/protobuf/vsprojects
