@@ -56,3 +56,6 @@ _output
 3.Project/1.Survival/1.Server/KFInterface
 3.Project/1.Survival/1.Server/_bin/startup/common
 3.Project/1.Survival/1.Server/_build/linux/tool/
+1.Frame/1.Server/_lib/win64/3rd/libprotobufd.lib
+1.Frame/1.Server/_lib/win64/3rd/libprotobuf.lib
+1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/x64/
