@@ -9,16 +9,8 @@ cd KFLibrary
 :================================================================
 :  build protobuf
 
-cd google/protobuf/vsprojects
+cd google/protobuf/vsbuild
 call build150-protobuf-x64.bat
-
-cd ../../../
-:================================================================
-
-:  build log4cxx
-
-cd log4cxx/log4cxx
-call build150-log4cxx-x64.bat
 
 cd ../../../
 :================================================================
